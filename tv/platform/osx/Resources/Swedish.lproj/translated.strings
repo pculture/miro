@@ -1,0 +1,1778 @@
+﻿/* SOME DESCRIPTIVE TITLE.
+Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+This file is distributed under the same license as the PACKAGE package.
+FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+ */
+/* Flag: untranslated */
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-13 17:31-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+
+"$log" = "$log";
+
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Vår felhanterare finns på <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Berätta för oss vad du gjorde, klistra in loggmeddelandet från rutan ovanför, och svara på några frågor så kan vi börja arbeta med problemet med en gång.</font>";
+
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Om du har en minut över, skulle du vilja skicka in en felrapport till vårt felhanteringssystem? Vad vi behöver är minst en beskrivning av vad du gjorde just då -- så precis information som möjligt -- plus det konstnärliga mumbo jumbo i rutan nedanför:";
+
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Olyckligt! $longAppName blev ett enkelt byte för någon sorts form av intern förvirring eller feltänkande $when. Vi ursäktar oss och föreslår att du avslutar och startar om $shortAppName. Det borde läxa upp programmet och även minska dina chanser att förlora dina inställningar eller kanalprenumerationer.";
+
+"OK" = "OK";
+
+"The fall of $shortAppName??" = "Slutet för $shortAppName??";
+
+"About Democracy" = "Om Democracy";
+
+"Add Channel..." = "Lägg till Kanal...";
+
+"Bring All to Front" = "Ta fram alla";
+
+"Channels" = "Kanaler";
+
+"Check for New Version" = "Leta efter en ny version";
+
+"Clear Menu" = "Töm meny";
+
+"Close Window" = "Stäng fönstret";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15 */
+"Copy" = "Kopiera";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28 */
+"Copy Channel URL" = "Kopiera kanalens URL";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11 */
+"Copy Video URL" = "Kopiera filmens URL";
+
+"Cut" = "Klipp ut";
+
+/* File: ../../portable/dialogs.py:77 */
+"Delete" = "Ta bort";
+
+"Democracy" = "Democracy";
+
+"Democracy Help" = "Hjälp för Democracy";
+
+"Donate" = "Donera";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14 */
+"Edit" = "Redigera";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6 */
+"File" = "Arkiv";
+
+"Full Screen" = "Helskärm";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47 */
+"Help" = "Hjälp";
+
+"Hide Democracy" = "Dölj Democracy";
+
+"Hide Others" = "Dölj övriga";
+
+"Main Window" = "Huvudfönster";
+
+"MainMenu" = "Huvudmeny";
+
+"Minimize" = "Minimera";
+
+"New Channel Folder..." = "Ny kanalmapp...";
+
+"New Channel Guide..." = "Ny kanalguide";
+
+"New Playlist Folder..." = "Ny spellistemapp...";
+
+"New Playlist..." = "Ny spellista...";
+
+"New Search Channel..." = "Ny sökkanal...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43 */
+"Next Video" = "Nästa film";
+
+"Open Recent" = "Öppna senaste";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7 */
+"Open..." = "Öppna...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16 */
+"Paste" = "Klistra in";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40 */
+"Play Video" = "Spela upp film";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39 */
+"Playback" = "Uppspelning";
+
+"Playlists" = "Spellistor";
+
+"Preferencesâ¦" = "Inställningar";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44 */
+"Previous Video" = "Föregående film";
+
+"Quit Democracy" = "Avsluta Democracy";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5 */
+"Remove..." = "Ta bort...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18 */
+"Rename..." = "Byt namn...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10 */
+"Save Video As..." = "Spara film som...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17 */
+"Select All" = "Markera alla";
+
+"Send This Channel to a Friend" = "Skicka den här kanalen till en vän";
+
+"Services" = "Tjänster";
+
+"Show All" = "Visa alla";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42 */
+"Stop Video" = "Stoppa film";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30 */
+"Update All Channels" = "Uppdatera alla kanaler";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29 */
+"Update Channel" = "Uppdatera kanal";
+
+"Window" = "Fönster";
+
+"Zoom" = "Zooma";
+
+"%channel feed%" = "%channel feed%";
+
+"%channel title%" = "%channel title%";
+
+"%donation label%" = "%donation label%";
+
+"-00:00:00" = "-00:00:00";
+
+"00:00:00" = "00.00.00";
+
+"Box" = "Ruta";
+
+"FullScreen Controls" = "Helskärmskontroller";
+
+/* File: ../../portable/tabs.py:27 */
+/* File: ../../portable/feed.py:1718 */
+/* File: ../../portable/feed.py:1777 */
+"Search" = "Sök";
+
+"VideoWindow" = "Filmfönster";
+
+/* File: ../../portable/dialogs.py:60 */
+"Cancel" = "Avbryt";
+
+"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
+
+"Password:\n" = "Lösenord:\n";
+
+"Username and password required" = "Användarnamn och lösenord krävs";
+
+"Username:\n\n" = "Användarnamn:\n\n";
+
+" limit upstream to" = " begränsa sändning till";
+
+"(You must restart Democracy for this change to take effect)\n" = "(Du måste starta om Democracy för att denna ändring ska bli aktiv)\n";
+
+"(movies directory path goes here)" = "(sökvägen till filmkatalogen anges här)";
+
+"1 day" = "1 dag";
+
+"1 month" = "1 månad";
+
+"10 days" = "10 dagar";
+
+"3 days" = "3 dagar";
+
+"3 hours" = "3 timmar";
+
+"4" = "4";
+
+"5" = "5";
+
+"6 days" = "6 dagar";
+
+"99999" = "99999";
+
+"BitTorrent ports:" = "BitTornado-portar:";
+
+"By default, videos expire after:" = "Som standard går filmen ut efter:";
+
+"Change..." = "Ändra...";
+
+"Check channels for new content:" = "Kontrollera kanaler efter nytt innehåll:";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:41 */
+"Don't start a download if it leaves less than" = "Starta inte en hämtning om den lämnar kvar mindre än";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:42 */
+"Download at most" = "Hämta som mest";
+
+"GB free." = "GB ledigt.";
+
+"KB/s when my computer is active." = "KB/s när min dator är aktiv.";
+
+"Maximum:" = "Maximum:";
+
+"Minimum:" = "Minimum:";
+
+"Never" = "Aldrig";
+
+"OtherViews" = "Andra vyer";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:53 */
+"Play videos one after another." = "Spela upp filmer efter varandra.";
+
+"Run Democracy at startup" = "Kör Democracy vid uppstart";
+
+"Save downloaded videos in this folder:" = "Spara hämtade filmer i denna mapp:";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
+"Stop after each video." = "Stoppa efter varje film.";
+
+"To avoid internet slowdowns:" = "För att undvika långsamt nätverk:";
+
+"every 30 minutes" = "två gånger i timmen";
+
+"every hour" = "varje timme";
+
+"manually" = "manuellt";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
+"videos at once." = "filmer samtidigt.";
+
+"$label$" = "$label$";
+
+"$title$" = "$title$";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20 */
+"Channel" = "Kanal";
+
+/* File: ../../portable/dialogs.py:72 */
+"Create" = "Skapa";
+
+"In this:" = "I denna:";
+
+"Item1" = "Post1";
+
+"Search Engine" = "Sökmotor";
+
+"Search for:" = "Sök efter:";
+
+"URL" = "URL";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/startup.py:31 */
+/* File: ../../platform/windows-xul/frontend_implementation/startup.py:25 */
+/* Flag: python-format */
+"(parsed %d files - found %d videos)" = "(tolkade %d filer - hittade %d filmer)";
+
+"Back" = "Tillbaka";
+
+"Browse" = "Bläddra";
+
+"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Democracy Player kan hitta alla filmer på din dator för att hjälpa dig att organisera din samling.\n\n\nVill du att Democracy Player ska leta efter filmer på din dator?";
+
+"Next" = "Nästa";
+
+/* File: ../../portable/dialogs.py:62 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28 */
+"No" = "Nej";
+
+"Only search my Movies folder." = "Sök endast i min filmkatalog.";
+
+"Search my entire Home folder." = "Sök i hela min hemkatalog.";
+
+"Search this folder:" = "Sök i denna mapp:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12 */
+"Searching for Videos" = "Söker efter filmer";
+
+"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "De nästa skärmarna kommer att hjälpa dig att ställa in Democracy Player så att den fungerar som du vill. Här är första frågan.";
+
+"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "Vi rekommenderar att du låter Democracy Player starta när din dator startar upp. Det här sättet innebär att filmer som ännu inte har hämtats hem kan färdigställas och nya filmer i dina kanaler kommer att vara färdiga när du vill se dem.\n\n\nVill du köra Democracy när din dator startar upp?";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:66 */
+"Welcome to Internet TV!" = "Välkommen till Internet-TV!";
+
+"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Välkommen till Internet-TV. Det finns en hel del du kan göra med Democracy Player: hämta filmer automatiskt från dina favoritkanaler, se nya filmer en efter en, hämta torrentfiler, rekommendera filmer till dina vänner, och mycket mycket mer.\n\n";
+
+/* File: ../../portable/dialogs.py:61 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27 */
+"Yes" = "Ja";
+
+"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "Nu är du färdig!\n\nKonfigurationen är klar -- nu kan du leta upp några kanaler och börja se på dem.\n\nVänta inte: Democracy är annorlunda än att se på filmer på webbsidor-- publicerare kan erbjuda stora och högkvalitativa filmer. Sitt inte där och vänta på filmerna: påbörja några hämtningar och kom tillbaka senare. \n\nLämna den påslagen: Democracy Player kontrollerar regelbundet kanalerna efter nya filmer och hämtar ner dem i bakgrunden. Lämna den påslagen betyder att du har nya filmer när du är klar att se dem.\n\nOroa dig inte för diskutrymmet: Precis som en TiVo, har Democracy Player en funktion för \"utgånget material\" som hjälper dig att rensa bort gamla filmer för att göra plats för nya filmer. Du kan alltid behålla en film permanent genom att klicka på \"spara\" och du kan ställa in kanalens inställningar att spara filmerna automatiskt.\n\nTänk stort: Knappen till höger om uppspelningsknappen visar filmer på hela skärmen.\n\nHitta filmer: Kanalguiden i Democracy innehåller hundratals Internet-TV-kanaler, alla är gratis. Klicka helt enkelt \"LÄGG TILL\" för att se på en kanal.\n";
+
+"%message%\n%message%" = "%message%\n%message%";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
+"Save Video _As..." = "Spara film so_m...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
+"Save this video" = "Spara denna film";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117 */
+"_Copy Video URL" = "_Kopiera filmens URL";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120 */
+"_Remove Video" = "_Ta bort filmen";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123 */
+"_Fullscreen" = "_Helskärm";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124 */
+"_Stop Video" = "_Stoppa film";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125 */
+"_Next Video" = "_Nästa film";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126 */
+"_Previous Video" = "_Föregående film";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129 */
+"_Play / Pause" = "_Spela upp / Pausa";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:132 */
+"Copy Channel _Link" = "Kopiera kanal_länk";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133 */
+"_Send this channel to a friend" = "_Skicka den här kanalen till en vän";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136 */
+"_Update Channel" = "_Uppdatera kanal";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139 */
+"Re_name Channel" = "_Byt namn på kanalen";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142 */
+"_Remove Channel" = "_Ta bort kanal";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145 */
+"Re_name Playlist" = "_Byt namn på spellistan";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148 */
+"_Remove Playlist" = "_Ta bort spellistan";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151 */
+"_Video" = "_Film";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152 */
+"_Channels" = "_Kanaler";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153 */
+"_Playlists" = "_Spellistor";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:154 */
+"P_layback" = "Upp_spelning";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155 */
+"_Open..." = "_Öppna...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155 */
+"Open various files" = "Öppna diverse filer";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157 */
+"New _Playlist..." = "_Ny spellista";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157 */
+"Create new playlist" = "Skapa ny spellista";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158 */
+"New Playlist _Folder..." = "Ny _mapp för spellistor...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158 */
+"Create new playlist folder" = "Skapa ny spellistemapp";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159 */
+"New Channel _Folder..." = "Ny _mapp för kanaler...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159 */
+"Create new channel folder" = "Skapa ny kanalmapp";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160 */
+"Add _Channel..." = "_Lägg till kanal...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161 */
+"New Searc_h Channel..." = "Ny sökka_nal...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162 */
+"New Channel _Guide..." = "Ny Kanal_guide...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164 */
+"P_references" = "Inställninga_r";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165 */
+"_Quit" = "_Avsluta";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165 */
+"Quit the Program" = "Avsluta programmet";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:166 */
+"U_pdate All Channels" = "U_ppdatera alla kanaler";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:167 */
+"_Help" = "_Hjälp";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169 */
+"_Donate" = "_Donera";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172 */
+"Delete selection" = "_Ta bort urval";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6 */
+"Username:" = "Användarnamn:";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:163 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7 */
+"Password:" = "Lösenord:";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:350 */
+"Unknown Runtime Error" = "Okänt körtidsfel";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351 */
+/* Flag: python-format */
+"An unknown error has occurred %s." = "Ett okänt fel har inträffat %s.";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5 */
+/* File: ../../platform/osx/frontend/UIStrings.py:5 */
+"_Remove..." = "_Ta bort";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6 */
+/* File: ../../platform/osx/frontend/UIStrings.py:6 */
+"_Remove Playlist..." = "_Ta bort spellista...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7 */
+/* File: ../../platform/osx/frontend/UIStrings.py:7 */
+"_Remove Playlists..." = "_Ta bort spellistor...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8 */
+/* File: ../../platform/osx/frontend/UIStrings.py:8 */
+"_Remove Playlist Folder..." = "_Ta bort mapp för spellistor...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:9 */
+/* File: ../../platform/osx/frontend/UIStrings.py:9 */
+"_Remove Playlist Folders..." = "_Ta bort mappar för spellistor...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10 */
+/* File: ../../platform/osx/frontend/UIStrings.py:10 */
+"_Remove Channel..." = "_Ta bort kanal...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11 */
+/* File: ../../platform/osx/frontend/UIStrings.py:11 */
+"_Remove Channels..." = "_Ta bort kanaler...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12 */
+/* File: ../../platform/osx/frontend/UIStrings.py:12 */
+"_Remove Channel Folder..." = "_Ta bort mapp för kanaler...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13 */
+/* File: ../../platform/osx/frontend/UIStrings.py:13 */
+"_Remove Channel Folders..." = "_Ta bort mappar för kanaler...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14 */
+/* File: ../../platform/osx/frontend/UIStrings.py:14 */
+"_Remove Channel Guide..." = "_Ta bort kanalguide...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:15 */
+/* File: ../../platform/osx/frontend/UIStrings.py:15 */
+"_Remove Channel Guides..." = "_Ta bort kanaguider...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16 */
+/* File: ../../platform/osx/frontend/UIStrings.py:16 */
+"_Remove Video..." = "_Ta bort film...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:17 */
+/* File: ../../platform/osx/frontend/UIStrings.py:17 */
+"_Remove Videos..." = "_Ta bort filmer...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18 */
+/* File: ../../platform/osx/frontend/UIStrings.py:18 */
+"Re_name..." = "_Byt namn...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:19 */
+/* File: ../../platform/osx/frontend/UIStrings.py:19 */
+"Re_name Playlist..." = "_Byt namn  på spellista...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:20 */
+/* File: ../../platform/osx/frontend/UIStrings.py:20 */
+"Re_name Playlist Folder..." = "_Byt namn på mapp för spellistor...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:21 */
+/* File: ../../platform/osx/frontend/UIStrings.py:21 */
+"Re_name Channel..." = "_Byt namn på kanal...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:22 */
+/* File: ../../platform/osx/frontend/UIStrings.py:22 */
+"Re_name Channel Folder..." = "_Byt namn på mapp för kanaler...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:23 */
+/* File: ../../platform/osx/frontend/UIStrings.py:23 */
+"Re_name Channel Guide..." = "_Byt namn på kanalguide...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24 */
+/* File: ../../platform/osx/frontend/UIStrings.py:24 */
+"_Update Channel..." = "_Uppdatera kanal...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25 */
+/* File: ../../platform/osx/frontend/UIStrings.py:25 */
+"_Update Channels..." = "_Uppdatera kanaler...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161 */
+"Error Bombing Item" = "Fel vid bombning av objekt";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:163 */
+"Error Recommending Item" = "Fel vid rekommendation av objekt";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:165 */
+"Error Opening Website" = "Fel vid öppning av webbplats";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:169 */
+/* Flag: python-format */
+"There was an error opening %s.  Please try again in a few seconds" = "Det inträffade ett fel vid öppning av %s.  Försök igen om några sekunder";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37 */
+"Remove Playlist..." = "Ta bort spellista...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7 */
+"Remove Playlists..." = "Ta bort spellistor";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:8 */
+"Remove Playlist Folder..." = "Ta bort mapp för spellistor...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:9 */
+"Remove Playlist Folders..." = "Ta bort mappar för spellistor...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27 */
+"Remove Channel..." = "Ta bort kanal...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11 */
+"Remove Channels..." = "Ta bort kanaler...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12 */
+"Remove Channel Folder..." = "Ta bort mapp för kanaler...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:13 */
+"Remove Channel Folders..." = "Ta bort mappar för kanaler...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:14 */
+"Remove Channel Guide..." = "Ta bort kanalguide...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:15 */
+"Remove Channel Guides..." = "Ta bort kanalguider...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16 */
+"Remove Video..." = "Ta bort film...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:17 */
+"Remove Videos..." = "Ta bort filmer...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36 */
+"Rename Playlist..." = "Byt namn på spellista...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20 */
+"Rename Playlist Folder..." = "Byt namn på mapp för spellistor...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26 */
+"Rename Channel..." = "Byt namn på kanal...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22 */
+"Rename Channel Folder..." = "Byt namn på mapp för kanaler...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:23 */
+"Rename Channel Guide..." = "Byt namn på kanalguiden...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:24 */
+"Update Channel..." = "Uppdatera kanal...";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:25 */
+"Update Channels..." = "Uppdatera kanaler...";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:36 */
+/* Flag: python-format */
+"Error importing democracy modules:\n%s" = "Fel vid importering av moduler för Democracy:\n%s";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:40 */
+"Starting up" = "Startar upp";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:136 */
+"Loading window" = "Läser in fönster";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:137 */
+"onStartup called twice" = "onStartup anropades två gånger";
+
+/* File: ../../portable/playlist.py:175 */
+/* File: ../../portable/playlist.py:180 */
+"Rename Playlist" = "Byt namn på spellista";
+
+/* File: ../../portable/playlist.py:176 */
+/* File: ../../portable/folder.py:120 */
+/* File: ../../portable/folder.py:175 */
+/* File: ../../portable/guide.py:130 */
+/* File: ../../portable/menu.py:48 */
+/* File: ../../portable/menu.py:53 */
+/* File: ../../portable/feed.py:690 */
+"Remove" = "Ta bort";
+
+/* File: ../../portable/playlist.py:181 */
+/* Flag: python-format */
+"Enter a new name for the playlist %s" = "Ange ett nytt namn för spellistan %s";
+
+/* File: ../../portable/playlist.py:194 */
+"Create Playlist" = "Skapa spellista";
+
+/* File: ../../portable/playlist.py:195 */
+"Enter a name for the new playlist" = "Ange ett namn för den nya spellistan";
+
+/* File: ../../portable/compiled_templates/search.py:39 */
+"Nothing to display.<br></br> Enter a query in the search field above." = "Ingenting att visa.<br></br> Ange en sökfråga i sökfältet ovan.";
+
+/* File: ../../portable/compiled_templates/search.py:44 */
+"Searching..." = "Söker...";
+
+/* File: ../../portable/compiled_templates/search.py:56 */
+"Results for \"${query}\"" = "Resultat för \"${query}\"";
+
+/* File: ../../portable/compiled_templates/search.py:95 */
+"Video Search" = "Filmsökning";
+
+/* File: ../../portable/compiled_templates/playlist.py:56 */
+"Empty Playlist" = "Tom spellista";
+
+/* File: ../../portable/compiled_templates/playlist.py:58 */
+"Drag downloaded videos to this playlist to add them." = "Dra hämtade filmer till den här spellistan för att lägga till dem.";
+
+/* File: ../../portable/compiled_templates/playlist_folder.py:59 */
+"Empty Playlist Folder" = "Töm spellistmappen";
+
+/* File: ../../portable/compiled_templates/playlist_folder.py:71 */
+"This folder contains ${count} playlists, but the playlists do not contain any items." = "Den här mappen innehåller ${count} spellistor, men spellistorna innehåller inga objekt.";
+
+/* File: ../../portable/compiled_templates/playlist_folder.py:76 */
+"Drag playlists to this folder to add them." = "Dra spellistor till den här mappen för att lägga till dem.";
+
+/* File: ../../portable/compiled_templates/multi_playlist.py:57 */
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} spellistmappar markerade<br><br>(innehåller ${containedcount} spellistor)";
+
+/* File: ../../portable/compiled_templates/multi_playlist.py:69 */
+"${count} Playlists Selected" = "${count} spellistor markerade";
+
+/* File: ../../portable/compiled_templates/external_playback_continue.py:47 */
+/* File: ../../portable/compiled_templates/video_info.py:40 */
+/* File: ../../portable/compiled_templates/external_playback.py:50 */
+"STAR" = "STJÄRNA";
+
+/* File: ../../portable/compiled_templates/external_playback_continue.py:57 */
+/* File: ../../portable/compiled_templates/video_info.py:50 */
+/* File: ../../portable/compiled_templates/external_playback.py:60 */
+/* File: ../../portable/compiled_templates/download_item.py:201 */
+"SAVE" = "SPARA";
+
+/* File: ../../portable/compiled_templates/external_playback_continue.py:62 */
+/* File: ../../portable/compiled_templates/video_info.py:55 */
+/* File: ../../portable/compiled_templates/external_playback.py:65 */
+"SAVED" = "SPARAD";
+
+/* File: ../../portable/compiled_templates/external_playback_continue.py:70 */
+/* File: ../../portable/compiled_templates/video_info.py:63 */
+/* File: ../../portable/compiled_templates/external_playback.py:73 */
+/* File: ../../portable/compiled_templates/download_item.py:211 */
+"DELETE" = "TA BORT";
+
+/* File: ../../portable/compiled_templates/external_playback_continue.py:85 */
+/* File: ../../portable/compiled_templates/external_playback.py:88 */
+"Democracy - External Playback Template" = "Democracy - Mall för extern uppspelning";
+
+/* File: ../../portable/compiled_templates/external_playback_continue.py:95 */
+"Continue To Next Video" = "Fortsätt till nästa film";
+
+/* File: ../../portable/compiled_templates/channelfolder.py:166 */
+"${count} Downloads in Progress" = "${count} pågående hämtningar";
+
+/* File: ../../portable/compiled_templates/channelfolder.py:171 */
+"1 Download in Progress" = "1 pågående hämtning";
+
+/* File: ../../portable/compiled_templates/channelfolder.py:191 */
+"${len} Videos On This Channel" = "${len} filmer på denna kanal";
+
+/* File: ../../portable/compiled_templates/channelfolder.py:205 */
+"All ${len} Videos Match This Search" = "Alla ${len} filmer matchar sökningen";
+
+/* File: ../../portable/compiled_templates/channelfolder.py:217 */
+"${len} Videos Match This Search" = "${len} filmer matchar sökningen";
+
+/* File: ../../portable/compiled_templates/channelfolder.py:277 */
+"${count} Videos on this Channel" = "${count} filmer på denna kanal";
+
+/* File: ../../portable/compiled_templates/channelfolder.py:290 */
+"Unwatched" = "Inte visad";
+
+/* File: ../../portable/compiled_templates/channelfolder.py:301 */
+"Watched" = "Visad";
+
+/* File: ../../portable/compiled_templates/channelfolder.py:312 */
+"Saved" = "Sparad";
+
+/* File: ../../portable/compiled_templates/feed_settings.py:32 */
+/* File: ../../portable/compiled_templates/channel.py:152 */
+"Default" = "Standard";
+
+/* File: ../../portable/compiled_templates/feed_settings.py:39 */
+/* File: ../../portable/compiled_templates/channel.py:159 */
+"default" = "standard";
+
+/* File: ../../portable/compiled_templates/feed_settings.py:110 */
+/* File: ../../portable/compiled_templates/channel.py:379 */
+"Videos expire after" = "Filmer går ut efter";
+
+/* File: ../../portable/compiled_templates/feed_settings.py:113 */
+/* File: ../../portable/compiled_templates/channel.py:382 */
+"When turned on, Auto Download should" = "När påslagen ska Automatisk hämtning";
+
+/* File: ../../portable/compiled_templates/feed_settings.py:146 */
+/* File: ../../portable/compiled_templates/channel.py:415 */
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Hämta inte automatiskt när mer än ${maxnew} ${maxnew2} filmer är osedda.";
+
+/* File: ../../portable/compiled_templates/channel.py:316 */
+/* File: ../../portable/compiled_templates/channel_content.py:122 */
+/* File: ../../portable/compiled_templates/channel_folder.py:252 */
+"Downloaded" = "Hämtad";
+
+/* File: ../../portable/compiled_templates/channel.py:428 */
+"Recommend" = "Rekommendera";
+
+/* File: ../../portable/compiled_templates/channel.py:430 */
+/* File: ../../portable/compiled_templates/unittest/simpleunicode.py:34 */
+/* File: ../../portable/test/unicodetest.py:402 */
+"Settings" = "Inställningar";
+
+/* File: ../../portable/compiled_templates/channel.py:440 */
+"<label for=\"automatic\">Auto Download</label>" = "<label for=\"automatic\">Automatisk hämtning</label>";
+
+/* File: ../../portable/compiled_templates/channel.py:458 */
+"Looking for videos at this URL" = "Letar efter filmer på denna url";
+
+/* File: ../../portable/compiled_templates/external_playback.py:111 */
+"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy kan inte spela upp denna fil. Du kanske kan öppna den med ett annat program.<br></br><br></br><strong>Filnamn:</strong> ${filename}<Br></Br><strong>Filtyp:</strong> ${format}";
+
+/* File: ../../portable/compiled_templates/external_playback.py:115 */
+"REVEAL FILE" = "VISA FIL";
+
+/* File: ../../portable/compiled_templates/external_playback.py:119 */
+"Play Externally" = "Spela upp externt";
+
+/* File: ../../portable/compiled_templates/external_playback.py:128 */
+"Skip >> ${countdown}" = "Hoppa över >> ${countdown}";
+
+/* File: ../../portable/compiled_templates/download_item.py:114 */
+"SHOW FILE" = "VISA FIL";
+
+/* File: ../../portable/compiled_templates/download_item.py:121 */
+"SHOW FOLDER" = "VISA MAPP";
+
+/* File: ../../portable/compiled_templates/download_item.py:135 */
+"SHARE IT" = "DELA UT DEN";
+
+/* File: ../../portable/compiled_templates/download_item.py:144 */
+"STAR IT" = "MÄRK DEN";
+
+/* File: ../../portable/compiled_templates/download_item.py:189 */
+"Pending Auto Download" = "Väntande automatisk hämtning";
+
+/* File: ../../portable/compiled_templates/unittest/translationtest.py:43 */
+"Simple translation" = "Enkel översättning";
+
+/* File: ../../portable/compiled_templates/unittest/translationtest.py:57 */
+"truck stop in a ${can}" = "lastbilen stoppar i en ${can}";
+
+/* File: ../../portable/compiled_templates/unittest/translationtest.py:61 */
+"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "Det här är en ${car} och det här är en ${truck} <span>Den här texten är <b style=\"color:red\">rå</b> text</span>";
+
+/* File: ../../portable/compiled_templates/download.py:91 */
+"${size} disk space free" = "${size} ledigt utrymme";
+
+/* File: ../../portable/compiled_templates/download.py:101 */
+"${size} available for downloads" = "${size} tillgängligt för hämtningar";
+
+/* File: ../../portable/compiled_templates/download.py:153 */
+/* File: ../../portable/tabs.py:28 */
+"Downloading" = "Hämtar";
+
+/* File: ../../portable/compiled_templates/download.py:168 */
+"Clear Completed Torrents" = "Töm färdiga torrent";
+
+/* File: ../../portable/compiled_templates/channel_folder.py:138 */
+"Empty Channel Folder" = "Tom kanalmapp";
+
+/* File: ../../portable/compiled_templates/channel_folder.py:140 */
+"Drag channels to this folder to add them." = "Dra kanaler till den här mappen för att lägga till dem.";
+
+/* File: ../../portable/compiled_templates/library.py:73 */
+/* File: ../../portable/tabs.py:25 */
+"My Collection" = "Min samling";
+
+/* File: ../../portable/compiled_templates/new.py:75 */
+/* File: ../../portable/tabs.py:26 */
+"New Videos" = "Nya filmer";
+
+/* File: ../../portable/compiled_templates/first_time_intro.py:38 */
+"Democracy Internet TV: How to Get Started" = "Democracy Internet-TV: Hur man kommer igång";
+
+/* File: ../../portable/compiled_templates/first_time_intro.py:42 */
+"GO BIG:" = "TÄNK STORT:";
+
+/* File: ../../portable/compiled_templates/first_time_intro.py:44 */
+"This is your fullscreen button. Click it and lean back." = "Det här är din helskärmsknapp. Klicka på den och luta dig tillbaka.";
+
+/* File: ../../portable/compiled_templates/first_time_intro.py:48 */
+"NEW STUFF:" = "NYA SAKER:";
+
+/* File: ../../portable/compiled_templates/first_time_intro.py:50 */
+"Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "Blåa cirklar betyder att kanalen har nya filmer tillgängliga, gröna cirklar betyder att du har hämtat filmer som är klara att se på.";
+
+/* File: ../../portable/compiled_templates/first_time_intro.py:52 */
+"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">HOPPA ÖVER INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Gå till kanalguiden >></a></strong>";
+
+/* File: ../../portable/compiled_templates/first_time_intro.py:54 */
+"<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" = "<strong>Lägg till kanaler:</strong> Kanalguiden är ditt hem för Internet-TV-kanaler. Klicka på \"LÄGG TILL\" för att prenumerera på en kanal-- <strong>kanalerna i guiden är gratis.</strong>";
+
+/* File: ../../portable/compiled_templates/first_time_intro.py:56 */
+"<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later." = "<strong>Vänta inte:</strong> Democracy är annorlunda än att se på filmer på webbsidor-- publicerare kan erbjuda stora och högkvalitativa filmer. Sitt inte där och vänta på filmerna: påbörja några hämtningar och kom tillbaka senare.";
+
+/* File: ../../portable/compiled_templates/first_time_intro.py:58 */
+"<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." = "<strong>Lämna den påslagen:</strong> Democracy Player kontrollerar regelbundet kanalerna efter nya filmer och hämtar ner dem i bakgrunden. Lämna den påslagen betyder att du har nya filmer när du är klar att se dem.";
+
+/* File: ../../portable/compiled_templates/first_time_intro.py:60 */
+"<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "<strong>Oroa dig inte för diskutrymmet:</strong> Precis som en TiVo, har Democracy Player en funktion för \"utgånget material\" som hjälper dig att rensa bort gamla filmer för att göra plats för nya filmer. Du kan alltid behålla en film permanent genom att klicka på \"spara\" och du kan ställa in kanalens inställningar att spara filmerna automatiskt.";
+
+/* File: ../../portable/compiled_templates/multi_channel.py:57 */
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} kanalmappar markerade<br><br>(innehåller ${containedcount} kanaler)";
+
+/* File: ../../portable/compiled_templates/multi_channel.py:69 */
+"${count} Channels Selected" = "${count} kanaler markerade";
+
+/* File: ../../portable/dl_daemon/download.py:298 */
+"Error" = "Fel";
+
+/* File: ../../portable/dl_daemon/download.py:357 */
+/* Flag: python-format */
+"Could not write to %s" = "Kunde inte skriva till %s";
+
+/* File: ../../portable/dl_daemon/download.py:376 */
+"Not enough disk space" = "Inte tillräckligt med diskutrymme";
+
+/* File: ../../portable/dl_daemon/download.py:377 */
+/* Flag: python-format */
+"%s MB required to store this video" = "%s MB krävs för att lagra denna film";
+
+/* File: ../../portable/dl_daemon/download.py:676 */
+"Corrupt Torrent" = "Korrupt torrent";
+
+/* File: ../../portable/dl_daemon/download.py:677 */
+/* Flag: python-format */
+"The torrent file at %s was not valid" = "Torrentfilen %s var inte giltig";
+
+/* File: ../../portable/dl_daemon/download.py:702 */
+"Torrent file deleted" = "Torrentfilen borttagen";
+
+/* File: ../../portable/dl_daemon/download.py:703 */
+"The torrent file for this item was deleted " = "Torrentfilen för detta objekt har blivit borttagen ";
+
+/* File: ../../portable/dl_daemon/download.py:704 */
+"outside of democracy." = "utanför democracy";
+
+/* File: ../../portable/util.py:386 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGB";
+
+/* File: ../../portable/util.py:388 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMB";
+
+/* File: ../../portable/util.py:390 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fKB";
+
+/* File: ../../portable/util.py:392 */
+/* Flag: python-format */
+"%0.0fB" = "%0.0fB";
+
+/* File: ../../portable/httpclient.py:52 */
+/* Flag: python-format */
+"Error: %s" = "Fel: %s";
+
+/* File: ../../portable/httpclient.py:67 */
+/* File: ../../portable/httpclient.py:72 */
+"Can't connect" = "Kan inte ansluta";
+
+/* File: ../../portable/httpclient.py:68 */
+/* Flag: python-format */
+"Connection Error: %s" = "Anslutningsfel: %s";
+
+/* File: ../../portable/httpclient.py:73 */
+"SSL connection error" = "SSL anslutningsfel";
+
+/* File: ../../portable/httpclient.py:77 */
+"HTTP error" = "HTTP-fel";
+
+/* File: ../../portable/httpclient.py:80 */
+/* Flag: python-format */
+"Bad Status Line: %s" = "Felaktig statusrad: %s";
+
+/* File: ../../portable/httpclient.py:83 */
+/* Flag: python-format */
+"Bad Header Line: %s" = "Felaktig rubrikrad: %s";
+
+/* File: ../../portable/httpclient.py:86 */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "Felaktig paketstorlek: %s";
+
+/* File: ../../portable/httpclient.py:89 */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "Förväntade CRLF, fick: %s";
+
+/* File: ../../portable/httpclient.py:92 */
+/* Flag: python-format */
+"%s closed connection" = "%s stängde anslutningen";
+
+/* File: ../../portable/httpclient.py:97 */
+/* File: ../../portable/downloader.py:173 */
+"File not found" = "Filen hittades inte";
+
+/* File: ../../portable/httpclient.py:98 */
+"Got 404 status code" = "Fick Statuskod 404";
+
+/* File: ../../portable/httpclient.py:100 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "Felaktig Statuskod: %s";
+
+/* File: ../../portable/httpclient.py:104 */
+"Authorization failed" = "Auktorisation misslyckades";
+
+/* File: ../../portable/httpclient.py:109 */
+"Internal Error" = "Internt fel";
+
+/* File: ../../portable/httpclient.py:110 */
+"Pipeline request never started" = "Rörledningsbegäran startade aldrig";
+
+/* File: ../../portable/httpclient.py:114 */
+"Timeout" = "Tidsgräns överskriden";
+
+/* File: ../../portable/httpclient.py:115 */
+/* Flag: python-format */
+"Connection to %s timed out" = "Anslutningen till %s  avbröts (Time Out)";
+
+/* File: ../../portable/httpclient.py:119 */
+"Invalid URL" = "Ogiltig URL";
+
+/* File: ../../portable/httpclient.py:120 */
+/* Flag: python-format */
+"%s is not a valid URL" = "%s är inte en giltig URL";
+
+/* File: ../../portable/httpclient.py:313 */
+"Connection closed" = "Anslutning stängd";
+
+/* File: ../../portable/httpclient.py:689 */
+"Unknown" = "Okänd";
+
+/* File: ../../portable/httpclient.py:690 */
+"Internal Error: Not ready to send" = "Internt fel: Inte redo att sända";
+
+/* File: ../../portable/storedatabase.py:789 */
+/* Flag: python-format */
+"%s database save succeeded" = "Databas för %s sparades";
+
+/* File: ../../portable/storedatabase.py:790 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Databasen har sparats. Det är nu säkert att avsluta utan att förlora något data.";
+
+/* File: ../../portable/storedatabase.py:797 */
+/* Flag: python-format */
+"%s database save failed" = "Databas för %s misslyckades att spara";
+
+/* File: ../../portable/storedatabase.py:798 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s kunde inte spara sin databas: Disken är full.\nVi föreslår att du tar bort filer från den fulla disken eller helt enkelt tar bort några filmer från din\nsamling. Senaste ändringarna kan gå förlorade.";
+
+/* File: ../../portable/dialogs.py:59 */
+"Ok" = "Ok";
+
+/* File: ../../portable/dialogs.py:63 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12 */
+"Quit" = "Avsluta";
+
+/* File: ../../portable/dialogs.py:64 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:50 */
+"Migrate" = "Migrera";
+
+/* File: ../../portable/dialogs.py:65 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:40 */
+"Don't Migrate" = "Migrera inte";
+
+/* File: ../../portable/dialogs.py:66 */
+/* File: ../../portable/item.py:1169 */
+/* File: ../../portable/menu.py:92 */
+"Download" = "Hämta";
+
+/* File: ../../portable/dialogs.py:67 */
+"Remove Entry" = "Ta bort objekt";
+
+/* File: ../../portable/dialogs.py:68 */
+"Delete File" = "Ta bort fil";
+
+/* File: ../../portable/dialogs.py:69 */
+"Delete Files" = "Ta bort filer";
+
+/* File: ../../portable/dialogs.py:70 */
+"Keep Videos" = "Behåll filmer";
+
+/* File: ../../portable/dialogs.py:71 */
+"Delete Videos" = "Ta bort filmer";
+
+/* File: ../../portable/dialogs.py:73 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:12 */
+"Create Channel" = "Skapa Kanal";
+
+/* File: ../../portable/dialogs.py:74 */
+"Add" = "Lägg till";
+
+/* File: ../../portable/dialogs.py:75 */
+"Add Into New Folder" = "Lägg till i ny mapp";
+
+/* File: ../../portable/dialogs.py:76 */
+"Keep" = "Behåll";
+
+/* File: ../../portable/dialogs.py:192 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:52 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:7 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:24 */
+"New Search Channel" = "Ny sökkanal";
+
+/* File: ../../portable/dialogs.py:192 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:31 */
+"A search channel contains items that match a search term." = "En sökkanal innehåller objekt som passar med en sökterm.";
+
+/* File: ../../portable/folder.py:102 */
+/* File: ../../portable/folder.py:119 */
+"Rename Channel Folder" = "Byt namn på kanalmapp";
+
+/* File: ../../portable/folder.py:104 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "Ange ett nytt namn för kanalmappen %s";
+
+/* File: ../../portable/folder.py:174 */
+/* File: ../../portable/folder.py:179 */
+"Rename Playlist Folder" = "Byt namn på spellistemapp";
+
+/* File: ../../portable/folder.py:181 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "Ange ett nytt namn för spellistemappen %s";
+
+/* File: ../../portable/folder.py:189 */
+"Create Channel Folder" = "Skapa kanalmapp";
+
+/* File: ../../portable/folder.py:190 */
+/* File: ../../portable/singleclick.py:137 */
+"Enter a name for the new channel folder" = "Ange ett namn för den nya kanalmappen";
+
+/* File: ../../portable/folder.py:203 */
+"Create Playlist Folder" = "Skapa spellistemapp";
+
+/* File: ../../portable/folder.py:204 */
+"Enter a name for the new playlist folder" = "Ange ett namn för den nya spellistemappen";
+
+/* File: ../../portable/item.py:397 */
+/* Flag: python-format */
+"Deleting %s" = "Tar bort %s";
+
+/* File: ../../portable/item.py:398 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Det här objektet är en mapp. När du tar bort en mapp kommer alla objekt i den mappen att tas bort.";
+
+/* File: ../../portable/item.py:420 */
+/* Flag: python-format */
+"%d days" = "%d dagar";
+
+/* File: ../../portable/item.py:422 */
+/* Flag: python-format */
+"%d hours" = "%d timmar";
+
+/* File: ../../portable/item.py:424 */
+/* Flag: python-format */
+"%d minutes" = "%d minuter";
+
+/* File: ../../portable/item.py:425 */
+/* Flag: python-format */
+"Expires in %s" = "Går ut om %s";
+
+/* File: ../../portable/item.py:751 */
+"TORRENT" = "TORRENT";
+
+/* File: ../../portable/item.py:753 */
+"WEB PAGE" = "HEMSIDA";
+
+/* File: ../../portable/item.py:956 */
+"downloading..." = "hämtar...";
+
+/* File: ../../portable/item.py:963 */
+/* File: ../../portable/item.py:966 */
+/* Flag: python-format */
+"%s remaining" = "%s återstår";
+
+/* File: ../../portable/item.py:974 */
+"starting up..." = "startar...";
+
+/* File: ../../portable/item.py:1154 */
+/* File: ../../portable/menu.py:78 */
+"Remove From Playlist" = "Ta bort från spellista";
+
+/* File: ../../portable/item.py:1156 */
+/* File: ../../portable/menu.py:80 */
+"Remove From My Collection" = "Ta bort från Min Samling";
+
+/* File: ../../portable/item.py:1158 */
+/* File: ../../portable/menu.py:75 */
+"Play" = "Spela upp";
+
+/* File: ../../portable/item.py:1160 */
+"Play Just This Video" = "Spela enbart denna film";
+
+/* File: ../../portable/item.py:1161 */
+/* File: ../../portable/menu.py:76 */
+"Add to new playlist" = "Lägg till i ny spellista";
+
+/* File: ../../portable/item.py:1165 */
+/* File: ../../portable/menu.py:86 */
+"Mark as Unwatched" = "Marker som osedd";
+
+/* File: ../../portable/item.py:1167 */
+/* File: ../../portable/menu.py:99 */
+"Cancel Download" = "Avbryt hämtning";
+
+/* File: ../../portable/item.py:1401 */
+/* Flag: python-format */
+"Removing %s" = "Tar bort %s";
+
+/* File: ../../portable/item.py:1403 */
+"Would you like to delete this folder and all of its videos or just remove its entry from My Collection?" = "Vill du ta bort denna mapp och alla filmer i den eller bara plocka bort den från Min samling?";
+
+/* File: ../../portable/item.py:1408 */
+"Would you like to delete this file or just remove its entry from My Collection?" = "Vill du ta bort denna fil eller bara ta bort den från Min samling?";
+
+/* File: ../../portable/item.py:1499 */
+/* Flag: python-format */
+"Removing %s items" = "Tar bort %s objekt";
+
+/* File: ../../portable/item.py:1501 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?" = "En eller flera av dessa filmer blev inte hämtade från en kanal. Vill du ta bort dessa eller bara plocka bort dem från Min samling";
+
+/* File: ../../portable/item.py:1509 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Ett eller flera av dessa objekt är en mapp. När du tar flyttar eller tar bort en mapp kommer objekt i denna också att bli flyttade eller borttagna.";
+
+/* File: ../../portable/app.py:668 */
+"Database too new" = "Databasen för ny";
+
+/* File: ../../portable/app.py:669 */
+"You have a database that was saved with a newer version of Democracy. You must download the latest version of Democracy and run that." = "Du har en databas som blev sparad med en nyare version av Democracy. Du måste hämta hem den senaste versionen av Democracy och köra den.";
+
+/* File: ../../portable/app.py:817 */
+/* File: ../../portable/app.py:831 */
+/* File: ../../portable/app.py:860 */
+/* File: ../../portable/app.py:880 */
+/* Flag: python-format */
+"Remove %s" = "Ta bort %s";
+
+/* File: ../../portable/app.py:818 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "Är du säker på att du vill ta bort guiden %s?";
+
+/* File: ../../portable/app.py:832 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "Ä du säker på att du vill ta bort %s";
+
+/* File: ../../portable/app.py:835 */
+/* File: ../../portable/app.py:865 */
+/* File: ../../portable/app.py:885 */
+/* Flag: python-format */
+"Remove %s channels" = "Ta bort %s kanaler";
+
+/* File: ../../portable/app.py:837 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "Är du säker på att du vill ta bort dessa %s spellistor";
+
+/* File: ../../portable/app.py:861 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Är du säker på att du vill ta bort %s?  Alla pågående hämtningar kommer att avbrytas.";
+
+/* File: ../../portable/app.py:866 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Är du säker på att du vill ta bort dessa %s kanaler?  Alla pågående hämtningar kommer att avbrytas.";
+
+/* File: ../../portable/app.py:881 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Vad vill du göra med de filmer i denna kanal som du har hämtat?";
+
+/* File: ../../portable/app.py:886 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Vad vill du göra med de filmer i dessa kanaler som du har hämtat?";
+
+/* File: ../../portable/app.py:923 */
+"Are you sure you want to quit?" = "Är du säker på att du vill avsluta?";
+
+/* File: ../../portable/app.py:1367 */
+"Invalid Value" = "Ogiltigt värde";
+
+/* File: ../../portable/app.py:1368 */
+/* Flag: python-format */
+"%s is invalid.  You must enter a non-negative number." = "%s är ogiltig.  Du måste ange ett positivt nummer.";
+
+/* File: ../../portable/app.py:1616 */
+" - Invalid URL" = " - Ogiltig url";
+
+/* File: ../../portable/app.py:1617 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Adressen du angav är inte en giltig url.\nKontrollera den och försök igen.\n\n";
+
+/* File: ../../portable/app.py:1639 */
+"Democracy - Add Channel" = "Democracy - Lägg till kanal";
+
+/* File: ../../portable/app.py:1639 */
+"Enter the URL of the channel to add" = "Ange url:en till kanalen som ska läggas till";
+
+/* File: ../../portable/app.py:1660 */
+"Democracy - Add Channel Guide" = "Democracy - Lägg till kanalguide";
+
+/* File: ../../portable/app.py:1660 */
+"Enter the URL of the channel guide to add" = "Ange url:en till kanalguiden som ska läggas till";
+
+/* File: ../../portable/app.py:1977 */
+"Example Playlist" = "Exempelspellista";
+
+/* File: ../../portable/app.py:1996 */
+"Custom Channels" = "Anpassade kanaler";
+
+/* File: ../../portable/app.py:1996 */
+"You are running a version of Democracy Player with a custom set of channels." = "Du kör en version av Democracy Player med en anpassad uppsättning kanaler.";
+
+/* File: ../../portable/guide.py:127 */
+/* File: ../../portable/feed.py:684 */
+"Copy URL to clipboard" = "Kopiera url till urklipp";
+
+/* File: ../../portable/guide.py:218 */
+"Channel Guide" = "Kanalguide";
+
+/* File: ../../portable/menu.py:52 */
+"Update Channels Now" = "Uppdatera kanalerna nu";
+
+/* File: ../../portable/menu.py:73 */
+/* Flag: python-format */
+"%d Downloaded Items" = "%d hämtade objekt";
+
+/* File: ../../portable/menu.py:91 */
+/* Flag: python-format */
+"%d Available Items" = "%d tillgängliga objekt";
+
+/* File: ../../portable/menu.py:97 */
+/* Flag: python-format */
+"%d Downloading Items" = "%d objekt hämtas";
+
+/* File: ../../portable/downloader.py:174 */
+"Flash URL Scraping Error" = "Fel i Flash url-fångare";
+
+/* File: ../../portable/downloader.py:317 */
+"starting up" = "startar";
+
+/* File: ../../portable/feed.py:682 */
+"Update Channel Now" = "Uppdatera kanal nu";
+
+/* File: ../../portable/feed.py:685 */
+/* File: ../../portable/feed.py:694 */
+"Rename Channel" = "Byt namn på kanal";
+
+/* File: ../../portable/feed.py:689 */
+"Revert Title to Default" = "Nollställ titel till standardtitel";
+
+/* File: ../../portable/feed.py:695 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Ange ett nytt namn för kanalen %s";
+
+/* File: ../../portable/feed.py:776 */
+"Error loading feed" = "Fel vid inläsning av kanal";
+
+/* File: ../../portable/feed.py:777 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Kunde inta läsa in kanalen på %s (%s).";
+
+/* File: ../../portable/feed.py:780 */
+"Would you like to keep the feed?" = "Vill du behålla kanalen?";
+
+/* File: ../../portable/feed.py:885 */
+"Bad content-type" = "Felaktig content-type";
+
+/* File: ../../portable/feed.py:898 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4 */
+"Channel is not compatible with Democracy!" = "Kanalen är inte kompatibel med Democracy!";
+
+/* File: ../../portable/feed.py:899 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with Democracy.\n\nDo you want to try to load this channel anyway?" = "Men vi kommer att försöka att fånga filerna. Det kan ta lite extra tid att lista filmerna, och beskrivningarna kan se konstiga ut.  Kontakta utgivarna av $url och fråga om de kan tillhandahålla en kanal i ett format som fungerar med Democracy.\n\nVill du försöka att läsa in denna kanal ändå?";
+
+/* File: ../../portable/feed.py:1791 */
+"Local File" = "Lokal fil";
+
+/* File: ../../portable/singleclick.py:122 */
+"Subscribing to multiple channels" = "Prenumererar på flera kanaler";
+
+/* File: ../../portable/singleclick.py:123 */
+/* Flag: python-format */
+"Create %d channels?" = "Skapa %d kanaler?";
+
+/* File: ../../portable/singleclick.py:136 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Lägger till %d kanaler till en ny mapp";
+
+/* File: ../../portable/singleclick.py:140 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "OBS: Du prenumererar redan på %d av dessa kanaler. Dessa kanaler kommer inte att ändras.";
+
+/* File: ../../portable/singleclick.py:151 */
+"Subscription error" = "Prenumerationsfel";
+
+/* File: ../../portable/singleclick.py:161 */
+/* Flag: python-format */
+"This Democracy channel file has an invalid format: %s. Please notify the publisher of this file." = "Denna kanalfil för Democracy har ett ogiltigt format: %s. Informera utgivaren av denna fil.";
+
+/* File: ../../portable/singleclick.py:170 */
+/* Flag: python-format */
+"This Democracy channel file has the wrong content type: %s. Please notify the publisher of this file." = "Denna kanalfil för Democracy har en felaktig innehållstyp: %s. Informera utgivaren av denna fil.";
+
+/* File: ../../portable/singleclick.py:175 */
+/* Flag: python-format */
+"Could not download the Democracy channel file: %s." = "Kunde inte hämta kanalfilen för Democracy: %s.";
+
+/* File: ../../portable/singleclick.py:201 */
+"Invalid Torrent" = "Ogiltig torrentfil";
+
+/* File: ../../portable/singleclick.py:202 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Torrentfilen %s verkar vara skadad och kan inte öppnas. [OK]";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:1 */
+"(Changes won't go into effect until you restart Democracy Player.)" = "(Ändringar kommer inte ta effekt förrens du startar om Democracy Player.)";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:2 */
+"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 dag\n3 dagar\n6 dagar\n10 dagar\n1 månad\nAldrig";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:8 */
+"<b>BitTorrent</b>" = "<b>BitTorrent</b>";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:9 */
+"<b>Channels</b>" = "<b>Kanaler</b>";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:10 */
+"<b>Disk Space</b>" = "<b>Diskutrymme</b>";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:11 */
+"<b>Downloads</b>" = "<b>Hämtningar</b>";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:12 */
+"<b>General</b>" = "<b>Allmänt</b>";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:13 */
+"<b>Movies Directory</b>" = "<b>Filmkatalog</b>";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:14 */
+"<b>Playback</b>" = "<b>Uppspelning</b>";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:15 */
+"<b>Searching for Videos</b>" = "<b>Söker efter filmer</b>";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:16 */
+"<b>Would you like Democracy Player to look for video files on your computer?</b>" = "<b>Vill du att Democracy Player ska leta efter filmer på din dator?</b>";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:17 */
+"<b>Would you like to run Democracy when your computer starts up?</b>" = "<b>Vill du köra Democracy när din dator startas?</b>";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:18 */
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Democracy is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Nu är du färdig!</b>\n\nKonfigurationen är färdig -- nu kan du söka fram några kanaler och börja se på film.\n\n<b>Vänta inte:</b> Democracy är annorlunda än att se på filmer på webbsidor -- publicerare kan erbjuda stora och högkvalitativa filmer.  Så sitt inte där och vänta på filmer: påbörja några hämtningar och återvänd senare.\n\n<b>Leave it On:</b> Democracy Player kontrollerar kanaler med jämna mellanrum efter nya filmer och hämtningar i bakgrunden. Lämna kvar den körande betyder att du har nya filmer när du är klar att se dem.\n\n<b>Oroa dig inte för diskutrymmet:</b> Precis som en TiVo, har Democracy Player en funktion för \"utgånget material\" som hjälper dig att rensa bort gamla filmer för att göra plats för nya filmer. Du kan alltid behålla en film permanent genom att klicka på \"spara\" och du kan ställa in kanalens inställningar att spara filmerna automatiskt.\n\n<b>Tänk stort:</b> Knappen till höger om uppspelningsknappen visar filmer på hela skärmen.\n\n<b>Hitta filmer:</b> Kanalguiden i Democracy innehåller hundratals Internet-TV-kanaler, alla är gratis. Klicka helt enkelt \"LÄGG TILL\" för att se på en kanal.";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:32 */
+"Automatically run Democracy Player when I log in" = "Kör automatiskt Democracy Player när jag loggar in";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:33 */
+"Bit Torrent uses ports between" = "Bit torrent använder portar mellan";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:34 */
+"By default, videos expire after" = "Som standard går filmerna ut efter";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:35 */
+"C_hannel:" = "Ka_nal:";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:36 */
+"C_reate Channel" = "Skapa _kanal";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:37 */
+"Check Channels for new content" = "Kontrollera kanaler efter nytt innehåll";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:38 */
+"Democracy Player" = "Democracy Player";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:8 */
+"Democracy Player can find all the videos on your computer to help you organize your collection." = "Democracy Player kan hitta all filmer på din dator för att hjälpa dig att organisera din samling.";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:43 */
+"Every 30 minutes\nEvery hour\nManually" = "Två gånger i timmen\nVarje timma\nManuellt";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:46 */
+"GB free" = "GB ledigt";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:47 */
+"Go" = "Gå";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:8 */
+"In This:" = "I denna:";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:49 */
+"KB/s when my computer is active" = "KB/s när min dator är aktiv";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:51 */
+"Migrate existing movies?" = "Migrera existerande filmer?";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:54 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:18 */
+"Preferences" = "Inställningar";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:55 */
+"Restrict to my full _home folder" = "Begränsa till min _hemkatalog";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:56 */
+"Search _Engine:" = "Sök_motor:";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:57 */
+"Search _custom folder:" = "Sök i _anpassad mapp:";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:58 */
+"Select Movies Directory" = "Välj filmkatalog";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:59 */
+"Select custom search directory" = "Välj anpassad sökkatalog";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:60 */
+"Show movies in these directories in My Collection" = "Visa filmer i dessa kataloger i Min samling";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:62 */
+"The next few screens will help you set up democracy player so that it works best for you.  Here's the first question." = "De nästkommande skärmarna kommer att hjälpa dig att ställa in Democracy Player så att den fungerar så bra som möjligt för dig. Här är första frågan.";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:63 */
+"To avoid slowdowns, limit upstream to" = "För att undvika långsam anslutning, begränsa sändning till";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:64 */
+"Volume:" = "Volym:";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:65 */
+"We recommend that you allow Democracy Player to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Vi rekommenderar att du låter Democracy Player starta automatiskt när du startat din dator. På så sätt så kommer filmer som inte hämtats klart att bli klara och nya filmer på din kanal kommer vara färdiga när du vill se dem.";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:67 */
+"Welcome to Internet TV.  There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Välkommen till Internet TV. Det finns mycket du kan göra med Democracy Player: automatiskt hämta ner filmer från dina favoritkanaler, se på nya filmer en efter en, hämta ner torrentfiler, rekommendera filmer till vänner och mycket mer.";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:68 */
+"You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Du har nu valt en ny mapp att hämta filmer till.  Ska Democracy migrera dina existerande hämtningar dit?  (Filmer som hämtas ner just nu kommer inte att flyttas förrän de har färdigställts.)";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:69 */
+"_Add Directory" = "_Lägg till katalog";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:70 */
+"_Search" = "_Sök";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:71 */
+"_Search For:" = "_Sök Efter:";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:72 */
+"_Store downloaded videos in this folder:" = "_Lagra hämtade filmer i den här mappen:";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:73 */
+"_URL" = "_Url";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:74 */
+"and" = "och";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1 */
+" " = " ";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:2 */
+"'" = "'";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:21 */
+"Add Channel" = "Lägg till kanal";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:5 */
+"Please enter the URL of the channel you'd like to add." = "Ange url:en för kanalen som du vill lägga till.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:5 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "Men vi kommer att försöka att fånga filerna. Det kan ta lite extra tid att lista filmerna, och beskrivningarna kan se konstiga ut.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7 */
+"Please contact the publishers of" = "Kontakta de som publicerat";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:8 */
+"and ask if they can supply a feed in a format that will work with Democracy." = "och fråga om de kan tillhandahålla en kanal i ett format som fungerar med Democracy.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4 */
+"Channel requires authentication" = "Kanalen kräver autentisering";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:5 */
+"Please enter the username and password given to you by this channel's publisher." = "Ange användarnamnet och lösenordet som du fick av kanalansvarige.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:4 */
+"A search channel contains" = "En sökkanal innehåller";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:5 */
+"items that match a search term." = "objekt som matchar en sökterm.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:9 */
+"Channel:" = "Kanal:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:10 */
+"Search Engine:" = "Sökmotor:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:6 */
+"Search For:" = "Sök efter:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:11 */
+"URL:" = "URL:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:14 */
+"Cancel Search" = "Avbryt sökning";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:13 */
+"Change" = "Ändra";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:4 */
+"Democracy First Time Setup" = "Förstagångskonfiguration av Democracy";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:20 */
+"Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "Democracy Player kontrollerar kanaler med jämna mellanrum efter nya filmer och hämtningar i bakgrunden. Lämna kvar den körande betyder att du har nya filmer när du är klar att se dem.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:21 */
+"Don't Worry About Disk Space:" = "Tänk inte på diskutrymme:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:25 */
+"Find Videos:" = "Sök filmer:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:23 */
+"Go Big:" = "Slå på stort:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:19 */
+"Leave it On:" = "Lämna den på:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:22 */
+"Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Precis som TiVo har Democracy Player en funktion för att \"föråldra\" data som hjälper till att rensa ut äldre filmer för att skapa plats för nya filmer. Du kan alltid behålla en film genom att klicka på \"Spara\" och du kan ställa in en inställningar för en kanal till att spara filmer automatiskt.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:17 */
+"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Nu kan du utforska kanalguiden\noch börja se på klipp. Ett par tips för\natt komma igång:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15 */
+"Reset Search" = "Nollställ sökning";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:10 */
+"Restrict to all my personal files." = "Begränsa till alla mina personliga filer.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:11 */
+"Search custom folder:" = "Sök i anpassad mapp:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:26 */
+"The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "Democracys kanalguide innehåller hundratals tv-kanaler på Internet, alla är gratis.  Klicka helt enkelt på \"LÄGG TILL\" för att se på en kanal.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:24 */
+"The button to the right of the play button shows videos fullscreen." = "Knappen till höger om uppspelningsknappen visa filmer i helskärm.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:5 */
+"The next few screens will help you set up Democracy Player so that it works best for you." = "De nästa skärmarna hjälper dig att konfigurera Democracy Player så att den fungerar på bästa sätt för dig.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:6 */
+"We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "Vi rekommenderar att du startar Democracy Player när din dator startar.  På det här sättet kan filmer hämtas klart och nya filmer kan hämtas i bakgrunden, färdiga när du vill se dem.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:9 */
+"Would you like Democracy Player to look for video files on your computer?" = "Vill du att Democracy Player ska leta efter filmer på din dator?";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:7 */
+"Would you like to run Democracy on startup?" = "Vill du köra Democracy vid uppstart?";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:16 */
+"You're done!" = "Nu är du färdig!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4 */
+"Question" = "Fråga";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:5 */
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 $publisher." = "$longAppName version $appVersion ($appRevision); copyright © 2005, 2006 $publisher.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:4 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:48 */
+"About $longAppName" = "Om $longAppName";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:9 */
+"Copy log to clipboard" = "Kopiera logg till urklipp";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8 */
+"Open up the bug tracker" = "Öppna felhanteraren";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5 */
+"Please help us fix it. Copy and paste all the" = "Hjälp oss rätta till det. Kopiera och klistra in all";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6 */
+"information into our bug tracker and tell us what you were doing when the" = "information i vår felhanterare och berätta för oss vad du gjorde när";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8 */
+"problem occurred." = "problemet inträffade.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:10 */
+"Then, please restart Democracy Player (or you may keep getting related errors). Sorry for the inconvenience. Democracy Player is still in beta, but with your help we're fixing problems fast!" = "Starta sedan om Democracy (annars kommer du fortsätta få liknande fel). Ursäkta olägenheten. Democracy är fortfarande i ett betastadie, men med din hjälp rättar vi snabbt till problemen!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:4 */
+"You found a bug in Democracy!" = "Du har hittat ett fel i Democracy!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:4 */
+"$longAppName" = "$longAppName";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:90 */
+"A" = "A";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:105 */
+"Alt+Enter" = "Alt+Enter";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:74 */
+"C" = "C";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8 */
+"Check Version" = "Kontrollera version";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:96 */
+"Ctrl+A" = "Ctrl+A";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:94 */
+"Ctrl+C" = "Ctrl+C";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:102 */
+"Ctrl+D" = "Ctrl+D";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:97 */
+"Ctrl+N" = "Ctrl+N";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:93 */
+"Ctrl+O" = "Ctrl+O";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:99 */
+"Ctrl+P" = "Ctrl+P";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:98 */
+"Ctrl+Shift+N" = "Ctrl+Skift+N";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:100 */
+"Ctrl+Shitf+P" = "Ctrl+Skift+P";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:95 */
+"Ctrl+V" = "Ctrl+V";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:91 */
+"D" = "D";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:49 */
+"Donate to the Democracy project" = "Donera till Democracy-projektet";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:59 */
+"E" = "E";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:87 */
+"F" = "F";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:45 */
+"Fullscreen" = "Helskärm";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:68 */
+"G" = "G";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:89 */
+"H" = "H";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:82 */
+"L" = "L";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:104 */
+"Left" = "Vänster";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:85 */
+"N" = "N";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:22 */
+"New Channel" = "Ny kanal";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:23 */
+"New Channel Folder" = "Ny kanalmapp";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:25 */
+"New Channel Guide" = "Ny kanal-guide";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:34 */
+"New Playlist" = "Ny spellista";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:35 */
+"New Playlist Folder" = "Ny spellistemapp";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:52 */
+"O" = "O";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:83 */
+"P" = "P";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:41 */
+"Pause Video" = "Pausa film";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:33 */
+"Playlist" = "Spellista";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:57 */
+"Q" = "Q";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:86 */
+"R" = "R";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9 */
+"Remove Video" = "Ta bort film";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103 */
+"Right" = "Höger";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:84 */
+"S" = "S";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:31 */
+"Send This Channel to a Friend..." = "Skicka den här kanalen till en vän...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:101 */
+"Space" = "Blanksteg";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:71 */
+"U" = "U";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:53 */
+"V" = "V";
