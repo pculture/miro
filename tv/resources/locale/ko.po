@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2006-09-01 16:05+0000\n"
-"Last-Translator: Se-yun Kim <makalkr@gmail.com>\n"
+"PO-Revision-Date: 2007-03-03 08:26+0000\n"
+"Last-Translator: Channy <channy@mozilla.or.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=(0);\n"
-"X-Rosetta-Export-Date: 2006-12-01 07:28+0000\n"
+"X-Rosetta-Export-Date: 2007-03-07 20:28+0000\n"
 
 msgid "$log"
 msgstr ""
@@ -49,7 +49,7 @@ msgid "The fall of $shortAppName??"
 msgstr ""
 
 msgid "About Democracy"
-msgstr ""
+msgstr "Democracy 소개"
 
 msgid "Add Channel..."
 msgstr ""
@@ -64,10 +64,10 @@ msgid "Check for New Version"
 msgstr ""
 
 msgid "Clear Menu"
-msgstr ""
+msgstr "메뉴 제거"
 
 msgid "Close Window"
-msgstr ""
+msgstr "창 닫기"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15
 msgid "Copy"
@@ -75,11 +75,11 @@ msgstr "복사"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
 msgid "Copy Channel URL"
-msgstr ""
+msgstr "채널 URL 복사"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "Copy Video URL"
-msgstr ""
+msgstr "동영상 URL 복사"
 
 msgid "Cut"
 msgstr "자르기"
@@ -92,7 +92,7 @@ msgid "Democracy"
 msgstr ""
 
 msgid "Democracy Help"
-msgstr ""
+msgstr "Democracy 도움말"
 
 msgid "Donate"
 msgstr ""

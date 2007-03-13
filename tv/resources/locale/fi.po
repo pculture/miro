@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2006-11-15 19:01+0000\n"
-"Last-Translator: SlugO <snoopgd@yahoo.com>\n"
+"PO-Revision-Date: 2007-02-17 10:12+0000\n"
+"Last-Translator: Ismo Vuorinen <ivuorinen@gmail.com>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2006-12-01 07:28+0000\n"
+"X-Rosetta-Export-Date: 2007-02-21 07:08+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -243,7 +243,7 @@ msgid "%donation label%"
 msgstr "%donation label%"
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
 msgstr "00:00:00"
@@ -341,8 +341,9 @@ msgstr ""
 "Älä aloita latausta, jos sen jälkeen jää vähemmän vapaata tilaa, kuin:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
+#, fuzzy
 msgid "Download at most"
-msgstr ""
+msgstr "Lataa enimmillään"
 
 msgid "GB free."
 msgstr "Gt."
@@ -370,7 +371,7 @@ msgid "Run Democracy at startup"
 msgstr "Suorita Democracy käynnistyksen yhteydessä"
 
 msgid "Save downloaded videos in this folder:"
-msgstr ""
+msgstr "Tallenna ladatut videot tähän kansioon:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:61
 msgid "Stop after each video."
@@ -389,8 +390,9 @@ msgid "manually"
 msgstr "käsin"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
+#, fuzzy
 msgid "videos at once."
-msgstr ""
+msgstr "videota kerrallaan."
 
 msgid "$label$"
 msgstr "$label$"
@@ -1005,7 +1007,7 @@ msgstr "Etsitään..."
 
 #: ../../portable/compiled_templates/search.py:56
 msgid "Results for \"${query}\""
-msgstr ""
+msgstr "Tulokset haulle \"${query}\""
 
 #: ../../portable/compiled_templates/search.py:95
 msgid "Video Search"
@@ -1013,7 +1015,7 @@ msgstr "Videohaku"
 
 #: ../../portable/compiled_templates/playlist.py:56
 msgid "Empty Playlist"
-msgstr ""
+msgstr "Tyhjä soittolista"
 
 #: ../../portable/compiled_templates/playlist.py:58
 msgid "Drag downloaded videos to this playlist to add them."
@@ -1028,10 +1030,11 @@ msgid ""
 "This folder contains ${count} playlists, but the playlists do not contain "
 "any items."
 msgstr ""
+"Tämä kansio sisältää ${count} soittolistaa, mutta soittolistat ovat tyhjiä."
 
 #: ../../portable/compiled_templates/playlist_folder.py:76
 msgid "Drag playlists to this folder to add them."
-msgstr ""
+msgstr "Vedä soittolistat tähän kansioon lisätäksesi ne."
 
 #: ../../portable/compiled_templates/multi_playlist.py:57
 msgid ""
@@ -1171,6 +1174,9 @@ msgid ""
 "program.<br></br><br></br><strong>Filename:</strong> "
 "${filename}<Br></Br><strong>File type:</strong> ${format}"
 msgstr ""
+"Democracy ei voi toistaa tätä tiedostoa. Voit ehkä toistaa sen toisella "
+"ohjelmalla.<br></br><br></br><strong>Tiedostonimi:</strong> "
+"${filename}<Br></Br><strong>Tiedostotyyppi:</strong> ${format}"
 
 #: ../../portable/compiled_templates/external_playback.py:115
 msgid "REVEAL FILE"
@@ -1221,8 +1227,9 @@ msgstr ""
 "style=\"color:red\">raakaa</b> tekstiä</span>"
 
 #: ../../portable/compiled_templates/download.py:91
+#, fuzzy
 msgid "${size} disk space free"
-msgstr ""
+msgstr "${size} levytilaa vapaana"
 
 #: ../../portable/compiled_templates/download.py:101
 msgid "${size} available for downloads"
@@ -1332,8 +1339,9 @@ msgid ""
 msgstr ""
 
 #: ../../portable/compiled_templates/multi_channel.py:69
+#, fuzzy
 msgid "${count} Channels Selected"
-msgstr ""
+msgstr "${count} Kanavaa valittuna"
 
 #: ../../portable/dl_daemon/download.py:298
 msgid "Error"

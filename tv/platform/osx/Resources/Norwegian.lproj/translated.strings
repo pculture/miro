@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-02-08 17:55-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-13 17:31-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -147,7 +147,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "%donation label%" = "%merkelapp for donasjoner%";
 
-/* Flag: untranslated */
 "-00:00:00" = "-00:00:00";
 
 "00:00:00" = "00:00:00";
@@ -735,8 +734,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/compiled_templates/feed_settings.py:39 */
 /* File: ../../portable/compiled_templates/channel.py:159 */
-/* Flag: untranslated */
-"default" = "default";
+"default" = "forvalgt";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:110 */
 /* File: ../../portable/compiled_templates/channel.py:379 */
@@ -749,8 +747,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/compiled_templates/feed_settings.py:146 */
 /* File: ../../portable/compiled_templates/channel.py:415 */
-/* Flag: untranslated */
-"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched.";
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Ikke last ned automatisk når det er mer enn ${maxnew} ${maxnew2} usette filmer.";
 
 /* File: ../../portable/compiled_templates/channel.py:316 */
 /* File: ../../portable/compiled_templates/channel_content.py:122 */
@@ -773,8 +770,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Looking for videos at this URL" = "Ser etter filmer på denne adressen";
 
 /* File: ../../portable/compiled_templates/external_playback.py:111 */
-/* Flag: untranslated */
-"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}";
+"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy kan ikke spille denne filen. Den kan kanskje spilles med et annet program.<br></br><br></br><strong>Filnavn:</strong> ${filename}<Br></Br><strong>Filtype:</strong> ${format}";
 
 /* File: ../../portable/compiled_templates/external_playback.py:115 */
 "REVEAL FILE" = "VIS FIL";
@@ -871,12 +867,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "<strong>Ikke tenk på lagringsplass:</strong> Democracy Player har et avansert 'utløps'-system som hjelper med å slette gamle videoer så det er plass til nye. Du kan velge å beholde videoer ved å klikke på 'Lagre' og du kan sette innstillinger for en kanal slik at videoer lagres automatisk.";
 
 /* File: ../../portable/compiled_templates/multi_channel.py:57 */
-/* Flag: untranslated */
-"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)";
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} kanalmapper valgt<br></br>(inneholder ${containedcount} kanaler)";
 
 /* File: ../../portable/compiled_templates/multi_channel.py:69 */
-/* Flag: untranslated */
-"${count} Channels Selected" = "${count} Channels Selected";
+"${count} Channels Selected" = "${count} kanaler valgt";
 
 /* File: ../../portable/dl_daemon/download.py:298 */
 "Error" = "Feil";
@@ -1343,8 +1337,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with Democracy.\n\nDo you want to try to load this channel anyway?" = "Men vi vil gjøre vårt beste for å få tak i filene. Det kan ta lenger tid å liste opp filmene, og beskrivelser kan se merkelige ut. Vennligst kontakt utgiverne av $url og spør om de kan tilby en mater i et format som vil fungere med Democracy.\n\nØnsker du å prøve å laste denne kanalen likevel?";
 
 /* File: ../../portable/feed.py:1791 */
-/* Flag: untranslated */
-"Local File" = "Local File";
+"Local File" = "Lokal fil";
 
 /* File: ../../portable/singleclick.py:122 */
 "Subscribing to multiple channels" = "Abonnerer på flere kanaler";
@@ -1454,8 +1447,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "GB free" = "GB ledig";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:47 */
-/* Flag: untranslated */
-"Go" = "Go";
+"Go" = "Start";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:48 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:8 */
@@ -1591,11 +1583,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Search Engine:" = "Search Engine:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:6 */
-/* Flag: untranslated */
-"Search For:" = "Search For:";
+"Search For:" = "Søk etter:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:11 */
-/* Flag: untranslated */
 "URL:" = "URL:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:14 */
@@ -1612,8 +1602,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:21 */
-/* Flag: untranslated */
-"Don't Worry About Disk Space:" = "Don't Worry About Disk Space:";
+"Don't Worry About Disk Space:" = "Ikke bekymre deg for diskplass:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:25 */
 /* Flag: untranslated */
@@ -1636,8 +1625,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15 */
-/* Flag: untranslated */
-"Reset Search" = "Reset Search";
+"Reset Search" = "Tilbakestill søk";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:10 */
 /* Flag: untranslated */
@@ -1664,16 +1652,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:9 */
-/* Flag: untranslated */
-"Would you like Democracy Player to look for video files on your computer?" = "Would you like Democracy Player to look for video files on your computer?";
+"Would you like Democracy Player to look for video files on your computer?" = "Vil du at Democracy Player skal lete etter filmer på maskinen din?";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:7 */
 /* Flag: untranslated */
 "Would you like to run Democracy on startup?" = "Would you like to run Democracy on startup?";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:16 */
-/* Flag: untranslated */
-"You're done!" = "You're done!";
+"You're done!" = "Du er ferdig!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4 */
 "Question" = "Spørsmål";
@@ -1711,22 +1697,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:90 */
 /* Flag: untranslated */
-"A" = "A";
+"A" = "A" /* = "A" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:105 */
-/* Flag: untranslated */
 "Alt+Enter" = "Alt+Enter";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:74 */
 /* Flag: untranslated */
-"C" = "C";
+"C" = "C" /* = "C" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8 */
-/* Flag: untranslated */
-"Check Version" = "Check Version";
+"Check Version" = "Sjekk versjon";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:96 */
-/* Flag: untranslated */
 "Ctrl+A" = "Ctrl+A";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:94 */
@@ -1758,44 +1741,40 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Ctrl+Shitf+P" = "Ctrl+Shitf+P";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:95 */
-/* Flag: untranslated */
 "Ctrl+V" = "Ctrl+V";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:91 */
 /* Flag: untranslated */
-"D" = "D";
+"D" = "D" /* = "D" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:49 */
-/* Flag: untranslated */
-"Donate to the Democracy project" = "Donate to the Democracy project";
+"Donate to the Democracy project" = "Doner penger til Democracy-prosjektet";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:59 */
 /* Flag: untranslated */
-"E" = "E";
+"E" = "E" /* = "E" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:87 */
 /* Flag: untranslated */
-"F" = "F";
+"F" = "F" /* = "F" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:45 */
-/* Flag: untranslated */
-"Fullscreen" = "Fullscreen";
+"Fullscreen" = "Fullskjerm";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:68 */
 /* Flag: untranslated */
-"G" = "G";
+"G" = "G" /* = "G" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:89 */
 /* Flag: untranslated */
-"H" = "H";
+"H" = "H" /* = "H" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:82 */
 /* Flag: untranslated */
-"L" = "L";
+"L" = "L" /* = "L" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:104 */
-/* Flag: untranslated */
-"Left" = "Left";
+"Left" = "Venstre";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:85 */
 /* Flag: untranslated */
@@ -1839,36 +1818,32 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:57 */
 /* Flag: untranslated */
-"Q" = "Q";
+"Q" = "Q" /* = "Q" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:86 */
 /* Flag: untranslated */
-"R" = "R";
+"R" = "R" /* = "R" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9 */
-/* Flag: untranslated */
-"Remove Video" = "Remove Video";
+"Remove Video" = "Fjern video";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103 */
-/* Flag: untranslated */
-"Right" = "Right";
+"Right" = "Høyre";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:84 */
 /* Flag: untranslated */
-"S" = "S";
+"S" = "S" /* = "S" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:31 */
-/* Flag: untranslated */
-"Send This Channel to a Friend..." = "Send This Channel to a Friend...";
+"Send This Channel to a Friend..." = "Send denne kanalen til en venn...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:101 */
-/* Flag: untranslated */
-"Space" = "Space";
+"Space" = "Mellomrom";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:71 */
 /* Flag: untranslated */
-"U" = "U";
+"U" = "U" /* = "U" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:53 */
 /* Flag: untranslated */
-"V" = "V";
+"V" = "V" /* = "V" */;

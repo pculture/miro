@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-01-20 22:02+0000\n"
-"Last-Translator: hoggart <hoggart@laposte.net>\n"
+"PO-Revision-Date: 2007-02-14 15:33+0000\n"
+"Last-Translator: PhoenixP3K <phoenixp3k@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Rosetta-Export-Date: 2007-01-29 04:57+0000\n"
+"X-Rosetta-Export-Date: 2007-02-15 07:38+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -45,16 +45,17 @@ msgstr ""
 "juste avant ce bogue -- aussi précise que possible -- et du charabia "
 "technique dans la boite ci-dessous :"
 
+#, fuzzy
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
 "wrong-headedness $when. We apologize and suggest that you exit and restart "
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
-"Pas de chance ! $longAppName a eu un problème $when. Nous vous présentons "
-"nos excuses et nous vous suggérons de quitter et redémarrer $shortAppName. "
-"Ça lui apprendra, et cela réduira aussi les risques de perte de vos "
-"préférences ou de vos abonnements aux chaînes."
+"Pas de chance ! $longAppName est tombé victime d'une espèce de confusion "
+"interne $when. Nous vous présentons nos excuses et nous vous suggérons de "
+"quitter et redémarrer $shortAppName. Ça lui apprendra, et cela réduira aussi "
+"les risques de perte de vos préférences ou de vos abonnements aux chaînes."
 
 msgid "OK"
 msgstr "OK"
@@ -74,8 +75,9 @@ msgstr "Tout ramener au premier plan"
 msgid "Channels"
 msgstr "Chaînes"
 
+#, fuzzy
 msgid "Check for New Version"
-msgstr "Vérifier les mises à jour"
+msgstr "Vérifier l'existence de mises à jour"
 
 msgid "Clear Menu"
 msgstr "Effacer le menu"
@@ -89,7 +91,7 @@ msgstr "Copier"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
 msgid "Copy Channel URL"
-msgstr "Copier l'adresse URLde la chaîne"
+msgstr "Copier l'adresse URL de la chaîne"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "Copy Video URL"
@@ -145,7 +147,7 @@ msgid "New Channel Folder..."
 msgstr "Nouveau dossier de chaînes…"
 
 msgid "New Channel Guide..."
-msgstr "Nouveau Guide des Chaînes..."
+msgstr "Nouveau guide des chaînes..."
 
 msgid "New Playlist Folder..."
 msgstr "Nouveau dossier de listes de lecture…"
@@ -153,15 +155,17 @@ msgstr "Nouveau dossier de listes de lecture…"
 msgid "New Playlist..."
 msgstr "Nouvelle liste de lecture…"
 
+#, fuzzy
 msgid "New Search Channel..."
-msgstr "Nouvelle Chaîne à partir d'une Recherche..."
+msgstr "Nouvelle chaîne à partir d'une techerche..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
 msgid "Next Video"
-msgstr "Vidéo Suivante"
+msgstr "Vidéo suivante"
 
+#, fuzzy
 msgid "Open Recent"
-msgstr "Ouvrir un flux récent"
+msgstr "Ouvrir fichier récent"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "Open..."
@@ -187,7 +191,7 @@ msgstr "Préférencesâ¦"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
 msgid "Previous Video"
-msgstr "Vidéo Précédente"
+msgstr "Vidéo précédente"
 
 msgid "Quit Democracy"
 msgstr "Quitter Democracy"
@@ -209,7 +213,7 @@ msgid "Select All"
 msgstr "Tout sélectionner"
 
 msgid "Send This Channel to a Friend"
-msgstr "Envoyer Cette Chaîne à un Ami"
+msgstr "Envoyer cette chaîne à un ami"
 
 msgid "Services"
 msgstr "Services"
@@ -235,8 +239,9 @@ msgstr "Fenêtre"
 msgid "Zoom"
 msgstr "Zoom"
 
+#, fuzzy
 msgid "%channel feed%"
-msgstr "%fil de la chaîne%"
+msgstr "%flux de la chaîne%"
 
 msgid "%channel title%"
 msgstr "%Titre de la chaîne%"
@@ -335,7 +340,7 @@ msgid "Change..."
 msgstr "Modifier..."
 
 msgid "Check channels for new content:"
-msgstr "Vérifier la présence de nouveaux contenus dans les chaines:"
+msgstr "Vérifier la présence de nouveaux contenus dans les chaînes:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
 msgid "Don't start a download if it leaves less than"
@@ -377,8 +382,9 @@ msgstr "Sauvegarder les téléchargements dans ce dossier:"
 msgid "Stop after each video."
 msgstr "Arrêter la lecture aprés chaque vidéo."
 
+#, fuzzy
 msgid "To avoid internet slowdowns:"
-msgstr "Pour éviter une congestion de la bande passante:"
+msgstr "Pour éviter un ralentissement de connexion:"
 
 msgid "every 30 minutes"
 msgstr "toutes les 30 minutes"
@@ -407,11 +413,13 @@ msgstr "Chaîne"
 msgid "Create"
 msgstr "Créer"
 
+#, fuzzy
 msgid "In this:"
-msgstr "Ici:"
+msgstr "Dans ceci:"
 
+#, fuzzy
 msgid "Item1"
-msgstr "Element1"
+msgstr "Item1"
 
 msgid "Search Engine"
 msgstr "Moteur de recherche"
@@ -583,7 +591,7 @@ msgstr "Sauvegarder cette vidéo"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
 msgid "_Copy Video URL"
-msgstr "_Copier l'Adresse Internet de la vidéo"
+msgstr "_Copier l'adresse URL de la vidéo"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
 msgid "_Remove Video"
@@ -595,15 +603,15 @@ msgstr "_Plein écran"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
 msgid "_Stop Video"
-msgstr "_Arreter la vidéo"
+msgstr "_Arrêter la vidéo"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
 msgid "_Next Video"
-msgstr "_Video suivante"
+msgstr "_Vidéo suivante"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
 msgid "_Previous Video"
-msgstr "_Video précédente"
+msgstr "_Vidéo précédente"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
 msgid "_Play / Pause"
@@ -634,8 +642,9 @@ msgid "Re_name Playlist"
 msgstr "Re_nommer la liste de lecture"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148
+#, fuzzy
 msgid "_Remove Playlist"
-msgstr "_Supprimer la liste de lecture"
+msgstr "_Retirer la liste de lecture"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151
 msgid "_Video"
@@ -679,23 +688,24 @@ msgstr "Créer un nouveau dossier de listes de lecture"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
 msgid "New Channel _Folder..."
-msgstr "Nouveau Groupe de Chaîne..."
+msgstr "Nouveau dossier de chaînes..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
 msgid "Create new channel folder"
-msgstr "Créer un nouveau groupe de chaîne"
+msgstr "Créer un nouveau dossier de chaînes"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160
 msgid "Add _Channel..."
-msgstr "Ajouter une _Chaîne..."
+msgstr "Ajouter une _chaîne..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161
+#, fuzzy
 msgid "New Searc_h Channel..."
-msgstr "Nouvelle Chaîne basée sur une Recherch_e"
+msgstr "Nouvelle chaîne de Recherch_e"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162
 msgid "New Channel _Guide..."
-msgstr "Nouveau _Guide de Chaînes"
+msgstr "Nouveau _guide de chaînes"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164
 msgid "P_references"
@@ -753,22 +763,22 @@ msgstr "_Supprimer..."
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6
 #: ../../platform/osx/frontend/UIStrings.py:6
 msgid "_Remove Playlist..."
-msgstr "_Supprimer la Liste de Lecture..."
+msgstr "_Supprimer la liste de lecture..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7
 #: ../../platform/osx/frontend/UIStrings.py:7
 msgid "_Remove Playlists..."
-msgstr "_Supprimer les Listes de Lecture..."
+msgstr "_Supprimer les listes de lecture..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8
 #: ../../platform/osx/frontend/UIStrings.py:8
 msgid "_Remove Playlist Folder..."
-msgstr "_Supprimer le Dossier de Liste de Lecture..."
+msgstr "_Supprimer le dossier de listes de lecture..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:9
 #: ../../platform/osx/frontend/UIStrings.py:9
 msgid "_Remove Playlist Folders..."
-msgstr "_Supprimer les Dossiers de Liste de Lecture..."
+msgstr "_Supprimer les dossiers de listes de lecture..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10
 #: ../../platform/osx/frontend/UIStrings.py:10
@@ -828,27 +838,27 @@ msgstr "Re_nommer le Dossier des Listes de Lecture..."
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:21
 #: ../../platform/osx/frontend/UIStrings.py:21
 msgid "Re_name Channel..."
-msgstr "Re_nommer la Chaîne..."
+msgstr "Re_nommer la chaîne..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:22
 #: ../../platform/osx/frontend/UIStrings.py:22
 msgid "Re_name Channel Folder..."
-msgstr "Re_nommer le Dossier des Chaînes..."
+msgstr "Re_nommer le dossier des chaînes..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:23
 #: ../../platform/osx/frontend/UIStrings.py:23
 msgid "Re_name Channel Guide..."
-msgstr "Re_nommer le Guide des Chaînes..."
+msgstr "Re_nommer le guide des chaînes..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24
 #: ../../platform/osx/frontend/UIStrings.py:24
 msgid "_Update Channel..."
-msgstr "_Mise à Jour de la Chaîne..."
+msgstr "_Mise à jour de la chaîne..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25
 #: ../../platform/osx/frontend/UIStrings.py:25
 msgid "_Update Channels..."
-msgstr "_Mise à Jour des Chaînes..."
+msgstr "_Mise à jour des chaînes..."
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:59
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:157
@@ -881,7 +891,7 @@ msgstr ""
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37
 msgid "Remove Playlist..."
-msgstr "Supprimer la Liste de Lecture..."
+msgstr "Supprimer la liste de lecture..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7
 msgid "Remove Playlists..."
@@ -898,7 +908,7 @@ msgstr "Supprimer les dossiers de liste de lecture..."
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27
 msgid "Remove Channel..."
-msgstr "Supprimer la Chaîne…"
+msgstr "Supprimer la chaîne…"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11
 msgid "Remove Channels..."
@@ -931,32 +941,32 @@ msgstr "Supprimer les vidéos..."
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36
 msgid "Rename Playlist..."
-msgstr "Renommer la Liste de Lecture..."
+msgstr "Renommer la liste de lecture..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20
 msgid "Rename Playlist Folder..."
-msgstr "Renommer le Dossier contenant les Listes de Lecture"
+msgstr "Renommer le dossier contenant les listes de lecture"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26
 msgid "Rename Channel..."
-msgstr "Renommer la Chaîne..."
+msgstr "Renommer la chaîne..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22
 msgid "Rename Channel Folder..."
-msgstr "Renommer le Dossier contenant les Chaînes..."
+msgstr "Renommer le dossier contenant les chaînes..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:23
 msgid "Rename Channel Guide..."
-msgstr "Renommer le Guide des Chaînes..."
+msgstr "Renommer le guide des chaînes..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:24
 msgid "Update Channel..."
-msgstr "Mettre à jour le canal"
+msgstr "Mettre à jour la chaîne"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:25
 msgid "Update Channels..."
-msgstr "Actualiser les Chaînes..."
+msgstr "Actualiser les chaînes..."
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:36
 #, python-format
@@ -981,7 +991,7 @@ msgstr "onStartup a été appelé deux fois"
 
 #: ../../portable/playlist.py:175 ../../portable/playlist.py:180
 msgid "Rename Playlist"
-msgstr "Renommer la Liste de Lecture"
+msgstr "Renommer la liste de lecture"
 
 #: ../../portable/playlist.py:176 ../../portable/folder.py:120
 #: ../../portable/folder.py:175 ../../portable/guide.py:130
@@ -1015,11 +1025,11 @@ msgstr "Recherche en cours..."
 
 #: ../../portable/compiled_templates/search.py:56
 msgid "Results for \"${query}\""
-msgstr "Résultats de la recherche \"${query}\""
+msgstr "Résultats de recherche pour \"${query}\""
 
 #: ../../portable/compiled_templates/search.py:95
 msgid "Video Search"
-msgstr "Recherche de Vidéos"
+msgstr "Recherche de vidéos"
 
 #: ../../portable/compiled_templates/playlist.py:56
 msgid "Empty Playlist"
@@ -1096,11 +1106,11 @@ msgstr "Continuer vers la prochaine vidéo"
 
 #: ../../portable/compiled_templates/channelfolder.py:166
 msgid "${count} Downloads in Progress"
-msgstr "${count} Téléchargements en Cours"
+msgstr "${count} Téléchargements en cours"
 
 #: ../../portable/compiled_templates/channelfolder.py:171
 msgid "1 Download in Progress"
-msgstr "1 Téléchargement en Cours"
+msgstr "1 Téléchargement en cours"
 
 #: ../../portable/compiled_templates/channelfolder.py:191
 msgid "${len} Videos On This Channel"
@@ -1108,15 +1118,15 @@ msgstr "${len} vidéos sur cette chaîne"
 
 #: ../../portable/compiled_templates/channelfolder.py:205
 msgid "All ${len} Videos Match This Search"
-msgstr "Ces ${len} Vidéos Correspondent à Cette Recherche"
+msgstr "Ces ${len} vidéos correspondent à cette recherche"
 
 #: ../../portable/compiled_templates/channelfolder.py:217
 msgid "${len} Videos Match This Search"
-msgstr "${len} Vidéos Correspondent à Cette Recherche"
+msgstr "${len} vidéos correspondent à cette recherche"
 
 #: ../../portable/compiled_templates/channelfolder.py:277
 msgid "${count} Videos on this Channel"
-msgstr "${count} Vidéos dans cette Chaîne"
+msgstr "${count} vidéos dans cette chaîne"
 
 #: ../../portable/compiled_templates/channelfolder.py:290
 msgid "Unwatched"
@@ -1179,11 +1189,11 @@ msgstr "Réglages"
 
 #: ../../portable/compiled_templates/channel.py:440
 msgid "<label for=\"automatic\">Auto Download</label>"
-msgstr "<label for=\"automatic\">Auto Download</label>"
+msgstr "<label for=\"automatic\">Télécharger automatiquement</label>"
 
 #: ../../portable/compiled_templates/channel.py:458
 msgid "Looking for videos at this URL"
-msgstr "Recherche des vidéos à cette Adresse Internet"
+msgstr "Recherche des vidéos à cette adresse URL"
 
 #: ../../portable/compiled_templates/external_playback.py:111
 msgid ""
@@ -1294,13 +1304,14 @@ msgid "NEW STUFF:"
 msgstr "NOUVEAUX:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:50
+#, fuzzy
 msgid ""
 "Blue circles mean the channel has new videos available, green circles mean "
 "you have downloaded videos ready to watch."
 msgstr ""
-"Les cercles bleus signifient qu'une chaîne a des nouvelles vidéos "
+"Les cercles bleus signifient qu'une chaîne a de nouvelles vidéos "
 "disponibles, les cercles verts signifient que vous avez téléchargés des "
-"vidéos qui sont désormais prêtes à être regardées."
+"vidéos prêtes à être regardées."
 
 #: ../../portable/compiled_templates/first_time_intro.py:52
 msgid ""
@@ -1308,7 +1319,7 @@ msgid ""
 "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
 msgstr ""
 "<strong i18n:translate=\"\">PASSEZ L'INTRO: <a style=\"color: #090;\" "
-"href=\"#\" onclick=\"doneWithIntro();\">Aller au Guide des Chaînes "
+"href=\"#\" onclick=\"doneWithIntro();\">Aller au guide des chaînes "
 ">></a></strong>"
 
 #: ../../portable/compiled_templates/first_time_intro.py:54
@@ -1319,7 +1330,7 @@ msgid ""
 msgstr ""
 "<strong>Ajouter des chaînes:</strong>Le guide des chaînes est votre point "
 "d'entrée pour définir des chaînes de TV sur l'Internet. Cliquez sur "
-"'Ajouter' pour souscrire à une chaîne-- <strong>Les chaînes de ce guide sont "
+"'Ajouter' pour souscrire à une chaîne-- <strong>les chaînes de ce guide sont "
 "gratuites.</strong>"
 
 #: ../../portable/compiled_templates/first_time_intro.py:56
@@ -1334,6 +1345,7 @@ msgstr ""
 "vidéos : lancez quelques téléchargements et regardez les plus tard."
 
 #: ../../portable/compiled_templates/first_time_intro.py:58
+#, fuzzy
 msgid ""
 "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
 "new videos and downloads in the background. Leaving it running means you'll "
@@ -1341,7 +1353,7 @@ msgid ""
 msgstr ""
 "<strong>Laisser activé:</strong> Le lecteur Democracy vérifie périodiquement "
 "la présence de nouvelles vidéos sur les chaînes et les télécharge "
-"automatiquement en arrière-plan. Le laisser tourner signifie que vous aurez "
+"automatiquement en arrière-plan. Le laisser ouvert signifie que vous aurez "
 "de nouvelles vidéos prêtes à être visionner."
 
 #: ../../portable/compiled_templates/first_time_intro.py:60
@@ -1351,11 +1363,11 @@ msgid ""
 "room for new videos. You can always keep a video permanently by clicking "
 "'save' and you can set a channel's settings to save videos automatically."
 msgstr ""
-"<strong>Ne vous souciez pas de l'espace disque:</strong> Comme un TiVo, le "
+"<strong>Ne vous inquiétez pas de l'espace disque:</strong> Comme un TiVo, le "
 "lecteur Democracy contient une fonctionnalité 'd'expiration' qui permet de "
 "supprimer les vidéos plus anciennes pour faire de la place pour les vidéos "
 "plus récentes. Vous pouvez toujours conserver une vidéo de manière "
-"permanente en cliquant sur 'sauvegarder' et vous pouvez définir un réglage "
+"permanente en cliquant sur 'Sauvegarder' et vous pouvez définir un réglage "
 "de chaîne pour sauvegarder automatiquement."
 
 #: ../../portable/compiled_templates/multi_channel.py:57
@@ -1363,12 +1375,12 @@ msgid ""
 "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
 "channels)"
 msgstr ""
-"${count} dossiers de canaux sélectionnés<br></br>(contient ${containedcount} "
-"canaux)"
+"${count} dossiers de chaînes sélectionnés<br></br>(contient "
+"${containedcount} chaînes)"
 
 #: ../../portable/compiled_templates/multi_channel.py:69
 msgid "${count} Channels Selected"
-msgstr "${count} Chaînes(s) Sélectionnée(s)"
+msgstr "${count} chaînes(s) sélectionnée(s)"
 
 #: ../../portable/dl_daemon/download.py:298
 msgid "Error"
@@ -1377,7 +1389,7 @@ msgstr "Erreur"
 #: ../../portable/dl_daemon/download.py:357
 #, python-format
 msgid "Could not write to %s"
-msgstr "Impossible d'ecrire %s"
+msgstr "Impossible d'écrire %s"
 
 #: ../../portable/dl_daemon/download.py:376
 msgid "Not enough disk space"
@@ -1427,7 +1439,7 @@ msgstr "%1.1fKo"
 #: ../../portable/util.py:392
 #, python-format
 msgid "%0.0fB"
-msgstr "%0.0fB"
+msgstr "%0.0fo"
 
 #: ../../portable/httpclient.py:52
 #, python-format
@@ -1454,27 +1466,27 @@ msgstr "Erreur HTTP"
 #: ../../portable/httpclient.py:80
 #, python-format
 msgid "Bad Status Line: %s"
-msgstr "Mauvaise Ligne d'état: %s"
+msgstr "Mauvaise ligne d'état: %s"
 
 #: ../../portable/httpclient.py:83
 #, python-format
 msgid "Bad Header Line: %s"
-msgstr "Mauvaise En-tête: %s"
+msgstr "Mauvaise en-tête: %s"
 
 #: ../../portable/httpclient.py:86
-#, python-format
+#, fuzzy
 msgid "Bad Chunk size: %s"
-msgstr "Mauvais Morcellement de la Taille: %s"
+msgstr "Mauvaise taille du morceau: %s"
 
 #: ../../portable/httpclient.py:89
 #, python-format
 msgid "Expected CRLF got: %r"
-msgstr "CRLF Attendu reçu: %r"
+msgstr "CRLF attendu reçu: %r"
 
 #: ../../portable/httpclient.py:92
 #, python-format
 msgid "%s closed connection"
-msgstr "%s a coupé la connection"
+msgstr "%s a fermé la connection"
 
 #: ../../portable/httpclient.py:97 ../../portable/downloader.py:173
 msgid "File not found"
@@ -1487,7 +1499,7 @@ msgstr "Code d'erreur 404 reçu"
 #: ../../portable/httpclient.py:100
 #, python-format
 msgid "Bad Status Code: %s"
-msgstr "Code d'État Erroné: %s"
+msgstr "Mauvais code d'état: %s"
 
 #: ../../portable/httpclient.py:104
 msgid "Authorization failed"
@@ -1498,6 +1510,7 @@ msgid "Internal Error"
 msgstr "Erreur interne"
 
 #: ../../portable/httpclient.py:110
+#, fuzzy
 msgid "Pipeline request never started"
 msgstr "La connexion Tunnel n'a jamais démarrer"
 
@@ -1508,16 +1521,16 @@ msgstr "Délai d'attente dépassé"
 #: ../../portable/httpclient.py:115
 #, python-format
 msgid "Connection to %s timed out"
-msgstr "Le délai d'attente de la connexion à %s est dépasse"
+msgstr "Le délai d'attente de la connexion à %s est dépassé"
 
 #: ../../portable/httpclient.py:119
 msgid "Invalid URL"
-msgstr "Adresse non valide"
+msgstr "Adresse URL non valide"
 
 #: ../../portable/httpclient.py:120
 #, python-format
 msgid "%s is not a valid URL"
-msgstr "%s n'est pas une adresse valide"
+msgstr "%s n'est pas une adresse URL valide"
 
 #: ../../portable/httpclient.py:313
 msgid "Connection closed"
@@ -1529,7 +1542,7 @@ msgstr "Inconnu"
 
 #: ../../portable/httpclient.py:690
 msgid "Internal Error: Not ready to send"
-msgstr "Erreur Interne: Pas prêt à envoyer"
+msgstr "Erreur interne: Pas prêt à envoyer"
 
 #: ../../portable/storedatabase.py:789
 #, python-format

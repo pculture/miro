@@ -2,19 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Democracy\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2006-12-08 10:33+0000\n"
-"Last-Translator: totolac <totolac@tiscali.it>\n"
+"PO-Revision-Date: 2007-02-21 07:50+0000\n"
+"Last-Translator: Fabri <mmt@ngi.it>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2006-12-09 12:38+0000\n"
+"X-Rosetta-Export-Date: 2007-02-23 04:08+0000\n"
 
 msgid "$log"
 msgstr "$log"
 
-#, fuzzy
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
@@ -239,7 +238,7 @@ msgid "%donation label%"
 msgstr "%donation label%"
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
 msgstr "00:00:00"
@@ -317,16 +316,16 @@ msgid "6 days"
 msgstr "6 giorni"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "BitTorrent ports:"
-msgstr ""
+msgstr "Porte Bit Torrent"
 
 msgid "By default, videos expire after:"
 msgstr "Di deafault i video vengono cancellati dopo:"
 
 msgid "Change..."
-msgstr ""
+msgstr "Modifica"
 
 msgid "Check channels for new content:"
 msgstr "Controlla canali per nuovi contenuti"
@@ -337,7 +336,7 @@ msgstr "Non avviare lo scaricamento se lascia meno di"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
 msgid "Download at most"
-msgstr ""
+msgstr "Scarica non più di"
 
 msgid "GB free."
 msgstr "GB liberi."
@@ -346,10 +345,10 @@ msgid "KB/s when my computer is active."
 msgstr "KB/s quando il mio computer è attivo."
 
 msgid "Maximum:"
-msgstr ""
+msgstr "Massimo"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Minimo:"
 
 msgid "Never"
 msgstr "Mai"
@@ -359,7 +358,7 @@ msgstr "Altre viste"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:53
 msgid "Play videos one after another."
-msgstr ""
+msgstr "Visualizza un video dopo l'altro"
 
 msgid "Run Democracy at startup"
 msgstr "Esegui Democracy all'avvio"
@@ -408,13 +407,13 @@ msgid "Item1"
 msgstr ""
 
 msgid "Search Engine"
-msgstr ""
+msgstr "Motore di ricerca"
 
 msgid "Search for:"
-msgstr ""
+msgstr "Cerca:"
 
 msgid "URL"
-msgstr ""
+msgstr "Indirizzo URL"
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:31
 #: ../../platform/windows-xul/frontend_implementation/startup.py:25
@@ -450,13 +449,13 @@ msgid "No"
 msgstr "No"
 
 msgid "Only search my Movies folder."
-msgstr ""
+msgstr "Cerca solo nella mia cartella Filmati"
 
 msgid "Search my entire Home folder."
-msgstr ""
+msgstr "Cerca in tutta la directory Home"
 
 msgid "Search this folder:"
-msgstr ""
+msgstr "Cerca questa cartella"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
 msgid "Searching for Videos"
@@ -566,7 +565,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save Video _As..."
-msgstr ""
+msgstr "Salva video con nome..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save this video"
@@ -574,11 +573,11 @@ msgstr "Salva questo video."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
 msgid "_Copy Video URL"
-msgstr ""
+msgstr "_Copia URL Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
 msgid "_Remove Video"
-msgstr ""
+msgstr "_Cancella Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123
 msgid "_Fullscreen"
@@ -586,7 +585,7 @@ msgstr "_Schermo intero"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
 msgid "_Stop Video"
-msgstr ""
+msgstr "_Ferma Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
 msgid "_Next Video"
@@ -662,7 +661,7 @@ msgstr "Crea nuova playlist"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
 msgid "New Playlist _Folder..."
-msgstr ""
+msgstr "Nuova _Cartella Playlist."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
 msgid "Create new playlist folder"
@@ -670,7 +669,7 @@ msgstr "Crea nuova cartella playlist"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
 msgid "New Channel _Folder..."
-msgstr ""
+msgstr "Nuova _Cartella Canali"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
 msgid "Create new channel folder"
@@ -678,7 +677,7 @@ msgstr "Crea nuova cartella canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160
 msgid "Add _Channel..."
-msgstr ""
+msgstr "Aggiungi _Canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161
 msgid "New Searc_h Channel..."
@@ -710,12 +709,12 @@ msgstr "_Aiuto"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169
 msgid "_Donate"
-msgstr ""
+msgstr "_Sostieni"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172
 msgid "Delete selection"
-msgstr ""
+msgstr "Elimina la selezione"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
@@ -739,17 +738,17 @@ msgstr "Si è verificato un errore sconosciuto %s."
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
 #: ../../platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
-msgstr ""
+msgstr "_Rimuovi"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6
 #: ../../platform/osx/frontend/UIStrings.py:6
 msgid "_Remove Playlist..."
-msgstr ""
+msgstr "_Cancella Playlist..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7
 #: ../../platform/osx/frontend/UIStrings.py:7
 msgid "_Remove Playlists..."
-msgstr ""
+msgstr "_Cancella le Playlist..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8
 #: ../../platform/osx/frontend/UIStrings.py:8
@@ -794,32 +793,32 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16
 #: ../../platform/osx/frontend/UIStrings.py:16
 msgid "_Remove Video..."
-msgstr ""
+msgstr "_Cancella Video..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:17
 #: ../../platform/osx/frontend/UIStrings.py:17
 msgid "_Remove Videos..."
-msgstr ""
+msgstr "Cancella i Video..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18
 #: ../../platform/osx/frontend/UIStrings.py:18
 msgid "Re_name..."
-msgstr ""
+msgstr "Ri_nomina..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:19
 #: ../../platform/osx/frontend/UIStrings.py:19
 msgid "Re_name Playlist..."
-msgstr ""
+msgstr "Ri_nomina playlist..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:20
 #: ../../platform/osx/frontend/UIStrings.py:20
 msgid "Re_name Playlist Folder..."
-msgstr ""
+msgstr "Ri_nomina cartella Playlist"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:21
 #: ../../platform/osx/frontend/UIStrings.py:21
 msgid "Re_name Channel..."
-msgstr ""
+msgstr "Ri_nomina Canale..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:22
 #: ../../platform/osx/frontend/UIStrings.py:22
@@ -834,12 +833,12 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24
 #: ../../platform/osx/frontend/UIStrings.py:24
 msgid "_Update Channel..."
-msgstr ""
+msgstr "_Aggiorna Canale..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25
 #: ../../platform/osx/frontend/UIStrings.py:25
 msgid "_Update Channels..."
-msgstr ""
+msgstr "_Aggiorna Canali..."
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:59
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:157

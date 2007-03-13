@@ -1,8 +1,0 @@
-<!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
-
-<!ENTITY canscrape.title     "Kanal ni kompatibilen s programom Democracy!">
-<!ENTITY canscrape.body      "Poskušali bomo prenesti datoteke. Preteče lahko nekaj časa preden se bodo izpisali vsi videji in nekateri opisi lahko izgledajo nenavadno.">
-
-<!ENTITY canscrape.prefix    "Prosimo kontaktirajte založnike">
-<!ENTITY canscrape.suffix    "in povprašajte ali lahko priskrbijo prenos v formatu, ki bo deloval v programu Democracy.">

@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-02-02 18:50+0000\n"
-"Last-Translator: Carlos Zendejas <czende@hotmail.com>\n"
+"PO-Revision-Date: 2007-03-01 11:36+0000\n"
+"Last-Translator: LeoGomez <leo.telsen@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-02-07 06:32+0000\n"
+"X-Rosetta-Export-Date: 2007-03-07 20:28+0000\n"
 
 msgid "$log"
 msgstr "$registro"
@@ -28,7 +28,7 @@ msgid ""
 "questions, and we'll get right to work.</font>"
 msgstr ""
 "<font face=\"Lucida Grande\" size=\"-1\">Nuestro rastreador de errores se "
-"encuentra en <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Solo indícenos "
+"encuentra en <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Solo indícanos "
 "lo que estabas haciendo cuando ocurrió el problema, pega el mensaje de la "
 "caja arriba, contesta unas cuantas preguntas, y nos pondremos enseguida a "
 "trabajar.</font>"
@@ -39,12 +39,13 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"De hecho, si tienes un minuto, ¿serías tan amable de enviarnos un reportaje "
+"De hecho, si tienes un minuto, ¿serías tan amable de enviarnos un reporte "
 "del incidente a nuestro sistema rastreador de errores? A lo mínimo lo que "
 "necesitaríamos sería una descripción —tan precisa como te sea posible— de lo "
 "que estabas haciendo en el momento, más la diestramente-fraseada jeringonza "
-"que aparece en la cuadra abajo:"
+"que aparece en el cuadro de abajo:"
 
+#, fuzzy
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
 "wrong-headedness $when. We apologize and suggest that you exit and restart "
@@ -57,8 +58,9 @@ msgstr ""
 "pierdan tus preferencias o tus suscripciones a canales."
 
 msgid "OK"
-msgstr "De acuerdo"
+msgstr "{&Tahoma8}&Aceptar"
 
+#, fuzzy
 msgid "The fall of $shortAppName??"
 msgstr "La caída de $shortAppName??"
 
@@ -78,14 +80,14 @@ msgid "Check for New Version"
 msgstr "Checar si hay una nueva versión"
 
 msgid "Clear Menu"
-msgstr "Deshalojar Menú"
+msgstr "Limpiar Menú"
 
 msgid "Close Window"
 msgstr "Cerrar ventana"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15
 msgid "Copy"
-msgstr "Copia"
+msgstr "Copiar"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
 msgid "Copy Channel URL"
@@ -96,7 +98,7 @@ msgid "Copy Video URL"
 msgstr "Copiar dirección del vídeo"
 
 msgid "Cut"
-msgstr "Corte"
+msgstr "Cortar"
 
 #: ../../portable/dialogs.py:77
 msgid "Delete"
@@ -105,7 +107,6 @@ msgstr "Borrar"
 msgid "Democracy"
 msgstr "Democracy"
 
-#, fuzzy
 msgid "Democracy Help"
 msgstr "Ayuda de Democracy"
 
@@ -142,21 +143,18 @@ msgstr "Menú principal"
 msgid "Minimize"
 msgstr "Minimizar"
 
-#, fuzzy
 msgid "New Channel Folder..."
 msgstr "Nueva carpeta de canales..."
 
 msgid "New Channel Guide..."
-msgstr "Guia de canales nuevos..."
+msgstr "Nueva guia de canales..."
 
-#, fuzzy
 msgid "New Playlist Folder..."
 msgstr "Nueva carpeta de listas de reproducción..."
 
 msgid "New Playlist..."
 msgstr "Nueva lista de reproducción..."
 
-#, fuzzy
 msgid "New Search Channel..."
 msgstr "Nuevo canal de búsqueda..."
 
@@ -202,7 +200,7 @@ msgstr "Eliminar..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
 msgid "Rename..."
-msgstr "Cambiar nombre..."
+msgstr "Renombrar…"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "Save Video As..."
@@ -250,7 +248,6 @@ msgstr "%título de canal%"
 msgid "%donation label%"
 msgstr "%etiqueta de donación%"
 
-#, fuzzy
 msgid "-00:00:00"
 msgstr "-00:00:00"
 
@@ -305,7 +302,7 @@ msgid "(You must restart Democracy for this change to take effect)\n"
 msgstr "(Debes reiniciar Democracy para que este cambio surta efecto)\n"
 
 msgid "(movies directory path goes here)"
-msgstr "(el camino del directorio de películas se coloca aquí)"
+msgstr "(la ruta del directorio de películas va aquí)"
 
 msgid "1 day"
 msgstr "1 día"
@@ -472,17 +469,15 @@ msgstr "Buscar solo en mi Directorio de Películas"
 
 #, fuzzy
 msgid "Search my entire Home folder."
-msgstr "Buscar en todo mi Directorio raíz."
+msgstr "Buscar en todo mi directorio home"
 
 msgid "Search this folder:"
 msgstr "Buscar en esta carpeta:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
-#, fuzzy
 msgid "Searching for Videos"
 msgstr "Buscando Vídeos"
 
-#, fuzzy
 msgid ""
 "The next few screens will help you set up Democracy Player so that it works "
 "best for you. Here's the first question."
@@ -586,12 +581,12 @@ msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
-"%mensaje%\n"
-"%mensaje%"
+"%message%\n"
+"%message%"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save Video _As..."
-msgstr "Salvar vídeo como..."
+msgstr "Guardar vídeo como..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save this video"
@@ -754,14 +749,13 @@ msgid "Password:"
 msgstr "Contraseña:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:350
-#, fuzzy
 msgid "Unknown Runtime Error"
 msgstr "Error desconocido en tiempo de ejecución"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351
-#, fuzzy
+#, python-format
 msgid "An unknown error has occurred %s."
-msgstr "Ha ocurrido un error desconocido %s"
+msgstr "Ha ocurrido un error desconocido %s."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
 #: ../../platform/osx/frontend/UIStrings.py:5
@@ -890,10 +884,10 @@ msgid "Error Opening Website"
 msgstr "Error al Abrir Página Web"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:169
-#, fuzzy
+#, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
-"Hubo un error al abrir %s. Por favor, prueba de nuevo en algunos segundos"
+"Hubo un error abriendo %s. Por favor, intenta de nuevo en algunos segundos"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37
@@ -981,7 +975,7 @@ msgid ""
 "Error importing democracy modules:\n"
 "%s"
 msgstr ""
-"Error al importar módulos democracy:\n"
+"Error al importar módulos de democracy:\n"
 "%s"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:40
@@ -995,7 +989,7 @@ msgstr "Cargando ventana"
 #: ../../platform/windows-xul/xul/components/pybridge.py:137
 #, fuzzy
 msgid "onStartup called twice"
-msgstr "En el incio llamar dos veces"
+msgstr "onStartup fue llamado dos veces"
 
 #: ../../portable/playlist.py:175 ../../portable/playlist.py:180
 msgid "Rename Playlist"
@@ -1009,9 +1003,9 @@ msgid "Remove"
 msgstr "Eliminar"
 
 #: ../../portable/playlist.py:181
-#, fuzzy
+#, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr "Escribe un nombre nuevo para la lista %s"
+msgstr "Ingresa un nuevo nombre para la lista de reproducción %s"
 
 #: ../../portable/playlist.py:194
 msgid "Create Playlist"
@@ -1305,12 +1299,10 @@ msgid "GO BIG:"
 msgstr "VE A LO GRANDE:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:44
-#, fuzzy
 msgid "This is your fullscreen button. Click it and lean back."
 msgstr "Este es tu botón de pantalla completa. Púlsalo y recuéstate."
 
 #: ../../portable/compiled_templates/first_time_intro.py:48
-#, fuzzy
 msgid "NEW STUFF:"
 msgstr "NOVEDADES:"
 
@@ -1386,7 +1378,6 @@ msgstr ""
 "canales)"
 
 #: ../../portable/compiled_templates/multi_channel.py:69
-#, fuzzy
 msgid "${count} Channels Selected"
 msgstr "${count} Canales Seleccionados"
 
@@ -1426,7 +1417,6 @@ msgid "The torrent file for this item was deleted "
 msgstr "El archivo torrent para este ítem fue eliminado "
 
 #: ../../portable/dl_daemon/download.py:704
-#, fuzzy
 msgid "outside of democracy."
 msgstr "fuera de democracy."
 
@@ -1495,7 +1485,7 @@ msgstr "CRLF esperado obtuvo: %r"
 #: ../../portable/httpclient.py:92
 #, fuzzy
 msgid "%s closed connection"
-msgstr "%s cerró la conexión"
+msgstr "%s conexión cerrada"
 
 #: ../../portable/httpclient.py:97 ../../portable/downloader.py:173
 msgid "File not found"
@@ -1558,18 +1548,17 @@ msgid "%s database save succeeded"
 msgstr "La base de datos de %s se ha guardado con éxito"
 
 #: ../../portable/storedatabase.py:790
-#, fuzzy
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 "La base de datos se ha guardado con éxito. Ahora ya es seguro salir sin "
-"perder ninguna data."
+"perder información."
 
 #: ../../portable/storedatabase.py:797
-#, fuzzy
+#, python-format
 msgid "%s database save failed"
-msgstr "guardar la base de datos %s falló"
+msgstr "fallo al guardar la base de datos %s"
 
 #: ../../portable/storedatabase.py:798
 #, fuzzy
@@ -1582,7 +1571,7 @@ msgstr ""
 "%s fue incapaz de guardar su base de datos: Disco lleno.\n"
 "Sugerimos eliminar archivos del disco duro lleno, o simplemente elimine "
 "películas de su colección.\n"
-"Es posible la pérdida de cambios recientes."
+"Los cambios recientes podrían perderse."
 
 #: ../../portable/dialogs.py:59
 msgid "Ok"
@@ -1605,14 +1594,12 @@ msgstr "No migrar"
 
 #: ../../portable/dialogs.py:66 ../../portable/item.py:1169
 #: ../../portable/menu.py:92
-#, fuzzy
 msgid "Download"
 msgstr "Descargar"
 
 #: ../../portable/dialogs.py:67
-#, fuzzy
 msgid "Remove Entry"
-msgstr "Borrar entrada"
+msgstr "Eliminar Entrada"
 
 #: ../../portable/dialogs.py:68
 msgid "Delete File"
@@ -1623,7 +1610,6 @@ msgid "Delete Files"
 msgstr "Borrar archivos"
 
 #: ../../portable/dialogs.py:70
-#, fuzzy
 msgid "Keep Videos"
 msgstr "Mantener Vídeos"
 
@@ -1663,17 +1649,15 @@ msgstr ""
 "búsqueda."
 
 #: ../../portable/folder.py:102 ../../portable/folder.py:119
-#, fuzzy
 msgid "Rename Channel Folder"
-msgstr "Cambiar nombre de Carpeta de Canales"
+msgstr "Renombrar Carpeta de Canales"
 
 #: ../../portable/folder.py:104
 #, fuzzy
 msgid "Enter a new name for the channel folder %s"
-msgstr "Introduzca un nuevo nombre para la carperta asociada a canales %s"
+msgstr "Ingresa un nombre nuevo para la carpeta de canales %s"
 
 #: ../../portable/folder.py:174 ../../portable/folder.py:179
-#, fuzzy
 msgid "Rename Playlist Folder"
 msgstr "Renombrar lista de reproducción"
 
@@ -1784,9 +1768,9 @@ msgid "Cancel Download"
 msgstr "Cancelar descarga"
 
 #: ../../portable/item.py:1401
-#, fuzzy
+#, python-format
 msgid "Removing %s"
-msgstr "Borrando %s"
+msgstr "Eliminando %s"
 
 #: ../../portable/item.py:1403
 msgid ""
@@ -1898,15 +1882,14 @@ msgstr ""
 "descargado ?"
 
 #: ../../portable/app.py:923
-#, fuzzy
 msgid "Are you sure you want to quit?"
-msgstr "¿Confirma que desea salir?"
+msgstr "¿Está seguro que desea salir?"
 
 #: ../../portable/app.py:924
 #, fuzzy
 msgid "You have %d download still in progress."
 msgid_plural "You have %d downloads still in progress."
-msgstr[0] "Tienes %d descargas en progreso."
+msgstr[0] "Tienes %d descarga en progreso."
 msgstr[1] "Tienes %d descargas en progreso."
 
 #: ../../portable/app.py:1367
@@ -1998,7 +1981,7 @@ msgstr "Error arañazo URL Flash"
 #: ../../portable/downloader.py:317
 #, fuzzy
 msgid "starting up"
-msgstr "comenzando"
+msgstr "iniciando"
 
 #: ../../portable/feed.py:682
 msgid "Update Channel Now"
@@ -2318,12 +2301,12 @@ msgstr "Restringirse a mi carpeta de _home completa"
 #: ../../platform/gtk-x11/glade/democracy.glade.h:56
 #, fuzzy
 msgid "Search _Engine:"
-msgstr "Buscar en _Motor"
+msgstr "Sist_ema de Búsqueda:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:57
 #, fuzzy
 msgid "Search _custom folder:"
-msgstr "Buscar en _carpeta personalizada"
+msgstr "Buscar en _carpeta personalizada:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:58
 msgid "Select Movies Directory"
@@ -2507,7 +2490,6 @@ msgid "Cancel Search"
 msgstr "Cancelar búsqueda"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:13
-#, fuzzy
 msgid "Change"
 msgstr "Cambiar"
 
@@ -2782,14 +2764,13 @@ msgid "New Channel Guide"
 msgstr "Guia del Nuevo Canal"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:34
-#, fuzzy
 msgid "New Playlist"
-msgstr "Nuevo Playlist"
+msgstr "Nueva Lista de Reproducción"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:35
 #, fuzzy
 msgid "New Playlist Folder"
-msgstr "Nuevo Directorio del Playlist"
+msgstr "Nuevo Directorio de lista de reproducción"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:52
 msgid "O"
@@ -2800,13 +2781,12 @@ msgid "P"
 msgstr "P"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:41
-#, fuzzy
 msgid "Pause Video"
-msgstr "Pausa Video"
+msgstr "Pausar Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:33
 msgid "Playlist"
-msgstr ""
+msgstr "Lista de Reproducción"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:57
 msgid "Q"

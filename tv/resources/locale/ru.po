@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2006-12-29 16:00+0000\n"
+"PO-Revision-Date: 2007-02-25 10:30+0000\n"
 "Last-Translator: Timur <tim_tim2000@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Rosetta-Export-Date: 2007-01-05 02:38+0000\n"
+"X-Rosetta-Export-Date: 2007-03-07 20:28+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -71,13 +71,13 @@ msgid "Channels"
 msgstr "Каналы"
 
 msgid "Check for New Version"
-msgstr "Проверить Наличие Новой Версии"
+msgstr "Проверить наличие новой версии"
 
 msgid "Clear Menu"
-msgstr "Очистить Меню"
+msgstr "Очистить меню"
 
 msgid "Close Window"
-msgstr "Закрыть Окно"
+msgstr "Закрыть окно"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15
 msgid "Copy"
@@ -109,27 +109,27 @@ msgstr "Сделать пожертвование"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14
 msgid "Edit"
-msgstr "Редактировать"
+msgstr "Правка..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6
 msgid "File"
 msgstr "Файл"
 
 msgid "Full Screen"
-msgstr "Полный Экран"
+msgstr "На весь экран"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47
 msgid "Help"
-msgstr "Помощь"
+msgstr "Справка"
 
 msgid "Hide Democracy"
-msgstr ""
+msgstr "Спрятать Democracy"
 
 msgid "Hide Others"
-msgstr ""
+msgstr "Скрыть остальные"
 
 msgid "Main Window"
-msgstr "Главное Окно"
+msgstr "Основное окно"
 
 msgid "MainMenu"
 msgstr "Главное Меню"
@@ -138,10 +138,10 @@ msgid "Minimize"
 msgstr "Свернуть"
 
 msgid "New Channel Folder..."
-msgstr ""
+msgstr "Новая папка каналов"
 
 msgid "New Channel Guide..."
-msgstr ""
+msgstr "Новый путеводитель по каналам"
 
 msgid "New Playlist Folder..."
 msgstr "Новая папка списков воспроизведения"
@@ -150,7 +150,7 @@ msgid "New Playlist..."
 msgstr "Новый список воспроизведения"
 
 msgid "New Search Channel..."
-msgstr ""
+msgstr "Новый канал поиска..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
 msgid "Next Video"
@@ -208,22 +208,22 @@ msgid "Send This Channel to a Friend"
 msgstr "Послать этот канал другу"
 
 msgid "Services"
-msgstr "Сервисы"
+msgstr "Службы"
 
 msgid "Show All"
-msgstr "Показать Все"
+msgstr "Показать все"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42
 msgid "Stop Video"
-msgstr "Остановить Видео"
+msgstr "Остановить воспроизведение"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30
 msgid "Update All Channels"
-msgstr "Обновить Все Каналы"
+msgstr "Обновить все каналы"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29
 msgid "Update Channel"
-msgstr "Обновить Канал"
+msgstr "Обновить канал"
 
 msgid "Window"
 msgstr "Окно"
@@ -248,10 +248,10 @@ msgid "00:00:00"
 msgstr "00:00:00"
 
 msgid "Box"
-msgstr ""
+msgstr "Блок"
 
 msgid "FullScreen Controls"
-msgstr ""
+msgstr "Элементы управления полноэкранного режима"
 
 #: ../../portable/tabs.py:27 ../../portable/feed.py:1718
 #: ../../portable/feed.py:1777
@@ -259,7 +259,7 @@ msgid "Search"
 msgstr "Поиск"
 
 msgid "VideoWindow"
-msgstr ""
+msgstr "Окно воспроизведения"
 
 #: ../../portable/dialogs.py:60
 msgid "Cancel"
@@ -274,7 +274,7 @@ msgid "Password:\n"
 msgstr "Пароль:\n"
 
 msgid "Username and password required"
-msgstr "Имя пользователя и пароль необходимы"
+msgstr "Необходимо ввести имя пользователя и пароль"
 
 msgid ""
 "Username:\n"
@@ -284,14 +284,14 @@ msgstr ""
 "\n"
 
 msgid " limit upstream to"
-msgstr ""
+msgstr " ограничить закачку на сервер:"
 
 msgid "(You must restart Democracy for this change to take effect)\n"
 msgstr ""
 "(Для вступления изменений в силу необходимо перезапустить Democracy)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(введите путь к каталогу с фильмами)"
 
 msgid "1 day"
 msgstr "1 день"
@@ -324,21 +324,22 @@ msgid "BitTorrent ports:"
 msgstr "Порты BitTorrent:"
 
 msgid "By default, videos expire after:"
-msgstr ""
+msgstr "По умолчанию, видео-файлы удаляются после:"
 
 msgid "Change..."
 msgstr "Изменить..."
 
 msgid "Check channels for new content:"
-msgstr ""
+msgstr "Проверять какналы на наличие нового содержимого:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
 msgid "Don't start a download if it leaves less than"
 msgstr "Не начинать загрузку, если после нее остается свободного места менее"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
+#, fuzzy
 msgid "Download at most"
-msgstr ""
+msgstr "Скачивать до:"
 
 msgid "GB free."
 msgstr "Гб."

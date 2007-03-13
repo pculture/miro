@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-02-08 17:55-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-13 17:31-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -12,7 +12,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "En fait, si vous aviez une minute, seriez-vous disposé à envoyer un rapport d'anomalie à notre système de pistage de bogues ?\r\nNous aurions besoin, au moins,  d'une description de ce que vous faisiez juste avant ce bogue -- aussi précise que possible -- et du charabia technique dans la boite ci-dessous :";
 
-"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Pas de chance ! $longAppName a eu un problème $when. Nous vous présentons nos excuses et nous vous suggérons de quitter et redémarrer $shortAppName. Ça lui apprendra, et cela réduira aussi les risques de perte de vos préférences ou de vos abonnements aux chaînes.";
+/* Flag: untranslated */
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." /* = "Pas de chance ! $longAppName est tombé victime d'une espèce de confusion interne $when. Nous vous présentons nos excuses et nous vous suggérons de quitter et redémarrer $shortAppName. Ça lui apprendra, et cela réduira aussi les risques de perte de vos préférences ou de vos abonnements aux chaînes." */;
 
 "OK" = "OK";
 
@@ -26,7 +27,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Channels" = "Chaînes";
 
-"Check for New Version" = "Vérifier les mises à jour";
+/* Flag: untranslated */
+"Check for New Version" = "Check for New Version" /* = "Vérifier l'existence de mises à jour" */;
 
 "Clear Menu" = "Effacer le menu";
 
@@ -36,7 +38,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Copy" = "Copier";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28 */
-"Copy Channel URL" = "Copier l'adresse URLde la chaîne";
+"Copy Channel URL" = "Copier l'adresse URL de la chaîne";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11 */
 "Copy Video URL" = "Copier l'adresse URL de la vidéo";
@@ -75,18 +77,20 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "New Channel Folder..." = "Nouveau dossier de chaînes…";
 
-"New Channel Guide..." = "Nouveau Guide des Chaînes...";
+"New Channel Guide..." = "Nouveau guide des chaînes...";
 
 "New Playlist Folder..." = "Nouveau dossier de listes de lecture…";
 
 "New Playlist..." = "Nouvelle liste de lecture…";
 
-"New Search Channel..." = "Nouvelle Chaîne à partir d'une Recherche...";
+/* Flag: untranslated */
+"New Search Channel..." = "New Search Channel..." /* = "Nouvelle chaîne à partir d'une techerche..." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43 */
-"Next Video" = "Vidéo Suivante";
+"Next Video" = "Vidéo suivante";
 
-"Open Recent" = "Ouvrir un flux récent";
+/* Flag: untranslated */
+"Open Recent" = "Open Recent" /* = "Ouvrir fichier récent" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7 */
 "Open..." = "Ouvrir…";
@@ -105,7 +109,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Preferencesâ¦" = "Préférencesâ¦";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44 */
-"Previous Video" = "Vidéo Précédente";
+"Previous Video" = "Vidéo précédente";
 
 "Quit Democracy" = "Quitter Democracy";
 
@@ -121,7 +125,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17 */
 "Select All" = "Tout sélectionner";
 
-"Send This Channel to a Friend" = "Envoyer Cette Chaîne à un Ami";
+"Send This Channel to a Friend" = "Envoyer cette chaîne à un ami";
 
 "Services" = "Services";
 
@@ -140,7 +144,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Zoom" = "Zoom";
 
-"%channel feed%" = "%fil de la chaîne%";
+/* Flag: untranslated */
+"%channel feed%" = "%channel feed%" /* = "%flux de la chaîne%" */;
 
 "%channel title%" = "%Titre de la chaîne%";
 
@@ -202,7 +207,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Change..." = "Modifier...";
 
-"Check channels for new content:" = "Vérifier la présence de nouveaux contenus dans les chaines:";
+"Check channels for new content:" = "Vérifier la présence de nouveaux contenus dans les chaînes:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:41 */
 "Don't start a download if it leaves less than" = "Ne pas démarrer de téléchargement s'il reste moins de";
@@ -232,7 +237,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
 "Stop after each video." = "Arrêter la lecture aprés chaque vidéo.";
 
-"To avoid internet slowdowns:" = "Pour éviter une congestion de la bande passante:";
+/* Flag: untranslated */
+"To avoid internet slowdowns:" = "To avoid internet slowdowns:" /* = "Pour éviter un ralentissement de connexion:" */;
 
 "every 30 minutes" = "toutes les 30 minutes";
 
@@ -253,9 +259,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/dialogs.py:72 */
 "Create" = "Créer";
 
-"In this:" = "Ici:";
+/* Flag: untranslated */
+"In this:" = "In this:" /* = "Dans ceci:" */;
 
-"Item1" = "Element1";
+/* Flag: untranslated */
+"Item1" = "Item1" /* = "Item1" */;
 
 "Search Engine" = "Moteur de recherche";
 
@@ -313,7 +321,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Save this video" = "Sauvegarder cette vidéo";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117 */
-"_Copy Video URL" = "_Copier l'Adresse Internet de la vidéo";
+"_Copy Video URL" = "_Copier l'adresse URL de la vidéo";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120 */
 "_Remove Video" = "_Supprimer la vidéo";
@@ -322,13 +330,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Fullscreen" = "_Plein écran";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124 */
-"_Stop Video" = "_Arreter la vidéo";
+"_Stop Video" = "_Arrêter la vidéo";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125 */
-"_Next Video" = "_Video suivante";
+"_Next Video" = "_Vidéo suivante";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126 */
-"_Previous Video" = "_Video précédente";
+"_Previous Video" = "_Vidéo précédente";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129 */
 "_Play / Pause" = "_Lecture / Pause";
@@ -352,7 +360,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Re_name Playlist" = "Re_nommer la liste de lecture";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148 */
-"_Remove Playlist" = "_Supprimer la liste de lecture";
+/* Flag: untranslated */
+"_Remove Playlist" = "_Remove Playlist" /* = "_Retirer la liste de lecture" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151 */
 "_Video" = "_Vidéo";
@@ -385,19 +394,20 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Create new playlist folder" = "Créer un nouveau dossier de listes de lecture";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159 */
-"New Channel _Folder..." = "Nouveau Groupe de Chaîne...";
+"New Channel _Folder..." = "Nouveau dossier de chaînes...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159 */
-"Create new channel folder" = "Créer un nouveau groupe de chaîne";
+"Create new channel folder" = "Créer un nouveau dossier de chaînes";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160 */
-"Add _Channel..." = "Ajouter une _Chaîne...";
+"Add _Channel..." = "Ajouter une _chaîne...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161 */
-"New Searc_h Channel..." = "Nouvelle Chaîne basée sur une Recherch_e";
+/* Flag: untranslated */
+"New Searc_h Channel..." = "New Searc_h Channel..." /* = "Nouvelle chaîne de Recherch_e" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162 */
-"New Channel _Guide..." = "Nouveau _Guide de Chaînes";
+"New Channel _Guide..." = "Nouveau _guide de chaînes";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164 */
 "P_references" = "P_références";
@@ -442,19 +452,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6 */
 /* File: ../../platform/osx/frontend/UIStrings.py:6 */
-"_Remove Playlist..." = "_Supprimer la Liste de Lecture...";
+"_Remove Playlist..." = "_Supprimer la liste de lecture...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7 */
 /* File: ../../platform/osx/frontend/UIStrings.py:7 */
-"_Remove Playlists..." = "_Supprimer les Listes de Lecture...";
+"_Remove Playlists..." = "_Supprimer les listes de lecture...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8 */
 /* File: ../../platform/osx/frontend/UIStrings.py:8 */
-"_Remove Playlist Folder..." = "_Supprimer le Dossier de Liste de Lecture...";
+"_Remove Playlist Folder..." = "_Supprimer le dossier de listes de lecture...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:9 */
 /* File: ../../platform/osx/frontend/UIStrings.py:9 */
-"_Remove Playlist Folders..." = "_Supprimer les Dossiers de Liste de Lecture...";
+"_Remove Playlist Folders..." = "_Supprimer les dossiers de listes de lecture...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10 */
 /* File: ../../platform/osx/frontend/UIStrings.py:10 */
@@ -502,23 +512,23 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:21 */
 /* File: ../../platform/osx/frontend/UIStrings.py:21 */
-"Re_name Channel..." = "Re_nommer la Chaîne...";
+"Re_name Channel..." = "Re_nommer la chaîne...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:22 */
 /* File: ../../platform/osx/frontend/UIStrings.py:22 */
-"Re_name Channel Folder..." = "Re_nommer le Dossier des Chaînes...";
+"Re_name Channel Folder..." = "Re_nommer le dossier des chaînes...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:23 */
 /* File: ../../platform/osx/frontend/UIStrings.py:23 */
-"Re_name Channel Guide..." = "Re_nommer le Guide des Chaînes...";
+"Re_name Channel Guide..." = "Re_nommer le guide des chaînes...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24 */
 /* File: ../../platform/osx/frontend/UIStrings.py:24 */
-"_Update Channel..." = "_Mise à Jour de la Chaîne...";
+"_Update Channel..." = "_Mise à jour de la chaîne...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25 */
 /* File: ../../platform/osx/frontend/UIStrings.py:25 */
-"_Update Channels..." = "_Mise à Jour des Chaînes...";
+"_Update Channels..." = "_Mise à jour des chaînes...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161 */
 "Error Bombing Item" = "Erreur lors du vote sur cet élément";
@@ -535,7 +545,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37 */
-"Remove Playlist..." = "Supprimer la Liste de Lecture...";
+"Remove Playlist..." = "Supprimer la liste de lecture...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7 */
 "Remove Playlists..." = "Supprimer les listes de lecture...";
@@ -548,7 +558,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27 */
-"Remove Channel..." = "Supprimer la Chaîne…";
+"Remove Channel..." = "Supprimer la chaîne…";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11 */
 "Remove Channels..." = "Supprimer les chaînes...";
@@ -573,26 +583,26 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36 */
-"Rename Playlist..." = "Renommer la Liste de Lecture...";
+"Rename Playlist..." = "Renommer la liste de lecture...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20 */
-"Rename Playlist Folder..." = "Renommer le Dossier contenant les Listes de Lecture";
+"Rename Playlist Folder..." = "Renommer le dossier contenant les listes de lecture";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26 */
-"Rename Channel..." = "Renommer la Chaîne...";
+"Rename Channel..." = "Renommer la chaîne...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22 */
-"Rename Channel Folder..." = "Renommer le Dossier contenant les Chaînes...";
+"Rename Channel Folder..." = "Renommer le dossier contenant les chaînes...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:23 */
-"Rename Channel Guide..." = "Renommer le Guide des Chaînes...";
+"Rename Channel Guide..." = "Renommer le guide des chaînes...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:24 */
-"Update Channel..." = "Mettre à jour le canal";
+"Update Channel..." = "Mettre à jour la chaîne";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:25 */
-"Update Channels..." = "Actualiser les Chaînes...";
+"Update Channels..." = "Actualiser les chaînes...";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:36 */
 /* Flag: python-format */
@@ -609,7 +619,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/playlist.py:175 */
 /* File: ../../portable/playlist.py:180 */
-"Rename Playlist" = "Renommer la Liste de Lecture";
+"Rename Playlist" = "Renommer la liste de lecture";
 
 /* File: ../../portable/playlist.py:176 */
 /* File: ../../portable/folder.py:120 */
@@ -637,10 +647,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Searching..." = "Recherche en cours...";
 
 /* File: ../../portable/compiled_templates/search.py:56 */
-"Results for \"${query}\"" = "Résultats de la recherche \"${query}\"";
+"Results for \"${query}\"" = "Résultats de recherche pour \"${query}\"";
 
 /* File: ../../portable/compiled_templates/search.py:95 */
-"Video Search" = "Recherche de Vidéos";
+"Video Search" = "Recherche de vidéos";
 
 /* File: ../../portable/compiled_templates/playlist.py:56 */
 "Empty Playlist" = "Liste de lecture vide";
@@ -693,22 +703,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Continue To Next Video" = "Continuer vers la prochaine vidéo";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:166 */
-"${count} Downloads in Progress" = "${count} Téléchargements en Cours";
+"${count} Downloads in Progress" = "${count} Téléchargements en cours";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:171 */
-"1 Download in Progress" = "1 Téléchargement en Cours";
+"1 Download in Progress" = "1 Téléchargement en cours";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:191 */
 "${len} Videos On This Channel" = "${len} vidéos sur cette chaîne";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:205 */
-"All ${len} Videos Match This Search" = "Ces ${len} Vidéos Correspondent à Cette Recherche";
+"All ${len} Videos Match This Search" = "Ces ${len} vidéos correspondent à cette recherche";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:217 */
-"${len} Videos Match This Search" = "${len} Vidéos Correspondent à Cette Recherche";
+"${len} Videos Match This Search" = "${len} vidéos correspondent à cette recherche";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:277 */
-"${count} Videos on this Channel" = "${count} Vidéos dans cette Chaîne";
+"${count} Videos on this Channel" = "${count} vidéos dans cette chaîne";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:290 */
 "Unwatched" = "Non visionné";
@@ -753,10 +763,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Settings" = "Réglages";
 
 /* File: ../../portable/compiled_templates/channel.py:440 */
-"<label for=\"automatic\">Auto Download</label>" = "<label for=\"automatic\">Auto Download</label>";
+"<label for=\"automatic\">Auto Download</label>" = "<label for=\"automatic\">Télécharger automatiquement</label>";
 
 /* File: ../../portable/compiled_templates/channel.py:458 */
-"Looking for videos at this URL" = "Recherche des vidéos à cette Adresse Internet";
+"Looking for videos at this URL" = "Recherche des vidéos à cette adresse URL";
 
 /* File: ../../portable/compiled_templates/external_playback.py:111 */
 "Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy est incapable de lire ce fichier. Il peut être possible de l'ouvrir avec un programme différent. <br></br><br></br><strong>Fichier:</strong> ${filename}<Br></Br><strong>Type:</strong> ${format}";
@@ -835,35 +845,37 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "NEW STUFF:" = "NOUVEAUX:";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:50 */
-"Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "Les cercles bleus signifient qu'une chaîne a des nouvelles vidéos disponibles, les cercles verts signifient que vous avez téléchargés des vidéos qui sont désormais prêtes à être regardées.";
+/* Flag: untranslated */
+"Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." /* = "Les cercles bleus signifient qu'une chaîne a de nouvelles vidéos disponibles, les cercles verts signifient que vous avez téléchargés des vidéos prêtes à être regardées." */;
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:52 */
-"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">PASSEZ L'INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Aller au Guide des Chaînes >></a></strong>";
+"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">PASSEZ L'INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Aller au guide des chaînes >></a></strong>";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:54 */
-"<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" = "<strong>Ajouter des chaînes:</strong>Le guide des chaînes est votre point d'entrée pour définir des chaînes de TV sur l'Internet. Cliquez sur 'Ajouter' pour souscrire à une chaîne-- <strong>Les chaînes de ce guide sont gratuites.</strong>";
+"<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" = "<strong>Ajouter des chaînes:</strong>Le guide des chaînes est votre point d'entrée pour définir des chaînes de TV sur l'Internet. Cliquez sur 'Ajouter' pour souscrire à une chaîne-- <strong>les chaînes de ce guide sont gratuites.</strong>";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:56 */
 "<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later." = "<strong>N'attendez pas:</strong> Democracy est différent de la consultation des vidéos sur une page web-- les diffuseurs peuvent offrir des vidéos de haute qualité. Donc, ne vous posez pas en attendant le téléchargement des vidéos : lancez quelques téléchargements et regardez les plus tard.";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:58 */
-"<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." = "<strong>Laisser activé:</strong> Le lecteur Democracy vérifie périodiquement la présence de nouvelles vidéos sur les chaînes et les télécharge automatiquement en arrière-plan. Le laisser tourner signifie que vous aurez de nouvelles vidéos prêtes à être visionner.";
+/* Flag: untranslated */
+"<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." = "<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." /* = "<strong>Laisser activé:</strong> Le lecteur Democracy vérifie périodiquement la présence de nouvelles vidéos sur les chaînes et les télécharge automatiquement en arrière-plan. Le laisser ouvert signifie que vous aurez de nouvelles vidéos prêtes à être visionner." */;
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:60 */
-"<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "<strong>Ne vous souciez pas de l'espace disque:</strong> Comme un TiVo, le lecteur Democracy contient une fonctionnalité 'd'expiration' qui permet de supprimer les vidéos plus anciennes pour faire de la place pour les vidéos plus récentes. Vous pouvez toujours conserver une vidéo de manière permanente en cliquant sur 'sauvegarder' et vous pouvez définir un réglage de chaîne pour sauvegarder automatiquement.";
+"<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "<strong>Ne vous inquiétez pas de l'espace disque:</strong> Comme un TiVo, le lecteur Democracy contient une fonctionnalité 'd'expiration' qui permet de supprimer les vidéos plus anciennes pour faire de la place pour les vidéos plus récentes. Vous pouvez toujours conserver une vidéo de manière permanente en cliquant sur 'Sauvegarder' et vous pouvez définir un réglage de chaîne pour sauvegarder automatiquement.";
 
 /* File: ../../portable/compiled_templates/multi_channel.py:57 */
-"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} dossiers de canaux sélectionnés<br></br>(contient ${containedcount} canaux)";
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} dossiers de chaînes sélectionnés<br></br>(contient ${containedcount} chaînes)";
 
 /* File: ../../portable/compiled_templates/multi_channel.py:69 */
-"${count} Channels Selected" = "${count} Chaînes(s) Sélectionnée(s)";
+"${count} Channels Selected" = "${count} chaînes(s) sélectionnée(s)";
 
 /* File: ../../portable/dl_daemon/download.py:298 */
 "Error" = "Erreur";
 
 /* File: ../../portable/dl_daemon/download.py:357 */
 /* Flag: python-format */
-"Could not write to %s" = "Impossible d'ecrire %s";
+"Could not write to %s" = "Impossible d'écrire %s";
 
 /* File: ../../portable/dl_daemon/download.py:376 */
 "Not enough disk space" = "Espace disque insuffisant";
@@ -902,7 +914,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/util.py:392 */
 /* Flag: python-format */
-"%0.0fB" = "%0.0fB";
+"%0.0fB" = "%0.0fo";
 
 /* File: ../../portable/httpclient.py:52 */
 /* Flag: python-format */
@@ -924,23 +936,23 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/httpclient.py:80 */
 /* Flag: python-format */
-"Bad Status Line: %s" = "Mauvaise Ligne d'état: %s";
+"Bad Status Line: %s" = "Mauvaise ligne d'état: %s";
 
 /* File: ../../portable/httpclient.py:83 */
 /* Flag: python-format */
-"Bad Header Line: %s" = "Mauvaise En-tête: %s";
+"Bad Header Line: %s" = "Mauvaise en-tête: %s";
 
 /* File: ../../portable/httpclient.py:86 */
-/* Flag: python-format */
-"Bad Chunk size: %s" = "Mauvais Morcellement de la Taille: %s";
+/* Flag: untranslated */
+"Bad Chunk size: %s" = "Bad Chunk size: %s" /* = "Mauvaise taille du morceau: %s" */;
 
 /* File: ../../portable/httpclient.py:89 */
 /* Flag: python-format */
-"Expected CRLF got: %r" = "CRLF Attendu reçu: %r";
+"Expected CRLF got: %r" = "CRLF attendu reçu: %r";
 
 /* File: ../../portable/httpclient.py:92 */
 /* Flag: python-format */
-"%s closed connection" = "%s a coupé la connection";
+"%s closed connection" = "%s a fermé la connection";
 
 /* File: ../../portable/httpclient.py:97 */
 /* File: ../../portable/downloader.py:173 */
@@ -951,7 +963,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/httpclient.py:100 */
 /* Flag: python-format */
-"Bad Status Code: %s" = "Code d'État Erroné: %s";
+"Bad Status Code: %s" = "Mauvais code d'état: %s";
 
 /* File: ../../portable/httpclient.py:104 */
 "Authorization failed" = "L'autorisation a échoué";
@@ -960,21 +972,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Internal Error" = "Erreur interne";
 
 /* File: ../../portable/httpclient.py:110 */
-"Pipeline request never started" = "La connexion Tunnel n'a jamais démarrer";
+/* Flag: untranslated */
+"Pipeline request never started" = "Pipeline request never started" /* = "La connexion Tunnel n'a jamais démarrer" */;
 
 /* File: ../../portable/httpclient.py:114 */
 "Timeout" = "Délai d'attente dépassé";
 
 /* File: ../../portable/httpclient.py:115 */
 /* Flag: python-format */
-"Connection to %s timed out" = "Le délai d'attente de la connexion à %s est dépasse";
+"Connection to %s timed out" = "Le délai d'attente de la connexion à %s est dépassé";
 
 /* File: ../../portable/httpclient.py:119 */
-"Invalid URL" = "Adresse non valide";
+"Invalid URL" = "Adresse URL non valide";
 
 /* File: ../../portable/httpclient.py:120 */
 /* Flag: python-format */
-"%s is not a valid URL" = "%s n'est pas une adresse valide";
+"%s is not a valid URL" = "%s n'est pas une adresse URL valide";
 
 /* File: ../../portable/httpclient.py:313 */
 "Connection closed" = "Connexion fermée";
@@ -983,7 +996,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Unknown" = "Inconnu";
 
 /* File: ../../portable/httpclient.py:690 */
-"Internal Error: Not ready to send" = "Erreur Interne: Pas prêt à envoyer";
+"Internal Error: Not ready to send" = "Erreur interne: Pas prêt à envoyer";
 
 /* File: ../../portable/storedatabase.py:789 */
 /* Flag: python-format */

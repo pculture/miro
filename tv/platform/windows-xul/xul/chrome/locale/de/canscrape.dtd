@@ -1,8 +1,0 @@
-<!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "&quot;">
-
-<!ENTITY canscrape.title     "Dieser Kanal ist nicht kompatibel mit Democracy!">
-<!ENTITY canscrape.body      "Democracy wird versuchen, die Dateien trotzdem herunterzuladen, möglicherweise sehen aber die Beschreibungen etwas merkwürdig aus und die Inhaltsauflistung dauert länger als gewöhnlich.">
-
-<!ENTITY canscrape.prefix    "Bitte wenden Sie sich an die Herausgeber des Kanals &quot;">
-<!ENTITY canscrape.suffix    "&quot; und fragen Sie nach einem Feed, der mit dem Democracy-Player kompatibel ist.">

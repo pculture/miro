@@ -1,5 +1,0 @@
-<!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
-
-<!ENTITY about.title         "Informazioni su $longAppName">
-<!ENTITY about.body          "$longAppName versione $appVersion ($appRevision); copyright © 2005, 2006 $publisher">
