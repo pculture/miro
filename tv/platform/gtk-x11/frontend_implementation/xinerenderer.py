@@ -6,6 +6,8 @@ import gobject
 import eventloop
 import config
 import prefs
+import os
+from download_utils import nextFreeFilename
 
 def waitForAttach(func):
     """Many xine calls can't be made until we attach the object to a X window.
@@ -63,8 +65,22 @@ class Renderer(app.VideoRenderer):
     def canPlayFile(self, filename):
         return self.xine.canPlayFile(filename)
 
-    def fileDuration(self, filename):
-        return self.xine.fileDuration(filename)
+    def fillMovieData(self, filename, movie_data):
+        dir = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+        try:
+            os.makedirs(dir)
+        except:
+            pass
+        screenshot = os.path.join (dir, os.path.basename(filename) + ".png")
+        movie_data["screenshot"] = nextFreeFilename(screenshot)
+
+        success = self.xine.fillMovieData(filename, movie_data["screenshot"], movie_data)
+        
+        if success:
+            if not os.path.exists(movie_data["screenshot"]):
+                movie_data["screenshot"] = ""
+        else:
+            movie_data["screenshot"] = None
 
     def goFullscreen(self):
         """Handle when the video window goes fullscreen."""

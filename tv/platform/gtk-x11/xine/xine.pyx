@@ -40,6 +40,8 @@ cdef extern from "xine_impl.h":
     void xineDetach(_Xine* xine)
     int xineCanPlayFile(_Xine* xine, char* filename)
     int xineFileDuration(_Xine* xine, char* filename)
+    int xineFileScreenshot(_Xine* xine, char* filename, char *screenshot_filename)
+    void xineDataMineClose(_Xine* xine, char* filename)
     void xineSelectFile(_Xine* xine, char* filename)
     void xineSetPlaying(_Xine* xine, int isPlaying)
     void xineSetViz(_Xine* xine, char *viz)
@@ -71,10 +73,11 @@ cdef class Xine:
     def canPlayFile(self, char* filename):
         # we convert xineCanPlayFile's return value to a python boolean
         return xineCanPlayFile(self.xine, filename) and True or False
-    def fileDuration(self, char* filename):
-        return xineFileDuration(self.xine, filename)
+    def fillMovieData(self, char* filename, char *screenshot, movie_data):
+        movie_data["duration"] = xineFileDuration(self.xine, filename)
+        success = xineFileScreenshot(self.xine, filename, screenshot)
+        return success
     def selectFile(self, char* filename):
-        print "Beginning playback %s" % (filename,)
         xineSelectFile(self.xine, filename)
     def play(self):
         xineSetPlaying(self.xine, 1)

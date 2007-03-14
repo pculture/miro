@@ -278,6 +278,7 @@ class ItemSchema(DDBObjectSchema):
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
+        ('screenshot', SchemaFilename(noneOk=True)),
         ('resumeTime', SchemaInt()),
     ]
 
@@ -435,7 +436,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('redirectedURL', SchemaURL(noneOk=True)),
     ]
 
-VERSION = 41
+VERSION = 42
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

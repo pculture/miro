@@ -79,7 +79,7 @@ class UIBackendDelegate:
         if isinstance(dialog, dialogs.TextEntryDialog):
             dlog = TextEntryController.alloc().initWithDialog_(dialog)
             dlog.run()
-            call = lambda:dialog.runCallback(dlog.result, unicode(dlog.value))
+            call = lambda:dialog.runCallback(dlog.result, dlog.value)
             name = "TextEntryDialog"
         elif isinstance(dialog, dialogs.HTTPAuthDialog):
             self.httpAuthLock.acquire()
@@ -112,6 +112,7 @@ class UIBackendDelegate:
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
     def revealFile(self, filename):
+        filename = platformutils.filenameTypeToOSFilename(filename)
         NSWorkspace.sharedWorkspace().selectFile_inFileViewerRootedAtPath_(filename, nil)
 
     def updateAvailableItemsCountFeedback(self, count):
@@ -356,8 +357,9 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
 
     # bound to button in nib
     def acceptEntry_(self, sender):
-        result = (self.usernameField.stringValue(), self.passwordField.stringValue())
-        self.closeWithResult(result)
+        username = unicode(self.usernameField.stringValue())
+        password = unicode(self.passwordField.stringValue())
+        self.closeWithResult((username, password))
 
     # bound to button in nib
     def cancelEntry_(self, sender):
@@ -392,7 +394,8 @@ class TextEntryController (NibClassBuilder.AutoBaseClass):
         NSApplication.sharedApplication().runModalForWindow_(self.window())
 
     def acceptEntry_(self, sender):
-        self.closeWithResult(self.dialog.buttons[0], self.entryField.stringValue())
+        entry = unicode(self.entryField.stringValue())
+        self.closeWithResult(self.dialog.buttons[0], entry)
 
     def cancelEntry_(self, sender):
         self.closeWithResult(self.dialog.buttons[1], None)
@@ -481,7 +484,7 @@ class SearchChannelController (NibClassBuilder.AutoBaseClass):
         self.closeWithResult(self.dialog.buttons[1])
 
     def create_(self, sender):
-        self.dialog.term = self.searchTermField.stringValue()
+        self.dialog.term = unicode(self.searchTermField.stringValue())
         self.dialog.style = self.targetMatrix.selectedCell().tag()
         if self.dialog.style == dialogs.SearchChannelDialog.CHANNEL:
             channel = self.channelPopup.titleOfSelectedItem()
@@ -490,7 +493,7 @@ class SearchChannelController (NibClassBuilder.AutoBaseClass):
             engine = self.enginePopup.titleOfSelectedItem()
             self.dialog.location = self.getEngineNameForTitle(engine)
         elif self.dialog.style == dialogs.SearchChannelDialog.URL:
-            self.dialog.location = self.urlField.stringValue()
+            self.dialog.location = unicode(self.urlField.stringValue())
         self.closeWithResult(self.dialog.buttons[0])
 
     def closeWithResult(self, result):

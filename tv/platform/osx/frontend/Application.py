@@ -21,6 +21,7 @@ import eventloop
 import autoupdate
 import singleclick
 
+from platformutils import osFilenamesToFilenameTypes
 from gtcache import gettext as _
 
 from Preferences import PreferencesWindowController
@@ -162,6 +163,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         logging.info("Downloader daemon has been terminated (status: %d)" % status)
 
     def application_openFiles_(self, nsapp, filenames):
+        filenames = osFilenamesToFilenameTypes(filenames)
         if app.controller.finishedStartup:
             eventloop.addIdle(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
         else:
@@ -270,7 +272,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         openPanel.setCanChooseDirectories_(NO)
         result = openPanel.runModalForDirectory_file_types_(NSHomeDirectory(), nil, nil)
         if result == NSOKButton:
-            filenames = openPanel.filenames()
+            filenames = osFilenamesToFilenameTypes(openPanel.filenames())
             eventloop.addUrgentCall(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
                 
     def shutdown_(self, sender):

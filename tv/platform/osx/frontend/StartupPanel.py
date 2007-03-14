@@ -161,7 +161,7 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
             elif restrictionTag == 1:
                 path = os.path.expanduser('~/')
             else:
-                path = self.customLocationField.stringValue()
+                path = unicode(self.customLocationField.stringValue())
             self.keepFinding = True
             self.gathered = util.gatherVideos(path, self.onProgressFindingVideos)
             self.finishFindVideoTask(True)

@@ -134,3 +134,39 @@ def cleanFilename(filename):
         return unicodeToFilename(filename.decode('ascii','replace'))
     else:
         return unicodeToFilename(filename)
+
+# Saves data, returns filename, doesn't write over existing files.
+def saveData (target, suggested_basename, data):
+    try:
+        os.makedirs(target)
+    except:
+        pass
+
+    filename = os.path.join (target, suggested_basename)
+
+    try:
+        # Write to a temp file.
+        tmp_filename = filename + ".part"
+#        tmp_filename = shortenFilename (tmp_filename)
+        tmp_filename = nextFreeFilename (tmp_filename)
+        output = file (tmp_filename, 'wb')
+        output.write(data)
+        output.close()
+    except IOError:
+        try:
+            os.remove (tmp_filename)
+        except:
+            pass
+        raise
+
+#    filename = shortenFilename (filename)
+    filename = nextFreeFilename (filename)
+    needsSave = True
+    try:
+        os.remove (filename)
+    except:
+        pass
+
+    os.rename (tmp_filename, filename)
+
+    return filename

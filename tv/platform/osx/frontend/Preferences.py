@@ -165,7 +165,7 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
         result = panel.runModalForDirectory_file_(oldMoviesDirectory, nil)
         
         if result == NSOKButton:
-            newMoviesDirectory = panel.directory()
+            newMoviesDirectory = unicode(panel.directory())
             if newMoviesDirectory != oldMoviesDirectory:
                 self.moviesDirectoryField.setStringValue_(newMoviesDirectory)
                 summary = _(u'Migrate existing movies?')

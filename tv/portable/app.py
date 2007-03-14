@@ -330,13 +330,13 @@ class VideoDisplayBase (Display):
     def initRenderers(self):
         pass
 
-    def fileDuration (self, filename, callback):
+    def fillMovieData (self, filename, movie_data, callback):
         for renderer in self.renderers:
-            duration = renderer.fileDuration(filename)
-            if duration != -1:
-                callback (duration)
+            success = renderer.fillMovieData(filename, movie_data)
+            if success:
+                callback ()
                 return
-        callback (-1)
+        callback ()
         
     def getRendererForItem(self, anItem):
         for renderer in self.renderers:
@@ -459,8 +459,8 @@ class VideoRenderer:
     def canPlayFile(self, filename):
         return False
 
-    def fileDuration(self, filename):
-        return None
+    def fillMovieData(self, filename, movie_data):
+        return False
     
     def getDisplayTime(self):
         seconds = self.getCurrentTime()

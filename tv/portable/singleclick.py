@@ -38,7 +38,7 @@ def addVideo(path):
         if (itemFilename != '' and 
                 os.path.exists(itemFilename) and
                 platformutils.samefile(itemFilename, path)):
-            print "Not adding duplicate video: %s" % path.encode('ascii', 'ignore')
+            print "Not adding duplicate video: %s" % path.decode('ascii', 'ignore')
             commandLineVideoIds.add(i.getID())
             return
     manualFeed = util.getSingletonDDBObject(views.manualFeed)

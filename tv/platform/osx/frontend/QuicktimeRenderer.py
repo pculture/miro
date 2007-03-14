@@ -8,9 +8,12 @@ from AppKit import *
 from Foundation import *
 
 import app
+import prefs
+import config
 import qtcomp
 import platformcfg
 import platformutils
+import download_utils
 
 ###############################################################################
 
@@ -116,7 +119,8 @@ class QuicktimeRenderer (app.VideoRenderer):
             self.registerMovieObserver(qtmovie)
 
     def getMovieFromFile(self, filename):
-        url = NSURL.fileURLWithPath_(unicode(filename))
+        osfilename = platformutils.filenameTypeToOSFilename(filename)
+        url = NSURL.fileURLWithPath_(osfilename)
         if self.cachedMovie is not nil and self.cachedMovie.attributeForKey_(QTMovieURLAttribute) == url:
             qtmovie = self.cachedMovie
         else:
@@ -124,14 +128,14 @@ class QuicktimeRenderer (app.VideoRenderer):
             self.cachedMovie = qtmovie
         return qtmovie
 
-    @platformutils.onMainThreadWithReturn
-    def fileDuration(self, filename):
-        (qtmovie, error) = QTMovie.movieWithFile_error_(filename)
-        if qtmovie is None:
-            return -1
-        duration = movieDuration(qtmovie) * 1000
-        del qtmovie
-        return int(duration)
+    @platformutils.onMainThread
+    def fillMovieData(self, filename, movie_data):
+        osfilename = platformutils.filenameTypeToOSFilename(filename)
+        (qtmovie, error) = QTMovie.movieWithFile_error_(osfilename)
+        if qtmovie is not None:
+            movie_data["duration"] = int(movieDuration(qtmovie) * 1000)
+            movie_data["screenshot"] = extractIcon(qtmovie, filename)
+            del qtmovie
 
     @platformutils.onMainThread
     def play(self):
@@ -197,22 +201,19 @@ def movieDuration(qtmovie):
 
 ###############################################################################
 
-@platformutils.onMainThreadWithReturn
-def extractIconDataAtPosition(filename, position):
-    url = NSURL.fileURLWithPath_(unicode(filename))
-    (qtmovie, error) = QTMovie.alloc().initWithURL_error_(url)
+def extractIcon(qtmovie, filename):
     if qtmovie is None:
-        return None
+        return ""
 
     qttime = qtmovie.duration()
-    qttime.timeValue *= position
+    qttime.timeValue *= .5
     frame = qtmovie.frameImageAtTime_(qttime)
     if frame is None:
-        return None
+        return ""
 
     frameSize = frame.size()
     if frameSize.width == 0 or frameSize.height == 0:
-        return None
+        return ""
 
     frameRatio = frameSize.width / frameSize.height
     iconSize = NSSize(226.0, 170.0)
@@ -234,21 +235,20 @@ def extractIconDataAtPosition(filename, position):
     finally:
         icon.unlockFocus()
     
-    jpegData = None
     try:
         tiffData = icon.TIFFRepresentation()
         imageRep = NSBitmapImageRep.imageRepWithData_(tiffData)
         properties = {NSImageCompressionFactor: 0.8}
         jpegData = imageRep.representationUsingType_properties_(NSJPEGFileType, properties)
         jpegData = str(jpegData.bytes())
+        
+        target = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+        iconFilename = os.path.basename(filename) + '.jpg'
+        iconFilename = download_utils.saveData(target, iconFilename, jpegData)
+
     except:
-        pass
+        return ""
 
-    return jpegData
-
-###############################################################################
-
-import iconcache
-iconcache.registerIconExtractor(extractIconDataAtPosition)
+    return iconFilename
 
 ###############################################################################

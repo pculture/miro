@@ -195,22 +195,6 @@ def setupLogging (inDownloader=False):
 # not is it garanteed to reverse the results of filenameToUnicode
 @returnsBinary
 def unicodeToFilename(filename, path = None):
-    @returnsUnicode
-    def shortenFilename(filename):
-        checkU(filename)
-        # Find the first part and the last part
-        pieces = filename.split(u".")
-        lastpart = pieces[-1]
-        if len(pieces) > 1:
-            firstpart = u".".join(pieces[:-1])
-        else:
-            firstpart = u""
-        # If there's a first part, use that, otherwise shorten what we have
-        if len(firstpart) > 0:
-            return u"%s.%s" % (firstpart[:-1],lastpart)
-        else:
-            return filename[:-1]
-
     checkU(filename)
     if path:
         checkB(path)
@@ -229,6 +213,22 @@ def unicodeToFilename(filename, path = None):
         newFilename = filename.encode('utf-8','replace')
 
     return newFilename
+
+@returnsUnicode
+def shortenFilename(filename):
+    checkU(filename)
+    # Find the first part and the last part
+    pieces = filename.split(u".")
+    lastpart = pieces[-1]
+    if len(pieces) > 1:
+        firstpart = u".".join(pieces[:-1])
+    else:
+        firstpart = u""
+    # If there's a first part, use that, otherwise shorten what we have
+    if len(firstpart) > 0:
+        return u"%s.%s" % (firstpart[:-1],lastpart)
+    else:
+        return filename[:-1]
 
 # Given a filename in raw bytes, return the unicode representation
 #
@@ -250,4 +250,16 @@ def makeURLSafe(string):
         return urllib.quote(string).decode('ascii')
     else:
         return urllib.quote(string.encode('utf-8','replace')).decode('ascii')
-    
+
+# Takes filename given by the PyObjC bridge and turn it into a FilenameType
+@returnsBinary
+def osFilenameToFilenameType(filename):
+    return FilenameType(unicode(filename).encode('utf-8','replace'))
+
+# Takes an array of filenames given by the OS and turn them into a FilenameTypes
+def osFilenamesToFilenameTypes(filenames):
+    return [osFilenameToFilenameType(filename) for filename in filenames]
+
+# Takes a FilenameType and turn it into something the PyObjC bridge accepts.
+def filenameTypeToOSFilename(filename):
+    return filename.decode('utf-8')

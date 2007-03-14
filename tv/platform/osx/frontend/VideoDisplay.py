@@ -41,6 +41,7 @@ class PlaybackController (app.PlaybackControllerBase):
     def playItemExternally(self, itemID):
         item = app.PlaybackControllerBase.playItemExternally(self, itemID)
         moviePath = item.getVideoFilename()
+        moviePath = platformutils.filenameTypeToOSFilename(moviePath)
 
         ws = NSWorkspace.sharedWorkspace()
         ok, externalApp, movieType = ws.getInfoForFile_application_type_(moviePath)

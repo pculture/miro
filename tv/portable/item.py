@@ -65,6 +65,7 @@ class Item(DDBObject):
         self.videoFilename = FilenameType("")
         self.eligibleForAutoDownload = True
         self.duration = None
+        self.screenshot = None
         self.resumeTime = 0
 
         self.iconCache = IconCache(self)
@@ -422,6 +423,13 @@ class Item(DDBObject):
         self.seen = self.keep = self.pendingManualDL = False
         self.watchedTime = None
         self.duration = None
+        if self.screenshot:
+            try:
+                os.remove(self.screenshot)
+            except:
+                pass
+        # This should be done even if screenshot = ""
+        self.screenshot = None
         if self.getFeedURL() != "dtv:manualFeed":
             self.signalChange()
         else:
@@ -751,8 +759,9 @@ folder will be deleted.""")
     def getThumbnail (self):
         self.confirmDBThread()
         if self.iconCache.isValid():
-            basename = os.path.basename(self.iconCache.getFilename())
-            return resources.iconCacheUrl(basename)
+            return resources.absoluteUrl(self.iconCache.getFilename())
+        elif self.screenshot:
+            return resources.absoluteUrl(self.screenshot)
         elif self.isContainerItem:
             return resources.url(u"images/container-icon.png")
         else:
@@ -893,7 +902,7 @@ folder will be deleted.""")
             else:
                 label = _("REVEAL LOCAL FILE")
             link = util.makeEventURL(label, linkEventURL)
-            rv.append((_('Filename:'), u"%s<BR />%s" % (basename, link)))
+            rv.append((_('Filename:'), u"%s<BR />%s" % (platformutils.filenameToUnicode(basename), link)))
         return rv
 
 
@@ -1398,7 +1407,6 @@ folder will be deleted.""")
 
         self.confirmDBThread()
         self.downloadedTime = datetime.now()
-        self.iconCache.requestUpdate(is_vital=True)
         if not self.splitItem():
             self.signalChange()
         moviedata.movieDataUpdater.requestUpdate (self)
@@ -1502,7 +1510,7 @@ folder will be deleted.""")
         if self.isContainerItem is not None and not os.path.exists(self.getFilename()):
             self.executeExpire()
             return
-        if self.duration == None:
+        if self.duration == None or self.screenshot == None or (self.screenshot and not os.path.exists(self.screenshot)):
             moviedata.movieDataUpdater.requestUpdate (self)
 
     def __str__(self):

@@ -1027,8 +1027,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
     def getThumbnail(self):
         self.confirmDBThread()
         if self.iconCache and self.iconCache.isValid():
-            basename = os.path.basename(self.iconCache.getFilename())
-            return resources.iconCacheUrl(basename)
+            return resources.absoluteUrl(self.iconCache.getFilename())
         else:
             return defaultFeedIconURL()
 
@@ -1036,8 +1035,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
     def getTablistThumbnail(self):
         self.confirmDBThread()
         if self.iconCache.isValid():
-            basename = os.path.basename(self.iconCache.getFilename())
-            return resources.iconCacheUrl(basename)
+            return resources.absoluteUrl(self.iconCache.getFilename())
         else:
             return defaultFeedIconURLTablist()
 

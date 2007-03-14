@@ -11,6 +11,7 @@
 
 #include <glib.h>
 #include <X11/Xlib.h>
+#define XINE_ENABLE_EXPERIMENTAL_FEATURES 1
 #include <xine.h>
 
 typedef struct {
@@ -44,6 +45,13 @@ typedef struct {
         xine_video_port_t* videoPort;
         xine_audio_port_t* audioPort;
     } tester;
+    struct {
+        xine_t* xine;
+        xine_stream_t* stream;
+        xine_video_port_t* videoPort;
+        xine_audio_port_t* audioPort;
+        char *current_filename;
+    } data_mine;
 } _Xine;
 
 /* Construct a Xine object */
@@ -71,6 +79,9 @@ int xineCanPlayUrl(_Xine* xine ,const char* url);
 
 /* Set the URL to play */
 void xinePlayUrl(_Xine* xine, const char* url);
+
+/* Close the data mine stream */
+void xineDataMineClose(_Xine *xine);
 
 /* Get the playback state of xine. */
 int xineGetPlaying(_Xine* xine);

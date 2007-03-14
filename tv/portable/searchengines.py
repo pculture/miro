@@ -26,8 +26,8 @@ class SearchEngine(DDBObject):
 
     def getRequestURL (self, query, filterAdultContents, limit):
         requestURL = self.url.replace(u"%s", urlencode(query))
-        requestURL = requestURL.replace(u"%a", str(int(not filterAdultContents)))
-        requestURL = requestURL.replace(u"%l", str(int(limit)))
+        requestURL = requestURL.replace(u"%a", unicode(int(not filterAdultContents)))
+        requestURL = requestURL.replace(u"%l", unicode(int(limit)))
         return requestURL
 
 def deleteEngines():

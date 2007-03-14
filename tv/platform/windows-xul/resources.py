@@ -41,10 +41,7 @@ def path(relative_path):
 def url(relative_path):
     return "file://" + path(relative_path).replace("\\", "/")
 
-def iconCacheUrl(relative_path):
-    """Like url, but for icon cache files.  These probably don't live in the
-    resources directory because we need write access to them.
+def absoluteUrl(absolute_path):
+    """Like url, but without adding the resource directory.
     """
-    dir = config.get(prefs.ICON_CACHE_DIRECTORY)
-    path = os.path.join(dir, relative_path)
-    return "file://" + path.replace("\\", "/")
+    return "file://" + absolute_path.replace("\\", "/")

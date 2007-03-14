@@ -14,10 +14,6 @@ import views
 import random
 
 RUNNING_MAX = 3
-
-iconExtractors = list()
-def registerIconExtractor(extractor):
-    iconExtractors.append(extractor)
     
 def clearOrphans():
     knownIcons = set()
@@ -31,11 +27,13 @@ def clearOrphans():
     if os.path.isdir(cachedir):
         existingFiles = [os.path.normcase(os.path.join(cachedir, f)) 
                 for f in os.listdir(cachedir)]
-        for file in existingFiles:
-            if (os.path.exists(file) and os.path.basename(file)[0] != '.' and 
-                    not file in knownIcons):
+        for filename in existingFiles:
+            if (os.path.exists(filename) and
+                os.path.basename(filename)[0] != '.' and
+                os.path.basename(filename) != 'extracted' and
+                not filename in knownIcons):
                 try:
-                    os.remove (file)
+                    os.remove (filename)
                 except OSError:
                     pass
     
@@ -252,28 +250,14 @@ class IconCache:
             url = self.url
 
         # Only verify each icon once per run unless the url changes
-        if (self.updated and url == self.url and url is not None):
+        if (self.updated and url == self.url):
             iconCacheUpdater.updateFinished ()
             return
 
         self.updating = True
 
         # No need to extract the icon again if we already have it.
-        if url is not None and (url.startswith(u"/") or url.startswith(u"file://")):
-            iconCacheUpdater.updateFinished ()
-            return
-
-        # But if we don't have it, let's extract it from the movie file if we 
-        # can get a valid filename and if the item is currently not being 
-        # downloaded (otherwise we could get some pretty bad random crashes).
-        hasFileName = (hasattr(self.dbItem, u'getFilename') and self.dbItem.getFilename() != u'')
-        isDownloading = (hasattr(self.dbItem, u'getState') and self.dbItem.getState() == u'downloading')
-        if url is None and hasFileName and not isDownloading:
-            self.extractIconFromMovieFile()
-            return
-        
-        # Still nothing and no url? Bail.
-        if url is None:
+        if url is None or url.startswith(u"/") or url.startswith(u"file://"):
             self.errorCallback(url)
             return
 
@@ -282,34 +266,6 @@ class IconCache:
             httpclient.grabURL (url, lambda info: self.updateIconCache(url, info), lambda error: self.errorCallback(url, error), etag=self.etag, modified=self.modified)
         else:
             httpclient.grabURL (url, lambda info: self.updateIconCache(url, info), lambda error: self.errorCallback(url, error))
-
-    @asIdle
-    def extractIconFromMovieFile(self):
-        iconData = None
-        filename = self.dbItem.getFilename()
-
-        # Try all extractors. The first one to succeed wins.
-        for extract in iconExtractors:
-            iconData = extract(filename, 0.5)
-            if iconData is not None:
-                break
-
-        if iconData is None:
-            self.errorCallback(None)
-            return
-        
-        iconFilename, unused = os.path.splitext(os.path.basename(filename))
-        iconFilename = '%s.jpg' % iconFilename
-        
-        # The updateIconCache method expects HTTP-like results.
-        # So let's just pretend we  got the icon from an HTTP request :)
-        info = dict()
-        info['status'] = 200
-        info['body'] = iconData
-        info['filename'] = iconFilename
-        
-        self.updateIconCache(None, info)
-        self.url = u'file://%s' % makeURLSafe(self.filename)
 
     def requestUpdate (self, is_vital = False):
         if hasattr (self, "updating") and hasattr (self, "dbItem"):

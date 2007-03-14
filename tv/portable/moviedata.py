@@ -23,9 +23,10 @@ class MovieDataUpdater:
             self.vital.prepend(item)
 
     @asIdle
-    def updateFinished (self, item, duration):
+    def updateFinished (self, item, movie_data):
         if item.idExists():
-            item.duration = duration
+            item.duration = movie_data["duration"]
+            item.screenshot = movie_data["screenshot"]
             item.updating_movie_info = False
             item.signalChange()
 
@@ -42,8 +43,9 @@ class MovieDataUpdater:
         if item.updating_movie_info:
             return
         item.updating_movie_info = True
-        app.controller.videoDisplay.fileDuration (item.getVideoFilename(), lambda duration: self.updateFinished (item, duration))
+        movie_data = {"duration": -1, "screenshot": ""}
         self.runningCount += 1
+        app.controller.videoDisplay.fillMovieData (item.getVideoFilename(), movie_data, lambda: self.updateFinished (item, movie_data))
 
     @asIdle
     def shutdown (self):

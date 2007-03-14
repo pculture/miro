@@ -621,8 +621,8 @@ class Slider (NibClassBuilder.AutoBaseClass):
         self.showCursor = showCursor
 
     def drawRect_(self, rect):
-        self.drawTrack()
         if self.showCursor:
+            self.drawTrack()
             self.drawCursor()
 
     def drawTrack(self):

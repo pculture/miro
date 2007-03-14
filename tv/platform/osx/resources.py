@@ -16,9 +16,7 @@ def path(relative_path):
 def url(relative_path):
     return u"file://" + urllib.quote(path(relative_path).encode('utf-8'))
 
-def iconCacheUrl(relative_path):
-    """Like url, but for icon cache files.  These probably don't live in the
-    resources directory because we need write access to them.
+def absoluteUrl(absolute_path):
+    """Like url, but without adding the resource directory.
     """
-    iconCacheDir = config.get(prefs.ICON_CACHE_DIRECTORY)
-    return u"file://" + os.path.join(iconCacheDir, relative_path)
+    return u"file://" + absolute_path.decode('utf-8')

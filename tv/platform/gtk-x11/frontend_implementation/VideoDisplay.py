@@ -67,8 +67,8 @@ class VideoDisplay (app.VideoDisplayBase):
         self.renderersReady.set()
 
     @gtkAsyncMethod
-    def fileDuration (self, filename, callback):
-        app.VideoDisplayBase.fileDuration (self, filename, callback)
+    def fillMovieData (self, filename, movie_data, callback):
+        app.VideoDisplayBase.fillMovieData (self, filename, movie_data, callback)
             
     def getRendererForItem(self, anItem):
         self.renderersReady.wait()

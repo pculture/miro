@@ -618,6 +618,14 @@ def upgrade41(objectList):
         changed.add(o)
     return changed
 
+def upgrade42(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            o.savedData['screenshot'] = None
+            changed.add(o)
+    return changed
+
 #         if o.classString == 'item':
 #             objChanged = False
 #             for field in ('pendingReason','videoFilename'):
