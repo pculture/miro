@@ -12,7 +12,7 @@ from frontend_implementation import urlcallbacks
 
 class MainFrame:
     def __init__(self, appl):
-        # Symbols by other parts of the program as as arguments
+        # Symbols by other parts of the program as arguments
         # to selectDisplay
         self.mainDisplay = "mainDisplay"
         self.channelsDisplay = "channelsDisplay"
