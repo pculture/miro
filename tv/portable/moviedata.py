@@ -1,5 +1,6 @@
 from fasttypes import LinkedList
 from eventloop import asIdle
+from platformutils import FilenameType
 import app
 
 RUNNING_MAX = 3
@@ -43,7 +44,7 @@ class MovieDataUpdater:
         if item.updating_movie_info:
             return
         item.updating_movie_info = True
-        movie_data = {"duration": -1, "screenshot": ""}
+        movie_data = {"duration": -1, "screenshot": FilenameType("")}
         self.runningCount += 1
         app.controller.videoDisplay.fillMovieData (item.getVideoFilename(), movie_data, lambda: self.updateFinished (item, movie_data))
 
