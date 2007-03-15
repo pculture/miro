@@ -95,6 +95,20 @@ def initializeProxyObjects(window):
     frontend.vlcRenderer.init(window)
     frontend.jsBridge.init(window)
 
+def initializeHTTPProxy():
+    klass = components.classes["@mozilla.org/preferences-service;1"]
+    xulprefs = klass.getService(components.interfaces.nsIPrefService)
+    branch = xulprefs.getBranch("network.proxy.")
+    if config.get(prefs.HTTP_PROXY_ACTIVE):                     
+        branch.setIntPref("type",1)
+        branch.setCharPref("http", config.get(prefs.HTTP_PROXY_HOST))
+        branch.setCharPref("ssl", config.get(prefs.HTTP_PROXY_HOST))
+        branch.setIntPref("http_port", config.get(prefs.HTTP_PROXY_PORT))
+        branch.setIntPref("ssl_port", config.get(prefs.HTTP_PROXY_PORT))
+        branch.setBoolPref("share_proxy_settings", True)
+    else:
+        branch.setIntPref("type",0)
+        
 def getArgumentList(commandLine):
     """Convert a nsICommandLine component to a list of arguments to pass
     to the singleclick module."""
@@ -148,8 +162,16 @@ class PyBridge:
 
         initializeProxyObjects(window)
         app.main()
-        views.initialize()
+        initializeHTTPProxy()
+
+        # This needs to be put into the urgent queue before
+        # initializeSearchEngines to avoid a race
+        self.initializeViews()
         self.initializeSearchEngines()
+
+    @asUrgent
+    def initializeViews(self):
+        views.initialize()
 
     def onShutdown(self):
         frontend.vlcRenderer.stop()
