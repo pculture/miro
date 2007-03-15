@@ -20,6 +20,7 @@ import views
 import platformutils
 import flashscraper
 import logging
+import traceback
 
 # a hash of download ids that the server knows about.
 _downloads = {}
