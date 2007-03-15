@@ -13,16 +13,21 @@ import filters
 import maps
 import sorts
 
-from threading import Lock
-initlock = Lock()
+from threading import Condition
+initcond = Condition()
 initialized = False
+    
+def waitForInit():
+    global initcond, initialized
+    initcond.acquire()
+    if not initialized:
+        initcond.wait()
+    initcond.release()
 
 def initialize():
-    global initialized, initlock
-    initlock.acquire()
+    global initcond, initialized
+    initcond.acquire()
     try:
-        if initialized:
-            return
         initialized = True
         global allTabs, guideTabs, staticTabs, feedTabs, playlistTabs
         global selectedTabs, tabOrders, channelTabOrder, playlistTabOrder
@@ -112,4 +117,5 @@ def initialize():
                                            searchengines.SearchEngine)
         searchEngines = searchEngines.sort(sorts.searchEngines)
     finally:
-        initlock.release()
+        initcond.notify()
+        initcond.release()
