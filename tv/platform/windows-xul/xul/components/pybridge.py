@@ -163,6 +163,7 @@ class PyBridge:
         initializeProxyObjects(window)
         app.main()
         initializeHTTPProxy()
+        views.waitForInit()
         self.initializeSearchEngines()
 
     @asUrgent
@@ -502,7 +503,6 @@ class PyBridge:
 
     @asUrgent
     def initializeSearchEngines(self):
-        views.waitForInit()
         # Send the search engine info to jsbridge.  This is a little tricky
         # because we need to access views.searchEngines from the main thread.
         names = []
