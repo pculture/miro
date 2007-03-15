@@ -148,6 +148,7 @@ class PyBridge:
 
         initializeProxyObjects(window)
         app.main()
+        views.initialize()
         self.initializeSearchEngines()
 
     def onShutdown(self):
