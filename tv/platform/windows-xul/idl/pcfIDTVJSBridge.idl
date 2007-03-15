@@ -8,15 +8,15 @@ interface pcfIDTVJSBridge : nsISupports
 {
   void init(in nsIDOMWindow window);
   void closeWindow();
-  void xulNavigateDisplay(in string area, in AString uri);
-  void xulAddElementAtEnd(in string area, in AString xml, in AString id);
-  void xulAddElementBefore(in string area, in AString xml, in AString id);
-  void xulRemoveElement(in string area, in AString id);
-  void xulChangeElement(in string area, in AString id, in AString xml);
-  void xulChangeAttribute(in string area, in AString id, in AString name, in AString value);
-  void xulRemoveAttribute(in string area, in AString id, in AString name);
-  void xulHideElement(in string area, in AString id);
-  void xulShowElement(in string area, in AString id);
+  void xulNavigateDisplay(in AString area, in AString uri);
+  void xulAddElementAtEnd(in AString area, in AString xml, in AString id);
+  void xulAddElementBefore(in AString area, in AString xml, in AString id);
+  void xulRemoveElement(in AString area, in AString id);
+  void xulChangeElement(in AString area, in AString id, in AString xml);
+  void xulChangeAttribute(in AString area, in AString id, in AString name, in AString value);
+  void xulRemoveAttribute(in AString area, in AString id, in AString name);
+  void xulHideElement(in AString area, in AString id);
+  void xulShowElement(in AString area, in AString id);
   void copyTextToClipboard(in AString text);
   void showContextMenu(in AString menuItems);
   void showSearchMenu();

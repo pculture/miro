@@ -7,8 +7,8 @@ interface pcfIDTVVLCRenderer : nsISupports
 {
     void init(in nsIDOMWindow window);
     void reset();
-    boolean canPlayURL(in string url);
-    void selectURL(in string url);
+    boolean canPlayURL(in AString url);
+    void selectURL(in AString url);
     void play();
     void pause();
     void pauseForDrag();

@@ -14,8 +14,8 @@ interface pcfIDTVPyBridge : nsISupports
   void onStartup(in nsIDOMWindow window);
   void onShutdown();
   void handleCommandLine(in nsICommandLine commandLine);
-  void pageLoadFinished(in string area, in AString url);
-  void performSearch(in string engine, in string query);
+  void pageLoadFinished(in AString area, in AString url);
+  void performSearch(in AString engine, in AString query);
   void setVolume(in float volume);
   void quit();
   void removeCurrentChannel();
@@ -28,15 +28,15 @@ interface pcfIDTVPyBridge : nsISupports
   void handleSimpleDialog(in unsigned long id, 
         in unsigned short buttonIndex);
   void handleHTTPAuthDialog(in unsigned long id, 
-          in unsigned short buttonIndex, in string username, 
-          in string password);
+          in unsigned short buttonIndex, in AString username, 
+          in AString password);
   void handleTextEntryDialog(in unsigned long id, 
-        in unsigned short buttonIndex, in string text);
+        in unsigned short buttonIndex, in AString text);
   void handleSearchChannelDialog(in unsigned long id, 
-        in unsigned short buttonIndex, in string term,
-        in unsigned short style, in string loc);
+        in unsigned short buttonIndex, in AString term,
+        in unsigned short style, in AString loc);
   void openURL(in AString url);
-  void loadURLInBrowser(in string browserAreaId, in AString url);
+  void loadURLInBrowser(in AString browserAreaId, in AString url);
   void skip(in short step);
   void skipPrevious();
   void onMovieFinished();
@@ -79,7 +79,7 @@ interface pcfIDTVPyBridge : nsISupports
   void createNewPlaylistFolder();
   void createNewSearchChannel();
   void createNewChannelFolder();
-  void handleDrop(in string dropData, in string dropType, in string sourceData);
+  void handleDrop(in AString dropData, in AString dropType, in AString sourceData);
   void removeCurrentSelection();
   void checkForUpdates();
   void removeCurrentItems();
