@@ -88,6 +88,8 @@ DOWNLOADER_LOG_PATHNAME = \
     Pref(key='DownloaderLogPathname', default=None, platformSpecific=True)
 GETTEXT_PATHNAME = \
     Pref(key='GetTextPathname', default=None, platformSpecific=True)
+HTTP_PROXY_SCHEME = \
+    Pref(key='HttpProxyScheme', default='http', platformSpecific=True)
 HTTP_PROXY_ACTIVE = \
     Pref(key='HttpProxyActive', default=False, platformSpecific=True)
 HTTP_PROXY_HOST = \
