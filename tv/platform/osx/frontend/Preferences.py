@@ -227,8 +227,14 @@ class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
 class PlaybackPrefsController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
+        remember = config.get(prefs.RESUME_VIDEOS_MODE)
+        self.rememberCheckBox.setState_(remember and NSOnState or NSOffState)
         singleMode = config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         self.modesMatrix.selectCellWithTag_(int(singleMode))
+
+    def rememberVideoPosition_(self, sender):
+        remember = (sender.state() == NSOnState)
+        config.set(prefs.RESUME_VIDEOS_MODE, remember)
 
     def setPlaybackMode_(self, sender):
         singleMode = bool(sender.selectedCell().tag())

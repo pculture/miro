@@ -80,6 +80,9 @@
 /* NSButtonCell (Play videos one after another.) : <title:Play videos one after another.> (oid:103) */
 "Play videos one after another." = "Play videos one after another.";
 
+/* NSButton (Remember video position.) : <title:Remember video position.> (oid:138) */
+"Remember video position." = "Remember video position.";
+
 /* NSButton (Run Democracy at startup) : <title:Run Democracy at startup> (oid:47) */
 "Run Democracy at startup" = "Run Democracy at startup";
 

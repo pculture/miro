@@ -48,10 +48,10 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {setPlaybackMode = id; }; 
+            ACTIONS = {rememberVideoPosition = id; setPlaybackMode = id; }; 
             CLASS = PlaybackPrefsController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {modesMatrix = id; }; 
+            OUTLETS = {modesMatrix = id; rememberCheckBox = id; }; 
             SUPERCLASS = NSObject; 
         }, 
         {
