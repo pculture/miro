@@ -48,6 +48,22 @@ user_pref("general.useragent.vendorComment", %s);
 """ % (repr(config.get(prefs.LONG_APP_NAME)),
        repr(config.get(prefs.APP_VERSION)),
        repr(config.get(prefs.PROJECT_URL)))
+
+    if config.get(prefs.HTTP_PROXY_ACTIVE):
+        prefsContent += """\
+user_pref("network.proxy.type", 1);
+user_pref("network.proxy.http", %s);
+user_pref("network.proxy.http_port", %d);
+user_pref("network.proxy.ssl", %s);
+user_pref("network.proxy.ssl_port", %d);
+user_pref("network.proxy.share_proxy_settings", true);
+""" % (repr(str(config.get(prefs.HTTP_PROXY_HOST))),
+       config.get(prefs.HTTP_PROXY_PORT),
+       repr(str(config.get(prefs.HTTP_PROXY_HOST))),
+       config.get(prefs.HTTP_PROXY_PORT))
+       
+
+
     prefsPath = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), 'mozilla',
             'prefs.js')
     f = open(prefsPath, "wt")
