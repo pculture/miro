@@ -515,6 +515,60 @@ class AsyncSSLStream(AsyncSocket):
                 self.interruptedOperation = None
             self.handleReadData(data)
 
+class ProxiedAsyncSSLStream(AsyncSSLStream):
+    def openConnection(self, host, port, callback, errback):
+        def onSocketOpen(self):
+            self.socket.setblocking(1)
+            eventloop.callInThread(onSSLOpen, handleSSLError, lambda: openProxyConnection(self),
+                                   "ProxiedAsyncSSL openProxyConnection()")
+        def openProxyConnection(self):
+            headers = {'User-Agent': '%s/%s (%s)' %(
+                config.get(prefs.SHORT_APP_NAME),
+                config.get(prefs.APP_VERSION),
+                config.get(prefs.PROJECT_URL)),
+                "Host": host}
+            if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
+                username = config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)
+                password = config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD)
+                authString = username+':'+password
+                authString = b64encode(authString)
+                headers['ProxyAuthorization'] = "Basic " + authString
+
+            connectString = "CONNECT %s:%d HTTP/1.1\r\n" % (host,port)
+            for header, value in headers.items():
+                connectString += ('%s: %s\r\n' % (header, value))
+            connectString += "\r\n"
+
+            try:
+                self.socket.send(connectString)
+                data = ""
+                while (data.find("\r\n\r\n") == -1):
+                    data += self.socket.recv(1)
+                data = data.split("\r\n")
+                if (-1 == data[0].find(' 200 ')):
+                    handleSSLError("Can't connect")
+                else:
+                    ssl = socket.ssl(self.socket)
+                    return ssl
+            except socket.error, (code, msg):
+                handleSSLError(msg)
+
+        def onSSLOpen(ssl):
+            if self.socket is None:
+                # the connection was closed while we were calling socket.ssl
+                return
+            self.socket.setblocking(0)
+            self.ssl = ssl
+            # finally we can call the actuall callback
+            callback(self)
+        def handleSSLError(error):
+            errback(SSLConnectionError())
+        proxy_host = config.get(prefs.HTTP_PROXY_HOST)
+        proxy_port = config.get(prefs.HTTP_PROXY_PORT)
+        AsyncSocket.openConnection(self, proxy_host, proxy_port, onSocketOpen,
+                errback)
+    
+    
 class ConnectionHandler(object):
     """Base class to handle asynchronous network streams.  It implements a
     simple state machine to deal with incomming data.
@@ -1043,6 +1097,10 @@ class HTTPSConnection(HTTPConnection):
     streamFactory = AsyncSSLStream
     scheme = 'https'
 
+class ProxyHTTPSConnection(HTTPConnection):
+    streamFactory = ProxiedAsyncSSLStream
+    scheme = 'https'
+
 class HTTPConnectionPool(object):
     """Handle a pool of HTTP connections.
 
@@ -1057,6 +1115,7 @@ class HTTPConnectionPool(object):
 
     HTTP_CONN = HTTPConnection
     HTTPS_CONN = HTTPSConnection
+    PROXY_HTTPS_CONN = ProxyHTTPSConnection
     MAX_CONNECTIONS_PER_SERVER = 2 
     CONNECTION_TIMEOUT = 300
     MAX_CONNECTIONS = 30
@@ -1127,12 +1186,14 @@ class HTTPConnectionPool(object):
         if scheme not in ['http', 'https'] or host == '' or path == '':
             errback (MalformedURL(url))
             return
-        if config.get(prefs.HTTP_PROXY_ACTIVE): # using proxy
-            scheme = config.get(prefs.HTTP_PROXY_SCHEME)
+        # using proxy
+        # NOTE: The code for HTTPS over a proxy is in _makeNewConnection()
+        if scheme == 'http' and config.get(prefs.HTTP_PROXY_ACTIVE):
             proxy_host = config.get(prefs.HTTP_PROXY_HOST)
             proxy_port = config.get(prefs.HTTP_PROXY_PORT)
             if proxy_host and proxy_port:
                 path = url
+                scheme = config.get(prefs.HTTP_PROXY_SCHEME)
                 host = proxy_host
                 port = proxy_port
                 if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
@@ -1200,14 +1261,25 @@ class HTTPConnectionPool(object):
                 self.activeConnectionCount -= 1
             req['errback'](error)
 
-        if req['scheme'] == 'http':
-            conn = self.HTTP_CONN(self._onConnectionClosed,
-                    self._onConnectionReady) 
-        elif req['scheme'] == 'https':
-            conn = self.HTTPS_CONN(self._onConnectionClosed,
-                    self._onConnectionReady) 
+        # using proxy
+        #
+        # NOTE: The code for HTTP over a proxy is in addRequest()
+        if req['scheme'] == 'https' and config.get(prefs.HTTP_PROXY_ACTIVE):
+            connect_scheme = 'proxied_https'
         else:
-            raise AssertionError ("Code shouldn't reach here.")
+            connect_scheme = req['scheme']
+
+        if connect_scheme == 'http':
+            conn = self.HTTP_CONN(self._onConnectionClosed,
+                    self._onConnectionReady)
+        elif connect_scheme == 'https':
+            conn = self.HTTPS_CONN(self._onConnectionClosed,
+                    self._onConnectionReady)
+        elif connect_scheme == 'proxied_https':
+            conn = self.PROXY_HTTPS_CONN(self._onConnectionClosed,
+                    self._onConnectionReady)
+        else:
+            raise AssertionError ("Code shouldn't reach here. (connect scheme %s)" % connect_scheme)
 
         # This needs to be in an idle so that the connection is added
         # to the "active" list before the open callback happens --NN
