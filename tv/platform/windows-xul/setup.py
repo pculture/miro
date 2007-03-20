@@ -28,7 +28,7 @@ BINARY_KIT_ROOT = defaultBinaryKitRoot
 
 # Set BOOST_LIB, BOOST_INCLUDE_PATH, and BOOST_RUNTIMES as appropriate
 # for the location of Boost, the version you built, and the compiler
-# you used. If you are unsure, search you hard drive for a file named
+# you used. If you are unsure, search your hard drive for a file named
 # "boost_python*". If there is more than one, you probably already
 # know what you're doing.
 # NEEDS: better accomodate non-vc71 compilers in binary kit?
