@@ -128,7 +128,7 @@ def unicodeToFilename(filename, path = None):
 
     newFilename = filename
     while len(newFilename) > MAX_LEN:
-        newFilename = shortenFilename(filename)
+        newFilename = shortenFilename(newFilename)
 
     return newFilename
 
