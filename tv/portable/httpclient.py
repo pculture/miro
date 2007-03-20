@@ -545,16 +545,15 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
                 while (data.find("\r\n\r\n") == -1):
                     data += self.socket.recv(1)
                 data = data.split("\r\n")
-                if (-1 == data[0].find(' 200 ')):
-                    handleSSLError("Can't connect")
+                if (-1 == data[0].find(' 200 ')):                   
+                    eventloop.addIdle(lambda :handleSSLError(NetworkError(data[0])),"Network Error")
                 else:
-                    ssl = socket.ssl(self.socket)
-                    return ssl
+                    return socket.ssl(self.socket)
             except socket.error, (code, msg):
                 handleSSLError(msg)
 
         def onSSLOpen(ssl):
-            if self.socket is None:
+            if self.socket is None or ssl is None:
                 # the connection was closed while we were calling socket.ssl
                 return
             self.socket.setblocking(0)
