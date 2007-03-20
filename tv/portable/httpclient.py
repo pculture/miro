@@ -1,7 +1,7 @@
 """httpclient.py 
 
 Implements an HTTP client.  The main way that this module is used is the
-grabURL function that that's an asynchronous version of our old grabURL.
+grabURL function that's an asynchronous version of our old grabURL.
 
 A lot of the code here comes from inspection of the httplib standard module.
 Some of it was taken more-or-less directly from there.  I (Ben Dean-Kawamura)
