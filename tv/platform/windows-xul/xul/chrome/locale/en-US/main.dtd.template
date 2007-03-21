@@ -46,7 +46,7 @@
 
 <!ENTITY main.menu.help "Help">
 <!ENTITY main.menu.help.about "About $longAppName">	
-<!ENTITY main.menu.help.donate "Donate to the Democracy project">
+<!ENTITY main.menu.help.donate "Donate to the $longAppName project">
 
 <!ENTITY main.menu.file.access "F">
 <!ENTITY main.menu.file.open.access "O">
@@ -97,7 +97,7 @@
 <!ENTITY main.menu.channel.add.accel "Ctrl+N">
 <!ENTITY main.menu.channel.newchannelfolder.accel "Ctrl+Shift+N">
 <!ENTITY main.menu.playlist.newplaylist.accel "Ctrl+P">
-<!ENTITY main.menu.playlist.newplaylistfolder.accel "Ctrl+Shitf+P">
+<!ENTITY main.menu.playlist.newplaylistfolder.accel "Ctrl+Shift+P">
 <!ENTITY main.menu.playback.play.accel "Space">
 <!ENTITY main.menu.playback.stop.accel "Ctrl+D">
 <!ENTITY main.menu.playback.next.accel "Right">
