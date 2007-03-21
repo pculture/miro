@@ -13,7 +13,6 @@ from util import quoteJS
 import platformutils
 from util import checkU
 
-import md5
 import os
 import re
 
@@ -147,9 +146,8 @@ class HTMLDisplayImpl:
         if (display.baseURL == app.controller.guideURL and
                 display.baseURL is not None):
             self.removeFile = False
-            baseURLHashed = md5.md5(display.baseURL).hexdigest()
             self.location = os.path.join(config.get(prefs.SUPPORT_DIRECTORY),
-                    'channelguide-%s.html' % baseURLHashed)
+                    'democracy-channel-guide.html')
             handle = open(self.location, 'w')
         else:
             self.removeFile = True
