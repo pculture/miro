@@ -53,7 +53,7 @@ def findSubscribeLinks(url):
         return []
     if host != 'subscribe.getdemocracy.com':
         return []
-    if path == '/':
+    if path in ('/', '/opml.php'):
         urls = []
         for key, value in cgi.parse_qs(query).items():
             if re.match(r'url\d+$', key):

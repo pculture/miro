@@ -21,7 +21,7 @@ class MainFrame:
         # Displays selected in each area, for generating deselection
         # messages.
         self.selectedDisplays = {}
-        urlcallbacks.installChannelGuideCallback(self.channelGuideCallback)
+        urlcallbacks.installMainDisplayCallback(self.mainDisplayCallback)
 
     def onSelectedTabChange(self, strings, actionGroups, guideURL,
             videoFilename):
@@ -62,9 +62,8 @@ class MainFrame:
                 frontend.jsBridge.hideVideoDisplay()
                 frontend.jsBridge.leaveFullscreen()
 
-    def channelGuideCallback(self, url):
+    def mainDisplayCallback(self, url):
         try:
-            # assume all channel guide URLS come from the mainDisplay
             return self.selectedDisplays[self.mainDisplay].onURLLoad(url)
         except KeyError:
             return True

@@ -12,11 +12,9 @@ import prefs
 from threading import Lock
 
 callbacks = {}
-channelGuideCallback = None
-# We specialcase all urls that begin with
-# "https://channelguide.particapatoryculture.org" to a single callback (the
-# mainDisplay HTTPArea registers for it).  FIXME: we may want a cleaner way
-# to do this.
+mainDisplayCallback = None
+# We assume all urls that don't begin with file:// go to the mainDisplay
+# FIXME: we may want a cleaner way to do this.
 callbacksLock = Lock()
 
 def installCallback(referrer, callback):
@@ -31,13 +29,13 @@ def installCallback(referrer, callback):
     finally:
         callbacksLock.release()
 
-def installChannelGuideCallback(callback):
+def installMainDisplayCallback(callback):
     """Install a callback for urls where the referrerer is any channel guide
     page.  """
-    global channelGuideCallback
+    global mainDisplayCallback
     callbacksLock.acquire()
     try:
-        channelGuideCallback = callback
+        mainDisplayCallback = callback
     finally:
         callbacksLock.release()
 
@@ -62,10 +60,9 @@ def runCallback(referrerURL, url):
         try:
             callback = callbacks[referrerURL]
         except KeyError:
-            cgStart = config.get(prefs.CHANNEL_GUIDE_URL)
-            if (referrerURL.startswith(cgStart) and
-                    channelGuideCallback is not None):
-                callback = channelGuideCallback
+            if (not url.startswith("file://") and 
+                    mainDisplayCallback is not None):
+                callback = mainDisplayCallback
             else:
                 return True
     finally:
