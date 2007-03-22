@@ -1405,24 +1405,11 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 path = url[len(u"file://"):]
                 return os.path.exists(path)
 
-            if url.startswith(u'feed://'):
-                url = u"http://" + url[len(u"feed://"):]
-                f = feed.getFeedByURL(url)
-                if f is None:
-                    f = feed.Feed(url)
-                f.blink()
-                return False
-
-            # check for subscribe.getdemocracy.com links
-            subscribeLinks = subscription.findSubscribeLinks(url)
-            if subscribeLinks:
-                eventloop.addIdle (lambda: self.addSubscribeLinks(subscribeLinks), "Add subscribe links")
-                return False
-
             # If we get here, this isn't a DTV URL. We should open it
             # in an external browser.
             if (url.startswith(u'http://') or url.startswith(u'https://') or
-                url.startswith(u'ftp://') or url.startswith(u'mailto:')):
+                url.startswith(u'ftp://') or url.startswith(u'mailto:') or
+                url.startswith(u'feed://')):
                 self.handleCandidateExternalURL(url)
                 return False
 
@@ -1449,6 +1436,15 @@ class TemplateDisplay(frontend.HTMLDisplay):
         if subscribeLinks:
             self.addSubscribeLinks(subscribeLinks)
             return
+
+        if url.startswith(u'feed://'):
+            url = u"http://" + url[len(u"feed://"):]
+            f = feed.getFeedByURL(url)
+            if f is None:
+                f = feed.Feed(url)
+            f.blink()
+            return
+
         delegate.openExternalURL(url)
 
     @eventloop.asUrgent
