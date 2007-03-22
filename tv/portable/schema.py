@@ -228,7 +228,7 @@ class ObjectSchema(object):
 from database import DDBObject
 from downloader import RemoteDownloader, HTTPAuthPassword
 from feed import Feed, FeedImpl, RSSFeedImpl, ScraperFeedImpl
-from feed import SearchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
+from feed import SearchFeedImpl, DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
 from feed import ManualFeedImpl
 from folder import ChannelFolder, PlaylistFolder
 from guide import ChannelGuide
@@ -354,6 +354,14 @@ class SearchFeedImplSchema(FeedImplSchema):
         ('lastQuery', SchemaString()),
     ]
 
+class DirectoryWatchFeedImplSchema(FeedImplSchema):
+    klass = DirectoryWatchFeedImpl
+    classString = 'directory-watch-feed-impl'
+    fields = FeedImplSchema.fields + [
+        ('firstUpdate', SchemaBool()),
+        ('dir', SchemaFilename(noneOk=True)),
+        ]
+
 class DirectoryFeedImplSchema(FeedImplSchema):
     klass = DirectoryFeedImpl
     classString = 'directory-feed-impl'
@@ -436,11 +444,11 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('redirectedURL', SchemaURL(noneOk=True)),
     ]
 
-VERSION = 42
+VERSION = 43
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
-    SearchFeedImplSchema, DirectoryFeedImplSchema,
+    SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
     HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,

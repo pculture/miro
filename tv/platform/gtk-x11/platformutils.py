@@ -141,13 +141,20 @@ def filenameToUnicode(filename, path = None):
 # Takes in a byte string or a unicode string and does the right thing
 # to make a URL
 @returnsUnicode
-def makeURLSafe(string):
+def makeURLSafe(string, safe = '/'):
     if type(string) == str:
         # quote the byte string
-        return urllib.quote(string).decode('ascii')
+        return urllib.quote(string, safe = safe).decode('ascii')
     else:
         try:
-            return urllib.quote(string.encode(locale.getpreferredencoding())).decode('ascii')
+            return urllib.quote(string.encode(locale.getpreferredencoding()), safe = safe).decode('ascii')
         except:
             return string.decode('ascii','replace')
+    
+# Undoes makeURLSafe (assuming it was passed a filenameType)
+@returnsBinary
+def unmakeURLSafe(string):
+    # unquote the byte string
+    checkU(string)
+    return urllib.unquote(string.encode('ascii'))
     

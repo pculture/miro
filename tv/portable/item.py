@@ -199,7 +199,7 @@ class Item(DDBObject):
                         self.videoFilename = self.videoFilename[1:]
                     self.isVideo = True
             else:
-                if self.getFeedURL() != u"dtv:directoryfeed":
+                if not self.getFeedURL().startswith ("dtv:directoryfeed"):
                     target_dir = config.get(prefs.NON_VIDEO_DIRECTORY)
                     if not filename_root.startswith(target_dir):
                         if isinstance(self, FileItem):
@@ -1608,20 +1608,20 @@ class FileItem(Item):
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()
-        if self.feed_id is None: 
-            # child of a container item
+        if not os.path.exists (self.filename):
+            # item whose file has been deleted outside of DP
             self.remove()
-            dler = self.getParent().downloader
-            if dler:
-                dler.stop(False)
-            self.deleteFiles()
-        elif not os.path.exists (self.filename): 
-            # external item whose file has been deleted outside of DP
-            self.remove()
-        else:
-            # external item that the user deleted in DP
+        elif self.feed_id is None: 
             self.deleted = True
             self.signalChange()
+        else:
+            # external item that the user deleted in DP
+            url = self.getFeedURL()
+            if url.startswith ("dtv:manualFeed"):
+                self.remove()
+            else:
+                self.deleted = True
+                self.signalChange()
 
     def expire(self):
         if not self.isExternal():
@@ -1653,6 +1653,10 @@ Collection?""")
 
     def deleteFiles(self):
         try:
+            if self.getParent():
+                dler = self.getParent().downloader
+                if dler:
+                    dler.stop(False)
             if os.path.isfile(self.filename):
                 os.remove(self.filename)
             elif os.path.isdir(self.filename):

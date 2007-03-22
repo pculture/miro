@@ -1053,7 +1053,7 @@ class LiveStorage:
                         data = cPickle.dumps(o,cPickle.HIGHEST_PROTOCOL)
                         self.cursor.execute("REPLACE INTO dtv_objects (id, serialized_object) VALUES (?,?)",(int(o.savedData['id']), buffer(data)))
                     else:
-                        self.cursor.execute("DELETE FROM dtv_objects WHERE id=?",int(o.savedData['id']))
+                        self.cursor.execute("DELETE FROM dtv_objects WHERE id=?", (int(o.savedData['id']),))
             self.version = schema_mod.VERSION
             self.cursor.execute("REPLACE INTO dtv_variables (name, serialized_value) VALUES (?,?)",(VERSION_KEY, buffer(cPickle.dumps(self.version,cPickle.HIGHEST_PROTOCOL))))
 

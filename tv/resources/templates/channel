@@ -174,7 +174,7 @@ if feed.idExists():
         <div t:updateForView="thisFeedView">
           <img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
         </div>
-        <div class="main-titlebar-right">
+        <div class="main-titlebar-right" t:hideIf="feed.getURL().startswith('dtv:directoryfeed')" t:updateHideOnView="thisFeedView">
             <ul>
                 <li t:hideIf="feed.getLink() == ''">
                     <a href="***feed.getLink()***" class="round-button-left black">
@@ -214,7 +214,7 @@ if feed.idExists():
             <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find in channel')***"/>
         </div>
         <div t:updateForView="matchingItems">
-        <div t:hideIf="searchTerm is None">
+        <div t:hideIf="searchTerm is None or feed.getURL().startswith('dtv:directoryfeed')">
             <div class="white-button-left save-search-channel">
             <div class="white-button-right">
             <div class="white-button-middle">

@@ -73,7 +73,7 @@
 
     <div id="main-titlebar-auto">
         <div t:updateForView="thisFeedView">
-            <div t:hideIf="isFolder">
+            <div t:hideIf="isFolder or feed.getURL().startswith('dtv:directoryfeed')">
                 <div class="auto-download">
                     <span id="auto-label" i18n:translate="">AUTO DOWNLOAD</span>
                     <div class="select-box-left" onclick="showSelectBoxMenu('auto-download-menu');">

@@ -928,31 +928,27 @@ You must download the latest version of Democracy and run that.""")
         return self.removeFeeds([feed])
 
     def removeFeeds(self, feeds):
+        downloads = False
+        downloading = False
+        allDirectories = True
         for feed in feeds:
-            if feed.hasDownloadedItems():
-                self.removeFeedsWithDownloads(feeds)
-                return
-        self.removeFeedsWithoutDownloads(feeds)
-
-    def removeFeedsWithoutDownloads(self, feeds):
-        if len(feeds) == 1:
-            title = _('Remove %s') % feeds[0].getTitle()
-            description = _("""\
-Are you sure you want to remove %s?  Any downloads in progress will \
-be canceled.""") % feeds[0].getTitle()
+            # We only care about downloaded items in non directory feeds.
+            if not feed.getURL().startswith("dtv:directoryfeed"):
+                print feed.getURL()
+                allDirectories = False
+                if feed.hasDownloadedItems():
+                    downloads = True
+                    break
+                if feed.hasDownloadingItems():
+                    downloading = True
+        if downloads:
+            self.removeFeedsWithDownloads(feeds)
+        elif downloading:
+            self.removeFeedsWithDownloading(feeds)
+        elif allDirectories:
+            self.removeDirectoryFeeds(feeds)
         else:
-            title = _('Remove %s channels') % len(feeds)
-            description = _("""\
-Are you sure you want to remove these %s channels?  Any downloads in \
-progress will be canceled.""") % len(feeds)
-        dialog = dialogs.ChoiceDialog(title, description, 
-                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
-        def dialogCallback(dialog):
-            if dialog.choice == dialogs.BUTTON_YES:
-                for feed in feeds:
-                    if feed.idExists():
-                        feed.remove()
-        dialog.run(dialogCallback)
+            self.removeFeedsNormal(feeds)
 
     def removeFeedsWithDownloads(self, feeds):
         if len(feeds) == 1:
@@ -975,6 +971,62 @@ downloaded?""")
                     if feed.idExists():
                         feed.remove(moveItemsTo=manualFeed)
             elif dialog.choice == dialogs.BUTTON_DELETE_VIDEOS:
+                for feed in feeds:
+                    if feed.idExists():
+                        feed.remove()
+        dialog.run(dialogCallback)
+
+    def removeFeedsWithDownloading(self, feeds):
+        if len(feeds) == 1:
+            title = _('Remove %s') % feeds[0].getTitle()
+            description = _("""\
+Are you sure you want to remove %s?  Any downloads in progress will \
+be canceled.""") % feeds[0].getTitle()
+        else:
+            title = _('Remove %s channels') % len(feeds)
+            description = _("""\
+Are you sure you want to remove these %s channels?  Any downloads in \
+progress will be canceled.""") % len(feeds)
+        dialog = dialogs.ChoiceDialog(title, description, 
+                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
+        def dialogCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_YES:
+                for feed in feeds:
+                    if feed.idExists():
+                        feed.remove()
+        dialog.run(dialogCallback)
+
+    def removeFeedsNormal(self, feeds):
+        if len(feeds) == 1:
+            title = _('Remove %s') % feeds[0].getTitle()
+            description = _("""\
+Are you sure you want to remove %s?""") % feeds[0].getTitle()
+        else:
+            title = _('Remove %s channels') % len(feeds)
+            description = _("""\
+Are you sure you want to remove these %s channels?""") % len(feeds)
+        dialog = dialogs.ChoiceDialog(title, description, 
+                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
+        def dialogCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_YES:
+                for feed in feeds:
+                    if feed.idExists():
+                        feed.remove()
+        dialog.run(dialogCallback)
+
+    def removeDirectoryFeeds(self, feeds):
+        if len(feeds) == 1:
+            title = _('Stop watching %s') % feeds[0].getTitle()
+            description = _("""\
+Are you sure you want to stop watching %s?""") % feeds[0].getTitle()
+        else:
+            title = _('Stop watching %s directories') % len(feeds)
+            description = _("""\
+Are you sure you want to stop watching these %s directories?""") % len(feeds)
+        dialog = dialogs.ChoiceDialog(title, description, 
+                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
+        def dialogCallback(dialog):
+            if dialog.choice == dialogs.BUTTON_YES:
                 for feed in feeds:
                     if feed.idExists():
                         feed.remove()

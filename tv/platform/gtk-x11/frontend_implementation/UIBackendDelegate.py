@@ -502,4 +502,4 @@ class UIBackendDelegate:
         # run the Democracy_Downloader script
         script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
 
-        os.spawnlpe(os.P_NOWAIT, "python2.4", "python2.4", script, environ)
+        os.spawnlpe(os.P_NOWAIT, "python", "python", script, environ)

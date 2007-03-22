@@ -146,6 +146,12 @@ def filenameToUnicode(filename, path = None):
 # Takes in a byte string or a unicode string and does the right thing
 # to make a URL
 @returnsUnicode
-def makeURLSafe(string):
+def makeURLSafe(string, safe = '/'):
     checkU(string)
-    return urllib.quote(string.encode('utf_16')).decode('ascii')
+    return urllib.quote(string.encode('utf_16'), safe=safe).decode('ascii')
+
+# Undoes makeURLSafe
+@returnsUnicode
+def unmakeURLSafe(string):
+    checkU(string)
+    return urllib.unquote(string.encode('ascii')).decode('utf_16')

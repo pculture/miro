@@ -20,6 +20,10 @@ import playlist
 import platformutils
 import startup
 import logging
+import feed
+import views
+import database
+from gtk_queue import gtkAsyncMethod
 from gtcache import gettext as _
  
 def AttachBoolean (dialog, widget, descriptor, sensitive_widget = None):
@@ -80,22 +84,40 @@ def AttachCombo (dialog, widget, descriptor, values):
             break
     widget.connect ('changed', ComboChanged)
 
-def SetupDirList (widgetTree):
+def SetupDirList (widgetTree, toggleRenderer):
     def SelectionChanged (selection):
-        if selection.get_selected()[1]:
+        if selection.count_selected_rows() > 0:
             widgetTree["button-collection-dirs-remove"].set_sensitive (True)
         else:
             widgetTree["button-collection-dirs-remove"].set_sensitive (False)
-    def SaveDirList():
-        model = widgetTree["treeview-collection-dirs"].get_model()
-        config.setList (prefs.MY_COLLECTION_DIRS, [dir for (dir,) in model])
 
+    @eventloop.asIdle
+    def removeFeeds (ids):
+        feeds = []
+        for id in ids:
+            try:
+                feeds.append(database.defaultDatabase.getObjectByID (id))
+            except:
+                pass
+        app.controller.removeFeeds (feeds)
+
+    @eventloop.asIdle
+    def addFeed (filename):
+        feed.Feed (u"dtv:directoryfeed:%s" % (platformutils.makeURLSafe(filename),))
+
+    @eventloop.asIdle
+    def toggleFeed (id):
+        try:
+            feed = database.defaultDatabase.getObjectByID (id)
+            feed.setVisible (not feed.visible)
+        except:
+            pass
+        
     def RemoveClicked (widget):
-        model, iter = selection.get_selected()
-        if iter:
-            model.remove(iter)
-        SaveDirList()
-            
+        model, rows = selection.get_selected_rows()
+        ids = [model.get_value(model.get_iter(row), 0) for row in rows]
+        removeFeeds (ids)
+
     def AddClicked (widget):
         dialog = gtk.FileChooserDialog("View this folder in \"My Collection\"",
                                        widgetTree["dialog-preferences"],
@@ -104,13 +126,20 @@ def SetupDirList (widgetTree):
                                         gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
         response = dialog.run()
         if response == gtk.RESPONSE_ACCEPT:
-            model = widgetTree["treeview-collection-dirs"].get_model()
-            model.set (model.append(None), 0, dialog.get_filename())
-            SaveDirList()
+            addFeed (dialog.get_filename())
         dialog.destroy()
+
+    def toggled (renderer, path):
+        model = widgetTree["treeview-collection-dirs"].get_model()
+        iter = model.get_iter (path)
+        if iter:
+            id = model.get_value (iter, 0)
+            toggleFeed(id)
         
+
     selection = widgetTree["treeview-collection-dirs"].get_selection()
     selection.connect ("changed", SelectionChanged)
+    selection.set_mode (gtk.SELECTION_MULTIPLE)
     SelectionChanged(selection)
 
     button = widgetTree["button-collection-dirs-remove"]
@@ -119,6 +148,63 @@ def SetupDirList (widgetTree):
     button = widgetTree["button-collection-dirs-add"]
     button.connect ("clicked", AddClicked)
 
+    model = widgetTree["treeview-collection-dirs"].get_model()
+    mediator = Mediator(model)
+    toggleRenderer.connect("toggled", toggled)
+
+class Mediator:
+
+    def __init__(self, model):
+        self.model = model
+        self.fillIn()
+
+    @eventloop.asIdle
+    def unlink (self):
+        views.feeds.removeChangeCallback(self.changeCallback)
+        views.feeds.removeAddCallback(self.changeCallback)
+        views.feeds.removeRemoveCallback(self.removeCallback)
+
+    @gtkAsyncMethod
+    def changeDirectory (self, id, dir, visible):
+        iter = self.model.get_iter_first()
+        while (iter):
+            val = self.model.get_value (iter, 0)
+            if val == id:
+                break
+            iter = self.model.iter_next (iter)
+        if iter is None:
+            iter = self.model.append(None)
+        self.model.set (iter, 0, id, 1, platformutils.filenameToUnicode (dir), 2, visible)
+
+    @gtkAsyncMethod
+    def removeDirectory (self, id):
+        iter = self.model.get_iter_first()
+        while (iter):
+            val = self.model.get_value (iter, 0)
+            if val == id:
+                break
+            iter = self.model.iter_next (iter)
+        if iter is not None:
+            self.model.remove (iter)
+
+    @eventloop.asIdle
+    def fillIn (self):
+        for f in views.feeds:
+            print f, f.actualFeed
+            if isinstance (f.actualFeed, feed.DirectoryWatchFeedImpl):
+                self.changeDirectory (f.getID(), f.dir, f.visible)
+        views.feeds.addChangeCallback(self.changeCallback)
+        views.feeds.addAddCallback(self.changeCallback)
+        views.feeds.addRemoveCallback(self.removeCallback)
+
+    def changeCallback(self, mapped, id):
+        if isinstance (mapped.actualFeed, feed.DirectoryWatchFeedImpl):
+            self.changeDirectory (id, mapped.dir, mapped.visible)
+
+    def removeCallback(self, mapped, id):
+        print mapped, mapped.actualFeed, id
+        if isinstance (mapped.actualFeed, feed.DirectoryWatchFeedImpl):
+            self.removeDirectory (id)
 
 class CallbackHandler(object):
     """Class to handle menu item activation, button presses, etc.  The method
@@ -421,18 +507,24 @@ class CallbackHandler(object):
         AttachBoolean (dialog, widgetTree['checkbutton-resumemode'], prefs.RESUME_VIDEOS_MODE)
 
         treeview = widgetTree['treeview-collection-dirs']
-        listmodel = gtk.TreeStore(gobject.TYPE_STRING)
-        for dir in config.getList(prefs.MY_COLLECTION_DIRS):
-            listmodel.set (listmodel.append(None), 0, dir)
+        listmodel = gtk.TreeStore(gobject.TYPE_INT, gobject.TYPE_STRING, gobject.TYPE_BOOLEAN)
         treeview.set_model(listmodel)
         
         renderer = gtk.CellRendererText()
         column = gtk.TreeViewColumn()
         column.pack_start(renderer)
-        column.add_attribute (renderer, "text", 0)
+        column.add_attribute (renderer, "text", 1)
+        column.set_title (_("Folder Location"))
         treeview.append_column(column)
 
-        SetupDirList (widgetTree)
+        toggle_renderer = gtk.CellRendererToggle()
+        column = gtk.TreeViewColumn()
+        column.pack_start(toggle_renderer)
+        column.add_attribute (toggle_renderer, "active", 2)
+        column.set_title (_("Show Folder as a Channel"))
+        treeview.append_column(column)
+
+        SetupDirList (widgetTree, toggle_renderer)
 
         try:
             os.makedirs (movie_dir)

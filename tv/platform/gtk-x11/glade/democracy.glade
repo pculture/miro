@@ -543,7 +543,7 @@
 	</widget>
 	<packing>
 	  <property name="padding">0</property>
-	  <property name="expand">True</property>
+	  <property name="expand">False</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>
@@ -760,7 +760,7 @@ Manually</property>
 	</widget>
 	<packing>
 	  <property name="padding">0</property>
-	  <property name="expand">True</property>
+	  <property name="expand">False</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>
@@ -840,7 +840,7 @@ Manually</property>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
-		      <property name="expand">True</property>
+		      <property name="expand">False</property>
 		      <property name="fill">True</property>
 		    </packing>
 		  </child>
@@ -848,7 +848,7 @@ Manually</property>
 		  <child>
 		    <widget class="GtkLabel" id="label41">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Show movies in these directories in My Collection</property>
+		      <property name="label" translatable="yes">Show movies found in these directories in My Collection</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -901,7 +901,7 @@ Manually</property>
 				<widget class="GtkTreeView" id="treeview-collection-dirs">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
-				  <property name="headers_visible">False</property>
+				  <property name="headers_visible">True</property>
 				  <property name="rules_hint">True</property>
 				  <property name="reorderable">False</property>
 				  <property name="enable_search">False</property>
@@ -1063,7 +1063,7 @@ Manually</property>
 	</widget>
 	<packing>
 	  <property name="padding">0</property>
-	  <property name="expand">False</property>
+	  <property name="expand">True</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>
@@ -1191,7 +1191,7 @@ Manually</property>
 	</widget>
 	<packing>
 	  <property name="padding">0</property>
-	  <property name="expand">True</property>
+	  <property name="expand">False</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>
@@ -1383,7 +1383,7 @@ Never</property>
 	</widget>
 	<packing>
 	  <property name="padding">0</property>
-	  <property name="expand">True</property>
+	  <property name="expand">False</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>

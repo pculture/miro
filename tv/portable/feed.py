@@ -30,6 +30,7 @@ import menu
 import prefs
 import resources
 from util import returnsUnicode, unicodify, chatter, checkU, checkF
+from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe
 import views
 import indexes
 import searchengines
@@ -805,10 +806,15 @@ class Feed(DDBObject):
         if oldFolder:
             oldFolder.signalChange(needsSave=False)
 
+    @eventloop.asIdle
     def generateFeed(self, removeOnError=False):
         newFeed = None
         if (self.origURL == u"dtv:directoryfeed"):
             newFeed = DirectoryFeedImpl(self)
+        elif (self.origURL.startswith(u"dtv:directoryfeed:")):
+            url = self.origURL[len(u"dtv:directoryfeed:"):]
+            dir = unmakeURLSafe(url)
+            newFeed = DirectoryWatchFeedImpl(self, dir)
         elif (self.origURL == u"dtv:search"):
             newFeed = SearchFeedImpl(self)
         elif (self.origURL == u"dtv:searchDownloads"):
@@ -1008,6 +1014,9 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         """
 
         self.confirmDBThread()
+
+        if isinstance (self.actualFeed, DirectoryWatchFeedImpl):
+            moveItemsTo = None
         self.cancelUpdateEvents()
         if self.download is not None:
             self.download.cancel()
@@ -1043,6 +1052,13 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         self.confirmDBThread()
         for item in self.items:
             if item.isDownloaded():
+                return True
+        return False
+
+    def hasDownloadingItems(self):
+        self.confirmDBThread()
+        for item in self.items:
+            if item.getState() in (u'downloading', u'paused'):
                 return True
         return False
 
@@ -1708,6 +1724,115 @@ class ScraperFeedImpl(FeedImpl):
         self.tempHistory = {}
         self.scheduleUpdateEvents(.1)
 
+class DirectoryWatchFeedImpl(FeedImpl):
+    def __init__(self,ufeed, dir, visible = True):
+        self.dir = dir
+        self.firstUpdate = True
+        if dir is not None:
+            url = u"dtv:directoryfeed:%s" % (makeURLSafe (dir),)
+        else:
+            url = u"dtv:directoryfeed"
+        FeedImpl.__init__(self,url = url,ufeed=ufeed,title = filenameToUnicode(dir),visible = visible)
+
+        self.setUpdateFrequency(5)
+        self.scheduleUpdateEvents(0)
+
+    ##
+    # Directory Items shouldn't automatically expire
+    def expireItems(self):
+        pass
+
+    def setUpdateFrequency(self, frequency):
+        newFreq = frequency*60
+        if newFreq != self.updateFreq:
+            self.updateFreq = newFreq
+            self.scheduleUpdateEvents(-1)
+
+    def setVisible(self, visible):
+        if self.visible == visible:
+            return
+        self.visible = visible
+        self.signalChange()
+
+    def update(self):
+        self.ufeed.confirmDBThread()
+
+        # Files known about by real feeds (other than other directory
+        # watch feeds)
+        knownFiles = set()
+        for item in views.toplevelItems:
+            if not item.getFeed().getURL().startswith("dtv:directoryfeed"):
+                knownFiles.add(os.path.normcase(item.getFilename()))
+
+        # Remove items that are in feeds, but we have in our list
+        for item in self.items:
+            if item.getFilename() in knownFiles:
+                item.remove()
+
+        # Now that we've checked for items that need to be removed, we
+        # add our items to knownFiles so that they don't get added
+        # multiple times to this feed.
+        for x in self.items:
+            knownFiles.add(os.path.normcase (x.getFilename()))
+
+        #Adds any files we don't know about
+        #Files on the filesystem
+        if os.path.isdir(self.dir):
+            existingFiles = [os.path.normcase(os.path.join(self.dir, f)) 
+                    for f in os.listdir(self.dir)]
+            for file in existingFiles:
+                if (os.path.exists(file) and os.path.basename(file)[0] != '.'):
+                    if not file in knownFiles:
+                        if not os.path.isdir(file):
+                            FileItem(file, feed_id=self.ufeed.id)
+                        else:
+                            found = 0
+                            not_found = []
+                            contents = [os.path.normcase(os.path.join(file, f)) 
+                                        for f in os.listdir(file)]
+                            for subfile in contents:
+                                if subfile in knownFiles:
+                                    found = found + 1
+                                else:
+                                    not_found.append(subfile)
+                            # If every subfile or subdirectory is
+                            # already in the database (including
+                            # the case where the directory is
+                            # empty) do nothing.
+                            if len(not_found) > 0:
+                                # If there were any files found,
+                                # this is probably a channel
+                                # directory that someone added
+                                # some thing to.  There are few
+                                # other cases where a directory
+                                # would have some things shown.
+                                if found != 0:
+                                    for subfile in not_found:
+                                        FileItem (subfile, feed_id=self.ufeed.id)
+                                        
+                                # But if not, it's probably a
+                                # directory added wholesale.
+                                
+                                else:
+                                    FileItem (file, feed_id=self.ufeed.id)
+
+
+        for item in self.items:
+            if not os.path.exists(item.getFilename()):
+                item.remove()
+        if self.firstUpdate:
+            for item in self.items:
+                item.markItemSeen()
+            self.firstUpdate = False
+
+        self.scheduleUpdateEvents(-1)
+
+    def onRestore(self):
+        FeedImpl.onRestore(self)
+        #FIXME: the update dies if all of the items aren't restored, so we 
+        # wait a little while before we start the update
+        self.scheduleUpdateEvents(.1)
+
 ##
 # A feed of all of the Movies we find in the movie folder that don't
 # belong to a "real" feed.  If the user changes her movies folder, this feed
@@ -1734,12 +1859,10 @@ class DirectoryFeedImpl(FeedImpl):
     def update(self):
         self.ufeed.confirmDBThread()
         moviesDir = config.get(prefs.MOVIES_DIRECTORY)
-        dirs = [moviesDir] + config.getList(prefs.MY_COLLECTION_DIRS)
-        logging.info (str(dirs))
         # Files known about by real feeds
         knownFiles = set()
         for item in views.toplevelItems:
-            if not item.feed_id is self.ufeed.id:
+            if item.feed_id is not self.ufeed.id:
                 knownFiles.add(os.path.normcase(item.getFilename()))
             if item.isContainerItem:
                 item.findNewChildren()
@@ -1754,49 +1877,52 @@ class DirectoryFeedImpl(FeedImpl):
             if item.getFilename() in knownFiles:
                 item.remove()
 
-        myFiles = set(x.getFilename() for x in self.items)
+        # Now that we've checked for items that need to be removed, we
+        # add our items to knownFiles so that they don't get added
+        # multiple times to this feed.
+        for x in self.items:
+            knownFiles.add(os.path.normcase (x.getFilename()))
 
-        for dir in dirs:
-            #Adds any files we don't know about
-            #Files on the filesystem
-            if os.path.isdir(dir):
-                existingFiles = [os.path.normcase(os.path.join(dir, f)) 
-                        for f in os.listdir(dir)]
-                for file in existingFiles:
-                    if (os.path.exists(file) and os.path.basename(file)[0] != '.'):
-                        if not file in knownFiles and not file in myFiles:
-                            if not os.path.isdir(file):
-                                FileItem(file, feed_id=self.ufeed.id)
-                            else:
-                                found = 0
-                                not_found = []
-                                contents = [os.path.normcase(os.path.join(file, f)) 
-                                            for f in os.listdir(file)]
-                                for subfile in contents:
-                                    if subfile in knownFiles or subfile in myFiles:
-                                        found = found + 1
-                                    else:
-                                        not_found.append(subfile)
-                                # If every subfile or subdirectory is
-                                # already in the database (including
-                                # the case where the directory is
-                                # empty) do nothing.
-                                if len(not_found) > 0:
-                                    # If there were any files found,
-                                    # this is probably a channel
-                                    # directory that someone added
-                                    # some thing to.  There are few
-                                    # other cases where a directory
-                                    # would have some things shown.
-                                    if found != 0:
-                                        for subfile in not_found:
-                                            FileItem (subfile, feed_id=self.ufeed.id)
-                                            
-                                    # But if not, it's probably a
-                                    # directory added wholesale.
-                                    
-                                    else:
-                                        FileItem (file, feed_id=self.ufeed.id)
+        #Adds any files we don't know about
+        #Files on the filesystem
+        if os.path.isdir(moviesDir):
+            existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) 
+                    for f in os.listdir(moviesDir)]
+            for file in existingFiles:
+                if (os.path.exists(file) and os.path.basename(file)[0] != '.'):
+                    if not file in knownFiles:
+                        if not os.path.isdir(file):
+                            FileItem(file, feed_id=self.ufeed.id)
+                        else:
+                            found = 0
+                            not_found = []
+                            contents = [os.path.normcase(os.path.join(file, f)) 
+                                        for f in os.listdir(file)]
+                            for subfile in contents:
+                                if subfile in knownFiles:
+                                    found = found + 1
+                                else:
+                                    not_found.append(subfile)
+                            # If every subfile or subdirectory is
+                            # already in the database (including
+                            # the case where the directory is
+                            # empty) do nothing.
+                            if len(not_found) > 0:
+                                # If there were any files found,
+                                # this is probably a channel
+                                # directory that someone added
+                                # some thing to.  There are few
+                                # other cases where a directory
+                                # would have some things shown.
+                                if found != 0:
+                                    for subfile in not_found:
+                                        FileItem (subfile, feed_id=self.ufeed.id)
+                                        
+                                # But if not, it's probably a
+                                # directory added wholesale.
+                                
+                                else:
+                                    FileItem (file, feed_id=self.ufeed.id)
                                 
 
         for item in self.items:
