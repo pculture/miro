@@ -4,7 +4,9 @@ from Foundation import *
 from PyObjCTools import NibClassBuilder
 
 import app
+import feed
 import prefs
+import views
 import config
 import dialogs
 import eventloop
@@ -36,6 +38,7 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
         generalItem = self.makePreferenceItem(u"GeneralItem", _(u"General"), u"general_pref", self.generalView)
         channelsItem = self.makePreferenceItem(u"ChannelsItem", _(u"Channels"), u"channels_pref", self.channelsView)
         downloadsItem = self.makePreferenceItem(u"DownloadsItem", _(u"Downloads"), u"downloads_pref", self.downloadsView)
+        downloadsItem = self.makePreferenceItem(u"FoldersItem", _(u"Folders"), u"folders_pref", self.foldersView)
         diskSpaceItem = self.makePreferenceItem(u"DiskSpaceItem", _(u"Disk Space"), u"disk_space_pref", self.diskSpaceView)
         playbackItem = self.makePreferenceItem(u"PlaybackItem", _(u"Playback"), u"playback_pref", self.playbackView)
 
@@ -195,7 +198,87 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
             self.btMaxPortField.setIntValue_(btMaxPort)
         config.set(prefs.BT_MIN_PORT, btMinPort)
         config.set(prefs.BT_MAX_PORT, btMaxPort)
-                
+
+###############################################################################
+
+class FoldersPrefsController (NibClassBuilder.AutoBaseClass):
+    
+    def init(self):
+        self.folders = list()
+        return self
+    
+    def awakeFromNib(self):
+        eventloop.addIdle(self.loadInitialData, 'Adding watched folders initial data')
+
+    def loadInitialData(self):
+        for f in views.feeds:
+            if isinstance(f.actualFeed, feed.DirectoryWatchFeedImpl):
+                self.folders.append(f)
+        views.feeds.addAddCallback(self.folderWasAdded)
+        views.feeds.addRemoveCallback(self.folderWasRemoved)
+        views.feeds.addChangeCallback(self.folderWasChanged)
+        self.foldersTable.reloadData()
+        
+    def addFolder_(self, sender):
+        panel = NSOpenPanel.openPanel()
+        panel.setCanChooseFiles_(NO)
+        panel.setCanChooseDirectories_(YES)
+        panel.setCanCreateDirectories_(YES)
+        panel.setAllowsMultipleSelection_(NO)
+        panel.setTitle_(_(u'View this Directory in My Collection'))
+        panel.setMessage_(_(u'Select a Directory to view in My Collection.'))
+        panel.setPrompt_(_(u'Select'))
+        
+        result = panel.runModalForDirectory_file_(nil, nil)
+        
+        if result == NSOKButton:
+            path = platformutils.osFilenameToFilenameType(panel.directory())
+            eventloop.addIdle(lambda:self.addFolder(path), 'Adding new watched folder')
+
+    def addFolder(self, path):
+        feed.Feed(u'dtv:directoryfeed:%s' % platformutils.makeURLSafe(path))
+
+    def folderWasAdded(self, mapped, id):
+        self.folders.append(mapped)
+        self.foldersTable.reloadData()
+
+    def removeFolder_(self, sender):
+        eventloop.addIdle(self.removeFolders, 'Removing watched folder(s)')
+
+    def removeFolders(self):
+        feeds = list()
+        for i in range(0, len(self.folders)):
+            if self.foldersTable.selectedRowIndexes().containsIndex_(i):
+                feeds.append(self.folders[i])
+        app.controller.removeFeeds(feeds)
+
+    def folderWasRemoved(self, mapped, id):
+        self.folders.remove(mapped)
+        self.foldersTable.reloadData()
+
+    def showFolderAsChannel_(self, sender):
+        folder = self.folders[sender.selectedRow()]
+        eventloop.addIdle(lambda:self.toggleFeed(folder), 'Toggling feed visibility')
+    
+    def toggleFeed(self, folder):
+        folder.setVisible(not folder.visible)
+        
+    def folderWasChanged(self, mapped, id):
+        self.foldersTable.reloadData()
+    
+    def numberOfRowsInTableView_(self, tableView):
+        return len(self.folders)
+        
+    def tableView_objectValueForTableColumn_row_(self, tableView, col, row):
+        if col.identifier() == 'location':
+            return self.folders[row].dir
+        elif col.identifier() == 'asChannel':
+            return self.folders[row].visible
+        return ''
+        
+    def tableViewSelectionDidChange_(self, notification):
+        self.deleteButton.setEnabled_(self.foldersTable.numberOfSelectedRows() > 0)
+            
 ###############################################################################
 
 class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):

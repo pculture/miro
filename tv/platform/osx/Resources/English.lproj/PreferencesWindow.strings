@@ -38,6 +38,9 @@
 /* NSTextField (99999) : <title:99999> (oid:115) */
 "99999" = "99999";
 
+/* NSButton (Add...) : <title:Add...> (oid:149) */
+"Add..." = "Add...";
+
 /* NSTextField (BitTorrent ports:) : <title:BitTorrent ports:> (oid:111) */
 "BitTorrent ports:" = "BitTorrent ports:";
 
@@ -58,6 +61,9 @@
 
 /* NSTextField (Download at most) : <title:Download at most> (oid:129) */
 "Download at most" = "Download at most";
+
+/* NSTableColumn : <title:Folder location> (oid:148) */
+"Folder location" = "Folder location";
 
 /* NSTextField (GB free.) : <title:GB free.> (oid:45) */
 "GB free." = "GB free.";
@@ -83,17 +89,26 @@
 /* NSButton (Remember video position.) : <title:Remember video position.> (oid:138) */
 "Remember video position." = "Remember video position.";
 
+/* NSButton (Remove) : <title:Remove> (oid:150) */
+"Remove" = "Remove";
+
 /* NSButton (Run Democracy at startup) : <title:Run Democracy at startup> (oid:47) */
 "Run Democracy at startup" = "Run Democracy at startup";
 
 /* NSTextField (Save downloaded videos in this folder:) : <title:Save downloaded videos in this folder:> (oid:92) */
 "Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
 
+/* NSTableColumn : <title:Show as Channel> (oid:147) */
+"Show as Channel" = "Show as Channel";
+
 /* NSButtonCell (Stop after each video.) : <title:Stop after each video.> (oid:104) */
 "Stop after each video." = "Stop after each video.";
 
 /* NSTextField (To avoid internet slowdowns:) : <title:To avoid internet slowdowns:> (oid:128) */
 "To avoid internet slowdowns:" = "To avoid internet slowdowns:";
+
+/* NSTextField (Watch for new videos in these folders and include them in My Collection:) : <title:Watch for new videos in these folders and include them in My Collection:> (oid:144) */
+"Watch for new videos in these folders and include them in My Collection:" = "Watch for new videos in these folders and include them in My Collection:";
 
 /* NSMenuItem : <title:every 30 minutes> (oid:27) */
 "every 30 minutes" = "every 30 minutes";
