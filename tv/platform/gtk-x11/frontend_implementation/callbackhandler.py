@@ -515,13 +515,17 @@ class CallbackHandler(object):
         column.pack_start(renderer)
         column.add_attribute (renderer, "text", 1)
         column.set_title (_("Folder Location"))
+        column.set_expand (True)
+        column.set_alignment(0.0)
         treeview.append_column(column)
 
         toggle_renderer = gtk.CellRendererToggle()
         column = gtk.TreeViewColumn()
         column.pack_start(toggle_renderer)
         column.add_attribute (toggle_renderer, "active", 2)
-        column.set_title (_("Show Folder as a Channel"))
+        column.set_title (_("Show as Channel"))
+        column.set_expand (False)
+        column.set_alignment(0.5)
         treeview.append_column(column)
 
         SetupDirList (widgetTree, toggle_renderer)
