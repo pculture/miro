@@ -8,6 +8,7 @@ import prefs
 import config
 import dialogs
 import eventloop
+import platformutils
 
 from gtcache import gettext as _
 
@@ -172,7 +173,7 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
                 message = _(u'You\'ve selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).')
                 def migrationCallback(dialog):
                     migrate = (dialog.choice == dialogs.BUTTON_YES)
-                    app.changeMoviesDirectory(newMoviesDirectory, migrate)
+                    app.changeMoviesDirectory(platformutils.osFilenameToFilenameType(newMoviesDirectory), migrate)
                 dlog = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_YES, dialogs.BUTTON_NO)
                 dlog.run(migrationCallback)
     
