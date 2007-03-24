@@ -1665,7 +1665,7 @@ class ModelActionHandler:
     def videoBombExternally(self, item):
         obj = db.getObjectByID(int(item))
         paramList = {}
-        paramList["title"] = obj.getTitle().encode('utf-8')
+        paramList["title"] = obj.getTitle()
         paramList["info_url"] = obj.getLink()
         paramList["hookup_url"] = obj.getPaymentLink()
         try:
@@ -1700,7 +1700,7 @@ class ModelActionHandler:
         description = obj.getDescription()
         if len(description) > 0:
             paramString = "%s%sdescription=%s" % (paramString, glue,
-                    xhtmltools.urlencode(description.encode('utf-8')))
+                    xhtmltools.urlencode(description))
         url = config.get(prefs.VIDEOBOMB_URL) + paramString
         self.backEndDelegate.openExternalURL(url)
 
