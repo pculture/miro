@@ -104,6 +104,9 @@ class VLCRenderer (app.VideoRenderer):
             return None
     def setCurrentTime(self, time): 
         return frontend.vlcRenderer.setCurrentTime(time)
+    @lockAndPlay
+    def playFromTime(self, time): 
+        return frontend.vlcRenderer.playFromTime(time)
     def getRate(self): 
         return frontend.vlcRenderer.getRate()
     def setRate(self, rate): 

@@ -30,8 +30,21 @@ VLCRenderer.prototype = {
     this.vlc = videoBrowser.contentDocument.getElementById("video1");
     this.timer = Components.classes["@mozilla.org/timer;1"].
           createInstance(Components.interfaces.nsITimer);
+    this.timer2 = Components.classes["@mozilla.org/timer;1"].
+          createInstance(Components.interfaces.nsITimer);
     this.active = false;
     this.startedPlaying = false;
+    this.item = null;
+    this.playTime = 0;
+  },
+
+  doScheduleUpdates: function() {
+      var callback = {
+	  notify: function(timer) { this.parent.updateVideoControls()}
+      };
+      callback.parent = this;
+      this.timer.initWithCallback(callback, 500,
+				  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
   },
 
   updateVideoControls: function() {
@@ -60,19 +73,16 @@ VLCRenderer.prototype = {
   	}
       }
       if(this.scheduleUpdates) {
-  	  var callback = {
-  	    notify: function(timer) { this.parent.updateVideoControls()}
-  	  };
-  	  callback.parent = this;
-  	  this.timer.initWithCallback(callback, 500,
-  		    Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-  	}
+	  this.doScheduleUpdates();
+      }
     } catch (e) {
       if (this.startedPlaying) {
 	// probably hit the end of the playlist in the middle of this function
         this.scheduleUpdates = false;
         this.active = false;
 	pybridge.onMovieFinished();
+      } else if(this.scheduleUpdates) {
+	  this.doScheduleUpdates();
       }
     }
   },
@@ -123,31 +133,50 @@ VLCRenderer.prototype = {
           this.stop();
           this.vlc.playlist.items.clear();
       }
-      item = this.vlc.playlist.add(url);
-      if (this.vlc.playlist.items.count > 0) {
-          this.vlc.playlist.playItem(item);
-      } 
+      this.item = this.vlc.playlist.add(url);
   },
 
   setCurrentTime: function(time) {
-      this.vlc.input.time = time * 1000;
+      try {
+	  this.vlc.input.time = time * 1000;
+      } catch (e) {
+	  var callback = {
+	      notify: function(timer) {
+		  this.parent.setCurrentTime(this.parent.playTime);
+	      }
+	  };
+	  callback.parent = this;
+	  this.playTime = time;
+	  this.timer2.initWithCallback(callback, 10,
+				       Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+      }
     },
   
   play: function() {
       if (this.vlc.playlist.items.count > 0) {
 	  if(!this.vlc.playlist.isPlaying) {
-	      this.vlc.playlist.play();
+	      if (this.item != null) {
+		  this.vlc.playlist.playItem(this.item);
+		  this.item = null;
+	      } else {
+		  this.vlc.playlist.play();
+	      }
 	  } 
 	  this.scheduleUpdates = true;
 	  this.active = true;
 	  this.startedPlaying = false;
-	  this.updateVideoControls();
+	  this.doScheduleUpdates();
 	  this.showPauseButton();
       } else {
 	  this.active = false;
 	  this.scheduleUpdates = false;
 	  pybridge.onMovieFinished();
       }
+  },
+
+  playFromTime: function(time) {
+      this.play();
+      this.setCurrentTime(time);
   },
 
   pause: function() {

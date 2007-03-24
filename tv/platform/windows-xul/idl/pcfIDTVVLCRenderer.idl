@@ -10,6 +10,7 @@ interface pcfIDTVVLCRenderer : nsISupports
     boolean canPlayURL(in AString url);
     void selectURL(in AString url);
     void play();
+    void playFromTime(in float position);
     void pause();
     void pauseForDrag();
     void stop();
