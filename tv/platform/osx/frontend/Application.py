@@ -9,6 +9,7 @@ from objc import YES, NO, nil, signature
 from AppKit import *
 from Foundation import *
 from PyObjCTools import NibClassBuilder, AppHelper
+from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMask
 
 from gestalt import gestalt
 
@@ -84,6 +85,9 @@ class Application:
 class AppController (NibClassBuilder.AutoBaseClass):
 
     def applicationWillFinishLaunching_(self, notification):
+        NSExceptionHandler.defaultExceptionHandler().setExceptionHandlingMask_(NSLogAndHandleEveryExceptionMask)
+        NSExceptionHandler.defaultExceptionHandler().setDelegate_(self)
+        
         man = NSAppleEventManager.sharedAppleEventManager()
         man.setEventHandler_andSelector_forEventClass_andEventID_(
             self,
@@ -178,6 +182,12 @@ class AppController (NibClassBuilder.AutoBaseClass):
         else:
             singleclick.addTorrent(path, infoHash)
             app.controller.selection.selectTabByTemplateBase('downloadtab')
+        
+    def exceptionHandler_shouldLogException_mask_(self, handler, exception, mask):
+        logging.warn("Unhandled exception: %s", exception.name())
+        import traceback
+        traceback.print_stack()
+        return NO
         
     def workspaceWillSleep_(self, notification):
         def pauseRunningDownloaders(self=self):
