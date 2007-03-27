@@ -24,7 +24,7 @@ def activatePsyco():
 # =============================================================================
 
 def launchDemocracy():
-    # Import the pysqlite module as soon as possible to avoir (very) weird
+    # Import the pysqlite module as soon as possible to avoid (very) weird
     # errors ("library routine called out of sequence") probably due to a
     # conflict between the standard OS X sqlite lib and our own most recent one.
     from pysqlite2 import dbapi2
