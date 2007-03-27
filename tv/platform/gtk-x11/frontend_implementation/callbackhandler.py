@@ -23,6 +23,8 @@ import logging
 import feed
 import views
 import database
+from menubar import menubar
+
 from gtk_queue import gtkAsyncMethod
 from gtcache import gettext as _
  
@@ -242,63 +244,63 @@ class CallbackHandler(object):
             fullscreen = None
 
         actionGroups["VideoSelected"].add_actions ([
-            ('SaveVideo', gtk.STOCK_SAVE, _('Save Video _As...'), '<Control>s', _('Save this video'), self.on_save_video_activate),
-            ('CopyVideoURL', None, _('_Copy Video URL'), None, None, self.on_copy_video_link_activate),
+            ('SaveVideo', gtk.STOCK_SAVE, menubar.getLabel('SaveVideo'), menubar.getShortcut('SaveVideo').GTKString(), None, self.on_save_video_activate),
+            ('CopyVideoURL', None, menubar.getLabel('CopyVideoURL'), menubar.getShortcut('CopyVideoURL').GTKString(), None, self.on_copy_video_link_activate),
             ])
         actionGroups["VideosSelected"].add_actions ([
-            ('RemoveVideos', None, _('_Remove Video'), None, None, self.on_remove_video_activate),
+            ('RemoveVideos', None, menubar.getLabel('RemoveVideos'), menubar.getShortcut('RemoveVideos').GTKString(), None, self.on_remove_video_activate),
             ])
         actionGroups["VideoPlaying"].add_actions ([
-            ('Fullscreen', fullscreen, _('_Fullscreen'), '<Control>f', None, self.on_fullscreen_button_clicked),
-            ('StopVideo', None, _('_Stop Video'), None, None, self.on_stop_activate),
-            ('NextVideo', None, _('_Next Video'), '<Alt>Right', None, self.on_next_button_clicked),
-            ('PreviousVideo', None, _('_Previous Video'), '<Alt>Left', None, self.on_previous_button_clicked),
+            ('Fullscreen', fullscreen, menubar.getLabel('Fullscreen'), menubar.getShortcut('Fullscreen').GTKString(), None, self.on_fullscreen_button_clicked),
+            ('StopVideo', None, menubar.getLabel('StopVideo'), menubar.getShortcut('StopVideo').GTKString(), None, self.on_stop_activate),
+            ('NextVideo', None, menubar.getLabel('NextVideo'), menubar.getShortcut('NextVideo').GTKString(), None, self.on_next_button_clicked),
+            ('PreviousVideo', None, menubar.getLabel('PreviousVideo'), menubar.getShortcut('PreviousVideo').GTKString(), None, self.on_previous_button_clicked),
             ])
         actionGroups["VideoPlayable"].add_actions ([
-            ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, _('_Play / Pause'), '<Control>space', None, self.on_play_pause_button_clicked),
+            ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, menubar.getLabel('PlayPauseVideo'),menubar.getShortcut('PlayPauseVideo').GTKString(), None, self.on_play_pause_button_clicked),
             ])
         actionGroups["ChannelSelected"].add_actions ([
-            ('CopyChannelURL', None, _("Copy Channel _Link"), None, None, self.on_copy_channel_link_activate),
-            ('MailChannel', None, _("_Send this channel to a friend"), None, None, self.on_mail_channel_link_activate),
+            ('CopyChannelURL', None, menubar.getLabel('CopyChannelURL'), menubar.getShortcut('CopyChannelURL').GTKString(), None, self.on_copy_channel_link_activate),
+            ('MailChannel', None, menubar.getLabel('MailChannel'), menubar.getShortcut('MailChannel').GTKString(), None, self.on_mail_channel_link_activate),
             ])
         actionGroups["ChannelsSelected"].add_actions ([
-            ('UpdateChannels', None, _("_Update Channel"), None, None, self.on_update_channel_activate),
+            ('UpdateChannels', None, menubar.getLabel('UpdateChannels'), menubar.getShortcut('UpdateChannels').GTKString(), None, self.on_update_channel_activate),
             ])
         actionGroups["ChannelLikeSelected"].add_actions ([
-            ('RenameChannel', None, _("Re_name Channel"), None, None, self.on_rename_channel_activate),
+            ('RenameChannel', None, menubar.getLabel('RenameChannel'), menubar.getShortcut('RenameChannel').GTKString(), None, self.on_rename_channel_activate),
             ])
         actionGroups["ChannelLikesSelected"].add_actions ([
-            ('RemoveChannels', None, _("_Remove Channel"), None, None, self.on_remove_channel_activate),
+            ('RemoveChannels', None, menubar.getLabel('RemoveChannels'), menubar.getShortcut('RemoveChannels').GTKString(), None, self.on_remove_channel_activate),
             ])
         actionGroups["PlaylistLikeSelected"].add_actions ([
-            ('RenamePlaylist', None, _("Re_name Playlist"), None, None, self.on_rename_playlist_activate),
+            ('RenamePlaylist', None, menubar.getLabel('RenamePlaylist'), menubar.getShortcut('RenamePlaylist').GTKString(), None, self.on_rename_playlist_activate),
             ])
         actionGroups["PlaylistLikesSelected"].add_actions ([
-            ('RemovePlaylists', None, _("_Remove Playlist"), None, None, self.on_remove_playlist_activate),
+            ('RemovePlaylists', None, menubar.getLabel('RemovePlaylists'), menubar.getShortcut('RemovePlaylists').GTKString(), None, self.on_remove_playlist_activate),
             ])
         actionGroups["Ubiquitous"].add_actions ([
-            ('Video', None, _('_Video')),
-            ('Channels', None, _('_Channels')),
-            ('Playlists', None, _('_Playlists')),
-            ('Playback', None, _('P_layback')),
-            ('Open', gtk.STOCK_OPEN, _('_Open...'), '<Control>o', _('Open various files'), self.on_open_video_activate),
+            ('Video', None, menubar.getLabel('Video')),
+            ('Channels', None, menubar.getLabel('Channels')),
+            ('Playlists', None, menubar.getLabel('Playlists')),
+            ('Playback', None, menubar.getLabel('Playback')),
+            ('Open', gtk.STOCK_OPEN, menubar.getLabel('Open'), menubar.getShortcut('Open').GTKString(), None, self.on_open_video_activate),
 
-            ('NewPlaylist', None, _('New _Playlist...'), None, _('Create new playlist'), self.on_new_playlist_activate),
-            ('NewPlaylistFolder', None, _('New Playlist _Folder...'), None, _('Create new playlist folder'), self.on_new_playlist_folder_activate),
-            ('NewChannelFolder', None, _('New Channel _Folder...'), None, _('Create new channel folder'), self.on_new_channel_folder_activate),
-            ('NewChannel', None, _("Add _Channel..."), None, None, self.on_add_channel_button_clicked),
-            ('NewSearchChannel', None, _("New Searc_h Channel..."), None, None, self.on_add_search_channel_button_clicked),
+            ('NewPlaylist', None, menubar.getLabel('NewPlaylist'), menubar.getShortcut('NewPlaylist').GTKString(), None, self.on_new_playlist_activate),
+            ('NewPlaylistFolder', None, menubar.getLabel('NewPlaylistFolder'), menubar.getShortcut('NewPlaylistFolder').GTKString(), None, self.on_new_playlist_folder_activate),
+            ('NewChannelFolder', None, menubar.getLabel('NewChannelFolder'), menubar.getShortcut('NewChannelFolder').GTKString(), None, self.on_new_channel_folder_activate),
+            ('NewChannel', None, menubar.getLabel('NewChannel'), menubar.getShortcut('NewChannel').GTKString(), None, self.on_add_channel_button_clicked),
+            ('NewSearchChannel', None, menubar.getLabel('NewSearchChannel'), menubar.getShortcut('NewSearchChannel').GTKString(), None, self.on_add_search_channel_button_clicked),
             ('NewGuide', None, _("New Channel _Guide..."), None, None, self.on_add_guide_button_clicked),
 
-            ('EditPreferences', gtk.STOCK_PREFERENCES, _('P_references'), None, None, self.on_preference),
-            ('Quit', gtk.STOCK_QUIT, _('_Quit'), '<Control>q', _('Quit the Program'), self.on_quit_activate),
-            ('UpdateAllChannels', None, _("U_pdate All Channels"), None, None, self.on_update_all_channels_activate),
-            ('Help', None, _('_Help')),
-            ('About', gtk.STOCK_ABOUT, None, None, None, self.on_about_clicked),
-            ('Donate', None, _("_Donate"), None, None, self.on_donate_clicked),
+            ('EditPreferences', gtk.STOCK_PREFERENCES, menubar.getLabel('EditPreferences'), menubar.getShortcut('EditPreferences').GTKString(), None, self.on_preference),
+            ('Quit', gtk.STOCK_QUIT, menubar.getLabel('Quit'), menubar.getShortcut('Quit').GTKString(), None, self.on_quit_activate),
+            ('UpdateAllChannels', None, menubar.getLabel('UpdateAllChannels'), menubar.getShortcut('UpdateAllChannels').GTKString(), None, self.on_update_all_channels_activate),
+            ('Help', None, menubar.getLabel('Help')),
+            ('About', gtk.STOCK_ABOUT, menubar.getLabel('About'), menubar.getShortcut('About').GTKString(), None, self.on_about_clicked),
+            ('Donate', None, menubar.getLabel('Donate'), menubar.getShortcut('Donate').GTKString(), None, self.on_donate_clicked),
 
-            ('Delete', None, _('Delete selection'), 'Delete', None, self.on_delete),
-            ('Backspace', None, _('Delete selection'), 'BackSpace', None, self.on_delete),
+            ('Delete', None, menubar.getLabel('Delete'), menubar.getShortcut('Delete').GTKString(), None, self.on_delete),
+            ('Backspace', None, menubar.getLabel('Backspace'), menubar.getShortcut('Backspace').GTKString(), None, self.on_delete),
             ])
         return actionGroups
 

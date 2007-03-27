@@ -7,6 +7,7 @@ import gtk.glade
 import sets
 import gconf
 import platformutils
+import menubar
 from gtcache import gettext as _
 
 import resources
@@ -153,8 +154,22 @@ class MainFrame:
             self.uiManager.insert_action_group (actionGroup, i)
             i = i + 1
 
-        self.uiManager.add_ui_from_file(resources.path('Democracy.xml'))
+        ui_string = "<ui>\n"
+        ui_string += "  <menubar>\n"
+        for menu in menubar.menubar:
+            ui_string += '  <menu action="%s">\n' % menu.action
+            for menuitem in menu.menuitems:
+                if isinstance(menuitem, menubar.Separator):
+                    ui_string += '      <separator/>\n'
+                else:
+                    ui_string += '      <menuitem action="%s"/>\n' %(
+                        menuitem.action)
+            ui_string += '  </menu>\n'
+        ui_string += "</menubar>\n"
+        ui_string += "</ui>\n"
 
+        self.uiManager.add_ui_from_string(ui_string)
+        
         self.widgetTree['menubar-box'].add (self.uiManager.get_widget('/menubar'))
         self.widgetTree['main-window'].add_accel_group(self.uiManager.get_accel_group())
 
