@@ -27,6 +27,7 @@ from gtcache import gettext as _
 
 from Preferences import PreferencesWindowController
 import GrowlNotifier
+import SparkleUpdater
 
 NibClassBuilder.extractClasses(u"MainMenu")
 
@@ -87,6 +88,8 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def applicationWillFinishLaunching_(self, notification):
         NSExceptionHandler.defaultExceptionHandler().setExceptionHandlingMask_(NSLogAndHandleEveryExceptionMask)
         NSExceptionHandler.defaultExceptionHandler().setDelegate_(self)
+        
+        SparkleUpdater.setup()
         
         man = NSAppleEventManager.sharedAppleEventManager()
         man.setEventHandler_andSelector_forEventClass_andEventID_(

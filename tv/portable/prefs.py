@@ -52,7 +52,7 @@ else:
 if 'DTV_AUTOUPDATE_URL' in os.environ:
     effectiveAutoupdate = util.unicodify(os.environ['DTV_AUTOUPDATE_URL'])
 else:
-    effectiveAutoupdate = u'http://www.participatoryculture.org/democracy-version.xml'
+    effectiveAutoupdate = u'http://www.participatoryculture.org/democracy-appcast.xml'
 
 CHANNEL_GUIDE_URL = Pref(key='ChannelGuideURL', default=effectiveChannelGuide,
                          platformSpecific=False)

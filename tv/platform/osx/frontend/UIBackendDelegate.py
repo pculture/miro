@@ -21,6 +21,7 @@ import platformutils
 
 from StartupPanel import StartupPanelController
 import GrowlNotifier
+import SparkleUpdater
 
 ###############################################################################
 
@@ -292,6 +293,9 @@ class UIBackendDelegate:
                         1,
                         0.0)
         NSMenu.popUpContextMenu_withEvent_forView_(nsmenu, event, view)
+
+    def handleNewUpdate(self, latest):
+        SparkleUpdater.handleNewUpdate(latest)
 
 ###############################################################################
 
