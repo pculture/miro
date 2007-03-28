@@ -14,6 +14,7 @@ import feed
 import views
 import template
 import util
+from gtcache import gettext as _
 
 def getID(obj):
     """Gets an ID to use for an object.  For tabs, this is the object ID that
@@ -458,7 +459,32 @@ class SelectionHandler(object):
                     containedChildren=containedChildren)
 
     def updateMenus(self):
-        from frontend import UIStrings
+        try:
+            from frontend import UIStrings
+        except:
+            class UIStrings:
+                REMOVE = _("Remove...")
+                REMOVE_PLAYLIST = _("Remove Playlist...")
+                REMOVE_PLAYLISTS = _("Remove Playlists...")
+                REMOVE_PLAYLIST_FOLDER = _("Remove Playlist Folder...")
+                REMOVE_PLAYLIST_FOLDERS = _("Remove Playlist Folders...")
+                REMOVE_CHANNEL = _("Remove Channel...")
+                REMOVE_CHANNELS = _("Remove Channels...")
+                REMOVE_CHANNEL_FOLDER = _("Remove Channel Folder...")
+                REMOVE_CHANNEL_FOLDERS = _("Remove Channel Folders...")
+                REMOVE_CHANNEL_GUIDE = _("Remove Channel Guide...")
+                REMOVE_CHANNEL_GUIDES = _("Remove Channel Guides...")
+                REMOVE_VIDEO = _("Remove Video...")
+                REMOVE_VIDEOS = _("Remove Videos...")
+                RENAME = _("Rename...")
+                RENAME_PLAYLIST = _("Rename Playlist...")
+                RENAME_PLAYLIST_FOLDER = _("Rename Playlist Folder...")
+                RENAME_CHANNEL = _("Rename Channel...")
+                RENAME_CHANNEL_FOLDER = _("Rename Channel Folder...")
+                RENAME_CHANNEL_GUIDE = _("Rename Channel Guide...")
+                UPDATE_CHANNEL = _("Update Channel...")
+                UPDATE_CHANNELS = _("Update Channels...")
+
         tabTypes = self.tabListSelection.getTypesDetailed()
         if tabTypes.issubset(set(['guidetab', 'addedguidetab'])):
             guideURL = self.getSelectedTabs()[0].obj.getRedirectedURL()

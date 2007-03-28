@@ -47,16 +47,12 @@ if hasGTK:
     from frontend_implementation.Application import Application
     from frontend_implementation.MainFrame import MainFrame, NullDisplay
     from frontend_implementation.UIBackendDelegate import UIBackendDelegate
-    import frontend_implementation.UIStrings as UIStrings
     from frontend_implementation.HTMLDisplay import HTMLDisplay, getDTVAPICookie, getDTVAPIURL
     from frontend_implementation.VideoDisplay import VideoDisplay
     from frontend_implementation.VideoDisplay import PlaybackController
 else:
     class Application:
         pass
-    class UIStrings:
-        def __getattr__():
-            return ""
     class MainFrame:
         pass
     class NullDisplay:
