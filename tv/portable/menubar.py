@@ -86,8 +86,8 @@ menubar = \
     Menu
    (_("_Video"), "Video",
     MenuItem(_("_Open"), "Open", Key("o", CTRL)),
-#    MenuItem(_("_Open Recent"), "OpenRecent", None),
-#    MenuItem(_("Check _Version"), "CheckVersion", None),
+    MenuItem(_("_Open Recent"), "OpenRecent", None),
+    MenuItem(_("Check _Version"), "CheckVersion", None),
     Separator(),
     MenuItem(_("_Remove Video..."), "RemoveVideos", None, False),
     MenuItem(_("Save Video _As..."),
@@ -96,12 +96,12 @@ menubar = \
     Separator(),
     MenuItem(_("P_references"), "EditPreferences", None),
     MenuItem(_("_Quit"),"Quit", Key("q",CTRL))),
-#    Menu
-#    (_("_Edit"), "Edit",
-#     MenuItem(_("Cu_t"), "Cut", Key("x", CTRL), False),
-#     MenuItem(_("_Copy"), "Copy", Key("c", CTRL), False),
-#     MenuItem(_("_Paste"), "Paste", Key("v", CTRL), False),
-#     MenuItem(_("Select _All"), "SelectAll", Key("a",CTRL))),
+   Menu
+   (_("_Edit"), "Edit",
+    MenuItem(_("Cu_t"), "Cut", Key("x", CTRL), False),
+    MenuItem(_("_Copy"), "Copy", Key("c", CTRL), False),
+    MenuItem(_("_Paste"), "Paste", Key("v", CTRL), False),
+    MenuItem(_("Select _All"), "SelectAll", Key("a",CTRL))),
    Menu
    (_("_Channels"), "Channels",
     MenuItem(_("Add _Channel..."), "NewChannel", Key("n",CTRL)),

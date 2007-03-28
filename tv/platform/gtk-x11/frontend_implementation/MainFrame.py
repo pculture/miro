@@ -149,22 +149,33 @@ class MainFrame:
         self.uiManager = gtk.UIManager()
 
         self.actionGroups = self.callbackHandler.actionGroups ()
+        actions = {} # Names of actions handled by the GTK UI
         i = 0
+
         for actionGroup in self.actionGroups.values():
+            actionlist = actionGroup.list_actions()
+            for action in actionlist:
+                actions[action.get_name()] = True
             self.uiManager.insert_action_group (actionGroup, i)
             i = i + 1
 
+        # Generate menus
         ui_string = "<ui>\n"
         ui_string += "  <menubar>\n"
         for menu in menubar.menubar:
-            ui_string += '  <menu action="%s">\n' % menu.action
-            for menuitem in menu.menuitems:
-                if isinstance(menuitem, menubar.Separator):
-                    ui_string += '      <separator/>\n'
-                else:
-                    ui_string += '      <menuitem action="%s"/>\n' %(
-                        menuitem.action)
-            ui_string += '  </menu>\n'
+            if actions.has_key(menu.action):
+                ui_string += '  <menu action="%s">\n' % menu.action
+                for menuitem in menu.menuitems:
+                    if isinstance(menuitem, menubar.Separator):
+                        ui_string += '      <separator/>\n'
+                    elif actions.has_key(menuitem.action):
+                        ui_string += '      <menuitem action="%s"/>\n' %(
+                            menuitem.action)
+                    else:
+                        logging.warn('Menu item action "%s" not implemented' % menuitem.action)
+                ui_string += '  </menu>\n'
+            else:
+                logging.warn('Menu action "%s" not implemented' % menu.action)
         ui_string += "</menubar>\n"
         ui_string += "</ui>\n"
 
