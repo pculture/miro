@@ -8,9 +8,9 @@ class ShortCut:
     GTK_MOD_STRINGS = {CTRL : '<Control>',
                        ALT:   '<Alt>',
                        SHIFT: '<Shift>'}
-    GTK_KEY_STRINGS = {RIGHT_ARROW : '<RightArrow>',
-                       LEFT_ARROW :   '<LeftArrow>',
-                       SPACE : '<Space>'}
+    GTK_KEY_STRINGS = {RIGHT_ARROW : 'Right',
+                       LEFT_ARROW :   'Left',
+                       SPACE : 'space'}
     def __init__(self, key, *modifiers):
         self.modifiers = modifiers
         self.key = key
