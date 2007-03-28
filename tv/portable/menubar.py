@@ -5,26 +5,9 @@ from gtcache import gettext as _
 CTRL, ALT, SHIFT, RIGHT_ARROW, LEFT_ARROW, SPACE = range(6)
 
 class ShortCut:
-    GTK_MOD_STRINGS = {CTRL : '<Control>',
-                       ALT:   '<Alt>',
-                       SHIFT: '<Shift>'}
-    GTK_KEY_STRINGS = {RIGHT_ARROW : 'Right',
-                       LEFT_ARROW :   'Left',
-                       SPACE : 'space'}
     def __init__(self, key, *modifiers):
         self.modifiers = modifiers
         self.key = key
-    def GTKString(self):
-        if self.key is None:
-            return None
-        output = []
-        for modifier in self.modifiers:
-            output.append(ShortCut.GTK_MOD_STRINGS[modifier])
-        if isinstance(self.key, int):
-            output.append(ShortCut.GTK_KEY_STRINGS[self.key])
-        else:
-            output.append(self.key)
-        return ''.join(output)
 
 Key = ShortCut
 

@@ -24,6 +24,27 @@ import config
 import prefs
 import logging
 
+# Extent the ShortCut class to include a GTKString() function
+def ShortCutMixin(self):
+    GTK_MOD_STRINGS = {menubar.CTRL : '<Control>',
+                       menubar.ALT:   '<Alt>',
+                       menubar.SHIFT: '<Shift>'}
+    GTK_KEY_STRINGS = {menubar.RIGHT_ARROW : 'Right',
+                       menubar.LEFT_ARROW :   'Left',
+                       menubar.SPACE : 'space'}
+
+    if self.key is None:
+        return None
+    output = []
+    for modifier in self.modifiers:
+        output.append(GTK_MOD_STRINGS[modifier])
+    if isinstance(self.key, int):
+        output.append(GTK_KEY_STRINGS[self.key])
+    else:
+        output.append(self.key)
+    return ''.join(output)
+menubar.ShortCut.GTKString = ShortCutMixin
+
 def _getPref(key, getter_name):
     gconf_lock.acquire()
     try:
