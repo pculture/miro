@@ -43,7 +43,7 @@ def parse_host_and_port(windows_proxy_string):
             continue
         if '://' in proxy:
             if proxy.startswith("http://"):
-                proxy = proxy[len("http://")]
+                proxy = proxy[len("http://"):]
             else:
                 logging.warn("unsupported proxy scheme: %s" % original_string)
                 continue
