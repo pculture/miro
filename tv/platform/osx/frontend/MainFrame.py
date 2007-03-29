@@ -401,8 +401,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
         return result
 
     def updateMenuItem(self, item, key):
-        if key in self.menuStrings:
-            item.setTitle_(self.menuStrings[key].replace('_', ''))
+        pass # Disabling this feature for now while I change the API --NN
+        #if key in self.menuStrings:
+        #    item.setTitle_(self.menuStrings[key].replace('_', ''))
 
 ###############################################################################
 
