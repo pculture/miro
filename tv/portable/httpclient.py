@@ -1738,8 +1738,8 @@ class HTTPClient(object):
         if match is None:
             trapCall(self, self.errback, AuthorizationFailed())
             return
-        authScheme = match.expand("\\1")
-        realm = match.expand("\\2")
+        authScheme = unicode(match.expand("\\1"))
+        realm = unicode(match.expand("\\2"))
         if authScheme.lower() != 'basic':
             trapCall(self, self.errback, AuthorizationFailed())
             return
