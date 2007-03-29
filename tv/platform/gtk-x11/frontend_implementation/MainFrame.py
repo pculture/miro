@@ -31,7 +31,8 @@ def ShortCutMixin(self):
                        menubar.SHIFT: '<Shift>'}
     GTK_KEY_STRINGS = {menubar.RIGHT_ARROW : 'Right',
                        menubar.LEFT_ARROW :   'Left',
-                       menubar.SPACE : 'space'}
+                       menubar.SPACE : 'space',
+                       menubar.ENTER: 'Enter'}
 
     if self.key is None:
         return None

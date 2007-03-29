@@ -2,7 +2,7 @@
 # THIS IS STILL A WORK IN PROGRESS. THE FORMAT IS NOT FINAL
 from gtcache import gettext as _
 
-CTRL, ALT, SHIFT, RIGHT_ARROW, LEFT_ARROW, SPACE = range(6)
+CTRL, ALT, SHIFT, RIGHT_ARROW, LEFT_ARROW, SPACE, ENTER = range(7)
 
 class ShortCut:
     def __init__(self, key, *modifiers):

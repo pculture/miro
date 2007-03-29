@@ -11,6 +11,10 @@ wnindow, hbox, vbox, menu, menubar, menuitem, menupopup {
 	border: 0px;
 }
 
+#titlebar-menu {
+  margin-left: 10px;
+}
+
 .titlebar menu {
 	-moz-appearance: none; 
 	color: #FFFFFF;

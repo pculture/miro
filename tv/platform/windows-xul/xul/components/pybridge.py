@@ -23,6 +23,7 @@ try:
     import singleclick
     import frontend
     import util
+    import menubar
     from frontend_implementation import HTMLDisplay
     from frontend_implementation.UIBackendDelegate import UIBackendDelegate
     from eventloop import asUrgent
@@ -47,6 +48,28 @@ except:
         return func
 else:
     errorOnImport = False
+
+# Extent the ShortCut class to include a XULString() function
+def ShortCutMixin(self):
+    XUL_MOD_STRINGS = {menubar.CTRL : 'Ctrl',
+                       menubar.ALT:   'Alt',
+                       menubar.SHIFT: 'Shift'}
+    XUL_KEY_STRINGS = {menubar.RIGHT_ARROW : 'Right',
+                       menubar.LEFT_ARROW :   'Left',
+                       menubar.SPACE : 'Space',
+                       menubar.ENTER: 'Enter'}
+
+    if self.key is None:
+        return None
+    output = []
+    for modifier in self.modifiers:
+        output.append(XUL_MOD_STRINGS[modifier])
+    if isinstance(self.key, int):
+        output.append(XUL_KEY_STRINGS[self.key])
+    else:
+        output.append(self.key.upper())
+    return '+'.join(output)
+menubar.ShortCut.XULString = ShortCutMixin
 
 nsIEventQueueService = components.interfaces.nsIEventQueueService
 nsIProperties = components.interfaces.nsIProperties
@@ -512,3 +535,43 @@ class PyBridge:
             titles.append(engine.title)
         frontend.jsBridge.setSearchEngineInfo(names, titles)
         frontend.jsBridge.setSearchEngine(searchengines.getLastEngine())
+
+    def addMenubar(self, document):
+        def XULifyLabel(label):
+            return label.replace(u'_',u'')
+        def XULAccelFromLabel(label):
+            parts = label.split(u'_')
+            if len(parts) > 1:
+                return parts[1][0]
+
+        menubarElement = document.getElementById("titlebar-menu")
+
+        for menu in menubar.menubar.menus:
+            menuElement = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menu")
+            menuElement.setAttribute("id", "menu-%s" % menu.action.lower())
+            menuElement.setAttribute("label", XULifyLabel(menu.label))
+            if XULAccelFromLabel(menu.label):
+                menuElement.setAttribute("accesskey", XULAccelFromLabel(menu.label))
+            menupopup = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menupopup")
+
+            menupopup.setAttribute("id", "menupopup-%s" % menu.action.lower())
+            menuElement.appendChild(menupopup)
+            menubarElement.appendChild(menuElement)
+            for item in menu.menuitems:
+                if isinstance(item, menubar.Separator):
+                    menuitem = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menuseparator")
+                else:
+                    menuitem = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menuitem")
+                    menuitem.setAttribute("id","menuitem-%s" % item.action.lower())
+                    menuitem.setAttribute("label",XULifyLabel(item.label))
+                    menuitem.setAttribute("command", item.action)
+                    if XULAccelFromLabel(item.label):
+                        menuitem.setAttribute("accesskey",
+                                          XULAccelFromLabel(item.label))
+                    if item.shortcut:
+                        menuitem.setAttribute("acceltext",
+                                              item.shortcut.XULString())
+                        
+                menupopup.appendChild(menuitem)
+                
+

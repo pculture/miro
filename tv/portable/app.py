@@ -57,6 +57,7 @@ import templatehelper
 import databasehelper
 import fasttypes
 import urllib
+import menubar # Needed because the XUL port only includes this in pybridge
 from gtcache import gettext as _
 from gtcache import ngettext
 from clock import clock

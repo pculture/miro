@@ -158,6 +158,8 @@ function buttonIsActive(buttonId) {
 function onLoad() {
     jsdump("onLoad running.");
 
+    pybridge.addMenubar(document);
+
     // Start watching for application exit.
     // NEEDS: should this move out of onLoad() and be global?
     var qo = new quitObserver();
@@ -347,7 +349,7 @@ function clipboardPaste() {
 function openFile() {
     var fp = Components.classes["@mozilla.org/filepicker;1"]
             .createInstance(Components.interfaces.nsIFilePicker);
-    var openMenuItem = document.getElementById('menuitem-file-open');
+    var openMenuItem = document.getElementById('menuitem-open');
     fp.init(window, openMenuItem.getAttribute('label'),
         Components.interfaces.nsIFilePicker.modeOpen);
     var res = fp.show();
