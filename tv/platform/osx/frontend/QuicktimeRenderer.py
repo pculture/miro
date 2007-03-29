@@ -15,11 +15,17 @@ import platformcfg
 import platformutils
 import download_utils
 
+from gtcache import gettext as _
+
+###############################################################################
+
+SUPPORTED_VIDEO_MEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
+SUPPORTED_AUDIO_MEDIA_TYPES = (QTMediaTypeSound, QTMediaTypeMusic)
+ALL_SUPPORTED_MEDIA_TYPES   = SUPPORTED_VIDEO_MEDIA_TYPES + SUPPORTED_AUDIO_MEDIA_TYPES
+
 ###############################################################################
 
 class QuicktimeRenderer (app.VideoRenderer):
-
-    CORRECT_QTMEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
 
     def __init__(self, delegate):
         app.VideoRenderer.__init__(self)
@@ -95,7 +101,7 @@ class QuicktimeRenderer (app.VideoRenderer):
                 for media in allMedia:
                     mediaType = media.attributeForKey_(QTMediaTypeAttribute)
                     mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
-                    if mediaType in self.CORRECT_QTMEDIA_TYPES and mediaDuration > 0:
+                    if mediaType in ALL_SUPPORTED_MEDIA_TYPES and mediaDuration > 0:
                         canPlay = True
                         break
         else:
@@ -109,11 +115,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         self.reset()
         if qtmovie is not nil:
             self.movie = qtmovie
-            self.view = QTMovieView.alloc().initWithFrame_(((0,0),(100,100)))
-            self.view.setFillColor_(NSColor.blackColor())
-            self.view.setControllerVisible_(NO)
-            self.view.setEditable_(NO)
-            self.view.setPreservesAspectRatio_(YES)
+            self.view = PlaybackView.alloc().init()
             self.view.setMovie_(self.movie)
             self.view.setNeedsDisplay_(YES)
             self.registerMovieObserver(qtmovie)
@@ -186,6 +188,49 @@ class QuicktimeRenderer (app.VideoRenderer):
         if self.movie is not nil:
             self.movie.setVolume_(level)
 
+###############################################################################
+
+class PlaybackView (QTMovieView):
+    
+    def init(self):
+        self = super(PlaybackView, self).initWithFrame_(((0,0),(100,100)))
+        self.setFillColor_(NSColor.blackColor())
+        self.setControllerVisible_(NO)
+        self.setEditable_(NO)
+        self.setPreservesAspectRatio_(YES)
+        self.headlineAttributes = {
+            NSForegroundColorAttributeName: NSColor.whiteColor(),
+            NSFontAttributeName: NSFont.fontWithName_size_(u'Lucida Grande', 18)
+        }
+        return self
+        
+    def drawRect_(self, rect):
+        if self.isAudioOnly():
+            self.drawForAudioPlayback(rect)
+        else:
+            super(PlaybackView, self).drawRect_(rect)
+    
+    def drawForAudioPlayback(self, rect):
+        NSColor.blackColor().set()
+        NSRectFill(rect)
+        headline = NSString.stringWithString_(_(u'Audio'))
+        headlineRect = headline.boundingRectWithSize_options_attributes_(rect.size, 0, self.headlineAttributes)
+        x = (rect.size.width - headlineRect.size.width) / 2
+        y = (rect.size.height - headlineRect.size.height) / 2
+        headline.drawAtPoint_withAttributes_((x, y), self.headlineAttributes)
+
+    def isAudioOnly(self):
+        audioOnly = False
+        movie = self.movie()
+        if movie is not None:
+            allTracks = movie.tracks()
+            allMedia = [track.media() for track in allTracks]
+            allTypes = [media.attributeForKey_(QTMediaTypeAttribute) for media in allMedia]
+            hasAudioTrack = True in [mtype in SUPPORTED_AUDIO_MEDIA_TYPES for mtype in allTypes]
+            hasVideoTrack = True in [mtype in SUPPORTED_VIDEO_MEDIA_TYPES for mtype in allTypes]
+            audioOnly = hasAudioTrack and not hasVideoTrack
+        return audioOnly
+            
 ###############################################################################
 
 def _qttime2secs(qttime):
