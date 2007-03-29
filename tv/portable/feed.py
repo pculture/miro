@@ -1725,14 +1725,14 @@ class ScraperFeedImpl(FeedImpl):
         self.scheduleUpdateEvents(.1)
 
 class DirectoryWatchFeedImpl(FeedImpl):
-    def __init__(self,ufeed, dir, visible = True):
-        self.dir = dir
+    def __init__(self,ufeed, directory, visible = True):
+        self.dir = directory
         self.firstUpdate = True
-        if dir is not None:
-            url = u"dtv:directoryfeed:%s" % (makeURLSafe (dir),)
+        if directory is not None:
+            url = u"dtv:directoryfeed:%s" % (makeURLSafe (directory),)
         else:
             url = u"dtv:directoryfeed"
-        FeedImpl.__init__(self,url = url,ufeed=ufeed,title = filenameToUnicode(dir),visible = visible)
+        FeedImpl.__init__(self,url = url,ufeed=ufeed,title = filenameToUnicode(directory),visible = visible)
 
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
@@ -1780,20 +1780,21 @@ class DirectoryWatchFeedImpl(FeedImpl):
         if os.path.isdir(self.dir):
             existingFiles = [os.path.normcase(os.path.join(self.dir, f)) 
                     for f in os.listdir(self.dir)]
-            for file in existingFiles:
-                if (os.path.exists(file) and os.path.basename(file)[0] != '.'):
-                    if not file in knownFiles:
-                        if not os.path.isdir(file):
-                            FileItem(file, feed_id=self.ufeed.id)
+            for existingFile in existingFiles:
+                if (os.path.exists(existingFile) and os.path.basename(existingFile)[0] != u'.'):
+                    if not existingFile in knownFiles:
+                        if not os.path.isdir(existingFile):
+                            if isAllowedFilename(platformutils.filenameToUnicode(existingFile)):
+                                FileItem(existingFile, feed_id=self.ufeed.id)
                         else:
                             found = 0
                             not_found = []
-                            contents = [os.path.normcase(os.path.join(file, f)) 
-                                        for f in os.listdir(file)]
+                            contents = [os.path.normcase(os.path.join(existingFile, f)) 
+                                        for f in os.listdir(existingFile)]
                             for subfile in contents:
                                 if subfile in knownFiles:
                                     found = found + 1
-                                else:
+                                elif isAllowedFilename(platformutils.filenameToUnicode(subfile)):
                                     not_found.append(subfile)
                             # If every subfile or subdirectory is
                             # already in the database (including
@@ -1814,7 +1815,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
                                 # directory added wholesale.
                                 
                                 else:
-                                    FileItem (file, feed_id=self.ufeed.id)
+                                    FileItem (existingFile, feed_id=self.ufeed.id)
 
 
         for item in self.items:
