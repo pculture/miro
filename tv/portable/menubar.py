@@ -59,12 +59,12 @@ class MenuBar:
     def getLabel(self, action):
         try:
             return self.labels[action]
-        except:
+        except KeyError:
             return action
     def getPluralLabel(self, action):
         try:
             return self.plurals[action]
-        except:
+        except KeyError:
             return self.getLabel(action)
     def getShortcut(self, action):
         try:
@@ -72,7 +72,7 @@ class MenuBar:
                 return ShortCut(None)
             else:
                 return self.shortcuts[action]
-        except:
+        except KeyError:
             return ShortCut(None)
 
 menubar = \
