@@ -459,32 +459,6 @@ class SelectionHandler(object):
                     containedChildren=containedChildren)
 
     def updateMenus(self):
-        try:
-            from frontend import UIStrings
-        except:
-            class UIStrings:
-                REMOVE = _("Remove...")
-                REMOVE_PLAYLIST = _("Remove Playlist...")
-                REMOVE_PLAYLISTS = _("Remove Playlists...")
-                REMOVE_PLAYLIST_FOLDER = _("Remove Playlist Folder...")
-                REMOVE_PLAYLIST_FOLDERS = _("Remove Playlist Folders...")
-                REMOVE_CHANNEL = _("Remove Channel...")
-                REMOVE_CHANNELS = _("Remove Channels...")
-                REMOVE_CHANNEL_FOLDER = _("Remove Channel Folder...")
-                REMOVE_CHANNEL_FOLDERS = _("Remove Channel Folders...")
-                REMOVE_CHANNEL_GUIDE = _("Remove Channel Guide...")
-                REMOVE_CHANNEL_GUIDES = _("Remove Channel Guides...")
-                REMOVE_VIDEO = _("Remove Video...")
-                REMOVE_VIDEOS = _("Remove Videos...")
-                RENAME = _("Rename...")
-                RENAME_PLAYLIST = _("Rename Playlist...")
-                RENAME_PLAYLIST_FOLDER = _("Rename Playlist Folder...")
-                RENAME_CHANNEL = _("Rename Channel...")
-                RENAME_CHANNEL_FOLDER = _("Rename Channel Folder...")
-                RENAME_CHANNEL_GUIDE = _("Rename Channel Guide...")
-                UPDATE_CHANNEL = _("Update Channel...")
-                UPDATE_CHANNELS = _("Update Channels...")
-
         tabTypes = self.tabListSelection.getTypesDetailed()
         if tabTypes.issubset(set(['guidetab', 'addedguidetab'])):
             guideURL = self.getSelectedTabs()[0].obj.getRedirectedURL()
@@ -493,48 +467,40 @@ class SelectionHandler(object):
         multiple = len(self.tabListSelection.currentSelection) > 1
 
         actionGroups = {}
-        strings = {}
+        plurals = []
 
         is_playlistlike = tabTypes.issubset (set(['playlisttab', 'playlistfoldertab']))
         is_channellike = tabTypes.issubset (set(['channeltab', 'channelfoldertab', 'addedguidetab']))
         is_channel = tabTypes.issubset (set(['channeltab', 'channelfoldertab']))
-        strings["channel_remove"] = UIStrings.REMOVE
-        strings["channel_rename"] = UIStrings.RENAME
-        strings["channel_update"] = UIStrings.UPDATE_CHANNEL
-        strings["playlist_remove"] = UIStrings.REMOVE
-        strings["playlist_rename"] = UIStrings.RENAME
-        strings["video_remove"] = UIStrings.REMOVE_VIDEO
         if len (tabTypes) == 1:
             if multiple:
                 if 'playlisttab' in tabTypes:
-                    strings["playlist_remove"] = UIStrings.REMOVE_PLAYLISTS
+                    plurals.append("RemovePlaylists")
                 elif 'playlistfoldertab' in tabTypes:
-                    strings["playlist_remove"] = UIStrings.REMOVE_PLAYLIST_FOLDERS
+                    # This was "Playlist Folders"...
+                    plurals.append("RemovePlaylists")
                 elif 'channeltab' in tabTypes:
-                    strings["channel_remove"] = UIStrings.REMOVE_CHANNELS
+                    plurals.append("RemoveChannels")
                 elif 'channelfoldertab' in tabTypes:
-                    strings["channel_remove"] = UIStrings.REMOVE_CHANNEL_FOLDERS
+                    # This was "Channel Folders"
+                    plurals.append("RemoveChannels")
                 elif 'addedguidetab' in tabTypes:
-                    strings["channel_remove"] = UIStrings.REMOVE_CHANNEL_GUIDES
+                    # This was "Channel Guides"
+                    plurals.append("ChannelGuides")
             else:
                 if 'playlisttab' in tabTypes:
-                    strings["playlist_remove"] = UIStrings.REMOVE_PLAYLIST
-                    strings["playlist_rename"] = UIStrings.RENAME_PLAYLIST
+                    pass
                 elif 'playlistfoldertab' in tabTypes:
-                    strings["playlist_remove"] = UIStrings.REMOVE_PLAYLIST_FOLDER
-                    strings["playlist_rename"] = UIStrings.RENAME_PLAYLIST_FOLDER
+                    pass
                 elif 'channeltab' in tabTypes:
-                    strings["channel_remove"] = UIStrings.REMOVE_CHANNEL
-                    strings["channel_rename"] = UIStrings.RENAME_CHANNEL
+                    pass
                 elif 'channelfoldertab' in tabTypes:
-                    strings["channel_remove"] = UIStrings.REMOVE_CHANNEL_FOLDER
-                    strings["channel_rename"] = UIStrings.RENAME_CHANNEL_FOLDER
+                    pass
                 elif 'addedguidetab' in tabTypes:
-                    strings["channel_remove"] = UIStrings.REMOVE_CHANNEL_GUIDE
-                    strings["channel_rename"] = UIStrings.RENAME_CHANNEL_GUIDE
+                    pass
 
         if multiple and is_channel:
-            strings["channel_update"] = UIStrings.UPDATE_CHANNELS
+            plurals.append("UpdateChannels")
 
         actionGroups["ChannelLikeSelected"] = is_channellike and not multiple
         actionGroups["ChannelLikesSelected"] = is_channellike
@@ -557,12 +523,12 @@ class SelectionHandler(object):
                 item = self.itemListSelection.getObjects()[0]
                 videoFileName = item.getVideoFilename()
             else:
-                strings["video_remove"] = UIStrings.REMOVE_VIDEOS
+                plurals.append("RemoveVideos")
 #        if len(self.itemListSelection.currentSelection) == 0:
 #            if playable_videos:
 #                actionGroups["VideoPlayable"] = True
 
-        app.controller.frame.onSelectedTabChange(strings, actionGroups, 
+        app.controller.frame.onSelectedTabChange(plurals, actionGroups, 
                 guideURL, videoFileName)
 
     def displayCurrentTabContent(self):
