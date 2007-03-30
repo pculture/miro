@@ -33,9 +33,9 @@ class MainFrame:
         frontend.currentVideoPath = videoFilename
         for group, enabled in actionGroups.items():
             frontend.jsBridge.setActionGroupEnabled(group, enabled)
-        for name, label in strings.items():
-            id = 'menuitem-%s' % name.replace('_', '-')
-            frontend.jsBridge.updateLabel(id, label)
+        #for name, label in strings.items():
+        #    id = 'menuitem-%s' % name.replace('_', '-')
+        #    frontend.jsBridge.updateLabel(id, label)
 
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
