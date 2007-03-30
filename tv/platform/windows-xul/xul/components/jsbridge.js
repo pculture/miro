@@ -416,10 +416,6 @@ jsBridge.prototype = {
        }
      }
   },
-  updateLabel: function(id, label) {
-    var menuitem = this.document.getElementById(id);
-    menuitem.setAttribute('label', label);
-  },
   updateVideoFilename: function(newFilename) {
     if(newFilename) this.videoFilename = newFilename;
     else this.videoFilename = null;
@@ -487,6 +483,38 @@ jsBridge.prototype = {
     var searchIcon = this.document.getElementById("search-icon");
     searchIcon.setAttribute("src",'images/search_icon_' + engine + '.png');
   },
+  updateMenus: function (plurals) {
+
+     // Strings with new labels
+     var removeChannels = new Object();
+     var updateChannels = new Object();
+     var removePlaylists = new Object();
+     var removeVideos = new Object();
+     pybridge.getLabel("RemoveChannels",false,removeChannels);
+     pybridge.getLabel("UpdateChannels",false, updateChannels);
+     pybridge.getLabel("RemovePlaylists",false, removePlaylists);
+     pybridge.getLabel("RemoveVideos",false,removeVideos);
+
+     for (var i=0;i<plurals.length;i++) {
+         if (plurals[i] == "RemoveChannels")
+             pybridge.getLabel("RemoveChannels",true,removeChannels);
+         if (plurals[i] == "UpdateChannels")
+             pybridge.getLabel("UpdateChannels",true, updateChannels);
+         if (plurals[i] == "RemovePlaylists")
+             pybridge.getLabel("RemovePlaylists",true, removePlaylists);
+         if (plurals[i] == "RemoveVideos")
+             pybridge.getLabel("RemoveVideos",true,removeVideos);
+     }
+
+     var ele = this.document.getElementById("menuitem-removechannels");
+     ele.setAttribute("label", removeChannels.value);
+     ele = this.document.getElementById("menuitem-updatechannels");
+     ele.setAttribute("label", updateChannels.value);
+     ele = this.document.getElementById("menuitem-removeplaylists");
+     ele.setAttribute("label", removePlaylists.value);
+     ele = this.document.getElementById("menuitem-removevideos");
+     ele.setAttribute("label", removeVideos.value);
+  },
 };
 
 var Module = {
@@ -531,7 +559,7 @@ var Module = {
 
   canUnload: function (aComponentManager) {
       return true;
-  }
+  },
 };
 
 function NSGetModule(compMgr, fileSpec) {

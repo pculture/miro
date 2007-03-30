@@ -97,4 +97,5 @@ interface pcfIDTVPyBridge : nsISupports
   AString getSpecialFolder(in AString name);
   void createProxyObjects();
   void addMenubar(in nsIDOMDocument doc);
+  void getLabel(in AString action, in boolean plural, out AString label);
 };

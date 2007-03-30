@@ -23,7 +23,7 @@ class MainFrame:
         self.selectedDisplays = {}
         urlcallbacks.installMainDisplayCallback(self.mainDisplayCallback)
 
-    def onSelectedTabChange(self, strings, actionGroups, guideURL,
+    def onSelectedTabChange(self, plurals, actionGroups, guideURL,
             videoFilename):
         app.controller.setGuideURL(guideURL)
         if videoFilename is not None:
@@ -33,10 +33,8 @@ class MainFrame:
         frontend.currentVideoPath = videoFilename
         for group, enabled in actionGroups.items():
             frontend.jsBridge.setActionGroupEnabled(group, enabled)
-        #for name, label in strings.items():
-        #    id = 'menuitem-%s' % name.replace('_', '-')
-        #    frontend.jsBridge.updateLabel(id, label)
-
+        frontend.jsBridge.updateMenus(plurals)
+        
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 

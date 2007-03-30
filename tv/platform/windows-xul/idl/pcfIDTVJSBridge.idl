@@ -44,7 +44,6 @@ interface pcfIDTVJSBridge : nsISupports
   void enterFullscreen();
   void leaveFullscreen();
   void setActionGroupEnabled(in AString group, in boolean enabled);
-  void updateLabel(in AString id, in AString label);
   void updateVideoFilename(in AString newFilename);
   void saveVideo();
   void setSliderText(in PRInt32 elasped);
@@ -55,4 +54,5 @@ interface pcfIDTVJSBridge : nsISupports
   void searchCancelled (in AString message);
   void setSearchEngine (in AString engine);
   void setSearchEngineInfo(in nsIVariant names, in nsIVariant titles);
+  void updateMenus(in nsIVariant plurals);
 };

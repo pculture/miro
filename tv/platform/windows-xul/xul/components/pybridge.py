@@ -150,6 +150,15 @@ def appRoot():
     file = service.get("XCurProcD", nsIFile)
     return file.path
 
+# Functions to convert menu information into XUL form
+def XULifyLabel(label):
+    return label.replace(u'_',u'')
+def XULAccelFromLabel(label):
+    parts = label.split(u'_')
+    if len(parts) > 1:
+        return parts[1][0]
+
+
 class PyBridge:
     _com_interfaces_ = [pcfIDTVPyBridge]
     _reg_clsid_ = "{F87D30FF-C117-401e-9194-DF3877C926D4}"
@@ -537,13 +546,6 @@ class PyBridge:
         frontend.jsBridge.setSearchEngine(searchengines.getLastEngine())
 
     def addMenubar(self, document):
-        def XULifyLabel(label):
-            return label.replace(u'_',u'')
-        def XULAccelFromLabel(label):
-            parts = label.split(u'_')
-            if len(parts) > 1:
-                return parts[1][0]
-
         menubarElement = document.getElementById("titlebar-menu")
 
         for menu in menubar.menubar.menus:
@@ -573,5 +575,10 @@ class PyBridge:
                                               item.shortcut.XULString())
                         
                 menupopup.appendChild(menuitem)
-                
+
+    def getLabel(self, action, plural):
+        if plural:
+            return XULifyLabel(menubar.menubar.getPluralLabel(action))
+        else:
+            return XULifyLabel(menubar.menubar.getLabel(action))
 
