@@ -576,9 +576,7 @@ class PyBridge:
                         
                 menupopup.appendChild(menuitem)
 
-    def getLabel(self, action, plural):
-        if plural:
-            return XULifyLabel(menubar.menubar.getPluralLabel(action))
-        else:
-            return XULifyLabel(menubar.menubar.getLabel(action))
+    def getLabel(self, action, state):
+        return XULifyLabel(menubar.menubar.getLabel(action,state))
+
 

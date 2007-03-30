@@ -12,12 +12,12 @@ class ShortCut:
 Key = ShortCut
 
 class MenuItem:
-    def __init__(self, label, action, shortcut, enabled = True, pluralLabel=None):
+    def __init__(self, label, action, shortcut, enabled = True, **stateLabels):
         self.label = label
         self.action = action
         self.shortcut = shortcut
         self.enabled = enabled
-        self.pluralLabel = pluralLabel
+        self.stateLabels = stateLabels
 
 class Separator:
     pass
@@ -27,15 +27,15 @@ class Menu:
         self.label = label
         self.action = action
         self.labels = {action:label}
-        self.plurals = {}
+        self.stateLabels = {}
         self.shortcuts = {}
         self.menuitems = menuitems
         for item in menuitems:
             if not isinstance(item, Separator):
                 self.labels[item.action] = item.label
                 self.shortcuts[item.action] = item.shortcut
-                if item.pluralLabel:
-                    self.plurals[item.action] = item.pluralLabel
+                if item.stateLabels:
+                    self.stateLabels[item.action] = item.stateLabels
             
     def getLabel(self, action):
         return self.labels[action]
@@ -46,26 +46,27 @@ class MenuBar:
     def __init__(self, *menus):
         self.menus = menus
         self.labels = {}
-        self.plurals = {}
+        self.stateLabels = {}
         self.shortcuts = {}
         for menu in menus:
             self.labels.update(menu.labels)
-            self.plurals.update(menu.plurals)
+            self.stateLabels.update(menu.stateLabels)
             self.shortcuts.update(menu.shortcuts)
 
     def __iter__(self):
         for menu in self.menus:
             yield menu
-    def getLabel(self, action):
-        try:
-            return self.labels[action]
-        except KeyError:
-            return action
-    def getPluralLabel(self, action):
-        try:
-            return self.plurals[action]
-        except KeyError:
-            return self.getLabel(action)
+    def getLabel(self, action, state=None):
+        if state is None:
+            try:
+                return self.labels[action]
+            except KeyError:
+                return action
+        else:
+            try:
+                return self.stateLabels[action][state]
+            except KeyError:
+                return self.getLabel(action)
     def getShortcut(self, action):
         try:
             if self.shortcuts[action] is None:
@@ -84,7 +85,7 @@ menubar = \
     MenuItem(_("Check _Version"), "CheckVersion", None),
     Separator(),
     MenuItem(_("_Remove Video..."), "RemoveVideos", None, False,
-             _("_Remove Videos...")),
+             plural=_("_Remove Videos...")),
     MenuItem(_("Save Video _As..."),
              "SaveVideo", Key("s",CTRL), False),
     MenuItem(_("Copy Video URL"), "CopyVideoURL", None, False),
@@ -106,9 +107,9 @@ menubar = \
     Separator(),
     MenuItem(_("Re_name..."), "RenameChannel", None, False),
     MenuItem(_("Re_move Channel..."), "RemoveChannels", None, False,
-             _("Re_move Channels...")),
+             plural=_("Re_move Channels...")),
     MenuItem(_("_Update Channel"), "UpdateChannels", None, False,
-             _("_Update Channels")),
+             plural=_("_Update Channels")),
     MenuItem(_("U_pdate All Channels"), "UpdateAllChannels", None),
     Separator(),
     MenuItem(_("_Send this channel to a friend"), "MailChannel",None, False),
@@ -118,10 +119,9 @@ menubar = \
     MenuItem(_("New _Playlist..."), "NewPlaylist", Key("p",CTRL)),
     MenuItem(_("New Playlist _Folder..."), "NewPlaylistFolder",None),
     Separator(),
-    MenuItem(_("Re_name Playlist..."),"RenamePlaylist",None, False,
-             _("Re_name Playlists...")),
+    MenuItem(_("Re_name Playlist..."),"RenamePlaylist",None, False),
     MenuItem(_("_Remove Playlist..."),"RemovePlaylists",None, False,
-             _("_Remove Playlists..."))),
+             plural=_("_Remove Playlists..."))),
    Menu
    (_("P_layback"), "Playback",
     MenuItem(_("_Play"), "PlayPauseVideo", Key(SPACE), False),

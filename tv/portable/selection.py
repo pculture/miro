@@ -467,7 +467,7 @@ class SelectionHandler(object):
         multiple = len(self.tabListSelection.currentSelection) > 1
 
         actionGroups = {}
-        plurals = []
+        states = {"plural":[]}
 
         is_playlistlike = tabTypes.issubset (set(['playlisttab', 'playlistfoldertab']))
         is_channellike = tabTypes.issubset (set(['channeltab', 'channelfoldertab', 'addedguidetab']))
@@ -475,18 +475,18 @@ class SelectionHandler(object):
         if len (tabTypes) == 1:
             if multiple:
                 if 'playlisttab' in tabTypes:
-                    plurals.append("RemovePlaylists")
+                    states["plural"].append("RemovePlaylists")
                 elif 'playlistfoldertab' in tabTypes:
                     # This was "Playlist Folders"...
-                    plurals.append("RemovePlaylists")
+                    states["plural"].append("RemovePlaylists")
                 elif 'channeltab' in tabTypes:
-                    plurals.append("RemoveChannels")
+                    states["plural"].append("RemoveChannels")
                 elif 'channelfoldertab' in tabTypes:
                     # This was "Channel Folders"
-                    plurals.append("RemoveChannels")
+                    states["plural"].append("RemoveChannels")
                 elif 'addedguidetab' in tabTypes:
                     # This was "Channel Guides"
-                    plurals.append("ChannelGuides")
+                    states["plural"].append("ChannelGuides")
             else:
                 if 'playlisttab' in tabTypes:
                     pass
@@ -500,7 +500,7 @@ class SelectionHandler(object):
                     pass
 
         if multiple and is_channel:
-            plurals.append("UpdateChannels")
+            states["plural"].append("UpdateChannels")
 
         actionGroups["ChannelLikeSelected"] = is_channellike and not multiple
         actionGroups["ChannelLikesSelected"] = is_channellike
@@ -523,12 +523,12 @@ class SelectionHandler(object):
                 item = self.itemListSelection.getObjects()[0]
                 videoFileName = item.getVideoFilename()
             else:
-                plurals.append("RemoveVideos")
+                states["plural"].append("RemoveVideos")
 #        if len(self.itemListSelection.currentSelection) == 0:
 #            if playable_videos:
 #                actionGroups["VideoPlayable"] = True
 
-        app.controller.frame.onSelectedTabChange(plurals, actionGroups, 
+        app.controller.frame.onSelectedTabChange(states, actionGroups, 
                 guideURL, videoFileName)
 
     def displayCurrentTabContent(self):

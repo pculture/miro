@@ -269,7 +269,7 @@ class MainFrame:
         self.actionGroups['VideoPlayable'].set_sensitive(self.playable or self.videoLoaded)
         
     @gtkAsyncMethod
-    def onSelectedTabChange(self, plurals, actionGroups, guideURL,
+    def onSelectedTabChange(self, states, actionGroups, guideURL,
             videoFilename):
         app.controller.setGuideURL(guideURL)
         self.currentVideoFilename = videoFilename
@@ -281,31 +281,28 @@ class MainFrame:
         self.actionGroups['VideoPlayable'].set_sensitive(self.playable or self.videoLoaded)
 
 
-        if "RemoveChannels" in plurals:
-            string = menubar.menubar.getPluralLabel("RemoveChannels")
-        else:
-            string = menubar.menubar.getLabel("RemoveChannels")
-        self.actionGroups["ChannelLikesSelected"].get_action("RemoveChannels").set_property("label", string)
+        removeChannels = menubar.menubar.getLabel("RemoveChannels")
+        updateChannels = menubar.menubar.getLabel("UpdateChannels")
+        removePlaylists = menubar.menubar.getLabel("RemovePlaylists")
+        removeVideos = menubar.menubar.getLabel("RemoveVideos")
 
+        for state, actions in states.items():
+            if "RemoveChannels" in actions:
+                removeChannels = menubar.menubar.getLabel("RemoveChannels",state)
+            if "UpdateChannels" in actions:
+                updateChannels = menubar.menubar.getLabel("UpdateChannels",state)
+            if "RemovePlaylists" in actions:
+                removePlaylists = menubar.menubar.getLabel("RemovePlaylists",state)
+            if "RemoveVideos" in actions:
+                removeVideos = menubar.menubar.getLabel("RemoveVideos",state)
 
-        if "UpdateChannels" in plurals:
-            string = menubar.menubar.getPluralLabel("UpdateChannels")
-        else:
-            string = menubar.menubar.getLabel("UpdateChannels")
-        self.actionGroups["ChannelsSelected"].get_action("UpdateChannels").set_property("label", string)
-        
+        self.actionGroups["ChannelLikesSelected"].get_action("RemoveChannels").set_property("label", removeChannels)
 
-        if "RemovePlaylists" in plurals:
-            string = menubar.menubar.getPluralLabel("RemovePlaylists")
-        else:
-            string = menubar.menubar.getLabel("RemovePlaylists")
-        self.actionGroups["PlaylistLikesSelected"].get_action("RemovePlaylists").set_property("label", string)
+        self.actionGroups["ChannelsSelected"].get_action("UpdateChannels").set_property("label", updateChannels)
 
-        if "RemoveVideos" in plurals:
-            string = menubar.menubar.getPluralLabel("RemoveVideos")
-        else:
-            string = menubar.menubar.getLabel("RemoveVideos")
-        self.actionGroups["VideosSelected"].get_action("RemoveVideos").set_property("label", string)
+        self.actionGroups["PlaylistLikesSelected"].get_action("RemovePlaylists").set_property("label", removePlaylists)
+
+        self.actionGroups["VideosSelected"].get_action("RemoveVideos").set_property("label", removeVideos)
 
     @gtkAsyncMethod
     def selectDisplay(self, newDisplay, area):

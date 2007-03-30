@@ -483,27 +483,44 @@ jsBridge.prototype = {
     var searchIcon = this.document.getElementById("search-icon");
     searchIcon.setAttribute("src",'images/search_icon_' + engine + '.png');
   },
-  updateMenus: function (plurals) {
+  updateMenus: function (states) {
 
      // Strings with new labels
      var removeChannels = new Object();
      var updateChannels = new Object();
      var removePlaylists = new Object();
      var removeVideos = new Object();
-     pybridge.getLabel("RemoveChannels",false,removeChannels);
-     pybridge.getLabel("UpdateChannels",false, updateChannels);
-     pybridge.getLabel("RemovePlaylists",false, removePlaylists);
-     pybridge.getLabel("RemoveVideos",false,removeVideos);
+     pybridge.getLabel("RemoveChannels","",removeChannels);
+     pybridge.getLabel("UpdateChannels","", updateChannels);
+     pybridge.getLabel("RemovePlaylists","", removePlaylists);
+     pybridge.getLabel("RemoveVideos","",removeVideos);
 
-     for (var i=0;i<plurals.length;i++) {
-         if (plurals[i] == "RemoveChannels")
-             pybridge.getLabel("RemoveChannels",true,removeChannels);
-         if (plurals[i] == "UpdateChannels")
-             pybridge.getLabel("UpdateChannels",true, updateChannels);
-         if (plurals[i] == "RemovePlaylists")
-             pybridge.getLabel("RemovePlaylists",true, removePlaylists);
-         if (plurals[i] == "RemoveVideos")
-             pybridge.getLabel("RemoveVideos",true,removeVideos);
+     states = states.QueryInterface(Components.interfaces.nsICollection);
+
+     for (var i=0;i<states.Count();i++) {
+         var state = states.GetElementAt(i);
+         state = state.QueryInterface(Components.interfaces.nsICollection);
+         var stateName = state.GetElementAt(0).QueryInterface(Components.interfaces.nsIVariant);
+
+         var actions = state.GetElementAt(1);
+         actions.QueryInterface(Components.interfaces.nsICollection);
+         for (var j=0;j<actions.Count();j++) {
+             var action = actions.GetElementAt(j).QueryInterface(Components.interfaces.nsIVariant)
+
+             if (action == "RemoveChannels")
+                 pybridge.getLabel("RemoveChannels",stateName,
+                                   removeChannels);
+             if (action == "UpdateChannels")
+                 pybridge.getLabel("UpdateChannels",stateName,
+                                   updateChannels);
+             if (action == "RemovePlaylists")
+                 pybridge.getLabel("RemovePlaylists",stateName,
+                                   removePlaylists);
+             if (action == "RemoveVideos")
+                 pybridge.getLabel("RemoveVideos",stateName,
+                                   removeVideos);
+         }
+         
      }
 
      var ele = this.document.getElementById("menuitem-removechannels");

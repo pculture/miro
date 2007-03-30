@@ -23,7 +23,7 @@ class MainFrame:
         self.selectedDisplays = {}
         urlcallbacks.installMainDisplayCallback(self.mainDisplayCallback)
 
-    def onSelectedTabChange(self, plurals, actionGroups, guideURL,
+    def onSelectedTabChange(self, states, actionGroups, guideURL,
             videoFilename):
         app.controller.setGuideURL(guideURL)
         if videoFilename is not None:
@@ -33,7 +33,32 @@ class MainFrame:
         frontend.currentVideoPath = videoFilename
         for group, enabled in actionGroups.items():
             frontend.jsBridge.setActionGroupEnabled(group, enabled)
-        frontend.jsBridge.updateMenus(plurals)
+
+        # Convert this into something JavaScript can see
+        array_cls = components.classes["@mozilla.org/supports-array;1"]
+        variant_cls = components.classes["@mozilla.org/variant;1"]
+        stateLists = array_cls.createInstance()
+        stateLists = stateLists.queryInterface(components.interfaces.nsICollection)
+        for key, actions in states.items():
+            newactions = array_cls.createInstance()
+            newactions = newactions.queryInterface(components.interfaces.nsICollection)
+            for action in actions:
+                newaction = variant_cls.createInstance()
+                newaction = newaction.queryInterface(components.interfaces.nsIWritableVariant)
+                newaction.setAsAString(action)
+                newactions.AppendElement(newaction)
+            newlist = array_cls.createInstance()
+            newlist = newlist.queryInterface(components.interfaces.nsICollection)
+            newkey = variant_cls.createInstance()
+            newkey = newkey.queryInterface(components.interfaces.nsIWritableVariant)
+            newkey.setAsAString(key)
+            newlist.AppendElement(newkey)
+            newactions = newactions.queryInterface(components.interfaces.nsISupportsArray)
+            newlist.AppendElement(newactions)
+            stateLists.AppendElement(newlist)
+
+        stateLists.queryInterface(components.interfaces.nsISupportsArray)
+        frontend.jsBridge.updateMenus(stateLists)
         
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
