@@ -253,7 +253,8 @@ class FoldersPrefsController (NibClassBuilder.AutoBaseClass):
         app.controller.removeFeeds(feeds)
 
     def folderWasRemoved(self, mapped, id):
-        self.folders.remove(mapped)
+        if mapped in self.folders:
+            self.folders.remove(mapped)
         self.foldersTable.reloadData()
 
     def showFolderAsChannel_(self, sender):
