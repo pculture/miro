@@ -21,6 +21,7 @@ def init():
     _gt.bind_textdomain_codeset("democracyplayer","UTF-8")
 
 def gettext(text):
+    text = text.encode('utf-8')
     try:
         return _gtcache[text]
     except KeyError:
@@ -34,6 +35,8 @@ def gettext(text):
         return text
 
 def ngettext(text1, text2, count):
+    text1 = text1.encode('utf-8')
+    text2 = text2.encode('utf-8')
     try:
         return _gtcache[(text1,text2,count)]
     except:
