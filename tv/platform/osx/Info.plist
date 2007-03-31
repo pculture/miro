@@ -236,5 +236,7 @@
 	<string>10.3.9</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>$copyright $publisher.   See license.</string>
+	<key>SUCheckAtStartup</key>
+	<false/>
 </dict>
 </plist>
