@@ -132,10 +132,16 @@ def getSearchEnginesHTML ():
     return enginesHTML
 
 def getLastEngine():
-    return _getSearchFeed().lastEngine
+    searchFeed = _getSearchFeed()
+    if not hasattr(searchFeed, 'lastEngine'):
+        return u'youtube'
+    return searchFeed.lastEngine
 
 def getLastQuery():
-    return _getSearchFeed().lastQuery
+    searchFeed = _getSearchFeed()
+    if not hasattr(searchFeed, 'lastQuery'):
+        return ''
+    return searchFeed.lastQuery
 
 def _getSearchFeed():
     return getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
