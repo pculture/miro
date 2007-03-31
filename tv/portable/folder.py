@@ -127,6 +127,12 @@ class ChannelFolder(FolderBase):
                 return True
         return False
 
+    def hasDownloadingItems(self):
+        for feed in self.getChildrenView():
+            if feed.hasDownloadingItems():
+                return True
+        return False
+
     def makeContextMenu(self, templateName, view):
         return menu.makeMenu([
             (self.rename, _('Rename Channel Folder')),

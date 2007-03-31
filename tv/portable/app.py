@@ -934,8 +934,7 @@ You must download the latest version of Democracy and run that.""")
         allDirectories = True
         for feed in feeds:
             # We only care about downloaded items in non directory feeds.
-            if not feed.getURL().startswith("dtv:directoryfeed"):
-                print feed.getURL()
+            if isinstance(feed, folder.ChannelFolder) or not feed.getURL().startswith("dtv:directoryfeed"):
                 allDirectories = False
                 if feed.hasDownloadedItems():
                     downloads = True
