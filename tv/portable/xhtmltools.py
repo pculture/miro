@@ -67,8 +67,11 @@ def unescape(data):
 #
 # encodes string for use in a URL
 def urlencode(data):
-    data = unicode(data)
-    return unicode(quote(data.encode('utf-8','replace')))
+    if type(data) == unicode:
+        data = data.encode('utf-8','replace')
+    else:
+        data = str(data)
+    return unicode(quote(data))
 
 #
 # gets a string from a URL

@@ -106,9 +106,9 @@ def createEngines():
 
 @returnsUnicode
 def getRequestURL(engineName, query, filterAdultContents=True, limit=50):
-    if query == u"LET'S TEST DTV'S CRASH REPORTER TODAY":
+    if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
         someVariable = intentionallyUndefinedVariableToTestCrashReporter
-    if query == u"LET'S DEBUG DTV: DUMP DATABASE":
+    if query == "LET'S DEBUG DTV: DUMP DATABASE":
         import database
         database.defaultDatabase.liveStorage.dumpDatabase (database.defaultDatabase)
         return u""

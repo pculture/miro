@@ -1,4 +1,5 @@
 import re
+import urllib
 import logging
 
 from objc import YES, NO, nil
@@ -198,7 +199,8 @@ class ManagedWebView (NSObject):
             return YES
 
     def eventURL(self,url):
-        self.onLoadURL(unicode(url))
+        url = urllib.unquote(str(url)).decode('utf8')
+        self.onLoadURL(url)
 
     def webView_contextMenuItemsForElement_defaultMenuItems_(self,webView,contextMenu,defaultMenuItems):
         event = NSApp().currentEvent()
