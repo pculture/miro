@@ -92,7 +92,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="main-video-details-digg" onclick="return eventURL('http://www.digg.com/submit?phase=2&amp;url=@@@this.getURL()@@@');" >
+                    <a href="#" class="main-video-details-digg" onclick="return eventURL('http://www.digg.com/submit?phrase=2&amp;url=@@@this.getURL()@@@');" >
                         <img src="resource:images/digg.gif" alt="digg icon" />
                         <span i18n:translate=""> Post to digg</span>
                     </a>
