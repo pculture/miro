@@ -114,10 +114,10 @@
                     </div>
                     <div t:hideIf="this.gotContentLength()">
                         <div class="progress-throbber-bg">
-                            <span t:showIf="this.downloadRate() != '0k/s'">
+                            <span t:showIf="this.downloadRate() != '0KB/s'">
                                 <img src="resource:images/progress-throbber.gif" />
                             </span>
-                            <span t:showIf="this.downloadRate() == '0k/s'">
+                            <span t:showIf="this.downloadRate() == '0KB/s'">
                                 <img src="resource:images/progress-throbber-gray.png" />
                             </span>
                         </div>

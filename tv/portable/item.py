@@ -1182,7 +1182,7 @@ folder will be deleted.""")
     @returnsUnicode
     def downloadRate(self):
         rate = 0
-        unit = u"k/s"
+        unit = u"KB/s"
         if self.downloader is not None:
             rate = self.downloader.getRate()
         else:
@@ -1190,10 +1190,10 @@ folder will be deleted.""")
         rate /= 1024
         if rate > 1024:
             rate /= 1024
-            unit = u"m/s"
+            unit = u"MB/s"
         if rate > 1024:
             rate /= 1024
-            unit = u"g/s"
+            unit = u"GB/s"
             
         return u"%d%s" % (rate, unit)
 
