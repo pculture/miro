@@ -58,6 +58,15 @@ static void build_tables() {
   tables_initialized = 1;
 }
 
+void _make_new_data_mine(_Xine* xine) {
+    xine->data_mine.videoPort = xine_new_framegrab_video_port(xine->data_mine.xine);
+    xine->data_mine.audioPort = xine_open_audio_driver(xine->data_mine.xine, "none", NULL);
+    xine->data_mine.stream = xine_stream_new(xine->data_mine.xine,
+            xine->data_mine.audioPort, xine->data_mine.videoPort);
+    xine->data_mine.current_filename = NULL;
+}
+
+
 _Xine* xineCreate(xine_event_listener_cb_t event_callback, 
         void* event_callback_data)
 {
@@ -96,9 +105,9 @@ _Xine* xineCreate(xine_event_listener_cb_t event_callback,
      */
     xine->tester.xine = xine_new();
     xine_init(xine->tester.xine);
-    xine->tester.videoPort = xine_open_video_driver(xine->xine, "auto", 
+    xine->tester.videoPort = xine_open_video_driver(xine->tester.xine, "auto", 
             XINE_VISUAL_TYPE_NONE, NULL);
-    xine->tester.audioPort = xine_open_audio_driver(xine->xine, "none", NULL);
+    xine->tester.audioPort = xine_open_audio_driver(xine->tester.xine, "none", NULL);
     xine->tester.stream = xine_stream_new(xine->tester.xine,
             xine->tester.audioPort, xine->tester.videoPort);
 
@@ -106,11 +115,7 @@ _Xine* xineCreate(xine_event_listener_cb_t event_callback,
        querying data about the movie */
     xine->data_mine.xine = xine_new();
     xine_init(xine->data_mine.xine);
-    xine->data_mine.videoPort = xine_new_framegrab_video_port(xine->xine);
-    xine->data_mine.audioPort = xine_open_audio_driver(xine->xine, "none", NULL);
-    xine->data_mine.stream = xine_stream_new(xine->data_mine.xine,
-            xine->data_mine.audioPort, xine->data_mine.videoPort);
-    xine->data_mine.current_filename = NULL;
+    _make_new_data_mine(xine);
 
     video_plugins = xine_list_audio_output_plugins (xine->data_mine.xine) ;
     for (i = 0; video_plugins[i]; i++) {
@@ -439,18 +444,12 @@ void xineDataMineClose(_Xine *xine)
 {
   if (xine->data_mine.current_filename) {
     free (xine->data_mine.current_filename);
-    xine->data_mine.current_filename = NULL;
 
     xine_close(xine->data_mine.stream);
     xine_dispose(xine->data_mine.stream);
     xine_close_audio_driver(xine->data_mine.xine, xine->data_mine.audioPort);
     xine_close_video_driver(xine->data_mine.xine, xine->data_mine.videoPort);
-
-    xine->data_mine.videoPort = xine_new_framegrab_video_port(xine->xine);
-    xine->data_mine.audioPort = xine_open_audio_driver(xine->xine, "none", NULL);
-    xine->data_mine.stream = xine_stream_new(xine->data_mine.xine,
-					     xine->data_mine.audioPort,
-					     xine->data_mine.videoPort);
+    _make_new_data_mine(xine);
   }
 }
 

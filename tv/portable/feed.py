@@ -806,7 +806,6 @@ class Feed(DDBObject):
         if oldFolder:
             oldFolder.signalChange(needsSave=False)
 
-    @eventloop.asIdle
     def generateFeed(self, removeOnError=False):
         newFeed = None
         if (self.origURL == u"dtv:directoryfeed"):
