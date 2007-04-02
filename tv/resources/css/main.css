@@ -724,8 +724,7 @@ an element is dragged, the drag-highlight class is added to it */
     border-bottom: 1px solid #8fc1f7;
 }
 
-.main-video.selected-inactive, .main-video-details.selected-inactive,  {
-
+.main-video.selected-inactive, .main-video-details.selected-inactive  {
     background: #ccc;
 }
 
