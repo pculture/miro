@@ -409,6 +409,7 @@ jsBridge.prototype = {
      }
      for(var i = 0; i < elements.length; i++) {
        var elt = this.document.getElementById(elements[i]);
+       if(!elt) continue;
        if(!enabled) {
          elt.setAttribute('disabled', true);
        } else {

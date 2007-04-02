@@ -37,7 +37,7 @@ class DemocracyCLH:
                 print "WARNING: error in deleteVLCCache()"
             if pybridge.getStartupTasksDone():
                 wwatch.openWindow(None, chromeURL, windowName,
-                        "chrome,dialog=no,all", None)
+                        "chrome,resizable,dialog=no,all", None)
             else:
                 jsbridgeCID = "@participatoryculture.org/dtv/jsbridge;1"
                 jsbridge = components.classes[jsbridgeCID]. \
