@@ -16,6 +16,7 @@
 #include <string.h>
 #include "xine_impl.h"
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <xine/video_out.h>
 
 const char *viz_available (_Xine* xine, const char *viz)
 {
@@ -352,6 +353,8 @@ int xineFileScreenshot(_Xine *xine, const char* filename, const char *screenshot
     int CrOffset;
     unsigned char *out_data;
     GdkPixbuf *pixbuf;
+    xine_video_port_t *video_out;
+
     rv = xineDataMineFilename(xine, filename);
     if (rv == 0)
       return 1;
@@ -363,13 +366,16 @@ int xineFileScreenshot(_Xine *xine, const char* filename, const char *screenshot
     rv = xine_play(xine->data_mine.stream, 0, duration / 2);
     if (rv == 0)
       return 1;
-    rv = xine_get_next_video_frame (xine->data_mine.videoPort,
-				    &frame);
+    video_out = xine->data_mine.videoPort;
+    if (video_out->get_property (video_out, VO_PROP_NUM_STREAMS) == 0) {
+        return 1;
+    }
+    rv = xine_get_next_video_frame (video_out, &frame);
     if (rv == 0)
       return 1;
     if (frame.colorspace != XINE_IMGFMT_YV12 &&
 	frame.colorspace != XINE_IMGFMT_YUY2) {
-      xine_free_video_frame (xine->data_mine.videoPort, &frame);
+      xine_free_video_frame (video_out, &frame);
       return 0;
     }
     build_tables();
