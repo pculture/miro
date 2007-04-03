@@ -1,6 +1,7 @@
 # Defines menu, accelerator keys, and shortcuts
 # THIS IS STILL A WORK IN PROGRESS. THE FORMAT IS NOT FINAL
 from gtcache import gettext as _
+import platform
 
 CTRL, ALT, SHIFT, RIGHT_ARROW, LEFT_ARROW, SPACE, ENTER = range(7)
 
@@ -75,6 +76,17 @@ class MenuBar:
                 return self.shortcuts[action]
         except KeyError:
             return ShortCut(None)
+
+if platform.system() == "Darwin":
+    # OS X Menu goes here
+    pass
+elif platform.system() == "Windows":
+    # Windows menu goes here
+    pass
+
+else:
+    # GTK menu goes here
+    pass
 
 menubar = \
   MenuBar(
