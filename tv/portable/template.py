@@ -87,14 +87,24 @@ def queueSelectDisplay(frame, display, area):
     useful if you want it to happen after template DOM updates (see
     selection.py for an example).
     """
-    toSelect[area] = display
+    if area in toSelect.keys():
+        toSelect[area].append(display)
+    else:
+        toSelect[area] = [display]
     queueDOMChange(lambda: doSelectDisplay(frame, area), "Select display")
 
+# A hash of display areas to lists of queued displays
 toSelect = {}
 def doSelectDisplay(frame, area):
     if area in toSelect:
-        frame.selectDisplay(toSelect.pop(area), area)
+        displays = toSelect.pop(area)
+        while len(displays) > 1:
+            disp = displays.pop(0)
 
+            # FIXME: Is there anything else we need to clean up --NN
+            disp.templateHandle.unlinkTemplate()
+        frame.selectDisplay(displays[0], area)
+        
 class TemplateError(Exception):
     def __init__(self, message):
         self.message = message
