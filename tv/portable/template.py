@@ -88,22 +88,16 @@ def queueSelectDisplay(frame, display, area):
     selection.py for an example).
     """
     if area in toSelect.keys():
-        toSelect[area].append(display)
-    else:
-        toSelect[area] = [display]
+        # There's already a display queued up. Dispose of it properly
+        toSelect[area].templateHandle.unlinkTemplate()
+        
+    toSelect[area] = display
     queueDOMChange(lambda: doSelectDisplay(frame, area), "Select display")
 
-# A hash of display areas to lists of queued displays
 toSelect = {}
 def doSelectDisplay(frame, area):
     if area in toSelect:
-        displays = toSelect.pop(area)
-        while len(displays) > 1:
-            disp = displays.pop(0)
-
-            # FIXME: Is there anything else we need to clean up --NN
-            disp.templateHandle.unlinkTemplate()
-        frame.selectDisplay(displays[0], area)
+        frame.selectDisplay(toSelect.pop(area), area)
         
 class TemplateError(Exception):
     def __init__(self, message):
