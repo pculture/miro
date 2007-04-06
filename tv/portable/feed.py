@@ -1094,7 +1094,7 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
         if self.actualFeed.__class__ == FeedImpl:
             # Our initial FeedImpl was never updated, call generateFeed again
             self.loading = True
-            self.generateFeed(True)
+            eventloop.addIdle(lambda:self.generateFeed(True), "generateFeed")
 
     def __str__(self):
         return "Feed - %s" % self.getTitle()
