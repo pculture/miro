@@ -130,7 +130,7 @@ class QuicktimeRenderer (app.VideoRenderer):
             self.cachedMovie = qtmovie
         return qtmovie
 
-    @platformutils.onMainThread
+    @platformutils.onMainThreadWithReturn
     def fillMovieData(self, filename, movie_data):
         osfilename = platformutils.filenameTypeToOSFilename(filename)
         (qtmovie, error) = QTMovie.movieWithFile_error_(osfilename)
@@ -138,6 +138,8 @@ class QuicktimeRenderer (app.VideoRenderer):
             movie_data["duration"] = int(movieDuration(qtmovie) * 1000)
             movie_data["screenshot"] = extractIcon(qtmovie, filename)
             del qtmovie
+            return True
+        return False
 
     @platformutils.onMainThread
     def play(self):
