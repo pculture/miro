@@ -1627,7 +1627,7 @@ class FileItem(Item):
         if not self.isExternal():
             self.executeExpire()
             return
-        title = _("Removing %s") % (os.path.basename(self.filename))
+        title = _("Removing %s") % os.path.basename(platformutils.filenameToUnicode(self.filename))
         if self.isContainerItem:
             description = _("""\
 Would you like to delete this folder and all of its videos or just remove \
