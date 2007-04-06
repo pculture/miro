@@ -271,10 +271,14 @@ class FoldersPrefsController (NibClassBuilder.AutoBaseClass):
         return len(self.folders)
         
     def tableView_objectValueForTableColumn_row_(self, tableView, col, row):
-        if col.identifier() == 'location':
-            return self.folders[row].dir
-        elif col.identifier() == 'asChannel':
-            return self.folders[row].visible
+        if not isinstance(self.folders[row].actualFeed, feed.DirectoryWatchFeedImpl):
+            # This feed has apparently not been fully created yet, schedule a refresh...
+            self.foldersTable.reloadData()
+        else:
+            if col.identifier() == 'location':
+                return self.folders[row].dir
+            elif col.identifier() == 'asChannel':
+                return self.folders[row].visible
         return ''
         
     def tableViewSelectionDidChange_(self, notification):
