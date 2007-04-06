@@ -545,6 +545,11 @@ class FeedImpl:
 #
 # It works by passing on attributes to the actual feed.
 class Feed(DDBObject):
+    ICON_CACHE_SIZES = [
+        (20, 20),
+        (76, 76),
+    ]
+
     def __init__(self,url, initiallyAutoDownloadable=True):
         DDBObject.__init__(self, add=False)
         checkU(url)
@@ -1035,7 +1040,8 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
     def getThumbnail(self):
         self.confirmDBThread()
         if self.iconCache and self.iconCache.isValid():
-            return resources.absoluteUrl(self.iconCache.getFilename())
+            path = self.iconCache.getResizedFilename(76, 76)
+            return resources.absoluteUrl(path)
         else:
             return defaultFeedIconURL()
 
@@ -1043,7 +1049,8 @@ Democracy.\n\nDo you want to try to load this channel anyway?"""))
     def getTablistThumbnail(self):
         self.confirmDBThread()
         if self.iconCache.isValid():
-            return resources.absoluteUrl(self.iconCache.getFilename())
+            path = self.iconCache.getResizedFilename(20, 20)
+            return resources.absoluteUrl(path)
         else:
             return defaultFeedIconURLTablist()
 

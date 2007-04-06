@@ -272,3 +272,20 @@ def osFilenamesToFilenameTypes(filenames):
 # Takes a FilenameType and turn it into something the PyObjC bridge accepts.
 def filenameTypeToOSFilename(filename):
     return filename.decode('utf-8')
+
+def resizeImage(source_path, dest_path, width, height):
+    """Resize an image to a smaller size.
+    
+    Guidelines:
+
+    Don't try to expand up the image.
+
+    Don't change the aspect ratio
+
+    The final image should be have the exact dimensions <width>X<height>.  If
+    there is extra room, either because the source image was smaller
+    specified, or because it had a different aspect ratio, pad out the image
+    with black pixels.
+    """
+    import shutil
+    shutil.copyfile(source_path, dest_path)

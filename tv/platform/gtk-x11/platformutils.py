@@ -24,7 +24,7 @@ import logging
 import locale
 import urllib
 import sys
-from util import returnsUnicode, returnsBinary, checkU, checkB
+from util import returnsUnicode, returnsBinary, checkU, checkB, call_command
 
 FilenameType = str
 
@@ -157,4 +157,43 @@ def unmakeURLSafe(string):
     # unquote the byte string
     checkU(string)
     return urllib.unquote(string.encode('ascii'))
+
+@returnsBinary
+def findConvert():
+    global _convert_path_cache
+    try:
+        return _convert_path_cache
+    except NameError:
+        _convert_path_cache = None
+        search_path = os.environ.get('PATH', os.defpath)
+        for dir in search_path.split(os.pathsep):
+            convert_path = os.path.join(dir, 'convert')
+            if os.path.exists(convert_path):
+                _convert_path_cache = convert_path
+        return _convert_path_cache
+
+def resizeImage(source_path, dest_path, width, height):
+    """Resize an image to a smaller size.
     
+    Guidelines:
+
+    Don't try to expand up the image.
+
+    Don't change the aspect ratio
+
+    The final image should be have the exact dimensions <width>X<height>.  If
+    there is extra room, either because the source image was smaller
+    specified, or because it had a different aspect ratio, pad out the image
+    with black pixels.
+    """
+    convert_path = findConvert()
+    # From the "Pad Out Image" recipe at
+    # http://www.imagemagick.org/Usage/thumbnails/
+    border_width = max(width, height) / 2
+    call_command(convert_path,  source_path, 
+            "-strip",
+            "-resize", "%dx%d>" % (width, height), 
+            "-gravity", "center", "-bordercolor", "black",
+            "-border", "%s" % border_width,
+            "-crop", "%dx%d+0+0" % (width, height),
+            "+repage", dest_path)

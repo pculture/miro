@@ -566,3 +566,16 @@ def unicodify(d):
     elif type(d) == StringType:
         d = d.decode('ascii','replace')
     return d
+
+def call_command(*args):
+    """Call an external command.  If the command doesn't exit with status 0,
+    an exception will be raised.  Returns a file-like object that corresponds
+    to stdout of the command.
+    """
+    pipe = subprocess.Popen(args, stdout=subprocess.PIPE)
+    stdout, stderr = pipe.communicate()
+    if pipe.returncode != 0:
+        raise OSError("call_command with %s has return code %s" % 
+                (args, pipe.returncode))
+    else:
+        return stdout

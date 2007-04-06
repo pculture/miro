@@ -653,6 +653,15 @@ def upgrade43(objectList):
                 del objectList[i]
     return changed
 
+def upgrade44(objectList):
+    changed = set()
+    for o in objectList:
+        if 'iconCache' in o.savedData:
+            iconCache = o.savedData['iconCache']
+            iconCache.savedData['resized_filenames'] = {}
+            changed.add(o)
+    return changed
+
 
 #         if o.classString == 'item':
 #             objChanged = False

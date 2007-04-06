@@ -1,14 +1,16 @@
 import item
 import os
+import logging
 import threading
 import httpclient
 from fasttypes import LinkedList
 from eventloop import asIdle, addIdle, addTimeout
 from download_utils import nextFreeFilename
-from util import unicodify
-from platformutils import unicodeToFilename, makeURLSafe
+from util import unicodify, call_command
+from platformutils import unicodeToFilename, makeURLSafe, resizeImage
 import config
 import prefs
+import traceback
 import time
 import views
 import random
@@ -36,7 +38,6 @@ def clearOrphans():
                     os.remove (filename)
                 except OSError:
                     pass
-    
 
 class IconCacheUpdater:
     def __init__ (self):
@@ -89,6 +90,7 @@ class IconCache:
         self.etag = None
         self.modified = None
         self.filename = None
+        self.resized_filenames = {}
         self.url = None
 
         self.updated = False
@@ -101,12 +103,14 @@ class IconCache:
 
     def remove (self):
         self.removed = True
+        self._removeFile(self.filename)
+        self._removeResizedFiles()
+
+    def _removeFile(self, filename):
         try:
-            if self.filename:
-                os.remove (self.filename)
+            os.remove (filename)
         except:
             pass
-
 
     def errorCallback(self, url, error = None):
         self.dbItem.confirmDBThread()
@@ -195,15 +199,14 @@ class IconCache:
                 self.filename = os.path.join(cachedir, self.filename)
                 self.filename = nextFreeFilename (self.filename)
                 needsSave = True
-            try:
-                os.remove (self.filename)
-            except:
-                pass
+            self._removeFile(self.filename)
             try:
                 os.rename (tmp_filename, self.filename)
             except:
                 self.filename = None
                 needsSave = True
+            else:
+                self.resizeIcon()
         
             if (info.has_key ("etag")):
                 etag = unicodify(info["etag"])
@@ -293,3 +296,35 @@ class IconCache:
             return self.url
         else:
             return self.filename
+
+    def _resizedKey(self, width, height):
+        return u'%sx%s' % (width, height)
+
+    def getResizedFilename(self, width, height):
+        try:
+            return self.resized_filenames[self._resizedKey(width, height)]
+        except KeyError:
+            return self.getFilename()
+
+    def resizeIcon(self):
+        self._removeResizedFiles()
+        for width, height in self.dbItem.ICON_CACHE_SIZES:
+            resizedPath = self._makeResizedPath(width, height)
+            try:
+                resizeImage(self.filename, resizedPath, width, height)
+            except:
+                logging.warn("Error resizing %s to %sx%s:\n%s", self.filename,
+                        width, height, traceback.format_exc())
+            else:
+                self.resized_filenames[self._resizedKey(width, height)] = \
+                        resizedPath
+
+    def _removeResizedFiles(self):
+        for filename in self.resized_filenames.values():
+            self._removeFile(filename)
+        self.resized_filenames = {}
+
+    def _makeResizedPath(self, width, height):
+        path, ext = os.path.splitext(self.filename)
+        path += '.%sx%s' % (width, height)
+        return path + ext

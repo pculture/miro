@@ -81,6 +81,9 @@ class SavableObject:
         self.classString = classString
         self.savedData = {}
 
+    def __str__(self):
+        return '<SavableObject: %s>' % self.classString
+
 class ConverterBase(object):
     """Base class for SavableConverter and SavableUnconverter.  It handles the
     common tasks relating to converting the database to/from SavableObjects.

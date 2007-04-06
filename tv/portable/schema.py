@@ -251,6 +251,7 @@ class IconCacheSchema (ObjectSchema):
         ('etag', SchemaString(noneOk=True)),
         ('modified', SchemaString(noneOk=True)),
         ('filename', SchemaFilename(noneOk=True)),
+        ('resized_filenames', SchemaDict(SchemaString(), SchemaFilename())),
         ('url', SchemaURL(noneOk=True)),
         ]
 
@@ -444,7 +445,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('redirectedURL', SchemaURL(noneOk=True)),
     ]
 
-VERSION = 43
+VERSION = 44
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
