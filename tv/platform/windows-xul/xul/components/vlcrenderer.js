@@ -36,6 +36,13 @@ VLCRenderer.prototype = {
     this.startedPlaying = false;
     this.item = null;
     this.playTime = 0;
+
+//    var extractBrowser = this.document.getElementById("mainExtractionVideo");
+//    this.vlc_extract = extractBrowser.contentDocument.getElementById("video2");
+//    this.timer_extract = Components.classes["@mozilla.org/timer;1"].
+//	    createInstance(Components.interfaces.nsITimer);
+//    this.extracting = false;
+//    this.extract_duration = -1;
   },
 
   doScheduleUpdates: function() {
@@ -128,7 +135,6 @@ VLCRenderer.prototype = {
     // It appears that clear_playlist() always leaves one item in
     // the playlist. This is the only way I could figure out to
     // actually clear it... -NN  
-      var item;
       if (this.vlc.playlist.items.count > 0) {
           this.stop();
           this.vlc.playlist.items.clear();
@@ -231,6 +237,191 @@ VLCRenderer.prototype = {
 
   goFullscreen: function() {
     this.vlc.video.fullscreen = true;
+  },
+
+  extractMovieDataStepSnapshot: function () {
+      pybridge.printOut("Step Snapshot");
+      try {
+	  this.vlc_extract.video.takeSnapshot (this.screenshot_filename_extract);
+	  var callback = {
+	      notify: function(timer) {
+		  pybridge.extractFinish (this.parent.duration_extract, true);
+	      }
+	  };
+	  callback.parent = this;
+	  this.vlc_extract.playlist.stop();
+	  this.timer_extract.initWithCallback(callback, 4000,
+					      Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+      } catch (e) {
+	    if (this.vlc_extract.input.state == 0) {
+		pybridge.extractFinish (this.duration_extract, false);
+		return;
+	    }
+	    if (this.vlc_extract.playlist.items.count == 0) {
+		pybridge.extractFinish (this.duration_extract, true);
+	    } else {
+		this.extract_errors ++;
+		if (this.extract_errors > 100) {
+		    pybridge.extractFinish (this.duration_extract, true);
+		}
+		var callback = {
+		    notify: function(timer) {
+			this.parent.extractMovieDataStepSnapshot();
+		    }
+		};
+		callback.parent = this;
+		this.timer_extract.initWithCallback(callback, 100,
+						    Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+	    }
+      }
+  },
+  
+  extractMovieDataStepWaitForJump: function () {
+      pybridge.printOut("Step Wait For Jump");
+      pybridge.printOut(this.vlc_extract.input.time);
+      //      this.extractMovieDataStepSnapshot();
+//	return;
+//	} catch (e) {
+//	}
+//	if (this.vlc_extract.playlist.items.count == 0) {
+//	    pybridge.extractFinish (this.duration_extract, false);
+//	} else {
+      var callback = {
+	  notify: function(timer) {
+	      this.parent.extractMovieDataStepSnapshot();
+	  }
+      };
+      callback.parent = this;
+      this.timer_extract.initWithCallback(callback, 500,
+					  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+//	}
+  },
+
+  extractMovieDataStepJump: function () {
+      pybridge.printOut("Step Jump");
+      try {
+	  this.vlc_extract.input.time = this.duration_extract / 2.0;
+          this.extractMovieDataStepWaitForJump();
+      } catch (e) {
+	  if (this.vlc_extract.playlist.items.count == 0) {
+	      pybridge.extractFinish (this.duration_extract, true);
+	  } else {
+	      this.extract_errors ++;
+	      if (this.extract_errors > 100) {
+		  pybridge.extractFinish (this.duration_extract, true);
+	      }
+	      var callback = {
+		  notify: function(timer) {
+		      this.parent.extractMovieDataStepJump();
+		  }
+	      };
+	      callback.parent = this;
+	      this.timer_extract.initWithCallback(callback, 100,
+						  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+	  }
+      }
+
+  },
+
+  extractMovieDataStepLength: function () {
+      pybridge.printOut("Step Length");
+      try {
+	  this.duration_extract = this.vlc_extract.input.length;
+          this.extractMovieDataStepJump();
+      } catch (e) {
+	  if (this.vlc_extract.playlist.items.count == 0) {
+	      pybridge.extractFinish (-1, true);
+	  } else {
+	      this.extract_errors ++;
+	      if (this.extract_errors > 100) {
+		  pybridge.extractFinish (-1, false);
+	      }
+	      var callback = {
+		  notify: function(timer) {
+		      this.parent.extractMovieDataStepLength();
+		  }
+	      };
+	      callback.parent = this;
+	      this.timer_extract.initWithCallback(callback, 10,
+						  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+	  }
+      }
+  },
+
+
+  extractMovieDataStepWaitPlay: function () {
+      pybridge.printOut("Step Wait Play");
+      pybridge.printOut(this.vlc_extract.input.state);
+      pybridge.printOut(this.vlc_extract.playlist.items.count);
+      try {
+	  if (this.vlc_extract.input.state == 3) {
+	      this.extractMovieDataStepLength();
+	      return;
+	  }
+      } catch (e) {
+      }	
+      if (this.vlc_extract.playlist.items.count == 0) {
+	  pybridge.extractFinish (-1, true);
+	  return;
+      }
+      this.extract_errors ++;
+      if (this.extract_errors > 100) {
+	  pybridge.extractFinish (-1, false);
+      }
+      var callback = {
+	  notify: function(timer) {
+	      this.parent.extractMovieDataStepWaitPlay();
+	  }
+      };
+      callback.parent = this;
+      this.timer_extract.initWithCallback(callback, 100,
+					  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+  },
+
+  extractMovieDataStepAdd: function () {
+      var item;
+      pybridge.printOut("Step Add");
+      item = this.vlc_extract.playlist.add(this.url_extract);
+      this.vlc_extract.playlist.playItem (item);
+      this.extractMovieDataStepWaitPlay();
+  },
+
+  extractMovieDataStepWaitStop: function () {
+      pybridge.printOut("Step Wait Stop");
+      try {
+	  if (this.vlc_extract.input.state == 0) {
+	      this.extractMovieDataStepAdd();
+	      return;
+	  }
+      } catch (e) {
+      }
+      this.extract_errors ++;
+      if (this.extract_errors > 100) {
+	  pybridge.extractFinish (-1, false);
+      }
+      var callback = {
+	  notify: function(timer) {
+	      this.parent.extractMovieDataStepWaitStop();
+	  }
+      };
+      callback.parent = this;
+      this.timer_extract.initWithCallback(callback, 100,
+					  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+  },
+
+  extractMovieData: function (url, screenshot_filename) {
+      this.screenshot_filename_extract = screenshot_filename;
+      this.url_extract = url;
+      this.extract_errors = 0;
+      pybridge.printOut("Step Start");
+      if (this.vlc_extract.playlist.items.count > 0) {
+	  pybridge.printOut("Step Stop");
+	  this.vlc_extract.playlist.stop();
+	  pybridge.printOut("Step Clear");
+          this.vlc_extract.playlist.items.clear();
+	  pybridge.printOut("Step Clear fin");
+      }
+      this.extractMovieDataStepWaitStop()
   },
 };
 

@@ -19,4 +19,5 @@ interface pcfIDTVVLCRenderer : nsISupports
     void setCurrentTime(in float position);
     void setVolume(in float volume);
     void goFullscreen();
+    void extractMovieData(in AString url, in AString screenshot_filename);
 };

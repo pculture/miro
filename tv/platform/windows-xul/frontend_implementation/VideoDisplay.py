@@ -2,6 +2,9 @@ import app
 import frontend
 import os
 import util
+import config
+import prefs
+from download_utils import nextFreeFilename
 
 from xpcom import components
 from threading import Lock
@@ -52,6 +55,36 @@ class VideoDisplay (app.VideoDisplayBase):
     def setVolume(self, volume): 
         self.volume = volume
         frontend.vlcRenderer.setVolume(volume)
+
+#    def fillMovieData (self, filename, movie_data, callback):
+#	 print "Fill Movie Data start: %s" % (filename,)
+#	 dir = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+#	 try:
+#	     os.makedirs(dir)
+#	 except:
+#	     pass
+#	 screenshot = os.path.join (dir, os.path.basename(filename) + ".png")
+#
+#	 movie_data["screenshot"] = nextFreeFilename(screenshot)
+#
+#	 self.movie_data = movie_data
+#	 self.callback = callback
+#
+#	 print "Calling renderer"
+#	 frontend.vlcRenderer.extractMovieData (filename, movie_data["screenshot"]);
+#	 print "renderer returned"
+#	 
+#    def extractFinish (self, duration, screenshot_success):
+#	 self.movie_data["duration"] = int (duration)
+#	 print duration, screenshot_success, self.movie_data["screenshot"], os.path.exists(self.movie_data["screenshot"])
+##        if not screenshot_success:
+##            self.movie_data["screenshot"] = None
+#	 if screenshot_success:
+#	     if not os.path.exists(self.movie_data["screenshot"]):
+#		 self.movie_data["screenshot"] = u""
+#	 else:
+#	     self.movie_data["screenshot"] = None
+#	 self.callback()
 
 # This is a major hack to avoid VLC crashes by giving it time to
 # process each stop or play command. --NN
@@ -111,6 +144,7 @@ class VLCRenderer (app.VideoRenderer):
         return frontend.vlcRenderer.getRate()
     def setRate(self, rate): 
         return frontend.vlcRenderer.setRate(rate)
+
 
 ###############################################################################
 ###############################################################################

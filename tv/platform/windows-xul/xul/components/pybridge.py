@@ -30,6 +30,8 @@ try:
     from platformutils import getLongPathName
     import searchengines
     import views
+    import moviedata
+    moviedata.RUNNING_MAX = 1
 except:
     errorOnImport = True
     # get a fallback error message in case we can't import util either
@@ -530,6 +532,9 @@ class PyBridge:
     def getSpecialFolder(self, name):
         return platformcfg.getSpecialFolder(name)
 
+    def extractFinish (self, duration, screenshot_success):
+        app.controller.videoDisplay.extractFinish(duration, screenshot_success)
+
     def createProxyObjects(self):
         createProxyObjects()
 
@@ -544,6 +549,9 @@ class PyBridge:
             titles.append(engine.title)
         frontend.jsBridge.setSearchEngineInfo(names, titles)
         frontend.jsBridge.setSearchEngine(searchengines.getLastEngine())
+
+    def printOut(self, output):
+        print output
 
     def addMenubar(self, document):
         menubarElement = document.getElementById("titlebar-menu")
@@ -578,5 +586,3 @@ class PyBridge:
 
     def getLabel(self, action, state):
         return XULifyLabel(menubar.menubar.getLabel(action,state))
-
-

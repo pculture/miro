@@ -86,7 +86,11 @@ add more menu elements later -NN -->
             <browser id="videoInfoDisplay" src="" type="content"
                     height="40px"/>
         </vbox>
-                
+<!--        <vbox id="extraction-box" flex="1" collapsed="true">
+            <browser flex="1" id="mainExtractionVideo" 
+                src="chrome://dtv/content/video-extraction-vlc.html" 
+                type="content" />
+        </vbox>-->
 
 <resizer id="resizer-right" dir="right" class="side-resizer" oncommand="return doResize(event);" />
 
@@ -131,7 +135,6 @@ add more menu elements later -NN -->
   <resizer dir="bottomright" id="resizer-bottom-right" oncommand="return doResize(event);"/>
         <spacer flex="0" width="20" id="bottom-right-blank" collapsed="true" />
 </hbox>
-
 <command id="showsearchmenu" oncommand="jsbridge.showSearchMenu();" />
 
 <command id="Open" oncommand="openFile();" />

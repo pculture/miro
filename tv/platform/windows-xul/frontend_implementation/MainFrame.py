@@ -87,7 +87,11 @@ class MainFrame:
 
     def mainDisplayCallback(self, url):
         try:
-            return self.selectedDisplays[self.mainDisplay].onURLLoad(url)
+            display = self.selectedDisplays[self.mainDisplay]
+            if hasattr (display, "onURLLoad"):
+                return self.selectedDisplays[self.mainDisplay].onURLLoad(url)
+            else:
+                return True
         except KeyError:
             return True
 
