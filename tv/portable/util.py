@@ -3,18 +3,17 @@ import re
 import sys
 import sha
 import time
+import prefs
 import string
 import urllib
 import socket
+import logging
 import threading
 import traceback
 import subprocess
-import logging
-from types import UnicodeType, StringType
-
-import prefs
 
 from clock import clock
+from types import UnicodeType, StringType
 from BitTorrent.bencode import bdecode, bencode
 
 # Should we print out warning messages.  Turn off in the unit tests.
@@ -348,6 +347,7 @@ class ExponentialBackoffTracker:
 def gatherVideos(path, progressCallback):
     import item
     import config
+    import platformutils
     keepGoing = True
     parsed = 0
     found = list()
@@ -356,7 +356,8 @@ def gatherVideos(path, progressCallback):
             for f in files:
                 parsed = parsed + 1
                 if item.isVideoFilename(f):
-                    found.append(os.path.join(root, f))
+                    fullPath = platformutils.osFilenameToFilenameType(os.path.join(root, f))
+                    found.append(fullPath)
                 if parsed > 1000:
                     adjustedParsed = int(parsed / 100.0) * 100
                 elif parsed > 100:

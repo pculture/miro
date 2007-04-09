@@ -143,6 +143,18 @@ def filenameToUnicode(filename, path = None):
     checkU(filename)
     return filename
 
+# Takes filename given by the OS and turn it into a FilenameType
+def osFilenameToFilenameType(filename):
+    return FilenameType(filename)
+
+# Takes an array of filenames given by the OS and turn them into a FilenameTypes
+def osFilenamesToFilenameTypes(filenames):
+    return [osFilenameToFilenameType(filename) for filename in filenames]
+
+# Takes a FilenameType and turn it into something the OS accepts.
+def filenameTypeToOSFilename(filename):
+    return filename
+
 # Takes in a byte string or a unicode string and does the right thing
 # to make a URL
 @returnsUnicode
