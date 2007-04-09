@@ -704,9 +704,10 @@ class HTTPConnection(ConnectionHandler):
                 (self.state != 'closed' and self.pipelinedRequest is None and
                     not self.willClose and PIPELINING_ENABLED))
 
-    def sendRequest(self, callback, errback, requestStartCallback=None,
-            headerCallback=None, bodyDataCallback = None, method="GET",
-            path='/', headers=None, postVariables = None, postFiles = None):
+    def sendRequest(self, callback, errback, host, port,
+                    requestStartCallback=None, headerCallback=None,
+                    bodyDataCallback = None, method="GET", path='/',
+                    headers=None, postVariables = None, postFiles = None):
         """Sending an HTTP Request.  callback will be called if the request
         completes normally, errback will be called if there is a network
         error.
@@ -746,9 +747,9 @@ class HTTPConnection(ConnectionHandler):
             headers = {}
         else:
             headers = headers.copy()
-        headers['Host'] = self.host.encode('idna')
-        if self.port != defaultPort(self.scheme):
-            headers['Host'] += ':%d' % self.port
+        headers['Host'] = host.encode('idna')
+        if port != defaultPort(self.scheme):
+            headers['Host'] += ':%d' % port
         headers['Accept-Encoding'] = 'identity'
 
         if (method == "POST" and postVariables is not None and
@@ -1145,8 +1146,14 @@ class HTTPConnectionPool(object):
             return None
         for i in xrange(len(self.pendingRequests)):
             req = self.pendingRequests[i]
-            conns = self._getServerConnections(req['scheme'], req['host'], 
-                    req['port'])
+            if req['proxy_host']:
+                conns = self._getServerConnections(req['scheme'],
+                                                   req['proxy_host'], 
+                                                   req['proxy_port'])
+            else:
+                conns = self._getServerConnections(req['scheme'], req['host'], 
+                                                   req['port'])
+
             if (len(conns['free']) > 0 or 
                     len(conns['active']) < self.MAX_CONNECTIONS_PER_SERVER):
                 # This doesn't mess up the xrange above since we return immediately.
@@ -1180,7 +1187,7 @@ class HTTPConnectionPool(object):
 
         returns a request id that can be passed to cancelRequest
         """
-
+        proxy_host = proxy_port = None
         scheme, host, port, path = parseURL(url)
         if scheme not in ['http', 'https'] or host == '' or path == '':
             errback (MalformedURL(url))
@@ -1188,13 +1195,12 @@ class HTTPConnectionPool(object):
         # using proxy
         # NOTE: The code for HTTPS over a proxy is in _makeNewConnection()
         if scheme == 'http' and config.get(prefs.HTTP_PROXY_ACTIVE):
-            proxy_host = config.get(prefs.HTTP_PROXY_HOST)
-            proxy_port = config.get(prefs.HTTP_PROXY_PORT)
-            if proxy_host and proxy_port:
+            if config.get(prefs.HTTP_PROXY_HOST) and \
+                   config.get(prefs.HTTP_PROXY_PORT):
+                proxy_host = config.get(prefs.HTTP_PROXY_HOST)
+                proxy_port = config.get(prefs.HTTP_PROXY_PORT)
                 path = url
                 scheme = config.get(prefs.HTTP_PROXY_SCHEME)
-                host = proxy_host
-                port = proxy_port
                 if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
                     username = config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)
                     password = config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD)
@@ -1215,6 +1221,8 @@ class HTTPConnectionPool(object):
             'headers': headers,
             'postVariables': postVariables,
             'postFiles': postFiles,
+            'proxy_host': proxy_host,
+            'proxy_port': proxy_port,
         }
         self.pendingRequests.append(req)
         self.runPendingRequests()
@@ -1228,12 +1236,18 @@ class HTTPConnectionPool(object):
             req = self._popPendingRequest()
             if req is None:
                 return
-            conns = self._getServerConnections(req['scheme'], req['host'], 
-                    req['port'])
+            if req['proxy_host']:
+                conns = self._getServerConnections(req['scheme'],
+                                                   req['proxy_host'], 
+                                                   req['proxy_port'])
+            else:
+                conns = self._getServerConnections(req['scheme'], req['host'], 
+                                                   req['port'])
             if len(conns['free']) > 0:
                 conn = conns['free'].pop()
                 self.freeConnectionCount -= 1
                 conn.sendRequest(req['callback'], req['errback'],
+                        req['host'], req['port'],
                         req['requestStartCallback'], req['headerCallback'],
                         req['bodyDataCallback'], req['method'], req['path'],
                         req['headers'], req['postVariables'], req['postFiles'])
@@ -1249,12 +1263,18 @@ class HTTPConnectionPool(object):
     def _makeNewConnection(self, req):
         def openConnectionCallback(conn):
             conn.sendRequest(req['callback'], req['errback'],
+                             req['host'], req['port'],
                     req['requestStartCallback'], req['headerCallback'],
                     req['bodyDataCallback'], req['method'], req['path'],
                     req['headers'], req['postVariables'], req['postFiles'])
         def openConnectionErrback(error):
-            conns = self._getServerConnections(req['scheme'], req['host'], 
-                    req['port'])
+            if req['proxy_host']:
+                conns = self._getServerConnections(req['scheme'],
+                                                   req['proxy_host'], 
+                                                   req['proxy_port'])
+            else:
+                conns = self._getServerConnections(req['scheme'], req['host'], 
+                                                   req['port'])
             if conn in conns['active']:
                 conns['active'].remove(conn)
                 self.activeConnectionCount -= 1
@@ -1282,7 +1302,14 @@ class HTTPConnectionPool(object):
 
         # This needs to be in an idle so that the connection is added
         # to the "active" list before the open callback happens --NN
-        eventloop.addIdle(lambda : conn.openConnection(req['host'],req['port'],
+        if req['proxy_host']:
+            eventloop.addIdle(lambda : conn.openConnection(req['proxy_host'],
+                                                           req['proxy_port'],
+                         openConnectionCallback, openConnectionErrback),
+                          "Open connection %s" % str(self))
+        else:
+            eventloop.addIdle(lambda : conn.openConnection(req['host'],
+                                                           req['port'],
                          openConnectionCallback, openConnectionErrback),
                           "Open connection %s" % str(self))
         return conn
