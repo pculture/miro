@@ -93,9 +93,14 @@ def setupLogging (inDownloader=False):
     if _loggingSetup:
         return
 
-    logFile = config.get(prefs.LOG_PATHNAME)
-    logStream = open(logFile, "wt")
-    sys.stdout = sys.stderr = AutoflushingStream(logStream)
+    if not inDownloader:
+        logFile = config.get(prefs.LOG_PATHNAME)
+        logStream = open(logFile, "wt")
+        sys.stdout = sys.stderr = AutoflushingStream(logStream)
+    else:
+        # If we're in the dwnloader sys.stdout and sys.stderr have already
+        # been redirected
+        logStream = sys.stderr
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(levelname)-8s %(message)s',
                         stream=logStream)
