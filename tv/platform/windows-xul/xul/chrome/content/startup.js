@@ -31,7 +31,7 @@ function onwizardfinish() {
     var wwatch = Components.classes["@mozilla.org/embedcomp/window-watcher;1"]
             .getService(Components.interfaces.nsIWindowWatcher);
     var startupTasksURL = "chrome://dtv/content/startup.xul";
-    this.startup = wwatch.openWindow(null, "chrome://dtv/content/main.xul",
+    wwatch.openWindow(null, "chrome://dtv/content/main.xul",
             "DemocracyPlayer", "chrome,dialog=yes,all", null);
 }
 
