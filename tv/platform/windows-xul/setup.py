@@ -103,6 +103,9 @@ VLC_MOZ_PLUGIN_DIR = os.path.join(BINARY_KIT_ROOT, "mozplugin")
 # Path to a build of vlc plugins to go along with that Mozilla plugin
 VLC_PLUGINS_DIR = os.path.join(VLC_MOZ_PLUGIN_DIR, "vlc-plugins")
 
+# Path to a build of the convert utility from imagemagick
+IMAGEMAGICK_DIR = os.path.join(BINARY_KIT_ROOT, 'imagemagick')
+
 # Name of python binary, so we can build the download daemon in
 # another process. (Can we get this from Python itself?)
 PYTHON_BINARY="python"
@@ -331,6 +334,9 @@ class bdist_xul_dumb(Command):
         self.copyMiscFiles(self.dist_dir)
 
         self.copyVLCPluginFiles(self.dist_dir, self.xulrunnerOut)
+
+        copyTreeExceptSvn(IMAGEMAGICK_DIR,
+                          os.path.join(self.dist_dir, 'imagemagick'))
 
         # Compile and drop in type library
         # NEEDS: make IDL directory configurable

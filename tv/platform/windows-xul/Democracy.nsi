@@ -193,6 +193,7 @@ FunctionEnd
   RMDir /r "${directory}\resources"
   RMDir /r "${directory}\vlc-plugins"
   RMDir /r "${directory}\xulrunner"
+  RMDir /r "${directory}\imagemagick"
 
   RMDIR ${directory} 
 !macroend
@@ -260,6 +261,7 @@ unzipok:
   File  /r resources
   File  /r vlc-plugins
   File  /r xulrunner
+  File  /r imagemagick
 
 !endif
 
