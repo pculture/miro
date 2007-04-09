@@ -11,7 +11,8 @@ import os
 import logging
 import sys
 import urllib
-from util import returnsUnicode, returnsBinary, checkU, checkB
+from util import (returnsUnicode, returnsBinary, checkU, checkB,
+        AutoflushingStream)
 
 localeInitialized = False
 FilenameType = unicode
@@ -86,10 +87,19 @@ def initializeLocale():
         os.environ["LANGUAGE"] = lang
     localeInitialized = True
 
+_loggingSetup = False
 def setupLogging (inDownloader=False):
+    global _loggingSetup
+    if _loggingSetup:
+        return
+
+    logFile = config.get(prefs.LOG_PATHNAME)
+    logStream = open(logFile, "wt")
+    sys.stdout = sys.stderr = AutoflushingStream(logStream)
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(levelname)-8s %(message)s',
-                        stream = sys.stdout)
+                        stream=logStream)
+    _loggingSetup = True
 
 # Takes in a unicode string representation of a filename and creates a
 # valid byte representation of it attempting to preserve extensions

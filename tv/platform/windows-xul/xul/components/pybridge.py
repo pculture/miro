@@ -10,6 +10,7 @@ import _winreg
 try:
     import platformutils
     platformutils.initializeLocale()
+    platformutils.setupLogging()
     import gtcache
     gtcache.init()
     import app
@@ -186,13 +187,6 @@ class PyBridge:
             return
         else:
             self.started = True
-        try:
-            logFile = config.get(prefs.LOG_PATHNAME)
-            if logFile is not None:
-                h = open(logFile, "wt")
-                sys.stdout = sys.stderr = util.AutoflushingStream(h)
-        except:
-            pass
 
         initializeProxyObjects(window)
         app.main()
