@@ -5,8 +5,9 @@ import statvfs
 import logging
 import sys
 
-from objc import NO
-import Foundation
+from objc import NO, YES
+from Foundation import *
+from AppKit import *
 
 from util import returnsUnicode, returnsBinary, checkU, checkB
 
@@ -106,7 +107,7 @@ def _call(args, delay=0.0, waitUntilDone=False, waitForResult=False):
         finally:
             del obj
 
-class CallerObject (Foundation.NSObject):
+class CallerObject (NSObject):
     
     def initWithArgs_(self, args):
         self = self.init()
@@ -117,7 +118,7 @@ class CallerObject (Foundation.NSObject):
         self.performSelectorOnMainThread_withObject_waitUntilDone_(self.perform_, self.args, waitUntilDone)
 
     def performCallLater_(self, delay):
-        dontWait = Foundation.NSNumber.numberWithBool_(NO)
+        dontWait = NSNumber.numberWithBool_(NO)
         self.performSelector_withObject_afterDelay_(self.performCall_, dontWait, delay)
         
     def performCallAndWaitReturn(self):
@@ -154,11 +155,11 @@ def getAvailableBytesForMovies():
     import config
     import prefs
 
-    pool = Foundation.NSAutoreleasePool.alloc().init()
-    fm = Foundation.NSFileManager.defaultManager()
+    pool = NSAutoreleasePool.alloc().init()
+    fm = NSFileManager.defaultManager()
     info = fm.fileSystemAttributesAtPath_(config.get(prefs.MOVIES_DIRECTORY))
     try:
-        available = info[Foundation.NSFileSystemFreeSize]
+        available = info[NSFileSystemFreeSize]
     except:
         # We could not retrieve the available disk size for some reason, default
         # to something huge to allow downloads.
@@ -169,8 +170,8 @@ def getAvailableBytesForMovies():
 def initializeLocale():
     global localeInitialized
 
-    pool = Foundation.NSAutoreleasePool.alloc().init()
-    languages = list(Foundation.NSUserDefaults.standardUserDefaults()["AppleLanguages"])
+    pool = NSAutoreleasePool.alloc().init()
+    languages = list(NSUserDefaults.standardUserDefaults()["AppleLanguages"])
     try:
         pos = languages.index('en')
         languages = languages[:pos]
@@ -273,19 +274,46 @@ def osFilenamesToFilenameTypes(filenames):
 def filenameTypeToOSFilename(filename):
     return filename.decode('utf-8')
 
+# Load the image at source_path, resize it to [width, height] (and use
+# letterboxing if source and destination ratio are different) and save it to
+# dest_path
 def resizeImage(source_path, dest_path, width, height):
-    """Resize an image to a smaller size.
+    source = NSImage.alloc().initWithContentsOfFile_(source_path)
+    jpegData = getResizedJPEGData(source, width, height)
+    destinationFile = open(dest_path, "w")
+    try:
+        destinationFile.write(jpegData)
+    finally:
+        destinationFile.close()
+
+# Returns a resized+letterboxed version of image source as JPEG data.
+def getResizedJPEGData(source, width, height):
+    sourceSize = source.size()
+    sourceRatio = sourceSize.width / sourceSize.height
+    destinationSize = NSSize(width, height)
+    destinationRatio = destinationSize.width / destinationSize.height
+
+    if sourceRatio > destinationRatio:
+        size = NSSize(destinationSize.width, destinationSize.width / sourceRatio)
+        pos = NSPoint(0, (destinationSize.height - size.height) / 2.0)
+    else:
+        size = NSSize(destinationSize.height * sourceRatio, destinationSize.height)
+        pos = NSPoint((destinationSize.width - size.width) / 2.0, 0)
     
-    Guidelines:
-
-    Don't try to expand up the image.
-
-    Don't change the aspect ratio
-
-    The final image should be have the exact dimensions <width>X<height>.  If
-    there is extra room, either because the source image was smaller
-    specified, or because it had a different aspect ratio, pad out the image
-    with black pixels.
-    """
-    import shutil
-    shutil.copyfile(source_path, dest_path)
+    destination = NSImage.alloc().initWithSize_(destinationSize)
+    try:
+        destination.lockFocus()
+        NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
+        NSColor.blackColor().set()
+        NSRectFill(((0,0), destinationSize))
+        source.drawInRect_fromRect_operation_fraction_((pos, size), ((0,0), sourceSize), NSCompositeSourceOver, 1.0)
+    finally:
+        destination.unlockFocus()
+    
+    tiffData = destination.TIFFRepresentation()
+    imageRep = NSBitmapImageRep.imageRepWithData_(tiffData)
+    properties = {NSImageCompressionFactor: 0.8}
+    jpegData = imageRep.representationUsingType_properties_(NSJPEGFileType, properties)
+    jpegData = str(jpegData.bytes())
+    
+    return jpegData

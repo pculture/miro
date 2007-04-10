@@ -263,36 +263,12 @@ def extractIcon(qtmovie, filename):
         return ""
 
     frameRatio = frameSize.width / frameSize.height
-    iconSize = NSSize(226.0, 170.0)
-    iconRatio = iconSize.width / iconSize.height
+    jpegData = platformutils.getResizedJPEGData(frame, 226.0, 170.0)
 
-    if frameRatio > iconRatio:
-        size = NSSize(iconSize.width, iconSize.width / frameRatio)
-        pos = NSPoint(0, (iconSize.height - size.height) / 2.0)
-    else:
-        size = NSSize(iconSize.height * frameRatio, iconSize.height)
-        pos = NSPoint((iconSize.width - size.width) / 2.0, 0)
-    
-    icon = NSImage.alloc().initWithSize_(iconSize)
     try:
-        icon.lockFocus()
-        NSColor.blackColor().set()
-        NSRectFill(((0,0), iconSize))
-        frame.drawInRect_fromRect_operation_fraction_((pos, size), ((0,0), frameSize), NSCompositeSourceOver, 1.0)
-    finally:
-        icon.unlockFocus()
-    
-    try:
-        tiffData = icon.TIFFRepresentation()
-        imageRep = NSBitmapImageRep.imageRepWithData_(tiffData)
-        properties = {NSImageCompressionFactor: 0.8}
-        jpegData = imageRep.representationUsingType_properties_(NSJPEGFileType, properties)
-        jpegData = str(jpegData.bytes())
-        
         target = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
         iconFilename = os.path.basename(filename) + '.jpg'
         iconFilename = download_utils.saveData(target, iconFilename, jpegData)
-
     except:
         return ""
 
