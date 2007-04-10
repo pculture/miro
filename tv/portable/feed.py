@@ -1467,9 +1467,9 @@ class ScraperFeedImpl(FeedImpl):
         self.linkHistory[url] = {}
         self.tempHistory = {}
         if not etag is None:
-            self.linkHistory[url]['etag'] = etag
+            self.linkHistory[url]['etag'] = unicodify(etag)
         if not modified is None:
-            self.linkHistory[url]['modified'] = modified
+            self.linkHistory[url]['modified'] = unicodify(modified)
         self.downloads = set()
         self.setUpdateFrequency(360)
         self.scheduleUpdateEvents(0)
@@ -1520,13 +1520,13 @@ class ScraperFeedImpl(FeedImpl):
     def processDownloadedHTML(self, info, urlList, depth, linkNumber, top = False):
         self.ufeed.confirmDBThread()
         #print "Done grabbing %s" % info['updated-url']
-
+        
         if not self.tempHistory.has_key(info['updated-url']):
             self.tempHistory[info['updated-url']] = {}
         if info.has_key('etag'):
-            self.tempHistory[info['updated-url']]['etag'] = info['etag']
+            self.tempHistory[info['updated-url']]['etag'] = unicodify(info['etag'])
         if info.has_key('last-modified'):
-            self.tempHistory[info['updated-url']]['modified'] = info['last-modified']
+            self.tempHistory[info['updated-url']]['modified'] = unicodify(info['last-modified'])
 
         if (info['status'] != 304) and (info.has_key('body')):
             if info.has_key('charset'):
@@ -1548,7 +1548,7 @@ class ScraperFeedImpl(FeedImpl):
             self.scheduleUpdateEvents(-1)
 
     def addVideoItem(self,link,dict,linkNumber):
-        link = link.strip()
+        link = unicodify(link.strip())
         if dict.has_key('title'):
             title = dict['title']
         else:
