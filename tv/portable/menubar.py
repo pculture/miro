@@ -3,7 +3,7 @@
 from gtcache import gettext as _
 import platform
 
-CTRL, ALT, SHIFT, RIGHT_ARROW, LEFT_ARROW, SPACE, ENTER = range(7)
+CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER = range(10)
 
 class ShortCut:
     def __init__(self, key, *modifiers):
@@ -79,72 +79,207 @@ class MenuBar:
 
 if platform.system() == "Darwin":
     # OS X Menu goes here
-    pass
+     menubar = \
+MenuBar(
+   Menu
+   (_("_Video"), "Video",
+    MenuItem(_("_Open"), "Open", Key("o", CMD)),
+    MenuItem(_("_Open Recent"), "OpenRecent", None),
+    MenuItem(_("Check _Version"), "CheckVersion", None),
+    Separator(),
+    MenuItem(_("Select _All"), "SelectAll", Key("a", CMD)),
+    Separator(),
+    MenuItem(_("_Remove Video (_x)"), "RemoveVideos", Key("x", CMD), False,
+             plural=_("_Remove Videos (_x)")),
+    MenuItem(_("_Save Video"), "SaveVideo", Key("s",CMD), False,
+             plural=_("_Save Videos")),
+    MenuItem(_("_Copy Video URL"), "CopyVideoURL", Key("c", CMD), False),
+    Separator(),
+    MenuItem(_("_Preferences"), "EditPreferences", Key("p",CMD)),
+    MenuItem(_("_Quit"),"Quit", Key("q",CMD))),
+   Menu
+   (_("_Channels"), "Channels",
+    MenuItem(_("Add _New Channel"), "NewChannel", Key("n",CMD,SHIFT)),
+    MenuItem(_("New Searc_h Channel"), "NewSearchChannel", Key("h",CMD,SHIFT)),
+    MenuItem(_("New _Folder"), "NewChannelFolder", Key("f",CMD,SHIFT)),
+    MenuItem(_("New Channel _Guide"), "NewGuide", Key("g",CMD,SHIFT)),
+    Separator(),
+    MenuItem(_("Renam_e Channel"), "RenameChannel", Key("e",CMD,SHIFT), False),
+    MenuItem(_("Remove Channel (_x)"), "RemoveChannels", Key("x",CMD,SHIFT), False,
+             plural=_("Re_move Channels (x)")),
+    MenuItem(_("_Update Channel"), "UpdateChannels", Key("u",CMD,SHIFT), False,
+             plural=_("_Update Channels")),
+    MenuItem(_("Update _All Channels"), "UpdateAllChannels", Key("a",CMD,SHIFT)),
+    Separator(),
+    MenuItem(_("_Send this channel to a friend"), "MailChannel", Key("s",CMD,SHIFT), False),
+    MenuItem(_("_Copy Channel Link"), "CopyChannelURL", Key("c",CMD,SHIFT), False)),
+   Menu
+   (_("_Playlists"), "Playlists",
+    MenuItem(_("New _Playlist"), "NewPlaylist", Key("p",CMD,SHIFT)),
+    MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",Key("d",CMD,SHIFT)),
+    Separator(),
+    MenuItem(_("Rename Playlist"),"RenamePlaylist",None, False),
+    MenuItem(_("Remove Playlist"),"RemovePlaylists",None, False,
+             plural=_("Remove Playlists"))),
+   Menu
+   (_("P_layback"), "Playback",
+    MenuItem(_("Play"), "PlayPauseVideo", Key(SPACE), False),
+    MenuItem(_("Stop"), "StopVideo", Key(ENTER), False),
+    Separator(),
+    MenuItem(_("Next Video"), "NextVideo", Key(RIGHT_ARROW, CMD), False),
+    MenuItem(_("Previous Video"), "PreviousVideo", Key(LEFT_ARROW, CMD), False),
+    Separator(),
+    MenuItem(_("Fast Forward"), "FastForward", Key(RIGHT_ARROW), False),
+    MenuItem(_("Rewind"), "Rewind", Key(LEFT_ARROW), False),
+    Separator(),
+    MenuItem(_("_Fullscreen"), "Fullscreen", Key("f", CMD), False),
+    Separator(),
+    MenuItem(_("Volume Up"), "UpVolume", Key(UP_ARROW, CMD), False),
+    MenuItem(_("Volume Down"), "DownVolume", Key(DOWN_ARROW,CMD), False),
+    MenuItem(_("Max Volume"), "MaxVolume", Key(UP_ARROW, ALT), False),
+    MenuItem(_("Min Volume"), "MinVolume", Key(DOWN_ARROW, ALT), False),
+    Separator(),
+    MenuItem(_("_Mute"), "MuteVolume", Key("m", CTRL), False)),
+   Menu
+   (_("_Help"), "Help",
+    MenuItem(_("About"), "About", None),
+    MenuItem(_("Donate"), "Donate", None),
+    MenuItem(_("Help"), "Help", None)))
+    
 elif platform.system() == "Windows":
     # Windows menu goes here
-    pass
-
-else:
-    # GTK menu goes here
-    pass
-
-menubar = \
+ menubar = \
   MenuBar(
-    Menu
+   Menu
    (_("_Video"), "Video",
     MenuItem(_("_Open"), "Open", Key("o", CTRL)),
     MenuItem(_("_Open Recent"), "OpenRecent", None),
     MenuItem(_("Check _Version"), "CheckVersion", None),
     Separator(),
-    MenuItem(_("_Remove Video..."), "RemoveVideos", None, False,
-             plural=_("_Remove Videos...")),
-    MenuItem(_("Save Video _As..."),
-             "SaveVideo", Key("s",CTRL), False),
-    MenuItem(_("Copy Video URL"), "CopyVideoURL", None, False),
+    MenuItem(_("Select _All"), "SelectAll", Key("a", CTRL)),
     Separator(),
-    MenuItem(_("P_references"), "EditPreferences", None),
+    MenuItem(_("_Remove Video (_x)"), "RemoveVideos", Key("x", CTRL), False,
+             plural=_("_Remove Videos (_x)")),
+    MenuItem(_("_Save Video"), "SaveVideo", Key("s",CTRL), False,
+             plural=_("_Save Videos")),
+    MenuItem(_("_Copy Video URL"), "CopyVideoURL", Key("c", CTRL), False),
+    Separator(),
+    MenuItem(_("_Preferences"), "EditPreferences", Key("p",CTRL)),
     MenuItem(_("_Quit"),"Quit", Key("q",CTRL))),
    Menu
-   (_("_Edit"), "Edit",
-    MenuItem(_("Cu_t"), "Cut", Key("x", CTRL), False),
-    MenuItem(_("_Copy"), "Copy", Key("c", CTRL), False),
-    MenuItem(_("_Paste"), "Paste", Key("v", CTRL), False),
-    MenuItem(_("Select _All"), "SelectAll", Key("a",CTRL))),
-   Menu
    (_("_Channels"), "Channels",
-    MenuItem(_("Add _Channel..."), "NewChannel", Key("n",CTRL)),
-    MenuItem(_("New Searc_h Channel"), "NewSearchChannel", None),
-    MenuItem(_("New _Folder..."), "NewChannelFolder", Key("n",CTRL, SHIFT)),
-    MenuItem(_("New Channel _Guide..."), "NewGuide", None),
+    MenuItem(_("Add _New Channel"), "NewChannel", Key("n",CTRL,SHIFT)),
+    MenuItem(_("New Searc_h Channel"), "NewSearchChannel", Key("h",CTRL,SHIFT)),
+    MenuItem(_("New _Folder"), "NewChannelFolder", Key("f",CTRL,SHIFT)),
+    MenuItem(_("New Channel _Guide"), "NewGuide", Key("g",CTRL,SHIFT)),
     Separator(),
-    MenuItem(_("Re_name..."), "RenameChannel", None, False),
-    MenuItem(_("Re_move Channel..."), "RemoveChannels", None, False,
-             plural=_("Re_move Channels...")),
-    MenuItem(_("_Update Channel"), "UpdateChannels", None, False,
+    MenuItem(_("Renam_e Channel"), "RenameChannel", Key("e",CTRL,SHIFT), False),
+    MenuItem(_("Remove Channel (_x)"), "RemoveChannels", Key("x",CTRL,SHIFT), False,
+             plural=_("Re_move Channels (x)")),
+    MenuItem(_("_Update Channel"), "UpdateChannels", Key("u",CTRL,SHIFT), False,
              plural=_("_Update Channels")),
-    MenuItem(_("U_pdate All Channels"), "UpdateAllChannels", None),
+    MenuItem(_("Update _All Channels"), "UpdateAllChannels", Key("a",CTRL,SHIFT)),
     Separator(),
-    MenuItem(_("_Send this channel to a friend"), "MailChannel",None, False),
-    MenuItem(_("Copy Channel _Link"), "CopyChannelURL", None, False)),
+    MenuItem(_("_Send this channel to a friend"), "MailChannel", Key("s",CTRL,SHIFT), False),
+    MenuItem(_("_Copy Channel Link"), "CopyChannelURL", Key("c",CTRL,SHIFT), False)),
    Menu
    (_("_Playlists"), "Playlists",
-    MenuItem(_("New _Playlist..."), "NewPlaylist", Key("p",CTRL)),
-    MenuItem(_("New Playlist _Folder..."), "NewPlaylistFolder",None),
+    MenuItem(_("New _Playlist"), "NewPlaylist", Key("p",CTRL,SHIFT)),
+    MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",Key("d",CTRL,SHIFT)),
     Separator(),
-    MenuItem(_("Re_name Playlist..."),"RenamePlaylist",None, False),
-    MenuItem(_("_Remove Playlist..."),"RemovePlaylists",None, False,
-             plural=_("_Remove Playlists..."))),
+    MenuItem(_("Rename Playlist"),"RenamePlaylist",None, False),
+    MenuItem(_("Remove Playlist"),"RemovePlaylists",None, False,
+             plural=_("Remove Playlists"))),
    Menu
    (_("P_layback"), "Playback",
-    MenuItem(_("_Play"), "PlayPauseVideo", Key(SPACE), False),
-    MenuItem(_("_Stop Video"), "StopVideo", Key("d",CTRL), False),
+    MenuItem(_("Play"), "PlayPauseVideo", Key(SPACE), False),
+    MenuItem(_("Stop"), "StopVideo", Key(ENTER), False),
     Separator(),
-    MenuItem(_("_Next Video"), "NextVideo", Key(RIGHT_ARROW), False),
-    MenuItem(_("_Previous Video"), "PreviousVideo", Key(LEFT_ARROW), False),
+    MenuItem(_("Next Video"), "NextVideo", Key(RIGHT_ARROW, CTRL), False),
+    MenuItem(_("Previous Video"), "PreviousVideo", Key(LEFT_ARROW, CTRL), False),
     Separator(),
-    MenuItem(_("_Fullscreen"), "Fullscreen", Key("f", CTRL), False)),
+    MenuItem(_("Fast Forward"), "FastForward", Key(RIGHT_ARROW), False),
+    MenuItem(_("Rewind"), "Rewind", Key(LEFT_ARROW), False),
+    Separator(),
+    MenuItem(_("_Fullscreen"), "Fullscreen", Key("f", CTRL), False),
+    Separator(),
+    MenuItem(_("Volume Up"), "UpVolume", Key(UP_ARROW, CTRL), False),
+    MenuItem(_("Volume Down"), "DownVolume", Key(DOWN_ARROW,CTRL), False),
+    MenuItem(_("Max Volume"), "MaxVolume", Key(UP_ARROW, ALT), False),
+    MenuItem(_("Min Volume"), "MinVolume", Key(DOWN_ARROW, ALT), False),
+    Separator(),
+    MenuItem(_("_Mute"), "MuteVolume", Key("m", CTRL), False)),
    Menu
    (_("_Help"), "Help",
-    MenuItem(_("_About"), "About", None),
-    MenuItem(_("_Donate"), "Donate", None),
-    MenuItem(_("_Help"), "Help", None)))
+    MenuItem(_("About"), "About", None),
+    MenuItem(_("Donate"), "Donate", None),
+    MenuItem(_("Help"), "Help", None)))
+    
+else:
+    # GTK menu goes here
+ menubar = \
+  MenuBar(
+   Menu
+   (_("_Video"), "Video",
+    MenuItem(_("_Open"), "Open", Key("o", CTRL)),
+    MenuItem(_("_Open Recent"), "OpenRecent", None),
+    MenuItem(_("Check _Version"), "CheckVersion", None),
+    Separator(),
+    MenuItem(_("Select _All"), "SelectAll", Key("a", CTRL)),
+    Separator(),
+    MenuItem(_("_Remove Video (_x)"), "RemoveVideos", Key("x", CTRL), False,
+             plural=_("_Remove Videos (_x)")),
+    MenuItem(_("_Save Video"), "SaveVideo", Key("s",CTRL), False,
+             plural=_("_Save Videos")),
+    MenuItem(_("_Copy Video URL"), "CopyVideoURL", Key("c", CTRL), False),
+    Separator(),
+    MenuItem(_("_Preferences"), "EditPreferences", Key("p",CTRL)),
+    MenuItem(_("_Quit"),"Quit", Key("q",CTRL))),
+   Menu
+   (_("_Channels"), "Channels",
+    MenuItem(_("Add _New Channel"), "NewChannel", Key("n",CTRL,SHIFT)),
+    MenuItem(_("New Searc_h Channel"), "NewSearchChannel", Key("h",CTRL,SHIFT)),
+    MenuItem(_("New _Folder"), "NewChannelFolder", Key("f",CTRL,SHIFT)),
+    MenuItem(_("New Channel _Guide"), "NewGuide", Key("g",CTRL,SHIFT)),
+    Separator(),
+    MenuItem(_("Renam_e Channel"), "RenameChannel", Key("e",CTRL,SHIFT), False),
+    MenuItem(_("Remove Channel (_x)"), "RemoveChannels", Key("x",CTRL,SHIFT), False,
+             plural=_("Re_move Channels (x)")),
+    MenuItem(_("_Update Channel"), "UpdateChannels", Key("u",CTRL,SHIFT), False,
+             plural=_("_Update Channels")),
+    MenuItem(_("Update _All Channels"), "UpdateAllChannels", Key("a",CTRL,SHIFT)),
+    Separator(),
+    MenuItem(_("_Send this channel to a friend"), "MailChannel", Key("s",CTRL,SHIFT), False),
+    MenuItem(_("_Copy Channel Link"), "CopyChannelURL", Key("c",CTRL,SHIFT), False)),
+   Menu
+   (_("_Playlists"), "Playlists",
+    MenuItem(_("New _Playlist"), "NewPlaylist", Key("p",CTRL,SHIFT)),
+    MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",Key("d",CTRL,SHIFT)),
+    Separator(),
+    MenuItem(_("Rename Playlist"),"RenamePlaylist",None, False),
+    MenuItem(_("Remove Playlist"),"RemovePlaylists",None, False,
+             plural=_("Remove Playlists"))),
+   Menu
+   (_("P_layback"), "Playback",
+    MenuItem(_("Play"), "PlayPauseVideo", Key(SPACE), False),
+    MenuItem(_("Stop"), "StopVideo", Key(ENTER), False),
+    Separator(),
+    MenuItem(_("Next Video"), "NextVideo", Key(RIGHT_ARROW, CTRL), False),
+    MenuItem(_("Previous Video"), "PreviousVideo", Key(LEFT_ARROW, CTRL), False),
+    Separator(),
+    MenuItem(_("Fast Forward"), "FastForward", Key(RIGHT_ARROW), False),
+    MenuItem(_("Rewind"), "Rewind", Key(LEFT_ARROW), False),
+    Separator(),
+    MenuItem(_("_Fullscreen"), "Fullscreen", Key("f", CTRL), False),
+    Separator(),
+    MenuItem(_("Volume Up"), "UpVolume", Key(UP_ARROW, CTRL), False),
+    MenuItem(_("Volume Down"), "DownVolume", Key(DOWN_ARROW,CTRL), False),
+    MenuItem(_("Max Volume"), "MaxVolume", Key(UP_ARROW, ALT), False),
+    MenuItem(_("Min Volume"), "MinVolume", Key(DOWN_ARROW, ALT), False),
+    Separator(),
+    MenuItem(_("_Mute"), "MuteVolume", Key("m", CTRL), False)),
+   Menu
+   (_("_Help"), "Help",
+    MenuItem(_("About"), "About", None),
+    MenuItem(_("Donate"), "Donate", None),
+    MenuItem(_("Help"), "Help", None)))
