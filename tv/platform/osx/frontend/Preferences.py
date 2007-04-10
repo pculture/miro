@@ -276,7 +276,7 @@ class FoldersPrefsController (NibClassBuilder.AutoBaseClass):
             self.foldersTable.reloadData()
         else:
             if col.identifier() == 'location':
-                return self.folders[row].dir
+                return platformutils.filenameTypeToOSFilename(self.folders[row].dir)
             elif col.identifier() == 'asChannel':
                 return self.folders[row].visible
         return ''
