@@ -59,6 +59,8 @@ def ShortCutMixin(self):
                        menubar.SHIFT: 'Shift'}
     XUL_KEY_STRINGS = {menubar.RIGHT_ARROW : 'Right',
                        menubar.LEFT_ARROW :   'Left',
+                       menubar.UP_ARROW :   'Up',
+                       menubar.DOWN_ARROW :   'Down',
                        menubar.SPACE : 'Space',
                        menubar.ENTER: 'Enter'}
 
