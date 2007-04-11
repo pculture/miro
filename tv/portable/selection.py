@@ -461,7 +461,7 @@ class SelectionHandler(object):
     def updateMenus(self):
         tabTypes = self.tabListSelection.getTypesDetailed()
         if tabTypes.issubset(set(['guidetab', 'addedguidetab'])):
-            guideURL = self.getSelectedTabs()[0].obj.getRedirectedURL()
+            guideURL = self.getSelectedTabs()[0].obj.getURL()
         else:
             guideURL = None
         multiple = len(self.tabListSelection.currentSelection) > 1

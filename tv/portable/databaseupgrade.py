@@ -662,6 +662,10 @@ def upgrade44(objectList):
             changed.add(o)
     return changed
 
+def upgrade45(objectList):
+    """Dropped the ChannelGuide.redirected URL attribute.  Just need to bump
+    the db version number."""
+    return set()
 
 #         if o.classString == 'item':
 #             objChanged = False

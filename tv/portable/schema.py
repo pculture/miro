@@ -442,10 +442,9 @@ class ChannelGuideSchema(DDBObjectSchema):
     classString = 'channel-guide'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL(noneOk=True)),
-        ('redirectedURL', SchemaURL(noneOk=True)),
     ]
 
-VERSION = 44
+VERSION = 45
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
