@@ -663,6 +663,7 @@ class bdist_xul_dumb(Command):
             self.fillTemplate(os.path.join(lang, 'main.dtd'))        
             self.fillTemplate(os.path.join(lang, 'about.dtd'))        
             self.fillTemplate(os.path.join(lang, 'bugreport.dtd'))        
+            self.fillTemplate(os.path.join(lang, 'prefs.dtd'))        
 
 class runxul(bdist_xul_dumb):
     def run(self):
