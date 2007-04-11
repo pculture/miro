@@ -181,6 +181,8 @@ def setCommandLineArgs(args):
     _commandLineArgs = args
 
 def parseCommandLineArgs(args=None):
+    views.waitForInit()
+
     if args is None:
         args = _commandLineArgs
 
