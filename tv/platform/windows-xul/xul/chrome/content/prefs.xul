@@ -2,127 +2,129 @@
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
 <?xml-stylesheet href="main.css" type="text/css"?>
 
-<!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/prefs.dtd">
 
 <!-- add hidechrome="true" to eliminate title bar -->
-<dialog id="democracy-preferences" title="Preferences"
-	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-	xmlns:html="http://www.w3.org/1999/xhtml"
-	orient="vertical"
-        onload="onload();"
-        ondialogaccept="ondialogaccept();"
-        buttons="accept"
-        class="preferences">
+<dialog id="democracy-preferences" title="&prefs.title;"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    orient="vertical"
+    onload="onload();"
+    ondialogaccept="ondialogaccept();"
+    buttons="accept"
+    class="preferences">
 <script src="chrome://dtv/content/main.js" />
 <script src="chrome://dtv/content/preffuncs.js" />
 <vbox>
-		
-	<!--GENERAL-->
-	<groupbox orient="horizontal">
-		<caption label="General"/>
-		<checkbox id="runonstartup" label="Automatically run Democracy Player when I login" value="1" oncommand="runOnStartupChange()"/>
-	</groupbox>
-	<!--/GENERAL-->
-		
-	<!--CHANNELS-->
-	<groupbox orient="horizontal">
-		<caption label="Channels"/>
-                <hbox>
-                    <description style="padding-top:4px;">Check Channels for new content</description>
-                    <menulist id="checkevery">
-                            <menupopup>
-                                    <menuitem label="Every 30 minutes" oncommand="checkEveryChange(30);" id="check30" value="30"/>
-                                    <menuitem label="Every hour" oncommand="checkEveryChange(60);" id="check60" value="60"/>
-                                    <menuitem label="Manually" oncommand="checkEveryChange(-1);" id="checknever" value="never"/>
-                            </menupopup>
-                    </menulist>
-                </hbox>
-	</groupbox>
-	<groupbox orient="horizontal">
-		<caption label="Playback"/>
-		    <checkbox id="resumeVideos" checked="true" label="Remember video position." value="1" oncommand="resumeVideosModeChange();"/>
-                    <radiogroup id="play-mode-radiogroup"
-                            oncommand="singlePlayModeChange();" >
-                        <radio label="Play videos one after another." 
-                                id="continuous-play-mode-radio" />
-                        <radio label="Stop after each video."
-                                id="single-play-mode-radio" />
-                    </radiogroup>
-	</groupbox>
-	<!--/CHANNELS-->
 
-	<!--MOVIES DIRECTORY-->
-	<groupbox orient="horizontal">
-		<caption label="Movies Directory"/>
-		<hbox>
-                        <description style="padding-top:5px;">
-                                Store downloaded videos in this folder:
-                        </description>
-			<textbox id="movies-directory" flex="0" value=""
+    <!--GENERAL-->
+    <groupbox orient="horizontal">
+        <caption label="&prefs.general;"/>
+        <checkbox id="runonstartup" label="&prefs.run.on.startup;" value="1" oncommand="runOnStartupChange()"/>
+    </groupbox>
+    <!--/GENERAL-->
+
+    <!--CHANNELS-->
+    <groupbox orient="horizontal">
+        <caption label="&prefs.channels;"/>
+        <hbox>
+            <description style="padding-top:4px;">&prefs.channels.check;</description>
+            <menulist id="checkevery">
+                <menupopup>
+                    <menuitem label="&prefs.channels.check.thirty;" oncommand="checkEveryChange(30);" id="check30" value="30"/>
+                    <menuitem label="&prefs.channels.check.sixty;" oncommand="checkEveryChange(60);" id="check60" value="60"/>
+                    <menuitem label="&prefs.channels.check.manually;" oncommand="checkEveryChange(-1);" id="checknever" value="never"/>
+                </menupopup>
+            </menulist>
+        </hbox>
+    </groupbox>
+    <!--/CHANNELS-->
+
+    <!--PLAYBACK-->
+    <groupbox orient="horizontal">
+        <caption label="&prefs.playback;"/>
+            <checkbox id="resumeVideos" checked="true" label="&prefs.playback.remember.pos;" value="1" oncommand="resumeVideosModeChange();"/>
+            <radiogroup id="play-mode-radiogroup"
+                    oncommand="singlePlayModeChange();" >
+                <radio label="&prefs.playback.auto.next.video;"
+                        id="continuous-play-mode-radio" />
+                <radio label="&prefs.playback.stop.after.each;"
+                        id="single-play-mode-radio" />
+            </radiogroup>
+    </groupbox>
+    <!--/PLAYBACK-->
+
+    <!--MOVIES DIRECTORY-->
+    <groupbox orient="horizontal">
+        <caption label="&prefs.folder.movies;"/>
+        <hbox>
+           <description style="padding-top:5px;">
+              &prefs.folder.downloads;
+           </description>
+        <textbox id="movies-directory" flex="0" value=""
                                 readonly="true" style="width: 300px;" />
                         <button id="movies-directory-button" flex="0"
-                                label="Change..."
+                                label="&prefs.folder.change;"
                                 oncommand="selectMoviesDirectory();" />
-		</hbox>				
-	</groupbox>
-	<!--/MOVIES DIRECTORY-->
+        </hbox>				
+    </groupbox>
+    <!--/MOVIES DIRECTORY-->
 
-	<!--DOWNLOADS-->
-	<groupbox orient="vertical">
-	        <caption label="Downloads"/>
-		<hbox>
-			<description>Download at most</description>
-			<textbox id="maxmanual" flex="0" value="300" style="max-width: 30px;" onchange="maxManualChange()"/>
-			<description>videos at once.</description>
-		</hbox>
-	</groupbox>
-	<!--/DOWNLOADS-->
-	
-	<!--DISK SPACE-->
-	<groupbox orient="vertical">
-		<caption label="Disk Space"/>
-		<hbox>
-			<checkbox id="hasminspace" checked="true" label="Don't start a download if it leaves less than" value="1" oncommand="hasMinSpaceChange();"/>
-			<textbox id="minspace" flex="0" value="1" style="max-width: 30px;" onchange="minSpaceChange()"/>
-                        <description style="padding-top:5px;">GB free.</description>
-		</hbox>				
-                <description style="margin-bottom: 10px;">WARNING: This setting will not go into effect until you restart Democracy Player.</description>
-		<hbox>
-			<description style="padding-top:4px;">By default, videos expire after</description>
-			<menulist id="expiration">
-				<menupopup>
-					<menuitem label="1 day" oncommand="expirationChange(1);" value="1"/>
-					<menuitem label="3 days"  oncommand="expirationChange(3);" value="3"/>
-					<menuitem label="6 days"  oncommand="expirationChange(6);" value="6"/>
-					<menuitem label="10 days"  oncommand="expirationChange(10);" value="10"/>
-					<menuitem label="1 month"  oncommand="expirationChange(30);" value="30"/>
-					<menuitem label="Never"  oncommand="expirationChange(-1);" value="never"/>
-				</menupopup>
-			</menulist>
-		</hbox>
-	</groupbox>
-	<!--/DISK SPACE-->
+    <!--DOWNLOADS-->
+    <groupbox orient="vertical">
+            <caption label="&prefs.downloads.max;"/>
+        <hbox>
+            <description>&prefs.downloads.max.part1;</description>
+            <textbox id="maxmanual" flex="0" value="300" style="max-width: 30px;" onchange="maxManualChange()"/>
+            <description>&prefs.downloads.max.part2;</description>
+        </hbox>
+    </groupbox>
+    <!--/DOWNLOADS-->
+    
+    <!--DISK SPACE-->
+    <groupbox orient="vertical">
+        <caption label="&prefs.disk.space;"/>
+        <hbox>
+            <checkbox id="hasminspace" checked="true" label="&prefs.disk.space.min.part1;" value="1" oncommand="hasMinSpaceChange();"/>
+            <textbox id="minspace" flex="0" value="1" style="max-width: 30px;" onchange="minSpaceChange()"/>
+                        <description style="padding-top:5px;">&prefs.disk.space.min.part2;</description>
+        </hbox>				
+                <description style="margin-bottom: 10px;">&prefs.disk.space.warning.restart;</description>
+        <hbox>
+            <description style="padding-top:4px;">&prefs.videos.expire;</description>
+            <menulist id="expiration">
+                <menupopup>
+                    <menuitem label="&prefs.videos.expire.one;" oncommand="expirationChange(1);" value="1"/>
+                    <menuitem label="&prefs.videos.expire.three;" oncommand="expirationChange(3);" value="3"/>
+                    <menuitem label="&prefs.videos.expire.six;" oncommand="expirationChange(6);" value="6"/>
+                    <menuitem label="&prefs.videos.expire.ten;" oncommand="expirationChange(10);" value="10"/>
+                    <menuitem label="&prefs.videos.expire.thirty;" oncommand="expirationChange(30);" value="30"/>
+                    <menuitem label="&prefs.videos.expire.never;" oncommand="expirationChange(-1);" value="never"/>
+                </menupopup>
+            </menulist>
+        </hbox>
+    </groupbox>
+    <!--/DISK SPACE-->
 
-	<!--BITTORRENT-->
-	<groupbox orient="vertical">
-	        <caption label="BitTorrent"/>
-                <description>(WARNING: Changes won't go into effect until you
-                        restart Democracy Player.)</description>
-		<hbox>
-			<checkbox id="limitupstream" checked="true" label="To avoid slowdowns, limit upstream to" value="1" oncommand="limitUpstreamChange()"/>
-			<textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
-			<description style="padding-top:5px;">KB/s when my computer is active.</description>
-		</hbox>				
+    <!--BITTORRENT-->
+    <groupbox orient="vertical">
+            <caption label="BitTorrent"/>
+                <description>&prefs.torrent.restart.warning;</description>
+        <hbox>
+            <checkbox id="limitupstream" checked="true" label="&prefs.torrent.limit.upstream.part1;" value="1" oncommand="limitUpstreamChange()"/>
+            <textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
+            <description style="padding-top:5px;">&prefs.torrent.limit.upstream.part2;</description>
+        </hbox>				
                 <hbox align="end">
-                        <description>Bit Torrent uses ports between</description>
+                        <description>&prefs.torrent.uses.ports.part1;</description>
                         <textbox id="btminport" flex="0" value="300" 
                                 size="5" onchange="btMinPortChange()" />
-                        <description>and</description>
+                        <description>&prefs.torrent.uses.ports.part2;</description>
                         <textbox id="btmaxport" flex="0" value="300" 
                                 size="5" onchange="btMaxPortChange()" />
                 </hbox>
-	</groupbox>
-	<!--/BITTORRENT-->
+    </groupbox>
+    <!--/BITTORRENT-->
 </vbox>
 
 </dialog>
