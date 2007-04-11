@@ -22,9 +22,13 @@ def clearOrphans():
     for item in views.items:
         if item.iconCache and item.iconCache.filename:
             knownIcons.add(os.path.normcase(item.iconCache.filename))
+            for resized in item.iconCache.resized_filenames.values():
+                knownIcons.add(os.path.normcase(resized))
     for feed in views.feeds:
         if feed.iconCache and feed.iconCache.filename:
             knownIcons.add(os.path.normcase(feed.iconCache.filename))
+            for resized in feed.iconCache.resized_filenames.values():
+                knownIcons.add(os.path.normcase(resized))
     cachedir = config.get(prefs.ICON_CACHE_DIRECTORY)
     if os.path.isdir(cachedir):
         existingFiles = [os.path.normcase(os.path.join(cachedir, f)) 
