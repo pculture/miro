@@ -355,9 +355,8 @@ def gatherVideos(path, progressCallback):
         for root, dirs, files in os.walk(path):
             for f in files:
                 parsed = parsed + 1
-                if item.isVideoFilename(f):
-                    fullPath = platformutils.osFilenameToFilenameType(os.path.join(root, f))
-                    found.append(fullPath)
+                if item.isVideoFilename(f) or item.isAudioFilename(f):
+                    found.append(os.path.join(root, f))
                 if parsed > 1000:
                     adjustedParsed = int(parsed / 100.0) * 100
                 elif parsed > 100:
