@@ -1821,17 +1821,17 @@ def isAllowedFilename(filename):
 
 def isVideoFilename(filename):
     return ((len(filename) > 4 and
-             filename[-4:].lower() in [u'.mov', u'.wmv', u'.mp4', u'.m4v',
-                                       u'.ogg', u'.anx', u'.mpg', u'.avi', 
-                                       u'.flv']) or
+             filename[-4:].lower() in ['.mov', '.wmv', '.mp4', '.m4v',
+                                       '.ogg', '.anx', '.mpg', '.avi', 
+                                       '.flv']) or
             (len(filename) > 5 and
              filename[-5:].lower() in ['.mpeg', '.divx']))
 
 def isAudioFilename(filename):
-    return len(filename) > 4 and filename[-4:].lower() in [u'.mp3', u'.m4a']
+    return len(filename) > 4 and filename[-4:].lower() in ['.mp3', '.m4a']
 
 def isTorrentFilename(filename):
-    return filename.endswith(u'.torrent')
+    return filename.endswith('.torrent')
 
 @returnsUnicode
 def formatRateForDetails(bytes):
