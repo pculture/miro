@@ -394,7 +394,8 @@ function onKeyDown(event) {
   // Don't mess with keys in input boxes.
   if(event.target.tagName) {
     var lowerTagName = event.target.tagName.toLowerCase();
-    if(lowerTagName == 'input' || lowerTagName == 'textbox') return true;
+    if(lowerTagName == 'input' || lowerTagName == 'textbox' || 
+       lowerTagName == 'textarea') return true;
   }
   if(event.keyCode == 8 || event.keyCode == 46) {  // Delete/Backspace
      pybridge.removeCurrentSelection();
