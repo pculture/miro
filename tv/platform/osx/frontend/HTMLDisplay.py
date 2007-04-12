@@ -40,8 +40,24 @@ class HTMLDisplay (app.Display):
         display is installed."""
         self.readyToDisplayHook = None
         self.readyToDisplay = False
-        self.web = ManagedWebView.alloc().init(html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(unicode(x)), frameHint and areaHint and frameHint.getDisplaySizeHint(areaHint) or None, baseURL)
+        self.html = html
+        self.baseURL = baseURL
+        if frameHint and areaHint:
+            self.displaySizeHint = frameHint.getDisplaySizeHint(areaHint)
+        else:
+            self.displaySizeHint = None
         app.Display.__init__(self)
+ 
+    # make web a lazily loaded property.  This is useful for the channel
+    # guides because it makes the load happen after setGuideURL
+    def get_web(self):
+        try:
+            return self._web
+        except AttributeError:
+            print "MAKING WEB"
+            self._web = ManagedWebView.alloc().init(self.html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(unicode(x)), self.displaySizeHint, self.baseURL)
+            return self._web
+    web = property(get_web)
 
     def getEventCookie(self):
         return ''
@@ -103,6 +119,7 @@ class HTMLDisplay (app.Display):
         pass
 
     def callWhenReadyToDisplay(self, hook):
+        self.get_web() # make sure our ManagedWebView is loaded
         if self.readyToDisplay:
             hook()
         else:
