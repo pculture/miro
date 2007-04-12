@@ -596,6 +596,12 @@ class Controller (frontend.Application):
     def _finishStartup(self, gatheredVideos=None):
         try:
             views.initialize()
+            # Use an idle for parseCommandLineArgs because the frontend may
+            # have put in idle calls to do set up video playback or similar
+            # things.
+            eventloop.addIdle(singleclick.parseCommandLineArgs, 
+                    'parse command line')
+
             #Restoring
             util.print_mem_usage("Pre-database memory check:")
             logging.info ("Restoring database...")
@@ -722,11 +728,6 @@ class Controller (frontend.Application):
 
             util.print_mem_usage("Pre single-click memory check")
 
-            # Use an idle for parseCommandLineArgs because the frontend may
-            # have put in idle calls to do set up video playback or similar
-            # things.
-            eventloop.addIdle(singleclick.parseCommandLineArgs, 
-                    'parse command line')
 
             util.print_mem_usage("Post single-click memory check")
 
