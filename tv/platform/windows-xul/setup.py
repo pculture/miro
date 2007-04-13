@@ -34,11 +34,20 @@ BINARY_KIT_ROOT = defaultBinaryKitRoot
 # NEEDS: better accomodate non-vc71 compilers in binary kit?
 BOOST_ROOT = os.path.join(BINARY_KIT_ROOT, 'boost', 'win32')
 BOOST_LIB_PATH = os.path.join(BOOST_ROOT, 'lib')
-BOOST_LIB = os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.lib')
-BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include', 'boost-1_33')
-BOOST_RUNTIMES = [
-    os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.dll'),
-    ]
+
+# Hack so we don't break things for people who haven't updated their binary kit
+if os.path.exists(os.path.join(BOOST_ROOT, 'include', 'boost-1_33_1')):
+    BOOST_LIB = os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33_1.lib')
+    BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include', 'boost-1_33_1')
+    BOOST_RUNTIMES = [
+        os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33_1.dll'),
+        ]
+else:
+    BOOST_LIB = os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.lib')
+    BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include', 'boost-1_33')
+    BOOST_RUNTIMES = [
+        os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.dll'),
+        ]
 
 # The 'Democracy.exe' launcher stub, currently provided only in the
 # binary kit.
@@ -319,10 +328,18 @@ class bdist_xul_dumb(Command):
         # directory..
         log.info("computing module dependencies")
         wellConnectedFile = os.path.join(root, 'portable', 'app.py')
-        manifest = self.computePythonManifest(scripts = [wellConnectedFile],
+        scriptIncludes = [wellConnectedFile]
+        manifest = self.computePythonManifest(scripts = scriptIncludes,
                                               includes = moduleIncludes,
                                               packages = packageIncludes,
                                               path = packagePaths)
+
+        # Hack to add support for sqlite3 until it makes it into py2exe -NN
+        for (source, dest) in manifest:
+            if source.endswith('_sqlite3.pyd'):
+                manifest.append((os.path.join(os.path.dirname(source), "sqlite3.dll"),"sqlite3.dll"))
+                break
+
         #print '\n'.join(["%s -> %s" % (source, dest) \
         #                 for (source, dest) in manifest])
         

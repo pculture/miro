@@ -695,7 +695,7 @@ class DynamicDatabase:
     def addBeforeCursor(self, newobject,value=NoValue):
         self.confirmDBThread()
         if self.objectLocs.has_key(newobject.id):
-            raise Exception, "%s (%d) is already in the database" % (newobject, newobject.id)
+            raise DatabaseConsistencyError,("%s (%d) is already in the database" % (newobject, newobject.id))
         point = self.cursor
         if point is None:
             point = self.objects.firstIter().copy()

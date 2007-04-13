@@ -40,7 +40,10 @@ import app
 import bsddb.db
 import dialogs
 import logging
-from pysqlite2 import dbapi2 as sql
+try:
+    from pysqlite2 import dbapi2 as sql
+except ImportError:
+    import sqlite3 as sql
 
 from gtcache import gettext as _
 
