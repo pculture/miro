@@ -797,7 +797,8 @@ class bdist_xul (bdist_xul_dumb):
             self.addFile ("python24.dll")
         else: # We must be using Python 2.5
             self.addFile ("python25.dll")
-        self.addFile ("boost_python-vc71-mt-1_33.dll")
+        for boostFile in BOOST_RUNTIMES:
+            self.addFile (os.path.basename(boostFile))
 
         self.addDirectory ("chrome")
         self.addDirectory ("components")
