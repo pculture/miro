@@ -57,9 +57,14 @@ COMPILER_RUNTIMES = [
 
 # Python runtime DLL to distribute with the application. Usually, the
 # Python installer drops it in c:\windows\system32.
-PYTHON_RUNTIMES = [
-    "C:\\windows\\system32\\python24.dll",
-    ]
+if sys.version.startswith("2.4"):
+    PYTHON_RUNTIMES = [
+        "C:\\windows\\system32\\python24.dll",
+        ]
+else: # We must be using Python 2.5
+    PYTHON_RUNTIMES = [
+        "C:\\windows\\system32\\python25.dll",
+        ]
 
 # Path to the Mozilla "xulrunner" distribution. We include a build in
 # the Binary Kit to save you a minute or two, but if you want to be
@@ -78,12 +83,11 @@ IDL_TOOLS_PATH = os.path.join(BINARY_KIT_ROOT, "idltools")
 # released, or the GRE SDK for now.
 IDL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, "idlinclude")
 
-# Path to a build of PyXPCOM, the glue that binds Python to
-# Mozilla. As of this writing, the only way to get this is to build
-# Mozilla, apply a patch or two, and then build PyXPCOM from within
-# the tree, and finally fish various files out of the 'dist' directory
-# produced and organize them the way this build script expects. This
-# setting should point to a directory that has contains:
+# Path to a separate build of PyXPCOM, the glue that binds Python to
+# Mozilla. This is now optional, since it's not too difficult to build
+# PyXPCOM into XULRunner now.
+#
+# This setting should point to a directory that has contains:
 #  (1) a subdirectory 'components', containing 'pyloader.dll', copied
 #      from '$objdir/dist/bin/components' in the Mozilla tree; and
 #  (2) a subdirectory 'python', containing a subdirectory 'xpcom',
@@ -276,8 +280,13 @@ class bdist_xul_dumb(Command):
         # cause the dependency scanner to conclude that all of the
         # PyXPCOM scripts are necessary.
         # NEEDS: again, should arrange to have these get built.
-        packagePaths.extend([
+        if os.path.exists(PYXPCOM_DIR):
+             packagePaths.extend([
                 os.path.join(PYXPCOM_DIR, "python"),
+                ])
+        else:
+            packagePaths.extend([
+                os.path.join(XULRUNNER_DIR, "python"),
                 ])
         moduleIncludes = [# Public to Python code
                            "xpcom",
@@ -325,11 +334,12 @@ class bdist_xul_dumb(Command):
         log.info("assembling xulrunner")
         self.xulrunnerOut = os.path.join(self.dist_dir, 'xulrunner')
         copyTreeExceptSvn(XULRUNNER_DIR, self.xulrunnerOut)
-        # (Copy *only* the components part, not the Python part; that
-        #  got sucked into the dependency scan above)
-        copyTreeExceptSvn(os.path.join(PYXPCOM_DIR, 'components'),
-                          os.path.join(self.xulrunnerOut, 'components'))
-
+        # If we don't have PyXPCOM in our XULRunner dist, Copy *only*
+        # the components part, not the Python part; that got sucked
+        # into the dependency scan above
+        if os.path.exists(PYXPCOM_DIR):
+            copyTreeExceptSvn(os.path.join(PYXPCOM_DIR, 'components'),
+                              os.path.join(self.xulrunnerOut, 'components'))
         # Copy the license file over
         self.copyMiscFiles(self.dist_dir)
 
@@ -766,7 +776,10 @@ class bdist_xul (bdist_xul_dumb):
         self.addFile ("application.ini")
         self.addFile ("msvcp71.dll")
         self.addFile ("msvcr71.dll")
-        self.addFile ("python24.dll")
+        if sys.version.startswith("2.4"):
+            self.addFile ("python24.dll")
+        else: # We must be using Python 2.5
+            self.addFile ("python25.dll")
         self.addFile ("boost_python-vc71-mt-1_33.dll")
 
         self.addDirectory ("chrome")
