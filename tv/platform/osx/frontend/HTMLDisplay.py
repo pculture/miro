@@ -54,7 +54,6 @@ class HTMLDisplay (app.Display):
         try:
             return self._web
         except AttributeError:
-            print "MAKING WEB"
             self._web = ManagedWebView.alloc().init(self.html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(unicode(x)), self.displaySizeHint, self.baseURL)
             return self._web
     web = property(get_web)
