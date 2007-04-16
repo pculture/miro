@@ -180,6 +180,19 @@ def fillTemplate(templatepath, outpath, **vars):
     f.write(s)
     f.close()
 
+def dtdQuoteHack(path):
+    """Replace the "'" charactor with "&quot;" instead. 
+
+    As far as I (BDK) can tell, it's legal for the XML spec, but we have had
+    reports of it not working in the wild (#3579).
+    """
+    f = open(path)
+    content = f.read()
+    f.close()
+    f = open(path, 'w')
+    f.write(content.replace("'", "&quot;"))
+    f.close()
+
 
 ###############################################################################
 
@@ -685,12 +698,12 @@ class bdist_xul_dumb(Command):
         for lang in glob (os.path.join (xulBase, 'chrome', 'locale', '*')):
             if len(lang) >= 4 and lang[-4:] in ("_svn", ".svn"):
                 continue
-            # NEEDS: generalize to do the whole tree, so as to handle all
-            # templates
-            self.fillTemplate(os.path.join(lang, 'main.dtd'))        
-            self.fillTemplate(os.path.join(lang, 'about.dtd'))        
-            self.fillTemplate(os.path.join(lang, 'bugreport.dtd'))        
-            self.fillTemplate(os.path.join(lang, 'prefs.dtd'))        
+            for fname in glob (os.path.join (lang, '*.template')):
+                dtd_fname = fname[:-len('.template')]
+                self.fillTemplate(dtd_fname)
+                dtdQuoteHack(dtd_fname)
+        import validate_dtds
+        validate_dtds.check_dtds(os.path.join (xulBase, 'chrome', 'locale'))
 
 class runxul(bdist_xul_dumb):
     def run(self):
