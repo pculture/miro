@@ -5,6 +5,10 @@ from here get sent out to be translated.  If you need to add a new string, add
 it to one of these files.  If you create a new window, create a new
 .dtd.template file.
 
+NOTE: don't use the "'" charactor in entities, use &quot; instead.  As far as
+I (BDK) can tell, it's legal for the XML spec, but we have had reports of it
+not working in the wild (#3579).
+
 * Once strings are translated, we download the new translations and run
 tv/resources/locale/build-catalogs.py.  This populates all the other
 language directories with the .dtd.template files.

@@ -1,6 +1,3 @@
-<!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "&quot;">
-
 <!ENTITY prefs.title "Agordo">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">

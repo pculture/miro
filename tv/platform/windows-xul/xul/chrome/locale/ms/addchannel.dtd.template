@@ -1,5 +1,2 @@
-<!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
-
 <!ENTITY addchannel.title    "Tambah Saluran">
 <!ENTITY addchannel.prompt   "Please enter the URL of the channel you'd like to add.">

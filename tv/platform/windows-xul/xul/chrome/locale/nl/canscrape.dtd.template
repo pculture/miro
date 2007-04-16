@@ -1,6 +1,3 @@
-<!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
-
 <!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
 <!ENTITY canscrape.body      "Maar we zullen ons best doen om de bestanden op te halen. Misschien kost het wat extra tijd om de video's te rangschikken, en zien de beschrijvingen er mogelijk vreemd uit.">
 

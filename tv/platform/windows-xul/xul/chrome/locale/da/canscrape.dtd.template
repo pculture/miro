@@ -1,6 +1,3 @@
-<!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
-
 <!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
 <!ENTITY canscrape.body      "Men Democracy afspilleren vil forsøger at gøre sit bedste for at hente filerne. Det tager måske noget ekstra tid at vise oversigten over videoerne og beskrivelserne kan måske blive formateret forkert.">
 

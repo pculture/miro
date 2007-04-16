@@ -1,6 +1,3 @@
-<!ENTITY nbsp				" ">
-<!ENTITY rsaquo				"'">
-
 <!ENTITY searchchannel.description	"A search channel contains
 items that match a search term.">
 <!ENTITY searchchannel.termlabel 	"Bilatu:">
