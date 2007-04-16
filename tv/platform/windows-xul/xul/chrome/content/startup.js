@@ -11,6 +11,7 @@ var initialButton;
 var inSearch = false;
 var searchSuccess = false;
 var cancelled = false;
+var finished = false;
 var wizard;
 var homedir;
 function onload() {
@@ -25,6 +26,12 @@ function onload() {
 }
 
 function onwizardfinish() {
+    if(finished) {
+      return; 
+      // User hit the Finish button quickly and we got this callback twice
+    } else {
+      finished = true;
+    }
     var autoStartYes = getWidget("radiogroup-autostart-yes");
     pybridge.setRunAtStartup(autoStartYes.selected);
     pybridge.setStartupTasksDone(true);
