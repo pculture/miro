@@ -40,6 +40,7 @@ import autodler
 import moviedata
 import logging
 import platformutils
+import filetypes
 
 _charset = locale.getpreferredencoding()
 
@@ -147,7 +148,7 @@ class Item(DDBObject):
             for (dirpath, dirnames, filenames) in os.walk(filename_root):
                 for name in filenames:
                     filename = os.path.join (dirpath, name)
-                    if isAllowedFilename(filename):
+                    if filetypes.isAllowedFilename(filename):
                         videos.add(filename)
         return videos
 
@@ -1779,15 +1780,6 @@ any items inside that folder will also be removed or deleted.""")
                     item.executeExpire()
     d.run(callback)
 
-def isVideoEnclosure(enclosure):
-    """
-    Pass an enclosure dictionary to this method and it will return a boolean
-    saying if the enclosure is a video or not.
-    """
-    return (_hasVideoType(enclosure) or
-            _hasVideoExtension(enclosure, 'url') or
-            _hasVideoExtension(enclosure, 'href'))
-
 def getFirstVideoEnclosure(entry):
     """Find the first video enclosure in a feedparser entry.  Returns the
     enclosure, or None if no video enclosure is found.
@@ -1798,40 +1790,9 @@ def getFirstVideoEnclosure(entry):
     except (KeyError, AttributeError):
         return None
     for enclosure in enclosures:
-        if isVideoEnclosure(enclosure):
+        if filetypes.isVideoEnclosure(enclosure):
             return enclosure
     return None
-
-def _hasVideoType(enclosure):
-    return ('type' in enclosure and
-            (enclosure['type'].startswith(u'video/') or
-             enclosure['type'].startswith(u'audio/') or
-             enclosure['type'] == u"application/ogg" or
-             enclosure['type'] == u"application/x-annodex" or
-             enclosure['type'] == u"application/x-bittorrent" or
-             enclosure['type'] == u"application/x-shockwave-flash"))
-
-def _hasVideoExtension(enclosure, key):
-    return (key in enclosure and isAllowedFilename(enclosure[key]))
-
-def isAllowedFilename(filename):
-    return (isVideoFilename(filename) or
-            isAudioFilename(filename) or
-            isTorrentFilename(filename))
-
-def isVideoFilename(filename):
-    return ((len(filename) > 4 and
-             filename[-4:].lower() in ['.mov', '.wmv', '.mp4', '.m4v',
-                                       '.ogg', '.anx', '.mpg', '.avi', 
-                                       '.flv']) or
-            (len(filename) > 5 and
-             filename[-5:].lower() in ['.mpeg', '.divx']))
-
-def isAudioFilename(filename):
-    return len(filename) > 4 and filename[-4:].lower() in ['.mp3', '.m4a']
-
-def isTorrentFilename(filename):
-    return filename.endswith('.torrent')
 
 @returnsUnicode
 def formatRateForDetails(bytes):

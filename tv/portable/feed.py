@@ -31,6 +31,7 @@ import prefs
 import resources
 from util import returnsUnicode, unicodify, chatter, checkU, checkF
 from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe
+import filetypes
 import views
 import indexes
 import searchengines
@@ -1790,7 +1791,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
                 if (os.path.exists(existingFile) and os.path.basename(existingFile)[0] != u'.'):
                     if not existingFile in knownFiles:
                         if not os.path.isdir(existingFile):
-                            if isAllowedFilename(platformutils.filenameToUnicode(existingFile)):
+                            if filetypes.isAllowedFilename(platformutils.filenameToUnicode(existingFile)):
                                 FileItem(existingFile, feed_id=self.ufeed.id)
                         else:
                             found = 0
@@ -1800,7 +1801,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
                             for subfile in contents:
                                 if subfile in knownFiles:
                                     found = found + 1
-                                elif isAllowedFilename(platformutils.filenameToUnicode(subfile)):
+                                elif filetypes.isAllowedFilename(platformutils.filenameToUnicode(subfile)):
                                     not_found.append(subfile)
                             # If every subfile or subdirectory is
                             # already in the database (including

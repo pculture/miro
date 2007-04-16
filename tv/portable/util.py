@@ -8,6 +8,7 @@ import string
 import urllib
 import socket
 import logging
+import filetypes
 import threading
 import traceback
 import subprocess
@@ -355,7 +356,7 @@ def gatherVideos(path, progressCallback):
         for root, dirs, files in os.walk(path):
             for f in files:
                 parsed = parsed + 1
-                if item.isVideoFilename(f) or item.isAudioFilename(f):
+                if filetypes.isVideoFilename(f) or filetypes.isAudioFilename(f):
                     found.append(os.path.join(root, f))
                 if parsed > 1000:
                     adjustedParsed = int(parsed / 100.0) * 100
