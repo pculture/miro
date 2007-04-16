@@ -10,6 +10,7 @@ from platformutils import unicodeToFilename
 
 # The mimetypes module does not know about FLV, let's enlighten him.
 mimetypes.add_type('video/flv', '.flv')
+mimetypes.add_type('video/x-flv', '.flv')
 
 def fixFileURLS(url):
     """Fix file URLS that start with file:// instead of file:///.  Note: this
