@@ -1,46 +1,46 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY prefs.title "Preferences">
+<!ENTITY prefs.title "Instellingen">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
-<!ENTITY prefs.channels.check "Check Channels for new content">
+<!ENTITY prefs.channels "Kanalen">
+<!ENTITY prefs.channels.check "Controleer Kanalen op nieuwe inhoud">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "Playback">
+<!ENTITY prefs.playback "Afspelen">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
-<!ENTITY prefs.playback.stop.after.each "Stop after each video.">
+<!ENTITY prefs.playback.auto.next.video "Video's na elkaar afspelen.">
+<!ENTITY prefs.playback.stop.after.each "Na elke video stoppen.">
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.change "Wijzigen...">
 
 <!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Download at most">
-<!ENTITY prefs.downloads.max.part2 "videos at once.">
+<!ENTITY prefs.downloads.max.part1 "Download hooguit">
+<!ENTITY prefs.downloads.max.part2 "video's in een keer.">
 
 <!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
-<!ENTITY prefs.disk.space.min.part2 "GB free.">
+<!ENTITY prefs.disk.space.min.part1 "Download niet starten wanneer minder overblijft dan">
+<!ENTITY prefs.disk.space.min.part2 "NL gratis">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
-<!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
-<!ENTITY prefs.videos.expire.six "6 days">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire "Video's vervallen standaard na">
+<!ENTITY prefs.videos.expire.one "1 dag">
+<!ENTITY prefs.videos.expire.three "3 dagen">
+<!ENTITY prefs.videos.expire.six "6 dagen">
+<!ENTITY prefs.videos.expire.ten "10 dagen">
+<!ENTITY prefs.videos.expire.thirty "1 maand">
+<!ENTITY prefs.videos.expire.never "Nooit">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Om vertragingen te voorkomen, beperk de uitvoersnelheid tot">
+<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s als mijn computer actief is.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "and">

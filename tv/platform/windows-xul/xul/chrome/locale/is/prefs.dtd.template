@@ -33,10 +33,10 @@
 
 <!ENTITY prefs.videos.expire "By default, videos expire after">
 <!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
+<!ENTITY prefs.videos.expire.three "3 dagar">
 <!ENTITY prefs.videos.expire.six "6 days">
 <!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
+<!ENTITY prefs.videos.expire.thirty "1 mánuður">
 <!ENTITY prefs.videos.expire.never "Never">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">

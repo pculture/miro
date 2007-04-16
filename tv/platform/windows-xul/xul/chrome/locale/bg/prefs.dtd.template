@@ -1,46 +1,46 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY prefs.title "Preferences">
+<!ENTITY prefs.title "Предпочитания">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
-<!ENTITY prefs.channels.check "Check Channels for new content">
+<!ENTITY prefs.channels "Канали">
+<!ENTITY prefs.channels.check "Провери канал за новости">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.playback "Playback">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
-<!ENTITY prefs.playback.stop.after.each "Stop after each video.">
+<!ENTITY prefs.playback.auto.next.video "Пусни видеотата едно след друго.">
+<!ENTITY prefs.playback.stop.after.each "Спри след всяко видео.">
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.change "Промени...">
 
 <!ENTITY prefs.downloads.max "Downloads">
 <!ENTITY prefs.downloads.max.part1 "Download at most">
 <!ENTITY prefs.downloads.max.part2 "videos at once.">
 
 <!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
-<!ENTITY prefs.disk.space.min.part2 "GB free.">
+<!ENTITY prefs.disk.space.min.part1 "Не стартирай сваляне, ако остават по-малко от">
+<!ENTITY prefs.disk.space.min.part2 "GB свободни">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
-<!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
-<!ENTITY prefs.videos.expire.six "6 days">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire "По подразбиране, валидността на видео файловете изтича след">
+<!ENTITY prefs.videos.expire.one "1 ден">
+<!ENTITY prefs.videos.expire.three "3 дни">
+<!ENTITY prefs.videos.expire.six "6 дни">
+<!ENTITY prefs.videos.expire.ten "10 дни">
+<!ENTITY prefs.videos.expire.thirty "1 месец">
+<!ENTITY prefs.videos.expire.never "Никога">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part1 "За да избегнат забавяния, ограничи скоростта до">
+<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s когато компютърът ми е активен.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "and">

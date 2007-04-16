@@ -1,0 +1,5 @@
+<!ENTITY nbsp                " ">
+<!ENTITY rsaquo              "'">
+
+<!ENTITY addchannel.title    "Kanal Ekle">
+<!ENTITY addchannel.prompt   "Lütfen eklemek istediğiniz kanalın adresini girin.">

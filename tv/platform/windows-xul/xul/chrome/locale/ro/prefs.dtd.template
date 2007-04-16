@@ -1,14 +1,14 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY prefs.title "Preferences">
+<!ENTITY prefs.title "Preferinţe">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
-<!ENTITY prefs.channels.check "Check Channels for new content">
+<!ENTITY prefs.channels "Canale">
+<!ENTITY prefs.channels.check "Verfic canalul daca are conţinut nou">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
@@ -27,11 +27,11 @@
 <!ENTITY prefs.downloads.max.part2 "videos at once.">
 
 <!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
+<!ENTITY prefs.disk.space.min.part1 "Nu porni o descărcare dacă rămâne mai puţin de">
 <!ENTITY prefs.disk.space.min.part2 "GB free.">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
-<!ENTITY prefs.videos.expire "By default, videos expire after">
+<!ENTITY prefs.videos.expire "În mod standard secvenţele video expiră după">
 <!ENTITY prefs.videos.expire.one "1 day">
 <!ENTITY prefs.videos.expire.three "3 days">
 <!ENTITY prefs.videos.expire.six "6 days">
@@ -40,7 +40,7 @@
 <!ENTITY prefs.videos.expire.never "Never">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Pentru a evita descărcările lente, mareşte stream-ul la">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "and">

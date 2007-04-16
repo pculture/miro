@@ -1,46 +1,46 @@
 <!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
+<!ENTITY rsaquo              "&quot;">
 
-<!ENTITY prefs.title "Preferences">
+<!ENTITY prefs.title "Einstellungen">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
-<!ENTITY prefs.channels.check "Check Channels for new content">
+<!ENTITY prefs.channels "Kanäle">
+<!ENTITY prefs.channels.check "Kanäle auf neue Inhalte überprüfen">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "Playback">
+<!ENTITY prefs.playback "Wiedergabe">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
-<!ENTITY prefs.playback.stop.after.each "Stop after each video.">
+<!ENTITY prefs.playback.auto.next.video "Videos nacheinander wiedergeben.">
+<!ENTITY prefs.playback.stop.after.each "Nach jedem Video stoppen.">
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.change "Ändern...">
 
 <!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Download at most">
-<!ENTITY prefs.downloads.max.part2 "videos at once.">
+<!ENTITY prefs.downloads.max.part1 "Lade höchstens">
+<!ENTITY prefs.downloads.max.part2 "Videos auf ein Mal.">
 
 <!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
-<!ENTITY prefs.disk.space.min.part2 "GB free.">
+<!ENTITY prefs.disk.space.min.part1 "Fangen Sie keine Downloads an, wenn danach weniger Speicherplatz bleibt als">
+<!ENTITY prefs.disk.space.min.part2 "GB frei bleibt.">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
-<!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
-<!ENTITY prefs.videos.expire.six "6 days">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire "Videos werden automatisch gelöscht nach">
+<!ENTITY prefs.videos.expire.one "1 Tag">
+<!ENTITY prefs.videos.expire.three "3 Tage">
+<!ENTITY prefs.videos.expire.six "6 Tage">
+<!ENTITY prefs.videos.expire.ten "10 Tage">
+<!ENTITY prefs.videos.expire.thirty "1 Monat">
+<!ENTITY prefs.videos.expire.never "Niemals">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "and">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf %s begrenzen">
+<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s, wenn mein Computer in Gebrauch ist.">
+<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent benutzt Ports zwischen">
+<!ENTITY prefs.torrent.uses.ports.part2 "und">

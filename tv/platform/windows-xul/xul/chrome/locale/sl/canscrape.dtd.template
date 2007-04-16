@@ -1,0 +1,8 @@
+<!ENTITY nbsp                " ">
+<!ENTITY rsaquo              "'">
+
+<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
+<!ENTITY canscrape.body      "Poskušali bomo prenesti datoteke. Preteče lahko nekaj časa preden se bodo izpisali vsi videji in nekateri opisi lahko izgledajo nenavadno.">
+
+<!ENTITY canscrape.prefix    "Prosimo kontaktirajte založnike">
+<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">

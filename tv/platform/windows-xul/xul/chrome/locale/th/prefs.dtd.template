@@ -1,46 +1,46 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY prefs.title "Preferences">
+<!ENTITY prefs.title "ปรับแต่ง">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
-<!ENTITY prefs.channels.check "Check Channels for new content">
+<!ENTITY prefs.channels "ช่อง">
+<!ENTITY prefs.channels.check "ตรวจหาวิดีโอใหม่ในแต่ละช่อง">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.playback "Playback">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
-<!ENTITY prefs.playback.stop.after.each "Stop after each video.">
+<!ENTITY prefs.playback.auto.next.video "เล่นวิดีโอเรื่องถัดไปเรื่อยๆ">
+<!ENTITY prefs.playback.stop.after.each "หยุดหลังเล่นจบแต่ละเรื่อง">
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.change "เปลี่ยน...">
 
 <!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Download at most">
-<!ENTITY prefs.downloads.max.part2 "videos at once.">
+<!ENTITY prefs.downloads.max.part1 "ดาวน์โหลดวิดีโอพร้อมกันครั้งละไม่เกิน">
+<!ENTITY prefs.downloads.max.part2 "เรื่อง">
 
 <!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
-<!ENTITY prefs.disk.space.min.part2 "GB free.">
+<!ENTITY prefs.disk.space.min.part1 "ไม่ต้องดาวน์โหลดถ้าทำให้เหลือที่ว่างน้อยกว่า">
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
-<!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
-<!ENTITY prefs.videos.expire.six "6 days">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire "โดยปกติให้วิดีโอหมดอายุหลังผ่านไปแล้ว">
+<!ENTITY prefs.videos.expire.one "1 วัน">
+<!ENTITY prefs.videos.expire.three "3 วัน">
+<!ENTITY prefs.videos.expire.six "6 วัน">
+<!ENTITY prefs.videos.expire.ten "10 วัน">
+<!ENTITY prefs.videos.expire.thirty "1 เดือน">
+<!ENTITY prefs.videos.expire.never "ไม่จำกัด">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "and">
+<!ENTITY prefs.torrent.limit.upstream.part1 "ลดความช้าในการใช้งาน โดยจำกัดข้อมูลขาออกไว้ที่">
+<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s เมื่อคอมพิวเตอร์ถูกใช้งานอยู่">
+<!ENTITY prefs.torrent.uses.ports.part1 "ใช้พอร์ต BitTorrent ระหว่าง">
+<!ENTITY prefs.torrent.uses.ports.part2 "ถึง">

@@ -7,13 +7,13 @@
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
+<!ENTITY prefs.channels "Saluran">
 <!ENTITY prefs.channels.check "Check Channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "Playback">
+<!ENTITY prefs.playback "Main Balik">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
 <!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
 <!ENTITY prefs.playback.stop.after.each "Stop after each video.">

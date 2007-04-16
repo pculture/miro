@@ -1,22 +1,22 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY prefs.title "Preferences">
+<!ENTITY prefs.title "Preferències">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
-<!ENTITY prefs.channels.check "Check Channels for new content">
+<!ENTITY prefs.channels "Canals">
+<!ENTITY prefs.channels.check "Comprovar els canals en busca de nou contingut">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "Playback">
+<!ENTITY prefs.playback "Reproducció">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
-<!ENTITY prefs.playback.stop.after.each "Stop after each video.">
+<!ENTITY prefs.playback.auto.next.video "Reprodueix els vídeos un rera l'altre">
+<!ENTITY prefs.playback.stop.after.each "Atura després de cada vídeo">
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
@@ -27,20 +27,20 @@
 <!ENTITY prefs.downloads.max.part2 "videos at once.">
 
 <!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
-<!ENTITY prefs.disk.space.min.part2 "GB free.">
+<!ENTITY prefs.disk.space.min.part1 "No iniciar una descàrrega si deixa menys de">
+<!ENTITY prefs.disk.space.min.part2 "Gb lliures">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
-<!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
-<!ENTITY prefs.videos.expire.six "6 days">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire "Per defecte, els vídeos expiren després de">
+<!ENTITY prefs.videos.expire.one "1 dia">
+<!ENTITY prefs.videos.expire.three "3 dies">
+<!ENTITY prefs.videos.expire.six "6 dies">
+<!ENTITY prefs.videos.expire.ten "10 dies">
+<!ENTITY prefs.videos.expire.thirty "1 mes">
+<!ENTITY prefs.videos.expire.never "Mai">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "and">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Per evitar retards, limita la pujada a">
+<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s quan l'ordinador està actiu">
+<!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent utilitza els canals entre">
+<!ENTITY prefs.torrent.uses.ports.part2 "i">

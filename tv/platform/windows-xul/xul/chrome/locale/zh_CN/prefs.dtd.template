@@ -1,22 +1,22 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY prefs.title "Preferences">
+<!ENTITY prefs.title "配置">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
+<!ENTITY prefs.channels "频道">
 <!ENTITY prefs.channels.check "Check Channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "Playback">
+<!ENTITY prefs.playback "回放">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
-<!ENTITY prefs.playback.stop.after.each "Stop after each video.">
+<!ENTITY prefs.playback.auto.next.video "循环播放视频">
+<!ENTITY prefs.playback.stop.after.each "放完一个视频后停止">
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
@@ -40,7 +40,7 @@
 <!ENTITY prefs.videos.expire.never "Never">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
+<!ENTITY prefs.torrent.limit.upstream.part1 "防止下载过慢，限制上传流到">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "and">
+<!ENTITY prefs.torrent.uses.ports.part2 "和">

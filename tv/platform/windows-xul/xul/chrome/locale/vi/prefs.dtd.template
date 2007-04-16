@@ -7,7 +7,7 @@
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
+<!ENTITY prefs.channels "Kênh">
 <!ENTITY prefs.channels.check "Check Channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">

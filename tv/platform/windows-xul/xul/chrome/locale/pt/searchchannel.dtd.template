@@ -1,0 +1,12 @@
+<!ENTITY nbsp				" ">
+<!ENTITY rsaquo				"&quot;">
+
+<!ENTITY searchchannel.description	"A search channel contains
+items that match a search term.">
+<!ENTITY searchchannel.termlabel 	"Pesquisar:">
+<!ENTITY searchchannel.title            "Nova pesquisa do canal">
+<!ENTITY searchchannel.inthis "Nisto:">
+<!ENTITY searchchannel.channel "Canal:">
+<!ENTITY searchchannel.searchengine "Motor de busca:">
+<!ENTITY searchchannel.url "URL:">
+<!ENTITY searchchannel.createchannel "Criar canal">

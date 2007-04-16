@@ -7,7 +7,7 @@
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
+<!ENTITY prefs.channels "Qanal">
 <!ENTITY prefs.channels.check "Check Channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
@@ -20,7 +20,7 @@
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.change "Biguherîne...">
 
 <!ENTITY prefs.downloads.max "Downloads">
 <!ENTITY prefs.downloads.max.part1 "Download at most">
@@ -28,16 +28,16 @@
 
 <!ENTITY prefs.disk.space "Disk Space">
 <!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
-<!ENTITY prefs.disk.space.min.part2 "GB free.">
+<!ENTITY prefs.disk.space.min.part2 "GB vala.">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
-<!ENTITY prefs.videos.expire.six "6 days">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire.one "rojek">
+<!ENTITY prefs.videos.expire.three "3 roj">
+<!ENTITY prefs.videos.expire.six "6 roj">
+<!ENTITY prefs.videos.expire.ten "10 roj">
+<!ENTITY prefs.videos.expire.thirty "mehek">
+<!ENTITY prefs.videos.expire.never "Qet">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">

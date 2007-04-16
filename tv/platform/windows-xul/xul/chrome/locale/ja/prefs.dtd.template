@@ -7,13 +7,13 @@
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
+<!ENTITY prefs.channels "チャンネル">
 <!ENTITY prefs.channels.check "Check Channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "Playback">
+<!ENTITY prefs.playback "再生">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
 <!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
 <!ENTITY prefs.playback.stop.after.each "Stop after each video.">
@@ -27,20 +27,20 @@
 <!ENTITY prefs.downloads.max.part2 "videos at once.">
 
 <!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
-<!ENTITY prefs.disk.space.min.part2 "GB free.">
+<!ENTITY prefs.disk.space.min.part1 "空き容量が">
+<!ENTITY prefs.disk.space.min.part2 "GB以下の時はダウンロードを開始しない">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
-<!ENTITY prefs.videos.expire.six "6 days">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire.one "1日">
+<!ENTITY prefs.videos.expire.three "3日">
+<!ENTITY prefs.videos.expire.six "6日">
+<!ENTITY prefs.videos.expire.ten "10日">
+<!ENTITY prefs.videos.expire.thirty "1ヶ月">
+<!ENTITY prefs.videos.expire.never "設定しない">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "and">
+<!ENTITY prefs.torrent.uses.ports.part2 "と">
