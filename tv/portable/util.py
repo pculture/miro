@@ -3,7 +3,6 @@ import re
 import sys
 import sha
 import time
-import prefs
 import string
 import urllib
 import socket
@@ -145,6 +144,7 @@ def failed(when, withExn = False, details = None):
     header = ""
     try:
         import config # probably works at runtime only
+        import prefs
         header += "App:        %s\n" % config.get(prefs.LONG_APP_NAME)
         header += "Publisher:  %s\n" % config.get(prefs.PUBLISHER)
         header += "Platform:   %s\n" % config.get(prefs.APP_PLATFORM)
@@ -570,13 +570,21 @@ def unicodify(d):
 
 def call_command(*args):
     """Call an external command.  If the command doesn't exit with status 0,
-    an exception will be raised.  Returns a file-like object that corresponds
-    to stdout of the command.
+    or if it outputs to stderr, an exception will be raised.  Returns stdout.
     """
-    pipe = subprocess.Popen(args, stdout=subprocess.PIPE)
+    if subprocess.mswindows:
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    else:
+        startupinfo = None
+    pipe = subprocess.Popen(args, stdout=subprocess.PIPE,
+            stdin=subprocess.PIPE, stderr=subprocess.PIPE,
+            startupinfo=startupinfo)
     stdout, stderr = pipe.communicate()
     if pipe.returncode != 0:
         raise OSError("call_command with %s has return code %s" % 
                 (args, pipe.returncode))
+    elif stderr:
+        raise OSError("call_command outputed error text:\n%s" % stderr)
     else:
         return stdout
