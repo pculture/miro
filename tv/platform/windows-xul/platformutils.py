@@ -176,13 +176,13 @@ def filenameTypeToOSFilename(filename):
 @returnsUnicode
 def makeURLSafe(string, safe = '/'):
     checkU(string)
-    return urllib.quote(string.encode('utf_16'), safe=safe).decode('ascii')
+    return urllib.quote(string.encode('utf_8'), safe=safe).decode('ascii')
 
 # Undoes makeURLSafe
 @returnsUnicode
 def unmakeURLSafe(string):
     checkU(string)
-    return urllib.unquote(string.encode('ascii')).decode('utf_16')
+    return urllib.unquote(string.encode('ascii')).decode('utf_8')
 
 def resizeImage(source_path, dest_path, width, height):
     """Resize an image to a smaller size.
