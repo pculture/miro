@@ -1522,7 +1522,10 @@ folder will be deleted.""")
         if self.isContainerItem is not None and not os.path.exists(self.getFilename()):
             self.executeExpire()
             return
-        if self.duration == None or self.screenshot == None or (self.screenshot and not os.path.exists(self.screenshot)):
+        if self.screenshot and not os.path.exists(self.screenshot):
+            self.screenshot = None
+            self.signalChange()
+        if self.duration == None or self.screenshot == None:
             moviedata.movieDataUpdater.requestUpdate (self)
 
     def __str__(self):
