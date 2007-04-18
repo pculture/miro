@@ -811,6 +811,7 @@ class BTDownloader(BGDownloader):
         if self.metainfo is None:
             if self.url.startswith('file://'):
                 path = self.url[len('file://'):]
+                path = platformutils.unmakeURLSafe(path)
                 try:
                     metainfoFile = open(path, 'rb')
                 except IOError:

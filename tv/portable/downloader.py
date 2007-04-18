@@ -611,6 +611,7 @@ def getDownloader(item):
     url = item.getURL()
     if url.startswith(u'file://'):
         scheme, host, port, path = parseURL(url)
+        path = platformutils.unmakeURLSafe (path)
         if re.match(r'/[a-zA-Z]:', path): 
             # fix windows pathnames (/C:/blah/blah/blah)
             path = path[1:]
