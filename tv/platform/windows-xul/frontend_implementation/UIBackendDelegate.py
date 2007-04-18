@@ -1,4 +1,5 @@
 import os
+import logging
 import subprocess
 import resources
 import webbrowser
@@ -46,6 +47,19 @@ def _makeSupportsArrayFromSecondElement(data):
         array.AppendElement(supportsString)
     return array
 
+class UpdateAvailableDialog(dialogs.Dialog):
+    """Give the user a choice of 2 options (Yes/No, Ok/Cancel,
+    Migrate/Don't Migrate, etc.)
+    """
+
+    def __init__(self, releaseNotes):
+        title = _("Update Available")
+        description = _("A new version of %s is available for download.") % (config.get(prefs.LONG_APP_NAME))
+        self.releaseNotes = releaseNotes
+        super(UpdateAvailableDialog, self).__init__(title, description,
+                [dialogs.BUTTON_DOWNLOAD, dialogs.BUTTON_NOT_NOW])
+
+
 class UIBackendDelegate:
     openDialogs = {}
     currentMenuItems = None
@@ -84,6 +98,10 @@ class UIBackendDelegate:
             frontend.jsBridge.showTextEntryDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text, getPrefillText(dialog))
+        elif isinstance(dialog, UpdateAvailableDialog):
+            frontend.jsBridge.showUpdateAvailableDialog(id, dialog.title,
+                    dialog.description, dialog.buttons[0].text,
+                    dialog.buttons[1].text, dialog.releaseNotes)
         elif isinstance(dialog, dialogs.SearchChannelDialog):
             engines = _makeSupportsArrayFromSecondElement(dialog.engines)
             channels = _makeSupportsArrayFromSecondElement(dialog.channels)
@@ -248,3 +266,21 @@ class UIBackendDelegate:
                 stderr=subprocess.PIPE, 
                 stdin=subprocess.PIPE,
                 startupinfo=startupinfo)
+
+    def handleNewUpdate(self, update_item):
+        url = update_item['enclosures'][0]['href']
+        try:
+            releaseNotes = update_item['releasenoteslink']
+        except KeyError:
+            try:
+                # The first key should work, but sometimes I've seen this
+                # one...
+                releaseNotes = update_item['sparkle_releasenoteslink']
+            except KeyError:
+                logging.warn("Couldn't fetch release notes")
+                releaseNotes = ''
+        dialog = UpdateAvailableDialog(releaseNotes)
+        def callback(dialog):
+            if dialog.choice == dialogs.BUTTON_DOWNLOAD:
+                self.openExternalURL(url)
+        dialog.run(callback)

@@ -218,6 +218,15 @@ jsBridge.prototype = {
             "dialog", "chrome,dependent,centerscreen,modal", params);
   },
 
+  showUpdateAvailableDialog: function(id, title, description, defaultLabel,
+  otherLabel, releaseNotes) {
+    var params = { "id": id, "title": title, "description": description,
+        "defaultLabel": defaultLabel, "otherLabel": otherLabel, 
+        "releaseNotes": releaseNotes }
+    this.window.openDialog("chrome://dtv/content/update_available_dialog.xul",
+            "dialog", "chrome,dependent,centerscreen,modal", params);
+  },
+
   setCollapsed: function(id, value) {
     var elt = this.document.getElementById(id);
     elt.setAttribute("collapsed", value);

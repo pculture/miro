@@ -1,6 +1,8 @@
 #include "nsISupports.idl"
 
 interface nsIDOMWindow;
+interface nsIDOMDocument;
+interface nsIDOMNode;
 interface nsIVariant;
 
 [scriptable, uuid(7E70142F-ABC9-4d6e-BDB8-EDC747FCD2A3)]
@@ -8,6 +10,7 @@ interface pcfIDTVJSBridge : nsISupports
 {
   void init(in nsIDOMWindow window);
   void closeWindow();
+  nsIDOMNode createNode(in nsIDOMDocument document, in AString xml);
   void xulNavigateDisplay(in AString area, in AString uri);
   void xulAddElementAtEnd(in AString area, in AString xml, in AString id);
   void xulAddElementBefore(in AString area, in AString xml, in AString id);
@@ -36,6 +39,9 @@ interface pcfIDTVJSBridge : nsISupports
  	in nsISupports engines, in AString defaultTerm,
 	in unsigned short defaultStyle, in unsigned long defaultChannel,
 	in unsigned long defaultEngine, in AString defaultURL);
+  void showUpdateAvailableDialog(in unsigned long id, in AString title, 
+        in AString description, in AString defaultLabel, 
+        in AString otherLabel, in AString releaseNotes);
   void showBugReportDialog(in AString when, in AString report);
   void showVideoDisplay();
   void hideVideoDisplay();
