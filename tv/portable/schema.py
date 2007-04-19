@@ -190,9 +190,9 @@ class SchemaStatusContainer(SchemaSimpleContainer):
     def validate(self, data):
         from platformutils import FilenameType
         if FilenameType == unicode:
-            binaryFields = ['metainfo']
+            binaryFields = ['metainfo','fastResumeData']
         else:
-            binaryFields = ['channelName','shortFilename','filename','metainfo']
+            binaryFields = ['channelName','shortFilename','filename','metainfo','fastResumeData']
         self.validateType(data, dict)
         for key, value in data.items():
             self.validateTypes(key, [bool, int, long, float, unicode,
@@ -444,7 +444,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('url', SchemaURL(noneOk=True)),
     ]
 
-VERSION = 45
+VERSION = 46
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

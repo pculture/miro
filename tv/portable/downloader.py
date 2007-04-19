@@ -170,7 +170,7 @@ class RemoteDownloader(DDBObject):
     @classmethod
     def updateStatus(cls, data):
         for field in data:
-            if field not in ['filename','shortFilename','channelName','metainfo']:
+            if field not in ['filename','shortFilename','channelName','metainfo','fastResumeData']:
                 data[field] = unicodify(data[field])
         self = _getDownloader (dlid=data['dlid'])
         # print data

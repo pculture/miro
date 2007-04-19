@@ -626,6 +626,19 @@ def upgrade45(objectList):
     the db version number."""
     return set()
 
+def upgrade46(objectList):
+    """fastResumeData should be str, not unicode."""
+    changed = set()
+    for o in objectList:
+        if o.classString == 'remote-downloader':
+            try:
+                if type (o.savedData['status']['fastResumeData']) == unicode:
+                    o.savedData['status']['fastResumeData'] = o.savedData['status']['fastResumeData'].encode('ascii','replace')
+                changed.add(o)
+            except:
+                pass
+    return changed
+
 #         if o.classString == 'item':
 #             objChanged = False
 #             for field in ('pendingReason','videoFilename'):

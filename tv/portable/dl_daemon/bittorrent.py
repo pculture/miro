@@ -126,7 +126,11 @@ class TorrentDownload:
                 print "WARNING: ERROR parsing fast resume data"
                 traceback.print_exc(1)
                 self.fast_resume_data = None
-        self.pieces_already_got = Bitfield(total_pieces, already_got)
+        try:
+            self.pieces_already_got = Bitfield(total_pieces, already_got)
+        except:
+            print "Failed to load resume data"
+            self.pieces_already_got = Bitfield(total_pieces, None)
         self.fast_resume_mtimes = mtimes
 
     def skip_hash_check(self, index, files):
