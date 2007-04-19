@@ -1787,46 +1787,20 @@ class DirectoryWatchFeedImpl(FeedImpl):
         if os.path.isdir(self.dir):
             existingFiles = [os.path.normcase(os.path.join(self.dir, f)) 
                     for f in os.listdir(self.dir)]
+            toAdd = []
             for existingFile in existingFiles:
-                if (os.path.exists(existingFile) and os.path.basename(existingFile)[0] != u'.'):
+                if os.path.isdir(existingFile):
+                    toAdd += [os.path.normcase(os.path.join(existingFile, f)) 
+                              for f in os.listdir(existingFile)]
+            existingFiles += toAdd
+            for existingFile in existingFiles:
+                if (os.path.isfile(existingFile) and os.path.basename(existingFile)[0] != u'.'):
                     if not existingFile in knownFiles:
-                        if not os.path.isdir(existingFile):
-                            if filetypes.isAllowedFilename(platformutils.filenameToUnicode(existingFile)):
-                                FileItem(existingFile, feed_id=self.ufeed.id)
-                        else:
-                            found = 0
-                            not_found = []
-                            contents = [os.path.normcase(os.path.join(existingFile, f)) 
-                                        for f in os.listdir(existingFile)]
-                            for subfile in contents:
-                                if subfile in knownFiles:
-                                    found = found + 1
-                                elif filetypes.isAllowedFilename(platformutils.filenameToUnicode(subfile)):
-                                    not_found.append(subfile)
-                            # If every subfile or subdirectory is
-                            # already in the database (including
-                            # the case where the directory is
-                            # empty) do nothing.
-                            if len(not_found) > 0:
-                                # If there were any files found,
-                                # this is probably a channel
-                                # directory that someone added
-                                # some thing to.  There are few
-                                # other cases where a directory
-                                # would have some things shown.
-                                if found != 0:
-                                    for subfile in not_found:
-                                        FileItem (subfile, feed_id=self.ufeed.id)
-                                        
-                                # But if not, it's probably a
-                                # directory added wholesale.
-                                
-                                else:
-                                    FileItem (existingFile, feed_id=self.ufeed.id)
-
+                        if filetypes.isAllowedFilename(platformutils.filenameToUnicode(existingFile)):
+                            FileItem(existingFile, feed_id=self.ufeed.id)
 
         for item in self.items:
-            if not os.path.exists(item.getFilename()):
+            if not os.path.isfile(item.getFilename()):
                 item.remove()
         if self.firstUpdate:
             for item in self.items:
