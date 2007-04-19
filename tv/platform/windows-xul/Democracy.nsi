@@ -183,7 +183,7 @@ FunctionEnd
   Delete   "${directory}\application.ini"
   Delete   "${directory}\msvcp71.dll"
   Delete   "${directory}\msvcr71.dll"
-  Delete   "${directory}\python25.dll"
+  Delete   "${directory}\python24.dll"
   Delete   "${directory}\boost_python-vc71-mt-1_33_1.dll"
   Delete   "${directory}\uninstall.exe"
 
@@ -252,7 +252,7 @@ unzipok:
   File  application.ini
   File  msvcp71.dll  
   File  msvcr71.dll  
-  File  python25.dll
+  File  python24.dll
   File  boost_python-vc71-mt-1_33_1.dll
 
   File  /r chrome
