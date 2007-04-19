@@ -131,6 +131,13 @@ def getSearchEnginesHTML ():
     enginesHTML += u'</select>'
     return enginesHTML
 
+def getLastEngineTitle():
+    last = getLastEngine()
+    for engine in views.searchEngines:
+        if engine.name == last:
+            return engine.title
+    return u''
+
 def getLastEngine():
     searchFeed = _getSearchFeed()
     if not hasattr(searchFeed, 'lastEngine'):

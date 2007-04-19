@@ -41,6 +41,7 @@ import moviedata
 import logging
 import platformutils
 import filetypes
+import searchengines
 
 _charset = locale.getpreferredencoding()
 
@@ -700,7 +701,7 @@ folder will be deleted.""")
 
         if self.downloader is None:
             self.downloader = downloader.getDownloader(self)
-        self.downloader.setChannelName (platformutils.unicodeToFilename(self.getChannelTitle()))
+        self.downloader.setChannelName (platformutils.unicodeToFilename(self.getChannelTitle(True)))
         if self.downloader.isFinished():
             self.onDownloadFinished()
         else:
@@ -794,10 +795,12 @@ folder will be deleted.""")
                 return u""
 
     @returnsUnicode
-    def getChannelTitle(self):
+    def getChannelTitle(self, allowSearchFeedTitle=False):
         implClass = self.getFeed().actualFeed.__class__
         if implClass in (feed.RSSFeedImpl, feed.ScraperFeedImpl):
             return self.getFeed().getTitle()
+        elif implClass == feed.SearchFeedImpl and allowSearchFeedTitle:
+            return searchengines.getLastEngineTitle()
         else:
             return u''
 
