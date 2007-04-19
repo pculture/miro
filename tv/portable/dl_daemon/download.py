@@ -12,7 +12,7 @@ from copy import copy
 
 from BitTorrent.bencode import bdecode
 from clock import clock
-from download_utils import cleanFilename, nextFreeFilename, checkFilenameExtension
+from download_utils import cleanFilename, nextFreeFilename, checkFilenameExtension, filterDirectoryName
 from download_utils import filenameFromURL
 import eventloop
 import httpclient
@@ -271,7 +271,7 @@ class BGDownloader:
     def moveToDirectory (self, directory):
         checkF(directory)
         if self.channelName:
-            channelName = re.sub(r'[^a-zA-Z0-9]', '-', self.channelName)
+            channelName = filterDirectoryName(self.channelName)
             directory = os.path.join (directory, channelName)
             try:
                 os.makedirs(directory)

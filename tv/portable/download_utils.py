@@ -167,3 +167,10 @@ def saveData (target, suggested_basename, data):
     os.rename (tmp_filename, filename)
 
     return filename
+
+# Filter out all non alpha-numeric characters from a future directory name so we 
+# can create a corresponding directory on disk without bumping into platform 
+# specific pathname limitations.
+def filterDirectoryName(name):
+    return re.sub(r'[^a-zA-Z0-9]', '-', name)
+

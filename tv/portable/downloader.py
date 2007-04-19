@@ -7,7 +7,7 @@ import shutil
 
 from database import DDBObject, defaultDatabase
 from dl_daemon import daemon, command
-from download_utils import nextFreeFilename, parseURL
+from download_utils import nextFreeFilename, parseURL, filterDirectoryName
 from util import getTorrentInfoHash, returnsUnicode, checkU, returnsFilename, unicodify, checkF
 from platformutils import FilenameType
 import app
@@ -332,15 +332,14 @@ WARNING: can't migrate download because we don't have a filename!
 URL was %s""" % self.url
                 return
             if os.path.exists(filename):
-                if self.status.get('channelName'):
-                    directory = os.path.join (directory, self.status['channelName'])
+                if 'channelName' in self.status:
+                    channelName = filterDirectoryName(self.status['channelName'])
+                    directory = os.path.join (directory, channelName)
                 try:
                     os.makedirs(directory)
                 except:
                     pass
-                newfilename = os.path.join(directory,
-                        shortFilename)
-                newfilename = shortenFilename(newfilename)
+                newfilename = os.path.join(directory, shortFilename)
                 if newfilename == filename:
                     return
                 newfilename = nextFreeFilename(newfilename)
