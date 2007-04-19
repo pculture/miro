@@ -1739,7 +1739,11 @@ class DirectoryWatchFeedImpl(FeedImpl):
             url = u"dtv:directoryfeed:%s" % (makeURLSafe (directory),)
         else:
             url = u"dtv:directoryfeed"
-        FeedImpl.__init__(self,url = url,ufeed=ufeed,title = filenameToUnicode(directory),visible = visible)
+        title = directory
+        if title[-1] == '/':
+            title = title[:-1]
+        title = filenameToUnicode(os.path.basename(title)) + "/"
+        FeedImpl.__init__(self,url = url,ufeed=ufeed,title = title,visible = visible)
 
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
@@ -1796,7 +1800,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
             for existingFile in existingFiles:
                 if (os.path.isfile(existingFile) and os.path.basename(existingFile)[0] != u'.'):
                     if not existingFile in knownFiles:
-                        if filetypes.isAllowedFilename(platformutils.filenameToUnicode(existingFile)):
+                        if filetypes.isVideoFilename(platformutils.filenameToUnicode(existingFile)):
                             FileItem(existingFile, feed_id=self.ufeed.id)
 
         for item in self.items:

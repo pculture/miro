@@ -121,22 +121,24 @@
 <!-- / NEW ITEMS -->
 
 <!-- WATCHABLE ******************************************************** -->
-<div t:updateForView="allWatchableItems">
-    <a class="main-channelbar downloaded-channelbar" href="#" onclick="return eventURL('action:toggleWatchableView')" t:hideIf="len(allWatchableItems) == 0" >
-        <div class="triangle" t:hideIf="showWatchableItems"/>
-        <div class="triangle down" t:hideIf="not showWatchableItems"/>
-        <span  i18n:translate=""><span i18n:name="len" t:replace="allWatchableItems.len()" /> Downloaded</span>
-    </a>
-</div>
-
-<div t:updateForView="watchableItems">
-    <div t:showIf="len(watchableItems) > 0">
-        <t:executeTemplate filename="sort-bar" 
-            itemSort="itemSortWatchable"
-            section="'watchable'" />
+<div t:hideIf="not isFolder and feed.getURL().startswith('dtv:directoryfeed')" t:updateHideOnView="thisFeedView">
+    <div t:updateForView="allWatchableItems">
+        <a class="main-channelbar downloaded-channelbar" href="#" onclick="return eventURL('action:toggleWatchableView')" t:hideIf="len(allWatchableItems) == 0 or (not isFolder and feed.getURL().startswith('dtv:directoryfeed'))" >
+            <div class="triangle" t:hideIf="showWatchableItems"/>
+            <div class="triangle down" t:hideIf="not showWatchableItems"/>
+            <span  i18n:translate=""><span i18n:name="len" t:replace="allWatchableItems.len()" /> Downloaded</span>
+        </a>
     </div>
+    
+    <div t:updateForView="watchableItems">
+        <div t:hideIf="len(watchableItems) == 0">
+            <t:executeTemplate filename="sort-bar" 
+                itemSort="itemSortWatchable"
+                section="'watchable'" />
+        </div>
+    </div>
+    <div t:repeatForView="watchableItems" t:repeatTemplate="download-item" t:containerDiv="true" />
 </div>
-<div t:repeatForView="watchableItems" t:repeatTemplate="download-item" t:containerDiv="true" />
 
 <!-- / WATCHABLE -->
 </body>
