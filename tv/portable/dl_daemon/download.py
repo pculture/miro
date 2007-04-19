@@ -271,7 +271,8 @@ class BGDownloader:
     def moveToDirectory (self, directory):
         checkF(directory)
         if self.channelName:
-            directory = os.path.join (directory, self.channelName)
+            channelName = re.sub(r'[^a-zA-Z0-9]', '-', self.channelName)
+            directory = os.path.join (directory, channelName)
             try:
                 os.makedirs(directory)
             except:
