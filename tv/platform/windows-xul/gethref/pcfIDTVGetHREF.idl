@@ -1,0 +1,8 @@
+#include "nsISupports.idl"
+#include "nsIBaseWindow.idl"
+
+[scriptable, uuid(C4EA271C-BD26-477c-AD81-19B81AC33583)]
+interface pcfIDTVGetHREF : nsISupports
+{ 	
+  void getit(in nsIBaseWindow window, out PRInt32 href);
+};

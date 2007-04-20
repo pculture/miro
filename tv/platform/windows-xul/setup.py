@@ -123,6 +123,9 @@ IMAGEMAGICK_DIR = os.path.join(BINARY_KIT_ROOT, 'imagemagick')
 # another process. (Can we get this from Python itself?)
 PYTHON_BINARY="python"
 
+# Name of the directory with the pre-built gethref
+GETHREF_COMPONENT_DIR = os.path.join(BINARY_KIT_ROOT, "gethref")
+
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
 ###############################################################################
@@ -370,6 +373,8 @@ class bdist_xul_dumb(Command):
         if os.path.exists(PYXPCOM_DIR):
             copyTreeExceptSvn(os.path.join(PYXPCOM_DIR, 'components'),
                               os.path.join(self.xulrunnerOut, 'components'))
+        copyTreeExceptSvn(GETHREF_COMPONENT_DIR,
+                          os.path.join(self.xulrunnerOut, 'components'))
         # Copy the license file over
         self.copyMiscFiles(self.dist_dir)
 

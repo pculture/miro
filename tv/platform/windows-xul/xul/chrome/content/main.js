@@ -9,6 +9,9 @@ var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].
 var vlcrenderer = Components.classes["@participatoryculture.org/dtv/vlc-renderer;1"].
                 getService(Components.interfaces.pcfIDTVVLCRenderer);
 
+var minimizer = Components.classes["@participatoryculture.org/dtv/minimize;1"].
+                getService(Components.interfaces.pcfIDTVMinimize);
+
 function quitObserver()
 {
   this.register();
@@ -279,6 +282,10 @@ function maximizeOrRestore() {
   } else {
     window.maximize();
   }
+}
+
+function minimizeToTray() {
+    minimizer.minimizeAll();
 }
 
 function closeApp() {

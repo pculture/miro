@@ -46,7 +46,7 @@ add more menu elements later -NN -->
 
 <!-- WINDOW BUTTONS -->
 <hbox flex="0" width="55" height="24" align="center">
-                <image id="titlebar-buttons-minimize" class="titlebar-button" onclick="minimize();" />
+                <image id="titlebar-buttons-minimize" class="titlebar-button" onclick="minimizeToTray();" />
                 <image id="titlebar-buttons-maximize" class="titlebar-button" onclick="maximizeOrRestore();" />
                 <image id="titlebar-buttons-close" class="titlebar-button" onclick="handleExit();" />
 </hbox>
