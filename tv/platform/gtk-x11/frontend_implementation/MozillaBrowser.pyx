@@ -1,6 +1,7 @@
 """MozillaBrowser extension."""
 
 import gtkmozembed
+import logging
 
 cdef extern from "MozillaBrowser.h":
     ctypedef struct GtkMozEmbed
@@ -46,6 +47,9 @@ cdef extern from "MozillaBrowserXPCOM.h":
 cdef extern from "DragAndDrop.h":
     nsresult setupDragAndDrop(GtkMozEmbed *gtkembed)
 
+cdef extern from "HttpObserver.h":
+    nsresult startObserving()
+
 cdef extern from "stdio.h":
     int printf(char* str, ...)
 
@@ -64,6 +68,7 @@ cdef class MozillaBrowser:
         self.cWidget = self.pygtkmozembed_to_c(self.widget)
 
     def __init__(self):
+        setupHttpObserver()
         self.URICallBack = None
         self.finishedCallBack = None
         self.destroyCallBack = None
@@ -220,3 +225,13 @@ cdef gint on_dom_mouse_down (GtkMozEmbed *embed, gpointer domEvent,
         Py_DECREF(self)
         PyGILState_Release(gil)
     return 0
+
+_httpObserverSetup = False
+def setupHttpObserver():
+    global _httpObserverSetup
+    if _httpObserverSetup:
+        return
+    _httpObserverSetup = True
+    result = startObserving()
+    if result != NS_OK:
+        logging.warn("Error setting up HTTP observer")
