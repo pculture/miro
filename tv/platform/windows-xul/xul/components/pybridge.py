@@ -138,6 +138,13 @@ def initializeHTTPProxy():
         branch.setBoolPref("share_proxy_settings", True)
     else:
         branch.setIntPref("type",0)
+
+def registerHttpObserver():
+    observer = makeComp("@participatoryculture.org/dtv/httprequestobserver;1",
+        components.interfaces.nsIObserver)
+    observer_service = makeService("@mozilla.org/observer-service;1",
+            components.interfaces.nsIObserverService)
+    observer_service.addObserver(observer, "http-on-modify-request", False);
         
 def getArgumentList(commandLine):
     """Convert a nsICommandLine component to a list of arguments to pass
@@ -193,6 +200,7 @@ class PyBridge:
             self.started = True
 
         initializeProxyObjects(window)
+        registerHttpObserver()
         app.main()
         initializeHTTPProxy()
         views.waitForInit()
