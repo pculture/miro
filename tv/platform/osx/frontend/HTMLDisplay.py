@@ -269,11 +269,16 @@ class ManagedWebView (NSObject):
     def webView_resource_willSendRequest_redirectResponse_fromDataSource_(self, webview, resourceCookie, request, redirectResponse, dataSource):
         platformutils.warnIfNotOnMainThread('ManagedWebView.webView_resource_willSendRequest_redirectResponse_fromDataSource_')
         url = request.URL().absoluteString()
+
         match = templatehelper.resourcePattern.match(url)
         if match is not None:
             url = resources.url(match.group(1))
             urlObject = NSURL.URLWithString_(url)
             return NSURLRequest.requestWithURL_cachePolicy_timeoutInterval_(urlObject, NSURLRequestReloadIgnoringCacheData, 60)
+
+        if isinstance(request, NSMutableURLRequest):
+            request.setValue_forHTTPHeaderField_(u'1', u'X-Miro')
+        
         return request
 
     # Return the actual WebView that we're managing
