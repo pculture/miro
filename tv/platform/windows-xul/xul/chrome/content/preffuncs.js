@@ -4,6 +4,8 @@ var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
 var originalMoviesDir = null;
 
 function onload() {
+  jsbridge.setPrefDocument(this.document);
+  pybridge.startPrefs();
   document.getElementById("runonstartup").checked = pybridge.getRunAtStartup();
   setCheckEvery(pybridge.getCheckEvery());
   setMoviesDir(pybridge.getMoviesDirectory());
@@ -24,6 +26,7 @@ function ondialogaccept() {
   checkMoviesDirChanged();
   checkBTPorts();
   pybridge.updatePrefs()
+  jsbridge.setPrefDocument(null);
 }
 
 /* Convert a floating point object into a string to show to the user.  We
@@ -76,6 +79,34 @@ function selectMoviesDirectory() {
         setMoviesDir(fp.file.path);
     }
 
+}
+
+function addDirectoryWatch() {
+    var fp = Components.classes["@mozilla.org/filepicker;1"]
+            .createInstance(Components.interfaces.nsIFilePicker);
+
+    fp.init(window, "Select a Directory to monitor",
+            Components.interfaces.nsIFilePicker.modeGetFolder);
+    var res = fp.show();
+    if (res == Components.interfaces.nsIFilePicker.returnOK){
+        pybridge.addDirectoryWatch(fp.file.path);
+    }
+}
+
+function removeDirectoryWatch() {
+    var xulListBox = document.getElementById('movies-collection-listbox');
+    var selected = xulListBox.selectedItem;
+    if (selected) {
+      var id = selected.getAttribute('folder_id');
+      pybridge.removeDirectoryWatch(id);
+    }
+}
+
+function toggleDirectoryWatchShown(checkbox) {
+    var id = checkbox.getAttribute('folder_id');
+    pybridge.printOut(id);
+    pybridge.toggleDirectoryWatchShown(id);
+    return true;
 }
 
 function checkMoviesDirChanged() {

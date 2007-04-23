@@ -542,6 +542,48 @@ jsBridge.prototype = {
      ele = this.document.getElementById("menuitem-removevideos");
      ele.setAttribute("label", removeVideos.value);
   },
+
+  setPrefDocument: function (document) {
+    this.prefDocument = document;
+  },
+
+  directoryWatchAdded: function (id, dirname, shown) {
+    if (this.prefDocument == null) {
+      return;
+    }
+
+    var setVals = function (xulDirectory) {
+      xulDirectory.getElementsByAttribute('role', 'directory')[0]
+	.setAttribute('value', dirname);
+      xulDirectory.getElementsByAttribute('role', 'shown')[0]
+	.setAttribute('checked', shown);
+      xulDirectory.getElementsByAttribute('role', 'shown')[0]
+	.setAttribute('folder_id', id);
+    }
+
+    var xulListBox = this.prefDocument.getElementById('movies-collection-listbox');
+    var oldChildList = xulListBox.getElementsByAttribute('folder_id', id);
+    if (oldChildList.length > 0) {
+	setVals(oldChildList[0]);
+    } else {
+      var xulDirectory = this.prefDocument.getElementById('blueprints')
+	.getElementsByAttribute('role', 'movies-collection-directory')[0].cloneNode(true);
+      setVals(xulDirectory);
+      xulDirectory.setAttribute('folder_id', id);
+      xulListBox.appendChild(xulDirectory);
+    }
+  },
+
+  directoryWatchRemoved: function (id) {
+    if (this.prefDocument == null) {
+      return;
+    }
+    var xulListBox = this.prefDocument.getElementById('movies-collection-listbox');
+    var oldChildList = xulListBox.getElementsByAttribute('folder_id', id);
+    if (oldChildList.length > 0) {
+      xulListBox.removeChild(oldChildList[0]);
+    }
+  },
 };
 
 var Module = {

@@ -61,4 +61,7 @@ interface pcfIDTVJSBridge : nsISupports
   void setSearchEngine (in AString engine);
   void setSearchEngineInfo(in nsIVariant names, in nsIVariant titles);
   void updateMenus(in nsIVariant plurals);
+  void setPrefDocument(in nsIDOMDocument document);
+  void directoryWatchAdded(in AString id, in AString dirname, in boolean shown);
+  void directoryWatchRemoved(in AString id);
 };

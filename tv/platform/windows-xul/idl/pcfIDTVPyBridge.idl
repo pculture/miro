@@ -57,6 +57,7 @@ interface pcfIDTVPyBridge : nsISupports
   void setLimitUpstreamAmount(in short value);
   short getMaxManual();
   void setMaxManual(in short value);
+  void startPrefs();
   void updatePrefs();
   boolean getPreserveDiskSpace();
   void setPreserveDiskSpace(in boolean value);
@@ -100,4 +101,7 @@ interface pcfIDTVPyBridge : nsISupports
   void printOut(in AString output);
   void addMenubar(in nsIDOMDocument doc);
   void getLabel(in AString action, in AString state, out AString label);
+  void addDirectoryWatch(in AString filename);
+  void removeDirectoryWatch(in AString id);
+  void toggleDirectoryWatchShown(in AString id);
 };

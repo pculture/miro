@@ -15,6 +15,12 @@
     class="preferences">
 <script src="chrome://dtv/content/main.js" />
 <script src="chrome://dtv/content/preffuncs.js" />
+<box id="blueprints" hidden="true">
+    <richlistitem role="movies-collection-directory" folder_id="">
+        <label role="directory" value=""/>
+        <checkbox role="shown" oncommand="return toggleDirectoryWatchShown(this);" checked="false"/>
+    </richlistitem>
+</box>
 <vbox>
 
     <!--GENERAL-->
@@ -55,18 +61,29 @@
     <!--/PLAYBACK-->
 
     <!--MOVIES DIRECTORY-->
-    <groupbox orient="horizontal">
-        <caption label="&prefs.folder.movies;"/>
-        <hbox>
-           <description style="padding-top:5px;">
-              &prefs.folder.downloads;
-           </description>
-        <textbox id="movies-directory" flex="0" value=""
-                                readonly="true" style="width: 300px;" />
-                        <button id="movies-directory-button" flex="0"
-                                label="&prefs.folder.change;"
-                                oncommand="selectMoviesDirectory();" />
-        </hbox>				
+    <groupbox orient="vertical">
+	<caption label="&prefs.folder.movies;"/>
+	<hbox>
+            <description style="padding-top:5px;">
+                &prefs.folder.downloads;
+            </description>
+            <textbox id="movies-directory" flex="0" value=""
+                 readonly="true" style="width: 300px;" />
+            <button id="movies-directory-button" flex="0"
+                label="&prefs.folder.change;"
+                oncommand="selectMoviesDirectory();" />
+	</hbox>
+	<hbox>
+	    <richlistbox id="movies-collection-listbox" flex="1"/>
+            <vbox>
+	        <button id="movies-collection-add-folder" flex="0"
+	            label="Add Folder..."
+	            oncommand="addDirectoryWatch();" />
+	        <button id="movies-collection-remove-folder" flex="0"
+	            label="Remove"
+                    oncommand="removeDirectoryWatch();" />
+	    </vbox>
+	</hbox>
     </groupbox>
     <!--/MOVIES DIRECTORY-->
 

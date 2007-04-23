@@ -25,9 +25,11 @@ try:
     import frontend
     import util
     import menubar
+    import feed
+    import database
     from frontend_implementation import HTMLDisplay
     from frontend_implementation.UIBackendDelegate import UIBackendDelegate
-    from eventloop import asUrgent
+    from eventloop import asUrgent, asIdle
     from platformutils import getLongPathName
     import searchengines
     import views
@@ -48,6 +50,8 @@ except:
     # we need to make a fake asUrgent since we probably couldn't import
     # eventloop.
     def asUrgent(func):
+        return func
+    def asIdle(func):
         return func
 else:
     errorOnImport = False
@@ -173,6 +177,31 @@ def XULAccelFromLabel(label):
         return parts[1][0]
 
 
+def prefsChangeCallback(mapped, id):
+    if isinstance (mapped.actualFeed, feed.DirectoryWatchFeedImpl):
+        frontend.jsBridge.directoryWatchAdded (str(id), mapped.dir, mapped.visible);
+
+def prefsRemoveCallback(mapped, id):
+    if isinstance (mapped.actualFeed, feed.DirectoryWatchFeedImpl):
+        frontend.jsBridge.directoryWatchRemoved (str(id));
+
+
+@asIdle
+def startPrefs():
+    for f in views.feeds:
+        if isinstance (f.actualFeed, feed.DirectoryWatchFeedImpl):
+            frontend.jsBridge.directoryWatchAdded (str(f.getID()), f.dir, f.visible)
+    views.feeds.addChangeCallback(prefsChangeCallback)
+    views.feeds.addAddCallback(prefsChangeCallback)
+    views.feeds.addRemoveCallback(prefsRemoveCallback)
+
+@asIdle
+def endPrefs():
+    views.feeds.removeChangeCallback(prefsChangeCallback)
+    views.feeds.removeAddCallback(prefsChangeCallback)
+    views.feeds.removeRemoveCallback(prefsRemoveCallback)
+
+
 class PyBridge:
     _com_interfaces_ = [pcfIDTVPyBridge]
     _reg_clsid_ = "{F87D30FF-C117-401e-9194-DF3877C926D4}"
@@ -274,8 +303,10 @@ class PyBridge:
         return config.get(prefs.MAX_MANUAL_DOWNLOADS)
     def setMaxManual(self, value):
         return config.set(prefs.MAX_MANUAL_DOWNLOADS, value)
+    def startPrefs(self):
+        startPrefs()
     def updatePrefs(self):
-        pass
+        endPrefs()
     def getPreserveDiskSpace(self):
         return config.get(prefs.PRESERVE_DISK_SPACE)
     def setPreserveDiskSpace(self, value):
@@ -595,3 +626,23 @@ class PyBridge:
 
     def getLabel(self, action, state):
         return XULifyLabel(menubar.menubar.getLabel(action,state))
+
+    @asIdle
+    def addDirectoryWatch(self, filename):
+        feed.Feed (u"dtv:directoryfeed:%s" % (platformutils.makeURLSafe(filename),))
+
+    @asIdle
+    def removeDirectoryWatch(self, id):
+        try:
+            obj = database.defaultDatabase.getObjectByID (int(id))
+            app.controller.removeFeeds ([obj])
+	except:
+	    pass
+
+    @asIdle
+    def toggleDirectoryWatchShown(self, id):
+        try:
+            obj = database.defaultDatabase.getObjectByID (int(id))
+            obj.setVisible (not obj.visible)
+        except:
+            pass
