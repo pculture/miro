@@ -8,8 +8,14 @@ INT = ctypes.c_int
 WM_USER = 0x0400
 WM_TRAYICON = WM_USER+0x1EEF
 WM_GETICON = 0x007F
+WM_SETICON = 0x0080
 WS_EX_APPWINDOW = 0x00040000L
 ICON_SMALL = 0
+ICON_BIG   = 1
+
+IMAGE_ICON = 1
+
+LR_LOADFROMFILE = 0x0010
 
 NIF_MESSAGE = 0x00000001
 NIF_ICON    = 0x00000002
@@ -38,6 +44,7 @@ WNDPROCTYPE = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, UINT, WPARAM, LPARAM)
 
 import config
 import prefs
+import resources
 
 class GUID(ctypes.Structure):
     _fields_ = [("Data1", ctypes.c_int32),
@@ -134,10 +141,12 @@ class Minimize:
             self.hInst,
             0)
         Minimize.minimizers[self.trayIconWindow] = self
-        self.hIcon = ctypes.windll.user32.LoadIconW(self.hInst, IDI_APPLICATION)
-        #ctypes.windll.user32.SendMessageW(self.trayIconWindow, WM_GETICON, ICON_SMALL, None)
-        #if self.hIcon == 0:
-        #    self.hIcon = ctypes.windll.user32.GetClassLongPtr(hwnd, GCLP_HICONSM)
+
+        # By default, everything uses the XULRunner icon
+        # Use the Democracy icon instead
+        self.iconloc = ctypes.c_wchar_p(resources.path("..\\Democracy.ico"))
+        self.hIcon = ctypes.windll.user32.LoadImageW(0, self.iconloc, IMAGE_ICON, 0, 0, LR_LOADFROMFILE)
+
         self.minimized = []
 
     def __del__(self):
