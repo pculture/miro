@@ -11,7 +11,7 @@ import os
 import shutil
 import traceback
 
-from download_utils import nextFreeFilename
+from download_utils import cleanFilename, nextFreeFilename
 from feedparser import FeedParserDict
 
 from database import DDBObject, defaultDatabase, ObjectNotFoundError
@@ -1565,7 +1565,7 @@ class FileItem(Item):
         self.filename = filename
         self.deleted = False
         self.offsetPath = offsetPath
-        self.shortFilename = os.path.basename(self.filename)
+        self.shortFilename = cleanFilename(os.path.basename(self.filename))
         Item.__init__(self, getEntryForFile(filename), feed_id=feed_id, parent_id=parent_id)
         moviedata.movieDataUpdater.requestUpdate (self)
 
@@ -1729,11 +1729,11 @@ filename was %s""" % self.filename
     def setupLinks(self):
         if self.shortFilename is None:
             if self.parent_id is None:
-                self.shortFilename = os.path.basename(self.filename)
+                self.shortFilename = cleanFilename(os.path.basename(self.filename))
             else:
                 parent_file = self.getParent().getFilename()
                 if self.filename.startswith(parent_file):
-                    self.shortFilename = self.filename[len(parent_file):]
+                    self.shortFilename = cleanFilename(self.filename[len(parent_file):])
                 else:
                     print "WARNING: %s is not a subdirectory of %s" % (self.filename, parent_file)
         Item.setupLinks(self)

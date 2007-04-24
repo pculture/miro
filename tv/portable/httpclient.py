@@ -1717,9 +1717,9 @@ class HTTPClient(object):
         elif not query:
             ret = filename
         else:
-            ret = "%s-%s" % (filename, query)
+            ret = u"%s-%s" % (filename, query)
         if ret is None:
-            ret = 'unknown'
+            ret = u'unknown'
         return cleanFilename(ret)
 
     def getCharsetFromResponse(self, response):

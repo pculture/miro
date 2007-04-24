@@ -258,7 +258,7 @@ class BGDownloader:
         except:
             pass
         baseFilename = os.path.join(downloadDir, self.shortFilename+".part")
-        self.filename = nextFreeFilename(baseFilename)
+        self.filename = nextFreeFilename(cleanFilename(baseFilename))
 
     def moveToMoviesDirectory(self):
         """Move our downloaded file from the Incomplete Downloads directoy to
@@ -266,7 +266,7 @@ class BGDownloader:
         """
         if chatter:
             logging.info ("moving to movies directory filename is %s", self.filename)
-        self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
+        self.moveToDirectory(cleanFilename(config.get(prefs.MOVIES_DIRECTORY)))
 
     def moveToDirectory (self, directory):
         checkF(directory)
