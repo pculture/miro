@@ -44,6 +44,11 @@ class DemocracyCLH:
                         getService(components.interfaces.pcfIDTVJSBridge)
                 jsbridge.performStartupTasks()
                 return
+        else:
+            # If Democracy is already running and minimize, make the
+            # tray icon disappear
+            minimizer = components.classes["@participatoryculture.org/dtv/minimize;1"].getService(components.interfaces.pcfIDTVMinimize)
+            minimizer.restoreAll()
 
 catman = components.classes["@mozilla.org/categorymanager;1"].getService()
 catman.queryInterface(components.interfaces.nsICategoryManager)
