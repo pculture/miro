@@ -937,7 +937,7 @@ class Feed(DDBObject):
             if info.has_key('charset'):
                 xmldata = fixXMLHeader(html,info['charset'])
                 html = fixHTMLHeader(html,info['charset'])
-                charset = info['charset']
+                charset = unicodify(info['charset'])
             else:
                 xmldata = html
                 charset = None
