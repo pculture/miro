@@ -17,8 +17,10 @@
 <script src="chrome://dtv/content/preffuncs.js" />
 <box id="blueprints" hidden="true">
     <richlistitem role="movies-collection-directory" folder_id="">
-        <label role="directory" value=""/>
-        <checkbox role="shown" oncommand="return toggleDirectoryWatchShown(this);" checked="false"/>
+        <label role="directory" value="" flex="1" crop="center"/>
+        <hbox pack="center" width="100">
+            <checkbox role="shown" oncommand="return toggleDirectoryWatchShown(this);" checked="false"/>
+        </hbox>
     </richlistitem>
 </box>
 <vbox>
@@ -73,14 +75,29 @@
                 label="&prefs.folder.change;"
                 oncommand="selectMoviesDirectory();" />
 	</hbox>
+        <description>
+            &prefs.folder.others.caption;
+        </description>
 	<hbox>
-	    <richlistbox id="movies-collection-listbox" flex="1"/>
+            <vbox flex="1">
+                <hbox>
+		    <label flex="1">
+			&prefs.folder.others.location;
+		    </label>
+                    <hbox pack="center" width="100">
+    			<label>
+    			    &prefs.folder.others.shown;
+    			</label>
+                    </hbox>
+		</hbox>
+                <richlistbox id="movies-collection-listbox" flex="1" rows="2" onselect="selectDirectoryWatch(false);"/>
+            </vbox>
             <vbox>
 	        <button id="movies-collection-add-folder" flex="0"
-	            label="Add Folder..."
+	            label="&prefs.folder.others.add;"
 	            oncommand="addDirectoryWatch();" />
 	        <button id="movies-collection-remove-folder" flex="0"
-	            label="Remove"
+	            label="&prefs.folder.others.remove;"
                     oncommand="removeDirectoryWatch();" />
 	    </vbox>
 	</hbox>

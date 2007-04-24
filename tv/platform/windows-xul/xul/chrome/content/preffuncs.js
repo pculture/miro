@@ -4,8 +4,10 @@ var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
 var originalMoviesDir = null;
 
 function onload() {
+  this.document.selectDirectoryWatch = selectDirectoryWatch;
   jsbridge.setPrefDocument(this.document);
   pybridge.startPrefs();
+  selectDirectoryWatch(false);
   document.getElementById("runonstartup").checked = pybridge.getRunAtStartup();
   setCheckEvery(pybridge.getCheckEvery());
   setMoviesDir(pybridge.getMoviesDirectory());
@@ -107,6 +109,17 @@ function toggleDirectoryWatchShown(checkbox) {
     pybridge.printOut(id);
     pybridge.toggleDirectoryWatchShown(id);
     return true;
+}
+
+function selectDirectoryWatch(always_false) {
+    var xulListBox = document.getElementById('movies-collection-listbox');
+    var selected = xulListBox.selectedItem;
+    var removeButton = document.getElementById('movies-collection-remove-folder');
+    if (selected && !always_false) {
+      removeButton.disabled = false;
+    } else {
+      removeButton.disabled = true;
+    }
 }
 
 function checkMoviesDirChanged() {

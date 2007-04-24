@@ -583,6 +583,7 @@ jsBridge.prototype = {
     if (oldChildList.length > 0) {
       xulListBox.removeChild(oldChildList[0]);
     }
+    this.prefDocument.selectDirectoryWatch(true);
   },
 };
 
