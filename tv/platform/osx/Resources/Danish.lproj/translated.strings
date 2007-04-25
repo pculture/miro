@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-08 15:28-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-25 13:11-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -27,13 +27,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Channels" = "Kanaler";
 
-/* Flag: untranslated */
-"Check for New Version" = "Check for New Version";
+"Check for New Version" = "Check om ny version er tilgængelig";
 
 "Clear Menu" = "Rens menu";
 
-/* Flag: untranslated */
-"Close Window" = "Close Window";
+"Close Window" = "Luk Vindue";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15 */
 "Copy" = "Kopiér";
@@ -53,8 +51,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Democracy Help" = "Democracy-hjælp";
 
-/* Flag: untranslated */
-"Donate" = "Donate";
+"Donate" = "Donér";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14 */
 "Edit" = "Rediger";
@@ -71,8 +68,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Hide Others" = "Skjul andre";
 
-/* Flag: untranslated */
-"Main Window" = "Main Window";
+"Main Window" = "Hovedvindue";
 
 "MainMenu" = "HovedMenu";
 
@@ -80,19 +76,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "New Channel Folder..." = "Ny kanalfolder...";
 
-/* Flag: untranslated */
-"New Channel Guide..." = "New Channel Guide...";
+"New Channel Guide..." = "Ny kanalguide...";
 
 "New Playlist Folder..." = "Ny spilleliste-folder...";
 
 "New Playlist..." = "Ny spilleliste...";
 
-/* Flag: untranslated */
-"New Search Channel..." = "New Search Channel...";
+"New Search Channel..." = "Ny kanalsøgning...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43 */
-/* Flag: untranslated */
-"Next Video" = "Next Video";
+"Next Video" = "Næste video";
 
 "Open Recent" = "Åbn seneste";
 
@@ -106,11 +99,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Play Video" = "Afspil video";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39 */
-/* Flag: untranslated */
-"Playback" = "Playback";
+"Playback" = "Afspilning";
 
-/* Flag: untranslated */
-"Playlists" = "Playlists";
+"Playlists" = "Spillelister";
 
 /* Flag: untranslated */
 "Preferencesâ¦" = "Preferencesâ¦" /* = "Indstillingerâ¦" */;
@@ -228,18 +219,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Don't start a download if it leaves less than" = "Start ikke hentning hvis det kommer til at betyde at der er mindre end";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:42 */
-/* Flag: untranslated */
-"Download at most" = "Download at most";
+"Download at most" = "Download højest";
 
 "GB free." = "GB ledig.";
 
 "KB/s when my computer is active." = "KB/s når computer er aktiv.";
 
 /* Flag: untranslated */
-"Maximum:" = "Maximum:";
+"Maximum:" = "Maximum:" /* = "Maksimum:" */;
 
 /* Flag: untranslated */
-"Minimum:" = "Minimum:";
+"Minimum:" = "Minimum:" /* = "Minimum:" */;
 
 "Never" = "Aldrig";
 
@@ -247,19 +237,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:53 */
 /* Flag: untranslated */
-"Play videos one after another." = "Play videos one after another.";
+"Play videos one after another." = "Play videos one after another." /* = "Afspil videoer kontinuerligt." */;
 
 "Run Democracy at startup" = "Kør Democracy ved start";
 
-/* Flag: untranslated */
-"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
+"Save downloaded videos in this folder:" = "Gem downloadede videoer i denne folder:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
-/* Flag: untranslated */
-"Stop after each video." = "Stop after each video.";
+"Stop after each video." = "Stop efter hver video.";
 
 /* Flag: untranslated */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
+"To avoid internet slowdowns:" = "To avoid internet slowdowns:" /* = "For at undgå at sløve internetforbindelsen:" */;
 
 "every 30 minutes" = "hver 30 minutter";
 
@@ -268,8 +256,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "manually" = "manuelt";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
-/* Flag: untranslated */
-"videos at once." = "videos at once.";
+"videos at once." = "videoer ad gangen.";
 
 /* Flag: untranslated */
 "$label$" = "$label$";
@@ -321,10 +308,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Only search my Movies folder." = "Only search my Movies folder.";
 
 /* Flag: untranslated */
-"Search my entire Home folder." = "Search my entire Home folder.";
+"Search my entire Home folder." = "Search my entire Home folder." /* = "Gennemsøg hele min hjemmemappe." */;
 
-/* Flag: untranslated */
-"Search this folder:" = "Search this folder:";
+"Search this folder:" = "Søg i denne mappe:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12 */
 "Searching for Videos" = "Søger efter videoer";
@@ -348,33 +334,31 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
 /* Flag: untranslated */
-"Save Video _As..." = "Save Video _As...";
+"Save Video _As..." = "Save Video _As..." /* = "Gem video som:" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
 "Save this video" = "Gem denne video";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117 */
 /* Flag: untranslated */
-"_Copy Video URL" = "_Copy Video URL";
+"_Copy Video URL" = "_Copy Video URL" /* = "Kopier video-URL" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120 */
 /* Flag: untranslated */
-"_Remove Video" = "_Remove Video";
+"_Remove Video" = "_Remove Video" /* = "Fjer_n video" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123 */
 "_Fullscreen" = "_Fuldskærm";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124 */
-/* Flag: untranslated */
-"_Stop Video" = "_Stop Video";
+"_Stop Video" = "_Stop video";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125 */
-/* Flag: untranslated */
-"_Next Video" = "_Next Video";
+"_Next Video" = "_Næste video";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126 */
 /* Flag: untranslated */
-"_Previous Video" = "_Previous Video";
+"_Previous Video" = "_Previous Video" /* = "Forrige video" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129 */
 "_Play / Pause" = "_Afspil / Pause";
@@ -383,15 +367,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Copy Channel _Link" = "Kopiér Kanal-_Link";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133 */
-/* Flag: untranslated */
-"_Send this channel to a friend" = "_Send this channel to a friend";
+"_Send this channel to a friend" = "_Send denne kanal til en ven";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136 */
 "_Update Channel" = "_Opdater Kanal";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139 */
 /* Flag: untranslated */
-"Re_name Channel" = "Re_name Channel";
+"Re_name Channel" = "Re_name Channel" /* = "Omdøb ka_nal" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142 */
 "_Remove Channel" = "_Fjern kanal";
@@ -455,8 +438,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "New Searc_h Channel..." = "New Searc_h Channel...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162 */
-/* Flag: untranslated */
-"New Channel _Guide..." = "New Channel _Guide...";
+"New Channel _Guide..." = "Ny Kanal_guide...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164 */
 "P_references" = "P_referencer";
@@ -474,8 +456,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Help" = "_Hjælp";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169 */
-/* Flag: untranslated */
-"_Donate" = "_Donate";
+"_Donate" = "_Donér";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171 */
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172 */
@@ -500,12 +481,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5 */
 /* File: ../../platform/osx/frontend/UIStrings.py:5 */
 /* Flag: untranslated */
-"_Remove..." = "_Remove...";
+"_Remove..." = "_Remove..." /* = "Fje_rn..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6 */
 /* File: ../../platform/osx/frontend/UIStrings.py:6 */
 /* Flag: untranslated */
-"_Remove Playlist..." = "_Remove Playlist...";
+"_Remove Playlist..." = "_Remove Playlist..." /* = "Fje_rn spilleliste..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7 */
 /* File: ../../platform/osx/frontend/UIStrings.py:7 */

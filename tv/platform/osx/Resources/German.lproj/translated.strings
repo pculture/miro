@@ -4,15 +4,15 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-08 15:28-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-25 13:11-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Unsere Fehlerverwaltung finden sie hier: <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Teilen Sie uns bitte mit, was Sie vor dem Fehler gemacht haben, kopieren Sie die obere Logmeldung und beantworten Sie einige kurze Fragen. Wir machen uns danach sofort an die Arbeit.</font>";
 
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Wenn Sie eine Minute hätten: Wären Sie so freundlich, einen Fehlerbericht für unsere Fehlerverwaltung einzureichen? Wir brauchen mindestens eine kurze Beschreibung, was Sie gemacht haben -- so exakt, wie möglich -- und dazu noch den kunstvoll formulierten Schwachsinn in der unten stehenden Box:";
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Haben Sie einen Moment Zeit? Wären Sie so freundlich, einen Fehlerbericht für unsere Fehlerverwaltung einzureichen? Wir brauchen mindestens eine kurze Beschreibung, was Sie gemacht haben -- so exakt, wie möglich -- und dazu noch den kunstvoll formulierten Schwachsinn in der unten stehenden Box:";
 
-"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "So ein Unglück! $longAppName ist aus Verwirrung oder schierer Verbohrtheit abgestürzt $when. Wir entschuldigen uns und schlagen, vor, dass Sie $shortAppName beenden und neu starten. Das wird dem Ding eine Lehre sein und Ihr Risiko minimieren, Ihre Programmeinstellungen und Kanalabonnements zu verlieren.";
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "So ein Unglück! $longAppName ist aus Verwirrung oder schierer Verbohrtheit abgestürzt $when. Wir entschuldigen uns und schlagen vor, dass Sie $shortAppName beenden und neu starten. Das wird dem Ding eine Lehre sein und Ihr Risiko minimieren, Ihre Programmeinstellungen und Kanalabonnements zu verlieren.";
 
 "OK" = "OK";
 

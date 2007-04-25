@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-08 15:28-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-25 13:11-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -164,7 +164,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "%donation label%" = "%donation label%" /* = "%donation label%" */;
 
-/* Flag: untranslated */
 "-00:00:00" = "-00:00:00";
 
 "00:00:00" = "00:00:00";
@@ -225,8 +224,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "By default, videos expire after:" = "Filmy powinny być usuwane po:";
 
-/* Flag: untranslated */
-"Change..." = "Change...";
+"Change..." = "Zmień...";
 
 /* Flag: untranslated */
 "Check channels for new content:" = "Check channels for new content:" /* = "Sprawdź czy kanał zawiera coś nowego" */;
@@ -235,8 +233,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Don't start a download if it leaves less than" = "Nie zaczynaj pobierania jeśli po zakończeniu pozostanie mniej niż";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:42 */
-/* Flag: untranslated */
-"Download at most" = "Download at most";
+"Download at most" = "Ściągnij najwyżej";
 
 "GB free." = "GB wolnego miejsca na dysku.";
 
@@ -256,15 +253,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Run Democracy at startup" = "Uruchamiaj Democracy przy starcie systemu";
 
-/* Flag: untranslated */
-"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
+"Save downloaded videos in this folder:" = "Zapisz ściągnięte filmy w tym folderze:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
 /* Flag: untranslated */
 "Stop after each video." = "Stop after each video." /* = "Zatrzymaj po każdym video" */;
 
-/* Flag: untranslated */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
+"To avoid internet slowdowns:" = "Zeby uniknąc spowolnienia internetu:";
 
 "every 30 minutes" = "co 30 minut";
 
@@ -273,8 +268,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "manually" = "ręcznie";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
-/* Flag: untranslated */
-"videos at once." = "videos at once.";
+"videos at once." = "filmów na raz.";
 
 "$label$" = "$label$";
 
@@ -287,26 +281,21 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/dialogs.py:72 */
 "Create" = "Stwórz";
 
-/* Flag: untranslated */
-"In this:" = "In this:";
+"In this:" = "W tym:";
 
 /* Flag: untranslated */
 "Item1" = "Item1";
 
-/* Flag: untranslated */
-"Search Engine" = "Search Engine";
+"Search Engine" = "Wyszukiwarka";
 
-/* Flag: untranslated */
-"Search for:" = "Search for:";
+"Search for:" = "Szukaj:";
 
-/* Flag: untranslated */
-"URL" = "URL";
+"URL" = "Adres URL:";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/startup.py:31 */
 /* File: ../../platform/windows-xul/frontend_implementation/startup.py:25 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)";
+"(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)" /* = "(przeanalizowane %d plików - znalezionych %d filmów)" */;
 
 "Back" = "Wstecz";
 
@@ -323,16 +312,15 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Only search my Movies folder." = "Przeszukaj tylko mój folder Filmów";
 
 /* Flag: untranslated */
-"Search my entire Home folder." = "Search my entire Home folder.";
+"Search my entire Home folder." = "Search my entire Home folder." /* = "Przeszukaj cały domowy katalog." */;
 
-/* Flag: untranslated */
-"Search this folder:" = "Search this folder:";
+"Search this folder:" = "Przeszukaj ten folder:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12 */
 "Searching for Videos" = "Szukanie filmów";
 
 /* Flag: untranslated */
-"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question.";
+"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." /* = "Następne parę ekranów pomoże ci ustawić Democracy Player tak żeby działał jak najlepiej. Oto pierwsze pytanie." */;
 
 /* Flag: untranslated */
 "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?";
@@ -388,33 +376,28 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139 */
 /* Flag: untranslated */
-"Re_name Channel" = "Re_name Channel";
+"Re_name Channel" = "Re_name Channel" /* = "Zmień _nazwę Kanału" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142 */
 "_Remove Channel" = "_Usuń kanał";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145 */
-/* Flag: untranslated */
-"Re_name Playlist" = "Re_name Playlist";
+"Re_name Playlist" = "Zmień _nazwę listy odtwarzania";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148 */
-/* Flag: untranslated */
-"_Remove Playlist" = "_Remove Playlist";
+"_Remove Playlist" = "_Usuń listę odtwarzania";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151 */
 "_Video" = "_Wideo";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152 */
-/* Flag: untranslated */
-"_Channels" = "_Channels";
+"_Channels" = "_Kanały";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153 */
-/* Flag: untranslated */
-"_Playlists" = "_Playlists";
+"_Playlists" = "_Lista odtwarzania";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:154 */
-/* Flag: untranslated */
-"P_layback" = "P_layback";
+"P_layback" = "_Odtwarzanie";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155 */
 "_Open..." = "_Otwórz";
@@ -424,28 +407,26 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157 */
 /* Flag: untranslated */
-"New _Playlist..." = "New _Playlist...";
+"New _Playlist..." = "New _Playlist..." /* = "Nowa _Lista odwarzania..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157 */
 "Create new playlist" = "Stwórz nową listę odtwarzania";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158 */
 /* Flag: untranslated */
-"New Playlist _Folder..." = "New Playlist _Folder...";
+"New Playlist _Folder..." = "New Playlist _Folder..." /* = "Nowy _Katalog List odtwarzania" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158 */
 "Create new playlist folder" = "Stwórz nowy filder list odtwarzania";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159 */
-/* Flag: untranslated */
-"New Channel _Folder..." = "New Channel _Folder...";
+"New Channel _Folder..." = "Nowy _Folder Kanałów";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159 */
 "Create new channel folder" = "Stwórz nowy folder kanałów";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160 */
-/* Flag: untranslated */
-"Add _Channel..." = "Add _Channel...";
+"Add _Channel..." = "Dodaj _Kanał...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161 */
 "New Searc_h Channel..." = "Nowy kanał wyszukiwania";
@@ -516,38 +497,32 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11 */
 /* File: ../../platform/osx/frontend/UIStrings.py:11 */
-/* Flag: untranslated */
-"_Remove Channels..." = "_Remove Channels...";
+"_Remove Channels..." = "_Usuń Kanały...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12 */
 /* File: ../../platform/osx/frontend/UIStrings.py:12 */
 /* Flag: untranslated */
-"_Remove Channel Folder..." = "_Remove Channel Folder...";
+"_Remove Channel Folder..." = "_Remove Channel Folder..." /* = "_Usuń Folder Kanałów" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13 */
 /* File: ../../platform/osx/frontend/UIStrings.py:13 */
-/* Flag: untranslated */
-"_Remove Channel Folders..." = "_Remove Channel Folders...";
+"_Remove Channel Folders..." = "_Usuń katalogi z kanałami";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14 */
 /* File: ../../platform/osx/frontend/UIStrings.py:14 */
-/* Flag: untranslated */
-"_Remove Channel Guide..." = "_Remove Channel Guide...";
+"_Remove Channel Guide..." = "_Usuń przewodnik po kanałach";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:15 */
 /* File: ../../platform/osx/frontend/UIStrings.py:15 */
-/* Flag: untranslated */
-"_Remove Channel Guides..." = "_Remove Channel Guides...";
+"_Remove Channel Guides..." = "_Usuń przewodniki po kanałach";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16 */
 /* File: ../../platform/osx/frontend/UIStrings.py:16 */
-/* Flag: untranslated */
-"_Remove Video..." = "_Remove Video...";
+"_Remove Video..." = "_Usuń film...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:17 */
 /* File: ../../platform/osx/frontend/UIStrings.py:17 */
-/* Flag: untranslated */
-"_Remove Videos..." = "_Remove Videos...";
+"_Remove Videos..." = "_Usuń filmy...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18 */
 /* File: ../../platform/osx/frontend/UIStrings.py:18 */
@@ -600,103 +575,82 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37 */
-/* Flag: untranslated */
-"Remove Playlist..." = "Remove Playlist...";
+"Remove Playlist..." = "Usuń listę odtwarzania...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7 */
-/* Flag: untranslated */
-"Remove Playlists..." = "Remove Playlists...";
+"Remove Playlists..." = "Usuń listy odtwarzania...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:8 */
-/* Flag: untranslated */
-"Remove Playlist Folder..." = "Remove Playlist Folder...";
+"Remove Playlist Folder..." = "Usuń folder listy odtwarzania...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:9 */
-/* Flag: untranslated */
-"Remove Playlist Folders..." = "Remove Playlist Folders...";
+"Remove Playlist Folders..." = "Usuń foldery list odtwarzania...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27 */
 "Remove Channel..." = "Usuń kanał...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11 */
-/* Flag: untranslated */
-"Remove Channels..." = "Remove Channels...";
+"Remove Channels..." = "Usuń kanały...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12 */
-/* Flag: untranslated */
-"Remove Channel Folder..." = "Remove Channel Folder...";
+"Remove Channel Folder..." = "Usuń folder kanału...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:13 */
-/* Flag: untranslated */
-"Remove Channel Folders..." = "Remove Channel Folders...";
+"Remove Channel Folders..." = "Usuń foldery kanałów...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:14 */
-/* Flag: untranslated */
-"Remove Channel Guide..." = "Remove Channel Guide...";
+"Remove Channel Guide..." = "Usuń przewodnik po kanałach...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:15 */
-/* Flag: untranslated */
-"Remove Channel Guides..." = "Remove Channel Guides...";
+"Remove Channel Guides..." = "Usuń przewodniki po kanałach...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16 */
 /* Flag: untranslated */
-"Remove Video..." = "Remove Video...";
+"Remove Video..." = "Remove Video..." /* = "Usuń Film..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:17 */
-/* Flag: untranslated */
-"Remove Videos..." = "Remove Videos...";
+"Remove Videos..." = "Usuń filmy...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36 */
-/* Flag: untranslated */
-"Rename Playlist..." = "Rename Playlist...";
+"Rename Playlist..." = "Zmień nazwę listy odtwarzania";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20 */
-/* Flag: untranslated */
-"Rename Playlist Folder..." = "Rename Playlist Folder...";
+"Rename Playlist Folder..." = "Zmień nazwę katalogu list odtwarzania";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26 */
-/* Flag: untranslated */
-"Rename Channel..." = "Rename Channel...";
+"Rename Channel..." = "Zmień nazwę kanału...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22 */
-/* Flag: untranslated */
-"Rename Channel Folder..." = "Rename Channel Folder...";
+"Rename Channel Folder..." = "Zmień nazwę katalogu z kanałami";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:23 */
-/* Flag: untranslated */
-"Rename Channel Guide..." = "Rename Channel Guide...";
+"Rename Channel Guide..." = "Zmień nazwę przewodnika po kanałach...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:24 */
-/* Flag: untranslated */
-"Update Channel..." = "Update Channel...";
+"Update Channel..." = "Uaktualnij kanał...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:25 */
-/* Flag: untranslated */
-"Update Channels..." = "Update Channels...";
+"Update Channels..." = "Uaktualnij kanały...";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:36 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Error importing democracy modules:\n%s" = "Error importing democracy modules:\n%s";
+"Error importing democracy modules:\n%s" = "Błąd podczas importowania modułów Democracy:\n%s";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:40 */
 "Starting up" = "Uruchamianie";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:136 */
-/* Flag: untranslated */
-"Loading window" = "Loading window";
+"Loading window" = "Ładuje okno";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:137 */
-/* Flag: untranslated */
-"onStartup called twice" = "onStartup called twice";
+"onStartup called twice" = "onStartup wywołano podwójnie";
 
 /* File: ../../portable/playlist.py:175 */
 /* File: ../../portable/playlist.py:180 */
-/* Flag: untranslated */
-"Rename Playlist" = "Rename Playlist";
+"Rename Playlist" = "Zmień nazwę listy odtwarzania";
 
 /* File: ../../portable/playlist.py:176 */
 /* File: ../../portable/folder.py:120 */
@@ -705,20 +659,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/menu.py:48 */
 /* File: ../../portable/menu.py:53 */
 /* File: ../../portable/feed.py:690 */
-/* Flag: untranslated */
-"Remove" = "Remove";
+"Remove" = "Usuń";
 
 /* File: ../../portable/playlist.py:181 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s";
+"Enter a new name for the playlist %s" = "Wpisz nową nazwę dla listy odtwarzania %s";
 
 /* File: ../../portable/playlist.py:194 */
 "Create Playlist" = "Stwórz listę odtwarzania";
 
 /* File: ../../portable/playlist.py:195 */
-/* Flag: untranslated */
-"Enter a name for the new playlist" = "Enter a name for the new playlist";
+"Enter a name for the new playlist" = "Wpsz nazwę dla listy odwatarzania";
 
 /* File: ../../portable/compiled_templates/search.py:39 */
 "Nothing to display.<br></br> Enter a query in the search field above." = "Brak elementów do wyświetlenia.<br></br>Wprowadź kryteria w powyższym polu wyszukiwania";
@@ -727,65 +678,55 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Searching..." = "Wyszukiwanie...";
 
 /* File: ../../portable/compiled_templates/search.py:56 */
-/* Flag: untranslated */
-"Results for \"${query}\"" = "Results for \"${query}\"";
+"Results for \"${query}\"" = "Wyniki dla \"${query}\"";
 
 /* File: ../../portable/compiled_templates/search.py:95 */
 "Video Search" = "Wyszukiwanie plików wideo";
 
 /* File: ../../portable/compiled_templates/playlist.py:56 */
-/* Flag: untranslated */
-"Empty Playlist" = "Empty Playlist";
+"Empty Playlist" = "Wyczyść listę odtwarzania";
 
 /* File: ../../portable/compiled_templates/playlist.py:58 */
-/* Flag: untranslated */
-"Drag downloaded videos to this playlist to add them." = "Drag downloaded videos to this playlist to add them.";
+"Drag downloaded videos to this playlist to add them." = "Przeciągnij ściągnięte filmy do tej listy odtwarzania żeby je dodać.";
 
 /* File: ../../portable/compiled_templates/playlist_folder.py:59 */
-/* Flag: untranslated */
-"Empty Playlist Folder" = "Empty Playlist Folder";
+"Empty Playlist Folder" = "Opróżnij folder list odtwarzania";
 
 /* File: ../../portable/compiled_templates/playlist_folder.py:71 */
 /* Flag: untranslated */
-"This folder contains ${count} playlists, but the playlists do not contain any items." = "This folder contains ${count} playlists, but the playlists do not contain any items.";
+"This folder contains ${count} playlists, but the playlists do not contain any items." = "This folder contains ${count} playlists, but the playlists do not contain any items." /* = "Folder zawiera ${count} list odtwarzania, ale nie zawierają one żadnych filmów." */;
 
 /* File: ../../portable/compiled_templates/playlist_folder.py:76 */
-/* Flag: untranslated */
-"Drag playlists to this folder to add them." = "Drag playlists to this folder to add them.";
+"Drag playlists to this folder to add them." = "PRzeciągnij plik do tego folderu żeby go dodać.";
 
 /* File: ../../portable/compiled_templates/multi_playlist.py:57 */
-/* Flag: untranslated */
-"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)";
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} zaznaczonych folderów list odtwarzania<br></br>(zawierają ${containedcount} list odtwarzania)";
 
 /* File: ../../portable/compiled_templates/multi_playlist.py:69 */
-/* Flag: untranslated */
-"${count} Playlists Selected" = "${count} Playlists Selected";
+"${count} Playlists Selected" = "${count} zaznaczonych list odtwarzania";
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:47 */
 /* File: ../../portable/compiled_templates/video_info.py:40 */
 /* File: ../../portable/compiled_templates/external_playback.py:50 */
 /* Flag: untranslated */
-"STAR" = "STAR";
+"STAR" = "STAR" /* = "GWIAZDKA" */;
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:57 */
 /* File: ../../portable/compiled_templates/video_info.py:50 */
 /* File: ../../portable/compiled_templates/external_playback.py:60 */
 /* File: ../../portable/compiled_templates/download_item.py:201 */
-/* Flag: untranslated */
-"SAVE" = "SAVE";
+"SAVE" = "ZAPISZ";
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:62 */
 /* File: ../../portable/compiled_templates/video_info.py:55 */
 /* File: ../../portable/compiled_templates/external_playback.py:65 */
-/* Flag: untranslated */
-"SAVED" = "SAVED";
+"SAVED" = "ZAPISANO";
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:70 */
 /* File: ../../portable/compiled_templates/video_info.py:63 */
 /* File: ../../portable/compiled_templates/external_playback.py:73 */
 /* File: ../../portable/compiled_templates/download_item.py:211 */
-/* Flag: untranslated */
-"DELETE" = "DELETE";
+"DELETE" = "USUŃ";
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:85 */
 /* File: ../../portable/compiled_templates/external_playback.py:88 */
@@ -804,16 +745,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "${len} Videos On This Channel" = "${len} Filmów na tym kanale";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:205 */
-/* Flag: untranslated */
-"All ${len} Videos Match This Search" = "All ${len} Videos Match This Search";
+"All ${len} Videos Match This Search" = "Wszystkie z ${len} elementów pasuje do wzorca";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:217 */
-/* Flag: untranslated */
-"${len} Videos Match This Search" = "${len} Videos Match This Search";
+"${len} Videos Match This Search" = "${len} elementów pasuje do wzorca";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:277 */
-/* Flag: untranslated */
-"${count} Videos on this Channel" = "${count} Videos on this Channel";
+"${count} Videos on this Channel" = "${count} Filmów na tym kanale";
 
 /* File: ../../portable/compiled_templates/channelfolder.py:290 */
 "Unwatched" = "Nie obejrzane";
@@ -831,28 +769,24 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/feed_settings.py:39 */
 /* File: ../../portable/compiled_templates/channel.py:159 */
 /* Flag: untranslated */
-"default" = "default";
+"default" = "default" /* = "domyślny" */;
 
 /* File: ../../portable/compiled_templates/feed_settings.py:110 */
 /* File: ../../portable/compiled_templates/channel.py:379 */
-/* Flag: untranslated */
-"Videos expire after" = "Videos expire after";
+"Videos expire after" = "Filmy przedawniają się po";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:113 */
 /* File: ../../portable/compiled_templates/channel.py:382 */
-/* Flag: untranslated */
-"When turned on, Auto Download should" = "When turned on, Auto Download should";
+"When turned on, Auto Download should" = "Po włączeniu, Automatyczne Ściąganie powinno";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:146 */
 /* File: ../../portable/compiled_templates/channel.py:415 */
-/* Flag: untranslated */
-"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched.";
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Nie ściągaj automatycznie jeśli jest więcej niż ${maxnew} ${maxnew2} oczekujących nieobejrzanych filmów.";
 
 /* File: ../../portable/compiled_templates/channel.py:316 */
 /* File: ../../portable/compiled_templates/channel_content.py:122 */
 /* File: ../../portable/compiled_templates/channel_folder.py:252 */
-/* Flag: untranslated */
-"Downloaded" = "Downloaded";
+"Downloaded" = "Ściągniętych";
 
 /* File: ../../portable/compiled_templates/channel.py:428 */
 "Recommend" = "Poleć";
@@ -863,8 +797,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Settings" = "Ustawienia";
 
 /* File: ../../portable/compiled_templates/channel.py:440 */
-/* Flag: untranslated */
-"<label for=\"automatic\">Auto Download</label>" = "<label for=\"automatic\">Auto Download</label>";
+"<label for=\"automatic\">Auto Download</label>" = "<label for=\"automatic\">Automatyczne Ściąganie</label>";
 
 /* File: ../../portable/compiled_templates/channel.py:458 */
 /* Flag: untranslated */
@@ -886,20 +819,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Skip >> ${countdown}" = "Skip >> ${countdown}";
 
 /* File: ../../portable/compiled_templates/download_item.py:114 */
-/* Flag: untranslated */
-"SHOW FILE" = "SHOW FILE";
+"SHOW FILE" = "POKAż PLIK";
 
 /* File: ../../portable/compiled_templates/download_item.py:121 */
-/* Flag: untranslated */
-"SHOW FOLDER" = "SHOW FOLDER";
+"SHOW FOLDER" = "POKAż FOLDER";
 
 /* File: ../../portable/compiled_templates/download_item.py:135 */
 /* Flag: untranslated */
-"SHARE IT" = "SHARE IT";
+"SHARE IT" = "SHARE IT" /* = "PODZIEL SIĘ TYM" */;
 
 /* File: ../../portable/compiled_templates/download_item.py:144 */
-/* Flag: untranslated */
-"STAR IT" = "STAR IT";
+"STAR IT" = "DODAJ GWIAZDKĘ";
 
 /* File: ../../portable/compiled_templates/download_item.py:189 */
 "Pending Auto Download" = "Oczekujące pobieranie automatyczne";
@@ -915,8 +845,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" /* = "To jest ${samochód} a to jest ${ciężarówka} <span>Ten tekst to <b style=\"color:red\">świezy</b> tekst</span>" */;
 
 /* File: ../../portable/compiled_templates/download.py:91 */
-/* Flag: untranslated */
-"${size} disk space free" = "${size} disk space free";
+"${size} disk space free" = "${size} wolnej przestrzeni na dysku";
 
 /* File: ../../portable/compiled_templates/download.py:101 */
 /* Flag: untranslated */
@@ -924,20 +853,18 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/compiled_templates/download.py:153 */
 /* File: ../../portable/tabs.py:28 */
-/* Flag: untranslated */
-"Downloading" = "Downloading";
+"Downloading" = "Ściąganie";
 
 /* File: ../../portable/compiled_templates/download.py:168 */
 /* Flag: untranslated */
-"Clear Completed Torrents" = "Clear Completed Torrents";
+"Clear Completed Torrents" = "Clear Completed Torrents" /* = "Wyczyść dokończone torrenty" */;
 
 /* File: ../../portable/compiled_templates/channel_folder.py:138 */
 /* Flag: untranslated */
-"Empty Channel Folder" = "Empty Channel Folder";
+"Empty Channel Folder" = "Empty Channel Folder" /* = "Pusty folder kanałów" */;
 
 /* File: ../../portable/compiled_templates/channel_folder.py:140 */
-/* Flag: untranslated */
-"Drag channels to this folder to add them." = "Drag channels to this folder to add them.";
+"Drag channels to this folder to add them." = "Przeciągnij kanały do tego folderu aby je dodać.";
 
 /* File: ../../portable/compiled_templates/library.py:73 */
 /* File: ../../portable/tabs.py:25 */
@@ -982,50 +909,40 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/compiled_templates/multi_channel.py:57 */
 /* Flag: untranslated */
-"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)";
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" /* = "${count} Zaznaczone foldery kanałów <br></br>(zawierają ${containedcount} kanałów)" */;
 
 /* File: ../../portable/compiled_templates/multi_channel.py:69 */
-/* Flag: untranslated */
-"${count} Channels Selected" = "${count} Channels Selected";
+"${count} Channels Selected" = "${count} Wybranych kanałów";
 
 /* File: ../../portable/dl_daemon/download.py:298 */
-/* Flag: untranslated */
-"Error" = "Error";
+"Error" = "Błąd";
 
 /* File: ../../portable/dl_daemon/download.py:357 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Could not write to %s" = "Could not write to %s";
+"Could not write to %s" = "Nie mogłem zapisać w %s";
 
 /* File: ../../portable/dl_daemon/download.py:376 */
-/* Flag: untranslated */
-"Not enough disk space" = "Not enough disk space";
+"Not enough disk space" = "Brak miejsca na dysku";
 
 /* File: ../../portable/dl_daemon/download.py:377 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s MB required to store this video" = "%s MB required to store this video";
+"%s MB required to store this video" = "%s MB wymaganych do przechowania filmu";
 
 /* File: ../../portable/dl_daemon/download.py:676 */
-/* Flag: untranslated */
-"Corrupt Torrent" = "Corrupt Torrent";
+"Corrupt Torrent" = "Uszkodzony Torrent";
 
 /* File: ../../portable/dl_daemon/download.py:677 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"The torrent file at %s was not valid" = "The torrent file at %s was not valid";
+"The torrent file at %s was not valid" = "Plik torrent pochodzący z %s nie jest poprawny";
 
 /* File: ../../portable/dl_daemon/download.py:702 */
-/* Flag: untranslated */
-"Torrent file deleted" = "Torrent file deleted";
+"Torrent file deleted" = "Plik torrent został usunięty";
 
 /* File: ../../portable/dl_daemon/download.py:703 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted " = "The torrent file for this item was deleted ";
+"The torrent file for this item was deleted " = "Plik torrent tego elementu został usuniety ";
 
 /* File: ../../portable/dl_daemon/download.py:704 */
-/* Flag: untranslated */
-"outside of democracy." = "outside of democracy.";
+"outside of democracy." = "poza demokracją.";
 
 /* File: ../../portable/util.py:386 */
 /* Flag: untranslated */
@@ -1048,27 +965,23 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%0.0fB" = "%0.0fB";
 
 /* File: ../../portable/httpclient.py:52 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Error: %s" = "Error: %s";
+"Error: %s" = "Błąd: %s";
 
 /* File: ../../portable/httpclient.py:67 */
 /* File: ../../portable/httpclient.py:72 */
 /* Flag: untranslated */
-"Can't connect" = "Can't connect";
+"Can't connect" = "Can't connect" /* = "Nie mogę się połączyć" */;
 
 /* File: ../../portable/httpclient.py:68 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Connection Error: %s" = "Connection Error: %s";
+"Connection Error: %s" = "Błąd połączenia %s";
 
 /* File: ../../portable/httpclient.py:73 */
-/* Flag: untranslated */
-"SSL connection error" = "SSL connection error";
+"SSL connection error" = "Błąd połączenia SSL";
 
 /* File: ../../portable/httpclient.py:77 */
-/* Flag: untranslated */
-"HTTP error" = "HTTP error";
+"HTTP error" = "Błąd HTTP";
 
 /* File: ../../portable/httpclient.py:80 */
 /* Flag: untranslated */
@@ -1091,74 +1004,61 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Expected CRLF got: %r" = "Expected CRLF got: %r";
 
 /* File: ../../portable/httpclient.py:92 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s closed connection" = "%s closed connection";
+"%s closed connection" = "połączenie zostało zamknięte przez %s";
 
 /* File: ../../portable/httpclient.py:97 */
 /* File: ../../portable/downloader.py:173 */
 /* Flag: untranslated */
-"File not found" = "File not found";
+"File not found" = "File not found" /* = "Nie odnaleziono pliku" */;
 
 /* File: ../../portable/httpclient.py:98 */
-/* Flag: untranslated */
-"Got 404 status code" = "Got 404 status code";
+"Got 404 status code" = "Otrzymano kod błędu 404";
 
 /* File: ../../portable/httpclient.py:100 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Bad Status Code: %s" = "Bad Status Code: %s";
+"Bad Status Code: %s" = "Błędny kod statusu: %s";
 
 /* File: ../../portable/httpclient.py:104 */
-/* Flag: untranslated */
-"Authorization failed" = "Authorization failed";
+"Authorization failed" = "Nieudana autoryzacja";
 
 /* File: ../../portable/httpclient.py:109 */
-/* Flag: untranslated */
-"Internal Error" = "Internal Error";
+"Internal Error" = "Błąd wewnętrzny";
 
 /* File: ../../portable/httpclient.py:110 */
 /* Flag: untranslated */
 "Pipeline request never started" = "Pipeline request never started";
 
 /* File: ../../portable/httpclient.py:114 */
-/* Flag: untranslated */
-"Timeout" = "Timeout";
+"Timeout" = "Przekroczony limit czasu";
 
 /* File: ../../portable/httpclient.py:115 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Connection to %s timed out" = "Connection to %s timed out";
+"Connection to %s timed out" = "Połączenie do %s przekroczyło limit czasu";
 
 /* File: ../../portable/httpclient.py:119 */
-/* Flag: untranslated */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Nieprawidłowy adres URL";
 
 /* File: ../../portable/httpclient.py:120 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"%s is not a valid URL" = "%s is not a valid URL";
+"%s is not a valid URL" = "%s is not a valid URL" /* = "%s nie jest poprawnym URL" */;
 
 /* File: ../../portable/httpclient.py:313 */
-/* Flag: untranslated */
-"Connection closed" = "Connection closed";
+"Connection closed" = "Połączenie zamknięte";
 
 /* File: ../../portable/httpclient.py:689 */
-/* Flag: untranslated */
-"Unknown" = "Unknown";
+"Unknown" = "Brak informacji";
 
 /* File: ../../portable/httpclient.py:690 */
 /* Flag: untranslated */
-"Internal Error: Not ready to send" = "Internal Error: Not ready to send";
+"Internal Error: Not ready to send" = "Internal Error: Not ready to send" /* = "Błąd wewnętrzny: nie gotowy do wysyłania" */;
 
 /* File: ../../portable/storedatabase.py:789 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s database save succeeded" = "%s database save succeeded";
+"%s database save succeeded" = "bazę danych %s zapisano poprawnie";
 
 /* File: ../../portable/storedatabase.py:790 */
-/* Flag: untranslated */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "The database has been successfully saved. It is now safe to quit without losing any data.";
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Baza danych została poprawnie zapisana. Można teraz wyjść bez utraty danych.";
 
 /* File: ../../portable/storedatabase.py:797 */
 /* Flag: python-format */
@@ -1190,15 +1090,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Download" = "Pobierz";
 
 /* File: ../../portable/dialogs.py:67 */
-/* Flag: untranslated */
-"Remove Entry" = "Remove Entry";
+"Remove Entry" = "Usuń pozycję";
 
 /* File: ../../portable/dialogs.py:68 */
 "Delete File" = "Usuń plik";
 
 /* File: ../../portable/dialogs.py:69 */
-/* Flag: untranslated */
-"Delete Files" = "Delete Files";
+"Delete Files" = "Usuń pliki";
 
 /* File: ../../portable/dialogs.py:70 */
 "Keep Videos" = "Zachowaj filmy";
@@ -1208,41 +1106,36 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/dialogs.py:73 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:12 */
-/* Flag: untranslated */
-"Create Channel" = "Create Channel";
+"Create Channel" = "Utwórz kanał";
 
 /* File: ../../portable/dialogs.py:74 */
-/* Flag: untranslated */
-"Add" = "Add";
+"Add" = "Dodaj";
 
 /* File: ../../portable/dialogs.py:75 */
-/* Flag: untranslated */
-"Add Into New Folder" = "Add Into New Folder";
+"Add Into New Folder" = "Dodaj do nowego folderu";
 
 /* File: ../../portable/dialogs.py:76 */
-/* Flag: untranslated */
-"Keep" = "Keep";
+"Keep" = "Zatrzymaj";
 
 /* File: ../../portable/dialogs.py:192 */
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:52 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:7 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:24 */
 /* Flag: untranslated */
-"New Search Channel" = "New Search Channel";
+"New Search Channel" = "New Search Channel" /* = "Nowy kanał wyszukiwania" */;
 
 /* File: ../../portable/dialogs.py:192 */
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:31 */
 /* Flag: untranslated */
-"A search channel contains items that match a search term." = "A search channel contains items that match a search term.";
+"A search channel contains items that match a search term." = "A search channel contains items that match a search term." /* = "Kanał wyszukiwania zawiera filmy zawierające wyszukiwany zwrot" */;
 
 /* File: ../../portable/folder.py:102 */
 /* File: ../../portable/folder.py:119 */
 "Rename Channel Folder" = "Usuń folder kanałów";
 
 /* File: ../../portable/folder.py:104 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Enter a new name for the channel folder %s";
+"Enter a new name for the channel folder %s" = "Wpisz nową nazwę dla folderu kanałów %s";
 
 /* File: ../../portable/folder.py:174 */
 /* File: ../../portable/folder.py:179 */
@@ -1266,54 +1159,45 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Enter a name for the new playlist folder" = "Wpisz nazwę nowego folderu list odtwarzania";
 
 /* File: ../../portable/item.py:397 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Deleting %s" = "Deleting %s";
+"Deleting %s" = "Kasowanie %s";
 
 /* File: ../../portable/item.py:398 */
 /* Flag: untranslated */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted.";
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted." /* = "Ten obiekt jest folderem. Jeśli usuniesz folder, wszystko co jest w środku zostanie również usunięte." */;
 
 /* File: ../../portable/item.py:420 */
 /* Flag: python-format */
 "%d days" = "%d dni";
 
 /* File: ../../portable/item.py:422 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d hours" = "%d hours";
+"%d hours" = "%d godzin";
 
 /* File: ../../portable/item.py:424 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d minutes" = "%d minutes";
+"%d minutes" = "%d minut";
 
 /* File: ../../portable/item.py:425 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Expires in %s" = "Expires in %s";
+"Expires in %s" = "Przedawni się za %s";
 
 /* File: ../../portable/item.py:751 */
-/* Flag: untranslated */
-"TORRENT" = "TORRENT";
+"TORRENT" = "Torrent";
 
 /* File: ../../portable/item.py:753 */
-/* Flag: untranslated */
-"WEB PAGE" = "WEB PAGE";
+"WEB PAGE" = "Strona internetowa";
 
 /* File: ../../portable/item.py:956 */
-/* Flag: untranslated */
-"downloading..." = "downloading...";
+"downloading..." = "ściągam...";
 
 /* File: ../../portable/item.py:963 */
 /* File: ../../portable/item.py:966 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s remaining" = "%s remaining";
+"%s remaining" = "pozostało %s";
 
 /* File: ../../portable/item.py:974 */
-/* Flag: untranslated */
-"starting up..." = "starting up...";
+"starting up..." = "zaczynam...";
 
 /* File: ../../portable/item.py:1154 */
 /* File: ../../portable/menu.py:78 */
@@ -1331,23 +1215,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Play" = "Play";
 
 /* File: ../../portable/item.py:1160 */
-/* Flag: untranslated */
-"Play Just This Video" = "Play Just This Video";
+"Play Just This Video" = "Odtwórz tylko ten film";
 
 /* File: ../../portable/item.py:1161 */
 /* File: ../../portable/menu.py:76 */
-/* Flag: untranslated */
-"Add to new playlist" = "Add to new playlist";
+"Add to new playlist" = "Dodaj do nowej listy odtwarzania";
 
 /* File: ../../portable/item.py:1165 */
 /* File: ../../portable/menu.py:86 */
-/* Flag: untranslated */
-"Mark as Unwatched" = "Mark as Unwatched";
+"Mark as Unwatched" = "Zaznacz jako nieoglądnięte";
 
 /* File: ../../portable/item.py:1167 */
 /* File: ../../portable/menu.py:99 */
-/* Flag: untranslated */
-"Cancel Download" = "Cancel Download";
+"Cancel Download" = "Przerwij pobieranie";
 
 /* File: ../../portable/item.py:1401 */
 /* Flag: untranslated */
@@ -1355,100 +1235,87 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/item.py:1403 */
 /* Flag: untranslated */
-"Would you like to delete this folder and all of its videos or just remove its entry from My Collection?" = "Would you like to delete this folder and all of its videos or just remove its entry from My Collection?";
+"Would you like to delete this folder and all of its videos or just remove its entry from My Collection?" = "Would you like to delete this folder and all of its videos or just remove its entry from My Collection?" /* = "Czy chcesz usunąć ten folder i wszystkie znajdujące się w nim filmy czy tylko wpis w Mojej Kolekcji?" */;
 
 /* File: ../../portable/item.py:1408 */
 /* Flag: untranslated */
-"Would you like to delete this file or just remove its entry from My Collection?" = "Would you like to delete this file or just remove its entry from My Collection?";
+"Would you like to delete this file or just remove its entry from My Collection?" = "Would you like to delete this file or just remove its entry from My Collection?" /* = "Czy chcesz usunąć ten plik czy tylko wpis w Mojej Kolekcji?" */;
 
 /* File: ../../portable/item.py:1499 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Removing %s items" = "Removing %s items";
+"Removing %s items" = "Usuwam %s plik(ów)";
 
 /* File: ../../portable/item.py:1501 */
 /* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?";
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?" /* = "Co najmniej jeden z tych filmów nie został ściągnięty z kanału. Czy chcesz je skasować czy tylko usunąć wpisy do Mojej Kolekcji?" */;
 
 /* File: ../../portable/item.py:1509 */
 /* Flag: untranslated */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." /* = "Wybrany został co najmniej jeden folder. Jeśli usuniesz lub skasujesz folder, wszystkie filmy w tym folderze zostaną także usunięte albo skasowane." */;
 
 /* File: ../../portable/app.py:668 */
 /* Flag: untranslated */
-"Database too new" = "Database too new";
+"Database too new" = "Database too new" /* = "Zbyt nowa baza danych" */;
 
 /* File: ../../portable/app.py:669 */
 /* Flag: untranslated */
-"You have a database that was saved with a newer version of Democracy. You must download the latest version of Democracy and run that." = "You have a database that was saved with a newer version of Democracy. You must download the latest version of Democracy and run that.";
+"You have a database that was saved with a newer version of Democracy. You must download the latest version of Democracy and run that." = "You have a database that was saved with a newer version of Democracy. You must download the latest version of Democracy and run that." /* = "Masz bazę danych zapisaną przy użyciu nowszej wersji Democracy. Musisz ściągnąć najnowszą wersję Democracy żeby jej użyć." */;
 
 /* File: ../../portable/app.py:817 */
 /* File: ../../portable/app.py:831 */
 /* File: ../../portable/app.py:860 */
 /* File: ../../portable/app.py:880 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Remove %s" = "Remove %s";
+"Remove %s" = "Usuń %s";
 
 /* File: ../../portable/app.py:818 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Are you sure you want to remove the guide %s?";
+"Are you sure you want to remove the guide %s?" = "Czy na pewno chcesz usunąć przewodnik %s?";
 
 /* File: ../../portable/app.py:832 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove %s" = "Are you sure you want to remove %s";
+"Are you sure you want to remove %s" = "Czy na pewno chcesz usunąć %s?";
 
 /* File: ../../portable/app.py:835 */
 /* File: ../../portable/app.py:865 */
 /* File: ../../portable/app.py:885 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Remove %s channels" = "Remove %s channels";
+"Remove %s channels" = "Usuń %s kanałów";
 
 /* File: ../../portable/app.py:837 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
+"Are you sure you want to remove these %s playlists" = "Czy jesteś pewien, że chcesz usunąć %s list odtwarzania";
 
 /* File: ../../portable/app.py:861 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Are you sure you want to remove %s?  Any downloads in progress will be canceled.";
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Czy jesteś pewien, że chcesz usunąć %s? Wszelkie operacje pobierania zostaną przerwane.";
 
 /* File: ../../portable/app.py:866 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Czy na pewno chcesz usunąć %s kanałów? Wszystkie obecnie ściągane z nich filmy zostaną skasowane.";
 
 /* File: ../../portable/app.py:881 */
-/* Flag: untranslated */
-"What would you like to do with the videos in this channel that you've downloaded?" = "What would you like to do with the videos in this channel that you've downloaded?";
+"What would you like to do with the videos in this channel that you've downloaded?" = "Co chcesz zrobić z już ściągniętymi filmami na tym kanale?";
 
 /* File: ../../portable/app.py:886 */
-/* Flag: untranslated */
-"What would you like to do with the videos in these channels that you've downloaded?" = "What would you like to do with the videos in these channels that you've downloaded?";
+"What would you like to do with the videos in these channels that you've downloaded?" = "Co chcesz zrobić z już ściągniętymi filmami na tych kanałach?";
 
 /* File: ../../portable/app.py:923 */
 "Are you sure you want to quit?" = "Na pewno zakończyć działanie programu?";
 
 /* File: ../../portable/app.py:1367 */
-/* Flag: untranslated */
-"Invalid Value" = "Invalid Value";
+"Invalid Value" = "Niewłaściwa wartość";
 
 /* File: ../../portable/app.py:1368 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number.";
+"%s is invalid.  You must enter a non-negative number." = "%s jest nieprawidłowe. Musisz podać liczbę dodatnią.";
 
 /* File: ../../portable/app.py:1616 */
-/* Flag: untranslated */
-" - Invalid URL" = " - Invalid URL";
+" - Invalid URL" = " - Nieprawidłowy URL";
 
 /* File: ../../portable/app.py:1617 */
 /* Flag: untranslated */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "The address you entered is not a valid URL.\nPlease double check and try again.\n\n";
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "The address you entered is not a valid URL.\nPlease double check and try again.\n\n" /* = "Wprowadzony przez ciebie adres nie jest poprawnym URL\nProszę, sprawdź go i spróbuj jeszcze raz.\n\n" */;
 
 /* File: ../../portable/app.py:1639 */
 "Democracy - Add Channel" = "Democracy - Dodaj kanał";
@@ -1457,16 +1324,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Enter the URL of the channel to add" = "Podaj adres URL kanału który chcesz dodać";
 
 /* File: ../../portable/app.py:1660 */
-/* Flag: untranslated */
-"Democracy - Add Channel Guide" = "Democracy - Add Channel Guide";
+"Democracy - Add Channel Guide" = "Democracy - Dodaj przewodnik po kanałach";
 
 /* File: ../../portable/app.py:1660 */
-/* Flag: untranslated */
-"Enter the URL of the channel guide to add" = "Enter the URL of the channel guide to add";
+"Enter the URL of the channel guide to add" = "Wprowadź URL przewodnika po kanałach który chcesz dodać";
 
 /* File: ../../portable/app.py:1977 */
-/* Flag: untranslated */
-"Example Playlist" = "Example Playlist";
+"Example Playlist" = "Przykładowa lista odtwarzania";
 
 /* File: ../../portable/app.py:1996 */
 /* Flag: untranslated */
@@ -1478,25 +1342,21 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/guide.py:127 */
 /* File: ../../portable/feed.py:684 */
-/* Flag: untranslated */
-"Copy URL to clipboard" = "Copy URL to clipboard";
+"Copy URL to clipboard" = "Skopiuj URL do schowka";
 
 /* File: ../../portable/guide.py:218 */
 "Channel Guide" = "Przewodnik po kanałach";
 
 /* File: ../../portable/menu.py:52 */
-/* Flag: untranslated */
-"Update Channels Now" = "Update Channels Now";
+"Update Channels Now" = "Uaktualnij kanały";
 
 /* File: ../../portable/menu.py:73 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"%d Downloaded Items" = "%d Downloaded Items";
+"%d Downloaded Items" = "%d Downloaded Items" /* = "%d Ściągniętych plików" */;
 
 /* File: ../../portable/menu.py:91 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"%d Available Items" = "%d Available Items";
+"%d Available Items" = "%d Available Items" /* = "%d dostępnych pozycji" */;
 
 /* File: ../../portable/menu.py:97 */
 /* Flag: untranslated */
@@ -1531,51 +1391,42 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/feed.py:776 */
 /* Flag: untranslated */
-"Error loading feed" = "Error loading feed";
+"Error loading feed" = "Error loading feed" /* = "Błąd poczas ładowaniu feeda" */;
 
 /* File: ../../portable/feed.py:777 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s).";
+"Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s)." /* = "Nie udało się załadować feeda z %s (%s)." */;
 
 /* File: ../../portable/feed.py:780 */
-/* Flag: untranslated */
-"Would you like to keep the feed?" = "Would you like to keep the feed?";
+"Would you like to keep the feed?" = "Czy chcesz zachować feed?";
 
 /* File: ../../portable/feed.py:885 */
-/* Flag: untranslated */
-"Bad content-type" = "Bad content-type";
+"Bad content-type" = "Zły typ zawartości";
 
 /* File: ../../portable/feed.py:898 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4 */
 "Channel is not compatible with Democracy!" = "Ten kanał nie jest kompatybilny z Democracy!";
 
 /* File: ../../portable/feed.py:899 */
-/* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with Democracy.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with Democracy.\n\nDo you want to try to load this channel anyway?";
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with Democracy.\n\nDo you want to try to load this channel anyway?" = "Ale postaramy się przechwycić pliki. Wyświetlenie listy filmów może potrwać trochę dłużej i opisy mogą wyglądać dziwnie. Proszę skontaktuj się z autorami $url i spytaj czy mogli by stworzyć feed w formacie współpracującym z Democracy.\n\nCzy chcesz mimo wszystko spróbować załadować ten kanał?";
 
 /* File: ../../portable/feed.py:1791 */
-/* Flag: untranslated */
-"Local File" = "Local File";
+"Local File" = "Lokalny plik";
 
 /* File: ../../portable/singleclick.py:122 */
-/* Flag: untranslated */
-"Subscribing to multiple channels" = "Subscribing to multiple channels";
+"Subscribing to multiple channels" = "Zapisz się do wielu kanałów";
 
 /* File: ../../portable/singleclick.py:123 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Create %d channels?" = "Create %d channels?";
+"Create %d channels?" = "Stworzyć %d kanał/ów?";
 
 /* File: ../../portable/singleclick.py:136 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Adding %d channels to a new folder" = "Adding %d channels to a new folder";
+"Adding %d channels to a new folder" = "Dodaje %d kanał/ów do nowego folderu";
 
 /* File: ../../portable/singleclick.py:140 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." /* = "Uwaga: %d kanał/ów jest już dodane do subskrypcji. Te kanały pozostaną w tym samym miejscu." */;
 
 /* File: ../../portable/singleclick.py:151 */
 /* Flag: untranslated */
@@ -1597,23 +1448,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Could not download the Democracy channel file: %s." = "Could not download the Democracy channel file: %s.";
 
 /* File: ../../portable/singleclick.py:201 */
-/* Flag: untranslated */
-"Invalid Torrent" = "Invalid Torrent";
+"Invalid Torrent" = "Nieprawidłowy torrent";
 
 /* File: ../../portable/singleclick.py:202 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]";
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Plik torrenta %s zdaje się być uszkodzony i udaje się go otworzyć. [OK]";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:1 */
-/* Flag: untranslated */
-"(Changes won't go into effect until you restart Democracy Player.)" = "(Changes won't go into effect until you restart Democracy Player.)";
+"(Changes won't go into effect until you restart Democracy Player.)" = "(Zmiany zostaną wprowadzone dopiero po ponownym uruchomieniu Democracy Playera.)";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 dniu\n3 dniach\n6 dniach\n10 dniach\n1 miesiącu\nNigdy";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:8 */
-/* Flag: untranslated */
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:9 */
@@ -1626,8 +1473,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>Downloads</b>" = "<b>Pobrane pliki</b>";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:12 */
-/* Flag: untranslated */
-"<b>General</b>" = "<b>General</b>";
+"<b>General</b>" = "<b>Ogólne</b>";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:13 */
 "<b>Movies Directory</b>" = "<b>Folder filmów</b>";
@@ -1653,12 +1499,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Democracy is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Democracy is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." /* = "<b>Skończone!</b>\n\nInstalacja zakończona -- teraz możesz wybrać jakieś kanały i zacząć oglądać\n\n<b>Nie czekaj:</b> Democracy to co innego niż oglądanie plików video ze stron -- publikujący mogą ci zaoferować video wysokiej jakości. Więc nie siedź czekając na video: zacznij ściągać i zajrzyj później.\n\n<b>Zostaw włączony:</b> Democracy Player regularnie sprawdza kanały czy zawierają nowe filmy i ściąga je w tle. Zostawienie go włączonego oznacza że będziesz mieć video wtedy kiedy zechcesz je obejrzeć.\n\n\nBRAK CZESCI (idę spać, mam dość :])" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:32 */
-/* Flag: untranslated */
-"Automatically run Democracy Player when I log in" = "Automatically run Democracy Player when I log in";
+"Automatically run Democracy Player when I log in" = "Automatycznie odpalaj Democracy Player kiedy się zaloguję";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:33 */
-/* Flag: untranslated */
-"Bit Torrent uses ports between" = "Bit Torrent uses ports between";
+"Bit Torrent uses ports between" = "Bit Torrent używa portów pomiędzy";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:34 */
 "By default, videos expire after" = "Domyślnie, pliki wideo wygasają po";
@@ -1689,13 +1533,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "GB free" = "GB wolne";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:47 */
-/* Flag: untranslated */
-"Go" = "Go";
+"Go" = "Rozpocznij";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:48 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:8 */
-/* Flag: untranslated */
-"In This:" = "In This:";
+"In This:" = "W tym";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:49 */
 "KB/s when my computer is active" = "KB/s kiedy mój komputer jest aktywny";
@@ -1728,7 +1570,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:60 */
 /* Flag: untranslated */
-"Show movies in these directories in My Collection" = "Show movies in these directories in My Collection";
+"Show movies in these directories in My Collection" = "Show movies in these directories in My Collection" /* = "Pokazuj filmy z tych miejsc w Mojej Kolekcji" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:62 */
 /* Flag: untranslated */
@@ -1756,20 +1598,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Add Directory" = "_Add Directory";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:70 */
-/* Flag: untranslated */
-"_Search" = "_Search";
+"_Search" = "_Szukaj:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:71 */
-/* Flag: untranslated */
-"_Search For:" = "_Search For:";
+"_Search For:" = "_Szukaj:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:72 */
 /* Flag: untranslated */
 "_Store downloaded videos in this folder:" = "_Store downloaded videos in this folder:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:73 */
-/* Flag: untranslated */
-"_URL" = "_URL";
+"_URL" = "Adres _URL";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:74 */
 "and" = "i";
@@ -1819,51 +1658,43 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Please enter the username and password given to you by this channel's publisher." = "Wpisz nazwę użytkownika i hasł, które otrzymałeś od administratora tego kanału.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:4 */
-/* Flag: untranslated */
-"A search channel contains" = "A search channel contains";
+"A search channel contains" = "Kanał wyszukiwania zawiera";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:5 */
-/* Flag: untranslated */
-"items that match a search term." = "items that match a search term.";
+"items that match a search term." = "wyników pasujacych do wyszukiwanego zwrotu.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:9 */
-/* Flag: untranslated */
-"Channel:" = "Channel:";
+"Channel:" = "Kanał:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:10 */
-/* Flag: untranslated */
-"Search Engine:" = "Search Engine:";
+"Search Engine:" = "Wyszukiwarka:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:6 */
-/* Flag: untranslated */
-"Search For:" = "Search For:";
+"Search For:" = "Szukaj:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:11 */
-/* Flag: untranslated */
-"URL:" = "URL:";
+"URL:" = "Adres URL:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:14 */
 /* Flag: untranslated */
-"Cancel Search" = "Cancel Search";
+"Cancel Search" = "Cancel Search" /* = "Zatrzymaj wyszukiwanie" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:13 */
 "Change" = "Zmień";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:4 */
 /* Flag: untranslated */
-"Democracy First Time Setup" = "Democracy First Time Setup";
+"Democracy First Time Setup" = "Democracy First Time Setup" /* = "Pierwszorazowe ustawienie Democracy" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:20 */
 /* Flag: untranslated */
-"Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.";
+"Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." /* = "Democracy Player regularnie sprawdza kanały i ściąga nowe filmy w tle. Zostawienie go włączonego oznacza że będziesz mieć nowe filmy wtedy kiedy najdzie cię ochota na oglądanie." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:21 */
-/* Flag: untranslated */
-"Don't Worry About Disk Space:" = "Don't Worry About Disk Space:";
+"Don't Worry About Disk Space:" = "Nie martw się o miejsce na dysku:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:25 */
-/* Flag: untranslated */
-"Find Videos:" = "Find Videos:";
+"Find Videos:" = "Znajdź Filmy:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:23 */
 /* Flag: untranslated */
@@ -1882,44 +1713,37 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15 */
-/* Flag: untranslated */
-"Reset Search" = "Reset Search";
+"Reset Search" = "Wyczyść wyszukiwanie";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:10 */
-/* Flag: untranslated */
-"Restrict to all my personal files." = "Restrict to all my personal files.";
+"Restrict to all my personal files." = "Ogranicz do moich osobistych plików.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:11 */
 /* Flag: untranslated */
 "Search custom folder:" = "Search custom folder:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:26 */
-/* Flag: untranslated */
-"The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
+"The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "Przewodnik po kanałach Democracy Player ma setki kanałów TV, wszystkie za darmo. Po prostu kliknij \"dodaj\" żeby zacząć oglądać kanał.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:24 */
 /* Flag: untranslated */
-"The button to the right of the play button shows videos fullscreen." = "The button to the right of the play button shows videos fullscreen.";
+"The button to the right of the play button shows videos fullscreen." = "The button to the right of the play button shows videos fullscreen." /* = "Przycisk na prawo od przycisku play pokazuje filmy w trybie pełnoekranowym." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:5 */
 /* Flag: untranslated */
-"The next few screens will help you set up Democracy Player so that it works best for you." = "The next few screens will help you set up Democracy Player so that it works best for you.";
+"The next few screens will help you set up Democracy Player so that it works best for you." = "The next few screens will help you set up Democracy Player so that it works best for you." /* = "Następne parę ekranów pomorze ci ustawić Democracy Player tak żeby jak najlepiej dla ciebie pracował." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:6 */
-/* Flag: untranslated */
-"We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.";
+"We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "Radzimy żebyś Democracy Player włączał się kiedy rusza twój komputer. W ten sposób może dokończyć ściąganie filmów i nowe filmy mogą zostać ściągnięte w tle, wszystko gotowe kiedy tylko zechcesz oglądać.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:9 */
-/* Flag: untranslated */
-"Would you like Democracy Player to look for video files on your computer?" = "Would you like Democracy Player to look for video files on your computer?";
+"Would you like Democracy Player to look for video files on your computer?" = "Czy chcesz żeby Democracy Player wyszukał wszystkie filmy na twoim komputerze?";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:7 */
-/* Flag: untranslated */
-"Would you like to run Democracy on startup?" = "Would you like to run Democracy on startup?";
+"Would you like to run Democracy on startup?" = "Czy chcesz żeby Democracy włączało się razem z systemem?";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:16 */
-/* Flag: untranslated */
-"You're done!" = "You're done!";
+"You're done!" = "Gotowe!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4 */
 "Question" = "Pytanie";
@@ -1956,116 +1780,89 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "$longAppName" = "$longAppName";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:90 */
-/* Flag: untranslated */
 "A" = "A";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:105 */
-/* Flag: untranslated */
 "Alt+Enter" = "Alt+Enter";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:74 */
-/* Flag: untranslated */
 "C" = "C";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8 */
-/* Flag: untranslated */
-"Check Version" = "Check Version";
+"Check Version" = "Sprawdź wersję";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:96 */
-/* Flag: untranslated */
 "Ctrl+A" = "Ctrl+A";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:94 */
-/* Flag: untranslated */
 "Ctrl+C" = "Ctrl+C";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:102 */
-/* Flag: untranslated */
 "Ctrl+D" = "Ctrl+D";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:97 */
-/* Flag: untranslated */
 "Ctrl+N" = "Ctrl+N";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:93 */
-/* Flag: untranslated */
 "Ctrl+O" = "Ctrl+O";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:99 */
-/* Flag: untranslated */
 "Ctrl+P" = "Ctrl+P";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:98 */
-/* Flag: untranslated */
 "Ctrl+Shift+N" = "Ctrl+Shift+N";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:100 */
-/* Flag: untranslated */
 "Ctrl+Shitf+P" = "Ctrl+Shitf+P";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:95 */
-/* Flag: untranslated */
 "Ctrl+V" = "Ctrl+V";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:91 */
-/* Flag: untranslated */
 "D" = "D";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:49 */
-/* Flag: untranslated */
-"Donate to the Democracy project" = "Donate to the Democracy project";
+"Donate to the Democracy project" = "Złóż dotację na projekt Democracy";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:59 */
-/* Flag: untranslated */
 "E" = "E";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:87 */
-/* Flag: untranslated */
 "F" = "F";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:45 */
-/* Flag: untranslated */
-"Fullscreen" = "Fullscreen";
+"Fullscreen" = "Tryb pełnoekranowy";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:68 */
-/* Flag: untranslated */
 "G" = "G";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:89 */
-/* Flag: untranslated */
 "H" = "H";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:82 */
-/* Flag: untranslated */
 "L" = "L";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:104 */
 /* Flag: untranslated */
-"Left" = "Left";
+"Left" = "Left" /* = "Lewa" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:85 */
-/* Flag: untranslated */
 "N" = "N";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:22 */
-/* Flag: untranslated */
-"New Channel" = "New Channel";
+"New Channel" = "Nowy kanał";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:23 */
-/* Flag: untranslated */
-"New Channel Folder" = "New Channel Folder";
+"New Channel Folder" = "Nowy folder kanałów";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:25 */
-/* Flag: untranslated */
-"New Channel Guide" = "New Channel Guide";
+"New Channel Guide" = "Nowy przewodnik po kanałach";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:34 */
-/* Flag: untranslated */
-"New Playlist" = "New Playlist";
+"New Playlist" = "Nowa lista odtwarzania";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:35 */
-/* Flag: untranslated */
-"New Playlist Folder" = "New Playlist Folder";
+"New Playlist Folder" = "Nowy folder list odtwarzania";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:52 */
 /* Flag: untranslated */
@@ -2080,41 +1877,33 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Pause Video" = "Pause Video";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:33 */
-/* Flag: untranslated */
-"Playlist" = "Playlist";
+"Playlist" = "Lista odtwarzania";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:57 */
-/* Flag: untranslated */
 "Q" = "Q";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:86 */
-/* Flag: untranslated */
 "R" = "R";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9 */
-/* Flag: untranslated */
-"Remove Video" = "Remove Video";
+"Remove Video" = "Usuń film";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103 */
 /* Flag: untranslated */
-"Right" = "Right";
+"Right" = "Right" /* = "Prawo" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:84 */
-/* Flag: untranslated */
 "S" = "S";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:31 */
-/* Flag: untranslated */
-"Send This Channel to a Friend..." = "Send This Channel to a Friend...";
+"Send This Channel to a Friend..." = "Wyślij ten kanał do...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:101 */
 /* Flag: untranslated */
-"Space" = "Space";
+"Space" = "Space" /* = "Miejsca" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:71 */
-/* Flag: untranslated */
 "U" = "U";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:53 */
-/* Flag: untranslated */
 "V" = "V";

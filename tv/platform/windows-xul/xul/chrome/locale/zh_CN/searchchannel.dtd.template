@@ -1,9 +1,9 @@
 <!ENTITY searchchannel.description	"A search channel contains
 items that match a search term.">
-<!ENTITY searchchannel.termlabel 	"Search For:">
-<!ENTITY searchchannel.title            "New Search Channel">
-<!ENTITY searchchannel.inthis "In This:">
-<!ENTITY searchchannel.channel "Channel:">
-<!ENTITY searchchannel.searchengine "Search Engine:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Create Channel">
+<!ENTITY searchchannel.termlabel 	"查找：">
+<!ENTITY searchchannel.title            "新建搜索频道">
+<!ENTITY searchchannel.inthis "这样：">
+<!ENTITY searchchannel.channel "频道：">
+<!ENTITY searchchannel.searchengine "搜索引擎：">
+<!ENTITY searchchannel.url "网络地址:">
+<!ENTITY searchchannel.createchannel "新建频道">

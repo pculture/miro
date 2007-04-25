@@ -4,23 +4,24 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-08 15:28-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-25 13:11-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* Flag: untranslated */
-"$log" = "$log";
+"$log" = "$log" /* = "$log" */;
 
 /* Flag: untranslated */
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>";
-
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "U stvari, ako imate vremena, da li bi mogli da date izveštaj o rušenju za naš sistem traženja greški? Želeli bi bra opis onoga šta ste radili u to vreme - maksimalno precizno - plus lukavu glupost u donjem okviru:";
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" /* = "<font face=\"Lucida Grande\" size=\"-1\">Naš bag-treker je <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Samo nam recite šta ste radili, kopirajte u log poruku iz box-a iznad, i odgovorite na par pitanja, i mi ćemo se dati na posao.</font>" */;
 
 /* Flag: untranslated */
-"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions.";
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" /* = "U stvari, ako imate vremena, da li bi mogli da date izveštaj o rušenju za naš sistem traženja greški? Želeli bi bar opis onoga šta ste radili u to vreme - maksimalno precizno - plus lukavu glupost u donjem okviru:" */;
+
+/* Flag: untranslated */
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." /* = "Nažalost! $longAppName je pao iz razoga neke vrste interne konfuzije ili greške $when. Izvinjavamo se i predlažemo da zatvorite program i restartujete $shortAppName. Time ćete mu pokazati, a istovremeno smanjujete šansu da izgubite Vaša podešavanja ili pretplaćene kanale." */;
 
 "OK" = "U redu";
 
 /* Flag: untranslated */
-"The fall of $shortAppName??" = "The fall of $shortAppName??";
+"The fall of $shortAppName??" = "The fall of $shortAppName??" /* = "Pao je $shortAppName??" */;
 
 "About Democracy" = "O Democracy";
 
@@ -50,10 +51,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/dialogs.py:77 */
 "Delete" = "Izbriši";
 
-"Democracy" = "Demokracija";
+"Democracy" = "Democracy";
 
-/* Flag: untranslated */
-"Democracy Help" = "Democracy Help" /* = "Demokracy pomoć" */;
+"Democracy Help" = "Demokracy pomoć";
 
 /* Flag: untranslated */
 "Donate" = "Donate" /* = "Donacije" */;
@@ -63,9 +63,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Edit" = "Edit" /* = "Uredi" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6 */
-"File" = "Dokument";
+"File" = "Datoteka:";
 
-"Full Screen" = "Ceo ekran";
+"Full Screen" = "Приказ на целом екрану";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47 */
 "Help" = "Pomoć";
@@ -79,717 +79,661 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "MainMenu" = "Glavni Meni";
 
 /* Flag: untranslated */
-"Minimize" = "Minimize" /* = "Smanji" */;
+"Minimize" = "Minimize" /* = "Минимизуј" */;
 
 /* Flag: untranslated */
-"New Channel Folder..." = "New Channel Folder..." /* = "Novi Kanal Mapa..." */;
+"New Channel Folder..." = "New Channel Folder..." /* = "Novi Folder Kanala..." */;
 
 /* Flag: untranslated */
-"New Channel Guide..." = "New Channel Guide..." /* = "Novi Kanal Vodič..." */;
+"New Channel Guide..." = "New Channel Guide..." /* = "Novi Vodič Kanala..." */;
 
 /* Flag: untranslated */
-"New Playlist Folder..." = "New Playlist Folder...";
+"New Playlist Folder..." = "New Playlist Folder..." /* = "Novi Folder Plejliste" */;
+
+"New Playlist..." = "Nova Plejlista";
 
 /* Flag: untranslated */
-"New Playlist..." = "New Playlist...";
-
-/* Flag: untranslated */
-"New Search Channel..." = "New Search Channel...";
+"New Search Channel..." = "New Search Channel..." /* = "Nova Pretraga Kanala" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43 */
 "Next Video" = "Sledeći video";
 
 /* Flag: untranslated */
-"Open Recent" = "Open Recent" /* = "Otvori nedavno" */;
+"Open Recent" = "Open Recent" /* = "Otvori skorašnji" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7 */
 "Open..." = "Otvori...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16 */
-"Paste" = "Ubaci";
+/* Flag: untranslated */
+"Paste" = "Paste" /* = "Ubaci" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40 */
 "Play Video" = "Pokreni video";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39 */
-/* Flag: untranslated */
-"Playback" = "Playback";
+"Playback" = "Reprodukcija";
 
 /* Flag: untranslated */
-"Playlists" = "Playlists";
+"Playlists" = "Playlists" /* = "Plejlista" */;
 
 /* Flag: untranslated */
-"Preferencesâ¦" = "Preferencesâ¦";
+"Preferencesâ¦" = "Preferencesâ¦" /* = "Podešavanja" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44 */
 /* Flag: untranslated */
-"Previous Video" = "Previous Video";
+"Previous Video" = "Previous Video" /* = "Prethodni Video" */;
 
 /* Flag: untranslated */
-"Quit Democracy" = "Quit Democracy";
+"Quit Democracy" = "Quit Democracy" /* = "Napusti Democracy" */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5 */
-/* Flag: untranslated */
-"Remove..." = "Remove...";
+"Remove..." = "Ukloni...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18 */
-/* Flag: untranslated */
-"Rename..." = "Rename...";
+"Rename..." = "Promeni ime...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10 */
-/* Flag: untranslated */
-"Save Video As..." = "Save Video As...";
+"Save Video As..." = "Sačuvaj Video Kao...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17 */
-/* Flag: untranslated */
-"Select All" = "Select All";
+"Select All" = "Odaberi sve";
 
 /* Flag: untranslated */
-"Send This Channel to a Friend" = "Send This Channel to a Friend";
+"Send This Channel to a Friend" = "Send This Channel to a Friend" /* = "Pošaljite ovaj Kanal Vašem prijatelju" */;
 
-/* Flag: untranslated */
-"Services" = "Services";
+"Services" = "Servisi";
 
-/* Flag: untranslated */
-"Show All" = "Show All";
+"Show All" = "Prikaži sve";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42 */
-/* Flag: untranslated */
 "Stop Video" = "Stop Video";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30 */
 /* Flag: untranslated */
-"Update All Channels" = "Update All Channels";
+"Update All Channels" = "Update All Channels" /* = "Update Svih Kanala" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29 */
 /* Flag: untranslated */
-"Update Channel" = "Update Channel";
+"Update Channel" = "Update Channel" /* = "Update Kanala" */;
+
+"Window" = "Prozor";
+
+"Zoom" = "Uveličavanje";
 
 /* Flag: untranslated */
-"Window" = "Window";
+"%channel feed%" = "%channel feed%" /* = "%channel feed%" */;
 
 /* Flag: untranslated */
-"Zoom" = "Zoom";
+"%channel title%" = "%channel title%" /* = "%ime kanala%" */;
 
 /* Flag: untranslated */
-"%channel feed%" = "%channel feed%";
+"%donation label%" = "%donation label%" /* = "%donacije label%" */;
 
-/* Flag: untranslated */
-"%channel title%" = "%channel title%";
-
-/* Flag: untranslated */
-"%donation label%" = "%donation label%";
-
-/* Flag: untranslated */
 "-00:00:00" = "-00:00:00";
 
-/* Flag: untranslated */
 "00:00:00" = "00:00:00";
 
-/* Flag: untranslated */
-"Box" = "Box";
+"Box" = "Kutija";
 
 /* Flag: untranslated */
-"FullScreen Controls" = "FullScreen Controls";
+"FullScreen Controls" = "FullScreen Controls" /* = "FullScreen Kontrole" */;
 
 /* File: ../../portable/tabs.py:27 */
 /* File: ../../portable/feed.py:1718 */
 /* File: ../../portable/feed.py:1777 */
-/* Flag: untranslated */
-"Search" = "Search";
+"Search" = "Pretraži";
 
 /* Flag: untranslated */
-"VideoWindow" = "VideoWindow";
+"VideoWindow" = "VideoWindow" /* = "VideoProzor" */;
 
 /* File: ../../portable/dialogs.py:60 */
-/* Flag: untranslated */
-"Cancel" = "Cancel";
+"Cancel" = "Prekinuti";
 
 /* Flag: untranslated */
-"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
+"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" /* = "Lokacija http://foo.bar.com/baz zahteva korisničko ime i lozinku za \"text \nsupplied by server\". (Do not localize -- test data)\n" */;
+
+"Password:\n" = "Lozinka:\n";
 
 /* Flag: untranslated */
-"Password:\n" = "Password:\n";
+"Username and password required" = "Username and password required" /* = "Korisničko ime i lozinka potrebni" */;
+
+"Username:\n\n" = "Ime Korisnika:\n\n";
 
 /* Flag: untranslated */
-"Username and password required" = "Username and password required";
+" limit upstream to" = " limit upstream to" /* = " limitiraj upstream do" */;
 
 /* Flag: untranslated */
-"Username:\n\n" = "Username:\n\n";
+"(You must restart Democracy for this change to take effect)\n" = "(You must restart Democracy for this change to take effect)\n" /* = "(Morate restartovati Democracy da bi ova promena nastupila)\n" */;
 
 /* Flag: untranslated */
-" limit upstream to" = " limit upstream to";
+"(movies directory path goes here)" = "(movies directory path goes here)" /* = "(movies direktorijum lokacija ide ovde)" */;
 
-/* Flag: untranslated */
-"(You must restart Democracy for this change to take effect)\n" = "(You must restart Democracy for this change to take effect)\n";
+"1 day" = "1 dan";
 
-/* Flag: untranslated */
-"(movies directory path goes here)" = "(movies directory path goes here)";
+"1 month" = "1 mesec";
 
-/* Flag: untranslated */
-"1 day" = "1 day";
+"10 days" = "10 dana";
 
-/* Flag: untranslated */
-"1 month" = "1 month";
+"3 days" = "3 dana";
 
-/* Flag: untranslated */
-"10 days" = "10 days";
+"3 hours" = "3 sata";
 
-/* Flag: untranslated */
-"3 days" = "3 days";
-
-/* Flag: untranslated */
-"3 hours" = "3 hours";
-
-/* Flag: untranslated */
 "4" = "4";
 
-/* Flag: untranslated */
 "5" = "5";
 
-/* Flag: untranslated */
-"6 days" = "6 days";
+"6 days" = "6 dana";
 
-/* Flag: untranslated */
 "99999" = "99999";
 
-/* Flag: untranslated */
-"BitTorrent ports:" = "BitTorrent ports:";
+"BitTorrent ports:" = "BitTorrent portovi:";
 
 /* Flag: untranslated */
-"By default, videos expire after:" = "By default, videos expire after:";
+"By default, videos expire after:" = "By default, videos expire after:" /* = "Po pravilu, video ne radi posle:" */;
+
+"Change..." = "Promeni...";
 
 /* Flag: untranslated */
-"Change..." = "Change...";
-
-/* Flag: untranslated */
-"Check channels for new content:" = "Check channels for new content:";
+"Check channels for new content:" = "Check channels for new content:" /* = "Proveri Kanale u potrazi za novim sadržajima" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:41 */
 /* Flag: untranslated */
-"Don't start a download if it leaves less than" = "Don't start a download if it leaves less than";
+"Don't start a download if it leaves less than" = "Don't start a download if it leaves less than" /* = "Ne startuj download ako preostaje manje od" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:42 */
 /* Flag: untranslated */
-"Download at most" = "Download at most";
+"Download at most" = "Download at most" /* = "Download na" */;
+
+"GB free." = "GB slobodno.";
 
 /* Flag: untranslated */
-"GB free." = "GB free.";
+"KB/s when my computer is active." = "KB/s when my computer is active." /* = "KB/s kada je moj kompjuter aktivan." */;
 
-/* Flag: untranslated */
-"KB/s when my computer is active." = "KB/s when my computer is active.";
+"Maximum:" = "Maksimum:";
 
-/* Flag: untranslated */
-"Maximum:" = "Maximum:";
-
-/* Flag: untranslated */
 "Minimum:" = "Minimum:";
 
-/* Flag: untranslated */
-"Never" = "Never";
+"Never" = "Nikada";
 
 /* Flag: untranslated */
-"OtherViews" = "OtherViews";
+"OtherViews" = "OtherViews" /* = "Druge perspektive" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:53 */
-/* Flag: untranslated */
-"Play videos one after another." = "Play videos one after another.";
+"Play videos one after another." = "Reprodukuj video fajlove jedan za drugim.";
+
+"Run Democracy at startup" = "Democracy se pokreće na uključenju";
 
 /* Flag: untranslated */
-"Run Democracy at startup" = "Run Democracy at startup";
-
-/* Flag: untranslated */
-"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
+"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:" /* = "Snimi preuzete video fajlove u ovaj folder:" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
-/* Flag: untranslated */
-"Stop after each video." = "Stop after each video.";
+"Stop after each video." = "Stop posle svakog videa.";
 
 /* Flag: untranslated */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
+"To avoid internet slowdowns:" = "To avoid internet slowdowns:" /* = "Da izbegnete usporenja interneta:" */;
 
-/* Flag: untranslated */
-"every 30 minutes" = "every 30 minutes";
+"every 30 minutes" = "svakih 30 minuta";
 
-/* Flag: untranslated */
-"every hour" = "every hour";
+"every hour" = "svakih sat vremena";
 
-/* Flag: untranslated */
-"manually" = "manually";
+"manually" = "manuelno";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
 /* Flag: untranslated */
-"videos at once." = "videos at once.";
+"videos at once." = "videos at once." /* = "video fajlova istovremeno." */;
 
 /* Flag: untranslated */
-"$label$" = "$label$";
+"$label$" = "$label$" /* = "$label$" */;
 
 /* Flag: untranslated */
-"$title$" = "$title$";
+"$title$" = "$title$" /* = "$naslov$" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20 */
-/* Flag: untranslated */
-"Channel" = "Channel";
+"Channel" = "Kanal";
 
 /* File: ../../portable/dialogs.py:72 */
-/* Flag: untranslated */
-"Create" = "Create";
+"Create" = "Kreiraj";
 
 /* Flag: untranslated */
-"In this:" = "In this:";
+"In this:" = "In this:" /* = "Ovde:" */;
 
 /* Flag: untranslated */
-"Item1" = "Item1";
+"Item1" = "Item1" /* = "Item1" */;
 
-/* Flag: untranslated */
-"Search Engine" = "Search Engine";
+"Search Engine" = "Pretraživač";
 
-/* Flag: untranslated */
-"Search for:" = "Search for:";
+"Search for:" = "Traži:";
 
-/* Flag: untranslated */
-"URL" = "URL";
+"URL" = "Internet adresa";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/startup.py:31 */
 /* File: ../../platform/windows-xul/frontend_implementation/startup.py:25 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)";
+"(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)" /* = "(pretraženo %d fajlova - pronađeno %d video fajlova)" */;
+
+"Back" = "Nazad";
 
 /* Flag: untranslated */
-"Back" = "Back";
+"Browse" = "Browse" /* = "Traženje" */;
 
 /* Flag: untranslated */
-"Browse" = "Browse";
+"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" /* = "Democracy Player može pronaći sve video fajlove na kompjuteru i pomoći Vam da organizujete Vašu kolekciju.\n\n\nDa li želite da Democracy Player potraži video fajlove na Vašem kompjuteru?" */;
 
-/* Flag: untranslated */
-"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?";
-
-/* Flag: untranslated */
-"Next" = "Next";
+"Next" = "Dalje";
 
 /* File: ../../portable/dialogs.py:62 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28 */
-/* Flag: untranslated */
-"No" = "No";
+"No" = "ne";
+
+"Only search my Movies folder." = "Pretraži samo moj Movies folder.";
 
 /* Flag: untranslated */
-"Only search my Movies folder." = "Only search my Movies folder.";
+"Search my entire Home folder." = "Search my entire Home folder." /* = "Pretraži moj Home folder." */;
 
 /* Flag: untranslated */
-"Search my entire Home folder." = "Search my entire Home folder.";
-
-/* Flag: untranslated */
-"Search this folder:" = "Search this folder:";
+"Search this folder:" = "Search this folder:" /* = "Pretraži ovaj folder:" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12 */
 /* Flag: untranslated */
-"Searching for Videos" = "Searching for Videos";
+"Searching for Videos" = "Searching for Videos" /* = "Tražim Video fajlove" */;
 
 /* Flag: untranslated */
-"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question.";
+"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." /* = "Sledećih nekoliko koraka će vam pomoći da podesite Democracy Player kako bi radio najbolje za Vas. Evo prvog pitanja." */;
 
 /* Flag: untranslated */
-"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?";
+"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" /* = "Preporučujemo da dozvolite Democracy Player-u da startuje sa uključenjem Vašeg kompjutera. Na ovaj način, video fajlovi koji nisu završili \"download\" mogu biti dovršeni i novi video fajlovi sa Vaših kanala će biti spremni da ih pogledate kada želite.\n\n\n\nDa li želite da Democracy startuje na uključenju Vašeg kompjutera?" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:66 */
 /* Flag: untranslated */
-"Welcome to Internet TV!" = "Welcome to Internet TV!";
+"Welcome to Internet TV!" = "Welcome to Internet TV!" /* = "Dobrodošli na Internet TV!" */;
 
 /* Flag: untranslated */
-"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
+"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" /* = "Dobrodošli na Internet TV. Mnogo toga možete uraditi sa Democracy Pleyer-om: automatski download videa sa Vaših omiljenih kanala, gledajte nove video fajlove jedan za drugim, download torrent-a, preporučite video fajl prijateljima, i mnogo više.\n\n" */;
 
 /* File: ../../portable/dialogs.py:61 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27 */
-/* Flag: untranslated */
-"Yes" = "Yes";
+"Yes" = "Da";
 
 /* Flag: untranslated */
-"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n";
+"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" /* = "Završili ste!\n\nPodešavanje je završeno -- sada možete potražiti neki kanal i poceti da gledate.\n\nNe čekajte: Democracy je drugačiji od gledanja videa na web stranicama -- izdavači mogu ponuditi velike, high quality snimke. Zato ne gubite vreme čekajući: startujte neki download i proverite ga posle nekog vremena. \n\nOstavite ga uključenog: Democracy Player povremeno proverava kanale tražeći nove sadržaje i vrši njihov download. Ostavite ga uključenog znači da ćete imati nove snimke spremne da ih pogledate kada to poželite. \n\nNe brinite za prostor na disku: Kao i TiVo, Democracy Player karakteriše 'expiration' sistem koji pomaže u čišćenju starih snimaka da bi oslobodio prostor za nove. Uvek možete zadržati snimak time što ćete kliknuti \"Snimi\" a možete podesiti u opcijama kanala koji će kanal sačuvati snimak automatski.\n\nGo Big: Taster desno od tastera za reprodukciju prikazuje snimke preko celog ekrana (fullscreen).\n\nPronađite Video: The Democracy TV Vodič poseduje stotine internet TV kanala, svi su besplatni. Samo kliknite \"Dodaj\" da biste gledali određeni kanal.\n" */;
 
 /* Flag: untranslated */
-"%message%\n%message%" = "%message%\n%message%";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
-/* Flag: untranslated */
-"Save Video _As..." = "Save Video _As...";
+"%message%\n%message%" = "%message%\n%message%" /* = "%poruka%\n%poruka%" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
-"Save this video" = "Сними овај видео";
+/* Flag: untranslated */
+"Save Video _As..." = "Save Video _As..." /* = "Snimi Video _Kao..." */;
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
+"Save this video" = "Snimi ovaj video";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117 */
 /* Flag: untranslated */
-"_Copy Video URL" = "_Copy Video URL";
+"_Copy Video URL" = "_Copy Video URL" /* = "_Kopiraj Video URL" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120 */
 /* Flag: untranslated */
-"_Remove Video" = "_Remove Video";
+"_Remove Video" = "_Remove Video" /* = "_Ukloni Video" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123 */
-"_Fullscreen" = "_Преко целог екрана";
+/* Flag: untranslated */
+"_Fullscreen" = "_Fullscreen" /* = "Preko celog ekrana (Fullscreen)" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124 */
-/* Flag: untranslated */
 "_Stop Video" = "_Stop Video";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125 */
-/* Flag: untranslated */
-"_Next Video" = "_Next Video";
+"_Next Video" = "_Sledeći Video";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126 */
-/* Flag: untranslated */
-"_Previous Video" = "_Previous Video";
+"_Previous Video" = "_Prethodni Video";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129 */
-"_Play / Pause" = "_Пусти / Паузирај";
+/* Flag: untranslated */
+"_Play / Pause" = "_Play / Pause" /* = "_Pusti / Pauziraj" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:132 */
 /* Flag: untranslated */
-"Copy Channel _Link" = "Copy Channel _Link" /* = "Копирај _Линк Канала" */;
+"Copy Channel _Link" = "Copy Channel _Link" /* = "Kopiraj _Link Kanala" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133 */
 /* Flag: untranslated */
-"_Send this channel to a friend" = "_Send this channel to a friend";
+"_Send this channel to a friend" = "_Send this channel to a friend" /* = "_Pošalji ovaj kanal prijatelju" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136 */
-"_Update Channel" = "_Освежи Канал";
+"_Update Channel" = "_Osveži Kanal";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139 */
 /* Flag: untranslated */
-"Re_name Channel" = "Re_name Channel";
+"Re_name Channel" = "Re_name Channel" /* = "Promeni_ime Kanala" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142 */
-"_Remove Channel" = "_Уклони Канал";
+/* Flag: untranslated */
+"_Remove Channel" = "_Remove Channel" /* = "_Ukloni Kanal" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145 */
 /* Flag: untranslated */
-"Re_name Playlist" = "Re_name Playlist";
+"Re_name Playlist" = "Re_name Playlist" /* = "Promeni_ime Plejliste" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148 */
 /* Flag: untranslated */
-"_Remove Playlist" = "_Remove Playlist";
+"_Remove Playlist" = "_Remove Playlist" /* = "_Ukloni Plejlistu" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151 */
-"_Video" = "_Видео";
+/* Flag: untranslated */
+"_Video" = "_Video" /* = "_Video" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152 */
-/* Flag: untranslated */
-"_Channels" = "_Channels";
+"_Channels" = "_Kanali";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153 */
 /* Flag: untranslated */
-"_Playlists" = "_Playlists";
+"_Playlists" = "_Playlists" /* = "_Plej liste" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:154 */
 /* Flag: untranslated */
-"P_layback" = "P_layback";
+"P_layback" = "P_layback" /* = "P_layback" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155 */
-"_Open..." = "_Отвори...";
+"_Open..." = "_Otvori...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155 */
-"Open various files" = "Отвори разне фајлове";
+/* Flag: untranslated */
+"Open various files" = "Open various files" /* = "Otvori razne fajlove" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157 */
 /* Flag: untranslated */
-"New _Playlist..." = "New _Playlist...";
+"New _Playlist..." = "New _Playlist..." /* = "Nova _Play lista..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157 */
-/* Flag: untranslated */
-"Create new playlist" = "Create new playlist";
+"Create new playlist" = "Kreiraj novu plejlistu";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158 */
 /* Flag: untranslated */
-"New Playlist _Folder..." = "New Playlist _Folder...";
+"New Playlist _Folder..." = "New Playlist _Folder..." /* = "Novi _Folder Plejliste..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158 */
 /* Flag: untranslated */
-"Create new playlist folder" = "Create new playlist folder";
+"Create new playlist folder" = "Create new playlist folder" /* = "Kreiraj novi folder plejliste" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159 */
 /* Flag: untranslated */
-"New Channel _Folder..." = "New Channel _Folder...";
+"New Channel _Folder..." = "New Channel _Folder..." /* = "Novi _Folder Kanala" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159 */
 /* Flag: untranslated */
-"Create new channel folder" = "Create new channel folder";
+"Create new channel folder" = "Create new channel folder" /* = "Kreiraj folder novog kanala" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160 */
 /* Flag: untranslated */
-"Add _Channel..." = "Add _Channel...";
+"Add _Channel..." = "Add _Channel..." /* = "Dodaj_Kanal" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161 */
 /* Flag: untranslated */
-"New Searc_h Channel..." = "New Searc_h Channel...";
+"New Searc_h Channel..." = "New Searc_h Channel..." /* = "Nova Pretrag_a Kanala..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162 */
 /* Flag: untranslated */
-"New Channel _Guide..." = "New Channel _Guide...";
+"New Channel _Guide..." = "New Channel _Guide..." /* = "Novi TV _Vodič..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164 */
 /* Flag: untranslated */
-"P_references" = "P_references" /* = "П_референце" */;
+"P_references" = "P_references" /* = "P_ostavke" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165 */
-"_Quit" = "_Излаз";
+"_Quit" = "_Završi";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165 */
-"Quit the Program" = "Изађи из Програма";
+/* Flag: untranslated */
+"Quit the Program" = "Quit the Program" /* = "Izađi iz Programa" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:166 */
-"U_pdate All Channels" = "О_свежи Све Канале";
+/* Flag: untranslated */
+"U_pdate All Channels" = "U_pdate All Channels" /* = "O_sveži Sve Kanale" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:167 */
-"_Help" = "_Помоћ";
+/* Flag: untranslated */
+"_Help" = "_Help" /* = "_Pomoć" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169 */
-/* Flag: untranslated */
-"_Donate" = "_Donate";
+"_Donate" = "_Donacije";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171 */
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172 */
 /* Flag: untranslated */
-"Delete selection" = "Delete selection";
+"Delete selection" = "Delete selection" /* = "Briši izbor" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6 */
-"Username:" = "Корисничко име:";
+"Username:" = "Korisničko ime";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:163 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7 */
-"Password:" = "Лозинка:";
+/* Flag: untranslated */
+"Password:" = "Password:" /* = "Lozinka:" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:350 */
 /* Flag: untranslated */
-"Unknown Runtime Error" = "Unknown Runtime Error" /* = "Непозната грешка" */;
+"Unknown Runtime Error" = "Unknown Runtime Error" /* = "Nepoznata Runtime Greška" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351 */
 /* Flag: untranslated */
-"An unknown error has occurred %s." = "An unknown error has occurred %s." /* = "Дошло је до непознате грешке %s." */;
+"An unknown error has occurred %s." = "An unknown error has occurred %s." /* = "Došlo je do nepoznate greške %s." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5 */
 /* File: ../../platform/osx/frontend/UIStrings.py:5 */
 /* Flag: untranslated */
-"_Remove..." = "_Remove...";
+"_Remove..." = "_Remove..." /* = "_Ukloni..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6 */
 /* File: ../../platform/osx/frontend/UIStrings.py:6 */
 /* Flag: untranslated */
-"_Remove Playlist..." = "_Remove Playlist...";
+"_Remove Playlist..." = "_Remove Playlist..." /* = "_Ukloni Plejlistu..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7 */
 /* File: ../../platform/osx/frontend/UIStrings.py:7 */
-/* Flag: untranslated */
-"_Remove Playlists..." = "_Remove Playlists...";
+"_Remove Playlists..." = "_Ukloni Plejliste...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8 */
 /* File: ../../platform/osx/frontend/UIStrings.py:8 */
 /* Flag: untranslated */
-"_Remove Playlist Folder..." = "_Remove Playlist Folder...";
+"_Remove Playlist Folder..." = "_Remove Playlist Folder..." /* = "_Ukloni Folder Plejliste..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:9 */
 /* File: ../../platform/osx/frontend/UIStrings.py:9 */
 /* Flag: untranslated */
-"_Remove Playlist Folders..." = "_Remove Playlist Folders...";
+"_Remove Playlist Folders..." = "_Remove Playlist Folders..." /* = "_Ukloni Foldere Plejliste..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10 */
 /* File: ../../platform/osx/frontend/UIStrings.py:10 */
 /* Flag: untranslated */
-"_Remove Channel..." = "_Remove Channel...";
+"_Remove Channel..." = "_Remove Channel..." /* = "_Ukloni Kanal" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11 */
 /* File: ../../platform/osx/frontend/UIStrings.py:11 */
 /* Flag: untranslated */
-"_Remove Channels..." = "_Remove Channels...";
+"_Remove Channels..." = "_Remove Channels..." /* = "_Ukloni Kanale..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12 */
 /* File: ../../platform/osx/frontend/UIStrings.py:12 */
 /* Flag: untranslated */
-"_Remove Channel Folder..." = "_Remove Channel Folder...";
+"_Remove Channel Folder..." = "_Remove Channel Folder..." /* = "_Ukloni Folder Kanala..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13 */
 /* File: ../../platform/osx/frontend/UIStrings.py:13 */
 /* Flag: untranslated */
-"_Remove Channel Folders..." = "_Remove Channel Folders...";
+"_Remove Channel Folders..." = "_Remove Channel Folders..." /* = "_Ukloni Folder Kanala..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14 */
 /* File: ../../platform/osx/frontend/UIStrings.py:14 */
 /* Flag: untranslated */
-"_Remove Channel Guide..." = "_Remove Channel Guide...";
+"_Remove Channel Guide..." = "_Remove Channel Guide..." /* = "_Ukloni TV Vodič..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:15 */
 /* File: ../../platform/osx/frontend/UIStrings.py:15 */
 /* Flag: untranslated */
-"_Remove Channel Guides..." = "_Remove Channel Guides...";
+"_Remove Channel Guides..." = "_Remove Channel Guides..." /* = "_Ukloni TV Vodiče..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16 */
 /* File: ../../platform/osx/frontend/UIStrings.py:16 */
 /* Flag: untranslated */
-"_Remove Video..." = "_Remove Video...";
+"_Remove Video..." = "_Remove Video..." /* = "_Ukloni Video Fajl..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:17 */
 /* File: ../../platform/osx/frontend/UIStrings.py:17 */
-/* Flag: untranslated */
-"_Remove Videos..." = "_Remove Videos...";
+"_Remove Videos..." = "_Ukloni Video Fajlove...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18 */
 /* File: ../../platform/osx/frontend/UIStrings.py:18 */
-/* Flag: untranslated */
-"Re_name..." = "Re_name...";
+"Re_name..." = "Promeni_ime";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:19 */
 /* File: ../../platform/osx/frontend/UIStrings.py:19 */
 /* Flag: untranslated */
-"Re_name Playlist..." = "Re_name Playlist...";
+"Re_name Playlist..." = "Re_name Playlist..." /* = "Promeni_ime Plejliste" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:20 */
 /* File: ../../platform/osx/frontend/UIStrings.py:20 */
-/* Flag: untranslated */
-"Re_name Playlist Folder..." = "Re_name Playlist Folder...";
+"Re_name Playlist Folder..." = "Promeni-ime Foldera Plejliste...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:21 */
 /* File: ../../platform/osx/frontend/UIStrings.py:21 */
 /* Flag: untranslated */
-"Re_name Channel..." = "Re_name Channel...";
+"Re_name Channel..." = "Re_name Channel..." /* = "Promeni-ime Kanala..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:22 */
 /* File: ../../platform/osx/frontend/UIStrings.py:22 */
 /* Flag: untranslated */
-"Re_name Channel Folder..." = "Re_name Channel Folder...";
+"Re_name Channel Folder..." = "Re_name Channel Folder..." /* = "Promeni_ime Foldera Kanala" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:23 */
 /* File: ../../platform/osx/frontend/UIStrings.py:23 */
 /* Flag: untranslated */
-"Re_name Channel Guide..." = "Re_name Channel Guide...";
+"Re_name Channel Guide..." = "Re_name Channel Guide..." /* = "Promeni_ime TV Vodiča..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24 */
 /* File: ../../platform/osx/frontend/UIStrings.py:24 */
 /* Flag: untranslated */
-"_Update Channel..." = "_Update Channel...";
+"_Update Channel..." = "_Update Channel..." /* = "_Osveži Kanal..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25 */
 /* File: ../../platform/osx/frontend/UIStrings.py:25 */
 /* Flag: untranslated */
-"_Update Channels..." = "_Update Channels...";
+"_Update Channels..." = "_Update Channels..." /* = "_Osveži Kanale_" */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161 */
 /* Flag: untranslated */
-"Error Bombing Item" = "Error Bombing Item";
+"Error Bombing Item" = "Error Bombing Item" /* = "Greška \"Bombing Item\"" */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:163 */
 /* Flag: untranslated */
-"Error Recommending Item" = "Error Recommending Item";
+"Error Recommending Item" = "Error Recommending Item" /* = "Greška \"Recommending Item\"" */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:165 */
 /* Flag: untranslated */
-"Error Opening Website" = "Error Opening Website";
+"Error Opening Website" = "Error Opening Website" /* = "Greška u Otvaranju Web sajta" */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:169 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "There was an error opening %s.  Please try again in a few seconds";
+"There was an error opening %s.  Please try again in a few seconds" = "There was an error opening %s.  Please try again in a few seconds" /* = "Greška u otvaranju %s.  Molimo Vas pokusajte ponovo za nekoliko sekundi" */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37 */
 /* Flag: untranslated */
-"Remove Playlist..." = "Remove Playlist...";
+"Remove Playlist..." = "Remove Playlist..." /* = "Ukloni Plejlistu" */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7 */
 /* Flag: untranslated */
-"Remove Playlists..." = "Remove Playlists...";
+"Remove Playlists..." = "Remove Playlists..." /* = "Ukloni Plejliste" */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:8 */
 /* Flag: untranslated */
-"Remove Playlist Folder..." = "Remove Playlist Folder...";
+"Remove Playlist Folder..." = "Remove Playlist Folder..." /* = "Ukloni Folder Plejliste..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:9 */
 /* Flag: untranslated */
-"Remove Playlist Folders..." = "Remove Playlist Folders...";
+"Remove Playlist Folders..." = "Remove Playlist Folders..." /* = "Ukloni Foldere Plejliste..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27 */
-/* Flag: untranslated */
-"Remove Channel..." = "Remove Channel...";
+"Remove Channel..." = "Ukloni Kanal...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11 */
 /* Flag: untranslated */
-"Remove Channels..." = "Remove Channels...";
+"Remove Channels..." = "Remove Channels..." /* = "Ukloni Kanale..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12 */
 /* Flag: untranslated */
-"Remove Channel Folder..." = "Remove Channel Folder...";
+"Remove Channel Folder..." = "Remove Channel Folder..." /* = "Ukloni Folder Kanala..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:13 */
 /* Flag: untranslated */
-"Remove Channel Folders..." = "Remove Channel Folders...";
+"Remove Channel Folders..." = "Remove Channel Folders..." /* = "Ukloni Foldere Kanala..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:14 */
 /* Flag: untranslated */
-"Remove Channel Guide..." = "Remove Channel Guide...";
+"Remove Channel Guide..." = "Remove Channel Guide..." /* = "Ukloni TV Vodič..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:15 */
-/* Flag: untranslated */
-"Remove Channel Guides..." = "Remove Channel Guides...";
+"Remove Channel Guides..." = "Ukloni TV Vodiče...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16 */
-/* Flag: untranslated */
-"Remove Video..." = "Remove Video...";
+"Remove Video..." = "Ukloni Video Fajl...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:17 */
 /* Flag: untranslated */
-"Remove Videos..." = "Remove Videos...";
+"Remove Videos..." = "Remove Videos..." /* = "Ukloni Video Fajlove..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36 */
 /* Flag: untranslated */
-"Rename Playlist..." = "Rename Playlist...";
+"Rename Playlist..." = "Rename Playlist..." /* = "Promeni Ime Plejliste..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20 */
 /* Flag: untranslated */
-"Rename Playlist Folder..." = "Rename Playlist Folder...";
+"Rename Playlist Folder..." = "Rename Playlist Folder..." /* = "Promeni ime Foldera Plejliste..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26 */
 /* Flag: untranslated */
-"Rename Channel..." = "Rename Channel...";
+"Rename Channel..." = "Rename Channel..." /* = "Promeni Ime Kanala..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22 */
 /* Flag: untranslated */
-"Rename Channel Folder..." = "Rename Channel Folder...";
+"Rename Channel Folder..." = "Rename Channel Folder..." /* = "Promeni Ime Kanala" */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:23 */
 /* Flag: untranslated */
-"Rename Channel Guide..." = "Rename Channel Guide...";
+"Rename Channel Guide..." = "Rename Channel Guide..." /* = "Promeni Ime TV Vodiča..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:24 */
 /* Flag: untranslated */
-"Update Channel..." = "Update Channel...";
+"Update Channel..." = "Update Channel..." /* = "Osveži Kanal..." */;
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:25 */
 /* Flag: untranslated */
-"Update Channels..." = "Update Channels...";
+"Update Channels..." = "Update Channels..." /* = "Osveži Kanale..." */;
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:36 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"Error importing democracy modules:\n%s" = "Error importing democracy modules:\n%s";
+"Error importing democracy modules:\n%s" = "Error importing democracy modules:\n%s" /* = "Grečka pri importu democracy modula:\n%s" */;
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:40 */
-/* Flag: untranslated */
-"Starting up" = "Starting up";
+"Starting up" = "Startujem";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:136 */
 /* Flag: untranslated */
-"Loading window" = "Loading window";
+"Loading window" = "Loading window" /* = "Učitavam prozor" */;
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:137 */
 /* Flag: untranslated */
-"onStartup called twice" = "onStartup called twice";
+"onStartup called twice" = "onStartup called twice" /* = "naUključenju pozvan dvaput" */;
 
 /* File: ../../portable/playlist.py:175 */
 /* File: ../../portable/playlist.py:180 */
 /* Flag: untranslated */
-"Rename Playlist" = "Rename Playlist";
+"Rename Playlist" = "Rename Playlist" /* = "Promeni Ime Plejliste" */;
 
 /* File: ../../portable/playlist.py:176 */
 /* File: ../../portable/folder.py:120 */
@@ -798,297 +742,284 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/menu.py:48 */
 /* File: ../../portable/menu.py:53 */
 /* File: ../../portable/feed.py:690 */
-/* Flag: untranslated */
-"Remove" = "Remove";
+"Remove" = "Ukloni";
 
 /* File: ../../portable/playlist.py:181 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s";
+"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s" /* = "Unesi novo ime za plejlistu %s" */;
 
 /* File: ../../portable/playlist.py:194 */
 /* Flag: untranslated */
-"Create Playlist" = "Create Playlist";
+"Create Playlist" = "Create Playlist" /* = "Kreiraj Plejlistu" */;
 
 /* File: ../../portable/playlist.py:195 */
 /* Flag: untranslated */
-"Enter a name for the new playlist" = "Enter a name for the new playlist";
+"Enter a name for the new playlist" = "Enter a name for the new playlist" /* = "Unesi ime za novu plejlistu" */;
 
 /* File: ../../portable/compiled_templates/search.py:39 */
 /* Flag: untranslated */
-"Nothing to display.<br></br> Enter a query in the search field above." = "Nothing to display.<br></br> Enter a query in the search field above.";
+"Nothing to display.<br></br> Enter a query in the search field above." = "Nothing to display.<br></br> Enter a query in the search field above." /* = "Ništa za prikaz.<br></br> Unesite upit u polje za pretraživanje iznad." */;
 
 /* File: ../../portable/compiled_templates/search.py:44 */
 /* Flag: untranslated */
-"Searching..." = "Searching...";
+"Searching..." = "Searching..." /* = "Tražim..." */;
 
 /* File: ../../portable/compiled_templates/search.py:56 */
 /* Flag: untranslated */
-"Results for \"${query}\"" = "Results for \"${query}\"";
+"Results for \"${query}\"" = "Results for \"${query}\"" /* = "Rezultati za \"${upit}\"" */;
 
 /* File: ../../portable/compiled_templates/search.py:95 */
 /* Flag: untranslated */
-"Video Search" = "Video Search";
+"Video Search" = "Video Search" /* = "Video Pretraživanje" */;
 
 /* File: ../../portable/compiled_templates/playlist.py:56 */
 /* Flag: untranslated */
-"Empty Playlist" = "Empty Playlist";
+"Empty Playlist" = "Empty Playlist" /* = "Prazna Plejlista" */;
 
 /* File: ../../portable/compiled_templates/playlist.py:58 */
 /* Flag: untranslated */
-"Drag downloaded videos to this playlist to add them." = "Drag downloaded videos to this playlist to add them.";
+"Drag downloaded videos to this playlist to add them." = "Drag downloaded videos to this playlist to add them." /* = "Prevucite nove video fajlove u ovu plejlistu da ih dodate." */;
 
 /* File: ../../portable/compiled_templates/playlist_folder.py:59 */
 /* Flag: untranslated */
-"Empty Playlist Folder" = "Empty Playlist Folder";
+"Empty Playlist Folder" = "Empty Playlist Folder" /* = "Folder Prazne Plejliste" */;
 
 /* File: ../../portable/compiled_templates/playlist_folder.py:71 */
-/* Flag: untranslated */
-"This folder contains ${count} playlists, but the playlists do not contain any items." = "This folder contains ${count} playlists, but the playlists do not contain any items.";
+"This folder contains ${count} playlists, but the playlists do not contain any items." = "Ovaj folder sadrži ${count} plejliste, ali su plejliste bez sadržaja.";
 
 /* File: ../../portable/compiled_templates/playlist_folder.py:76 */
 /* Flag: untranslated */
-"Drag playlists to this folder to add them." = "Drag playlists to this folder to add them.";
+"Drag playlists to this folder to add them." = "Drag playlists to this folder to add them." /* = "Prevucite plejliste u ovaj folder da ih dodate." */;
 
 /* File: ../../portable/compiled_templates/multi_playlist.py:57 */
 /* Flag: untranslated */
-"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)";
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" /* = "${count} Plejlist Foldera Izabrano<br></br>(contains ${containedcount} playlists)" */;
 
 /* File: ../../portable/compiled_templates/multi_playlist.py:69 */
 /* Flag: untranslated */
-"${count} Playlists Selected" = "${count} Playlists Selected";
+"${count} Playlists Selected" = "${count} Playlists Selected" /* = "${count} Plejlisti Izabrano" */;
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:47 */
 /* File: ../../portable/compiled_templates/video_info.py:40 */
 /* File: ../../portable/compiled_templates/external_playback.py:50 */
 /* Flag: untranslated */
-"STAR" = "STAR";
+"STAR" = "STAR" /* = "ZVEZDA" */;
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:57 */
 /* File: ../../portable/compiled_templates/video_info.py:50 */
 /* File: ../../portable/compiled_templates/external_playback.py:60 */
 /* File: ../../portable/compiled_templates/download_item.py:201 */
 /* Flag: untranslated */
-"SAVE" = "SAVE";
+"SAVE" = "SAVE" /* = "Snimi" */;
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:62 */
 /* File: ../../portable/compiled_templates/video_info.py:55 */
 /* File: ../../portable/compiled_templates/external_playback.py:65 */
 /* Flag: untranslated */
-"SAVED" = "SAVED";
+"SAVED" = "SAVED" /* = "Snimljeno" */;
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:70 */
 /* File: ../../portable/compiled_templates/video_info.py:63 */
 /* File: ../../portable/compiled_templates/external_playback.py:73 */
 /* File: ../../portable/compiled_templates/download_item.py:211 */
-/* Flag: untranslated */
-"DELETE" = "DELETE";
+"DELETE" = "IZBRIŠI";
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:85 */
 /* File: ../../portable/compiled_templates/external_playback.py:88 */
 /* Flag: untranslated */
-"Democracy - External Playback Template" = "Democracy - External Playback Template";
+"Democracy - External Playback Template" = "Democracy - External Playback Template" /* = "Democracy - External Playback Template" */;
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:95 */
 /* Flag: untranslated */
-"Continue To Next Video" = "Continue To Next Video";
+"Continue To Next Video" = "Continue To Next Video" /* = "Nastavi do sledećeg Video fajla" */;
 
 /* File: ../../portable/compiled_templates/channelfolder.py:166 */
 /* Flag: untranslated */
-"${count} Downloads in Progress" = "${count} Downloads in Progress";
+"${count} Downloads in Progress" = "${count} Downloads in Progress" /* = "${count} Download-a u toku" */;
 
 /* File: ../../portable/compiled_templates/channelfolder.py:171 */
 /* Flag: untranslated */
-"1 Download in Progress" = "1 Download in Progress";
+"1 Download in Progress" = "1 Download in Progress" /* = "1 Download u toku" */;
 
 /* File: ../../portable/compiled_templates/channelfolder.py:191 */
 /* Flag: untranslated */
-"${len} Videos On This Channel" = "${len} Videos On This Channel";
+"${len} Videos On This Channel" = "${len} Videos On This Channel" /* = "${len} Video Fajlova na ovom kanalu" */;
 
 /* File: ../../portable/compiled_templates/channelfolder.py:205 */
 /* Flag: untranslated */
-"All ${len} Videos Match This Search" = "All ${len} Videos Match This Search";
+"All ${len} Videos Match This Search" = "All ${len} Videos Match This Search" /* = "Svi ${len} Video fajlovi odgovaraju upitu ove pretrage" */;
 
 /* File: ../../portable/compiled_templates/channelfolder.py:217 */
 /* Flag: untranslated */
-"${len} Videos Match This Search" = "${len} Videos Match This Search";
+"${len} Videos Match This Search" = "${len} Videos Match This Search" /* = "${len} Video fajlova odgovara ovoj pretrazi" */;
 
 /* File: ../../portable/compiled_templates/channelfolder.py:277 */
 /* Flag: untranslated */
-"${count} Videos on this Channel" = "${count} Videos on this Channel";
+"${count} Videos on this Channel" = "${count} Videos on this Channel" /* = "${count} Video fajlova na ovom kanalu" */;
 
 /* File: ../../portable/compiled_templates/channelfolder.py:290 */
-"Unwatched" = "Без надгледања";
+/* Flag: untranslated */
+"Unwatched" = "Unwatched" /* = "Nije pregledano" */;
 
 /* File: ../../portable/compiled_templates/channelfolder.py:301 */
 /* Flag: untranslated */
-"Watched" = "Watched";
+"Watched" = "Watched" /* = "Pregledano" */;
 
 /* File: ../../portable/compiled_templates/channelfolder.py:312 */
-/* Flag: untranslated */
-"Saved" = "Saved";
+"Saved" = "Snimljeno";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:32 */
 /* File: ../../portable/compiled_templates/channel.py:152 */
 /* Flag: untranslated */
-"Default" = "Default";
+"Default" = "Default" /* = "Početna" */;
 
 /* File: ../../portable/compiled_templates/feed_settings.py:39 */
 /* File: ../../portable/compiled_templates/channel.py:159 */
-/* Flag: untranslated */
-"default" = "default";
+"default" = "podrazumevano";
 
 /* File: ../../portable/compiled_templates/feed_settings.py:110 */
 /* File: ../../portable/compiled_templates/channel.py:379 */
 /* Flag: untranslated */
-"Videos expire after" = "Videos expire after";
+"Videos expire after" = "Videos expire after" /* = "Video fajlova ističe posle" */;
 
 /* File: ../../portable/compiled_templates/feed_settings.py:113 */
 /* File: ../../portable/compiled_templates/channel.py:382 */
 /* Flag: untranslated */
-"When turned on, Auto Download should" = "When turned on, Auto Download should";
+"When turned on, Auto Download should" = "When turned on, Auto Download should" /* = "Kada je uključen, Auto Download" */;
 
 /* File: ../../portable/compiled_templates/feed_settings.py:146 */
 /* File: ../../portable/compiled_templates/channel.py:415 */
 /* Flag: untranslated */
-"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched.";
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." /* = "Ne uključuj Auto Download kada je više od ${maxnew} ${maxnew2} video fajlova još uvek nepregledano." */;
 
 /* File: ../../portable/compiled_templates/channel.py:316 */
 /* File: ../../portable/compiled_templates/channel_content.py:122 */
 /* File: ../../portable/compiled_templates/channel_folder.py:252 */
-/* Flag: untranslated */
-"Downloaded" = "Downloaded";
+"Downloaded" = "Preuzeto";
 
 /* File: ../../portable/compiled_templates/channel.py:428 */
-/* Flag: untranslated */
-"Recommend" = "Recommend";
+"Recommend" = "Preporuči";
 
 /* File: ../../portable/compiled_templates/channel.py:430 */
 /* File: ../../portable/compiled_templates/unittest/simpleunicode.py:34 */
 /* File: ../../portable/test/unicodetest.py:402 */
 /* Flag: untranslated */
-"Settings" = "Settings";
+"Settings" = "Settings" /* = "Podešavanja" */;
 
 /* File: ../../portable/compiled_templates/channel.py:440 */
 /* Flag: untranslated */
-"<label for=\"automatic\">Auto Download</label>" = "<label for=\"automatic\">Auto Download</label>";
+"<label for=\"automatic\">Auto Download</label>" = "<label for=\"automatic\">Auto Download</label>" /* = "<label for=\"automatic\">Auto Download</label>" */;
 
 /* File: ../../portable/compiled_templates/channel.py:458 */
 /* Flag: untranslated */
-"Looking for videos at this URL" = "Looking for videos at this URL";
+"Looking for videos at this URL" = "Looking for videos at this URL" /* = "Tražim video fajlove na URL" */;
 
 /* File: ../../portable/compiled_templates/external_playback.py:111 */
 /* Flag: untranslated */
-"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}";
+"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" /* = "Democracy ne može reprodukovati ovaj fajl. Možda da probate da ga otvorite nekim drugim programom.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" */;
 
 /* File: ../../portable/compiled_templates/external_playback.py:115 */
 /* Flag: untranslated */
-"REVEAL FILE" = "REVEAL FILE";
+"REVEAL FILE" = "REVEAL FILE" /* = "OTKRIJ FAJL" */;
 
 /* File: ../../portable/compiled_templates/external_playback.py:119 */
 /* Flag: untranslated */
-"Play Externally" = "Play Externally";
+"Play Externally" = "Play Externally" /* = "Reprodukuj eksterno" */;
 
 /* File: ../../portable/compiled_templates/external_playback.py:128 */
 /* Flag: untranslated */
-"Skip >> ${countdown}" = "Skip >> ${countdown}";
+"Skip >> ${countdown}" = "Skip >> ${countdown}" /* = "Preskoči >> ${countdown}" */;
 
 /* File: ../../portable/compiled_templates/download_item.py:114 */
 /* Flag: untranslated */
-"SHOW FILE" = "SHOW FILE";
+"SHOW FILE" = "SHOW FILE" /* = "PRIKAŽI FAJL" */;
 
 /* File: ../../portable/compiled_templates/download_item.py:121 */
 /* Flag: untranslated */
-"SHOW FOLDER" = "SHOW FOLDER";
+"SHOW FOLDER" = "SHOW FOLDER" /* = "PRIKAŽI FOLDER" */;
 
 /* File: ../../portable/compiled_templates/download_item.py:135 */
-/* Flag: untranslated */
-"SHARE IT" = "SHARE IT";
+"SHARE IT" = "PODELI SA DRUGIMA";
 
 /* File: ../../portable/compiled_templates/download_item.py:144 */
 /* Flag: untranslated */
-"STAR IT" = "STAR IT";
+"STAR IT" = "STAR IT" /* = "DODELI ZVEZDICU" */;
 
 /* File: ../../portable/compiled_templates/download_item.py:189 */
-"Pending Auto Download" = "Аутоматско скидање у току";
+/* Flag: untranslated */
+"Pending Auto Download" = "Pending Auto Download" /* = "Aktivan Auto Download" */;
 
 /* File: ../../portable/compiled_templates/unittest/translationtest.py:43 */
-/* Flag: untranslated */
-"Simple translation" = "Simple translation";
+"Simple translation" = "Jednostavan prevod";
 
 /* File: ../../portable/compiled_templates/unittest/translationtest.py:57 */
-/* Flag: untranslated */
-"truck stop in a ${can}" = "truck stop in a ${can}";
+"truck stop in a ${can}" = "kamion staje za ${can}";
 
 /* File: ../../portable/compiled_templates/unittest/translationtest.py:61 */
 /* Flag: untranslated */
-"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>";
+"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" /* = "Ovo je ${car} a ovo je ${truck} <span>Ovaj tekst je <b style=\"color:red\">raw</b> text</span>" */;
 
 /* File: ../../portable/compiled_templates/download.py:91 */
 /* Flag: untranslated */
-"${size} disk space free" = "${size} disk space free";
+"${size} disk space free" = "${size} disk space free" /* = "${size} slobodno na disku" */;
 
 /* File: ../../portable/compiled_templates/download.py:101 */
 /* Flag: untranslated */
-"${size} available for downloads" = "${size} available for downloads";
+"${size} available for downloads" = "${size} available for downloads" /* = "${size} raspoloživo za download" */;
 
 /* File: ../../portable/compiled_templates/download.py:153 */
 /* File: ../../portable/tabs.py:28 */
-/* Flag: untranslated */
 "Downloading" = "Downloading";
 
 /* File: ../../portable/compiled_templates/download.py:168 */
 /* Flag: untranslated */
-"Clear Completed Torrents" = "Clear Completed Torrents";
+"Clear Completed Torrents" = "Clear Completed Torrents" /* = "Ukloni završene torente" */;
 
 /* File: ../../portable/compiled_templates/channel_folder.py:138 */
 /* Flag: untranslated */
-"Empty Channel Folder" = "Empty Channel Folder";
+"Empty Channel Folder" = "Empty Channel Folder" /* = "Isprazni folder kanala" */;
 
 /* File: ../../portable/compiled_templates/channel_folder.py:140 */
 /* Flag: untranslated */
-"Drag channels to this folder to add them." = "Drag channels to this folder to add them.";
+"Drag channels to this folder to add them." = "Drag channels to this folder to add them." /* = "Prevucite kanale u ovaj folder da ih dodate." */;
 
 /* File: ../../portable/compiled_templates/library.py:73 */
 /* File: ../../portable/tabs.py:25 */
-/* Flag: untranslated */
-"My Collection" = "My Collection";
+"My Collection" = "Moja kolekcija";
 
 /* File: ../../portable/compiled_templates/new.py:75 */
 /* File: ../../portable/tabs.py:26 */
-"New Videos" = "Нови Снимци";
+"New Videos" = "Novi video fajlovi";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:38 */
 /* Flag: untranslated */
-"Democracy Internet TV: How to Get Started" = "Democracy Internet TV: How to Get Started";
+"Democracy Internet TV: How to Get Started" = "Democracy Internet TV: How to Get Started" /* = "Democracy Internet TV: Kako početi" */;
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:42 */
-/* Flag: untranslated */
 "GO BIG:" = "GO BIG:";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:44 */
 /* Flag: untranslated */
-"This is your fullscreen button. Click it and lean back." = "This is your fullscreen button. Click it and lean back.";
+"This is your fullscreen button. Click it and lean back." = "This is your fullscreen button. Click it and lean back." /* = "Ovo je fullscreen taster. Klikni i opusti se." */;
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:48 */
-/* Flag: untranslated */
-"NEW STUFF:" = "NEW STUFF:";
+"NEW STUFF:" = "NOVO:";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:50 */
 /* Flag: untranslated */
-"Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch.";
+"Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." /* = "Plavi krugovi označavaju da kanal ima nove video fajlove na raspolaganju, zeleni krugovi označavaju da su preuzeti fajlovi spremni da ih pogledate." */;
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:52 */
 /* Flag: untranslated */
-"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>";
+"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" /* = "<strong i18n:translate=\"\">PRESKOČI INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Idi na TV Vodič >></a></strong>" */;
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:54 */
 /* Flag: untranslated */
-"<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" = "<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>";
+"<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" = "<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" /* = "<strong>Dodaj kanale:</strong> TV Vodič je tvoja baza internet TV kanala. Klikni 'DODAJ' da biste se pretplatili na kanal-- <strong>tkanali u vodiču su besplatni.</strong>" */;
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:56 */
 /* Flag: untranslated */
-"<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later." = "<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later.";
+"<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later." = "<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later." /* = "<strong>Ne čekaj:</strong> Democracy je drugačiji od gledanja video fajlova na web stranicama-- izdavači mogu ponuditi velike, high quality video snimke. Ne gubi vreme: startuj neki download i proveri ga malo kasnije." */;
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:58 */
 /* Flag: untranslated */
@@ -1103,30 +1034,24 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)";
 
 /* File: ../../portable/compiled_templates/multi_channel.py:69 */
-/* Flag: untranslated */
-"${count} Channels Selected" = "${count} Channels Selected";
+"${count} Channels Selected" = "${count} kanala izabrano";
 
 /* File: ../../portable/dl_daemon/download.py:298 */
-/* Flag: untranslated */
-"Error" = "Error";
+"Error" = "Greška";
 
 /* File: ../../portable/dl_daemon/download.py:357 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Could not write to %s" = "Could not write to %s";
+"Could not write to %s" = "Ne mogu da upisujem na %s";
 
 /* File: ../../portable/dl_daemon/download.py:376 */
-/* Flag: untranslated */
-"Not enough disk space" = "Not enough disk space";
+"Not enough disk space" = "Nedovoljno slobodnog prostora na disku";
 
 /* File: ../../portable/dl_daemon/download.py:377 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s MB required to store this video" = "%s MB required to store this video";
+"%s MB required to store this video" = "%s MB potrebno za snimanje ovog video fajla";
 
 /* File: ../../portable/dl_daemon/download.py:676 */
-/* Flag: untranslated */
-"Corrupt Torrent" = "Corrupt Torrent";
+"Corrupt Torrent" = "neispravan torent";
 
 /* File: ../../portable/dl_daemon/download.py:677 */
 /* Flag: untranslated */
@@ -1134,12 +1059,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The torrent file at %s was not valid" = "The torrent file at %s was not valid";
 
 /* File: ../../portable/dl_daemon/download.py:702 */
-/* Flag: untranslated */
-"Torrent file deleted" = "Torrent file deleted";
+"Torrent file deleted" = "Torent fajl obrisan";
 
 /* File: ../../portable/dl_daemon/download.py:703 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted " = "The torrent file for this item was deleted ";
+"The torrent file for this item was deleted " = "Odgovarajući torent fajl je obrisan ";
 
 /* File: ../../portable/dl_daemon/download.py:704 */
 /* Flag: untranslated */
@@ -1166,27 +1089,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%0.0fB" = "%0.0fB";
 
 /* File: ../../portable/httpclient.py:52 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Error: %s" = "Error: %s";
+"Error: %s" = "Greška: %s";
 
 /* File: ../../portable/httpclient.py:67 */
 /* File: ../../portable/httpclient.py:72 */
-/* Flag: untranslated */
-"Can't connect" = "Can't connect";
+"Can't connect" = "Ne mogu da se povežem";
 
 /* File: ../../portable/httpclient.py:68 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Connection Error: %s" = "Connection Error: %s";
+"Connection Error: %s" = "Grečka u povezivanju %s";
 
 /* File: ../../portable/httpclient.py:73 */
-/* Flag: untranslated */
-"SSL connection error" = "SSL connection error";
+"SSL connection error" = "greška SSL konekcije";
 
 /* File: ../../portable/httpclient.py:77 */
-/* Flag: untranslated */
-"HTTP error" = "HTTP error";
+"HTTP error" = "HTTP greška";
 
 /* File: ../../portable/httpclient.py:80 */
 /* Flag: untranslated */
@@ -1215,15 +1133,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/httpclient.py:97 */
 /* File: ../../portable/downloader.py:173 */
-/* Flag: untranslated */
-"File not found" = "File not found";
+"File not found" = "Fajl nije nađen";
 
 /* File: ../../portable/httpclient.py:98 */
-/* Flag: untranslated */
 "Got 404 status code" = "Got 404 status code";
 
 /* File: ../../portable/httpclient.py:100 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Bad Status Code: %s" = "Bad Status Code: %s";
 
@@ -1232,15 +1147,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Authorization failed" = "Authorization failed";
 
 /* File: ../../portable/httpclient.py:109 */
-/* Flag: untranslated */
-"Internal Error" = "Internal Error";
+"Internal Error" = "Interna greška";
 
 /* File: ../../portable/httpclient.py:110 */
-/* Flag: untranslated */
 "Pipeline request never started" = "Pipeline request never started";
 
 /* File: ../../portable/httpclient.py:114 */
-/* Flag: untranslated */
 "Timeout" = "Timeout";
 
 /* File: ../../portable/httpclient.py:115 */
@@ -1249,8 +1161,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Connection to %s timed out" = "Connection to %s timed out";
 
 /* File: ../../portable/httpclient.py:119 */
-/* Flag: untranslated */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Neispravan URL";
 
 /* File: ../../portable/httpclient.py:120 */
 /* Flag: untranslated */
@@ -1258,12 +1169,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%s is not a valid URL" = "%s is not a valid URL";
 
 /* File: ../../portable/httpclient.py:313 */
-/* Flag: untranslated */
-"Connection closed" = "Connection closed";
+"Connection closed" = "Veza je zatvorena";
 
 /* File: ../../portable/httpclient.py:689 */
-/* Flag: untranslated */
-"Unknown" = "Unknown";
+"Unknown" = "Nepoznato";
 
 /* File: ../../portable/httpclient.py:690 */
 /* Flag: untranslated */

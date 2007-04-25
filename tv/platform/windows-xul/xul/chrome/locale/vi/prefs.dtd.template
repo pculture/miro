@@ -10,31 +10,37 @@
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "Playback">
+<!ENTITY prefs.playback "Phát lại">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
-<!ENTITY prefs.playback.stop.after.each "Stop after each video.">
+<!ENTITY prefs.playback.auto.next.video "Xem liên tiếp">
+<!ENTITY prefs.playback.stop.after.each "Dừng sau mỗi video.">
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.change "Thay đổi...">
+
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
+<!ENTITY prefs.folder.others.location "Folder Location">
+<!ENTITY prefs.folder.others.shown "Show as Channel">
+<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.remove "Remove">
 
 <!ENTITY prefs.downloads.max "Downloads">
 <!ENTITY prefs.downloads.max.part1 "Download at most">
 <!ENTITY prefs.downloads.max.part2 "videos at once.">
 
 <!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
-<!ENTITY prefs.disk.space.min.part2 "GB free.">
+<!ENTITY prefs.disk.space.min.part1 "Không tải về nếu nhỏ hơn">
+<!ENTITY prefs.disk.space.min.part2 "GB miễn phí">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
-<!ENTITY prefs.videos.expire.six "6 days">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire.one "1 ngày">
+<!ENTITY prefs.videos.expire.three "3 ngày">
+<!ENTITY prefs.videos.expire.six "6 ngày">
+<!ENTITY prefs.videos.expire.ten "10 ngày">
+<!ENTITY prefs.videos.expire.thirty "1 tháng">
+<!ENTITY prefs.videos.expire.never "Không bao giờ">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">

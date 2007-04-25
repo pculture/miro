@@ -6,7 +6,8 @@
 <!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"Searching for Videos">
+<!ENTITY startup.search.searching	"Naghahanap ng mga Video
+Naghahanap ng mga Palabas">
 <!ENTITY startup.change	                "Change">
 <!ENTITY startup.cancel	                "Cancel Search">
 <!ENTITY startup.undo	                "Reset Search">
@@ -21,5 +22,5 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
 <!ENTITY startup.done6.heading		"Find Videos:">
 <!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
-<!ENTITY startup.answer.yes		"Yes">
+<!ENTITY startup.answer.yes		"Oo">
 <!ENTITY startup.answer.no		"No">

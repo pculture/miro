@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-08 15:28-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-25 13:11-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -146,7 +146,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "%donation label%" = "%donation label%";
 
-/* Flag: untranslated */
 "-00:00:00" = "-00:00:00";
 
 "00:00:00" = "00:00:00";
@@ -165,7 +164,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/dialogs.py:60 */
 "Cancel" = "Peruuta";
 
-"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)↵\n";
+"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n\n";
 
 "Password:\n" = "Salasana:\n";
 
@@ -201,8 +200,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "By default, videos expire after:" = "Oletuksena videoiden vanhenemisaika on:";
 
-/* Flag: untranslated */
-"Change..." = "Change...";
+"Change..." = "Muuta...";
 
 "Check channels for new content:" = "Tarkista kanavat uuden sisällön varalta:";
 
@@ -211,7 +209,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:42 */
 /* Flag: untranslated */
-"Download at most" = "Download at most";
+"Download at most" = "Download at most" /* = "Lataa enimmillään" */;
 
 "GB free." = "Gt.";
 
@@ -230,8 +228,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Run Democracy at startup" = "Suorita Democracy käynnistyksen yhteydessä";
 
-/* Flag: untranslated */
-"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
+"Save downloaded videos in this folder:" = "Tallenna ladatut videot tähän kansioon:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
 "Stop after each video." = "Pysäytä soitto jokaisen jälkeen.";
@@ -247,7 +244,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
 /* Flag: untranslated */
-"videos at once." = "videos at once.";
+"videos at once." = "videos at once." /* = "videota kerrallaan." */;
 
 "$label$" = "$label$";
 
@@ -290,8 +287,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Search my entire Home folder." = "Etsi koko kotikansiostani.";
 
-/* Flag: untranslated */
-"Search this folder:" = "Search this folder:";
+"Search this folder:" = "Hae tästä hakemistosta:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12 */
 "Searching for Videos" = "Etsitään videoita";
@@ -311,7 +307,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "Ja sillä selvä!\n\nAsennus on valmis. Voit nyt ruveta etsimään kanavia ja katsomaan ohjelmia.\n\nÄlä odota turhaan: Democracyn videot eivät ole samoja kuin WWW-sivuilla. Democracy sallii videoiden tekijöiden julkaista isoja, hyvälaatuisia videoita, joiden latautumisen ajaksi ei kuitenkaan täydy lopettaa muita tekemisiä. Katso videot yksinkertaisesti myöhemmin kun ne ovat latautuneet.\n\nJätä soitin päälle: Democracy Player tarkistaa videokanavat aika ajoin uusien videoiden varalta ja lataa uudet videot automaattisesti. Jätä soitin päälle ja videot odottavat valmiina ladattuina sopivaa katseluhetkeä.\n\nÄlä huolehdi levytilasta: Democracy Playerissä on \"vanhentumistoiminto,\" joka poistaa vanhat videot uusien tieltä. Voit tietysti halutessasi säilyttää videon napsauttamalla tallenna-painiketta tai asettaa kaikki kanavan videot automaattisesti säilytettäviksi.\n\nÄlä ole vaatimaton: Toistonäppäimen oikealla puolella oleva painike sovittaa videon kokoruutuun.\n\nEtsi videoita: Democracyn kanavaoppaassa on satoja internet TV-kanavia, jotka eivät maksa mitään katsoa. Napsauta vain ADD, katsellaksesi kanavan tarjontaa.\n";
 
-"%message%\n%message%" = "%message%↵";
+"%message%\n" = "%message%\n";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
 "Save Video _As..." = "Tallenna _video nimellä...";
@@ -644,45 +640,39 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Searching..." = "Etsitään...";
 
 /* File: ../../portable/compiled_templates/search.py:56 */
-/* Flag: untranslated */
-"Results for \"${query}\"" = "Results for \"${query}\"";
+"Results for \"${query}\"" = "Tulokset haulle \"${query}\"";
 
 /* File: ../../portable/compiled_templates/search.py:95 */
 "Video Search" = "Videohaku";
 
 /* File: ../../portable/compiled_templates/playlist.py:56 */
-/* Flag: untranslated */
-"Empty Playlist" = "Empty Playlist";
+"Empty Playlist" = "Tyhjä soittolista";
 
 /* File: ../../portable/compiled_templates/playlist.py:58 */
-/* Flag: untranslated */
-"Drag downloaded videos to this playlist to add them." = "Drag downloaded videos to this playlist to add them.";
+"Drag downloaded videos to this playlist to add them." = "Vedä ladatut videot tähän soittolistaan lisätäksesi ne.";
 
 /* File: ../../portable/compiled_templates/playlist_folder.py:59 */
 /* Flag: untranslated */
-"Empty Playlist Folder" = "Empty Playlist Folder";
+"Empty Playlist Folder" = "Empty Playlist Folder" /* = "Tyhjä Soittolistakansio" */;
 
 /* File: ../../portable/compiled_templates/playlist_folder.py:71 */
-/* Flag: untranslated */
-"This folder contains ${count} playlists, but the playlists do not contain any items." = "This folder contains ${count} playlists, but the playlists do not contain any items.";
+"This folder contains ${count} playlists, but the playlists do not contain any items." = "Tämä kansio sisältää ${count} soittolistaa, mutta soittolistat ovat tyhjiä.";
 
 /* File: ../../portable/compiled_templates/playlist_folder.py:76 */
-/* Flag: untranslated */
-"Drag playlists to this folder to add them." = "Drag playlists to this folder to add them.";
+"Drag playlists to this folder to add them." = "Vedä soittolistat tähän kansioon lisätäksesi ne.";
 
 /* File: ../../portable/compiled_templates/multi_playlist.py:57 */
 /* Flag: untranslated */
-"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)";
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" /* = "${count} Soittolistakansiota valittuna<br></br>(sisältää ${containedcount} soittolistaa)" */;
 
 /* File: ../../portable/compiled_templates/multi_playlist.py:69 */
-/* Flag: untranslated */
-"${count} Playlists Selected" = "${count} Playlists Selected";
+"${count} Playlists Selected" = "${count} Soittolistaa valittu";
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:47 */
 /* File: ../../portable/compiled_templates/video_info.py:40 */
 /* File: ../../portable/compiled_templates/external_playback.py:50 */
 /* Flag: untranslated */
-"STAR" = "STAR";
+"STAR" = "STAR" /* = "Tähti" */;
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:57 */
 /* File: ../../portable/compiled_templates/video_info.py:50 */
@@ -694,14 +684,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/video_info.py:55 */
 /* File: ../../portable/compiled_templates/external_playback.py:65 */
 /* Flag: untranslated */
-"SAVED" = "SAVED";
+"SAVED" = "SAVED" /* = "Tallennettu" */;
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:70 */
 /* File: ../../portable/compiled_templates/video_info.py:63 */
 /* File: ../../portable/compiled_templates/external_playback.py:73 */
 /* File: ../../portable/compiled_templates/download_item.py:211 */
 /* Flag: untranslated */
-"DELETE" = "DELETE";
+"DELETE" = "DELETE" /* = "Poista" */;
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:85 */
 /* File: ../../portable/compiled_templates/external_playback.py:88 */
@@ -783,8 +773,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Looking for videos at this URL" = "Etsitään videoita tästä osoitteesta";
 
 /* File: ../../portable/compiled_templates/external_playback.py:111 */
-/* Flag: untranslated */
-"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}";
+"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy ei voi toistaa tätä tiedostoa. Voit ehkä toistaa sen toisella ohjelmalla.<br></br><br></br><strong>Tiedostonimi:</strong> ${filename}<Br></Br><strong>Tiedostotyyppi:</strong> ${format}";
 
 /* File: ../../portable/compiled_templates/external_playback.py:115 */
 /* Flag: untranslated */
@@ -802,16 +791,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "SHOW FILE" = "SHOW FILE";
 
 /* File: ../../portable/compiled_templates/download_item.py:121 */
-/* Flag: untranslated */
-"SHOW FOLDER" = "SHOW FOLDER";
+"SHOW FOLDER" = "Näytä kansio";
 
 /* File: ../../portable/compiled_templates/download_item.py:135 */
-/* Flag: untranslated */
-"SHARE IT" = "SHARE IT";
+"SHARE IT" = "Jaa se";
 
 /* File: ../../portable/compiled_templates/download_item.py:144 */
-/* Flag: untranslated */
-"STAR IT" = "STAR IT";
+"STAR IT" = "Merkitse tähdellä";
 
 /* File: ../../portable/compiled_templates/download_item.py:189 */
 "Pending Auto Download" = "Automaattilataus jonossa";
@@ -827,27 +813,25 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/compiled_templates/download.py:91 */
 /* Flag: untranslated */
-"${size} disk space free" = "${size} disk space free";
+"${size} disk space free" = "${size} disk space free" /* = "${size} levytilaa vapaana" */;
 
 /* File: ../../portable/compiled_templates/download.py:101 */
 /* Flag: untranslated */
-"${size} available for downloads" = "${size} available for downloads";
+"${size} available for downloads" = "${size} available for downloads" /* = "${size} tilaa latauksille" */;
 
 /* File: ../../portable/compiled_templates/download.py:153 */
 /* File: ../../portable/tabs.py:28 */
 "Downloading" = "Ladataan";
 
 /* File: ../../portable/compiled_templates/download.py:168 */
-/* Flag: untranslated */
-"Clear Completed Torrents" = "Clear Completed Torrents";
+"Clear Completed Torrents" = "Tyhjennä listasta valmiit torrentit";
 
 /* File: ../../portable/compiled_templates/channel_folder.py:138 */
-/* Flag: untranslated */
-"Empty Channel Folder" = "Empty Channel Folder";
+"Empty Channel Folder" = "Tyhjä Kanavakansio";
 
 /* File: ../../portable/compiled_templates/channel_folder.py:140 */
 /* Flag: untranslated */
-"Drag channels to this folder to add them." = "Drag channels to this folder to add them.";
+"Drag channels to this folder to add them." = "Drag channels to this folder to add them." /* = "Vedä kanavat tähän kansioon lisätäksesi ne." */;
 
 /* File: ../../portable/compiled_templates/library.py:73 */
 /* File: ../../portable/tabs.py:25 */
@@ -874,7 +858,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:52 */
 /* Flag: untranslated */
-"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>";
+"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" /* = "<strong i18n:translate=\"fi\">Ohita intro: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Jatka kanavaoppaaseen >></a></strong>" */;
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:54 */
 "<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" = "<strong>Lisää kanavia:</strong> Kanavaopas on kotikansiosi internetin TV-kanaville. Paina Lisää-nappia tilataksesi kanava-- <strong>oppaassa olevat kanavat ovat ilmaisia.</strong>";
@@ -894,7 +878,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/compiled_templates/multi_channel.py:69 */
 /* Flag: untranslated */
-"${count} Channels Selected" = "${count} Channels Selected";
+"${count} Channels Selected" = "${count} Channels Selected" /* = "${count} Kanavaa valittuna" */;
 
 /* File: ../../portable/dl_daemon/download.py:298 */
 "Error" = "Virhe";
@@ -1036,7 +1020,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/storedatabase.py:798 */
 /* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s ei onnistunut tallentamaan tietokantaansa: Levy täynnä.↵\nSuosittelemme joko poistamaan tietostoja täydeltä levyltä tai elokuvia kokoelmastasi.↵\nViimeaikaiset muutokset on saatettu menettää.";
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s ei onnistunut tallentamaan tietokantaansa: Levy täynnä.\n\nSuosittelemme joko poistamaan tietostoja täydeltä levyltä tai elokuvia kokoelmastasi.\n\nViimeaikaiset muutokset on saatettu menettää.";
 
 /* File: ../../portable/dialogs.py:59 */
 "Ok" = "OK";
@@ -1131,7 +1115,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/item.py:398 */
 /* Flag: untranslated */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted.";
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted." /* = "Tämä kohde on kansio. Kun poistat kansion, kyseisen kansion sisältö poistetaan samalla." */;
 
 /* File: ../../portable/item.py:420 */
 /* Flag: python-format */

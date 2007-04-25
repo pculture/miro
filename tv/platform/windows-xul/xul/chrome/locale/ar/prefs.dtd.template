@@ -4,20 +4,26 @@
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
+<!ENTITY prefs.channels "القنوات">
 <!ENTITY prefs.channels.check "Check Channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "Playback">
+<!ENTITY prefs.playback "العزف">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
-<!ENTITY prefs.playback.stop.after.each "Stop after each video.">
+<!ENTITY prefs.playback.auto.next.video "شغل الفيديو  واحد تلو الاخر">
+<!ENTITY prefs.playback.stop.after.each "توقف بعد كل فيديو">
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Change...">
+
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
+<!ENTITY prefs.folder.others.location "Folder Location">
+<!ENTITY prefs.folder.others.shown "Show as Channel">
+<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.remove "Remove">
 
 <!ENTITY prefs.downloads.max "Downloads">
 <!ENTITY prefs.downloads.max.part1 "Download at most">
@@ -29,11 +35,11 @@
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "يوم 1">
+<!ENTITY prefs.videos.expire.one "يوم واحد">
 <!ENTITY prefs.videos.expire.three "3 أيام">
 <!ENTITY prefs.videos.expire.six "6">
 <!ENTITY prefs.videos.expire.ten "10 أيام">
-<!ENTITY prefs.videos.expire.thirty "شهر 1">
+<!ENTITY prefs.videos.expire.thirty "شهر واحد">
 <!ENTITY prefs.videos.expire.never "ابدا/ ولا مرة">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">

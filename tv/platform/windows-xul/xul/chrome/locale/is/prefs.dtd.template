@@ -19,6 +19,12 @@
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Change...">
 
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
+<!ENTITY prefs.folder.others.location "Folder Location">
+<!ENTITY prefs.folder.others.shown "Show as Channel">
+<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.remove "Remove">
+
 <!ENTITY prefs.downloads.max "Downloads">
 <!ENTITY prefs.downloads.max.part1 "Download at most">
 <!ENTITY prefs.downloads.max.part2 "videos at once.">

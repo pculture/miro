@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2006-10-24 03:32+0000\n"
-"Last-Translator: emmanuel jr maniego <cocoy_12212@yahoo.com>\n"
+"PO-Revision-Date: 2007-04-10 23:39+0000\n"
+"Last-Translator: krvilla <krvilla@gmail.com>\n"
 "Language-Team: Filipino <fil@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Rosetta-Export-Date: 2006-12-01 07:28+0000\n"
+"X-Rosetta-Export-Date: 2007-04-25 16:38:31+0000\n"
 
 msgid "$log"
 msgstr ""
@@ -52,19 +52,21 @@ msgid "About Democracy"
 msgstr "Tungkol sa Demokrasya"
 
 msgid "Add Channel..."
-msgstr ""
+msgstr "Magdadag ng Channel"
 
 msgid "Bring All to Front"
 msgstr "Ilagay lahat sa harapan"
 
 msgid "Channels"
-msgstr ""
+msgstr "Mga Channel"
 
 msgid "Check for New Version"
-msgstr ""
+msgstr "Alamin kung may Bagong Bersiyon"
 
 msgid "Clear Menu"
 msgstr ""
+"Baguhin ang Menu\n"
+"Burahin ang Menu"
 
 msgid "Close Window"
 msgstr "isara ang bintana"
@@ -75,11 +77,15 @@ msgstr "kopya"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
 msgid "Copy Channel URL"
-msgstr "kopya channel URL"
+msgstr ""
+"kopya channel URL\n"
+"Kopyahin ang Channel URL"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "Copy Video URL"
-msgstr "Kopya Video URL"
+msgstr ""
+"Kopya Video URL\n"
+"Kopyahin ang Video URL"
 
 msgid "Cut"
 msgstr "putulin"
@@ -125,26 +131,29 @@ msgid "MainMenu"
 msgstr ""
 
 msgid "Minimize"
-msgstr ""
+msgstr "Paliitin"
 
 msgid "New Channel Folder..."
 msgstr ""
 
 msgid "New Channel Guide..."
-msgstr ""
+msgstr "Bagong Gabay sa Channel"
 
 msgid "New Playlist Folder..."
 msgstr ""
 
 msgid "New Playlist..."
-msgstr ""
+msgstr "Bagong Listahan ng Palabas"
 
 msgid "New Search Channel..."
 msgstr "bagong paghanap ng channel"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
 msgid "Next Video"
-msgstr "susunod na vidyo"
+msgstr ""
+"susunod na vidyo\n"
+"Susunod na Video\n"
+"Susunod na Palabas"
 
 msgid "Open Recent"
 msgstr ""
@@ -160,13 +169,15 @@ msgstr "idikit"
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40
 msgid "Play Video"
 msgstr ""
+"Ipalabas ang Video\n"
+"Ipalabas"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
 msgid "Playback"
 msgstr ""
 
 msgid "Playlists"
-msgstr ""
+msgstr "Listahan ng mga Palabas"
 
 msgid "Preferencesâ¦"
 msgstr ""
@@ -174,17 +185,25 @@ msgstr ""
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
 msgid "Previous Video"
 msgstr ""
+"Naunang Video\n"
+"Naunang Palabas"
 
 msgid "Quit Democracy"
 msgstr ""
+"Umalis sa Democracy\n"
+"Itigil ang Democracy"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
 msgid "Remove..."
-msgstr "alisin"
+msgstr ""
+"alisin\n"
+"Tanggalin"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
 msgid "Rename..."
-msgstr "bagohin ang pangalan"
+msgstr ""
+"bagohin ang pangalan\n"
+"Baguhin ang Pangalan"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "Save Video As..."
@@ -195,17 +214,19 @@ msgid "Select All"
 msgstr ""
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Ipadala ang Channel sa Kaibigan"
 
 msgid "Services"
-msgstr ""
+msgstr "Mga Serbisyo"
 
 msgid "Show All"
-msgstr ""
+msgstr "Ipakita Lahat"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42
 msgid "Stop Video"
 msgstr ""
+"Ihinto ang Video\n"
+"Ihinto ang Palabas"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30
 msgid "Update All Channels"
@@ -219,13 +240,13 @@ msgid "Window"
 msgstr ""
 
 msgid "Zoom"
-msgstr ""
+msgstr "Ilapit"
 
 msgid "%channel feed%"
 msgstr ""
 
 msgid "%channel title%"
-msgstr ""
+msgstr "%pangalan ng channel%"
 
 msgid "%donation label%"
 msgstr ""
@@ -237,7 +258,7 @@ msgid "00:00:00"
 msgstr ""
 
 msgid "Box"
-msgstr ""
+msgstr "Kahon"
 
 msgid "FullScreen Controls"
 msgstr ""
@@ -245,7 +266,7 @@ msgstr ""
 #: ../../portable/tabs.py:27 ../../portable/feed.py:1718
 #: ../../portable/feed.py:1777
 msgid "Search"
-msgstr ""
+msgstr "Maghanap"
 
 msgid "VideoWindow"
 msgstr ""
@@ -274,37 +295,51 @@ msgid " limit upstream to"
 msgstr ""
 
 msgid "(You must restart Democracy for this change to take effect)\n"
-msgstr ""
+msgstr "(Kailangang ulitin ang Democracy upang gumana ang mga pagbabago)\n"
 
 msgid "(movies directory path goes here)"
 msgstr ""
 
 msgid "1 day"
 msgstr ""
+"Isang Araw\n"
+"1 Araw"
 
 msgid "1 month"
 msgstr ""
+"Isang  Buwan\n"
+"1 Buwan"
 
 msgid "10 days"
 msgstr ""
+"Sampung Araw\n"
+"10 Araw"
 
 msgid "3 days"
 msgstr ""
+"Tatlong Araw\n"
+"3 Araw"
 
 msgid "3 hours"
 msgstr ""
+"Tatlong Oras\n"
+"3 Oras"
 
 msgid "4"
-msgstr ""
+msgstr "Apat"
 
 msgid "5"
 msgstr ""
+"Lima\n"
+"5"
 
 msgid "6 days"
 msgstr ""
+"Anim na Araw\n"
+"6 na Araw"
 
 msgid "99999"
-msgstr ""
+msgstr "Siyam na pu't siyam na libo, siyam na pu't siyam na daan at siyam"
 
 msgid "BitTorrent ports:"
 msgstr ""
@@ -313,7 +348,7 @@ msgid "By default, videos expire after:"
 msgstr ""
 
 msgid "Change..."
-msgstr ""
+msgstr "Palitan"
 
 msgid "Check channels for new content:"
 msgstr ""
@@ -327,16 +362,16 @@ msgid "Download at most"
 msgstr ""
 
 msgid "GB free."
-msgstr ""
+msgstr "Libreng GB"
 
 msgid "KB/s when my computer is active."
-msgstr ""
+msgstr "KB/s kung aktibo ang aking kompyuter"
 
 msgid "Maximum:"
-msgstr ""
+msgstr "Pinakamalaki"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Pinakamaliit"
 
 msgid "Never"
 msgstr ""
@@ -346,7 +381,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:53
 msgid "Play videos one after another."
-msgstr ""
+msgstr "Pagsunud-sunuring ipalabas ang mga Video"
 
 msgid "Run Democracy at startup"
 msgstr ""
@@ -357,15 +392,17 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/democracy.glade.h:61
 msgid "Stop after each video."
 msgstr ""
+"Itigil pagkatapos ng bawa't Video.\n"
+"Itigil pagkatapos ng bawa't Palabas."
 
 msgid "To avoid internet slowdowns:"
-msgstr ""
+msgstr "Upang iwasang bumagal ang internet:"
 
 msgid "every 30 minutes"
-msgstr ""
+msgstr "tuwing 30 minutos"
 
 msgid "every hour"
-msgstr ""
+msgstr "tuwing oras"
 
 msgid "manually"
 msgstr ""
@@ -373,6 +410,8 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
 msgid "videos at once."
 msgstr ""
+"Pagsabay-sabayin lahat ng video.\n"
+"Pagsabay-sabaying ipalabas."
 
 msgid "$label$"
 msgstr ""
@@ -382,14 +421,14 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20
 msgid "Channel"
-msgstr ""
+msgstr "Channel"
 
 #: ../../portable/dialogs.py:72
 msgid "Create"
-msgstr ""
+msgstr "Gumawa"
 
 msgid "In this:"
-msgstr ""
+msgstr "Dito:"
 
 msgid "Item1"
 msgstr ""
@@ -398,10 +437,10 @@ msgid "Search Engine"
 msgstr ""
 
 msgid "Search for:"
-msgstr ""
+msgstr "Maghanap ng:"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:31
 #: ../../platform/windows-xul/frontend_implementation/startup.py:25
@@ -410,10 +449,10 @@ msgid "(parsed %d files - found %d videos)"
 msgstr ""
 
 msgid "Back"
-msgstr ""
+msgstr "Bumalik"
 
 msgid "Browse"
-msgstr ""
+msgstr "Maghanap"
 
 msgid ""
 "Democracy Player can find all the videos on your computer to help you "
@@ -422,9 +461,14 @@ msgid ""
 "\n"
 "Would you like Democracy Player to look for video files on your computer?"
 msgstr ""
+"Makakahanap ang Democracy Player ng lahat ng video sa iyong compyuter upang "
+"makatulong ayusin ang iyong koleksiyon.\n"
+"\n"
+"\n"
+"Nais mo ba'ng maghanap ang Democracy Player ng mga video sa iyong kompyuter?"
 
 msgid "Next"
-msgstr ""
+msgstr "Susunod"
 
 #: ../../portable/dialogs.py:62
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28
@@ -443,6 +487,8 @@ msgstr ""
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
 msgid "Searching for Videos"
 msgstr ""
+"Naghahanap ng mga Video\n"
+"Naghahanap ng mga Palabas"
 
 msgid ""
 "The next few screens will help you set up Democracy Player so that it works "
@@ -457,10 +503,18 @@ msgid ""
 "\n"
 "Would you like to run Democracy when your computer starts up?"
 msgstr ""
+"Rekomendadong iyong payagang ilunsad ang Democracy Player pagka nag-umpisang "
+"gumana ang iyong kompyuter. Sa ganitong paraan, maaaring matapos ang pag-"
+"download ng mga di natapos na video, at ang mga bagong video sa iyong mga "
+"channel ay maaaring mag-umpisa kung nais mo nang manood.\n"
+"\n"
+"\n"
+"Nais mo bang ilunsad ang Democracy Player sa tuwing pag-gana ng iyong "
+"kompyuter?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:66
 msgid "Welcome to Internet TV!"
-msgstr ""
+msgstr "Mabuhay! Ito ang Internet TV!"
 
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
@@ -469,11 +523,16 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Mabuhay! Ito ang Internet TV! Maraming magagawa ang Democracy Player para sa "
+"iyo: makapag-download agad ng video mula sa iyong mga paboritong channel, "
+"sunud-sunod na panood ng mga bagong video, mag-download ng torrent, mag-"
+"rekomenda ng mga video sa iyong mga kaibigan at marami pang iba.\n"
+"\n"
 
 #: ../../portable/dialogs.py:61
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27
 msgid "Yes"
-msgstr ""
+msgstr "Oo"
 
 msgid ""
 "You're done!\n"
@@ -498,6 +557,31 @@ msgid ""
 "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
 "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
 msgstr ""
+"Tapos na!\n"
+"\n"
+"Natapos na ang Set-up -- ngayon, maaari nang maghanap ng mga channel at "
+"manood.\n"
+"\n"
+"Huwag nang maghintay pa: Iba ang Democracy sa panonood ng video sa mga web "
+"page -- makakapagbigay ang mga gumawa ng malalaki at de-kalidad na video. "
+"Huwag nang mag-inip sa kahihintay ng mga video: umpisahan nang mag-download "
+"ngayon at balikan pagkaraan.\n"
+"\n"
+"Iwanang gumagana: Maghahanap ang Democracy Player sa mga channel ng video at "
+"magdo-download ng kusa. Ikaw ay makasisigurong may bagong video na "
+"mapapanood kung iiwan mo itong gumagana.\n"
+"\n"
+"Huwag mag-alalang mapuno ng iyong harddisk: tulad ng TiVo, may takdang "
+"panahon ang Democracy Player na siyang mag-tatanggal ng mga lumang video "
+"upang may paglalagyan ang mga bagong video. Maaari ding manatili ang mga "
+"video sa iyong kompyuter sa pamamagitan ng pag-'save', at maaari din itakda "
+"ang mga setting ng channel upang ang mga video may ma-'save' ng kusa.\n"
+"\n"
+"- -\n"
+"\n"
+"Maghanap ng mga Video: Ang Gabay sa Democracy Channel ay may daan-daang "
+"internet TV channel at lahat ay libre. i-click lamang ang 'DAGDAG' upang "
+"makanood ng channel.\n"
 
 msgid ""
 "%message%\n"
@@ -518,7 +602,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
 msgid "_Remove Video"
-msgstr ""
+msgstr "_Tanggalin ang Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123
 msgid "_Fullscreen"
@@ -527,18 +611,24 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
 msgid "_Stop Video"
 msgstr ""
+"_Itigil ang Video\n"
+"_Itigil ang Palabas"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
 msgid "_Next Video"
 msgstr ""
+"_Susunod na Video\n"
+"_Susunod na Palabas"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
 msgid "_Previous Video"
 msgstr ""
+"_Naunang Video\n"
+"_Naunang Palabas"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
 msgid "_Play / Pause"
-msgstr ""
+msgstr "Ipalabas / Pansamantalang Itigil"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:132
 msgid "Copy Channel _Link"
@@ -547,6 +637,8 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133
 msgid "_Send this channel to a friend"
 msgstr ""
+"_Ipadala itong Channel sa kaibigan\n"
+"_Ipadala ang Channel sa kaibigan"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
 msgid "_Update Channel"
@@ -554,11 +646,11 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
 msgid "Re_name Channel"
-msgstr ""
+msgstr "Baguhin ang pangalan ng Channel"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
 msgid "_Remove Channel"
-msgstr ""
+msgstr "_Tanggalin ng Channel"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145
 msgid "Re_name Playlist"
@@ -570,11 +662,11 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151
 msgid "_Video"
-msgstr ""
+msgstr "_Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152
 msgid "_Channels"
-msgstr ""
+msgstr "_Mga Channel"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153
 msgid "_Playlists"
@@ -586,7 +678,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
 msgid "_Open..."
-msgstr ""
+msgstr "_Buksan..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
 msgid "Open various files"
@@ -618,7 +710,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160
 msgid "Add _Channel..."
-msgstr ""
+msgstr "Magdagdag ng_Channel"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161
 msgid "New Searc_h Channel..."
@@ -650,7 +742,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169
 msgid "_Donate"
-msgstr ""
+msgstr "_Magbigay"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172
@@ -679,7 +771,7 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
 #: ../../platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
-msgstr ""
+msgstr "_Tanggalin..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6
 #: ../../platform/osx/frontend/UIStrings.py:6
@@ -704,12 +796,12 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10
 #: ../../platform/osx/frontend/UIStrings.py:10
 msgid "_Remove Channel..."
-msgstr ""
+msgstr "_Tanggalin ang Channel..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11
 #: ../../platform/osx/frontend/UIStrings.py:11
 msgid "_Remove Channels..."
-msgstr ""
+msgstr "_Tanggalin ang mga Channel..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12
 #: ../../platform/osx/frontend/UIStrings.py:12
@@ -734,12 +826,12 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16
 #: ../../platform/osx/frontend/UIStrings.py:16
 msgid "_Remove Video..."
-msgstr ""
+msgstr "_tanggalin ang Video..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:17
 #: ../../platform/osx/frontend/UIStrings.py:17
 msgid "_Remove Videos..."
-msgstr ""
+msgstr "_Tanggalin ang mga Video..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18
 #: ../../platform/osx/frontend/UIStrings.py:18
@@ -787,8 +879,8 @@ msgstr ""
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Video Nahanap"
+msgstr[1] "%d Mga Video Nahanap"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161
 msgid "Error Bombing Item"
@@ -800,12 +892,13 @@ msgstr ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:165
 msgid "Error Opening Website"
-msgstr ""
+msgstr "May Mali sa Pagbukas ng Website"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:169
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
+"May mali sa pagbukas ng %s. Subukang muli pagkalipas ng ilang sandali"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37
@@ -827,11 +920,11 @@ msgstr ""
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27
 msgid "Remove Channel..."
-msgstr ""
+msgstr "Tanggalin ang Channel"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11
 msgid "Remove Channels..."
-msgstr ""
+msgstr "Tanggalin ang mga Channel"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12
 msgid "Remove Channel Folder..."
@@ -851,11 +944,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16
 msgid "Remove Video..."
-msgstr ""
+msgstr "Tanggalin ng Video"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:17
 msgid "Remove Videos..."
-msgstr ""
+msgstr "Tanggalin ang mga Video"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36
@@ -869,7 +962,7 @@ msgstr ""
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26
 msgid "Rename Channel..."
-msgstr ""
+msgstr "Bagong Pangalan ng Channel"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22
 msgid "Rename Channel Folder..."
@@ -896,7 +989,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:40
 msgid "Starting up"
-msgstr ""
+msgstr "Nag-uumpisa na"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:136
 msgid "Loading window"
@@ -933,14 +1026,16 @@ msgstr ""
 #: ../../portable/compiled_templates/search.py:39
 msgid "Nothing to display.<br></br> Enter a query in the search field above."
 msgstr ""
+"Walang maipakita.<br></br> Maglagay ng katanungan sa patlang ng Search sa "
+"itaas."
 
 #: ../../portable/compiled_templates/search.py:44
 msgid "Searching..."
-msgstr ""
+msgstr "Naghahanap..."
 
 #: ../../portable/compiled_templates/search.py:56
 msgid "Results for \"${query}\""
-msgstr ""
+msgstr "Mga Resulta ng \"${katanungan}\""
 
 #: ../../portable/compiled_templates/search.py:95
 msgid "Video Search"
@@ -1003,6 +1098,9 @@ msgstr ""
 #: ../../portable/compiled_templates/download_item.py:211
 msgid "DELETE"
 msgstr ""
+"ALISIN\n"
+"TANGGALIN\n"
+"BURAHIN"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:85
 #: ../../portable/compiled_templates/external_playback.py:88
@@ -1011,7 +1109,7 @@ msgstr ""
 
 #: ../../portable/compiled_templates/external_playback_continue.py:95
 msgid "Continue To Next Video"
-msgstr ""
+msgstr "Ituloy Sa Susunod na Video"
 
 #: ../../portable/compiled_templates/channelfolder.py:166
 msgid "${count} Downloads in Progress"
@@ -1019,7 +1117,7 @@ msgstr ""
 
 #: ../../portable/compiled_templates/channelfolder.py:171
 msgid "1 Download in Progress"
-msgstr ""
+msgstr "1 Download Kasalukuyan"
 
 #: ../../portable/compiled_templates/channelfolder.py:191
 msgid "${len} Videos On This Channel"
@@ -1039,11 +1137,11 @@ msgstr ""
 
 #: ../../portable/compiled_templates/channelfolder.py:290
 msgid "Unwatched"
-msgstr ""
+msgstr "Hindi Pa Napapanood"
 
 #: ../../portable/compiled_templates/channelfolder.py:301
 msgid "Watched"
-msgstr ""
+msgstr "Napanood"
 
 #: ../../portable/compiled_templates/channelfolder.py:312
 msgid "Saved"
@@ -1084,7 +1182,7 @@ msgstr ""
 
 #: ../../portable/compiled_templates/channel.py:428
 msgid "Recommend"
-msgstr ""
+msgstr "I-rekomenda"
 
 #: ../../portable/compiled_templates/channel.py:430
 #: ../../portable/compiled_templates/unittest/simpleunicode.py:34
@@ -1098,7 +1196,7 @@ msgstr ""
 
 #: ../../portable/compiled_templates/channel.py:458
 msgid "Looking for videos at this URL"
-msgstr ""
+msgstr "Naghahanap ng mga Video sa URL na ito"
 
 #: ../../portable/compiled_templates/external_playback.py:111
 msgid ""
@@ -1141,7 +1239,7 @@ msgstr ""
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:43
 msgid "Simple translation"
-msgstr ""
+msgstr "Simpleng pagsalin"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:57
 msgid "truck stop in a ${can}"
@@ -1167,7 +1265,7 @@ msgstr ""
 
 #: ../../portable/compiled_templates/download.py:168
 msgid "Clear Completed Torrents"
-msgstr ""
+msgstr "Tanggalin ang Na-kumpletong Torrent"
 
 #: ../../portable/compiled_templates/channel_folder.py:138
 msgid "Empty Channel Folder"
@@ -1179,15 +1277,15 @@ msgstr ""
 
 #: ../../portable/compiled_templates/library.py:73 ../../portable/tabs.py:25
 msgid "My Collection"
-msgstr ""
+msgstr "Aking Koleksyion"
 
 #: ../../portable/compiled_templates/new.py:75 ../../portable/tabs.py:26
 msgid "New Videos"
-msgstr ""
+msgstr "Mga Bagong Video"
 
 #: ../../portable/compiled_templates/first_time_intro.py:38
 msgid "Democracy Internet TV: How to Get Started"
-msgstr ""
+msgstr "Democracy Internet TV: Paano Mag-umpisa"
 
 #: ../../portable/compiled_templates/first_time_intro.py:42
 msgid "GO BIG:"
@@ -1199,13 +1297,15 @@ msgstr ""
 
 #: ../../portable/compiled_templates/first_time_intro.py:48
 msgid "NEW STUFF:"
-msgstr ""
+msgstr "Mga Bagong Bagay"
 
 #: ../../portable/compiled_templates/first_time_intro.py:50
 msgid ""
 "Blue circles mean the channel has new videos available, green circles mean "
 "you have downloaded videos ready to watch."
 msgstr ""
+"Ang mga asul na bilog ay may mga bagong video, ng mga berdeng bilog ay mga "
+"mga na-download na video na maaari nang panoorin."
 
 #: ../../portable/compiled_templates/first_time_intro.py:52
 msgid ""
@@ -1254,7 +1354,7 @@ msgstr ""
 
 #: ../../portable/dl_daemon/download.py:298
 msgid "Error"
-msgstr ""
+msgstr "May Mali"
 
 #: ../../portable/dl_daemon/download.py:357
 #, python-format
@@ -1289,7 +1389,7 @@ msgstr ""
 
 #: ../../portable/dl_daemon/download.py:704
 msgid "outside of democracy."
-msgstr ""
+msgstr "sa labas ng demokrasya."
 
 #: ../../portable/util.py:386
 #, python-format
@@ -1314,24 +1414,24 @@ msgstr ""
 #: ../../portable/httpclient.py:52
 #, python-format
 msgid "Error: %s"
-msgstr ""
+msgstr "May mali: %s"
 
 #: ../../portable/httpclient.py:67 ../../portable/httpclient.py:72
 msgid "Can't connect"
-msgstr ""
+msgstr "hindi maka-konek"
 
 #: ../../portable/httpclient.py:68
 #, python-format
 msgid "Connection Error: %s"
-msgstr ""
+msgstr "May Mali sa Koneksiyon: %s"
 
 #: ../../portable/httpclient.py:73
 msgid "SSL connection error"
-msgstr ""
+msgstr "May Mali sa koneksiyon ng SSL"
 
 #: ../../portable/httpclient.py:77
 msgid "HTTP error"
-msgstr ""
+msgstr "May mali sa HTTP"
 
 #: ../../portable/httpclient.py:80
 #, python-format
@@ -1377,7 +1477,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:109
 msgid "Internal Error"
-msgstr ""
+msgstr "May Maling Internal"
 
 #: ../../portable/httpclient.py:110
 msgid "Pipeline request never started"
@@ -1403,7 +1503,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:313
 msgid "Connection closed"
-msgstr ""
+msgstr "Saradong Koneksiyon"
 
 #: ../../portable/httpclient.py:689
 msgid "Unknown"
@@ -1411,7 +1511,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:690
 msgid "Internal Error: Not ready to send"
-msgstr ""
+msgstr "May Maling Internal: Di handang ipadala"
 
 #: ../../portable/storedatabase.py:789
 #, python-format
@@ -1440,12 +1540,12 @@ msgstr ""
 
 #: ../../portable/dialogs.py:59
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: ../../portable/dialogs.py:63
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12
 msgid "Quit"
-msgstr ""
+msgstr "Ihinto"
 
 #: ../../portable/dialogs.py:64
 #: ../../platform/gtk-x11/glade/democracy.glade.h:50
@@ -1476,20 +1576,20 @@ msgstr ""
 
 #: ../../portable/dialogs.py:70
 msgid "Keep Videos"
-msgstr ""
+msgstr "Panatilihin ang mga Video"
 
 #: ../../portable/dialogs.py:71
 msgid "Delete Videos"
-msgstr ""
+msgstr "Tanggalin ng mga Video"
 
 #: ../../portable/dialogs.py:73
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:12
 msgid "Create Channel"
-msgstr ""
+msgstr "Gumawa ng Channel"
 
 #: ../../portable/dialogs.py:74
 msgid "Add"
-msgstr ""
+msgstr "Magdagdag"
 
 #: ../../portable/dialogs.py:75
 msgid "Add Into New Folder"
@@ -1497,7 +1597,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:76
 msgid "Keep"
-msgstr ""
+msgstr "Panatilihin"
 
 #: ../../portable/dialogs.py:192
 #: ../../platform/gtk-x11/glade/democracy.glade.h:52
@@ -1548,7 +1648,7 @@ msgstr ""
 #: ../../portable/item.py:397
 #, python-format
 msgid "Deleting %s"
-msgstr ""
+msgstr "Tinatanggal %s"
 
 #: ../../portable/item.py:398
 msgid ""
@@ -1559,17 +1659,17 @@ msgstr ""
 #: ../../portable/item.py:420
 #, python-format
 msgid "%d days"
-msgstr ""
+msgstr "%d mga araw"
 
 #: ../../portable/item.py:422
 #, python-format
 msgid "%d hours"
-msgstr ""
+msgstr "%d mg oras"
 
 #: ../../portable/item.py:424
 #, python-format
 msgid "%d minutes"
-msgstr ""
+msgstr "%d mga minuto"
 
 #: ../../portable/item.py:425
 #, python-format
@@ -1578,11 +1678,11 @@ msgstr ""
 
 #: ../../portable/item.py:751
 msgid "TORRENT"
-msgstr ""
+msgstr "TORRENT"
 
 #: ../../portable/item.py:753
 msgid "WEB PAGE"
-msgstr ""
+msgstr "WEB PAGE"
 
 #: ../../portable/item.py:956
 msgid "downloading..."
@@ -1591,11 +1691,11 @@ msgstr ""
 #: ../../portable/item.py:963 ../../portable/item.py:966
 #, python-format
 msgid "%s remaining"
-msgstr ""
+msgstr "%s natitira"
 
 #: ../../portable/item.py:974
 msgid "starting up..."
-msgstr ""
+msgstr "nag-uumpisa..."
 
 #: ../../portable/item.py:1154 ../../portable/menu.py:78
 msgid "Remove From Playlist"
@@ -1603,15 +1703,15 @@ msgstr ""
 
 #: ../../portable/item.py:1156 ../../portable/menu.py:80
 msgid "Remove From My Collection"
-msgstr ""
+msgstr "Tanggalin sa Aking Koleksyion"
 
 #: ../../portable/item.py:1158 ../../portable/menu.py:75
 msgid "Play"
-msgstr ""
+msgstr "Ipalabas"
 
 #: ../../portable/item.py:1160
 msgid "Play Just This Video"
-msgstr ""
+msgstr "Ipalabas Itong Video lamang"
 
 #: ../../portable/item.py:1161 ../../portable/menu.py:76
 msgid "Add to new playlist"
@@ -1619,7 +1719,7 @@ msgstr ""
 
 #: ../../portable/item.py:1165 ../../portable/menu.py:86
 msgid "Mark as Unwatched"
-msgstr ""
+msgstr "Markahang Hindi pa Napapanood"
 
 #: ../../portable/item.py:1167 ../../portable/menu.py:99
 msgid "Cancel Download"
@@ -1628,7 +1728,7 @@ msgstr ""
 #: ../../portable/item.py:1401
 #, python-format
 msgid "Removing %s"
-msgstr ""
+msgstr "Tinatanggal %s"
 
 #: ../../portable/item.py:1403
 msgid ""
@@ -1652,6 +1752,8 @@ msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from My Collection?"
 msgstr ""
+"May isa o ilan sa mga video ang hindi na-download sa isang channel. Nais mo "
+"bang burahin ito o tanggalin lamang sa mga naitala sa Aking Koleksiyon?"
 
 #: ../../portable/item.py:1509
 msgid ""
@@ -1673,23 +1775,23 @@ msgstr ""
 #: ../../portable/app.py:860 ../../portable/app.py:880
 #, python-format
 msgid "Remove %s"
-msgstr ""
+msgstr "Tanggalin %s"
 
 #: ../../portable/app.py:818
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
-msgstr ""
+msgstr "Sigurado ka bang nais mong tanggalin ang gabay %s?"
 
 #: ../../portable/app.py:832
 #, python-format
 msgid "Are you sure you want to remove %s"
-msgstr ""
+msgstr "Sigurado ka bang nais mong tangglin %s"
 
 #: ../../portable/app.py:835 ../../portable/app.py:865
 #: ../../portable/app.py:885
 #, python-format
 msgid "Remove %s channels"
-msgstr ""
+msgstr "Tanggalin ang mga %s na channel"
 
 #: ../../portable/app.py:837
 #, python-format
@@ -1715,12 +1817,15 @@ msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
 msgstr ""
+"Ano ang nais mong gawin sa mga video sa channel na ito na iyong nai-download?"
 
 #: ../../portable/app.py:886
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
 msgstr ""
+"Ano ang nais mong gawin sa mga video sa mga channel na ito na iyong nai-"
+"download?"
 
 #: ../../portable/app.py:923
 msgid "Are you sure you want to quit?"
@@ -1729,9 +1834,9 @@ msgstr ""
 #: ../../portable/app.py:924
 #, python-format
 msgid "You have %d download still in progress."
-msgid_plural "You have %d downloads still in progress."
-msgstr[0] ""
-msgstr[1] ""
+msgid_plural "You have %d download still in progress."
+msgstr[0] "May %d download kasalukuyan."
+msgstr[1] "May %d na mga download kasalukuyan."
 
 #: ../../portable/app.py:1367
 msgid "Invalid Value"
@@ -1784,7 +1889,7 @@ msgstr ""
 
 #: ../../portable/guide.py:127 ../../portable/feed.py:684
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "Kopyahin ang URL sa clipboard"
 
 #: ../../portable/guide.py:218
 msgid "Channel Guide"
@@ -1815,7 +1920,7 @@ msgstr ""
 
 #: ../../portable/downloader.py:317
 msgid "starting up"
-msgstr ""
+msgstr "nag-uumpisa na"
 
 #: ../../portable/feed.py:682
 msgid "Update Channel Now"
@@ -1865,6 +1970,10 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Nguni't lubos naming susubukang makuha ang mga file. Maaaring tumagal ng "
+"kaunti na ilista ang mga video, at ang mga tala nito ay maaaring naiiba. "
+"Mangyaring makipag-ugnay sa mga gumawa ng $url at itanong kung maaari silang "
+"magbigay ng format na pwedeng gumana sa Domocracy."
 
 #: ../../portable/feed.py:1791
 msgid "Local File"
@@ -1877,7 +1986,7 @@ msgstr ""
 #: ../../portable/singleclick.py:123
 #, python-format
 msgid "Create %d channels?"
-msgstr ""
+msgstr "Gumawa ng %d na mga chnnel?"
 
 #: ../../portable/singleclick.py:136
 #, python-format
@@ -2481,7 +2590,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:22
 msgid "New Channel"
-msgstr ""
+msgstr "Bagong Channel"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:23
 msgid "New Channel Folder"
@@ -2493,7 +2602,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:34
 msgid "New Playlist"
-msgstr ""
+msgstr "Bagong Listahan ng Palabas"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:35
 msgid "New Playlist Folder"
@@ -2501,11 +2610,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:52
 msgid "O"
-msgstr ""
+msgstr "O"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:83
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:41
 msgid "Pause Video"
@@ -2513,40 +2622,40 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:33
 msgid "Playlist"
-msgstr ""
+msgstr "Listahan ng Palabas"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:57
 msgid "Q"
-msgstr ""
+msgstr "Q"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:86
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9
 msgid "Remove Video"
-msgstr ""
+msgstr "Tanggalin ang Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103
 msgid "Right"
-msgstr ""
+msgstr "Kanan"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:84
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:31
 msgid "Send This Channel to a Friend..."
-msgstr ""
+msgstr "Ipadala ang Channel sa Kaibigan"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:101
 msgid "Space"
-msgstr ""
+msgstr "Puwang"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:71
 msgid "U"
-msgstr ""
+msgstr "U"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:53
 msgid "V"
-msgstr ""
+msgstr "V"

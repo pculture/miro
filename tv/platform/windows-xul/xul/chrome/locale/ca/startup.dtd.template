@@ -5,20 +5,20 @@
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
 <!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restringeix a tots els meus arxius personals.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.search.custom          "Cercar la carpeta personal:">
 <!ENTITY startup.search.searching	"Cercant videos">
 <!ENTITY startup.change	                "Canvia">
 <!ENTITY startup.cancel	                "Cancel·la la cerca">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.undo	                "Inicialitza la recerca">
+<!ENTITY startup.done1			"Heu finalitzat!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
+<!ENTITY startup.done3.heading		"Deixeu-lo estar">
 <!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
+<!ENTITY startup.done4.heading		"No us amoïneu per l'espai al disc:">
 <!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
+<!ENTITY startup.done5.heading		"És gran:">
+<!ENTITY startup.done5.text		"El botó situat a la dreta del botó de reproducció mostra els vídeos a pantalla completa.">
 <!ENTITY startup.done6.heading		"Troba Videos:">
 <!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Sí">

@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-01-14 23:42+0000\n"
-"Last-Translator: Per Lund Madsen <perlundmadsen@hotmail.com>\n"
+"PO-Revision-Date: 2007-02-22 21:59+0000\n"
+"Last-Translator: Thomsen <junk@andersthomsen.dk>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-01-29 04:57+0000\n"
+"X-Rosetta-Export-Date: 2007-02-23 04:08+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -73,13 +73,13 @@ msgid "Channels"
 msgstr "Kanaler"
 
 msgid "Check for New Version"
-msgstr ""
+msgstr "Check om ny version er tilgængelig"
 
 msgid "Clear Menu"
 msgstr "Rens menu"
 
 msgid "Close Window"
-msgstr ""
+msgstr "Luk Vindue"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15
 msgid "Copy"
@@ -107,7 +107,7 @@ msgid "Democracy Help"
 msgstr "Democracy-hjælp"
 
 msgid "Donate"
-msgstr ""
+msgstr "Donér"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14
 msgid "Edit"
@@ -131,7 +131,7 @@ msgid "Hide Others"
 msgstr "Skjul andre"
 
 msgid "Main Window"
-msgstr ""
+msgstr "Hovedvindue"
 
 msgid "MainMenu"
 msgstr "HovedMenu"
@@ -143,7 +143,7 @@ msgid "New Channel Folder..."
 msgstr "Ny kanalfolder..."
 
 msgid "New Channel Guide..."
-msgstr ""
+msgstr "Ny kanalguide..."
 
 msgid "New Playlist Folder..."
 msgstr "Ny spilleliste-folder..."
@@ -152,11 +152,11 @@ msgid "New Playlist..."
 msgstr "Ny spilleliste..."
 
 msgid "New Search Channel..."
-msgstr ""
+msgstr "Ny kanalsøgning..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
 msgid "Next Video"
-msgstr ""
+msgstr "Næste video"
 
 msgid "Open Recent"
 msgstr "Åbn seneste"
@@ -175,10 +175,10 @@ msgstr "Afspil video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
 msgid "Playback"
-msgstr ""
+msgstr "Afspilning"
 
 msgid "Playlists"
-msgstr ""
+msgstr "Spillelister"
 
 #, fuzzy
 msgid "Preferencesâ¦"
@@ -340,7 +340,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
 msgid "Download at most"
-msgstr ""
+msgstr "Download højest"
 
 msgid "GB free."
 msgstr "GB ledig."
@@ -348,11 +348,13 @@ msgstr "GB ledig."
 msgid "KB/s when my computer is active."
 msgstr "KB/s når computer er aktiv."
 
+#, fuzzy
 msgid "Maximum:"
-msgstr ""
+msgstr "Maksimum:"
 
+#, fuzzy
 msgid "Minimum:"
-msgstr ""
+msgstr "Minimum:"
 
 msgid "Never"
 msgstr "Aldrig"
@@ -361,21 +363,23 @@ msgid "OtherViews"
 msgstr "AndreVisninger"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:53
+#, fuzzy
 msgid "Play videos one after another."
-msgstr ""
+msgstr "Afspil videoer kontinuerligt."
 
 msgid "Run Democracy at startup"
 msgstr "Kør Democracy ved start"
 
 msgid "Save downloaded videos in this folder:"
-msgstr ""
+msgstr "Gem downloadede videoer i denne folder:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:61
 msgid "Stop after each video."
-msgstr ""
+msgstr "Stop efter hver video."
 
+#, fuzzy
 msgid "To avoid internet slowdowns:"
-msgstr ""
+msgstr "For at undgå at sløve internetforbindelsen:"
 
 msgid "every 30 minutes"
 msgstr "hver 30 minutter"
@@ -388,7 +392,7 @@ msgstr "manuelt"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
 msgid "videos at once."
-msgstr ""
+msgstr "videoer ad gangen."
 
 msgid "$label$"
 msgstr ""
@@ -455,11 +459,12 @@ msgstr "Nej"
 msgid "Only search my Movies folder."
 msgstr ""
 
+#, fuzzy
 msgid "Search my entire Home folder."
-msgstr ""
+msgstr "Gennemsøg hele min hjemmemappe."
 
 msgid "Search this folder:"
-msgstr ""
+msgstr "Søg i denne mappe:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
 msgid "Searching for Videos"
@@ -559,20 +564,23 @@ msgstr ""
 "%message%"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
+#, fuzzy
 msgid "Save Video _As..."
-msgstr ""
+msgstr "Gem video som:"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save this video"
 msgstr "Gem denne video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
+#, fuzzy
 msgid "_Copy Video URL"
-msgstr ""
+msgstr "Kopier video-URL"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
+#, fuzzy
 msgid "_Remove Video"
-msgstr ""
+msgstr "Fjer_n video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123
 msgid "_Fullscreen"
@@ -580,15 +588,16 @@ msgstr "_Fuldskærm"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
 msgid "_Stop Video"
-msgstr ""
+msgstr "_Stop video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
 msgid "_Next Video"
-msgstr ""
+msgstr "_Næste video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
+#, fuzzy
 msgid "_Previous Video"
-msgstr ""
+msgstr "Forrige video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
 msgid "_Play / Pause"
@@ -600,15 +609,16 @@ msgstr "Kopiér Kanal-_Link"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133
 msgid "_Send this channel to a friend"
-msgstr ""
+msgstr "_Send denne kanal til en ven"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
 msgid "_Update Channel"
 msgstr "_Opdater Kanal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
+#, fuzzy
 msgid "Re_name Channel"
-msgstr ""
+msgstr "Omdøb ka_nal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
 msgid "_Remove Channel"
@@ -680,7 +690,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162
 msgid "New Channel _Guide..."
-msgstr ""
+msgstr "Ny Kanal_guide..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164
 msgid "P_references"
@@ -704,7 +714,7 @@ msgstr "_Hjælp"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169
 msgid "_Donate"
-msgstr ""
+msgstr "_Donér"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172
@@ -732,13 +742,15 @@ msgstr "En ukendt fejl opstod %s."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
 #: ../../platform/osx/frontend/UIStrings.py:5
+#, fuzzy
 msgid "_Remove..."
-msgstr ""
+msgstr "Fje_rn..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6
 #: ../../platform/osx/frontend/UIStrings.py:6
+#, fuzzy
 msgid "_Remove Playlist..."
-msgstr ""
+msgstr "Fje_rn spilleliste..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7
 #: ../../platform/osx/frontend/UIStrings.py:7

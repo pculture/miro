@@ -1,6 +1,6 @@
 <!ENTITY searchchannel.description	"A search channel contains
 items that match a search term.">
-<!ENTITY searchchannel.termlabel 	"Search For:">
+<!ENTITY searchchannel.termlabel 	"Søk etter:">
 <!ENTITY searchchannel.title            "Ny søkekanal">
 <!ENTITY searchchannel.inthis "In This:">
 <!ENTITY searchchannel.channel "Channel:">

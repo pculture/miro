@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-08 15:28-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-25 13:11-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -232,8 +232,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
 "Stop after each video." = "Parar depois de cada video.";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:" /* = "Para evitar a lentidão na internet:" */;
+"To avoid internet slowdowns:" = "Para evitar a lentidão nas descargas da internet:";
 
 "every 30 minutes" = "cada 30 minutos";
 
@@ -668,8 +667,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/compiled_templates/external_playback_continue.py:47 */
 /* File: ../../portable/compiled_templates/video_info.py:40 */
 /* File: ../../portable/compiled_templates/external_playback.py:50 */
-/* Flag: untranslated */
-"STAR" = "STAR" /* = "ESTRELA" */;
+"STAR" = "MARCAR COMO FAVORITO";
 
 /* File: ../../portable/compiled_templates/external_playback_continue.py:57 */
 /* File: ../../portable/compiled_templates/video_info.py:50 */
@@ -775,12 +773,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Skip >> ${countdown}" = "Saltar >> ${countdown}";
 
 /* File: ../../portable/compiled_templates/download_item.py:114 */
-/* Flag: untranslated */
-"SHOW FILE" = "SHOW FILE" /* = "LOCALIZAR FICHEIRO" */;
+"SHOW FILE" = "MOSTRAR O FICHEIRO";
 
 /* File: ../../portable/compiled_templates/download_item.py:121 */
-/* Flag: untranslated */
-"SHOW FOLDER" = "SHOW FOLDER" /* = "LOCALIZAR PASTA" */;
+"SHOW FOLDER" = "MOSTRAR A PASTA";
 
 /* File: ../../portable/compiled_templates/download_item.py:135 */
 "SHARE IT" = "PARTILHAR";
@@ -804,8 +800,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "${size} disk space free" = "${size} de espaço livre em disco";
 
 /* File: ../../portable/compiled_templates/download.py:101 */
-/* Flag: untranslated */
-"${size} available for downloads" = "${size} available for downloads" /* = "${size} disponíveis para transferências (downloads)" */;
+"${size} available for downloads" = "${size} disponíveis para descargas";
 
 /* File: ../../portable/compiled_templates/download.py:153 */
 /* File: ../../portable/tabs.py:28 */

@@ -9,26 +9,33 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-01-27 15:51+0000\n"
-"Last-Translator: Nikola Kotur <kotnick@gmail.com>\n"
+"PO-Revision-Date: 2007-02-25 02:11+0000\n"
+"Last-Translator: Dusko Gunjic <dgunjic@yahoo.com>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Rosetta-Export-Date: 2007-01-29 04:57+0000\n"
+"X-Rosetta-Export-Date: 2007-03-07 20:28+0000\n"
 
+#, fuzzy
 msgid "$log"
-msgstr ""
+msgstr "$log"
 
+#, fuzzy
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
+"<font face=\"Lucida Grande\" size=\"-1\">Naš bag-treker je <a "
+"href=\"$bugTrackerURL\">$bugTrackerURL</a>. Samo nam recite šta ste radili, "
+"kopirajte u log poruku iz box-a iznad, i odgovorite na par pitanja, i mi "
+"ćemo se dati na posao.</font>"
 
+#, fuzzy
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
 "report to our bug-tracking system? At a minimum, what we'd need is "
@@ -36,21 +43,27 @@ msgid ""
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
 "U stvari, ako imate vremena, da li bi mogli da date izveštaj o rušenju za "
-"naš sistem traženja greški? Želeli bi bra opis onoga šta ste radili u to "
+"naš sistem traženja greški? Želeli bi bar opis onoga šta ste radili u to "
 "vreme - maksimalno precizno - plus lukavu glupost u donjem okviru:"
 
+#, fuzzy
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
 "wrong-headedness $when. We apologize and suggest that you exit and restart "
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
+"Nažalost! $longAppName je pao iz razoga neke vrste interne konfuzije ili "
+"greške $when. Izvinjavamo se i predlažemo da zatvorite program i "
+"restartujete $shortAppName. Time ćete mu pokazati, a istovremeno smanjujete "
+"šansu da izgubite Vaša podešavanja ili pretplaćene kanale."
 
 msgid "OK"
 msgstr "U redu"
 
+#, fuzzy
 msgid "The fall of $shortAppName??"
-msgstr ""
+msgstr "Pao je $shortAppName??"
 
 msgid "About Democracy"
 msgstr "O Democracy"
@@ -93,9 +106,8 @@ msgid "Delete"
 msgstr "Izbriši"
 
 msgid "Democracy"
-msgstr "Demokracija"
+msgstr "Democracy"
 
-#, fuzzy
 msgid "Democracy Help"
 msgstr "Demokracy pomoć"
 
@@ -110,10 +122,10 @@ msgstr "Uredi"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6
 msgid "File"
-msgstr "Dokument"
+msgstr "Datoteka:"
 
 msgid "Full Screen"
-msgstr "Ceo ekran"
+msgstr "Приказ на целом екрану"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47
 msgid "Help"
@@ -133,24 +145,26 @@ msgstr "Glavni Meni"
 
 #, fuzzy
 msgid "Minimize"
-msgstr "Smanji"
+msgstr "Минимизуј"
 
 #, fuzzy
 msgid "New Channel Folder..."
-msgstr "Novi Kanal Mapa..."
+msgstr "Novi Folder Kanala..."
 
 #, fuzzy
 msgid "New Channel Guide..."
-msgstr "Novi Kanal Vodič..."
+msgstr "Novi Vodič Kanala..."
 
+#, fuzzy
 msgid "New Playlist Folder..."
-msgstr ""
+msgstr "Novi Folder Plejliste"
 
 msgid "New Playlist..."
-msgstr ""
+msgstr "Nova Plejlista"
 
+#, fuzzy
 msgid "New Search Channel..."
-msgstr ""
+msgstr "Nova Pretraga Kanala"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
 msgid "Next Video"
@@ -158,13 +172,14 @@ msgstr "Sledeći video"
 
 #, fuzzy
 msgid "Open Recent"
-msgstr "Otvori nedavno"
+msgstr "Otvori skorašnji"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "Open..."
 msgstr "Otvori..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16
+#, fuzzy
 msgid "Paste"
 msgstr "Ubaci"
 
@@ -174,258 +189,294 @@ msgstr "Pokreni video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
 msgid "Playback"
-msgstr ""
+msgstr "Reprodukcija"
 
+#, fuzzy
 msgid "Playlists"
-msgstr ""
+msgstr "Plejlista"
 
+#, fuzzy
 msgid "Preferencesâ¦"
-msgstr ""
+msgstr "Podešavanja"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
+#, fuzzy
 msgid "Previous Video"
-msgstr ""
+msgstr "Prethodni Video"
 
+#, fuzzy
 msgid "Quit Democracy"
-msgstr ""
+msgstr "Napusti Democracy"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
 msgid "Remove..."
-msgstr ""
+msgstr "Ukloni..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
 msgid "Rename..."
-msgstr ""
+msgstr "Promeni ime..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "Save Video As..."
-msgstr ""
+msgstr "Sačuvaj Video Kao..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17
 msgid "Select All"
-msgstr ""
+msgstr "Odaberi sve"
 
+#, fuzzy
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Pošaljite ovaj Kanal Vašem prijatelju"
 
 msgid "Services"
-msgstr ""
+msgstr "Servisi"
 
 msgid "Show All"
-msgstr ""
+msgstr "Prikaži sve"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42
 msgid "Stop Video"
-msgstr ""
+msgstr "Stop Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30
+#, fuzzy
 msgid "Update All Channels"
-msgstr ""
+msgstr "Update Svih Kanala"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29
+#, fuzzy
 msgid "Update Channel"
-msgstr ""
+msgstr "Update Kanala"
 
 msgid "Window"
-msgstr ""
+msgstr "Prozor"
 
 msgid "Zoom"
-msgstr ""
+msgstr "Uveličavanje"
 
+#, fuzzy
 msgid "%channel feed%"
-msgstr ""
+msgstr "%channel feed%"
 
+#, fuzzy
 msgid "%channel title%"
-msgstr ""
+msgstr "%ime kanala%"
 
+#, fuzzy
 msgid "%donation label%"
-msgstr ""
+msgstr "%donacije label%"
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
-msgstr ""
+msgstr "00:00:00"
 
 msgid "Box"
-msgstr ""
+msgstr "Kutija"
 
+#, fuzzy
 msgid "FullScreen Controls"
-msgstr ""
+msgstr "FullScreen Kontrole"
 
 #: ../../portable/tabs.py:27 ../../portable/feed.py:1718
 #: ../../portable/feed.py:1777
 msgid "Search"
-msgstr ""
+msgstr "Pretraži"
 
+#, fuzzy
 msgid "VideoWindow"
-msgstr ""
+msgstr "VideoProzor"
 
 #: ../../portable/dialogs.py:60
 msgid "Cancel"
-msgstr ""
+msgstr "Prekinuti"
 
+#, fuzzy
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
+"Lokacija http://foo.bar.com/baz zahteva korisničko ime i lozinku za \"text \n"
+"supplied by server\". (Do not localize -- test data)\n"
 
 msgid "Password:\n"
-msgstr ""
+msgstr "Lozinka:\n"
 
+#, fuzzy
 msgid "Username and password required"
-msgstr ""
+msgstr "Korisničko ime i lozinka potrebni"
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
+"Ime Korisnika:\n"
+"\n"
 
+#, fuzzy
 msgid " limit upstream to"
-msgstr ""
+msgstr " limitiraj upstream do"
 
+#, fuzzy
 msgid "(You must restart Democracy for this change to take effect)\n"
-msgstr ""
+msgstr "(Morate restartovati Democracy da bi ova promena nastupila)\n"
 
+#, fuzzy
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(movies direktorijum lokacija ide ovde)"
 
 msgid "1 day"
-msgstr ""
+msgstr "1 dan"
 
 msgid "1 month"
-msgstr ""
+msgstr "1 mesec"
 
 msgid "10 days"
-msgstr ""
+msgstr "10 dana"
 
 msgid "3 days"
-msgstr ""
+msgstr "3 dana"
 
 msgid "3 hours"
-msgstr ""
+msgstr "3 sata"
 
 msgid "4"
-msgstr ""
+msgstr "4"
 
 msgid "5"
-msgstr ""
+msgstr "5"
 
 msgid "6 days"
-msgstr ""
+msgstr "6 dana"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "BitTorrent ports:"
-msgstr ""
+msgstr "BitTorrent portovi:"
 
+#, fuzzy
 msgid "By default, videos expire after:"
-msgstr ""
+msgstr "Po pravilu, video ne radi posle:"
 
 msgid "Change..."
-msgstr ""
+msgstr "Promeni..."
 
+#, fuzzy
 msgid "Check channels for new content:"
-msgstr ""
+msgstr "Proveri Kanale u potrazi za novim sadržajima"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
+#, fuzzy
 msgid "Don't start a download if it leaves less than"
-msgstr ""
+msgstr "Ne startuj download ako preostaje manje od"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
+#, fuzzy
 msgid "Download at most"
-msgstr ""
+msgstr "Download na"
 
 msgid "GB free."
-msgstr ""
+msgstr "GB slobodno."
 
+#, fuzzy
 msgid "KB/s when my computer is active."
-msgstr ""
+msgstr "KB/s kada je moj kompjuter aktivan."
 
 msgid "Maximum:"
-msgstr ""
+msgstr "Maksimum:"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Minimum:"
 
 msgid "Never"
-msgstr ""
+msgstr "Nikada"
 
+#, fuzzy
 msgid "OtherViews"
-msgstr ""
+msgstr "Druge perspektive"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:53
 msgid "Play videos one after another."
-msgstr ""
+msgstr "Reprodukuj video fajlove jedan za drugim."
 
 msgid "Run Democracy at startup"
-msgstr ""
+msgstr "Democracy se pokreće na uključenju"
 
+#, fuzzy
 msgid "Save downloaded videos in this folder:"
-msgstr ""
+msgstr "Snimi preuzete video fajlove u ovaj folder:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:61
 msgid "Stop after each video."
-msgstr ""
+msgstr "Stop posle svakog videa."
 
+#, fuzzy
 msgid "To avoid internet slowdowns:"
-msgstr ""
+msgstr "Da izbegnete usporenja interneta:"
 
 msgid "every 30 minutes"
-msgstr ""
+msgstr "svakih 30 minuta"
 
 msgid "every hour"
-msgstr ""
+msgstr "svakih sat vremena"
 
 msgid "manually"
-msgstr ""
+msgstr "manuelno"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
+#, fuzzy
 msgid "videos at once."
-msgstr ""
+msgstr "video fajlova istovremeno."
 
+#, fuzzy
 msgid "$label$"
-msgstr ""
+msgstr "$label$"
 
+#, fuzzy
 msgid "$title$"
-msgstr ""
+msgstr "$naslov$"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20
 msgid "Channel"
-msgstr ""
+msgstr "Kanal"
 
 #: ../../portable/dialogs.py:72
 msgid "Create"
-msgstr ""
+msgstr "Kreiraj"
 
+#, fuzzy
 msgid "In this:"
-msgstr ""
+msgstr "Ovde:"
 
+#, fuzzy
 msgid "Item1"
-msgstr ""
+msgstr "Item1"
 
 msgid "Search Engine"
-msgstr ""
+msgstr "Pretraživač"
 
 msgid "Search for:"
-msgstr ""
+msgstr "Traži:"
 
 msgid "URL"
-msgstr ""
+msgstr "Internet adresa"
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:31
 #: ../../platform/windows-xul/frontend_implementation/startup.py:25
-#, python-format
+#, fuzzy
 msgid "(parsed %d files - found %d videos)"
-msgstr ""
+msgstr "(pretraženo %d fajlova - pronađeno %d video fajlova)"
 
 msgid "Back"
-msgstr ""
+msgstr "Nazad"
 
+#, fuzzy
 msgid "Browse"
-msgstr ""
+msgstr "Traženje"
 
+#, fuzzy
 msgid ""
 "Democracy Player can find all the videos on your computer to help you "
 "organize your collection.\n"
@@ -433,33 +484,45 @@ msgid ""
 "\n"
 "Would you like Democracy Player to look for video files on your computer?"
 msgstr ""
+"Democracy Player može pronaći sve video fajlove na kompjuteru i pomoći Vam "
+"da organizujete Vašu kolekciju.\n"
+"\n"
+"\n"
+"Da li želite da Democracy Player potraži video fajlove na Vašem kompjuteru?"
 
 msgid "Next"
-msgstr ""
+msgstr "Dalje"
 
 #: ../../portable/dialogs.py:62
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28
 msgid "No"
-msgstr ""
+msgstr "ne"
 
 msgid "Only search my Movies folder."
-msgstr ""
+msgstr "Pretraži samo moj Movies folder."
 
+#, fuzzy
 msgid "Search my entire Home folder."
-msgstr ""
+msgstr "Pretraži moj Home folder."
 
+#, fuzzy
 msgid "Search this folder:"
-msgstr ""
+msgstr "Pretraži ovaj folder:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
+#, fuzzy
 msgid "Searching for Videos"
-msgstr ""
+msgstr "Tražim Video fajlove"
 
+#, fuzzy
 msgid ""
 "The next few screens will help you set up Democracy Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"Sledećih nekoliko koraka će vam pomoći da podesite Democracy Player kako bi "
+"radio najbolje za Vas. Evo prvog pitanja."
 
+#, fuzzy
 msgid ""
 "We recommend that you allow Democracy Player to launch when your computer "
 "starts up. This way, videos that haven't finished downloading can finish and "
@@ -468,11 +531,21 @@ msgid ""
 "\n"
 "Would you like to run Democracy when your computer starts up?"
 msgstr ""
+"Preporučujemo da dozvolite Democracy Player-u da startuje sa uključenjem "
+"Vašeg kompjutera. Na ovaj način, video fajlovi koji nisu završili "
+"\"download\" mogu biti dovršeni i novi video fajlovi sa Vaših kanala će biti "
+"spremni da ih pogledate kada želite.\n"
+"\n"
+"\n"
+"\n"
+"Da li želite da Democracy startuje na uključenju Vašeg kompjutera?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:66
+#, fuzzy
 msgid "Welcome to Internet TV!"
-msgstr ""
+msgstr "Dobrodošli na Internet TV!"
 
+#, fuzzy
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
 "automatically download videos from your favorite channels, watch new videos "
@@ -480,12 +553,18 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Dobrodošli na Internet TV. Mnogo toga možete uraditi sa Democracy Pleyer-om: "
+"automatski download videa sa Vaših omiljenih kanala, gledajte nove video "
+"fajlove jedan za drugim, download torrent-a, preporučite video fajl "
+"prijateljima, i mnogo više.\n"
+"\n"
 
 #: ../../portable/dialogs.py:61
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
+#, fuzzy
 msgid ""
 "You're done!\n"
 "\n"
@@ -509,738 +588,907 @@ msgid ""
 "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
 "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
 msgstr ""
+"Završili ste!\n"
+"\n"
+"Podešavanje je završeno -- sada možete potražiti neki kanal i poceti da "
+"gledate.\n"
+"\n"
+"Ne čekajte: Democracy je drugačiji od gledanja videa na web stranicama -- "
+"izdavači mogu ponuditi velike, high quality snimke. Zato ne gubite vreme "
+"čekajući: startujte neki download i proverite ga posle nekog vremena. \n"
+"\n"
+"Ostavite ga uključenog: Democracy Player povremeno proverava kanale tražeći "
+"nove sadržaje i vrši njihov download. Ostavite ga uključenog znači da ćete "
+"imati nove snimke spremne da ih pogledate kada to poželite. \n"
+"\n"
+"Ne brinite za prostor na disku: Kao i TiVo, Democracy Player karakteriše "
+"'expiration' sistem koji pomaže u čišćenju starih snimaka da bi oslobodio "
+"prostor za nove. Uvek možete zadržati snimak time što ćete kliknuti "
+"\"Snimi\" a možete podesiti u opcijama kanala koji će kanal sačuvati snimak "
+"automatski.\n"
+"\n"
+"Go Big: Taster desno od tastera za reprodukciju prikazuje snimke preko celog "
+"ekrana (fullscreen).\n"
+"\n"
+"Pronađite Video: The Democracy TV Vodič poseduje stotine internet TV kanala, "
+"svi su besplatni. Samo kliknite \"Dodaj\" da biste gledali određeni kanal.\n"
 
+#, fuzzy
 msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
+"%poruka%\n"
+"%poruka%"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
+#, fuzzy
 msgid "Save Video _As..."
-msgstr ""
+msgstr "Snimi Video _Kao..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save this video"
-msgstr "Сними овај видео"
+msgstr "Snimi ovaj video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
+#, fuzzy
 msgid "_Copy Video URL"
-msgstr ""
+msgstr "_Kopiraj Video URL"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
+#, fuzzy
 msgid "_Remove Video"
-msgstr ""
+msgstr "_Ukloni Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123
+#, fuzzy
 msgid "_Fullscreen"
-msgstr "_Преко целог екрана"
+msgstr "Preko celog ekrana (Fullscreen)"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
 msgid "_Stop Video"
-msgstr ""
+msgstr "_Stop Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
 msgid "_Next Video"
-msgstr ""
+msgstr "_Sledeći Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
 msgid "_Previous Video"
-msgstr ""
+msgstr "_Prethodni Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
+#, fuzzy
 msgid "_Play / Pause"
-msgstr "_Пусти / Паузирај"
+msgstr "_Pusti / Pauziraj"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:132
 #, fuzzy
 msgid "Copy Channel _Link"
-msgstr "Копирај _Линк Канала"
+msgstr "Kopiraj _Link Kanala"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133
+#, fuzzy
 msgid "_Send this channel to a friend"
-msgstr ""
+msgstr "_Pošalji ovaj kanal prijatelju"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
 msgid "_Update Channel"
-msgstr "_Освежи Канал"
+msgstr "_Osveži Kanal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
+#, fuzzy
 msgid "Re_name Channel"
-msgstr ""
+msgstr "Promeni_ime Kanala"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
+#, fuzzy
 msgid "_Remove Channel"
-msgstr "_Уклони Канал"
+msgstr "_Ukloni Kanal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145
+#, fuzzy
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "Promeni_ime Plejliste"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148
+#, fuzzy
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "_Ukloni Plejlistu"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151
+#, fuzzy
 msgid "_Video"
-msgstr "_Видео"
+msgstr "_Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152
 msgid "_Channels"
-msgstr ""
+msgstr "_Kanali"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153
+#, fuzzy
 msgid "_Playlists"
-msgstr ""
+msgstr "_Plej liste"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:154
+#, fuzzy
 msgid "P_layback"
-msgstr ""
+msgstr "P_layback"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
 msgid "_Open..."
-msgstr "_Отвори..."
+msgstr "_Otvori..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
+#, fuzzy
 msgid "Open various files"
-msgstr "Отвори разне фајлове"
+msgstr "Otvori razne fajlove"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
+#, fuzzy
 msgid "New _Playlist..."
-msgstr ""
+msgstr "Nova _Play lista..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
 msgid "Create new playlist"
-msgstr ""
+msgstr "Kreiraj novu plejlistu"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
+#, fuzzy
 msgid "New Playlist _Folder..."
-msgstr ""
+msgstr "Novi _Folder Plejliste..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
+#, fuzzy
 msgid "Create new playlist folder"
-msgstr ""
+msgstr "Kreiraj novi folder plejliste"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
+#, fuzzy
 msgid "New Channel _Folder..."
-msgstr ""
+msgstr "Novi _Folder Kanala"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
+#, fuzzy
 msgid "Create new channel folder"
-msgstr ""
+msgstr "Kreiraj folder novog kanala"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160
+#, fuzzy
 msgid "Add _Channel..."
-msgstr ""
+msgstr "Dodaj_Kanal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161
+#, fuzzy
 msgid "New Searc_h Channel..."
-msgstr ""
+msgstr "Nova Pretrag_a Kanala..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162
+#, fuzzy
 msgid "New Channel _Guide..."
-msgstr ""
+msgstr "Novi TV _Vodič..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164
 #, fuzzy
 msgid "P_references"
-msgstr "П_референце"
+msgstr "P_ostavke"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165
 msgid "_Quit"
-msgstr "_Излаз"
+msgstr "_Završi"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165
+#, fuzzy
 msgid "Quit the Program"
-msgstr "Изађи из Програма"
+msgstr "Izađi iz Programa"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:166
+#, fuzzy
 msgid "U_pdate All Channels"
-msgstr "О_свежи Све Канале"
+msgstr "O_sveži Sve Kanale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:167
+#, fuzzy
 msgid "_Help"
-msgstr "_Помоћ"
+msgstr "_Pomoć"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169
 msgid "_Donate"
-msgstr ""
+msgstr "_Donacije"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172
+#, fuzzy
 msgid "Delete selection"
-msgstr ""
+msgstr "Briši izbor"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
 msgid "Username:"
-msgstr "Корисничко име:"
+msgstr "Korisničko ime"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:163
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
+#, fuzzy
 msgid "Password:"
-msgstr "Лозинка:"
+msgstr "Lozinka:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:350
 #, fuzzy
 msgid "Unknown Runtime Error"
-msgstr "Непозната грешка"
+msgstr "Nepoznata Runtime Greška"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351
 #, fuzzy
 msgid "An unknown error has occurred %s."
-msgstr "Дошло је до непознате грешке %s."
+msgstr "Došlo je do nepoznate greške %s."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
 #: ../../platform/osx/frontend/UIStrings.py:5
+#, fuzzy
 msgid "_Remove..."
-msgstr ""
+msgstr "_Ukloni..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6
 #: ../../platform/osx/frontend/UIStrings.py:6
+#, fuzzy
 msgid "_Remove Playlist..."
-msgstr ""
+msgstr "_Ukloni Plejlistu..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7
 #: ../../platform/osx/frontend/UIStrings.py:7
 msgid "_Remove Playlists..."
-msgstr ""
+msgstr "_Ukloni Plejliste..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8
 #: ../../platform/osx/frontend/UIStrings.py:8
+#, fuzzy
 msgid "_Remove Playlist Folder..."
-msgstr ""
+msgstr "_Ukloni Folder Plejliste..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:9
 #: ../../platform/osx/frontend/UIStrings.py:9
+#, fuzzy
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "_Ukloni Foldere Plejliste..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10
 #: ../../platform/osx/frontend/UIStrings.py:10
+#, fuzzy
 msgid "_Remove Channel..."
-msgstr ""
+msgstr "_Ukloni Kanal"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11
 #: ../../platform/osx/frontend/UIStrings.py:11
+#, fuzzy
 msgid "_Remove Channels..."
-msgstr ""
+msgstr "_Ukloni Kanale..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12
 #: ../../platform/osx/frontend/UIStrings.py:12
+#, fuzzy
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "_Ukloni Folder Kanala..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13
 #: ../../platform/osx/frontend/UIStrings.py:13
+#, fuzzy
 msgid "_Remove Channel Folders..."
-msgstr ""
+msgstr "_Ukloni Folder Kanala..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14
 #: ../../platform/osx/frontend/UIStrings.py:14
+#, fuzzy
 msgid "_Remove Channel Guide..."
-msgstr ""
+msgstr "_Ukloni TV Vodič..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:15
 #: ../../platform/osx/frontend/UIStrings.py:15
+#, fuzzy
 msgid "_Remove Channel Guides..."
-msgstr ""
+msgstr "_Ukloni TV Vodiče..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16
 #: ../../platform/osx/frontend/UIStrings.py:16
+#, fuzzy
 msgid "_Remove Video..."
-msgstr ""
+msgstr "_Ukloni Video Fajl..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:17
 #: ../../platform/osx/frontend/UIStrings.py:17
 msgid "_Remove Videos..."
-msgstr ""
+msgstr "_Ukloni Video Fajlove..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18
 #: ../../platform/osx/frontend/UIStrings.py:18
 msgid "Re_name..."
-msgstr ""
+msgstr "Promeni_ime"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:19
 #: ../../platform/osx/frontend/UIStrings.py:19
+#, fuzzy
 msgid "Re_name Playlist..."
-msgstr ""
+msgstr "Promeni_ime Plejliste"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:20
 #: ../../platform/osx/frontend/UIStrings.py:20
 msgid "Re_name Playlist Folder..."
-msgstr ""
+msgstr "Promeni-ime Foldera Plejliste..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:21
 #: ../../platform/osx/frontend/UIStrings.py:21
+#, fuzzy
 msgid "Re_name Channel..."
-msgstr ""
+msgstr "Promeni-ime Kanala..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:22
 #: ../../platform/osx/frontend/UIStrings.py:22
+#, fuzzy
 msgid "Re_name Channel Folder..."
-msgstr ""
+msgstr "Promeni_ime Foldera Kanala"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:23
 #: ../../platform/osx/frontend/UIStrings.py:23
+#, fuzzy
 msgid "Re_name Channel Guide..."
-msgstr ""
+msgstr "Promeni_ime TV Vodiča..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24
 #: ../../platform/osx/frontend/UIStrings.py:24
+#, fuzzy
 msgid "_Update Channel..."
-msgstr ""
+msgstr "_Osveži Kanal..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25
 #: ../../platform/osx/frontend/UIStrings.py:25
+#, fuzzy
 msgid "_Update Channels..."
-msgstr ""
+msgstr "_Osveži Kanale_"
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:59
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:157
 #: ../../platform/windows-xul/frontend_implementation/startup.py:33
-#, python-format
+#, fuzzy
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d video fajl pronađen"
+msgstr[1] "%d video falovi pronađeni"
+msgstr[2] "%d video falovi pronađeni"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161
+#, fuzzy
 msgid "Error Bombing Item"
-msgstr ""
+msgstr "Greška \"Bombing Item\""
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:163
+#, fuzzy
 msgid "Error Recommending Item"
-msgstr ""
+msgstr "Greška \"Recommending Item\""
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:165
+#, fuzzy
 msgid "Error Opening Website"
-msgstr ""
+msgstr "Greška u Otvaranju Web sajta"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:169
-#, python-format
+#, fuzzy
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
+"Greška u otvaranju %s.  Molimo Vas pokusajte ponovo za nekoliko sekundi"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37
+#, fuzzy
 msgid "Remove Playlist..."
-msgstr ""
+msgstr "Ukloni Plejlistu"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7
+#, fuzzy
 msgid "Remove Playlists..."
-msgstr ""
+msgstr "Ukloni Plejliste"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:8
+#, fuzzy
 msgid "Remove Playlist Folder..."
-msgstr ""
+msgstr "Ukloni Folder Plejliste..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:9
+#, fuzzy
 msgid "Remove Playlist Folders..."
-msgstr ""
+msgstr "Ukloni Foldere Plejliste..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27
 msgid "Remove Channel..."
-msgstr ""
+msgstr "Ukloni Kanal..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11
+#, fuzzy
 msgid "Remove Channels..."
-msgstr ""
+msgstr "Ukloni Kanale..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12
+#, fuzzy
 msgid "Remove Channel Folder..."
-msgstr ""
+msgstr "Ukloni Folder Kanala..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:13
+#, fuzzy
 msgid "Remove Channel Folders..."
-msgstr ""
+msgstr "Ukloni Foldere Kanala..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:14
+#, fuzzy
 msgid "Remove Channel Guide..."
-msgstr ""
+msgstr "Ukloni TV Vodič..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:15
 msgid "Remove Channel Guides..."
-msgstr ""
+msgstr "Ukloni TV Vodiče..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16
 msgid "Remove Video..."
-msgstr ""
+msgstr "Ukloni Video Fajl..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:17
+#, fuzzy
 msgid "Remove Videos..."
-msgstr ""
+msgstr "Ukloni Video Fajlove..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36
+#, fuzzy
 msgid "Rename Playlist..."
-msgstr ""
+msgstr "Promeni Ime Plejliste..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20
+#, fuzzy
 msgid "Rename Playlist Folder..."
-msgstr ""
+msgstr "Promeni ime Foldera Plejliste..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26
+#, fuzzy
 msgid "Rename Channel..."
-msgstr ""
+msgstr "Promeni Ime Kanala..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22
+#, fuzzy
 msgid "Rename Channel Folder..."
-msgstr ""
+msgstr "Promeni Ime Kanala"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:23
+#, fuzzy
 msgid "Rename Channel Guide..."
-msgstr ""
+msgstr "Promeni Ime TV Vodiča..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:24
+#, fuzzy
 msgid "Update Channel..."
-msgstr ""
+msgstr "Osveži Kanal..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:25
+#, fuzzy
 msgid "Update Channels..."
-msgstr ""
+msgstr "Osveži Kanale..."
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:36
-#, python-format
+#, fuzzy
 msgid ""
 "Error importing democracy modules:\n"
 "%s"
 msgstr ""
+"Grečka pri importu democracy modula:\n"
+"%s"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:40
 msgid "Starting up"
-msgstr ""
+msgstr "Startujem"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:136
+#, fuzzy
 msgid "Loading window"
-msgstr ""
+msgstr "Učitavam prozor"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:137
+#, fuzzy
 msgid "onStartup called twice"
-msgstr ""
+msgstr "naUključenju pozvan dvaput"
 
 #: ../../portable/playlist.py:175 ../../portable/playlist.py:180
+#, fuzzy
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Promeni Ime Plejliste"
 
 #: ../../portable/playlist.py:176 ../../portable/folder.py:120
 #: ../../portable/folder.py:175 ../../portable/guide.py:130
 #: ../../portable/menu.py:48 ../../portable/menu.py:53
 #: ../../portable/feed.py:690
 msgid "Remove"
-msgstr ""
+msgstr "Ukloni"
 
 #: ../../portable/playlist.py:181
-#, python-format
+#, fuzzy
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Unesi novo ime za plejlistu %s"
 
 #: ../../portable/playlist.py:194
+#, fuzzy
 msgid "Create Playlist"
-msgstr ""
+msgstr "Kreiraj Plejlistu"
 
 #: ../../portable/playlist.py:195
+#, fuzzy
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Unesi ime za novu plejlistu"
 
 #: ../../portable/compiled_templates/search.py:39
+#, fuzzy
 msgid "Nothing to display.<br></br> Enter a query in the search field above."
 msgstr ""
+"Ništa za prikaz.<br></br> Unesite upit u polje za pretraživanje iznad."
 
 #: ../../portable/compiled_templates/search.py:44
+#, fuzzy
 msgid "Searching..."
-msgstr ""
+msgstr "Tražim..."
 
 #: ../../portable/compiled_templates/search.py:56
+#, fuzzy
 msgid "Results for \"${query}\""
-msgstr ""
+msgstr "Rezultati za \"${upit}\""
 
 #: ../../portable/compiled_templates/search.py:95
+#, fuzzy
 msgid "Video Search"
-msgstr ""
+msgstr "Video Pretraživanje"
 
 #: ../../portable/compiled_templates/playlist.py:56
+#, fuzzy
 msgid "Empty Playlist"
-msgstr ""
+msgstr "Prazna Plejlista"
 
 #: ../../portable/compiled_templates/playlist.py:58
+#, fuzzy
 msgid "Drag downloaded videos to this playlist to add them."
-msgstr ""
+msgstr "Prevucite nove video fajlove u ovu plejlistu da ih dodate."
 
 #: ../../portable/compiled_templates/playlist_folder.py:59
+#, fuzzy
 msgid "Empty Playlist Folder"
-msgstr ""
+msgstr "Folder Prazne Plejliste"
 
 #: ../../portable/compiled_templates/playlist_folder.py:71
 msgid ""
 "This folder contains ${count} playlists, but the playlists do not contain "
 "any items."
 msgstr ""
+"Ovaj folder sadrži ${count} plejliste, ali su plejliste bez sadržaja."
 
 #: ../../portable/compiled_templates/playlist_folder.py:76
+#, fuzzy
 msgid "Drag playlists to this folder to add them."
-msgstr ""
+msgstr "Prevucite plejliste u ovaj folder da ih dodate."
 
 #: ../../portable/compiled_templates/multi_playlist.py:57
+#, fuzzy
 msgid ""
 "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
 "playlists)"
 msgstr ""
+"${count} Plejlist Foldera Izabrano<br></br>(contains ${containedcount} "
+"playlists)"
 
 #: ../../portable/compiled_templates/multi_playlist.py:69
+#, fuzzy
 msgid "${count} Playlists Selected"
-msgstr ""
+msgstr "${count} Plejlisti Izabrano"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:47
 #: ../../portable/compiled_templates/video_info.py:40
 #: ../../portable/compiled_templates/external_playback.py:50
+#, fuzzy
 msgid "STAR"
-msgstr ""
+msgstr "ZVEZDA"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:57
 #: ../../portable/compiled_templates/video_info.py:50
 #: ../../portable/compiled_templates/external_playback.py:60
 #: ../../portable/compiled_templates/download_item.py:201
+#, fuzzy
 msgid "SAVE"
-msgstr ""
+msgstr "Snimi"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:62
 #: ../../portable/compiled_templates/video_info.py:55
 #: ../../portable/compiled_templates/external_playback.py:65
+#, fuzzy
 msgid "SAVED"
-msgstr ""
+msgstr "Snimljeno"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:70
 #: ../../portable/compiled_templates/video_info.py:63
 #: ../../portable/compiled_templates/external_playback.py:73
 #: ../../portable/compiled_templates/download_item.py:211
 msgid "DELETE"
-msgstr ""
+msgstr "IZBRIŠI"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:85
 #: ../../portable/compiled_templates/external_playback.py:88
+#, fuzzy
 msgid "Democracy - External Playback Template"
-msgstr ""
+msgstr "Democracy - External Playback Template"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:95
+#, fuzzy
 msgid "Continue To Next Video"
-msgstr ""
+msgstr "Nastavi do sledećeg Video fajla"
 
 #: ../../portable/compiled_templates/channelfolder.py:166
+#, fuzzy
 msgid "${count} Downloads in Progress"
-msgstr ""
+msgstr "${count} Download-a u toku"
 
 #: ../../portable/compiled_templates/channelfolder.py:171
+#, fuzzy
 msgid "1 Download in Progress"
-msgstr ""
+msgstr "1 Download u toku"
 
 #: ../../portable/compiled_templates/channelfolder.py:191
+#, fuzzy
 msgid "${len} Videos On This Channel"
-msgstr ""
+msgstr "${len} Video Fajlova na ovom kanalu"
 
 #: ../../portable/compiled_templates/channelfolder.py:205
+#, fuzzy
 msgid "All ${len} Videos Match This Search"
-msgstr ""
+msgstr "Svi ${len} Video fajlovi odgovaraju upitu ove pretrage"
 
 #: ../../portable/compiled_templates/channelfolder.py:217
+#, fuzzy
 msgid "${len} Videos Match This Search"
-msgstr ""
+msgstr "${len} Video fajlova odgovara ovoj pretrazi"
 
 #: ../../portable/compiled_templates/channelfolder.py:277
+#, fuzzy
 msgid "${count} Videos on this Channel"
-msgstr ""
+msgstr "${count} Video fajlova na ovom kanalu"
 
 #: ../../portable/compiled_templates/channelfolder.py:290
+#, fuzzy
 msgid "Unwatched"
-msgstr "Без надгледања"
+msgstr "Nije pregledano"
 
 #: ../../portable/compiled_templates/channelfolder.py:301
+#, fuzzy
 msgid "Watched"
-msgstr ""
+msgstr "Pregledano"
 
 #: ../../portable/compiled_templates/channelfolder.py:312
 msgid "Saved"
-msgstr ""
+msgstr "Snimljeno"
 
 #: ../../portable/compiled_templates/feed_settings.py:32
 #: ../../portable/compiled_templates/channel.py:152
+#, fuzzy
 msgid "Default"
-msgstr ""
+msgstr "Početna"
 
 #: ../../portable/compiled_templates/feed_settings.py:39
 #: ../../portable/compiled_templates/channel.py:159
 msgid "default"
-msgstr ""
+msgstr "podrazumevano"
 
 #: ../../portable/compiled_templates/feed_settings.py:110
 #: ../../portable/compiled_templates/channel.py:379
+#, fuzzy
 msgid "Videos expire after"
-msgstr ""
+msgstr "Video fajlova ističe posle"
 
 #: ../../portable/compiled_templates/feed_settings.py:113
 #: ../../portable/compiled_templates/channel.py:382
+#, fuzzy
 msgid "When turned on, Auto Download should"
-msgstr ""
+msgstr "Kada je uključen, Auto Download"
 
 #: ../../portable/compiled_templates/feed_settings.py:146
 #: ../../portable/compiled_templates/channel.py:415
+#, fuzzy
 msgid ""
 "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
 "unwatched."
 msgstr ""
+"Ne uključuj Auto Download kada je više od ${maxnew} ${maxnew2} video fajlova "
+"još uvek nepregledano."
 
 #: ../../portable/compiled_templates/channel.py:316
 #: ../../portable/compiled_templates/channel_content.py:122
 #: ../../portable/compiled_templates/channel_folder.py:252
 msgid "Downloaded"
-msgstr ""
+msgstr "Preuzeto"
 
 #: ../../portable/compiled_templates/channel.py:428
 msgid "Recommend"
-msgstr ""
+msgstr "Preporuči"
 
 #: ../../portable/compiled_templates/channel.py:430
 #: ../../portable/compiled_templates/unittest/simpleunicode.py:34
 #: ../../portable/test/unicodetest.py:402
+#, fuzzy
 msgid "Settings"
-msgstr ""
+msgstr "Podešavanja"
 
 #: ../../portable/compiled_templates/channel.py:440
+#, fuzzy
 msgid "<label for=\"automatic\">Auto Download</label>"
-msgstr ""
+msgstr "<label for=\"automatic\">Auto Download</label>"
 
 #: ../../portable/compiled_templates/channel.py:458
+#, fuzzy
 msgid "Looking for videos at this URL"
-msgstr ""
+msgstr "Tražim video fajlove na URL"
 
 #: ../../portable/compiled_templates/external_playback.py:111
+#, fuzzy
 msgid ""
 "Democracy can't play this file. You may be able to open it with a different "
 "program.<br></br><br></br><strong>Filename:</strong> "
 "${filename}<Br></Br><strong>File type:</strong> ${format}"
 msgstr ""
+"Democracy ne može reprodukovati ovaj fajl. Možda da probate da ga otvorite "
+"nekim drugim programom.<br></br><br></br><strong>Filename:</strong> "
+"${filename}<Br></Br><strong>File type:</strong> ${format}"
 
 #: ../../portable/compiled_templates/external_playback.py:115
+#, fuzzy
 msgid "REVEAL FILE"
-msgstr ""
+msgstr "OTKRIJ FAJL"
 
 #: ../../portable/compiled_templates/external_playback.py:119
+#, fuzzy
 msgid "Play Externally"
-msgstr ""
+msgstr "Reprodukuj eksterno"
 
 #: ../../portable/compiled_templates/external_playback.py:128
+#, fuzzy
 msgid "Skip >> ${countdown}"
-msgstr ""
+msgstr "Preskoči >> ${countdown}"
 
 #: ../../portable/compiled_templates/download_item.py:114
+#, fuzzy
 msgid "SHOW FILE"
-msgstr ""
+msgstr "PRIKAŽI FAJL"
 
 #: ../../portable/compiled_templates/download_item.py:121
+#, fuzzy
 msgid "SHOW FOLDER"
-msgstr ""
+msgstr "PRIKAŽI FOLDER"
 
 #: ../../portable/compiled_templates/download_item.py:135
 msgid "SHARE IT"
-msgstr ""
+msgstr "PODELI SA DRUGIMA"
 
 #: ../../portable/compiled_templates/download_item.py:144
+#, fuzzy
 msgid "STAR IT"
-msgstr ""
+msgstr "DODELI ZVEZDICU"
 
 #: ../../portable/compiled_templates/download_item.py:189
+#, fuzzy
 msgid "Pending Auto Download"
-msgstr "Аутоматско скидање у току"
+msgstr "Aktivan Auto Download"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:43
 msgid "Simple translation"
-msgstr ""
+msgstr "Jednostavan prevod"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:57
 msgid "truck stop in a ${can}"
-msgstr ""
+msgstr "kamion staje za ${can}"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:61
+#, fuzzy
 msgid ""
 "This is a ${car} and this is a ${truck} <span>This text is <b "
 "style=\"color:red\">raw</b> text</span>"
 msgstr ""
+"Ovo je ${car} a ovo je ${truck} <span>Ovaj tekst je <b "
+"style=\"color:red\">raw</b> text</span>"
 
 #: ../../portable/compiled_templates/download.py:91
+#, fuzzy
 msgid "${size} disk space free"
-msgstr ""
+msgstr "${size} slobodno na disku"
 
 #: ../../portable/compiled_templates/download.py:101
+#, fuzzy
 msgid "${size} available for downloads"
-msgstr ""
+msgstr "${size} raspoloživo za download"
 
 #: ../../portable/compiled_templates/download.py:153 ../../portable/tabs.py:28
 msgid "Downloading"
-msgstr ""
+msgstr "Downloading"
 
 #: ../../portable/compiled_templates/download.py:168
+#, fuzzy
 msgid "Clear Completed Torrents"
-msgstr ""
+msgstr "Ukloni završene torente"
 
 #: ../../portable/compiled_templates/channel_folder.py:138
+#, fuzzy
 msgid "Empty Channel Folder"
-msgstr ""
+msgstr "Isprazni folder kanala"
 
 #: ../../portable/compiled_templates/channel_folder.py:140
+#, fuzzy
 msgid "Drag channels to this folder to add them."
-msgstr ""
+msgstr "Prevucite kanale u ovaj folder da ih dodate."
 
 #: ../../portable/compiled_templates/library.py:73 ../../portable/tabs.py:25
 msgid "My Collection"
-msgstr ""
+msgstr "Moja kolekcija"
 
 #: ../../portable/compiled_templates/new.py:75 ../../portable/tabs.py:26
 msgid "New Videos"
-msgstr "Нови Снимци"
+msgstr "Novi video fajlovi"
 
 #: ../../portable/compiled_templates/first_time_intro.py:38
+#, fuzzy
 msgid "Democracy Internet TV: How to Get Started"
-msgstr ""
+msgstr "Democracy Internet TV: Kako početi"
 
 #: ../../portable/compiled_templates/first_time_intro.py:42
 msgid "GO BIG:"
-msgstr ""
+msgstr "GO BIG:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:44
+#, fuzzy
 msgid "This is your fullscreen button. Click it and lean back."
-msgstr ""
+msgstr "Ovo je fullscreen taster. Klikni i opusti se."
 
 #: ../../portable/compiled_templates/first_time_intro.py:48
 msgid "NEW STUFF:"
-msgstr ""
+msgstr "NOVO:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:50
+#, fuzzy
 msgid ""
 "Blue circles mean the channel has new videos available, green circles mean "
 "you have downloaded videos ready to watch."
 msgstr ""
+"Plavi krugovi označavaju da kanal ima nove video fajlove na raspolaganju, "
+"zeleni krugovi označavaju da su preuzeti fajlovi spremni da ih pogledate."
 
 #: ../../portable/compiled_templates/first_time_intro.py:52
+#, fuzzy
 msgid ""
 "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
 "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
 msgstr ""
+"<strong i18n:translate=\"\">PRESKOČI INTRO: <a style=\"color: #090;\" "
+"href=\"#\" onclick=\"doneWithIntro();\">Idi na TV Vodič >></a></strong>"
 
 #: ../../portable/compiled_templates/first_time_intro.py:54
+#, fuzzy
 msgid ""
 "<strong>Add Channels:</strong> The Channel Guide is your home base for "
 "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
 "channels in the guide are free.</strong>"
 msgstr ""
+"<strong>Dodaj kanale:</strong> TV Vodič je tvoja baza internet TV kanala. "
+"Klikni 'DODAJ' da biste se pretplatili na kanal-- <strong>tkanali u vodiču "
+"su besplatni.</strong>"
 
 #: ../../portable/compiled_templates/first_time_intro.py:56
+#, fuzzy
 msgid ""
 "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
 "videos-- publishers can offer big, high quality videos. So don't sit around "
 "waiting for videos: start some downloads and check back later."
 msgstr ""
+"<strong>Ne čekaj:</strong> Democracy je drugačiji od gledanja video fajlova "
+"na web stranicama-- izdavači mogu ponuditi velike, high quality video "
+"snimke. Ne gubi vreme: startuj neki download i proveri ga malo kasnije."
 
 #: ../../portable/compiled_templates/first_time_intro.py:58
 msgid ""
@@ -1265,29 +1513,29 @@ msgstr ""
 
 #: ../../portable/compiled_templates/multi_channel.py:69
 msgid "${count} Channels Selected"
-msgstr ""
+msgstr "${count} kanala izabrano"
 
 #: ../../portable/dl_daemon/download.py:298
 msgid "Error"
-msgstr ""
+msgstr "Greška"
 
 #: ../../portable/dl_daemon/download.py:357
 #, python-format
 msgid "Could not write to %s"
-msgstr ""
+msgstr "Ne mogu da upisujem na %s"
 
 #: ../../portable/dl_daemon/download.py:376
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Nedovoljno slobodnog prostora na disku"
 
 #: ../../portable/dl_daemon/download.py:377
 #, python-format
 msgid "%s MB required to store this video"
-msgstr ""
+msgstr "%s MB potrebno za snimanje ovog video fajla"
 
 #: ../../portable/dl_daemon/download.py:676
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "neispravan torent"
 
 #: ../../portable/dl_daemon/download.py:677
 #, python-format
@@ -1296,11 +1544,11 @@ msgstr ""
 
 #: ../../portable/dl_daemon/download.py:702
 msgid "Torrent file deleted"
-msgstr ""
+msgstr "Torent fajl obrisan"
 
 #: ../../portable/dl_daemon/download.py:703
 msgid "The torrent file for this item was deleted "
-msgstr ""
+msgstr "Odgovarajući torent fajl je obrisan "
 
 #: ../../portable/dl_daemon/download.py:704
 msgid "outside of democracy."
@@ -1329,24 +1577,24 @@ msgstr ""
 #: ../../portable/httpclient.py:52
 #, python-format
 msgid "Error: %s"
-msgstr ""
+msgstr "Greška: %s"
 
 #: ../../portable/httpclient.py:67 ../../portable/httpclient.py:72
 msgid "Can't connect"
-msgstr ""
+msgstr "Ne mogu da se povežem"
 
 #: ../../portable/httpclient.py:68
 #, python-format
 msgid "Connection Error: %s"
-msgstr ""
+msgstr "Grečka u povezivanju %s"
 
 #: ../../portable/httpclient.py:73
 msgid "SSL connection error"
-msgstr ""
+msgstr "greška SSL konekcije"
 
 #: ../../portable/httpclient.py:77
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP greška"
 
 #: ../../portable/httpclient.py:80
 #, python-format
@@ -1375,16 +1623,16 @@ msgstr ""
 
 #: ../../portable/httpclient.py:97 ../../portable/downloader.py:173
 msgid "File not found"
-msgstr ""
+msgstr "Fajl nije nađen"
 
 #: ../../portable/httpclient.py:98
 msgid "Got 404 status code"
-msgstr ""
+msgstr "Got 404 status code"
 
 #: ../../portable/httpclient.py:100
 #, python-format
 msgid "Bad Status Code: %s"
-msgstr ""
+msgstr "Bad Status Code: %s"
 
 #: ../../portable/httpclient.py:104
 msgid "Authorization failed"
@@ -1392,15 +1640,15 @@ msgstr ""
 
 #: ../../portable/httpclient.py:109
 msgid "Internal Error"
-msgstr ""
+msgstr "Interna greška"
 
 #: ../../portable/httpclient.py:110
 msgid "Pipeline request never started"
-msgstr ""
+msgstr "Pipeline request never started"
 
 #: ../../portable/httpclient.py:114
 msgid "Timeout"
-msgstr ""
+msgstr "Timeout"
 
 #: ../../portable/httpclient.py:115
 #, python-format
@@ -1409,7 +1657,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:119
 msgid "Invalid URL"
-msgstr ""
+msgstr "Neispravan URL"
 
 #: ../../portable/httpclient.py:120
 #, python-format
@@ -1418,11 +1666,11 @@ msgstr ""
 
 #: ../../portable/httpclient.py:313
 msgid "Connection closed"
-msgstr ""
+msgstr "Veza je zatvorena"
 
 #: ../../portable/httpclient.py:689
 msgid "Unknown"
-msgstr ""
+msgstr "Nepoznato"
 
 #: ../../portable/httpclient.py:690
 msgid "Internal Error: Not ready to send"

@@ -1,2 +1,2 @@
-<!ENTITY about.title         "About $longAppName">
-<!ENTITY about.body          "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 $publisher.">
+<!ENTITY about.title         "关于$longAppName">
+<!ENTITY about.body          "$longAppName 版本 $appVersion ($appRevision); 版权所有 2005, 2006 $publisher。">

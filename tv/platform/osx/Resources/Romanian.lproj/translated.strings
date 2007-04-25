@@ -4,241 +4,194 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-08 15:28-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-25 13:11-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
-/* Flag: untranslated */
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>";
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Trackerul de buguri este la <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Spuneți-ne ce făceați, lipiți mesajul logului din caseta de mai sus, răspundeți la cîteva întrebări și ne vom pune pe treabă</font>";
 
-/* Flag: untranslated */
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:";
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "De fapt dacă aveți un pic de timp puteți trimite un raport despre prăbușire la sistemul nostru de urmărire a bugurilor. Avem nevoie cel puțin de o descriere a ceea ce făceați în momentul respectiv -- cît de precisă posibil -- la care trebuie atașat nonsensul bine articulat din caseta de mai jos :";
 
-/* Flag: untranslated */
-"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions.";
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Nenorocire! $longAppName a căzut pradă unui oarecare tip de confuzie internă sau de încăpățînare în greșeală $when. Ne cerem scuze și vă sugerăm să părăsiți și apoi să reporniți $shortAppName. Asta îl va învăța minte și de asemenea va reduce șansele de a vă pierde preferințele sau abonamentele la canale.";
 
 "OK" = "OK";
 
-"The fall of $shortAppName??" = "Sfârşitul lui $shortAppName??";
+"The fall of $shortAppName??" = "Prăbușirea lui $shortAppName??";
 
 "About Democracy" = "Despre Democracy";
 
-"Add Channel..." = "Adauga un canal";
+"Add Channel..." = "Adaugă Canal";
 
-"Bring All to Front" = "Afişează toate în primplan";
+"Bring All to Front" = "Adu Totul în Prim-Plan";
 
 "Channels" = "Canale";
 
-/* Flag: untranslated */
-"Check for New Version" = "Check for New Version";
+"Check for New Version" = "Caută Versiune Nouă";
 
-"Clear Menu" = "Sterge meniu";
+"Clear Menu" = "Șterge meniul";
 
-/* Flag: untranslated */
-"Close Window" = "Close Window";
+"Close Window" = "Închide Fereastra";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15 */
-/* Flag: untranslated */
-"Copy" = "Copy";
+"Copy" = "Copiază";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28 */
-/* Flag: untranslated */
-"Copy Channel URL" = "Copy Channel URL";
+"Copy Channel URL" = "Copiază URL-ul Canalului";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11 */
-/* Flag: untranslated */
-"Copy Video URL" = "Copy Video URL";
+"Copy Video URL" = "Copiază URL-ul Videoului";
 
 /* Flag: untranslated */
 "Cut" = "Cut" /* = "Decupează" */;
 
 /* File: ../../portable/dialogs.py:77 */
-"Delete" = "Şterge";
+"Delete" = "Șterge";
 
 /* Flag: untranslated */
 "Democracy" = "Democracy" /* = "Democracy" */;
 
 /* Flag: untranslated */
-"Democracy Help" = "Democracy Help" /* = "Democracy Asistenţă" */;
+"Democracy Help" = "Democracy Help" /* = "Ajutor pentru Democracy" */;
 
-/* Flag: untranslated */
-"Donate" = "Donate";
+"Donate" = "Donați";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14 */
 "Edit" = "Editează";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6 */
-/* Flag: untranslated */
-"File" = "File";
+"File" = "Fișier";
 
-/* Flag: untranslated */
-"Full Screen" = "Full Screen";
+"Full Screen" = "Ecran Complet";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47 */
-/* Flag: untranslated */
-"Help" = "Help";
+"Help" = "Ajutor";
 
-/* Flag: untranslated */
-"Hide Democracy" = "Hide Democracy";
+"Hide Democracy" = "Ascunde Democracy";
 
-/* Flag: untranslated */
-"Hide Others" = "Hide Others";
+"Hide Others" = "Ascunde-le pe Celelalte";
 
-/* Flag: untranslated */
-"Main Window" = "Main Window";
+"Main Window" = "Fereastra Principală";
 
-/* Flag: untranslated */
-"MainMenu" = "MainMenu";
+"MainMenu" = "Meniul Principal";
 
-/* Flag: untranslated */
-"Minimize" = "Minimize";
+"Minimize" = "Minimizează";
 
-/* Flag: untranslated */
-"New Channel Folder..." = "New Channel Folder...";
+"New Channel Folder..." = "Dosar de Canale Nou...";
 
-/* Flag: untranslated */
-"New Channel Guide..." = "New Channel Guide...";
+"New Channel Guide..." = "Ghid de Canale Nou...";
 
-/* Flag: untranslated */
-"New Playlist Folder..." = "New Playlist Folder...";
+"New Playlist Folder..." = "Dosar cu Liste de Redare Nou...";
 
-/* Flag: untranslated */
-"New Playlist..." = "New Playlist...";
+"New Playlist..." = "Listă de Redare Nouă";
 
-/* Flag: untranslated */
-"New Search Channel..." = "New Search Channel...";
+"New Search Channel..." = "Canal de Căutare Nou";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43 */
-/* Flag: untranslated */
-"Next Video" = "Next Video";
+"Next Video" = "Următorul Video";
 
-"Open Recent" = "Deschide recent";
+"Open Recent" = "Deschide Unul Recent";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7 */
 "Open..." = "Deschide...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16 */
-"Paste" = "Lipeşte";
+"Paste" = "Lipește";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40 */
-/* Flag: untranslated */
-"Play Video" = "Play Video";
+"Play Video" = "Redă Videoul";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39 */
-/* Flag: untranslated */
-"Playback" = "Playback";
+"Playback" = "Redare";
 
-/* Flag: untranslated */
-"Playlists" = "Playlists";
+"Playlists" = "Liste de Redare";
 
-/* Flag: untranslated */
-"Preferencesâ¦" = "Preferencesâ¦";
+"Preferencesâ¦" = "Preferințe";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44 */
-/* Flag: untranslated */
-"Previous Video" = "Previous Video";
+"Previous Video" = "Precedentul Video";
 
-/* Flag: untranslated */
-"Quit Democracy" = "Quit Democracy";
+"Quit Democracy" = "Închide Democracy";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5 */
-/* Flag: untranslated */
-"Remove..." = "Remove...";
+"Remove..." = "Șterge";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18 */
-"Rename..." = "Redenumeşte...";
+"Rename..." = "Redenumește";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10 */
-/* Flag: untranslated */
-"Save Video As..." = "Save Video As...";
+"Save Video As..." = "Salvează Video ca...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17 */
-/* Flag: untranslated */
-"Select All" = "Select All";
+"Select All" = "Selectează Tot";
 
-/* Flag: untranslated */
-"Send This Channel to a Friend" = "Send This Channel to a Friend";
+"Send This Channel to a Friend" = "Trimite Acest Canal unui Prieten";
 
-/* Flag: untranslated */
-"Services" = "Services";
+"Services" = "Servicii";
 
-/* Flag: untranslated */
-"Show All" = "Show All";
+"Show All" = "Afișează Tot";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42 */
-/* Flag: untranslated */
-"Stop Video" = "Stop Video";
+"Stop Video" = "Oprește Video";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30 */
 /* Flag: untranslated */
-"Update All Channels" = "Update All Channels" /* = "Actualizeaza toate canalele" */;
+"Update All Channels" = "Update All Channels" /* = "Actualizează toate Canalele" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29 */
 /* Flag: untranslated */
-"Update Channel" = "Update Channel" /* = "Actualizeaza canalul" */;
+"Update Channel" = "Update Channel" /* = "Actualizează Canalul" */;
 
 "Window" = "Fereastră";
 
 /* Flag: untranslated */
-"Zoom" = "Zoom" /* = "Mărire" */;
+"Zoom" = "Zoom" /* = "Zoom" */;
 
 /* Flag: untranslated */
-"%channel feed%" = "%channel feed%" /* = "%legatura canalului%" */;
+"%channel feed%" = "%channel feed%" /* = "%fluxul canalului%" */;
 
 /* Flag: untranslated */
 "%channel title%" = "%channel title%" /* = "%titlul canalului%" */;
 
 /* Flag: untranslated */
-"%donation label%" = "%donation label%" /* = "%eticheta donaţie%" */;
+"%donation label%" = "%donation label%" /* = "%eticheta donației%" */;
 
-/* Flag: untranslated */
 "-00:00:00" = "-00:00:00";
 
 "00:00:00" = "00:00:00";
 
-/* Flag: untranslated */
-"Box" = "Box";
+"Box" = "Casetă";
 
-/* Flag: untranslated */
-"FullScreen Controls" = "FullScreen Controls";
+"FullScreen Controls" = "Controale în modul Ecran Complet";
 
 /* File: ../../portable/tabs.py:27 */
 /* File: ../../portable/feed.py:1718 */
 /* File: ../../portable/feed.py:1777 */
 "Search" = "Caută";
 
-/* Flag: untranslated */
-"VideoWindow" = "VideoWindow";
+"VideoWindow" = "Fereastra Videoului";
 
 /* File: ../../portable/dialogs.py:60 */
-"Cancel" = "Renunţă";
+"Cancel" = "Anulează";
+
+"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Locația http://foo.bar.com/baz necesită un nume de utilizator și o parolă pentru \"text supplied by server\".\n";
+
+"Password:\n" = "Parola:\n";
+
+"Username and password required" = "Sînt necesare Numele de Utilizator și Parola";
+
+"Username:\n\n" = "Nume de Utilizator\n\n";
+
+" limit upstream to" = " limitează traficul ascendent la";
+
+"(You must restart Democracy for this change to take effect)\n" = "(Trebuie să reporniți Democracy pentru ca schimbarea să aibă efect)\n";
+
+"(movies directory path goes here)" = "(calea dosarului cu filme se trece aici)";
 
 /* Flag: untranslated */
-"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
+"1 day" = "1 day" /* = "1 zi" */;
 
 /* Flag: untranslated */
-"Password:\n" = "Password:\n";
-
-/* Flag: untranslated */
-"Username and password required" = "Username and password required";
-
-/* Flag: untranslated */
-"Username:\n\n" = "Username:\n\n";
-
-/* Flag: untranslated */
-" limit upstream to" = " limit upstream to";
-
-/* Flag: untranslated */
-"(You must restart Democracy for this change to take effect)\n" = "(You must restart Democracy for this change to take effect)\n";
-
-/* Flag: untranslated */
-"(movies directory path goes here)" = "(movies directory path goes here)";
-
-/* Flag: untranslated */
-"1 day" = "1 day" /* = "o zi" */;
-
-/* Flag: untranslated */
-"1 month" = "1 month" /* = "o lună" */;
+"1 month" = "1 month" /* = "1 lună" */;
 
 /* Flag: untranslated */
 "10 days" = "10 days" /* = "10 zile" */;
@@ -256,80 +209,59 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "6 days" = "6 days" /* = "6 zile" */;
 
-/* Flag: untranslated */
 "99999" = "99999";
 
-/* Flag: untranslated */
-"BitTorrent ports:" = "BitTorrent ports:";
+"BitTorrent ports:" = "Porturi BitTorrent:";
 
 /* Flag: untranslated */
-"By default, videos expire after:" = "By default, videos expire after:" /* = "Din start, clip-urile expiră după:" */;
+"By default, videos expire after:" = "By default, videos expire after:" /* = "În mod implicit videourile expiră după:" */;
 
-/* Flag: untranslated */
-"Change..." = "Change...";
+"Change..." = "Modifică:";
 
-/* Flag: untranslated */
-"Check channels for new content:" = "Check channels for new content:";
+"Check channels for new content:" = "Controlează dacă e conținut nou în canale:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:41 */
-"Don't start a download if it leaves less than" = "Nu porni o descărcare dacă rămâne mai puţin de";
+"Don't start a download if it leaves less than" = "Nu porni o descărcare dacă rămîne mai puțin de";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:42 */
-/* Flag: untranslated */
-"Download at most" = "Download at most";
+"Download at most" = "Descarcă cel mult";
 
-/* Flag: untranslated */
-"GB free." = "GB free.";
+"GB free." = "GB gratuit";
 
-/* Flag: untranslated */
-"KB/s when my computer is active." = "KB/s when my computer is active.";
+"KB/s when my computer is active." = "KB/s cînd calculatorul meu este activ.";
 
-/* Flag: untranslated */
 "Maximum:" = "Maximum:";
 
-/* Flag: untranslated */
 "Minimum:" = "Minimum:";
 
-/* Flag: untranslated */
-"Never" = "Never";
+"Never" = "Niciodată";
 
-/* Flag: untranslated */
-"OtherViews" = "OtherViews";
+"OtherViews" = "Alte Vizualizări";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:53 */
-/* Flag: untranslated */
-"Play videos one after another." = "Play videos one after another.";
+"Play videos one after another." = "Redă videourile unul după altul.";
 
-/* Flag: untranslated */
-"Run Democracy at startup" = "Run Democracy at startup";
+"Run Democracy at startup" = "Lansează Democracy la pornirea SO";
 
-/* Flag: untranslated */
-"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
+"Save downloaded videos in this folder:" = "Salvează videourile descărcate în acest dosar:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
-/* Flag: untranslated */
-"Stop after each video." = "Stop after each video.";
+"Stop after each video." = "Oprire după fiecare video.";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
+"To avoid internet slowdowns:" = "Pentru a evita încetinirea internetului:";
 
-/* Flag: untranslated */
-"every 30 minutes" = "every 30 minutes";
+"every 30 minutes" = "la fiecare 30 de minute";
 
-/* Flag: untranslated */
-"every hour" = "every hour";
+"every hour" = "la fiecare oră";
 
 "manually" = "manual";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
-/* Flag: untranslated */
-"videos at once." = "videos at once.";
+"videos at once." = "videouri odată.";
 
-/* Flag: untranslated */
-"$label$" = "$label$";
+"$label$" = "$etichetă$";
 
-/* Flag: untranslated */
-"$title$" = "$title$";
+"$title$" = "$titlu$";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20 */
 "Channel" = "Canal";
@@ -338,89 +270,72 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Create" = "Create" /* = "Creează" */;
 
-/* Flag: untranslated */
-"In this:" = "In this:";
+"In this:" = "În asta:";
 
-/* Flag: untranslated */
 "Item1" = "Item1";
 
-/* Flag: untranslated */
-"Search Engine" = "Search Engine";
+"Search Engine" = "Motor de Căutare";
 
-/* Flag: untranslated */
-"Search for:" = "Search for:";
+"Search for:" = "Caută asta:";
 
-/* Flag: untranslated */
 "URL" = "URL";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/startup.py:31 */
 /* File: ../../platform/windows-xul/frontend_implementation/startup.py:25 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)";
+"(parsed %d files - found %d videos)" = "(parsate %d fișiere - găsite %d videouri)";
 
 /* Flag: untranslated */
 "Back" = "Back" /* = "Înapoi" */;
 
 /* Flag: untranslated */
-"Browse" = "Browse" /* = "Răsfoieşte" */;
+"Browse" = "Browse" /* = "Explorează" */;
 
 /* Flag: untranslated */
-"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" /* = "Playerul Democratic poate gasi toate clipurile din calculatorul tau, ajutându-te sa-ţi organizezi colectia.↵\n↵\n↵\nVrei ca Playerul Democratic sa caute clipurile din calculatorul tău?" */;
+"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" /* = "Democracy Player poate găsi toate videourile de pe calculatorul dv. pentru a vă ajuta să vă organizați colecția.\n\n\nDoriți ca Democracy Player să caute fișiere video pe calculatorul dv. ?" */;
 
 /* Flag: untranslated */
-"Next" = "Next" /* = "Urmatorul" */;
+"Next" = "Next" /* = "Următorul" */;
 
 /* File: ../../portable/dialogs.py:62 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28 */
 "No" = "Nu";
 
-/* Flag: untranslated */
-"Only search my Movies folder." = "Only search my Movies folder.";
+"Only search my Movies folder." = "Caută numai în dosarul Movies";
 
-/* Flag: untranslated */
-"Search my entire Home folder." = "Search my entire Home folder.";
+"Search my entire Home folder." = "Caută în tot dosarul meu Home.";
 
-/* Flag: untranslated */
-"Search this folder:" = "Search this folder:";
+"Search this folder:" = "Caută în acest dosar:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12 */
 /* Flag: untranslated */
 "Searching for Videos" = "Searching for Videos" /* = "Caută Clipuri" */;
 
-/* Flag: untranslated */
-"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question.";
+"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "Următoarele cîteva ecrane vă vor ajuta să setați Democracy Player în așa fel încît să meargă optim pentru dv. Iată prima întrebare.";
 
-/* Flag: untranslated */
-"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?";
+"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "Vă recomandăm să permiteți ca Democracy Player să fie lansat la pornirea sistemului. În acest fel videourile la care nu s-a terminat descărcarea pot fi terminate, iar noile videouri din canalele dv. vor fi gata cînd veți dori să le vizionați.\n\nDoriți ca Democracy să fie lansat la pornirea sistemului?";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:66 */
-/* Flag: untranslated */
-"Welcome to Internet TV!" = "Welcome to Internet TV!";
+"Welcome to Internet TV!" = "Bine ați venit la TV prin internet!";
 
-/* Flag: untranslated */
-"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
+"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Bine ați venit la TV prin internet. Puteți face multe cu Democracy Player: descărcare de videouri de pe canalele preferate, vizionare de videouri noi unul după altul, descărcare de torente, recomandare de videouri către prieteni și multe altele.\n\n";
 
 /* File: ../../portable/dialogs.py:61 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27 */
 "Yes" = "Da";
 
-/* Flag: untranslated */
-"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n";
+"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "Sînteți gata!\n\nSetarea e completă -- acum puteți găsi niște canale pentru a le viziona\n\nNu mai așteptați: Democracy e diferit de vizionarea videourilor din paginile web -- producătorii pot oferi videouri de calitate superioară. Deci nu stați degeaba așteptînd videouri: porniți cîteva descărcări și reveniți mai tîrziu. \n\nLăsați-l pornit: Democracy Player controlează cu regularitate canalele pentru videouri noi și le descarcă în fundal. Dacă îl lăsați pornit înseamnă că veți avea videouri noi la dispoziție cînd veți fi pregătit de vizionare.\n\nNu vă îngrijorați pentru spațiul de pe disc: Ca și TiVo, Democracy Player posedă un sistem de 'expirare' care ajută la eliminarea videourilor vechi ca să facă loc pentru cele noi. Puteți totuși păstra un video în mod permanent făcînd clic pe 'salvează' și puteți seta un canal ca să autosalveze videourile .\n\nFaceți-l Mare: Butonul de la dreapta celui de redare maximizează videourile.\n\nGăsiți Videouri: Ghidul de Canale Democracy are sute de canale de TV prin internet, toate gratuite. Faceți clic pe 'ADAUGĂ' pentru a vedea un canal.\n";
 
-/* Flag: untranslated */
 "%message%\n%message%" = "%message%\n%message%";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
-/* Flag: untranslated */
-"Save Video _As..." = "Save Video _As...";
+"Save Video _As..." = "Salvează Videoul _ca...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
 "Save this video" = "Salvează acest fişier";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117 */
-/* Flag: untranslated */
-"_Copy Video URL" = "_Copy Video URL";
+"_Copy Video URL" = "_Copiază URL-ul Videoului";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120 */
 /* Flag: untranslated */
@@ -769,7 +684,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:36 */
 /* Flag: untranslated */
-"Error importing democracy modules:\n%s" = "Error importing democracy modules:\n%s" /* = "Eroare la incărcarea modulelor Democratic:↵\n%s" */;
+"Error importing democracy modules:\n%s" = "Error importing democracy modules:\n%s" /* = "Eroare la incărcarea modulelor Democratic:\n\n%s" */;
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:40 */
 /* Flag: untranslated */
@@ -1256,7 +1171,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/storedatabase.py:798 */
 /* Flag: untranslated */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." /* = "%s nu a reuşit şă-şi salveze baza de date: Lipsă Spaţiu↵\nSugerăm ştergerea anumitor fişiere din calculator sau doar câteva clipuri din colectie.↵\nSchimbările recente s-ar putea pierde." */;
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." /* = "%s nu a reuşit şă-şi salveze baza de date: Lipsă Spaţiu\n\nSugerăm ştergerea anumitor fişiere din calculator sau doar câteva clipuri din colectie.\n\nSchimbările recente s-ar putea pierde." */;
 
 /* File: ../../portable/dialogs.py:59 */
 "Ok" = "În regulă";

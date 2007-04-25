@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-08 15:28-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-25 13:11-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* Flag: untranslated */
 "$log" = "$log";
@@ -18,57 +18,42 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions.";
 
-/* Flag: untranslated */
-"OK" = "OK";
+"OK" = "تایید";
 
 /* Flag: untranslated */
 "The fall of $shortAppName??" = "The fall of $shortAppName??";
 
-/* Flag: untranslated */
-"About Democracy" = "About Democracy";
+"About Democracy" = "درباره دموکراسی";
 
-/* Flag: untranslated */
-"Add Channel..." = "Add Channel...";
+"Add Channel..." = "اضافه کردن کانال ...";
 
-/* Flag: untranslated */
-"Bring All to Front" = "Bring All to Front";
+"Bring All to Front" = "آوردن همگی بر روی صفحه";
 
-/* Flag: untranslated */
-"Channels" = "Channels";
+"Channels" = "کانال ها";
 
-/* Flag: untranslated */
-"Check for New Version" = "Check for New Version";
+"Check for New Version" = "بروزرسانی";
 
-/* Flag: untranslated */
-"Clear Menu" = "Clear Menu";
+"Clear Menu" = "پاک کردن منو";
 
-/* Flag: untranslated */
-"Close Window" = "Close Window";
+"Close Window" = "بستن پنجره‌";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15 */
-/* Flag: untranslated */
-"Copy" = "Copy";
+"Copy" = "کپی کردن";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28 */
-/* Flag: untranslated */
-"Copy Channel URL" = "Copy Channel URL";
+"Copy Channel URL" = "کپی کردن URL کانال";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11 */
-/* Flag: untranslated */
-"Copy Video URL" = "Copy Video URL";
+"Copy Video URL" = "کپی کردن URL ویدئو";
 
-/* Flag: untranslated */
-"Cut" = "Cut";
+"Cut" = "بریدن";
 
 /* File: ../../portable/dialogs.py:77 */
-/* Flag: untranslated */
-"Delete" = "Delete";
+"Delete" = "حذف کردن";
 
-/* Flag: untranslated */
-"Democracy" = "Democracy";
+"Democracy" = "دموکراسی";
 
-/* Flag: untranslated */
-"Democracy Help" = "Democracy Help";
+"Democracy Help" = "راهنمای دموکراسی";
 
 /* Flag: untranslated */
 "Donate" = "Donate";

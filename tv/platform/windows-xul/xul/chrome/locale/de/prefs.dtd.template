@@ -19,6 +19,12 @@
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Ändern...">
 
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
+<!ENTITY prefs.folder.others.location "Folder Location">
+<!ENTITY prefs.folder.others.shown "Show as Channel">
+<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.remove "Entfernen">
+
 <!ENTITY prefs.downloads.max "Downloads">
 <!ENTITY prefs.downloads.max.part1 "Lade höchstens">
 <!ENTITY prefs.downloads.max.part2 "Videos auf ein Mal.">
@@ -37,7 +43,7 @@
 <!ENTITY prefs.videos.expire.never "Niemals">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf begrenzen">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf %s begrenzen">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s, wenn mein Computer in Gebrauch ist.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent benutzt Ports zwischen">
 <!ENTITY prefs.torrent.uses.ports.part2 "und">

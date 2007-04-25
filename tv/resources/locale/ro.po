@@ -2,14 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2006-12-14 13:23+0000\n"
-"Last-Translator: DanielGM <danielg.max@gmail.com>\n"
+"PO-Revision-Date: 2007-03-31 16:06+0000\n"
+"Last-Translator: Alexandru Bogdan Munteanu <muntealb@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=((n == 1 ? 0: (((n % 100 > 19) || ((n % 100 == 0) && (n != 0))) ? 2: 1)));\n"
-"X-Rosetta-Export-Date: 2007-01-29 04:58+0000\n"
+"Plural-Forms: nplurals=3; plural=((n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
+"== 0) && (n != 0))) ? 2: 1)));\n"
+"X-Rosetta-Export-Date: 2007-04-10 13:38:15+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -20,6 +21,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
+"<font face=\"Lucida Grande\" size=\"-1\">Trackerul de buguri este la <a "
+"href=\"$bugTrackerURL\">$bugTrackerURL</a>. Spuneți-ne ce făceați, lipiți "
+"mesajul logului din caseta de mai sus, răspundeți la cîteva întrebări și ne "
+"vom pune pe treabă</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -27,6 +32,10 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
+"De fapt dacă aveți un pic de timp puteți trimite un raport despre prăbușire "
+"la sistemul nostru de urmărire a bugurilor. Avem nevoie cel puțin de o "
+"descriere a ceea ce făceați în momentul respectiv -- cît de precisă posibil -"
+"- la care trebuie atașat nonsensul bine articulat din caseta de mai jos :"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -34,45 +43,50 @@ msgid ""
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
+"Nenorocire! $longAppName a căzut pradă unui oarecare tip de confuzie internă "
+"sau de încăpățînare în greșeală $when. Ne cerem scuze și vă sugerăm să "
+"părăsiți și apoi să reporniți $shortAppName. Asta îl va învăța minte și de "
+"asemenea va reduce șansele de a vă pierde preferințele sau abonamentele la "
+"canale."
 
 msgid "OK"
 msgstr "OK"
 
 msgid "The fall of $shortAppName??"
-msgstr "Sfârşitul lui $shortAppName??"
+msgstr "Prăbușirea lui $shortAppName??"
 
 msgid "About Democracy"
 msgstr "Despre Democracy"
 
 msgid "Add Channel..."
-msgstr "Adauga un canal"
+msgstr "Adaugă Canal"
 
 msgid "Bring All to Front"
-msgstr "Afişează toate în primplan"
+msgstr "Adu Totul în Prim-Plan"
 
 msgid "Channels"
 msgstr "Canale"
 
 msgid "Check for New Version"
-msgstr ""
+msgstr "Caută Versiune Nouă"
 
 msgid "Clear Menu"
-msgstr "Sterge meniu"
+msgstr "Șterge meniul"
 
 msgid "Close Window"
-msgstr ""
+msgstr "Închide Fereastra"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15
 msgid "Copy"
-msgstr ""
+msgstr "Copiază"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
 msgid "Copy Channel URL"
-msgstr ""
+msgstr "Copiază URL-ul Canalului"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "Copy Video URL"
-msgstr ""
+msgstr "Copiază URL-ul Videoului"
 
 #, fuzzy
 msgid "Cut"
@@ -80,7 +94,7 @@ msgstr "Decupează"
 
 #: ../../portable/dialogs.py:77
 msgid "Delete"
-msgstr "Şterge"
+msgstr "Șterge"
 
 #, fuzzy
 msgid "Democracy"
@@ -88,10 +102,10 @@ msgstr "Democracy"
 
 #, fuzzy
 msgid "Democracy Help"
-msgstr "Democracy Asistenţă"
+msgstr "Ajutor pentru Democracy"
 
 msgid "Donate"
-msgstr ""
+msgstr "Donați"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14
 msgid "Edit"
@@ -99,51 +113,51 @@ msgstr "Editează"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6
 msgid "File"
-msgstr ""
+msgstr "Fișier"
 
 msgid "Full Screen"
-msgstr ""
+msgstr "Ecran Complet"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47
 msgid "Help"
-msgstr ""
+msgstr "Ajutor"
 
 msgid "Hide Democracy"
-msgstr ""
+msgstr "Ascunde Democracy"
 
 msgid "Hide Others"
-msgstr ""
+msgstr "Ascunde-le pe Celelalte"
 
 msgid "Main Window"
-msgstr ""
+msgstr "Fereastra Principală"
 
 msgid "MainMenu"
-msgstr ""
+msgstr "Meniul Principal"
 
 msgid "Minimize"
-msgstr ""
+msgstr "Minimizează"
 
 msgid "New Channel Folder..."
-msgstr ""
+msgstr "Dosar de Canale Nou..."
 
 msgid "New Channel Guide..."
-msgstr ""
+msgstr "Ghid de Canale Nou..."
 
 msgid "New Playlist Folder..."
-msgstr ""
+msgstr "Dosar cu Liste de Redare Nou..."
 
 msgid "New Playlist..."
-msgstr ""
+msgstr "Listă de Redare Nouă"
 
 msgid "New Search Channel..."
-msgstr ""
+msgstr "Canal de Căutare Nou"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
 msgid "Next Video"
-msgstr ""
+msgstr "Următorul Video"
 
 msgid "Open Recent"
-msgstr "Deschide recent"
+msgstr "Deschide Unul Recent"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "Open..."
@@ -151,78 +165,78 @@ msgstr "Deschide..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16
 msgid "Paste"
-msgstr "Lipeşte"
+msgstr "Lipește"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40
 msgid "Play Video"
-msgstr ""
+msgstr "Redă Videoul"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
 msgid "Playback"
-msgstr ""
+msgstr "Redare"
 
 msgid "Playlists"
-msgstr ""
+msgstr "Liste de Redare"
 
 msgid "Preferencesâ¦"
-msgstr ""
+msgstr "Preferințe"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
 msgid "Previous Video"
-msgstr ""
+msgstr "Precedentul Video"
 
 msgid "Quit Democracy"
-msgstr ""
+msgstr "Închide Democracy"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
 msgid "Remove..."
-msgstr ""
+msgstr "Șterge"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
 msgid "Rename..."
-msgstr "Redenumeşte..."
+msgstr "Redenumește"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "Save Video As..."
-msgstr ""
+msgstr "Salvează Video ca..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17
 msgid "Select All"
-msgstr ""
+msgstr "Selectează Tot"
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Trimite Acest Canal unui Prieten"
 
 msgid "Services"
-msgstr ""
+msgstr "Servicii"
 
 msgid "Show All"
-msgstr ""
+msgstr "Afișează Tot"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42
 msgid "Stop Video"
-msgstr ""
+msgstr "Oprește Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30
 #, fuzzy
 msgid "Update All Channels"
-msgstr "Actualizeaza toate canalele"
+msgstr "Actualizează toate Canalele"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29
 #, fuzzy
 msgid "Update Channel"
-msgstr "Actualizeaza canalul"
+msgstr "Actualizează Canalul"
 
 msgid "Window"
 msgstr "Fereastră"
 
 #, fuzzy
 msgid "Zoom"
-msgstr "Mărire"
+msgstr "Zoom"
 
 #, fuzzy
 msgid "%channel feed%"
-msgstr "%legatura canalului%"
+msgstr "%fluxul canalului%"
 
 #, fuzzy
 msgid "%channel title%"
@@ -230,19 +244,19 @@ msgstr "%titlul canalului%"
 
 #, fuzzy
 msgid "%donation label%"
-msgstr "%eticheta donaţie%"
+msgstr "%eticheta donației%"
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
 msgstr "00:00:00"
 
 msgid "Box"
-msgstr ""
+msgstr "Casetă"
 
 msgid "FullScreen Controls"
-msgstr ""
+msgstr "Controale în modul Ecran Complet"
 
 #: ../../portable/tabs.py:27 ../../portable/feed.py:1718
 #: ../../portable/feed.py:1777
@@ -250,44 +264,49 @@ msgid "Search"
 msgstr "Caută"
 
 msgid "VideoWindow"
-msgstr ""
+msgstr "Fereastra Videoului"
 
 #: ../../portable/dialogs.py:60
 msgid "Cancel"
-msgstr "Renunţă"
+msgstr "Anulează"
 
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
+"Locația http://foo.bar.com/baz necesită un nume de utilizator și o parolă "
+"pentru \"text supplied by server\".\n"
 
 msgid "Password:\n"
-msgstr ""
+msgstr "Parola:\n"
 
 msgid "Username and password required"
-msgstr ""
+msgstr "Sînt necesare Numele de Utilizator și Parola"
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
+"Nume de Utilizator\n"
+"\n"
 
 msgid " limit upstream to"
-msgstr ""
+msgstr " limitează traficul ascendent la"
 
 msgid "(You must restart Democracy for this change to take effect)\n"
 msgstr ""
+"(Trebuie să reporniți Democracy pentru ca schimbarea să aibă efect)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(calea dosarului cu filme se trece aici)"
 
 #, fuzzy
 msgid "1 day"
-msgstr "o zi"
+msgstr "1 zi"
 
 #, fuzzy
 msgid "1 month"
-msgstr "o lună"
+msgstr "1 lună"
 
 #, fuzzy
 msgid "10 days"
@@ -312,82 +331,82 @@ msgid "6 days"
 msgstr "6 zile"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "BitTorrent ports:"
-msgstr ""
+msgstr "Porturi BitTorrent:"
 
 #, fuzzy
 msgid "By default, videos expire after:"
-msgstr "Din start, clip-urile expiră după:"
+msgstr "În mod implicit videourile expiră după:"
 
 msgid "Change..."
-msgstr ""
+msgstr "Modifică:"
 
 msgid "Check channels for new content:"
-msgstr ""
+msgstr "Controlează dacă e conținut nou în canale:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
 msgid "Don't start a download if it leaves less than"
-msgstr "Nu porni o descărcare dacă rămâne mai puţin de"
+msgstr "Nu porni o descărcare dacă rămîne mai puțin de"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
 msgid "Download at most"
-msgstr ""
+msgstr "Descarcă cel mult"
 
 msgid "GB free."
-msgstr ""
+msgstr "GB gratuit"
 
 msgid "KB/s when my computer is active."
-msgstr ""
+msgstr "KB/s cînd calculatorul meu este activ."
 
 msgid "Maximum:"
-msgstr ""
+msgstr "Maximum:"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Minimum:"
 
 msgid "Never"
-msgstr ""
+msgstr "Niciodată"
 
 msgid "OtherViews"
-msgstr ""
+msgstr "Alte Vizualizări"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:53
 msgid "Play videos one after another."
-msgstr ""
+msgstr "Redă videourile unul după altul."
 
 msgid "Run Democracy at startup"
-msgstr ""
+msgstr "Lansează Democracy la pornirea SO"
 
 msgid "Save downloaded videos in this folder:"
-msgstr ""
+msgstr "Salvează videourile descărcate în acest dosar:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:61
 msgid "Stop after each video."
-msgstr ""
+msgstr "Oprire după fiecare video."
 
 msgid "To avoid internet slowdowns:"
-msgstr ""
+msgstr "Pentru a evita încetinirea internetului:"
 
 msgid "every 30 minutes"
-msgstr ""
+msgstr "la fiecare 30 de minute"
 
 msgid "every hour"
-msgstr ""
+msgstr "la fiecare oră"
 
 msgid "manually"
 msgstr "manual"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
 msgid "videos at once."
-msgstr ""
+msgstr "videouri odată."
 
 msgid "$label$"
-msgstr ""
+msgstr "$etichetă$"
 
 msgid "$title$"
-msgstr ""
+msgstr "$titlu$"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20
 msgid "Channel"
@@ -399,25 +418,25 @@ msgid "Create"
 msgstr "Creează"
 
 msgid "In this:"
-msgstr ""
+msgstr "În asta:"
 
 msgid "Item1"
-msgstr ""
+msgstr "Item1"
 
 msgid "Search Engine"
-msgstr ""
+msgstr "Motor de Căutare"
 
 msgid "Search for:"
-msgstr ""
+msgstr "Caută asta:"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:31
 #: ../../platform/windows-xul/frontend_implementation/startup.py:25
 #, python-format
 msgid "(parsed %d files - found %d videos)"
-msgstr ""
+msgstr "(parsate %d fișiere - găsite %d videouri)"
 
 #, fuzzy
 msgid "Back"
@@ -425,7 +444,7 @@ msgstr "Înapoi"
 
 #, fuzzy
 msgid "Browse"
-msgstr "Răsfoieşte"
+msgstr "Explorează"
 
 #, fuzzy
 msgid ""
@@ -435,15 +454,15 @@ msgid ""
 "\n"
 "Would you like Democracy Player to look for video files on your computer?"
 msgstr ""
-"Playerul Democratic poate gasi toate clipurile din calculatorul tau, "
-"ajutându-te sa-ţi organizezi colectia.↵\n"
-"↵\n"
-"↵\n"
-"Vrei ca Playerul Democratic sa caute clipurile din calculatorul tău?"
+"Democracy Player poate găsi toate videourile de pe calculatorul dv. pentru a "
+"vă ajuta să vă organizați colecția.\n"
+"\n"
+"\n"
+"Doriți ca Democracy Player să caute fișiere video pe calculatorul dv. ?"
 
 #, fuzzy
 msgid "Next"
-msgstr "Urmatorul"
+msgstr "Următorul"
 
 #: ../../portable/dialogs.py:62
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28
@@ -451,13 +470,13 @@ msgid "No"
 msgstr "Nu"
 
 msgid "Only search my Movies folder."
-msgstr ""
+msgstr "Caută numai în dosarul Movies"
 
 msgid "Search my entire Home folder."
-msgstr ""
+msgstr "Caută în tot dosarul meu Home."
 
 msgid "Search this folder:"
-msgstr ""
+msgstr "Caută în acest dosar:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
 #, fuzzy
@@ -468,6 +487,8 @@ msgid ""
 "The next few screens will help you set up Democracy Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"Următoarele cîteva ecrane vă vor ajuta să setați Democracy Player în așa fel "
+"încît să meargă optim pentru dv. Iată prima întrebare."
 
 msgid ""
 "We recommend that you allow Democracy Player to launch when your computer "
@@ -477,10 +498,16 @@ msgid ""
 "\n"
 "Would you like to run Democracy when your computer starts up?"
 msgstr ""
+"Vă recomandăm să permiteți ca Democracy Player să fie lansat la pornirea "
+"sistemului. În acest fel videourile la care nu s-a terminat descărcarea pot "
+"fi terminate, iar noile videouri din canalele dv. vor fi gata cînd veți dori "
+"să le vizionați.\n"
+"\n"
+"Doriți ca Democracy să fie lansat la pornirea sistemului?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:66
 msgid "Welcome to Internet TV!"
-msgstr ""
+msgstr "Bine ați venit la TV prin internet!"
 
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
@@ -489,6 +516,11 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Bine ați venit la TV prin internet. Puteți face multe cu Democracy Player: "
+"descărcare de videouri de pe canalele preferate, vizionare de videouri noi "
+"unul după altul, descărcare de torente, recomandare de videouri către "
+"prieteni și multe altele.\n"
+"\n"
 
 #: ../../portable/dialogs.py:61
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27
@@ -518,15 +550,41 @@ msgid ""
 "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
 "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
 msgstr ""
+"Sînteți gata!\n"
+"\n"
+"Setarea e completă -- acum puteți găsi niște canale pentru a le viziona\n"
+"\n"
+"Nu mai așteptați: Democracy e diferit de vizionarea videourilor din paginile "
+"web -- producătorii pot oferi videouri de calitate superioară. Deci nu stați "
+"degeaba așteptînd videouri: porniți cîteva descărcări și reveniți mai "
+"tîrziu. \n"
+"\n"
+"Lăsați-l pornit: Democracy Player controlează cu regularitate canalele "
+"pentru videouri noi și le descarcă în fundal. Dacă îl lăsați pornit înseamnă "
+"că veți avea videouri noi la dispoziție cînd veți fi pregătit de vizionare.\n"
+"\n"
+"Nu vă îngrijorați pentru spațiul de pe disc: Ca și TiVo, Democracy Player "
+"posedă un sistem de 'expirare' care ajută la eliminarea videourilor vechi ca "
+"să facă loc pentru cele noi. Puteți totuși păstra un video în mod permanent "
+"făcînd clic pe 'salvează' și puteți seta un canal ca să autosalveze "
+"videourile .\n"
+"\n"
+"Faceți-l Mare: Butonul de la dreapta celui de redare maximizează "
+"videourile.\n"
+"\n"
+"Găsiți Videouri: Ghidul de Canale Democracy are sute de canale de TV prin "
+"internet, toate gratuite. Faceți clic pe 'ADAUGĂ' pentru a vedea un canal.\n"
 
 msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
+"%message%\n"
+"%message%"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save Video _As..."
-msgstr ""
+msgstr "Salvează Videoul _ca..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save this video"
@@ -534,7 +592,7 @@ msgstr "Salvează acest fişier"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
 msgid "_Copy Video URL"
-msgstr ""
+msgstr "_Copiază URL-ul Videoului"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
 msgid "_Remove Video"
@@ -917,7 +975,8 @@ msgid ""
 "Error importing democracy modules:\n"
 "%s"
 msgstr ""
-"Eroare la incărcarea modulelor Democratic:↵\n"
+"Eroare la incărcarea modulelor Democratic:\n"
+"\n"
 "%s"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:40
@@ -1493,9 +1552,11 @@ msgid ""
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
-"%s nu a reuşit şă-şi salveze baza de date: Lipsă Spaţiu↵\n"
+"%s nu a reuşit şă-şi salveze baza de date: Lipsă Spaţiu\n"
+"\n"
 "Sugerăm ştergerea anumitor fişiere din calculator sau doar câteva clipuri "
-"din colectie.↵\n"
+"din colectie.\n"
+"\n"
 "Schimbările recente s-ar putea pierde."
 
 #: ../../portable/dialogs.py:59
@@ -1794,7 +1855,7 @@ msgstr "Eşti sigur că vrei să renunţi?"
 #: ../../portable/app.py:924
 #, python-format
 msgid "You have %d download still in progress."
-msgid_plural "You have %d downloads still in progress."
+msgid_plural "You have %d download still in progress."
 msgstr[0] "Ai %d descărcare în derulare."
 msgstr[1] "Ai %d descărcări în derulare."
 msgstr[2] "Ai %d descărcări în derulare."

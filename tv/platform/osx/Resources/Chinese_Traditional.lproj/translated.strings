@@ -4,20 +4,20 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-08 15:28-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-25 13:11-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
 /* Flag: untranslated */
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>";
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" /* = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>只要告訴我們發生問題時你正在做什麼，轉貼跳出視窗內的訊息並回答一些問題，我們將會盡快處理。</font>" */;
 
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "事實上, 假如你有一分鐘, 你是否會傳送一份當機報告給我們的臭蟲追縱系統? 在一分鐘內,我們所需要你做的是描述你當時在做些什麼 -- 儘其可能越準確越好 -- 加上那充滿藝術味成語式的癈話在下面那個框框:";
+/* Flag: untranslated */
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" /* = "事實上，假如只要一點點時間，你是否願意傳送一份當機報告給我們的臭蟲追縱系統？我們希望這份報告至少包含有關當機時你做過些什麼動作－－描述得越準確越好－－加上一些巧妙措辭的癈話在下面那個框框：" */;
 
 /* Flag: untranslated */
 "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions.";
 
-/* Flag: untranslated */
-"OK" = "OK";
+"OK" = "確定";
 
 /* Flag: untranslated */
 "The fall of $shortAppName??" = "The fall of $shortAppName??";
@@ -40,19 +40,20 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Copy" = "複製";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28 */
-"Copy Channel URL" = "複製頻道URL";
+"Copy Channel URL" = "複製頻道網址";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11 */
-"Copy Video URL" = "複製視訊URL";
+"Copy Video URL" = "複製視訊網址";
 
 "Cut" = "剪下";
 
 /* File: ../../portable/dialogs.py:77 */
 "Delete" = "刪除";
 
-"Democracy" = "Democracy";
+"Democracy" = "民主播放器";
 
-"Democracy Help" = "Democracy 求助";
+/* Flag: untranslated */
+"Democracy Help" = "Democracy Help" /* = "民主播放器說明" */;
 
 "Donate" = "捐贈";
 
@@ -67,7 +68,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47 */
 "Help" = "說明";
 
-"Hide Democracy" = "隱藏Democracy";
+"Hide Democracy" = "隱藏民主播放器";
 
 "Hide Others" = "隱藏其他";
 
@@ -77,54 +78,58 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Minimize" = "最小化";
 
-"New Channel Folder..." = "新頻道檔案夾";
+"New Channel Folder..." = "新增頻道檔案夾";
 
 /* Flag: untranslated */
-"New Channel Guide..." = "New Channel Guide...";
+"New Channel Guide..." = "New Channel Guide..." /* = "新增頻道導覽" */;
 
-"New Playlist Folder..." = "新播放表檔案夾";
+"New Playlist Folder..." = "新增播放列表檔案夾";
 
-"New Playlist..." = "新的播放表";
+"New Playlist..." = "新增播放列表";
 
 /* Flag: untranslated */
-"New Search Channel..." = "New Search Channel...";
+"New Search Channel..." = "New Search Channel..." /* = "新增搜尋頻道" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43 */
 /* Flag: untranslated */
-"Next Video" = "Next Video";
+"Next Video" = "Next Video" /* = "下一段影片" */;
 
-"Open Recent" = "打開最近使用";
+/* Flag: untranslated */
+"Open Recent" = "Open Recent" /* = "開啟最近使用過的檔案" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7 */
-"Open..." = "打開...";
+"Open..." = "開啟";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16 */
 "Paste" = "貼上";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40 */
-"Play Video" = "播放視訊";
+"Play Video" = "播放影片";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39 */
-"Playback" = "播放";
-
-"Playlists" = "播放列表";
+/* Flag: untranslated */
+"Playback" = "Playback" /* = "播放" */;
 
 /* Flag: untranslated */
-"Preferencesâ¦" = "Preferencesâ¦";
+"Playlists" = "Playlists" /* = "播放列表" */;
+
+"Preferencesâ¦" = "偏好設定";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44 */
 "Previous Video" = "前一個影片";
 
-"Quit Democracy" = "離開Democracy程式";
+"Quit Democracy" = "離開民主播放器程式";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5 */
 "Remove..." = "移除";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18 */
-"Rename..." = "改名...";
+/* Flag: untranslated */
+"Rename..." = "Rename..." /* = "重新命名" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10 */
-"Save Video As..." = "以....儲存";
+/* Flag: untranslated */
+"Save Video As..." = "Save Video As..." /* = "另存新檔" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17 */
 "Select All" = "選擇全部";
@@ -169,11 +174,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/tabs.py:27 */
 /* File: ../../portable/feed.py:1718 */
 /* File: ../../portable/feed.py:1777 */
-/* Flag: untranslated */
-"Search" = "Search";
+"Search" = "搜尋";
 
 /* Flag: untranslated */
-"VideoWindow" = "VideoWindow";
+"VideoWindow" = "VideoWindow" /* = "影片視窗" */;
 
 /* File: ../../portable/dialogs.py:60 */
 "Cancel" = "取消";
@@ -212,27 +216,26 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "99999" = "99999";
 
-/* Flag: untranslated */
-"BitTorrent ports:" = "BitTorrent ports:";
+"BitTorrent ports:" = "BitTorrent傳輸埠";
 
-"By default, videos expire after:" = "影片預設過期:";
+"By default, videos expire after:" = "預設影片保存期限:";
 
-/* Flag: untranslated */
-"Change..." = "Change...";
+"Change..." = "變更";
 
-"Check channels for new content:" = "檢查各頻道的新節目";
+"Check channels for new content:" = "檢查各頻道是否有新內容";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:41 */
 /* Flag: untranslated */
-"Don't start a download if it leaves less than" = "Don't start a download if it leaves less than";
+"Don't start a download if it leaves less than" = "Don't start a download if it leaves less than" /* = "不要開始下載若硬碟剩餘容量少於" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:42 */
 /* Flag: untranslated */
-"Download at most" = "Download at most";
+"Download at most" = "Download at most" /* = "最多下載" */;
 
-"GB free." = "GB剩下的空間";
+/* Flag: untranslated */
+"GB free." = "GB free." /* = "GB" */;
 
-"KB/s when my computer is active." = "KB/S 當我的電腦啟動狀態";
+"KB/s when my computer is active." = "KB/S 當我的電腦正在使用中";
 
 "Maximum:" = "最高";
 
@@ -245,26 +248,25 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "OtherViews" = "OtherViews" /* = "其他觀看" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:53 */
-"Play videos one after another." = "連續的播放影片";
+"Play videos one after another." = "連續播放影片";
 
-"Run Democracy at startup" = "開機就運行Democracy";
+"Run Democracy at startup" = "於啟動時執行民主播放器";
 
-/* Flag: untranslated */
-"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
+"Save downloaded videos in this folder:" = "儲存下載的影片在此資料夾";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
 /* Flag: untranslated */
-"Stop after each video." = "Stop after each video.";
+"Stop after each video." = "Stop after each video." /* = "不連續播放影片" */;
 
 /* Flag: untranslated */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
+"To avoid internet slowdowns:" = "To avoid internet slowdowns:" /* = "為避免網路雍塞" */;
 
-"every 30 minutes" = "每間隔 30 分鐘";
+"every 30 minutes" = "每30分鐘";
 
 "every hour" = "每小時";
 
 /* Flag: untranslated */
-"manually" = "manually";
+"manually" = "manually" /* = "手動地" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
 /* Flag: untranslated */
@@ -289,14 +291,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Item1" = "Item1";
 
-/* Flag: untranslated */
-"Search Engine" = "Search Engine";
+"Search Engine" = "搜尋引擎";
 
 /* Flag: untranslated */
-"Search for:" = "Search for:";
+"Search for:" = "Search for:" /* = "搜尋：" */;
 
-/* Flag: untranslated */
-"URL" = "URL";
+"URL" = "網址";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/startup.py:31 */
 /* File: ../../platform/windows-xul/frontend_implementation/startup.py:25 */
@@ -304,14 +304,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)";
 
-/* Flag: untranslated */
-"Back" = "Back";
+"Back" = "上一頁";
+
+"Browse" = "瀏覽";
 
 /* Flag: untranslated */
-"Browse" = "Browse";
-
-/* Flag: untranslated */
-"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?";
+"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" /* = "Democracy Player可以找出您電腦中的所有影片，以便您將您的收集做分類。\n\n\n您是否要Democracy Player搜尋您電腦中的影片？" */;
 
 /* Flag: untranslated */
 "Next" = "Next";
@@ -321,8 +319,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "No" = "No";
 
-/* Flag: untranslated */
-"Only search my Movies folder." = "Only search my Movies folder.";
+"Only search my Movies folder." = "只搜尋我的影片資料夾";
 
 /* Flag: untranslated */
 "Search my entire Home folder." = "Search my entire Home folder.";
@@ -332,20 +329,20 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12 */
 /* Flag: untranslated */
-"Searching for Videos" = "Searching for Videos";
+"Searching for Videos" = "Searching for Videos" /* = "搜尋影片" */;
 
 /* Flag: untranslated */
-"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question.";
+"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." /* = "下面幾個畫面將幫助您設定Democracy Player以便符合您的需求。首先請回答這個問題：" */;
 
 /* Flag: untranslated */
-"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?";
+"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" /* = "我們建議您讓Democracy Player在開機時自動啟動。這樣的話，上次沒有下載完的視訊就會繼續下載，以便在您想看之前完成下載。" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:66 */
 /* Flag: untranslated */
-"Welcome to Internet TV!" = "Welcome to Internet TV!";
+"Welcome to Internet TV!" = "Welcome to Internet TV!" /* = "歡迎收看網路電視！" */;
 
 /* Flag: untranslated */
-"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
+"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" /* = "歡迎收看網路電視。Democracy Player有好多功能：你可以設定讓你的最愛頻道自動下載影片、連續播放不同的影片、下載torrent檔案、推薦影片給朋友，還有其他更多的功能。\n\n" */;
 
 /* File: ../../portable/dialogs.py:61 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27 */
@@ -404,11 +401,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136 */
 /* Flag: untranslated */
-"_Update Channel" = "_Update Channel";
+"_Update Channel" = "_Update Channel" /* = "更新頻道" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139 */
-/* Flag: untranslated */
-"Re_name Channel" = "Re_name Channel";
+"Re_name Channel" = "重新命名頻道";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142 */
 /* Flag: untranslated */
@@ -1868,15 +1864,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:67 */
 /* Flag: untranslated */
-"Welcome to Internet TV.  There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." /* = "歡迎到網上電視。Democracy Player內有好多用處：自下" */;
+"Welcome to Internet TV.  There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." /* = "歡迎收看網路電視。Democracy Player有好多功能：你可以設定讓你的最愛頻道自動下載影片、連續播放不同的影片、下載torrent檔案、推薦影片給朋友，還有其他更多的功能。" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:68 */
 /* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
+"You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" /* = "你選擇了新的資料夾來儲存下載的電影，是否其他已下載的電影也要搬移至那個資料夾？（但現在正在下載的電影會在完成下載後才搬移）" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:69 */
-/* Flag: untranslated */
-"_Add Directory" = "_Add Directory";
+"_Add Directory" = "新增目錄";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:70 */
 /* Flag: untranslated */
@@ -1888,7 +1883,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:72 */
 /* Flag: untranslated */
-"_Store downloaded videos in this folder:" = "_Store downloaded videos in this folder:";
+"_Store downloaded videos in this folder:" = "_Store downloaded videos in this folder:" /* = "儲存下載的影片在這個資料夾" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:73 */
 /* Flag: untranslated */

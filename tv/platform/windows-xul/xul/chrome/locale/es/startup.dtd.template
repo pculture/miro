@@ -6,8 +6,8 @@
 <!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restringir a todos mis archivos personales.">
 <!ENTITY startup.search.custom          "Buscar en la carpeta perasonalizada:">
-<!ENTITY startup.search.searching	"Searching for Videos">
-<!ENTITY startup.change	                "Change">
+<!ENTITY startup.search.searching	"Buscando Vídeos">
+<!ENTITY startup.change	                "Cambiar">
 <!ENTITY startup.cancel	                "Cancelar búsqueda">
 <!ENTITY startup.undo	                "Reajustar búsqueda">
 <!ENTITY startup.done1			"¡Estás list@!">

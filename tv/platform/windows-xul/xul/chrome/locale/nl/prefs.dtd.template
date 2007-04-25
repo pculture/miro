@@ -5,7 +5,7 @@
 <!ENTITY prefs.general "General">
 
 <!ENTITY prefs.channels "Kanalen">
-<!ENTITY prefs.channels.check "Controleer Kanalen op nieuwe inhoud">
+<!ENTITY prefs.channels.check "Controleer kanalen op nieuwe inhoud">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
@@ -19,13 +19,19 @@
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Wijzigen...">
 
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
+<!ENTITY prefs.folder.others.location "Folder Location">
+<!ENTITY prefs.folder.others.shown "Show as Channel">
+<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.remove "Verwijderen">
+
 <!ENTITY prefs.downloads.max "Downloads">
 <!ENTITY prefs.downloads.max.part1 "Download hooguit">
 <!ENTITY prefs.downloads.max.part2 "video's in een keer.">
 
 <!ENTITY prefs.disk.space "Disk Space">
 <!ENTITY prefs.disk.space.min.part1 "Download niet starten wanneer minder overblijft dan">
-<!ENTITY prefs.disk.space.min.part2 "NL gratis">
+<!ENTITY prefs.disk.space.min.part2 "GB gratis.">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "Video's vervallen standaard na">
@@ -39,5 +45,5 @@
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Om vertragingen te voorkomen, beperk de uitvoersnelheid tot">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s als mijn computer actief is.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "and">
+<!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent gebruikt poorten tussen">
+<!ENTITY prefs.torrent.uses.ports.part2 "en">

@@ -9,33 +9,40 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2006-11-15 18:02+0000\n"
-"Last-Translator: cal_t <calvin.tsang@gmail.com>\n"
+"PO-Revision-Date: 2007-03-18 16:21+0000\n"
+"Last-Translator: zhchen543 <zhchen543@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) <zh_TW@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=(0);\n"
-"X-Rosetta-Export-Date: 2006-12-01 07:28+0000\n"
+"X-Rosetta-Export-Date: 2007-03-18 16:28+0000\n"
 
 msgid "$log"
 msgstr "$log"
 
+#, fuzzy
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
+"href=\"$bugTr"
+"ackerURL\">$bugTrackerURL</a>只要告訴我們發生問題時你正在做什麼，轉貼跳出視窗內的訊息並回答一些問題，"
+"我們將會盡快處理。</font>"
 
+#, fuzzy
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
 "report to our bug-tracking system? At a minimum, what we'd need is "
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"事實上, 假如你有一分鐘, 你是否會傳送一份當機報告給我們的臭蟲追縱系統? 在一分鐘內,我們所需要你做的是描述你當時在做些什麼 -- 儘其可能越準確越好 "
-"-- 加上那充滿藝術味成語式的癈話在下面那個框框:"
+""
+"事實上，假如只要一點點時間，你是否願意傳送一份當機報告給我們的臭蟲追縱系統？我們希望這份報告至少包含有關當機時你做過些什麼動作－－描述得越準確越好－－加上一"
+"些巧妙措辭的癈話在下面那個框框："
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -45,7 +52,7 @@ msgid ""
 msgstr ""
 
 msgid "OK"
-msgstr ""
+msgstr "確定"
 
 msgid "The fall of $shortAppName??"
 msgstr ""
@@ -77,11 +84,11 @@ msgstr "複製"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
 msgid "Copy Channel URL"
-msgstr "複製頻道URL"
+msgstr "複製頻道網址"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "Copy Video URL"
-msgstr "複製視訊URL"
+msgstr "複製視訊網址"
 
 msgid "Cut"
 msgstr "剪下"
@@ -91,10 +98,11 @@ msgid "Delete"
 msgstr "刪除"
 
 msgid "Democracy"
-msgstr "Democracy"
+msgstr "民主播放器"
 
+#, fuzzy
 msgid "Democracy Help"
-msgstr "Democracy 求助"
+msgstr "民主播放器說明"
 
 msgid "Donate"
 msgstr "捐贈"
@@ -115,7 +123,7 @@ msgid "Help"
 msgstr "說明"
 
 msgid "Hide Democracy"
-msgstr "隱藏Democracy"
+msgstr "隱藏民主播放器"
 
 msgid "Hide Others"
 msgstr "隱藏其他"
@@ -130,30 +138,34 @@ msgid "Minimize"
 msgstr "最小化"
 
 msgid "New Channel Folder..."
-msgstr "新頻道檔案夾"
+msgstr "新增頻道檔案夾"
 
+#, fuzzy
 msgid "New Channel Guide..."
-msgstr ""
+msgstr "新增頻道導覽"
 
 msgid "New Playlist Folder..."
-msgstr "新播放表檔案夾"
+msgstr "新增播放列表檔案夾"
 
 msgid "New Playlist..."
-msgstr "新的播放表"
+msgstr "新增播放列表"
 
+#, fuzzy
 msgid "New Search Channel..."
-msgstr ""
+msgstr "新增搜尋頻道"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
+#, fuzzy
 msgid "Next Video"
-msgstr ""
+msgstr "下一段影片"
 
+#, fuzzy
 msgid "Open Recent"
-msgstr "打開最近使用"
+msgstr "開啟最近使用過的檔案"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "Open..."
-msgstr "打開..."
+msgstr "開啟"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16
 msgid "Paste"
@@ -161,36 +173,40 @@ msgstr "貼上"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40
 msgid "Play Video"
-msgstr "播放視訊"
+msgstr "播放影片"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
+#, fuzzy
 msgid "Playback"
 msgstr "播放"
 
+#, fuzzy
 msgid "Playlists"
 msgstr "播放列表"
 
 msgid "Preferencesâ¦"
-msgstr ""
+msgstr "偏好設定"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
 msgid "Previous Video"
 msgstr "前一個影片"
 
 msgid "Quit Democracy"
-msgstr "離開Democracy程式"
+msgstr "離開民主播放器程式"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
 msgid "Remove..."
 msgstr "移除"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
+#, fuzzy
 msgid "Rename..."
-msgstr "改名..."
+msgstr "重新命名"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
+#, fuzzy
 msgid "Save Video As..."
-msgstr "以....儲存"
+msgstr "另存新檔"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17
 msgid "Select All"
@@ -247,10 +263,11 @@ msgstr "全螢幕控制"
 #: ../../portable/tabs.py:27 ../../portable/feed.py:1718
 #: ../../portable/feed.py:1777
 msgid "Search"
-msgstr ""
+msgstr "搜尋"
 
+#, fuzzy
 msgid "VideoWindow"
-msgstr ""
+msgstr "影片視窗"
 
 #: ../../portable/dialogs.py:60
 msgid "Cancel"
@@ -311,30 +328,33 @@ msgid "99999"
 msgstr "99999"
 
 msgid "BitTorrent ports:"
-msgstr ""
+msgstr "BitTorrent傳輸埠"
 
 msgid "By default, videos expire after:"
-msgstr "影片預設過期:"
+msgstr "預設影片保存期限:"
 
 msgid "Change..."
-msgstr ""
+msgstr "變更"
 
 msgid "Check channels for new content:"
-msgstr "檢查各頻道的新節目"
+msgstr "檢查各頻道是否有新內容"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
+#, fuzzy
 msgid "Don't start a download if it leaves less than"
-msgstr ""
+msgstr "不要開始下載若硬碟剩餘容量少於"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
+#, fuzzy
 msgid "Download at most"
-msgstr ""
+msgstr "最多下載"
 
+#, fuzzy
 msgid "GB free."
-msgstr "GB剩下的空間"
+msgstr "GB"
 
 msgid "KB/s when my computer is active."
-msgstr "KB/S 當我的電腦啟動狀態"
+msgstr "KB/S 當我的電腦正在使用中"
 
 msgid "Maximum:"
 msgstr "最高"
@@ -352,29 +372,32 @@ msgstr "其他觀看"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:53
 msgid "Play videos one after another."
-msgstr "連續的播放影片"
+msgstr "連續播放影片"
 
 msgid "Run Democracy at startup"
-msgstr "開機就運行Democracy"
+msgstr "於啟動時執行民主播放器"
 
 msgid "Save downloaded videos in this folder:"
-msgstr ""
+msgstr "儲存下載的影片在此資料夾"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:61
+#, fuzzy
 msgid "Stop after each video."
-msgstr ""
+msgstr "不連續播放影片"
 
+#, fuzzy
 msgid "To avoid internet slowdowns:"
-msgstr ""
+msgstr "為避免網路雍塞"
 
 msgid "every 30 minutes"
-msgstr "每間隔 30 分鐘"
+msgstr "每30分鐘"
 
 msgid "every hour"
 msgstr "每小時"
 
+#, fuzzy
 msgid "manually"
-msgstr ""
+msgstr "手動地"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
 msgid "videos at once."
@@ -401,13 +424,14 @@ msgid "Item1"
 msgstr ""
 
 msgid "Search Engine"
-msgstr ""
+msgstr "搜尋引擎"
 
+#, fuzzy
 msgid "Search for:"
-msgstr ""
+msgstr "搜尋："
 
 msgid "URL"
-msgstr ""
+msgstr "網址"
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:31
 #: ../../platform/windows-xul/frontend_implementation/startup.py:25
@@ -416,11 +440,12 @@ msgid "(parsed %d files - found %d videos)"
 msgstr ""
 
 msgid "Back"
-msgstr ""
+msgstr "上一頁"
 
 msgid "Browse"
-msgstr ""
+msgstr "瀏覽"
 
+#, fuzzy
 msgid ""
 "Democracy Player can find all the videos on your computer to help you "
 "organize your collection.\n"
@@ -428,6 +453,10 @@ msgid ""
 "\n"
 "Would you like Democracy Player to look for video files on your computer?"
 msgstr ""
+"Democracy Player可以找出您電腦中的所有影片，以便您將您的收集做分類。\n"
+"\n"
+"\n"
+"您是否要Democracy Player搜尋您電腦中的影片？"
 
 msgid "Next"
 msgstr ""
@@ -438,7 +467,7 @@ msgid "No"
 msgstr ""
 
 msgid "Only search my Movies folder."
-msgstr ""
+msgstr "只搜尋我的影片資料夾"
 
 msgid "Search my entire Home folder."
 msgstr ""
@@ -447,14 +476,17 @@ msgid "Search this folder:"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
+#, fuzzy
 msgid "Searching for Videos"
-msgstr ""
+msgstr "搜尋影片"
 
+#, fuzzy
 msgid ""
 "The next few screens will help you set up Democracy Player so that it works "
 "best for you. Here's the first question."
-msgstr ""
+msgstr "下面幾個畫面將幫助您設定Democracy Player以便符合您的需求。首先請回答這個問題："
 
+#, fuzzy
 msgid ""
 "We recommend that you allow Democracy Player to launch when your computer "
 "starts up. This way, videos that haven't finished downloading can finish and "
@@ -462,12 +494,14 @@ msgid ""
 "\n"
 "\n"
 "Would you like to run Democracy when your computer starts up?"
-msgstr ""
+msgstr "我們建議您讓Democracy Player在開機時自動啟動。這樣的話，上次沒有下載完的視訊就會繼續下載，以便在您想看之前完成下載。"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:66
+#, fuzzy
 msgid "Welcome to Internet TV!"
-msgstr ""
+msgstr "歡迎收看網路電視！"
 
+#, fuzzy
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
 "automatically download videos from your favorite channels, watch new videos "
@@ -475,6 +509,9 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"歡迎收看網路電視。Democracy "
+"Player有好多功能：你可以設定讓你的最愛頻道自動下載影片、連續播放不同的影片、下載torrent檔案、推薦影片給朋友，還有其他更多的功能。\n"
+"\n"
 
 #: ../../portable/dialogs.py:61
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27
@@ -555,12 +592,13 @@ msgid "_Send this channel to a friend"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
+#, fuzzy
 msgid "_Update Channel"
-msgstr ""
+msgstr "更新頻道"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
 msgid "Re_name Channel"
-msgstr ""
+msgstr "重新命名頻道"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
 msgid "_Remove Channel"
@@ -1734,7 +1772,7 @@ msgstr ""
 #: ../../portable/app.py:924
 #, python-format
 msgid "You have %d download still in progress."
-msgid_plural "You have %d downloads still in progress."
+msgid_plural "You have %d download still in progress."
 msgstr[0] ""
 
 #: ../../portable/app.py:1367
@@ -2130,18 +2168,21 @@ msgid ""
 "automatically download videos from your favorite channels, watch new videos "
 "one after the other, download torrents, recommend videos to friends, and "
 "lots more."
-msgstr "歡迎到網上電視。Democracy Player內有好多用處：自下"
+msgstr ""
+"歡迎收看網路電視。Democracy "
+"Player有好多功能：你可以設定讓你的最愛頻道自動下載影片、連續播放不同的影片、下載torrent檔案、推薦影片給朋友，還有其他更多的功能。"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:68
+#, fuzzy
 msgid ""
 "You've selected a new folder to download movies to.  Should Democracy "
 "migrate your existing downloads there?  (Currently dowloading movies will "
 "not be moved until they finish.)"
-msgstr ""
+msgstr "你選擇了新的資料夾來儲存下載的電影，是否其他已下載的電影也要搬移至那個資料夾？（但現在正在下載的電影會在完成下載後才搬移）"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:69
 msgid "_Add Directory"
-msgstr ""
+msgstr "新增目錄"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:70
 msgid "_Search"
@@ -2152,8 +2193,9 @@ msgid "_Search For:"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:72
+#, fuzzy
 msgid "_Store downloaded videos in this folder:"
-msgstr ""
+msgstr "儲存下載的影片在這個資料夾"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:73
 msgid "_URL"

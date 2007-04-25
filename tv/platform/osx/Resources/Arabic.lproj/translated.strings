@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-03-08 15:28-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-25 13:11-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "إدخل";
 
@@ -23,45 +23,39 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "About Democracy" = "حول البرنامج";
 
-/* Flag: untranslated */
-"Add Channel..." = "Add Channel...";
+"Add Channel..." = "آضف قناة...";
 
-/* Flag: untranslated */
-"Bring All to Front" = "Bring All to Front";
+"Bring All to Front" = "أظهر الجميع في المقدمة";
 
-/* Flag: untranslated */
-"Channels" = "Channels";
+"Channels" = "القنوات";
 
 /* Flag: untranslated */
 "Check for New Version" = "Check for New Version";
 
 "Clear Menu" = "امسح القائمه";
 
-/* Flag: untranslated */
-"Close Window" = "Close Window";
+"Close Window" = "أغلق النافذة";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15 */
 "Copy" = "إنسخ";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28 */
-/* Flag: untranslated */
-"Copy Channel URL" = "Copy Channel URL";
+"Copy Channel URL" = "انسخ عنوان القناة";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11 */
-/* Flag: untranslated */
-"Copy Video URL" = "Copy Video URL";
+"Copy Video URL" = "انسخ عنوان الفيديو";
 
 "Cut" = "قصّ";
 
 /* File: ../../portable/dialogs.py:77 */
-"Delete" = "حذف";
+"Delete" = "احذف";
 
 "Democracy" = "دمقراطيه";
 
-"Democracy Help" = "مساعد دمقراطيه";
-
 /* Flag: untranslated */
-"Donate" = "Donate";
+"Democracy Help" = "Democracy Help" /* = "المساعدة" */;
+
+"Donate" = "تبرع";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14 */
 "Edit" = "حرّر";
@@ -72,39 +66,35 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Full Screen" = "شاشه كامله";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47 */
-"Help" = "مساعده";
+"Help" = "مساعدة";
 
 "Hide Democracy" = "إخفِ دمقراطيه";
 
-"Hide Others" = "إخفِ آخرين";
+"Hide Others" = "إخفِ الآخرين";
 
-/* Flag: untranslated */
-"Main Window" = "Main Window";
+"Main Window" = "النافذة الرئيسية";
 
-"MainMenu" = "القائمه الرئيسيه";
+"MainMenu" = "القائمة الرئيسية";
 
 "Minimize" = "صغّر";
 
-"New Channel Folder..." = "ملف قناة جديده";
+"New Channel Folder..." = "مجلد قنوات جديد...";
 
-/* Flag: untranslated */
-"New Channel Guide..." = "New Channel Guide...";
+"New Channel Guide..." = "دليل قنوات جديد...";
 
-"New Playlist Folder..." = "ملف قائمة مطلوبات جديده";
+"New Playlist Folder..." = "مجلد قوائم تشغيل جديد...";
 
-"New Playlist..." = "قئمة مطلوبات جديده";
+"New Playlist..." = "قائمة تشغيل جديدة...";
 
-/* Flag: untranslated */
-"New Search Channel..." = "New Search Channel...";
+"New Search Channel..." = "قناة بحث جديدة...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43 */
-/* Flag: untranslated */
-"Next Video" = "Next Video";
+"Next Video" = "الفيديو التالي";
 
 "Open Recent" = "فُتِح مؤخرا";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7 */
-"Open..." = "مفتوح";
+"Open..." = "إفتح...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16 */
 "Paste" = "ألصِق";
@@ -113,36 +103,31 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Play Video" = "شغٌل الفيديو";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39 */
-/* Flag: untranslated */
-"Playback" = "Playback";
+"Playback" = "العزف";
+
+"Playlists" = "قوائم تشغيل";
 
 /* Flag: untranslated */
-"Playlists" = "Playlists";
-
-"Preferencesâ¦" = "أضليات";
+"Preferencesâ¦" = "Preferencesâ¦" /* = "تفضيلات" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44 */
-/* Flag: untranslated */
-"Previous Video" = "Previous Video";
+"Previous Video" = "الفيديو السابق";
 
 "Quit Democracy" = "أنهِ دمقراطيه";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5 */
-/* Flag: untranslated */
-"Remove..." = "Remove...";
+"Remove..." = "أزل...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18 */
-"Rename..." = "أعطِ اسما جديدا";
+"Rename..." = "أ_عِد التسمية...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10 */
-/* Flag: untranslated */
-"Save Video As..." = "Save Video As...";
+"Save Video As..." = "احفظ الفيديو باسم...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17 */
-"Select All" = "إختيار الكل";
+"Select All" = "إنتق الكل";
 
-/* Flag: untranslated */
-"Send This Channel to a Friend" = "Send This Channel to a Friend";
+"Send This Channel to a Friend" = "آرسل هذه القناة الى صديق";
 
 "Services" = "خدمات";
 
@@ -152,12 +137,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Stop Video" = "إوقف الفيديو";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30 */
-"Update All Channels" = "جدٌد كل الأقنية";
+"Update All Channels" = "جدٌد كل القنوات";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29 */
 "Update Channel" = "جدٌد القناة";
 
-"Window" = "شبٌاك";
+"Window" = "نافذة";
 
 "Zoom" = "كبٌر/صغٌر";
 
@@ -179,31 +164,30 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/tabs.py:27 */
 /* File: ../../portable/feed.py:1718 */
 /* File: ../../portable/feed.py:1777 */
-/* Flag: untranslated */
-"Search" = "Search";
+"Search" = "إبحث";
 
 "VideoWindow" = "شباك الفيديو";
 
 /* File: ../../portable/dialogs.py:60 */
-"Cancel" = "أبطِل";
+"Cancel" = "الغِ";
 
 "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "ا\n";
 
-"Password:\n" = "كلمة الدخول\n";
+"Password:\n" = "كلمة السر\n";
 
-"Username and password required" = "مطلوب اسم مستعمل و كلمة دخول";
+"Username and password required" = "مطلوب اسم مستخدم و كلمة سر";
 
-"Username:\n\n" = "اسم المستعمل\n\n";
+"Username:\n\n" = "اسم المستخدم:\n\n";
 
 " limit upstream to" = " حدٌد جريان البث";
 
-"(You must restart Democracy for this change to take effect)\n" = "يجب اعادة تشغيل دمقراطيه لكي يأخذ التغيير مفعوله.\n";
+"(You must restart Democracy for this change to take effect)\n" = "(يجب اعادة تشغيل دمقراطيه لكي يأخذ التغيير مفعوله)\n";
 
-"(movies directory path goes here)" = "طريق ملف الافلام يوضع هنا";
+"(movies directory path goes here)" = "(مسار الأفلام يأتي هنا)";
 
-"1 day" = "يوم 1";
+"1 day" = "يوم واحد";
 
-"1 month" = "شهر 1";
+"1 month" = "شهر واحد";
 
 "10 days" = "10 أيام";
 
@@ -241,31 +225,25 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "KB/s when my computer is active." = "كيلوبايت عندما يكون جهازي شغٌالا";
 
-/* Flag: untranslated */
-"Maximum:" = "Maximum:";
+"Maximum:" = "الحد الأقصى:";
 
-/* Flag: untranslated */
-"Minimum:" = "Minimum:";
+"Minimum:" = "الحد الأدنى:";
 
 "Never" = "ابدا/ ولا مرة";
 
 "OtherViews" = "مشاهد أخرى";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:53 */
-/* Flag: untranslated */
-"Play videos one after another." = "Play videos one after another.";
+"Play videos one after another." = "شغل الفيديو  واحد تلو الاخر";
 
 "Run Democracy at startup" = "شغٌل دمقراطيه من البدايه";
 
-/* Flag: untranslated */
-"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
+"Save downloaded videos in this folder:" = "احفظ الفيديو المحمل في هذا الملف";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
-/* Flag: untranslated */
-"Stop after each video." = "Stop after each video.";
+"Stop after each video." = "توقف بعد كل فيديو";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
+"To avoid internet slowdowns:" = "لتجنب بطىء الانترنت:";
 
 "every 30 minutes" = "كل 30 دقيقة";
 
@@ -287,8 +265,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Channel" = "قناة";
 
 /* File: ../../portable/dialogs.py:72 */
-/* Flag: untranslated */
-"Create" = "Create";
+"Create" = "أنشئ";
 
 /* Flag: untranslated */
 "In this:" = "In this:";
@@ -319,22 +296,18 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?";
 
-/* Flag: untranslated */
-"Next" = "Next";
+"Next" = "التّالي";
 
 /* File: ../../portable/dialogs.py:62 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28 */
-/* Flag: untranslated */
-"No" = "No";
+"No" = "ﻻ";
 
-/* Flag: untranslated */
-"Only search my Movies folder." = "Only search my Movies folder.";
+"Only search my Movies folder." = "ابحث في ملفاتي للفيديو فقط";
 
 /* Flag: untranslated */
 "Search my entire Home folder." = "Search my entire Home folder.";
 
-/* Flag: untranslated */
-"Search this folder:" = "Search this folder:";
+"Search this folder:" = "ابحث في هذه الحافظة:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12 */
 "Searching for Videos" = "البحث عن فيديو";

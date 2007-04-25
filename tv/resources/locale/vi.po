@@ -9,17 +9,17 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-02-17 22:03+0000\n"
-"Last-Translator: Nam A.H. Nguyen <getdemtv@gmail.com>\n"
+"PO-Revision-Date: 2007-03-16 18:41+0000\n"
+"Last-Translator: Dichthuat.net <manhlinhvn@yahoo.com>\n"
 "Language-Team: Vietnamese <vi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=(0);\n"
-"X-Rosetta-Export-Date: 2007-02-21 07:08+0000\n"
+"X-Rosetta-Export-Date: 2007-03-16 20:18+0000\n"
 
 msgid "$log"
-msgstr ""
+msgstr "$log"
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
@@ -27,10 +27,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
-"<font face=\"Lucida Grande\" size=\"-1\">Phần mềm theo dõi bọ nằm tại <a "
+"<font face=\"Lucida Grande\" size=\"-1\">Phần mềm theo dõi lỗi tại <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Chỉ cần nói cho chúng tôi biết "
-"bạn đang làm gì, dán và bảng tin lưu từ hộp ở trên, và trả lời một số câu "
-"hỏi, và rồi chúng tôi sẽ tiến hành ngay.</font>"
+"bạn đang làm gì, dán và bảng tin lưu từ hộp ở trên, trả lời một số câu hỏi, "
+"và chúng tôi sẽ tiến hành ngay.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -39,7 +39,7 @@ msgid ""
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
 "Thật ra, nếu bạn có một phút, bạn có sẵn lòng gửi một báo cáo gấp tới hệ "
-"thống theo dõi bọ ? Ít nhất, chúng tôi cần bạn mô tả lại lúc đó bạn làm gì --"
+"thống theo dõi lỗi? Ít nhất, chúng tôi cần bạn mô tả lại lúc đó bạn làm gì --"
 " càng chính xác càng tốt -- cùng với những chuyện lẩm cẩm trong hộp nhận chữ "
 "dưới đây\""
 
@@ -51,7 +51,7 @@ msgid ""
 msgstr ""
 
 msgid "OK"
-msgstr "Đồng Ý"
+msgstr "Đồng ý"
 
 msgid "The fall of $shortAppName??"
 msgstr ""
@@ -60,174 +60,174 @@ msgid "About Democracy"
 msgstr "Về phần mềm Democracy"
 
 msgid "Add Channel..."
-msgstr ""
+msgstr "Thêm kênh..."
 
 msgid "Bring All to Front"
-msgstr "Đưa Tất Cả về Trước"
+msgstr "Đưa tất cả về trước"
 
 msgid "Channels"
 msgstr "Kênh"
 
 msgid "Check for New Version"
-msgstr ""
+msgstr "Kiểm tra phiên bản mới"
 
 msgid "Clear Menu"
-msgstr ""
+msgstr "Xóa thực đơn"
 
 msgid "Close Window"
-msgstr ""
+msgstr "Đóng cửa sổ"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15
 msgid "Copy"
-msgstr ""
+msgstr "Chép"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
 msgid "Copy Channel URL"
-msgstr ""
+msgstr "Chép URL kênh"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "Copy Video URL"
-msgstr ""
+msgstr "Chép URL Video"
 
 msgid "Cut"
-msgstr ""
+msgstr "Cắt"
 
 #: ../../portable/dialogs.py:77
 msgid "Delete"
-msgstr ""
+msgstr "Xóa"
 
 msgid "Democracy"
 msgstr ""
 
 msgid "Democracy Help"
-msgstr ""
+msgstr "Trợ giúp"
 
 msgid "Donate"
-msgstr ""
+msgstr "Quyên góp"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14
 msgid "Edit"
-msgstr ""
+msgstr "Sửa"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6
 msgid "File"
-msgstr ""
+msgstr "Tệp tin"
 
 msgid "Full Screen"
-msgstr ""
+msgstr "Toàn màn hình"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47
 msgid "Help"
-msgstr ""
+msgstr "Trợ giúp"
 
 msgid "Hide Democracy"
-msgstr ""
+msgstr "Ẩn chương trình"
 
 msgid "Hide Others"
-msgstr ""
+msgstr "Ẩn khác"
 
 msgid "Main Window"
-msgstr ""
+msgstr "Cửa sổ chính"
 
 msgid "MainMenu"
-msgstr ""
+msgstr "Cửa sổ chính"
 
 msgid "Minimize"
-msgstr ""
+msgstr "Thu nhỏ"
 
 msgid "New Channel Folder..."
-msgstr ""
+msgstr "Thư mục kênh mới"
 
 msgid "New Channel Guide..."
-msgstr ""
+msgstr "Hướng dẫn kênh mới"
 
 msgid "New Playlist Folder..."
-msgstr ""
+msgstr "Thư mục xem mới"
 
 msgid "New Playlist..."
-msgstr ""
+msgstr "Danh sách mới..."
 
 msgid "New Search Channel..."
-msgstr ""
+msgstr "Kênh tìm kiếm mới..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
 msgid "Next Video"
-msgstr ""
+msgstr "Video kế tiếp"
 
 msgid "Open Recent"
-msgstr ""
+msgstr "Mở gần đây"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "Open..."
-msgstr ""
+msgstr "Mở..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16
 msgid "Paste"
-msgstr ""
+msgstr "Dán"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40
 msgid "Play Video"
-msgstr ""
+msgstr "Xem Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
 msgid "Playback"
-msgstr ""
+msgstr "Phát lại"
 
 msgid "Playlists"
-msgstr ""
+msgstr "Danh sách"
 
 msgid "Preferencesâ¦"
-msgstr ""
+msgstr "Tùy chọn"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
 msgid "Previous Video"
-msgstr ""
+msgstr "Video trước"
 
 msgid "Quit Democracy"
-msgstr ""
+msgstr "Thoát"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
 msgid "Remove..."
-msgstr ""
+msgstr "Xóa..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
 msgid "Rename..."
-msgstr ""
+msgstr "Đổi tên..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "Save Video As..."
-msgstr ""
+msgstr "Lưu Video là..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17
 msgid "Select All"
-msgstr ""
+msgstr "Chọn toàn bộ"
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Gửi kênh này cho bạn bè"
 
 msgid "Services"
-msgstr ""
+msgstr "Dịch vụ"
 
 msgid "Show All"
-msgstr ""
+msgstr "Hiện tất cả"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42
 msgid "Stop Video"
-msgstr ""
+msgstr "Dừng Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30
 msgid "Update All Channels"
-msgstr ""
+msgstr "Cập nhật các kênh"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29
 msgid "Update Channel"
-msgstr ""
+msgstr "Cập nhật kênh"
 
 msgid "Window"
-msgstr ""
+msgstr "Cửa sổ"
 
 msgid "Zoom"
-msgstr ""
+msgstr "Thu/phóng"
 
 msgid "%channel feed%"
 msgstr ""
@@ -239,144 +239,148 @@ msgid "%donation label%"
 msgstr ""
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
-msgstr ""
+msgstr "00:00:00"
 
 msgid "Box"
-msgstr ""
+msgstr "Khung"
 
 msgid "FullScreen Controls"
-msgstr ""
+msgstr "Điều chỉnh toàn màn hình"
 
 #: ../../portable/tabs.py:27 ../../portable/feed.py:1718
 #: ../../portable/feed.py:1777
 msgid "Search"
-msgstr ""
+msgstr "Tìm kiếm"
 
 msgid "VideoWindow"
-msgstr ""
+msgstr "Cửa sổ Video"
 
 #: ../../portable/dialogs.py:60
 msgid "Cancel"
-msgstr ""
+msgstr "Huỷ bỏ"
 
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
+"Địa chỉ http://foo.bar.com/baz cần tên người dùng và mật khẩu cho \"chữ do "
+"mạng cung cấp\". (Xin đừng bản địa hóa -- dữ liệu thử)\n"
 
 msgid "Password:\n"
-msgstr ""
+msgstr "Mật khẩu\n"
 
 msgid "Username and password required"
-msgstr ""
+msgstr "Cần có tên người dùng và mật khẩu"
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
+"Tên người dùng:\n"
+"\n"
 
 msgid " limit upstream to"
-msgstr ""
+msgstr " giới hạn lưu lượng tải lên"
 
 msgid "(You must restart Democracy for this change to take effect)\n"
-msgstr ""
+msgstr "(Bạn phải khởi động chương trình này để hiệu quả có tác dụng)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(đặt đường dẫn thư mục phim ở đây)"
 
 msgid "1 day"
-msgstr ""
+msgstr "1 ngày"
 
 msgid "1 month"
-msgstr ""
+msgstr "1 tháng"
 
 msgid "10 days"
-msgstr ""
+msgstr "10 ngày"
 
 msgid "3 days"
-msgstr ""
+msgstr "3 ngày"
 
 msgid "3 hours"
-msgstr ""
+msgstr "3 giờ"
 
 msgid "4"
-msgstr ""
+msgstr "4"
 
 msgid "5"
-msgstr ""
+msgstr "5"
 
 msgid "6 days"
-msgstr ""
+msgstr "6 ngày"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "BitTorrent ports:"
-msgstr ""
+msgstr "Cổng BitTorrent:"
 
 msgid "By default, videos expire after:"
-msgstr ""
+msgstr "Theo mặc định, video hết hạn vào:"
 
 msgid "Change..."
-msgstr ""
+msgstr "Thay đổi..."
 
 msgid "Check channels for new content:"
-msgstr ""
+msgstr "Kiểm tra nội dung mới của kênh:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
 msgid "Don't start a download if it leaves less than"
-msgstr ""
+msgstr "Không tải về nếu nhỏ hơn"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
 msgid "Download at most"
 msgstr ""
 
 msgid "GB free."
-msgstr ""
+msgstr "GB miễn phí"
 
 msgid "KB/s when my computer is active."
 msgstr ""
 
 msgid "Maximum:"
-msgstr ""
+msgstr "Tối đa"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Tối thiểu:"
 
 msgid "Never"
-msgstr ""
+msgstr "Không bao giờ"
 
 msgid "OtherViews"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:53
 msgid "Play videos one after another."
-msgstr ""
+msgstr "Xem liên tiếp"
 
 msgid "Run Democracy at startup"
-msgstr ""
+msgstr "Chạy khi khởi động máy"
 
 msgid "Save downloaded videos in this folder:"
-msgstr ""
+msgstr "Lưu video tải về vào thư mục:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:61
 msgid "Stop after each video."
-msgstr ""
+msgstr "Dừng sau mỗi video."
 
 msgid "To avoid internet slowdowns:"
-msgstr ""
+msgstr "Để tránh interrnet chậm:"
 
 msgid "every 30 minutes"
-msgstr ""
+msgstr "mỗi 30 phút"
 
 msgid "every hour"
-msgstr ""
+msgstr "mỗi giờ"
 
 msgid "manually"
-msgstr ""
+msgstr "thủ công"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
 msgid "videos at once."
@@ -390,26 +394,26 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20
 msgid "Channel"
-msgstr ""
+msgstr "Kênh"
 
 #: ../../portable/dialogs.py:72
 msgid "Create"
-msgstr ""
+msgstr "Tạo"
 
 msgid "In this:"
-msgstr ""
+msgstr "Trong:"
 
 msgid "Item1"
-msgstr ""
+msgstr "mục1"
 
 msgid "Search Engine"
 msgstr ""
 
 msgid "Search for:"
-msgstr ""
+msgstr "Tìm kiếm:"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:31
 #: ../../platform/windows-xul/frontend_implementation/startup.py:25
@@ -418,10 +422,10 @@ msgid "(parsed %d files - found %d videos)"
 msgstr ""
 
 msgid "Back"
-msgstr ""
+msgstr "Quay lại"
 
 msgid "Browse"
-msgstr ""
+msgstr "Duyệt"
 
 msgid ""
 "Democracy Player can find all the videos on your computer to help you "
@@ -432,12 +436,12 @@ msgid ""
 msgstr ""
 
 msgid "Next"
-msgstr ""
+msgstr "Tiếp sau"
 
 #: ../../portable/dialogs.py:62
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28
 msgid "No"
-msgstr ""
+msgstr "Không"
 
 msgid "Only search my Movies folder."
 msgstr ""
@@ -446,11 +450,11 @@ msgid "Search my entire Home folder."
 msgstr ""
 
 msgid "Search this folder:"
-msgstr ""
+msgstr "Tìm trong thư mục:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
 msgid "Searching for Videos"
-msgstr ""
+msgstr "Tìm video"
 
 msgid ""
 "The next few screens will help you set up Democracy Player so that it works "
@@ -481,7 +485,7 @@ msgstr ""
 #: ../../portable/dialogs.py:61
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27
 msgid "Yes"
-msgstr ""
+msgstr "Đồng Ý"
 
 msgid ""
 "You're done!\n"
@@ -514,59 +518,59 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save Video _As..."
-msgstr ""
+msgstr "Lưu video như..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save this video"
-msgstr ""
+msgstr "Lưu video này"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
 msgid "_Copy Video URL"
-msgstr ""
+msgstr "_Chép URL Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
 msgid "_Remove Video"
-msgstr ""
+msgstr "_Xóa video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123
 msgid "_Fullscreen"
-msgstr ""
+msgstr "_Toàn màn hình"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
 msgid "_Stop Video"
-msgstr ""
+msgstr "_Dừng video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
 msgid "_Next Video"
-msgstr ""
+msgstr "_Video  tiếp"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
 msgid "_Previous Video"
-msgstr ""
+msgstr "_Video trước"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
 msgid "_Play / Pause"
-msgstr ""
+msgstr "_Phát / Tạm dừng"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:132
 msgid "Copy Channel _Link"
-msgstr ""
+msgstr "Chép link kênh"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133
 msgid "_Send this channel to a friend"
-msgstr ""
+msgstr "_Gửi kênh này cho bạn bè"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
 msgid "_Update Channel"
-msgstr ""
+msgstr "_Cập nhật kênh"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
 msgid "Re_name Channel"
-msgstr ""
+msgstr "Đổi _tên kênh"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
 msgid "_Remove Channel"
-msgstr ""
+msgstr "_Xóa kênh"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145
 msgid "Re_name Playlist"
@@ -578,11 +582,11 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151
 msgid "_Video"
-msgstr ""
+msgstr "_Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152
 msgid "_Channels"
-msgstr ""
+msgstr "_Kênh"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153
 msgid "_Playlists"
@@ -1736,7 +1740,7 @@ msgstr ""
 #: ../../portable/app.py:924
 #, python-format
 msgid "You have %d download still in progress."
-msgid_plural "You have %d downloads still in progress."
+msgid_plural "You have %d download still in progress."
 msgstr[0] ""
 
 #: ../../portable/app.py:1367

@@ -1,5 +1,5 @@
 <!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
-<!ENTITY canscrape.body      "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.">
+<!ENTITY canscrape.body      "不过我们尽力抓取那些文件。可能要额外的时间列出视频，并且描述可能看起来滑稽。">
 
-<!ENTITY canscrape.prefix    "Please contact the publishers of">
+<!ENTITY canscrape.prefix    "请联系它的发布人--">
 <!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">

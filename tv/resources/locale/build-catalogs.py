@@ -54,6 +54,7 @@ langs = (
          ("sv", "Swedish"),
          ("th", "Thai"),
          ("tr", "Turkish"),
+         ("vi", "Vietnamese"),
          ("zh_CN", "Chinese_Simplified"),
          ("zh_HK", "Chinese_HK"),
          ("zh_TW", "Chinese_Traditional"),
