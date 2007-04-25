@@ -41,6 +41,13 @@
         }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
+            ACTIONS = {addFolder = id; removeFolder = id; showFolderAsChannel = id; }; 
+            CLASS = FoldersPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {deleteButton = id; foldersTable = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
             ACTIONS = {runAtStartup = id; }; 
             CLASS = GeneralPrefsController; 
             LANGUAGE = ObjC; 
@@ -48,10 +55,10 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {setPlaybackMode = id; }; 
+            ACTIONS = {rememberVideoPosition = id; setPlaybackMode = id; }; 
             CLASS = PlaybackPrefsController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {modesMatrix = id; }; 
+            OUTLETS = {modesMatrix = id; rememberCheckBox = id; }; 
             SUPERCLASS = NSObject; 
         }, 
         {
@@ -62,6 +69,7 @@
                 channelsView = id; 
                 diskSpaceView = id; 
                 downloadsView = id; 
+                foldersView = id; 
                 generalView = id; 
                 playbackView = id; 
             }; 
