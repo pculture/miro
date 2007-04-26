@@ -418,6 +418,12 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
     def toggleFullScreen_(self, sender):
         app.controller.videoDisplay.exitFullScreen()
 
+    def nextVideo_(self, sender):
+        eventloop.addIdle(lambda:app.controller.playbackController.skip(1), "Skip Video")
+
+    def previousVideo_(self, sender):
+        eventloop.addIdle(lambda:app.controller.playbackController.skip(-1, False), "Skip Video")
+
     def sendEvent_(self, event):
         if self.isFullScreen:
             if event.type() == NSLeftMouseDown:
