@@ -57,31 +57,32 @@ class VideoDisplay (app.VideoDisplayBase):
         frontend.vlcRenderer.setVolume(volume)
 
 #    def fillMovieData (self, filename, movie_data, callback):
-#        dir = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
-#        try:
-#            os.makedirs(dir)
-#        except:
-#            pass
-#        screenshot = os.path.join (dir, os.path.basename(filename) + ".png")
+#	 print "fillMovieData (%s)" % (filename,)
+#	 dir = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+#	 try:
+#	     os.makedirs(dir)
+#	 except:
+#	     pass
+#	 screenshot = os.path.join (dir, os.path.basename(filename) + ".png")
 #
-#        movie_data["screenshot"] = nextFreeFilename(screenshot)
+#	 movie_data["screenshot"] = nextFreeFilename(screenshot)
 #
-#        self.movie_data = movie_data
-#        self.callback = callback
+#	 self.movie_data = movie_data
+#	 self.callback = callback
 #
-#        print "Calling renderer"
-#        frontend.vlcRenderer.extractMovieData (filename, movie_data["screenshot"], filename.endswith("m4v") or filename.endswith("mov"));
-#        print "renderer returned"
-
+#	 print "Calling renderer"
+#	 frontend.vlcRenderer.extractMovieData (filename, movie_data["screenshot"]);
+#	 print "renderer returned"
+#
 #    def extractFinish (self, duration, screenshot_success):
-#        print "extractFinish (%d, %s)" % (duration, screenshot_success)
-#        self.movie_data["duration"] = int (duration)
-#        if screenshot_success:
-#            if self.movie_data["screenshot"] and not os.path.exists(self.movie_data["screenshot"]):
-#                self.movie_data["screenshot"] = u""
-#        else:
-#            self.movie_data["screenshot"] = None
-#        self.callback()
+#	 print "extractFinish (%d, %s)" % (duration, screenshot_success)
+#	 self.movie_data["duration"] = int (duration)
+#	 if screenshot_success:
+#	     if self.movie_data["screenshot"] and not os.path.exists(self.movie_data["screenshot"]):
+#		 self.movie_data["screenshot"] = u""
+#	 else:
+#	     self.movie_data["screenshot"] = None
+#	 self.callback()
 
 # This is a major hack to avoid VLC crashes by giving it time to
 # process each stop or play command. --NN
