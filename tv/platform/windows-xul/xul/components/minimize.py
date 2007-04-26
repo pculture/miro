@@ -1,6 +1,6 @@
 from xpcom import components
 import ctypes
-from ctypes.wintypes import DWORD, HWND, HANDLE, LPCWSTR, WPARAM, LPARAM
+from ctypes.wintypes import DWORD, HWND, HANDLE, LPCWSTR, WPARAM, LPARAM, RECT
 UINT = ctypes.c_uint
 WCHAR = ctypes.c_wchar
 INT = ctypes.c_int
@@ -39,6 +39,18 @@ NIM_DELETE  = 2
 
 IDI_APPLICATION = 32512
 IDI_WINLOGO = 32517
+
+ABM_GETTASKBARPOS = 5
+ABE_LEFT       = 0
+ABE_TOP        = 1
+ABE_RIGHT      = 2
+ABE_BOTTOM     = 3
+
+IDANI_OPEN         = 1
+IDANI_CAPTION      = 3
+
+SW_HIDE = 0
+SW_SHOW = 5
 
 WNDPROCTYPE = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, UINT, WPARAM, LPARAM)
 
@@ -90,6 +102,13 @@ class WNDCLASSEX(ctypes.Structure):
                 ("lpszClassName", LPCWSTR),
                 ("hIconSm", HANDLE),
                 ]
+class APPBARDATA(ctypes.Structure):
+    _fields_ = [("cbSize", DWORD),
+                ("hWnd", HANDLE),
+                ("uCallbackMessage", UINT),
+                ("uEdge", UINT),
+                ("rc", RECT),
+                ("lParam", LPARAM)]
 
 def PyWindProc(hWnd, uMsg, wParam, lParam):
     if uMsg == WM_TRAYICON:
@@ -200,12 +219,53 @@ class Minimize:
 
     def delTrayIcon(self):
         ctypes.windll.shell32.Shell_NotifyIconW(NIM_DELETE,ctypes.byref(self.iconinfo))
-        
+
+    def getTrayRect(self):
+        trayRect = RECT(0,0,0,0)
+
+        # I don't think this ever actually works with modern windows,
+        # but gAIM does this, so I'll do it to like the sheep I am -NN
+        trayWindow = ctypes.windll.user32.FindWindowExW(0,0,"Shell_TrayWnd",0)
+        if trayWindow != 0:
+            trayNotifyWindow = ctypes.windll.user32.FindWindowEx(trayWindow,0,"TrayNotifyWnd",0)
+            if trayNotifyWindow != 0:
+                ctypes.windll.user32.GetWindowRect(trayNotifyWindow, ctypes.byref(trayRect))
+                return trayRect
+
+        # That hack didn't work, let's find the tray notify window the
+        # by finding the task bar
+        appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
+        if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
+            if appBarData.uEdge in [ABE_LEFT, ABE_RIGHT]:
+                trayRect.top=appBarData.rc.bottom-100
+                trayRect.bottom=appBarData.rc.bottom-16
+                trayRect.left=appBarData.rc.left
+                trayRect.right=appBarData.rc.right
+            else: # ABE_TOP, ABE_BOTTOM
+                trayRect.top=appBarData.rc.top
+                trayRect.bottom=appBarData.rc.bottom
+                trayRect.left=appBarData.rc.right-100
+                trayRect.right=appBarData.rc.right-16
+            return trayRect
+        # Give up
+        return None
+
     def minimize(self, href):
-        ctypes.windll.user32.ShowWindow(href, ctypes.c_int(0)) # SW_HIDE
+        fromer = RECT(0,0,0,0)
+        ctypes.windll.user32.GetWindowRect(href,ctypes.byref(fromer))
+        to = self.getTrayRect()
+        if to:
+            ctypes.windll.user32.DrawAnimatedRects(href,IDANI_CAPTION,ctypes.byref(fromer),ctypes.byref(to))
+        ctypes.windll.user32.ShowWindow(href, ctypes.c_int(SW_HIDE))
 
     def restore(self, href):
-        ctypes.windll.user32.ShowWindow(href, ctypes.c_int(5)) # SW_SHOW
+        fromer = RECT(0,0,0,0)
+        ctypes.windll.user32.GetWindowRect(href,ctypes.byref(fromer))
+        to = self.getTrayRect()
+        if to:
+            ctypes.windll.user32.DrawAnimatedRects(href,IDANI_CAPTION,ctypes.byref(to),ctypes.byref(fromer))
+
+        ctypes.windll.user32.ShowWindow(href, ctypes.c_int(SW_SHOW))
 
     def restoreAll(self):
         for href in self.minimized:
