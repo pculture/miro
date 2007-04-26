@@ -2298,8 +2298,8 @@ msgstr ""
 "einzurichten. Die erste Frage lautet:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:63
-msgid "To avoid slowdowns, limit upstream to"
-msgstr "Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf %s begrenzen"
+#msgid "To avoid slowdowns, limit upstream to"
+#msgstr ""
 #"Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf %s "
 #"begrenzen"
 
