@@ -404,7 +404,8 @@ def startup():
 
 def join():
     global lt
-    lt.join()
+    if lt is not None:
+        lt.join()
 
 def quit():
     threadPoolQuit()
