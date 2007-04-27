@@ -646,3 +646,9 @@ class PyBridge:
             obj.setVisible (not obj.visible)
         except:
             pass
+
+    def minimizeToTray(self):
+        return config.get(prefs.MINIMIZE_TO_TRAY)
+
+    def setMinimizeToTray(self, newSetting):
+        config.set(prefs.MINIMIZE_TO_TRAY, newSetting)

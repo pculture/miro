@@ -9,6 +9,7 @@ function onload() {
   pybridge.startPrefs();
   selectDirectoryWatch(false);
   document.getElementById("runonstartup").checked = pybridge.getRunAtStartup();
+  document.getElementById("minimizetotray").checked = pybridge.minimizeToTray();
   setCheckEvery(pybridge.getCheckEvery());
   setMoviesDir(pybridge.getMoviesDirectory());
   originalMoviesDir = pybridge.getMoviesDirectory();
@@ -51,6 +52,13 @@ function runOnStartupChange() {
       pybridge.setRunAtStartup(true);
   else
       pybridge.setRunAtStartup(false);
+}
+
+function minimizeToTrayChange() {
+  if (document.getElementById("minimizetotray").checked)
+      pybridge.setMinimizeToTray(true);
+  else
+      pybridge.setMinimizeToTray(false);
 }
 
 function setCheckEvery(minutes) {

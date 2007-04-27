@@ -28,7 +28,10 @@
     <!--GENERAL-->
     <groupbox orient="horizontal">
         <caption label="&prefs.general;"/>
-        <checkbox id="runonstartup" label="&prefs.run.on.startup;" value="1" oncommand="runOnStartupChange()"/>
+        <vbox>
+          <checkbox id="runonstartup" label="&prefs.run.on.startup;" value="1" oncommand="runOnStartupChange()"/>
+          <checkbox id="minimizetotray" label="&prefs.minimize.to.tray;" value="1" oncommand="minimizeToTrayChange()"/>
+        </vbox>
     </groupbox>
     <!--/GENERAL-->
 

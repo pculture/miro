@@ -252,22 +252,15 @@ function setupHandlers() {
 
 function onClose()
 {
-   if (vlc.playlist.items.count > 0) {
-       vlc.playlist.stop();
-   }
-   pybridge.quit();
-   closeApp();
+    if (pybridge.minimizeToTray()) {
+        minimizeToTray();
+    } else {
+        handleExit();
+    }
 }
 
 function onUnload() {
-    jsdump("onUnload running.");
-    if (vlc.playlist.items.count > 0) {
-	vlc.playlist.stop();
-    }
-    // Make sure the app exits (even if there is still another window
-    // open such as the Javascript console, for example)
-    pybridge.quit();
-    closeApp();
+    handleExit();
 }
 
 function jsdump(str) {
@@ -367,9 +360,11 @@ function openFile() {
 
 function handleExit() {
     if (vlc.playlist.items.count > 0) {
-	vlc.playlist.stop();
+        vlc.playlist.stop();
     }
     pybridge.quit();
+    closeApp();
+    minimizer.restoreAll();
 }
 
 function onKeyDown(event) {

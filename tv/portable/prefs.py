@@ -64,6 +64,9 @@ DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getdemocracy.com/
                          platformSpecific=False)
 HELP_URL          = Pref(key='HelpURL', default=u"http://www.getdemocracy.com/help/",
                          platformSpecific=False)
+# This can be safely ignored on platforms without minimize to tray
+MINIMIZE_TO_TRAY = \
+    Pref(key='MinimizeToTray',   default=True, platformSpecific=False)
 
 # These are computed by special platform code.
 RUN_AT_STARTUP     = Pref( key='RunAtStartup',  default=False,  platformSpecific=True )

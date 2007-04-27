@@ -104,4 +104,6 @@ interface pcfIDTVPyBridge : nsISupports
   void addDirectoryWatch(in AString filename);
   void removeDirectoryWatch(in AString id);
   void toggleDirectoryWatchShown(in AString id);
+  boolean minimizeToTray();
+  void setMinimizeToTray(in boolean newSetting);
 };

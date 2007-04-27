@@ -218,7 +218,8 @@ class Minimize:
         ctypes.windll.shell32.Shell_NotifyIconW(NIM_ADD,ctypes.byref(self.iconinfo))
 
     def delTrayIcon(self):
-        ctypes.windll.shell32.Shell_NotifyIconW(NIM_DELETE,ctypes.byref(self.iconinfo))
+        if self.iconinfo:
+            ctypes.windll.shell32.Shell_NotifyIconW(NIM_DELETE,ctypes.byref(self.iconinfo))
 
     def getTrayRect(self):
         trayRect = RECT(0,0,0,0)
