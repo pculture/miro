@@ -68,6 +68,9 @@ else:
     revision = '%s - %s' % revision
 
 # Inject the revision number into app.config.template to get app.config.
+appConfigTemplatePath = os.path.join(root, 'resources/app.config.template')
+appConfigPath = os.path.join(root, 'resources/app.config.template')
+
 def fillTemplate(templatepath, outpath, **vars):
     s = open(templatepath, 'rt').read()
     s = string.Template(s).safe_substitute(**vars)
