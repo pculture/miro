@@ -14,7 +14,7 @@ import prefs
 import frontend
 from frontend_implementation import urlcallbacks
 
-tempdir = os.path.join(tempfile.gettempdir(), "Democracy")
+tempdir = os.path.join(tempfile.gettempdir(), config.get(prefs.SHORT_APP_NAME))
 
 def getDTVAPICookie():
     return None

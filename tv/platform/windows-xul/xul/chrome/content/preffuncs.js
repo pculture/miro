@@ -68,7 +68,7 @@ function selectMoviesDirectory() {
     var fp = Components.classes["@mozilla.org/filepicker;1"]
             .createInstance(Components.interfaces.nsIFilePicker);
 
-    fp.init(window, "Select a Directory to store Democracy downloads in",
+    fp.init(window, "Select a Directory to store downloads",
             Components.interfaces.nsIFilePicker.modeGetFolder);
     var res = fp.show();
     if (res == Components.interfaces.nsIFilePicker.returnOK){

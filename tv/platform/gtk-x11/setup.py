@@ -316,11 +316,19 @@ class build_py (distutils.command.build_py.build_py):
     package.
     """
 
+    def expand_templates(self):
+        conf = util.readSimpleConfigFile(app_config)
+        for path in [os.path.join(portable_dir,'dl_daemon','daemon.py')]:
+            template = Template(read_file(path+".template"))
+            expanded = template.substitute(**conf)
+            write_file(path, expanded)
+        
     def find_democracy_modules(self):
         """Returns a list of modules to go in the democracy directory.  Each
         item has the form (package, module, path).  The trick here is merging
         the contents of the platform/gtk-x11 and portable directories.
         """
+        self.expend_templates()
         files = glob(os.path.join(portable_dir, '*.py'))
         files.extend(glob(os.path.join(platform_dir, '*.py')))
         rv = []

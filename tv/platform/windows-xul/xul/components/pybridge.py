@@ -33,7 +33,7 @@ except:
     errorOnImport = True
     # get a fallback error message in case we can't import util either
     import traceback
-    importErrorMessage = (_("Error importing democracy modules:\n%s") %
+    importErrorMessage = (_("Error importing modules:\n%s") %
         traceback.format_exc())
     try:
         import util
@@ -455,6 +455,10 @@ class PyBridge:
     @asUrgent
     def openDonatePage(self):
         self.delegate.openExternalURL(config.get(prefs.DONATE_URL))
+
+    @asUrgent
+    def openBugTracker(self):
+        self.delegate.openExternalURL(config.get(prefs.BUG_TRACKER_URL))
 
     @asUrgent
     def saveVideoFile(self, path):

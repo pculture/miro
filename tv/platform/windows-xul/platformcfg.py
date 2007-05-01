@@ -117,10 +117,10 @@ def get(descriptor):
         return os.path.join(path, 'database')
 
     elif descriptor == prefs.LOG_PATHNAME:
-        return os.path.join(tempfile.gettempdir(), 'dtv-log')
+        return os.path.join(tempfile.gettempdir(), ('%s.log' %config.get(prefs.SHORT_APP_NAME)))
 
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
-        return os.path.join(tempfile.gettempdir(), 'dtv-downloader-log')
+        return os.path.join(tempfile.gettempdir(), ('%s-downloader.log'%config.get(prefs.SHORT_APP_NAME)))
 
     elif descriptor == prefs.RUN_AT_STARTUP:
         # We use the legacy startup registry key, so legacy versions
@@ -133,7 +133,7 @@ def get(descriptor):
             try:
                 (name, val, type) = _winreg.EnumValue(folder,count)
                 count += 1
-                if (name == "Democracy Player"):
+                if (name == config.get(prefs.LONG_APP_NAME)):
                     return True                    
             except:
                 return False

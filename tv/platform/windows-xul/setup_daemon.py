@@ -1,5 +1,6 @@
 import os
 import sys
+import shutil
 from distutils.core import setup
 from distutils.extension import Extension
 import py2exe
@@ -18,6 +19,8 @@ sys.path[0:0] = [
     os.path.join(root, 'portable'),
 ]
 root = os.path.normpath(root)
+
+import util
 
 defaultBinaryKitRoot = os.path.join(os.path.dirname(sys.argv[0]), \
 				    '..', '..', '..', 'dtv-binary-kit')
@@ -39,8 +42,10 @@ ext_modules=[
     )
 ]
 
+templateVars = util.readSimpleConfigFile(os.path.join(root, 'resources', 'app.config'))
+
 setup(
-    console=[os.path.join(root, 'portable', 'dl_daemon', 'Democracy_Downloader.py')],
+    console=[{"dest_base":("%s_Downloader"%templateVars['shortAppName']),"script":os.path.join(root, 'portable', 'dl_daemon', 'Democracy_Downloader.py')}],
     ext_modules=ext_modules,
     zipfile=None,
     cmdclass = {

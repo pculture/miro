@@ -4,9 +4,11 @@
 ;  CONFIG_SHORT_APP_NAME eg, "Democracy"
 ;  CONFIG_LONG_APP_NAME  eg, "Democracy Player"
 ;  CONFIG_PUBLISHER      eg, "Participatory Culture Foundation"
-;  CONFIG_EXECUTABLE     eg, "Democracy.exe"
+;  CONFIG_EXECUTABLE     eg, "Democracy.exe
+;  CONFIG_DL_EXECUTABLE  eg, "Democracy_Downloader.exe"
 ;  CONFIG_ICON           eg, "Democracy.ico"
 ;  CONFIG_OUTPUT_FILE    eg, "Democracy-0.8.0.exe"
+;  CONFIG_PROG_ID        eg, "Democracy.Player.1"
 
 !define INST_KEY "Software\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
 !define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CONFIG_LONG_APP_NAME}"
@@ -168,7 +170,7 @@ FunctionEnd
   ReadRegStr $0 HKCR "${ext}" ""
   StrCmp $0 "" +6
   StrCmp $0 "DemocracyPlayer" +5
-  StrCmp $0 "Democracy.Player.1" +4
+  StrCmp $0 "${CONFIG_PROG_ID}" +4
     SectionGetFlags ${sectionName} $0
     IntOp $0 $0 & 0xFFFFFFFE
     SectionSetFlags ${sectionName} $0
@@ -179,7 +181,7 @@ FunctionEnd
   ; Remove the program
   Delete   "${directory}\${CONFIG_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_ICON}"
-  Delete   "${directory}\Democracy_Downloader.exe"
+  Delete   "${directory}\${CONFIG_DL_EXECUTABLE}"
   Delete   "${directory}\application.ini"
   Delete   "${directory}\msvcp71.dll"
   Delete   "${directory}\msvcr71.dll"
@@ -211,7 +213,7 @@ Section "-${CONFIG_LONG_APP_NAME}"
     "SOFTWARE\Microsoft\Windows NT\CurrentVersion" CurrentVersion
   IfErrors 0 lbl_winnt
   MessageBox MB_ICONEXCLAMATION \
-     "WARNING: Democracy Player is not officially supported on this version of Windows$\r$\n$\r$\nVideo playback is known to be broken, and there may be other problems"
+     "WARNING: ${CONFIG_LONG_APP_NAME} is not officially supported on this version of Windows$\r$\n$\r$\nVideo playback is known to be broken, and there may be other problems"
 lbl_winnt:
 
   Pop $R0
@@ -219,7 +221,7 @@ lbl_winnt:
   Call IsUserAdmin
   Pop $R0
   StrCmp $R0 "true" is_admin
-  MessageBox MB_OK|MB_ICONEXCLAMATION "You must have administrator privileges to install Democracy.  Please log in using an administrator account and try again."
+  MessageBox MB_OK|MB_ICONEXCLAMATION "You must have administrator privileges to install ${CONFIG_SHORT_APP_NAME}.  Please log in using an administrator account and try again."
   Quit
   
 is_admin:
@@ -229,14 +231,14 @@ is_admin:
 
 !if ${CONFIG_TWOSTAGE} = "Yes"
 
-  InetLoad::load http://ftp.osuosl.org/pub/pculture.org/democracy/win/Democracy-Contents-${CONFIG_VERSION}.zip $INSTDIR\Democracy-Contents.zip
+  InetLoad::load http://ftp.osuosl.org/pub/pculture.org/democracy/win/${CONFIG_SHORT_APP_NAME}-Contents-${CONFIG_VERSION}.zip "${INSTDIR}\${CONFIG_SHORT_APP_NAME}-Contents.zip"
   Pop $0
   StrCmp $0 "OK" dlok
   MessageBox MB_OK|MB_ICONEXCLAMATION "Download Error, click OK to abort installation: $0" /SD IDOK
   Abort
 dlok:
-  !insertmacro ZIPDLL_EXTRACT $INSTDIR\Democracy-Contents.zip $INSTDIR <ALL>
-  Delete $INSTDIR\Democracy-Contents.zip
+  !insertmacro ZIPDLL_EXTRACT "${INSTDIR}\${CONFIG_SHORT_APP_NAME}-Contents.zip" $INSTDIR <ALL>
+  Delete "${INSTDIR}\${CONFIG_SHORT_APP_NAME}-Contents.zip"
   Pop $0
   StrCmp $0 "success" unzipok
   MessageBox MB_OK|MB_ICONEXCLAMATION "Unzip error, click OK to abort installation: $0" /SD IDOK
@@ -247,7 +249,7 @@ unzipok:
 
   File  ${CONFIG_EXECUTABLE}
   File  ${CONFIG_ICON}
-  File  Democracy_Downloader.exe
+  File  ${CONFIG_DL_EXECUTABLE}
   File  application.ini
   File  msvcp71.dll  
   File  msvcr71.dll  
@@ -267,29 +269,29 @@ unzipok:
   TackOn::writeToFile initial-feeds.democracy
   IfErrors 0 files_ok
   
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Installation failed.  An error occured writing to the Democracy Folder."
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Installation failed.  An error occured writing to the ${CONFIG_SHORT_APP_NAME} Folder."
   Quit
 
 files_ok:
 
   ; Old versions used HKEY_LOCAL_MACHINE for the RunAtStartup value, we use
   ; HKEY_CURRENT_USER now
-  ReadRegStr $R0 HKLM  "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player"
+  ReadRegStr $R0 HKLM  "Software\Microsoft\Windows\CurrentVersion\Run" "${CONFIG_LONG_APP_NAME}"
   StrCmp $R0 "" +3
-    DeleteRegValue HKLM  "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player"
-    WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player" $R0
+    DeleteRegValue HKLM  "Software\Microsoft\Windows\CurrentVersion\Run" "${CONFIG_LONG_APP_NAME}"
+    WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "${CONFIG_LONG_APP_NAME}" $R0
 
   ; Create a ProgID for Democracy
-  WriteRegStr HKCR "Democracy.Player.1" "" "Democracy Player"
-  WriteRegDword HKCR "Democracy.Player.1" "EditFlags" 0x00010000
+  WriteRegStr HKCR "${CONFIG_PROG_ID}" "" "${CONFIG_LONG_APP_NAME}"
+  WriteRegDword HKCR "${CONFIG_PROG_ID}" "EditFlags" 0x00010000
   ; FTA_OpenIsSafe flag
-  WriteRegStr HKCR "Democracy.Player.1\shell" "" "open"
-  WriteRegStr HKCR "Democracy.Player.1\DefaultIcon" "" "$INSTDIR\Democracy.exe,0"
-  WriteRegStr HKCR "Democracy.Player.1\shell\open\command" "" \
-    '$INSTDIR\Democracy.exe "%1"'
-  WriteRegStr HKCR "Democracy.Player.1\shell\edit" "" "Edit Options File"
-  WriteRegStr HKCR "Democracy.Player.1\shell\edit\command" "" \
-    '$INSTDIR\Democracy.exe "%1"'
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell" "" "open"
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\DefaultIcon" "" "$INSTDIR\${CONFIG_EXECUTABLE},0"
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\open\command" "" \
+    '$INSTDIR\${CONFIG_EXECUTABLE} "%1"'
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\edit" "" "Edit Options File"
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\edit\command" "" \
+    '$INSTDIR\${CONFIG_EXECUTABLE} "%1"'
 
   ; Delete our old, poorly formatted ProgID
   DeleteRegKey HKCR "DemocracyPlayer"
@@ -317,88 +319,88 @@ Section /o "Quick launch icon" SecQuickLaunch
 SectionEnd
 
 Section "Handle Democracy files" SecRegisterDemocracy
-  WriteRegStr HKCR ".democracy" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".democracy" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle Torrent files" SecRegisterTorrent
-  WriteRegStr HKCR ".torrent" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".torrent" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle AVI files" SecRegisterAvi
-  WriteRegStr HKCR ".avi" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".avi" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle MPEG files" SecRegisterMpg
-  WriteRegStr HKCR ".m4v" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mpg" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mpeg" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mp2" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mp4" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mpe" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mpv" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mpv2" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".m4v" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".mpg" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".mpeg" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".mp2" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".mp4" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".mpe" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".mpv" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".mpv2" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle MP3 files" SecRegisterMp3
-  WriteRegStr HKCR ".mp3" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mpa" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mp3" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".mpa" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle Quicktime files" SecRegisterMov
-  WriteRegStr HKCR ".mov" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".qt" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mov" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".qt" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle ASF files" SecRegisterAsf
-  WriteRegStr HKCR ".asf" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".asf" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle Windows Media files" SecRegisterWmv
-  WriteRegStr HKCR ".wmv" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".wmv" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "DTS files" SecRegisterDts
-  WriteRegStr HKCR ".dts" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".dts" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle Ogg Media files" SecRegisterOgg
-  WriteRegStr HKCR ".ogg" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".ogm" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".ogg" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".ogm" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle Matroska Media files" SecRegisterMkv
-  WriteRegStr HKCR ".mkv" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mka" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".mks" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".mkv" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".mka" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".mks" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle 3gp Media files" SecRegister3gp
-  WriteRegStr HKCR ".3gp" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".3gp" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle 3g2 Media files" SecRegister3g2
-  WriteRegStr HKCR ".3g2" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".3g2" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle Flash Video files" SecRegisterFlv
-  WriteRegStr HKCR ".flv" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".flv" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle Nullsoft Video files" SecRegisterNsv
-  WriteRegStr HKCR ".nsv" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".nsv" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle pva Video files" SecRegisterPva
-  WriteRegStr HKCR ".pva" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".pva" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle Annodex Video files" SecRegisterAnx
-  WriteRegStr HKCR ".anx" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".anx" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section "Handle Xvid Video files" SecRegisterXvid
-  WriteRegStr HKCR ".xvid" "" "Democracy.Player.1"
-  WriteRegStr HKCR ".3ivx" "" "Democracy.Player.1"
+  WriteRegStr HKCR ".xvid" "" "${CONFIG_PROG_ID}"
+  WriteRegStr HKCR ".3ivx" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
 Section -NotifyShellExentionChange
@@ -506,8 +508,8 @@ Section "Uninstall" SEC91
   ; Remove registry keys
   DeleteRegKey HKLM "${INST_KEY}"
   DeleteRegKey HKLM "${UNINST_KEY}"
-  DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player"
-  DeleteRegKey HKCR "Democracy.Player.1"
+  DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "${CONFIG_LONG_APP_NAME}"
+  DeleteRegKey HKCR "${CONFIG_PROG_ID}"
 
   SetAutoClose true
 SectionEnd

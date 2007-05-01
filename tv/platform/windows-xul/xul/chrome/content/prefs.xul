@@ -2,10 +2,10 @@
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
 <?xml-stylesheet href="main.css" type="text/css"?>
 
-<!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/prefs.dtd">
 
 <!-- add hidechrome="true" to eliminate title bar -->
-<dialog id="democracy-preferences" title="Preferences"
+<dialog id="democracy-preferences" title="&prefs.title;"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	orient="vertical"
@@ -20,7 +20,7 @@
 	<!--GENERAL-->
 	<groupbox orient="horizontal">
 		<caption label="General"/>
-		<checkbox id="runonstartup" label="Automatically run Democracy Player when I login" value="1" oncommand="runOnStartupChange()"/>
+		<checkbox id="runonstartup" label="&prefs.runonstartup;" value="1" oncommand="runOnStartupChange()"/>
 	</groupbox>
 	<!--/GENERAL-->
 		
@@ -85,7 +85,7 @@
 			<textbox id="minspace" flex="0" value="1" style="max-width: 30px;" onchange="minSpaceChange()"/>
                         <description style="padding-top:5px;">GB free.</description>
 		</hbox>				
-                <description style="margin-bottom: 10px;">WARNING: This setting will not go into effect until you restart Democracy Player.</description>
+                <description style="margin-bottom: 10px;">&prefs.restart;</description>
 		<hbox>
 			<description style="padding-top:4px;">By default, videos expire after</description>
 			<menulist id="expiration">
@@ -105,8 +105,7 @@
 	<!--BITTORRENT-->
 	<groupbox orient="vertical">
 	        <caption label="BitTorrent"/>
-                <description>(WARNING: Changes won't go into effect until you
-                        restart Democracy Player.)</description>
+                <description>&prefs.restart;</description>
 		<hbox>
 			<checkbox id="limitupstream" checked="true" label="To avoid slowdowns, limit upstream to" value="1" oncommand="limitUpstreamChange()"/>
 			<textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>

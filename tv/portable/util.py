@@ -366,8 +366,8 @@ def gatherVideos(path, progressCallback):
                 if not keepGoing:
                     found = None
                     raise
-            if 'Democracy' in dirs:
-                dirs.remove('Democracy')
+            if config.get(prefs.SHORT_APP_NAME) in dirs:
+                dirs.remove(config.get(prefs.SHORT_APP_NAME))
     except KeyboardInterrupt:
         raise
     except:
