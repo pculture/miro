@@ -1287,8 +1287,7 @@ class RSSFeedImpl(FeedImpl):
 
     def updateUsingParsed(self, parsed):
         """Update the feed using parsed XML passed in"""
-        parsed.__dict__ = unicodify(parsed.__dict__)
-        self.parsed = parsed
+        self.parsed = unicodify(parsed)
 
         try:
             self.title = self.parsed["feed"]["title"]

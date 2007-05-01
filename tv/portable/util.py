@@ -559,7 +559,7 @@ def returnsFilename(func):
 # Turns all strings in data structure to unicode
 def unicodify(d):
     if isinstance(d, dict):
-        for key in d:
+        for key in d.keys():
             d[key] = unicodify(d[key])
     elif isinstance(d, list):
         for key in range(len(d)):
