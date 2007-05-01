@@ -722,7 +722,7 @@ class bdist_xul (bdist_xul_dumb):
             nsisVars[nsisName] = self.getTemplateVariable(ourName)
 
         nsisVars['CONFIG_EXECUTABLE'] = "%s.exe" % (self.getTemplateVariable('shortAppName'))
-        nsisVars['CONFIG_DL_EXECUTABLE'] = "%s.exe" % (self.getTemplateVariable('shortAppName'))
+        nsisVars['CONFIG_DL_EXECUTABLE'] = "%s_Downloader.exe" % (self.getTemplateVariable('shortAppName'))
         nsisVars['CONFIG_ICON'] = "%s.ico" % (self.getTemplateVariable('shortAppName'))
         nsisVars['CONFIG_PROG_ID'] = self.getTemplateVariable('longAppName').replace(" ",".")+".1"
 
