@@ -83,7 +83,7 @@ else:
 
 # Inject the revision number into app.config.template to get app.config.
 appConfigTemplatePath = os.path.join(root, 'resources/app.config.template')
-appConfigPath = os.path.join(root, 'resources/app.config.template')
+appConfigPath = os.path.join(root, 'resources/app.config')
 
 def fillTemplate(templatepath, outpath, **vars):
     s = open(templatepath, 'rt').read()
@@ -92,8 +92,8 @@ def fillTemplate(templatepath, outpath, **vars):
     f.write(s)
     f.close()
 
-fillTemplate(os.path.join(root, 'resources/app.config.template'),
-             os.path.join(root, 'resources/app.config'),
+fillTemplate(appConfigTemplatePath,
+             appConfigPath,
              APP_REVISION = revision, 
              APP_REVISION_URL = revisionURL, 
              APP_REVISION_NUM = revisionNum, 
