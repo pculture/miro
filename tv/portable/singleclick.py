@@ -178,12 +178,14 @@ def addDemocracyURL(url):
 
 def setCommandLineArgs(args):
     global _commandLineArgs
-    _commandLineArgs = args
+    _commandLineArgs.extend (args)
 
 def parseCommandLineArgs(args=None):
 
     if args is None:
+        global _commandLineArgs
         args = _commandLineArgs
+        _commandLineArgs = []
 
     resetCommandLineView()
 

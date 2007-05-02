@@ -1,3 +1,4 @@
+
 from gettext import gettext as _
 from xpcom import components
 import ctypes
@@ -346,6 +347,12 @@ class PyBridge:
         # parseCommandLineArgs in app.py since this is "asUrgent"
         # and that call is "asIdle" --NN
         singleclick.setCommandLineArgs(getArgumentList(commandLine))
+
+    @asIdle
+    def parseCommandLine(self):
+        # This is guaranteed to execute after any call to 
+        # handleCommandLine.
+        singleclick.parseCommandLineArgs()
 
     def pageLoadFinished(self, area, url):
         eventloop.addUrgentCall(HTMLDisplay.runPageFinishCallback, 
