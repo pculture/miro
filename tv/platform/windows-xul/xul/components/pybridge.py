@@ -343,16 +343,9 @@ class PyBridge:
 
     @asUrgent
     def handleCommandLine(self, commandLine):
-        # This is guaranteed to execute before the call to
-        # parseCommandLineArgs in app.py since this is "asUrgent"
-        # and that call is "asIdle" --NN
-        singleclick.setCommandLineArgs(getArgumentList(commandLine))
-
-    @asIdle
-    def parseCommandLine(self):
-        # This is guaranteed to execute after any call to 
-        # handleCommandLine.
-        singleclick.parseCommandLineArgs()
+        # Doesn't matter if this executes before the call to
+        # parseCommandLineArgs in app.py. -clahey
+        singleclick.handleCommandLineArgs(getArgumentList(commandLine))
 
     def pageLoadFinished(self, area, url):
         eventloop.addUrgentCall(HTMLDisplay.runPageFinishCallback, 

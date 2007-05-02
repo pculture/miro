@@ -49,7 +49,6 @@ class DemocracyCLH:
             # tray icon disappear
             minimizer = components.classes["@participatoryculture.org/dtv/minimize;1"].getService(components.interfaces.pcfIDTVMinimize)
             minimizer.restoreAll()
-            pybridge.parseCommandLine()
 
 catman = components.classes["@mozilla.org/categorymanager;1"].getService()
 catman.queryInterface(components.interfaces.nsICategoryManager)

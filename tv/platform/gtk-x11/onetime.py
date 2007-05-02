@@ -113,7 +113,7 @@ class OneTime (dbus.service.Object):
         for i in xrange(len(args)):
             if args[i].startswith('file://'):
                 args[i] = args[i][len('file://'):]
-        eventloop.addIdle(lambda:singleclick.parseCommandLineArgs (args), "Open Files from dbus")
+        eventloop.addIdle(lambda:singleclick.handleCommandLineArgs (args), "Open Files from dbus")
         app.controller.frame.widgetTree['main-window'].present()
 
 

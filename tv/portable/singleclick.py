@@ -176,6 +176,12 @@ def addDemocracyURL(url):
                 Template(_("Could not download the $shortAppName channel file: $url.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
     httpclient.grabURL(realURL, callback, errback)
 
+def handleCommandLineArgs(args):
+    if app.controller.finishedStartup:
+        parseCommandLineArgs(args)
+    else:
+        setCommandLineArgs(args)
+
 def setCommandLineArgs(args):
     global _commandLineArgs
     _commandLineArgs.extend (args)
