@@ -1,7 +1,7 @@
 function openBugReportWindow() {
   var py = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
         getService(Components.interfaces.pcfIDTVPyBridge);
-  py.openURL("https://develop.participatoryculture.org/projects/democracy/newticket");
+  py.openBugTracker();
 }
 
 function updateLabel() {

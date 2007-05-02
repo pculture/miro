@@ -30,7 +30,7 @@ def launch():
     if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':
         logging.info ("*** Starting new downloader log ***")
     else:
-        logging.info ("*** Launching Democracy Downloader Daemon ****")
+        logging.info ("*** Launching Downloader Daemon ****")
 
 
     # Start of normal imports

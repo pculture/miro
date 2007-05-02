@@ -2,18 +2,17 @@
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
 <?xml-stylesheet href="main.css" type="text/css"?>
 
+<!DOCTYPE window SYSTEM "chrome://dtv/locale/migrate.dtd">
+
 <dialog id="democracy-migrate"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:html="http://www.w3.org/1999/xhtml"
-        title="Migrate existing movies?"
+        title="&migrate.title;"
         maxwidth="400"
         ondialogaccept="window.arguments[0].out = true;"
         ondialogcancel="window.arguments[0].out = false;"
-        buttonlabelaccept="Migrate"
-        buttonlabelcancel="Don't Migrate"
+        buttonlabelaccept="&migrate.accept;"
+        buttonlabelcancel="&migrate.cancel;"
         buttons="accept,cancel">
-    <description>You've selected a new folder to download
-    movies to.  Should Democracy migrate your existing downloads there?
-    (Currently dowloading movies will not be moved until they finish)
-    </description>
+    <description>&migrate.description;</description>
 </dialog>

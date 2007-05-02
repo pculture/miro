@@ -114,6 +114,12 @@ LONG_APP_NAME = \
     Pref(key='longAppName',       default=None, platformSpecific=False)
 PROJECT_URL = \
     Pref(key='projectURL',        default=None, platformSpecific=False)
+HELP_URL = \
+    Pref(key='helpURL',           default=None, platformSpecific=False)
+RECOMMEND_URL = \
+    Pref(key='recommendURL',      default=None, platformSpecific=False)
+BUG_TRACKER_URL = \
+    Pref(key='bugTrackerURL',      default=None, platformSpecific=False)
 PUBLISHER = \
     Pref(key='publisher',         default=None, platformSpecific=False)
 APP_VERSION = \

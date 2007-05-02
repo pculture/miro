@@ -51,7 +51,7 @@ else:
 
 # The 'Democracy.exe' launcher stub, currently provided only in the
 # binary kit.
-STUB_PATH = os.path.join(BINARY_KIT_ROOT, 'stub', 'Democracy.exe')
+STUB_PATH = os.path.join(BINARY_KIT_ROOT, 'stub')
 
 # Runtime library DLLs to distribute with the application. Set as
 # appropriate for your compiler.
@@ -455,7 +455,7 @@ class bdist_xul_dumb(Command):
                           os.path.join(self.dist_dir, 'resources'),
                           filterOut=['unittest', 'testdata'])
         shutil.copy2("Democracy.nsi", self.dist_dir)
-        shutil.copy2("Democracy.ico", self.dist_dir)
+        shutil.copy2("%s.ico" % (self.getTemplateVariable('shortAppName')), self.dist_dir)
 
 
         locale_dir = os.path.join (self.appResources, "locale")
@@ -473,9 +473,9 @@ class bdist_xul_dumb(Command):
         # see it in the process list (and in firewall/antivirus
         # dialogs, etc.)
         log.info("creating executable")
-        shutil.copy2(STUB_PATH, self.dist_dir)
+        shutil.copy2(os.path.join(STUB_PATH, "%s.exe" % (self.getTemplateVariable('shortAppName'))), self.dist_dir)
         os.rename(os.path.join(self.xulrunnerOut, "xulrunner.exe"),
-                  os.path.join(self.xulrunnerOut, "Democracy.exe"))
+                  os.path.join(self.xulrunnerOut, "%s.exe" % (self.getTemplateVariable('shortAppName'))))
         os.remove(os.path.join(self.xulrunnerOut, "xulrunner-stub.exe"))
 
         # Finally, build the download daemon
@@ -564,7 +564,7 @@ class bdist_xul_dumb(Command):
     def buildDownloadDaemon(self, baseDir):
         print "building download daemon"
         os.system("%s setup_daemon.py py2exe --dist-dir daemon --bundle-files 1" % PYTHON_BINARY)
-        shutil.copy2(os.path.join("daemon","Democracy_Downloader.exe"), baseDir)
+        shutil.copy2(os.path.join("daemon","%s_Downloader.exe" % (self.getTemplateVariable('shortAppName'))), baseDir)
 
     # NEEDS: if you look at the usage of this function, we're dropping
     # the plugin into the xulrunner plugin directory, rather than the
@@ -667,7 +667,7 @@ class bdist_xul_dumb(Command):
          os.chdir(stubDir)
          rv = os.system("rc Democracy.rc")
          if rv == 0:
-             rv = os.system("cl Democracy.cpp /link /subsystem:windows /machine:x86 Democracy.RES")
+             rv = os.system('cl  /DXULRUNNER_BIN=\\"%s.exe\\" Democracy.cpp /link /subsystem:windows /machine:x86 Democracy.RES /out:%s.exe"' % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('shortAppName')))
          os.chdir(olddir)
          if rv != 0:
             raise OSError("Making stub exe failed")
@@ -694,6 +694,7 @@ class bdist_xul_dumb(Command):
         fillTemplate("%s.template" % filename, filename, **self.templateVars)
 
     def fillTemplates(self):
+        self.fillTemplate(os.path.join(root,'portable','dl_daemon','daemon.py'))
         xulBase = os.path.join(root, 'platform', platform, 'xul')
 
         self.fillTemplate(os.path.join(xulBase, 'application.ini'))
@@ -716,7 +717,7 @@ class runxul(bdist_xul_dumb):
         log.info("starting up democracy")
         oldDir = os.getcwd()
         os.chdir(self.dist_dir)
-        subprocess.call(["Democracy.exe", "application.ini", "-jsconsole",
+        subprocess.call(["%s.exe" % (self.getTemplateVariable('shortAppName')), "application.ini", "-jsconsole",
                 "-console"])
         os.chdir(oldDir)
 
@@ -768,9 +769,10 @@ class bdist_xul (bdist_xul_dumb):
             ]:
             nsisVars[nsisName] = self.getTemplateVariable(ourName)
 
-        # Hardcoded elsewhere in this file, so why not here too?
-        nsisVars['CONFIG_EXECUTABLE'] = "Democracy.exe"
-        nsisVars['CONFIG_ICON'] = "Democracy.ico"
+        nsisVars['CONFIG_EXECUTABLE'] = "%s.exe" % (self.getTemplateVariable('shortAppName'))
+        nsisVars['CONFIG_DL_EXECUTABLE'] = "%s_Downloader.exe" % (self.getTemplateVariable('shortAppName'))
+        nsisVars['CONFIG_ICON'] = "%s.ico" % (self.getTemplateVariable('shortAppName'))
+        nsisVars['CONFIG_PROG_ID'] = self.getTemplateVariable('longAppName').replace(" ",".")+".1"
 
         # One stage installer
         outputFile = "%s-%s.exe" % \
@@ -804,10 +806,10 @@ class bdist_xul (bdist_xul_dumb):
             os.remove(outputFile)
         subprocess.call([NSIS_PATH] + nsisArgs)
 
-        self.zipfile = zip.ZipFile(os.path.join (self.dist_dir, "Democracy-Contents-%s.zip" % (self.getTemplateVariable('appVersion'),)), 'w', zip.ZIP_DEFLATED)
+        self.zipfile = zip.ZipFile(os.path.join (self.dist_dir, "%s-Contents-%s.zip" % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('appVersion'),)), 'w', zip.ZIP_DEFLATED)
         self.addFile (nsisVars['CONFIG_EXECUTABLE'])
         self.addFile (nsisVars['CONFIG_ICON'])
-        self.addFile ("Democracy_Downloader.exe")
+        self.addFile (nsisVars['CONFIG_DL_EXECUTABLE'])
         self.addFile ("application.ini")
         self.addFile ("msvcp71.dll")
         self.addFile ("msvcr71.dll")

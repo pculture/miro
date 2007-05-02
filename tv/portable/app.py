@@ -52,6 +52,10 @@ import iconcache
 import platformutils
 import logging
 
+# These are Python templates for string substitution, not at all
+# related to our HTML based templates
+from string import Template
+
 # Something needs to import this outside of Pyrex. Might as well be app
 import templatehelper
 import databasehelper
@@ -559,7 +563,7 @@ class Controller (frontend.Application):
 
     def onStartup(self, gatheredVideos=None):
         try:
-            logging.info ("Starting up Democracy Player")
+            logging.info ("Starting up %s", config.get(prefs.LONG_APP_NAME))
             logging.info ("Version:  %s", config.get(prefs.APP_VERSION))
             logging.info ("Revision: %s", config.get(prefs.APP_REVISION))
 
@@ -741,9 +745,9 @@ class Controller (frontend.Application):
             self.databaseIsSetup.set()
         except databaseupgrade.DatabaseTooNewError:
             title = _("Database too new")
-            description = _("""\
-You have a database that was saved with a newer version of Democracy. \
-You must download the latest version of Democracy and run that.""")
+            description = Template(_("""\
+You have a database that was saved with a newer version of $shortAppName. \
+You must download the latest version of $shortAppName and run that.""")).substitute(shortAppName = config.get(prefs.SHORT_APP_NAME))
             def callback(dialog):
                 eventloop.quit()
                 frontend.quit()
@@ -1797,7 +1801,7 @@ class GUIActionHandler:
                 controller.selection.selectTabByObject(myFeed)
             else:
                 myFeed.blink()
-        self.addURL (_("Democracy - Add Channel"), _("Enter the URL of the channel to add"), doAdd, url)
+        self.addURL (Template(_("$shortAppName - Add Channel")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME)), _("Enter the URL of the channel to add"), doAdd, url)
 
     def selectFeed(self, url):
         url = feed.normalizeFeedURL(url)
@@ -1818,7 +1822,7 @@ class GUIActionHandler:
     
             if selected == '1':
                 controller.selection.selectTabByObject(myGuide)
-        self.addURL (_("Democracy - Add Channel Guide"), _("Enter the URL of the channel guide to add"), doAdd, url)
+        self.addURL (Template(_("$shortAppName - Add Channel Guide")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME)), _("Enter the URL of the channel guide to add"), doAdd, url)
 
     def handleDrop(self, data, type, sourcedata):
         controller.handleDrop(data, type, sourcedata)
@@ -1827,8 +1831,7 @@ class GUIActionHandler:
         controller.handleURIDrop(data, **kwargs)
 
     def showHelp(self):
-        # FIXME don't hardcode this URL
-        delegate.openExternalURL('http://www.getdemocracy.com/help')
+        delegate.openExternalURL(config.get(prefs.HELP_URL))
 
 # Functions that are safe to call from action: URLs that change state
 # specific to a particular instantiation of a template, and so have to
@@ -2154,7 +2157,7 @@ def _getInitialChannelGuide():
             if urls is not None:
                 for url in urls:
                     feed.Feed(url, initiallyAutoDownloadable=False)
-            dialog = dialogs.MessageBoxDialog(_("Custom Channels"), _("You are running a version of Democracy Player with a custom set of channels."))
+            dialog = dialogs.MessageBoxDialog(_("Custom Channels"), Template(_("You are running a version of $longAppName with a custom set of channels.")).substitute(longAppName=config.get(prefs.LONG_APP_NAME)))
             dialog.run()
             controller.initial_feeds = True
         else:

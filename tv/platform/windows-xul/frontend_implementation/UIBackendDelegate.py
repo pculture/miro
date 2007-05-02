@@ -173,7 +173,7 @@ class UIBackendDelegate:
         except:
             print "WARNING: Error opening URL: %r" % url
             traceback.print_exc()
-            recommendURL = 'http://www.videobomb.com/index/democracyemail'
+            recommendURL = config.get(prefs.RECOMMEND_URL)
 
             if url.startswith(config.get(prefs.VIDEOBOMB_URL)):
                 title = _('Error Bombing Item')
@@ -222,12 +222,12 @@ class UIBackendDelegate:
             else:
                 raise
         if (value):
-            filename = os.path.join(resources.resourceRoot(),"..","Democracy.exe")
+            filename = os.path.join(resources.resourceRoot(),"..",("%s.exe" % config.get(prefs.SHORT_APP_NAME)))
             filename = os.path.normpath(filename)
-            _winreg.SetValueEx(folder, "Democracy Player", 0,_winreg.REG_SZ, filename)
+            _winreg.SetValueEx(folder, config.get(prefs.LONG_APP_NAME), 0,_winreg.REG_SZ, filename)
         else:
             try:
-                _winreg.DeleteValue(folder, "Democracy Player")
+                _winreg.DeleteValue(folder, config.get(prefs.LONG_APP_NAME))
             except WindowsError, e:
                 if e.errno == 2: 
                     # registry key doesn't exist, user must have deleted it
@@ -259,7 +259,7 @@ class UIBackendDelegate:
         # might not have a valid stdin/stdout/stderr, so we create a pipe to
         # it that we never actually use.
         downloaderPath = os.path.join(resources.resourceRoot(), "..",
-                "Democracy_Downloader.exe")
+                ("%s_Downloader.exe" % config.get(prefs.SHORT_APP_NAME)))
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,

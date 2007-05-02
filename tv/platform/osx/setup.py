@@ -82,17 +82,23 @@ else:
     revision = '%s - %s' % revision
 
 # Inject the revision number into app.config.template to get app.config.
-
 appConfigTemplatePath = os.path.join(root, 'resources/app.config.template')
-appConfigPath = '/tmp/democracy.app.config'
-s = open(appConfigTemplatePath, "rt").read()
-s = string.Template(s).safe_substitute(APP_REVISION = revision, 
-                                       APP_REVISION_URL = revisionURL, 
-                                       APP_REVISION_NUM = revisionNum, 
-                                       APP_PLATFORM = 'osx')
-f = open(appConfigPath, 'wt')
-f.write(s)
-f.close()
+appConfigPath = os.path.join(root, 'resources/app.config.template')
+
+def fillTemplate(templatepath, outpath, **vars):
+    s = open(templatepath, 'rt').read()
+    s = string.Template(s).safe_substitute(**vars)
+    f = open(outpath, "wt")
+    f.write(s)
+    f.close()
+
+fillTemplate(os.path.join(root, 'resources/app.config.template'),
+             os.path.join(root, 'resources/app.config'),
+             APP_REVISION = revision, 
+             APP_REVISION_URL = revisionURL, 
+             APP_REVISION_NUM = revisionNum, 
+             APP_PLATFORM = 'osx')
+
 
 # Update the Info property list.
 
@@ -109,6 +115,11 @@ updatePListEntry(infoPlist, u'CFBundleName', conf)
 updatePListEntry(infoPlist, u'CFBundleShortVersionString', conf)
 updatePListEntry(infoPlist, u'CFBundleVersion', conf)
 updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
+
+# Create daemon.py
+fillTemplate(os.path.join(root, 'portable/dl_daemon/daemon.py.template'),
+             os.path.join(root, 'portable/dl_daemon/daemon.py'),
+             **conf)
 
 # Get a list of additional resource files to include
 

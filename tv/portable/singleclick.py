@@ -25,6 +25,9 @@ import views
 import platformutils
 import subscription
 import util
+import config
+import prefs
+from string import Template
 
 _commandLineArgs = []
 commandLineVideoIds = None
@@ -158,8 +161,7 @@ def addDemocracyURL(url):
             urls = subscription.parseContent(info['body'])
             if urls is None:
                 complainAboutDemocracyURL(
-                    _("This Democracy channel file has an invalid format: "
-                    "%s. Please notify the publisher of this file.") % realURL)
+                    Template(_("This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
             else:
                 if len(urls) > 1:
                     askForMultipleFeeds(urls)
@@ -167,13 +169,11 @@ def addDemocracyURL(url):
                     addFeeds(urls)
         else:
             complainAboutDemocracyURL(
-                    _("This Democracy channel file has the wrong content "
-                    "type: %s. Please notify the publisher of this file.")
-                    % realURL)
+                Template(_("This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.")).substitute(
+                url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
     def errback(error):
         complainAboutDemocracyURL(
-                _("Could not download the Democracy channel file: %s.") %
-                realURL)
+                Template(_("Could not download the $shortAppName channel file: $url.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
     httpclient.grabURL(realURL, callback, errback)
 
 def setCommandLineArgs(args):

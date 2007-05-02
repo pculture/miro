@@ -21,6 +21,7 @@ from database import defaultDatabase, DatabaseConstraintError
 from httpclient import grabURL, NetworkError
 from iconcache import iconCacheUpdater, IconCache
 from templatehelper import quoteattr, escape, toUni
+from string import Template
 import app
 import config
 import dialogs
@@ -983,13 +984,14 @@ class Feed(DDBObject):
         self.signalChange()
 
     def askForScrape(self, info, initialHTML, charset):
-        title = _("Channel is not compatible with Democracy!")
-        descriptionTemplate = string.Template(_("""\
+        title = Template(_("Channel is not compatible with $shortAppName!")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME))
+        descriptionTemplate = Template(_("""\
 But we'll try our best to grab the files. It may take extra time to list the \
 videos, and descriptions may look funny.  Please contact the publishers of \
 $url and ask if they can supply a feed in a format that will work with \
-Democracy.\n\nDo you want to try to load this channel anyway?"""))
-        description = descriptionTemplate.substitute(url=info['updated-url'])
+$shortAppName.\n\nDo you want to try to load this channel anyway?"""))
+        description = descriptionTemplate.substitute(url=info['updated-url'],
+                                shortAppName=config.get(prefs.SHORT_APP_NAME))
         dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
                 dialogs.BUTTON_NO)
 
