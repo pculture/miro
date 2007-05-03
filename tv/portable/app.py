@@ -722,8 +722,9 @@ class Controller (frontend.Application):
                 for v in gatheredVideos:
                     try:
                         singleclick.addVideo(v)
-                    except:
+                    except Exception e:
                         logging.info ("error while adding file %s", v)
+                        logging.info (str(e))
 
             util.print_mem_usage("Pre single-click memory check")
 
