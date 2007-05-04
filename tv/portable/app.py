@@ -722,7 +722,7 @@ class Controller (frontend.Application):
                 for v in gatheredVideos:
                     try:
                         singleclick.addVideo(v)
-                    except Exception(e):
+                    except Exception, e:
                         logging.info ("error while adding file %s", v)
                         logging.info (e)
 
