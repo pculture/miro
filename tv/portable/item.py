@@ -1230,7 +1230,7 @@ folder will be deleted.""")
     @returnsUnicode
     def getReleaseDate(self):
         try:
-            return self.releaseDateObj.strftime(u"%b %d %Y").decode(_charset)
+            return self.releaseDateObj.strftime("%b %d %Y").decode(_charset)
         except:
             return u""
 
