@@ -347,6 +347,7 @@ class ExponentialBackoffTracker:
 # Gather movie files on the disk. Used by the startup dialog.
 def gatherVideos(path, progressCallback):
     import item
+    import prefs
     import config
     import platformutils
     keepGoing = True
@@ -588,3 +589,4 @@ def call_command(*args):
         raise OSError("call_command outputed error text:\n%s" % stderr)
     else:
         return stdout
+

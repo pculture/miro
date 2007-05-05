@@ -157,11 +157,12 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
         try:
             restrictionTag = self.findRestrictionsMatrix.selectedCell().tag()
             if restrictionTag == 0:
-                path = os.path.expanduser('~/Movies')
+                path = os.path.expanduser(u'~/Movies')
             elif restrictionTag == 1:
-                path = os.path.expanduser('~/')
+                path = os.path.expanduser(u'~/')
             else:
-                path = unicode(self.customLocationField.stringValue())
+                path = self.customLocationField.stringValue()
+            path = platformutils.osFilenameToFilenameType(path)
             self.keepFinding = True
             self.gathered = util.gatherVideos(path, self.onProgressFindingVideos)
             self.finishFindVideoTask(True)
