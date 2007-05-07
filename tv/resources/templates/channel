@@ -44,7 +44,7 @@ def _updateView ():
     feed.updateIcons()
 
 def reInit(*args, **kargs):
-    global feed, allItems, showDownloads, showWatchableItems, showNewItems, allItemsMode, watchableItems, matchingItems, newItems, itemSort, itemSortWatchable, itemSortDownloading
+    global feed, allItems, notDeleted, showDownloads, showWatchableItems, showNewItems, allItemsMode, watchableItems, matchingItems, newItems, itemSort, itemSortWatchable, itemSortDownloading
 
     if feed.idExists():
         feed.markAsViewed()
@@ -122,7 +122,8 @@ def setSortBy(by, which, handle):
 _setFeed(kargs)
 
 allItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
-matchingItems = allItems.filter(lambda x: filters.matchingItems(x, searchTerm))
+notDeleted = allItems.filter(filters.notDeleted)
+matchingItems = notDeleted.filter(lambda x: filters.matchingItems(x, searchTerm))
 newItems = matchingItems.filter(showNewFilter, sortFunc=feed.itemSort.sort, resort=True)
 
 allDownloadingItems = matchingItems.filter(filters.downloadingOrPausedItems)
@@ -153,6 +154,7 @@ isFolder = False
     <t:execOnUnload><![CDATA[
 matchingItems.unlink()
 thisFeedView.unlink()
+notDeleted.unlink()
 allItems.unlink()
 if feed.idExists():
     feed.markAsViewed()

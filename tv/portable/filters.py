@@ -1,5 +1,6 @@
 import tabs
 import feed
+import item
 import folder
 import playlist
 import guide
@@ -41,6 +42,9 @@ def watchableItems(obj):
 
 def autoUploadingDownloaders(obj):
     return obj.getState() == 'uploading' and not obj.manualUpload
+
+def notDeleted(obj):
+    return not (isinstance (obj, item.FileItem) and obj.deleted)
 
 newMemory = {}
 newMemoryFor = None

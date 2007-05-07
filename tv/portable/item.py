@@ -1697,6 +1697,11 @@ Collection?""")
         except:
             return FilenameType("")
 
+    def download(self,autodl=False):
+        self.deleted = False
+        self.signalChange()
+        
+
     def migrate(self, newDir):
         self.confirmDBThread()
         if self.parent_id:
