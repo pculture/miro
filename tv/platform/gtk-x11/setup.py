@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.4
+#!/usr/bin/env python
 
 # Democracy Player - an RSS based video player application
 # Copyright (C) 2005-2006 Participatory Culture Foundation
@@ -211,6 +211,19 @@ for subdir in ['dom', 'gfx', 'widget', 'commandhandler', 'uriloader',
     path = os.path.join(mozIncludeBase, subdir)
     mozilla_browser_options['include_dirs'].append(path)
 
+
+nsI = True
+for dir in mozilla_browser_options['include_dirs']:
+    if os.path.exists(os.path.join (dir, "nsIServiceManagerUtils.h")):
+        nsI = True
+        break
+    if os.path.exists(os.path.join (dir, "nsServiceManagerUtils.h")):
+        nsI = False
+        break
+
+if nsI:
+    mozilla_browser_options['extra_compile_args'].append('-DNS_I_SERVICE_MANAGER_UTILS=1')
+
 mozilla_browser_ext = Extension("democracy.MozillaBrowser",
         [ os.path.join(frontend_implementation_dir,'MozillaBrowser.pyx'),
           os.path.join(frontend_implementation_dir,'MozillaBrowserXPCOM.cc'),
@@ -406,7 +419,7 @@ class bdist_deb (Command):
         # copy the copyright file
         copyright_source = os.path.join(debian_package_dir, 'copyright')
         copyright_dest = os.path.join(self.bdist_dir, 'usr', 'share', 'doc', 
-                    'python2.4-democracy-player')
+                    'python-democracy-player')
         self.mkpath(copyright_dest)
         self.copy_file(copyright_source, copyright_dest)
         # ensure the dist directory is around

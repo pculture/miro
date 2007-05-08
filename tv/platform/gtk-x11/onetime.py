@@ -50,7 +50,8 @@ class BusNameFlags(object):
             bus = dbus.Bus()
 
         # otherwise register the name
-        retval = dbus.dbus_bindings.bus_request_name(bus.get_connection(), name, flags=flags)
+        conn = bus.get_connection()
+        retval = dbus.dbus_bindings.bus_request_name(conn, name, flags)
 
         # TODO: more intelligent tracking of bus name states?
         if retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_PRIMARY_OWNER:
@@ -73,6 +74,7 @@ class BusNameFlags(object):
         bus_name = object.__new__(cls)
         bus_name._bus = bus
         bus_name._name = name
+        bus_name._conn = conn
 
         return bus_name
 
@@ -94,6 +96,10 @@ class BusNameFlags(object):
     def get_name(self):
         """Get the name of this service"""
         return self._name
+
+    def get_connection(self): 
+        """Get the connection for this service""" 
+        return self._conn 
 
     def __repr__(self):
         return '<dbus.service.BusName %s on %r at %#x>' % (self._name, self._bus, id(self))

@@ -11,7 +11,11 @@
 #include "HttpObserver.h"
 #include <nscore.h>
 #include <nsCOMPtr.h>
+#ifdef NS_I_SERVICE_MANAGER_UTILS
 #include <nsIServiceManagerUtils.h>
+#else
+#include <nsServiceManagerUtils.h>
+#endif
 #include <nsIHttpChannel.h>
 #include <nsIObserver.h>
 #include <nsIObserverService.h>
