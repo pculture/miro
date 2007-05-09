@@ -1,5 +1,6 @@
 function performSearch()
 {
+    fillSearch()
     engine = document.forms['search']['engines'].value;
     query =  document.forms['search']['query'].value;
     url = 'action:'
