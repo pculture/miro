@@ -232,10 +232,10 @@ class FeedImpl:
 
     def scheduleUpdateEvents(self, firstTriggerDelay):
         self.cancelUpdateEvents()
-        if self.updateFreq > 0:
-            if firstTriggerDelay >= 0:
-                self.scheduler = eventloop.addTimeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.getTitle())
-            else:
+        if firstTriggerDelay >= 0:
+            self.scheduler = eventloop.addTimeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.getTitle())
+        else:
+            if self.updateFreq > 0:
                 self.scheduler = eventloop.addTimeout(self.updateFreq, self.update, "Feed update (%s)" % self.getTitle())
 
     def cancelUpdateEvents(self):
