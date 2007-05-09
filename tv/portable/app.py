@@ -1361,7 +1361,9 @@ class TemplateDisplay(frontend.HTMLDisplay):
             path = match.group(1)
             argString = match.group(3)
             if argString is None:
-                argString = ''
+                argString = u''
+            argString = argString.encode('utf8')
+            # argString is turned into a str since parse_qs will fail on utf8 that has been url encoded.
             argLists = cgi.parse_qs(argString, keep_blank_values=True)
 
             # argLists is a dictionary from parameter names to a list
@@ -1372,8 +1374,12 @@ class TemplateDisplay(frontend.HTMLDisplay):
             for key in argLists.keys():
                 value = argLists[key]
                 if len(value) != 1:
-                    raise template.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, action)
-                args[key.encode('ascii','replace')] = value[0]
+                    raise template.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, url)
+                # Cast the value results back to unicode
+                try:
+                    args[key.encode('ascii','replace')] = value[0].decode('utf8')
+                except:
+                    args[key.encode('ascii','replace')] = value[0].decode('ascii', 'replace')
             return path, args
         else:
             raise ValueError("Badly formed eventURL: %s" % url)
