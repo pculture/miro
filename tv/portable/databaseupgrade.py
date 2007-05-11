@@ -639,6 +639,16 @@ def upgrade46(objectList):
                 pass
     return changed
 
+def upgrade47(objectList):
+    """Parsed item entries must be unicode"""
+    from util import unicodify
+    changed = set()
+    for o in objectList:
+        if o.classString == 'item':
+            o.savedData['entry'] = unicodify(o.savedData['entry'])
+            changed.add(o)
+    return changed
+
 #         if o.classString == 'item':
 #             objChanged = False
 #             for field in ('pendingReason','videoFilename'):

@@ -444,7 +444,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('url', SchemaURL(noneOk=True)),
     ]
 
-VERSION = 46
+VERSION = 47
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
