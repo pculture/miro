@@ -999,9 +999,10 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
             if not self.idExists():
                 return
             if dialog.choice == dialogs.BUTTON_YES:
-                impl = ScraperFeedImpl(info['updated-url'],
-                    initialHTML=initialHTML, etag=info.get('etag'),
-                    modified=info.get('modified'), charset=charset,
+                uinfo = unicodify(info)
+                impl = ScraperFeedImpl(uinfo['updated-url'],
+                    initialHTML=initialHTML, etag=uinfo.get('etag'),
+                    modified=uinfo.get('modified'), charset=charset,
                     ufeed=self) 
                 self.finishGenerateFeed(impl)
             else:
