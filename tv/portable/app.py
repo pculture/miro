@@ -741,8 +741,7 @@ class Controller (frontend.Application):
             logging.timing ("Icon clear: %.3f", clock() - start)
 
             logging.info ("Finished startup sequence")
-            self.finishedStartup = True
-
+            self.finishStartupSequence()
             self.databaseIsSetup.set()
         except databaseupgrade.DatabaseTooNewError:
             title = _("Database too new")
@@ -758,6 +757,10 @@ You must download the latest version of $shortAppName and run that.""")).substit
         except:
             util.failedExn("while finishing starting up")
             frontend.exit(1)
+
+    def finishStartupSequence(self):
+        self.finishedStartup = True
+        frontend.Application.finishStartupSequence(self)
 
     def setupGlobalFeed(self, url, *args, **kwargs):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)

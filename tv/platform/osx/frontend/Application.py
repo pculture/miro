@@ -65,6 +65,9 @@ class Application:
         # For overriding
         pass
 
+    def finishStartupSequence(self):
+        NSApplication.sharedApplication().delegate().finishStartupSequence()
+
     def onShutdown(self):
         # For overriding
         pass
@@ -108,6 +111,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         wsnc.addObserver_selector_name_object_(self, 'workspaceWillSleep:', NSWorkspaceWillSleepNotification, nil)
         wsnc.addObserver_selector_name_object_(self, 'workspaceDidWake:',   NSWorkspaceDidWakeNotification,   nil)
         
+        self.openQueue = list()
         self.pausedDownloaders = list()
         self.internalShutdown = False
         self.emergencyShutdown = False
@@ -126,7 +130,11 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
         # Initialize the Growl notifier
         GrowlNotifier.register()
-            
+    
+    def finishStartupSequence(self):
+        for command in self.openQueue:
+            eventloop.addUrgentCall(*command)
+    
     def applicationDidBecomeActive_(self, notification):
         if app.controller.frame is not None:
             # This should hopefully avoid weird things like #1722
@@ -256,9 +264,14 @@ class AppController (NibClassBuilder.AutoBaseClass):
                 url = 'http://%s' % url
 
         if url.startswith('http'):
-            eventloop.addIdle(lambda:app.controller.addAndSelectFeed(url), "Open HTTP URL")
+            command = [lambda:app.controller.addAndSelectFeed(url), "Open HTTP URL"]
         elif url.startswith('democracy:'):
-            eventloop.addIdle(lambda:singleclick.addDemocracyURL(url), "Open Democracy URL")
+            command = [lambda:singleclick.addDemocracyURL(url), "Open Democracy URL"]
+
+        if app.controller.finishedStartup:
+            eventloop.addIdle(*command)
+        else:
+            self.openQueue.append(command)
 
     def donate_(self, sender):
         donateURL = NSURL.URLWithString_(config.get(prefs.DONATE_URL))

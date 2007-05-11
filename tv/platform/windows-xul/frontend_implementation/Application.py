@@ -48,6 +48,9 @@ class Application:
         # For overriding
         pass
 
+    def finishStartupSequence(self):
+        pass
+
     def onShutdown(self):
         # For overriding
         pass
