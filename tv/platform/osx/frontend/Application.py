@@ -179,7 +179,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
     def application_openFiles_(self, nsapp, filenames):
         filenames = osFilenamesToFilenameTypes(filenames)
-        eventloop.addUrgent(lambda:singleclick.handleCommandLineArgs(filenames), "Open local file(s)")
+        eventloop.addUrgentCall(lambda:singleclick.handleCommandLineArgs(filenames), "Open local file(s)")
         nsapp.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
 
     def addTorrent(self, path):
