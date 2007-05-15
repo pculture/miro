@@ -562,6 +562,7 @@ class HTTPDownloader(BGDownloader):
             self.moveToMoviesDirectory()
         except IOError, e:
             self.handleWriteError(e)
+        self.resetBlockTimes()
         self.updateClient()
 
     def getStatus(self):
@@ -575,10 +576,13 @@ class HTTPDownloader(BGDownloader):
         now = clock()
         self.currentSize = self.currentSize + length
         self.blockTimes.append((now,  self.currentSize))
-        if (len(self.blockTimes) > 0 and 
-                now - self.blockTimes[0][0] > self.UPDATE_CLIENT_WINDOW):
-            self.blockTimes.pop(0)
-        
+        window_start = now - self.UPDATE_CLIENT_WINDOW
+        i = 0
+        for i in xrange (len(self.blockTimes)):
+            if self.blockTimes[0][0] >= window_start:
+                break
+        self.blockTimes = self.blockTimes[i:]
+
     ##
     # Checks the download file size to see if we can accept it based on the 
     # user disk space preservation preference
