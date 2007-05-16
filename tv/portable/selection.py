@@ -467,7 +467,9 @@ class SelectionHandler(object):
         multiple = len(self.tabListSelection.currentSelection) > 1
 
         actionGroups = {}
-        states = {"plural":[]}
+        states = {"plural":[],
+                  "folders":[],
+                  "folder":[]}
 
         is_playlistlike = tabTypes.issubset (set(['playlisttab', 'playlistfoldertab']))
         is_channellike = tabTypes.issubset (set(['channeltab', 'channelfoldertab', 'addedguidetab']))
@@ -477,25 +479,22 @@ class SelectionHandler(object):
                 if 'playlisttab' in tabTypes:
                     states["plural"].append("RemovePlaylists")
                 elif 'playlistfoldertab' in tabTypes:
-                    # This was "Playlist Folders"...
-                    states["plural"].append("RemovePlaylists")
+                    states["folders"].append("RemovePlaylists")
                 elif 'channeltab' in tabTypes:
                     states["plural"].append("RemoveChannels")
                 elif 'channelfoldertab' in tabTypes:
-                    # This was "Channel Folders"
-                    states["plural"].append("RemoveChannels")
+                    states["folders"].append("RemoveChannels")
                 elif 'addedguidetab' in tabTypes:
-                    # This was "Channel Guides"
                     states["plural"].append("ChannelGuides")
             else:
                 if 'playlisttab' in tabTypes:
                     pass
                 elif 'playlistfoldertab' in tabTypes:
-                    pass
+                    states["folder"].append("RemovePlaylists")
                 elif 'channeltab' in tabTypes:
                     pass
                 elif 'channelfoldertab' in tabTypes:
-                    pass
+                    states["folder"].append("RemoveChannels")
                 elif 'addedguidetab' in tabTypes:
                     pass
 

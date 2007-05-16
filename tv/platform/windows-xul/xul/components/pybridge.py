@@ -69,7 +69,21 @@ def ShortCutMixin(self):
                        menubar.UP_ARROW :   'Up',
                        menubar.DOWN_ARROW :   'Down',
                        menubar.SPACE : 'Space',
-                       menubar.ENTER: 'Enter'}
+                       menubar.ENTER: 'Enter',
+                       menubar.DELETE: 'Delete',
+                       menubar.BKSPACE: 'BackSpace',
+                       menubar.F1: 'F1',
+                       menubar.F2: 'F2',
+                       menubar.F3: 'F3',
+                       menubar.F4: 'F4',
+                       menubar.F5: 'F5',
+                       menubar.F6: 'F6',
+                       menubar.F7: 'F7',
+                       menubar.F8: 'F8',
+                       menubar.F9: 'F9',
+                       menubar.F10: 'F10',
+                       menubar.F11: 'F11',
+                       menubar.F12: 'F12'}
 
     if self.key is None:
         return None
@@ -622,9 +636,9 @@ class PyBridge:
                     if XULAccelFromLabel(item.label):
                         menuitem.setAttribute("accesskey",
                                           XULAccelFromLabel(item.label))
-                    if item.shortcut:
+                    if len(item.shortcuts)>0:
                         menuitem.setAttribute("acceltext",
-                                              item.shortcut.XULString())
+                                              item.shortcuts[-1].XULString())
                         
                 menupopup.appendChild(menuitem)
 
