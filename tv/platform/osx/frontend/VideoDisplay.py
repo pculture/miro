@@ -76,6 +76,10 @@ class VideoDisplay (app.VideoDisplayBase):
         app.VideoDisplayBase.play(self)
         self.controller.play()
 
+    def playFromTime(self, startTime):
+        app.VideoDisplayBase.playFromTime(self, startTime)
+        self.controller.play()
+
     def pause(self):
         app.VideoDisplayBase.pause(self)
         self.controller.pause()
