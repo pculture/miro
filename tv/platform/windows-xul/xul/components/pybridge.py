@@ -57,45 +57,45 @@ except:
 else:
     errorOnImport = False
 
-# Extent the ShortCut class to include a XULString() function
-def ShortCutMixin(self):
-    XUL_MOD_STRINGS = {menubar.CTRL : 'Ctrl',
-                       menubar.ALT:   'Alt',
-                       menubar.SHIFT: 'Shift'}
-    XUL_KEY_STRINGS ={ menubar.RIGHT_ARROW: 'Right',
-                       menubar.LEFT_ARROW:  'Left',
-                       menubar.UP_ARROW:    'Up',
-                       menubar.DOWN_ARROW:  'Down',
-                       menubar.UP_ARROW :   'Up',
-                       menubar.DOWN_ARROW :   'Down',
-                       menubar.SPACE : 'Space',
-                       menubar.ENTER: 'Enter',
-                       menubar.DELETE: 'Delete',
-                       menubar.BKSPACE: 'BackSpace',
-                       menubar.F1: 'F1',
-                       menubar.F2: 'F2',
-                       menubar.F3: 'F3',
-                       menubar.F4: 'F4',
-                       menubar.F5: 'F5',
-                       menubar.F6: 'F6',
-                       menubar.F7: 'F7',
-                       menubar.F8: 'F8',
-                       menubar.F9: 'F9',
-                       menubar.F10: 'F10',
-                       menubar.F11: 'F11',
-                       menubar.F12: 'F12'}
+# See http://www.xulplanet.com/tutorials/xultu/keyshort.html
+XUL_MOD_STRINGS = {menubar.CTRL : 'control',
+                   menubar.ALT:   'alt',
+                   menubar.SHIFT: 'shift'}
+XUL_KEY_STRINGS ={ menubar.RIGHT_ARROW: 'VK_RIGHT',
+                   menubar.LEFT_ARROW:  'VK_LEFT',
+                   menubar.UP_ARROW:    'VK_UP',
+                   menubar.DOWN_ARROW:  'VK_DOWN',
+                   menubar.SPACE : 'VK_SPACE',
+                   menubar.ENTER: 'VK_ENTER',
+                   menubar.DELETE: 'VK_DELETE',
+                   menubar.BKSPACE: 'VK_BACK',
+                   menubar.F1: 'VK_F1',
+                   menubar.F2: 'VK_F2',
+                   menubar.F3: 'VK_F3',
+                   menubar.F4: 'VK_F4',
+                   menubar.F5: 'VK_F5',
+                   menubar.F6: 'VK_F6',
+                   menubar.F7: 'VK_F7',
+                   menubar.F8: 'VK_F8',
+                   menubar.F9: 'VK_F9',
+                   menubar.F10: 'VK_F10',
+                   menubar.F11: 'VK_F11',
+                   menubar.F12: 'VK_F12'}
 
-    if self.key is None:
+# Extent the ShortCut class to include a XULString() function
+def XULKey(shortcut):
+    if isinstance(shortcut.key, int):
+        return XUL_KEY_STRINGS[shortcut.key]
+    else:
+        return shortcut.key.upper()
+
+def XULModifier(shortcut):
+    if shortcut.key is None:
         return None
     output = []
-    for modifier in self.modifiers:
+    for modifier in shortcut.modifiers:
         output.append(XUL_MOD_STRINGS[modifier])
-    if isinstance(self.key, int):
-        output.append(XUL_KEY_STRINGS[self.key])
-    else:
-        output.append(self.key.upper())
-    return '+'.join(output)
-menubar.ShortCut.XULString = ShortCutMixin
+    return ' '.join(output)
 
 nsIEventQueueService = components.interfaces.nsIEventQueueService
 nsIProperties = components.interfaces.nsIProperties
@@ -614,6 +614,26 @@ class PyBridge:
     def addMenubar(self, document):
         menubarElement = document.getElementById("titlebar-menu")
 
+        keysetElement = document.createElementNS(
+         "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","keyset")
+
+        for menu in menubar.menubar.menus:
+            for item in menu.menuitems:
+                if isinstance(item, menubar.MenuItem):
+                    count = 0
+                    for shortcut in item.shortcuts:
+                        count += 1
+                        keyElement = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","key")
+                        keyElement.setAttribute("id", "%s-key%d" % (item.action, count))
+                        if len(XULKey(shortcut)) == 1:
+                            keyElement.setAttribute("key", XULKey(shortcut))
+                        else:
+                            keyElement.setAttribute("keycode", XULKey(shortcut))
+                        if len(shortcut.modifiers) > 0:
+                            keyElement.setAttribute("modifiers", XULModifier(shortcut))
+                        keysetElement.appendChild(keyElement)
+        menubarElement.appendChild(keysetElement)
+
         for menu in menubar.menubar.menus:
             menuElement = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menu")
             menuElement.setAttribute("id", "menu-%s" % menu.action.lower())
@@ -637,8 +657,7 @@ class PyBridge:
                         menuitem.setAttribute("accesskey",
                                           XULAccelFromLabel(item.label))
                     if len(item.shortcuts)>0:
-                        menuitem.setAttribute("acceltext",
-                                              item.shortcuts[-1].XULString())
+                        menuitem.setAttribute("key","%s-key%d"%(item.action,len(item.shortcuts)))
                         
                 menupopup.appendChild(menuitem)
 
