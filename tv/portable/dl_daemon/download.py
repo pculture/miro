@@ -23,7 +23,7 @@ import config
 import prefs
 from sha import sha
 
-from dl_daemon import command, daemon, bittorrent
+from dl_daemon import command, daemon, bittorrentdtv
 from datetime import timedelta
 from util import checkF, checkU
 
@@ -670,7 +670,7 @@ class BTDownloader(BGDownloader):
             logging.exception ("DTV: Warning: Error shutting down torrent")
 
     def _startTorrent(self):
-        self.torrent = bittorrent.TorrentDownload(self.metainfo,
+        self.torrent = bittorrentdtv.TorrentDownload(self.metainfo,
                 self.filename, self.fastResumeData)
         self.torrent.set_status_callback(self.updateStatus)
         self.torrent.start()
