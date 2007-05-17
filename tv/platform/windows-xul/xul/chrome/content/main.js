@@ -252,15 +252,22 @@ function setupHandlers() {
 
 function onClose()
 {
+    pybridge.printOut("onClose");
     if (pybridge.minimizeToTray()) {
         minimizeToTray();
     } else {
         handleExit();
     }
+    return false;
 }
 
 function onUnload() {
-    handleExit();
+    pybridge.printOut("onUnload"); 
+    if (vlc.playlist.items.count > 0) { 
+        vlc.playlist.stop(); 
+    } 
+    closeApp();
+    minimizer.restoreAll();
 }
 
 function jsdump(str) {
@@ -359,12 +366,7 @@ function openFile() {
 }
 
 function handleExit() {
-    if (vlc.playlist.items.count > 0) {
-        vlc.playlist.stop();
-    }
     pybridge.quit();
-    closeApp();
-    minimizer.restoreAll();
 }
 
 function onKeyDown(event) {
