@@ -261,10 +261,12 @@ def unmakeURLSafe(string):
     checkU (string)
     return urllib.unquote(string.encode('ascii'))
 
-# Takes filename given by the PyObjC bridge and turn it into a FilenameType
+# Takes filename given by Python or the PyObjC bridge and turn it into a FilenameType
 @returnsBinary
 def osFilenameToFilenameType(filename):
-    return FilenameType(unicode(filename).encode('utf-8','replace'))
+    if not isinstance(filename, unicode):
+        filename = unicode(filename)
+    return FilenameType(filename.encode('utf-8','replace'))
 
 # Takes an array of filenames given by the OS and turn them into a FilenameTypes
 def osFilenamesToFilenameTypes(filenames):
