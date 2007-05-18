@@ -31,7 +31,7 @@ import menu
 import prefs
 import resources
 from util import returnsUnicode, unicodify, chatter, checkU, checkF
-from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe
+from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType
 import filetypes
 import views
 import indexes
@@ -1874,7 +1874,7 @@ class DirectoryFeedImpl(FeedImpl):
         #Adds any files we don't know about
         #Files on the filesystem
         if os.path.isdir(moviesDir):
-            existingFiles = [os.path.normcase(os.path.join(moviesDir, f)) 
+            existingFiles = [osFilenameToFilenameType(os.path.normcase(os.path.join(moviesDir, f)))
                     for f in os.listdir(moviesDir)]
             for file in existingFiles:
                 if (os.path.exists(file) and os.path.basename(file)[0] != '.'):
@@ -1884,7 +1884,7 @@ class DirectoryFeedImpl(FeedImpl):
                         else:
                             found = 0
                             not_found = []
-                            contents = [os.path.normcase(os.path.join(file, f)) 
+                            contents = [osFilenameToFilenameType(os.path.normcase(os.path.join(file, f))) 
                                         for f in os.listdir(file)]
                             for subfile in contents:
                                 if subfile in knownFiles:
