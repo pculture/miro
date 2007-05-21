@@ -223,7 +223,6 @@ function setupSeekButton(direction, buttonId) {
 }
 
 function setupHandlers() {
-    document.getElementById("main").onkeydown = onKeyDown;
     var knob = document.getElementById("volume");
     knob.onmousemove = volumeKnobMove;
     knob.onmousedown = volumeKnobDown;
@@ -367,50 +366,6 @@ function openFile() {
 
 function handleExit() {
     pybridge.quit();
-}
-
-function onKeyDown(event) {
-  if(event.altKey && event.keyCode == 13) { // Alt Enter
-     onFullscreenActivate();
-     return false
-  }
-  if(event.ctrlKey) {
-    var charPressed = String.fromCharCode(event.keyCode).toLowerCase();
-    if(charPressed == 'o') {
-      openFile();
-      return false;
-    } else if(charPressed == 'p') {
-      if(event.shiftKey) pybridge.createNewPlaylistFolder();
-      else pybridge.createNewPlaylist();
-      return false;
-    } else if(charPressed == 'n') {
-      if(event.shiftKey) pybridge.createNewChannelFolder();
-      else pybridge.addChannel();
-      return false;
-    } else if(charPressed == 'd') {
-      pybridge.stop();
-      return false;
-    } else if(charPressed == 'f') {
-      onFullscreenActivate();
-      return false;
-    }
-  }
-  // Don't mess with keys in input boxes.
-  if(event.target.tagName) {
-    var lowerTagName = event.target.tagName.toLowerCase();
-    if(lowerTagName == 'input' || lowerTagName == 'textbox' || 
-       lowerTagName == 'textarea') return true;
-  }
-  if(event.keyCode == 8 || event.keyCode == 46) {  // Delete/Backspace
-     pybridge.removeCurrentSelection();
-  } else if(event.keyCode == 32) { // Space
-    pybridge.playPause();
-  } else if(event.keyCode == 39) { // Right arrow
-    pybridge.skip(1);
-  } else if(event.keyCode == 37) { // Left Arrow
-    pybridge.skip(-1);
-  } 
-  return false;
 }
 
 /* This is where the search on chrome events come to hang out */

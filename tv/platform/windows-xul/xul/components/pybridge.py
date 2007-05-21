@@ -631,6 +631,7 @@ class PyBridge:
                             keyElement.setAttribute("keycode", XULKey(shortcut))
                         if len(shortcut.modifiers) > 0:
                             keyElement.setAttribute("modifiers", XULModifier(shortcut))
+                        keyElement.setAttribute("command", item.action)
                         keysetElement.appendChild(keyElement)
         menubarElement.appendChild(keysetElement)
 
