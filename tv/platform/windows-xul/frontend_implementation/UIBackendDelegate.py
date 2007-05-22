@@ -106,7 +106,10 @@ class UIBackendDelegate:
             engines = _makeSupportsArrayFromSecondElement(dialog.engines)
             channels = _makeSupportsArrayFromSecondElement(dialog.channels)
             defaultTerm = ""
-            defaultChannelId = dialog.channels[0][0]
+            if len(dialog.channels) > 0:
+                defaultChannelId = dialog.channels[0][0]
+            else:
+                defaultChannelId = 0
             defaultEngineName = dialog.defaultEngine
             defaultURL = ""
             if dialog.term:
