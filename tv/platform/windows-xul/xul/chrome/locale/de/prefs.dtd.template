@@ -1,6 +1,10 @@
 <!ENTITY prefs.title "Einstellungen">
+<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
+<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.title "Einstellungen">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
+<!ENTITY prefs.minimize.to.tray "Minimize $longAppName to the system tray when I close the program">
 
 <!ENTITY prefs.general "General">
 
@@ -43,7 +47,7 @@
 <!ENTITY prefs.videos.expire.never "Niemals">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf %s begrenzen">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s, wenn mein Computer in Gebrauch ist.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent benutzt Ports zwischen">
 <!ENTITY prefs.torrent.uses.ports.part2 "und">

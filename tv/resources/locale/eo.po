@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-01-20 01:49+0000\n"
-"Last-Translator: Fajro <faigos@gmail.com>\n"
+"PO-Revision-Date: 2007-05-10 18:30+0000\n"
+"Last-Translator: OlivierWeb <olivierweb@ifrance.com>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-01-29 04:57+0000\n"
+"X-Rosetta-Export-Date: 2007-05-22 17:48:18+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -52,7 +52,7 @@ msgid "About Democracy"
 msgstr "Pri Democracy"
 
 msgid "Add Channel..."
-msgstr ""
+msgstr "Aldoni Kanalon..."
 
 msgid "Bring All to Front"
 msgstr ""
@@ -67,7 +67,7 @@ msgid "Clear Menu"
 msgstr ""
 
 msgid "Close Window"
-msgstr ""
+msgstr "Fermi Fenestron"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15
 msgid "Copy"
@@ -75,7 +75,7 @@ msgstr "Kopiu"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
 msgid "Copy Channel URL"
-msgstr ""
+msgstr "Kopii la Kanalan URL"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "Copy Video URL"
@@ -95,7 +95,7 @@ msgid "Democracy Help"
 msgstr "Demokratio Helpo"
 
 msgid "Donate"
-msgstr ""
+msgstr "Donaci"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14
 msgid "Edit"
@@ -103,10 +103,10 @@ msgstr "Redakti"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6
 msgid "File"
-msgstr ""
+msgstr "Dosiero"
 
 msgid "Full Screen"
-msgstr ""
+msgstr "Tuta Ekrano"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47
 msgid "Help"
@@ -119,16 +119,16 @@ msgid "Hide Others"
 msgstr ""
 
 msgid "Main Window"
-msgstr ""
+msgstr "Ĉefa Fenestro"
 
 msgid "MainMenu"
-msgstr ""
+msgstr "ĈefMenuo"
 
 msgid "Minimize"
-msgstr ""
+msgstr "Minimumigi"
 
 msgid "New Channel Folder..."
-msgstr ""
+msgstr "Nova Kanala Dosiero..."
 
 msgid "New Channel Guide..."
 msgstr ""
@@ -147,7 +147,7 @@ msgid "Next Video"
 msgstr ""
 
 msgid "Open Recent"
-msgstr ""
+msgstr "Malfermi lastajn"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "Open..."
@@ -159,7 +159,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40
 msgid "Play Video"
-msgstr ""
+msgstr "Ludi Videon"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
 msgid "Playback"
@@ -176,44 +176,44 @@ msgid "Previous Video"
 msgstr ""
 
 msgid "Quit Democracy"
-msgstr ""
+msgstr "Eliri Democracy"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
 msgid "Remove..."
-msgstr ""
+msgstr "Forigi..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
 msgid "Rename..."
-msgstr ""
+msgstr "Alinomi..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "Save Video As..."
-msgstr ""
+msgstr "Registri Videon Kiel..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17
 msgid "Select All"
-msgstr ""
+msgstr "Elekti Ĉion"
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Sendi Tiun Kanalon al Amiko"
 
 msgid "Services"
-msgstr ""
+msgstr "Servoj"
 
 msgid "Show All"
-msgstr ""
+msgstr "Vidigi Ĉiujn"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42
 msgid "Stop Video"
-msgstr ""
+msgstr "Halti Videon"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30
 msgid "Update All Channels"
-msgstr ""
+msgstr "Ĝisdatigi ĉiujn Kanalojn"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29
 msgid "Update Channel"
-msgstr ""
+msgstr "Ĝisdatigi Kanalon"
 
 msgid "Window"
 msgstr "Fenestro"
@@ -263,12 +263,14 @@ msgid "Password:\n"
 msgstr "Pasvorto\n"
 
 msgid "Username and password required"
-msgstr ""
+msgstr "Uzantnomo kaj pasvorto bezonataj"
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
+"Uzantnomo :\n"
+"\n"
 
 msgid " limit upstream to"
 msgstr ""
@@ -280,19 +282,19 @@ msgid "(movies directory path goes here)"
 msgstr ""
 
 msgid "1 day"
-msgstr ""
+msgstr "1 tago"
 
 msgid "1 month"
-msgstr ""
+msgstr "1 montao"
 
 msgid "10 days"
-msgstr ""
+msgstr "10 tagoj"
 
 msgid "3 days"
-msgstr ""
+msgstr "3 tagoj"
 
 msgid "3 hours"
-msgstr ""
+msgstr "3 horoj"
 
 msgid "4"
 msgstr "4"
@@ -301,10 +303,10 @@ msgid "5"
 msgstr "5"
 
 msgid "6 days"
-msgstr ""
+msgstr "6 tagoj"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "BitTorrent ports:"
 msgstr ""
@@ -313,7 +315,7 @@ msgid "By default, videos expire after:"
 msgstr ""
 
 msgid "Change..."
-msgstr ""
+msgstr "Ŝanĝi..."
 
 msgid "Check channels for new content:"
 msgstr ""
@@ -324,7 +326,7 @@ msgstr "Ne komencu elŝutadon se lasas malpli ol"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
 msgid "Download at most"
-msgstr ""
+msgstr "Elŝuti maksimume"
 
 msgid "GB free."
 msgstr ""
@@ -333,10 +335,10 @@ msgid "KB/s when my computer is active."
 msgstr ""
 
 msgid "Maximum:"
-msgstr ""
+msgstr "Maksimume:"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Minimume:"
 
 msgid "Never"
 msgstr "Neniam"
@@ -351,8 +353,9 @@ msgstr ""
 msgid "Run Democracy at startup"
 msgstr ""
 
+#, fuzzy
 msgid "Save downloaded videos in this folder:"
-msgstr ""
+msgstr "Registri elŝutitajn videojn en tiu dosiero:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:61
 msgid "Stop after each video."
@@ -362,13 +365,13 @@ msgid "To avoid internet slowdowns:"
 msgstr ""
 
 msgid "every 30 minutes"
-msgstr ""
+msgstr "je ĉiuj 30 minutoj"
 
 msgid "every hour"
 msgstr "Ĉiuhore"
 
 msgid "manually"
-msgstr ""
+msgstr "permane"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
 msgid "videos at once."
@@ -387,7 +390,7 @@ msgstr "Kanalo"
 
 #: ../../portable/dialogs.py:72
 msgid "Create"
-msgstr ""
+msgstr "Krei"
 
 msgid "In this:"
 msgstr ""
@@ -399,7 +402,7 @@ msgid "Search Engine"
 msgstr ""
 
 msgid "Search for:"
-msgstr ""
+msgstr "Serĉi:"
 
 msgid "URL"
 msgstr ""
@@ -425,7 +428,7 @@ msgid ""
 msgstr ""
 
 msgid "Next"
-msgstr ""
+msgstr "Sekva"
 
 #: ../../portable/dialogs.py:62
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28
@@ -506,8 +509,9 @@ msgid ""
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
+#, fuzzy
 msgid "Save Video _As..."
-msgstr ""
+msgstr "Registri Videon Kiel..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save this video"
@@ -518,24 +522,28 @@ msgid "_Copy Video URL"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
+#, fuzzy
 msgid "_Remove Video"
-msgstr ""
+msgstr "Forigi Videon"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123
 msgid "_Fullscreen"
 msgstr "_Tutekrane"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
+#, fuzzy
 msgid "_Stop Video"
-msgstr ""
+msgstr "Halti Videon"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
+#, fuzzy
 msgid "_Next Video"
-msgstr ""
+msgstr "Sekva Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
+#, fuzzy
 msgid "_Previous Video"
-msgstr ""
+msgstr "Antaŭa Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
 #, fuzzy
@@ -547,8 +555,9 @@ msgid "Copy Channel _Link"
 msgstr "Kopii kanalan _ligilon"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133
+#, fuzzy
 msgid "_Send this channel to a friend"
-msgstr ""
+msgstr "Sendi tiun kanalon al amiko"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
 #, fuzzy
@@ -556,8 +565,9 @@ msgid "_Update Channel"
 msgstr "_Ĝisdatigi kanalon"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
+#, fuzzy
 msgid "Re_name Channel"
-msgstr ""
+msgstr "Renomi Kanalon"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
 msgid "_Remove Channel"
@@ -620,8 +630,9 @@ msgid "Create new channel folder"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160
+#, fuzzy
 msgid "Add _Channel..."
-msgstr ""
+msgstr "Aldoni Kanalon..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161
 msgid "New Searc_h Channel..."
@@ -652,13 +663,14 @@ msgid "_Help"
 msgstr "_Helpo"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169
+#, fuzzy
 msgid "_Donate"
-msgstr ""
+msgstr "_Donaci"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172
 msgid "Delete selection"
-msgstr ""
+msgstr "Forigi la elekton"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
@@ -682,7 +694,7 @@ msgstr "Nekonata eraro okazis %s"
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
 #: ../../platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
-msgstr ""
+msgstr "_Forigi..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6
 #: ../../platform/osx/frontend/UIStrings.py:6
@@ -707,12 +719,12 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10
 #: ../../platform/osx/frontend/UIStrings.py:10
 msgid "_Remove Channel..."
-msgstr ""
+msgstr "_Forigi Kanalon..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11
 #: ../../platform/osx/frontend/UIStrings.py:11
 msgid "_Remove Channels..."
-msgstr ""
+msgstr "_Forigi Kanalojn..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12
 #: ../../platform/osx/frontend/UIStrings.py:12
@@ -747,7 +759,7 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18
 #: ../../platform/osx/frontend/UIStrings.py:18
 msgid "Re_name..."
-msgstr ""
+msgstr "Re_nomi..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:19
 #: ../../platform/osx/frontend/UIStrings.py:19
@@ -776,13 +788,14 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24
 #: ../../platform/osx/frontend/UIStrings.py:24
+#, fuzzy
 msgid "_Update Channel..."
-msgstr ""
+msgstr "_Ĝisdatigi Kanalon..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25
 #: ../../platform/osx/frontend/UIStrings.py:25
 msgid "_Update Channels..."
-msgstr ""
+msgstr "_Ĝisdatigi Kanalojn..."
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:59
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:157
@@ -790,8 +803,8 @@ msgstr ""
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d video trovita"
+msgstr[1] "%d videoj trovitaj"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161
 msgid "Error Bombing Item"
@@ -834,7 +847,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11
 msgid "Remove Channels..."
-msgstr ""
+msgstr "Forigi Kanalojn..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12
 msgid "Remove Channel Folder..."
@@ -854,11 +867,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16
 msgid "Remove Video..."
-msgstr ""
+msgstr "Forigi Videon..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:17
 msgid "Remove Videos..."
-msgstr ""
+msgstr "Forigi Videojn..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36
@@ -872,7 +885,7 @@ msgstr ""
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26
 msgid "Rename Channel..."
-msgstr ""
+msgstr "Renomi Kanalon..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22
 msgid "Rename Channel Folder..."
@@ -918,7 +931,7 @@ msgstr ""
 #: ../../portable/menu.py:48 ../../portable/menu.py:53
 #: ../../portable/feed.py:690
 msgid "Remove"
-msgstr ""
+msgstr "Forigi"
 
 #: ../../portable/playlist.py:181
 #, python-format
@@ -944,7 +957,7 @@ msgstr "Serĉanta..."
 
 #: ../../portable/compiled_templates/search.py:56
 msgid "Results for \"${query}\""
-msgstr ""
+msgstr "Resultoj por \"${query}\""
 
 #: ../../portable/compiled_templates/search.py:95
 msgid "Video Search"
@@ -1764,7 +1777,7 @@ msgstr "Ĉu vi vere volas fini la programon?"
 #: ../../portable/app.py:924
 #, fuzzy
 msgid "You have %d download still in progress."
-msgid_plural "You have %d downloads still in progress."
+msgid_plural "You have %d download still in progress."
 msgstr[0] "%d elŝutado daŭras ankoraŭ."
 msgstr[1] "%d elŝutadoj daŭras ankoraŭ."
 

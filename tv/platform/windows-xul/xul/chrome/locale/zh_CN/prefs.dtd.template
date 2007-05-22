@@ -1,6 +1,10 @@
 <!ENTITY prefs.title "配置">
+<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
+<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.title "配置">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
+<!ENTITY prefs.minimize.to.tray "Minimize $longAppName to the system tray when I close the program">
 
 <!ENTITY prefs.general "General">
 
@@ -10,7 +14,7 @@
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "回放">
+<!ENTITY prefs.playback "播放">
 <!ENTITY prefs.playback.remember.pos "Remember video position.">
 <!ENTITY prefs.playback.auto.next.video "连续播放视频">
 <!ENTITY prefs.playback.stop.after.each "每个视频播放完后停止">

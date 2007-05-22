@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-26 14:22-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-05-22 14:38-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -307,7 +307,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "Ja sillä selvä!\n\nAsennus on valmis. Voit nyt ruveta etsimään kanavia ja katsomaan ohjelmia.\n\nÄlä odota turhaan: Democracyn videot eivät ole samoja kuin WWW-sivuilla. Democracy sallii videoiden tekijöiden julkaista isoja, hyvälaatuisia videoita, joiden latautumisen ajaksi ei kuitenkaan täydy lopettaa muita tekemisiä. Katso videot yksinkertaisesti myöhemmin kun ne ovat latautuneet.\n\nJätä soitin päälle: Democracy Player tarkistaa videokanavat aika ajoin uusien videoiden varalta ja lataa uudet videot automaattisesti. Jätä soitin päälle ja videot odottavat valmiina ladattuina sopivaa katseluhetkeä.\n\nÄlä huolehdi levytilasta: Democracy Playerissä on \"vanhentumistoiminto,\" joka poistaa vanhat videot uusien tieltä. Voit tietysti halutessasi säilyttää videon napsauttamalla tallenna-painiketta tai asettaa kaikki kanavan videot automaattisesti säilytettäviksi.\n\nÄlä ole vaatimaton: Toistonäppäimen oikealla puolella oleva painike sovittaa videon kokoruutuun.\n\nEtsi videoita: Democracyn kanavaoppaassa on satoja internet TV-kanavia, jotka eivät maksa mitään katsoa. Napsauta vain ADD, katsellaksesi kanavan tarjontaa.\n";
 
-"%message%\n" = "%message%\n";
+"%message%\n%message%\n" = "%message%\n";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
 "Save Video _As..." = "Tallenna _video nimellä...";

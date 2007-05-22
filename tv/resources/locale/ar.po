@@ -19,7 +19,7 @@ msgstr ""
 "X-Rosetta-Export-Date: 2007-04-25 16:38:30+0000\n"
 
 msgid "$log"
-msgstr "$log"
+msgstr "إدخل"
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "

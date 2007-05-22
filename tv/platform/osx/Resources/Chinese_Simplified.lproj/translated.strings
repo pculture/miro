@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-26 14:22-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-05-22 14:38-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "日志记录";
 
@@ -46,7 +46,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/dialogs.py:77 */
 "Delete" = "删除";
 
-"Democracy" = "民主自由播放软件";
+"Democracy" = "民主自由播放器";
 
 "Democracy Help" = "软件帮助";
 
@@ -61,7 +61,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Full Screen" = "全屏";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47 */
-"Help" = "帮助说明";
+"Help" = "帮助";
 
 "Hide Democracy" = "隐藏Democracy";
 
@@ -75,7 +75,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "New Channel Folder..." = "新建频道夹...";
 
-"New Channel Guide..." = "新建频道指南...";
+"New Channel Guide..." = "新建频道导航...";
 
 "New Playlist Folder..." = "新建播放列表夹...";
 
@@ -98,14 +98,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Play Video" = "播放视频";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39 */
-"Playback" = "回放";
+"Playback" = "播放";
 
 "Playlists" = "播放列表";
 
-"Preferencesâ¦" = "自设选项";
+"Preferencesâ¦" = "选项";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44 */
-"Previous Video" = "前一段视频";
+"Previous Video" = "前一个视频";
 
 "Quit Democracy" = "退出软件";
 
@@ -574,10 +574,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36 */
-"Rename Playlist..." = "移除播放列表...";
+"Rename Playlist..." = "重命名播放列表...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20 */
-"Rename Playlist Folder..." = "移除播放列表夹...";
+"Rename Playlist Folder..." = "重命名播放列表夹...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26 */
@@ -1111,7 +1111,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/item.py:425 */
 /* Flag: python-format */
-"Expires in %s" = "过期在%s";
+"Expires in %s" = "%s后过期";
 
 /* File: ../../portable/item.py:751 */
 "TORRENT" = "BitTorrent种子";

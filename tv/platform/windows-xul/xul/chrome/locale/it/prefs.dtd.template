@@ -1,6 +1,10 @@
 <!ENTITY prefs.title "Preferenze">
+<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
+<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.title "Preferenze">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
+<!ENTITY prefs.minimize.to.tray "Minimize $longAppName to the system tray when I close the program">
 
 <!ENTITY prefs.general "General">
 

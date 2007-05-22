@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-03-31 16:06+0000\n"
+"PO-Revision-Date: 2007-05-09 14:45+0000\n"
 "Last-Translator: Alexandru Bogdan Munteanu <muntealb@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1)));\n"
-"X-Rosetta-Export-Date: 2007-04-10 13:38:15+0000\n"
+"X-Rosetta-Export-Date: 2007-05-22 17:48:19+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -596,7 +596,7 @@ msgstr "_Copiază URL-ul Videoului"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
 msgid "_Remove Video"
-msgstr ""
+msgstr "_Înlătură Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123
 msgid "_Fullscreen"
@@ -604,15 +604,15 @@ msgstr "_Tot ecranul"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
 msgid "_Stop Video"
-msgstr ""
+msgstr "_Oprește Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
 msgid "_Next Video"
-msgstr ""
+msgstr "_Următorul Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
 msgid "_Previous Video"
-msgstr ""
+msgstr "_Precedentul Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
 msgid "_Play / Pause"
@@ -624,7 +624,7 @@ msgstr "Copiaza a_dresa canalului"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133
 msgid "_Send this channel to a friend"
-msgstr ""
+msgstr "_Trimite acest canal unui prieten"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
 msgid "_Update Channel"
@@ -632,7 +632,7 @@ msgstr "_Actualizează canalul"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
 msgid "Re_name Channel"
-msgstr ""
+msgstr "Re_denumește Canalul"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
 msgid "_Remove Channel"
@@ -640,11 +640,11 @@ msgstr "Şter_ge canalul"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "Re_denumește Lista de redare"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "_Înlătură Lista de redare"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151
 msgid "_Video"
@@ -652,15 +652,15 @@ msgstr "Secvenţa _video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152
 msgid "_Channels"
-msgstr ""
+msgstr "_Canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153
 msgid "_Playlists"
-msgstr ""
+msgstr "_Liste de Redare"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:154
 msgid "P_layback"
-msgstr ""
+msgstr "R_edare"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
 msgid "_Open..."
@@ -672,15 +672,15 @@ msgstr "Deschide diferite fişiere"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
 msgid "New _Playlist..."
-msgstr ""
+msgstr "_Listă de Redare Nouă"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
 msgid "Create new playlist"
-msgstr ""
+msgstr "Creează listă de redare nouă"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
 msgid "New Playlist _Folder..."
-msgstr ""
+msgstr "_Dosar Nou cu Liste de redare..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
 #, fuzzy
@@ -689,7 +689,7 @@ msgstr "Creează un nou director pentru playlist"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
 msgid "New Channel _Folder..."
-msgstr ""
+msgstr "_Dosar Nou cu Canale..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
 #, fuzzy
@@ -698,15 +698,15 @@ msgstr "Creează un nou director pentru canal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160
 msgid "Add _Channel..."
-msgstr ""
+msgstr "Adaugă _Canal..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161
 msgid "New Searc_h Channel..."
-msgstr ""
+msgstr "Canal de Căutar_e Nou ..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162
 msgid "New Channel _Guide..."
-msgstr ""
+msgstr "Ghid de Canale Nou ..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164
 msgid "P_references"
@@ -730,12 +730,12 @@ msgstr "A_jutor"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169
 msgid "_Donate"
-msgstr ""
+msgstr "_Donați"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172
 msgid "Delete selection"
-msgstr ""
+msgstr "Șterge selecția"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
@@ -759,52 +759,52 @@ msgstr "O eroare necunoscută a apărut %s."
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
 #: ../../platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
-msgstr ""
+msgstr "_Înlătură"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6
 #: ../../platform/osx/frontend/UIStrings.py:6
 msgid "_Remove Playlist..."
-msgstr ""
+msgstr "_Înlătură Lista de Redare..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7
 #: ../../platform/osx/frontend/UIStrings.py:7
 msgid "_Remove Playlists..."
-msgstr ""
+msgstr "_Înlătură Listele de Redare..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8
 #: ../../platform/osx/frontend/UIStrings.py:8
 msgid "_Remove Playlist Folder..."
-msgstr ""
+msgstr "_Înlătură Dosarul Listei de Redare..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:9
 #: ../../platform/osx/frontend/UIStrings.py:9
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "_Înlătură Dosarele Listelor de Redare..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10
 #: ../../platform/osx/frontend/UIStrings.py:10
 msgid "_Remove Channel..."
-msgstr ""
+msgstr "_Înlătură Canalul..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11
 #: ../../platform/osx/frontend/UIStrings.py:11
 msgid "_Remove Channels..."
-msgstr ""
+msgstr "_Înlătură Canalele..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12
 #: ../../platform/osx/frontend/UIStrings.py:12
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "_Înlătură Dosarul Canalului..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13
 #: ../../platform/osx/frontend/UIStrings.py:13
 msgid "_Remove Channel Folders..."
-msgstr ""
+msgstr "_Înlătură Dosarele Canalelor..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14
 #: ../../platform/osx/frontend/UIStrings.py:14
 msgid "_Remove Channel Guide..."
-msgstr ""
+msgstr "_Înlătură Ghidul Canalelor..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:15
 #: ../../platform/osx/frontend/UIStrings.py:15
@@ -859,7 +859,7 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25
 #: ../../platform/osx/frontend/UIStrings.py:25
 msgid "_Update Channels..."
-msgstr ""
+msgstr "_Actualizează Canalele..."
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:59
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:157
@@ -867,43 +867,44 @@ msgstr ""
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d video găsit"
+msgstr[1] "%d videouri găsite"
 msgstr[2] ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161
 msgid "Error Bombing Item"
-msgstr ""
+msgstr "Eroare la Bombardarea Itemului"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:163
 msgid "Error Recommending Item"
-msgstr ""
+msgstr "Eroare la Recomandarea Itemului"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:165
 msgid "Error Opening Website"
-msgstr ""
+msgstr "Eroare la Deschiderea Sitului"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:169
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
+"A apărut o eroare la deschiderea %s. Încercați din nou peste cîteva secunde"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37
 msgid "Remove Playlist..."
-msgstr ""
+msgstr "Înlătură Lista de Redare"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7
 msgid "Remove Playlists..."
-msgstr ""
+msgstr "Înlătură Listele de Redare"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:8
 msgid "Remove Playlist Folder..."
-msgstr ""
+msgstr "Înlătură Dosarul Listei de Redare"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:9
 msgid "Remove Playlist Folders..."
-msgstr ""
+msgstr "Înlătură Dosarele Listei de Redare"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27
@@ -912,62 +913,63 @@ msgid "Remove Channel..."
 msgstr "Şterge canal..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11
+#, fuzzy
 msgid "Remove Channels..."
-msgstr ""
+msgstr "Înlătură Canalele..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12
 msgid "Remove Channel Folder..."
-msgstr ""
+msgstr "Înlătură Dosarul de Canale..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:13
 msgid "Remove Channel Folders..."
-msgstr ""
+msgstr "Înlătură Dosarele de Canale..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:14
 msgid "Remove Channel Guide..."
-msgstr ""
+msgstr "Înlătură Ghidul de Canale..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:15
 msgid "Remove Channel Guides..."
-msgstr ""
+msgstr "Înlătură Ghidurile de Canale..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16
 msgid "Remove Video..."
-msgstr ""
+msgstr "Înlătură Videoul..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:17
 msgid "Remove Videos..."
-msgstr ""
+msgstr "Înlătură Videourile..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36
 msgid "Rename Playlist..."
-msgstr ""
+msgstr "Redenumește Lista de Redare..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20
 msgid "Rename Playlist Folder..."
-msgstr ""
+msgstr "Redenumește Dosarul cu Liste de Redare..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26
 msgid "Rename Channel..."
-msgstr ""
+msgstr "Redenumește Canalul..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22
 msgid "Rename Channel Folder..."
-msgstr ""
+msgstr "Redenumește Dosarul Canalului..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:23
 msgid "Rename Channel Guide..."
-msgstr ""
+msgstr "Redenumește Ghidul Canalelor..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:24
 msgid "Update Channel..."
-msgstr ""
+msgstr "Actualizează Canalul..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:25
 msgid "Update Channels..."
-msgstr ""
+msgstr "Actualizează Canalele"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:36
 #, fuzzy
@@ -991,27 +993,27 @@ msgstr "Încărcare fereastră"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:137
 msgid "onStartup called twice"
-msgstr ""
+msgstr "onStartup apelat de două ori"
 
 #: ../../portable/playlist.py:175 ../../portable/playlist.py:180
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Redenumește Lista de Redare..."
 
 #: ../../portable/playlist.py:176 ../../portable/folder.py:120
 #: ../../portable/folder.py:175 ../../portable/guide.py:130
 #: ../../portable/menu.py:48 ../../portable/menu.py:53
 #: ../../portable/feed.py:690
 msgid "Remove"
-msgstr ""
+msgstr "Înlătură"
 
 #: ../../portable/playlist.py:181
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Introduceți un nume nou pentru lista de redare %s"
 
 #: ../../portable/playlist.py:194
 msgid "Create Playlist"
-msgstr ""
+msgstr "Creează Listă de Redare"
 
 #: ../../portable/playlist.py:195
 msgid "Enter a name for the new playlist"
@@ -1071,7 +1073,7 @@ msgstr ""
 #: ../../portable/compiled_templates/video_info.py:40
 #: ../../portable/compiled_templates/external_playback.py:50
 msgid "STAR"
-msgstr ""
+msgstr "MARCAJ"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:57
 #: ../../portable/compiled_templates/video_info.py:50
@@ -1085,14 +1087,14 @@ msgstr "SALVEAZĂ"
 #: ../../portable/compiled_templates/video_info.py:55
 #: ../../portable/compiled_templates/external_playback.py:65
 msgid "SAVED"
-msgstr ""
+msgstr "SALVAT"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:70
 #: ../../portable/compiled_templates/video_info.py:63
 #: ../../portable/compiled_templates/external_playback.py:73
 #: ../../portable/compiled_templates/download_item.py:211
 msgid "DELETE"
-msgstr ""
+msgstr "ȘTERGE"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:85
 #: ../../portable/compiled_templates/external_playback.py:88
@@ -1105,19 +1107,19 @@ msgstr "Continuă cu următoarea secvenţă video"
 
 #: ../../portable/compiled_templates/channelfolder.py:166
 msgid "${count} Downloads in Progress"
-msgstr ""
+msgstr "${count} Descărcări Aflate în Curs"
 
 #: ../../portable/compiled_templates/channelfolder.py:171
 msgid "1 Download in Progress"
-msgstr ""
+msgstr "1 Descărcare Aflată în Curs"
 
 #: ../../portable/compiled_templates/channelfolder.py:191
 msgid "${len} Videos On This Channel"
-msgstr ""
+msgstr "${len} Videouri În Acest Canal"
 
 #: ../../portable/compiled_templates/channelfolder.py:205
 msgid "All ${len} Videos Match This Search"
-msgstr ""
+msgstr "Toate Cele ${len} Videouri Se Potrivesc Cu Această Căutare"
 
 #: ../../portable/compiled_templates/channelfolder.py:217
 #, fuzzy
@@ -1149,17 +1151,17 @@ msgstr "Standard"
 #: ../../portable/compiled_templates/feed_settings.py:39
 #: ../../portable/compiled_templates/channel.py:159
 msgid "default"
-msgstr ""
+msgstr "implicit"
 
 #: ../../portable/compiled_templates/feed_settings.py:110
 #: ../../portable/compiled_templates/channel.py:379
 msgid "Videos expire after"
-msgstr ""
+msgstr "Videourile expiră după"
 
 #: ../../portable/compiled_templates/feed_settings.py:113
 #: ../../portable/compiled_templates/channel.py:382
 msgid "When turned on, Auto Download should"
-msgstr ""
+msgstr "Cînd e activată, Auto-Descărcarea trebuie"
 
 #: ../../portable/compiled_templates/feed_settings.py:146
 #: ../../portable/compiled_templates/channel.py:415
@@ -1167,12 +1169,14 @@ msgid ""
 "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
 "unwatched."
 msgstr ""
+"Nu Auto-Descărca atunci cînd mai mult de ${maxnew} ${maxnew2} videouri "
+"așteaptă să fie vizionate."
 
 #: ../../portable/compiled_templates/channel.py:316
 #: ../../portable/compiled_templates/channel_content.py:122
 #: ../../portable/compiled_templates/channel_folder.py:252
 msgid "Downloaded"
-msgstr ""
+msgstr "Descărcat"
 
 #: ../../portable/compiled_templates/channel.py:428
 msgid "Recommend"
@@ -1186,7 +1190,7 @@ msgstr "Setări"
 
 #: ../../portable/compiled_templates/channel.py:440
 msgid "<label for=\"automatic\">Auto Download</label>"
-msgstr ""
+msgstr "label for=\"automatic\">Descarcă Automat</label>"
 
 #: ../../portable/compiled_templates/channel.py:458
 #, fuzzy
@@ -1199,10 +1203,13 @@ msgid ""
 "program.<br></br><br></br><strong>Filename:</strong> "
 "${filename}<Br></Br><strong>File type:</strong> ${format}"
 msgstr ""
+"Democracy nu poate reda acest fișier. E posibil să reușiți să-l deschideți "
+"cu un alt program.<br></br><br></br><strong>Numele Fișierului:</strong> "
+"${filename}<Br></Br><strong>File type:</strong> ${format}"
 
 #: ../../portable/compiled_templates/external_playback.py:115
 msgid "REVEAL FILE"
-msgstr ""
+msgstr "REVELEAZĂ FIȘIERUL"
 
 #: ../../portable/compiled_templates/external_playback.py:119
 msgid "Play Externally"
@@ -1210,23 +1217,23 @@ msgstr "Rulează extern"
 
 #: ../../portable/compiled_templates/external_playback.py:128
 msgid "Skip >> ${countdown}"
-msgstr ""
+msgstr "Sari >> ${countdown}"
 
 #: ../../portable/compiled_templates/download_item.py:114
 msgid "SHOW FILE"
-msgstr ""
+msgstr "ARATĂ FIȘIERUL"
 
 #: ../../portable/compiled_templates/download_item.py:121
 msgid "SHOW FOLDER"
-msgstr ""
+msgstr "ARATĂ DOSARUL"
 
 #: ../../portable/compiled_templates/download_item.py:135
 msgid "SHARE IT"
-msgstr ""
+msgstr "PARTAJEAZĂ-L"
 
 #: ../../portable/compiled_templates/download_item.py:144
 msgid "STAR IT"
-msgstr ""
+msgstr "MARCHEAZĂ-L"
 
 #: ../../portable/compiled_templates/download_item.py:189
 msgid "Pending Auto Download"
@@ -1372,47 +1379,47 @@ msgstr ""
 #: ../../portable/dl_daemon/download.py:357
 #, python-format
 msgid "Could not write to %s"
-msgstr ""
+msgstr "Nu pot scrie în %s"
 
 #: ../../portable/dl_daemon/download.py:376
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Spațiul de pe disc e insuficient"
 
 #: ../../portable/dl_daemon/download.py:377
 #, python-format
 msgid "%s MB required to store this video"
-msgstr ""
+msgstr "%s MB necesari pentru a stoca acest video"
 
 #: ../../portable/dl_daemon/download.py:676
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "Torent Deteriorat"
 
 #: ../../portable/dl_daemon/download.py:677
 #, python-format
 msgid "The torrent file at %s was not valid"
-msgstr ""
+msgstr "Fișierul torent de la %s nu era valid"
 
 #: ../../portable/dl_daemon/download.py:702
 msgid "Torrent file deleted"
-msgstr ""
+msgstr "A fost detectat un fișier torent"
 
 #: ../../portable/dl_daemon/download.py:703
 msgid "The torrent file for this item was deleted "
-msgstr ""
+msgstr "Fișierul torent pentru acest item a fost șters "
 
 #: ../../portable/dl_daemon/download.py:704
 msgid "outside of democracy."
-msgstr ""
+msgstr "la exteriorul democracy"
 
 #: ../../portable/util.py:386
 #, python-format
 msgid "%1.1fGB"
-msgstr ""
+msgstr "%1.1fGB"
 
 #: ../../portable/util.py:388
 #, python-format
 msgid "%1.1fMB"
-msgstr ""
+msgstr "%1.1fMB"
 
 #: ../../portable/util.py:390
 #, python-format
@@ -1855,7 +1862,7 @@ msgstr "Eşti sigur că vrei să renunţi?"
 #: ../../portable/app.py:924
 #, python-format
 msgid "You have %d download still in progress."
-msgid_plural "You have %d download still in progress."
+msgid_plural "You have %d downloads still in progress."
 msgstr[0] "Ai %d descărcare în derulare."
 msgstr[1] "Ai %d descărcări în derulare."
 msgstr[2] "Ai %d descărcări în derulare."
