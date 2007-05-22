@@ -2120,28 +2120,30 @@ def _defaultFeeds():
     defaultFeedURLs = [ (_('News and Tech'),
                          [u'http://jetset.blip.tv/?skin=rss',
                           u'http://revision3.com/diggnation/feed/quicktime-large',
-                          u'http://www.podshow.com/feeds/hd.xml',
-                          u'http://podcast.msnbc.com/audio/podcast/MSNBC-NN-NETCAST-M4V.xml']),
+                          u'http://geekbrief.podshow.com/?feed=rss2',
+                          u'http://downloads.bbc.co.uk/rmhttp/downloadtrial/bbc2/newsnightvideopodcast/rss.xml',
+                          u'http://www.tvo.org/TVOspecial3/WebObjects/TVOMedia.woa?AgendaVideoFeed']),
                         
                         (_('Entertainment'),
                          [u'http://feeds.feedburner.com/Terravideos',
-                          u'http://feeds.feedburner.com/freshtopia',
-                          u'http://feeds.feedburner.com/thechannelchannel/featured',
-                          u'http://www.zefrank.com/theshow/index.xml',
+                          u'http://www.smallcarrot.com/podcast.php',
+                          u'http://feeds.feedburner.com/Theburg/',
+                          u'http://feeds.theonion.com/OnionNewsNetwork',
                           u'http://feeds.feedburner.com/AskANinja']),
 
                         (_('High-Def'),
                          [u'http://www.telemusicvision.com/videos/rss.php?i=1',
                           u'http://revision3.com/pixelperfect/feed/quicktime-high-definition',
-                          u'http://www.movedigital.com/rss/rocketboom/main.xml'])
+                          u'http://www.movedigital.com/rss/rocketboom/main.xml',
+                          u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml'])
                         ]
     if platform.system() == "Darwin":
         defaultFeedURLs.append(
             (_('Mac'),
-             [u'http://feeds.feedburner.com/peters-screencast',
-              u'http://macbreak.libsyn.com/rss',
+             [u'http://feeds.feedburner.com/MacProPodcast',
               u'http://www.podshow.com/feeds/appleclipscomputer.xml',
-              u'http://libsyn.com/podcasts/donmc/_static/scoipod.xml']))
+              u'http://libsyn.com/podcasts/donmc/_static/scoipod.xml',
+              u'http://feeds.macworld.com/macworld/video']))
 
     for defaultFolder in defaultFeedURLs:
         c_folder = folder.ChannelFolder(defaultFolder[0])
