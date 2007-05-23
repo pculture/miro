@@ -94,8 +94,6 @@ def loadSearchEngine (file):
         SearchEngine (id, displayname, url, sort)
     except:
         warn(file, "Exception parsing file")
-        raise
-        #return
 
 def createEngines():
     deleteEngines()
