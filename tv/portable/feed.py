@@ -31,7 +31,7 @@ import menu
 import prefs
 import resources
 from util import returnsUnicode, unicodify, chatter, checkU, checkF
-from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType
+from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
 import filetypes
 import views
 import indexes
@@ -1768,6 +1768,10 @@ class DirectoryWatchFeedImpl(FeedImpl):
         self.signalChange()
 
     def update(self):
+        def isBasenameHidden(filename):
+            if filename[-1] == os.sep:
+                filename = filename[:-1]
+            return os.path.basename(filename)[0] == FilenameType('.')
         self.ufeed.confirmDBThread()
 
         # Files known about by real feeds (other than other directory
@@ -1795,12 +1799,12 @@ class DirectoryWatchFeedImpl(FeedImpl):
                     for f in os.listdir(self.dir)]
             toAdd = []
             for existingFile in existingFiles:
-                if os.path.isdir(existingFile):
+                if os.path.isdir(existingFile) and not isBasenameHidden(existingFile):
                     toAdd += [os.path.normcase(os.path.join(existingFile, f)) 
                               for f in os.listdir(existingFile)]
             existingFiles += toAdd
             for existingFile in existingFiles:
-                if (os.path.isfile(existingFile) and os.path.basename(existingFile)[0] != u'.'):
+                if os.path.isfile(existingFile) and not isBasenameHidden(existingFile):
                     if not existingFile in knownFiles:
                         if filetypes.isVideoFilename(platformutils.filenameToUnicode(existingFile)):
                             FileItem(existingFile, feed_id=self.ufeed.id)

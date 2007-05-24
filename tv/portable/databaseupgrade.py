@@ -649,6 +649,34 @@ def upgrade47(objectList):
             changed.add(o)
     return changed
 
+def upgrade48(objectList):
+    changed = set()
+    removed = set()
+    ids = set()
+    for o in objectList:
+        if o.classString == 'feed':
+            feedImpl = o.savedData['actualFeed']
+            if feedImpl.classString == 'directory-watch-feed-impl':
+                ids.add (o.savedData['id'])
+
+    if len(ids) == 0:
+        return changed
+
+    for i in xrange (len(objectList) - 1, -1, -1):
+        o = objectList [i]
+        if o.classString == 'file-item' and o.savedData['feed_id'] in ids:
+            removed.add (o.savedData['id'])
+            changed.add(o)
+            del objectList[i]
+
+    for i in xrange (len(objectList) - 1, -1, -1):
+        o = objectList [i]
+        if o.classString == 'file-item':
+            if o.savedData['parent_id'] in removed:
+                changed.add(o)
+                del objectList[i]
+    return changed
+
 #         if o.classString == 'item':
 #             objChanged = False
 #             for field in ('pendingReason','videoFilename'):

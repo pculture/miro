@@ -117,6 +117,7 @@ class OneTime (dbus.service.Object):
         import app
         import eventloop
         for i in xrange(len(args)):
+            args[i] = args[i].encode('latin1')
             if args[i].startswith('file://'):
                 args[i] = args[i][len('file://'):]
         eventloop.addIdle(lambda:singleclick.handleCommandLineArgs (args), "Open Files from dbus")
