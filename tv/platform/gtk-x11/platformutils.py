@@ -199,6 +199,8 @@ def resizeImage(source_path, dest_path, width, height):
     with black pixels.
     """
     convert_path = findConvert()
+    if convert_path == None:
+        return
     # From the "Pad Out Image" recipe at
     # http://www.imagemagick.org/Usage/thumbnails/
     border_width = max(width, height) / 2
