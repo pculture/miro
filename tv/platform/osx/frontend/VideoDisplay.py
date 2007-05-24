@@ -323,6 +323,7 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
     def activateVideoWindow(self):
         if self.window().isMiniaturized():
             self.window().deminiaturize_(nil)
+        self.window().orderFront_(nil)
         self.videoWindow.orderFront_(nil)
         if self.videoWindow.parentWindow() is nil:
             self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
