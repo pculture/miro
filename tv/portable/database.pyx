@@ -507,7 +507,7 @@ class DynamicDatabase:
                 self.cursor.forward();
             return self.objects[self.cursor][1]
         except:
-            raise StopIteration
+            raise StopIteration, "No next"
 
     ##
     # returns the next object in the view
