@@ -39,8 +39,14 @@ def createPrefsJS():
 # Mozilla User Preferences
 user_pref("security.warn_entering_secure", false);
 user_pref("security.warn_entering_weak", false);
+user_pref("security.warn_viewing_mixed", false);
 user_pref("security.warn_leaving_secure", false);
 user_pref("security.warn_submit_insecure", false);
+user_pref("security.warn_entering_secure.show_once", false);
+user_pref("security.warn_entering_weak.show_once", false);
+user_pref("security.warn_viewing_mixed.show_once", false);
+user_pref("security.warn_leaving_secure.show_once", false);
+user_pref("security.warn_submit_insecure.show_once", false);
 user_pref("general.useragent.vendor", %s);
 user_pref("general.useragent.vendorSub", %s);
 user_pref("general.useragent.vendorComment", %s);
