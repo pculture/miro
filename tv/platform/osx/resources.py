@@ -19,4 +19,4 @@ def url(relative_path):
 def absoluteUrl(absolute_path):
     """Like url, but without adding the resource directory.
     """
-    return u"file://" + absolute_path.decode('utf-8')
+    return u"file://" + urllib.quote(absolute_path.decode('utf-8'))
