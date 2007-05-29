@@ -18,6 +18,7 @@
 import os
 import re
 import sys
+import urllib
 import config
 import prefs
 
@@ -46,9 +47,9 @@ def sharePath(relative_path):
 
 # As path(), but return a file: URL instead.
 def url(relative_path):
-    return u'file://%s' % path(relative_path)
+    return u'file://%s' % urllib.quote(path(relative_path))
 
 def absoluteUrl(absolute_path):
     """Like url, but without adding the resource directory.
     """
-    return u"file://%s" % absolute_path
+    return u"file://%s" % urllib.quote(absolute_path)
