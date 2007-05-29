@@ -39,9 +39,9 @@ def path(relative_path):
     return abspath.replace("/", "\\")
 
 def url(relative_path):
-    return "file://" + urllib.quote(path(relative_path).replace("\\", "/"))
+    return u"file://" + urllib.quote(path(relative_path).replace("\\", "/"),safe="/:")
 
 def absoluteUrl(absolute_path):
     """Like url, but without adding the resource directory.
     """
-    return "file://" + urllib.quote(absolute_path.replace("\\", "/"))
+    return u"file://" + urllib.quote(absolute_path.replace("\\", "/"),safe="/:")
