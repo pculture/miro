@@ -1555,7 +1555,7 @@ def reconnectDownloaders():
 
 def getEntryForFile(filename):
     return FeedParserDict({'title':platformutils.filenameToUnicode(os.path.basename(filename)),
-            'enclosures':[{'url': u'file://%s' % platformutils.makeURLSafe(filename)}]})
+            'enclosures':[{'url': resources.url(filename)}]})
 
 ##
 # An Item that exists as a local file
