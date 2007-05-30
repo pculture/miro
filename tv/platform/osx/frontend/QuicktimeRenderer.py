@@ -168,6 +168,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         qttime = self.movie.currentTime()
         return _qttime2secs(qttime)
 
+    @platformutils.onMainThread
     def setCurrentTime(self, time):
         platformutils.warnIfNotOnMainThread('QuicktimeRenderer.setCurrentTime')
         if self.movie is not nil:
