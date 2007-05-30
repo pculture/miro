@@ -101,7 +101,9 @@ VideoItems = [
     Separator(),
     MenuItem(_("_Remove Video"), "RemoveVideos", (Key(DELETE),Key(BKSPACE, MOD)), False,
              plural=_("_Remove Videos")),
-    MenuItem(_("Re_name Video"), "RenameVideo", (), False),
+    #
+    # Not implemented
+    #MenuItem(_("Re_name Video"), "RenameVideo", (), False),
     MenuItem(_("Save Video _As..."), "SaveVideo", (Key("s",MOD),), False,
              plural=_("Save Videos _As...")),
     MenuItem(_("Copy Video _URL"), "CopyVideoURL", (Key("u", MOD),), False),
