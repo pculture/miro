@@ -904,6 +904,8 @@ class LiveStorage:
                         self.version = self.cursor.fetchone()
                         if self.version:
                             self.version = cPickle.loads(str(self.version[0]))
+                        else:
+                            self.version = schema_mod.VERSION
                         self.loadDatabase()
                     else:
                         self.version = None
@@ -921,7 +923,6 @@ class LiveStorage:
                 except databaseupgrade.DatabaseTooNewError:
                     raise
                 except:
-                    raise
                     self.handleDatabaseLoadError()
             else:
                 self.saveDatabase()
