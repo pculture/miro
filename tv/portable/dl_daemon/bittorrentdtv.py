@@ -381,7 +381,7 @@ class TorrentDownload:
             try:
                 fast_resume_data = {
                     'already_got': storagewrapper.get_have_list(),
-                    'mtimes': dict([(f.encode('utf-8'), path.getmtime(f)) for \
+                    'mtimes': dict([(f, path.getmtime(f)) for \
                             f, size in files]),
                 }
                 self.fast_resume_queue.put(bencode(fast_resume_data))
