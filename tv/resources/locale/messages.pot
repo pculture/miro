@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-01 15:15-0400\n"
+"POT-Creation-Date: 2007-06-01 15:23-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1816,7 +1816,7 @@ msgid "Delete Videos"
 msgstr ""
 
 #: ../../portable/dialogs.py:73
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:9
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
 msgid "Create Channel"
 msgstr ""
 
@@ -1838,12 +1838,13 @@ msgstr ""
 
 #: ../../portable/dialogs.py:193
 #: ../../platform/gtk-x11/glade/democracy.glade.h:52
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
 msgstr ""
 
 #: ../../portable/dialogs.py:193
 #: ../../platform/gtk-x11/glade/democracy.glade.h:31
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr ""
 
@@ -2555,7 +2556,7 @@ msgid "Go"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:48
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr ""
 
@@ -2798,27 +2799,19 @@ msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
-msgid "A search channel contains"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
-msgid "items that match a search term."
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
 msgid "Search Engine:"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
 msgid "Search For:"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
 msgstr ""
 
