@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-26 14:22-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-06-01 13:27-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -283,7 +283,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "In this:" = "W tym:";
 
-/* Flag: untranslated */
 "Item1" = "Item1";
 
 "Search Engine" = "Wyszukiwarka";
@@ -800,12 +799,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<label for=\"automatic\">Auto Download</label>" = "<label for=\"automatic\">Automatyczne Ściąganie</label>";
 
 /* File: ../../portable/compiled_templates/channel.py:458 */
-/* Flag: untranslated */
-"Looking for videos at this URL" = "Looking for videos at this URL";
+"Looking for videos at this URL" = "Poszukuje video pod  tym adresem";
 
 /* File: ../../portable/compiled_templates/external_playback.py:111 */
-/* Flag: untranslated */
-"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}";
+"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy nie może otworzyć tego pliku. Możesz spróbować otworzyć to przy pomocy innego programu.<br></br><br></br><strong>Nazwa pliku:</strong> ${filename}<Br></Br><strong>Rodzaj pliku:</strong> ${format}";
 
 /* File: ../../portable/compiled_templates/external_playback.py:115 */
 /* Flag: untranslated */
@@ -848,8 +845,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "${size} disk space free" = "${size} wolnej przestrzeni na dysku";
 
 /* File: ../../portable/compiled_templates/download.py:101 */
-/* Flag: untranslated */
-"${size} available for downloads" = "${size} available for downloads";
+"${size} available for downloads" = "${size} dostępne do pobierania";
 
 /* File: ../../portable/compiled_templates/download.py:153 */
 /* File: ../../portable/tabs.py:28 */
@@ -945,22 +941,18 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "outside of democracy." = "poza demokracją.";
 
 /* File: ../../portable/util.py:386 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%1.1fGB" = "%1.1fGB";
 
 /* File: ../../portable/util.py:388 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%1.1fMB" = "%1.1fMB";
 
 /* File: ../../portable/util.py:390 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%1.1fKB" = "%1.1fKB";
 
 /* File: ../../portable/util.py:392 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%0.0fB" = "%0.0fB";
 
@@ -1372,13 +1364,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "starting up" = "starting up";
 
 /* File: ../../portable/feed.py:682 */
-/* Flag: untranslated */
-"Update Channel Now" = "Update Channel Now";
+"Update Channel Now" = "Uaktualnij teraz kanal";
 
 /* File: ../../portable/feed.py:685 */
 /* File: ../../portable/feed.py:694 */
-/* Flag: untranslated */
-"Rename Channel" = "Rename Channel";
+"Rename Channel" = "Zmień nazwe kanału";
 
 /* File: ../../portable/feed.py:689 */
 /* Flag: untranslated */
@@ -1429,8 +1419,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." /* = "Uwaga: %d kanał/ów jest już dodane do subskrypcji. Te kanały pozostaną w tym samym miejscu." */;
 
 /* File: ../../portable/singleclick.py:151 */
-/* Flag: untranslated */
-"Subscription error" = "Subscription error";
+"Subscription error" = "Błąd prenumeraty";
 
 /* File: ../../portable/singleclick.py:161 */
 /* Flag: untranslated */
@@ -1701,16 +1690,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Go Big:" = "Go Big:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:19 */
-/* Flag: untranslated */
-"Leave it On:" = "Leave it On:";
+"Leave it On:" = "Zostaw włączone:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:22 */
 /* Flag: untranslated */
 "Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:17 */
-/* Flag: untranslated */
-"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:";
+"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Teraz możesz przeglądać program telewizyjny\ni zacząć oglądać. Pare wskazówek przed rozpoczęciem:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15 */
 "Reset Search" = "Wyczyść wyszukiwanie";
@@ -1873,8 +1860,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "P" = "P";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:41 */
-/* Flag: untranslated */
-"Pause Video" = "Pause Video";
+"Pause Video" = "Zatrzymaj Video";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:33 */
 "Playlist" = "Lista odtwarzania";

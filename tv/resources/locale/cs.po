@@ -9,18 +9,18 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2006-10-17 15:06+0000\n"
-"Last-Translator: sabik <sabik@baum.com.au>\n"
+"PO-Revision-Date: 2007-06-01 00:43+0000\n"
+"Last-Translator: Ondrej Donek <ondrejd@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Rosetta-Export-Date: 2006-12-01 07:28+0000\n"
+"X-Rosetta-Export-Date: 2007-06-01 17:08:16+0000\n"
 
 msgid "$log"
-msgstr ""
+msgstr "$log"
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
@@ -28,6 +28,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
+"<font face=\"Lucida Grande\" size=\"-1\">Náš systém pro správu chyb najdete "
+"na <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Napište nám co jste dělali "
+"a vložte text do schránky nahoře, odpovězte na pár otázek a my chybu "
+"opravíme.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -35,6 +39,10 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
+"Nemáte chvilku, aby jste vyplnili zprávu o pádu aplikace do našeho systému "
+"pro správu chyb? Přinejmenším by jsme potřebovali popis - pokud možno co "
+"nejpřesnější - co jste dělali v okamžiku pádu aplikace a také znaky z "
+"obrázku níže:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -59,23 +67,23 @@ msgid "Add Channel..."
 msgstr "Přidat kanál..."
 
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Přenést vše dopředu"
 
 msgid "Channels"
 msgstr "Kanály"
 
 msgid "Check for New Version"
-msgstr ""
+msgstr "Zkontrovat aktualizace"
 
 msgid "Clear Menu"
-msgstr ""
+msgstr "Vymazat menu"
 
 msgid "Close Window"
 msgstr "Zavřít okno"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15
 msgid "Copy"
-msgstr ""
+msgstr "Zkopírovat"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
 msgid "Copy Channel URL"
@@ -86,38 +94,38 @@ msgid "Copy Video URL"
 msgstr "Zkopírovat URL videa"
 
 msgid "Cut"
-msgstr ""
+msgstr "Vyjmout"
 
 #: ../../portable/dialogs.py:77
 msgid "Delete"
-msgstr ""
+msgstr "Odebrat"
 
 msgid "Democracy"
-msgstr ""
+msgstr "Democracy"
 
 msgid "Democracy Help"
-msgstr ""
+msgstr "Nápověda Democracy"
 
 msgid "Donate"
-msgstr ""
+msgstr "Přispěj"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14
 msgid "Edit"
-msgstr ""
+msgstr "Editovat"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6
 msgid "File"
 msgstr "Soubor"
 
 msgid "Full Screen"
-msgstr ""
+msgstr "Celá obrazovka"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47
 msgid "Help"
 msgstr "Nápověda"
 
 msgid "Hide Democracy"
-msgstr ""
+msgstr "Skrýt Democracy"
 
 msgid "Hide Others"
 msgstr "Skrýt ostatní"
@@ -126,7 +134,7 @@ msgid "Main Window"
 msgstr "Hlavní okno"
 
 msgid "MainMenu"
-msgstr "HlavníNabídka"
+msgstr "Hlavní nabídka"
 
 msgid "Minimize"
 msgstr "Minimalizovat"
@@ -138,13 +146,13 @@ msgid "New Channel Guide..."
 msgstr ""
 
 msgid "New Playlist Folder..."
-msgstr ""
+msgstr "Nová složka seznamu skladeb"
 
 msgid "New Playlist..."
-msgstr ""
+msgstr "Nový seznam skladeb..."
 
 msgid "New Search Channel..."
-msgstr ""
+msgstr "Nový vyhledávací kanál..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
 msgid "Next Video"
@@ -159,7 +167,7 @@ msgstr "Otevřít..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16
 msgid "Paste"
-msgstr ""
+msgstr "Vložit"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40
 msgid "Play Video"
@@ -167,24 +175,24 @@ msgstr "Přehrát video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
 msgid "Playback"
-msgstr ""
+msgstr "Přehrát"
 
 msgid "Playlists"
-msgstr ""
+msgstr "Seznamy skladeb"
 
 msgid "Preferencesâ¦"
-msgstr ""
+msgstr "Nastavení"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
 msgid "Previous Video"
 msgstr "Předchozí video"
 
 msgid "Quit Democracy"
-msgstr ""
+msgstr "Ukončit Democracy"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
 msgid "Remove..."
-msgstr ""
+msgstr "Odstranit..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
 msgid "Rename..."
@@ -192,24 +200,24 @@ msgstr "Přejmenovat..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "Save Video As..."
-msgstr "Nahrát video jako..."
+msgstr "Uložit video jako..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17
 msgid "Select All"
 msgstr "Označit vše"
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Pošli tento kanál příteli"
 
 msgid "Services"
-msgstr ""
+msgstr "Služby"
 
 msgid "Show All"
-msgstr ""
+msgstr "Zobrazit vše"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42
 msgid "Stop Video"
-msgstr ""
+msgstr "Zastavit video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30
 msgid "Update All Channels"
@@ -223,28 +231,29 @@ msgid "Window"
 msgstr "Okno"
 
 msgid "Zoom"
-msgstr ""
+msgstr "Lupa"
 
 msgid "%channel feed%"
-msgstr ""
+msgstr "%channel feed%"
 
 msgid "%channel title%"
-msgstr ""
+msgstr "%channel title%"
 
 msgid "%donation label%"
-msgstr ""
+msgstr "%donation label%"
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
-msgstr ""
+msgstr "00:00:00"
 
+#, fuzzy
 msgid "Box"
-msgstr ""
+msgstr "Panel"
 
 msgid "FullScreen Controls"
-msgstr ""
+msgstr "Ovladače celoobrazovkového režimu"
 
 #: ../../portable/tabs.py:27 ../../portable/feed.py:1718
 #: ../../portable/feed.py:1777
@@ -252,7 +261,7 @@ msgid "Search"
 msgstr "Hledat"
 
 msgid "VideoWindow"
-msgstr ""
+msgstr "Okno videa"
 
 #: ../../portable/dialogs.py:60
 msgid "Cancel"
@@ -267,7 +276,7 @@ msgid "Password:\n"
 msgstr "Heslo:\n"
 
 msgid "Username and password required"
-msgstr ""
+msgstr "Vyžadováno přihlašovací jméno a heslo"
 
 msgid ""
 "Username:\n"
@@ -277,13 +286,13 @@ msgstr ""
 "\n"
 
 msgid " limit upstream to"
-msgstr ""
+msgstr " omezit odchozí tok na"
 
 msgid "(You must restart Democracy for this change to take effect)\n"
-msgstr ""
+msgstr "(Pro aplikování změn musíte restartovat Democracy)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(cesta ke složce s filmy)"
 
 msgid "1 day"
 msgstr "1 den"
@@ -313,24 +322,26 @@ msgid "99999"
 msgstr "99999"
 
 msgid "BitTorrent ports:"
-msgstr ""
+msgstr "Porty BitTorrent:"
 
+#, fuzzy
 msgid "By default, videos expire after:"
-msgstr ""
+msgstr "Standartně vyprší video po:"
 
 msgid "Change..."
-msgstr ""
+msgstr "Změnit..."
 
 msgid "Check channels for new content:"
-msgstr ""
+msgstr "Zkontroluj kanály pro nový obsah:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
 msgid "Don't start a download if it leaves less than"
 msgstr "Nezačínat stahování pokud by zůstalo méně než"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
+#, fuzzy
 msgid "Download at most"
-msgstr ""
+msgstr "Stahovat nejvíce"
 
 msgid "GB free."
 msgstr "GB volných."
@@ -348,8 +359,9 @@ msgstr "Minimum:"
 msgid "Never"
 msgstr "Nikdy"
 
+#, fuzzy
 msgid "OtherViews"
-msgstr ""
+msgstr "Ostatní pohledy"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:53
 msgid "Play videos one after another."
@@ -359,14 +371,15 @@ msgid "Run Democracy at startup"
 msgstr "Při startu spustit Democracy"
 
 msgid "Save downloaded videos in this folder:"
-msgstr ""
+msgstr "Ukládat stažená videa do této složky:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:61
 msgid "Stop after each video."
-msgstr ""
+msgstr "Zastav přehrávání po každém videu."
 
+#, fuzzy
 msgid "To avoid internet slowdowns:"
-msgstr ""
+msgstr "K předejití zpomalení internetu:"
 
 msgid "every 30 minutes"
 msgstr "každých 30 minut"
@@ -379,13 +392,13 @@ msgstr "ručně"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
 msgid "videos at once."
-msgstr ""
+msgstr "videí najednou."
 
 msgid "$label$"
-msgstr ""
+msgstr "$label$"
 
 msgid "$title$"
-msgstr ""
+msgstr "$title$"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20
 msgid "Channel"
@@ -406,7 +419,7 @@ msgid "Search Engine"
 msgstr "Vyhledávač"
 
 msgid "Search for:"
-msgstr "Hledat:"
+msgstr "Vyhledat:"
 
 msgid "URL"
 msgstr "URL"
@@ -445,13 +458,14 @@ msgid "No"
 msgstr "Ne"
 
 msgid "Only search my Movies folder."
-msgstr ""
+msgstr "Vyhledávat pouze v mé složce Filmy."
 
+#, fuzzy
 msgid "Search my entire Home folder."
-msgstr ""
+msgstr "Prohledej celou mou složku Domov."
 
 msgid "Search this folder:"
-msgstr ""
+msgstr "Prohledej tuto složku:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
 msgid "Searching for Videos"
@@ -472,10 +486,16 @@ msgid ""
 "\n"
 "Would you like to run Democracy when your computer starts up?"
 msgstr ""
+"Doporučujeme povolit přehrávači Democracy automatické spouštění po startu "
+"počítače. Tak se bude moci dokončit stahování nestažených videí a nová videa "
+"ve vašich kanálech budou připravena kdykoli se budete chtít podívat.\n"
+"\n"
+"\n"
+"Chcete spouštět Democracy po startu počítače?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:66
 msgid "Welcome to Internet TV!"
-msgstr ""
+msgstr "Vítejte do internetové televize!"
 
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
@@ -484,6 +504,11 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Vítejte do internetové televize. Je pousta věcí, které můžete dělat pomocí "
+"přehrávače Democracy: automaticky stahovat videa z vašich oblíbených kanálů, "
+"sledovat nová jedno po druhém, stahovat torrenty, zasílat doporučení svým "
+"přátelům a mnoho dalšího.\n"
+"\n"
 
 #: ../../portable/dialogs.py:61
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27
@@ -518,90 +543,92 @@ msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
+"%message%\n"
+"%message%"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save Video _As..."
-msgstr ""
+msgstr "Uložit video j_ako"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
 msgid "Save this video"
-msgstr ""
+msgstr "Uložit toto video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
 msgid "_Copy Video URL"
-msgstr ""
+msgstr "_Kopírovat adresu videa"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
 msgid "_Remove Video"
-msgstr ""
+msgstr "_Odstranit video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123
 msgid "_Fullscreen"
-msgstr ""
+msgstr "_Přes celou obrazovku"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
 msgid "_Stop Video"
-msgstr ""
+msgstr "_Zastavit přehrávání"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
 msgid "_Next Video"
-msgstr ""
+msgstr "_Následující video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
 msgid "_Previous Video"
-msgstr ""
+msgstr "_Předchozí video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
 msgid "_Play / Pause"
-msgstr ""
+msgstr "_Přehrávat / Pozastavit"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:132
 msgid "Copy Channel _Link"
-msgstr ""
+msgstr "Kopíruj _odkaz na kanál"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133
 msgid "_Send this channel to a friend"
-msgstr ""
+msgstr "_Zaslat odkaz na kanál příteli"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
 msgid "_Update Channel"
-msgstr ""
+msgstr "Akt_ualizovat kanál"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
 msgid "Re_name Channel"
-msgstr ""
+msgstr "Přejme_novat kanál"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
 msgid "_Remove Channel"
-msgstr ""
+msgstr "_Odstraň kanál"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "Přejme_novat seznam skladeb"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "_Odstranit seznam skladeb"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151
 msgid "_Video"
-msgstr ""
+msgstr "_Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152
 msgid "_Channels"
-msgstr ""
+msgstr "_Kanály"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153
 msgid "_Playlists"
-msgstr ""
+msgstr "_Seznamy skladeb"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:154
 msgid "P_layback"
-msgstr ""
+msgstr "Pře_hrát"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
 msgid "_Open..."
-msgstr ""
+msgstr "_Otevřít..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
 msgid "Open various files"
@@ -609,35 +636,35 @@ msgstr "Otevřít různé soubory"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
 msgid "New _Playlist..."
-msgstr ""
+msgstr "Nový _seznam skladeb"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
 msgid "Create new playlist"
-msgstr ""
+msgstr "Vytvořit nový seznam skladeb"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
 msgid "New Playlist _Folder..."
-msgstr ""
+msgstr "No_vá složka seznamu skladeb"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
 msgid "Create new playlist folder"
-msgstr ""
+msgstr "Vytvořit novou složku seznamu skladeb"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
 msgid "New Channel _Folder..."
-msgstr ""
+msgstr "Nová skložka _kanálu"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
 msgid "Create new channel folder"
-msgstr ""
+msgstr "Vytvořit novou složku kanálu"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160
 msgid "Add _Channel..."
-msgstr ""
+msgstr "Přidat _kanál"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161
 msgid "New Searc_h Channel..."
-msgstr ""
+msgstr "Přidej nový _vyhledávací kanál"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162
 msgid "New Channel _Guide..."
@@ -645,32 +672,32 @@ msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164
 msgid "P_references"
-msgstr ""
+msgstr "Nastav_ení"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165
 msgid "_Quit"
-msgstr ""
+msgstr "_Zavřít"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165
 msgid "Quit the Program"
-msgstr "Odejít z programu"
+msgstr "Ukončit program"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:166
 msgid "U_pdate All Channels"
-msgstr ""
+msgstr "Akt_ualizovat všechny kanály"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:167
 msgid "_Help"
-msgstr ""
+msgstr "Nápověd_a"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169
 msgid "_Donate"
-msgstr ""
+msgstr "_Přispěj"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172
 msgid "Delete selection"
-msgstr ""
+msgstr "Odstranit výběr"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
@@ -694,47 +721,47 @@ msgstr "Stala se neznámá chyba %s."
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
 #: ../../platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
-msgstr ""
+msgstr "_Odstranit..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6
 #: ../../platform/osx/frontend/UIStrings.py:6
 msgid "_Remove Playlist..."
-msgstr ""
+msgstr "_Odstranit seznam skladeb..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7
 #: ../../platform/osx/frontend/UIStrings.py:7
 msgid "_Remove Playlists..."
-msgstr ""
+msgstr "_Odstranit seznamy skladeb..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8
 #: ../../platform/osx/frontend/UIStrings.py:8
 msgid "_Remove Playlist Folder..."
-msgstr ""
+msgstr "_Odstranit složku seznamu skladeb..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:9
 #: ../../platform/osx/frontend/UIStrings.py:9
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "_Odstranit složky seznamů skladeb..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10
 #: ../../platform/osx/frontend/UIStrings.py:10
 msgid "_Remove Channel..."
-msgstr ""
+msgstr "_Odstranit kanál..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11
 #: ../../platform/osx/frontend/UIStrings.py:11
 msgid "_Remove Channels..."
-msgstr ""
+msgstr "_Odstranit kanály..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12
 #: ../../platform/osx/frontend/UIStrings.py:12
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "_Odstranit složku kanálu..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13
 #: ../../platform/osx/frontend/UIStrings.py:13
 msgid "_Remove Channel Folders..."
-msgstr ""
+msgstr "_Odstranit složky kanálů..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14
 #: ../../platform/osx/frontend/UIStrings.py:14
@@ -749,37 +776,37 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16
 #: ../../platform/osx/frontend/UIStrings.py:16
 msgid "_Remove Video..."
-msgstr ""
+msgstr "_Odstranit video..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:17
 #: ../../platform/osx/frontend/UIStrings.py:17
 msgid "_Remove Videos..."
-msgstr ""
+msgstr "_Odstranit videa..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18
 #: ../../platform/osx/frontend/UIStrings.py:18
 msgid "Re_name..."
-msgstr ""
+msgstr "Přejme_novat..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:19
 #: ../../platform/osx/frontend/UIStrings.py:19
 msgid "Re_name Playlist..."
-msgstr ""
+msgstr "Přejme_novat seznam skladeb..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:20
 #: ../../platform/osx/frontend/UIStrings.py:20
 msgid "Re_name Playlist Folder..."
-msgstr ""
+msgstr "Přejme_novat složku seznamu skladeb..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:21
 #: ../../platform/osx/frontend/UIStrings.py:21
 msgid "Re_name Channel..."
-msgstr ""
+msgstr "Přejme_novat kanál..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:22
 #: ../../platform/osx/frontend/UIStrings.py:22
 msgid "Re_name Channel Folder..."
-msgstr ""
+msgstr "Přejme_novat složku kanálu..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:23
 #: ../../platform/osx/frontend/UIStrings.py:23
@@ -789,12 +816,12 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24
 #: ../../platform/osx/frontend/UIStrings.py:24
 msgid "_Update Channel..."
-msgstr ""
+msgstr "Akt_ualizovat kanál..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25
 #: ../../platform/osx/frontend/UIStrings.py:25
 msgid "_Update Channels..."
-msgstr ""
+msgstr "Akt_ualizovat kanály..."
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:59
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:157
@@ -812,33 +839,33 @@ msgstr ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:163
 msgid "Error Recommending Item"
-msgstr ""
+msgstr "Chyba při doporučování položky"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:165
 msgid "Error Opening Website"
-msgstr ""
+msgstr "Chyba při otevírání stránky"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:169
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr "Nastala chyba s otvíráním %s. Zkuste to znovu za pár vteřin"
+msgstr "Nastala chyba s otevíráním %s. Zkuste to znovu za několik vteřin"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37
 msgid "Remove Playlist..."
-msgstr ""
+msgstr "Odstranit seznam skladeb..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7
 msgid "Remove Playlists..."
-msgstr ""
+msgstr "Odstranit seznamy skladeb..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:8
 msgid "Remove Playlist Folder..."
-msgstr ""
+msgstr "Odstranit složku seznamu skladeb..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:9
 msgid "Remove Playlist Folders..."
-msgstr ""
+msgstr "Odstranit složky seznamů skladeb..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27
@@ -876,11 +903,11 @@ msgstr "Odstranit videa..."
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36
 msgid "Rename Playlist..."
-msgstr ""
+msgstr "Přejmenovat seznam skladeb..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20
 msgid "Rename Playlist Folder..."
-msgstr ""
+msgstr "Přejmenovat složku seznamu skladeb..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26
@@ -909,7 +936,7 @@ msgid ""
 "Error importing democracy modules:\n"
 "%s"
 msgstr ""
-"Chyba při načítání modulů democracy:\n"
+"Chyba při načítání modulů přehrávače Democracy:\n"
 "%s"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:40
@@ -918,15 +945,15 @@ msgstr "Začínám"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:136
 msgid "Loading window"
-msgstr ""
+msgstr "Načítám okno"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:137
 msgid "onStartup called twice"
-msgstr ""
+msgstr "onStartup bylo voláno dvakrát"
 
 #: ../../portable/playlist.py:175 ../../portable/playlist.py:180
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Přejmenovat seznam skladeb"
 
 #: ../../portable/playlist.py:176 ../../portable/folder.py:120
 #: ../../portable/folder.py:175 ../../portable/guide.py:130
@@ -938,15 +965,15 @@ msgstr "Odstranit"
 #: ../../portable/playlist.py:181
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Vložte nové jméno pro seznam skladeb %s"
 
 #: ../../portable/playlist.py:194
 msgid "Create Playlist"
-msgstr ""
+msgstr "Vytvořit seznam skladeb"
 
 #: ../../portable/playlist.py:195
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Vložte jméno pro nový seznam skladeb"
 
 #: ../../portable/compiled_templates/search.py:39
 msgid "Nothing to display.<br></br> Enter a query in the search field above."
@@ -959,69 +986,74 @@ msgstr "Hledám..."
 
 #: ../../portable/compiled_templates/search.py:56
 msgid "Results for \"${query}\""
-msgstr ""
+msgstr "Výsledky pro \"${query}\""
 
 #: ../../portable/compiled_templates/search.py:95
 msgid "Video Search"
-msgstr ""
+msgstr "Vyzhledej video"
 
 #: ../../portable/compiled_templates/playlist.py:56
 msgid "Empty Playlist"
-msgstr ""
+msgstr "Prázdný seznam skladeb"
 
 #: ../../portable/compiled_templates/playlist.py:58
 msgid "Drag downloaded videos to this playlist to add them."
 msgstr ""
+"Přetáhněte stažená videa do tohoto seznamu skladeb pokud je chcete přidat."
 
 #: ../../portable/compiled_templates/playlist_folder.py:59
 msgid "Empty Playlist Folder"
-msgstr ""
+msgstr "Prázdná složka seznamu skladeb"
 
 #: ../../portable/compiled_templates/playlist_folder.py:71
 msgid ""
 "This folder contains ${count} playlists, but the playlists do not contain "
 "any items."
 msgstr ""
+"Tato složka obsahuje ${count} seznamů skladeb, ale všechny seznamy jsou "
+"prázdné."
 
 #: ../../portable/compiled_templates/playlist_folder.py:76
 msgid "Drag playlists to this folder to add them."
-msgstr ""
+msgstr "Přetáhněte seznamy skladeb do této složky pokud je chcete přidat."
 
 #: ../../portable/compiled_templates/multi_playlist.py:57
 msgid ""
 "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
 "playlists)"
 msgstr ""
+"Označeno ${count} složek seznamů skladeb<br></br>(obsahují ${containedcount} "
+"seznamů skladeb)"
 
 #: ../../portable/compiled_templates/multi_playlist.py:69
 msgid "${count} Playlists Selected"
-msgstr ""
+msgstr "Označeno ${count} seznamů skladeb"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:47
 #: ../../portable/compiled_templates/video_info.py:40
 #: ../../portable/compiled_templates/external_playback.py:50
 msgid "STAR"
-msgstr ""
+msgstr "HVĚZDA"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:57
 #: ../../portable/compiled_templates/video_info.py:50
 #: ../../portable/compiled_templates/external_playback.py:60
 #: ../../portable/compiled_templates/download_item.py:201
 msgid "SAVE"
-msgstr ""
+msgstr "ULOŽIT"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:62
 #: ../../portable/compiled_templates/video_info.py:55
 #: ../../portable/compiled_templates/external_playback.py:65
 msgid "SAVED"
-msgstr ""
+msgstr "ULOŽENO"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:70
 #: ../../portable/compiled_templates/video_info.py:63
 #: ../../portable/compiled_templates/external_playback.py:73
 #: ../../portable/compiled_templates/download_item.py:211
 msgid "DELETE"
-msgstr ""
+msgstr "SMAŽ"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:85
 #: ../../portable/compiled_templates/external_playback.py:88
@@ -1030,7 +1062,7 @@ msgstr "Democracy - Šablona vnějšího přehrávání"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:95
 msgid "Continue To Next Video"
-msgstr ""
+msgstr "Pokračovat na další video"
 
 #: ../../portable/compiled_templates/channelfolder.py:166
 msgid "${count} Downloads in Progress"
@@ -1058,35 +1090,35 @@ msgstr "Videí v tomto kanálu: ${count}"
 
 #: ../../portable/compiled_templates/channelfolder.py:290
 msgid "Unwatched"
-msgstr ""
+msgstr "Neshlédnuté"
 
 #: ../../portable/compiled_templates/channelfolder.py:301
 msgid "Watched"
-msgstr ""
+msgstr "Shlédnuté"
 
 #: ../../portable/compiled_templates/channelfolder.py:312
 msgid "Saved"
-msgstr ""
+msgstr "Uložené"
 
 #: ../../portable/compiled_templates/feed_settings.py:32
 #: ../../portable/compiled_templates/channel.py:152
 msgid "Default"
-msgstr ""
+msgstr "Výchozí"
 
 #: ../../portable/compiled_templates/feed_settings.py:39
 #: ../../portable/compiled_templates/channel.py:159
 msgid "default"
-msgstr ""
+msgstr "výchozí"
 
 #: ../../portable/compiled_templates/feed_settings.py:110
 #: ../../portable/compiled_templates/channel.py:379
 msgid "Videos expire after"
-msgstr ""
+msgstr "Videa vyprší po"
 
 #: ../../portable/compiled_templates/feed_settings.py:113
 #: ../../portable/compiled_templates/channel.py:382
 msgid "When turned on, Auto Download should"
-msgstr ""
+msgstr "Pokud je zapnutý, má automatické stahování"
 
 #: ../../portable/compiled_templates/feed_settings.py:146
 #: ../../portable/compiled_templates/channel.py:415
@@ -1094,12 +1126,14 @@ msgid ""
 "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
 "unwatched."
 msgstr ""
+"Nezačínat automatické stahování pokud zbývá více než ${maxnew} ${maxnew2} "
+"videí neshlédnutých."
 
 #: ../../portable/compiled_templates/channel.py:316
 #: ../../portable/compiled_templates/channel_content.py:122
 #: ../../portable/compiled_templates/channel_folder.py:252
 msgid "Downloaded"
-msgstr ""
+msgstr "Staženo"
 
 #: ../../portable/compiled_templates/channel.py:428
 msgid "Recommend"
@@ -1113,7 +1147,7 @@ msgstr "Nastavení"
 
 #: ../../portable/compiled_templates/channel.py:440
 msgid "<label for=\"automatic\">Auto Download</label>"
-msgstr ""
+msgstr "<label for=\"automatic\">Automatické stahování</label>"
 
 #: ../../portable/compiled_templates/channel.py:458
 msgid "Looking for videos at this URL"
@@ -1125,6 +1159,9 @@ msgid ""
 "program.<br></br><br></br><strong>Filename:</strong> "
 "${filename}<Br></Br><strong>File type:</strong> ${format}"
 msgstr ""
+"Democracy nemůže přehrát tento soubor. Můžete zkusit ho otevřít v jiném "
+"programu.<br></br><br></br><strong>Jméno souboru:</strong> "
+"${filename}<Br></Br><strong>Typ souboru:</strong> ${format}"
 
 #: ../../portable/compiled_templates/external_playback.py:115
 msgid "REVEAL FILE"
@@ -1140,15 +1177,15 @@ msgstr ""
 
 #: ../../portable/compiled_templates/download_item.py:114
 msgid "SHOW FILE"
-msgstr ""
+msgstr "ZOBRAZ SOUBOR"
 
 #: ../../portable/compiled_templates/download_item.py:121
 msgid "SHOW FOLDER"
-msgstr ""
+msgstr "ZOBRAZ SLOŽKU"
 
 #: ../../portable/compiled_templates/download_item.py:135
 msgid "SHARE IT"
-msgstr ""
+msgstr "SDÍLEJ"
 
 #: ../../portable/compiled_templates/download_item.py:144
 msgid "STAR IT"
@@ -1171,14 +1208,18 @@ msgid ""
 "This is a ${car} and this is a ${truck} <span>This text is <b "
 "style=\"color:red\">raw</b> text</span>"
 msgstr ""
+"Toto je ${car} a tohle je ${truck} <span>Tento text je <b "
+"style=\"color:red\">prostý</b> text</span>"
 
 #: ../../portable/compiled_templates/download.py:91
+#, fuzzy
 msgid "${size} disk space free"
-msgstr ""
+msgstr "${size} volného místa na disku"
 
 #: ../../portable/compiled_templates/download.py:101
+#, fuzzy
 msgid "${size} available for downloads"
-msgstr ""
+msgstr "${size} dostupné pro stahování"
 
 #: ../../portable/compiled_templates/download.py:153 ../../portable/tabs.py:28
 msgid "Downloading"
@@ -1186,11 +1227,11 @@ msgstr "Stahuji"
 
 #: ../../portable/compiled_templates/download.py:168
 msgid "Clear Completed Torrents"
-msgstr ""
+msgstr "Vymaž dokončené Torrenty"
 
 #: ../../portable/compiled_templates/channel_folder.py:138
 msgid "Empty Channel Folder"
-msgstr ""
+msgstr "Prázdná složka kanálu"
 
 #: ../../portable/compiled_templates/channel_folder.py:140
 msgid "Drag channels to this folder to add them."
@@ -1218,13 +1259,15 @@ msgstr ""
 
 #: ../../portable/compiled_templates/first_time_intro.py:48
 msgid "NEW STUFF:"
-msgstr ""
+msgstr "NOVINKA"
 
 #: ../../portable/compiled_templates/first_time_intro.py:50
 msgid ""
 "Blue circles mean the channel has new videos available, green circles mean "
 "you have downloaded videos ready to watch."
 msgstr ""
+"Modré kroužky značí, že kanál má k dispozici nová videa, zelené kroužky "
+"značí, že stahované filmy jsou připraveny ke shlédnutí."
 
 #: ../../portable/compiled_templates/first_time_intro.py:52
 msgid ""
@@ -1266,10 +1309,11 @@ msgid ""
 "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
 "channels)"
 msgstr ""
+"${count} označených složek kanálů<br></br>(obsahují ${containedcount} kanálů)"
 
 #: ../../portable/compiled_templates/multi_channel.py:69
 msgid "${count} Channels Selected"
-msgstr ""
+msgstr "${count} kanálů označeno"
 
 #: ../../portable/dl_daemon/download.py:298
 msgid "Error"
@@ -1291,16 +1335,16 @@ msgstr "Toto video potřebuje %s MB"
 
 #: ../../portable/dl_daemon/download.py:676
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "Porušený Torrent"
 
 #: ../../portable/dl_daemon/download.py:677
 #, python-format
 msgid "The torrent file at %s was not valid"
-msgstr ""
+msgstr "Soubor torrentu není v %s validní"
 
 #: ../../portable/dl_daemon/download.py:702
 msgid "Torrent file deleted"
-msgstr ""
+msgstr "Soubor Torrentu smazán"
 
 #: ../../portable/dl_daemon/download.py:703
 msgid "The torrent file for this item was deleted "
@@ -1375,11 +1419,11 @@ msgstr ""
 #: ../../portable/httpclient.py:92
 #, python-format
 msgid "%s closed connection"
-msgstr ""
+msgstr "%s zavřených spojení"
 
 #: ../../portable/httpclient.py:97 ../../portable/downloader.py:173
 msgid "File not found"
-msgstr ""
+msgstr "Soubor nebyl nalezen"
 
 #: ../../portable/httpclient.py:98
 msgid "Got 404 status code"
@@ -1404,12 +1448,12 @@ msgstr "Nezačala žádost potrubí"
 
 #: ../../portable/httpclient.py:114
 msgid "Timeout"
-msgstr ""
+msgstr "Vypršení času"
 
 #: ../../portable/httpclient.py:115
 #, python-format
 msgid "Connection to %s timed out"
-msgstr ""
+msgstr "Vypršel čas spojení %s"
 
 #: ../../portable/httpclient.py:119
 msgid "Invalid URL"
@@ -1457,6 +1501,10 @@ msgid ""
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
+"%s nemohl uložit svoji databázi: Disk je plný.\n"
+"Doporučujeme smazat soubory ze zaplněného disku nebo jednoduše smazat "
+"některé filmy z vaší sbírky.\n"
+"Poslední změny mohou být ztraceny."
 
 #: ../../portable/dialogs.py:59
 msgid "Ok"
@@ -1465,17 +1513,17 @@ msgstr "Budiž"
 #: ../../portable/dialogs.py:63
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12
 msgid "Quit"
-msgstr ""
+msgstr "Zavřít"
 
 #: ../../portable/dialogs.py:64
 #: ../../platform/gtk-x11/glade/democracy.glade.h:50
 msgid "Migrate"
-msgstr ""
+msgstr "Migrovat"
 
 #: ../../portable/dialogs.py:65
 #: ../../platform/gtk-x11/glade/democracy.glade.h:40
 msgid "Don't Migrate"
-msgstr ""
+msgstr "Nemigrovat"
 
 #: ../../portable/dialogs.py:66 ../../portable/item.py:1169
 #: ../../portable/menu.py:92
@@ -1484,7 +1532,7 @@ msgstr "Stáhnout"
 
 #: ../../portable/dialogs.py:67
 msgid "Remove Entry"
-msgstr ""
+msgstr "Odstranit položku"
 
 #: ../../portable/dialogs.py:68
 msgid "Delete File"
@@ -1542,12 +1590,12 @@ msgstr "Vložte nové jméno pro složku kanálů %s"
 
 #: ../../portable/folder.py:174 ../../portable/folder.py:179
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Přejmenovat složku seznamu skladeb"
 
 #: ../../portable/folder.py:181
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
-msgstr ""
+msgstr "Zadejte nové jméno pro služku seznamu skladeb %s"
 
 #: ../../portable/folder.py:189
 msgid "Create Channel Folder"
@@ -1559,11 +1607,11 @@ msgstr "Vložte jméno pro novou složku kanálů"
 
 #: ../../portable/folder.py:203
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Vytvořit složku seznamu skladeb"
 
 #: ../../portable/folder.py:204
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Vložte jméno pro složku nového seznamu skladeb"
 
 #: ../../portable/item.py:397
 #, python-format
@@ -1575,6 +1623,8 @@ msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
 msgstr ""
+"Tato položka je složka. Pokud odstraníte složku, veškeré položky uvnitř této "
+"složky budou smazány."
 
 #: ../../portable/item.py:420
 #, python-format
@@ -1598,11 +1648,11 @@ msgstr "Vyprší za %s"
 
 #: ../../portable/item.py:751
 msgid "TORRENT"
-msgstr ""
+msgstr "TORRENT"
 
 #: ../../portable/item.py:753
 msgid "WEB PAGE"
-msgstr ""
+msgstr "WEBOVÁ STRÁNKA"
 
 #: ../../portable/item.py:956
 msgid "downloading..."
@@ -1615,31 +1665,31 @@ msgstr "zbývá %s"
 
 #: ../../portable/item.py:974
 msgid "starting up..."
-msgstr ""
+msgstr "začínám..."
 
 #: ../../portable/item.py:1154 ../../portable/menu.py:78
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "Odstranit ze seznamu skladeb"
 
 #: ../../portable/item.py:1156 ../../portable/menu.py:80
 msgid "Remove From My Collection"
-msgstr ""
+msgstr "Odstranit z Mé sbírky"
 
 #: ../../portable/item.py:1158 ../../portable/menu.py:75
 msgid "Play"
-msgstr ""
+msgstr "Přehrávat"
 
 #: ../../portable/item.py:1160
 msgid "Play Just This Video"
-msgstr ""
+msgstr "Přehrát pouze toto video"
 
 #: ../../portable/item.py:1161 ../../portable/menu.py:76
 msgid "Add to new playlist"
-msgstr ""
+msgstr "Přidat do nového seznamu skladeb"
 
 #: ../../portable/item.py:1165 ../../portable/menu.py:86
 msgid "Mark as Unwatched"
-msgstr ""
+msgstr "Označit jako neshlédnuté"
 
 #: ../../portable/item.py:1167 ../../portable/menu.py:99
 msgid "Cancel Download"
@@ -1655,12 +1705,15 @@ msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from My Collection?"
 msgstr ""
+"Chcete smazat tuto složku a všechna její videa nebo pouze odstranit záznam o "
+"ní z vaší sbírky?"
 
 #: ../../portable/item.py:1408
 msgid ""
 "Would you like to delete this file or just remove its entry from My "
 "Collection?"
 msgstr ""
+"Chcete tento soubor smazat nebo pouze odstranit záznam o něm z vaší sbírky?"
 
 #: ../../portable/item.py:1499
 #, python-format
@@ -1672,12 +1725,16 @@ msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from My Collection?"
 msgstr ""
+"Jedno či více z těchto videí nebylo z kanálu staženo. Chcete tyto položky "
+"smazat nebo pouze odstranit záznamy o nich z vaší sbírky?"
 
 #: ../../portable/item.py:1509
 msgid ""
 "One or more of these items is a folder.  When you remove or delete a folder, "
 "any items inside that folder will also be removed or deleted."
 msgstr ""
+"Jedna nebo více těchto položek jsou složky. Pokud odstraníte nebo smažete "
+"složku, všechny položky uvnitř ní budou také odstraněny či smazány."
 
 #: ../../portable/app.py:668
 msgid "Database too new"
@@ -1716,7 +1773,7 @@ msgstr "Odstranit kanálů: %s"
 #: ../../portable/app.py:837
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
+msgstr "Skutečně chcete odstranit tyto %s eznamy skladeb"
 
 #: ../../portable/app.py:861
 #, python-format
@@ -1738,22 +1795,22 @@ msgstr ""
 msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
-msgstr ""
+msgstr "Co chcete udělat s videi v tomto kanálu, které jste právě stáhli?"
 
 #: ../../portable/app.py:886
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
-msgstr ""
+msgstr "Co chcete udělat s videi v tomto kanálu, které jste právě stáhli?"
 
 #: ../../portable/app.py:923
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "Skutečně to chcete zavřít aplikaci?"
 
 #: ../../portable/app.py:924
 #, python-format
 msgid "You have %d download still in progress."
-msgid_plural "You have %d downloads still in progress."
+msgid_plural "You have %d download still in progress."
 msgstr[0] "Stále běží %d stahování."
 msgstr[1] "Stále běží %d stahování."
 msgstr[2] "Stále běží %d stahování."
@@ -1799,7 +1856,7 @@ msgstr ""
 
 #: ../../portable/app.py:1977
 msgid "Example Playlist"
-msgstr ""
+msgstr "Ukázkový seznam skladeb"
 
 #: ../../portable/app.py:1996
 msgid "Custom Channels"
@@ -1843,11 +1900,11 @@ msgstr ""
 
 #: ../../portable/downloader.py:317
 msgid "starting up"
-msgstr ""
+msgstr "startuji"
 
 #: ../../portable/feed.py:682
 msgid "Update Channel Now"
-msgstr ""
+msgstr "Aktualizovat kanál"
 
 #: ../../portable/feed.py:685 ../../portable/feed.py:694
 msgid "Rename Channel"
@@ -1864,20 +1921,20 @@ msgstr "Vložte nové jméno pro kanál %s"
 
 #: ../../portable/feed.py:776
 msgid "Error loading feed"
-msgstr ""
+msgstr "Chyba při načítání proudu"
 
 #: ../../portable/feed.py:777
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
-msgstr ""
+msgstr "Nemohu stáhnout proud na %s (%s)."
 
 #: ../../portable/feed.py:780
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "Chcete ponechat tento proud?"
 
 #: ../../portable/feed.py:885
 msgid "Bad content-type"
-msgstr ""
+msgstr "Špatný typ obsahu"
 
 #: ../../portable/feed.py:898
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4
@@ -1896,11 +1953,11 @@ msgstr ""
 
 #: ../../portable/feed.py:1791
 msgid "Local File"
-msgstr ""
+msgstr "Místní soubor"
 
 #: ../../portable/singleclick.py:122
 msgid "Subscribing to multiple channels"
-msgstr ""
+msgstr "Odebírat více kanálů"
 
 #: ../../portable/singleclick.py:123
 #, python-format
@@ -1923,14 +1980,16 @@ msgstr ""
 
 #: ../../portable/singleclick.py:151
 msgid "Subscription error"
-msgstr ""
+msgstr "Chyba při odebírání"
 
 #: ../../portable/singleclick.py:161
-#, python-format
+#, fuzzy
 msgid ""
 "This Democracy channel file has an invalid format: %s. Please notify the "
 "publisher of this file."
 msgstr ""
+"Tento Democracy soubor má spatný formát: %s. Prosíme, aby jste informovali "
+"vydavatele tohoto souboru."
 
 #: ../../portable/singleclick.py:170
 #, python-format
@@ -1938,6 +1997,8 @@ msgid ""
 "This Democracy channel file has the wrong content type: %s. Please notify "
 "the publisher of this file."
 msgstr ""
+"Tento soubor Democracy kanálu má špatný typ obsahu: %s. Oznamte to, prosím, "
+"vydavateli tohoto souboru."
 
 #: ../../portable/singleclick.py:175
 #, python-format
@@ -1946,12 +2007,13 @@ msgstr "Stáhnutí souboru kanálu Democracy selhalo: %s."
 
 #: ../../portable/singleclick.py:201
 msgid "Invalid Torrent"
-msgstr ""
+msgstr "Chybný Torrent"
 
 #: ../../portable/singleclick.py:202
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
 msgstr ""
+"Soubor Torrentu %s vypadá, že je porušený a nemůže být proto otevřen. [OK]"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:1
 msgid "(Changes won't go into effect until you restart Democracy Player.)"
@@ -1975,7 +2037,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:8
 msgid "<b>BitTorrent</b>"
-msgstr ""
+msgstr "<b>BitTorrent</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:9
 msgid "<b>Channels</b>"
@@ -1991,15 +2053,15 @@ msgstr "<b>Stahování</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:12
 msgid "<b>General</b>"
-msgstr ""
+msgstr "<b>Obecné</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:13
 msgid "<b>Movies Directory</b>"
-msgstr ""
+msgstr "<b>Složka filmů</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:14
 msgid "<b>Playback</b>"
-msgstr ""
+msgstr "<b>Přehrát</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:15
 msgid "<b>Searching for Videos</b>"
@@ -2075,6 +2137,8 @@ msgid ""
 "Democracy Player can find all the videos on your computer to help you "
 "organize your collection."
 msgstr ""
+"Aby vám přehrávač Democracy zjednodušil správu vaší sbírky, může projít váš "
+"počítač a vyhledat všechna videa."
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:43
 msgid ""
@@ -2101,36 +2165,36 @@ msgstr "V:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:49
 msgid "KB/s when my computer is active"
-msgstr ""
+msgstr "KB/s pokud je můj počítač aktivní"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:51
 msgid "Migrate existing movies?"
-msgstr ""
+msgstr "Přesunout existující filmy?"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:54
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:18
 msgid "Preferences"
-msgstr ""
+msgstr "Nastaveni"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:55
 msgid "Restrict to my full _home folder"
-msgstr ""
+msgstr "Omez na celou moji _domovskou složku"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:56
 msgid "Search _Engine:"
-msgstr ""
+msgstr "Vyhl_edávač"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:57
 msgid "Search _custom folder:"
-msgstr ""
+msgstr "Vyhledej _složku:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:58
 msgid "Select Movies Directory"
-msgstr ""
+msgstr "Vyber složkus s filmy"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:59
 msgid "Select custom search directory"
-msgstr ""
+msgstr "Vyberte složku k vyhledávání"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:60
 msgid "Show movies in these directories in My Collection"
@@ -2192,7 +2256,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:73
 msgid "_URL"
-msgstr ""
+msgstr "_Adresa"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:74
 msgid "and"
@@ -2208,7 +2272,7 @@ msgstr "a"
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
 msgid " "
-msgstr ""
+msgstr " "
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:2
@@ -2220,7 +2284,7 @@ msgstr ""
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:2
 msgid "'"
-msgstr ""
+msgstr "'"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:21
@@ -2229,7 +2293,7 @@ msgstr "Přidat kanál"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:5
 msgid "Please enter the URL of the channel you'd like to add."
-msgstr ""
+msgstr "Zadejte, prosím, adresu kanálu, který chcete přidat."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:5
 msgid ""
@@ -2239,26 +2303,30 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7
 msgid "Please contact the publishers of"
-msgstr ""
+msgstr "Kontaktujte, prosím, vydavatele"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:8
 msgid ""
 "and ask if they can supply a feed in a format that will work with Democracy."
 msgstr ""
+"a zeptejte se jich, zda nemohou poskytovat proud ve formátu, který přehrávač "
+"Democracy podporuje."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4
 msgid "Channel requires authentication"
-msgstr ""
+msgstr "Kanál vyžaduje identifikaci"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:5
 msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
 msgstr ""
+"Vložte, prosím, uživatelské jméno a heslo, které vám přidělil vydavatel "
+"tohoto kanálu."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:4
 msgid "A search channel contains"
-msgstr ""
+msgstr "Vyhledávací kanál obsahuje"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:5
 msgid "items that match a search term."
@@ -2305,11 +2373,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:25
 msgid "Find Videos:"
-msgstr ""
+msgstr "Najdi videa:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:23
 msgid "Go Big:"
-msgstr ""
+msgstr "Zvětši:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:19
 msgid "Leave it On:"
@@ -2331,15 +2399,15 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15
 msgid "Reset Search"
-msgstr ""
+msgstr "Zrušit vyhledávání"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:10
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Omezit na všechny moje soubory."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:11
 msgid "Search custom folder:"
-msgstr ""
+msgstr "Prohledej složku:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:26
 msgid ""
@@ -2586,8 +2654,8 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:71
 msgid "U"
-msgstr ""
+msgstr "U"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:53
 msgid "V"
-msgstr ""
+msgstr "V"

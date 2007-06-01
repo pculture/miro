@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-04-19 23:39+0000\n"
-"Last-Translator: amargem <amargem@gmail.com>\n"
+"PO-Revision-Date: 2007-05-23 19:32+0000\n"
+"Last-Translator: Túlio Simões Martins Padilha <tuliouel@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Rosetta-Export-Date: 2007-04-25 16:38:18+0000\n"
+"X-Rosetta-Export-Date: 2007-05-25 03:08:10+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -1073,9 +1073,8 @@ msgstr "${count} Playlists Selecionadas"
 #: ../../portable/compiled_templates/external_playback_continue.py:47
 #: ../../portable/compiled_templates/video_info.py:40
 #: ../../portable/compiled_templates/external_playback.py:50
-#, fuzzy
 msgid "STAR"
-msgstr "Marcar com uma estrela como favorito"
+msgstr "Marcar como favorito"
 
 #: ../../portable/compiled_templates/external_playback_continue.py:57
 #: ../../portable/compiled_templates/video_info.py:50

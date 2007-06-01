@@ -4,21 +4,21 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-26 14:22-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-06-01 13:27-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
-"$log" = "$log";
+"$log" = "$Journal";
 
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Notre traqueur de bugs : <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Dites-nous ce que vous étiez en train de faire, collez le message d'erreur de la boîte ci-dessus puis répondez à quelques questions, et nous nous mettrons immédiatement au travail.</font>";
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Notre traqueur de bugues : <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Dites-nous ce que vous étiez en train de faire, collez le message d'erreur de la boîte ci-dessus puis répondez à quelques questions, et nous nous mettrons immédiatement au travail.</font>";
 
 "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "En fait, si vous aviez une minute, seriez-vous disposé à envoyer un rapport d'anomalie à notre système de pistage de bogues ?\r\nNous aurions besoin, au moins,  d'une description de ce que vous faisiez juste avant ce bogue -- aussi précise que possible -- et du charabia technique dans la boite ci-dessous :";
 
-"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Pas de chance ! $longAppName est tombé victime d'une espèce de confusion interne $when. Nous vous présentons nos excuses et nous vous suggérons de quitter et redémarrer $shortAppName. Ça lui apprendra, et cela réduira aussi les risques de perte de vos préférences ou de vos abonnements aux chaînes.";
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Pas de chance ! $longAppName est tombé victime d'une espèce de confusion interne $when. Nous vous présentons nos excuses et nous vous suggérons de quitter et de redémarrer $shortAppName. Ça lui apprendra, et cela réduira aussi les risques de perte de vos préférences ou de vos abonnements aux chaînes.";
 
 "OK" = "OK";
 
 "The fall of $shortAppName??" = "L'échec de $shortAppName??";
 
-"About Democracy" = "À propos de Democracy";
+"About Democracy" = "À propos de Démocracie";
 
 "Add Channel..." = "Ajouter une chaîne...";
 
@@ -26,8 +26,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Channels" = "Chaînes";
 
-/* Flag: untranslated */
-"Check for New Version" = "Check for New Version" /* = "Vérifier l'existence d'une nouvelle version" */;
+"Check for New Version" = "Vérifier l'existence d'une nouvelle version";
 
 "Clear Menu" = "Effacer le menu";
 
@@ -40,16 +39,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Copy Channel URL" = "Copier l'adresse URL de la chaîne";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11 */
-"Copy Video URL" = "Copier l'adresse URL de la vidéo";
+"Copy Video URL" = "Copier l'adresse URL du vidéo";
 
 "Cut" = "Couper";
 
 /* File: ../../portable/dialogs.py:77 */
 "Delete" = "Supprimer";
 
-"Democracy" = "Democracy";
+"Democracy" = "Démocratie";
 
-"Democracy Help" = "Aide de Democracy";
+"Democracy Help" = "Aide de Démocracie";
 
 "Donate" = "Faire un don";
 
@@ -64,7 +63,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47 */
 "Help" = "Aide";
 
-"Hide Democracy" = "Masquer Democracy";
+"Hide Democracy" = "Masquer Democracie";
 
 "Hide Others" = "Masquer les autres";
 
@@ -83,13 +82,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "New Playlist..." = "Nouvelle liste de lecture…";
 
 /* Flag: untranslated */
-"New Search Channel..." = "New Search Channel..." /* = "Nouvelle chaîne à partir d'une recherche..." */;
+"New Search Channel..." = "New Search Channel..." /* = "Nouvelle recherche de chaîne..." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43 */
-"Next Video" = "Vidéo suivante";
+"Next Video" = "Vidéo suivant";
 
-/* Flag: untranslated */
-"Open Recent" = "Open Recent" /* = "Ouvrir fichier récent" */;
+"Open Recent" = "Ouverture de fichiers récents";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7 */
 "Open..." = "Ouvrir…";
@@ -98,19 +96,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Paste" = "Coller";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40 */
-"Play Video" = "Lire la vidéo";
+"Play Video" = "Lire le vidéo";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39 */
-"Playback" = "Lecture";
+"Playback" = "Rejouer";
 
 "Playlists" = "Listes de lecture";
 
 "Preferencesâ¦" = "Préférencesâ¦";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44 */
-"Previous Video" = "Vidéo précédente";
+"Previous Video" = "Vidéo précédent";
 
-"Quit Democracy" = "Quitter Democracy";
+"Quit Democracy" = "Quitter Démocracie";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5 */
 "Remove..." = "Supprimer...";
@@ -119,7 +117,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Rename..." = "Renommer…";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10 */
-"Save Video As..." = "Enregister la vidéo sous...";
+"Save Video As..." = "Enregister le vidéo sous...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17 */
 "Select All" = "Tout sélectionner";
@@ -131,7 +129,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Show All" = "Tout afficher";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42 */
-"Stop Video" = "Arrêter la vidéo";
+"Stop Video" = "Arrêter la lecture";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30 */
 "Update All Channels" = "Actualiser toutes les chaînes";
@@ -141,7 +139,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Window" = "Fenêtre";
 
-"Zoom" = "Zoom";
+"Zoom" = "Agrandissement";
 
 /* Flag: untranslated */
 "%channel feed%" = "%channel feed%" /* = "%flux de la chaîne%" */;
@@ -168,7 +166,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/dialogs.py:60 */
 "Cancel" = "Annuler";
 
-"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
+"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "L'adresse http://foo.bar.com/baz requière un nom d'utilisateur et un mot de passe pour avoir accès au \"texte fourni par le serveur\". (Ne pas localiser -- données teste)\n";
 
 "Password:\n" = "Mot de passe :\n";
 
@@ -176,9 +174,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Username:\n\n" = "Nom d'utilisateur :\n\n";
 
-" limit upstream to" = " limiter la vitesse d'upload à";
+" limit upstream to" = " limiter la vitesse de téléversement à";
 
-"(You must restart Democracy for this change to take effect)\n" = "(Vous devez redémarrer Democracy pour que ces changements prennent effet)\n";
+"(You must restart Democracy for this change to take effect)\n" = "(Vous devez redémarrer Démocracie pour que ces changements soient pris en compte)\n";
 
 "(movies directory path goes here)" = "(saisir le chemin vers le répertoire des vidéos ici)";
 
@@ -206,10 +204,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Change..." = "Modifier...";
 
-"Check channels for new content:" = "Vérifier la présence de nouveaux contenus dans les chaînes:";
+"Check channels for new content:" = "Vérifier la présence de nouveau contenu dans les chaînes:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:41 */
-"Don't start a download if it leaves less than" = "Ne pas démarrer de téléchargement s'il reste moins de";
+/* Flag: untranslated */
+"Don't start a download if it leaves less than" = "Don't start a download if it leaves less than" /* = "Ne pas démarrer de téléchargement s'il reste moins de" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:42 */
 "Download at most" = "Télécharger un maximun de";
@@ -229,7 +228,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:53 */
 "Play videos one after another." = "Lire les vidéos en continu.";
 
-"Run Democracy at startup" = "Lancer Democracy au démarrage";
+"Run Democracy at startup" = "Lancer Démocracie au démarrage";
 
 "Save downloaded videos in this folder:" = "Sauvegarder les téléchargements dans ce dossier:";
 
@@ -245,7 +244,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "manually" = "manuellement";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
-"videos at once." = "vidéos individuelles";
+"videos at once." = "vidéos immédiatement.";
 
 "$label$" = "$nom$";
 
@@ -796,7 +795,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/compiled_templates/unittest/translationtest.py:57 */
 /* Flag: untranslated */
-"truck stop in a ${can}" = "truck stop in a ${can}" /* = "camion stoppé dans un ${can}" */;
+"truck stop in a ${can}" = "truck stop in a ${can}" /* = "Arrêt de camion dans un ${can}" */;
 
 /* File: ../../portable/compiled_templates/unittest/translationtest.py:61 */
 "This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "Ceci est une ${car} et ceci est un ${truck} <span>Ce texte est du texte <b style=\"color:red\">brut</b></span>";
@@ -841,8 +840,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "NEW STUFF:" = "NOUVEAUX:";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:50 */
-/* Flag: untranslated */
-"Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." /* = "Les cercles bleus signifient qu'une chaîne a de nouvelles vidéos disponibles, les cercles verts signifient que vous avez téléchargés des vidéos prêtes à être regardées." */;
+"Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "Les cercles bleus signifient qu'une chaîne a de nouveaus vidéos disponibles, les cercles verts signifient que vous avez téléchargés des vidéos prêts à être regardés.";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:52 */
 "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">PASSEZ L'INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Aller au guide des chaînes >></a></strong>";
@@ -854,8 +852,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later." = "<strong>N'attendez pas:</strong> Democracy est différent de la consultation des vidéos sur une page web-- les diffuseurs peuvent offrir des vidéos de haute qualité. Donc, ne vous posez pas en attendant le téléchargement des vidéos : lancez quelques téléchargements et regardez les plus tard.";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:58 */
-/* Flag: untranslated */
-"<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." = "<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." /* = "<strong>Laisser activé:</strong> Le lecteur Democracy vérifie périodiquement la présence de nouvelles vidéos sur les chaînes et les télécharge automatiquement en arrière-plan. Le laisser ouvert signifie que vous aurez de nouvelles vidéos prêtes à être visionner." */;
+"<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." = "<strong>Laisser activé:</strong> Le lecteur Démocracie vérifie périodiquement la présence de nouveaus vidéos sur les chaînes et les télécharge automatiquement en arrière-plan. Le laisser ouvert signifie que vous aurez de nouveaus vidéos prêts à être visionner.";
 
 /* File: ../../portable/compiled_templates/first_time_intro.py:60 */
 "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "<strong>Ne vous inquiétez pas de l'espace disque:</strong> Comme un TiVo, le lecteur Democracy contient une fonctionnalité 'd'expiration' qui permet de supprimer les vidéos plus anciennes pour faire de la place pour les vidéos plus récentes. Vous pouvez toujours conserver une vidéo de manière permanente en cliquant sur 'Sauvegarder' et vous pouvez définir un réglage de chaîne pour sauvegarder automatiquement.";
@@ -939,8 +936,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Bad Header Line: %s" = "Mauvaise en-tête: %s";
 
 /* File: ../../portable/httpclient.py:86 */
-/* Flag: untranslated */
-"Bad Chunk size: %s" = "Bad Chunk size: %s" /* = "Mauvaise taille du morceau: %s" */;
+/* Flag: python-format */
+"Bad Chunk size: %s" = "Mauvaise taille du morceau: %s";
 
 /* File: ../../portable/httpclient.py:89 */
 /* Flag: python-format */
@@ -1769,7 +1766,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Remove Video" = "Supprimer Vidéo";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103 */
-"Right" = "Droit";
+"Right" = "Droite";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:84 */
 "S" = "S";

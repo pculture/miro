@@ -8,18 +8,18 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-04-04 15:28+0000\n"
-"Last-Translator: Simon Allan <allan.simon@supinfo.com>\n"
+"PO-Revision-Date: 2007-05-30 17:49+0000\n"
+"Last-Translator: Isabeau <isabeau.premont.schwarz@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Rosetta-Export-Date: 2007-04-10 13:38:12+0000\n"
+"X-Rosetta-Export-Date: 2007-06-01 17:08:20+0000\n"
 
 msgid "$log"
-msgstr "$log"
+msgstr "$Journal"
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
@@ -27,7 +27,7 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
-"<font face=\"Lucida Grande\" size=\"-1\">Notre traqueur de bugs : <a "
+"<font face=\"Lucida Grande\" size=\"-1\">Notre traqueur de bugues : <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Dites-nous ce que vous étiez en "
 "train de faire, collez le message d'erreur de la boîte ci-dessus puis "
 "répondez à quelques questions, et nous nous mettrons immédiatement au "
@@ -53,8 +53,9 @@ msgid ""
 msgstr ""
 "Pas de chance ! $longAppName est tombé victime d'une espèce de confusion "
 "interne $when. Nous vous présentons nos excuses et nous vous suggérons de "
-"quitter et redémarrer $shortAppName. Ça lui apprendra, et cela réduira aussi "
-"les risques de perte de vos préférences ou de vos abonnements aux chaînes."
+"quitter et de redémarrer $shortAppName. Ça lui apprendra, et cela réduira "
+"aussi les risques de perte de vos préférences ou de vos abonnements aux "
+"chaînes."
 
 msgid "OK"
 msgstr "OK"
@@ -63,7 +64,7 @@ msgid "The fall of $shortAppName??"
 msgstr "L'échec de $shortAppName??"
 
 msgid "About Democracy"
-msgstr "À propos de Democracy"
+msgstr "À propos de Démocracie"
 
 msgid "Add Channel..."
 msgstr "Ajouter une chaîne..."
@@ -74,7 +75,6 @@ msgstr "Tout ramener au premier plan"
 msgid "Channels"
 msgstr "Chaînes"
 
-#, fuzzy
 msgid "Check for New Version"
 msgstr "Vérifier l'existence d'une nouvelle version"
 
@@ -94,7 +94,7 @@ msgstr "Copier l'adresse URL de la chaîne"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "Copy Video URL"
-msgstr "Copier l'adresse URL de la vidéo"
+msgstr "Copier l'adresse URL du vidéo"
 
 msgid "Cut"
 msgstr "Couper"
@@ -104,10 +104,10 @@ msgid "Delete"
 msgstr "Supprimer"
 
 msgid "Democracy"
-msgstr "Democracy"
+msgstr "Démocratie"
 
 msgid "Democracy Help"
-msgstr "Aide de Democracy"
+msgstr "Aide de Démocracie"
 
 msgid "Donate"
 msgstr "Faire un don"
@@ -128,7 +128,7 @@ msgid "Help"
 msgstr "Aide"
 
 msgid "Hide Democracy"
-msgstr "Masquer Democracy"
+msgstr "Masquer Democracie"
 
 msgid "Hide Others"
 msgstr "Masquer les autres"
@@ -156,15 +156,14 @@ msgstr "Nouvelle liste de lecture…"
 
 #, fuzzy
 msgid "New Search Channel..."
-msgstr "Nouvelle chaîne à partir d'une recherche..."
+msgstr "Nouvelle recherche de chaîne..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
 msgid "Next Video"
-msgstr "Vidéo suivante"
+msgstr "Vidéo suivant"
 
-#, fuzzy
 msgid "Open Recent"
-msgstr "Ouvrir fichier récent"
+msgstr "Ouverture de fichiers récents"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "Open..."
@@ -176,11 +175,11 @@ msgstr "Coller"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40
 msgid "Play Video"
-msgstr "Lire la vidéo"
+msgstr "Lire le vidéo"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
 msgid "Playback"
-msgstr "Lecture"
+msgstr "Rejouer"
 
 msgid "Playlists"
 msgstr "Listes de lecture"
@@ -190,10 +189,10 @@ msgstr "Préférencesâ¦"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
 msgid "Previous Video"
-msgstr "Vidéo précédente"
+msgstr "Vidéo précédent"
 
 msgid "Quit Democracy"
-msgstr "Quitter Democracy"
+msgstr "Quitter Démocracie"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
 msgid "Remove..."
@@ -205,7 +204,7 @@ msgstr "Renommer…"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "Save Video As..."
-msgstr "Enregister la vidéo sous..."
+msgstr "Enregister le vidéo sous..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17
 msgid "Select All"
@@ -222,7 +221,7 @@ msgstr "Tout afficher"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42
 msgid "Stop Video"
-msgstr "Arrêter la vidéo"
+msgstr "Arrêter la lecture"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30
 msgid "Update All Channels"
@@ -236,7 +235,7 @@ msgid "Window"
 msgstr "Fenêtre"
 
 msgid "Zoom"
-msgstr "Zoom"
+msgstr "Agrandissement"
 
 #, fuzzy
 msgid "%channel feed%"
@@ -276,8 +275,9 @@ msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
-"Location http://foo.bar.com/baz requires a username and password for \"text "
-"supplied by server\". (Do not localize -- test data)\n"
+"L'adresse http://foo.bar.com/baz requière un nom d'utilisateur et un mot de "
+"passe pour avoir accès au \"texte fourni par le serveur\". (Ne pas localiser "
+"-- données teste)\n"
 
 msgid "Password:\n"
 msgstr "Mot de passe :\n"
@@ -293,11 +293,12 @@ msgstr ""
 "\n"
 
 msgid " limit upstream to"
-msgstr " limiter la vitesse d'upload à"
+msgstr " limiter la vitesse de téléversement à"
 
 msgid "(You must restart Democracy for this change to take effect)\n"
 msgstr ""
-"(Vous devez redémarrer Democracy pour que ces changements prennent effet)\n"
+"(Vous devez redémarrer Démocracie pour que ces changements soient pris en "
+"compte)\n"
 
 msgid "(movies directory path goes here)"
 msgstr "(saisir le chemin vers le répertoire des vidéos ici)"
@@ -339,9 +340,10 @@ msgid "Change..."
 msgstr "Modifier..."
 
 msgid "Check channels for new content:"
-msgstr "Vérifier la présence de nouveaux contenus dans les chaînes:"
+msgstr "Vérifier la présence de nouveau contenu dans les chaînes:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
+#, fuzzy
 msgid "Don't start a download if it leaves less than"
 msgstr "Ne pas démarrer de téléchargement s'il reste moins de"
 
@@ -372,7 +374,7 @@ msgid "Play videos one after another."
 msgstr "Lire les vidéos en continu."
 
 msgid "Run Democracy at startup"
-msgstr "Lancer Democracy au démarrage"
+msgstr "Lancer Démocracie au démarrage"
 
 msgid "Save downloaded videos in this folder:"
 msgstr "Sauvegarder les téléchargements dans ce dossier:"
@@ -395,7 +397,7 @@ msgstr "manuellement"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
 msgid "videos at once."
-msgstr "vidéos individuelles"
+msgstr "vidéos immédiatement."
 
 msgid "$label$"
 msgstr "$nom$"
@@ -1241,7 +1243,7 @@ msgstr "Traduction simple"
 #: ../../portable/compiled_templates/unittest/translationtest.py:57
 #, fuzzy
 msgid "truck stop in a ${can}"
-msgstr "camion stoppé dans un ${can}"
+msgstr "Arrêt de camion dans un ${can}"
 
 #: ../../portable/compiled_templates/unittest/translationtest.py:61
 msgid ""
@@ -1300,14 +1302,13 @@ msgid "NEW STUFF:"
 msgstr "NOUVEAUX:"
 
 #: ../../portable/compiled_templates/first_time_intro.py:50
-#, fuzzy
 msgid ""
 "Blue circles mean the channel has new videos available, green circles mean "
 "you have downloaded videos ready to watch."
 msgstr ""
-"Les cercles bleus signifient qu'une chaîne a de nouvelles vidéos "
-"disponibles, les cercles verts signifient que vous avez téléchargés des "
-"vidéos prêtes à être regardées."
+"Les cercles bleus signifient qu'une chaîne a de nouveaus vidéos disponibles, "
+"les cercles verts signifient que vous avez téléchargés des vidéos prêts à "
+"être regardés."
 
 #: ../../portable/compiled_templates/first_time_intro.py:52
 msgid ""
@@ -1341,16 +1342,15 @@ msgstr ""
 "vidéos : lancez quelques téléchargements et regardez les plus tard."
 
 #: ../../portable/compiled_templates/first_time_intro.py:58
-#, fuzzy
 msgid ""
 "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
 "new videos and downloads in the background. Leaving it running means you'll "
 "have new videos when you're ready to watch."
 msgstr ""
-"<strong>Laisser activé:</strong> Le lecteur Democracy vérifie périodiquement "
-"la présence de nouvelles vidéos sur les chaînes et les télécharge "
-"automatiquement en arrière-plan. Le laisser ouvert signifie que vous aurez "
-"de nouvelles vidéos prêtes à être visionner."
+"<strong>Laisser activé:</strong> Le lecteur Démocracie vérifie "
+"périodiquement la présence de nouveaus vidéos sur les chaînes et les "
+"télécharge automatiquement en arrière-plan. Le laisser ouvert signifie que "
+"vous aurez de nouveaus vidéos prêts à être visionner."
 
 #: ../../portable/compiled_templates/first_time_intro.py:60
 msgid ""
@@ -1470,7 +1470,7 @@ msgid "Bad Header Line: %s"
 msgstr "Mauvaise en-tête: %s"
 
 #: ../../portable/httpclient.py:86
-#, fuzzy
+#, python-format
 msgid "Bad Chunk size: %s"
 msgstr "Mauvaise taille du morceau: %s"
 
@@ -2773,7 +2773,7 @@ msgstr "Supprimer Vidéo"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103
 msgid "Right"
-msgstr "Droit"
+msgstr "Droite"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:84
 msgid "S"

@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Democracy\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-04-14 08:55+0000\n"
-"Last-Translator: Matteo Piotto <piotto@gmail.com>\n"
+"PO-Revision-Date: 2007-05-16 10:07+0000\n"
+"Last-Translator: mosta <mosta.ml@email.it>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-04-25 16:38:16+0000\n"
+"X-Rosetta-Export-Date: 2007-05-20 10:48:12+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -371,7 +371,7 @@ msgid "Stop after each video."
 msgstr "Ferma dopo ogni video."
 
 msgid "To avoid internet slowdowns:"
-msgstr ""
+msgstr "Per evitare rallentamenti della linea internet"
 
 msgid "every 30 minutes"
 msgstr "ogni 30 minuti"
@@ -387,10 +387,10 @@ msgid "videos at once."
 msgstr "video ad esecuzione"
 
 msgid "$label$"
-msgstr ""
+msgstr "$etichetta$"
 
 msgid "$title$"
-msgstr ""
+msgstr "$titolo$"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20
 msgid "Channel"
@@ -404,7 +404,7 @@ msgid "In this:"
 msgstr "In questo:"
 
 msgid "Item1"
-msgstr ""
+msgstr "oggetto1"
 
 msgid "Search Engine"
 msgstr "Motore di ricerca"
@@ -588,12 +588,13 @@ msgid "_Stop Video"
 msgstr "_Ferma Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
+#, fuzzy
 msgid "_Next Video"
-msgstr ""
+msgstr "Video Successivo"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
 msgid "_Previous Video"
-msgstr ""
+msgstr "Video _Precedente"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
 msgid "_Play / Pause"
@@ -605,7 +606,7 @@ msgstr "Copia _Link al Canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133
 msgid "_Send this channel to a friend"
-msgstr ""
+msgstr "_Segnala questo canale ad un amico"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
 msgid "_Update Channel"
@@ -613,7 +614,7 @@ msgstr "Aggiorna canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
 msgid "Re_name Channel"
-msgstr ""
+msgstr "Ri_nomina Canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
 msgid "_Remove Channel"
@@ -621,7 +622,7 @@ msgstr "_Rimuovi canale"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "Ri_nomina Playlist"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148
 msgid "_Remove Playlist"
@@ -768,27 +769,30 @@ msgstr ""
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11
 #: ../../platform/osx/frontend/UIStrings.py:11
 msgid "_Remove Channels..."
-msgstr ""
+msgstr "_Rimuovi canali"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12
 #: ../../platform/osx/frontend/UIStrings.py:12
+#, fuzzy
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "_Rimuovi Cartella Dei Canali..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13
 #: ../../platform/osx/frontend/UIStrings.py:13
 msgid "_Remove Channel Folders..."
-msgstr ""
+msgstr "_Rimuovi Cartelle Canale..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14
 #: ../../platform/osx/frontend/UIStrings.py:14
+#, fuzzy
 msgid "_Remove Channel Guide..."
-msgstr ""
+msgstr "_Rimuovi Guida Ai Canali..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:15
 #: ../../platform/osx/frontend/UIStrings.py:15
+#, fuzzy
 msgid "_Remove Channel Guides..."
-msgstr ""
+msgstr "_Rimuovi Guide Ai Canali..."
 
 #: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16
 #: ../../platform/osx/frontend/UIStrings.py:16
@@ -2345,12 +2349,14 @@ msgstr ""
 "del canale."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:4
+#, fuzzy
 msgid "A search channel contains"
-msgstr ""
+msgstr "Un canale di ricerca contiene"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:5
+#, fuzzy
 msgid "items that match a search term."
-msgstr ""
+msgstr "gli oggetti che soddisfano un criterio di ricerca."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:9
 msgid "Channel:"
@@ -2369,16 +2375,18 @@ msgid "URL:"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:14
+#, fuzzy
 msgid "Cancel Search"
-msgstr ""
+msgstr "Annulla Ricerca"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:13
 msgid "Change"
 msgstr "Cambia"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:4
+#, fuzzy
 msgid "Democracy First Time Setup"
-msgstr ""
+msgstr "Democracy Prima Configurazione"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:20
 msgid ""
@@ -2388,12 +2396,14 @@ msgid ""
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:21
+#, fuzzy
 msgid "Don't Worry About Disk Space:"
-msgstr ""
+msgstr "Non ti preoccupare delle spazio sul disco"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:25
+#, fuzzy
 msgid "Find Videos:"
-msgstr ""
+msgstr "Trova Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:23
 msgid "Go Big:"
@@ -2404,18 +2414,27 @@ msgid "Leave it On:"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:22
+#, fuzzy
 msgid ""
 "Like a TiVo, Democracy Player features an 'expiration' system that helps "
 "clean out older videos to make room for new videos.  You can always keep a "
 "video permanently by clicking 'save' and you can set a channel's settings to "
 "save videos automatically."
 msgstr ""
+"Come TiVo, Democracy Player adotta un sistema di 'scadenze' che aiuta a "
+"cancellare i vecchi video per fare spazio ai nuovi. Puoi comunque scegliere "
+"di conservere i video permanentemente cliccando su 'salva' e puoi impostare "
+"le preferenze di un canale in modo che il salvataggio avvenga "
+"automaticamente."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:17
+#, fuzzy
 msgid ""
 "Now you can explore the Channel Guide\n"
 "and start watching.  A few tips to get started:"
 msgstr ""
+"Adesso puoi esplorare la Guida ai Canali\n"
+"e cominciare a guardare. Alcuni suggerimenti per cominciare:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15
 msgid "Reset Search"
@@ -2423,47 +2442,64 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:10
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Applica soltanto ai miei file personali."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:11
 msgid "Search custom folder:"
-msgstr ""
+msgstr "Cerca cartella personalizzata:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:26
+#, fuzzy
 msgid ""
 "The Democracy Channel Guide has hundreds of internet TV channels, all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"La Guida ai Canali di Democracy contiene centinaia di canali internet, tutti "
+"sono liberi. Per guardare un canale è sufficiente cliccare su 'AGGIUNGI.'"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:24
+#, fuzzy
 msgid "The button to the right of the play button shows videos fullscreen."
 msgstr ""
+"Alla destra del bottone 'play' trovi il bottone per guardare i programmi a "
+"tutto schermo."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:5
+#, fuzzy
 msgid ""
 "The next few screens will help you set up Democracy Player so that it works "
 "best for you."
 msgstr ""
+"Le prossime schermate ti aiuteranno a configurare Democracy Player nel modo "
+"che più ti piace."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:6
+#, fuzzy
 msgid ""
 "We recommend that you have Democracy Player launch when your computer starts "
 "up.  This way, videos in progress can finish downloading and new videos can "
 "be downloaded in the background, ready when you want to watch."
 msgstr ""
+"Ti raccomandiamo di fare in modo che Democracy Player si avvii "
+"all'accensione del computer. In questo modo puoi portare a termine i "
+"download dei video che stai scaricando e nuovi video possono essere "
+"scaricati in background tutti pronti per essere visti quando vorrai."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:9
+#, fuzzy
 msgid ""
 "Would you like Democracy Player to look for video files on your computer?"
-msgstr ""
+msgstr "Vuoi che Democracy Player cerchi i file video sul tuo computer?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:7
+#, fuzzy
 msgid "Would you like to run Democracy on startup?"
 msgstr ""
+"Vuoi che Democracy si avvii automaticamente quando accendi il computer?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:16
 msgid "You're done!"
-msgstr ""
+msgstr "Hai finito!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4
 msgid "Question"
@@ -2529,16 +2565,18 @@ msgid "A"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:105
+#, fuzzy
 msgid "Alt+Enter"
-msgstr ""
+msgstr "Alt+Invio"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:74
 msgid "C"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8
+#, fuzzy
 msgid "Check Version"
-msgstr ""
+msgstr "Controlla Versione"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:96
 msgid "Ctrl+A"
@@ -2581,8 +2619,9 @@ msgid "D"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:49
+#, fuzzy
 msgid "Donate to the Democracy project"
-msgstr ""
+msgstr "Fai una donazione al progetto Democracy"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:59
 msgid "E"
@@ -2622,11 +2661,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:23
 msgid "New Channel Folder"
-msgstr ""
+msgstr "Nuova Cartella Canali"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:25
 msgid "New Channel Guide"
-msgstr ""
+msgstr "Nuova Guida Canali"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:34
 msgid "New Playlist"
@@ -2661,8 +2700,9 @@ msgid "R"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9
+#, fuzzy
 msgid "Remove Video"
-msgstr ""
+msgstr "Rimuovi Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103
 msgid "Right"
@@ -2674,7 +2714,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:31
 msgid "Send This Channel to a Friend..."
-msgstr ""
+msgstr "Invia quest Canale ad un amico..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:101
 msgid "Space"

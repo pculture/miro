@@ -564,6 +564,7 @@ msgstr ""
 
 msgid ""
 "%message%\n"
+"%message%\n"
 msgstr "%message%\n"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116

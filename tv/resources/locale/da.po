@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-02-22 21:59+0000\n"
-"Last-Translator: Thomsen <junk@andersthomsen.dk>\n"
+"PO-Revision-Date: 2007-05-31 04:54+0000\n"
+"Last-Translator: rescph <rescph@gmail.com>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-02-23 04:08+0000\n"
+"X-Rosetta-Export-Date: 2007-06-01 17:08:18+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -186,14 +186,14 @@ msgstr "Indstillingerâ¦"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
 msgid "Previous Video"
-msgstr ""
+msgstr "Foregående Video"
 
 msgid "Quit Democracy"
 msgstr "Afslut Democracy"
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
 msgid "Remove..."
-msgstr ""
+msgstr "Fjern..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
 msgid "Rename..."
@@ -201,14 +201,14 @@ msgstr "Omdøb..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "Save Video As..."
-msgstr ""
+msgstr "Gem Video Som..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17
 msgid "Select All"
 msgstr "Vælg alle"
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Send denne Kanal til en ven"
 
 msgid "Services"
 msgstr "Tjenester"
@@ -322,13 +322,13 @@ msgid "99999"
 msgstr ""
 
 msgid "BitTorrent ports:"
-msgstr ""
+msgstr "BitTorrent porte:"
 
 msgid "By default, videos expire after:"
 msgstr "Som standard udløber videoer efter:"
 
 msgid "Change..."
-msgstr ""
+msgstr "Ændr..."
 
 msgid "Check channels for new content:"
 msgstr "Tjek kanaler for nyt indhold:"
@@ -406,22 +406,22 @@ msgstr "Kanal"
 
 #: ../../portable/dialogs.py:72
 msgid "Create"
-msgstr ""
+msgstr "Opret"
 
 msgid "In this:"
-msgstr ""
+msgstr "I denne:"
 
 msgid "Item1"
-msgstr ""
+msgstr "Emne1"
 
 msgid "Search Engine"
-msgstr ""
+msgstr "Søgemaskine"
 
 msgid "Search for:"
-msgstr ""
+msgstr "Søg efter:"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:31
 #: ../../platform/windows-xul/frontend_implementation/startup.py:25
@@ -433,7 +433,7 @@ msgid "Back"
 msgstr "Tilbage"
 
 msgid "Browse"
-msgstr ""
+msgstr "Gennemse..."
 
 msgid ""
 "Democracy Player can find all the videos on your computer to help you "
@@ -457,7 +457,7 @@ msgid "No"
 msgstr "Nej"
 
 msgid "Only search my Movies folder."
-msgstr ""
+msgstr "Søg kun i Mine Film folderen."
 
 #, fuzzy
 msgid "Search my entire Home folder."
@@ -626,11 +626,11 @@ msgstr "_Fjern kanal"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "Omdøb Playliste"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "Slet Playliste"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151
 msgid "_Video"
@@ -638,11 +638,11 @@ msgstr "_Video"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152
 msgid "_Channels"
-msgstr ""
+msgstr "_Kanaler"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153
 msgid "_Playlists"
-msgstr ""
+msgstr "_Playlister"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:154
 msgid "P_layback"
@@ -658,7 +658,7 @@ msgstr "Åbn flere filer"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
 msgid "New _Playlist..."
-msgstr ""
+msgstr "Ny Playliste"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
 msgid "Create new playlist"
@@ -719,7 +719,7 @@ msgstr "_Donér"
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172
 msgid "Delete selection"
-msgstr ""
+msgstr "Slet valgte"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
@@ -853,8 +853,8 @@ msgstr ""
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d video fundet"
+msgstr[1] "%d videoer fundet"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161
 msgid "Error Bombing Item"
@@ -876,19 +876,19 @@ msgstr "Åbning af %s fejlede. Prøv venligst igen om et par sekunder"
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37
 msgid "Remove Playlist..."
-msgstr ""
+msgstr "Fjern afspilningsliste..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7
 msgid "Remove Playlists..."
-msgstr ""
+msgstr "Fjern afspilningslister..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:8
 msgid "Remove Playlist Folder..."
-msgstr ""
+msgstr "Fjern afspilningsliste mappe..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:9
 msgid "Remove Playlist Folders..."
-msgstr ""
+msgstr "Fjern afspilningsliste mapper..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27
@@ -897,23 +897,23 @@ msgstr "Slet kanal..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11
 msgid "Remove Channels..."
-msgstr ""
+msgstr "Fjern Kanaler..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12
 msgid "Remove Channel Folder..."
-msgstr ""
+msgstr "Fjern Kanal Mappe..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:13
 msgid "Remove Channel Folders..."
-msgstr ""
+msgstr "Fjern Kanal Mapper..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:14
 msgid "Remove Channel Guide..."
-msgstr ""
+msgstr "Fjern Kanal Guide..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:15
 msgid "Remove Channel Guides..."
-msgstr ""
+msgstr "Fjern Kanal Guider..."
 
 #: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16
 msgid "Remove Video..."
@@ -983,20 +983,20 @@ msgstr ""
 #: ../../portable/menu.py:48 ../../portable/menu.py:53
 #: ../../portable/feed.py:690
 msgid "Remove"
-msgstr ""
+msgstr "Fjern"
 
 #: ../../portable/playlist.py:181
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Skriv et nyt navn for afspilningslisten %s"
 
 #: ../../portable/playlist.py:194
 msgid "Create Playlist"
-msgstr ""
+msgstr "Opret Afspilningsliste"
 
 #: ../../portable/playlist.py:195
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Skriv navn for afspilningslisten"
 
 #: ../../portable/compiled_templates/search.py:39
 msgid "Nothing to display.<br></br> Enter a query in the search field above."
@@ -1008,7 +1008,7 @@ msgstr "Søger..."
 
 #: ../../portable/compiled_templates/search.py:56
 msgid "Results for \"${query}\""
-msgstr ""
+msgstr "Resultater for \"${query}\""
 
 #: ../../portable/compiled_templates/search.py:95
 msgid "Video Search"
@@ -1016,25 +1016,28 @@ msgstr "Video Søgning"
 
 #: ../../portable/compiled_templates/playlist.py:56
 msgid "Empty Playlist"
-msgstr ""
+msgstr "Tom Afspilningsliste"
 
 #: ../../portable/compiled_templates/playlist.py:58
 msgid "Drag downloaded videos to this playlist to add them."
 msgstr ""
+"Træk downloadede videoer til denne afspilningsliste for at tilføje dem."
 
 #: ../../portable/compiled_templates/playlist_folder.py:59
 msgid "Empty Playlist Folder"
-msgstr ""
+msgstr "Tom afspilningsliste mappe"
 
 #: ../../portable/compiled_templates/playlist_folder.py:71
 msgid ""
 "This folder contains ${count} playlists, but the playlists do not contain "
 "any items."
 msgstr ""
+"Denne mappe indeholder ${count} afspilningslister, men afspilningslisterne "
+"indeholder ingen emner."
 
 #: ../../portable/compiled_templates/playlist_folder.py:76
 msgid "Drag playlists to this folder to add them."
-msgstr ""
+msgstr "Træk afspilningslister til denne mappe for at tilføje dem."
 
 #: ../../portable/compiled_templates/multi_playlist.py:57
 msgid ""
@@ -1099,11 +1102,11 @@ msgstr ""
 
 #: ../../portable/compiled_templates/channelfolder.py:217
 msgid "${len} Videos Match This Search"
-msgstr ""
+msgstr "${len} Videoer passer på din søgning"
 
 #: ../../portable/compiled_templates/channelfolder.py:277
 msgid "${count} Videos on this Channel"
-msgstr ""
+msgstr "${count} Videoer i denne kanal"
 
 #: ../../portable/compiled_templates/channelfolder.py:290
 msgid "Unwatched"
@@ -1125,17 +1128,17 @@ msgstr "Standard"
 #: ../../portable/compiled_templates/feed_settings.py:39
 #: ../../portable/compiled_templates/channel.py:159
 msgid "default"
-msgstr ""
+msgstr "standard"
 
 #: ../../portable/compiled_templates/feed_settings.py:110
 #: ../../portable/compiled_templates/channel.py:379
 msgid "Videos expire after"
-msgstr ""
+msgstr "Videoer udløber efter"
 
 #: ../../portable/compiled_templates/feed_settings.py:113
 #: ../../portable/compiled_templates/channel.py:382
 msgid "When turned on, Auto Download should"
-msgstr ""
+msgstr "Når aktiveret, skal Auto Download"
 
 #: ../../portable/compiled_templates/feed_settings.py:146
 #: ../../portable/compiled_templates/channel.py:415
@@ -1148,7 +1151,7 @@ msgstr ""
 #: ../../portable/compiled_templates/channel_content.py:122
 #: ../../portable/compiled_templates/channel_folder.py:252
 msgid "Downloaded"
-msgstr ""
+msgstr "Downloadet"
 
 #: ../../portable/compiled_templates/channel.py:428
 msgid "Recommend"
@@ -1166,7 +1169,7 @@ msgstr ""
 
 #: ../../portable/compiled_templates/channel.py:458
 msgid "Looking for videos at this URL"
-msgstr ""
+msgstr "Ser efter videoer på denne URL"
 
 #: ../../portable/compiled_templates/external_playback.py:111
 msgid ""
@@ -1174,6 +1177,9 @@ msgid ""
 "program.<br></br><br></br><strong>Filename:</strong> "
 "${filename}<Br></Br><strong>File type:</strong> ${format}"
 msgstr ""
+"Democracy kan ikke afspille denne fil. Du kan muligvis åbne den med et andet "
+"program.<br></br><br></br><strong>Filename:</strong> "
+"${filename}<Br></Br><strong>File type:</strong> ${format}"
 
 #: ../../portable/compiled_templates/external_playback.py:115
 msgid "REVEAL FILE"
@@ -1233,15 +1239,15 @@ msgstr ""
 
 #: ../../portable/compiled_templates/download.py:153 ../../portable/tabs.py:28
 msgid "Downloading"
-msgstr ""
+msgstr "Downloader"
 
 #: ../../portable/compiled_templates/download.py:168
 msgid "Clear Completed Torrents"
-msgstr ""
+msgstr "Ryd færdige Torrents"
 
 #: ../../portable/compiled_templates/channel_folder.py:138
 msgid "Empty Channel Folder"
-msgstr ""
+msgstr "Tøm Kanal Mappen"
 
 #: ../../portable/compiled_templates/channel_folder.py:140
 msgid "Drag channels to this folder to add them."
@@ -1342,7 +1348,7 @@ msgstr ""
 
 #: ../../portable/dl_daemon/download.py:298
 msgid "Error"
-msgstr ""
+msgstr "Fejl"
 
 #: ../../portable/dl_daemon/download.py:357
 #, python-format
@@ -1351,7 +1357,7 @@ msgstr ""
 
 #: ../../portable/dl_daemon/download.py:376
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Ikke tilstrækkelig ledig diskplads"
 
 #: ../../portable/dl_daemon/download.py:377
 #, python-format
@@ -1419,7 +1425,7 @@ msgstr ""
 
 #: ../../portable/httpclient.py:77
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP fejl"
 
 #: ../../portable/httpclient.py:80
 #, python-format
@@ -1817,7 +1823,7 @@ msgstr "Er du sikker på at du vil slutte programmet?"
 #: ../../portable/app.py:924
 #, python-format
 msgid "You have %d download still in progress."
-msgid_plural "You have %d downloads still in progress."
+msgid_plural "You have %d download still in progress."
 msgstr[0] "Du har %d hentninger som er i gang."
 msgstr[1] "Du har %d hentninger som er i gang."
 
@@ -2609,11 +2615,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:34
 msgid "New Playlist"
-msgstr ""
+msgstr "Ny afspilningsliste"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:35
 msgid "New Playlist Folder"
-msgstr ""
+msgstr "Ny afspilningsliste mappe"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:52
 msgid "O"
@@ -2625,11 +2631,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:41
 msgid "Pause Video"
-msgstr ""
+msgstr "Pause Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:33
 msgid "Playlist"
-msgstr ""
+msgstr "Afspillingsliste"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:57
 msgid "Q"
@@ -2641,11 +2647,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9
 msgid "Remove Video"
-msgstr ""
+msgstr "Fjern Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103
 msgid "Right"
-msgstr ""
+msgstr "Højre"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:84
 msgid "S"

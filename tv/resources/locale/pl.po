@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Democracy Player\n"
 "POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-04-02 19:59+0000\n"
-"Last-Translator: harcesz <harcesz@obin.org>\n"
+"PO-Revision-Date: 2007-06-01 03:30+0000\n"
+"Last-Translator: Wojtek <anetku@gmail.com>\n"
 "Language-Team: Piotr Szmitkowski <pszmitkowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Rosetta-Export-Date: 2007-04-10 13:38:14+0000\n"
+"X-Rosetta-Export-Date: 2007-06-01 17:08:14+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -430,7 +430,7 @@ msgid "In this:"
 msgstr "W tym:"
 
 msgid "Item1"
-msgstr ""
+msgstr "Item1"
 
 msgid "Search Engine"
 msgstr "Wyszukiwarka"
@@ -1191,7 +1191,7 @@ msgstr "<label for=\"automatic\">Automatyczne Ściąganie</label>"
 
 #: ../../portable/compiled_templates/channel.py:458
 msgid "Looking for videos at this URL"
-msgstr ""
+msgstr "Poszukuje video pod  tym adresem"
 
 #: ../../portable/compiled_templates/external_playback.py:111
 msgid ""
@@ -1199,6 +1199,9 @@ msgid ""
 "program.<br></br><br></br><strong>Filename:</strong> "
 "${filename}<Br></Br><strong>File type:</strong> ${format}"
 msgstr ""
+"Democracy nie może otworzyć tego pliku. Możesz spróbować otworzyć to przy "
+"pomocy innego programu.<br></br><br></br><strong>Nazwa pliku:</strong> "
+"${filename}<Br></Br><strong>Rodzaj pliku:</strong> ${format}"
 
 #: ../../portable/compiled_templates/external_playback.py:115
 msgid "REVEAL FILE"
@@ -1256,7 +1259,7 @@ msgstr "${size} wolnej przestrzeni na dysku"
 
 #: ../../portable/compiled_templates/download.py:101
 msgid "${size} available for downloads"
-msgstr ""
+msgstr "${size} dostępne do pobierania"
 
 #: ../../portable/compiled_templates/download.py:153 ../../portable/tabs.py:28
 msgid "Downloading"
@@ -1416,22 +1419,22 @@ msgstr "poza demokracją."
 #: ../../portable/util.py:386
 #, python-format
 msgid "%1.1fGB"
-msgstr ""
+msgstr "%1.1fGB"
 
 #: ../../portable/util.py:388
 #, python-format
 msgid "%1.1fMB"
-msgstr ""
+msgstr "%1.1fMB"
 
 #: ../../portable/util.py:390
 #, python-format
 msgid "%1.1fKB"
-msgstr ""
+msgstr "%1.1fKB"
 
 #: ../../portable/util.py:392
 #, python-format
 msgid "%0.0fB"
-msgstr ""
+msgstr "%0.0fB"
 
 #: ../../portable/httpclient.py:52
 #, python-format
@@ -1973,11 +1976,11 @@ msgstr ""
 
 #: ../../portable/feed.py:682
 msgid "Update Channel Now"
-msgstr ""
+msgstr "Uaktualnij teraz kanal"
 
 #: ../../portable/feed.py:685 ../../portable/feed.py:694
 msgid "Rename Channel"
-msgstr ""
+msgstr "Zmień nazwe kanału"
 
 #: ../../portable/feed.py:689
 msgid "Revert Title to Default"
@@ -2056,7 +2059,7 @@ msgstr ""
 
 #: ../../portable/singleclick.py:151
 msgid "Subscription error"
-msgstr ""
+msgstr "Błąd prenumeraty"
 
 #: ../../portable/singleclick.py:161
 #, python-format
@@ -2500,7 +2503,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:19
 msgid "Leave it On:"
-msgstr ""
+msgstr "Zostaw włączone:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:22
 msgid ""
@@ -2515,6 +2518,8 @@ msgid ""
 "Now you can explore the Channel Guide\n"
 "and start watching.  A few tips to get started:"
 msgstr ""
+"Teraz możesz przeglądać program telewizyjny\n"
+"i zacząć oglądać. Pare wskazówek przed rozpoczęciem:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15
 msgid "Reset Search"
@@ -2757,7 +2762,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:41
 msgid "Pause Video"
-msgstr ""
+msgstr "Zatrzymaj Video"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:33
 msgid "Playlist"

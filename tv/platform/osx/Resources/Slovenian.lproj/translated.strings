@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-26 14:22-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-06-01 13:27-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* Flag: untranslated */
 "$log" = "$log";
@@ -22,26 +22,24 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "The fall of $shortAppName??" = "The fall of $shortAppName??";
 
-"About Democracy" = "O Demokraciji";
+"About Democracy" = "O Democracy";
 
 /* Flag: untranslated */
 "Add Channel..." = "Add Channel...";
 
 "Bring All to Front" = "Vse na vrh";
 
-/* Flag: untranslated */
-"Channels" = "Channels";
+"Channels" = "Kanali";
 
 /* Flag: untranslated */
 "Check for New Version" = "Check for New Version";
 
 "Clear Menu" = "Zbriši meni";
 
-/* Flag: untranslated */
-"Close Window" = "Close Window";
+"Close Window" = "Zapri okno";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15 */
-"Copy" = "Prepiši";
+"Copy" = "Kopiraj";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28 */
 /* Flag: untranslated */
@@ -51,20 +49,20 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Copy Video URL" = "Copy Video URL";
 
-"Cut" = "Odreži";
+"Cut" = "Izreži";
 
 /* File: ../../portable/dialogs.py:77 */
 "Delete" = "Izbriši";
 
-"Democracy" = "Demokracija";
+"Democracy" = "Democracy";
 
-"Democracy Help" = "Demokracija pomoč";
+"Democracy Help" = "Democracy pomoč";
 
 /* Flag: untranslated */
 "Donate" = "Donate";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14 */
-"Edit" = "Uredi";
+"Edit" = "Urejanje";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6 */
 "File" = "Datoteka";
@@ -74,12 +72,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47 */
 "Help" = "Pomoč";
 
-"Hide Democracy" = "Skrij Demokracijo";
+"Hide Democracy" = "Skrij Democracy";
 
 "Hide Others" = "Skrij ostale";
 
-/* Flag: untranslated */
-"Main Window" = "Main Window";
+"Main Window" = "Glavno okno";
 
 "MainMenu" = "Glavni meni";
 
@@ -101,21 +98,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Next Video" = "Next Video";
 
-/* Flag: untranslated */
-"Open Recent" = "Open Recent";
+"Open Recent" = "Odpri nedavne";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7 */
-"Open..." = "Odpri ...";
+"Open..." = "Odpri...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16 */
-"Paste" = "Dodaj";
+"Paste" = "Prilepi";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40 */
 "Play Video" = "Predvajaj video";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39 */
-/* Flag: untranslated */
-"Playback" = "Playback";
+"Playback" = "Predvajanje";
 
 /* Flag: untranslated */
 "Playlists" = "Playlists";
@@ -127,14 +122,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Previous Video" = "Previous Video";
 
-"Quit Democracy" = "Izklop Demokracije";
+"Quit Democracy" = "Izklop Democracy";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5 */
 /* Flag: untranslated */
 "Remove..." = "Remove...";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18 */
-"Rename..." = "Preimenuj ...";
+"Rename..." = "Preimenuj...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10 */
 /* Flag: untranslated */
@@ -146,7 +141,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Send This Channel to a Friend" = "Send This Channel to a Friend";
 
-"Services" = "Servisi";
+"Services" = "Storitve";
 
 "Show All" = "Pokaži vse";
 
@@ -189,7 +184,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/feed.py:1777 */
 "Search" = "Iskanje";
 
-"VideoWindow" = "video okno";
+"VideoWindow" = "Video okno";
 
 /* File: ../../portable/dialogs.py:60 */
 "Cancel" = "Preklic";
@@ -205,7 +200,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 " limit upstream to" = " omeji pretok navzgor na";
 
-"(You must restart Democracy for this change to take effect)\n" = "(Za to spremembo je treba Demokracijo ponovno zagnati)↵\n";
+"(You must restart Democracy for this change to take effect)\n" = "(Za to spremembo je treba Democracy ponovno zagnati)\n";
 
 "(movies directory path goes here)" = "(pot do mape s filmi)";
 
@@ -228,13 +223,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "99999" = "99999";
 
-/* Flag: untranslated */
-"BitTorrent ports:" = "BitTorrent ports:";
+"BitTorrent ports:" = "BitTorrent vrata:";
 
 "By default, videos expire after:" = "Videi naj ponavadi potečejo po:";
 
-/* Flag: untranslated */
-"Change..." = "Change...";
+"Change..." = "Spremeni...";
 
 "Check channels for new content:" = "Preveri novo vsebino na kanalih:";
 
@@ -263,7 +256,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Play videos one after another." = "Play videos one after another.";
 
-"Run Democracy at startup" = "Poženi Demokracijo ob startu";
+"Run Democracy at startup" = "Poženi Democracy ob startu";
 
 /* Flag: untranslated */
 "Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
@@ -321,7 +314,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Browse" = "Išči";
 
-"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Demokracija lahko najde vse vedee na računalniku in jih pomaga urediti.↵\n↵\n↵\nŽeliš, da Demokracija poišče videe na tvojem računalniku?";
+"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Demokracija lahko najde vse vedee na računalniku in jih pomaga urediti.\n\n\n\n\n\nŽeliš, da Demokracija poišče videe na tvojem računalniku?";
 
 "Next" = "Naprej";
 
@@ -345,7 +338,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." /* = "Naslednji zasloni pomagajo nastaviti Demokracijo, da bo kar najbolje delovala. Prvo vprašanje." */;
 
 /* Flag: untranslated */
-"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" /* = "Predlagamo, da dovolite Demokraciji da se zažene hkrati z računalnikom. Tako se bodo neprenešeni videi prenesli do konca in bodo na voljo, ko jih boste hoteli gledati.↵\n↵\n↵\nNaj se Demokracija zažene ob zagonu računalnika?" */;
+"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" /* = "Predlagamo, da dovolite Demokraciji da se zažene hkrati z računalnikom. Tako se bodo neprenešeni videi prenesli do konca in bodo na voljo, ko jih boste hoteli gledati.\n\n\n\n\n\nNaj se Demokracija zažene ob zagonu računalnika?" */;
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:66 */
 "Welcome to Internet TV!" = "Dobrodošli na internetno TV!";
@@ -357,7 +350,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27 */
 "Yes" = "Da";
 
-"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "Končano!↵\n↵\nNastavitev je gotova -- zdaj lahko poiščete kanale in začnete gledati.↵\n↵\nNe čakajte: Demokracija je drugačna kot gledanje spletnih strani z videi -- tukaj lahko gledate velike in zelo kakovostne videe. Zato ne čakajte na videe: poženite nekaj prenosov in preverite kasneje ↵\n↵\nNe izklopite Demokracije! Demokracija redno preverja vsebino na kanalih in nove videe samodejno prenese. Če je Demokracija deluje pomeni, da bodo novi videi na voljo, ko jih boste želeli gledati.↵\n↵\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.↵\n↵\nGo Big: The button to the right of the play button shows videos fullscreen.↵\n↵\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.↵\n";
+"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "Končano!\n\n\n\nNastavitev je gotova -- zdaj lahko poiščete kanale in začnete gledati.\n\n\n\nNe čakajte: Demokracija je drugačna kot gledanje spletnih strani z videi -- tukaj lahko gledate velike in zelo kakovostne videe. Zato ne čakajte na videe: poženite nekaj prenosov in preverite kasneje \n\n\n\nNe izklopite Demokracije! Demokracija redno preverja vsebino na kanalih in nove videe samodejno prenese. Če je Demokracija deluje pomeni, da bodo novi videi na voljo, ko jih boste želeli gledati.\n\n\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\n\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n\n";
 
 /* Flag: untranslated */
 "%message%\n%message%" = "%message%\n%message%";
@@ -713,7 +706,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:36 */
 /* Flag: python-format */
-"Error importing democracy modules:\n%s" = "Napaka pri uvažanju modulov demokracije:↵\n%s";
+"Error importing democracy modules:\n%s" = "Napaka pri uvažanju modulov demokracije:\n\n%s";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:40 */
 "Starting up" = "Začetek";
@@ -1191,7 +1184,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/storedatabase.py:798 */
 /* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s ne more shraniti podatkov: disk je poln.↵\nZbrišite kakšno datoteko z diska ali pa kakšen film iz svoje zbirke.↵\nZadnje spremembe se lahko izgubijo.";
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s ne more shraniti podatkov: disk je poln.\n\nZbrišite kakšno datoteko z diska ali pa kakšen film iz svoje zbirke.\n\nZadnje spremembe se lahko izgubijo.";
 
 /* File: ../../portable/dialogs.py:59 */
 "Ok" = "V redu";
@@ -1628,7 +1621,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "(Changes won't go into effect until you restart Democracy Player.)" = "(Changes won't go into effect until you restart Democracy Player.)";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:2 */
-"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 dan↵\n3 dni↵\n6 dni↵\n10 dni↵\n1 mesec↵\nNikoli";
+"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 dan\n\n3 dni\n\n6 dni\n\n10 dni\n\n1 mesec\n\nNikoli";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:8 */
 /* Flag: untranslated */

@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-04-26 14:22-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-06-01 13:27-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -233,8 +233,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
 "Stop after each video." = "Ferma dopo ogni video.";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
+"To avoid internet slowdowns:" = "Per evitare rallentamenti della linea internet";
 
 "every 30 minutes" = "ogni 30 minuti";
 
@@ -245,11 +244,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
 "videos at once." = "video ad esecuzione";
 
-/* Flag: untranslated */
-"$label$" = "$label$";
+"$label$" = "$etichetta$";
 
-/* Flag: untranslated */
-"$title$" = "$title$";
+"$title$" = "$titolo$";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20 */
 "Channel" = "Canale";
@@ -259,8 +256,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "In this:" = "In questo:";
 
-/* Flag: untranslated */
-"Item1" = "Item1";
+"Item1" = "oggetto1";
 
 "Search Engine" = "Motore di ricerca";
 
@@ -331,11 +327,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125 */
 /* Flag: untranslated */
-"_Next Video" = "_Next Video";
+"_Next Video" = "_Next Video" /* = "Video Successivo" */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126 */
-/* Flag: untranslated */
-"_Previous Video" = "_Previous Video";
+"_Previous Video" = "Video _Precedente";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129 */
 "_Play / Pause" = "_Riproduci / Pausa";
@@ -344,22 +339,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Copy Channel _Link" = "Copia _Link al Canale";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133 */
-/* Flag: untranslated */
-"_Send this channel to a friend" = "_Send this channel to a friend";
+"_Send this channel to a friend" = "_Segnala questo canale ad un amico";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136 */
 "_Update Channel" = "Aggiorna canale";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139 */
-/* Flag: untranslated */
-"Re_name Channel" = "Re_name Channel";
+"Re_name Channel" = "Ri_nomina Canale";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142 */
 "_Remove Channel" = "_Rimuovi canale";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145 */
-/* Flag: untranslated */
-"Re_name Playlist" = "Re_name Playlist";
+"Re_name Playlist" = "Ri_nomina Playlist";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148 */
 /* Flag: untranslated */
@@ -481,28 +473,26 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11 */
 /* File: ../../platform/osx/frontend/UIStrings.py:11 */
-/* Flag: untranslated */
-"_Remove Channels..." = "_Remove Channels...";
+"_Remove Channels..." = "_Rimuovi canali";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12 */
 /* File: ../../platform/osx/frontend/UIStrings.py:12 */
 /* Flag: untranslated */
-"_Remove Channel Folder..." = "_Remove Channel Folder...";
+"_Remove Channel Folder..." = "_Remove Channel Folder..." /* = "_Rimuovi Cartella Dei Canali..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13 */
 /* File: ../../platform/osx/frontend/UIStrings.py:13 */
-/* Flag: untranslated */
-"_Remove Channel Folders..." = "_Remove Channel Folders...";
+"_Remove Channel Folders..." = "_Rimuovi Cartelle Canale...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14 */
 /* File: ../../platform/osx/frontend/UIStrings.py:14 */
 /* Flag: untranslated */
-"_Remove Channel Guide..." = "_Remove Channel Guide...";
+"_Remove Channel Guide..." = "_Remove Channel Guide..." /* = "_Rimuovi Guida Ai Canali..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:15 */
 /* File: ../../platform/osx/frontend/UIStrings.py:15 */
 /* Flag: untranslated */
-"_Remove Channel Guides..." = "_Remove Channel Guides...";
+"_Remove Channel Guides..." = "_Remove Channel Guides..." /* = "_Rimuovi Guide Ai Canali..." */;
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16 */
 /* File: ../../platform/osx/frontend/UIStrings.py:16 */
@@ -1736,11 +1726,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:4 */
 /* Flag: untranslated */
-"A search channel contains" = "A search channel contains";
+"A search channel contains" = "A search channel contains" /* = "Un canale di ricerca contiene" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:5 */
 /* Flag: untranslated */
-"items that match a search term." = "items that match a search term.";
+"items that match a search term." = "items that match a search term." /* = "gli oggetti che soddisfano un criterio di ricerca." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:9 */
 /* Flag: untranslated */
@@ -1760,14 +1750,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:14 */
 /* Flag: untranslated */
-"Cancel Search" = "Cancel Search";
+"Cancel Search" = "Cancel Search" /* = "Annulla Ricerca" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:13 */
 "Change" = "Cambia";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:4 */
 /* Flag: untranslated */
-"Democracy First Time Setup" = "Democracy First Time Setup";
+"Democracy First Time Setup" = "Democracy First Time Setup" /* = "Democracy Prima Configurazione" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:20 */
 /* Flag: untranslated */
@@ -1775,11 +1765,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:21 */
 /* Flag: untranslated */
-"Don't Worry About Disk Space:" = "Don't Worry About Disk Space:";
+"Don't Worry About Disk Space:" = "Don't Worry About Disk Space:" /* = "Non ti preoccupare delle spazio sul disco" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:25 */
 /* Flag: untranslated */
-"Find Videos:" = "Find Videos:";
+"Find Videos:" = "Find Videos:" /* = "Trova Video" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:23 */
 /* Flag: untranslated */
@@ -1791,51 +1781,48 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:22 */
 /* Flag: untranslated */
-"Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.";
+"Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." /* = "Come TiVo, Democracy Player adotta un sistema di 'scadenze' che aiuta a cancellare i vecchi video per fare spazio ai nuovi. Puoi comunque scegliere di conservere i video permanentemente cliccando su 'salva' e puoi impostare le preferenze di un canale in modo che il salvataggio avvenga automaticamente." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:17 */
 /* Flag: untranslated */
-"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:";
+"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" /* = "Adesso puoi esplorare la Guida ai Canali\ne cominciare a guardare. Alcuni suggerimenti per cominciare:" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15 */
 /* Flag: untranslated */
 "Reset Search" = "Reset Search";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:10 */
-/* Flag: untranslated */
-"Restrict to all my personal files." = "Restrict to all my personal files.";
+"Restrict to all my personal files." = "Applica soltanto ai miei file personali.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:11 */
-/* Flag: untranslated */
-"Search custom folder:" = "Search custom folder:";
+"Search custom folder:" = "Cerca cartella personalizzata:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:26 */
 /* Flag: untranslated */
-"The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
+"The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." /* = "La Guida ai Canali di Democracy contiene centinaia di canali internet, tutti sono liberi. Per guardare un canale è sufficiente cliccare su 'AGGIUNGI.'" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:24 */
 /* Flag: untranslated */
-"The button to the right of the play button shows videos fullscreen." = "The button to the right of the play button shows videos fullscreen.";
+"The button to the right of the play button shows videos fullscreen." = "The button to the right of the play button shows videos fullscreen." /* = "Alla destra del bottone 'play' trovi il bottone per guardare i programmi a tutto schermo." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:5 */
 /* Flag: untranslated */
-"The next few screens will help you set up Democracy Player so that it works best for you." = "The next few screens will help you set up Democracy Player so that it works best for you.";
+"The next few screens will help you set up Democracy Player so that it works best for you." = "The next few screens will help you set up Democracy Player so that it works best for you." /* = "Le prossime schermate ti aiuteranno a configurare Democracy Player nel modo che più ti piace." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:6 */
 /* Flag: untranslated */
-"We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.";
+"We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." /* = "Ti raccomandiamo di fare in modo che Democracy Player si avvii all'accensione del computer. In questo modo puoi portare a termine i download dei video che stai scaricando e nuovi video possono essere scaricati in background tutti pronti per essere visti quando vorrai." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:9 */
 /* Flag: untranslated */
-"Would you like Democracy Player to look for video files on your computer?" = "Would you like Democracy Player to look for video files on your computer?";
+"Would you like Democracy Player to look for video files on your computer?" = "Would you like Democracy Player to look for video files on your computer?" /* = "Vuoi che Democracy Player cerchi i file video sul tuo computer?" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:7 */
 /* Flag: untranslated */
-"Would you like to run Democracy on startup?" = "Would you like to run Democracy on startup?";
+"Would you like to run Democracy on startup?" = "Would you like to run Democracy on startup?" /* = "Vuoi che Democracy si avvii automaticamente quando accendi il computer?" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:16 */
-/* Flag: untranslated */
-"You're done!" = "You're done!";
+"You're done!" = "Hai finito!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4 */
 "Question" = "Domanda";
@@ -1877,7 +1864,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:105 */
 /* Flag: untranslated */
-"Alt+Enter" = "Alt+Enter";
+"Alt+Enter" = "Alt+Enter" /* = "Alt+Invio" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:74 */
 /* Flag: untranslated */
@@ -1885,7 +1872,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8 */
 /* Flag: untranslated */
-"Check Version" = "Check Version";
+"Check Version" = "Check Version" /* = "Controlla Versione" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:96 */
 /* Flag: untranslated */
@@ -1929,7 +1916,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:49 */
 /* Flag: untranslated */
-"Donate to the Democracy project" = "Donate to the Democracy project";
+"Donate to the Democracy project" = "Donate to the Democracy project" /* = "Fai una donazione al progetto Democracy" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:59 */
 /* Flag: untranslated */
@@ -1968,12 +1955,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "New Channel" = "New Channel";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:23 */
-/* Flag: untranslated */
-"New Channel Folder" = "New Channel Folder";
+"New Channel Folder" = "Nuova Cartella Canali";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:25 */
-/* Flag: untranslated */
-"New Channel Guide" = "New Channel Guide";
+"New Channel Guide" = "Nuova Guida Canali";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:34 */
 /* Flag: untranslated */
@@ -2009,7 +1994,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9 */
 /* Flag: untranslated */
-"Remove Video" = "Remove Video";
+"Remove Video" = "Remove Video" /* = "Rimuovi Video" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103 */
 /* Flag: untranslated */
@@ -2020,8 +2005,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "S" = "S";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:31 */
-/* Flag: untranslated */
-"Send This Channel to a Friend..." = "Send This Channel to a Friend...";
+"Send This Channel to a Friend..." = "Invia quest Canale ad un amico...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:101 */
 /* Flag: untranslated */
