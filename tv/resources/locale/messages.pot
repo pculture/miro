@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-01 15:07-0400\n"
+"POT-Creation-Date: 2007-06-01 15:15-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,6 +81,7 @@ msgstr "Bring All to Front"
 
 # NSMenu : <title:Channels> (oid:226)
 #: ../../platform/osx/frontend/Preferences.py:39
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "Channels"
 msgstr "Channels"
 
@@ -209,6 +210,7 @@ msgstr "Play Video"
 
 # NSMenu : <title:Playback> (oid:216)
 #: ../../platform/osx/frontend/Preferences.py:43
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Playback"
 msgstr "Playback"
 
@@ -366,18 +368,22 @@ msgid "(movies directory path goes here)"
 msgstr "(movies directory path goes here)"
 
 # NSMenuItem : <title:1 day> (oid:83)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "1 day"
 msgstr "1 day"
 
 # NSMenuItem : <title:1 month> (oid:87)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid "1 month"
 msgstr "1 month"
 
 # NSMenuItem : <title:10 days> (oid:85)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
 msgid "10 days"
 msgstr "10 days"
 
 # NSMenuItem : <title:3 days> (oid:81)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "3 days"
 msgstr "3 days"
 
@@ -394,6 +400,7 @@ msgid "5"
 msgstr "5"
 
 # NSMenuItem : <title:6 days> (oid:84)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid "6 days"
 msgstr "6 days"
 
@@ -414,6 +421,7 @@ msgid "By default, videos expire after:"
 msgstr "By default, videos expire after:"
 
 # NSButton (Change...) : <title:Change...> (oid:93)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Change..."
 msgstr "Change..."
 
@@ -423,11 +431,13 @@ msgstr "Check channels for new content:"
 
 # NSButton (Don't start a download if it leaves less than) : <title:Don't start a download if it leaves less than> (oid:74)
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Don't start a download if it leaves less than"
 msgstr "Don't start a download if it leaves less than"
 
 # NSTextField (Download at most) : <title:Download at most> (oid:129)
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Download at most"
 msgstr "Download at most"
 
@@ -436,10 +446,12 @@ msgid "Folder location"
 msgstr "Folder location"
 
 # NSTextField (GB free.) : <title:GB free.> (oid:45)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
 msgid "GB free."
 msgstr "GB free."
 
 # NSTextField (KB/s when my computer is active.) : <title:KB/s when my computer is active.> (oid:38)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid "KB/s when my computer is active."
 msgstr "KB/s when my computer is active."
 
@@ -452,6 +464,7 @@ msgid "Minimum:"
 msgstr "Minimum:"
 
 # NSMenuItem : <title:Never> (oid:86)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "Never"
 msgstr "Never"
 
@@ -461,10 +474,12 @@ msgid "OtherViews"
 msgstr "OtherViews"
 
 # NSButtonCell (Play videos one after another.) : <title:Play videos one after another.> (oid:103)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid "Play videos one after another."
 msgstr "Play videos one after another."
 
 # NSButton (Remember video position.) : <title:Remember video position.> (oid:138)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "Remember video position."
 msgstr "Remember video position."
 
@@ -473,6 +488,7 @@ msgstr "Remember video position."
 #: ../../portable/folder.py:139 ../../portable/folder.py:194
 #: ../../portable/feed.py:769 ../../portable/guide.py:38
 #: ../../portable/playlist.py:180
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Remove"
 msgstr "Remove"
 
@@ -486,10 +502,12 @@ msgstr "Save downloaded videos in this folder:"
 
 # NSTableColumn : <title:Show as Channel> (oid:147)
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:528
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Show as Channel"
 msgstr "Show as Channel"
 
 # NSButtonCell (Stop after each video.) : <title:Stop after each video.> (oid:104)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "Stop after each video."
 msgstr "Stop after each video."
 
@@ -498,6 +516,7 @@ msgid "To avoid internet slowdowns:"
 msgstr "To avoid internet slowdowns:"
 
 # NSTextField (Watch for new videos in these folders and include them in My Collection:) : <title:Watch for new videos in these folders and include them in My Collection:> (oid:144)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26
 msgid ""
 "Watch for new videos in these folders and include them in My Collection:"
 msgstr ""
@@ -516,6 +535,7 @@ msgid "manually"
 msgstr "manually"
 
 # NSTextField (videos at once.) : <title:videos at once.> (oid:132)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "videos at once."
 msgstr "videos at once."
 
@@ -596,6 +616,7 @@ msgstr "Next"
 
 # NSButtonCell (No) : <title:No> (oid:87)
 #: ../../portable/dialogs.py:62
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
 msgid "No"
 msgstr "No"
 
@@ -612,6 +633,7 @@ msgid "Search this folder:"
 msgstr "Search this folder:"
 
 # NSTextField (Searching for Videos) : <title:Searching for Videos> (oid:57)
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37
 msgid "Searching for Videos"
 msgstr "Searching for Videos"
 
@@ -665,6 +687,7 @@ msgstr ""
 
 # NSButtonCell (Yes) : <title:Yes> (oid:88)
 #: ../../portable/dialogs.py:61
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
 msgid "Yes"
 msgstr "Yes"
 
@@ -756,10 +779,12 @@ msgid "Quit"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:153
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
 msgid "Username:"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:164
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
 msgid "Password:"
 msgstr ""
 
@@ -787,6 +812,7 @@ msgid "New Channel _Guide..."
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:519
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Folder Location"
 msgstr ""
 
@@ -867,10 +893,12 @@ msgid "Audio"
 msgstr ""
 
 #: ../../platform/osx/frontend/Preferences.py:38
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "General"
 msgstr ""
 
 #: ../../platform/osx/frontend/Preferences.py:40
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
 msgid "Downloads"
 msgstr ""
 
@@ -879,10 +907,12 @@ msgid "Folders"
 msgstr ""
 
 #: ../../platform/osx/frontend/Preferences.py:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36
 msgid "Disk Space"
 msgstr ""
 
 #: ../../platform/osx/frontend/Preferences.py:164
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Movies Directory"
 msgstr ""
 
@@ -897,6 +927,7 @@ msgstr ""
 
 #: ../../platform/osx/frontend/Preferences.py:175
 #: ../../platform/gtk-x11/glade/democracy.glade.h:51
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
 msgstr ""
 
@@ -1754,11 +1785,13 @@ msgstr ""
 
 #: ../../portable/dialogs.py:64
 #: ../../platform/gtk-x11/glade/democracy.glade.h:50
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr ""
 
 #: ../../portable/dialogs.py:65
 #: ../../platform/gtk-x11/glade/democracy.glade.h:40
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr ""
 
@@ -1783,6 +1816,7 @@ msgid "Delete Videos"
 msgstr ""
 
 #: ../../portable/dialogs.py:73
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:9
 msgid "Create Channel"
 msgstr ""
 
@@ -1804,6 +1838,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:193
 #: ../../platform/gtk-x11/glade/democracy.glade.h:52
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "New Search Channel"
 msgstr ""
 
@@ -2176,6 +2211,7 @@ msgid "Bad content-type"
 msgstr ""
 
 #: ../../portable/feed.py:987
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
 msgstr ""
 
@@ -2471,10 +2507,12 @@ msgid "Automatically run Democracy Player when I log in"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:33
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Bit Torrent uses ports between"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:34
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid "By default, videos expire after"
 msgstr ""
 
@@ -2487,6 +2525,7 @@ msgid "C_reate Channel"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:37
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
 msgid "Check Channels for new content"
 msgstr ""
 
@@ -2516,6 +2555,7 @@ msgid "Go"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:48
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "In This:"
 msgstr ""
 
@@ -2528,6 +2568,7 @@ msgid "Play videos one after another"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:54
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Preferences"
 msgstr ""
 
@@ -2566,6 +2607,7 @@ msgid ""
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:63
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "To avoid slowdowns, limit upstream to"
 msgstr ""
 
@@ -2620,9 +2662,272 @@ msgid "_URL"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:75
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "and"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:76
 msgid "videos at once"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
+msgid ""
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
+"$publisher."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
+msgid "About $longAppName"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
+msgid "Add Channel"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
+msgid "Please enter the URL of the channel you'd like to add."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
+msgid "Copy log to clipboard"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
+msgid "Open up the bug tracker"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
+msgid ""
+"Please help us fix it. Copy and paste all the\n"
+"information into our bug tracker and tell us what you were doing when the\n"
+"problem occurred."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
+msgid ""
+"Then, please restart $longAppName (or you may keep getting related errors). "
+"Sorry for the inconvenience. $longAppName is still in beta, but with your "
+"help we're fixing problems fast!"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
+msgid "You found a bug in $longAppName!"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
+msgid " "
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
+msgid "'"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
+msgid "Please contact the publishers of"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
+msgid ""
+"and ask if they can supply a feed in a format that will work with "
+"$shortAppName."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
+msgid "$longAppName"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4
+msgid ""
+"You've selected a new folder to download movies to.  Should $shortAppName "
+"migrate your existing downloads there?(Currently dowloading movies will not "
+"be moved until they finish)"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
+msgid "Channel requires authentication"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2
+msgid ""
+"Please enter the username and password given to you by this channel's "
+"publisher."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
+msgid "(WARNING: Changes won't go into effect until you restart $longAppName.)"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
+msgid "Add Folder..."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
+msgid "Automatically run $longAppName when I login"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
+msgid "Every 30 minutes"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
+msgid "Every hour"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+msgid "Manually"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
+msgid "Minimize $longAppName to the system tray when I close the program"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
+msgid "Store downloaded videos in this folder:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
+msgid ""
+"WARNING: This setting will not go into effect until you restart $longAppName."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
+msgid "A search channel contains"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
+msgid "items that match a search term."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
+msgid "Channel:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
+msgid "Search Engine:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
+msgid "Search For:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
+msgid "URL:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
+msgid ""
+"$longAppName can find all the videos on your computer to help you organize "
+"your collection."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
+msgid ""
+"$longAppName regularly checks channels for new videos and downloads in the "
+"background.  Leaving it running means you'll have new videos when you're "
+"ready to watch."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
+msgid "$shortAppName First Time Setup"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
+msgid "Cancel Search"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
+msgid "Change"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46
+msgid "Don't Worry About Disk Space:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50
+msgid "Find Videos:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
+msgid "Go Big:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
+msgid "Leave it On:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
+msgid ""
+"Like a TiVo, $longAppName features an 'expiration' system that helps clean "
+"out older videos to make room for new videos.  You can always keep a video "
+"permanently by clicking 'save' and you can set a channel's settings to save "
+"videos automatically."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
+msgid ""
+"Now you can explore the Channel Guide\n"
+"and start watching.  A few tips to get started:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
+msgid "Reset Search"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
+msgid "Restrict to all my personal files."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
+msgid "Search custom folder:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
+msgid ""
+"The $shortAppName Channel Guide has hundreds of internet TV channels, all of "
+"them are free.  Just click 'ADD' to watch a channel."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
+msgid "The button to the right of the play button shows videos fullscreen."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30
+msgid ""
+"The next few screens will help you set up $longAppName so that it works best "
+"for you."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
+msgid ""
+"We recommend that you have $longAppName launch when your computer starts "
+"up.  This way, videos in progress can finish downloading and new videos can "
+"be downloaded in the background, ready when you want to watch."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
+msgid "Would you like $longAppName to look for video files on your computer?"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
+msgid "Would you like to run $shortAppName on startup?"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
+msgid "You're done!"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
+msgid "Release Notes:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
+msgid "Question"
 msgstr ""
