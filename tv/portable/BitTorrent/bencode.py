@@ -226,7 +226,7 @@ def test_bdecode():
         pass
     bdecode('d0:i3ee')
 
-from types import StringType, IntType, LongType, DictType, ListType, TupleType
+from types import UnicodeType, StringType, IntType, LongType, DictType, ListType, TupleType
 
 class Bencached(object):
     __slots__ = ['bencoded']
@@ -243,6 +243,10 @@ def encode_int(x, r):
 def encode_string(x, r):
     r.extend((str(len(x)), ':', x))
 
+def encode_unicode(x, r):
+    x = x.encode('utf-8')
+    return encode_string(x,r)
+
 def encode_list(x, r):
     r.append('l')
     for i in x:
@@ -254,7 +258,7 @@ def encode_dict(x,r):
     ilist = x.items()
     ilist.sort()
     for k, v in ilist:
-        r.extend((str(len(k)), ':', k))
+        encode_func[type(k)](k, r)
         encode_func[type(v)](v, r)
     r.append('e')
 
@@ -263,6 +267,7 @@ encode_func[type(Bencached(0))] = encode_bencached
 encode_func[IntType] = encode_int
 encode_func[LongType] = encode_int
 encode_func[StringType] = encode_string
+encode_func[UnicodeType] = encode_unicode
 encode_func[ListType] = encode_list
 encode_func[TupleType] = encode_list
 encode_func[DictType] = encode_dict
