@@ -2576,7 +2576,7 @@ msgid ""
 "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
 "$publisher."
 msgstr ""
-"$longAppName, Version $appVersion ($appRevision); Copyright &copy; 2005, "
+"$longAppName, Version $appVersion ($appRevision); copyright (c) 2005, "
 "2006 $publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:4

@@ -1,5 +1,4 @@
-<!ENTITY searchchannel.description	"A search channel contains
-items that match a search term.">
+<!ENTITY searchchannel.description	"En sökkanal innehåller objekt som passar med en sökterm.">
 <!ENTITY searchchannel.termlabel 	"Sök efter:">
 <!ENTITY searchchannel.title            "Ny sökkanal">
 <!ENTITY searchchannel.inthis "I denna:">

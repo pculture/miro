@@ -1,5 +1,4 @@
-<!ENTITY searchchannel.description	"A search channel contains
-items that match a search term.">
+<!ENTITY searchchannel.description	"Ein Suchkanal enthält Elemte, auf die ein Suchbegriff zutrifft.">
 <!ENTITY searchchannel.termlabel 	"Suche Nach:">
 <!ENTITY searchchannel.title            "Neue Kanalsuche">
 <!ENTITY searchchannel.inthis "In diesem:">

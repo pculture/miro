@@ -1,5 +1,4 @@
-<!ENTITY searchchannel.description	"A search channel contains
-items that match a search term.">
+<!ENTITY searchchannel.description	"La cerca de canal conté objectes que parteixen d'un terme de cerca.">
 <!ENTITY searchchannel.termlabel 	"Cerca:">
 <!ENTITY searchchannel.title            "Nova Cerca de Canal">
 <!ENTITY searchchannel.inthis "En Aquest:">
