@@ -44,9 +44,9 @@ class QuicktimeRenderer (app.VideoRenderer):
             if self.checkComponentCompatibility(cmpName):
                 ok = qtcomp.register(component.encode('utf-8'))
                 if ok:
-                    logging.info('Successfully registered embedded Quicktime component: %s' % cmpName)
+                    logging.info('Successfully registered embedded component: %s' % cmpName)
                 else:
-                    logging.warn('Error while registering embedded Quicktime component: %s' % cmpName)
+                    logging.warn('Error while registering embedded component: %s' % cmpName)
 
     def checkComponentCompatibility(self, name):
         if "Perian" in name:
