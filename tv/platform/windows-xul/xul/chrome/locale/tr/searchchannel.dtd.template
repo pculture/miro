@@ -1,5 +1,4 @@
-<!ENTITY searchchannel.description	"A search channel contains
-items that match a search term.">
+<!ENTITY searchchannel.description	"Bir arama kanalı arama şartına uyan ögeler içerir.">
 <!ENTITY searchchannel.termlabel 	"Aranacak Kelime:">
 <!ENTITY searchchannel.title            "Yeni Arama Kanalı">
 <!ENTITY searchchannel.inthis "Bunda:">

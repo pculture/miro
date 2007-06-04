@@ -1,5 +1,4 @@
-<!ENTITY searchchannel.description	"A search channel contains
-items that match a search term.">
+<!ENTITY searchchannel.description	"一个搜索频道包含了匹配搜索词语的搜索结果。">
 <!ENTITY searchchannel.termlabel 	"查找：">
 <!ENTITY searchchannel.title            "新建搜索频道">
 <!ENTITY searchchannel.inthis "这样：">

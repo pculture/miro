@@ -1,5 +1,4 @@
-<!ENTITY searchchannel.description	"A search channel contains
-items that match a search term.">
+<!ENTITY searchchannel.description	"По поисковому термину найдены видео в канале.">
 <!ENTITY searchchannel.termlabel 	"Искать:">
 <!ENTITY searchchannel.title            "Новый поисковой канал">
 <!ENTITY searchchannel.inthis "In This:">

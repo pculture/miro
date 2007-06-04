@@ -1,5 +1,4 @@
-<!ENTITY searchchannel.description	"A search channel contains
-items that match a search term.">
+<!ENTITY searchchannel.description	"חיפוש בערוץ מכיל פריט שלא מתאים לתנאים">
 <!ENTITY searchchannel.termlabel 	"Search For:">
 <!ENTITY searchchannel.title            "חיפוש חדש בערוץ">
 <!ENTITY searchchannel.inthis "In This:">

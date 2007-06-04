@@ -1,5 +1,4 @@
-<!ENTITY searchchannel.description	"A search channel contains
-items that match a search term.">
+<!ENTITY searchchannel.description	"Vyhledávací kanál obsahuje položky podle klíčového slova.">
 <!ENTITY searchchannel.termlabel 	"Search For:">
 <!ENTITY searchchannel.title            "Nový vyhledávací kanál">
 <!ENTITY searchchannel.inthis "V:">
