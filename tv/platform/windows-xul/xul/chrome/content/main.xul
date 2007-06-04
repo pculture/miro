@@ -174,6 +174,7 @@ add more menu elements later -NN -->
 
 <command id="About" oncommand="window.openDialog('chrome://dtv/content/about.xul','aboutdialog','chrome,dependent,centerscreen');" />
 <command id="Donate" oncommand="pybridge.openDonatePage();" />
+<command id="Help" oncommand="pybridge.showHelp();" />
 
 <command id="EditPreferences" oncommand="window.openDialog('chrome://dtv/content/prefs.xul','prefs','chrome,dependent,centerscreen');" />
 
