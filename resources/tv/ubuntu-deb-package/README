@@ -16,6 +16,9 @@ Debian packages.  Here's how to use it:
    
    Make sure your date string is in RFC-2822 format.  Use "date -R".
 
+3a) If you're building it on ubuntu edgy or dapper, use the debian-edgy
+    directory instead.
+
 4) Copy the debian/ directory into the directory you just untarred.
 
 5) cd to the same directory and run:
