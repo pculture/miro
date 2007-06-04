@@ -656,6 +656,8 @@ folder will be deleted.""")
 
     @eventloop.asIdle
     def setResumeTime(self, position):
+        if not self.idExists():
+            return
         position = int(position)
         if self.resumeTime != position:
             self.resumeTime = position
