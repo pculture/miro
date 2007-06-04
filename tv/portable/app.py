@@ -2121,6 +2121,7 @@ def _defaultFeeds():
                          [u'http://jetset.blip.tv/?skin=rss',
                           u'http://revision3.com/diggnation/feed/quicktime-large',
                           u'http://geekbrief.podshow.com/?feed=rss2',
+                          u'http://www.rocketboom.com/vlog/index.xml',
                           u'http://downloads.bbc.co.uk/rmhttp/downloadtrial/bbc2/newsnightvideopodcast/rss.xml',
                           u'http://www.tvo.org/TVOspecial3/WebObjects/TVOMedia.woa?AgendaVideoFeed']),
                         
@@ -2134,7 +2135,6 @@ def _defaultFeeds():
                         (_('High-Def'),
                          [u'http://www.telemusicvision.com/videos/rss.php?i=1',
                           u'http://revision3.com/pixelperfect/feed/quicktime-high-definition',
-                          u'http://www.movedigital.com/rss/rocketboom/main.xml',
                           u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml'])
                         ]
     if platform.system() == "Darwin":
