@@ -49,7 +49,7 @@ class QuicktimeRenderer (app.VideoRenderer):
                     logging.warn('Error while registering embedded component: %s' % cmpName)
 
     def checkComponentCompatibility(self, name):
-        if "Perian" in name:
+        if "Perian" in name or "AC3" in name or "A52" in name:
             versionInfo = os.uname()
             versionInfo = versionInfo[2].split('.')
             majorBuildVersion = int(versionInfo[0])

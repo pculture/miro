@@ -2123,7 +2123,8 @@ def _defaultFeeds():
                           u'http://geekbrief.podshow.com/?feed=rss2',
                           u'http://www.rocketboom.com/vlog/index.xml',
                           u'http://downloads.bbc.co.uk/rmhttp/downloadtrial/bbc2/newsnightvideopodcast/rss.xml',
-                          u'http://www.tvo.org/TVOspecial3/WebObjects/TVOMedia.woa?AgendaVideoFeed']),
+                          u'http://www.tvo.org/TVOspecial3/WebObjects/TVOMedia.woa?AgendaVideoFeed',
+                          u'http://feeds.feedburner.com/TEDTalks_video']),
                         
                         (_('Entertainment'),
                          [u'http://feeds.feedburner.com/Terravideos',
