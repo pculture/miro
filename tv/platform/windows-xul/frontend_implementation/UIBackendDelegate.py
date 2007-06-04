@@ -172,7 +172,7 @@ class UIBackendDelegate:
         if len(url) > 2047:
             url = url[:2047]
         try:
-            webbrowser.open(url)
+            webbrowser.get("windows-default").open_new(url)
         except:
             print "WARNING: Error opening URL: %r" % url
             traceback.print_exc()
