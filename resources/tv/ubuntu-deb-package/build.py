@@ -21,12 +21,12 @@ For example:
 """)
     sys.exit(1)
 
-if len(sys.argv) != 4:
+if len(sys.argv) != 3:
     usage()
 
 version = sys.argv[1]
 distro = sys.argv[2]
-debian_dir = os.path.normpath(os.path.join(__file__, '..', sys.argv[3]))
+debian_dir = os.path.normpath(os.path.join(__file__, '..', 'debian-%s' % distro))
 tarball_name = 'Democracy-%s.tar.gz' % version
 tarball_url = ('ftp://ftp.osuosl.org/pub/pculture.org/democracy/src/' +
         tarball_name)
