@@ -945,14 +945,18 @@ class LiveStorage:
         self.cursor = self.conn.cursor()
 
         # In the future, we may need a way to upgrade this
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS dtv_objects(
-        id INTEGER PRIMARY KEY NOT NULL,
-        serialized_object BLOB NOT NULL UNIQUE
+        self.cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+        tables = [row[0] for row in self.cursor]
+        if 'dtv_objects' not in tables:
+            self.cursor.execute("""CREATE TABLE dtv_objects(
+            id INTEGER PRIMARY KEY NOT NULL,
+            serialized_object BLOB NOT NULL UNIQUE
 );""")
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS dtv_variables(
-        name TEXT PRIMARY KEY NOT NULL,
-        serialized_value BLOB NOT NULL
-);""")
+        if 'dtv_variables' not in tables:
+            self.cursor.execute("""CREATE TABLE dtv_variables(
+            name TEXT PRIMARY KEY NOT NULL,
+            serialized_value BLOB NOT NULL
+    );""")
 
     def dumpDatabase(self, db):
         from download_utils import nextFreeFilename
@@ -1136,6 +1140,7 @@ class LiveStorage:
         database.confirmDBThread()
         self.runUpdate()
         self.closed = True
+        self.cursor.close()
         self.conn.close()
 
     def runUpdate(self):
