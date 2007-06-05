@@ -1,11 +1,12 @@
 democracyplayer (0.9.6-1ubuntupcf) unstable; urgency=low
 
   * New upstream release
-  * Added imagemagick dependancy
+  * Added imagemagick, python-pysqlite2 dependancies
   * Moved to python2.5
-  * changed mozilla-dev dependancy to firefox-dev removed mozilla-psm
+  * changed mozilla-dev dependancy to firefox-dev
+  * removed mozilla-psm dependancy
 
- -- Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>  Mon, 19 Mar 2007 16:43:12 -0400
+ -- Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>  Tue, 05 Jun 2007 11:49:38 -0400
 
 democracyplayer (0.9.5.3-1ubuntupcf) unstable; urgency=low
 
