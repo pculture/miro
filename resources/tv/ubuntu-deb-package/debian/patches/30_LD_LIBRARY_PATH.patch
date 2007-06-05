@@ -1,0 +1,15 @@
+--- platform/gtk-x11/democracyplayer.orig	2007-06-04 20:18:10.000000000 -0400
++++ platform/gtk-x11/democracyplayer	2007-06-04 20:18:07.000000000 -0400
+@@ -6,6 +6,12 @@
+ if xlibhelper.XInitThreads() == 0:
+     print "WARNING: XInitThreads() failed!"
+ 
++import os
++ld_library_path = '/usr/lib/firefox'
++if 'LD_LIBRARY_PATH' in os.environ:
++    ld_library_path += ':' + os.environ['LD_LIBRARY_PATH']
++os.environ['LD_LIBRARY_PATH'] = ld_library_path
++
+ import os.path
+ import sys
+ import optparse
