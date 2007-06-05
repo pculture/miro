@@ -210,7 +210,7 @@ class Renderer(app.VideoRenderer):
 
         def handle_result (success):
             if success:
-                movie_data["duration"] = extracter.duration
+                movie_data["duration"] = extracter.duration / 1000000
                 if not os.path.exists(movie_data["screenshot"]):
                     movie_data["screenshot"] = ""
             else:
