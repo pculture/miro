@@ -3,8 +3,7 @@ democracyplayer (0.9.6-1ubuntupcf) unstable; urgency=low
   * New upstream release
   * Added imagemagick, python-pysqlite2 dependancies
 
- -- Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>  Tue, 05 Jun 2007 11:49:38
--0400
+ -- Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>  Tue, 05 Jun 2007 11:49:38 -0400
 
 democracyplayer (0.9.5.3-1ubuntupcf) unstable; urgency=low
 
