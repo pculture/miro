@@ -28,7 +28,8 @@ version = sys.argv[1]
 distro = sys.argv[2]
 debian_dir = os.path.normpath(os.path.join(__file__, '..', sys.argv[3]))
 tarball_name = 'Democracy-%s.tar.gz' % version
-tarball_url = 'http://pculture.org/nightlies/' + tarball_name
+tarball_url = ('ftp://ftp.osuosl.org/pub/pculture.org/democracy/src/' +
+        tarball_name)
 user = os.environ['USER']
 
 if not os.path.isdir(debian_dir):
