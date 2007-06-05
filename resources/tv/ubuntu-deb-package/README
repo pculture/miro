@@ -25,7 +25,9 @@ Debian packages.  Here's how to use it:
 
 4) If everything goes well, you should have your .debs in a directory named
    after your distro, along with Packages.gz.  This directory can be used to
-   create an APT repository if you want.
+   create an APT repository if you want.  There will also be a directory
+   called build-tmp that contains files created during the build process.
+   It's safe to delete.
 
    If something went wrong, then you'll need to fix other files in the debian/
    directory, probably debian/control.  That's beyond the scope of this README
