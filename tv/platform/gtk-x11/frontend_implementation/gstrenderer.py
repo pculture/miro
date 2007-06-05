@@ -2,6 +2,11 @@ import app
 import traceback
 import gobject
 import eventloop
+import config
+import prefs
+import os
+from download_utils import nextFreeFilename
+from gtk_queue import gtkAsyncMethod
 
 from threading import Event
 
@@ -55,6 +60,89 @@ class Tester:
         del self.playbin
         del self.audiosink
         del self.videosink
+
+class Extracter:
+    def __init__(self, filename, thumbnail_filename, callback):
+        self.thumbnail_filename = thumbnail_filename
+        self.grabit = False
+        self.first_pause = True
+        self.success = False
+        self.duration = 0
+	self.buffer_probes = {}
+        self.callback = callback
+
+	self.pipeline = gst.parse_launch('filesrc location="%s" ! decodebin ! ffmpegcolorspace ! video/x-raw-rgb,depth=24,bpp=24 ! fakesink signal-handoffs=True' % (filename,))
+
+        for sink in self.pipeline.sinks():
+            name = sink.get_name()
+            factoryname = sink.get_factory().get_name()
+            if factoryname == "fakesink":
+                pad = sink.get_pad("sink")
+                self.buffer_probes[name] = pad.add_buffer_probe(self.buffer_probe_handler, name)
+
+        self.bus = self.pipeline.get_bus()
+        self.bus.add_signal_watch()
+        self.watch_id = self.bus.connect("message", self.onBusMessage)
+
+        self.pipeline.set_state(gst.STATE_PAUSED)
+
+    def done (self):
+        self.callback(self.success)
+
+    def onBusMessage(self, bus, message):
+        if message.src == self.pipeline:
+            if message.type == gst.MESSAGE_STATE_CHANGED:
+                prev, new, pending = message.parse_state_changed()
+                if new == gst.STATE_PAUSED:
+                    if self.first_pause:
+                        self.duration = self.pipeline.query_duration(gst.FORMAT_TIME)[0]
+                        self.grabit = True
+                        seek_result = self.pipeline.seek(1.0,
+                                gst.FORMAT_TIME,
+                                gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
+                                gst.SEEK_TYPE_SET,
+                                self.duration / 2,
+                                gst.SEEK_TYPE_NONE, 0)
+                        if not seek_result:
+                            self.success = False
+                            self.disconnect()
+                    self.first_pause = False
+            if message.type == gst.MESSAGE_ERROR:
+                self.success = False
+                self.disconnect()
+
+    def buffer_probe_handler(self, pad, buffer, name) :
+        """Capture buffers as gdk_pixbufs when told to."""
+        if self.grabit:
+            caps = buffer.caps
+            if caps is not None:
+                filters = caps[0]
+                self.width = filters["width"]
+                self.height = filters["height"]
+            timecode = self.pipeline.query_position(gst.FORMAT_TIME)[0]
+            pixbuf = gtk.gdk.pixbuf_new_from_data(buffer.data, gtk.gdk.COLORSPACE_RGB, False, 8, self.width, self.height, self.width * 3)
+            pixbuf.save(self.thumbnail_filename, "png")
+            del pixbuf
+            self.success = True
+            self.disconnect()
+        return True
+
+    @gtkAsyncMethod
+    def disconnect (self):
+        if self.pipeline is not None:
+            self.pipeline.set_state(gst.STATE_NULL)
+            for sink in self.pipeline.sinks():
+                name = sink.get_name()
+                factoryname = sink.get_factory().get_name()
+                if factoryname == "fakesink" :
+                    pad = sink.get_pad("sink")
+                    pad.remove_buffer_probe(self.buffer_probes[name])
+                    del self.buffer_probes[name]
+            self.pipeline = None
+        if self.bus is not None:
+            self.bus.disconnect (self.watch_id)
+            self.bus = None
+        self.done()
 
 class Renderer(app.VideoRenderer):
     def __init__(self):
@@ -111,6 +199,26 @@ class Renderer(app.VideoRenderer):
         """whether or not this renderer can play this data"""
         return Tester(filename).result()
 
+    def fillMovieData(self, filename, movie_data, callback):
+        dir = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+        try:
+            os.makedirs(dir)
+        except:
+            pass
+        screenshot = os.path.join (dir, os.path.basename(filename) + ".png")
+        movie_data["screenshot"] = nextFreeFilename(screenshot)
+
+        def handle_result (success):
+            if success:
+                movie_data["duration"] = extracter.duration
+                if not os.path.exists(movie_data["screenshot"]):
+                    movie_data["screenshot"] = ""
+            else:
+                movie_data["screenshot"] = None
+            callback(success)
+
+	extracter = Extracter(filename, movie_data["screenshot"], handle_result)
+
     def goFullscreen(self):
         """Handle when the video window goes fullscreen."""
         print "haven't implemented goFullscreen method yet!"
@@ -136,9 +244,8 @@ class Renderer(app.VideoRenderer):
             print "getCurrentTime: caught exception: %s" % e
             position = 0
         return position
-        
-    def playFromTime(self, seconds):
-        #self.playbin.set_state(gst.STATE_NULL)
+
+    def seek(self, seconds):
         event = gst.event_new_seek(1.0,
                                    gst.FORMAT_TIME,
                                    gst.SEEK_FLAG_FLUSH|gst.SEEK_FLAG_ACCURATE,
@@ -147,7 +254,11 @@ class Renderer(app.VideoRenderer):
                                    gst.SEEK_TYPE_NONE, 0)
         result = self.playbin.send_event(event)
         if not result:
-            print "playFromTime: seek failed"
+            print "seek failed"
+        
+    def playFromTime(self, seconds):
+        #self.playbin.set_state(gst.STATE_NULL)
+	self.seek(seconds)
         self.play()
 #        print "playFromTime: starting playback from %s sec" % seconds
 

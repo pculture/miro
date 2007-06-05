@@ -65,7 +65,7 @@ class Renderer(app.VideoRenderer):
     def canPlayFile(self, filename):
         return self.xine.canPlayFile(filename)
 
-    def fillMovieData(self, filename, movie_data):
+    def fillMovieData(self, filename, movie_data, callback):
         dir = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
         try:
             os.makedirs(dir)
@@ -81,6 +81,7 @@ class Renderer(app.VideoRenderer):
                 movie_data["screenshot"] = ""
         else:
             movie_data["screenshot"] = None
+        callback (success)
 
     def goFullscreen(self):
         """Handle when the video window goes fullscreen."""
