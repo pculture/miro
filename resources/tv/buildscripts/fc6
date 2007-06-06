@@ -12,7 +12,9 @@ cp Democracy-$2$3.tar.gz $2$3/src/
 
 #Get the spec
 svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/Democracy-FC6.spec > Democracy.spec
+svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/setup.py.patch > setup.py.patch
 sudo cp Democracy-$2$3.tar.gz /usr/src/redhat/SOURCES 
+sudo cp setup.py.patch /usr/src/redhat/SOURCES
 sudo cp Democracy.spec /usr/src/redhat/SPECS 
 
 #build the rpm

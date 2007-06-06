@@ -25,7 +25,7 @@ BuildRequires:  python-devel
 BuildRequires:  xine-lib-devel libfame Pyrex
 BuildRequires:  boost-devel
 BuildRequires:  firefox-devel = %{mozversion}
-BuildRequires:  sqlite-devel
+Requires:       python-sqlite2
 Requires:   	python-abi = %(%{__python} -c "import sys ; print sys.version[:3]")
 Requires:	xine-lib gnome-python2-gtkmozembed libfame gnome-python2-gconf dbus-python
 Requires:       firefox = %{mozversion}

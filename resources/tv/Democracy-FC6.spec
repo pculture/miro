@@ -25,10 +25,11 @@ BuildRequires:  python-devel
 BuildRequires:  xine-lib-devel libfame Pyrex
 BuildRequires:  boost-devel
 BuildRequires:  firefox-devel = %{mozversion}
-BuildRequires:  sqlite-devel
+Requires:       python-sqlite2
 Requires:   	python-abi = %(%{__python} -c "import sys ; print sys.version[:3]")
 Requires:	xine-lib gnome-python2-gtkmozembed libfame gnome-python2-gconf dbus-python
 Requires:       firefox = %{mozversion}
+Patch1:         setup.py.patch
 
 %description
 Democracy Player
@@ -36,7 +37,7 @@ Democracy Player
 
 %prep
 %setup -q -n Democracy-%{FULL_VERSION}
-#%patch1
+%patch1
 
 
 %build
