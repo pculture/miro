@@ -7,7 +7,7 @@
 %define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-%{RELEASE_CANDIDATE}}
 #define FULL_VERSION %{NIGHTLY}
 %define RELEASE 1
-%define mozversion 1.5.0.8
+%define mozversion 2.0.0.3
 
 Name:           Democracy
 Version:        %{VERSION}
@@ -29,6 +29,7 @@ Requires:       python-sqlite2
 Requires:   	python-abi = %(%{__python} -c "import sys ; print sys.version[:3]")
 Requires:	xine-lib gnome-python2-gtkmozembed libfame gnome-python2-gconf dbus-python
 Requires:       firefox = %{mozversion}
+Patch1:         setup.py.patch
 
 %description
 Democracy Player
@@ -36,7 +37,7 @@ Democracy Player
 
 %prep
 %setup -q -n Democracy-%{FULL_VERSION}
-#%patch1
+%patch1
 
 
 %build
