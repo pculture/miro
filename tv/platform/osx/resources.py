@@ -14,7 +14,7 @@ def path(relative_path):
 
 # As path(), but return a file: URL instead.
 def url(relative_path):
-    return u"file://" + urllib.quote(path(relative_path).encode('utf-8'))
+    return u"file://" + urllib.quote(path(relative_path))
 
 def absoluteUrl(absolute_path):
     """Like url, but without adding the resource directory.
