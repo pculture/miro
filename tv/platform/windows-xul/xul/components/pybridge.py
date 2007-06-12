@@ -613,11 +613,11 @@ class PyBridge:
 
     def addMenubar(self, document):
         menubarElement = document.getElementById("titlebar-menu")
-
+        trayMenuElement = document.getElementById("traypopup")
         keysetElement = document.createElementNS(
          "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","keyset")
 
-        for menu in menubar.menubar.menus:
+        for menu in (menubar.menubar.menus + (menubar.traymenu,)):
             for item in menu.menuitems:
                 if isinstance(item, menubar.MenuItem):
                     count = 0
@@ -661,6 +661,22 @@ class PyBridge:
                         menuitem.setAttribute("key","%s-key%d"%(item.action,len(item.shortcuts)))
                         
                 menupopup.appendChild(menuitem)
+
+        for item in menubar.traymenu.menuitems:
+            if isinstance(item, menubar.Separator):
+                menuitem = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menuseparator")
+            else:
+                menuitem = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menuitem")
+                menuitem.setAttribute("id","menuitem-%s" % item.action.lower())
+                menuitem.setAttribute("label",XULifyLabel(item.label))
+                menuitem.setAttribute("command", item.action)
+                if XULAccelFromLabel(item.label):
+                    menuitem.setAttribute("accesskey",
+                                          XULAccelFromLabel(item.label))
+                if len(item.shortcuts)>0:
+                    menuitem.setAttribute("key","%s-key%d"%(item.action,len(item.shortcuts)))
+                        
+            trayMenuElement.appendChild(menuitem)
 
     def getLabel(self, action, state):
         return XULifyLabel(menubar.menubar.getLabel(action,state))

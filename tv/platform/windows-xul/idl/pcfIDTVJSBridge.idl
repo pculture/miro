@@ -64,4 +64,5 @@ interface pcfIDTVJSBridge : nsISupports
   void setPrefDocument(in nsIDOMDocument document);
   void directoryWatchAdded(in AString id, in AString dirname, in boolean shown);
   void directoryWatchRemoved(in AString id);
+  void showPopup(in PRInt32 x, in PRInt32 y);
 };

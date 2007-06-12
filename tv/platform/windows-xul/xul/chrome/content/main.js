@@ -253,10 +253,16 @@ function onClose()
 {
     pybridge.printOut("onClose");
     if (pybridge.minimizeToTray()) {
-        minimizeToTray();
+        minimizeOrRestore();
     } else {
         handleExit();
     }
+    return false;
+}
+
+function minimizeOrRestore()
+{
+    minimizer.minimizeOrRestore();
     return false;
 }
 
@@ -266,7 +272,7 @@ function onUnload() {
         vlc.playlist.stop(); 
     } 
     closeApp();
-    minimizer.restoreAll();
+    minimizer.delTrayIcon();
 }
 
 function jsdump(str) {
@@ -281,10 +287,6 @@ function maximizeOrRestore() {
   } else {
     window.maximize();
   }
-}
-
-function minimizeToTray() {
-    minimizer.minimizeAll();
 }
 
 function closeApp() {

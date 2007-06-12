@@ -135,6 +135,12 @@ add more menu elements later -NN -->
   <resizer dir="bottomright" id="resizer-bottom-right" oncommand="return doResize(event);"/>
         <spacer flex="0" width="20" id="bottom-right-blank" collapsed="true" />
 </hbox>
+
+<!-- this gets filled in with the tray icon context menu -->
+  <popupset id="mainPopupSet">
+    <popup id="traypopup"/>
+  </popupset>       
+
 <command id="showsearchmenu" oncommand="jsbridge.showSearchMenu();" />
 
 <command id="Open" oncommand="openFile();" />
@@ -144,6 +150,8 @@ add more menu elements later -NN -->
 <command id="CopyVideoURL" oncommand="pybridge.copyCurrentItemURL();" />
 
 <command id="Quit" oncommand="handleExit();" />
+
+<command id="RestoreWindow" oncommand="minimizeOrRestore();" />
 
 <command id="Cut" oncommand="clipboardCut();" />
 <command id="Copy" oncommand="clipboardCopy();" />

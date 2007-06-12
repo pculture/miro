@@ -182,3 +182,15 @@ menubar = \
                 Menu(_("P_layback"), "Playback",*PlaybackItems),
                 Menu(_("_Help"), "Help",*HelpItems),
                 )
+
+traymenu = Menu(config.get(prefs.SHORT_APP_NAME),
+                config.get(prefs.SHORT_APP_NAME),
+                MenuItem(_("Options"), "EditPreferences", ()),
+                MenuItem(_("Play Unwatched (%d)")%5, "PlayUnwatched", ()),
+                MenuItem(_("Pause All Downloads (%d)") % 5, "PauseDownloads", (),
+                         restoredls=_("Restore All Downloads (%d)")%5),
+                Separator(),
+                MenuItem(_("Minimize"),"RestoreWindow", (),
+                         restore=_("Restore")),
+                MenuItem(_("Close"),"Quit", ()),
+                )                

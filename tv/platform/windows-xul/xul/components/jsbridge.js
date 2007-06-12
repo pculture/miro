@@ -585,6 +585,50 @@ jsBridge.prototype = {
     }
     this.prefDocument.selectDirectoryWatch(true);
   },
+  showPopup: function(x, y) {
+      // show popup and adjust position once we know width / height
+      // Based on core.js from Firefox minimizetotray extension
+      var screenwidth = this.window.screen.width;
+      var screenheight = this.window.screen.height;
+      var document = this.document;
+
+      popup = document.getElementById('traypopup');
+
+      function minimize_onshown(event, x, y, screenWidth, screenHeight, document) {
+
+          var popup = event.target;
+          popup.removeEventListener("popupshown",
+                                    popup._minimizetotray_onshown,
+                                    true);
+        
+          var box = popup.popupBoxObject;
+          if (x + box.width > screenWidth)
+          x = x - box.width;
+          if (y + box.height > screenHeight)
+          y = y - box.height;
+        
+          // re-show the popup in the right position
+          popup.hidePopup();
+          document.popupNode = null;
+          popup.showPopup(
+                          document.documentElement,
+                          x, y,
+                          "context",
+                          "", "");
+      }
+      popup._minimizetotray_onshown = function(event){ return minimize_onshown(event, x, y, screenwidth, screenheight, document); };
+      popup.addEventListener("popupshown",
+                             popup._minimizetotray_onshown,
+                             true);
+
+      popup.showPopup(document.documentElement,   // anchoring element
+                      -10000,                    // x
+                      -10000,                    // y
+                      "context",                  // type
+                      "",                         // popupanchor (ignored)
+                      "");
+
+  },
 };
 
 var Module = {

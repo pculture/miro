@@ -52,6 +52,9 @@ IDANI_CAPTION      = 3
 SW_HIDE = 0
 SW_SHOW = 5
 
+def LOWORD(dword): return dword & 0x0000ffff
+def HIWORD(dword): return dword >> 16
+
 WNDPROCTYPE = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, UINT, WPARAM, LPARAM)
 
 import config
@@ -111,9 +114,14 @@ class APPBARDATA(ctypes.Structure):
                 ("lParam", LPARAM)]
 
 def PyWindProc(hWnd, uMsg, wParam, lParam):
+    mousePos = ctypes.windll.user32.GetMessagePos()
+    mouseX = LOWORD(mousePos)
+    mouseY = HIWORD(mousePos)
     if uMsg == WM_TRAYICON:
-        if lParam in [WM_LBUTTONUP, WM_MBUTTONUP, WM_RBUTTONUP]:
-            Minimize.minimizers[hWnd].restoreAll()   
+        if lParam in [WM_LBUTTONUP, WM_MBUTTONUP]:
+            Minimize.minimizers[hWnd].minimizeOrRestore()
+        elif lParam == WM_RBUTTONUP:
+            Minimize.minimizers[hWnd].showPopup(mouseX, mouseY)
     #components.classes['@mozilla.org/consoleservice;1'].getService(components.interfaces.nsIConsoleService).logStringMessage("PYWINPROC %d %d %d %d" % (hWnd, uMsg, wParam, lParam))
     return ctypes.windll.user32.CallWindowProcW(ctypes.windll.user32.DefWindowProcW,hWnd, uMsg, wParam, lParam)
 
@@ -167,6 +175,13 @@ class Minimize:
         self.hIcon = ctypes.windll.user32.LoadImageW(0, self.iconloc, IMAGE_ICON, 0, 0, LR_LOADFROMFILE)
 
         self.minimized = []
+        self.updateIcon()
+
+    def updateIcon(self):
+        if config.get(prefs.MINIMIZE_TO_TRAY):
+            self.addTrayIcon()
+        else:
+            self.delTrayIcon()
 
     def __del__(self):
         del Minimize.minimizers[self.trayIconWindow]
@@ -196,7 +211,6 @@ class Minimize:
             href = self.getHREFFromDOMWindow(win)
             self.minimized.append(href)
             self.minimize(href)
-        self.addTrayIcon()
 
     def addTrayIcon(self):
         self.iconinfo = NOTIFYICONDATA(ctypes.sizeof(NOTIFYICONDATA),
@@ -251,6 +265,11 @@ class Minimize:
         # Give up
         return None
 
+    def showPopup(self, x, y):
+        print "x and y is %d  %d" % (x, y)
+        jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
+        jsbridge.showPopup(x, y)
+
     def minimize(self, href):
         fromer = RECT(0,0,0,0)
         ctypes.windll.user32.GetWindowRect(href,ctypes.byref(fromer))
@@ -268,8 +287,20 @@ class Minimize:
 
         ctypes.windll.user32.ShowWindow(href, ctypes.c_int(SW_SHOW))
 
-    def restoreAll(self):
-        for href in self.minimized:
-            self.restore(href)
-        self.minimized = []
-        self.delTrayIcon()
+    def minimizeOrRestore(self):
+        if len(self.minimized) > 0:
+            for href in self.minimized:
+                self.restore(href)
+            self.minimized = []
+        else:
+            self.minimizeAll()
+
+def configDidChange(key, value):
+    if key is prefs.MINIMIZE_TO_TRAY.key:
+        for mini in Minimize.minimizers:
+            if value:
+                Minimize.minimizers[mini].addTrayIcon()
+            else:
+                Minimize.minimizers[mini].delTrayIcon()
+
+config.addChangeCallback(configDidChange)
