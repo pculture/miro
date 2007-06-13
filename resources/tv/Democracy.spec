@@ -1,13 +1,13 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
-%define VERSION 0.9.6
+%define VERSION 0.9.5
 #define RELEASE_CANDIDATE rc1
 #define NIGHTLY 2006-07-20
 #define RELEASE_CANDIDATE 2006_07_20
 %define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-%{RELEASE_CANDIDATE}}
 #define FULL_VERSION %{NIGHTLY}
 %define RELEASE 1
-%define mozversion 2.0.0.3
+%define mozversion 1.5.0.8
 
 Name:           Democracy
 Version:        %{VERSION}
@@ -25,11 +25,9 @@ BuildRequires:  python-devel
 BuildRequires:  xine-lib-devel libfame Pyrex
 BuildRequires:  boost-devel
 BuildRequires:  firefox-devel = %{mozversion}
-Requires:       python-sqlite2
 Requires:   	python-abi = %(%{__python} -c "import sys ; print sys.version[:3]")
 Requires:	xine-lib gnome-python2-gtkmozembed libfame gnome-python2-gconf dbus-python
 Requires:       firefox = %{mozversion}
-Patch1:         setup.py.patch
 
 %description
 Democracy Player
@@ -37,7 +35,7 @@ Democracy Player
 
 %prep
 %setup -q -n Democracy-%{FULL_VERSION}
-%patch1
+#%patch1
 
 
 %build
