@@ -20,6 +20,13 @@ include /usr/share/cdbs/1/rules/simple-patchsys.mk
 # Install everything into debian/tmp, as we have a multi-binary package.
 DEB_DH_INSTALL_SOURCEDIR := debian/tmp
 
+#install the wrapper
+install/democracyplayer::
+	mv $(CURDIR)/debian/tmp/usr/bin/democracyplayer \
+	   $(CURDIR)/debian/tmp/usr/bin/democracyplayer.real
+	/usr/bin/install --mode 755 debian/democracyplayer.wrapper \
+	   $(CURDIR)/debian/tmp/usr/bin/democracyplayer
+
 # Remove unneeded files from the deb.
 binary-post-install/democracyplayer::
 	rm -rf debian/democracyplayer/usr/share/python-support/democracyplayer/democracy/compiled_templates/unittest

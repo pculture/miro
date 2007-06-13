@@ -1,3 +1,10 @@
+democracyplayer (0.9.6-2ubuntupcf) unstable; urgency=low
+
+  * Actual fix for the LD_LIBRARY_PATH problem.  This one uses the wrapper
+    script from ubuntu universe.
+
+ -- Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>  Wed, 06 Jun 2007 11:19:20 -0400
+
 democracyplayer (0.9.6-1ubuntupcf) unstable; urgency=low
 
   * New upstream release

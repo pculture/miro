@@ -14,10 +14,10 @@ def call(cmd):
 
 def usage():
     sys.stderr.write("""\
-Usage: build.py [version] [distribution-name] [debian-directory]
+Usage: build.py [version] [distribution-name]
 
 For example:
-    build.py 0.9.5 feisty debian/
+    build.py 0.9.5 feisty
 """)
     sys.exit(1)
 
