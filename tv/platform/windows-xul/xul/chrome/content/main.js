@@ -50,7 +50,7 @@ function getPageCoords (element) {
 var VOLUME_SLIDER_LEFT = 25;
 var VOLUME_SLIDER_RIGHT = 98;
 var VOLUME_SLIDER_WIDTH = VOLUME_SLIDER_RIGHT - VOLUME_SLIDER_LEFT;
-var VOLUME_KNOB_OFFSET = 5;
+var VOLUME_KNOB_OFFSET = 6;
 
 
 function translateToVolumeX(event) 
