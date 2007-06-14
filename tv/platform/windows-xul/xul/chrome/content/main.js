@@ -47,38 +47,58 @@ function getPageCoords (element) {
  Volume Knob 
  *****************************************************************************/
 
-var knobDragStart = 0;
-var knobPos = 98;
+var VOLUME_SLIDER_LEFT = 25;
+var VOLUME_SLIDER_RIGHT = 98;
+var VOLUME_SLIDER_WIDTH = VOLUME_SLIDER_RIGHT - VOLUME_SLIDER_LEFT;
+var VOLUME_KNOB_OFFSET = 5;
+
+
+function translateToVolumeX(event) 
+{
+  var bottomVolume = document.getElementById("volume");
+  var slider = document.getElementById("knob");
+  var x = event.screenX - bottomVolume.boxObject.screenX;
+  x = x - VOLUME_KNOB_OFFSET;
+  return Math.max(VOLUME_SLIDER_LEFT, Math.min(VOLUME_SLIDER_RIGHT, x));
+}
+
+function volumeKnobDown(event) {
+  var slider = document.getElementById("knob");
+  slider.beingDragged = true;
+  slider.left = translateToVolumeX(event);
+}
+
+function doVol() {
+  var slider = document.getElementById("knob");
+  var x = slider.left;
+  pybridge.setVolume((x - VOLUME_SLIDER_LEFT) / VOLUME_SLIDER_WIDTH);
+}
+
+function volumeKnobOut(event) {
+  var slider = document.getElementById("knob");
+  if(event.relatedTarget.id != 'volume' && 
+        event.relatedTarget.id != "knob" &&
+        slider.beingDragged) {
+    doVol();
+    slider.beingDragged = false;
+  }
+}
 
 function volumeKnobMove(event) {
-  if (knobDragStart > 0) {
-    var left = 25;
-    var right= 98;
-    var knob = document.getElementById("knob");
-    knobPos += event.clientX - knobDragStart;
-    if (knobPos < left) knobPos = left;
-    if (knobPos > right) knobPos = right;
-    knobDragStart = event.clientX;
-    knob.left = knobPos;
-    pybridge.setVolume((knobPos - left)/(right-left));
+  var slider = document.getElementById("knob");
+  if (slider.beingDragged) {
+    var x = translateToVolumeX(event);
+    slider.left = x;
+    doVol();
   }
 }
-function volumeKnobDown(event) {
-  knobDragStart = event.clientX;
-}
-function volumeKnobOut(event) {
-  /* Ignore a move from the knob to the slider or vice-versa */
-  if (!((event.target.getAttribute("id") == "knob" &&
-        event.currentTarget.getAttribute("id") == "volume") ||
-        (event.target.getAttribute("id") == "volume" &&
-         event.currentTarget.getAttribute("id") == "volume")))
-  {
-    knobDragStart = 0;
-  }
-  event.stopPropagation();
-}
+
 function volumeKnobUp(event) {
-  knobDragStart = 0;
+  var slider = document.getElementById("knob");
+  if (slider.beingDragged) {
+    doVol();
+    slider.beingDragged = false;
+  }
 }
 
 /*****************************************************************************
@@ -88,12 +108,14 @@ function volumeKnobUp(event) {
 var PROGRESS_SLIDER_LEFT = 61;
 var PROGRESS_SLIDER_RIGHT = 204;
 var PROGRESS_SLIDER_WIDTH = PROGRESS_SLIDER_RIGHT - PROGRESS_SLIDER_LEFT;
+var PROGRESS_KNOB_OFFSET = 2;
 
 
 function translateToProgressX(event) 
 {
   var bottomProgress = document.getElementById("bottom-progress");
   var x = event.screenX - bottomProgress.boxObject.screenX;
+  x = x - PROGRESS_KNOB_OFFSET;
   return Math.max(PROGRESS_SLIDER_LEFT, Math.min(PROGRESS_SLIDER_RIGHT, x));
 }
 
@@ -120,7 +142,7 @@ function doSeek() {
 
 function videoProgressOut(event) {
   var slider = document.getElementById("progress-slider");
-  if(event.target.id == 'bottom-progress' && 
+  if(event.relatedTarget.id != 'bottom-progress' && 
         event.relatedTarget.id != "progress-text" &&
         event.relatedTarget.id != "progress-slider" &&
         slider.beingDragged) {
