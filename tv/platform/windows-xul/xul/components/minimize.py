@@ -294,6 +294,16 @@ class Minimize:
             self.minimized = []
         else:
             self.minimizeAll()
+        jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
+        jsbridge.updateTrayMenus()
+        
+
+    def isMinimized(self):
+        for mini in Minimize.minimizers.values():
+            if len(mini.minimized) > 0:
+                return True
+        return False
+        
 
 def configDidChange(key, value):
     if key is prefs.MINIMIZE_TO_TRAY.key:

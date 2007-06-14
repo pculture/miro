@@ -6,4 +6,5 @@ interface pcfIDTVMinimize : nsISupports
 {
   void minimizeOrRestore();
   void delTrayIcon();
+  boolean isMinimized();
 };

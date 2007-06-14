@@ -3,6 +3,8 @@ const JSBRIDGE_CLASSID    = Components.ID("{421AA951-F53D-4499-B362-E432CAE920F4
 
 var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
         getService(Components.interfaces.pcfIDTVPyBridge);
+var minimizer = Components.classes["@participatoryculture.org/dtv/minimize;1"].
+        getService(Components.interfaces.pcfIDTVMinimize);
 
 function writelog(str) {
     Components.classes['@mozilla.org/consoleservice;1']
@@ -547,10 +549,19 @@ jsBridge.prototype = {
       var playUnwatched = new Object();
       var pauseDownloads = new Object();
       var restoreDownloads = new Object();
+      var restoreWindow = new Object();
+      var minstate = "";
+
+      if (minimizer.isMinimized()){
+          minstate = "restore";
+      }
+      
+
      // Tray menu strings that get updated periodically
      pybridge.getLabel("PlayUnwatched","",playUnwatched);
      pybridge.getLabel("PauseDownloads","",pauseDownloads);
      pybridge.getLabel("RestoreDownloads","",restoreDownloads);
+     pybridge.getLabel("RestoreWindow",minstate,restoreWindow);
 
      var ele = this.document.getElementById("traymenu-playunwatched");
      ele.setAttribute("label", playUnwatched.value);
@@ -558,6 +569,8 @@ jsBridge.prototype = {
      ele.setAttribute("label", pauseDownloads.value);
      ele = this.document.getElementById("traymenu-restoredownloads");
      ele.setAttribute("label", restoreDownloads.value);
+     ele = this.document.getElementById("traymenu-restorewindow");
+     ele.setAttribute("label", restoreWindow.value);
 
   },
   setPrefDocument: function (document) {
