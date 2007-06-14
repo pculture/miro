@@ -541,8 +541,25 @@ jsBridge.prototype = {
      ele.setAttribute("label", removePlaylists.value);
      ele = this.document.getElementById("menuitem-removevideos");
      ele.setAttribute("label", removeVideos.value);
-  },
 
+  },
+  updateTrayMenus: function () {
+      var playUnwatched = new Object();
+      var pauseDownloads = new Object();
+      var restoreDownloads = new Object();
+     // Tray menu strings that get updated periodically
+     pybridge.getLabel("PlayUnwatched","",playUnwatched);
+     pybridge.getLabel("PauseDownloads","",pauseDownloads);
+     pybridge.getLabel("RestoreDownloads","",restoreDownloads);
+
+     var ele = this.document.getElementById("traymenu-playunwatched");
+     ele.setAttribute("label", playUnwatched.value);
+     ele = this.document.getElementById("traymenu-pausedownloads");
+     ele.setAttribute("label", pauseDownloads.value);
+     ele = this.document.getElementById("traymenu-restoredownloads");
+     ele.setAttribute("label", restoreDownloads.value);
+
+  },
   setPrefDocument: function (document) {
     this.prefDocument = document;
   },

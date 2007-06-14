@@ -44,10 +44,10 @@ except:
         traceback.format_exc())
     try:
         import util
-        importErrorMessage = util.formatFailedMessage(_("Starting up"),
+        importErrorMessage = util.failed(_("Starting up"),
                 withExn=True)
     except:
-        pass
+        raise
     # we need to make a fake asUrgent since we probably couldn't import
     # eventloop.
     def asUrgent(func):
@@ -638,9 +638,9 @@ class PyBridge:
         for menu in menubar.menubar.menus:
             menuElement = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menu")
             menuElement.setAttribute("id", "menu-%s" % menu.action.lower())
-            menuElement.setAttribute("label", XULifyLabel(menu.label))
-            if XULAccelFromLabel(menu.label):
-                menuElement.setAttribute("accesskey", XULAccelFromLabel(menu.label))
+            menuElement.setAttribute("label", XULifyLabel(menu.getLabel(menu.action)))
+            if XULAccelFromLabel(menu.getLabel(menu.action)):
+                menuElement.setAttribute("accesskey", XULAccelFromLabel(menu.getLabel(menu.action)))
             menupopup = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menupopup")
 
             menupopup.setAttribute("id", "menupopup-%s" % menu.action.lower())
@@ -652,7 +652,7 @@ class PyBridge:
                 else:
                     menuitem = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menuitem")
                     menuitem.setAttribute("id","menuitem-%s" % item.action.lower())
-                    menuitem.setAttribute("label",XULifyLabel(item.label))
+                    menuitem.setAttribute("label",XULifyLabel(menu.getLabel(item.action)))
                     menuitem.setAttribute("command", item.action)
                     if XULAccelFromLabel(item.label):
                         menuitem.setAttribute("accesskey",
@@ -667,7 +667,7 @@ class PyBridge:
                 menuitem = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menuseparator")
             else:
                 menuitem = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul","menuitem")
-                menuitem.setAttribute("id","menuitem-%s" % item.action.lower())
+                menuitem.setAttribute("id","traymenu-%s" % item.action.lower())
                 menuitem.setAttribute("label",XULifyLabel(item.label))
                 menuitem.setAttribute("command", item.action)
                 if XULAccelFromLabel(item.label):
@@ -679,7 +679,27 @@ class PyBridge:
             trayMenuElement.appendChild(menuitem)
 
     def getLabel(self, action, state):
-        return XULifyLabel(menubar.menubar.getLabel(action,state))
+        # This needs to access the database, return a value, and be callable
+        # from JavaScript, hence the hacks
+        import threading
+        import eventloop
+        import database
+        event = threading.Event()
+        def _getLabel(action, state):
+            event.returnValue = XULifyLabel(menubar.menubar.getLabel(action,state))
+            if event.returnValue == action:
+                event.returnValue = XULifyLabel(menubar.traymenu.getLabel(action,state))
+            event.set()
+            return event.returnValue
+
+        if threading.currentThread() != database.event_thread:
+            # This is safe since we know _getLabel won't call back
+            # into the main thread.
+            eventloop.addIdle(_getLabel, "_getLabel in pybridge", [action, state])
+            event.wait()
+            return event.returnValue
+        else:
+            return _getLabel(action, state)
 
     @asIdle
     def addDirectoryWatch(self, filename):

@@ -21,33 +21,45 @@ class ShortCut:
 Key = ShortCut
 
 class MenuItem:
-    def __init__(self, label, action, shortcuts, enabled = True, **stateLabels):
+    def __init__(self, label, action, shortcuts, enabled = True, labelFilter=lambda x:x, **stateLabels):
         self.label = label
         self.action = action
         self.shortcuts = shortcuts
         self.enabled = enabled
         self.stateLabels = stateLabels
+        self.labelFilter = labelFilter
 
 class Separator:
     pass
 
 class Menu:
-    def __init__(self, label, action, *menuitems):
+    def __init__(self, label, action, labelFilter, *menuitems):
         self.label = label
         self.action = action
         self.labels = {action:label}
+        self.labelFilters = {action:labelFilter}
         self.stateLabels = {}
         self.shortcuts = {}
         self.menuitems = menuitems
         for item in menuitems:
             if not isinstance(item, Separator):
                 self.labels[item.action] = item.label
+                self.labelFilters[item.action] = item.labelFilter
                 self.shortcuts[item.action] = item.shortcuts
                 if item.stateLabels:
                     self.stateLabels[item.action] = item.stateLabels
             
-    def getLabel(self, action):
-        return self.labels[action]
+    def getLabel(self, action, state=None):
+        if state is None:
+            try:
+                return self.labelFilters[action](self.labels[action])
+            except KeyError:
+                return action
+        else:
+            try:
+                return self.labelFilters[action](self.stateLabels[action][state])
+            except KeyError:
+                return self.getLabel(action)
     def getShortcuts(self, action):
         try:
             return self.shortcuts[action]
@@ -60,8 +72,10 @@ class MenuBar:
         self.labels = {}
         self.stateLabels = {}
         self.shortcuts = {}
+        self.labelFilters = {}
         for menu in menus:
             self.labels.update(menu.labels)
+            self.labelFilters.update(menu.labelFilters)
             self.stateLabels.update(menu.stateLabels)
             self.shortcuts.update(menu.shortcuts)
 
@@ -71,12 +85,12 @@ class MenuBar:
     def getLabel(self, action, state=None):
         if state is None:
             try:
-                return self.labels[action]
+                return self.labelFilters[action](self.labels[action])
             except KeyError:
                 return action
         else:
             try:
-                return self.stateLabels[action][state]
+                return self.labelFilters[action](self.stateLabels[action][state])
             except KeyError:
                 return self.getLabel(action)
     def getShortcuts(self, action):
@@ -176,19 +190,41 @@ HelpItems = [
 ]
 
 menubar = \
-        MenuBar(Menu(_("_Video"), "Video",*VideoItems),
-                Menu(_("_Channels"), "Channels",*ChannelItems),
-                Menu(_("_Playlists"), "Playlists",*PlaylistItems),
-                Menu(_("P_layback"), "Playback",*PlaybackItems),
-                Menu(_("_Help"), "Help",*HelpItems),
+        MenuBar(Menu(_("_Video"), "Video", lambda x:x, *VideoItems),
+                Menu(_("_Channels"), "Channels", lambda x:x, *ChannelItems),
+                Menu(_("_Playlists"), "Playlists", lambda x:x, *PlaylistItems),
+                Menu(_("P_layback"), "Playback", lambda x:x, *PlaybackItems),
+                Menu(_("_Help"), "Help", lambda x:x, *HelpItems),
                 )
+
+def fillInUnwatched(text):
+    import views
+    if views.initialized:
+        return text % len(views.unwatchedItems)
+    else:
+        return text
+
+def fillInDownloading(text):
+    import views
+    if views.initialized:
+        return text % len(views.downloadingItems)
+    else:
+        return text
+
+def fillInPaused(text):
+    import views
+    if views.initialized:
+        return text % len(views.pausedItems)
+    else:
+        return text
 
 traymenu = Menu(config.get(prefs.SHORT_APP_NAME),
                 config.get(prefs.SHORT_APP_NAME),
+                lambda x:x,
                 MenuItem(_("Options"), "EditPreferences", ()),
-                MenuItem(_("Play Unwatched (%d)")%5, "PlayUnwatched", ()),
-                MenuItem(_("Pause All Downloads (%d)") % 5, "PauseDownloads", (),
-                         restoredls=_("Restore All Downloads (%d)")%5),
+                MenuItem(_("Play Unwatched (%d)"), "PlayUnwatched", (), labelFilter = fillInUnwatched),
+                MenuItem(_("Pause All Downloads (%d)"), "PauseDownloads", (), labelFilter = fillInDownloading),
+                MenuItem(_("Restore All Downloads (%d)"), "RestoreDownloads", (), labelFilter = fillInPaused),
                 Separator(),
                 MenuItem(_("Minimize"),"RestoreWindow", (),
                          restore=_("Restore")),

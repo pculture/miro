@@ -1175,10 +1175,14 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         assert self.newTab is not None
         self.newTab.redraw()
         self.updateAvailableItemsCountFeedback()
+        if hasattr(frontend.Application, "onUnwatchedItemsCountChange"):
+            frontend.Application.onUnwatchedItemsCountChange(self, obj, id)
 
     def onDownloadingItemsCountChange(self, obj, id):
         assert self.downloadTab is not None
         self.downloadTab.redraw()
+        if hasattr(frontend.Application, "onDownloadingItemsCountChange"):
+            frontend.Application.onDownloadingItemsCountChange(self, obj, id)
 
     def updateAvailableItemsCountFeedback(self):
         global delegate

@@ -49,7 +49,7 @@ class Application:
         pass
 
     def finishStartupSequence(self):
-        pass
+        frontend.jsBridge.updateTrayMenus()
 
     def onShutdown(self):
         # For overriding
@@ -62,6 +62,12 @@ class Application:
     def addAndSelectFeed(self, url):
         # For overriding
         pass
+
+    def onUnwatchedItemsCountChange(self, obj, id):
+        frontend.jsBridge.updateTrayMenus()
+
+    def onDownloadingItemsCountChange(self, obj, id):
+        frontend.jsBridge.updateTrayMenus()
 
 ###############################################################################
 ###############################################################################
