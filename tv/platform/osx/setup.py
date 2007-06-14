@@ -22,16 +22,6 @@ if '--force-update' in sys.argv:
     sys.argv.remove('--force-update')
     forceUpdate = True
 
-if "--make-dmg" in sys.argv:
-    # Change this to change the name of the .dmg file we create
-    imgName = "Democracy-%4d-%02d-%02d.dmg" % (
-        datetime.date.today().year,
-        datetime.date.today().month,
-        datetime.date.today().day)
-    sys.argv.remove('--make-dmg')
-else:
-    imgName = None
-
 # Find the top of the source tree and set search path
 # GCC3.3 on OS X 10.3.9 doesn't like ".."'s in the path so we normalize it
 
@@ -116,6 +106,18 @@ updatePListEntry(infoPlist, u'CFBundleShortVersionString', conf)
 updatePListEntry(infoPlist, u'CFBundleVersion', conf)
 updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
 
+# Now that we have a config, we can process the image name
+if "--make-dmg" in sys.argv:
+    # Change this to change the name of the .dmg file we create
+    imgName = "%s-%4d-%02d-%02d.dmg" % (
+	conf['shortAppName'],
+        datetime.date.today().year,
+        datetime.date.today().month,
+        datetime.date.today().day)
+    sys.argv.remove('--make-dmg')
+else:
+    imgName = None
+
 # Create daemon.py
 fillTemplate(os.path.join(root, 'portable/dl_daemon/daemon.py.template'),
              os.path.join(root, 'portable/dl_daemon/daemon.py'),
@@ -178,7 +180,7 @@ class clean(Command):
             pass
         print "Removing old app..."
         try:
-            shutil.rmtree('Democracy.app')
+            shutil.rmtree('%s.app'%conf['shortAppName'])
         except:
             pass
         print "Removing old compiled templates..."
@@ -199,7 +201,7 @@ class mypy2app(py2app):
         global root, imgName, conf
         print "------------------------------------------------"
         
-        print "Building Democracy Player v%s (%s)" % (conf['appVersion'], conf['appRevision'])
+        print "Building %s v%s (%s)" % (conf['longAppName'], conf['appVersion'], conf['appRevision'])
 
         template_compiler.compileAllTemplates(root)
 
@@ -207,7 +209,7 @@ class mypy2app(py2app):
 
         # Setup some variables we'll need
 
-        bundleRoot = os.path.join(self.dist_dir, 'Democracy.app/Contents')
+        bundleRoot = os.path.join(self.dist_dir, '%s.app/Contents'%conf['shortAppName'])
         execRoot = os.path.join(bundleRoot, 'MacOS')
         rsrcRoot = os.path.join(bundleRoot, 'Resources')
         fmwkRoot = os.path.join(bundleRoot, 'Frameworks')
@@ -226,14 +228,14 @@ class mypy2app(py2app):
                     os.symlink(os.path.dirname(dest), fmwk)
 
         # Create a hard link to the main executable with a different
-        # name for the downloader. This is to avoid having 'Democracy'
+        # name for the downloader. This is to avoid having 'Miro'
         # shown twice in the Activity Monitor since the downloader is
-        # basically Democracy itself, relaunched with a specific
+        # basically Miro itself, relaunched with a specific
         # command line parameter.
 
         print "Creating Downloader hard link."
 
-        srcPath = os.path.join(execRoot, 'Democracy')
+        srcPath = os.path.join(execRoot, conf['shortAppName'])
         linkPath = os.path.join(execRoot, 'Downloader')
 
         if os.path.exists(linkPath):
@@ -300,7 +302,7 @@ class mypy2app(py2app):
         # Check that we haven't left some turds in the application bundle.
         
         wipeList = list()
-        for root, dirs, files in os.walk(os.path.join(self.dist_dir, 'Democracy.app')):
+        for root, dirs, files in os.walk(os.path.join(self.dist_dir, '%s.app'%conf['shortAppName'])):
             for excluded in ('.svn', 'unittest'):
                 if excluded in dirs:
                     dirs.remove(excluded)
@@ -330,8 +332,8 @@ class mypy2app(py2app):
             os.mkdir(imgDirName)
             os.mkdir(os.path.join(imgDirName,".background"))
 
-            os.rename(os.path.join(self.dist_dir,"Democracy.app"),
-                      os.path.join(imgDirName, "Democracy.app"))
+            os.rename(os.path.join(self.dist_dir,"%s.app"%conf['shortAppName']),
+                      os.path.join(imgDirName, "%s.app"%conf['shortAppName']))
             shutil.copyfile("Resources-DMG/DS_Store",
                             os.path.join(imgDirName,".DS_Store"))
             shutil.copyfile("Resources-DMG/background.tiff",
@@ -345,15 +347,16 @@ class mypy2app(py2app):
 
             print "Creating DMG file... "
 
-            os.system("hdiutil create -srcfolder \"%s\" -volname Democracy -format UDZO \"%s\"" %
+            os.system("hdiutil create -srcfolder \"%s\" -volname %s -format UDZO \"%s\"" %
                       (imgDirName,
-                       os.path.join(self.dist_dir, "Democracy.tmp.dmg")))
+		       conf['shortAppName'],
+                       os.path.join(self.dist_dir, "%s.tmp.dmg"%conf['shortAppName'])))
 
             os.system("hdiutil convert -format UDZO -imagekey zlib-level=9 -o \"%s\" \"%s\"" %
                       (imgPath,
-                       os.path.join(self.dist_dir, "Democracy.tmp.dmg")))
+                       os.path.join(self.dist_dir, "%s.tmp.dmg"%conf['shortAppName'])))
                       
-            os.remove(os.path.join(self.dist_dir,"Democracy.tmp.dmg"))
+            os.remove(os.path.join(self.dist_dir,"%s.tmp.dmg"%conf['shortAppName']))
 
             print "Completed"
             os.system("ls -la \"%s\"" % imgPath)
@@ -361,14 +364,14 @@ class mypy2app(py2app):
 
 py2app_options = dict(
     plist = infoPlist,
-    iconfile = os.path.join(root, 'platform/osx/Democracy.icns'),
+    iconfile = os.path.join(root, 'platform/osx/%s.icns'%conf['shortAppName']),
     resources = resourceFiles,
     frameworks = frameworks,
     packages = ['dl_daemon']
 )
 
 setup(
-    app = ['Democracy.py'],
+    app = ['%s.py'%conf['shortAppName']],
     options = dict(py2app = py2app_options),
     ext_modules = [
         Extension("idletime",  [os.path.join(root, 'platform/osx/modules/idletime.c')], extra_link_args=['-framework', 'CoreFoundation']),
