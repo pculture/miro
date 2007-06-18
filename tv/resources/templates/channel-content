@@ -51,20 +51,20 @@
 
       <div t:showIf="searchTerm is None">
         <div t:hideIf="isFolder" i18n:translate="">
-              <span i18n:name="len" t:replace="allItems.len()" /> 
+              <span i18n:name="len" t:replace="notDeleted.len()" /> 
               Items on this Channel
         </div>
         <div t:showIf="isFolder" i18n:translate="">
-              <span i18n:name="len" t:replace="allItems.len()" /> 
+              <span i18n:name="len" t:replace="notDeleted.len()" /> 
               Items on this Channel
         </div>
       </div>
       <div t:showIf="searchTerm is not None">
-        <div t:showIf="allItems.len() == matchingItems.len()" i18n:translate="">
+        <div t:showIf="notDeleted.len() == matchingItems.len()" i18n:translate="">
                 All <span i18n:name="len" t:replace="matchingItems.len()" /> 
                 Match This Search
         </div>
-        <div t:hideIf="allItems.len() == matchingItems.len()" i18n:translate="">
+        <div t:hideIf="notDeleted.len() == matchingItems.len()" i18n:translate="">
                 <span i18n:name="len" t:replace="matchingItems.len()" /> 
                 Match This Search
         </div>
