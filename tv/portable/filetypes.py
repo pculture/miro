@@ -1,5 +1,5 @@
 
-VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx']
+VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.rmvb']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma']
 
 MIMETYPES_EXT_MAP = {
