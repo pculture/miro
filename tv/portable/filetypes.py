@@ -31,20 +31,29 @@ def isVideoFilename(filename):
     Pass a filename to this method and it will return a boolean
     saying if the filename represents a video file.
     """
-    return True in [filename.endswith(ext) for ext in VIDEO_EXTENSIONS]
+    filename = filename.lower()
+    for ext in VIDEO_EXTENSIONS:
+        if filename.endswith(ext):
+            return True
+    return False
 
 def isAudioFilename(filename):
     """
     Pass a filename to this method and it will return a boolean
     saying if the filename represents an audio file.
     """
-    return True in [filename.endswith(ext) for ext in AUDIO_EXTENSIONS]
+    filename = filename.lower()
+    for ext in AUDIO_EXTENSIONS:
+        if filename.endswith(ext):
+            return True
+    return False
 
 def isTorrentFilename(filename):
     """
     Pass a filename to this method and it will return a boolean
     saying if the filename represents a torrent file.
     """
+    filename = filename.lower()
     return filename.endswith('.torrent')
 
 def isVideoEnclosure(enclosure):
