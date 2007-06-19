@@ -150,21 +150,12 @@ def getBundleResourcePath():
     return unicode(NSBundle.mainBundle().resourcePath())
 
 ###############################################################################
-#### Migrate to Democracy                                                  ####
+#### Migrate to new application name                                       ####
 ###############################################################################
 
-oldAppName = 'DTV'
-newAppName = 'Democracy'
-
-oldMoviesFolder = os.path.join(MOVIES_DIRECTORY_PARENT, oldAppName)
-newMoviesFolder = os.path.join(MOVIES_DIRECTORY_PARENT, newAppName)
-oldSupportFolder = os.path.join(SUPPORT_DIRECTORY_PARENT, oldAppName)
-newSupportFolder = os.path.join(SUPPORT_DIRECTORY_PARENT, newAppName)
-
-def migrateToDemocracy():
+def migrateToNewAppName(oldAppName, newAppName):
 
     # Migrate preferences
-    
     prefsPath = os.path.expanduser('~/Library/Preferences')
     newDomain = getBundleIdentifier()
     newPrefs = '%s.plist' % os.path.join(prefsPath, newDomain)
@@ -172,24 +163,28 @@ def migrateToDemocracy():
     oldPrefs = '%s.plist' % os.path.join(prefsPath, oldDomain)
     
     if os.path.exists(oldPrefs):
-        logging.info("Migrating preferences to %s" % newDomain)
         os.rename(oldPrefs, newPrefs)
+        print("Migrated preferences to %s" % newPrefs)
         
     # Migrate Movies and Support folders
 
+    oldMoviesFolder = os.path.join(MOVIES_DIRECTORY_PARENT, oldAppName)
+    newMoviesFolder = os.path.join(MOVIES_DIRECTORY_PARENT, newAppName)
     if os.path.exists(oldMoviesFolder):
         if not os.path.exists(newMoviesFolder):
-            logging.info("Migrating movies folder to %s" % newMoviesFolder)
             os.rename(oldMoviesFolder, newMoviesFolder)
+            print("Migrated movies folder to %s" % newMoviesFolder)
         else:
-            logging.warn("Both DTV and Democracy movies folder exist.")
+            print("Both %s and %s movies folder exist." % (oldAppName, newAppName))
 
+    oldSupportFolder = os.path.join(SUPPORT_DIRECTORY_PARENT, oldAppName)
+    newSupportFolder = os.path.join(SUPPORT_DIRECTORY_PARENT, newAppName)
     if os.path.exists(oldSupportFolder):
         if not os.path.exists(newSupportFolder):
-            logging.info("Migrating support folder to %s" % newSupportFolder)
             os.rename(oldSupportFolder, newSupportFolder)
+            print("Migrated support folder to %s" % newSupportFolder)
         else:
-            logging.warn("Both DTV and Democracy support folder exist.")
+            print("Both %s and %s support folder exist." % (oldAppName, newAppName))
 
 def ensureMigratedMoviePath(pathname):
     if pathname.startswith(oldMoviesFolder):
@@ -198,4 +193,4 @@ def ensureMigratedMoviePath(pathname):
     return pathname
 
 if not util.inDownloader:
-    migrateToDemocracy()
+    migrateToNewAppName('Democracy', 'Miro')

@@ -23,7 +23,7 @@ def activatePsyco():
 
 # =============================================================================
 
-def launchDemocracy():
+def launchApplication():
     # Import the pysqlite module as soon as possible to avoid (very) weird
     # errors ("library routine called out of sequence") probably due to a
     # conflict between the standard OS X sqlite lib and our own most recent one.
@@ -124,5 +124,5 @@ if bundleInfo['PyOptions']['alias']:
 if len(sys.argv) > 1 and sys.argv[1] == "download_daemon":
     launchDownloaderDaemon()
 else:
-    launchDemocracy()
+    launchApplication()
 
