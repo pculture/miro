@@ -59,7 +59,7 @@ static void build_tables() {
 }
 
 void _make_new_data_mine(_Xine* xine) {
-    xine->data_mine.videoPort = xine_new_framegrab_video_port(xine->data_mine.xine);
+    xine->data_mine.videoPort = xine_open_video_driver(xine->data_mine.xine, "none", XINE_VISUAL_TYPE_NONE, NULL);
     xine->data_mine.audioPort = xine_open_audio_driver(xine->data_mine.xine, "none", NULL);
     xine->data_mine.stream = xine_stream_new(xine->data_mine.xine,
             xine->data_mine.audioPort, xine->data_mine.videoPort);
