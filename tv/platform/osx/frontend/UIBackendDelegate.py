@@ -234,7 +234,7 @@ class UIBackendDelegate:
         logging.info('Launching Download Daemon')
         dlTask.launch()
         
-    def makeDemocracyRunAtStartup(self, run):
+    def makeAppRunAtStartup(self, run):
         defaults = NSUserDefaults.standardUserDefaults()
         lwdomain = defaults.persistentDomainForName_('loginwindow')
         lwdomain = Conversion.pythonCollectionFromPropertyList(lwdomain)

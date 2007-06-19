@@ -112,7 +112,7 @@ class GeneralPrefsController (NibClassBuilder.AutoBaseClass):
     
     def runAtStartup_(self, sender):
         run = (sender.state() == NSOnState)
-        app.delegate.makeDemocracyRunAtStartup(run)
+        app.delegate.makeAppRunAtStartup(run)
         config.set(prefs.RUN_DTV_AT_STARTUP, run)
                     
 ###############################################################################
@@ -162,7 +162,7 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
         panel.setCanCreateDirectories_(YES)
         panel.setAllowsMultipleSelection_(NO)
         panel.setTitle_(_(u'Movies Directory'))
-        panel.setMessage_(_(u'Select a Directory to store Democracy downloads in.'))
+        panel.setMessage_(_(u'Select a Directory to store %s downloads in.') % config.get(prefs.SHORT_APP_NAME))
         panel.setPrompt_(_(u'Select'))
         
         oldMoviesDirectory = self.moviesDirectoryField.stringValue()
@@ -173,7 +173,7 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
             if newMoviesDirectory != oldMoviesDirectory:
                 self.moviesDirectoryField.setStringValue_(newMoviesDirectory)
                 summary = _(u'Migrate existing movies?')
-                message = _(u'You\'ve selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).')
+                message = _(u'You\'ve selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).' % config.get(prefs.SHORT_APP_NAME))
                 def migrationCallback(dialog):
                     migrate = (dialog.choice == dialogs.BUTTON_YES)
                     app.changeMoviesDirectory(platformutils.osFilenameToFilenameType(newMoviesDirectory), migrate)

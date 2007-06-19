@@ -41,13 +41,13 @@ class Application:
         controller = appl.delegate()
 
     def Run(self):
-        if self.checkOtherDemocracyInstances():
+        if self.checkOtherAppInstances():
             eventloop.setDelegate(self)
             AppHelper.runEventLoop()
         else:
-            logging.warning('Another instance of Democracy is already running! Quitting now.')
+            logging.warning('Another instance of %s is already running! Quitting now.' % config.get(prefs.SHORT_APP_NAME))
 
-    def checkOtherDemocracyInstances(self):
+    def checkOtherAppInstances(self):
         ourBundleIdentifier = NSBundle.mainBundle().bundleIdentifier()
         applications = NSWorkspace.sharedWorkspace().launchedApplications()
         democracies = [appl for appl in applications if appl['NSApplicationBundleIdentifier'] == ourBundleIdentifier]
@@ -55,9 +55,9 @@ class Application:
 
         if not alone:
             ourBundlePath = NSBundle.mainBundle().bundlePath()
-            otherDemocracy = [dem['NSApplicationPath'] for dem in democracies if dem['NSApplicationPath'] != ourBundlePath]
-            if len(otherDemocracy) == 1:
-                NSWorkspace.sharedWorkspace().launchApplication_(otherDemocracy[0])
+            otherInstance = [dem['NSApplicationPath'] for dem in democracies if dem['NSApplicationPath'] != ourBundlePath]
+            if len(otherInstance) == 1:
+                NSWorkspace.sharedWorkspace().launchApplication_(otherInstance[0])
 
         return alone
 
@@ -76,7 +76,7 @@ class Application:
         # For overriding
         pass
 
-    ### eventloop (the Democracy one, not the Cocoa one) delegate methods
+    ### eventloop (our own one, not the Cocoa one) delegate methods
 
     def beginLoop(self, loop):
         loop.pool = NSAutoreleasePool.alloc().init()

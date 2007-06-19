@@ -93,7 +93,7 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
 
     def performRunAtStartupTask(self):
         run = (self.runAtStartupMatrix.selectedCell().tag() == 1)
-        app.delegate.makeDemocracyRunAtStartup(run)
+        app.delegate.makeAppRunAtStartup(run)
         config.set(prefs.RUN_DTV_AT_STARTUP, run)
         return True
 
