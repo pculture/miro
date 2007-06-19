@@ -1,5 +1,5 @@
-/* NSMenuItem : <title:About Democracy> (oid:58) */
-"About Democracy" = "About Democracy";
+/* NSMenuItem : <title:About $shortAppName> (oid:58) */
+"About $shortAppName" = "About $shortAppName";
 
 /* NSMenuItem : <title:Add Channel...> (oid:227) */
 "Add Channel..." = "Add Channel...";
@@ -34,12 +34,6 @@
 /* NSMenuItem : <title:Delete> (oid:164) */
 "Delete" = "Delete";
 
-/* NSMenu : <title:Democracy> (oid:57) */
-"Democracy" = "Democracy";
-
-/* NSMenuItem : <title:Democracy Help> (oid:111) */
-"Democracy Help" = "Democracy Help";
-
 /* NSMenuItem : <title:Donate> (oid:341) */
 "Donate" = "Donate";
 
@@ -55,8 +49,8 @@
 /* NSMenu : <title:Help> (oid:106) */
 "Help" = "Help";
 
-/* NSMenuItem : <title:Hide Democracy> (oid:134) */
-"Hide Democracy" = "Hide Democracy";
+/* NSMenuItem : <title:Hide Miro> (oid:134) */
+"Hide Miro" = "Hide Miro";
 
 /* NSMenuItem : <title:Hide Others> (oid:145) */
 "Hide Others" = "Hide Others";
@@ -69,6 +63,12 @@
 
 /* NSMenuItem : <title:Minimize> (oid:23) */
 "Minimize" = "Minimize";
+
+/* NSMenu : <title:Miro> (oid:57) */
+"Miro" = "Miro";
+
+/* NSMenuItem : <title:Miro Help> (oid:111) */
+"Miro Help" = "Miro Help";
 
 /* NSMenuItem : <title:New Channel Folder...> (oid:312) */
 "New Channel Folder..." = "New Channel Folder...";
@@ -112,8 +112,8 @@
 /* NSMenuItem : <title:Previous Video> (oid:323) */
 "Previous Video" = "Previous Video";
 
-/* NSMenuItem : <title:Quit Democracy> (oid:136) */
-"Quit Democracy" = "Quit Democracy";
+/* NSMenuItem : <title:Quit Miro> (oid:136) */
+"Quit Miro" = "Quit Miro";
 
 /* NSMenuItem : <title:Remove...> (oid:309) */
 "Remove..." = "Remove...";

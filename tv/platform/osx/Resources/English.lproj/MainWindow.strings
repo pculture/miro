@@ -16,11 +16,11 @@
 /* NSBox (Box) : <title:Box> (oid:227) */
 "Box" = "Box";
 
-/* NSWindow (Democracy) : <title:Democracy> (oid:7) */
-"Democracy" = "Democracy";
-
 /* FullScreenPalette (FullScreen Controls) : <title:FullScreen Controls> (oid:237) */
 "FullScreen Controls" = "FullScreen Controls";
+
+/* NSWindow (Miro) : <title:Miro> (oid:7) */
+"Miro" = "Miro";
 
 /* VideoSearchField (0) : <title:Search> (oid:289) */
 "Search" = "Search";

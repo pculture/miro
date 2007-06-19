@@ -8,6 +8,10 @@
 > (oid:127) */
 "(You must restart Democracy for this change to take effect)\n" = "(You must restart Democracy for this change to take effect)\n";
 
+/* NSTextField ((You must restart Miro for this change to take effect) ) : <title:(You must restart Miro for this change to take effect)
+> (oid:100) */
+"(You must restart Miro for this change to take effect)\n" = "(You must restart Miro for this change to take effect)\n";
+
 /* NSTextField ((movies directory path goes here)) : <title:(movies directory path goes here)> (oid:94) */
 "(movies directory path goes here)" = "(movies directory path goes here)";
 
@@ -92,8 +96,8 @@
 /* NSButton (Remove) : <title:Remove> (oid:150) */
 "Remove" = "Remove";
 
-/* NSButton (Run Democracy at startup) : <title:Run Democracy at startup> (oid:47) */
-"Run Democracy at startup" = "Run Democracy at startup";
+/* NSButton (Run Miro at startup) : <title:Run Miro at startup> (oid:47) */
+"Run Miro at startup" = "Run Miro at startup";
 
 /* NSTextField (Save downloaded videos in this folder:) : <title:Save downloaded videos in this folder:> (oid:92) */
 "Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
