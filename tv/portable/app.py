@@ -1223,6 +1223,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
                 continue
             if url.startswith(u"file://"):
                 filename = url[len(u'file://'):]
+                filename = platformutils.unicodeToFilename(filename)
                 eventloop.addIdle (singleclick.openFile,
                     "Open Dropped file", args=(filename,))
             elif url.startswith(u"http:") or url.startswith(u"https:"):
