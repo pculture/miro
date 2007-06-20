@@ -490,8 +490,8 @@ Section -Post
   WriteRegStr HKLM "${UNINST_KEY}" "URLInfoAbout" "${CONFIG_PROJECT_URL}"
   WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "${CONFIG_PUBLISHER}"
 
-  ; Set the program to XP Compatibility mode, so it works under Vista
-  WriteRegStr HKLM "Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\${CONFIG_EXECUTABLE}" "WINXPSP2"
+  ; We're Vista compatible now, so drop the compatability crap
+  DeleteRegValue HKLM "Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\${CONFIG_EXECUTABLE}"
 SectionEnd
 
 Section "Uninstall" SEC91
