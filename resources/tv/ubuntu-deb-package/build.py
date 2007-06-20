@@ -14,22 +14,21 @@ def call(cmd):
 
 def usage():
     sys.stderr.write("""\
-Usage: build.py [version] [distribution-name]
+Usage: build.py [version] [distribution-name] [source tarball url]
 
 For example:
-    build.py 0.9.5 feisty
+    build.py 0.9.5 feisty http://example.com/Democracy-0.9.5.tar.gz
 """)
     sys.exit(1)
 
-if len(sys.argv) != 3:
+if len(sys.argv) != 4:
     usage()
 
 version = sys.argv[1]
 distro = sys.argv[2]
 debian_dir = os.path.normpath(os.path.join(__file__, '..', 'debian-%s' % distro))
 tarball_name = 'Democracy-%s.tar.gz' % version
-tarball_url = ('ftp://ftp.osuosl.org/pub/pculture.org/democracy/src/' +
-        tarball_name)
+tarball_url = sys.argv[3]
 user = os.environ['USER']
 
 if not os.path.isdir(debian_dir):
@@ -64,8 +63,5 @@ os.chdir('../..')
 
 if os.path.exists(distro):
     shutil.rmtree(distro)
-os.mkdir(distro)
-call('mv build-tmp/*.deb %s' % distro)
-call('apt-ftparchive packages %s > %s/Packages' % (distro, distro))
-call('gzip %s/Packages' % distro)
+call('mv build-tmp/*.deb .')
 print 'done'
