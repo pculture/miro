@@ -99,12 +99,6 @@ def doSelectDisplay(frame, area):
     if area in toSelect:
         frame.selectDisplay(toSelect.pop(area), area)
         
-class TemplateError(Exception):
-    def __init__(self, message):
-        self.message = message
-    def __str__(self):
-        return self.message
-
 ###############################################################################
 #### template runtime code                                                 ####
 ###############################################################################
@@ -127,8 +121,6 @@ class TrackedView:
         self.toAdd = []
         self.addBefore = None
         self.idle_queued = False
-        self.currentAttrs = {}
-        self.currentInnerHTMLs = {}
 
     def tid(self, obj):
         return "objid-%s-%d" % (id(self), id(obj))
@@ -296,8 +288,6 @@ class UpdateRegionBase:
         self.htmlChanger = self.parent.htmlChanger
         self.tid = generateId()
         self.idle_queued = False
-        self.currentAttrs = None
-        self.currentInnerHTML = None
 
     #
     # This is called after the HTML has been rendered to fill in the
@@ -383,7 +373,7 @@ class Handle:
         self.onUnlink = onUnlink
         self.htmlChanger = HTMLChangeOptimizer()
         self.filled = False
-        
+
     def addTriggerActionURLOnLoad(self,url):
         self.triggerActionURLsOnLoad.append(str(url))
 
@@ -468,6 +458,8 @@ class Handle:
         self.trackedHides = {}
         for handle in self.subHandles:
             handle.unlinkTemplate()
+        self.subHandles = []
+        self.templateVars.clear()
         self.onUnlink()
 
     def initialFillIn(self):
