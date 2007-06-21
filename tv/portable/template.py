@@ -182,6 +182,7 @@ class TrackedView:
 
             tids = [self.tid(obj) for obj in self.toRemove]
             if len(tids) > 0:
+                self.htmlChanger.removeElements(tids)
                 self.parent.domHandler.removeItems(tids)
             
         self.toChange = {}

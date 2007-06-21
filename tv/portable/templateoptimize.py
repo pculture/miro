@@ -172,3 +172,7 @@ class HTMLChangeOptimizer:
         new = OptimizedElement(id, html)
         self.elements[id] = new
         return new.calcChanges(old)
+
+    def removeElements(self, ids):
+        for id in ids:
+            del self.elements[id]
