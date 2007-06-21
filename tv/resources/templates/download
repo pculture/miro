@@ -161,12 +161,12 @@ allPausedDownloads.unlink()
 
     <div t:updateForView="matchingULs">
         <div t:hideIf="matchingULs.len() == 0">
-            <t:executeTemplate filename="static-tab-sort-bar" 
-                    itemSort="sorts.itemSortSeedingTorrents"
-                    section="'seeding-torrents'" />
             <div class="main-channelbar seeding-channelbar no-arrow">
                 <span i18n:translate="">Seeding Torrents</span>
             </div>
+            <t:executeTemplate filename="static-tab-sort-bar" 
+                    itemSort="sorts.itemSortSeedingTorrents"
+                    section="'seeding-torrents'" />
         </div>
     </div>
     <div t:repeatForView="matchingULs" t:repeatTemplate='download-item' t:containerDiv="true" />
