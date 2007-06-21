@@ -73,6 +73,9 @@ class HTMLDisplay(app.Display):
     def __str__ (self):
         return str (self.count)
 
+    def __repr__ (self):
+        return str(self)
+
     def __nonzero__ (self):
         return True
 
