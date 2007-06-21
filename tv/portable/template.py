@@ -87,7 +87,7 @@ def queueSelectDisplay(frame, display, area):
     useful if you want it to happen after template DOM updates (see
     selection.py for an example).
     """
-    if area in toSelect.keys():
+    if area in toSelect:
         # There's already a display queued up. Dispose of it properly
         toSelect[area].templateHandle.unlinkTemplate()
         
