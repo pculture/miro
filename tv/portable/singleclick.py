@@ -150,17 +150,17 @@ will stay where they currently are.""" % existingURLCount)
     dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
             dialogs.BUTTON_CANCEL).run(callback)
 
-def complainAboutDemocracyURL(messageText):
+def complainAboutSubscriptionURL(messageText):
     title = _("Subscription error")
     dialogs.MessageBoxDialog(title, messageText).run()
 
-def addDemocracyURL(url):
-    realURL = url[len('democracy:'):]
+def addSubscriptionURL(prefix, expectedContentType, url):
+    realURL = url[len(prefix):]
     def callback(info):
-        if info.get('content-type') == 'application/x-democracy':
+        if info.get('content-type') == expectedContentType:
             urls = subscription.parseContent(info['body'])
             if urls is None:
-                complainAboutDemocracyURL(
+                complainAboutSubscriptionURL(
                     Template(_("This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
             else:
                 if len(urls) > 1:
@@ -168,11 +168,11 @@ def addDemocracyURL(url):
                 else:
                     addFeeds(urls)
         else:
-            complainAboutDemocracyURL(
+            complainAboutSubscriptionURL(
                 Template(_("This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.")).substitute(
                 url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
     def errback(error):
-        complainAboutDemocracyURL(
+        complainAboutSubscriptionURL(
                 Template(_("Could not download the $shortAppName channel file: $url.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
     httpclient.grabURL(realURL, callback, errback)
 
@@ -199,8 +199,10 @@ def parseCommandLineArgs(args=None):
     addedTorrents = False
 
     for arg in args:
-        if arg.startswith('democracy:'):
-            addDemocracyURL(arg)
+        if arg.startswith('miro:'):
+            addSubscriptionURL('miro:', 'application/x-miro', arg)
+        elif arg.startswith('democracy:'):
+            addSubscriptionURL('democracy:', 'application/x-democracy', arg)
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):
@@ -216,7 +218,7 @@ def parseCommandLineArgs(args=None):
                 addedTorrents = True
             elif ext in ('.rss', '.rdf', '.atom', '.ato'):
                 addFeed(arg)
-            elif ext in ('.democracy', '.dem', '.opml'):
+            elif ext in ('.miro', '.democracy', '.dem', '.opml'):
                 addSubscriptions(arg)
             else:
                 addVideo(arg)

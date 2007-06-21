@@ -320,6 +320,10 @@ Section /o "Quick launch icon" SecQuickLaunch
     "" "$INSTDIR\${CONFIG_ICON}"
 SectionEnd
 
+Section "Handle Miro files" SecRegisterMiro
+  WriteRegStr HKCR ".miro" "" "${CONFIG_PROG_ID}"
+SectionEnd
+
 Section "Handle Democracy files" SecRegisterDemocracy
   WriteRegStr HKCR ".democracy" "" "${CONFIG_PROG_ID}"
 SectionEnd
@@ -445,6 +449,7 @@ continue:
 
   ; Make check boxes for unhandled file extensions.
   !insertmacro checkExtensionHandled ".torrent" ${SecRegisterTorrent}
+  !insertmacro checkExtensionHandled ".miro" ${SecRegisterMiro}
   !insertmacro checkExtensionHandled ".democracy" ${SecRegisterDemocracy}
   !insertmacro checkExtensionHandled ".avi" ${SecRegisterAvi}
   !insertmacro checkExtensionHandled ".m4v" ${SecRegisterMpg}

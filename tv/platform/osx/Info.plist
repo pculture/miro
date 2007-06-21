@@ -7,6 +7,26 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>miro</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string></string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-miro</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Miro One Click Subscribe Content</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>TEXT</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>democracy</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -16,7 +36,7 @@
 				<string>application/x-democracy</string>
 			</array>
 			<key>CFBundleTypeName</key>
-			<string>One Click Subscribe Content</string>
+			<string>Democracy One Click Subscribe Content</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>TEXT</string>
@@ -204,6 +224,14 @@
 	<string>$appVersion</string>
 	<key>CFBundleURLTypes</key>
 	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Miro URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>miro</string>
+			</array>
+		</dict>
 		<dict>
 			<key>CFBundleURLName</key>
 			<string>Democracy URL</string>

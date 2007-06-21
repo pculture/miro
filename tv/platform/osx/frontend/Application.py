@@ -265,8 +265,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
 
         if url.startswith('http'):
             command = [lambda:app.controller.addAndSelectFeed(url), "Open HTTP URL"]
+        elif url.startswith('miro:'):
+            command = [lambda:singleclick.addSubscriptionURL('miro:', 'application/x-miro', url), "Open Miro URL"]
         elif url.startswith('democracy:'):
-            command = [lambda:singleclick.addDemocracyURL(url), "Open Democracy URL"]
+            command = [lambda:singleclick.addSubscriptionURL('democracy:', 'application/x-democracy', url), "Open Democracy URL"]
 
         if app.controller.finishedStartup:
             eventloop.addIdle(*command)
