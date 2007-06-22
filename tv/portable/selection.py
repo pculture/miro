@@ -556,6 +556,7 @@ class SelectionHandler(object):
         if (self.lastDisplay and newDisplay == self.lastDisplay and
                 self.lastDisplay is mainDisplay and
                 newDisplay.templateName != 'guide'):
+            newDisplay.unlink()
             return
 
         self.itemListSelection.clearSelection()

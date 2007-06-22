@@ -89,7 +89,7 @@ def queueSelectDisplay(frame, display, area):
     """
     if area in toSelect:
         # There's already a display queued up. Dispose of it properly
-        toSelect[area].templateHandle.unlinkTemplate()
+        toSelect[area].unlink()
         
     toSelect[area] = display
     queueDOMChange(lambda: doSelectDisplay(frame, area), "Select display")

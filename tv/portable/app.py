@@ -1486,8 +1486,12 @@ class TemplateDisplay(frontend.HTMLDisplay):
     def onDeselected(self, frame):
         unloadTriggers = self.templateHandle.getTriggerActionURLsOnUnload()
         self.runActionURLs(unloadTriggers)
-        self.templateHandle.unlinkTemplate()
+        self.unlink()
         frontend.HTMLDisplay.onDeselected(self, frame)
+
+    def unlink(self):
+        self.templateHandle.unlinkTemplate()
+        self.actionHandlers = []
 
 ###############################################################################
 #### Handlers for actions generated from templates, the OS, etc            ####
