@@ -42,9 +42,11 @@ def _handleAppCast(data, notifyIfUpToDate):
             if appcast['bozo'] == '1':
                 return
 
-            latest = _getItemForLatest(appcast)        
-            serial = int(config.get(prefs.APP_SERIAL))
-            upToDate = (serial > _getItemSerial(latest))
+            upToDate = True
+            latest = _getItemForLatest(appcast)
+            if latest is not None:
+                serial = int(config.get(prefs.APP_SERIAL))
+                upToDate = (serial > _getItemSerial(latest))
         
             if not upToDate:
                 logging.info('New update available.')
@@ -82,8 +84,11 @@ def _getItemForLatest(appcast):
     for item in rejectedItems:
         appcast['entries'].remove(item)
 
-    appcast['entries'].sort(key=_getItemSerial, reverse=True)
-    return appcast['entries'][0]
+    try:
+        appcast['entries'].sort(key=_getItemSerial, reverse=True)
+        return appcast['entries'][0]
+    except:
+        return None
 
 # Returns the serial of the first enclosure of the passed item
 def _getItemSerial(item):
