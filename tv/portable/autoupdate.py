@@ -46,7 +46,7 @@ def _handleAppCast(data, notifyIfUpToDate):
             latest = _getItemForLatest(appcast)
             if latest is not None:
                 serial = int(config.get(prefs.APP_SERIAL))
-                upToDate = (serial > _getItemSerial(latest))
+                upToDate = (serial >= _getItemSerial(latest))
         
             if not upToDate:
                 logging.info('New update available.')
