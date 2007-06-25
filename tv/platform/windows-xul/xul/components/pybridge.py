@@ -35,6 +35,7 @@ try:
     import searchengines
     import views
     import moviedata
+    import migrateappname
     moviedata.RUNNING_MAX = 1
 except:
     errorOnImport = True
@@ -224,6 +225,7 @@ class PyBridge:
     _reg_desc_ = "Bridge into DTV Python core"
 
     def __init__(self):
+        migrateappname.migrateSupport('Democracy Player', 'Miro')
         self.started = False
         self.cursorDisplayCount = 0
         if not errorOnImport:
@@ -249,6 +251,8 @@ class PyBridge:
         initializeHTTPProxy()
         views.waitForInit()
         self.initializeSearchEngines()
+        
+        migrateappname.migrateVideos('Democracy', 'Miro')
 
     @asUrgent
     def initializeViews(self):
