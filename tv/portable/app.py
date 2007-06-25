@@ -65,6 +65,7 @@ import menubar # Needed because the XUL port only includes this in pybridge
 from gtcache import gettext as _
 from gtcache import ngettext
 from clock import clock
+from download_utils import parseURL
 
 # Global Controller singleton
 controller = None
@@ -1793,13 +1794,18 @@ class GUIActionHandler:
                     doAdd(dialog.value)
             dialog.run(callback)
         def doAdd(url):
-            url = feed.normalizeFeedURL(url)
-            if not feed.validateFeedURL(url):
+            # The w3C says that URLs containing international characters should
+            # be UTF8/url-quoted: <http://www.w3.org/International/O-URL-code.html>
+            scheme, host, port, path = parseURL(url)
+            quotedURL = u"%s://%s:%s%s" % (scheme, host, port, urllib.quote(path.encode('utf8')))
+            # Now normalize
+            normalizedURL = feed.normalizeFeedURL(quotedURL)
+            if not feed.validateFeedURL(normalizedURL):
                 ltitle = title + _(" - Invalid URL")
                 lmessage = _("The address you entered is not a valid URL.\nPlease double check and try again.\n\n") + message
                 createDialog(ltitle, lmessage, url)
                 return
-            callback(url)
+            callback(normalizedURL)
         if url is None:
             createDialog(title, message)
         else:
