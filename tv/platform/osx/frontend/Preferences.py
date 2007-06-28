@@ -225,8 +225,8 @@ class FoldersPrefsController (NibClassBuilder.AutoBaseClass):
         panel.setCanChooseDirectories_(YES)
         panel.setCanCreateDirectories_(YES)
         panel.setAllowsMultipleSelection_(NO)
-        panel.setTitle_(_(u'View this Directory in My Collection'))
-        panel.setMessage_(_(u'Select a Directory to view in My Collection.'))
+        panel.setTitle_(_(u'View this Directory in the Library'))
+        panel.setMessage_(_(u'Select a Directory to view in the Library.'))
         panel.setPrompt_(_(u'Select'))
         
         result = panel.runModalForDirectory_file_(nil, nil)

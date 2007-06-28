@@ -1852,7 +1852,7 @@ class GUIActionHandler:
     
             if selected == '1':
                 controller.selection.selectTabByObject(myGuide)
-        self.addURL (Template(_("$shortAppName - Add Channel Guide")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME)), _("Enter the URL of the channel guide to add"), doAdd, url)
+        self.addURL (Template(_("$shortAppName - Add Miro Guide")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME)), _("Enter the URL of the Miro Guide to add"), doAdd, url)
 
     def handleDrop(self, data, type, sourcedata):
         controller.handleDrop(data, type, sourcedata)
@@ -2182,7 +2182,7 @@ def _getInitialChannelGuide():
         else:
             guideObj.remove()
     if default_guide is None:
-        logging.info ("Spawning Channel Guide...")
+        logging.info ("Spawning Miro Guide...")
         default_guide = guide.ChannelGuide()
         initialFeeds = resources.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):

@@ -23,8 +23,8 @@ from gtcache import gettext as _
 # Database object representing a static (non-feed-associated) tab.
 class StaticTab(database.DDBObject):
     tabTitles = {
-        'librarytab': _('My Collection'),
-        'newtab': _('New Videos'),
+        'librarytab': _('Library'),
+        'newtab': _('New'),
         'searchtab': _('Video Search'),
         'downloadtab': _('Downloading'),
     }

@@ -121,7 +121,7 @@ def SetupDirList (widgetTree, toggleRenderer):
         removeFeeds (ids)
 
     def AddClicked (widget):
-        dialog = gtk.FileChooserDialog("View this folder in \"My Collection\"",
+        dialog = gtk.FileChooserDialog("View this folder in the Library",
                                        widgetTree["dialog-preferences"],
                                        gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                        (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, 

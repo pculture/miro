@@ -1386,7 +1386,7 @@ folder will be deleted.""")
             if templateName in ('playlist', 'playlist-folder'):
                 label = _('Remove From Playlist')
             else:
-                label = _('Remove From My Collection')
+                label = _('Remove From the Library')
             items = [
                 (lambda: c.playView(view, self.getID()), _('Play')),
                 (lambda: c.playView(view, self.getID(), True), 
@@ -1651,7 +1651,7 @@ class FileItem(Item):
         if self.isContainerItem:
             description = _("""\
 Would you like to delete this folder and all of its videos or just remove \
-its entry from My Collection?""")
+its entry from the Library?""")
             button = dialogs.BUTTON_DELETE_FILES
         else:
             description = _("""\
@@ -1763,7 +1763,7 @@ def expireItems(items):
     if hasExternalItems:
         description = _("""One or more of these videos was not downloaded \
 from a channel.  Would you like to delete these items or just remove their \
-entries from My Collection?""")
+entries from the Library?""")
     else:
         description = u"Are you sure you want to delete all %s videos?" % \
                 len(items)

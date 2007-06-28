@@ -111,8 +111,8 @@
 /* NSTextField (To avoid internet slowdowns:) : <title:To avoid internet slowdowns:> (oid:128) */
 "To avoid internet slowdowns:" = "To avoid internet slowdowns:";
 
-/* NSTextField (Watch for new videos in these folders and include them in My Collection:) : <title:Watch for new videos in these folders and include them in My Collection:> (oid:144) */
-"Watch for new videos in these folders and include them in My Collection:" = "Watch for new videos in these folders and include them in My Collection:";
+/* NSTextField (Watch for new videos in these folders and include them in the Library:) : <title:Watch for new videos in these folders and include them in the Library:> (oid:144) */
+"Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:";
 
 /* NSMenuItem : <title:every 30 minutes> (oid:27) */
 "every 30 minutes" = "every 30 minutes";

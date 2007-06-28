@@ -848,7 +848,7 @@ Manually</property>
 		  <child>
 		    <widget class="GtkLabel" id="label41">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Watch for new videos in these folders and include them in My Collection</property>
+		      <property name="label" translatable="yes">Watch for new videos in these folders and include them in the Library</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1041,7 +1041,7 @@ Manually</property>
 	  <child>
 	    <widget class="GtkLabel" id="label13">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">&lt;b&gt;Folders in My Collection&lt;/b&gt;</property>
+	      <property name="label" translatable="yes">&lt;b&gt;Folders in the Library&lt;/b&gt;</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">True</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -2473,7 +2473,7 @@ Setup is complete -- now you can find some channels and start watching.
 
 &lt;b&gt;Go Big:&lt;/b&gt; The button to the right of the play button shows videos fullscreen.
 
-&lt;b&gt;Find Videos:&lt;/b&gt; The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.</property>
+&lt;b&gt;Find Videos:&lt;/b&gt; The Democracy Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">True</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>

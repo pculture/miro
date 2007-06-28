@@ -14,7 +14,7 @@ guide = views.guides.getObjectByID(int(kargs['id']))
 </head>
 <body class="channel-guide-body">
 	<div id="channel-guide-loading-image">
-		<span id="channel-guide-loading-text" i18n:translate="">Loading Channel Guide</span>
+		<span id="channel-guide-loading-text" i18n:translate="">Loading Miro Guide</span>
 	</div>
 </body>
 </html>

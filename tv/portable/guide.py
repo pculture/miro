@@ -27,7 +27,7 @@ class ChannelGuide(DDBObject):
         DDBObject.__init__(self)
 
     def __str__(self):
-        return "Channel Guide <%s>" % (self.url,)
+        return "Miro Guide <%s>" % (self.url,)
 
     def makeContextMenu(self, templateName, view):
         menuItems = [
@@ -55,7 +55,7 @@ class ChannelGuide(DDBObject):
     @returnsUnicode
     def getTitle(self):
         if self.getDefault():
-            return _('Channel Guide')
+            return _('Miro Guide')
         else:
             return self.getURL()
 

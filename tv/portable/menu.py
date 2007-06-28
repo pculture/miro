@@ -79,7 +79,7 @@ def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
         if templateName in ('playlist', 'playlist-folder'):
             label = _('Remove From Playlist')
         else:
-            label = _('Remove From My Collection')
+            label = _('Remove From the Library')
         items.append((c.removeCurrentItems, label))
         if watched:
             def markAllUnseen():

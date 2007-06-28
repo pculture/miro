@@ -1,5 +1,5 @@
-/* NSMenuItem : <title:About $shortAppName> (oid:58) */
-"About $shortAppName" = "About $shortAppName";
+/* NSMenuItem : <title:About Miro> (oid:58) */
+"About Miro" = "About Miro";
 
 /* NSMenuItem : <title:Add Channel...> (oid:227) */
 "Add Channel..." = "Add Channel...";
@@ -73,8 +73,8 @@
 /* NSMenuItem : <title:New Channel Folder...> (oid:312) */
 "New Channel Folder..." = "New Channel Folder...";
 
-/* NSMenuItem : <title:New Channel Guide...> (oid:317) */
-"New Channel Guide..." = "New Channel Guide...";
+/* NSMenuItem : <title:New Miro Guide...> (oid:317) */
+"New Miro Guide..." = "New Miro Guide...";
 
 /* NSMenuItem : <title:New Playlist Folder...> (oid:307) */
 "New Playlist Folder..." = "New Playlist Folder...";

@@ -22,8 +22,8 @@
 /* NSWindow (Miro) : <title:Miro> (oid:7) */
 "Miro" = "Miro";
 
-/* VideoSearchField (0) : <title:Search> (oid:289) */
-"Search" = "Search";
+/* VideoSearchField (0) : <title:Video Search> (oid:289) */
+"Video Search" = "Video Search";
 
 /* VideoWindow (VideoWindow) : <title:VideoWindow> (oid:242) */
 "VideoWindow" = "VideoWindow";
