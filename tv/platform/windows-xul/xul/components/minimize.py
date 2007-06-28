@@ -294,9 +294,8 @@ class Minimize:
             self.minimized = []
         else:
             self.minimizeAll()
-        jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-        jsbridge.updateTrayMenus()
-        
+        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        pybridge.updateTrayMenus()
 
     def isMinimized(self):
         for mini in Minimize.minimizers.values():

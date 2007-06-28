@@ -502,10 +502,10 @@ jsBridge.prototype = {
      var updateChannels = new Object();
      var removePlaylists = new Object();
      var removeVideos = new Object();
-     pybridge.getLabel("RemoveChannels","",removeChannels);
-     pybridge.getLabel("UpdateChannels","", updateChannels);
-     pybridge.getLabel("RemovePlaylists","", removePlaylists);
-     pybridge.getLabel("RemoveVideos","",removeVideos);
+     pybridge.getLabel("RemoveChannels","",0,0,0,removeChannels);
+     pybridge.getLabel("UpdateChannels","",0,0,0,updateChannels);
+     pybridge.getLabel("RemovePlaylists","",0,0,0,removePlaylists);
+     pybridge.getLabel("RemoveVideos","",0,0,0,removeVideos);
 
      states = states.QueryInterface(Components.interfaces.nsICollection);
 
@@ -520,16 +520,16 @@ jsBridge.prototype = {
              var action = actions.GetElementAt(j).QueryInterface(Components.interfaces.nsIVariant)
 
              if (action == "RemoveChannels")
-                 pybridge.getLabel("RemoveChannels",stateName,
+                 pybridge.getLabel("RemoveChannels",stateName,0,0,0,
                                    removeChannels);
              if (action == "UpdateChannels")
-                 pybridge.getLabel("UpdateChannels",stateName,
+                 pybridge.getLabel("UpdateChannels",stateName,0,0,0,
                                    updateChannels);
              if (action == "RemovePlaylists")
-                 pybridge.getLabel("RemovePlaylists",stateName,
+                 pybridge.getLabel("RemovePlaylists",stateName,0,0,0,
                                    removePlaylists);
              if (action == "RemoveVideos")
-                 pybridge.getLabel("RemoveVideos",stateName,
+                 pybridge.getLabel("RemoveVideos",stateName,0,0,0,
                                    removeVideos);
          }
          
@@ -545,7 +545,7 @@ jsBridge.prototype = {
      ele.setAttribute("label", removeVideos.value);
 
   },
-  updateTrayMenus: function () {
+  updateTrayMenus: function (unwatched, downloading, paused) {
       var playUnwatched = new Object();
       var pauseDownloads = new Object();
       var restoreDownloads = new Object();
@@ -558,10 +558,10 @@ jsBridge.prototype = {
       
 
      // Tray menu strings that get updated periodically
-     pybridge.getLabel("PlayUnwatched","",playUnwatched);
-     pybridge.getLabel("PauseDownloads","",pauseDownloads);
-     pybridge.getLabel("RestoreDownloads","",restoreDownloads);
-     pybridge.getLabel("RestoreWindow",minstate,restoreWindow);
+     pybridge.getLabel("PlayUnwatched","",unwatched, downloading, paused, playUnwatched);
+     pybridge.getLabel("PauseDownloads","",unwatched, downloading, paused,pauseDownloads);
+     pybridge.getLabel("RestoreDownloads","",unwatched, downloading, paused, restoreDownloads);
+     pybridge.getLabel("RestoreWindow",minstate,unwatched, downloading, paused, restoreWindow);
 
      var ele = this.document.getElementById("traymenu-playunwatched");
      ele.setAttribute("label", playUnwatched.value);

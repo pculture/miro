@@ -1,4 +1,3 @@
-
 from gettext import gettext as _
 from xpcom import components
 import ctypes
@@ -682,28 +681,35 @@ class PyBridge:
                         
             trayMenuElement.appendChild(menuitem)
 
-    def getLabel(self, action, state):
-        # This needs to access the database, return a value, and be callable
-        # from JavaScript, hence the hacks
-        import threading
-        import eventloop
-        import database
-        event = threading.Event()
-        def _getLabel(action, state):
-            event.returnValue = XULifyLabel(menubar.menubar.getLabel(action,state))
-            if event.returnValue == action:
-                event.returnValue = XULifyLabel(menubar.traymenu.getLabel(action,state))
-            event.set()
-            return event.returnValue
-
-        if threading.currentThread() != database.event_thread:
-            # This is safe since we know _getLabel won't call back
-            # into the main thread.
-            eventloop.addIdle(_getLabel, "_getLabel in pybridge", [action, state])
-            event.wait()
-            return event.returnValue
+    # Grab the database information, then throw it over the fence to
+    # the UI thread
+    @asIdle
+    def updateTrayMenus(self):
+        if views.initialized:
+            numUnwatched = len(views.unwatchedItems)
+            numDownloading = len(views.downloadingItems)
+            numPaused = len(views.pausedItems)
         else:
-            return _getLabel(action, state)
+            numPaused = numDownloading = numUnwatched = 0
+        frontend.jsBridge.updateTrayMenus(numUnwatched, numDownloading, numPaused)
+
+    # HACK ALERT - We should change this to take a dictionary instead
+    # of all of the possible database variables. Since there's no
+    # equivalent in XPCOM, it would be a pain, so we can wait. -- NN
+    def getLabel(self,action,state,unwatched = 0,downloading = 0, paused = 0):
+        variables = {}
+        variables['numUnwatched'] = unwatched
+        variables['numDownloading'] = downloading
+        variables['numPaused'] = paused
+
+        # Ih8XPCOM
+        if len(state) == 0:
+            state = None
+
+        ret = XULifyLabel(menubar.menubar.getLabel(action,state,variables))
+        if ret == action:
+            ret = XULifyLabel(menubar.traymenu.getLabel(action,state, variables))
+        return ret
 
     @asIdle
     def addDirectoryWatch(self, filename):
@@ -730,3 +736,4 @@ class PyBridge:
 
     def setMinimizeToTray(self, newSetting):
         config.set(prefs.MINIMIZE_TO_TRAY, newSetting)
+

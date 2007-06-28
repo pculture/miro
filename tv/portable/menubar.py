@@ -3,15 +3,16 @@
 from gtcache import gettext as _
 import config
 import prefs
+from string import Template
 
 CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12 = range(24)
-
+_ = lambda x : x
 platform = config.get(prefs.APP_PLATFORM)
 
 if platform == "osx":
-    MOD = CMD
+   MOD = CMD
 else:
-    MOD = CTRL
+   MOD = CTRL
 
 class ShortCut:
     def __init__(self, key, *modifiers):
@@ -21,43 +22,43 @@ class ShortCut:
 Key = ShortCut
 
 class MenuItem:
-    def __init__(self, label, action, shortcuts, enabled = True, labelFilter=lambda x:x, **stateLabels):
+    def __init__(self, label, action, shortcuts, enabled = True, **stateLabels):
         self.label = label
         self.action = action
         self.shortcuts = shortcuts
         self.enabled = enabled
         self.stateLabels = stateLabels
-        self.labelFilter = labelFilter
 
 class Separator:
     pass
 
 class Menu:
-    def __init__(self, label, action, labelFilter, *menuitems):
+    def __init__(self, label, action, *menuitems):
         self.label = label
         self.action = action
         self.labels = {action:label}
-        self.labelFilters = {action:labelFilter}
         self.stateLabels = {}
         self.shortcuts = {}
         self.menuitems = menuitems
         for item in menuitems:
             if not isinstance(item, Separator):
                 self.labels[item.action] = item.label
-                self.labelFilters[item.action] = item.labelFilter
                 self.shortcuts[item.action] = item.shortcuts
                 if item.stateLabels:
                     self.stateLabels[item.action] = item.stateLabels
             
-    def getLabel(self, action, state=None):
+    def getLabel(self, action, state=None, variables={}):
         if state is None:
-            try:
-                return self.labelFilters[action](self.labels[action])
-            except KeyError:
-                return action
+           try:
+               print self.labels[action]
+               print Template(self.labels[action])
+               print variables
+               return Template(self.labels[action]).substitute(**variables)
+           except KeyError:
+               return action
         else:
             try:
-                return self.labelFilters[action](self.stateLabels[action][state])
+                return Template(self.stateLabels[action][state]).substitute(**variables)
             except KeyError:
                 return self.getLabel(action)
     def getShortcuts(self, action):
@@ -72,25 +73,23 @@ class MenuBar:
         self.labels = {}
         self.stateLabels = {}
         self.shortcuts = {}
-        self.labelFilters = {}
         for menu in menus:
             self.labels.update(menu.labels)
-            self.labelFilters.update(menu.labelFilters)
             self.stateLabels.update(menu.stateLabels)
             self.shortcuts.update(menu.shortcuts)
 
     def __iter__(self):
         for menu in self.menus:
             yield menu
-    def getLabel(self, action, state=None):
+    def getLabel(self, action, state=None, variables={}):
         if state is None:
             try:
-                return self.labelFilters[action](self.labels[action])
+                return Template(self.labels[action]).substitute(**variables)
             except KeyError:
                 return action
         else:
             try:
-                return self.labelFilters[action](self.stateLabels[action][state])
+                return Template(self.stateLabels[action][state]).substitute(**variables)
             except KeyError:
                 return self.getLabel(action)
     def getShortcuts(self, action):
@@ -190,41 +189,18 @@ HelpItems = [
 ]
 
 menubar = \
-        MenuBar(Menu(_("_Video"), "Video", lambda x:x, *VideoItems),
-                Menu(_("_Channels"), "Channels", lambda x:x, *ChannelItems),
-                Menu(_("_Playlists"), "Playlists", lambda x:x, *PlaylistItems),
-                Menu(_("P_layback"), "Playback", lambda x:x, *PlaybackItems),
-                Menu(_("_Help"), "Help", lambda x:x, *HelpItems),
+        MenuBar(Menu(_("_Video"), "Video", *VideoItems),
+                Menu(_("_Channels"), "Channels", *ChannelItems),
+                Menu(_("_Playlists"), "Playlists", *PlaylistItems),
+                Menu(_("P_layback"), "Playback", *PlaybackItems),
+                Menu(_("_Help"), "Help", *HelpItems),
                 )
 
-def fillInUnwatched(text):
-    import views
-    if views.initialized:
-        return text % len(views.unwatchedItems)
-    else:
-        return text
-
-def fillInDownloading(text):
-    import views
-    if views.initialized:
-        return text % len(views.downloadingItems)
-    else:
-        return text
-
-def fillInPaused(text):
-    import views
-    if views.initialized:
-        return text % len(views.pausedItems)
-    else:
-        return text
-
-traymenu = Menu(config.get(prefs.SHORT_APP_NAME),
-                config.get(prefs.SHORT_APP_NAME),
-                lambda x:x,
+traymenu = Menu("Miro","Miro",
                 MenuItem(_("Options"), "EditPreferences", ()),
-                MenuItem(_("Play Unwatched (%d)"), "PlayUnwatched", (), labelFilter = fillInUnwatched),
-                MenuItem(_("Pause All Downloads (%d)"), "PauseDownloads", (), labelFilter = fillInDownloading),
-                MenuItem(_("Restore All Downloads (%d)"), "RestoreDownloads", (), labelFilter = fillInPaused),
+                MenuItem(_("Play Unwatched ($numUnwatched)"), "PlayUnwatched", ()),
+                MenuItem(_("Pause All Downloads ($numPaused)"), "PauseDownloads", ()),
+                MenuItem(_("Restore All Downloads ($numDownloading)"), "RestoreDownloads", ()),
                 Separator(),
                 MenuItem(_("Minimize"),"RestoreWindow", (),
                          restore=_("Restore")),

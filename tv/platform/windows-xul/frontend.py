@@ -8,6 +8,9 @@ from frontend_implementation.MainFrame import MainFrame
 from frontend_implementation.VideoDisplay import VideoDisplay, PlaybackController
 import frontend_implementation.startup as startup
 
+# FIXME: I threw this here so distutils would find it --NN
+import migrateappname
+
 # these get set in components.pybridge.onStartup
 jsBridge = None
 vlcRenderer = None

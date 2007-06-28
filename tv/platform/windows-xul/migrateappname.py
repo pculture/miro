@@ -65,4 +65,4 @@ def migrateVideos(oldAppName, newAppName):
         newDefault = os.path.join(platformcfg._baseMoviesDirectory, newAppName)
         videoDir = config.get(prefs.MOVIES_DIRECTORY)
         if videoDir == newDefault:
-            pybridge.changeMoviesDirectory(oldDefault, newDefault)
+            pybridge.changeMoviesDirectory(newDefault, True)

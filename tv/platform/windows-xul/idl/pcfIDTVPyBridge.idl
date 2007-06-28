@@ -101,7 +101,8 @@ interface pcfIDTVPyBridge : nsISupports
   void createProxyObjects();
   void printOut(in AString output);
   void addMenubar(in nsIDOMDocument doc);
-  void getLabel(in AString action, in AString state, out AString label);
+  void updateTrayMenus();
+  void getLabel(in AString action, in AString state, in PRInt32 unwatched, in PRInt32 downloading, in PRInt32 paused, out AString label);
   void addDirectoryWatch(in AString filename);
   void removeDirectoryWatch(in AString id);
   void toggleDirectoryWatchShown(in AString id);

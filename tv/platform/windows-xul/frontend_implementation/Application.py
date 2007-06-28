@@ -49,7 +49,9 @@ class Application:
         pass
 
     def finishStartupSequence(self):
-        frontend.jsBridge.updateTrayMenus()
+        from xpcom import components
+        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        pybridge.updateTrayMenus()
 
     def onShutdown(self):
         # For overriding
@@ -64,10 +66,14 @@ class Application:
         pass
 
     def onUnwatchedItemsCountChange(self, obj, id):
-        frontend.jsBridge.updateTrayMenus()
+        from xpcom import components
+        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        pybridge.updateTrayMenus()
 
     def onDownloadingItemsCountChange(self, obj, id):
-        frontend.jsBridge.updateTrayMenus()
+        from xpcom import components
+        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        pybridge.updateTrayMenus()
 
 ###############################################################################
 ###############################################################################
