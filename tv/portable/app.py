@@ -498,9 +498,6 @@ class VideoRenderer:
     def reset(self):
         pass
 
-    def getCurrentTime(self):
-        return 0.0
-
     def setCurrentTime(self, seconds):
         pass
 
@@ -1963,6 +1960,9 @@ class TemplateActionHandler:
         else:
             raise TypeError("Can't get new videos for %s (type: %s)" % 
                     (obj, type(obj)))
+
+    def playUnwatched(self):
+        controller.playView(views.unwatchedItems)
 
     def playItemExternally(self, itemID):
         controller.playbackController.playItemExternally(itemID)
