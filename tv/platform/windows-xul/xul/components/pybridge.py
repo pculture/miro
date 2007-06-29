@@ -731,6 +731,18 @@ class PyBridge:
         except:
             pass
 
+    @asUrgent
+    def playUnwatched(self):
+        app.controller.frame.mainDisplayCallback(u'action:playUnwatched')
+
+    @asIdle
+    def pauseDownloads(self):
+        app.controller.frame.mainDisplayCallback(u'action:pauseAll')
+
+    @asIdle
+    def resumeDownloads(self):
+        app.controller.frame.mainDisplayCallback(u'action:resumeAll')
+
     def minimizeToTray(self):
         return config.get(prefs.MINIMIZE_TO_TRAY)
 

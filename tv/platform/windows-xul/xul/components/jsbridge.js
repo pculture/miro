@@ -560,14 +560,14 @@ jsBridge.prototype = {
      // Tray menu strings that get updated periodically
      pybridge.getLabel("PlayUnwatched","",unwatched, downloading, paused, playUnwatched);
      pybridge.getLabel("PauseDownloads","",unwatched, downloading, paused,pauseDownloads);
-     pybridge.getLabel("RestoreDownloads","",unwatched, downloading, paused, restoreDownloads);
+     pybridge.getLabel("ResumeDownloads","",unwatched, downloading, paused, restoreDownloads);
      pybridge.getLabel("RestoreWindow",minstate,unwatched, downloading, paused, restoreWindow);
 
      var ele = this.document.getElementById("traymenu-playunwatched");
      ele.setAttribute("label", playUnwatched.value);
      ele = this.document.getElementById("traymenu-pausedownloads");
      ele.setAttribute("label", pauseDownloads.value);
-     ele = this.document.getElementById("traymenu-restoredownloads");
+     ele = this.document.getElementById("traymenu-resumedownloads");
      ele.setAttribute("label", restoreDownloads.value);
      ele = this.document.getElementById("traymenu-restorewindow");
      ele.setAttribute("label", restoreWindow.value);

@@ -184,6 +184,10 @@ add more menu elements later -NN -->
 <command id="Donate" oncommand="pybridge.openDonatePage();" />
 <command id="Help" oncommand="pybridge.showHelp();" />
 
+<command id="PlayUnwatched" oncommand="pybridge.playUnwatched();" />
+<command id="PauseDownloads" oncommand="pybridge.pauseDownloads();" />
+<command id="ResumeDownloads" oncommand="pybridge.resumeDownloads();" />
+
 <command id="EditPreferences" oncommand="window.openDialog('chrome://dtv/content/prefs.xul','prefs','chrome,dependent,centerscreen');" />
 
 </window>
