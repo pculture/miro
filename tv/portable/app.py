@@ -1744,6 +1744,9 @@ class printResultThread(threading.Thread):
 # the GUI presentation (and may or may not manipulate the database.)
 class GUIActionHandler:
 
+    def playUnwatched(self):
+        controller.playView(views.unwatchedItems)
+
     def openFile(self, path):
         singleclick.openFile(path)
 
@@ -1960,9 +1963,6 @@ class TemplateActionHandler:
         else:
             raise TypeError("Can't get new videos for %s (type: %s)" % 
                     (obj, type(obj)))
-
-    def playUnwatched(self):
-        controller.playView(views.unwatchedItems)
 
     def playItemExternally(self, itemID):
         controller.playbackController.playItemExternally(itemID)
