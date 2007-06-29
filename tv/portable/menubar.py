@@ -50,9 +50,6 @@ class Menu:
     def getLabel(self, action, state=None, variables={}):
         if state is None:
            try:
-               print self.labels[action]
-               print Template(self.labels[action])
-               print variables
                return Template(self.labels[action]).substitute(**variables)
            except KeyError:
                return action
@@ -200,7 +197,7 @@ traymenu = Menu("Miro","Miro",
                 MenuItem(_("Options"), "EditPreferences", ()),
                 MenuItem(_("Play Unwatched ($numUnwatched)"), "PlayUnwatched", ()),
                 MenuItem(_("Pause All Downloads ($numPaused)"), "PauseDownloads", ()),
-                MenuItem(_("Restore All Downloads ($numDownloading)"), "RestoreDownloads", ()),
+                MenuItem(_("Resume All Downloads ($numDownloading)"), "ResumeDownloads", ()),
                 Separator(),
                 MenuItem(_("Minimize"),"RestoreWindow", (),
                          restore=_("Restore")),
