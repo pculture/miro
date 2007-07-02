@@ -1794,17 +1794,21 @@ class GUIActionHandler:
                     doAdd(dialog.value)
             dialog.run(callback)
         def doAdd(url):
-            # The w3C says that URLs containing international characters should
-            # be UTF8/url-quoted: <http://www.w3.org/International/O-URL-code.html>
-            scheme, host, port, path = parseURL(url)
-            # Make sure we don't quote already quoted URL paths
-            try: path = urllib.unquote(str(path)).decode('utf8')
-            except: pass
-            # Now quote according to the w3c and reconstruct the URL
-            path = urllib.quote(path.encode('utf8'))
-            quotedURL = u"%s://%s:%s%s" % (scheme, host, port, path)
-            # Now normalize it
-            normalizedURL = feed.normalizeFeedURL(quotedURL)
+            if url.startswith (u"dtv:searchTerm:"):
+                normalizedURL = feed.normalizeFeedURL(url)
+            else:
+                # The w3C says that URLs containing international characters should
+                # be UTF8/url-quoted: <http://www.w3.org/International/O-URL-code.html>
+                scheme, host, port, path = parseURL(url)
+                # Make sure we don't quote already quoted URL paths
+                try: path = urllib.unquote(str(path)).decode('utf8')
+                except: pass
+                # Now quote according to the w3c and reconstruct the URL
+                path = urllib.quote(path.encode('utf8'))
+                quotedURL = u"%s://%s:%s%s" % (scheme, host, port, path)
+                # Now normalize it
+                normalizedURL = feed.normalizeFeedURL(quotedURL)
+
             if not feed.validateFeedURL(normalizedURL):
                 ltitle = title + _(" - Invalid URL")
                 lmessage = _("The address you entered is not a valid URL.\nPlease double check and try again.\n\n") + message
