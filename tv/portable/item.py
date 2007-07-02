@@ -149,7 +149,7 @@ class Item(DDBObject):
             for (dirpath, dirnames, filenames) in os.walk(filename_root):
                 for name in filenames:
                     filename = os.path.join (dirpath, name)
-                    if filetypes.isAllowedFilename(filename):
+                    if filetypes.isVideoFilename(filename):
                         videos.add(filename)
         return videos
 
