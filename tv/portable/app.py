@@ -178,6 +178,7 @@ class PlaybackControllerBase:
 
     def playItemInternally(self, anItem, videoDisplay, videoRenderer):
         logging.info("Playing item with renderer: %s" % videoRenderer)
+        controller.videoDisplay.setExternal(False)
         frame = controller.frame
         if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
@@ -197,6 +198,7 @@ class PlaybackControllerBase:
         return anItem
         
     def scheduleExternalPlayback(self, anItem):
+        controller.videoDisplay.setExternal(True)
         controller.videoDisplay.stopOnDeselect = False
         controller.videoInfoItem = anItem
         newDisplay = TemplateDisplay('external-playback','default')
@@ -220,6 +222,7 @@ class PlaybackControllerBase:
             self.updateVideoTimeDC = eventloop.addTimeout(.5, self.updateVideoTime, "Update Video Time")
 
     def stop(self, switchDisplay=True, markAsViewed=False):
+        controller.videoDisplay.setExternal(False)
         if self.updateVideoTimeDC:
             self.updateVideoTime(repeat=False)
             self.stopUpdateVideoTime()
@@ -329,12 +332,16 @@ class VideoDisplayBase (Display):
         self.previousVolume = 1.0
         self.isPlaying = False
         self.isFullScreen = False
+        self.isExternal = False
         self.stopOnDeselect = True
         self.renderers = list()
         self.activeRenderer = None
 
     def initRenderers(self):
         pass
+
+    def setExternal(self, external):
+        self.isExternal = external
 
     def fillMovieData (self, filename, movie_data, callback):
         for renderer in self.renderers:

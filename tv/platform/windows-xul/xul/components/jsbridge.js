@@ -262,6 +262,10 @@ jsBridge.prototype = {
     this.setActive("progress-slider", false);
   },
 
+  setExternalVideoDisplay: function() {
+    this.setActive("bottom-buttons-stop", true);
+  },
+
   positionVolumeSlider: function(volume) {
     var left = 25;
     var right= 98;

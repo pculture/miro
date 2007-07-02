@@ -68,6 +68,11 @@ class VideoDisplay (app.VideoDisplayBase):
     def initRenderers(self):
         self.renderers.append(QuicktimeRenderer(self.controller))
 
+    def setExternal(self, external):
+        app.VideoDisplayBase.setExternal(self, external)
+        if external:
+            self.controller.enableExternalPlaybackControls()
+
     def selectItem(self, item, renderer):
         app.VideoDisplayBase.selectItem(self, item, renderer)
         self.controller.selectItem(item, renderer)
@@ -189,9 +194,16 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def enableSecondaryControls(self, enabled, allowFastSeeking=YES):
         self.backwardButton.setEnabled_(enabled)
         self.backwardButton.cell().setAllowsFastSeeking(allowFastSeeking)
-        self.stopButton.setEnabled_(enabled)
+        self.stopButton.setEnabled_(enabled or app.controller.videoDisplay.isExternal)
         self.forwardButton.setEnabled_(enabled)
         self.forwardButton.cell().setAllowsFastSeeking(allowFastSeeking)
+
+    def enableExternalPlaybackControls(self):
+        self.stopButton.setEnabled_(True)
+        self.playPauseButton.setEnabled_(False)
+        self.fullscreenButton.setEnabled_(False)
+        self.backwardButton.setEnabled_(False)
+        self.forwardButton.setEnabled_(False)
 
     def updatePlayPauseButton(self, prefix):
         self.playPauseButton.setImage_(NSImage.imageNamed_(u'%s' % prefix))
