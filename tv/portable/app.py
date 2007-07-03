@@ -2139,7 +2139,7 @@ def _defaultFeeds():
                          [u'http://jetset.blip.tv/?skin=rss',
                           u'http://revision3.com/diggnation/feed/quicktime-large',
                           u'http://geekbrief.podshow.com/?feed=rss2',
-                          u'http://www.rocketboom.com/vlog/index.xml',
+                          u'http://www.rocketboom.com/vlog/quicktime_daily_enclosures.xml',
                           u'http://downloads.bbc.co.uk/rmhttp/downloadtrial/bbc2/newsnightvideopodcast/rss.xml',
                           u'http://www.tvo.org/TVOspecial3/WebObjects/TVOMedia.woa?AgendaVideoFeed',
                           u'http://feeds.feedburner.com/TEDTalks_video']),
