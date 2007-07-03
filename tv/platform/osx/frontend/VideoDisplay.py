@@ -38,6 +38,22 @@ objc.loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity
 
 class PlaybackController (app.PlaybackControllerBase):
     
+    def handleKeyboardShortcut(self, event):
+        if event.characters().characterAtIndex_(0) == 0x1B:
+            app.controller.videoDisplay.exitFullScreen()
+        elif event.characters().characterAtIndex_(0) == 0x20:
+            eventloop.addUrgentCall(lambda:app.controller.playbackController.playPause(), "Play/Pause")
+        elif event.characters().characterAtIndex_(0) == 0xF702:
+            eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(-1, False), "Skipping backward")
+        elif event.characters().characterAtIndex_(0) == 0xF703:
+            eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(1, False), "Skipping forward")
+        elif event.characters().characterAtIndex_(0) == 0xF700:
+            volume = app.controller.videoDisplay.getVolume()
+            eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(volume+0.1), "Pumping volume up")
+        elif event.characters().characterAtIndex_(0) == 0xF701:
+            volume = app.controller.videoDisplay.getVolume()
+            eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(volume-0.1), "Pumping volume down")
+
     def playItemExternally(self, itemID):
         item = app.PlaybackControllerBase.playItemExternally(self, itemID)
         moviePath = item.getVideoFilename()
@@ -286,6 +302,7 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
     def setVolume(self, level):
         if self.muteButton.state() == NSOnState:
             self.volumeSlider.setFloatValue_(level)
+            self.videoAreaView.videoWindow.palette.volumeSlider.setFloatValue_(level)
 
     def muteUnmuteVolume_(self, sender):
         if sender.state() is NSOffState:
@@ -451,10 +468,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
                 else:
                     NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
             elif event.type() == NSKeyDown:
-                if event.characters().characterAtIndex_(0) == 0x1B:
-                    app.controller.videoDisplay.exitFullScreen()
-                elif event.characters().characterAtIndex_(0) == 0x20:
-                    eventloop.addUrgentCall(lambda:app.controller.playbackController.playPause(), "Play/Pause")
+                app.controller.playbackController.handleKeyboardShortcut(event)
             elif event.type() == NSMouseMoved:
                 if not self.palette.isVisible():
                     self.palette.reveal(self)
@@ -466,7 +480,7 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
                     app.controller.videoDisplay.goFullScreen()
                 else:
                     NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
-
+    
 ###############################################################################
 
 class SkipSeekButtonCell (NSButtonCell):

@@ -234,8 +234,8 @@ class MainController (NibClassBuilder.AutoBaseClass):
     ### Events ###
 
     def keyDown_(self, event):
-        if self.frame.mainDisplay.hostedDisplay is app.controller.videoDisplay and event.characters().characterAtIndex_(0) == 0x20:
-            app.controller.playbackController.playPause()
+        if self.frame.mainDisplay.hostedDisplay is app.controller.videoDisplay:
+            app.controller.playbackController.handleKeyboardShortcut(event)
 
     ### Actions ###
 

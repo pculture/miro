@@ -88,7 +88,7 @@ def getAppConfig():
     
 def set(descriptor, value):
     __lock.acquire()
-    logging.info ("Setting %s to %s", descriptor.key, value)
+    logging.debug("Setting %s to %s", descriptor.key, value)
     try:
         __checkValidity()
         if descriptor.key not in __data or __data[ descriptor.key ] != value:

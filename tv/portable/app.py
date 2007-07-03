@@ -438,6 +438,10 @@ class VideoDisplayBase (Display):
         return None
 
     def setVolume(self, level):
+        if level > 1.0:
+            level = 1.0
+        if level < 0.0:
+            level = 0.0
         self.volume = level
         config.set(prefs.VOLUME_LEVEL, level)
         if self.activeRenderer is not None:
