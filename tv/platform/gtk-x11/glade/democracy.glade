@@ -5,7 +5,7 @@
 
 <widget class="GtkWindow" id="main-window">
   <property name="visible">True</property>
-  <property name="title" translatable="yes">Democracy Player</property>
+  <property name="title" translatable="yes">Miro</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
@@ -506,7 +506,7 @@
 		<widget class="GtkCheckButton" id="checkbutton-autorun">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Automatically run Democracy Player when I log in</property>
+		  <property name="label" translatable="yes">Automatically run Miro when I log in</property>
 		  <property name="use_underline">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
@@ -1718,7 +1718,7 @@ Never</property>
       <child>
 	<widget class="GtkLabel" id="label14">
 	  <property name="visible">True</property>
-	  <property name="label" translatable="yes">You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)</property>
+	  <property name="label" translatable="yes">You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)</property>
 	  <property name="use_underline">False</property>
 	  <property name="use_markup">False</property>
 	  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1931,7 +1931,7 @@ Never</property>
 		    <widget class="GtkLabel" id="label19">
 		      <property name="width_request">226</property>
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Welcome to Internet TV.  There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.</property>
+		      <property name="label" translatable="yes">Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1964,7 +1964,7 @@ Never</property>
 		<widget class="GtkLabel" id="label20">
 		  <property name="width_request">360</property>
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">The next few screens will help you set up democracy player so that it works best for you.  Here's the first question.</property>
+		  <property name="label" translatable="yes">The next few screens will help you set up Miro so that it works best for you.  Here's the first question.</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -2001,7 +2001,7 @@ Never</property>
 		<widget class="GtkLabel" id="label25">
 		  <property name="width_request">360</property>
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">We recommend that you allow Democracy Player to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.</property>
+		  <property name="label" translatable="yes">We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -2027,7 +2027,7 @@ Never</property>
 		<widget class="GtkLabel" id="label26">
 		  <property name="width_request">360</property>
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">&lt;b&gt;Would you like to run Democracy when your computer starts up?&lt;/b&gt;</property>
+		  <property name="label" translatable="yes">&lt;b&gt;Would you like to run Miro when your computer starts up?&lt;/b&gt;</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">True</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
