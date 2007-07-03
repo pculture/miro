@@ -203,6 +203,7 @@ class PlaybackControllerBase:
         newDisplay = TemplateDisplay('external-playback','default')
         frame = controller.frame
         frame.selectDisplay(newDisplay, frame.mainDisplay)
+        anItem.markItemSeen()
 
     def startUpdateVideoTime(self):
         if not self.updateVideoTimeDC:
