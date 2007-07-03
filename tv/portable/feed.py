@@ -210,10 +210,10 @@ class FeedImpl:
         self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
         self.availableItems = self.items.filter(lambda x: x.getState() == 'new')
         self.unwatchedItems = self.items.filter(lambda x: x.getState() == 'newly-downloaded')
-        self.availableItems.addAddCallback(lambda x,y:DDBObject.signalChange(self.ufeed))
-        self.availableItems.addRemoveCallback(lambda x,y:DDBObject.signalChange(self.ufeed))
-        self.unwatchedItems.addAddCallback(lambda x,y:DDBObject.signalChange(self.ufeed))
-        self.unwatchedItems.addRemoveCallback(lambda x,y:DDBObject.signalChange(self.ufeed))
+        self.availableItems.addAddCallback(lambda x,y:self.ufeed.signalChange(needsSignalFolder = True))
+        self.availableItems.addRemoveCallback(lambda x,y:self.ufeed.signalChange(needsSignalFolder = True))
+        self.unwatchedItems.addAddCallback(lambda x,y:self.ufeed.signalChange(needsSignalFolder = True))
+        self.unwatchedItems.addRemoveCallback(lambda x,y:self.ufeed.signalChange(needsSignalFolder = True))
         
     def signalChange(self):
         self.ufeed.signalChange()
@@ -588,6 +588,13 @@ class Feed(DDBObject):
         self._initRestore()
         self.dd.addAfterCursor(self)
         self.generateFeed(True)
+
+    def signalChange (self, needsSave=True, needsSignalFolder=False):
+        if needsSignalFolder:
+            folder = self.getFolder()
+            if folder:
+                folder.signalChange(needsSave=False)
+        DDBObject.signalChange (self, needsSave=needsSave)
 
     def _initRestore(self):
         self.download = None
