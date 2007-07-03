@@ -432,6 +432,15 @@ class VideoDisplayBase (Display):
             return self.activeRenderer.getCurrentTime()
         return None
 
+    def getProgress(self):
+        if self.activeRenderer is not None:
+            return self.activeRenderer.getProgress()
+        return 0.0
+
+    def setProgress(self, progress):
+        if self.activeRenderer is not None:
+            return self.activeRenderer.setProgress(progress)
+
     def getDuration(self):
         if self.activeRenderer is not None:
             return self.activeRenderer.getDuration()
@@ -498,6 +507,10 @@ class VideoRenderer:
         return self.getCurrentTime() / duration
 
     def setProgress(self, progress):
+        if progress > 1.0:
+            progress = 1.0
+        if progress < 0.0:
+            progress = 0.0
         self.setCurrentTime(self.getDuration() * progress)
 
     def selectItem(self, anItem):

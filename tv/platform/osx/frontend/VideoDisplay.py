@@ -44,15 +44,23 @@ class PlaybackController (app.PlaybackControllerBase):
         elif event.characters().characterAtIndex_(0) == 0x20:
             eventloop.addUrgentCall(lambda:app.controller.playbackController.playPause(), "Play/Pause")
         elif event.characters().characterAtIndex_(0) == 0xF702:
-            eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(-1, False), "Skipping backward")
+            progress = app.controller.videoDisplay.getProgress()
+            eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setProgress(progress - 0.05), "Seeking backward")
         elif event.characters().characterAtIndex_(0) == 0xF703:
-            eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(1, False), "Skipping forward")
+            progress = app.controller.videoDisplay.getProgress()
+            eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setProgress(progress + 0.05), "Seeking forward")
         elif event.characters().characterAtIndex_(0) == 0xF700:
-            volume = app.controller.videoDisplay.getVolume()
-            eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(volume+0.1), "Pumping volume up")
+            if event.modifierFlags() & NSControlKeyMask:
+                eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(1.0), "Pumping volume to max")
+            else:
+                volume = app.controller.videoDisplay.getVolume()
+                eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(volume+0.1), "Pumping volume up")
         elif event.characters().characterAtIndex_(0) == 0xF701:
-            volume = app.controller.videoDisplay.getVolume()
-            eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(volume-0.1), "Pumping volume down")
+            if event.modifierFlags() & NSControlKeyMask:
+                eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(0.0), "Pumping volume to lowest")
+            else:
+                volume = app.controller.videoDisplay.getVolume()
+                eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(volume-0.1), "Pumping volume down")
 
     def playItemExternally(self, itemID):
         item = app.PlaybackControllerBase.playItemExternally(self, itemID)
