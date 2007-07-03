@@ -1416,7 +1416,7 @@ Never</property>
 		  <child>
 		    <widget class="GtkLabel" id="label-bt-change">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">(Changes won't go into effect until you restart Democracy Player)</property>
+		      <property name="label" translatable="yes">(Changes won't go into effect until you restart Miro)</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -2139,7 +2139,7 @@ Never</property>
 	      <child>
 		<widget class="GtkLabel" id="label21">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Democracy Player can find all the videos on your computer to help you organize your collection.</property>
+		  <property name="label" translatable="yes">Miro can find all the videos on your computer to help you organize your collection.</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -2164,7 +2164,7 @@ Never</property>
 	      <child>
 		<widget class="GtkLabel" id="label22">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">&lt;b&gt;Would you like Democracy Player to look for video files on your computer?&lt;/b&gt;</property>
+		  <property name="label" translatable="yes">&lt;b&gt;Would you like Miro to look for video files on your computer?&lt;/b&gt;</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">True</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -2465,15 +2465,15 @@ Never</property>
 
 Setup is complete -- now you can find some channels and start watching.
 
-&lt;b&gt;Don't Wait:&lt;/b&gt; Democracy is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.
+&lt;b&gt;Don't Wait:&lt;/b&gt; Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.
 
-&lt;b&gt;Leave it On:&lt;/b&gt; Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.
+&lt;b&gt;Leave it On:&lt;/b&gt; Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.
 
-&lt;b&gt;Don't Worry About Disk Space:&lt;/b&gt; Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.
+&lt;b&gt;Don't Worry About Disk Space:&lt;/b&gt; Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.
 
 &lt;b&gt;Go Big:&lt;/b&gt; The button to the right of the play button shows videos fullscreen.
 
-&lt;b&gt;Find Videos:&lt;/b&gt; The Democracy Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.</property>
+&lt;b&gt;Find Videos:&lt;/b&gt; The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">True</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
