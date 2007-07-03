@@ -284,7 +284,7 @@ class mypy2app(py2app):
 
         print "Copying gettext MO files to application bundle"
 
-        localeDir = os.path.join (root, 'resources/locale')
+        localeDir = os.path.join(root, 'resources/locale')
         lclDir = os.path.join(rsrcRoot, 'locale')
         if forceUpdate and os.path.exists(lclDir):
             shutil.rmtree(lclDir, True);
@@ -298,6 +298,26 @@ class mypy2app(py2app):
                 os.makedirs(os.path.dirname(dest))
                 shutil.copy2(source, dest)
                 print "    %s" % dest
+        
+        # Wipe out incomplete lproj folders
+        
+        print "Wiping out incomplete lproj folders"
+        
+        incompleteLprojs = list()
+        for lproj in glob(os.path.join(rsrcRoot, '*.lproj')):
+            if os.path.basename(lproj) != 'English.lproj':
+                nibs = glob(os.path.join(lproj, '*.nib'))
+                if len(nibs) == 0:
+                    print "    Removing %s" % os.path.basename(lproj)
+                    incompleteLprojs.append(lproj)
+                else:
+                    print "    Keeping  %s" % os.path.basename(lproj)
+                    
+        for lproj in incompleteLprojs:
+            if os.path.islink(lproj):
+                os.remove(lproj)
+            else:
+                shutil.rmtree(lproj)
         
         # Check that we haven't left some turds in the application bundle.
         
