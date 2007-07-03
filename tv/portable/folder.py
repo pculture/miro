@@ -155,7 +155,7 @@ class ChannelFolder(FolderBase):
     def showA(self):
         return self.numAvailable() > 0
 
-    # Returns string with number of unwatched videos in feed
+    # Returns string with number of available videos in feed
     def numAvailable(self):
         available = 0
         for child in self.getChildrenView():
