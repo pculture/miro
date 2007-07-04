@@ -218,6 +218,16 @@ class FeedParserDict(UserDict):
         else:
             reverse_keymap[keymap[key]] = key
 
+    def __init__(self, initialData=None):
+        if isinstance(initialData, dict):
+            UserDict.__init__(self)
+            for key in initialData:
+                self[key] = initialData[key]
+        elif initialData is not None:
+            UserDict.__init__(self, initialData)
+        else:
+            UserDict.__init__(self)
+
     def reverse_key (self, key):
         if self.reverse_keymap.has_key(key):
             return self.reverse_keymap[key]
