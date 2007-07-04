@@ -970,6 +970,7 @@ class Feed(DDBObject):
             except: pass
             handler = RSSLinkGrabber(unicodify(info['redirected-url']),charset)
             parser.setContentHandler(handler)
+            parser.setErrorHandler(handler)
             try:
                 parser.parse(StringIO(xmldata))
             except UnicodeDecodeError:
@@ -2079,7 +2080,7 @@ class HTMLLinkGrabber(HTMLParser):
                 linkURL = match.group(3).encode('ascii')
             except UnicodeError:
                 linkURL = match.group(3)
-                logging.info ("%s is non-ascii, trying anyway: (baseURL: %s)", linkURL.decode("latin1"), self.baseurl)
+                logging.info ("%s is non-ascii, trying anyway: (baseURL: %s)", linkURL.encode("ascii", "replace"), self.baseurl)
                 i = len (linkURL) - 1
                 while (i >= 0):
                     if 127 < ord(linkURL[i]) <= 255:
@@ -2105,7 +2106,7 @@ class HTMLLinkGrabber(HTMLParser):
             match = HTMLLinkGrabber.linkPattern.search(match.group(5))
         return self.links
 
-class RSSLinkGrabber(xml.sax.handler.ContentHandler):
+class RSSLinkGrabber(xml.sax.handler.ContentHandler, xml.sax.handler.ErrorHandler):
     def __init__(self,baseurl,charset=None):
         self.baseurl = baseurl
         self.charset = charset
@@ -2122,6 +2123,8 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
         self.theLink = ''
         self.title = None
         self.firstTag = True
+        self.errors = 0
+        self.fatalErrors = 0
 
     def startElementNS(self, name, qname, attrs):
         uri = name[0]
@@ -2143,6 +2146,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
             self.inItem = True
         elif tag.lower() == 'title' and not self.inItem:
             self.inTitle = True
+
     def endElementNS(self, name, qname):
         uri = name[0]
         tag = name[1]
@@ -2174,6 +2178,12 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler):
                 self.title = data
             else:
                 self.title += data
+
+    def error(self, exception):
+        self.errors += 1
+
+    def fatalError(self, exception):
+        self.fatalErrors += 1
 
 # Grabs the feed link from the given webpage
 class HTMLFeedURLParser(HTMLParser):
