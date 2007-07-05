@@ -916,10 +916,14 @@ class Feed(DDBObject):
         modified = unicodify(info.get('last-modified'))
         etag = unicodify(info.get('etag'))
         contentType = unicodify(info.get('content-type', u'text/html'))
+        
+        # Some smarty pants serve RSS feeds with a text/html content-type...
+        # So let's do some really simple sniffing first.
+        apparentlyRSS = re.compile(r'<\?xml.*\?>\s*<rss').match(info['body']) is not None
 
         #Definitely an HTML feed
         if (contentType.startswith(u'text/html') or 
-            contentType.startswith(u'application/xhtml+xml')):
+            contentType.startswith(u'application/xhtml+xml')) and not apparentlyRSS:
             #print "Scraping HTML"
             html = info['body']
             if info.has_key('charset'):
@@ -947,7 +951,8 @@ class Feed(DDBObject):
             # application/rss+xml links are definitely feeds. However, they
             # might be pre-enclosure RSS, so we still have to download them
             # and parse them before we can deal with them correctly.
-        elif (contentType.startswith(u'application/rss+xml') or
+        elif (apparentlyRSS or
+              contentType.startswith(u'application/rss+xml') or
               contentType.startswith(u'application/podcast+xml') or
               contentType.startswith(u'text/xml') or 
               contentType.startswith(u'application/xml') or
@@ -2080,7 +2085,6 @@ class HTMLLinkGrabber(HTMLParser):
                 linkURL = match.group(3).encode('ascii')
             except UnicodeError:
                 linkURL = match.group(3)
-                logging.info ("%s is non-ascii, trying anyway: (baseURL: %s)", linkURL.encode("ascii", "replace"), self.baseurl)
                 i = len (linkURL) - 1
                 while (i >= 0):
                     if 127 < ord(linkURL[i]) <= 255:
@@ -2092,12 +2096,8 @@ class HTMLLinkGrabber(HTMLParser):
             imgMatch = HTMLLinkGrabber.imgPattern.match(desc)
             if imgMatch:
                 try:
-                    thumb = urljoin(baseurl,
-                            imgMatch.group(1).encode('ascii'))
+                    thumb = urljoin(baseurl, imgMatch.group(1).encode('ascii'))
                 except UnicodeError:
-                    if chatter:
-                        logging.info ("WARNING: scraped thumbnail url is non-ascii "
-                        "(%s) -- discarding", imgMatch.group(1))
                     thumb = None
             else:
                 thumb = None
