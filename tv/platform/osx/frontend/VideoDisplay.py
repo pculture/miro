@@ -38,17 +38,15 @@ objc.loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity
 
 class PlaybackController (app.PlaybackControllerBase):
     
-    def handleKeyboardShortcut(self, event):
+    def handleKeyDownShortcut(self, event):
         if event.characters().characterAtIndex_(0) == 0x1B:
             app.controller.videoDisplay.exitFullScreen()
         elif event.characters().characterAtIndex_(0) == 0x20:
             eventloop.addUrgentCall(lambda:app.controller.playbackController.playPause(), "Play/Pause")
         elif event.characters().characterAtIndex_(0) == 0xF702:
-            progress = app.controller.videoDisplay.getProgress()
-            eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setProgress(progress - 0.05), "Seeking backward")
+            app.controller.videoDisplay.controller.fastSeek(-1)
         elif event.characters().characterAtIndex_(0) == 0xF703:
-            progress = app.controller.videoDisplay.getProgress()
-            eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setProgress(progress + 0.05), "Seeking forward")
+            app.controller.videoDisplay.controller.fastSeek(1)
         elif event.characters().characterAtIndex_(0) == 0xF700:
             if event.modifierFlags() & NSControlKeyMask:
                 eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(1.0), "Pumping volume to max")
@@ -61,6 +59,10 @@ class PlaybackController (app.PlaybackControllerBase):
             else:
                 volume = app.controller.videoDisplay.getVolume()
                 eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(volume-0.1), "Pumping volume down")
+
+    def handleKeyUpShortcut(self, event):
+        if event.characters().characterAtIndex_(0) in (0xF702, 0xF703):
+            app.controller.videoDisplay.controller.stopSeeking()
 
     def playItemExternally(self, itemID):
         item = app.PlaybackControllerBase.playItemExternally(self, itemID)
@@ -476,7 +478,9 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
                 else:
                     NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
             elif event.type() == NSKeyDown:
-                app.controller.playbackController.handleKeyboardShortcut(event)
+                app.controller.playbackController.handleKeyDownShortcut(event)
+            elif event.type() == NSKeyUp:
+                app.controller.playbackController.handleKeyUpShortcut(event)
             elif event.type() == NSMouseMoved:
                 if not self.palette.isVisible():
                     self.palette.reveal(self)
