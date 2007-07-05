@@ -121,6 +121,9 @@
 /* NSMenuItem : <title:Rename...> (oid:314) */
 "Rename..." = "Rename...";
 
+/* NSMenuItem : <title:Report a bug> (oid:360) */
+"Report a bug" = "Report a bug";
+
 /* NSMenuItem : <title:Save Video As...> (oid:303) */
 "Save Video As..." = "Save Video As...";
 

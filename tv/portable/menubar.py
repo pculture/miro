@@ -183,6 +183,8 @@ HelpItems = [
     MenuItem(_("_About"), "About", ()),
     MenuItem(_("_Donate"), "Donate", ()),
     MenuItem(_("_Help"), "Help", (Key(F1),)),
+    Separator(),
+    MenuItem(_("Report a _Bug"), "ReportBug", ()),
 ]
 
 menubar = \

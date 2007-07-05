@@ -296,6 +296,7 @@ class CallbackHandler(object):
             ('Quit', gtk.STOCK_QUIT, menubar.getLabel('Quit'), menubar.getShortcut('Quit').GTKString(), None, self.on_quit_activate),
             ('UpdateAllChannels', None, menubar.getLabel('UpdateAllChannels'), menubar.getShortcut('UpdateAllChannels').GTKString(), None, self.on_update_all_channels_activate),
             ('Help', None, menubar.getLabel('Help')),
+            ('ReportBug', None, menubar.getLabel('ReportBug')),
             ('About', gtk.STOCK_ABOUT, menubar.getLabel('About'), menubar.getShortcut('About').GTKString(), None, self.on_about_clicked),
             ('Donate', None, menubar.getLabel('Donate'), menubar.getShortcut('Donate').GTKString(), None, self.on_donate_clicked),
 

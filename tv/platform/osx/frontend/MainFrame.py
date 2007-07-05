@@ -331,51 +331,55 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def showHelp_(self, sender):
         helpURL = NSURL.URLWithString_(config.get(prefs.HELP_URL))
         NSWorkspace.sharedWorkspace().openURL_(helpURL)
+    
+    def reportBug_(self, sender):
+        reportURL = NSURL.URLWithString_(config.get(prefs.BUG_REPORT_URL))
+        NSWorkspace.sharedWorkspace().openURL_(reportURL)
 
     ### Menu items validation ###
 
     def validateMenuItem_(self, item):
-        result = False
         action = item.action()
+        print action
         display = self.frame.mainDisplay.hostedDisplay
         
         if action == 'removeVideos:':
             self.updateMenuItem(item, 'video_remove')
-            result = self.actionGroups['VideoSelected'] or self.actionGroups['VideosSelected']
+            return self.actionGroups['VideoSelected'] or self.actionGroups['VideosSelected']
         elif action == 'saveVideoAs:':
-            result = False
+            return False
         elif action == 'copyVideoURL:':
-            result = self.actionGroups['VideoSelected']
+            return self.actionGroups['VideoSelected']
         elif action == 'deleteSelected:':
-            result = (self.actionGroups['ChannelLikeSelected'] or
-                      self.actionGroups['ChannelLikesSelected'] or
-                      self.actionGroups['PlaylistLikeSelected'] or
-                      self.actionGroups['PlaylistLikesSelected'] or
-                      self.actionGroups['VideoSelected'] or
-                      self.actionGroups['VideosSelected'])
+            return (self.actionGroups['ChannelLikeSelected'] or
+                    self.actionGroups['ChannelLikesSelected'] or
+                    self.actionGroups['PlaylistLikeSelected'] or
+                    self.actionGroups['PlaylistLikesSelected'] or
+                    self.actionGroups['VideoSelected'] or
+                    self.actionGroups['VideosSelected'])
         elif action == 'addChannel:':
-            result = True
+            return True
         elif action == 'createSearchChannel:':
-            result = True
+            return True
         elif action == 'createChannelFolder:':
-            result = True
+            return True
         elif action == 'addGuide:':
-            result = True
+            return True
         elif action == 'renameChannelFolder:':
             self.updateMenuItem(item, 'channel_rename')
-            result = self.actionGroups['ChannelLikeSelected']
+            return self.actionGroups['ChannelLikeSelected']
         elif action == 'removeChannel:':
             self.updateMenuItem(item, 'channel_remove')
-            result = self.actionGroups['ChannelLikeSelected'] or self.actionGroups['ChannelLikesSelected']
+            return self.actionGroups['ChannelLikeSelected'] or self.actionGroups['ChannelLikesSelected']
         elif action == 'updateChannel:':
             self.updateMenuItem(item, 'channel_update')
-            result = self.actionGroups['ChannelLikeSelected'] or self.actionGroups['ChannelLikesSelected']
+            return self.actionGroups['ChannelLikeSelected'] or self.actionGroups['ChannelLikesSelected']
         elif action == 'updateAllChannels:':
-            result = True
+            return True
         elif action == 'tellAFriend:':
-            result = self.actionGroups['ChannelSelected']
+            return self.actionGroups['ChannelSelected']
         elif action == 'copyChannelURL:':
-            result = self.actionGroups['ChannelSelected']
+            return self.actionGroups['ChannelSelected']
         elif action == 'createPlaylist:':
             return True
         elif action == 'createPlaylistFolder:':
@@ -398,7 +402,9 @@ class MainController (NibClassBuilder.AutoBaseClass):
             return display is app.controller.videoDisplay
         elif action == 'showHelp:':
             return True
-        return result
+        elif action == 'reportBug:':
+            return True
+        return False
 
     def updateMenuItem(self, item, key):
         pass # Disabling this feature for now while I change the API --NN

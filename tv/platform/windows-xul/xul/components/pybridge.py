@@ -399,6 +399,10 @@ class PyBridge:
         self.delegate.openExternalURL(config.get(prefs.HELP_URL))
 
     @asUrgent
+    def reportBug(self):
+        self.delegate.openExternalURL(config.get(prefs.BUG_REPORT_URL))
+
+    @asUrgent
     def copyChannelLink(self):
         app.controller.copyCurrentFeedURL()
 

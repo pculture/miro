@@ -1879,6 +1879,9 @@ class GUIActionHandler:
     def showHelp(self):
         delegate.openExternalURL(config.get(prefs.HELP_URL))
 
+    def reportBug(self):
+        delegate.openExternalURL(config.get(prefs.BUG_REPORT_URL))
+
 # Functions that are safe to call from action: URLs that change state
 # specific to a particular instantiation of a template, and so have to
 # be scoped to a particular HTML display widget.
