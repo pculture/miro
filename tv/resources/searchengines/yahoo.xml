@@ -1,6 +1,0 @@
-<searchengine>
-   <id>yahoo</id>
-   <displayname>Yahoo! Video</displayname>
-   <url>http://api.search.yahoo.com/VideoSearchService/rss/videoSearch.xml?appid=dtv_search&amp;adult_ok=%a&amp;results=%l&amp;format=any&amp;query=%s</url>
-   <sort>1</sort>
-</searchengine>
