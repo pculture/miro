@@ -20,7 +20,7 @@
 PYTHON=`which python`
 PYTHON_VERSION=`python -c 'import sys; info=sys.version_info; print "%s.%s" % (info[0], info[1])'`
 PREFIX=/usr
-export DEMOCRACY_SHARE_ROOT=dist/$PREFIX/share/
-export DEMOCRACY_RESOURCE_ROOT=dist/usr/share/democracy/resources/
+export MIRO_SHARE_ROOT=dist/$PREFIX/share/
+export MIRO_RESOURCE_ROOT=dist/$PREFIX/share/democracy/resources/
 export LD_LIBRARY_PATH=/usr/lib/firefox${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}
 $PYTHON setup.py install --root=./dist --prefix=$PREFIX && PYTHONPATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/ dist/$PREFIX/bin/democracyplayer "$@"

@@ -4,8 +4,8 @@ import sys
 
 PREFIX = '/usr'
 os.environ['PREFIX'] = PREFIX
-os.environ['DEMOCRACY_SHARE_ROOT'] = 'dist/%s/share/' % PREFIX
-os.environ['DEMOCRACY_RESOURCE_ROOT'] = 'dist/usr/share/democracy/resources/'
+os.environ['MIRO_SHARE_ROOT'] = 'dist/%s/share/' % PREFIX
+os.environ['MIRO_RESOURCE_ROOT'] = 'dist/usr/share/democracy/resources/'
 rv = os.system('python2.4 setup.py install --root=./dist --prefix=$PREFIX')
 if rv != 0:
     print "FAILURE BUILDING DEMOCRACY"

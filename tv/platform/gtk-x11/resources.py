@@ -22,11 +22,11 @@ import urllib
 import config
 import prefs
 
-resource_root = os.environ.get('DEMOCRACY_RESOURCE_ROOT',
+resource_root = os.environ.get('MIRO_RESOURCE_ROOT',
         '/usr/share/democracy/resources/')
 resource_root = os.path.abspath(resource_root)
 
-share_root = os.environ.get('DEMOCRACY_SHARE_ROOT',
+share_root = os.environ.get('MIRO_SHARE_ROOT',
                             '/usr/share/')
 share_root = os.path.abspath(share_root)
 

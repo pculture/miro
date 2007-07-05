@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Democracy Player - an RSS based video player application
+# Miro - an RSS based video player application
 # Copyright (C) 2005-2006 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -50,7 +50,7 @@ from Pyrex.Distutils import build_ext
 # platform/gtk-x11.  This makes it hard to find the root directory.  We work
 # our way up the path until our is_root_dir test passes.
 def is_root_dir(dir):
-    return os.path.exists(os.path.join(dir, "DEMOCRACY_ROOT"))
+    return os.path.exists(os.path.join(dir, "MIRO_ROOT"))
 
 root_try = os.path.abspath(os.path.dirname(__file__))
 while True:
@@ -273,10 +273,10 @@ data_files += [
     ('/usr/share/mime/packages', 
      [os.path.join(platform_dir, 'democracy.xml')]),
     ('/usr/share/man/man1',
-     [os.path.join(platform_dir, 'democracyplayer.1.gz')]),
+     [os.path.join(platform_dir, 'miro.1.gz')]),
 ]
 
-os.system ("gzip -9 < " + os.path.join(platform_dir, 'democracyplayer.1') + " > " + os.path.join(platform_dir, 'democracyplayer.1.gz'))
+os.system ("gzip -9 < " + os.path.join(platform_dir, 'miro.1') + " > " + os.path.join(platform_dir, 'miro.1.gz'))
 
 #### Our specialized install_data command ####
 class install_data (distutils.command.install_data.install_data):
