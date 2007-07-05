@@ -1,0 +1,21 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {cancel = id; changeTarget = id; create = id; }; 
+            CLASS = SearchChannelController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                channelPopup = id; 
+                createButton = id; 
+                enginePopup = id; 
+                labelField = id; 
+                searchTermField = id; 
+                targetMatrix = id; 
+                urlField = id; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

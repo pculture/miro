@@ -36,6 +36,7 @@
                 removeVideos = id; 
                 renameChannelFolder = id; 
                 renamePlaylist = id; 
+                reportBug = id; 
                 saveVideoAs = id; 
                 sendPlaylistToFriend = id; 
                 stopVideo = id; 
