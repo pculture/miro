@@ -17,6 +17,9 @@ import democracy
 # Make sure democracy modules are on the search path
 sys.path.insert(0, os.path.abspath(os.path.dirname(democracy.__file__)))
 
+import upgrade
+upgrade.upgrade()
+
 # Set up gettext before everything else
 import gtcache
 gtcache.init()

@@ -105,10 +105,10 @@ def get(descriptor):
         value = resources.path("../../locale")
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
-        value = os.path.expanduser('~/.democracy')
+        value = os.path.expanduser('~/.miro')
 
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
-        value = os.path.expanduser('~/.democracy/icon-cache')
+        value = os.path.expanduser('~/.miro/icon-cache')
     
     elif descriptor == prefs.DB_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
@@ -124,11 +124,11 @@ def get(descriptor):
 
     elif descriptor == prefs.LOG_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
-        value = os.path.join(value, 'dtv-log')
+        value = os.path.join(value, 'miro-log')
     
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
-        return os.path.join(value, 'dtv-downloader-log')
+        return os.path.join(value, 'miro-downloader-log')
 
     elif descriptor == prefs.HTTP_PROXY_ACTIVE:
         return _get_gconf ("/system/http_proxy/use_http_proxy")
