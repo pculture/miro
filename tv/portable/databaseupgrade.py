@@ -677,6 +677,8 @@ def upgrade48(objectList):
                 del objectList[i]
     return changed
 
+upgrade49 = upgrade42
+
 #         if o.classString == 'item':
 #             objChanged = False
 #             for field in ('pendingReason','videoFilename'):
