@@ -2554,8 +2554,7 @@ msgstr ""
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "To avoid slowdowns, limit upstream to"
 msgstr ""
-"Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf %s "
-"begrenzen"
+"Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf begrenzen"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:64
 msgid "Volume:"
