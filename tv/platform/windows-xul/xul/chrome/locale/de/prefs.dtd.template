@@ -15,17 +15,17 @@
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.playback "Wiedergabe">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback.remember.pos "Abspielposition merken.">
 <!ENTITY prefs.playback.auto.next.video "Videos nacheinander wiedergeben.">
-<!ENTITY prefs.playback.stop.after.each "Nach jedem Video stoppen.">
+<!ENTITY prefs.playback.stop.after.each "Nach jedem Video anhalten.">
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Ändern...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Folder Location">
-<!ENTITY prefs.folder.others.shown "Show as Channel">
+<!ENTITY prefs.folder.others.caption "In den folgenden Ordnern nach neuen Videos suchen und zu Meiner Sammlung hinzufügen:">
+<!ENTITY prefs.folder.others.location "Speicherort des Ordners">
+<!ENTITY prefs.folder.others.shown "Als Kanal anzeigen">
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "Entfernen">
 
@@ -34,8 +34,8 @@
 <!ENTITY prefs.downloads.max.part2 "Videos auf ein Mal.">
 
 <!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Fangen Sie keine Downloads an, wenn danach weniger Speicherplatz bleibt als">
-<!ENTITY prefs.disk.space.min.part2 "GB frei bleibt.">
+<!ENTITY prefs.disk.space.min.part1 "Keine Downloads beginnen, wenn danach weniger Speicherplatz bleibt als">
+<!ENTITY prefs.disk.space.min.part2 "GB frei bleiben.">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "Videos werden automatisch gelöscht nach">
@@ -47,7 +47,7 @@
 <!ENTITY prefs.videos.expire.never "Niemals">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf %s begrenzen">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s, wenn mein Computer in Gebrauch ist.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent benutzt Ports zwischen">
 <!ENTITY prefs.torrent.uses.ports.part2 "und">

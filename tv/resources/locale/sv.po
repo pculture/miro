@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2006-11-27 01:48-0500\n"
-"PO-Revision-Date: 2007-02-07 12:15+0000\n"
-"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"POT-Creation-Date: 2007-06-01 15:23-0400\n"
+"PO-Revision-Date: 2007-06-13 14:27+0000\n"
+"Last-Translator: Daniel Nylander <yeager@ubuntu.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-02-08 17:18+0000\n"
+"X-Rosetta-Export-Date: 2007-07-06 13:19:08+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -69,6 +69,8 @@ msgstr "Lägg till Kanal..."
 msgid "Bring All to Front"
 msgstr "Ta fram alla"
 
+#: ../../platform/osx/frontend/Preferences.py:39
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -81,15 +83,12 @@ msgstr "Töm meny"
 msgid "Close Window"
 msgstr "Stäng fönstret"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15
 msgid "Copy"
 msgstr "Kopiera"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28
 msgid "Copy Channel URL"
 msgstr "Kopiera kanalens URL"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11
 msgid "Copy Video URL"
 msgstr "Kopiera filmens URL"
 
@@ -109,18 +108,15 @@ msgstr "Hjälp för Democracy"
 msgid "Donate"
 msgstr "Donera"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14
 msgid "Edit"
 msgstr "Redigera"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6
 msgid "File"
 msgstr "Arkiv"
 
 msgid "Full Screen"
 msgstr "Helskärm"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47
 msgid "Help"
 msgstr "Hjälp"
 
@@ -154,26 +150,24 @@ msgstr "Ny spellista..."
 msgid "New Search Channel..."
 msgstr "Ny sökkanal..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43
 msgid "Next Video"
 msgstr "Nästa film"
 
 msgid "Open Recent"
 msgstr "Öppna senaste"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7
 msgid "Open..."
 msgstr "Öppna..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16
 msgid "Paste"
 msgstr "Klistra in"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40
+#: ../../platform/osx/frontend/Application.py:234
 msgid "Play Video"
 msgstr "Spela upp film"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39
+#: ../../platform/osx/frontend/Preferences.py:43
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Playback"
 msgstr "Uppspelning"
 
@@ -183,26 +177,21 @@ msgstr "Spellistor"
 msgid "Preferencesâ¦"
 msgstr "Inställningar"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44
 msgid "Previous Video"
 msgstr "Föregående film"
 
 msgid "Quit Democracy"
 msgstr "Avsluta Democracy"
 
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5
 msgid "Remove..."
 msgstr "Ta bort..."
 
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18
 msgid "Rename..."
 msgstr "Byt namn..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10
 msgid "Save Video As..."
 msgstr "Spara film som..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17
 msgid "Select All"
 msgstr "Markera alla"
 
@@ -215,15 +204,12 @@ msgstr "Tjänster"
 msgid "Show All"
 msgstr "Visa alla"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42
 msgid "Stop Video"
 msgstr "Stoppa film"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30
 msgid "Update All Channels"
 msgstr "Uppdatera alla kanaler"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29
 msgid "Update Channel"
 msgstr "Uppdatera kanal"
 
@@ -254,8 +240,7 @@ msgstr "Ruta"
 msgid "FullScreen Controls"
 msgstr "Helskärmskontroller"
 
-#: ../../portable/tabs.py:27 ../../portable/feed.py:1718
-#: ../../portable/feed.py:1777
+#: ../../portable/feed.py:1957 ../../portable/feed.py:2020
 msgid "Search"
 msgstr "Sök"
 
@@ -295,15 +280,19 @@ msgstr "(Du måste starta om Democracy för att denna ändring ska bli aktiv)\n"
 msgid "(movies directory path goes here)"
 msgstr "(sökvägen till filmkatalogen anges här)"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "1 day"
 msgstr "1 dag"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid "1 month"
 msgstr "1 månad"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
 msgid "10 days"
 msgstr "10 dagar"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "3 days"
 msgstr "3 dagar"
 
@@ -316,11 +305,15 @@ msgstr "4"
 msgid "5"
 msgstr "5"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid "6 days"
 msgstr "6 dagar"
 
 msgid "99999"
 msgstr "99999"
+
+msgid "Add..."
+msgstr "Lägg till..."
 
 msgid "BitTorrent ports:"
 msgstr "BitTornado-portar:"
@@ -328,6 +321,7 @@ msgstr "BitTornado-portar:"
 msgid "By default, videos expire after:"
 msgstr "Som standard går filmen ut efter:"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Change..."
 msgstr "Ändra..."
 
@@ -335,16 +329,23 @@ msgid "Check channels for new content:"
 msgstr "Kontrollera kanaler efter nytt innehåll:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:41
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Don't start a download if it leaves less than"
 msgstr "Starta inte en hämtning om den lämnar kvar mindre än"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Download at most"
 msgstr "Hämta som mest"
 
+msgid "Folder location"
+msgstr "Mapplats"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
 msgid "GB free."
 msgstr "GB ledigt."
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid "KB/s when my computer is active."
 msgstr "KB/s när min dator är aktiv."
 
@@ -354,15 +355,28 @@ msgstr "Maximum:"
 msgid "Minimum:"
 msgstr "Minimum:"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "Never"
 msgstr "Aldrig"
 
 msgid "OtherViews"
 msgstr "Andra vyer"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:53
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid "Play videos one after another."
 msgstr "Spela upp filmer efter varandra."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+msgid "Remember video position."
+msgstr "Kom ihåg videoposition."
+
+#: ../../portable/menu.py:48 ../../portable/menu.py:53
+#: ../../portable/folder.py:139 ../../portable/folder.py:194
+#: ../../portable/feed.py:769 ../../portable/guide.py:38
+#: ../../portable/playlist.py:180
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
+msgid "Remove"
+msgstr "Ta bort"
 
 msgid "Run Democracy at startup"
 msgstr "Kör Democracy vid uppstart"
@@ -370,12 +384,22 @@ msgstr "Kör Democracy vid uppstart"
 msgid "Save downloaded videos in this folder:"
 msgstr "Spara hämtade filmer i denna mapp:"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:61
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:528
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
+msgid "Show as Channel"
+msgstr "Visa som kanal"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "Stop after each video."
 msgstr "Stoppa efter varje film."
 
 msgid "To avoid internet slowdowns:"
 msgstr "För att undvika långsamt nätverk:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26
+msgid ""
+"Watch for new videos in these folders and include them in My Collection:"
+msgstr ""
 
 msgid "every 30 minutes"
 msgstr "två gånger i timmen"
@@ -386,7 +410,7 @@ msgstr "varje timme"
 msgid "manually"
 msgstr "manuellt"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:75
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "videos at once."
 msgstr "filmer samtidigt."
 
@@ -396,7 +420,6 @@ msgstr "$label$"
 msgid "$title$"
 msgstr "$title$"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20
 msgid "Channel"
 msgstr "Kanal"
 
@@ -444,11 +467,13 @@ msgstr ""
 "\n"
 "Vill du att Democracy Player ska leta efter filmer på din dator?"
 
+#: ../../platform/osx/frontend/StartupPanel.py:90
+#: ../../platform/osx/frontend/StartupPanel.py:116
 msgid "Next"
 msgstr "Nästa"
 
 #: ../../portable/dialogs.py:62
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
 msgid "No"
 msgstr "Nej"
 
@@ -461,7 +486,7 @@ msgstr "Sök i hela min hemkatalog."
 msgid "Search this folder:"
 msgstr "Sök i denna mapp:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37
 msgid "Searching for Videos"
 msgstr "Söker efter filmer"
 
@@ -488,7 +513,7 @@ msgstr ""
 "\n"
 "Vill du köra Democracy när din dator startar upp?"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:66
+#: ../../platform/gtk-x11/glade/democracy.glade.h:67
 msgid "Welcome to Internet TV!"
 msgstr "Välkommen till Internet-TV!"
 
@@ -506,7 +531,7 @@ msgstr ""
 "\n"
 
 #: ../../portable/dialogs.py:61
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
 msgid "Yes"
 msgstr "Ja"
 
@@ -566,282 +591,43 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
-msgid "Save Video _As..."
-msgstr "Spara film so_m..."
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:25
+#: ../../portable/compiled_templates/unittest/simpleunicode.py:36
+#: ../../portable/test/unicodetest.py:319
+msgid "Settings"
+msgstr "Inställningar"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116
-msgid "Save this video"
-msgstr "Spara denna film"
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:28
+msgid "Hide"
+msgstr "Dölj"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117
-msgid "_Copy Video URL"
-msgstr "_Kopiera filmens URL"
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:30
+msgid "Show"
+msgstr "Visa"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120
-msgid "_Remove Video"
-msgstr "_Ta bort filmen"
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:31
+#: ../../portable/dialogs.py:63
+msgid "Quit"
+msgstr "Avsluta"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123
-msgid "_Fullscreen"
-msgstr "_Helskärm"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124
-msgid "_Stop Video"
-msgstr "_Stoppa film"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125
-msgid "_Next Video"
-msgstr "_Nästa film"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126
-msgid "_Previous Video"
-msgstr "_Föregående film"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129
-msgid "_Play / Pause"
-msgstr "_Spela upp / Pausa"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:132
-msgid "Copy Channel _Link"
-msgstr "Kopiera kanal_länk"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133
-msgid "_Send this channel to a friend"
-msgstr "_Skicka den här kanalen till en vän"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136
-msgid "_Update Channel"
-msgstr "_Uppdatera kanal"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139
-msgid "Re_name Channel"
-msgstr "_Byt namn på kanalen"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142
-msgid "_Remove Channel"
-msgstr "_Ta bort kanal"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145
-msgid "Re_name Playlist"
-msgstr "_Byt namn på spellistan"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148
-msgid "_Remove Playlist"
-msgstr "_Ta bort spellistan"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151
-msgid "_Video"
-msgstr "_Film"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152
-msgid "_Channels"
-msgstr "_Kanaler"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153
-msgid "_Playlists"
-msgstr "_Spellistor"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:154
-msgid "P_layback"
-msgstr "Upp_spelning"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
-msgid "_Open..."
-msgstr "_Öppna..."
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155
-msgid "Open various files"
-msgstr "Öppna diverse filer"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
-msgid "New _Playlist..."
-msgstr "_Ny spellista"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157
-msgid "Create new playlist"
-msgstr "Skapa ny spellista"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
-msgid "New Playlist _Folder..."
-msgstr "Ny _mapp för spellistor..."
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158
-msgid "Create new playlist folder"
-msgstr "Skapa ny spellistemapp"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
-msgid "New Channel _Folder..."
-msgstr "Ny _mapp för kanaler..."
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159
-msgid "Create new channel folder"
-msgstr "Skapa ny kanalmapp"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160
-msgid "Add _Channel..."
-msgstr "_Lägg till kanal..."
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161
-msgid "New Searc_h Channel..."
-msgstr "Ny sökka_nal..."
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162
-msgid "New Channel _Guide..."
-msgstr "Ny Kanal_guide..."
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164
-msgid "P_references"
-msgstr "Inställninga_r"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165
-msgid "_Quit"
-msgstr "_Avsluta"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165
-msgid "Quit the Program"
-msgstr "Avsluta programmet"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:166
-msgid "U_pdate All Channels"
-msgstr "U_ppdatera alla kanaler"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:167
-msgid "_Help"
-msgstr "_Hjälp"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169
-msgid "_Donate"
-msgstr "_Donera"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172
-msgid "Delete selection"
-msgstr "_Ta bort urval"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:153
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
 msgid "Username:"
 msgstr "Användarnamn:"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:163
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:164
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
 msgid "Password:"
 msgstr "Lösenord:"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:350
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351
 msgid "Unknown Runtime Error"
 msgstr "Okänt körtidsfel"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:352
 #, python-format
 msgid "An unknown error has occurred %s."
 msgstr "Ett okänt fel har inträffat %s."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5
-#: ../../platform/osx/frontend/UIStrings.py:5
-msgid "_Remove..."
-msgstr "_Ta bort"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6
-#: ../../platform/osx/frontend/UIStrings.py:6
-msgid "_Remove Playlist..."
-msgstr "_Ta bort spellista..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7
-#: ../../platform/osx/frontend/UIStrings.py:7
-msgid "_Remove Playlists..."
-msgstr "_Ta bort spellistor..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8
-#: ../../platform/osx/frontend/UIStrings.py:8
-msgid "_Remove Playlist Folder..."
-msgstr "_Ta bort mapp för spellistor..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:9
-#: ../../platform/osx/frontend/UIStrings.py:9
-msgid "_Remove Playlist Folders..."
-msgstr "_Ta bort mappar för spellistor..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10
-#: ../../platform/osx/frontend/UIStrings.py:10
-msgid "_Remove Channel..."
-msgstr "_Ta bort kanal..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11
-#: ../../platform/osx/frontend/UIStrings.py:11
-msgid "_Remove Channels..."
-msgstr "_Ta bort kanaler..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12
-#: ../../platform/osx/frontend/UIStrings.py:12
-msgid "_Remove Channel Folder..."
-msgstr "_Ta bort mapp för kanaler..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13
-#: ../../platform/osx/frontend/UIStrings.py:13
-msgid "_Remove Channel Folders..."
-msgstr "_Ta bort mappar för kanaler..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14
-#: ../../platform/osx/frontend/UIStrings.py:14
-msgid "_Remove Channel Guide..."
-msgstr "_Ta bort kanalguide..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:15
-#: ../../platform/osx/frontend/UIStrings.py:15
-msgid "_Remove Channel Guides..."
-msgstr "_Ta bort kanaguider..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16
-#: ../../platform/osx/frontend/UIStrings.py:16
-msgid "_Remove Video..."
-msgstr "_Ta bort film..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:17
-#: ../../platform/osx/frontend/UIStrings.py:17
-msgid "_Remove Videos..."
-msgstr "_Ta bort filmer..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18
-#: ../../platform/osx/frontend/UIStrings.py:18
-msgid "Re_name..."
-msgstr "_Byt namn..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:19
-#: ../../platform/osx/frontend/UIStrings.py:19
-msgid "Re_name Playlist..."
-msgstr "_Byt namn  på spellista..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:20
-#: ../../platform/osx/frontend/UIStrings.py:20
-msgid "Re_name Playlist Folder..."
-msgstr "_Byt namn på mapp för spellistor..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:21
-#: ../../platform/osx/frontend/UIStrings.py:21
-msgid "Re_name Channel..."
-msgstr "_Byt namn på kanal..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:22
-#: ../../platform/osx/frontend/UIStrings.py:22
-msgid "Re_name Channel Folder..."
-msgstr "_Byt namn på mapp för kanaler..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:23
-#: ../../platform/osx/frontend/UIStrings.py:23
-msgid "Re_name Channel Guide..."
-msgstr "_Byt namn på kanalguide..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24
-#: ../../platform/osx/frontend/UIStrings.py:24
-msgid "_Update Channel..."
-msgstr "_Uppdatera kanal..."
-
-#: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25
-#: ../../platform/osx/frontend/UIStrings.py:25
-msgid "_Update Channels..."
-msgstr "_Uppdatera kanaler..."
 
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:59
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:157
@@ -852,325 +638,289 @@ msgid_plural "%d videos found"
 msgstr[0] "%d film hittad"
 msgstr[1] "%d filmer hittade"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:293
+#: ../../portable/menubar.py:129
+msgid "New Channel _Guide..."
+msgstr "Ny Kanal_guide..."
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:519
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+msgid "Folder Location"
+msgstr "Mapplats"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:43
+#, python-format
+msgid ""
+"Error importing modules:\n"
+"%s"
+msgstr ""
+"Fel vid importering av moduler:\n"
+"%s"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:47
+msgid "Starting up"
+msgstr "Startar upp"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:240
+msgid "Loading window"
+msgstr "Läser in fönster"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:241
+msgid "onStartup called twice"
+msgstr "onStartup anropades två gånger"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:56
+msgid "Update Available"
+msgstr "Uppdatering finns tillgänglig"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57
+#, python-format
+msgid "A new version of %s is available for download."
+msgstr ""
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:182
 msgid "Error Bombing Item"
 msgstr "Fel vid bombning av objekt"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:163
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:184
 msgid "Error Recommending Item"
 msgstr "Fel vid rekommendation av objekt"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:165
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:186
 msgid "Error Opening Website"
 msgstr "Fel vid öppning av webbplats"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:169
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:190
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
 "Det inträffade ett fel vid öppning av %s.  Försök igen om några sekunder"
 
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37
-msgid "Remove Playlist..."
-msgstr "Ta bort spellista..."
+#: ../../platform/osx/frontend/StartupPanel.py:114
+msgid "Search!"
+msgstr ""
 
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7
-msgid "Remove Playlists..."
-msgstr "Ta bort spellistor"
+#: ../../platform/osx/frontend/Application.py:231
+msgid "Pause Video"
+msgstr "Pausa film"
 
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:8
-msgid "Remove Playlist Folder..."
-msgstr "Ta bort mapp för spellistor..."
+#: ../../platform/osx/frontend/Application.py:240
+msgid "Unsupported version of Quicktime"
+msgstr ""
 
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:9
-msgid "Remove Playlist Folders..."
-msgstr "Ta bort mappar för spellistor..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27
-msgid "Remove Channel..."
-msgstr "Ta bort kanal..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11
-msgid "Remove Channels..."
-msgstr "Ta bort kanaler..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12
-msgid "Remove Channel Folder..."
-msgstr "Ta bort mapp för kanaler..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:13
-msgid "Remove Channel Folders..."
-msgstr "Ta bort mappar för kanaler..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:14
-msgid "Remove Channel Guide..."
-msgstr "Ta bort kanalguide..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:15
-msgid "Remove Channel Guides..."
-msgstr "Ta bort kanalguider..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16
-msgid "Remove Video..."
-msgstr "Ta bort film..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:17
-msgid "Remove Videos..."
-msgstr "Ta bort filmer..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36
-msgid "Rename Playlist..."
-msgstr "Byt namn på spellista..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20
-msgid "Rename Playlist Folder..."
-msgstr "Byt namn på mapp för spellistor..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26
-msgid "Rename Channel..."
-msgstr "Byt namn på kanal..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22
-msgid "Rename Channel Folder..."
-msgstr "Byt namn på mapp för kanaler..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:23
-msgid "Rename Channel Guide..."
-msgstr "Byt namn på kanalguiden..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:24
-msgid "Update Channel..."
-msgstr "Uppdatera kanal..."
-
-#: ../../platform/windows-xul/frontend_implementation/UIStrings.py:25
-msgid "Update Channels..."
-msgstr "Uppdatera kanaler..."
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:36
+#: ../../platform/osx/frontend/Application.py:241
 #, python-format
 msgid ""
-"Error importing democracy modules:\n"
-"%s"
+"To run %s you need the most recent version of Quicktime, which is a free "
+"update."
 msgstr ""
-"Fel vid importering av moduler för Democracy:\n"
-"%s"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:40
-msgid "Starting up"
-msgstr "Startar upp"
+#: ../../platform/osx/frontend/MainFrame.py:265
+msgid "Subscribe to Channel"
+msgstr ""
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:136
-msgid "Loading window"
-msgstr "Läser in fönster"
+#: ../../platform/osx/frontend/MainFrame.py:266
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr ""
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:137
-msgid "onStartup called twice"
-msgstr "onStartup anropades två gånger"
+#: ../../platform/osx/frontend/QuicktimeRenderer.py:219
+msgid "Audio"
+msgstr ""
 
-#: ../../portable/playlist.py:175 ../../portable/playlist.py:180
-msgid "Rename Playlist"
-msgstr "Byt namn på spellista"
+#: ../../platform/osx/frontend/Preferences.py:38
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
+msgid "General"
+msgstr ""
 
-#: ../../portable/playlist.py:176 ../../portable/folder.py:120
-#: ../../portable/folder.py:175 ../../portable/guide.py:130
-#: ../../portable/menu.py:48 ../../portable/menu.py:53
-#: ../../portable/feed.py:690
-msgid "Remove"
-msgstr "Ta bort"
+#: ../../platform/osx/frontend/Preferences.py:40
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
+msgid "Downloads"
+msgstr ""
 
-#: ../../portable/playlist.py:181
+#: ../../platform/osx/frontend/Preferences.py:41
+msgid "Folders"
+msgstr "Mappar"
+
+#: ../../platform/osx/frontend/Preferences.py:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36
+msgid "Disk Space"
+msgstr "Diskutrymme"
+
+#: ../../platform/osx/frontend/Preferences.py:164
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
+msgid "Movies Directory"
+msgstr "Filmkatalog"
+
+#: ../../platform/osx/frontend/Preferences.py:165
+msgid "Select a Directory to store Democracy downloads in."
+msgstr "Välj en katalog att lagra Democracys hämtade filer i."
+
+#: ../../platform/osx/frontend/Preferences.py:166
+#: ../../platform/osx/frontend/Preferences.py:230
+msgid "Select"
+msgstr "Välj"
+
+#: ../../platform/osx/frontend/Preferences.py:175
+#: ../../platform/gtk-x11/glade/democracy.glade.h:51
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
+msgid "Migrate existing movies?"
+msgstr "Migrera existerande filmer?"
+
+#: ../../platform/osx/frontend/Preferences.py:176
+msgid ""
+"You've selected a new folder to download movies to.  Should Democracy "
+"migrate your existing downloads there?  (Currently dowloading movies will "
+"not be moved until they finish)."
+msgstr ""
+
+#: ../../platform/osx/frontend/Preferences.py:228
+msgid "View this Directory in My Collection"
+msgstr ""
+
+#: ../../platform/osx/frontend/Preferences.py:229
+msgid "Select a Directory to view in My Collection."
+msgstr ""
+
+#: ../../platform/osx/frontend/GrowlNotifier.py:27
+msgid "Download Completed"
+msgstr "Hämtningen är färdig"
+
+#: ../../platform/osx/frontend/GrowlNotifier.py:28
 #, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Ange ett nytt namn för spellistan %s"
+msgid "Download of video '%s' is finished."
+msgstr "Hämtning av videon \"%s\" är färdig."
 
-#: ../../portable/playlist.py:194
-msgid "Create Playlist"
-msgstr "Skapa spellista"
-
-#: ../../portable/playlist.py:195
-msgid "Enter a name for the new playlist"
-msgstr "Ange ett namn för den nya spellistan"
-
-#: ../../portable/compiled_templates/search.py:39
-msgid "Nothing to display.<br></br> Enter a query in the search field above."
-msgstr "Ingenting att visa.<br></br> Ange en sökfråga i sökfältet ovan."
-
-#: ../../portable/compiled_templates/search.py:44
-msgid "Searching..."
-msgstr "Söker..."
-
-#: ../../portable/compiled_templates/search.py:56
-msgid "Results for \"${query}\""
-msgstr "Resultat för \"${query}\""
-
-#: ../../portable/compiled_templates/search.py:95
-msgid "Video Search"
-msgstr "Filmsökning"
-
-#: ../../portable/compiled_templates/playlist.py:56
-msgid "Empty Playlist"
-msgstr "Tom spellista"
-
-#: ../../portable/compiled_templates/playlist.py:58
-msgid "Drag downloaded videos to this playlist to add them."
-msgstr "Dra hämtade filmer till den här spellistan för att lägga till dem."
-
-#: ../../portable/compiled_templates/playlist_folder.py:59
-msgid "Empty Playlist Folder"
-msgstr "Töm spellistmappen"
-
-#: ../../portable/compiled_templates/playlist_folder.py:71
-msgid ""
-"This folder contains ${count} playlists, but the playlists do not contain "
-"any items."
+#: ../../platform/osx/frontend/GrowlNotifier.py:37
+msgid "Download Failed"
 msgstr ""
-"Den här mappen innehåller ${count} spellistor, men spellistorna innehåller "
-"inga objekt."
 
-#: ../../portable/compiled_templates/playlist_folder.py:76
-msgid "Drag playlists to this folder to add them."
-msgstr "Dra spellistor till den här mappen för att lägga till dem."
-
-#: ../../portable/compiled_templates/multi_playlist.py:57
-msgid ""
-"${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-"playlists)"
+#: ../../platform/osx/frontend/GrowlNotifier.py:38
+#, python-format
+msgid "Download of video '%s' has failed."
 msgstr ""
-"${count} spellistmappar markerade<br><br>(innehåller ${containedcount} "
-"spellistor)"
 
-#: ../../portable/compiled_templates/multi_playlist.py:69
-msgid "${count} Playlists Selected"
-msgstr "${count} spellistor markerade"
+#: ../../platform/osx/frontend/UIStrings.py:5
+msgid "_Remove..."
+msgstr "_Ta bort"
 
-#: ../../portable/compiled_templates/external_playback_continue.py:47
-#: ../../portable/compiled_templates/video_info.py:40
-#: ../../portable/compiled_templates/external_playback.py:50
+#: ../../platform/osx/frontend/UIStrings.py:6
+msgid "_Remove Playlist..."
+msgstr "_Ta bort spellista..."
+
+#: ../../platform/osx/frontend/UIStrings.py:7
+msgid "_Remove Playlists..."
+msgstr "_Ta bort spellistor..."
+
+#: ../../platform/osx/frontend/UIStrings.py:8
+msgid "_Remove Playlist Folder..."
+msgstr "_Ta bort mapp för spellistor..."
+
+#: ../../platform/osx/frontend/UIStrings.py:9
+msgid "_Remove Playlist Folders..."
+msgstr "_Ta bort mappar för spellistor..."
+
+#: ../../platform/osx/frontend/UIStrings.py:10 ../../portable/menubar.py:132
+msgid "_Remove Channel..."
+msgstr "_Ta bort kanal..."
+
+#: ../../platform/osx/frontend/UIStrings.py:11 ../../portable/menubar.py:133
+msgid "_Remove Channels..."
+msgstr "_Ta bort kanaler..."
+
+#: ../../platform/osx/frontend/UIStrings.py:12 ../../portable/menubar.py:135
+msgid "_Remove Channel Folder..."
+msgstr "_Ta bort mapp för kanaler..."
+
+#: ../../platform/osx/frontend/UIStrings.py:13 ../../portable/menubar.py:134
+msgid "_Remove Channel Folders..."
+msgstr "_Ta bort mappar för kanaler..."
+
+#: ../../platform/osx/frontend/UIStrings.py:14
+msgid "_Remove Channel Guide..."
+msgstr "_Ta bort kanalguide..."
+
+#: ../../platform/osx/frontend/UIStrings.py:15
+msgid "_Remove Channel Guides..."
+msgstr "_Ta bort kanaguider..."
+
+#: ../../platform/osx/frontend/UIStrings.py:16
+msgid "_Remove Video..."
+msgstr "_Ta bort film..."
+
+#: ../../platform/osx/frontend/UIStrings.py:17
+msgid "_Remove Videos..."
+msgstr "_Ta bort filmer..."
+
+#: ../../platform/osx/frontend/UIStrings.py:18
+msgid "Re_name..."
+msgstr "_Byt namn..."
+
+#: ../../platform/osx/frontend/UIStrings.py:19
+msgid "Re_name Playlist..."
+msgstr "_Byt namn  på spellista..."
+
+#: ../../platform/osx/frontend/UIStrings.py:20
+msgid "Re_name Playlist Folder..."
+msgstr "_Byt namn på mapp för spellistor..."
+
+#: ../../platform/osx/frontend/UIStrings.py:21 ../../portable/menubar.py:131
+msgid "Re_name Channel..."
+msgstr "_Byt namn på kanal..."
+
+#: ../../platform/osx/frontend/UIStrings.py:22
+msgid "Re_name Channel Folder..."
+msgstr "_Byt namn på mapp för kanaler..."
+
+#: ../../platform/osx/frontend/UIStrings.py:23
+msgid "Re_name Channel Guide..."
+msgstr "_Byt namn på kanalguide..."
+
+#: ../../platform/osx/frontend/UIStrings.py:24 ../../portable/menubar.py:137
+msgid "_Update Channel..."
+msgstr "_Uppdatera kanal..."
+
+#: ../../platform/osx/frontend/UIStrings.py:25 ../../portable/menubar.py:138
+msgid "_Update Channels..."
+msgstr "_Uppdatera kanaler..."
+
+#: ../../portable/compiled_templates/new.py:126 ../../portable/tabs.py:27
+msgid "New Videos"
+msgstr "Nya filmer"
+
+#: ../../portable/compiled_templates/new.py:128
+#: ../../portable/compiled_templates/download.py:414
+#: ../../portable/compiled_templates/library.py:127
+msgid "Find"
+msgstr ""
+
+#: ../../portable/compiled_templates/external_playback.py:54
+#: ../../portable/compiled_templates/video_info.py:42
+#: ../../portable/compiled_templates/external_playback_continue.py:51
 msgid "STAR"
 msgstr "STJÄRNA"
 
-#: ../../portable/compiled_templates/external_playback_continue.py:57
-#: ../../portable/compiled_templates/video_info.py:50
-#: ../../portable/compiled_templates/external_playback.py:60
-#: ../../portable/compiled_templates/download_item.py:201
-msgid "SAVE"
-msgstr "SPARA"
+#: ../../portable/compiled_templates/external_playback.py:64
+#: ../../portable/compiled_templates/download_item_details.py:75
+#: ../../portable/compiled_templates/video_info.py:52
+#: ../../portable/compiled_templates/download_item_inner.py:158
+#: ../../portable/compiled_templates/external_playback_continue.py:61
+msgid "KEEP"
+msgstr ""
 
-#: ../../portable/compiled_templates/external_playback_continue.py:62
-#: ../../portable/compiled_templates/video_info.py:55
-#: ../../portable/compiled_templates/external_playback.py:65
-msgid "SAVED"
-msgstr "SPARAD"
-
-#: ../../portable/compiled_templates/external_playback_continue.py:70
-#: ../../portable/compiled_templates/video_info.py:63
-#: ../../portable/compiled_templates/external_playback.py:73
-#: ../../portable/compiled_templates/download_item.py:211
+#: ../../portable/compiled_templates/external_playback.py:69
+#: ../../portable/compiled_templates/download_item_details.py:85
+#: ../../portable/compiled_templates/video_info.py:57
+#: ../../portable/compiled_templates/download_item_inner.py:168
+#: ../../portable/compiled_templates/external_playback_continue.py:66
 msgid "DELETE"
 msgstr "TA BORT"
 
-#: ../../portable/compiled_templates/external_playback_continue.py:85
-#: ../../portable/compiled_templates/external_playback.py:88
+#: ../../portable/compiled_templates/external_playback.py:84
+#: ../../portable/compiled_templates/external_playback_continue.py:81
 msgid "Democracy - External Playback Template"
 msgstr "Democracy - Mall för extern uppspelning"
 
-#: ../../portable/compiled_templates/external_playback_continue.py:95
-msgid "Continue To Next Video"
-msgstr "Fortsätt till nästa film"
-
-#: ../../portable/compiled_templates/channelfolder.py:166
-msgid "${count} Downloads in Progress"
-msgstr "${count} pågående hämtningar"
-
-#: ../../portable/compiled_templates/channelfolder.py:171
-msgid "1 Download in Progress"
-msgstr "1 pågående hämtning"
-
-#: ../../portable/compiled_templates/channelfolder.py:191
-msgid "${len} Videos On This Channel"
-msgstr "${len} filmer på denna kanal"
-
-#: ../../portable/compiled_templates/channelfolder.py:205
-msgid "All ${len} Videos Match This Search"
-msgstr "Alla ${len} filmer matchar sökningen"
-
-#: ../../portable/compiled_templates/channelfolder.py:217
-msgid "${len} Videos Match This Search"
-msgstr "${len} filmer matchar sökningen"
-
-#: ../../portable/compiled_templates/channelfolder.py:277
-msgid "${count} Videos on this Channel"
-msgstr "${count} filmer på denna kanal"
-
-#: ../../portable/compiled_templates/channelfolder.py:290
-msgid "Unwatched"
-msgstr "Inte visad"
-
-#: ../../portable/compiled_templates/channelfolder.py:301
-msgid "Watched"
-msgstr "Visad"
-
-#: ../../portable/compiled_templates/channelfolder.py:312
-msgid "Saved"
-msgstr "Sparad"
-
-#: ../../portable/compiled_templates/feed_settings.py:32
-#: ../../portable/compiled_templates/channel.py:152
-msgid "Default"
-msgstr "Standard"
-
-#: ../../portable/compiled_templates/feed_settings.py:39
-#: ../../portable/compiled_templates/channel.py:159
-msgid "default"
-msgstr "standard"
-
-#: ../../portable/compiled_templates/feed_settings.py:110
-#: ../../portable/compiled_templates/channel.py:379
-msgid "Videos expire after"
-msgstr "Filmer går ut efter"
-
-#: ../../portable/compiled_templates/feed_settings.py:113
-#: ../../portable/compiled_templates/channel.py:382
-msgid "When turned on, Auto Download should"
-msgstr "När påslagen ska Automatisk hämtning"
-
-#: ../../portable/compiled_templates/feed_settings.py:146
-#: ../../portable/compiled_templates/channel.py:415
-msgid ""
-"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-"unwatched."
-msgstr ""
-"Hämta inte automatiskt när mer än ${maxnew} ${maxnew2} filmer är osedda."
-
-#: ../../portable/compiled_templates/channel.py:316
-#: ../../portable/compiled_templates/channel_content.py:122
-#: ../../portable/compiled_templates/channel_folder.py:252
-msgid "Downloaded"
-msgstr "Hämtad"
-
-#: ../../portable/compiled_templates/channel.py:428
-msgid "Recommend"
-msgstr "Rekommendera"
-
-#: ../../portable/compiled_templates/channel.py:430
-#: ../../portable/compiled_templates/unittest/simpleunicode.py:34
-#: ../../portable/test/unicodetest.py:402
-msgid "Settings"
-msgstr "Inställningar"
-
-#: ../../portable/compiled_templates/channel.py:440
-msgid "<label for=\"automatic\">Auto Download</label>"
-msgstr "<label for=\"automatic\">Automatisk hämtning</label>"
-
-#: ../../portable/compiled_templates/channel.py:458
-msgid "Looking for videos at this URL"
-msgstr "Letar efter filmer på denna url"
-
-#: ../../portable/compiled_templates/external_playback.py:111
+#: ../../portable/compiled_templates/external_playback.py:107
 msgid ""
 "Democracy can't play this file. You may be able to open it with a different "
 "program.<br></br><br></br><strong>Filename:</strong> "
@@ -1180,47 +930,260 @@ msgstr ""
 "annat program.<br></br><br></br><strong>Filnamn:</strong> "
 "${filename}<Br></Br><strong>Filtyp:</strong> ${format}"
 
-#: ../../portable/compiled_templates/external_playback.py:115
+#: ../../portable/compiled_templates/external_playback.py:111
 msgid "REVEAL FILE"
 msgstr "VISA FIL"
 
-#: ../../portable/compiled_templates/external_playback.py:119
+#: ../../portable/compiled_templates/external_playback.py:115
 msgid "Play Externally"
 msgstr "Spela upp externt"
 
-#: ../../portable/compiled_templates/external_playback.py:128
+#: ../../portable/compiled_templates/external_playback.py:124
 msgid "Skip >> ${countdown}"
 msgstr "Hoppa över >> ${countdown}"
 
-#: ../../portable/compiled_templates/download_item.py:114
-msgid "SHOW FILE"
-msgstr "VISA FIL"
+#: ../../portable/compiled_templates/download.py:39
+#, python-format
+msgid "%0.1f KB/s uploading"
+msgstr ""
 
-#: ../../portable/compiled_templates/download_item.py:121
-msgid "SHOW FOLDER"
-msgstr "VISA MAPP"
+#: ../../portable/compiled_templates/download.py:42
+#, python-format
+msgid "%0.1f KB/s downloading"
+msgstr ""
 
-#: ../../portable/compiled_templates/download_item.py:135
-msgid "SHARE IT"
-msgstr "DELA UT DEN"
+#: ../../portable/compiled_templates/download.py:140
+msgid "External Torrents"
+msgstr ""
 
-#: ../../portable/compiled_templates/download_item.py:144
-msgid "STAR IT"
-msgstr "MÄRK DEN"
+#: ../../portable/compiled_templates/download.py:142
+msgid "Clear Completed Torrents"
+msgstr "Töm färdiga torrent"
 
-#: ../../portable/compiled_templates/download_item.py:189
+#: ../../portable/compiled_templates/download.py:157
+msgid "Seeding Torrents"
+msgstr "Distribuerar torrentfiler"
+
+#: ../../portable/compiled_templates/download.py:177
+msgid "${size} free for downloads"
+msgstr "${size} ledigt för hämtade filer"
+
+#: ../../portable/compiled_templates/download.py:412 ../../portable/tabs.py:29
+msgid "Downloading"
+msgstr "Hämtar"
+
+#: ../../portable/compiled_templates/download.py:426
+msgid "Pause All"
+msgstr "Pausa alla"
+
+#: ../../portable/compiled_templates/download.py:438
+msgid "Resume All"
+msgstr "Återuppta alla"
+
+#: ../../portable/compiled_templates/download.py:447
+msgid "${size} free on disk"
+msgstr "${size} ledigt på disk"
+
+#: ../../portable/compiled_templates/download.py:461
+msgid "Channel Downloads"
+msgstr "Kanalhämtningar"
+
+#: ../../portable/compiled_templates/go_to_guide.py:40
+#: ../../portable/compiled_templates/guide_loading.py:42
+msgid "Loading Channel Guide"
+msgstr "Läser in kanalguide"
+
+#: ../../portable/compiled_templates/channel_folder.py:172
+msgid "Empty Channel Folder"
+msgstr "Tom kanalmapp"
+
+#: ../../portable/compiled_templates/channel_folder.py:174
+msgid "Drag channels to this folder to add them."
+msgstr "Dra kanaler till den här mappen för att lägga till dem."
+
+#: ../../portable/compiled_templates/channel_folder.py:280
+#: ../../portable/compiled_templates/channel.py:427
+#: ../../portable/compiled_templates/channel_content.py:116
+msgid "AUTO DOWNLOAD"
+msgstr ""
+
+#: ../../portable/compiled_templates/channel_folder.py:354
+#: ../../portable/compiled_templates/channel.py:501
+#: ../../portable/compiled_templates/channel_content.py:190
+msgid "${len} Downloaded"
+msgstr "${len} hämtat"
+
+#: ../../portable/compiled_templates/feed_settings.py:53
+#: ../../portable/compiled_templates/channel.py:195
+msgid "Settings for ${title}"
+msgstr "Inställningar för ${title}"
+
+#: ../../portable/compiled_templates/feed_settings.py:55
+#: ../../portable/compiled_templates/channel.py:197
+msgid "Videos expire after"
+msgstr "Filmer går ut efter"
+
+#: ../../portable/compiled_templates/feed_settings.py:59
+#: ../../portable/compiled_templates/channel.py:201
+msgid "Default"
+msgstr "Standard"
+
+#: ../../portable/compiled_templates/feed_settings.py:66
+#: ../../portable/compiled_templates/channel.py:208
+msgid "default"
+msgstr "standard"
+
+#: ../../portable/compiled_templates/feed_settings.py:132
+#: ../../portable/compiled_templates/channel.py:274
+msgid ""
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+"unwatched."
+msgstr ""
+"Hämta inte automatiskt när mer än ${maxnew} ${maxnew2} filmer är osedda."
+
+#: ../../portable/compiled_templates/feed_settings.py:134
+#: ../../portable/compiled_templates/channel.py:276
+msgid "Prevents this channel from using unlimited disk space."
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item_details.py:40
+#: ../../portable/compiled_templates/download_item_inner.py:123
+msgid "Details"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item_details.py:49
+#: ../../portable/compiled_templates/download_item_inner.py:132
+msgid "Close"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item_details.py:68
+#: ../../portable/compiled_templates/download_item_inner.py:151
+msgid ".torrent"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item_details.py:107
+#: ../../portable/compiled_templates/download_item_inner.py:190
+msgid "Email to a friend"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item_details.py:113
+#: ../../portable/compiled_templates/download_item_inner.py:196
+msgid "Post to Video Bomb"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item_details.py:121
+#: ../../portable/compiled_templates/download_item_inner.py:204
+msgid "Post to del.icio.us"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item_details.py:127
+#: ../../portable/compiled_templates/download_item_inner.py:210
+msgid "Post to digg"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item_details.py:135
+#: ../../portable/compiled_templates/download_item_inner.py:218
+msgid "Post to Reddit"
+msgstr ""
+
+#: ../../portable/compiled_templates/download_item_details.py:205
+#: ../../portable/compiled_templates/download_item_inner.py:288
 msgid "Pending Auto Download"
 msgstr "Väntande automatisk hämtning"
 
-#: ../../portable/compiled_templates/unittest/translationtest.py:43
+#: ../../portable/compiled_templates/download_item_details.py:224
+#: ../../portable/compiled_templates/download_item_inner.py:307
+msgid "STOP SEEDING"
+msgstr "SLUTA DISTRIBUERA"
+
+#: ../../portable/compiled_templates/channel.py:680
+msgid "VISIT WEBSITE"
+msgstr "BESÖK WEBBPLATSEN"
+
+#: ../../portable/compiled_templates/channel.py:687
+msgid "SEND TO FRIEND"
+msgstr "SKICKA TILL EN VÄN"
+
+#: ../../portable/compiled_templates/channel.py:689
+msgid "SETTINGS"
+msgstr "INSTÄLLNINGAR"
+
+#: ../../portable/compiled_templates/channel.py:694
+msgid "Find in channel"
+msgstr "Sök i kanal"
+
+#: ../../portable/compiled_templates/channel.py:714
+msgid "Looking for videos at this URL"
+msgstr "Letar efter filmer på denna url"
+
+#: ../../portable/compiled_templates/multi_playlist.py:59
+msgid ""
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+"playlists)"
+msgstr ""
+"${count} spellistmappar markerade<br><br>(innehåller ${containedcount} "
+"spellistor)"
+
+#: ../../portable/compiled_templates/multi_playlist.py:71
+msgid "${count} Playlists Selected"
+msgstr "${count} spellistor markerade"
+
+#: ../../portable/compiled_templates/library.py:125 ../../portable/tabs.py:26
+msgid "My Collection"
+msgstr "Min samling"
+
+#: ../../portable/compiled_templates/multi_channel.py:59
+msgid ""
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+"channels)"
+msgstr ""
+"${count} kanalmappar markerade<br><br>(innehåller ${containedcount} kanaler)"
+
+#: ../../portable/compiled_templates/multi_channel.py:71
+msgid "${count} Channels Selected"
+msgstr "${count} kanaler markerade"
+
+#: ../../portable/compiled_templates/playlist_folder.py:61
+msgid "Empty Playlist Folder"
+msgstr "Töm spellistmappen"
+
+#: ../../portable/compiled_templates/playlist_folder.py:73
+msgid ""
+"This folder contains ${count} playlists, but the playlists do not contain "
+"any items."
+msgstr ""
+"Den här mappen innehåller ${count} spellistor, men spellistorna innehåller "
+"inga objekt."
+
+#: ../../portable/compiled_templates/playlist_folder.py:78
+msgid "Drag playlists to this folder to add them."
+msgstr "Dra spellistor till den här mappen för att lägga till dem."
+
+#: ../../portable/compiled_templates/search.py:60
+msgid "Nothing to display.<br></br> Enter a query in the search field above."
+msgstr "Ingenting att visa.<br></br> Ange en sökfråga i sökfältet ovan."
+
+#: ../../portable/compiled_templates/search.py:65
+msgid "Searching..."
+msgstr "Söker..."
+
+#: ../../portable/compiled_templates/search.py:77
+msgid "Results for \"${query}\""
+msgstr "Resultat för \"${query}\""
+
+#: ../../portable/compiled_templates/search.py:161 ../../portable/tabs.py:28
+msgid "Video Search"
+msgstr "Filmsökning"
+
+#: ../../portable/compiled_templates/unittest/translationtest.py:45
 msgid "Simple translation"
 msgstr "Enkel översättning"
 
-#: ../../portable/compiled_templates/unittest/translationtest.py:57
+#: ../../portable/compiled_templates/unittest/translationtest.py:59
 msgid "truck stop in a ${can}"
 msgstr "lastbilen stoppar i en ${can}"
 
-#: ../../portable/compiled_templates/unittest/translationtest.py:61
+#: ../../portable/compiled_templates/unittest/translationtest.py:63
 msgid ""
 "This is a ${car} and this is a ${truck} <span>This text is <b "
 "style=\"color:red\">raw</b> text</span>"
@@ -1228,183 +1191,241 @@ msgstr ""
 "Det här är en ${car} och det här är en ${truck} <span>Den här texten är <b "
 "style=\"color:red\">rå</b> text</span>"
 
-#: ../../portable/compiled_templates/download.py:91
-msgid "${size} disk space free"
-msgstr "${size} ledigt utrymme"
+#: ../../portable/compiled_templates/external_playback_continue.py:91
+msgid "Continue To Next Video"
+msgstr "Fortsätt till nästa film"
 
-#: ../../portable/compiled_templates/download.py:101
-msgid "${size} available for downloads"
-msgstr "${size} tillgängligt för hämtningar"
+#: ../../portable/compiled_templates/playlist.py:58
+msgid "Empty Playlist"
+msgstr "Tom spellista"
 
-#: ../../portable/compiled_templates/download.py:153 ../../portable/tabs.py:28
-msgid "Downloading"
-msgstr "Hämtar"
+#: ../../portable/compiled_templates/playlist.py:60
+msgid "Drag downloaded videos to this playlist to add them."
+msgstr "Dra hämtade filmer till den här spellistan för att lägga till dem."
 
-#: ../../portable/compiled_templates/download.py:168
-msgid "Clear Completed Torrents"
-msgstr "Töm färdiga torrent"
-
-#: ../../portable/compiled_templates/channel_folder.py:138
-msgid "Empty Channel Folder"
-msgstr "Tom kanalmapp"
-
-#: ../../portable/compiled_templates/channel_folder.py:140
-msgid "Drag channels to this folder to add them."
-msgstr "Dra kanaler till den här mappen för att lägga till dem."
-
-#: ../../portable/compiled_templates/library.py:73 ../../portable/tabs.py:25
-msgid "My Collection"
-msgstr "Min samling"
-
-#: ../../portable/compiled_templates/new.py:75 ../../portable/tabs.py:26
-msgid "New Videos"
-msgstr "Nya filmer"
-
-#: ../../portable/compiled_templates/first_time_intro.py:38
-msgid "Democracy Internet TV: How to Get Started"
-msgstr "Democracy Internet-TV: Hur man kommer igång"
-
-#: ../../portable/compiled_templates/first_time_intro.py:42
-msgid "GO BIG:"
-msgstr "TÄNK STORT:"
-
-#: ../../portable/compiled_templates/first_time_intro.py:44
-msgid "This is your fullscreen button. Click it and lean back."
-msgstr "Det här är din helskärmsknapp. Klicka på den och luta dig tillbaka."
-
-#: ../../portable/compiled_templates/first_time_intro.py:48
-msgid "NEW STUFF:"
-msgstr "NYA SAKER:"
-
-#: ../../portable/compiled_templates/first_time_intro.py:50
-msgid ""
-"Blue circles mean the channel has new videos available, green circles mean "
-"you have downloaded videos ready to watch."
-msgstr ""
-"Blåa cirklar betyder att kanalen har nya filmer tillgängliga, gröna cirklar "
-"betyder att du har hämtat filmer som är klara att se på."
-
-#: ../../portable/compiled_templates/first_time_intro.py:52
-msgid ""
-"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-"onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
-msgstr ""
-"<strong i18n:translate=\"\">HOPPA ÖVER INTRO: <a style=\"color: #090;\" "
-"href=\"#\" onclick=\"doneWithIntro();\">Gå till kanalguiden >></a></strong>"
-
-#: ../../portable/compiled_templates/first_time_intro.py:54
-msgid ""
-"<strong>Add Channels:</strong> The Channel Guide is your home base for "
-"internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-"channels in the guide are free.</strong>"
-msgstr ""
-"<strong>Lägg till kanaler:</strong> Kanalguiden är ditt hem för Internet-TV-"
-"kanaler. Klicka på \"LÄGG TILL\" för att prenumerera på en kanal-- "
-"<strong>kanalerna i guiden är gratis.</strong>"
-
-#: ../../portable/compiled_templates/first_time_intro.py:56
-msgid ""
-"<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-"videos-- publishers can offer big, high quality videos. So don't sit around "
-"waiting for videos: start some downloads and check back later."
-msgstr ""
-"<strong>Vänta inte:</strong> Democracy är annorlunda än att se på filmer på "
-"webbsidor-- publicerare kan erbjuda stora och högkvalitativa filmer. Sitt "
-"inte där och vänta på filmerna: påbörja några hämtningar och kom tillbaka "
-"senare."
-
-#: ../../portable/compiled_templates/first_time_intro.py:58
-msgid ""
-"<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-"new videos and downloads in the background. Leaving it running means you'll "
-"have new videos when you're ready to watch."
-msgstr ""
-"<strong>Lämna den påslagen:</strong> Democracy Player kontrollerar "
-"regelbundet kanalerna efter nya filmer och hämtar ner dem i bakgrunden. "
-"Lämna den påslagen betyder att du har nya filmer när du är klar att se dem."
-
-#: ../../portable/compiled_templates/first_time_intro.py:60
-msgid ""
-"<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-"features an 'expiration' system that helps clean out older videos to make "
-"room for new videos. You can always keep a video permanently by clicking "
-"'save' and you can set a channel's settings to save videos automatically."
-msgstr ""
-"<strong>Oroa dig inte för diskutrymmet:</strong> Precis som en TiVo, har "
-"Democracy Player en funktion för \"utgånget material\" som hjälper dig att "
-"rensa bort gamla filmer för att göra plats för nya filmer. Du kan alltid "
-"behålla en film permanent genom att klicka på \"spara\" och du kan ställa in "
-"kanalens inställningar att spara filmerna automatiskt."
-
-#: ../../portable/compiled_templates/multi_channel.py:57
-msgid ""
-"${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-"channels)"
-msgstr ""
-"${count} kanalmappar markerade<br><br>(innehåller ${containedcount} kanaler)"
-
-#: ../../portable/compiled_templates/multi_channel.py:69
-msgid "${count} Channels Selected"
-msgstr "${count} kanaler markerade"
-
-#: ../../portable/dl_daemon/download.py:298
-msgid "Error"
-msgstr "Fel"
-
-#: ../../portable/dl_daemon/download.py:357
+#: ../../portable/item.py:449
 #, python-format
-msgid "Could not write to %s"
-msgstr "Kunde inte skriva till %s"
+msgid "Deleting %s"
+msgstr "Tar bort %s"
 
-#: ../../portable/dl_daemon/download.py:376
-msgid "Not enough disk space"
-msgstr "Inte tillräckligt med diskutrymme"
+#: ../../portable/item.py:450
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+"Det här objektet är en mapp. När du tar bort en mapp kommer alla objekt i "
+"den mappen att tas bort."
 
-#: ../../portable/dl_daemon/download.py:377
+#: ../../portable/item.py:476 ../../portable/feed.py:375
 #, python-format
-msgid "%s MB required to store this video"
-msgstr "%s MB krävs för att lagra denna film"
+msgid "%d days"
+msgstr "%d dagar"
 
-#: ../../portable/dl_daemon/download.py:676
-msgid "Corrupt Torrent"
-msgstr "Korrupt torrent"
-
-#: ../../portable/dl_daemon/download.py:677
+#: ../../portable/item.py:478 ../../portable/feed.py:371
 #, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "Torrentfilen %s var inte giltig"
+msgid "%d hours"
+msgstr "%d timmar"
 
-#: ../../portable/dl_daemon/download.py:702
-msgid "Torrent file deleted"
-msgstr "Torrentfilen borttagen"
-
-#: ../../portable/dl_daemon/download.py:703
-msgid "The torrent file for this item was deleted "
-msgstr "Torrentfilen för detta objekt har blivit borttagen "
-
-#: ../../portable/dl_daemon/download.py:704
-msgid "outside of democracy."
-msgstr "utanför democracy"
-
-#: ../../portable/util.py:386
+#: ../../portable/item.py:480
 #, python-format
-msgid "%1.1fGB"
-msgstr "%1.1fGB"
+msgid "%d minutes"
+msgstr "%d minuter"
 
-#: ../../portable/util.py:388
+#: ../../portable/item.py:490
 #, python-format
-msgid "%1.1fMB"
-msgstr "%1.1fMB"
+msgid "Expires in %s"
+msgstr "Går ut om %s"
 
-#: ../../portable/util.py:390
+#: ../../portable/item.py:502
 #, python-format
-msgid "%1.1fKB"
-msgstr "%1.1fKB"
+msgid "Will retry in %s"
+msgstr ""
 
-#: ../../portable/util.py:392
+#: ../../portable/item.py:504
+msgid "Paused"
+msgstr "Pausad"
+
+#: ../../portable/item.py:878
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../../portable/item.py:880
+msgid "WEB PAGE"
+msgstr "HEMSIDA"
+
+#: ../../portable/item.py:890
+msgid "Total Down:"
+msgstr ""
+
+#: ../../portable/item.py:897
+msgid "Seeders:"
+msgstr "Distributörer:"
+
+#: ../../portable/item.py:898
+msgid "Leachers:"
+msgstr "Reciprokörer:"
+
+#: ../../portable/item.py:899
+msgid "Down Rate:"
+msgstr ""
+
+#: ../../portable/item.py:900
+msgid "Down Total:"
+msgstr ""
+
+#: ../../portable/item.py:902
+msgid "Up Rate:"
+msgstr ""
+
+#: ../../portable/item.py:903
+msgid "Up Total:"
+msgstr ""
+
+#: ../../portable/item.py:908
+msgid "Web page:"
+msgstr ""
+
+#: ../../portable/item.py:908
+msgid "permalink"
+msgstr ""
+
+#: ../../portable/item.py:909
+msgid "File link:"
+msgstr ""
+
+#: ../../portable/item.py:909
+msgid "direct link to file"
+msgstr ""
+
+#: ../../portable/item.py:911
+msgid "File type:"
+msgstr "Filtyp:"
+
+#: ../../portable/item.py:918
+msgid "REVEAL LOCAL FOLDER"
+msgstr ""
+
+#: ../../portable/item.py:920
+msgid "REVEAL LOCAL FILE"
+msgstr ""
+
+#: ../../portable/item.py:922
+msgid "Filename:"
+msgstr "Filnamn:"
+
+#: ../../portable/item.py:929
+msgid "Down Total"
+msgstr ""
+
+#: ../../portable/item.py:931
+msgid "Up Total"
+msgstr ""
+
+#: ../../portable/item.py:949
+msgid "Item Details"
+msgstr ""
+
+#: ../../portable/item.py:956
+msgid "Torrent Details"
+msgstr ""
+
+#: ../../portable/item.py:961
+msgid "Download Details"
+msgstr ""
+
+#: ../../portable/item.py:1175
+msgid "downloading..."
+msgstr "hämtar..."
+
+#: ../../portable/item.py:1182 ../../portable/item.py:1185
 #, python-format
-msgid "%0.0fB"
-msgstr "%0.0fB"
+msgid "%s remaining"
+msgstr "%s återstår"
+
+#: ../../portable/item.py:1194
+msgid "starting up..."
+msgstr "startar..."
+
+#: ../../portable/item.py:1387 ../../portable/menu.py:80
+msgid "Remove From Playlist"
+msgstr "Ta bort från spellista"
+
+#: ../../portable/item.py:1389 ../../portable/menu.py:82
+msgid "Remove From My Collection"
+msgstr "Ta bort från Min Samling"
+
+#: ../../portable/item.py:1391 ../../portable/menu.py:77
+msgid "Play"
+msgstr "Spela upp"
+
+#: ../../portable/item.py:1393
+msgid "Play Just This Video"
+msgstr "Spela enbart denna film"
+
+#: ../../portable/item.py:1394 ../../portable/menu.py:78
+msgid "Add to new playlist"
+msgstr "Lägg till i ny spellista"
+
+#: ../../portable/item.py:1398 ../../portable/menu.py:88
+msgid "Mark as Unwatched"
+msgstr "Marker som osedd"
+
+#: ../../portable/item.py:1400 ../../portable/menu.py:106
+msgid "Restart Upload"
+msgstr ""
+
+#: ../../portable/item.py:1402 ../../portable/menu.py:101
+msgid "Cancel Download"
+msgstr "Avbryt hämtning"
+
+#: ../../portable/item.py:1402 ../../portable/menu.py:103
+msgid "Pause Download"
+msgstr ""
+
+#: ../../portable/item.py:1404 ../../portable/dialogs.py:66
+#: ../../portable/menu.py:94
+msgid "Download"
+msgstr "Hämta"
+
+#: ../../portable/item.py:1650
+#, python-format
+msgid "Removing %s"
+msgstr "Tar bort %s"
+
+#: ../../portable/item.py:1652
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from My Collection?"
+msgstr ""
+"Vill du ta bort denna mapp och alla filmer i den eller bara plocka bort den "
+"från Min samling?"
+
+#: ../../portable/item.py:1657
+msgid ""
+"Would you like to delete this file or just remove its entry from My "
+"Collection?"
+msgstr "Vill du ta bort denna fil eller bara ta bort den från Min samling?"
+
+#: ../../portable/item.py:1762
+#, python-format
+msgid "Removing %s items"
+msgstr "Tar bort %s objekt"
+
+#: ../../portable/item.py:1764
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from My Collection?"
+msgstr ""
+"En eller flera av dessa filmer blev inte hämtade från en kanal. Vill du ta "
+"bort dessa eller bara plocka bort dem från Min samling"
+
+#: ../../portable/item.py:1772
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"Ett eller flera av dessa objekt är en mapp. När du tar flyttar eller tar "
+"bort en mapp kommer objekt i denna också att bli flyttade eller borttagna."
 
 #: ../../portable/httpclient.py:52
 #, python-format
@@ -1453,7 +1474,7 @@ msgstr "Förväntade CRLF, fick: %s"
 msgid "%s closed connection"
 msgstr "%s stängde anslutningen"
 
-#: ../../portable/httpclient.py:97 ../../portable/downloader.py:173
+#: ../../portable/httpclient.py:97 ../../portable/downloader.py:232
 msgid "File not found"
 msgstr "Filen hittades inte"
 
@@ -1500,20 +1521,60 @@ msgstr "%s är inte en giltig URL"
 msgid "Connection closed"
 msgstr "Anslutning stängd"
 
-#: ../../portable/httpclient.py:689
+#: ../../portable/httpclient.py:743
 msgid "Unknown"
 msgstr "Okänd"
 
-#: ../../portable/httpclient.py:690
+#: ../../portable/httpclient.py:744
 msgid "Internal Error: Not ready to send"
 msgstr "Internt fel: Inte redo att sända"
 
-#: ../../portable/storedatabase.py:789
+#: ../../portable/util.py:388
+#, python-format
+msgid "%1.1fGB"
+msgstr "%1.1fGB"
+
+#: ../../portable/util.py:390
+#, python-format
+msgid "%dGB"
+msgstr ""
+
+#: ../../portable/util.py:394
+#, python-format
+msgid "%1.1fMB"
+msgstr "%1.1fMB"
+
+#: ../../portable/util.py:396
+#, python-format
+msgid "%dMB"
+msgstr "%dMB"
+
+#: ../../portable/util.py:400
+#, python-format
+msgid "%1.1fKB"
+msgstr "%1.1fKB"
+
+#: ../../portable/util.py:402
+#, python-format
+msgid "%dKB"
+msgstr "%dKB"
+
+#: ../../portable/util.py:406
+#, python-format
+msgid "%1.1fB"
+msgstr "%1.1fB"
+
+#: ../../portable/util.py:408
+#, python-format
+msgid "%dB"
+msgstr "%dB"
+
+#: ../../portable/storedatabase.py:808 ../../portable/storedatabase.py:1164
 #, python-format
 msgid "%s database save succeeded"
 msgstr "Databas för %s sparades"
 
-#: ../../portable/storedatabase.py:790
+#: ../../portable/storedatabase.py:809 ../../portable/storedatabase.py:1165
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -1521,12 +1582,12 @@ msgstr ""
 "Databasen har sparats. Det är nu säkert att avsluta utan att förlora något "
 "data."
 
-#: ../../portable/storedatabase.py:797
+#: ../../portable/storedatabase.py:816 ../../portable/storedatabase.py:1173
 #, python-format
 msgid "%s database save failed"
 msgstr "Databas för %s misslyckades att spara"
 
-#: ../../portable/storedatabase.py:798
+#: ../../portable/storedatabase.py:817 ../../portable/storedatabase.py:1174
 #, python-format
 msgid ""
 "%s was unable to save its database: Disk Full.\n"
@@ -1539,29 +1600,60 @@ msgstr ""
 "tar bort några filmer från din\n"
 "samling. Senaste ändringarna kan gå förlorade."
 
+#: ../../portable/dl_daemon/download.py:370
+msgid "Error"
+msgstr "Fel"
+
+#: ../../portable/dl_daemon/download.py:443
+#, python-format
+msgid "Could not write to %s"
+msgstr "Kunde inte skriva till %s"
+
+#: ../../portable/dl_daemon/download.py:462
+msgid "Not enough disk space"
+msgstr "Inte tillräckligt med diskutrymme"
+
+#: ../../portable/dl_daemon/download.py:463
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "%s MB krävs för att lagra denna film"
+
+#: ../../portable/dl_daemon/download.py:796
+msgid "Corrupt Torrent"
+msgstr "Korrupt torrent"
+
+#: ../../portable/dl_daemon/download.py:797
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "Torrentfilen %s var inte giltig"
+
+#: ../../portable/dl_daemon/download.py:823
+msgid "Torrent file deleted"
+msgstr "Torrentfilen borttagen"
+
+#: ../../portable/dl_daemon/download.py:824
+msgid "The torrent file for this item was deleted "
+msgstr "Torrentfilen för detta objekt har blivit borttagen "
+
+#: ../../portable/dl_daemon/download.py:825
+msgid "outside of democracy."
+msgstr "utanför democracy"
+
 #: ../../portable/dialogs.py:59
 msgid "Ok"
 msgstr "Ok"
 
-#: ../../portable/dialogs.py:63
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12
-msgid "Quit"
-msgstr "Avsluta"
-
 #: ../../portable/dialogs.py:64
 #: ../../platform/gtk-x11/glade/democracy.glade.h:50
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr "Migrera"
 
 #: ../../portable/dialogs.py:65
 #: ../../platform/gtk-x11/glade/democracy.glade.h:40
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr "Migrera inte"
-
-#: ../../portable/dialogs.py:66 ../../portable/item.py:1169
-#: ../../portable/menu.py:92
-msgid "Download"
-msgstr "Hämta"
 
 #: ../../portable/dialogs.py:67
 msgid "Remove Entry"
@@ -1584,7 +1676,7 @@ msgid "Delete Videos"
 msgstr "Ta bort filmer"
 
 #: ../../portable/dialogs.py:73
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:12
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
 msgid "Create Channel"
 msgstr "Skapa Kanal"
 
@@ -1600,214 +1692,461 @@ msgstr "Lägg till i ny mapp"
 msgid "Keep"
 msgstr "Behåll"
 
-#: ../../portable/dialogs.py:192
+#: ../../portable/dialogs.py:78
+msgid "Not Now"
+msgstr "Inte nu"
+
+#: ../../portable/dialogs.py:193
 #: ../../platform/gtk-x11/glade/democracy.glade.h:52
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:7
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:24
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
 msgstr "Ny sökkanal"
 
-#: ../../portable/dialogs.py:192
+#: ../../portable/dialogs.py:193
 #: ../../platform/gtk-x11/glade/democracy.glade.h:31
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr "En sökkanal innehåller objekt som passar med en sökterm."
 
-#: ../../portable/folder.py:102 ../../portable/folder.py:119
+#: ../../portable/autoupdate.py:99
+#, python-format
+msgid "%s Version Alert"
+msgstr ""
+
+#: ../../portable/autoupdate.py:100
+#, python-format
+msgid "A new version of %s is available. Would you like to download it now?"
+msgstr ""
+
+#: ../../portable/autoupdate.py:106
+#, python-format
+msgid "%s Version Check"
+msgstr ""
+
+#: ../../portable/autoupdate.py:107
+#, python-format
+msgid "%s is up to date."
+msgstr ""
+
+#: ../../portable/downloader.py:196
+msgid "activity"
+msgstr "aktivitet"
+
+#: ../../portable/downloader.py:233
+msgid "Flash URL Scraping Error"
+msgstr "Fel i Flash url-fångare"
+
+#: ../../portable/downloader.py:412
+msgid "starting up"
+msgstr "startar"
+
+#: ../../portable/menubar.py:98
+msgid "_Open"
+msgstr ""
+
+#: ../../portable/menubar.py:100
+msgid "Check _Version"
+msgstr ""
+
+#: ../../portable/menubar.py:102
+msgid "_Remove Video"
+msgstr "_Ta bort filmen"
+
+#: ../../portable/menubar.py:103
+msgid "_Remove Videos"
+msgstr ""
+
+#: ../../portable/menubar.py:104
+msgid "Re_name Video"
+msgstr ""
+
+#: ../../portable/menubar.py:105
+msgid "Save Video _As..."
+msgstr "Spara film so_m..."
+
+#: ../../portable/menubar.py:106
+msgid "Save Videos _As..."
+msgstr ""
+
+#: ../../portable/menubar.py:107
+msgid "Copy Video _URL"
+msgstr ""
+
+#: ../../portable/menubar.py:109
+msgid "_Options"
+msgstr "A_lternativ"
+
+#: ../../portable/menubar.py:110
+msgid "_Quit"
+msgstr "_Avsluta"
+
+#: ../../portable/menubar.py:118
+msgid "Cu_t"
+msgstr "Klipp _ut"
+
+#: ../../portable/menubar.py:119
+msgid "_Copy"
+msgstr "_Kopiera"
+
+#: ../../portable/menubar.py:120
+msgid "_Paste"
+msgstr "Klista _in"
+
+#: ../../portable/menubar.py:121
+msgid "Select _All"
+msgstr "Markera _allt"
+
+#: ../../portable/menubar.py:122
+msgid "_Delete"
+msgstr "_Ta bort"
+
+#: ../../portable/menubar.py:126
+msgid "Add _Channel"
+msgstr "Lägg till _kanal"
+
+#: ../../portable/menubar.py:127
+msgid "New Searc_h Channel..."
+msgstr "Ny sökka_nal..."
+
+#: ../../portable/menubar.py:128
+msgid "New _Folder..."
+msgstr "Ny _mapp..."
+
+#: ../../portable/menubar.py:139
+msgid "Update _All Channels"
+msgstr "Uppdatera _alla kanaler"
+
+#: ../../portable/menubar.py:141
+msgid "_Send this channel to a friend"
+msgstr "_Skicka den här kanalen till en vän"
+
+#: ../../portable/menubar.py:142
+msgid "Copy Channel _Link"
+msgstr "Kopiera kanal_länk"
+
+#: ../../portable/menubar.py:145
+msgid "New _Playlist"
+msgstr "Ny s_pellista"
+
+#: ../../portable/menubar.py:146
+msgid "New Playlist Fol_der"
+msgstr ""
+
+#: ../../portable/menubar.py:148
+msgid "Re_name Playlist"
+msgstr "_Byt namn på spellistan"
+
+#: ../../portable/menubar.py:149
+msgid "_Remove Playlist"
+msgstr "_Ta bort spellistan"
+
+#: ../../portable/menubar.py:150
+msgid "_Remove Playlists"
+msgstr ""
+
+#: ../../portable/menubar.py:151
+msgid "_Remove Playlist Folders"
+msgstr ""
+
+#: ../../portable/menubar.py:152
+msgid "_Remove Playlist Folder"
+msgstr ""
+
+#: ../../portable/menubar.py:157
+msgid "_Play"
+msgstr ""
+
+#: ../../portable/menubar.py:158
+msgid "_Stop"
+msgstr ""
+
+#: ../../portable/menubar.py:160
+msgid "_Next Video"
+msgstr "_Nästa film"
+
+#: ../../portable/menubar.py:161
+msgid "_Previous Video"
+msgstr "_Föregående film"
+
+#: ../../portable/menubar.py:163
+msgid "Skip _Forward"
+msgstr ""
+
+#: ../../portable/menubar.py:164
+msgid "Skip _Back"
+msgstr ""
+
+#: ../../portable/menubar.py:166
+msgid "Volume _Up"
+msgstr ""
+
+#: ../../portable/menubar.py:167
+msgid "Volume _Down"
+msgstr ""
+
+#: ../../portable/menubar.py:169
+msgid "_Fullscreen"
+msgstr "_Helskärm"
+
+#: ../../portable/menubar.py:173
+msgid "_About"
+msgstr "_Om"
+
+#: ../../portable/menubar.py:174
+msgid "_Donate"
+msgstr "_Donera"
+
+#: ../../portable/menubar.py:175 ../../portable/menubar.py:183
+msgid "_Help"
+msgstr "_Hjälp"
+
+#: ../../portable/menubar.py:179
+msgid "_Video"
+msgstr "_Film"
+
+#: ../../portable/menubar.py:180
+msgid "_Channels"
+msgstr "_Kanaler"
+
+#: ../../portable/menubar.py:181
+msgid "_Playlists"
+msgstr "_Spellistor"
+
+#: ../../portable/menubar.py:182
+msgid "P_layback"
+msgstr "Upp_spelning"
+
+#: ../../portable/menu.py:52
+msgid "Update Channels Now"
+msgstr "Uppdatera kanalerna nu"
+
+#: ../../portable/menu.py:75
+#, python-format
+msgid "%d Downloaded Items"
+msgstr "%d hämtade objekt"
+
+#: ../../portable/menu.py:93
+#, python-format
+msgid "%d Available Items"
+msgstr "%d tillgängliga objekt"
+
+#: ../../portable/menu.py:99
+#, python-format
+msgid "%d Downloading Items"
+msgstr "%d objekt hämtas"
+
+#: ../../portable/folder.py:115 ../../portable/folder.py:138
 msgid "Rename Channel Folder"
 msgstr "Byt namn på kanalmapp"
 
-#: ../../portable/folder.py:104
+#: ../../portable/folder.py:117
 #, python-format
 msgid "Enter a new name for the channel folder %s"
 msgstr "Ange ett nytt namn för kanalmappen %s"
 
-#: ../../portable/folder.py:174 ../../portable/folder.py:179
+#: ../../portable/folder.py:193 ../../portable/folder.py:198
 msgid "Rename Playlist Folder"
 msgstr "Byt namn på spellistemapp"
 
-#: ../../portable/folder.py:181
+#: ../../portable/folder.py:200
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
 msgstr "Ange ett nytt namn för spellistemappen %s"
 
-#: ../../portable/folder.py:189
+#: ../../portable/folder.py:208
 msgid "Create Channel Folder"
 msgstr "Skapa kanalmapp"
 
-#: ../../portable/folder.py:190 ../../portable/singleclick.py:137
+#: ../../portable/folder.py:209 ../../portable/singleclick.py:140
 msgid "Enter a name for the new channel folder"
 msgstr "Ange ett namn för den nya kanalmappen"
 
-#: ../../portable/folder.py:203
+#: ../../portable/folder.py:222
 msgid "Create Playlist Folder"
 msgstr "Skapa spellistemapp"
 
-#: ../../portable/folder.py:204
+#: ../../portable/folder.py:223
 msgid "Enter a name for the new playlist folder"
 msgstr "Ange ett namn för den nya spellistemappen"
 
-#: ../../portable/item.py:397
-#, python-format
-msgid "Deleting %s"
-msgstr "Tar bort %s"
+#: ../../portable/singleclick.py:125
+msgid "Subscribing to multiple channels"
+msgstr "Prenumererar på flera kanaler"
 
-#: ../../portable/item.py:398
+#: ../../portable/singleclick.py:126
+#, python-format
+msgid "Create %d channels?"
+msgstr "Skapa %d kanaler?"
+
+#: ../../portable/singleclick.py:139
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr "Lägger till %d kanaler till en ny mapp"
+
+#: ../../portable/singleclick.py:143
+#, python-format
 msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
 msgstr ""
-"Det här objektet är en mapp. När du tar bort en mapp kommer alla objekt i "
-"den mappen att tas bort."
+"OBS: Du prenumererar redan på %d av dessa kanaler. Dessa kanaler kommer inte "
+"att ändras."
 
-#: ../../portable/item.py:420
-#, python-format
-msgid "%d days"
-msgstr "%d dagar"
+#: ../../portable/singleclick.py:154
+msgid "Subscription error"
+msgstr "Prenumerationsfel"
 
-#: ../../portable/item.py:422
-#, python-format
-msgid "%d hours"
-msgstr "%d timmar"
-
-#: ../../portable/item.py:424
-#, python-format
-msgid "%d minutes"
-msgstr "%d minuter"
-
-#: ../../portable/item.py:425
-#, python-format
-msgid "Expires in %s"
-msgstr "Går ut om %s"
-
-#: ../../portable/item.py:751
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../../portable/item.py:753
-msgid "WEB PAGE"
-msgstr "HEMSIDA"
-
-#: ../../portable/item.py:956
-msgid "downloading..."
-msgstr "hämtar..."
-
-#: ../../portable/item.py:963 ../../portable/item.py:966
-#, python-format
-msgid "%s remaining"
-msgstr "%s återstår"
-
-#: ../../portable/item.py:974
-msgid "starting up..."
-msgstr "startar..."
-
-#: ../../portable/item.py:1154 ../../portable/menu.py:78
-msgid "Remove From Playlist"
-msgstr "Ta bort från spellista"
-
-#: ../../portable/item.py:1156 ../../portable/menu.py:80
-msgid "Remove From My Collection"
-msgstr "Ta bort från Min Samling"
-
-#: ../../portable/item.py:1158 ../../portable/menu.py:75
-msgid "Play"
-msgstr "Spela upp"
-
-#: ../../portable/item.py:1160
-msgid "Play Just This Video"
-msgstr "Spela enbart denna film"
-
-#: ../../portable/item.py:1161 ../../portable/menu.py:76
-msgid "Add to new playlist"
-msgstr "Lägg till i ny spellista"
-
-#: ../../portable/item.py:1165 ../../portable/menu.py:86
-msgid "Mark as Unwatched"
-msgstr "Marker som osedd"
-
-#: ../../portable/item.py:1167 ../../portable/menu.py:99
-msgid "Cancel Download"
-msgstr "Avbryt hämtning"
-
-#: ../../portable/item.py:1401
-#, python-format
-msgid "Removing %s"
-msgstr "Tar bort %s"
-
-#: ../../portable/item.py:1403
+#: ../../portable/singleclick.py:164
 msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from My Collection?"
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
 msgstr ""
-"Vill du ta bort denna mapp och alla filmer i den eller bara plocka bort den "
-"från Min samling?"
 
-#: ../../portable/item.py:1408
+#: ../../portable/singleclick.py:172
 msgid ""
-"Would you like to delete this file or just remove its entry from My "
-"Collection?"
-msgstr "Vill du ta bort denna fil eller bara ta bort den från Min samling?"
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
+msgstr ""
 
-#: ../../portable/item.py:1499
+#: ../../portable/singleclick.py:176
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr ""
+
+#: ../../portable/singleclick.py:210
+msgid "Invalid Torrent"
+msgstr "Ogiltig torrentfil"
+
+#: ../../portable/singleclick.py:211
 #, python-format
-msgid "Removing %s items"
-msgstr "Tar bort %s objekt"
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr "Torrentfilen %s verkar vara skadad och kan inte öppnas. [OK]"
 
-#: ../../portable/item.py:1501
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from My Collection?"
+#: ../../portable/feed.py:369
+msgid "never"
+msgstr "aldrig"
+
+#: ../../portable/feed.py:373
+#, python-format
+msgid "%d day"
+msgstr "%d dygn"
+
+#: ../../portable/feed.py:377
+#, python-format
+msgid "%d months"
+msgstr "%d månader"
+
+#: ../../portable/feed.py:761
+msgid "Update Channel Now"
+msgstr "Uppdatera kanal nu"
+
+#: ../../portable/feed.py:763 ../../portable/guide.py:35
+msgid "Copy URL to clipboard"
+msgstr "Kopiera url till urklipp"
+
+#: ../../portable/feed.py:764 ../../portable/feed.py:773
+msgid "Rename Channel"
+msgstr "Byt namn på kanal"
+
+#: ../../portable/feed.py:768
+msgid "Revert Title to Default"
+msgstr "Nollställ titel till standardtitel"
+
+#: ../../portable/feed.py:774
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr "Ange ett nytt namn för kanalen %s"
+
+#: ../../portable/feed.py:859
+msgid "Error loading feed"
+msgstr "Fel vid inläsning av kanal"
+
+#: ../../portable/feed.py:860
+#, python-format
+msgid "Couldn't load the feed at %s (%s)."
+msgstr "Kunde inta läsa in kanalen på %s (%s)."
+
+#: ../../portable/feed.py:863
+msgid "Would you like to keep the feed?"
+msgstr "Vill du behålla kanalen?"
+
+#: ../../portable/feed.py:974
+msgid "Bad content-type"
+msgstr "Felaktig content-type"
+
+#: ../../portable/feed.py:987
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+msgid "Channel is not compatible with $shortAppName!"
 msgstr ""
-"En eller flera av dessa filmer blev inte hämtade från en kanal. Vill du ta "
-"bort dessa eller bara plocka bort dem från Min samling"
 
-#: ../../portable/item.py:1509
+#: ../../portable/feed.py:988
 msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
 msgstr ""
-"Ett eller flera av dessa objekt är en mapp. När du tar flyttar eller tar "
-"bort en mapp kommer objekt i denna också att bli flyttade eller borttagna."
 
-#: ../../portable/app.py:668
+#: ../../portable/feed.py:2035
+msgid "Local File"
+msgstr "Lokal fil"
+
+#: ../../portable/guide.py:58
+msgid "Channel Guide"
+msgstr "Kanalguide"
+
+#: ../../portable/app.py:749
 msgid "Database too new"
 msgstr "Databasen för ny"
 
-#: ../../portable/app.py:669
+#: ../../portable/app.py:750
 msgid ""
-"You have a database that was saved with a newer version of Democracy. You "
-"must download the latest version of Democracy and run that."
+"You have a database that was saved with a newer version of $shortAppName. "
+"You must download the latest version of $shortAppName and run that."
 msgstr ""
-"Du har en databas som blev sparad med en nyare version av Democracy. Du "
-"måste hämta hem den senaste versionen av Democracy och köra den."
 
-#: ../../portable/app.py:817 ../../portable/app.py:831
-#: ../../portable/app.py:860 ../../portable/app.py:880
+#: ../../portable/app.py:908 ../../portable/app.py:922
+#: ../../portable/app.py:966 ../../portable/app.py:992
+#: ../../portable/app.py:1012
 #, python-format
 msgid "Remove %s"
 msgstr "Ta bort %s"
 
-#: ../../portable/app.py:818
+#: ../../portable/app.py:909
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
 msgstr "Är du säker på att du vill ta bort guiden %s?"
 
-#: ../../portable/app.py:832
+#: ../../portable/app.py:923
 #, python-format
 msgid "Are you sure you want to remove %s"
 msgstr "Ä du säker på att du vill ta bort %s"
 
-#: ../../portable/app.py:835 ../../portable/app.py:865
-#: ../../portable/app.py:885
+#: ../../portable/app.py:926 ../../portable/app.py:971
+#: ../../portable/app.py:997 ../../portable/app.py:1016
 #, python-format
 msgid "Remove %s channels"
 msgstr "Ta bort %s kanaler"
 
-#: ../../portable/app.py:837
+#: ../../portable/app.py:928
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
 msgstr "Är du säker på att du vill ta bort dessa %s spellistor"
 
-#: ../../portable/app.py:861
+#: ../../portable/app.py:967
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr "Vad vill du göra med de filmer i denna kanal som du har hämtat?"
+
+#: ../../portable/app.py:972
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr "Vad vill du göra med de filmer i dessa kanaler som du har hämtat?"
+
+#: ../../portable/app.py:993
 #, python-format
 msgid ""
 "Are you sure you want to remove %s?  Any downloads in progress will be "
@@ -1816,7 +2155,7 @@ msgstr ""
 "Är du säker på att du vill ta bort %s?  Alla pågående hämtningar kommer att "
 "avbrytas."
 
-#: ../../portable/app.py:866
+#: ../../portable/app.py:998
 #, python-format
 msgid ""
 "Are you sure you want to remove these %s channels?  Any downloads in "
@@ -1825,43 +2164,61 @@ msgstr ""
 "Är du säker på att du vill ta bort dessa %s kanaler?  Alla pågående "
 "hämtningar kommer att avbrytas."
 
-#: ../../portable/app.py:881
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr "Vad vill du göra med de filmer i denna kanal som du har hämtat?"
+#: ../../portable/app.py:1013
+#, python-format
+msgid "Are you sure you want to remove %s?"
+msgstr ""
 
-#: ../../portable/app.py:886
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr "Vad vill du göra med de filmer i dessa kanaler som du har hämtat?"
+#: ../../portable/app.py:1017
+#, python-format
+msgid "Are you sure you want to remove these %s channels?"
+msgstr ""
 
-#: ../../portable/app.py:923
+#: ../../portable/app.py:1030
+#, python-format
+msgid "Stop watching %s"
+msgstr ""
+
+#: ../../portable/app.py:1031
+#, python-format
+msgid "Are you sure you want to stop watching %s?"
+msgstr ""
+
+#: ../../portable/app.py:1034
+#, python-format
+msgid "Stop watching %s directories"
+msgstr ""
+
+#: ../../portable/app.py:1035
+#, python-format
+msgid "Are you sure you want to stop watching these %s directories?"
+msgstr ""
+
+#: ../../portable/app.py:1065
 msgid "Are you sure you want to quit?"
 msgstr "Är du säker på att du vill avsluta?"
 
-#: ../../portable/app.py:924
+#: ../../portable/app.py:1066
 #, python-format
 msgid "You have %d download still in progress."
 msgid_plural "You have %d downloads still in progress."
 msgstr[0] "Du har fortfarande %d pågående hämtning."
 msgstr[1] "Du har fortfarande %d pågående hämtningar."
 
-#: ../../portable/app.py:1367
+#: ../../portable/app.py:1513
 msgid "Invalid Value"
 msgstr "Ogiltigt värde"
 
-#: ../../portable/app.py:1368
+#: ../../portable/app.py:1514
 #, python-format
 msgid "%s is invalid.  You must enter a non-negative number."
 msgstr "%s är ogiltig.  Du måste ange ett positivt nummer."
 
-#: ../../portable/app.py:1616
+#: ../../portable/app.py:1791
 msgid " - Invalid URL"
 msgstr " - Ogiltig url"
 
-#: ../../portable/app.py:1617
+#: ../../portable/app.py:1792
 msgid ""
 "The address you entered is not a valid URL.\n"
 "Please double check and try again.\n"
@@ -1871,193 +2228,71 @@ msgstr ""
 "Kontrollera den och försök igen.\n"
 "\n"
 
-#: ../../portable/app.py:1639
-msgid "Democracy - Add Channel"
-msgstr "Democracy - Lägg till kanal"
+#: ../../portable/app.py:1816
+msgid "$shortAppName - Add Channel"
+msgstr ""
 
-#: ../../portable/app.py:1639
+#: ../../portable/app.py:1816
 msgid "Enter the URL of the channel to add"
 msgstr "Ange url:en till kanalen som ska läggas till"
 
-#: ../../portable/app.py:1660
-msgid "Democracy - Add Channel Guide"
-msgstr "Democracy - Lägg till kanalguide"
+#: ../../portable/app.py:1837
+msgid "$shortAppName - Add Channel Guide"
+msgstr ""
 
-#: ../../portable/app.py:1660
+#: ../../portable/app.py:1837
 msgid "Enter the URL of the channel guide to add"
 msgstr "Ange url:en till kanalguiden som ska läggas till"
 
-#: ../../portable/app.py:1977
+#: ../../portable/app.py:2122
+msgid "News and Tech"
+msgstr ""
+
+#: ../../portable/app.py:2129
+msgid "Entertainment"
+msgstr ""
+
+#: ../../portable/app.py:2136
+msgid "High-Def"
+msgstr ""
+
+#: ../../portable/app.py:2144
+msgid "Mac"
+msgstr ""
+
+#: ../../portable/app.py:2155
 msgid "Example Playlist"
 msgstr "Exempelspellista"
 
-#: ../../portable/app.py:1996
+#: ../../portable/app.py:2174
 msgid "Custom Channels"
 msgstr "Anpassade kanaler"
 
-#: ../../portable/app.py:1996
+#: ../../portable/app.py:2174
 msgid ""
-"You are running a version of Democracy Player with a custom set of channels."
+"You are running a version of $longAppName with a custom set of channels."
 msgstr ""
-"Du kör en version av Democracy Player med en anpassad uppsättning kanaler."
 
-#: ../../portable/guide.py:127 ../../portable/feed.py:684
-msgid "Copy URL to clipboard"
-msgstr "Kopiera url till urklipp"
+#: ../../portable/playlist.py:179 ../../portable/playlist.py:184
+msgid "Rename Playlist"
+msgstr "Byt namn på spellista"
 
-#: ../../portable/guide.py:218
-msgid "Channel Guide"
-msgstr "Kanalguide"
-
-#: ../../portable/menu.py:52
-msgid "Update Channels Now"
-msgstr "Uppdatera kanalerna nu"
-
-#: ../../portable/menu.py:73
+#: ../../portable/playlist.py:185
 #, python-format
-msgid "%d Downloaded Items"
-msgstr "%d hämtade objekt"
+msgid "Enter a new name for the playlist %s"
+msgstr "Ange ett nytt namn för spellistan %s"
 
-#: ../../portable/menu.py:91
-#, python-format
-msgid "%d Available Items"
-msgstr "%d tillgängliga objekt"
+#: ../../portable/playlist.py:207
+msgid "Create Playlist"
+msgstr "Skapa spellista"
 
-#: ../../portable/menu.py:97
-#, python-format
-msgid "%d Downloading Items"
-msgstr "%d objekt hämtas"
-
-#: ../../portable/downloader.py:174
-msgid "Flash URL Scraping Error"
-msgstr "Fel i Flash url-fångare"
-
-#: ../../portable/downloader.py:317
-msgid "starting up"
-msgstr "startar"
-
-#: ../../portable/feed.py:682
-msgid "Update Channel Now"
-msgstr "Uppdatera kanal nu"
-
-#: ../../portable/feed.py:685 ../../portable/feed.py:694
-msgid "Rename Channel"
-msgstr "Byt namn på kanal"
-
-#: ../../portable/feed.py:689
-msgid "Revert Title to Default"
-msgstr "Nollställ titel till standardtitel"
-
-#: ../../portable/feed.py:695
-#, python-format
-msgid "Enter a new name for the channel %s"
-msgstr "Ange ett nytt namn för kanalen %s"
-
-#: ../../portable/feed.py:776
-msgid "Error loading feed"
-msgstr "Fel vid inläsning av kanal"
-
-#: ../../portable/feed.py:777
-#, python-format
-msgid "Couldn't load the feed at %s (%s)."
-msgstr "Kunde inta läsa in kanalen på %s (%s)."
-
-#: ../../portable/feed.py:780
-msgid "Would you like to keep the feed?"
-msgstr "Vill du behålla kanalen?"
-
-#: ../../portable/feed.py:885
-msgid "Bad content-type"
-msgstr "Felaktig content-type"
-
-#: ../../portable/feed.py:898
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4
-msgid "Channel is not compatible with Democracy!"
-msgstr "Kanalen är inte kompatibel med Democracy!"
-
-#: ../../portable/feed.py:899
-msgid ""
-"But we'll try our best to grab the files. It may take extra time to list the "
-"videos, and descriptions may look funny.  Please contact the publishers of "
-"$url and ask if they can supply a feed in a format that will work with "
-"Democracy.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-"Men vi kommer att försöka att fånga filerna. Det kan ta lite extra tid att "
-"lista filmerna, och beskrivningarna kan se konstiga ut.  Kontakta utgivarna "
-"av $url och fråga om de kan tillhandahålla en kanal i ett format som "
-"fungerar med Democracy.\n"
-"\n"
-"Vill du försöka att läsa in denna kanal ändå?"
-
-#: ../../portable/feed.py:1791
-msgid "Local File"
-msgstr "Lokal fil"
-
-#: ../../portable/singleclick.py:122
-msgid "Subscribing to multiple channels"
-msgstr "Prenumererar på flera kanaler"
-
-#: ../../portable/singleclick.py:123
-#, python-format
-msgid "Create %d channels?"
-msgstr "Skapa %d kanaler?"
-
-#: ../../portable/singleclick.py:136
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "Lägger till %d kanaler till en ny mapp"
-
-#: ../../portable/singleclick.py:140
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
-msgstr ""
-"OBS: Du prenumererar redan på %d av dessa kanaler. Dessa kanaler kommer inte "
-"att ändras."
-
-#: ../../portable/singleclick.py:151
-msgid "Subscription error"
-msgstr "Prenumerationsfel"
-
-#: ../../portable/singleclick.py:161
-#, python-format
-msgid ""
-"This Democracy channel file has an invalid format: %s. Please notify the "
-"publisher of this file."
-msgstr ""
-"Denna kanalfil för Democracy har ett ogiltigt format: %s. Informera "
-"utgivaren av denna fil."
-
-#: ../../portable/singleclick.py:170
-#, python-format
-msgid ""
-"This Democracy channel file has the wrong content type: %s. Please notify "
-"the publisher of this file."
-msgstr ""
-"Denna kanalfil för Democracy har en felaktig innehållstyp: %s. Informera "
-"utgivaren av denna fil."
-
-#: ../../portable/singleclick.py:175
-#, python-format
-msgid "Could not download the Democracy channel file: %s."
-msgstr "Kunde inte hämta kanalfilen för Democracy: %s."
-
-#: ../../portable/singleclick.py:201
-msgid "Invalid Torrent"
-msgstr "Ogiltig torrentfil"
-
-#: ../../portable/singleclick.py:202
-#, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr "Torrentfilen %s verkar vara skadad och kan inte öppnas. [OK]"
+#: ../../portable/playlist.py:208
+msgid "Enter a name for the new playlist"
+msgstr "Ange ett namn för den nya spellistan"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:1
-msgid "(Changes won't go into effect until you restart Democracy Player.)"
+msgid "(Changes won't go into effect until you restart Democracy Player)"
 msgstr ""
-"(Ändringar kommer inte ta effekt förrens du startar om Democracy Player.)"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:2
 msgid ""
@@ -2092,12 +2327,12 @@ msgid "<b>Downloads</b>"
 msgstr "<b>Hämtningar</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:12
-msgid "<b>General</b>"
-msgstr "<b>Allmänt</b>"
+msgid "<b>Folders in My Collection</b>"
+msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:13
-msgid "<b>Movies Directory</b>"
-msgstr "<b>Filmkatalog</b>"
+msgid "<b>General</b>"
+msgstr "<b>Allmänt</b>"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:14
 msgid "<b>Playback</b>"
@@ -2174,10 +2409,12 @@ msgid "Automatically run Democracy Player when I log in"
 msgstr "Kör automatiskt Democracy Player när jag loggar in"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:33
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Bit Torrent uses ports between"
 msgstr "Bit torrent använder portar mellan"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:34
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid "By default, videos expire after"
 msgstr "Som standard går filmerna ut efter"
 
@@ -2190,6 +2427,7 @@ msgid "C_reate Channel"
 msgstr "Skapa _kanal"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:37
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
 msgid "Check Channels for new content"
 msgstr "Kontrollera kanaler efter nytt innehåll"
 
@@ -2198,7 +2436,6 @@ msgid "Democracy Player"
 msgstr "Democracy Player"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:39
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:8
 msgid ""
 "Democracy Player can find all the videos on your computer to help you "
 "organize your collection."
@@ -2225,7 +2462,7 @@ msgid "Go"
 msgstr "Gå"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:48
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:8
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr "I denna:"
 
@@ -2233,12 +2470,12 @@ msgstr "I denna:"
 msgid "KB/s when my computer is active"
 msgstr "KB/s när min dator är aktiv"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:51
-msgid "Migrate existing movies?"
-msgstr "Migrera existerande filmer?"
+#: ../../platform/gtk-x11/glade/democracy.glade.h:53
+msgid "Play videos one after another"
+msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:54
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:18
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Preferences"
 msgstr "Inställningar"
 
@@ -2247,24 +2484,28 @@ msgid "Restrict to my full _home folder"
 msgstr "Begränsa till min _hemkatalog"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:56
+msgid "Resume playback of videos from the point where they were stopped"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:57
 msgid "Search _Engine:"
 msgstr "Sök_motor:"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:57
+#: ../../platform/gtk-x11/glade/democracy.glade.h:58
 msgid "Search _custom folder:"
 msgstr "Sök i _anpassad mapp:"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:58
+#: ../../platform/gtk-x11/glade/democracy.glade.h:59
 msgid "Select Movies Directory"
 msgstr "Välj filmkatalog"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:59
+#: ../../platform/gtk-x11/glade/democracy.glade.h:60
 msgid "Select custom search directory"
 msgstr "Välj anpassad sökkatalog"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:60
-msgid "Show movies in these directories in My Collection"
-msgstr "Visa filmer i dessa kataloger i Min samling"
+#: ../../platform/gtk-x11/glade/democracy.glade.h:61
+msgid "Stop after each video"
+msgstr ""
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:62
 msgid ""
@@ -2275,6 +2516,7 @@ msgstr ""
 "Player så att den fungerar så bra som möjligt för dig. Här är första frågan."
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:63
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "To avoid slowdowns, limit upstream to"
 msgstr "För att undvika långsam anslutning, begränsa sändning till"
 
@@ -2284,6 +2526,11 @@ msgstr "Volym:"
 
 #: ../../platform/gtk-x11/glade/democracy.glade.h:65
 msgid ""
+"Watch for new videos in these folders and include them in My Collection"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:66
+msgid ""
 "We recommend that you allow Democracy Player to launch when your computer "
 "starts up.  This way, videos that haven't finished downloading can finish "
 "and new videos on your channels will be ready when you want to watch."
@@ -2292,7 +2539,7 @@ msgstr ""
 "startat din dator. På så sätt så kommer filmer som inte hämtats klart att "
 "bli klara och nya filmer på din kanal kommer vara färdiga när du vill se dem."
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:67
+#: ../../platform/gtk-x11/glade/democracy.glade.h:68
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Democracy Player: "
 "automatically download videos from your favorite channels, watch new videos "
@@ -2304,7 +2551,7 @@ msgstr ""
 "filmer en efter en, hämta ner torrentfiler, rekommendera filmer till vänner "
 "och mycket mer."
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:68
+#: ../../platform/gtk-x11/glade/democracy.glade.h:69
 msgid ""
 "You've selected a new folder to download movies to.  Should Democracy "
 "migrate your existing downloads there?  (Currently dowloading movies will "
@@ -2314,64 +2561,92 @@ msgstr ""
 "existerande hämtningar dit?  (Filmer som hämtas ner just nu kommer inte att "
 "flyttas förrän de har färdigställts.)"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:69
-msgid "_Add Directory"
-msgstr "_Lägg till katalog"
-
 #: ../../platform/gtk-x11/glade/democracy.glade.h:70
+msgid "_Add Folder"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/democracy.glade.h:71
 msgid "_Search"
 msgstr "_Sök"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:71
+#: ../../platform/gtk-x11/glade/democracy.glade.h:72
 msgid "_Search For:"
 msgstr "_Sök Efter:"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:72
+#: ../../platform/gtk-x11/glade/democracy.glade.h:73
 msgid "_Store downloaded videos in this folder:"
 msgstr "_Lagra hämtade filmer i den här mappen:"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:73
+#: ../../platform/gtk-x11/glade/democracy.glade.h:74
 msgid "_URL"
 msgstr "_Url"
 
-#: ../../platform/gtk-x11/glade/democracy.glade.h:74
+#: ../../platform/gtk-x11/glade/democracy.glade.h:75
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "and"
 msgstr "och"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:1
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:1
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:1
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:1
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:1
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
-msgid " "
-msgstr " "
+#: ../../platform/gtk-x11/glade/democracy.glade.h:76
+msgid "videos at once"
+msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:2
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:2
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:2
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:2
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:2
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:2
-msgid "'"
-msgstr "'"
+msgid ""
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
+"$publisher."
+msgstr ""
+"$longAppName version $appVersion ($appRevision); copyright © 2005, 2006 "
+"$publisher."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:21
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
+msgid "About $longAppName"
+msgstr "Om $longAppName"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
 msgid "Add Channel"
 msgstr "Lägg till kanal"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:5
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
 msgid "Please enter the URL of the channel you'd like to add."
 msgstr "Ange url:en för kanalen som du vill lägga till."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:5
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
+msgid "Copy log to clipboard"
+msgstr "Kopiera logg till urklipp"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
+msgid "Open up the bug tracker"
+msgstr "Öppna felhanteraren"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
+msgid ""
+"Please help us fix it. Copy and paste all the\n"
+"information into our bug tracker and tell us what you were doing when the\n"
+"problem occurred."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
+msgid ""
+"Then, please restart $longAppName (or you may keep getting related errors). "
+"Sorry for the inconvenience. $longAppName is still in beta, but with your "
+"help we're fixing problems fast!"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
+msgid "You found a bug in $longAppName!"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
+msgid " "
+msgstr " "
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
+msgid "'"
+msgstr "'"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
@@ -2379,103 +2654,141 @@ msgstr ""
 "Men vi kommer att försöka att fånga filerna. Det kan ta lite extra tid att "
 "lista filmerna, och beskrivningarna kan se konstiga ut."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
 msgid "Please contact the publishers of"
 msgstr "Kontakta de som publicerat"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:8
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
 msgid ""
-"and ask if they can supply a feed in a format that will work with Democracy."
+"and ask if they can supply a feed in a format that will work with "
+"$shortAppName."
 msgstr ""
-"och fråga om de kan tillhandahålla en kanal i ett format som fungerar med "
-"Democracy."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
+msgid "$longAppName"
+msgstr "$longAppName"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4
+msgid ""
+"You've selected a new folder to download movies to.  Should $shortAppName "
+"migrate your existing downloads there?(Currently dowloading movies will not "
+"be moved until they finish)"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
 msgstr "Kanalen kräver autentisering"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:5
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2
 msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
 msgstr "Ange användarnamnet och lösenordet som du fick av kanalansvarige."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:4
-msgid "A search channel contains"
-msgstr "En sökkanal innehåller"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
+msgid ""
+"(WARNING: Changes won't go into effect until you restart $longAppName.)"
+msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:5
-msgid "items that match a search term."
-msgstr "objekt som matchar en sökterm."
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
+msgid "Add Folder..."
+msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:9
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
+msgid "Automatically run $longAppName when I login"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
+msgid "Every 30 minutes"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
+msgid "Every hour"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+msgid "Manually"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
+msgid "Minimize $longAppName to the system tray when I close the program"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
+msgid "Store downloaded videos in this folder:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
+msgid ""
+"WARNING: This setting will not go into effect until you restart $longAppName."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
 msgstr "Kanal:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:10
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
 msgid "Search Engine:"
 msgstr "Sökmotor:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:6
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
 msgid "Search For:"
 msgstr "Sök efter:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:11
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
 msgstr "URL:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:14
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
+msgid ""
+"$longAppName can find all the videos on your computer to help you organize "
+"your collection."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
+msgid ""
+"$longAppName regularly checks channels for new videos and downloads in the "
+"background.  Leaving it running means you'll have new videos when you're "
+"ready to watch."
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
+msgid "$shortAppName First Time Setup"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
 msgstr "Avbryt sökning"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:13
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
 msgid "Change"
 msgstr "Ändra"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:4
-msgid "Democracy First Time Setup"
-msgstr "Förstagångskonfiguration av Democracy"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:20
-msgid ""
-"Democracy Player regularly checks channels for new videos and downloads in "
-"the background.  Leaving it running means you'll have new videos when you're "
-"ready to watch."
-msgstr ""
-"Democracy Player kontrollerar kanaler med jämna mellanrum efter nya filmer "
-"och hämtningar i bakgrunden. Lämna kvar den körande betyder att du har nya "
-"filmer när du är klar att se dem."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:21
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46
 msgid "Don't Worry About Disk Space:"
 msgstr "Tänk inte på diskutrymme:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:25
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50
 msgid "Find Videos:"
 msgstr "Sök filmer:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:23
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
 msgid "Go Big:"
 msgstr "Slå på stort:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:19
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
 msgid "Leave it On:"
 msgstr "Lämna den på:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:22
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
 msgid ""
-"Like a TiVo, Democracy Player features an 'expiration' system that helps "
-"clean out older videos to make room for new videos.  You can always keep a "
-"video permanently by clicking 'save' and you can set a channel's settings to "
-"save videos automatically."
+"Like a TiVo, $longAppName features an 'expiration' system that helps clean "
+"out older videos to make room for new videos.  You can always keep a video "
+"permanently by clicking 'save' and you can set a channel's settings to save "
+"videos automatically."
 msgstr ""
-"Precis som TiVo har Democracy Player en funktion för att \"föråldra\" data "
-"som hjälper till att rensa ut äldre filmer för att skapa plats för nya "
-"filmer. Du kan alltid behålla en film genom att klicka på \"Spara\" och du "
-"kan ställa in en inställningar för en kanal till att spara filmer "
-"automatiskt."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:17
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
 msgid ""
 "Now you can explore the Channel Guide\n"
 "and start watching.  A few tips to get started:"
@@ -2484,280 +2797,595 @@ msgstr ""
 "och börja se på klipp. Ett par tips för\n"
 "att komma igång:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
 msgid "Reset Search"
 msgstr "Nollställ sökning"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:10
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
 msgid "Restrict to all my personal files."
 msgstr "Begränsa till alla mina personliga filer."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:11
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
 msgid "Search custom folder:"
 msgstr "Sök i anpassad mapp:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:26
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
 msgid ""
-"The Democracy Channel Guide has hundreds of internet TV channels, all of "
+"The $shortAppName Channel Guide has hundreds of internet TV channels, all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
-"Democracys kanalguide innehåller hundratals tv-kanaler på Internet, alla är "
-"gratis.  Klicka helt enkelt på \"LÄGG TILL\" för att se på en kanal."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:24
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."
 msgstr "Knappen till höger om uppspelningsknappen visa filmer i helskärm."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:5
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30
 msgid ""
-"The next few screens will help you set up Democracy Player so that it works "
-"best for you."
+"The next few screens will help you set up $longAppName so that it works best "
+"for you."
 msgstr ""
-"De nästa skärmarna hjälper dig att konfigurera Democracy Player så att den "
-"fungerar på bästa sätt för dig."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:6
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
 msgid ""
-"We recommend that you have Democracy Player launch when your computer starts "
-"up.  This way, videos in progress can finish downloading and new videos can "
-"be downloaded in the background, ready when you want to watch."
+"We recommend that you have $longAppName launch when your computer starts up. "
+" This way, videos in progress can finish downloading and new videos can be "
+"downloaded in the background, ready when you want to watch."
 msgstr ""
-"Vi rekommenderar att du startar Democracy Player när din dator startar.  På "
-"det här sättet kan filmer hämtas klart och nya filmer kan hämtas i "
-"bakgrunden, färdiga när du vill se dem."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:9
-msgid ""
-"Would you like Democracy Player to look for video files on your computer?"
-msgstr "Vill du att Democracy Player ska leta efter filmer på din dator?"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
+msgid "Would you like $longAppName to look for video files on your computer?"
+msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:7
-msgid "Would you like to run Democracy on startup?"
-msgstr "Vill du köra Democracy vid uppstart?"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
+msgid "Would you like to run $shortAppName on startup?"
+msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:16
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
 msgid "You're done!"
 msgstr "Nu är du färdig!"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
+msgid "Release Notes:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"
 msgstr "Fråga"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:5
-msgid ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-"$publisher."
-msgstr ""
-"$longAppName version $appVersion ($appRevision); copyright © 2005, 2006 "
-"$publisher."
+#~ msgid "Save this video"
+#~ msgstr "Spara denna film"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:4
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:48
-msgid "About $longAppName"
-msgstr "Om $longAppName"
+#~ msgid "_Copy Video URL"
+#~ msgstr "_Kopiera filmens URL"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:9
-msgid "Copy log to clipboard"
-msgstr "Kopiera logg till urklipp"
+#~ msgid "_Stop Video"
+#~ msgstr "_Stoppa film"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
-msgid "Open up the bug tracker"
-msgstr "Öppna felhanteraren"
+#~ msgid "_Play / Pause"
+#~ msgstr "_Spela upp / Pausa"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
-msgid "Please help us fix it. Copy and paste all the"
-msgstr "Hjälp oss rätta till det. Kopiera och klistra in all"
+#~ msgid "_Update Channel"
+#~ msgstr "_Uppdatera kanal"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
-msgid ""
-"information into our bug tracker and tell us what you were doing when the"
-msgstr "information i vår felhanterare och berätta för oss vad du gjorde när"
+#~ msgid "Re_name Channel"
+#~ msgstr "_Byt namn på kanalen"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8
-msgid "problem occurred."
-msgstr "problemet inträffade."
+#~ msgid "_Remove Channel"
+#~ msgstr "_Ta bort kanal"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:10
-msgid ""
-"Then, please restart Democracy Player (or you may keep getting related "
-"errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-"with your help we're fixing problems fast!"
-msgstr ""
-"Starta sedan om Democracy (annars kommer du fortsätta få liknande fel). "
-"Ursäkta olägenheten. Democracy är fortfarande i ett betastadie, men med din "
-"hjälp rättar vi snabbt till problemen!"
+#~ msgid "_Open..."
+#~ msgstr "_Öppna..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:4
-msgid "You found a bug in Democracy!"
-msgstr "Du har hittat ett fel i Democracy!"
+#~ msgid "Open various files"
+#~ msgstr "Öppna diverse filer"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:4
-msgid "$longAppName"
-msgstr "$longAppName"
+#~ msgid "New _Playlist..."
+#~ msgstr "_Ny spellista"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:90
-msgid "A"
-msgstr "A"
+#~ msgid "Create new playlist"
+#~ msgstr "Skapa ny spellista"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:105
-msgid "Alt+Enter"
-msgstr "Alt+Enter"
+#~ msgid "New Playlist _Folder..."
+#~ msgstr "Ny _mapp för spellistor..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:74
-msgid "C"
-msgstr "C"
+#~ msgid "Create new playlist folder"
+#~ msgstr "Skapa ny spellistemapp"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8
-msgid "Check Version"
-msgstr "Kontrollera version"
+#~ msgid "New Channel _Folder..."
+#~ msgstr "Ny _mapp för kanaler..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:96
-msgid "Ctrl+A"
-msgstr "Ctrl+A"
+#~ msgid "Create new channel folder"
+#~ msgstr "Skapa ny kanalmapp"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:94
-msgid "Ctrl+C"
-msgstr "Ctrl+C"
+#~ msgid "Add _Channel..."
+#~ msgstr "_Lägg till kanal..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:102
-msgid "Ctrl+D"
-msgstr "Ctrl+D"
+#~ msgid "P_references"
+#~ msgstr "Inställninga_r"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:97
-msgid "Ctrl+N"
-msgstr "Ctrl+N"
+#~ msgid "Quit the Program"
+#~ msgstr "Avsluta programmet"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:93
-msgid "Ctrl+O"
-msgstr "Ctrl+O"
+#~ msgid "U_pdate All Channels"
+#~ msgstr "U_ppdatera alla kanaler"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:99
-msgid "Ctrl+P"
-msgstr "Ctrl+P"
+#~ msgid "Delete selection"
+#~ msgstr "_Ta bort urval"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:98
-msgid "Ctrl+Shift+N"
-msgstr "Ctrl+Skift+N"
+#~ msgid "Remove Playlist..."
+#~ msgstr "Ta bort spellista..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:100
-msgid "Ctrl+Shitf+P"
-msgstr "Ctrl+Skift+P"
+#~ msgid "Remove Playlists..."
+#~ msgstr "Ta bort spellistor"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:95
-msgid "Ctrl+V"
-msgstr "Ctrl+V"
+#~ msgid "Remove Playlist Folder..."
+#~ msgstr "Ta bort mapp för spellistor..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:91
-msgid "D"
-msgstr "D"
+#~ msgid "Remove Playlist Folders..."
+#~ msgstr "Ta bort mappar för spellistor..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:49
-msgid "Donate to the Democracy project"
-msgstr "Donera till Democracy-projektet"
+#~ msgid "Remove Channel..."
+#~ msgstr "Ta bort kanal..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:59
-msgid "E"
-msgstr "E"
+#~ msgid "Remove Channels..."
+#~ msgstr "Ta bort kanaler..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:87
-msgid "F"
-msgstr "F"
+#~ msgid "Remove Channel Folder..."
+#~ msgstr "Ta bort mapp för kanaler..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:45
-msgid "Fullscreen"
-msgstr "Helskärm"
+#~ msgid "Remove Channel Folders..."
+#~ msgstr "Ta bort mappar för kanaler..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:68
-msgid "G"
-msgstr "G"
+#~ msgid "Remove Channel Guide..."
+#~ msgstr "Ta bort kanalguide..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:89
-msgid "H"
-msgstr "H"
+#~ msgid "Remove Channel Guides..."
+#~ msgstr "Ta bort kanalguider..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:82
-msgid "L"
-msgstr "L"
+#~ msgid "Remove Video..."
+#~ msgstr "Ta bort film..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:104
-msgid "Left"
-msgstr "Vänster"
+#~ msgid "Remove Videos..."
+#~ msgstr "Ta bort filmer..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:85
-msgid "N"
-msgstr "N"
+#~ msgid "Rename Playlist..."
+#~ msgstr "Byt namn på spellista..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:22
-msgid "New Channel"
-msgstr "Ny kanal"
+#~ msgid "Rename Playlist Folder..."
+#~ msgstr "Byt namn på mapp för spellistor..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:23
-msgid "New Channel Folder"
-msgstr "Ny kanalmapp"
+#~ msgid "Rename Channel..."
+#~ msgstr "Byt namn på kanal..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:25
-msgid "New Channel Guide"
-msgstr "Ny kanal-guide"
+#~ msgid "Rename Channel Folder..."
+#~ msgstr "Byt namn på mapp för kanaler..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:34
-msgid "New Playlist"
-msgstr "Ny spellista"
+#~ msgid "Rename Channel Guide..."
+#~ msgstr "Byt namn på kanalguiden..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:35
-msgid "New Playlist Folder"
-msgstr "Ny spellistemapp"
+#~ msgid "Update Channel..."
+#~ msgstr "Uppdatera kanal..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:52
-msgid "O"
-msgstr "O"
+#~ msgid "Update Channels..."
+#~ msgstr "Uppdatera kanaler..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:83
-msgid "P"
-msgstr "P"
+#, python-format
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Fel vid importering av moduler för Democracy:\n"
+#~ "%s"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:41
-msgid "Pause Video"
-msgstr "Pausa film"
+#~ msgid "SAVE"
+#~ msgstr "SPARA"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:33
-msgid "Playlist"
-msgstr "Spellista"
+#~ msgid "SAVED"
+#~ msgstr "SPARAD"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:57
-msgid "Q"
-msgstr "Q"
+#~ msgid "${count} Downloads in Progress"
+#~ msgstr "${count} pågående hämtningar"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:86
-msgid "R"
-msgstr "R"
+#~ msgid "1 Download in Progress"
+#~ msgstr "1 pågående hämtning"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9
-msgid "Remove Video"
-msgstr "Ta bort film"
+#~ msgid "${len} Videos On This Channel"
+#~ msgstr "${len} filmer på denna kanal"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103
-msgid "Right"
-msgstr "Höger"
+#~ msgid "All ${len} Videos Match This Search"
+#~ msgstr "Alla ${len} filmer matchar sökningen"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:84
-msgid "S"
-msgstr "S"
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len} filmer matchar sökningen"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:31
-msgid "Send This Channel to a Friend..."
-msgstr "Skicka den här kanalen till en vän..."
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} filmer på denna kanal"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:101
-msgid "Space"
-msgstr "Blanksteg"
+#~ msgid "Unwatched"
+#~ msgstr "Inte visad"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:71
-msgid "U"
-msgstr "U"
+#~ msgid "Watched"
+#~ msgstr "Visad"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:53
-msgid "V"
-msgstr "V"
+#~ msgid "Saved"
+#~ msgstr "Sparad"
+
+#~ msgid "When turned on, Auto Download should"
+#~ msgstr "När påslagen ska Automatisk hämtning"
+
+#~ msgid "Downloaded"
+#~ msgstr "Hämtad"
+
+#~ msgid "Recommend"
+#~ msgstr "Rekommendera"
+
+#~ msgid "<label for=\"automatic\">Auto Download</label>"
+#~ msgstr "<label for=\"automatic\">Automatisk hämtning</label>"
+
+#~ msgid "SHOW FILE"
+#~ msgstr "VISA FIL"
+
+#~ msgid "SHOW FOLDER"
+#~ msgstr "VISA MAPP"
+
+#~ msgid "SHARE IT"
+#~ msgstr "DELA UT DEN"
+
+#~ msgid "STAR IT"
+#~ msgstr "MÄRK DEN"
+
+#~ msgid "${size} disk space free"
+#~ msgstr "${size} ledigt utrymme"
+
+#~ msgid "${size} available for downloads"
+#~ msgstr "${size} tillgängligt för hämtningar"
+
+#~ msgid "Democracy Internet TV: How to Get Started"
+#~ msgstr "Democracy Internet-TV: Hur man kommer igång"
+
+#~ msgid "GO BIG:"
+#~ msgstr "TÄNK STORT:"
+
+#~ msgid "This is your fullscreen button. Click it and lean back."
+#~ msgstr "Det här är din helskärmsknapp. Klicka på den och luta dig tillbaka."
+
+#~ msgid "NEW STUFF:"
+#~ msgstr "NYA SAKER:"
+
+#~ msgid ""
+#~ "Blue circles mean the channel has new videos available, green circles mean "
+#~ "you have downloaded videos ready to watch."
+#~ msgstr ""
+#~ "Blåa cirklar betyder att kanalen har nya filmer tillgängliga, gröna cirklar "
+#~ "betyder att du har hämtat filmer som är klara att se på."
+
+#~ msgid ""
+#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
+#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
+#~ msgstr ""
+#~ "<strong i18n:translate=\"\">HOPPA ÖVER INTRO: <a style=\"color: #090;\" "
+#~ "href=\"#\" onclick=\"doneWithIntro();\">Gå till kanalguiden >></a></strong>"
+
+#~ msgid ""
+#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
+#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+#~ "channels in the guide are free.</strong>"
+#~ msgstr ""
+#~ "<strong>Lägg till kanaler:</strong> Kanalguiden är ditt hem för Internet-TV-"
+#~ "kanaler. Klicka på \"LÄGG TILL\" för att prenumerera på en kanal-- "
+#~ "<strong>kanalerna i guiden är gratis.</strong>"
+
+#~ msgid ""
+#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
+#~ "waiting for videos: start some downloads and check back later."
+#~ msgstr ""
+#~ "<strong>Vänta inte:</strong> Democracy är annorlunda än att se på filmer på "
+#~ "webbsidor-- publicerare kan erbjuda stora och högkvalitativa filmer. Sitt "
+#~ "inte där och vänta på filmerna: påbörja några hämtningar och kom tillbaka "
+#~ "senare."
+
+#~ msgid ""
+#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
+#~ "new videos and downloads in the background. Leaving it running means you'll "
+#~ "have new videos when you're ready to watch."
+#~ msgstr ""
+#~ "<strong>Lämna den påslagen:</strong> Democracy Player kontrollerar "
+#~ "regelbundet kanalerna efter nya filmer och hämtar ner dem i bakgrunden. "
+#~ "Lämna den påslagen betyder att du har nya filmer när du är klar att se dem."
+
+#~ msgid ""
+#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
+#~ "features an 'expiration' system that helps clean out older videos to make "
+#~ "room for new videos. You can always keep a video permanently by clicking "
+#~ "'save' and you can set a channel's settings to save videos automatically."
+#~ msgstr ""
+#~ "<strong>Oroa dig inte för diskutrymmet:</strong> Precis som en TiVo, har "
+#~ "Democracy Player en funktion för \"utgånget material\" som hjälper dig att "
+#~ "rensa bort gamla filmer för att göra plats för nya filmer. Du kan alltid "
+#~ "behålla en film permanent genom att klicka på \"spara\" och du kan ställa in "
+#~ "kanalens inställningar att spara filmerna automatiskt."
+
+#, python-format
+#~ msgid "%0.0fB"
+#~ msgstr "%0.0fB"
+
+#~ msgid ""
+#~ "You have a database that was saved with a newer version of Democracy. You "
+#~ "must download the latest version of Democracy and run that."
+#~ msgstr ""
+#~ "Du har en databas som blev sparad med en nyare version av Democracy. Du "
+#~ "måste hämta hem den senaste versionen av Democracy och köra den."
+
+#~ msgid "Democracy - Add Channel"
+#~ msgstr "Democracy - Lägg till kanal"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - Lägg till kanalguide"
+
+#~ msgid ""
+#~ "You are running a version of Democracy Player with a custom set of channels."
+#~ msgstr ""
+#~ "Du kör en version av Democracy Player med en anpassad uppsättning kanaler."
+
+#~ msgid "Channel is not compatible with Democracy!"
+#~ msgstr "Kanalen är inte kompatibel med Democracy!"
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Men vi kommer att försöka att fånga filerna. Det kan ta lite extra tid att "
+#~ "lista filmerna, och beskrivningarna kan se konstiga ut.  Kontakta utgivarna "
+#~ "av $url och fråga om de kan tillhandahålla en kanal i ett format som "
+#~ "fungerar med Democracy.\n"
+#~ "\n"
+#~ "Vill du försöka att läsa in denna kanal ändå?"
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr ""
+#~ "Denna kanalfil för Democracy har ett ogiltigt format: %s. Informera "
+#~ "utgivaren av denna fil."
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Denna kanalfil för Democracy har en felaktig innehållstyp: %s. Informera "
+#~ "utgivaren av denna fil."
+
+#, python-format
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Kunde inte hämta kanalfilen för Democracy: %s."
+
+#~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
+#~ msgstr ""
+#~ "(Ändringar kommer inte ta effekt förrens du startar om Democracy Player.)"
+
+#~ msgid "<b>Movies Directory</b>"
+#~ msgstr "<b>Filmkatalog</b>"
+
+#~ msgid "Show movies in these directories in My Collection"
+#~ msgstr "Visa filmer i dessa kataloger i Min samling"
+
+#~ msgid "_Add Directory"
+#~ msgstr "_Lägg till katalog"
+
+#~ msgid ""
+#~ "and ask if they can supply a feed in a format that will work with Democracy."
+#~ msgstr ""
+#~ "och fråga om de kan tillhandahålla en kanal i ett format som fungerar med "
+#~ "Democracy."
+
+#~ msgid "A search channel contains"
+#~ msgstr "En sökkanal innehåller"
+
+#~ msgid "items that match a search term."
+#~ msgstr "objekt som matchar en sökterm."
+
+#~ msgid "Democracy First Time Setup"
+#~ msgstr "Förstagångskonfiguration av Democracy"
+
+#~ msgid ""
+#~ "Democracy Player regularly checks channels for new videos and downloads in "
+#~ "the background.  Leaving it running means you'll have new videos when you're "
+#~ "ready to watch."
+#~ msgstr ""
+#~ "Democracy Player kontrollerar kanaler med jämna mellanrum efter nya filmer "
+#~ "och hämtningar i bakgrunden. Lämna kvar den körande betyder att du har nya "
+#~ "filmer när du är klar att se dem."
+
+#~ msgid ""
+#~ "Like a TiVo, Democracy Player features an 'expiration' system that helps "
+#~ "clean out older videos to make room for new videos.  You can always keep a "
+#~ "video permanently by clicking 'save' and you can set a channel's settings to "
+#~ "save videos automatically."
+#~ msgstr ""
+#~ "Precis som TiVo har Democracy Player en funktion för att \"föråldra\" data "
+#~ "som hjälper till att rensa ut äldre filmer för att skapa plats för nya "
+#~ "filmer. Du kan alltid behålla en film genom att klicka på \"Spara\" och du "
+#~ "kan ställa in en inställningar för en kanal till att spara filmer "
+#~ "automatiskt."
+
+#~ msgid ""
+#~ "The Democracy Channel Guide has hundreds of internet TV channels, all of "
+#~ "them are free.  Just click 'ADD' to watch a channel."
+#~ msgstr ""
+#~ "Democracys kanalguide innehåller hundratals tv-kanaler på Internet, alla är "
+#~ "gratis.  Klicka helt enkelt på \"LÄGG TILL\" för att se på en kanal."
+
+#~ msgid ""
+#~ "The next few screens will help you set up Democracy Player so that it works "
+#~ "best for you."
+#~ msgstr ""
+#~ "De nästa skärmarna hjälper dig att konfigurera Democracy Player så att den "
+#~ "fungerar på bästa sätt för dig."
+
+#~ msgid ""
+#~ "We recommend that you have Democracy Player launch when your computer starts "
+#~ "up.  This way, videos in progress can finish downloading and new videos can "
+#~ "be downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Vi rekommenderar att du startar Democracy Player när din dator startar.  På "
+#~ "det här sättet kan filmer hämtas klart och nya filmer kan hämtas i "
+#~ "bakgrunden, färdiga när du vill se dem."
+
+#~ msgid ""
+#~ "Would you like Democracy Player to look for video files on your computer?"
+#~ msgstr "Vill du att Democracy Player ska leta efter filmer på din dator?"
+
+#~ msgid "Would you like to run Democracy on startup?"
+#~ msgstr "Vill du köra Democracy vid uppstart?"
+
+#~ msgid "Please help us fix it. Copy and paste all the"
+#~ msgstr "Hjälp oss rätta till det. Kopiera och klistra in all"
+
+#~ msgid ""
+#~ "information into our bug tracker and tell us what you were doing when the"
+#~ msgstr "information i vår felhanterare och berätta för oss vad du gjorde när"
+
+#~ msgid "problem occurred."
+#~ msgstr "problemet inträffade."
+
+#~ msgid ""
+#~ "Then, please restart Democracy Player (or you may keep getting related "
+#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
+#~ "with your help we're fixing problems fast!"
+#~ msgstr ""
+#~ "Starta sedan om Democracy (annars kommer du fortsätta få liknande fel). "
+#~ "Ursäkta olägenheten. Democracy är fortfarande i ett betastadie, men med din "
+#~ "hjälp rättar vi snabbt till problemen!"
+
+#~ msgid "You found a bug in Democracy!"
+#~ msgstr "Du har hittat ett fel i Democracy!"
+
+#~ msgid "A"
+#~ msgstr "A"
+
+#~ msgid "Alt+Enter"
+#~ msgstr "Alt+Enter"
+
+#~ msgid "C"
+#~ msgstr "C"
+
+#~ msgid "Check Version"
+#~ msgstr "Kontrollera version"
+
+#~ msgid "Ctrl+A"
+#~ msgstr "Ctrl+A"
+
+#~ msgid "Ctrl+C"
+#~ msgstr "Ctrl+C"
+
+#~ msgid "Ctrl+D"
+#~ msgstr "Ctrl+D"
+
+#~ msgid "Ctrl+N"
+#~ msgstr "Ctrl+N"
+
+#~ msgid "Ctrl+O"
+#~ msgstr "Ctrl+O"
+
+#~ msgid "Ctrl+P"
+#~ msgstr "Ctrl+P"
+
+#~ msgid "Ctrl+Shift+N"
+#~ msgstr "Ctrl+Skift+N"
+
+#~ msgid "Ctrl+Shitf+P"
+#~ msgstr "Ctrl+Skift+P"
+
+#~ msgid "Ctrl+V"
+#~ msgstr "Ctrl+V"
+
+#~ msgid "D"
+#~ msgstr "D"
+
+#~ msgid "Donate to the Democracy project"
+#~ msgstr "Donera till Democracy-projektet"
+
+#~ msgid "E"
+#~ msgstr "E"
+
+#~ msgid "F"
+#~ msgstr "F"
+
+#~ msgid "Fullscreen"
+#~ msgstr "Helskärm"
+
+#~ msgid "G"
+#~ msgstr "G"
+
+#~ msgid "H"
+#~ msgstr "H"
+
+#~ msgid "L"
+#~ msgstr "L"
+
+#~ msgid "Left"
+#~ msgstr "Vänster"
+
+#~ msgid "N"
+#~ msgstr "N"
+
+#~ msgid "New Channel"
+#~ msgstr "Ny kanal"
+
+#~ msgid "New Channel Folder"
+#~ msgstr "Ny kanalmapp"
+
+#~ msgid "New Channel Guide"
+#~ msgstr "Ny kanal-guide"
+
+#~ msgid "New Playlist"
+#~ msgstr "Ny spellista"
+
+#~ msgid "New Playlist Folder"
+#~ msgstr "Ny spellistemapp"
+
+#~ msgid "O"
+#~ msgstr "O"
+
+#~ msgid "P"
+#~ msgstr "P"
+
+#~ msgid "Playlist"
+#~ msgstr "Spellista"
+
+#~ msgid "Q"
+#~ msgstr "Q"
+
+#~ msgid "R"
+#~ msgstr "R"
+
+#~ msgid "Remove Video"
+#~ msgstr "Ta bort film"
+
+#~ msgid "Right"
+#~ msgstr "Höger"
+
+#~ msgid "S"
+#~ msgstr "S"
+
+#~ msgid "Send This Channel to a Friend..."
+#~ msgstr "Skicka den här kanalen till en vän..."
+
+#~ msgid "Space"
+#~ msgstr "Blanksteg"
+
+#~ msgid "U"
+#~ msgstr "U"
+
+#~ msgid "V"
+#~ msgstr "V"
 
 #~ msgid "Add a Channel..."
 #~ msgstr "Lägg till en kanal..."

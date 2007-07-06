@@ -10,30 +10,30 @@
 
 <!ENTITY prefs.channels "Canales">
 <!ENTITY prefs.channels.check "Comprobar canales en busca de nuevos contenidos">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check.thirty "Cada 30 minutos">
+<!ENTITY prefs.channels.check.sixty "Cada hora">
+<!ENTITY prefs.channels.check.manually "Manualmente">
 
 <!ENTITY prefs.playback "Reproducción">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback.remember.pos "Recordar posición del video.">
 <!ENTITY prefs.playback.auto.next.video "Reproducir vídeos uno tras otro.">
 <!ENTITY prefs.playback.stop.after.each "Detener después de cada vídeo.">
 
-<!ENTITY prefs.folder.movies "Movies Directory">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.movies "Directorio de Películas">
+<!ENTITY prefs.folder.downloads "Almacenar videos descargados en esta carpeta:">
 <!ENTITY prefs.folder.change "Cambiar...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Folder Location">
-<!ENTITY prefs.folder.others.shown "Show as Channel">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.caption "Buscar nuevos videos en estas carpetas e incluirlas en Mi Colección">
+<!ENTITY prefs.folder.others.location "Ubicación de la carpeta">
+<!ENTITY prefs.folder.others.shown "Mostrar como Canal">
+<!ENTITY prefs.folder.others.add "Añadir Carpeta...">
 <!ENTITY prefs.folder.others.remove "Eliminar">
 
-<!ENTITY prefs.downloads.max "Downloads">
+<!ENTITY prefs.downloads.max "Descargas">
 <!ENTITY prefs.downloads.max.part1 "Descargar como máximo">
 <!ENTITY prefs.downloads.max.part2 "vídeos al mismo tiempo.">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "Espacio en disco">
 <!ENTITY prefs.disk.space.min.part1 "No empezar una descarga si deja menos de">
 <!ENTITY prefs.disk.space.min.part2 "GB libres.">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">

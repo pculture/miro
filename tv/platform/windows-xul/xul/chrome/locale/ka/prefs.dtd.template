@@ -8,7 +8,7 @@
 
 <!ENTITY prefs.general "General">
 
-<!ENTITY prefs.channels "Channels">
+<!ENTITY prefs.channels "არხები">
 <!ENTITY prefs.channels.check "არხების ახალ მასალაზე შემოწმება">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">

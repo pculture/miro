@@ -1,12 +1,12 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "&quot;">
 
-<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
+<!ENTITY canscrape.title     "Dieser Video-Channel ist nicht kompatibel mit $shortAppName!">
 <!ENTITY canscrape.body      "Democracy wird versuchen, die Dateien trotzdem herunterzuladen, möglicherweise sehen aber die Beschreibungen etwas merkwürdig aus und die Inhaltsauflistung dauert länger als gewöhnlich.">
 
 <!ENTITY canscrape.prefix    "Bitte wenden Sie sich an die Herausgeber des Kanals &quot;">
 <!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
-<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
+<!ENTITY canscrape.title     "Dieser Video-Channel ist nicht kompatibel mit $shortAppName!">
 <!ENTITY canscrape.body      "Democracy wird versuchen, die Dateien trotzdem herunterzuladen, möglicherweise sehen aber die Beschreibungen etwas merkwürdig aus und die Inhaltsauflistung dauert länger als gewöhnlich.">
 
 <!ENTITY canscrape.prefix    "Bitte wenden Sie sich an die Herausgeber des Kanals &quot;">

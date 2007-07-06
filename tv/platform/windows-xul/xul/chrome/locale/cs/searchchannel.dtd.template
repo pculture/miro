@@ -1,8 +1,8 @@
 <!ENTITY searchchannel.description	"Vyhledávací kanál obsahuje položky podle klíčového slova.">
-<!ENTITY searchchannel.termlabel 	"Search For:">
+<!ENTITY searchchannel.termlabel 	"Vyhledat:">
 <!ENTITY searchchannel.title            "Nový vyhledávací kanál">
 <!ENTITY searchchannel.inthis "V:">
-<!ENTITY searchchannel.channel "Channel:">
-<!ENTITY searchchannel.searchengine "Search Engine:">
-<!ENTITY searchchannel.url "URL:">
+<!ENTITY searchchannel.channel "Kanál:">
+<!ENTITY searchchannel.searchengine "Vyhledávač:">
+<!ENTITY searchchannel.url "URL adresa:">
 <!ENTITY searchchannel.createchannel "Vytvořit kanál">

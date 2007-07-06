@@ -21,7 +21,7 @@
 
 <!ENTITY prefs.folder.movies "Movies Directory">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.change "変更する...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
 <!ENTITY prefs.folder.others.location "Folder Location">

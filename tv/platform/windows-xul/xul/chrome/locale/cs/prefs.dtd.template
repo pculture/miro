@@ -1,42 +1,42 @@
-<!ENTITY prefs.title "Preferences">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.title "Preferences">
+<!ENTITY prefs.title "Nastaveni">
+<!ENTITY prefs.runonstartup "AUtomaticky spouštět $longAppName, když se přihlásím">
+<!ENTITY prefs.restart "(VAROVÁNÍ: Změny se neprojeví dokud $longAppName neukončíte a znovu nespustíte.)">
+<!ENTITY prefs.title "Nastaveni">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.minimize.to.tray "Minimize $longAppName to the system tray when I close the program">
+<!ENTITY prefs.run.on.startup "AUtomaticky spouštět $longAppName, když se přihlásím">
+<!ENTITY prefs.minimize.to.tray "Minimalizovat $longAppName do systémové lišty, pokud zavřu aplikaci.">
 
-<!ENTITY prefs.general "General">
+<!ENTITY prefs.general "Obecné">
 
 <!ENTITY prefs.channels "Kanály">
-<!ENTITY prefs.channels.check "Check Channels for new content">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check "Zontrolovat kanály pro nový obsah">
+<!ENTITY prefs.channels.check.thirty "Každých 30 minut">
+<!ENTITY prefs.channels.check.sixty "Každou hodinu">
+<!ENTITY prefs.channels.check.manually "Ručně">
 
-<!ENTITY prefs.playback "Playback">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback "Přehrát">
+<!ENTITY prefs.playback.remember.pos "Zapamatovat si pozici videa.">
 <!ENTITY prefs.playback.auto.next.video "Přehrávat videa jedno po druhém.">
-<!ENTITY prefs.playback.stop.after.each "Stop after each video.">
+<!ENTITY prefs.playback.stop.after.each "Zastav přehrávání po každém videu.">
 
-<!ENTITY prefs.folder.movies "Movies Directory">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.movies "Složka filmů">
+<!ENTITY prefs.folder.downloads "Uládat stažená videa do této složky:">
+<!ENTITY prefs.folder.change "Změnit...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Folder Location">
-<!ENTITY prefs.folder.others.shown "Show as Channel">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.caption "Sleduj tyto složky přo nová videa a zařaď je do Mé sbírky:">
+<!ENTITY prefs.folder.others.location "Adresa složky">
+<!ENTITY prefs.folder.others.shown "Zobrazit jako kanál">
+<!ENTITY prefs.folder.others.add "Přidat složku...">
 <!ENTITY prefs.folder.others.remove "Odstranit">
 
-<!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Download at most">
-<!ENTITY prefs.downloads.max.part2 "videos at once.">
+<!ENTITY prefs.downloads.max "Stažené soubory">
+<!ENTITY prefs.downloads.max.part1 "Stahovat nejvýše">
+<!ENTITY prefs.downloads.max.part2 "videí najednou.">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "Místo na disku">
 <!ENTITY prefs.disk.space.min.part1 "Nezačínat stahování pokud by zůstalo méně než">
 <!ENTITY prefs.disk.space.min.part2 "GB volných.">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "(VAROVÁNÍ: Toto nastavení se neprojeví dokud $longAppName neukončíte a znovu nespustíte.)">
 
 <!ENTITY prefs.videos.expire "Implicitně videa vyprší po">
 <!ENTITY prefs.videos.expire.one "1 den">
@@ -46,8 +46,8 @@
 <!ENTITY prefs.videos.expire.thirty "1 měsíc">
 <!ENTITY prefs.videos.expire.never "Nikdy">
 
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
+<!ENTITY prefs.torrent.restart.warning "(VAROVÁNÍ: Změny se neprojeví dokud $longAppName neukončíte a znovu nespustíte.)">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Aby nedocházelo ke zpomalení připojení, omezit odchozí tok na">
+<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s ve chvílích, kdy svůj počítač využívám.">
+<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent používá porty mezi">
 <!ENTITY prefs.torrent.uses.ports.part2 "a">

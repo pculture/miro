@@ -10,9 +10,9 @@
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
 <!ENTITY startup.search.searching	"Searching for Videos">
-<!ENTITY startup.change	                "Change">
+<!ENTITY startup.change	                "Schimbă">
 <!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
+<!ENTITY startup.undo	                "Resetează căutarea">
 <!ENTITY startup.done1			"You're done!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
@@ -35,9 +35,9 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
 <!ENTITY startup.search.searching	"Searching for Videos">
-<!ENTITY startup.change	                "Change">
+<!ENTITY startup.change	                "Schimbă">
 <!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
+<!ENTITY startup.undo	                "Resetează căutarea">
 <!ENTITY startup.done1			"You're done!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">

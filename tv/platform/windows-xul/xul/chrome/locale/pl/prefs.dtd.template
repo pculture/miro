@@ -15,17 +15,17 @@
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.playback "Odtwarzanie">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback.remember.pos "Zapamiętaj pozycję okna video">
 <!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
 <!ENTITY prefs.playback.stop.after.each "Stop after each video.">
 
-<!ENTITY prefs.folder.movies "Movies Directory">
+<!ENTITY prefs.folder.movies "Katalog Filmów">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Zmień...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Folder Location">
-<!ENTITY prefs.folder.others.shown "Show as Channel">
+<!ENTITY prefs.folder.others.caption "Szukaj nowych video w tych folderach i dodaj je do Moja kolekcja:">
+<!ENTITY prefs.folder.others.location "Miejsce folderu">
+<!ENTITY prefs.folder.others.shown "Pokaż jako kanał">
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "Usuń">
 
@@ -33,7 +33,7 @@
 <!ENTITY prefs.downloads.max.part1 "Ściągnij najwyżej">
 <!ENTITY prefs.downloads.max.part2 "filmów na raz.">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "Miejsce na dysku">
 <!ENTITY prefs.disk.space.min.part1 "Nie zaczynaj pobierania jeśli po zakończeniu pozostanie mniej niż">
 <!ENTITY prefs.disk.space.min.part2 "GB wolnego miejsca na dysku.">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">

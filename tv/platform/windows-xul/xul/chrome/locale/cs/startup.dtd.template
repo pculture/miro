@@ -1,53 +1,53 @@
 <!ENTITY nbsp				" ">
 <!ENTITY rsaquo				"'">
 
-<!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
-<!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.title			"Počáteční nastavení $shortAppName">
+<!ENTITY startup.description		"Několik následujících obrazovek vám pomůže nastavit $longAppName tak, aby jste ho mohli co nejlépe používat.">
+<!ENTITY startup.autostart.description	"Doporučujeme povolit automatické spuštění $longAppName po startu počítače. Tak se budou moci dostahovat nestáhnutá videa a  stáhnout nová videa na pozadí, aby byla připravena, až je budete chtít sledovat.">
+<!ENTITY startup.autostart.question	"Chcete $longAppName spouštět při startu?">
+<!ENTITY startup.search.description	"$longAppName může najít všechna videa na vašem počítači, aby se vám vaše sbírka lépe organizovala.">
+<!ENTITY startup.search.question        "Chcete aby $longAppName prohledával váš počítat pro nové filmy?">
+<!ENTITY startup.search.restrict	"Omezit na všechny moje soubory.">
+<!ENTITY startup.search.custom          "Prohledej složku:">
 <!ENTITY startup.search.searching	"Hledám videa">
 <!ENTITY startup.change	                "Změnit">
-<!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.cancel	                "Zrušit vyhledávání">
+<!ENTITY startup.undo	                "Zrušit vyhledávání">
+<!ENTITY startup.done1			"Hotovo!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done3.heading		"Nechte to běžet:">
+<!ENTITY startup.done3.text		"$longAppName pravidelně kontroluje kanály pro nová videa a stahuje je na pozadí. Nechat to běžet znamená mít všechna videa ve chvíli, kdy je chcete sledovat.">
+<!ENTITY startup.done4.heading		"Nebojte se o volné místo na disku:">
+<!ENTITY startup.done4.text		"Nebojte se o diskový prostor: Podobně jako TiVo používá $longAppName systém pro sledování 'vypršení platnosti', který vám pomůže odstranit starší videa a připravit tak místo pro nová. Vždy si můžete některé video ponechat pouhý stisknutím tlačítka 'uložit' nebo můžete nastavit vybraný kanál tak, aby ukládal videa automaticky.">
+<!ENTITY startup.done5.heading		"Zvětši:">
+<!ENTITY startup.done5.text		"Tlačítko napravo od přehrávání přepne do režimu celoobrazovkového zobrazení.">
+<!ENTITY startup.done6.heading		"Najdi videa:">
+<!ENTITY startup.done6.text		"Průvodce kanálem $shortAppName obsahuje stovky kanálů internetových televizí a všechny jsou zdarma. Prostě pokud chcete nějaký kanál sledovat, klikněte na 'PŘIDEJ'.">
 <!ENTITY startup.answer.yes		"Ano">
 <!ENTITY startup.answer.no		"Ne">
-<!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
-<!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.title			"Počáteční nastavení $shortAppName">
+<!ENTITY startup.description		"Několik následujících obrazovek vám pomůže nastavit $longAppName tak, aby jste ho mohli co nejlépe používat.">
+<!ENTITY startup.autostart.description	"Doporučujeme povolit automatické spuštění $longAppName po startu počítače. Tak se budou moci dostahovat nestáhnutá videa a  stáhnout nová videa na pozadí, aby byla připravena, až je budete chtít sledovat.">
+<!ENTITY startup.autostart.question	"Chcete $longAppName spouštět při startu?">
+<!ENTITY startup.search.description	"$longAppName může najít všechna videa na vašem počítači, aby se vám vaše sbírka lépe organizovala.">
+<!ENTITY startup.search.question        "Chcete aby $longAppName prohledával váš počítat pro nové filmy?">
+<!ENTITY startup.search.restrict	"Omezit na všechny moje soubory.">
+<!ENTITY startup.search.custom          "Prohledej složku:">
 <!ENTITY startup.search.searching	"Hledám videa">
 <!ENTITY startup.change	                "Změnit">
-<!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.cancel	                "Zrušit vyhledávání">
+<!ENTITY startup.undo	                "Zrušit vyhledávání">
+<!ENTITY startup.done1			"Hotovo!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done3.heading		"Nechte to běžet:">
+<!ENTITY startup.done3.text		"$longAppName pravidelně kontroluje kanály pro nová videa a stahuje je na pozadí. Nechat to běžet znamená mít všechna videa ve chvíli, kdy je chcete sledovat.">
+<!ENTITY startup.done4.heading		"Nebojte se o volné místo na disku:">
+<!ENTITY startup.done4.text		"Nebojte se o diskový prostor: Podobně jako TiVo používá $longAppName systém pro sledování 'vypršení platnosti', který vám pomůže odstranit starší videa a připravit tak místo pro nová. Vždy si můžete některé video ponechat pouhý stisknutím tlačítka 'uložit' nebo můžete nastavit vybraný kanál tak, aby ukládal videa automaticky.">
+<!ENTITY startup.done5.heading		"Zvětši:">
+<!ENTITY startup.done5.text		"Tlačítko napravo od přehrávání přepne do režimu celoobrazovkového zobrazení.">
+<!ENTITY startup.done6.heading		"Najdi videa:">
+<!ENTITY startup.done6.text		"Průvodce kanálem $shortAppName obsahuje stovky kanálů internetových televizí a všechny jsou zdarma. Prostě pokud chcete nějaký kanál sledovat, klikněte na 'PŘIDEJ'.">
 <!ENTITY startup.answer.yes		"Ano">
 <!ENTITY startup.answer.no		"Ne">

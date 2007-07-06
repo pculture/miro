@@ -6,7 +6,7 @@
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
 <!ENTITY prefs.minimize.to.tray "Minimize $longAppName to the system tray when I close the program">
 
-<!ENTITY prefs.general "General">
+<!ENTITY prefs.general "主选项">
 
 <!ENTITY prefs.channels "频道">
 <!ENTITY prefs.channels.check "检查频道的新内容">
@@ -15,25 +15,25 @@
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.playback "播放">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback.remember.pos "记住影片位置">
 <!ENTITY prefs.playback.auto.next.video "连续播放视频">
 <!ENTITY prefs.playback.stop.after.each "每个视频播放完后停止">
 
-<!ENTITY prefs.folder.movies "Movies Directory">
+<!ENTITY prefs.folder.movies "影片目录">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "更改…">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Folder Location">
-<!ENTITY prefs.folder.others.shown "Show as Channel">
+<!ENTITY prefs.folder.others.caption "寻找在这些文件夹内的新影片并把他们收集到我的收藏：">
+<!ENTITY prefs.folder.others.location "文件夹位置">
+<!ENTITY prefs.folder.others.shown "作为频道显示">
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "移除">
 
-<!ENTITY prefs.downloads.max "Downloads">
+<!ENTITY prefs.downloads.max "下载">
 <!ENTITY prefs.downloads.max.part1 "一次最多下载">
 <!ENTITY prefs.downloads.max.part2 "个视频">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "磁盘空间">
 <!ENTITY prefs.disk.space.min.part1 "不要启动下载低于">
 <!ENTITY prefs.disk.space.min.part2 "千兆的剩余空间。">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">

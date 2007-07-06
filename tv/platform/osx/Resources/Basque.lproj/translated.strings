@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-06-04 15:00-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-07-06 13:34-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -27,6 +27,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Bring All to Front" = "Guztia aurrera ekarri";
 
+/* File: ../../platform/osx/frontend/Preferences.py:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
 "Channels" = "Kanalak";
 
 "Check for New Version" = "Bertsio Berririk dagoen Begiztatu";
@@ -35,13 +37,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Close Window" = "Leihoa Itxi";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:15 */
 "Copy" = "Kopiatu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:28 */
 "Copy Channel URL" = "Kopiatu Kanalaren URLa";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:11 */
 "Copy Video URL" = "Kopiatu Bideoaren URLa";
 
 "Cut" = "Ebaki";
@@ -55,15 +54,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Donate" = "Diru laguntza egin";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:14 */
 "Edit" = "Editatu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:6 */
 "File" = "Fitxategi";
 
 "Full Screen" = "Pantaila osoa";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:47 */
 "Help" = "Laguntza";
 
 "Hide Democracy" = "Democracy ezkutatu";
@@ -86,42 +82,35 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "New Search Channel..." = "Bilaketa Kanal Berria...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:43 */
 "Next Video" = "Hurrengo Bideoa";
 
 "Open Recent" = "Oraintsukoa Ireki";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:7 */
 "Open..." = "Ireki...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:16 */
 "Paste" = "Itsatsi";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:40 */
+/* File: ../../platform/osx/frontend/Application.py:234 */
 "Play Video" = "Bideoa erreproduzitu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:39 */
+/* File: ../../platform/osx/frontend/Preferences.py:43 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
 "Playback" = "Erreproduzitu";
 
 "Playlists" = "Erreprodukzio-zerrendak";
 
 "Preferencesâ¦" = "Hobespenak";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:44 */
 "Previous Video" = "Aurreko Bideoa";
 
 "Quit Democracy" = "Democracytik Irten";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:5 */
 "Remove..." = "Ezabatu...";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:18 */
 "Rename..." = "Izena aldatu...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:10 */
 "Save Video As..." = "Honela Gorde Bideoa...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:17 */
 "Select All" = "Dena hautatu";
 
 "Send This Channel to a Friend" = "Kanal Hau Lagun bati Bidali";
@@ -130,13 +119,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Show All" = "Dena Erakutsi";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:42 */
 "Stop Video" = "Bideoa Gelditu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:30 */
 "Update All Channels" = "Kanal Guztiak Eguneratu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:29 */
 "Update Channel" = "Kanala Eguneratu";
 
 "Window" = "Leihoa";
@@ -157,9 +143,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "FullScreen Controls" = "Pantaila osoko kontrolak";
 
-/* File: ../../portable/tabs.py:27 */
-/* File: ../../portable/feed.py:1718 */
-/* File: ../../portable/feed.py:1777 */
+/* File: ../../portable/feed.py:1957 */
+/* File: ../../portable/feed.py:2020 */
 "Search" = "Bilatu";
 
 "VideoWindow" = "Bideo Leihoa";
@@ -182,12 +167,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "(movies directory path goes here)" = "(bideoen direktorioaren bidea jarri behar da hemen)";
 
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
 "1 day" = "egun 1";
 
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
 "1 month" = "hilabete 1";
 
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
 "10 days" = "10 egun";
 
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
 "3 days" = "3 egun";
 
 "3 hours" = "3 ordu";
@@ -196,49 +185,85 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "5" = "5";
 
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "6 days" = "6 egun";
 
 "99999" = "99999";
+
+/* Flag: untranslated */
+"Add..." = "Add...";
 
 "BitTorrent ports:" = "BitTorrent portuak:";
 
 "By default, videos expire after:" = "Ez bada zehazten, bideoen iraungitze (kaduzitate) denbora:";
 
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
 "Change..." = "Aldatu...";
 
 "Check channels for new content:" = "Kanaletan eduki berririk dagoen egiaztatu:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:41 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
 "Don't start a download if it leaves less than" = "Deskarga ez hasi, zenbat baino gutxiago geratzen bada?";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
 "Download at most" = "Deskargatu gehienez";
 
+/* Flag: untranslated */
+"Folder location" = "Folder location";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
 "GB free." = "GB libre";
 
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
 "KB/s when my computer is active." = "KB/s nire ordenagailua aktibo dagoenean.";
 
 "Maximum:" = "Gehienez:";
 
 "Minimum:" = "Gutxienez:";
 
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
 "Never" = "Inoiz ere ez";
 
 /* Flag: untranslated */
 "OtherViews" = "OtherViews";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:53 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
 "Play videos one after another." = "Bideoak bata bestearen atzetik jo";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
+/* Flag: untranslated */
+"Remember video position." = "Remember video position.";
+
+/* File: ../../portable/menu.py:48 */
+/* File: ../../portable/menu.py:53 */
+/* File: ../../portable/folder.py:139 */
+/* File: ../../portable/folder.py:194 */
+/* File: ../../portable/feed.py:769 */
+/* File: ../../portable/guide.py:38 */
+/* File: ../../portable/playlist.py:180 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
+"Remove" = "Ezabatu";
 
 "Run Democracy at startup" = "Abiatzean jarri Democracy martxan";
 
 "Save downloaded videos in this folder:" = "Jaitsitako bideoak karpeta honetan gorde:";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:528 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+/* Flag: untranslated */
+"Show as Channel" = "Show as Channel";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
 "Stop after each video." = "Bideo bakoitzaren ostean gelditu.";
 
 /* Flag: untranslated */
 "To avoid internet slowdowns:" = "To avoid internet slowdowns:" /* = "Interneten abiadura moteltzeak ekiditeko:" */;
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26 */
+/* Flag: untranslated */
+"Watch for new videos in these folders and include them in My Collection:" = "Watch for new videos in these folders and include them in My Collection:";
 
 "every 30 minutes" = "30 minuturo";
 
@@ -246,14 +271,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "manually" = "eskuz";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
 "videos at once." = "Bideoak aldi berean.";
 
 "$label$" = "$etiketa$";
 
 "$title$" = "$Izena$";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:20 */
 "Channel" = "Kanala";
 
 /* File: ../../portable/dialogs.py:72 */
@@ -282,10 +306,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?";
 
+/* File: ../../platform/osx/frontend/StartupPanel.py:90 */
+/* File: ../../platform/osx/frontend/StartupPanel.py:116 */
 "Next" = "Hurrengoa";
 
 /* File: ../../portable/dialogs.py:62 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:28 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "Ez";
 
 "Only search my Movies folder." = "Bilatu bakarrik nire filmen karpetan.";
@@ -295,7 +321,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Search this folder:" = "Karpeta hau bilatu:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:12 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37 */
 "Searching for Videos" = "Bideoak Bilatzen";
 
 /* Flag: untranslated */
@@ -303,636 +329,735 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "Gomendatzen dizugu sistema abiaraztean Democracy Player martxan jartzea onartzea. Modu horretan, deskargatzen bukatu gabeko bideoak deskargatuko dira eta bideo berriak egongo dira prest zure kanaletan ikusi nahi dituzunean.\n\n\nNahi duzu Demokracy martxan jartzea zure ordenagailua abiarazten denean?";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:66 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:67 */
 "Welcome to Internet TV!" = "Ongi Etorri Internet TVra!";
 
 "Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Ongi etorri Internet TVra. Democracy Player-egaz gauza asko egin ditzakezu: Zure gogoko kanaletako bideoak automatikoki jaitsi, bideo berriak bata bestearen atzean ikusi, torrent-ak jaitsi, zure lagunei bideoak gomendatu, etab.\n\n";
 
 /* File: ../../portable/dialogs.py:61 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:27 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
 "Yes" = "Bai";
 
 "You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "Bukatu duzu!\n\nInstalazioa bukatu da. Orain zenbait kanal bilatu eta ikusten has zaitezke.\n\nEz egon zain: Democracy ez da webguneetako bideoak ikustea bezalakoa. Oso kalitate altu eta bideo handiak eskaini ditzazke publikatzaileak. Hori dela eta, ez egon bideoak deskargatu arte zai:jarri zenbait deskarga martxan eta geroxeago begiratu ea bukatu duen.\n\nUtzi martxan: Democracy Playerrek noizean behin kanalak kontsultatzen ditu ea bideo berriak dauden eta deskargak egiten ditu atzeko planoan. Martxan uzteak esan nahi du bideo berriak izango dituzula ikusteko prest zaudenean.\n\nEz arduratu disko espazioaz: TiVo baten moduan, Democracy Playerrek 'iraungitze' sistema bat du bideo zaharrak garbitu eta berrientzat tokia egiteko. Bideo bat betirako mantendu dezakezu 'gorde' aukeran klik eginez, eta kanal bat konfiguratu daiteke ere bideoak automatikoki kordetzeko.\n\nHaundian hobe: play botoiaren eskumako botoiak bideoak pantaila osoan erakusten ditu.\n\nAurkitu bideoak: Democracyren kanalen gidak Interneteko ehundaka telebista kanal eskaintzen ditu, denak doan. Klik egin 'GEHITU' botoian kanal bat ikusteko.\n";
 
 "%message%\n%message%" = "%message%\n%message%";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
-"Save Video _As..." = "Gorde bideoa _honela...";
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:25 */
+/* File: ../../portable/compiled_templates/unittest/simpleunicode.py:36 */
+/* File: ../../portable/test/unicodetest.py:319 */
+"Settings" = "Ezarpenak";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:116 */
-"Save this video" = "Bideo hau gorde";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:117 */
-"_Copy Video URL" = "_Kopiatu bideoaren URLa";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:120 */
-"_Remove Video" = "_Ezabatu bideoa";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:123 */
-"_Fullscreen" = "_Pantaila osoa";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:124 */
-"_Stop Video" = "_Gelditu bideoa";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:125 */
-"_Next Video" = "_Hurrengo Bideoa";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:126 */
-"_Previous Video" = "_Aurreko Bideoa";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:129 */
-"_Play / Pause" = "_Erreproduzitu / Pausatu";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:132 */
-"Copy Channel _Link" = "Kanala Kopiatu _Esteka";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:133 */
-"_Send this channel to a friend" = "_Kanal hau lagun bati bidali";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:136 */
-"_Update Channel" = "_Kanala Eguneratu";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:139 */
-"Re_name Channel" = "_Kanalaren izena aldatu";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:142 */
-"_Remove Channel" = "_Kanala Kendu";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:145 */
-"Re_name Playlist" = "Zerrendaren izena aldatu";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:148 */
-"_Remove Playlist" = "_Zerrenda Ezabatu";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:151 */
-"_Video" = "_Bideo";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:152 */
-"_Channels" = "_Kanalak";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:153 */
-"_Playlists" = "_Zerrendak";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:154 */
-"P_layback" = "_Erreproduzitu";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155 */
-"_Open..." = "_Ireki";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:155 */
-"Open various files" = "Fitxategi ugari ireki";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157 */
-"New _Playlist..." = "Zerrenda_Berria";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:157 */
-"Create new playlist" = "Zerrenda berria sortu...";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158 */
-"New Playlist _Folder..." = "Zerrenden_Karpeta Berria...";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:158 */
-"Create new playlist folder" = "Sortu zerrenden karpeta berria";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159 */
-"New Channel _Folder..." = "Kanalen Karpeta Berria";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:159 */
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:28 */
 /* Flag: untranslated */
-"Create new channel folder" = "Create new channel folder";
+"Hide" = "Hide";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:160 */
-"Add _Channel..." = "Kanala_Erantsi";
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:30 */
+/* Flag: untranslated */
+"Show" = "Show";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:161 */
-"New Searc_h Channel..." = "_Kanal bilaketa berria...";
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:31 */
+/* File: ../../portable/dialogs.py:63 */
+"Quit" = "Irten";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:162 */
-"New Channel _Guide..." = "_Kanal gida berria...";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:164 */
-"P_references" = "_Xehetasunak";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165 */
-"_Quit" = "_Irten";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:165 */
-"Quit the Program" = "Programa Itxi";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:166 */
-"U_pdate All Channels" = "_Kanal guztiak eguneratu";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:167 */
-"_Help" = "_Laguntza";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:169 */
-"_Donate" = "_Dirulaguntza";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:171 */
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:172 */
-"Delete selection" = "Aukeratutakoa ezabatu";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:152 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:6 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:153 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
 "Username:" = "Erabiltzailea:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:163 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:7 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:164 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
 "Password:" = "Pasahitza:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:350 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351 */
 "Unknown Runtime Error" = "Prozesu Errore Ezezaguna";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:352 */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "Errore ezezaguna gertatu da %s.";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:5 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:293 */
+/* File: ../../portable/menubar.py:129 */
+"New Channel _Guide..." = "_Kanal gida berria...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:519 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+/* Flag: untranslated */
+"Folder Location" = "Folder Location";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:43 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Error importing modules:\n%s" = "Error importing modules:\n%s";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:47 */
+"Starting up" = "Abiarazten";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:240 */
+"Loading window" = "Leihoa kargatzen";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:241 */
+/* Flag: untranslated */
+"onStartup called twice" = "onStartup called twice";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:56 */
+/* Flag: untranslated */
+"Update Available" = "Update Available";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"A new version of %s is available for download." = "A new version of %s is available for download.";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:182 */
+/* Flag: untranslated */
+"Error Bombing Item" = "Error Bombing Item";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:184 */
+"Error Recommending Item" = "Akatsa gertatu da bideo bat gomendatzean";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:186 */
+"Error Opening Website" = "Akatsa gertatu da webgunea zabaltzean";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:190 */
+/* Flag: python-format */
+"There was an error opening %s.  Please try again in a few seconds" = "%s irekitzerakoan arazo bat egon da. Mesedez, zaiatu berriz pixkat beranduago";
+
+/* File: ../../platform/osx/frontend/StartupPanel.py:114 */
+/* Flag: untranslated */
+"Search!" = "Search!";
+
+/* File: ../../platform/osx/frontend/Application.py:231 */
+"Pause Video" = "Pausatu bideoa";
+
+/* File: ../../platform/osx/frontend/Application.py:240 */
+/* Flag: untranslated */
+"Unsupported version of Quicktime" = "Unsupported version of Quicktime";
+
+/* File: ../../platform/osx/frontend/Application.py:241 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"To run %s you need the most recent version of Quicktime, which is a free update." = "To run %s you need the most recent version of Quicktime, which is a free update.";
+
+/* File: ../../platform/osx/frontend/MainFrame.py:265 */
+/* Flag: untranslated */
+"Subscribe to Channel" = "Subscribe to Channel";
+
+/* File: ../../platform/osx/frontend/MainFrame.py:266 */
+/* Flag: untranslated */
+"Enter the URL of the channel you would like to subscribe to." = "Enter the URL of the channel you would like to subscribe to.";
+
+/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:219 */
+/* Flag: untranslated */
+"Audio" = "Audio";
+
+/* File: ../../platform/osx/frontend/Preferences.py:38 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
+/* Flag: untranslated */
+"General" = "General";
+
+/* File: ../../platform/osx/frontend/Preferences.py:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
+/* Flag: untranslated */
+"Downloads" = "Downloads";
+
+/* File: ../../platform/osx/frontend/Preferences.py:41 */
+/* Flag: untranslated */
+"Folders" = "Folders";
+
+/* File: ../../platform/osx/frontend/Preferences.py:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36 */
+/* Flag: untranslated */
+"Disk Space" = "Disk Space";
+
+/* File: ../../platform/osx/frontend/Preferences.py:164 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
+/* Flag: untranslated */
+"Movies Directory" = "Movies Directory";
+
+/* File: ../../platform/osx/frontend/Preferences.py:165 */
+/* Flag: untranslated */
+"Select a Directory to store Democracy downloads in." = "Select a Directory to store Democracy downloads in.";
+
+/* File: ../../platform/osx/frontend/Preferences.py:166 */
+/* File: ../../platform/osx/frontend/Preferences.py:230 */
+/* Flag: untranslated */
+"Select" = "Select";
+
+/* File: ../../platform/osx/frontend/Preferences.py:175 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:51 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
+"Migrate existing movies?" = "Migratu dauden filma guztiak?";
+
+/* File: ../../platform/osx/frontend/Preferences.py:176 */
+/* Flag: untranslated */
+"You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).";
+
+/* File: ../../platform/osx/frontend/Preferences.py:228 */
+/* Flag: untranslated */
+"View this Directory in My Collection" = "View this Directory in My Collection";
+
+/* File: ../../platform/osx/frontend/Preferences.py:229 */
+/* Flag: untranslated */
+"Select a Directory to view in My Collection." = "Select a Directory to view in My Collection.";
+
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:27 */
+/* Flag: untranslated */
+"Download Completed" = "Download Completed";
+
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:28 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Download of video '%s' is finished." = "Download of video '%s' is finished.";
+
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:37 */
+/* Flag: untranslated */
+"Download Failed" = "Download Failed";
+
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:38 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Download of video '%s' has failed." = "Download of video '%s' has failed.";
+
 /* File: ../../platform/osx/frontend/UIStrings.py:5 */
 "_Remove..." = "_Ezabatu...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:6 */
 /* File: ../../platform/osx/frontend/UIStrings.py:6 */
 "_Remove Playlist..." = "_Zerrenda Ezabatu...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:7 */
 /* File: ../../platform/osx/frontend/UIStrings.py:7 */
 /* Flag: untranslated */
 "_Remove Playlists..." = "_Remove Playlists...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:8 */
 /* File: ../../platform/osx/frontend/UIStrings.py:8 */
 /* Flag: untranslated */
 "_Remove Playlist Folder..." = "_Remove Playlist Folder...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:9 */
 /* File: ../../platform/osx/frontend/UIStrings.py:9 */
 /* Flag: untranslated */
 "_Remove Playlist Folders..." = "_Remove Playlist Folders...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:10 */
 /* File: ../../platform/osx/frontend/UIStrings.py:10 */
+/* File: ../../portable/menubar.py:132 */
 "_Remove Channel..." = "_Kanala ezabatu...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:11 */
 /* File: ../../platform/osx/frontend/UIStrings.py:11 */
+/* File: ../../portable/menubar.py:133 */
 "_Remove Channels..." = "_Kanalak Ezabatu...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:12 */
 /* File: ../../platform/osx/frontend/UIStrings.py:12 */
+/* File: ../../portable/menubar.py:135 */
 /* Flag: untranslated */
 "_Remove Channel Folder..." = "_Remove Channel Folder...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:13 */
 /* File: ../../platform/osx/frontend/UIStrings.py:13 */
+/* File: ../../portable/menubar.py:134 */
 /* Flag: untranslated */
 "_Remove Channel Folders..." = "_Remove Channel Folders...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:14 */
 /* File: ../../platform/osx/frontend/UIStrings.py:14 */
 /* Flag: untranslated */
 "_Remove Channel Guide..." = "_Remove Channel Guide...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:15 */
 /* File: ../../platform/osx/frontend/UIStrings.py:15 */
 /* Flag: untranslated */
 "_Remove Channel Guides..." = "_Remove Channel Guides...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:16 */
 /* File: ../../platform/osx/frontend/UIStrings.py:16 */
 "_Remove Video..." = "_Bideoa Ezabatu";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:17 */
 /* File: ../../platform/osx/frontend/UIStrings.py:17 */
 "_Remove Videos..." = "_Bideoak ezabatu";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:18 */
 /* File: ../../platform/osx/frontend/UIStrings.py:18 */
 "Re_name..." = "Izena_aldatu...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:19 */
 /* File: ../../platform/osx/frontend/UIStrings.py:19 */
 "Re_name Playlist..." = "Zerrendaren izena_aldatu";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:20 */
 /* File: ../../platform/osx/frontend/UIStrings.py:20 */
 "Re_name Playlist Folder..." = "Zerenden Karpetaren izena aldatu...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:21 */
 /* File: ../../platform/osx/frontend/UIStrings.py:21 */
+/* File: ../../portable/menubar.py:131 */
 "Re_name Channel..." = "Kanalaren izena aldatu...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:22 */
 /* File: ../../platform/osx/frontend/UIStrings.py:22 */
 "Re_name Channel Folder..." = "Kanalen Karpetaren izena aldatu...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:23 */
 /* File: ../../platform/osx/frontend/UIStrings.py:23 */
 "Re_name Channel Guide..." = "Kanalen Gidaren izena aldatu...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:24 */
 /* File: ../../platform/osx/frontend/UIStrings.py:24 */
+/* File: ../../portable/menubar.py:137 */
 "_Update Channel..." = "_Kanala Eguneratu...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIStrings.py:25 */
 /* File: ../../platform/osx/frontend/UIStrings.py:25 */
+/* File: ../../portable/menubar.py:138 */
 "_Update Channels..." = "_Kanalak Eguneratu";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:161 */
+/* File: ../../portable/compiled_templates/new.py:126 */
+/* File: ../../portable/tabs.py:27 */
+"New Videos" = "Bideo Berriak";
+
+/* File: ../../portable/compiled_templates/new.py:128 */
+/* File: ../../portable/compiled_templates/download.py:414 */
+/* File: ../../portable/compiled_templates/library.py:127 */
 /* Flag: untranslated */
-"Error Bombing Item" = "Error Bombing Item";
+"Find" = "Find";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:163 */
-"Error Recommending Item" = "Akatsa gertatu da bideo bat gomendatzean";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:165 */
-"Error Opening Website" = "Akatsa gertatu da webgunea zabaltzean";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:169 */
-/* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "%s irekitzerakoan arazo bat egon da. Mesedez, zaiatu berriz pixkat beranduago";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:6 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:37 */
-"Remove Playlist..." = "Ezabatu Zerrenda...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:7 */
-"Remove Playlists..." = "Ezabatu Zerrendak...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:8 */
-/* Flag: untranslated */
-"Remove Playlist Folder..." = "Remove Playlist Folder...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:9 */
-/* Flag: untranslated */
-"Remove Playlist Folders..." = "Remove Playlist Folders...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:10 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:27 */
-"Remove Channel..." = "Ezabatu kanala...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:11 */
-"Remove Channels..." = "Ezabatu kanalak...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:12 */
-"Remove Channel Folder..." = "Ezabatu kanalen karpeta...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:13 */
-"Remove Channel Folders..." = "Ezabatu kanalen karpetak...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:14 */
-"Remove Channel Guide..." = "Ezabatu kanalen gida...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:15 */
-"Remove Channel Guides..." = "Kanal Gidak Ezabatu...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:16 */
-"Remove Video..." = "Bideoa Ezabatu...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:17 */
-"Remove Videos..." = "Bideoak Ezabatu...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:19 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:36 */
-"Rename Playlist..." = "Erreprodukzio-zerrenda Berrizendatu...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:20 */
-"Rename Playlist Folder..." = "Erreprodukzio-zerrenden Karpeta Berrizendatu...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:21 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:26 */
-"Rename Channel..." = "Kanala Berrizendatu...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:22 */
-"Rename Channel Folder..." = "Kanalen Karpeta  Berrizendatu...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:23 */
-"Rename Channel Guide..." = "Kanalen Gida Berrizendatu...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:24 */
-"Update Channel..." = "Kanala Eguneratu...";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIStrings.py:25 */
-"Update Channels..." = "Kanalak Eguneratu...";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:36 */
-/* Flag: python-format */
-"Error importing democracy modules:\n%s" = "Errorea Democracy-ren moduluak inportatzean\n%s";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:40 */
-"Starting up" = "Abiarazten";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:136 */
-"Loading window" = "Leihoa kargatzen";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:137 */
-/* Flag: untranslated */
-"onStartup called twice" = "onStartup called twice";
-
-/* File: ../../portable/playlist.py:175 */
-/* File: ../../portable/playlist.py:180 */
-"Rename Playlist" = "Zerrendaren izena aldatu";
-
-/* File: ../../portable/playlist.py:176 */
-/* File: ../../portable/folder.py:120 */
-/* File: ../../portable/folder.py:175 */
-/* File: ../../portable/guide.py:130 */
-/* File: ../../portable/menu.py:48 */
-/* File: ../../portable/menu.py:53 */
-/* File: ../../portable/feed.py:690 */
-"Remove" = "Ezabatu";
-
-/* File: ../../portable/playlist.py:181 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s";
-
-/* File: ../../portable/playlist.py:194 */
-/* Flag: untranslated */
-"Create Playlist" = "Create Playlist";
-
-/* File: ../../portable/playlist.py:195 */
-/* Flag: untranslated */
-"Enter a name for the new playlist" = "Enter a name for the new playlist";
-
-/* File: ../../portable/compiled_templates/search.py:39 */
-"Nothing to display.<br></br> Enter a query in the search field above." = "Ez dago ezer erakusteko.<br></br> Hemen gaineko hutsunea bilaketa batekin bete ezazu.";
-
-/* File: ../../portable/compiled_templates/search.py:44 */
-"Searching..." = "Bilatzen...";
-
-/* File: ../../portable/compiled_templates/search.py:56 */
-/* Flag: untranslated */
-"Results for \"${query}\"" = "Results for \"${query}\"";
-
-/* File: ../../portable/compiled_templates/search.py:95 */
-"Video Search" = "Bideo Bilaketa";
-
-/* File: ../../portable/compiled_templates/playlist.py:56 */
-"Empty Playlist" = "Erreprodukzio-zerrenda Hutsa";
-
-/* File: ../../portable/compiled_templates/playlist.py:58 */
-/* Flag: untranslated */
-"Drag downloaded videos to this playlist to add them." = "Drag downloaded videos to this playlist to add them.";
-
-/* File: ../../portable/compiled_templates/playlist_folder.py:59 */
-"Empty Playlist Folder" = "Erreproduzkio-zerrenden Karpeta Hustu";
-
-/* File: ../../portable/compiled_templates/playlist_folder.py:71 */
-"This folder contains ${count} playlists, but the playlists do not contain any items." = "Karpeta honek ${count} zerrenda ditu, baina zerrendek ez dute objeturik";
-
-/* File: ../../portable/compiled_templates/playlist_folder.py:76 */
-"Drag playlists to this folder to add them." = "Zerrendak gehitzeko mugitu itzazu karpeta honetara";
-
-/* File: ../../portable/compiled_templates/multi_playlist.py:57 */
-/* Flag: untranslated */
-"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)";
-
-/* File: ../../portable/compiled_templates/multi_playlist.py:69 */
-"${count} Playlists Selected" = "${count} Zerrenda Hautatuta";
-
-/* File: ../../portable/compiled_templates/external_playback_continue.py:47 */
-/* File: ../../portable/compiled_templates/video_info.py:40 */
-/* File: ../../portable/compiled_templates/external_playback.py:50 */
+/* File: ../../portable/compiled_templates/external_playback.py:54 */
+/* File: ../../portable/compiled_templates/video_info.py:42 */
+/* File: ../../portable/compiled_templates/external_playback_continue.py:51 */
 "STAR" = "IZARRA";
 
-/* File: ../../portable/compiled_templates/external_playback_continue.py:57 */
-/* File: ../../portable/compiled_templates/video_info.py:50 */
-/* File: ../../portable/compiled_templates/external_playback.py:60 */
-/* File: ../../portable/compiled_templates/download_item.py:201 */
-"SAVE" = "GORDE";
+/* File: ../../portable/compiled_templates/external_playback.py:64 */
+/* File: ../../portable/compiled_templates/download_item_details.py:75 */
+/* File: ../../portable/compiled_templates/video_info.py:52 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:158 */
+/* File: ../../portable/compiled_templates/external_playback_continue.py:61 */
+/* Flag: untranslated */
+"KEEP" = "KEEP";
 
-/* File: ../../portable/compiled_templates/external_playback_continue.py:62 */
-/* File: ../../portable/compiled_templates/video_info.py:55 */
-/* File: ../../portable/compiled_templates/external_playback.py:65 */
-"SAVED" = "GORDETA";
-
-/* File: ../../portable/compiled_templates/external_playback_continue.py:70 */
-/* File: ../../portable/compiled_templates/video_info.py:63 */
-/* File: ../../portable/compiled_templates/external_playback.py:73 */
-/* File: ../../portable/compiled_templates/download_item.py:211 */
+/* File: ../../portable/compiled_templates/external_playback.py:69 */
+/* File: ../../portable/compiled_templates/download_item_details.py:85 */
+/* File: ../../portable/compiled_templates/video_info.py:57 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:168 */
+/* File: ../../portable/compiled_templates/external_playback_continue.py:66 */
 "DELETE" = "EZABATU";
 
-/* File: ../../portable/compiled_templates/external_playback_continue.py:85 */
-/* File: ../../portable/compiled_templates/external_playback.py:88 */
+/* File: ../../portable/compiled_templates/external_playback.py:84 */
+/* File: ../../portable/compiled_templates/external_playback_continue.py:81 */
 "Democracy - External Playback Template" = "Democracy - Kanpo Erreproduzio Plantilla";
 
-/* File: ../../portable/compiled_templates/external_playback_continue.py:95 */
-"Continue To Next Video" = "Hurrengo Bideora jarraitu";
+/* File: ../../portable/compiled_templates/external_playback.py:107 */
+"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy-k ezin du fitxategi hau erreproduzitu. Beste programa batek zabaldu beharko luke.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}";
 
-/* File: ../../portable/compiled_templates/channelfolder.py:166 */
-"${count} Downloads in Progress" = "${count} deskarga daude martxan";
+/* File: ../../portable/compiled_templates/external_playback.py:111 */
+"REVEAL FILE" = "ERAKUTSI FITXATEGIA";
 
-/* File: ../../portable/compiled_templates/channelfolder.py:171 */
-"1 Download in Progress" = "Deskarga bat egiten ari da";
+/* File: ../../portable/compiled_templates/external_playback.py:115 */
+"Play Externally" = "Kanpoan Erreproduzitu";
 
-/* File: ../../portable/compiled_templates/channelfolder.py:191 */
-"${len} Videos On This Channel" = "${len} bideo kanal honetan";
+/* File: ../../portable/compiled_templates/external_playback.py:124 */
+"Skip >> ${countdown}" = "Saltatu >> ${countdown}";
 
-/* File: ../../portable/compiled_templates/channelfolder.py:205 */
-"All ${len} Videos Match This Search" = "Bideo guztiek (${len}) betetzen dute bilaketa kondizioa";
+/* File: ../../portable/compiled_templates/download.py:39 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%0.1f KB/s uploading" = "%0.1f KB/s uploading";
 
-/* File: ../../portable/compiled_templates/channelfolder.py:217 */
-"${len} Videos Match This Search" = "${len} bideo aurkitu dira";
+/* File: ../../portable/compiled_templates/download.py:42 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%0.1f KB/s downloading" = "%0.1f KB/s downloading";
 
-/* File: ../../portable/compiled_templates/channelfolder.py:277 */
-"${count} Videos on this Channel" = "${count} bideo kanal honetan";
+/* File: ../../portable/compiled_templates/download.py:140 */
+/* Flag: untranslated */
+"External Torrents" = "External Torrents";
 
-/* File: ../../portable/compiled_templates/channelfolder.py:290 */
-"Unwatched" = "Ikusi gabea";
+/* File: ../../portable/compiled_templates/download.py:142 */
+"Clear Completed Torrents" = "Burututako Torrentak Garbitu";
 
-/* File: ../../portable/compiled_templates/channelfolder.py:301 */
-"Watched" = "Ikusita";
+/* File: ../../portable/compiled_templates/download.py:157 */
+/* Flag: untranslated */
+"Seeding Torrents" = "Seeding Torrents";
 
-/* File: ../../portable/compiled_templates/channelfolder.py:312 */
-"Saved" = "Gordeta";
+/* File: ../../portable/compiled_templates/download.py:177 */
+/* Flag: untranslated */
+"${size} free for downloads" = "${size} free for downloads";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:32 */
-/* File: ../../portable/compiled_templates/channel.py:152 */
-"Default" = "Defektuz";
+/* File: ../../portable/compiled_templates/download.py:412 */
+/* File: ../../portable/tabs.py:29 */
+"Downloading" = "Deskargatzen";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:39 */
-/* File: ../../portable/compiled_templates/channel.py:159 */
-"default" = "Defektuzkoa";
+/* File: ../../portable/compiled_templates/download.py:426 */
+/* Flag: untranslated */
+"Pause All" = "Pause All";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:110 */
-/* File: ../../portable/compiled_templates/channel.py:379 */
+/* File: ../../portable/compiled_templates/download.py:438 */
+/* Flag: untranslated */
+"Resume All" = "Resume All";
+
+/* File: ../../portable/compiled_templates/download.py:447 */
+/* Flag: untranslated */
+"${size} free on disk" = "${size} free on disk";
+
+/* File: ../../portable/compiled_templates/download.py:461 */
+/* Flag: untranslated */
+"Channel Downloads" = "Channel Downloads";
+
+/* File: ../../portable/compiled_templates/go_to_guide.py:40 */
+/* File: ../../portable/compiled_templates/guide_loading.py:42 */
+/* Flag: untranslated */
+"Loading Channel Guide" = "Loading Channel Guide";
+
+/* File: ../../portable/compiled_templates/channel_folder.py:172 */
+"Empty Channel Folder" = "Kanalen Karpeta Hustu";
+
+/* File: ../../portable/compiled_templates/channel_folder.py:174 */
+"Drag channels to this folder to add them." = "Kanalak gehitzeko mugitu karpeta honetara";
+
+/* File: ../../portable/compiled_templates/channel_folder.py:280 */
+/* File: ../../portable/compiled_templates/channel.py:427 */
+/* File: ../../portable/compiled_templates/channel_content.py:116 */
+/* Flag: untranslated */
+"AUTO DOWNLOAD" = "AUTO DOWNLOAD";
+
+/* File: ../../portable/compiled_templates/channel_folder.py:354 */
+/* File: ../../portable/compiled_templates/channel.py:501 */
+/* File: ../../portable/compiled_templates/channel_content.py:190 */
+/* Flag: untranslated */
+"${len} Downloaded" = "${len} Downloaded";
+
+/* File: ../../portable/compiled_templates/feed_settings.py:53 */
+/* File: ../../portable/compiled_templates/channel.py:195 */
+/* Flag: untranslated */
+"Settings for ${title}" = "Settings for ${title}";
+
+/* File: ../../portable/compiled_templates/feed_settings.py:55 */
+/* File: ../../portable/compiled_templates/channel.py:197 */
 "Videos expire after" = "Bideoen iraungitze denbora";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:113 */
-/* File: ../../portable/compiled_templates/channel.py:382 */
-"When turned on, Auto Download should" = "Piztuta dagoenean, Auto-deskargak egin behar lukeena";
+/* File: ../../portable/compiled_templates/feed_settings.py:59 */
+/* File: ../../portable/compiled_templates/channel.py:201 */
+"Default" = "Defektuz";
 
-/* File: ../../portable/compiled_templates/feed_settings.py:146 */
-/* File: ../../portable/compiled_templates/channel.py:415 */
+/* File: ../../portable/compiled_templates/feed_settings.py:66 */
+/* File: ../../portable/compiled_templates/channel.py:208 */
+"default" = "Defektuzkoa";
+
+/* File: ../../portable/compiled_templates/feed_settings.py:132 */
+/* File: ../../portable/compiled_templates/channel.py:274 */
 /* Flag: untranslated */
 "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched.";
 
-/* File: ../../portable/compiled_templates/channel.py:316 */
-/* File: ../../portable/compiled_templates/channel_content.py:122 */
-/* File: ../../portable/compiled_templates/channel_folder.py:252 */
-"Downloaded" = "Deskargatua";
-
-/* File: ../../portable/compiled_templates/channel.py:428 */
-"Recommend" = "Gomendatu";
-
-/* File: ../../portable/compiled_templates/channel.py:430 */
-/* File: ../../portable/compiled_templates/unittest/simpleunicode.py:34 */
-/* File: ../../portable/test/unicodetest.py:402 */
-"Settings" = "Ezarpenak";
-
-/* File: ../../portable/compiled_templates/channel.py:440 */
+/* File: ../../portable/compiled_templates/feed_settings.py:134 */
+/* File: ../../portable/compiled_templates/channel.py:276 */
 /* Flag: untranslated */
-"<label for=\"automatic\">Auto Download</label>" = "<label for=\"automatic\">Auto Download</label>";
+"Prevents this channel from using unlimited disk space." = "Prevents this channel from using unlimited disk space.";
 
-/* File: ../../portable/compiled_templates/channel.py:458 */
-"Looking for videos at this URL" = "URL honetan bideoak topatzen";
+/* File: ../../portable/compiled_templates/download_item_details.py:40 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:123 */
+/* Flag: untranslated */
+"Details" = "Details";
 
-/* File: ../../portable/compiled_templates/external_playback.py:111 */
-"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Democracy-k ezin du fitxategi hau erreproduzitu. Beste programa batek zabaldu beharko luke.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}";
+/* File: ../../portable/compiled_templates/download_item_details.py:49 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:132 */
+/* Flag: untranslated */
+"Close" = "Close";
 
-/* File: ../../portable/compiled_templates/external_playback.py:115 */
-"REVEAL FILE" = "ERAKUTSI FITXATEGIA";
+/* File: ../../portable/compiled_templates/download_item_details.py:68 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:151 */
+/* Flag: untranslated */
+".torrent" = ".torrent";
 
-/* File: ../../portable/compiled_templates/external_playback.py:119 */
-"Play Externally" = "Kanpoan Erreproduzitu";
+/* File: ../../portable/compiled_templates/download_item_details.py:107 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:190 */
+/* Flag: untranslated */
+"Email to a friend" = "Email to a friend";
 
-/* File: ../../portable/compiled_templates/external_playback.py:128 */
-"Skip >> ${countdown}" = "Saltatu >> ${countdown}";
+/* File: ../../portable/compiled_templates/download_item_details.py:113 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:196 */
+/* Flag: untranslated */
+"Post to Video Bomb" = "Post to Video Bomb";
 
-/* File: ../../portable/compiled_templates/download_item.py:114 */
-"SHOW FILE" = "FITXATEGIA ERAKUTSI";
+/* File: ../../portable/compiled_templates/download_item_details.py:121 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:204 */
+/* Flag: untranslated */
+"Post to del.icio.us" = "Post to del.icio.us";
 
-/* File: ../../portable/compiled_templates/download_item.py:121 */
-"SHOW FOLDER" = "KARPETA ERAKUTSI";
+/* File: ../../portable/compiled_templates/download_item_details.py:127 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:210 */
+/* Flag: untranslated */
+"Post to digg" = "Post to digg";
 
-/* File: ../../portable/compiled_templates/download_item.py:135 */
-"SHARE IT" = "KONPARTITU";
+/* File: ../../portable/compiled_templates/download_item_details.py:135 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:218 */
+/* Flag: untranslated */
+"Post to Reddit" = "Post to Reddit";
 
-/* File: ../../portable/compiled_templates/download_item.py:144 */
-"STAR IT" = "IZARRATU";
-
-/* File: ../../portable/compiled_templates/download_item.py:189 */
+/* File: ../../portable/compiled_templates/download_item_details.py:205 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:288 */
 "Pending Auto Download" = "Auto Deskarga Burutu Gabe";
 
-/* File: ../../portable/compiled_templates/unittest/translationtest.py:43 */
-"Simple translation" = "Itzulpen simplea";
+/* File: ../../portable/compiled_templates/download_item_details.py:224 */
+/* File: ../../portable/compiled_templates/download_item_inner.py:307 */
+/* Flag: untranslated */
+"STOP SEEDING" = "STOP SEEDING";
 
-/* File: ../../portable/compiled_templates/unittest/translationtest.py:57 */
-"truck stop in a ${can}" = "erreproduzioa gelditu ${can}(a)n";
+/* File: ../../portable/compiled_templates/channel.py:680 */
+/* Flag: untranslated */
+"VISIT WEBSITE" = "VISIT WEBSITE";
 
-/* File: ../../portable/compiled_templates/unittest/translationtest.py:61 */
-"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "Hau ${car} bat da eta hau ${truck} bat <span>Textu hau textu <b style=\"color:red\">gordina</b> da</span>";
+/* File: ../../portable/compiled_templates/channel.py:687 */
+/* Flag: untranslated */
+"SEND TO FRIEND" = "SEND TO FRIEND";
 
-/* File: ../../portable/compiled_templates/download.py:91 */
-"${size} disk space free" = "${size} da libre dagoen disko espazioa";
+/* File: ../../portable/compiled_templates/channel.py:689 */
+/* Flag: untranslated */
+"SETTINGS" = "SETTINGS";
 
-/* File: ../../portable/compiled_templates/download.py:101 */
-"${size} available for downloads" = "${size} erabilgarri deskargak egiteko";
+/* File: ../../portable/compiled_templates/channel.py:694 */
+/* Flag: untranslated */
+"Find in channel" = "Find in channel";
 
-/* File: ../../portable/compiled_templates/download.py:153 */
-/* File: ../../portable/tabs.py:28 */
-"Downloading" = "Deskargatzen";
+/* File: ../../portable/compiled_templates/channel.py:714 */
+"Looking for videos at this URL" = "URL honetan bideoak topatzen";
 
-/* File: ../../portable/compiled_templates/download.py:168 */
-"Clear Completed Torrents" = "Burututako Torrentak Garbitu";
+/* File: ../../portable/compiled_templates/multi_playlist.py:59 */
+/* Flag: untranslated */
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)";
 
-/* File: ../../portable/compiled_templates/channel_folder.py:138 */
-"Empty Channel Folder" = "Kanalen Karpeta Hustu";
+/* File: ../../portable/compiled_templates/multi_playlist.py:71 */
+"${count} Playlists Selected" = "${count} Zerrenda Hautatuta";
 
-/* File: ../../portable/compiled_templates/channel_folder.py:140 */
-"Drag channels to this folder to add them." = "Kanalak gehitzeko mugitu karpeta honetara";
-
-/* File: ../../portable/compiled_templates/library.py:73 */
-/* File: ../../portable/tabs.py:25 */
+/* File: ../../portable/compiled_templates/library.py:125 */
+/* File: ../../portable/tabs.py:26 */
 "My Collection" = "Nire bilduma";
 
-/* File: ../../portable/compiled_templates/new.py:75 */
-/* File: ../../portable/tabs.py:26 */
-"New Videos" = "Bideo Berriak";
-
-/* File: ../../portable/compiled_templates/first_time_intro.py:38 */
-"Democracy Internet TV: How to Get Started" = "Democracy Internet TV: Nola Erabiltzen Hasi";
-
-/* File: ../../portable/compiled_templates/first_time_intro.py:42 */
-"GO BIG:" = "HANDITU";
-
-/* File: ../../portable/compiled_templates/first_time_intro.py:44 */
-"This is your fullscreen button. Click it and lean back." = "Hau pantaila osoaren botoia duzu. Sakatu eta eroso jarri.";
-
-/* File: ../../portable/compiled_templates/first_time_intro.py:48 */
-"NEW STUFF:" = "GAI BERRIAK";
-
-/* File: ../../portable/compiled_templates/first_time_intro.py:50 */
-"Blue circles mean the channel has new videos available, green circles mean you have downloaded videos ready to watch." = "Borobil urdinak kanalak bideo berriak ikusgai dituela adierazten du, borobil berdeak aldiz, deskargatutako bideoak ikusteko prest daudela.";
-
-/* File: ../../portable/compiled_templates/first_time_intro.py:52 */
-"<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>" = "<strong i18n:translate=\"\">INTROA SALTATU <a style=\"color: #090;\" href=\"#\" onclick=\"doneWithIntro();\">Kanalen Gidara joan>></a></strong>";
-
-/* File: ../../portable/compiled_templates/first_time_intro.py:54 */
-"<strong>Add Channels:</strong> The Channel Guide is your home base for internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the channels in the guide are free.</strong>" = "<strong>Kanalak Gehitu:</strong> Kanalen Gida zure internet TVaren egoitza da. Kanal baten harpidedun izateko 'GEHITU' sakatu-- <strong>Gidako kanalak dohainik dira.</strong>";
-
-/* File: ../../portable/compiled_templates/first_time_intro.py:56 */
-"<strong>Don't Wait:</strong> Democracy is different than watching webpage videos-- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later." = "<strong>Etzazu Itxoin:</strong> Democracy ez da webetan bideoak ikustea bezala-- editoreek bideo haundiak, kalitate handikoak eskeini ditzazkete. Beraz etzaitez lokartu bideoak itxoiten: hainbat deskargatzen jarri eta beranduago ikusi.";
-
-/* File: ../../portable/compiled_templates/first_time_intro.py:58 */
-"<strong>Leave it On:</strong> Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch." = "<strong>Uztazu Martxan:</stron> Tarteka Democracy Playerrek bideo berrien bila kanalak aztertzen ditu eta azpi prozesuan deskargatzen ditu. Uztazu martxan eta ondo datorkizunean bideo berriak izango dituzu ikusteko prest.";
-
-/* File: ../../portable/compiled_templates/first_time_intro.py:60 */
-"<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "<strong>Etzaitez Disko Espazioarekin Larritu:</strong> TiVoren antzera, Democracy Playerrek 'ahitzeko' sistema bat dakar bideo zaharrek bideo berriei lekua uztarazteko. 'Gorde' sakatu ezkero bideoa betirako mantendu ahalko duzu eta automatikoki kanal batetako bideoak zuzenean gordetzeko aukera izan duzu kanalaren ezarpenentan horrela adierazi ezkero.";
-
-/* File: ../../portable/compiled_templates/multi_channel.py:57 */
+/* File: ../../portable/compiled_templates/multi_channel.py:59 */
 /* Flag: untranslated */
 "${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)";
 
-/* File: ../../portable/compiled_templates/multi_channel.py:69 */
+/* File: ../../portable/compiled_templates/multi_channel.py:71 */
 "${count} Channels Selected" = "${count} kanal aukeratuta";
 
-/* File: ../../portable/dl_daemon/download.py:298 */
-"Error" = "Errorea";
+/* File: ../../portable/compiled_templates/playlist_folder.py:61 */
+"Empty Playlist Folder" = "Erreproduzkio-zerrenden Karpeta Hustu";
 
-/* File: ../../portable/dl_daemon/download.py:357 */
+/* File: ../../portable/compiled_templates/playlist_folder.py:73 */
+"This folder contains ${count} playlists, but the playlists do not contain any items." = "Karpeta honek ${count} zerrenda ditu, baina zerrendek ez dute objeturik";
+
+/* File: ../../portable/compiled_templates/playlist_folder.py:78 */
+"Drag playlists to this folder to add them." = "Zerrendak gehitzeko mugitu itzazu karpeta honetara";
+
+/* File: ../../portable/compiled_templates/search.py:60 */
+"Nothing to display.<br></br> Enter a query in the search field above." = "Ez dago ezer erakusteko.<br></br> Hemen gaineko hutsunea bilaketa batekin bete ezazu.";
+
+/* File: ../../portable/compiled_templates/search.py:65 */
+"Searching..." = "Bilatzen...";
+
+/* File: ../../portable/compiled_templates/search.py:77 */
+/* Flag: untranslated */
+"Results for \"${query}\"" = "Results for \"${query}\"";
+
+/* File: ../../portable/compiled_templates/search.py:161 */
+/* File: ../../portable/tabs.py:28 */
+"Video Search" = "Bideo Bilaketa";
+
+/* File: ../../portable/compiled_templates/unittest/translationtest.py:45 */
+"Simple translation" = "Itzulpen simplea";
+
+/* File: ../../portable/compiled_templates/unittest/translationtest.py:59 */
+"truck stop in a ${can}" = "erreproduzioa gelditu ${can}(a)n";
+
+/* File: ../../portable/compiled_templates/unittest/translationtest.py:63 */
+"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "Hau ${car} bat da eta hau ${truck} bat <span>Textu hau textu <b style=\"color:red\">gordina</b> da</span>";
+
+/* File: ../../portable/compiled_templates/external_playback_continue.py:91 */
+"Continue To Next Video" = "Hurrengo Bideora jarraitu";
+
+/* File: ../../portable/compiled_templates/playlist.py:58 */
+"Empty Playlist" = "Erreprodukzio-zerrenda Hutsa";
+
+/* File: ../../portable/compiled_templates/playlist.py:60 */
+/* Flag: untranslated */
+"Drag downloaded videos to this playlist to add them." = "Drag downloaded videos to this playlist to add them.";
+
+/* File: ../../portable/item.py:449 */
 /* Flag: python-format */
-"Could not write to %s" = "Ezin izan da idatzi hemen: %s";
+"Deleting %s" = "%s Ezabatzen";
 
-/* File: ../../portable/dl_daemon/download.py:376 */
-"Not enough disk space" = "Ez dago lekurik diskoan";
+/* File: ../../portable/item.py:450 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Hau karpeta bat da. Karpeta bat ezabatzean, barruan egon daitezkeen elementuak ere ezabatuko dira.";
 
-/* File: ../../portable/dl_daemon/download.py:377 */
+/* File: ../../portable/item.py:476 */
+/* File: ../../portable/feed.py:375 */
 /* Flag: python-format */
-"%s MB required to store this video" = "%s MB behar dira bideo hau gordetzeko";
+"%d days" = "%d egun";
 
-/* File: ../../portable/dl_daemon/download.py:676 */
-"Corrupt Torrent" = "Torrent Usteldua";
-
-/* File: ../../portable/dl_daemon/download.py:677 */
+/* File: ../../portable/item.py:478 */
+/* File: ../../portable/feed.py:371 */
 /* Flag: python-format */
-"The torrent file at %s was not valid" = "%s torrent fitxategia baliogabea da";
+"%d hours" = "%d ordu";
 
-/* File: ../../portable/dl_daemon/download.py:702 */
-"Torrent file deleted" = "Torrent fitxategia ezabatua";
-
-/* File: ../../portable/dl_daemon/download.py:703 */
-"The torrent file for this item was deleted " = "Bideo honen torrent fitxategia ezabatu da ";
-
-/* File: ../../portable/dl_daemon/download.py:704 */
-"outside of democracy." = "democracytik kanpo.";
-
-/* File: ../../portable/util.py:386 */
+/* File: ../../portable/item.py:480 */
 /* Flag: python-format */
-"%1.1fGB" = "%1.1fGB";
+"%d minutes" = "%d minutu";
 
-/* File: ../../portable/util.py:388 */
+/* File: ../../portable/item.py:490 */
 /* Flag: python-format */
-"%1.1fMB" = "%1.1fMB";
+"Expires in %s" = "Iraungitze epea: %s";
 
-/* File: ../../portable/util.py:390 */
+/* File: ../../portable/item.py:502 */
+/* Flag: untranslated */
 /* Flag: python-format */
-"%1.1fKB" = "%1.1fKB";
+"Will retry in %s" = "Will retry in %s";
 
-/* File: ../../portable/util.py:392 */
+/* File: ../../portable/item.py:504 */
+/* Flag: untranslated */
+"Paused" = "Paused";
+
+/* File: ../../portable/item.py:878 */
+"TORRENT" = "TORRENT";
+
+/* File: ../../portable/item.py:880 */
+"WEB PAGE" = "WEB ORRIA";
+
+/* File: ../../portable/item.py:890 */
+/* Flag: untranslated */
+"Total Down:" = "Total Down:";
+
+/* File: ../../portable/item.py:897 */
+/* Flag: untranslated */
+"Seeders:" = "Seeders:";
+
+/* File: ../../portable/item.py:898 */
+/* Flag: untranslated */
+"Leachers:" = "Leachers:";
+
+/* File: ../../portable/item.py:899 */
+/* Flag: untranslated */
+"Down Rate:" = "Down Rate:";
+
+/* File: ../../portable/item.py:900 */
+/* Flag: untranslated */
+"Down Total:" = "Down Total:";
+
+/* File: ../../portable/item.py:902 */
+/* Flag: untranslated */
+"Up Rate:" = "Up Rate:";
+
+/* File: ../../portable/item.py:903 */
+/* Flag: untranslated */
+"Up Total:" = "Up Total:";
+
+/* File: ../../portable/item.py:908 */
+/* Flag: untranslated */
+"Web page:" = "Web page:";
+
+/* File: ../../portable/item.py:908 */
+/* Flag: untranslated */
+"permalink" = "permalink";
+
+/* File: ../../portable/item.py:909 */
+/* Flag: untranslated */
+"File link:" = "File link:";
+
+/* File: ../../portable/item.py:909 */
+/* Flag: untranslated */
+"direct link to file" = "direct link to file";
+
+/* File: ../../portable/item.py:911 */
+/* Flag: untranslated */
+"File type:" = "File type:";
+
+/* File: ../../portable/item.py:918 */
+/* Flag: untranslated */
+"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
+
+/* File: ../../portable/item.py:920 */
+/* Flag: untranslated */
+"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
+
+/* File: ../../portable/item.py:922 */
+/* Flag: untranslated */
+"Filename:" = "Filename:";
+
+/* File: ../../portable/item.py:929 */
+/* Flag: untranslated */
+"Down Total" = "Down Total";
+
+/* File: ../../portable/item.py:931 */
+/* Flag: untranslated */
+"Up Total" = "Up Total";
+
+/* File: ../../portable/item.py:949 */
+/* Flag: untranslated */
+"Item Details" = "Item Details";
+
+/* File: ../../portable/item.py:956 */
+/* Flag: untranslated */
+"Torrent Details" = "Torrent Details";
+
+/* File: ../../portable/item.py:961 */
+/* Flag: untranslated */
+"Download Details" = "Download Details";
+
+/* File: ../../portable/item.py:1175 */
+"downloading..." = "deskargatzen...";
+
+/* File: ../../portable/item.py:1182 */
+/* File: ../../portable/item.py:1185 */
 /* Flag: python-format */
-"%0.0fB" = "%0.0fB";
+"%s remaining" = "%s falta da";
+
+/* File: ../../portable/item.py:1194 */
+"starting up..." = "abiarazten...";
+
+/* File: ../../portable/item.py:1387 */
+/* File: ../../portable/menu.py:80 */
+"Remove From Playlist" = "Zerrendatik Ezabatu";
+
+/* File: ../../portable/item.py:1389 */
+/* File: ../../portable/menu.py:82 */
+"Remove From My Collection" = "Nire Bildumatik Ezabatu";
+
+/* File: ../../portable/item.py:1391 */
+/* File: ../../portable/menu.py:77 */
+"Play" = "Jo";
+
+/* File: ../../portable/item.py:1393 */
+"Play Just This Video" = "Erreproduzitu bideo hau orain";
+
+/* File: ../../portable/item.py:1394 */
+/* File: ../../portable/menu.py:78 */
+/* Flag: untranslated */
+"Add to new playlist" = "Add to new playlist";
+
+/* File: ../../portable/item.py:1398 */
+/* File: ../../portable/menu.py:88 */
+"Mark as Unwatched" = "Ez-ikusia bezala markatu";
+
+/* File: ../../portable/item.py:1400 */
+/* File: ../../portable/menu.py:106 */
+/* Flag: untranslated */
+"Restart Upload" = "Restart Upload";
+
+/* File: ../../portable/item.py:1402 */
+/* File: ../../portable/menu.py:101 */
+"Cancel Download" = "Deskarga Utzi";
+
+/* File: ../../portable/item.py:1402 */
+/* File: ../../portable/menu.py:103 */
+/* Flag: untranslated */
+"Pause Download" = "Pause Download";
+
+/* File: ../../portable/item.py:1404 */
+/* File: ../../portable/dialogs.py:66 */
+/* File: ../../portable/menu.py:94 */
+"Download" = "Deskargatu";
+
+/* File: ../../portable/item.py:1650 */
+/* Flag: python-format */
+"Removing %s" = "%s Ezabatzen";
+
+/* File: ../../portable/item.py:1652 */
+"Would you like to delete this folder and all of its videos or just remove its entry from My Collection?" = "Karpeta hau eta bere bideo guztiak ezabatu nahi dituzu edo Nire Bildumatik ezabatu bakarrik?";
+
+/* File: ../../portable/item.py:1657 */
+"Would you like to delete this file or just remove its entry from My Collection?" = "Fitxategi hau ezabatzea nahi duzu edo Nire Bildumatik ezabatzea bakarrik?";
+
+/* File: ../../portable/item.py:1762 */
+/* Flag: python-format */
+"Removing %s items" = "%s elementu ezabatzen ari da";
+
+/* File: ../../portable/item.py:1764 */
+/* Flag: untranslated */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?";
+
+/* File: ../../portable/item.py:1772 */
+/* Flag: untranslated */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
 
 /* File: ../../portable/httpclient.py:52 */
 /* Flag: python-format */
@@ -978,7 +1103,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%s closed connection" = "%s : konexioa itxi du";
 
 /* File: ../../portable/httpclient.py:97 */
-/* File: ../../portable/downloader.py:173 */
+/* File: ../../portable/downloader.py:232 */
 "File not found" = "Fitxategia ez da aurkitu";
 
 /* File: ../../portable/httpclient.py:98 */
@@ -1016,48 +1141,112 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/httpclient.py:313 */
 "Connection closed" = "Konexioa itxi da";
 
-/* File: ../../portable/httpclient.py:689 */
+/* File: ../../portable/httpclient.py:743 */
 "Unknown" = "Ezezaguna";
 
-/* File: ../../portable/httpclient.py:690 */
+/* File: ../../portable/httpclient.py:744 */
 /* Flag: untranslated */
 "Internal Error: Not ready to send" = "Internal Error: Not ready to send";
 
-/* File: ../../portable/storedatabase.py:789 */
+/* File: ../../portable/util.py:388 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGB";
+
+/* File: ../../portable/util.py:390 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%dGB" = "%dGB";
+
+/* File: ../../portable/util.py:394 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMB";
+
+/* File: ../../portable/util.py:396 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%dMB" = "%dMB";
+
+/* File: ../../portable/util.py:400 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fKB";
+
+/* File: ../../portable/util.py:402 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%dKB" = "%dKB";
+
+/* File: ../../portable/util.py:406 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%1.1fB" = "%1.1fB";
+
+/* File: ../../portable/util.py:408 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%dB" = "%dB";
+
+/* File: ../../portable/storedatabase.py:808 */
+/* File: ../../portable/storedatabase.py:1164 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "%s database save succeeded" = "%s database save succeeded";
 
-/* File: ../../portable/storedatabase.py:790 */
+/* File: ../../portable/storedatabase.py:809 */
+/* File: ../../portable/storedatabase.py:1165 */
 "The database has been successfully saved. It is now safe to quit without losing any data." = "Datubasea ongi gorde da. Programa itxi dezakezu daturik galdu gabe.";
 
-/* File: ../../portable/storedatabase.py:797 */
+/* File: ../../portable/storedatabase.py:816 */
+/* File: ../../portable/storedatabase.py:1173 */
 /* Flag: python-format */
 "%s database save failed" = "%s datubaseak huts egin du";
 
-/* File: ../../portable/storedatabase.py:798 */
+/* File: ../../portable/storedatabase.py:817 */
+/* File: ../../portable/storedatabase.py:1174 */
 /* Flag: python-format */
 "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "Ezin izan da %s gorde:Diskoa beteta dago\nBetetako diskotik fitxategiak edo zure bildumako bideo batzuk ezabatzea gomendatzen da.\nAzken aldaketak galdu daitezke";
+
+/* File: ../../portable/dl_daemon/download.py:370 */
+"Error" = "Errorea";
+
+/* File: ../../portable/dl_daemon/download.py:443 */
+/* Flag: python-format */
+"Could not write to %s" = "Ezin izan da idatzi hemen: %s";
+
+/* File: ../../portable/dl_daemon/download.py:462 */
+"Not enough disk space" = "Ez dago lekurik diskoan";
+
+/* File: ../../portable/dl_daemon/download.py:463 */
+/* Flag: python-format */
+"%s MB required to store this video" = "%s MB behar dira bideo hau gordetzeko";
+
+/* File: ../../portable/dl_daemon/download.py:796 */
+"Corrupt Torrent" = "Torrent Usteldua";
+
+/* File: ../../portable/dl_daemon/download.py:797 */
+/* Flag: python-format */
+"The torrent file at %s was not valid" = "%s torrent fitxategia baliogabea da";
+
+/* File: ../../portable/dl_daemon/download.py:823 */
+"Torrent file deleted" = "Torrent fitxategia ezabatua";
+
+/* File: ../../portable/dl_daemon/download.py:824 */
+"The torrent file for this item was deleted " = "Bideo honen torrent fitxategia ezabatu da ";
+
+/* File: ../../portable/dl_daemon/download.py:825 */
+"outside of democracy." = "democracytik kanpo.";
 
 /* File: ../../portable/dialogs.py:59 */
 "Ok" = "Ados";
 
-/* File: ../../portable/dialogs.py:63 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:12 */
-"Quit" = "Irten";
-
 /* File: ../../portable/dialogs.py:64 */
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:50 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
 "Migrate" = "Migratu";
 
 /* File: ../../portable/dialogs.py:65 */
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
 "Don't Migrate" = "Ez Migratu";
-
-/* File: ../../portable/dialogs.py:66 */
-/* File: ../../portable/item.py:1169 */
-/* File: ../../portable/menu.py:92 */
-"Download" = "Deskargatu";
 
 /* File: ../../portable/dialogs.py:67 */
 "Remove Entry" = "Ezabatu sarrera";
@@ -1075,7 +1264,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Delete Videos" = "Bideoak Ezabatu";
 
 /* File: ../../portable/dialogs.py:73 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:12 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
 "Create Channel" = "Kanala Sortu";
 
 /* File: ../../portable/dialogs.py:74 */
@@ -1087,345 +1276,522 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/dialogs.py:76 */
 "Keep" = "Mantendu";
 
-/* File: ../../portable/dialogs.py:192 */
+/* File: ../../portable/dialogs.py:78 */
+/* Flag: untranslated */
+"Not Now" = "Not Now";
+
+/* File: ../../portable/dialogs.py:193 */
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:52 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:7 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:24 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
 /* Flag: untranslated */
 "New Search Channel" = "New Search Channel";
 
-/* File: ../../portable/dialogs.py:192 */
+/* File: ../../portable/dialogs.py:193 */
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:31 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
 "A search channel contains items that match a search term." = "Bilaketa kanal batek bilaketa baten emaitza diren elementuak erakusten ditu.";
 
-/* File: ../../portable/folder.py:102 */
-/* File: ../../portable/folder.py:119 */
-"Rename Channel Folder" = "Kanalen karpetaren izena aldatu";
-
-/* File: ../../portable/folder.py:104 */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Sartu %s kanalen karpetarentzat izen berria";
-
-/* File: ../../portable/folder.py:174 */
-/* File: ../../portable/folder.py:179 */
-"Rename Playlist Folder" = "Zerrenden Karpetaren izena aldatu";
-
-/* File: ../../portable/folder.py:181 */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "%s zerrenden karpetarentzat izen berri bat sartu";
-
-/* File: ../../portable/folder.py:189 */
-"Create Channel Folder" = "Kanalen Karpeta Sortu";
-
-/* File: ../../portable/folder.py:190 */
-/* File: ../../portable/singleclick.py:137 */
-"Enter a name for the new channel folder" = "Kanalaren karpetarako izen bat tekleatu";
-
-/* File: ../../portable/folder.py:203 */
-"Create Playlist Folder" = "Zerrenden Karpeta Sortu";
-
-/* File: ../../portable/folder.py:204 */
-"Enter a name for the new playlist folder" = "Idatzi zerrenden karpeta berriaren izena";
-
-/* File: ../../portable/item.py:397 */
-/* Flag: python-format */
-"Deleting %s" = "%s Ezabatzen";
-
-/* File: ../../portable/item.py:398 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Hau karpeta bat da. Karpeta bat ezabatzean, barruan egon daitezkeen elementuak ere ezabatuko dira.";
-
-/* File: ../../portable/item.py:420 */
-/* Flag: python-format */
-"%d days" = "%d egun";
-
-/* File: ../../portable/item.py:422 */
-/* Flag: python-format */
-"%d hours" = "%d ordu";
-
-/* File: ../../portable/item.py:424 */
-/* Flag: python-format */
-"%d minutes" = "%d minutu";
-
-/* File: ../../portable/item.py:425 */
-/* Flag: python-format */
-"Expires in %s" = "Iraungitze epea: %s";
-
-/* File: ../../portable/item.py:751 */
-"TORRENT" = "TORRENT";
-
-/* File: ../../portable/item.py:753 */
-"WEB PAGE" = "WEB ORRIA";
-
-/* File: ../../portable/item.py:956 */
-"downloading..." = "deskargatzen...";
-
-/* File: ../../portable/item.py:963 */
-/* File: ../../portable/item.py:966 */
-/* Flag: python-format */
-"%s remaining" = "%s falta da";
-
-/* File: ../../portable/item.py:974 */
-"starting up..." = "abiarazten...";
-
-/* File: ../../portable/item.py:1154 */
-/* File: ../../portable/menu.py:78 */
-"Remove From Playlist" = "Zerrendatik Ezabatu";
-
-/* File: ../../portable/item.py:1156 */
-/* File: ../../portable/menu.py:80 */
-"Remove From My Collection" = "Nire Bildumatik Ezabatu";
-
-/* File: ../../portable/item.py:1158 */
-/* File: ../../portable/menu.py:75 */
-"Play" = "Jo";
-
-/* File: ../../portable/item.py:1160 */
-"Play Just This Video" = "Erreproduzitu bideo hau orain";
-
-/* File: ../../portable/item.py:1161 */
-/* File: ../../portable/menu.py:76 */
-/* Flag: untranslated */
-"Add to new playlist" = "Add to new playlist";
-
-/* File: ../../portable/item.py:1165 */
-/* File: ../../portable/menu.py:86 */
-"Mark as Unwatched" = "Ez-ikusia bezala markatu";
-
-/* File: ../../portable/item.py:1167 */
-/* File: ../../portable/menu.py:99 */
-"Cancel Download" = "Deskarga Utzi";
-
-/* File: ../../portable/item.py:1401 */
-/* Flag: python-format */
-"Removing %s" = "%s Ezabatzen";
-
-/* File: ../../portable/item.py:1403 */
-"Would you like to delete this folder and all of its videos or just remove its entry from My Collection?" = "Karpeta hau eta bere bideo guztiak ezabatu nahi dituzu edo Nire Bildumatik ezabatu bakarrik?";
-
-/* File: ../../portable/item.py:1408 */
-"Would you like to delete this file or just remove its entry from My Collection?" = "Fitxategi hau ezabatzea nahi duzu edo Nire Bildumatik ezabatzea bakarrik?";
-
-/* File: ../../portable/item.py:1499 */
-/* Flag: python-format */
-"Removing %s items" = "%s elementu ezabatzen ari da";
-
-/* File: ../../portable/item.py:1501 */
-/* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?";
-
-/* File: ../../portable/item.py:1509 */
-/* Flag: untranslated */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
-
-/* File: ../../portable/app.py:668 */
-"Database too new" = "Datubase berriegia";
-
-/* File: ../../portable/app.py:669 */
-/* Flag: untranslated */
-"You have a database that was saved with a newer version of Democracy. You must download the latest version of Democracy and run that." = "You have a database that was saved with a newer version of Democracy. You must download the latest version of Democracy and run that.";
-
-/* File: ../../portable/app.py:817 */
-/* File: ../../portable/app.py:831 */
-/* File: ../../portable/app.py:860 */
-/* File: ../../portable/app.py:880 */
-/* Flag: python-format */
-"Remove %s" = "Ezabatu %s";
-
-/* File: ../../portable/app.py:818 */
-/* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Ziur zaude %s gida ezabatu nahi duzula?";
-
-/* File: ../../portable/app.py:832 */
-/* Flag: python-format */
-"Are you sure you want to remove %s" = "Zihur %s ezabatu nahi duzula?";
-
-/* File: ../../portable/app.py:835 */
-/* File: ../../portable/app.py:865 */
-/* File: ../../portable/app.py:885 */
-/* Flag: python-format */
-"Remove %s channels" = "Ezabatu %s kanal";
-
-/* File: ../../portable/app.py:837 */
+/* File: ../../portable/autoupdate.py:99 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
+"%s Version Alert" = "%s Version Alert";
 
-/* File: ../../portable/app.py:861 */
-/* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Zihur %s ezabatu nahi duzula? Bukatu gabeko jeitsierak ezeztatuak izango dira";
-
-/* File: ../../portable/app.py:866 */
+/* File: ../../portable/autoupdate.py:100 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
+"A new version of %s is available. Would you like to download it now?" = "A new version of %s is available. Would you like to download it now?";
 
-/* File: ../../portable/app.py:881 */
-"What would you like to do with the videos in this channel that you've downloaded?" = "Zer egin nahi duzu jeitsi duzun kanaleko bideoekin?";
-
-/* File: ../../portable/app.py:886 */
-"What would you like to do with the videos in these channels that you've downloaded?" = "Zer egin nahi duzu jeitsi dituzun kanaletako bideoekin?";
-
-/* File: ../../portable/app.py:923 */
-"Are you sure you want to quit?" = "Ziur zaude irten nahi duzula?";
-
-/* File: ../../portable/app.py:1367 */
-/* Flag: untranslated */
-"Invalid Value" = "Invalid Value";
-
-/* File: ../../portable/app.py:1368 */
+/* File: ../../portable/autoupdate.py:106 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number.";
+"%s Version Check" = "%s Version Check";
 
-/* File: ../../portable/app.py:1616 */
-" - Invalid URL" = " - URL desegokia";
-
-/* File: ../../portable/app.py:1617 */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Sartu duzun herlbidea ez da URL baliogarri bat\nMesedez, konprobatu sartutakoa eta zaiatu berriz\n\n";
-
-/* File: ../../portable/app.py:1639 */
-"Democracy - Add Channel" = "Democracy - Kanala Gehitu";
-
-/* File: ../../portable/app.py:1639 */
-"Enter the URL of the channel to add" = "Sar ezazu gehitu beharreko kanalaren URLa";
-
-/* File: ../../portable/app.py:1660 */
+/* File: ../../portable/autoupdate.py:107 */
 /* Flag: untranslated */
-"Democracy - Add Channel Guide" = "Democracy - Add Channel Guide";
+/* Flag: python-format */
+"%s is up to date." = "%s is up to date.";
 
-/* File: ../../portable/app.py:1660 */
+/* File: ../../portable/downloader.py:196 */
 /* Flag: untranslated */
-"Enter the URL of the channel guide to add" = "Enter the URL of the channel guide to add";
+"activity" = "activity";
 
-/* File: ../../portable/app.py:1977 */
+/* File: ../../portable/downloader.py:233 */
 /* Flag: untranslated */
-"Example Playlist" = "Example Playlist";
+"Flash URL Scraping Error" = "Flash URL Scraping Error";
 
-/* File: ../../portable/app.py:1996 */
-"Custom Channels" = "Kanal pertsonalizatuak";
+/* File: ../../portable/downloader.py:412 */
+"starting up" = "hasieratzen";
 
-/* File: ../../portable/app.py:1996 */
+/* File: ../../portable/menubar.py:98 */
 /* Flag: untranslated */
-"You are running a version of Democracy Player with a custom set of channels." = "You are running a version of Democracy Player with a custom set of channels.";
+"_Open" = "_Open";
 
-/* File: ../../portable/guide.py:127 */
-/* File: ../../portable/feed.py:684 */
-"Copy URL to clipboard" = "Kopiatu URLa arbelera";
+/* File: ../../portable/menubar.py:100 */
+/* Flag: untranslated */
+"Check _Version" = "Check _Version";
 
-/* File: ../../portable/guide.py:218 */
-"Channel Guide" = "Kanalen Gida";
+/* File: ../../portable/menubar.py:102 */
+"_Remove Video" = "_Ezabatu bideoa";
+
+/* File: ../../portable/menubar.py:103 */
+/* Flag: untranslated */
+"_Remove Videos" = "_Remove Videos";
+
+/* File: ../../portable/menubar.py:104 */
+/* Flag: untranslated */
+"Re_name Video" = "Re_name Video";
+
+/* File: ../../portable/menubar.py:105 */
+"Save Video _As..." = "Gorde bideoa _honela...";
+
+/* File: ../../portable/menubar.py:106 */
+/* Flag: untranslated */
+"Save Videos _As..." = "Save Videos _As...";
+
+/* File: ../../portable/menubar.py:107 */
+/* Flag: untranslated */
+"Copy Video _URL" = "Copy Video _URL";
+
+/* File: ../../portable/menubar.py:109 */
+/* Flag: untranslated */
+"_Options" = "_Options";
+
+/* File: ../../portable/menubar.py:110 */
+"_Quit" = "_Irten";
+
+/* File: ../../portable/menubar.py:118 */
+/* Flag: untranslated */
+"Cu_t" = "Cu_t";
+
+/* File: ../../portable/menubar.py:119 */
+/* Flag: untranslated */
+"_Copy" = "_Copy";
+
+/* File: ../../portable/menubar.py:120 */
+/* Flag: untranslated */
+"_Paste" = "_Paste";
+
+/* File: ../../portable/menubar.py:121 */
+/* Flag: untranslated */
+"Select _All" = "Select _All";
+
+/* File: ../../portable/menubar.py:122 */
+/* Flag: untranslated */
+"_Delete" = "_Delete";
+
+/* File: ../../portable/menubar.py:126 */
+/* Flag: untranslated */
+"Add _Channel" = "Add _Channel";
+
+/* File: ../../portable/menubar.py:127 */
+"New Searc_h Channel..." = "_Kanal bilaketa berria...";
+
+/* File: ../../portable/menubar.py:128 */
+/* Flag: untranslated */
+"New _Folder..." = "New _Folder...";
+
+/* File: ../../portable/menubar.py:139 */
+/* Flag: untranslated */
+"Update _All Channels" = "Update _All Channels";
+
+/* File: ../../portable/menubar.py:141 */
+"_Send this channel to a friend" = "_Kanal hau lagun bati bidali";
+
+/* File: ../../portable/menubar.py:142 */
+"Copy Channel _Link" = "Kanala Kopiatu _Esteka";
+
+/* File: ../../portable/menubar.py:145 */
+/* Flag: untranslated */
+"New _Playlist" = "New _Playlist";
+
+/* File: ../../portable/menubar.py:146 */
+/* Flag: untranslated */
+"New Playlist Fol_der" = "New Playlist Fol_der";
+
+/* File: ../../portable/menubar.py:148 */
+"Re_name Playlist" = "Zerrendaren izena aldatu";
+
+/* File: ../../portable/menubar.py:149 */
+"_Remove Playlist" = "_Zerrenda Ezabatu";
+
+/* File: ../../portable/menubar.py:150 */
+/* Flag: untranslated */
+"_Remove Playlists" = "_Remove Playlists";
+
+/* File: ../../portable/menubar.py:151 */
+/* Flag: untranslated */
+"_Remove Playlist Folders" = "_Remove Playlist Folders";
+
+/* File: ../../portable/menubar.py:152 */
+/* Flag: untranslated */
+"_Remove Playlist Folder" = "_Remove Playlist Folder";
+
+/* File: ../../portable/menubar.py:157 */
+/* Flag: untranslated */
+"_Play" = "_Play";
+
+/* File: ../../portable/menubar.py:158 */
+/* Flag: untranslated */
+"_Stop" = "_Stop";
+
+/* File: ../../portable/menubar.py:160 */
+"_Next Video" = "_Hurrengo Bideoa";
+
+/* File: ../../portable/menubar.py:161 */
+"_Previous Video" = "_Aurreko Bideoa";
+
+/* File: ../../portable/menubar.py:163 */
+/* Flag: untranslated */
+"Skip _Forward" = "Skip _Forward";
+
+/* File: ../../portable/menubar.py:164 */
+/* Flag: untranslated */
+"Skip _Back" = "Skip _Back";
+
+/* File: ../../portable/menubar.py:166 */
+/* Flag: untranslated */
+"Volume _Up" = "Volume _Up";
+
+/* File: ../../portable/menubar.py:167 */
+/* Flag: untranslated */
+"Volume _Down" = "Volume _Down";
+
+/* File: ../../portable/menubar.py:169 */
+"_Fullscreen" = "_Pantaila osoa";
+
+/* File: ../../portable/menubar.py:173 */
+/* Flag: untranslated */
+"_About" = "_About";
+
+/* File: ../../portable/menubar.py:174 */
+"_Donate" = "_Dirulaguntza";
+
+/* File: ../../portable/menubar.py:175 */
+/* File: ../../portable/menubar.py:183 */
+"_Help" = "_Laguntza";
+
+/* File: ../../portable/menubar.py:179 */
+"_Video" = "_Bideo";
+
+/* File: ../../portable/menubar.py:180 */
+"_Channels" = "_Kanalak";
+
+/* File: ../../portable/menubar.py:181 */
+"_Playlists" = "_Zerrendak";
+
+/* File: ../../portable/menubar.py:182 */
+"P_layback" = "_Erreproduzitu";
 
 /* File: ../../portable/menu.py:52 */
 "Update Channels Now" = "Kanalak Eguneratu Orain";
 
-/* File: ../../portable/menu.py:73 */
+/* File: ../../portable/menu.py:75 */
 /* Flag: python-format */
 "%d Downloaded Items" = "%d objetu jeitsita";
 
-/* File: ../../portable/menu.py:91 */
+/* File: ../../portable/menu.py:93 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "%d Available Items" = "%d Available Items";
 
-/* File: ../../portable/menu.py:97 */
+/* File: ../../portable/menu.py:99 */
 /* Flag: python-format */
 "%d Downloading Items" = "%d objetu jeisten";
 
-/* File: ../../portable/downloader.py:174 */
-/* Flag: untranslated */
-"Flash URL Scraping Error" = "Flash URL Scraping Error";
+/* File: ../../portable/folder.py:115 */
+/* File: ../../portable/folder.py:138 */
+"Rename Channel Folder" = "Kanalen karpetaren izena aldatu";
 
-/* File: ../../portable/downloader.py:317 */
-"starting up" = "hasieratzen";
-
-/* File: ../../portable/feed.py:682 */
-"Update Channel Now" = "Kanala eguneratu orain";
-
-/* File: ../../portable/feed.py:685 */
-/* File: ../../portable/feed.py:694 */
-"Rename Channel" = "Kanalaren izena aldatu";
-
-/* File: ../../portable/feed.py:689 */
-"Revert Title to Default" = "Itzuli izenburua balio lehenetsira";
-
-/* File: ../../portable/feed.py:695 */
+/* File: ../../portable/folder.py:117 */
 /* Flag: python-format */
-"Enter a new name for the channel %s" = "Sartu %s kanalarentzat izen berri bat";
+"Enter a new name for the channel folder %s" = "Sartu %s kanalen karpetarentzat izen berria";
 
-/* File: ../../portable/feed.py:776 */
-/* Flag: untranslated */
-"Error loading feed" = "Error loading feed";
+/* File: ../../portable/folder.py:193 */
+/* File: ../../portable/folder.py:198 */
+"Rename Playlist Folder" = "Zerrenden Karpetaren izena aldatu";
 
-/* File: ../../portable/feed.py:777 */
-/* Flag: untranslated */
+/* File: ../../portable/folder.py:200 */
 /* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s).";
+"Enter a new name for the playlist folder %s" = "%s zerrenden karpetarentzat izen berri bat sartu";
 
-/* File: ../../portable/feed.py:780 */
-/* Flag: untranslated */
-"Would you like to keep the feed?" = "Would you like to keep the feed?";
+/* File: ../../portable/folder.py:208 */
+"Create Channel Folder" = "Kanalen Karpeta Sortu";
 
-/* File: ../../portable/feed.py:885 */
-/* Flag: untranslated */
-"Bad content-type" = "Bad content-type";
+/* File: ../../portable/folder.py:209 */
+/* File: ../../portable/singleclick.py:140 */
+"Enter a name for the new channel folder" = "Kanalaren karpetarako izen bat tekleatu";
 
-/* File: ../../portable/feed.py:898 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:4 */
-"Channel is not compatible with Democracy!" = "Kanala ez Democracyrekin bateragarria!";
+/* File: ../../portable/folder.py:222 */
+"Create Playlist Folder" = "Zerrenden Karpeta Sortu";
 
-/* File: ../../portable/feed.py:899 */
-/* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with Democracy.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with Democracy.\n\nDo you want to try to load this channel anyway?";
+/* File: ../../portable/folder.py:223 */
+"Enter a name for the new playlist folder" = "Idatzi zerrenden karpeta berriaren izena";
 
-/* File: ../../portable/feed.py:1791 */
-/* Flag: untranslated */
-"Local File" = "Local File";
-
-/* File: ../../portable/singleclick.py:122 */
+/* File: ../../portable/singleclick.py:125 */
 /* Flag: untranslated */
 "Subscribing to multiple channels" = "Subscribing to multiple channels";
 
-/* File: ../../portable/singleclick.py:123 */
+/* File: ../../portable/singleclick.py:126 */
 /* Flag: python-format */
 "Create %d channels?" = "%d kanal sortu?";
 
-/* File: ../../portable/singleclick.py:136 */
+/* File: ../../portable/singleclick.py:139 */
 /* Flag: python-format */
 "Adding %d channels to a new folder" = "%d kanal karpeta berri batera eransten";
 
-/* File: ../../portable/singleclick.py:140 */
+/* File: ../../portable/singleclick.py:143 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
 
-/* File: ../../portable/singleclick.py:151 */
+/* File: ../../portable/singleclick.py:154 */
 "Subscription error" = "Errorea harpidetzean";
 
-/* File: ../../portable/singleclick.py:161 */
+/* File: ../../portable/singleclick.py:164 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"This Democracy channel file has an invalid format: %s. Please notify the publisher of this file." = "This Democracy channel file has an invalid format: %s. Please notify the publisher of this file.";
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.";
 
-/* File: ../../portable/singleclick.py:170 */
+/* File: ../../portable/singleclick.py:172 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"This Democracy channel file has the wrong content type: %s. Please notify the publisher of this file." = "This Democracy channel file has the wrong content type: %s. Please notify the publisher of this file.";
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.";
 
-/* File: ../../portable/singleclick.py:175 */
-/* Flag: python-format */
-"Could not download the Democracy channel file: %s." = "Ezin izan da %s Democrazy kanala jeitsi";
+/* File: ../../portable/singleclick.py:176 */
+/* Flag: untranslated */
+"Could not download the $shortAppName channel file: $url." = "Could not download the $shortAppName channel file: $url.";
 
-/* File: ../../portable/singleclick.py:201 */
+/* File: ../../portable/singleclick.py:210 */
 "Invalid Torrent" = "Torrent baliogabea";
 
-/* File: ../../portable/singleclick.py:202 */
+/* File: ../../portable/singleclick.py:211 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]";
 
+/* File: ../../portable/feed.py:369 */
+/* Flag: untranslated */
+"never" = "never";
+
+/* File: ../../portable/feed.py:373 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%d day" = "%d day";
+
+/* File: ../../portable/feed.py:377 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%d months" = "%d months";
+
+/* File: ../../portable/feed.py:761 */
+"Update Channel Now" = "Kanala eguneratu orain";
+
+/* File: ../../portable/feed.py:763 */
+/* File: ../../portable/guide.py:35 */
+"Copy URL to clipboard" = "Kopiatu URLa arbelera";
+
+/* File: ../../portable/feed.py:764 */
+/* File: ../../portable/feed.py:773 */
+"Rename Channel" = "Kanalaren izena aldatu";
+
+/* File: ../../portable/feed.py:768 */
+"Revert Title to Default" = "Itzuli izenburua balio lehenetsira";
+
+/* File: ../../portable/feed.py:774 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Sartu %s kanalarentzat izen berri bat";
+
+/* File: ../../portable/feed.py:859 */
+/* Flag: untranslated */
+"Error loading feed" = "Error loading feed";
+
+/* File: ../../portable/feed.py:860 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s).";
+
+/* File: ../../portable/feed.py:863 */
+/* Flag: untranslated */
+"Would you like to keep the feed?" = "Would you like to keep the feed?";
+
+/* File: ../../portable/feed.py:974 */
+/* Flag: untranslated */
+"Bad content-type" = "Bad content-type";
+
+/* File: ../../portable/feed.py:987 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+/* Flag: untranslated */
+"Channel is not compatible with $shortAppName!" = "Channel is not compatible with $shortAppName!";
+
+/* File: ../../portable/feed.py:988 */
+/* Flag: untranslated */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
+
+/* File: ../../portable/feed.py:2035 */
+/* Flag: untranslated */
+"Local File" = "Local File";
+
+/* File: ../../portable/guide.py:58 */
+"Channel Guide" = "Kanalen Gida";
+
+/* File: ../../portable/app.py:749 */
+"Database too new" = "Datubase berriegia";
+
+/* File: ../../portable/app.py:750 */
+/* Flag: untranslated */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that.";
+
+/* File: ../../portable/app.py:908 */
+/* File: ../../portable/app.py:922 */
+/* File: ../../portable/app.py:966 */
+/* File: ../../portable/app.py:992 */
+/* File: ../../portable/app.py:1012 */
+/* Flag: python-format */
+"Remove %s" = "Ezabatu %s";
+
+/* File: ../../portable/app.py:909 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "Ziur zaude %s gida ezabatu nahi duzula?";
+
+/* File: ../../portable/app.py:923 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "Zihur %s ezabatu nahi duzula?";
+
+/* File: ../../portable/app.py:926 */
+/* File: ../../portable/app.py:971 */
+/* File: ../../portable/app.py:997 */
+/* File: ../../portable/app.py:1016 */
+/* Flag: python-format */
+"Remove %s channels" = "Ezabatu %s kanal";
+
+/* File: ../../portable/app.py:928 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
+
+/* File: ../../portable/app.py:967 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Zer egin nahi duzu jeitsi duzun kanaleko bideoekin?";
+
+/* File: ../../portable/app.py:972 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Zer egin nahi duzu jeitsi dituzun kanaletako bideoekin?";
+
+/* File: ../../portable/app.py:993 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Zihur %s ezabatu nahi duzula? Bukatu gabeko jeitsierak ezeztatuak izango dira";
+
+/* File: ../../portable/app.py:998 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
+
+/* File: ../../portable/app.py:1013 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "Are you sure you want to remove %s?";
+
+/* File: ../../portable/app.py:1017 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "Are you sure you want to remove these %s channels?";
+
+/* File: ../../portable/app.py:1030 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Stop watching %s" = "Stop watching %s";
+
+/* File: ../../portable/app.py:1031 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "Are you sure you want to stop watching %s?";
+
+/* File: ../../portable/app.py:1034 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Stop watching %s directories" = "Stop watching %s directories";
+
+/* File: ../../portable/app.py:1035 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to stop watching these %s directories?" = "Are you sure you want to stop watching these %s directories?";
+
+/* File: ../../portable/app.py:1065 */
+"Are you sure you want to quit?" = "Ziur zaude irten nahi duzula?";
+
+/* File: ../../portable/app.py:1513 */
+/* Flag: untranslated */
+"Invalid Value" = "Invalid Value";
+
+/* File: ../../portable/app.py:1514 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number.";
+
+/* File: ../../portable/app.py:1791 */
+" - Invalid URL" = " - URL desegokia";
+
+/* File: ../../portable/app.py:1792 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Sartu duzun herlbidea ez da URL baliogarri bat\nMesedez, konprobatu sartutakoa eta zaiatu berriz\n\n";
+
+/* File: ../../portable/app.py:1816 */
+/* Flag: untranslated */
+"$shortAppName - Add Channel" = "$shortAppName - Add Channel";
+
+/* File: ../../portable/app.py:1816 */
+"Enter the URL of the channel to add" = "Sar ezazu gehitu beharreko kanalaren URLa";
+
+/* File: ../../portable/app.py:1837 */
+/* Flag: untranslated */
+"$shortAppName - Add Channel Guide" = "$shortAppName - Add Channel Guide";
+
+/* File: ../../portable/app.py:1837 */
+/* Flag: untranslated */
+"Enter the URL of the channel guide to add" = "Enter the URL of the channel guide to add";
+
+/* File: ../../portable/app.py:2122 */
+/* Flag: untranslated */
+"News and Tech" = "News and Tech";
+
+/* File: ../../portable/app.py:2129 */
+/* Flag: untranslated */
+"Entertainment" = "Entertainment";
+
+/* File: ../../portable/app.py:2136 */
+/* Flag: untranslated */
+"High-Def" = "High-Def";
+
+/* File: ../../portable/app.py:2144 */
+/* Flag: untranslated */
+"Mac" = "Mac";
+
+/* File: ../../portable/app.py:2155 */
+/* Flag: untranslated */
+"Example Playlist" = "Example Playlist";
+
+/* File: ../../portable/app.py:2174 */
+"Custom Channels" = "Kanal pertsonalizatuak";
+
+/* File: ../../portable/app.py:2174 */
+/* Flag: untranslated */
+"You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels.";
+
+/* File: ../../portable/playlist.py:179 */
+/* File: ../../portable/playlist.py:184 */
+"Rename Playlist" = "Zerrendaren izena aldatu";
+
+/* File: ../../portable/playlist.py:185 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s";
+
+/* File: ../../portable/playlist.py:207 */
+/* Flag: untranslated */
+"Create Playlist" = "Create Playlist";
+
+/* File: ../../portable/playlist.py:208 */
+/* Flag: untranslated */
+"Enter a name for the new playlist" = "Enter a name for the new playlist";
+
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:1 */
 /* Flag: untranslated */
-"(Changes won't go into effect until you restart Democracy Player.)" = "(Changes won't go into effect until you restart Democracy Player.)";
+"(Changes won't go into effect until you restart Democracy Player)" = "(Changes won't go into effect until you restart Democracy Player)";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "egun batean\n3 egunetan\n6 egunetan\n10 egunetan\nhilabete batean\nInoiz";
@@ -1443,10 +1809,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>Downloads</b>" = "<b>Deskargak</d>";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:12 */
-"<b>General</b>" = "<b>Orokorra</b>";
+/* Flag: untranslated */
+"<b>Folders in My Collection</b>" = "<b>Folders in My Collection</b>";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:13 */
-"<b>Movies Directory</b>" = "<b>Filma Direktorioa</b>";
+"<b>General</b>" = "<b>Orokorra</b>";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:14 */
 /* Flag: untranslated */
@@ -1470,10 +1837,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Automatically run Democracy Player when I log in" = "Automatically run Democracy Player when I log in";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:33 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 /* Flag: untranslated */
 "Bit Torrent uses ports between" = "Bit Torrent uses ports between";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:34 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
 "By default, videos expire after" = "Defektuz, bideoak ahitzen dira";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:35 */
@@ -1485,13 +1854,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "C_reate Channel" = "C_reate Channel";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:37 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
 "Check Channels for new content" = "Eduki berri bila Kanalak aztertu";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:38 */
 "Democracy Player" = "Democracy Player";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:39 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:8 */
 "Democracy Player can find all the videos on your computer to help you organize your collection." = "Democrazy Player-ek zure ordenagailuan dauden bideo guztiak bilatu ahal ditzake zure bilduma antolatzen laguntzeko";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:43 */
@@ -1505,18 +1874,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Go" = "Go";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:48 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:8 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 /* Flag: untranslated */
 "In This:" = "In This:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:49 */
 "KB/s when my computer is active" = "KB/s nire ordenagailua aktibo dagonean";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:51 */
-"Migrate existing movies?" = "Migratu dauden filma guztiak?";
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:53 */
+/* Flag: untranslated */
+"Play videos one after another" = "Play videos one after another";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:54 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:18 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
 "Preferences" = "Xehetasunak";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:55 */
@@ -1525,375 +1895,269 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:56 */
 /* Flag: untranslated */
-"Search _Engine:" = "Search _Engine:";
+"Resume playback of videos from the point where they were stopped" = "Resume playback of videos from the point where they were stopped";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:57 */
 /* Flag: untranslated */
-"Search _custom folder:" = "Search _custom folder:";
+"Search _Engine:" = "Search _Engine:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:58 */
-"Select Movies Directory" = "Filme Direktorioa Hautatu";
+/* Flag: untranslated */
+"Search _custom folder:" = "Search _custom folder:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:59 */
-/* Flag: untranslated */
-"Select custom search directory" = "Select custom search directory";
+"Select Movies Directory" = "Filme Direktorioa Hautatu";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:60 */
 /* Flag: untranslated */
-"Show movies in these directories in My Collection" = "Show movies in these directories in My Collection";
+"Select custom search directory" = "Select custom search directory";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
+/* Flag: untranslated */
+"Stop after each video" = "Stop after each video";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:62 */
 /* Flag: untranslated */
 "The next few screens will help you set up democracy player so that it works best for you.  Here's the first question." = "The next few screens will help you set up democracy player so that it works best for you.  Here's the first question.";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:63 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
 "To avoid slowdowns, limit upstream to" = "Abiadura galera sahiesteko, jarioa mugatu";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:64 */
 "Volume:" = "Bolumena:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:65 */
+/* Flag: untranslated */
+"Watch for new videos in these folders and include them in My Collection" = "Watch for new videos in these folders and include them in My Collection";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:66 */
 "We recommend that you allow Democracy Player to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Ordenagailua pizterakoan Democrazy Player exekutatzen uztea gomendatzen dizugu. Honela, erdizka jeitsitako bideoak jeisten bukatu daitezke eta bideo berriak prest egongo dira ikusi nahi dituzunerako.";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:67 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:68 */
 "Welcome to Internet TV.  There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Ongi Etorri Interneteko Telebistara. Asko egin dezakezu Democrazy Plater-ekin: Zure kanal gustokoenetatik bideoak automatikoki jeitsi, bideo berriak bat bestearen atzetik ikusi, torrent-ak jeitsi, lagunei bideoak gomendatu, eta askoz gehiago.";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:68 */
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:69 */
 "You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Deskargak gordetzeko karpeta berria aukeratu duzu. Nahi duzu Democracyk deskargatutakoak horra migratzea? (Orain jeisten ari direnak ez dira mugituko deskarga bukatu ezean.)";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:69 */
-"_Add Directory" = "Direktorioa gehitu";
-
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:70 */
-"_Search" = "_Bilatu";
+/* Flag: untranslated */
+"_Add Folder" = "_Add Folder";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:71 */
+"_Search" = "_Bilatu";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:72 */
 /* Flag: untranslated */
 "_Search For:" = "_Search For:";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:72 */
-"_Store downloaded videos in this folder:" = "Jeitsitako bideoak karpeta honetan gorde:";
-
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:73 */
-/* Flag: untranslated */
-"_URL" = "_URL";
+"_Store downloaded videos in this folder:" = "Jeitsitako bideoak karpeta honetan gorde:";
 
 /* File: ../../platform/gtk-x11/glade/democracy.glade.h:74 */
 /* Flag: untranslated */
+"_URL" = "_URL";
+
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
+/* Flag: untranslated */
 "and" = "and";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:1 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:1 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:1 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:1 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:1 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:1 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1 */
-" " = " ";
+/* File: ../../platform/gtk-x11/glade/democracy.glade.h:76 */
+/* Flag: untranslated */
+"videos at once" = "videos at once";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:2 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:2 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:2 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:2 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:2 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:2 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:2 */
-"'" = "'";
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 $publisher." = "$longAppName bertsioa $appVersion ($appRevision); copyright (c) 2005, 2006 $publisher.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:4 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:21 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
+"About $longAppName" = "$longAppName-ri buruz";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1 */
 "Add Channel" = "Kanala Gehitu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd:5 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2 */
 "Please enter the URL of the channel you'd like to add." = "Gehitu nahi duzun kanalaren URLa sar ezazu mesedez.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:5 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6 */
+"Copy log to clipboard" = "Log-a copiatu (portapapeles)";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5 */
+"Open up the bug tracker" = "Akats jarraitzailea ireki";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2 */
+/* Flag: untranslated */
+"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7 */
+/* Flag: untranslated */
+"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1 */
+/* Flag: untranslated */
+"You found a bug in $longAppName!" = "You found a bug in $longAppName!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1 */
+" " = " ";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2 */
+"'" = "'";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10 */
 "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "Fitxategiak lortzen saiatuko gara baina. Bideoak zerrendatzen denbora har dezake, eta deskripzioak dibertigarriak izan daitezke.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:7 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12 */
 "Please contact the publishers of" = "Editoreak kontaktatu mesedez";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd:8 */
-"and ask if they can supply a feed in a format that will work with Democracy." = "eta Democracyrekin bateragarria den jario formato bat ezarri dezaketen galdetu.";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13 */
+/* Flag: untranslated */
+"and ask if they can supply a feed in a format that will work with $shortAppName." = "and ask if they can supply a feed in a format that will work with $shortAppName.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:4 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1 */
+"$longAppName" = "$longAppName";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4 */
+/* Flag: untranslated */
+"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1 */
 "Channel requires authentication" = "Kanal honek egiaztatzea behar du";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd:5 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
 "Please enter the username and password given to you by this channel's publisher." = "Kanal honetako editoreak eskuratutako erabiltzaile izena eta pasahitza sar ezazu mesedez.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:4 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
 /* Flag: untranslated */
-"A search channel contains" = "A search channel contains";
+"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(WARNING: Changes won't go into effect until you restart $longAppName.)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:5 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
 /* Flag: untranslated */
-"items that match a search term." = "items that match a search term.";
+"Add Folder..." = "Add Folder...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:9 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
+/* Flag: untranslated */
+"Automatically run $longAppName when I login" = "Automatically run $longAppName when I login";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+/* Flag: untranslated */
+"Every 30 minutes" = "Every 30 minutes";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
+/* Flag: untranslated */
+"Every hour" = "Every hour";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+/* Flag: untranslated */
+"Manually" = "Manually";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7 */
+/* Flag: untranslated */
+"Minimize $longAppName to the system tray when I close the program" = "Minimize $longAppName to the system tray when I close the program";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
+/* Flag: untranslated */
+"Store downloaded videos in this folder:" = "Store downloaded videos in this folder:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+/* Flag: untranslated */
+"WARNING: This setting will not go into effect until you restart $longAppName." = "WARNING: This setting will not go into effect until you restart $longAppName.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
 "Channel:" = "Kanala:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:10 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6 */
 "Search Engine:" = "Bilaketa Motorra:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:6 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2 */
 "Search For:" = "Bilatu:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd:11 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7 */
 "URL:" = "URL:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:14 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33 */
+/* Flag: untranslated */
+"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName can find all the videos on your computer to help you organize your collection.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45 */
+/* Flag: untranslated */
+"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29 */
+/* Flag: untranslated */
+"$shortAppName First Time Setup" = "$shortAppName First Time Setup";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39 */
 "Cancel Search" = "Bilaketa ezeztatu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:13 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38 */
 "Change" = "Aldatu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:4 */
-"Democracy First Time Setup" = "Democrazy lehen aldiz exekutatzen";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:20 */
-"Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "Democracy Player-ek sarritan eguneratzen ditu kanalak bideo berrien bila eta atzeko planoan deskargatzen ditu. Martxan uzten baduzu ikusteko prest zaudenean bideo berriak izango dituzu.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:21 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46 */
 "Don't Worry About Disk Space:" = "Ez arduratu disko espazioaz.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:25 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50 */
 "Find Videos:" = "Bideoak aurkitu:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:23 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48 */
 /* Flag: untranslated */
 "Go Big:" = "Go Big:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:19 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44 */
 /* Flag: untranslated */
 "Leave it On:" = "Leave it On:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:22 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47 */
 /* Flag: untranslated */
-"Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.";
+"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:17 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42 */
 /* Flag: untranslated */
 "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:15 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40 */
 /* Flag: untranslated */
 "Reset Search" = "Reset Search";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:10 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35 */
 /* Flag: untranslated */
 "Restrict to all my personal files." = "Restrict to all my personal files.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:11 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36 */
 /* Flag: untranslated */
 "Search custom folder:" = "Search custom folder:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:26 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
 /* Flag: untranslated */
-"The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
+"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:24 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49 */
 /* Flag: untranslated */
 "The button to the right of the play button shows videos fullscreen." = "The button to the right of the play button shows videos fullscreen.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:5 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30 */
 /* Flag: untranslated */
-"The next few screens will help you set up Democracy Player so that it works best for you." = "The next few screens will help you set up Democracy Player so that it works best for you.";
+"The next few screens will help you set up $longAppName so that it works best for you." = "The next few screens will help you set up $longAppName so that it works best for you.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:6 */
-"We recommend that you have Democracy Player launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "Democracy Player sistemarekin batera abiaraztea gomendatzen dizugu. Modu horretan, deskargatzen ari ziren bideoak bukatuko dute eta bideo berriak deskargatu ahal izango ditu atzeko planoan, nahi duzunerako prest egon daitezen.";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31 */
+/* Flag: untranslated */
+"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:9 */
-"Would you like Democracy Player to look for video files on your computer?" = "Nahi duzu Democracy Player-ek zure ordenagailuan bideo fitxategiak bilatzea?";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34 */
+/* Flag: untranslated */
+"Would you like $longAppName to look for video files on your computer?" = "Would you like $longAppName to look for video files on your computer?";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:7 */
-"Would you like to run Democracy on startup?" = "Nahi duzu Democracy martxan jartzea sistema abiaraztean?";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32 */
+/* Flag: untranslated */
+"Would you like to run $shortAppName on startup?" = "Would you like to run $shortAppName on startup?";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd:16 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41 */
 "You're done!" = "Bukatu duzu!";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd:4 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1 */
+/* Flag: untranslated */
+"Release Notes:" = "Release Notes:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1 */
 "Question" = "Galdera";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:5 */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 $publisher." = "$longAppName bertsioa $appVersion ($appRevision); copyright (c) 2005, 2006 $publisher.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:4 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:48 */
-"About $longAppName" = "$longAppName-ri buruz";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:9 */
-"Copy log to clipboard" = "Log-a copiatu (portapapeles)";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8 */
-"Open up the bug tracker" = "Akats jarraitzailea ireki";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5 */
-"Please help us fix it. Copy and paste all the" = "Konpontzen lagundu iezauguzu. Guztia kopiatu eta itsatsi";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6 */
-"information into our bug tracker and tell us what you were doing when the" = "gure akats jarraitzailearekin eta gertatu bitartean egiten ari zarena jakinaraziguzu.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:8 */
-"problem occurred." = "arazoa jazo da.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:10 */
-"Then, please restart Democracy Player (or you may keep getting related errors). Sorry for the inconvenience. Democracy Player is still in beta, but with your help we're fixing problems fast!" = "Hortaz, mesedez berrarazi Democracy Player (edo tankerako erroreak jasotzen jarraituko duzu). Barkatu eragozpenak. Democracy Player oraindik beta egoeran dago, baina zure laguntzarekin arazoak azkar konpontzen ditugu!";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:4 */
-"You found a bug in Democracy!" = "Akats bat aurkitu duzu Democracyn!";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:4 */
-"$longAppName" = "$longAppName";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:90 */
-"A" = "A";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:105 */
-/* Flag: untranslated */
-"Alt+Enter" = "Alt+Enter";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:74 */
-/* Flag: untranslated */
-"C" = "C";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:8 */
-/* Flag: untranslated */
-"Check Version" = "Check Version";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:96 */
-/* Flag: untranslated */
-"Ctrl+A" = "Ctrl+A";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:94 */
-/* Flag: untranslated */
-"Ctrl+C" = "Ctrl+C";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:102 */
-"Ctrl+D" = "Ctrl-D";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:97 */
-"Ctrl+N" = "Ctrl-N";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:93 */
-"Ctrl+O" = "Ctrl-O";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:99 */
-"Ctrl+P" = "Ctrl-P";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:98 */
-"Ctrl+Shift+N" = "Ctrl-Shift+N";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:100 */
-"Ctrl+Shitf+P" = "Ctrl-Shift+P";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:95 */
-"Ctrl+V" = "Ctrl+V";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:91 */
-"D" = "D";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:49 */
-"Donate to the Democracy project" = "Eman dirua Democracy proiektuarentzat";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:59 */
-"E" = "E";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:87 */
-/* Flag: untranslated */
-"F" = "F";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:45 */
-/* Flag: untranslated */
-"Fullscreen" = "Fullscreen";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:68 */
-/* Flag: untranslated */
-"G" = "G";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:89 */
-/* Flag: untranslated */
-"H" = "H";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:82 */
-/* Flag: untranslated */
-"L" = "L";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:104 */
-/* Flag: untranslated */
-"Left" = "Left";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:85 */
-/* Flag: untranslated */
-"N" = "N";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:22 */
-/* Flag: untranslated */
-"New Channel" = "New Channel";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:23 */
-/* Flag: untranslated */
-"New Channel Folder" = "New Channel Folder";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:25 */
-/* Flag: untranslated */
-"New Channel Guide" = "New Channel Guide";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:34 */
-/* Flag: untranslated */
-"New Playlist" = "New Playlist";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:35 */
-/* Flag: untranslated */
-"New Playlist Folder" = "New Playlist Folder";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:52 */
-/* Flag: untranslated */
-"O" = "O";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:83 */
-/* Flag: untranslated */
-"P" = "P";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:41 */
-"Pause Video" = "Pausatu bideoa";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:33 */
-/* Flag: untranslated */
-"Playlist" = "Playlist";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:57 */
-/* Flag: untranslated */
-"Q" = "Q";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:86 */
-/* Flag: untranslated */
-"R" = "R";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:9 */
-"Remove Video" = "Ezabatu bideoa";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:103 */
-/* Flag: untranslated */
-"Right" = "Right";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:84 */
-/* Flag: untranslated */
-"S" = "S";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:31 */
-/* Flag: untranslated */
-"Send This Channel to a Friend..." = "Send This Channel to a Friend...";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:101 */
-"Space" = "Espazioa";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:71 */
-"U" = "U";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:53 */
-"V" = "V";

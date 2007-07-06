@@ -13,7 +13,7 @@
 <!ENTITY startup.change	                "Ændr">
 <!ENTITY startup.cancel	                "Cancel Search">
 <!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.done1			"Du er færdig!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Leave it On:">
@@ -38,7 +38,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.change	                "Ændr">
 <!ENTITY startup.cancel	                "Cancel Search">
 <!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.done1			"Du er færdig!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Leave it On:">

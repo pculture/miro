@@ -15,7 +15,7 @@
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.playback "Gerisar">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback.remember.pos "Vıdeonun nerede kaldığını hatırla">
 <!ENTITY prefs.playback.auto.next.video "Videoları arka arkaya oynat.">
 <!ENTITY prefs.playback.stop.after.each "Her videodan sonra dur.">
 

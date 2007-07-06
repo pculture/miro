@@ -15,17 +15,17 @@
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.playback "Uppspelning">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback.remember.pos "Kom ihåg videoposition.">
 <!ENTITY prefs.playback.auto.next.video "Spela upp filmer efter varandra.">
 <!ENTITY prefs.playback.stop.after.each "Stoppa efter varje film.">
 
-<!ENTITY prefs.folder.movies "Movies Directory">
+<!ENTITY prefs.folder.movies "Filmkatalog">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Ändra...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Folder Location">
-<!ENTITY prefs.folder.others.shown "Show as Channel">
+<!ENTITY prefs.folder.others.location "Mapplats">
+<!ENTITY prefs.folder.others.shown "Visa som kanal">
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "Ta bort">
 
@@ -33,7 +33,7 @@
 <!ENTITY prefs.downloads.max.part1 "Hämta som mest">
 <!ENTITY prefs.downloads.max.part2 "filmer samtidigt.">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "Diskutrymme">
 <!ENTITY prefs.disk.space.min.part1 "Starta inte en hämtning om den lämnar kvar mindre än">
 <!ENTITY prefs.disk.space.min.part2 "GB ledigt.">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
