@@ -11,6 +11,7 @@
 ;  CONFIG_PROG_ID        eg, "Democracy.Player.1"
 
 !define INST_KEY "Software\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
+!define OLD_INST_KEY "Software\Participatory Culture Foundation\Democracy Player"
 !define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CONFIG_LONG_APP_NAME}"
 
 !define RUN_SHORTCUT "${CONFIG_LONG_APP_NAME}.lnk"
@@ -433,18 +434,32 @@ NotDownloaderRunning:
 
   ; Is the app already installed? Bail if so.
   ReadRegStr $R0 HKLM "${INST_KEY}" "InstallDir"
-  StrCmp $R0 "" done
+  StrCmp $R0 "" NotCurrentInstalled
  
   ; Should we uninstall the old one?
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "It looks like you already have a copy of ${CONFIG_LONG_APP_NAME} $\n\
 installed.  Do you want to continue and overwrite it?" \
-       IDOK continue
+       IDOK UninstallCurrent
   Quit
-continue:
+UninstallCurrent:
+  !insertmacro uninstall $R0
+NotCurrentInstalled:
+
+  ; Is the app already installed? Bail if so.
+  ReadRegStr $R0 HKLM "${OLD_INST_KEY}" "InstallDir"
+  StrCmp $R0 "" NotOldInstalled
+ 
+  ; Should we uninstall the old one?
+  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+  "It looks like you already have a copy of Democracy Player $\n\
+installed.  Do you want to continue and overwrite it?" \
+       IDOK UninstallOld
+  Quit
+UninstallOld:
   !insertmacro uninstall $R0
 
-  done:
+NotOldInstalled:
   !insertmacro MUI_LANGDLL_DISPLAY
 
   ; Make check boxes for unhandled file extensions.
