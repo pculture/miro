@@ -272,7 +272,7 @@ data_files += [
      [os.path.join(platform_dir, 'miro.desktop')]),
     ('/usr/share/mime/packages', 
      [os.path.join(platform_dir, 'miro.xml')]),
-    ('/usr/share/man/man1',p
+    ('/usr/share/man/man1',
      [os.path.join(platform_dir, 'miro.1.gz')]),
 ]
 
