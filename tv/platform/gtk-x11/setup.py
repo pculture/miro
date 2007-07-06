@@ -269,10 +269,10 @@ data_files += [
     ('/usr/share/pixmaps', 
      glob(os.path.join(platform_dir, 'democracyplayer-*.png'))),
     ('/usr/share/applications', 
-     [os.path.join(platform_dir, 'democracyplayer.desktop')]),
+     [os.path.join(platform_dir, 'miro.desktop')]),
     ('/usr/share/mime/packages', 
-     [os.path.join(platform_dir, 'democracy.xml')]),
-    ('/usr/share/man/man1',
+     [os.path.join(platform_dir, 'miro.xml')]),
+    ('/usr/share/man/man1',p
      [os.path.join(platform_dir, 'miro.1.gz')]),
 ]
 
