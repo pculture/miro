@@ -58,7 +58,7 @@ while True:
         root_dir = root_try
         break
     if root_try == '/':
-        raise RuntimeError("Couldn't find Democracy root directory")
+        raise RuntimeError("Couldn't find Miro root directory")
     root_try = os.path.abspath(os.path.join(root_try, '..'))
 portable_dir = os.path.join(root_dir, 'portable')
 bittorrent_dir = os.path.join(portable_dir, 'BitTorrent')
