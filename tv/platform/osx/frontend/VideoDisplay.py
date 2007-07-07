@@ -344,14 +344,22 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
         self.activateVideoWindow()
         nc = NSNotificationCenter.defaultCenter()
         nc.addObserver_selector_name_object_(self, 
-                                             'handleWindowNotifications:', 
+                                             'windowDidMove:', 
                                              NSWindowDidMoveNotification, 
+                                             self.window())
+        nc.addObserver_selector_name_object_(self, 
+                                             'windowWillClose:', 
+                                             NSWindowWillCloseNotification, 
+                                             self.window())
+        nc.addObserver_selector_name_object_(self, 
+                                             'windowDidBecomeKey:', 
+                                             NSWindowDidBecomeKeyNotification, 
                                              self.window())
         
     def teardown(self):
         platformutils.warnIfNotOnMainThread('VideoAreaView.teardown')
         nc = NSNotificationCenter.defaultCenter()
-        nc.removeObserver_name_object_(self, NSWindowDidMoveNotification, nil)
+        nc.removeObserver_name_object_(self, nil, nil)
         if self.videoWindow.isFullScreen:
             self.videoWindow.exitFullScreen()
         self.window().removeChildWindow_(self.videoWindow)
@@ -384,8 +392,18 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
         super(VideoAreaView, self).setFrame_(frame)
         self.adjustVideoWindowFrame()
 
-    def handleWindowNotifications_(self, notification):
+    def windowDidMove_(self, notification):
         self.adjustVideoWindowFrame()
+    
+    def windowWillClose_(self, notification):
+        eventloop.addUrgentCall(app.controller.videoDisplay.pause, "Pause Playback")
+        self.window().removeChildWindow_(self.videoWindow)
+        self.videoWindow.orderOut_(nil)
+    
+    def windowDidBecomeKey_(self, notification):
+        self.adjustVideoWindowFrame()
+        self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
+        self.window().makeKeyAndOrderFront_(nil)
     
     @platformutils.onMainThread
     def enterFullScreen(self):

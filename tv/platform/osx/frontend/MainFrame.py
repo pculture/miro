@@ -186,10 +186,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
     def windowDidResize_(self, notification):
         self.updateWindowTexture()
 
-    def windowWillClose_(self, notification):
-        if app.controller.videoDisplay.isPlaying:
-            eventloop.addUrgentCall(app.controller.playbackController.stop, "Stop Playback")
-
     ### Size constraints on splitview ###
 
     minimumTabListWidth = 160 # pixels
