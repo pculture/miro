@@ -163,6 +163,11 @@ PlaylistItems = [
              ),
 ]
 
+if platform == "windows-xul":
+    fullscreen_shortcuts = (Key("f", MOD), Key(ENTER, ALT))
+else:
+    fullscreen_shortcuts = (Key("f", MOD), )
+
 PlaybackItems = [
     MenuItem(_("_Play"), "PlayPauseVideo", (Key(SPACE),), False),
     MenuItem(_("_Stop"), "StopVideo", (Key("d",MOD),), False),
@@ -176,7 +181,7 @@ PlaybackItems = [
     MenuItem(_("Volume _Up"), "UpVolume", (Key(UP_ARROW, MOD),), False),
     MenuItem(_("Volume _Down"), "DownVolume", (Key(DOWN_ARROW,MOD),), False),
     Separator(),
-    MenuItem(_("_Fullscreen"), "Fullscreen", (Key("f", MOD),), False),
+    MenuItem(_("_Fullscreen"), "Fullscreen", fullscreen_shortcuts, False),
 ]
 
 HelpItems = [

@@ -403,3 +403,29 @@ function onSearchKeyDown(event) {
     pybridge.performSearch(name, event.target.value);
   }
 }
+
+/* key presses in the main window.  This is a hack to workaround the fact that
+ * XUL doesn't fire events for a couple keys (Enter, Space)
+ */
+function runCommand(commandId) {
+  var command = document.getElementById(commandId);
+  if(command) command.doCommand();
+}
+
+function runMenuItemCommand(menuitemid) {
+  var menuitem = document.getElementById(menuitemid);
+  if(menuitem.getAttribute('disabled')) return;
+  runCommand(menuitem.getAttribute('command'))
+}
+function onKeyDown(event) {
+  if(event.keyCode == 13 && event.altKey) { 
+    // Alt+Enter
+    runMenuItemCommand('menuitem-fullscreen');
+  } else if(event.keyCode == 32) {
+    // Space
+    runMenuItemCommand('menuitem-playpausevideo');
+  } else if((event.keyCode == 8 && event.ctrlKey) || event.keyCode == 46) {
+    // Ctrl-Backspace or Delete
+    runCommand("RemoveCurrentSelection");
+  } 
+}
