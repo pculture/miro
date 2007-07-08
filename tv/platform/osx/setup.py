@@ -362,6 +362,7 @@ class mypy2app(py2app):
 
             os.system("/Developer/Tools/SetFile -a V \"%s\"" %
                       os.path.join(imgDirName,".DS_Store"))
+            os.symlink("/Applications", os.path.join(imgDirName, "Applications"))
             
             # Create the DMG from the image folder
 
