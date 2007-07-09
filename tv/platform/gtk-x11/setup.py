@@ -257,7 +257,7 @@ data_files = []
 # filter out app.config.template (which is handled specially)
 files = [f for f in listfiles(resource_dir) \
         if os.path.basename(f) != 'app.config.template']
-files.append(os.path.join(platform_dir, 'glade', 'democracy.glade'))
+files.append(os.path.join(platform_dir, 'glade', 'miro.glade'))
 data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
 for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','unittest'), 'searchengines'):

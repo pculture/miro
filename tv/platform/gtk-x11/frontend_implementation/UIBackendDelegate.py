@@ -178,7 +178,7 @@ def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     return dialog
 
 def BuildSearchChannelDialog(dialog):
-    widgetTree = MainFrame.WidgetTree(resources.path('democracy.glade'), 'dialog-search', 'democracyplayer')
+    widgetTree = MainFrame.WidgetTree(resources.path('miro.glade'), 'dialog-search', 'democracyplayer')
     gtkDialog = widgetTree['dialog-search']
     gtkDialog.set_data("glade", widgetTree)
     channel_id = -1

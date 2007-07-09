@@ -157,7 +157,7 @@ class MainFrame:
     def _gtkInit(self, engines, default_engine):
         # Create the widget tree, and remember important widgets
         platformutils.confirmMainThread()
-        self.widgetTree = WidgetTree(resources.path('democracy.glade'), 'main-window', 'democracyplayer')
+        self.widgetTree = WidgetTree(resources.path('miro.glade'), 'main-window', 'democracyplayer')
         self.displayBoxes = {
             self.mainDisplay : self.widgetTree['main-box'],
             self.channelsDisplay : self.widgetTree['channels-box'],

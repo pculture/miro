@@ -511,7 +511,7 @@ class CallbackHandler(object):
         import autodler
         # get our add channel dialog
         movie_dir = config.get(prefs.MOVIES_DIRECTORY)
-        widgetTree = MainFrame.WidgetTree(resources.path('democracy.glade'), 'dialog-preferences', 'democracyplayer')
+        widgetTree = MainFrame.WidgetTree(resources.path('miro.glade'), 'dialog-preferences', 'democracyplayer')
         dialog = widgetTree['dialog-preferences']
         dialog.integerWidgets = []
         dialog.floatWidgets = []
@@ -578,7 +578,7 @@ class CallbackHandler(object):
         new_movie_dir = widgetTree['filechooserbutton-movies-directory'].get_filename()
         if (movie_dir != new_movie_dir):
             print "NEW: %r" % new_movie_dir
-            migrate_widgetTree = MainFrame.WidgetTree(resources.path('democracy.glade'), 'dialog-migrate', 'democracyplater')
+            migrate_widgetTree = MainFrame.WidgetTree(resources.path('miro.glade'), 'dialog-migrate', 'democracyplater')
             migrate_dialog = migrate_widgetTree['dialog-migrate']
             response = migrate_dialog.run()
             app.changeMoviesDirectory(new_movie_dir, 
