@@ -273,12 +273,7 @@ function setupHandlers() {
 
 function onClose()
 {
-    pybridge.printOut("onClose");
-    if (pybridge.minimizeToTray()) {
-        minimizeOrRestore();
-    } else {
-        handleExit();
-    }
+    pybridge.handleCloseButton();
     return false;
 }
 

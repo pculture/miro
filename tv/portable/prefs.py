@@ -66,9 +66,11 @@ HELP_URL          = Pref(key='HelpURL', default=u"http://www.getdemocracy.com/he
                          platformSpecific=False)
 BUG_REPORT_URL    = Pref(key='ReportURL', default=u"https://develop.participatoryculture.org/trac/democracy/newticket",
                          platformSpecific=False)
-# This can be safely ignored on platforms without minimize to tray
+# These can be safely ignored on platforms without minimize to tray
 MINIMIZE_TO_TRAY = \
     Pref(key='MinimizeToTray',   default=True, platformSpecific=False)
+MINIMIZE_TO_TRAY_ASK_ON_CLOSE = \
+    Pref(key='MinimizeToTrayAskOnClose', default=True, platformSpecific=False)
 
 # These are computed by special platform code.
 RUN_AT_STARTUP     = Pref( key='RunAtStartup',  default=False,  platformSpecific=True )

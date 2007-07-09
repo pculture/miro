@@ -76,6 +76,7 @@ BUTTON_ADD_INTO_NEW_FOLDER = DialogButton(_("Add Into New Folder"))
 BUTTON_KEEP = DialogButton(_("Keep"))
 BUTTON_DELETE = DialogButton(_("Delete"))
 BUTTON_NOT_NOW = DialogButton(_("Not Now"))
+BUTTON_CLOSE_TO_TRAY = DialogButton(_("Close to Tray"))
 
 class Dialog(object):
     """Abstract base class for dialogs."""

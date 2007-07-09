@@ -17,6 +17,7 @@ try:
     import autoupdate
     import eventloop
     import config
+    import dialogs
     import folder
     import playlist
     import prefs
@@ -781,3 +782,33 @@ class PyBridge:
         if keycode in keycode_to_portable_code:
             key = keycode_to_portable_code[keycode]
             keyboard.handleKey(key, shiftDown, controlDown)
+
+    def handleCloseButton(self):
+        if config.get(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE):
+            self.askUserForCloseBehaviour()
+        elif config.get(prefs.MINIMIZE_TO_TRAY):
+            self.minimizeToTray()
+        else:
+            self.quit()
+
+    def minimizeToTray(self):
+        minimizer = makeService("@participatoryculture.org/dtv/minimize;1",
+                components.interfaces.pcfIDTVMinimize)
+        minimizer.minimizeOrRestore()
+
+    def askUserForCloseBehaviour(self):
+        title = _("Close to tray?")
+        description = _("When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options.")
+
+        dialog = dialogs.ChoiceDialog(title, description, 
+                dialogs.BUTTON_CLOSE_TO_TRAY, dialogs.BUTTON_QUIT)
+        def callback(dialog):
+            if dialog.choice is None:
+                return
+            if dialog.choice == dialogs.BUTTON_CLOSE_TO_TRAY:
+                config.set(prefs.MINIMIZE_TO_TRAY, True)
+            else:
+                config.set(prefs.MINIMIZE_TO_TRAY, False)
+            config.set(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE, False)
+            self.handleCloseButton()
+        dialog.run(callback)

@@ -113,4 +113,5 @@ interface pcfIDTVPyBridge : nsISupports
   boolean minimizeToTray();
   void setMinimizeToTray(in boolean newSetting);
   void handleKeyPress(in short keycode, in boolean controlDown, in boolean shiftDown);
+  void handleCloseButton();
 };
