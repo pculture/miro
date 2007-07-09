@@ -267,7 +267,7 @@ for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','
 # add the desktop file, icons, mime data, and man page.
 data_files += [
     ('/usr/share/pixmaps', 
-     glob(os.path.join(platform_dir, 'democracyplayer-*.png'))),
+     glob(os.path.join(platform_dir, 'miro-*.png'))),
     ('/usr/share/applications', 
      [os.path.join(platform_dir, 'miro.desktop')]),
     ('/usr/share/mime/packages', 

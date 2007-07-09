@@ -46,8 +46,8 @@ class _Search:
 def performStartupTasks(terminationCallback):
     widgetTree = MainFrame.WidgetTree(resources.path('democracy.glade'), 'dialog-startup', 'democracyplayer')
     dialog = widgetTree['dialog-startup']
-    widgetTree['image-startup-tv'].set_from_file (resources.sharePath('pixmaps/democracyplayer-128x128.png'))
-    dialog.set_icon_from_file (resources.sharePath('pixmaps/democracyplayer-128x128.png'))
+    widgetTree['image-startup-tv'].set_from_file (resources.sharePath('pixmaps/miro-128x128.png'))
+    dialog.set_icon_from_file (resources.sharePath('pixmaps/miro-128x128.png'))
     status = {}
     status['inSearch'] = False
     status['files'] = None

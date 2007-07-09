@@ -166,7 +166,7 @@ class MainFrame:
 
         UIBackendDelegate.dialogParent = self.widgetTree['main-window']
 
-        self.widgetTree['main-window'].set_icon_from_file (resources.sharePath('pixmaps/democracyplayer-128x128.png'))
+        self.widgetTree['main-window'].set_icon_from_file (resources.sharePath('pixmaps/miro-128x128.png'))
 
         # create the buttonsDown attribute to the video time scale.  It will
         # track which mouse buttons are currently pressed.  This is usefull
@@ -258,7 +258,7 @@ class MainFrame:
                 self.widgetTree['main-window'].unmaximize()
 
         if getPlayerBool("showTrayicon") and trayicon.trayicon_is_supported:
-            self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/democracyplayer-24x20.png"), self)
+            self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/miro-24x20.png"), self)
             self.trayicon.set_visible(True)
 
         self.widgetTree['main-window'].connect ("configure-event", self.configureEvent)
