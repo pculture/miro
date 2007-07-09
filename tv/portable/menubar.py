@@ -192,8 +192,13 @@ HelpItems = [
     MenuItem(_("Report a _Bug"), "ReportBug", ()),
 ]
 
+if platform == "gtk-x11":
+    main_title = _("_Video")
+else:
+    main_title = _("_File")
+
 menubar = \
-        MenuBar(Menu(_("_Video"), "Video", *VideoItems),
+        MenuBar(Menu(main_title, "Video", *VideoItems),
                 Menu(_("_Channels"), "Channels", *ChannelItems),
                 Menu(_("_Playlists"), "Playlists", *PlaylistItems),
                 Menu(_("P_layback"), "Playback", *PlaybackItems),
