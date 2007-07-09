@@ -23,4 +23,4 @@ PREFIX=/usr
 export MIRO_SHARE_ROOT=dist/$PREFIX/share/
 export MIRO_RESOURCE_ROOT=dist/$PREFIX/share/democracy/resources/
 export LD_LIBRARY_PATH=/usr/lib/firefox${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}
-$PYTHON setup.py install --root=./dist --prefix=$PREFIX && PYTHONPATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/ dist/$PREFIX/bin/democracyplayer "$@"
+$PYTHON setup.py install --root=./dist --prefix=$PREFIX && PYTHONPATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/ dist/$PREFIX/bin/miro "$@"

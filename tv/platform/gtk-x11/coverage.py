@@ -339,7 +339,7 @@ class coverage:
         if settings.get('execute'):
             # EDITED FOR DEMOCRACY:
             runSetupDotPy()
-            sys.argv = ['dist/usr/bin/democracyplayer', '--unittest'] + args
+            sys.argv = ['dist/usr/bin/miro', '--unittest'] + args
             self.start()
             import __main__
             sys.path[0] = os.path.dirname(sys.argv[0])

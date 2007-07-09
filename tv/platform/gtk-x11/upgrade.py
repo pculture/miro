@@ -15,8 +15,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import os.path
+import os
 import shutil
+import resources
 
 def upgrade():
     src = os.path.expanduser('~/.democracy')
@@ -24,3 +25,24 @@ def upgrade():
     if os.path.isdir(src) and not os.path.exists(dst):
         shutil.move(src, dst)
         shutil.rmtree(os.path.join(dst, "icon-cache"), True)
+
+    config_home = os.environ.get ('XDG_CONFIG_HOME',
+                                  '~/.config')
+    config_home = os.path.expanduser (config_home)
+    autostart_dir = os.path.join (config_home, "autostart")
+    old_file = os.path.join (autostart_dir, "democracyplayer.desktop")
+    destination = os.path.join (autostart_dir, "miro.desktop")
+    if os.path.exists(old_file):
+        if not os.path.exists(destination):
+            try:
+                os.makedirs(autostart_dir)
+            except:
+                pass
+            try:
+                shutil.copy (resources.sharePath('applications/miro.desktop'), destination)
+            except:
+                pass
+            try: 
+                os.remove (old_file)
+            except:
+                pass

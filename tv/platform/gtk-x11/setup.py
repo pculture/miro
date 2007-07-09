@@ -440,7 +440,7 @@ setup(name='democracy',
     author_email='feedback@pculture.org',
     url='http://www.getdemocracy.com/',
     download_url='http://www.getdemocracy.com/downloads/',
-    scripts=[os.path.join(platform_dir, 'democracyplayer')],
+    scripts=[os.path.join(platform_dir, 'miro')],
     data_files=data_files,
     ext_modules = [
         fasttypes_ext, mozilla_browser_ext, xine_ext, xlib_ext,

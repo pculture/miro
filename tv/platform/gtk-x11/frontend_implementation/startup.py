@@ -176,7 +176,7 @@ def updateAutostart():
                                   '~/.config')
     config_home = os.path.expanduser (config_home)
     autostart_dir = os.path.join (config_home, "autostart")
-    destination = os.path.join (autostart_dir, "democracyplayer.desktop")
+    destination = os.path.join (autostart_dir, "miro.desktop")
     if config.get(prefs.RUN_DTV_AT_STARTUP):
         if os.path.exists(destination):
             return
@@ -185,7 +185,7 @@ def updateAutostart():
         except:
             pass
         try:
-            shutil.copy (resources.sharePath('applications/democracyplayer.desktop'), destination)
+            shutil.copy (resources.sharePath('applications/miro.desktop'), destination)
         except:
             pass
     else:
