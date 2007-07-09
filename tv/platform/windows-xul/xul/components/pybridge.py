@@ -97,6 +97,19 @@ def XULModifier(shortcut):
         output.append(XUL_MOD_STRINGS[modifier])
     return ' '.join(output)
 
+def XULDisplayedShortcut(item):
+    """Return the index of the default shortcut.  Normally items only have 1
+    shortcut, which is an easy case.  If items have multiple shortcuts,
+    normally we display the last one in the menus, however there are some
+    special cases.
+
+    Shortcut indicies are 1-based
+    """
+
+    if item.action.startswith("Remove"):
+        return 1
+    return len(item.shortcuts)
+
 nsIEventQueueService = components.interfaces.nsIEventQueueService
 nsIProperties = components.interfaces.nsIProperties
 nsIFile = components.interfaces.nsIFile
@@ -636,6 +649,9 @@ class PyBridge:
                             keyElement.setAttribute("key", XULKey(shortcut))
                         else:
                             keyElement.setAttribute("keycode", XULKey(shortcut))
+                        if XULKey(shortcut) == 'VK_SPACE':
+                            # spacebar doesn't get display text for some reason
+                            keyElement.setAttribute('keytext', _('Spacebar'))
                         if len(shortcut.modifiers) > 0:
                             keyElement.setAttribute("modifiers", XULModifier(shortcut))
                         keyElement.setAttribute("command", item.action)
@@ -665,7 +681,8 @@ class PyBridge:
                         menuitem.setAttribute("accesskey",
                                           XULAccelFromLabel(item.label))
                     if len(item.shortcuts)>0:
-                        menuitem.setAttribute("key","%s-key%d"%(item.action,len(item.shortcuts)))
+                        menuitem.setAttribute("key","%s-key%d"%(item.action,
+                            XULDisplayedShortcut(item)))
                         
                 menupopup.appendChild(menuitem)
 
