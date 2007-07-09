@@ -427,5 +427,8 @@ function onKeyDown(event) {
   } else if((event.keyCode == 8 && event.ctrlKey) || event.keyCode == 46) {
     // Ctrl-Backspace or Delete
     runCommand("RemoveCurrentSelection");
-  } 
+  } else if(event.keyCode >= 37 && event.keyCode <= 40) {
+    // Arrow keys
+    pybridge.handleKeyPress(event.keyCode, event.shiftKey, event.ctrlKey);
+  }
 }

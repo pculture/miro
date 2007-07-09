@@ -35,6 +35,7 @@ try:
     import views
     import moviedata
     import migrateappname
+    import keyboard
     moviedata.RUNNING_MAX = 1
 except:
     errorOnImport = True
@@ -770,3 +771,13 @@ class PyBridge:
     def setMinimizeToTray(self, newSetting):
         config.set(prefs.MINIMIZE_TO_TRAY, newSetting)
 
+    def handleKeyPress(self, keycode, shiftDown, controlDown):
+        keycode_to_portable_code = {
+            37: keyboard.LEFT,
+            38: keyboard.UP,
+            39: keyboard.RIGHT,
+            40: keyboard.DOWN,
+        }
+        if keycode in keycode_to_portable_code:
+            key = keycode_to_portable_code[keycode]
+            keyboard.handleKey(key, shiftDown, controlDown)

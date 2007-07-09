@@ -324,6 +324,9 @@ class bdist_xul_dumb(Command):
                            "xpcom.server",
                            # This manages to escape but looks important (?)
                            "xpcom.server.enumerator",
+                           # slips through because it's only included by
+                           # platform code
+                           "keyboard", 
                            ]
 
         # Add other stuff that is necessary to get a functional Python

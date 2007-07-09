@@ -53,8 +53,9 @@ class VideoDisplay (app.VideoDisplayBase):
         return frontend.vlcRenderer.exitFullScreen(url)
 
     def setVolume(self, volume): 
-        self.volume = volume
-        frontend.vlcRenderer.setVolume(volume)
+        app.VideoDisplayBase.setVolume(self, volume)
+        frontend.vlcRenderer.setVolume(self.volume)
+        frontend.jsBridge.positionVolumeSlider(self.volume)
 
     def fillMovieData (self, filename, movie_data, callback):
 	 print "fillMovieData (%s)" % (filename,)

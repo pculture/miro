@@ -112,4 +112,5 @@ interface pcfIDTVPyBridge : nsISupports
   void toggleDirectoryWatchShown(in AString id);
   boolean minimizeToTray();
   void setMinimizeToTray(in boolean newSetting);
+  void handleKeyPress(in short keycode, in boolean controlDown, in boolean shiftDown);
 };
