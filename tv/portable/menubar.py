@@ -156,7 +156,7 @@ PlaylistItems = [
     MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",(Key("p",MOD,SHIFT),)),
     Separator(),
     MenuItem(_("Re_name Playlist"),"RenamePlaylist",(), False),
-    MenuItem(_("_Remove Playlist"),"RemovePlaylists",(), False,
+    MenuItem(_("_Remove Playlist"),"RemovePlaylists", (Key(DELETE),Key(BKSPACE, MOD)), False,
              plural=_("_Remove Playlists"),
              folders=_("_Remove Playlist Folders"),
              folder=_("_Remove Playlist Folder"),
