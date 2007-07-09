@@ -30,7 +30,11 @@
         <caption label="&prefs.general;"/>
         <vbox>
           <checkbox id="runonstartup" label="&prefs.run.on.startup;" value="1" oncommand="runOnStartupChange()"/>
-          <checkbox id="minimizetotray" label="&prefs.minimize.to.tray;" value="1" oncommand="minimizeToTrayChange()"/>
+          <caption label="&prefs.close_to_tray_start;" />
+          <radiogroup id="close-to-tray" oncommand="closeToTrayChange();">
+            <radio label="&prefs.close_to_tray;" id="close-to-tray-yes" />
+            <radio label="&prefs.no_close_to_tray;" id="close-to-tray-no" />
+          </radiogroup>
         </vbox>
     </groupbox>
     <!--/GENERAL-->

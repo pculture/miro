@@ -9,7 +9,7 @@ function onload() {
   pybridge.startPrefs();
   selectDirectoryWatch(false);
   document.getElementById("runonstartup").checked = pybridge.getRunAtStartup();
-  document.getElementById("minimizetotray").checked = pybridge.minimizeToTray();
+  setCloseToTray(pybridge.minimizeToTray());
   setCheckEvery(pybridge.getCheckEvery());
   setMoviesDir(pybridge.getMoviesDirectory());
   originalMoviesDir = pybridge.getMoviesDirectory();
@@ -54,11 +54,9 @@ function runOnStartupChange() {
       pybridge.setRunAtStartup(false);
 }
 
-function minimizeToTrayChange() {
-  if (document.getElementById("minimizetotray").checked)
-      pybridge.setMinimizeToTray(true);
-  else
-      pybridge.setMinimizeToTray(false);
+function closeToTrayChange() {
+  var radio = document.getElementById('close-to-tray-yes');
+  pybridge.setMinimizeToTray(radio.selected);
 }
 
 function setCheckEvery(minutes) {
@@ -216,6 +214,15 @@ function expirationChange(days) {
 function singlePlayModeChange() {
   var radio = document.getElementById('single-play-mode-radio');
   pybridge.setSinglePlayMode(radio.selected);
+}
+
+function setCloseToTray(closeToTray) {
+  if(closeToTray) {
+    var button = document.getElementById('close-to-tray-yes');
+  } else {
+    var button = document.getElementById('close-to-tray-no');
+  }
+  document.getElementById('close-to-tray').selectedItem = button;
 }
 
 function setSinglePlayMode(value) {

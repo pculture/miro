@@ -787,14 +787,12 @@ class PyBridge:
         if config.get(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE):
             self.askUserForCloseBehaviour()
         elif config.get(prefs.MINIMIZE_TO_TRAY):
-            self.minimizeToTray()
+            minimizer = makeService(
+                    "@participatoryculture.org/dtv/minimize;1",
+                    components.interfaces.pcfIDTVMinimize)
+            minimizer.minimizeOrRestore()
         else:
             self.quit()
-
-    def minimizeToTray(self):
-        minimizer = makeService("@participatoryculture.org/dtv/minimize;1",
-                components.interfaces.pcfIDTVMinimize)
-        minimizer.minimizeOrRestore()
 
     def askUserForCloseBehaviour(self):
         title = _("Close to tray?")
