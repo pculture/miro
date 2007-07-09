@@ -11,11 +11,15 @@
 ;  CONFIG_PROG_ID        eg, "Democracy.Player.1"
 
 !define INST_KEY "Software\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
-!define OLD_INST_KEY "Software\Participatory Culture Foundation\Democracy Player"
 !define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CONFIG_LONG_APP_NAME}"
 
 !define RUN_SHORTCUT "${CONFIG_LONG_APP_NAME}.lnk"
 !define UNINSTALL_SHORTCUT "Uninstall ${CONFIG_SHORT_APP_NAME}.lnk"
+
+!define OLD_INST_KEY "Software\Participatory Culture Foundation\Democracy Player"
+!define OLD_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Democracy Player"
+!define OLD_RUN_SHORTCUT "Democracy Player.lnk"
+!define OLD_UNINSTALL_SHORTCUT "Uninstall Democracy Player.lnk"
 
 Name "${CONFIG_LONG_APP_NAME} ${CONFIG_VERSION}"
 OutFile ${CONFIG_OUTPUT_FILE}
@@ -458,6 +462,34 @@ installed.  Do you want to continue and overwrite it?" \
   Quit
 UninstallOld:
   !insertmacro uninstall $R0
+
+  ; Remove Start Menu shortcuts
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_RUN_SHORTCUT}"
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_UNINSTALL_SHORTCUT}"
+  RMDir "$SMPROGRAMS\Democracy Player"
+
+  ; Remove desktop and quick launch shortcuts
+  Delete "$DESKTOP\${OLD_RUN_SHORTCUT}"
+  Delete "$QUICKLAUNCH\${OLD_RUN_SHORTCUT}"
+
+  SetShellVarContext all
+
+  ; Remove Start Menu shortcuts
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_RUN_SHORTCUT}"
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_UNINSTALL_SHORTCUT}"
+  RMDir "$SMPROGRAMS\Democracy Player"
+
+  ; Remove desktop and quick launch shortcuts
+  Delete "$DESKTOP\${OLD_RUN_SHORTCUT}"
+  Delete "$QUICKLAUNCH\${OLD_RUN_SHORTCUT}"
+
+  SetShellVarContext current
+
+  ; Remove registry keys
+  DeleteRegKey HKLM "${OLD_INST_KEY}"
+  DeleteRegKey HKLM "${OLD_UNINST_KEY}"
+  DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player"
+  DeleteRegKey HKCR "Democracy.Player.1"
 
 NotOldInstalled:
   !insertmacro MUI_LANGDLL_DISPLAY
