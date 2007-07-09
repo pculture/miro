@@ -258,7 +258,7 @@ class MainFrame:
                 self.widgetTree['main-window'].unmaximize()
 
         if getPlayerBool("showTrayicon") and trayicon.trayicon_is_supported:
-            self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/miro-24x20.png"), self)
+            self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/miro-24x24.png"), self)
             self.trayicon.set_visible(True)
 
         self.widgetTree['main-window'].connect ("configure-event", self.configureEvent)
