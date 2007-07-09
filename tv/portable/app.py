@@ -432,6 +432,10 @@ class VideoDisplayBase (Display):
             return self.activeRenderer.getCurrentTime()
         return None
 
+    def setCurrentTime(self, seconds):
+        if self.activeRenderer is not None:
+            self.activeRenderer.setCurrentTime(seconds)
+
     def getProgress(self):
         if self.activeRenderer is not None:
             return self.activeRenderer.getProgress()

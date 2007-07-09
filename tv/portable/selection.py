@@ -96,7 +96,6 @@ class SelectionArea(object):
                 if obj.getID not in self.currentSelection:
                     self.selectItem(view, obj.getID())
 
-
     def calcExtendRange(self, view, id):
         idIsBefore = False
         gotFirst = False
@@ -248,6 +247,36 @@ class SelectionArea(object):
     def getObjects(self):
         view = self.currentView
         return [view.getObjectByID(id) for id in self.currentSelection]
+
+    def firstBeforeSelection(self, iterator):
+        """Go through iterator and find the first item that is selected.
+        Returns the item immediately before that one.
+
+        Returns None if the first item in iterator is selected, or no items
+        are selected.
+        """
+
+        lastItem = None
+        for item in iterator:
+            if item.getID() in self.currentSelection:
+                return lastItem
+            lastItem = item
+        return None
+
+    def firstAfterSelection(self, iterator):
+        """Like firstBeforeSelection, but returns the first item following the
+        last selected item in iterator.
+        """
+
+        retval = None
+        lastSelected = False
+        for item in iterator:
+            if item.getID() in self.currentSelection:
+                lastSelected = True
+            elif lastSelected:
+                lastSelected = False
+                retval = item
+        return retval
 
 class TabSelectionArea(SelectionArea):
     """Selection area for the tablist.  This has a couple special cases to

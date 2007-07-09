@@ -4,6 +4,7 @@ import app
 import gobject
 import gtk
 import gtk.gdk
+import gtk.keysyms
 import os
 import shutil
 import frontend
@@ -23,6 +24,7 @@ import logging
 import feed
 import views
 import database
+import keyboard
 from menubar import menubar
 
 from gtk_queue import gtkAsyncMethod
@@ -309,6 +311,25 @@ class CallbackHandler(object):
         platformutils.confirmMainThread()
         app.controller.quit()
         return True
+
+    def on_main_window_key_press_event(self, widget, event):
+        portable_keys_mapping = {
+            gtk.keysyms.Down: keyboard.DOWN,
+            gtk.keysyms.Up: keyboard.UP,
+            gtk.keysyms.Right: keyboard.RIGHT,
+            gtk.keysyms.Left: keyboard.LEFT,
+        }
+        if event.keyval in portable_keys_mapping:
+            control = shift = False
+            if event.state & gtk.gdk.SHIFT_MASK:
+                shift = True
+            if event.state & gtk.gdk.CONTROL_MASK:
+                control = True
+            key = portable_keys_mapping[event.keyval]
+            keyboard.handleKey(key, shift, control)
+            return True
+        else:
+            return False
 
     def on_play_pause_button_clicked(self, event = None):
         videoDisplay = self.mainApp.videoDisplay

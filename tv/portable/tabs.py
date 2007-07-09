@@ -9,7 +9,7 @@ import resources
 import guide
 import playlist
 import sorts
-from util import checkU
+from util import checkU, getSingletonDDBObject
 from databasehelper import TrackedIDList
 
 from xml.dom.minidom import parse
@@ -307,3 +307,25 @@ def reloadStaticTabs():
         state = n.getAttribute('state')
         order = int(n.getAttribute('order'))
         StaticTab(tabTemplateBase, contentsTemplate, state, order)
+
+def tabIterator():
+    """Iterates over all tabs in order"""
+    for tab in views.guideTabs:
+        yield tab
+    for tab in views.staticTabs:
+        yield tab
+    for tab in getSingletonDDBObject(views.channelTabOrder).getView():
+        yield tab
+    for tab in getSingletonDDBObject(views.playlistTabOrder).getView():
+        yield tab
+
+def getViewForTab(tab):
+    if tab.type == 'guide':
+        return views.guideTabs
+    elif tab.type == 'statictab':
+        return views.staticTabs
+    elif tab.type == 'feed':
+        return getSingletonDDBObject(views.channelTabOrder).getView()
+    elif tab.type == 'playlist':
+        return getSingletonDDBObject(views.playlistTabOrder).getView()
+    raise AssertionError("Unknown tab type")

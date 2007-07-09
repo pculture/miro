@@ -130,9 +130,12 @@ class Renderer(app.VideoRenderer):
     def getCurrentTime(self):
         try:
             pos, length = self.xine.getPositionAndLength()
-            return pos / 1000
+            return pos / 1000.0
         except:
             return None
+
+    def setCurrentTime(self, seconds):
+        self.seek(seconds)
 
     def playFromTime(self, seconds):
         self.seek (seconds)
