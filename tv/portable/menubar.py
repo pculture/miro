@@ -123,8 +123,6 @@ VideoItems = [
 if platform == "gtk-x11":
     del VideoItems[2] # No "Check version" on GTK platforms. We use
                       # the package management system instead
-elif platform == 'windows-xul':
-    del VideoItems[5] # SaveVideo not implement on windows
 
 EditItems = [
     MenuItem(_("Cu_t"), "ClipboardCut", (Key("x",MOD),)),

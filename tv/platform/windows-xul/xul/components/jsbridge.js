@@ -441,7 +441,7 @@ jsBridge.prototype = {
 
     var fp = Components.classes["@mozilla.org/filepicker;1"]
             .createInstance(Components.interfaces.nsIFilePicker);
-    var saveMenuItem = this.document.getElementById('menuitem-video-save');
+    var saveMenuItem = this.document.getElementById('menuitem-savevideo');
     fp.init(this.window, saveMenuItem.getAttribute('label'),
         Components.interfaces.nsIFilePicker.modeSave);
     fp.defaultString = this.videoFilename;
