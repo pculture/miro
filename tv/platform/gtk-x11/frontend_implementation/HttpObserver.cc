@@ -5,7 +5,7 @@
  */
 
 // NOTE: we could have code to register the class with XPCOM, but since we
-// only construct it from inside democracy, there's no need.
+// only construct it from inside miro, there's no need.
 
 #define MOZILLA_INTERNAL_API
 #include "HttpObserver.h"

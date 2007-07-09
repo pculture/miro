@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Democracy Player - an RSS based video player application
+# Miro - an RSS based video player application
 # Copyright (C) 2005-2006 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,6 @@ PYTHON=`which python`
 PYTHON_VERSION=`python -c 'import sys; info=sys.version_info; print "%s.%s" % (info[0], info[1])'`
 PREFIX=/usr
 export MIRO_SHARE_ROOT=dist/$PREFIX/share/
-export MIRO_RESOURCE_ROOT=dist/$PREFIX/share/democracy/resources/
+export MIRO_RESOURCE_ROOT=dist/$PREFIX/share/miro/resources/
 export LD_LIBRARY_PATH=/usr/lib/firefox${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}
 $PYTHON setup.py install --root=./dist --prefix=$PREFIX && PYTHONPATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/ dist/$PREFIX/bin/miro "$@"

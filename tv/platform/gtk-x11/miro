@@ -2,7 +2,7 @@
 # -*- mode: python -*-
 
 # This comes first.  Seriously.
-import democracy.xlibhelper as xlibhelper
+import miro.xlibhelper as xlibhelper
 if xlibhelper.XInitThreads() == 0:
     print "WARNING: XInitThreads() failed!"
 
@@ -13,9 +13,9 @@ import optparse
 import pygtk
 pygtk.require('2.0')
 
-import democracy
-# Make sure democracy modules are on the search path
-sys.path.insert(0, os.path.abspath(os.path.dirname(democracy.__file__)))
+import miro
+# Make sure miro modules are on the search path
+sys.path.insert(0, os.path.abspath(os.path.dirname(miro.__file__)))
 
 import upgrade
 upgrade.upgrade()

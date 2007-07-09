@@ -5,15 +5,15 @@ import sys
 PREFIX = '/usr'
 os.environ['PREFIX'] = PREFIX
 os.environ['MIRO_SHARE_ROOT'] = 'dist/%s/share/' % PREFIX
-os.environ['MIRO_RESOURCE_ROOT'] = 'dist/usr/share/democracy/resources/'
+os.environ['MIRO_RESOURCE_ROOT'] = 'dist/usr/share/miro/resources/'
 rv = os.system('python2.4 setup.py install --root=./dist --prefix=$PREFIX')
 if rv != 0:
-    print "FAILURE BUILDING DEMOCRACY"
+    print "FAILURE BUILDING MIRO"
     sys.exit()
-sys.path.insert(0, 'dist/%s/lib/python2.4/site-packages/democracy' % PREFIX)
+sys.path.insert(0, 'dist/%s/lib/python2.4/site-packages/miro' % PREFIX)
 import app
 
-# OK democracy environment is set up.
+# OK miro environment is set up.
 import tempfile
 from xml import sax
 from StringIO import StringIO
@@ -35,7 +35,7 @@ import sorts
 import indexes
 import filters
 
-resourcePath = 'dist/%s/share/democracy/resources/' % PREFIX
+resourcePath = 'dist/%s/share/miro/resources/' % PREFIX
 template_compiler.setResourcePath('file://' + os.path.abspath(resourcePath))
 
 class FakeView:

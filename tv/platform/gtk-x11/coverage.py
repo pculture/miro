@@ -337,7 +337,7 @@ class coverage:
         if settings.get('erase'):
             self.erase()
         if settings.get('execute'):
-            # EDITED FOR DEMOCRACY:
+            # EDITED FOR MIRO:
             runSetupDotPy()
             sys.argv = ['dist/usr/bin/miro', '--unittest'] + args
             self.start()
@@ -355,13 +355,13 @@ class coverage:
         else:
             omit = []
 
-        self.relative_dir = 'dist/usr/lib/python2.4/site-packages/democracy/'
-        democracyRoot = 'dist/usr/lib/python2.4/site-packages/democracy/'
+        self.relative_dir = 'dist/usr/lib/python2.4/site-packages/miro/'
+        miroRoot = 'dist/usr/lib/python2.4/site-packages/miro/'
         if settings.get('report'):
-            args = [os.path.join(democracyRoot, arg) for arg in args]
+            args = [os.path.join(miroRoot, arg) for arg in args]
             self.report(args, show_missing, ignore_errors, omit_prefixes=omit)
         if settings.get('annotate'):
-            args = [os.path.join(democracyRoot, arg) for arg in args]
+            args = [os.path.join(miroRoot, arg) for arg in args]
             self.annotate(args, directory, ignore_errors, omit_prefixes=omit)
 
     def use_cache(self, usecache):
@@ -796,7 +796,7 @@ def runSetupDotPy():
         print "error running setup.py"
         sys.exit(-1)
     sys.path.append('dist/usr/lib/python2.4/site-packages/')
-    os.environ['DEMOCRACY_RESOURCE_ROOT']='dist/usr/share/democracy/resources/'
+    os.environ['MIRO_RESOURCE_ROOT']='dist/usr/share/miro/resources/'
 
 # Command-line interface.
 if __name__ == '__main__':

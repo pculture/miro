@@ -165,7 +165,7 @@ def parsePkgConfig(command, components, options_dict = None):
 
 #### The fasttypes extension ####
 fasttypes_ext = \
-    Extension("democracy.fasttypes", 
+    Extension("miro.fasttypes", 
         sources = [os.path.join(portable_dir, 'fasttypes.cpp')],
         libraries = [BOOST_LIB],
     )
@@ -224,7 +224,7 @@ for dir in mozilla_browser_options['include_dirs']:
 if nsI:
     mozilla_browser_options['extra_compile_args'].append('-DNS_I_SERVICE_MANAGER_UTILS=1')
 
-mozilla_browser_ext = Extension("democracy.MozillaBrowser",
+mozilla_browser_ext = Extension("miro.MozillaBrowser",
         [ os.path.join(frontend_implementation_dir,'MozillaBrowser.pyx'),
           os.path.join(frontend_implementation_dir,'MozillaBrowserXPCOM.cc'),
           os.path.join(frontend_implementation_dir,'HttpObserver.cc'),
@@ -235,7 +235,7 @@ mozilla_browser_ext = Extension("democracy.MozillaBrowser",
         **mozilla_browser_options)
 #### Xlib Extension ####
 xlib_ext = \
-    Extension("democracy.xlibhelper", 
+    Extension("miro.xlibhelper", 
         [ os.path.join(frontend_implementation_dir,'xlibhelper.pyx') ],
         library_dirs = ['/usr/X11R6/lib'],
         libraries = ['X11'],
@@ -244,7 +244,7 @@ xlib_ext = \
 #### Xine Extension ####
 xine_options = parsePkgConfig('pkg-config', 
         'libxine pygtk-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
-xine_ext = Extension('democracy.xine', [
+xine_ext = Extension('miro.xine', [
         os.path.join(xine_dir, 'xine.pyx'),
         os.path.join(xine_dir, 'xine_impl.c'),
         ], **xine_options)
@@ -258,11 +258,11 @@ data_files = []
 files = [f for f in listfiles(resource_dir) \
         if os.path.basename(f) != 'app.config.template']
 files.append(os.path.join(platform_dir, 'glade', 'democracy.glade'))
-data_files.append(('/usr/share/democracy/resources/', files))
+data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
 for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','unittest'), 'searchengines'):
     source_dir = os.path.join(resource_dir, dir)
-    dest_dir = os.path.join('/usr/share/democracy/resources/', dir)
+    dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
 # add the desktop file, icons, mime data, and man page.
 data_files += [
@@ -286,7 +286,7 @@ class install_data (distutils.command.install_data.install_data):
 
     def install_app_config(self):
         source = os.path.join(resource_dir, 'app.config.template')
-        dest = '/usr/share/democracy/resources/app.config'
+        dest = '/usr/share/miro/resources/app.config'
         revision = util.queryRevision(root_dir)
         if revision is None:
             revision = "unknown"
@@ -325,7 +325,7 @@ class install_data (distutils.command.install_data.install_data):
 #### Our specialized build_py command ####
 class build_py (distutils.command.build_py.build_py):
     """build_py extends the default build_py implementation so that the
-    platform and portable directories get merged into the democracy
+    platform and portable directories get merged into the miro
     package.
     """
 
@@ -336,8 +336,8 @@ class build_py (distutils.command.build_py.build_py):
             expanded = template.substitute(**conf)
             write_file(path, expanded)
         
-    def find_democracy_modules(self):
-        """Returns a list of modules to go in the democracy directory.  Each
+    def find_miro_modules(self):
+        """Returns a list of modules to go in the miro directory.  Each
         item has the form (package, module, path).  The trick here is merging
         the contents of the platform/gtk-x11 and portable directories.
         """
@@ -349,27 +349,27 @@ class build_py (distutils.command.build_py.build_py):
             if os.path.samefile(f, __file__):
                 continue
             module = os.path.splitext(os.path.basename(f))[0]
-            rv.append(('democracy', module, f))
+            rv.append(('miro', module, f))
         return rv
 
     def find_all_modules (self):
-        """Extend build_py's module list to include the democracy modules."""
+        """Extend build_py's module list to include the miro modules."""
         modules = distutils.command.build_py.build_py.find_all_modules(self)
-        modules.extend(self.find_democracy_modules())
+        modules.extend(self.find_miro_modules())
         return modules
 
     def run(self):
         """Do the build work.  In addition to the default implementation, we
-        also build the democracy package from the platform and portable code
+        also build the miro package from the platform and portable code
         and install the resources as package data.  
         """
 
-        for (package, module, module_file) in self.find_democracy_modules():
-            assert package == 'democracy'
+        for (package, module, module_file) in self.find_miro_modules():
+            assert package == 'miro'
             self.build_module(module, module_file, package)
         return distutils.command.build_py.build_py.run(self)
 
-#### bdist_deb builds the democracy debian package ####
+#### bdist_deb builds the miro debian package ####
 class bdist_deb (Command):
 
     description = "Create a deb package"
@@ -425,7 +425,7 @@ class bdist_deb (Command):
         # ensure the dist directory is around
         self.mkpath(self.dist_dir)
         # create the debian package
-        package_basename = "democracy_%s_i386.deb" % \
+        package_basename = "miro_%s_i386.deb" % \
                 self.distribution.get_version()
         package_path  = os.path.join(self.dist_dir, package_basename)
         dpkg_command = "fakeroot dpkg --build %s %s" % (self.bdist_dir, 
@@ -434,39 +434,39 @@ class bdist_deb (Command):
         os.system(dpkg_command)
         dir_util.remove_tree(self.bdist_dir)
 #### Run setup ####
-setup(name='democracy', 
+setup(name='miro', 
     version=appVersion,
     author='Participatory Culture Foundation',
     author_email='feedback@pculture.org',
-    url='http://www.getdemocracy.com/',
-    download_url='http://www.getdemocracy.com/downloads/',
+    url='http://www.getmiro.com/',
+    download_url='http://www.getmiro.com/downloads/',
     scripts=[os.path.join(platform_dir, 'miro')],
     data_files=data_files,
     ext_modules = [
         fasttypes_ext, mozilla_browser_ext, xine_ext, xlib_ext,
-        Extension("democracy.database", 
+        Extension("miro.database", 
                 [os.path.join(portable_dir, 'database.pyx')]),
-        Extension("democracy.sorts", 
+        Extension("miro.sorts", 
                 [os.path.join(portable_dir, 'sorts.pyx')]),
-        #Extension("democracy.template", 
+        #Extension("miro.template", 
         #        [os.path.join(portable_dir, 'template.pyx')]),
     ],
     packages = [
-        'democracy.frontend_implementation',
-        'democracy.BitTorrent',
-        'democracy.dl_daemon',
-        'democracy.test',
-        'democracy.compiled_templates',
-        'democracy.compiled_templates.unittest',
-        'democracy.dl_daemon.private',
+        'miro.frontend_implementation',
+        'miro.BitTorrent',
+        'miro.dl_daemon',
+        'miro.test',
+        'miro.compiled_templates',
+        'miro.compiled_templates.unittest',
+        'miro.dl_daemon.private',
     ],
     package_dir = {
-        'democracy.frontend_implementation' : frontend_implementation_dir,
-        'democracy.BitTorrent' : bittorrent_dir,
-        'democracy.dl_daemon' : dl_daemon_dir,
-        'democracy.test' : test_dir,
-        'democracy.compiled_templates' : compiled_templates_dir,
-        'democracy.compiled_templates.unittest' : compiled_templates_unittest_dir,
+        'miro.frontend_implementation' : frontend_implementation_dir,
+        'miro.BitTorrent' : bittorrent_dir,
+        'miro.dl_daemon' : dl_daemon_dir,
+        'miro.test' : test_dir,
+        'miro.compiled_templates' : compiled_templates_dir,
+        'miro.compiled_templates.unittest' : compiled_templates_unittest_dir,
     },
     cmdclass = {
         'build_ext': build_ext, 

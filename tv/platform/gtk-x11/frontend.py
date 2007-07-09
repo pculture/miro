@@ -1,4 +1,4 @@
-# Democracy Player - an RSS based video player application
+# Miro - an RSS based video player application
 # Copyright (C) 2005-2006 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -66,7 +66,7 @@ else:
     class PlaybackController:
         pass
 
-# Create democracy directories in the user's home
+# Create miro directories in the user's home
 support_dir = config.get(prefs.SUPPORT_DIRECTORY)
 os.environ['APPDATA'] = support_dir # Needed to make bittorrent happy
 if not os.path.exists(support_dir):

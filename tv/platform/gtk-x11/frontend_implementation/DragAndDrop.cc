@@ -47,7 +47,7 @@ nsresult makeDragData(nsIDOMElement* element, nsISupportsArray *dragArray) {
     nsAutoString dragType;
     rv = element->GetAttribute(dragSourceTypeStr, dragType);
     nsCAutoString mimeType = NS_ConvertUTF16toUTF8(dragType);
-    mimeType.Insert("application/x-democracy-", 0);
+    mimeType.Insert("application/x-miro-", 0);
     mimeType.Append("-drag");
     trans->AddDataFlavor(PromiseFlatCString(mimeType).get());
     if(NS_FAILED(rv)) return rv;
@@ -93,7 +93,7 @@ nsresult isSingleDragTypeSupported(const nsAString &dragType, PRBool *supported)
 
 
     nsCAutoString dragMimeType = NS_ConvertUTF16toUTF8(dragType);
-    dragMimeType.Insert("application/x-democracy-", 0);
+    dragMimeType.Insert("application/x-miro-", 0);
     dragMimeType.Append("-drag");
     nsCOMPtr<nsIDragService> dragService(do_GetService(
                 "@mozilla.org/widget/dragservice;1", &rv));
@@ -185,7 +185,7 @@ nsresult getDragSourceData(const nsAString &dragType, nsAString &output)
     nsresult rv;
 
     nsCAutoString dragMimeType = NS_ConvertUTF16toUTF8(dragType);
-    dragMimeType.Insert("application/x-democracy-", 0);
+    dragMimeType.Insert("application/x-miro-", 0);
     dragMimeType.Append("-drag");
     rv = extractDragData(PromiseFlatCString(dragMimeType).get(), output);
     if(NS_FAILED(rv)) return rv;
@@ -283,12 +283,12 @@ nsresult findDropElement(nsIDOMEvent* event, nsIDOMElement** element,
     }
 }
 
-class DemocracyDNDHook : public nsIClipboardDragDropHooks, nsIDOMEventListener {
+class MiroDNDHook : public nsIClipboardDragDropHooks, nsIDOMEventListener {
 protected:
     GtkMozEmbed* embed;
 
 public:   
-    DemocracyDNDHook(GtkMozEmbed* embed) {
+    MiroDNDHook(GtkMozEmbed* embed) {
         this->embed = embed;
     }
 
@@ -458,7 +458,7 @@ public:
     }
 };
 
-NS_IMPL_ISUPPORTS2(DemocracyDNDHook, nsIClipboardDragDropHooks, nsIDOMEventListener)
+NS_IMPL_ISUPPORTS2(MiroDNDHook, nsIClipboardDragDropHooks, nsIDOMEventListener)
 
 nsresult setupDragAndDrop(GtkMozEmbed* gtkembed)
 {
@@ -476,16 +476,16 @@ nsresult setupDragAndDrop(GtkMozEmbed* gtkembed)
 
     if (NS_FAILED(rv)) return rv;
 
-    nsIClipboardDragDropHooks *rawPtr = new DemocracyDNDHook(gtkembed);
+    nsIClipboardDragDropHooks *rawPtr = new MiroDNDHook(gtkembed);
     if (!rawPtr)
         return NS_ERROR_OUT_OF_MEMORY;
-    nsCOMPtr<nsIClipboardDragDropHooks> democracyDNDHook(do_QueryInterface(
+    nsCOMPtr<nsIClipboardDragDropHooks> miroDNDHook(do_QueryInterface(
                 rawPtr, &rv));
     if (NS_FAILED(rv)) return rv;
     nsCOMPtr<nsICommandParams> params(do_CreateInstance(
         "@mozilla.org/embedcomp/command-params;1", &rv));
     if (NS_FAILED(rv)) return rv;
-    rv = params->SetISupportsValue("addhook", democracyDNDHook);
+    rv = params->SetISupportsValue("addhook", miroDNDHook);
     if (NS_FAILED(rv)) return rv;
     rv = commandManager->DoCommand("cmd_clipboardDragDropHook", params,
             domWindow);
@@ -493,7 +493,7 @@ nsresult setupDragAndDrop(GtkMozEmbed* gtkembed)
             do_QueryInterface(domWindow, &rv));
     if(NS_FAILED(rv)) return rv;
     nsCOMPtr<nsIDOMEventListener> dndEventListener(
-            do_QueryInterface(democracyDNDHook, &rv));
+            do_QueryInterface(miroDNDHook, &rv));
     if(NS_FAILED(rv)) return rv;
     nsAutoString type = NS_ConvertUTF8toUTF16(
             nsDependentCString("dragexit"));

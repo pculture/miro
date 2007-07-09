@@ -368,9 +368,9 @@ class MainFrame:
         platformutils.confirmMainThread()
         if (self.aboutWidget is None):
             self.aboutWidget = gtk.AboutDialog()
-            self.aboutWidget.set_name("Democracy Player")
+            self.aboutWidget.set_name("Miro")
             self.aboutWidget.set_version(config.get(prefs.APP_VERSION))
-            self.aboutWidget.set_website("http://www.getdemocracy.com/")
+            self.aboutWidget.set_website("http://www.getmiro.com/")
             def delete_event_cb(widget, event):
                 widget.hide()
                 return True

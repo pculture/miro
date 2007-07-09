@@ -488,18 +488,18 @@ class UIBackendDelegate:
             self.killDownloadDaemon(oldpid)
 
         environ = os.environ.copy()
-        import democracy
-        democracyPath = os.path.dirname(democracy.__file__)
-        dlDaemonPath = os.path.join(democracyPath, 'dl_daemon')
+        import miro
+        miroPath = os.path.dirname(miro.__file__)
+        dlDaemonPath = os.path.join(miroPath, 'dl_daemon')
         privatePath = os.path.join(dlDaemonPath, 'private')
 
         pythonPath = environ.get('PYTHONPATH', '').split(':')
-        pythonPath[0:0] = [privatePath, democracyPath]
+        pythonPath[0:0] = [privatePath, miroPath]
         environ['PYTHONPATH'] = ':'.join(pythonPath)
 
         environ.update(env)
 
-        # run the Democracy_Downloader script
+        # run the Miro_Downloader script
         script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
 
         os.spawnlpe(os.P_NOWAIT, "python", "python", script, environ)
