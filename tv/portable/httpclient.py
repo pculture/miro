@@ -1576,6 +1576,27 @@ class HTTPClient(object):
             traceback.print_exc()
         return response
 
+    def getCookieExpirationDate(self, val):
+        """Tries a bunch of possible cookie expiration date formats
+        until it finds the magic one (or doesn't and returns 0).
+        """
+        fmts = ( '%a, %d %b %Y %H:%M:%S %Z',
+                 '%a, %d %b %y %H:%M:%S %Z',
+                 '%a, %d-%b-%Y %H:%M:%S %Z',
+                 '%a, %d-%b-%y %H:%M:%S %Z' )
+
+        for fmt in fmts:
+            try:
+                return time.mktime(time.strptime(val, fmt))
+            except ValueError, ve:
+                pass
+            except OverflowError, oe:
+                print "DTV: Warning: overflow error on cookie expiration: '%s'" % val
+
+        print "DTV: Warning: Can't process cookie expiration: '%s'" % val
+        return 0
+
+
     def getCookiesFromResponse(self, response):
         """Generates a cookie dictionary from headers in response
         """
@@ -1650,18 +1671,9 @@ class HTTPClient(object):
                         now = time.time()
                         # FIXME: "expires" isn't very well defined and
                         # this code will probably puke in certain cases
-                        try:
-                            expires = time.mktime(time.strptime(
-                                                getAttrPair(attr)[1],
-                                              '%a, %d %b %Y %H:%M:%S %Z'))
-                        except:
-                            try:
-                                expires = time.mktime(time.strptime(
-                                              getAttrPair(attr)[1],
-                                              '%a, %d-%b-%y %H:%M:%S %Z'))
-                            except:
-                                print "DTV: Warning: Can't process cookie expiration: %s" % getAttrPair(attr)[1]
-                                expires = 0
+                        cookieval = getAttrPair(attr)[1].strip()
+                        expires = self.getCookieExpirationDate(cookieval)
+                        
                         expires -= time.timezone
                         if expires < now:
                             cookie['Max-Age'] = 0
