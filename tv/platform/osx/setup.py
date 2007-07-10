@@ -354,7 +354,7 @@ class mypy2app(py2app):
 
             os.rename(os.path.join(self.dist_dir,"%s.app"%conf['shortAppName']),
                       os.path.join(imgDirName, "%s.app"%conf['shortAppName']))
-            shutil.copyfile("Resources-DMG/DS_Store",
+            shutil.copyfile("Resources-DMG/dmg-ds-store",
                             os.path.join(imgDirName,".DS_Store"))
             shutil.copyfile("Resources-DMG/background.tiff",
                             os.path.join(imgDirName,".background",
