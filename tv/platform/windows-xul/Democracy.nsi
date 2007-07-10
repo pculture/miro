@@ -18,8 +18,10 @@
 
 !define OLD_INST_KEY "Software\Participatory Culture Foundation\Democracy Player"
 !define OLD_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Democracy Player"
-!define OLD_RUN_SHORTCUT "Democracy Player.lnk"
-!define OLD_UNINSTALL_SHORTCUT "Uninstall Democracy Player.lnk"
+!define OLD_RUN_SHORTCUT1 "Democracy Player.lnk"
+!define OLD_RUN_SHORTCUT2 "Democracy.lnk"
+!define OLD_UNINSTALL_SHORTCUT1 "Uninstall Democracy Player.lnk"
+!define OLD_UNINSTALL_SHORTCUT2 "Uninstall Democracy.lnk"
 
 Name "${CONFIG_LONG_APP_NAME} ${CONFIG_VERSION}"
 OutFile ${CONFIG_OUTPUT_FILE}
@@ -463,25 +465,33 @@ installed.  Do you want to continue and overwrite it?" \
 UninstallOld:
   !insertmacro uninstall $R0
 
+  SetShellVarContext current
   ; Remove Start Menu shortcuts
-  Delete "$SMPROGRAMS\Democracy Player\${OLD_RUN_SHORTCUT}"
-  Delete "$SMPROGRAMS\Democracy Player\${OLD_UNINSTALL_SHORTCUT}"
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_RUN_SHORTCUT1}"
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_RUN_SHORTCUT2}"
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_UNINSTALL_SHORTCUT1}"
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_UNINSTALL_SHORTCUT2}"
   RMDir "$SMPROGRAMS\Democracy Player"
 
   ; Remove desktop and quick launch shortcuts
-  Delete "$DESKTOP\${OLD_RUN_SHORTCUT}"
-  Delete "$QUICKLAUNCH\${OLD_RUN_SHORTCUT}"
+  Delete "$DESKTOP\${OLD_RUN_SHORTCUT1}"
+  Delete "$DESKTOP\${OLD_RUN_SHORTCUT2}"
+  Delete "$QUICKLAUNCH\${OLD_RUN_SHORTCUT1}"
+  Delete "$QUICKLAUNCH\${OLD_RUN_SHORTCUT2}"
 
   SetShellVarContext all
-
   ; Remove Start Menu shortcuts
-  Delete "$SMPROGRAMS\Democracy Player\${OLD_RUN_SHORTCUT}"
-  Delete "$SMPROGRAMS\Democracy Player\${OLD_UNINSTALL_SHORTCUT}"
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_RUN_SHORTCUT1}"
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_RUN_SHORTCUT2}"
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_UNINSTALL_SHORTCUT1}"
+  Delete "$SMPROGRAMS\Democracy Player\${OLD_UNINSTALL_SHORTCUT2}"
   RMDir "$SMPROGRAMS\Democracy Player"
 
   ; Remove desktop and quick launch shortcuts
-  Delete "$DESKTOP\${OLD_RUN_SHORTCUT}"
-  Delete "$QUICKLAUNCH\${OLD_RUN_SHORTCUT}"
+  Delete "$DESKTOP\${OLD_RUN_SHORTCUT1}"
+  Delete "$DESKTOP\${OLD_RUN_SHORTCUT2}"
+  Delete "$QUICKLAUNCH\${OLD_RUN_SHORTCUT1}"
+  Delete "$QUICKLAUNCH\${OLD_RUN_SHORTCUT2}"
 
   SetShellVarContext current
 
