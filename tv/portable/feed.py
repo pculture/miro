@@ -16,7 +16,6 @@ import string
 import re
 import traceback 
 import xml
-import urllib
 
 from database import defaultDatabase, DatabaseConstraintError
 from httpclient import grabURL, NetworkError
@@ -31,7 +30,7 @@ import folder
 import menu
 import prefs
 import resources
-from util import returnsUnicode, unicodify, chatter, checkU, checkF
+from util import returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL
 from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
 import filetypes
 import views
@@ -152,15 +151,7 @@ def normalizeFeedURL(url):
     if searchTerm is not None:
         url = "dtv:searchTerm:%s?%s" % (urlencode(url), urlencode(searchTerm))
     else:
-        # The w3c says that international characters in URLs should be utf8
-        # encoded and quoted: <http://www.w3.org/International/O-URL-code.html>
-        quotedURL = list()
-        for c in url.encode('utf8'):
-            if ord(c) > 127:
-                quotedURL.append(urllib.quote(c))
-            else:
-                quotedURL.append(c)
-        url = u''.join(quotedURL)
+        url = quoteUnicodeURL(url)
 
     if not validateFeedURL(url):
         logging.info ("unable to normalize URL %s", originalURL)

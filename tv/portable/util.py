@@ -569,6 +569,18 @@ def unicodify(d):
         d = d.decode('ascii','replace')
     return d
 
+# Quote international characters contained in a URL according to w3c, see:
+# <http://www.w3.org/International/O-URL-code.html>
+def quoteUnicodeURL(url):
+    checkU(url)
+    quotedChars = list()
+    for c in url.encode('utf8'):
+        if ord(c) > 127:
+            quotedChars.append(urllib.quote(c))
+        else:
+            quotedChars.append(c)
+    return u''.join(quotedChars)
+
 def call_command(*args):
     """Call an external command.  If the command doesn't exit with status 0,
     or if it outputs to stderr, an exception will be raised.  Returns stdout.

@@ -4,7 +4,7 @@ from gtcache import gettext as _
 from math import ceil
 from xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
-from util import checkU, returnsUnicode, checkF, returnsFilename
+from util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL
 from platformutils import FilenameType
 import locale
 import os
@@ -354,7 +354,7 @@ class Item(DDBObject):
         self.confirmDBThread()
         videoEnclosure = self.getFirstVideoEnclosure()
         if videoEnclosure is not None and 'url' in videoEnclosure:
-            return videoEnclosure['url'].decode('ascii','replace')
+            return quoteUnicodeURL(videoEnclosure['url'])
         else:
             return u''
 
