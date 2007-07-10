@@ -18,14 +18,17 @@
 import os
 import shutil
 import resources
+import gconf
 
 def upgrade():
+    # dot directory
     src = os.path.expanduser('~/.democracy')
     dst = os.path.expanduser('~/.miro')
     if os.path.isdir(src) and not os.path.exists(dst):
         shutil.move(src, dst)
         shutil.rmtree(os.path.join(dst, "icon-cache"), True)
 
+    # autostart file
     config_home = os.environ.get ('XDG_CONFIG_HOME',
                                   '~/.config')
     config_home = os.path.expanduser (config_home)
@@ -44,5 +47,28 @@ def upgrade():
                 pass
             try: 
                 os.remove (old_file)
+            except:
+                pass
+
+    # gconf settings
+
+    client = gconf.client_get_default()
+
+    def _copy_gconf(src, dst):
+        for entry in client.all_entries(src):
+            entry_dst = dst + '/' + entry.key.split('/')[-1]
+            client.set(entry_dst, entry.value)
+        for subdir in client.all_dirs(src):
+            subdir_dst = dst + '/' + subdir.split('/')[-1]
+            _copy_gconf (subdir, subdir_dst)
+
+    if client.dir_exists ("/apps/democracy/player") and not client.dir_exists ("/apps/miro"):
+        _copy_gconf("/apps/democracy/player", "/apps/miro")
+        client.recursive_unset("/apps/democracy", 1)
+        if client.get("/apps/miro/MoviesDirectory") is None:
+            value = os.path.expanduser('~/Movies/Democracy')
+            client.set_string("/apps/miro/MoviesDirectory", value)
+            try:
+                os.makedirs (value)
             except:
                 pass

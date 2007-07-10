@@ -67,7 +67,7 @@ def _getPref(key, getter_name):
     gconf_lock.acquire()
     try:
         client = gconf.client_get_default()
-        fullkey = '/apps/democracy/player/' + key
+        fullkey = '/apps/miro/' + key
         value = client.get(fullkey)
         if value is not None:
             getter = getattr(value, getter_name)
@@ -81,7 +81,7 @@ def _setPref(key, setter_name, value):
     gconf_lock.acquire()
     try:
         client = gconf.client_get_default()
-        fullkey = '/apps/democracy/player/' + key
+        fullkey = '/apps/miro/' + key
         setter = getattr(client, setter_name)
         setter(fullkey, value)
     finally:

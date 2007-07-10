@@ -54,7 +54,7 @@ class VideoDisplay (app.VideoDisplayBase):
     def initRenderers(self):
         self.renderers = []
         gconf_lock.acquire()
-        values = gconf.client_get_default().get("/apps/democracy/player/renderers")
+        values = gconf.client_get_default().get("/apps/miro/renderers")
         if values == None:
             # Using both renderers causes segfaults --NN
             # self.add_renderer("gstrenderer")

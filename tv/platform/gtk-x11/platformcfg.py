@@ -45,13 +45,13 @@ class gconfDict:
     def get(self, key, default = None):
         if (type(key) != str):
             raise TypeError()
-        fullkey = '/apps/democracy/player/' + key
+        fullkey = '/apps/miro/' + key
         return _get_gconf(fullkey, default)
 
     def __contains__(self, key):
         gconf_lock.acquire()
         try:
-            fullkey = '/apps/democracy/player/' + key
+            fullkey = '/apps/miro/' + key
             return client.get(fullkey) is not None
         finally:
             gconf_lock.release()
@@ -68,7 +68,7 @@ class gconfDict:
         try:
             if (type(key) != str):
                 raise TypeError()
-            fullkey = '/apps/democracy/player/' + key
+            fullkey = '/apps/miro/' + key
             if (type(value) == str):
                 client.set_string(fullkey, value)
             elif (type(value) == int):
@@ -92,7 +92,7 @@ def get(descriptor):
     value = descriptor.default
 
     if descriptor == prefs.MOVIES_DIRECTORY:
-        value = os.path.expanduser('~/Movies/Democracy')
+        value = os.path.expanduser('~/Movies/Miro')
         try:
             os.makedirs (value)
         except:
