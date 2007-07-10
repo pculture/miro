@@ -1,0 +1,6 @@
+<searchengine>
+   <id>veoh</id>
+   <displayname>Veoh Video Network</displayname>
+   <url>http://www.veoh.com/rss/search?type=v&amp;order=mr&amp;query=%s&amp;limit=%l</url>
+   <sort>1</sort>
+</searchengine>
