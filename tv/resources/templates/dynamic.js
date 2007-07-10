@@ -244,7 +244,12 @@ function handleSelect(event) {
 }
 
 function handleDblClick(event, viewName, id) {
-   if(event.target.tagName && event.target.tagName.toUpperCase() == 'A') {
+   var target = event.target;
+   while (target != undefined && target.ondblclick === null && target.tagName.toUpperCase() != 'A') {
+       target = target.parentNode;
+   }
+
+   if(target.tagName.toUpperCase() == 'A') {
        // Either a link in the descrption, or a bomb/mailto/trash click
        return true;
    } else {
