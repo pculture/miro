@@ -12,6 +12,8 @@ var vlcrenderer = Components.classes["@participatoryculture.org/dtv/vlc-renderer
 var minimizer = Components.classes["@participatoryculture.org/dtv/minimize;1"].
                 getService(Components.interfaces.pcfIDTVMinimize);
 
+window.maximized = false;
+
 function quitObserver()
 {
   this.register();
@@ -189,6 +191,9 @@ function onLoad() {
     // NEEDS: should this move out of onLoad() and be global?
     var qo = new quitObserver();
 
+    // Initialize the minimizer class
+    minimizer.registerMainWindowProc(window);
+
     // Bring up Python environment.
     pybridge.onStartup(window, document);
 
@@ -299,11 +304,9 @@ function jsdump(str) {
 }
 
 function maximizeOrRestore() {
-  if (window.windowState == window.STATE_MAXIMIZED) {
-    window.restore();
-  } else {
-    window.maximize();
-  }
+    // XUL doesn't properly recognize the taskbar if we don't have it
+    // draw the window chrome, so we have to do all of this ourselves
+    jsbridge.maximizeOrRestore();
 }
 
 function closeApp() {

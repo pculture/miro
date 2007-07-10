@@ -1,10 +1,15 @@
 #include "nsISupports.idl"
 #include "nsIDOMDocument.idl"
 
+interface nsIDOMWindow;
+
 [scriptable, uuid(645F3B3D-E5E2-45c5-BE61-6176888DE9A3)]
 interface pcfIDTVMinimize : nsISupports
 {
   void minimizeOrRestore();
   void delTrayIcon();
   boolean isMinimized();
+  PRInt32 getTaskbarEdge();
+  PRInt32 getTaskbarHeight();
+  void registerMainWindowProc(in nsIDOMWindow window);
 };

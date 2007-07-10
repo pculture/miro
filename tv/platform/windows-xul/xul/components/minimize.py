@@ -9,7 +9,11 @@ WM_USER = 0x0400
 WM_TRAYICON = WM_USER+0x1EEF
 WM_GETICON = 0x007F
 WM_SETICON = 0x0080
+WM_STYLECHANGED = 0x007D
+WM_SIZE = 0x0005
 WS_EX_APPWINDOW = 0x00040000L
+WS_MAXIMIZE = 0x01000000L
+SIZE_MAXIMIZED = 2
 ICON_SMALL = 0
 ICON_BIG   = 1
 
@@ -51,6 +55,8 @@ IDANI_CAPTION      = 3
 
 SW_HIDE = 0
 SW_SHOW = 5
+
+GWL_WNDPROC = -4
 
 def LOWORD(dword): return dword & 0x0000ffff
 def HIWORD(dword): return dword >> 16
@@ -113,6 +119,11 @@ class APPBARDATA(ctypes.Structure):
                 ("rc", RECT),
                 ("lParam", LPARAM)]
 
+class STYLESTRUCT(ctypes.Structure):
+    _fields_ = [("styleOld", DWORD),
+                ("styleNew", DWORD)]
+
+
 def PyWindProc(hWnd, uMsg, wParam, lParam):
     mousePos = ctypes.windll.user32.GetMessagePos()
     mouseX = LOWORD(mousePos)
@@ -125,7 +136,17 @@ def PyWindProc(hWnd, uMsg, wParam, lParam):
     #components.classes['@mozilla.org/consoleservice;1'].getService(components.interfaces.nsIConsoleService).logStringMessage("PYWINPROC %d %d %d %d" % (hWnd, uMsg, wParam, lParam))
     return ctypes.windll.user32.CallWindowProcW(ctypes.windll.user32.DefWindowProcW,hWnd, uMsg, wParam, lParam)
 
+def PyMainWindProc(hWnd, uMsg, wParam, lParam):
+    if (uMsg == WM_SIZE):
+        if (wParam == SIZE_MAXIMIZED):
+            jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
+            jsbridge.maximizeOrRestore()
+            #return ctypes.c_long(0)
+
+    return ctypes.windll.user32.CallWindowProcW(Minimize.oldWindowProcs[hWnd],hWnd, uMsg, wParam, lParam)
+
 WindProc = WNDPROCTYPE(PyWindProc)
+MainWindProc = WNDPROCTYPE(PyMainWindProc)
 
 class Minimize:
     _com_interfaces_ = [components.interfaces.pcfIDTVMinimize]
@@ -134,6 +155,7 @@ class Minimize:
     _reg_desc_ = "Minimizize and restorizor windizows"
 
     minimizers = {}
+    oldWindowProcs = {}
 
     def __init__(self):
         self.iconinfo = None
@@ -186,6 +208,10 @@ class Minimize:
     def __del__(self):
         del Minimize.minimizers[self.trayIconWindow]
         self.delTrayIcon()
+
+    def registerMainWindowProc(self, win):
+        href = self.getHREFFromDOMWindow(win)
+        Minimize.oldWindowProcs[href.value] = ctypes.windll.user32.SetWindowLongW(href,GWL_WNDPROC, MainWindProc)
 
     def getHREFFromBaseWindow(self, win):
         return ctypes.c_int(self._gethrefcomp.getit(win))
@@ -265,6 +291,23 @@ class Minimize:
         # Give up
         return None
 
+    def getTaskbarEdge(self):
+        appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
+        if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
+            return appBarData.uEdge
+        else:
+            return -1
+
+    def getTaskbarHeight(self):
+        appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
+        if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
+            if appBarData.uEdge in [ABE_LEFT, ABE_RIGHT]:
+                return (appBarData.rc.right - appBarData.rc.left)
+            else:
+                return (appBarData.rc.bottom - appBarData.rc.top)
+        else:
+            return -1
+    
     def showPopup(self, x, y):
         print "x and y is %d  %d" % (x, y)
         jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)

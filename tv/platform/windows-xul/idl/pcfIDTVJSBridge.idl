@@ -23,6 +23,7 @@ interface pcfIDTVJSBridge : nsISupports
   void copyTextToClipboard(in AString text);
   void showContextMenu(in AString menuItems);
   void showSearchMenu();
+  void maximizeOrRestore();
   void showChoiceDialog(in unsigned long id, in AString title, 
         in AString description, in AString defaultLabel, 
         in AString otherLabel);
