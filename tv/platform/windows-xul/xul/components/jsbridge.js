@@ -23,14 +23,15 @@ function LoadFinishedListener(area)
 }
 
 var actionGroupCommands = {
-  'ChannelSelected': Array('copychannellink', 'recommendcurrentchannel'),
+  'ChannelSelected': Array('menuitem-copychannelurl', 'menuitem-mailchannel'),
   'ChannelFolderSelected': Array(),
-  'VideoSelected': Array('copyvideourl', 'savevideoas'),
-  'VideosSelected': Array('removevideo'),
-  'PlaylistLikeSelected': Array('renameplaylist'),
-  'PlaylistLikesSelected': Array('removeplaylist'),
+  'VideoSelected': Array('menuitem-copyvideourl', 'menuitem-savevideo'),
+  'VideosSelected': Array('menuitem-removevideos'),
+  'PlaylistLikeSelected': Array('menuitem-renameplaylist'),
+  'PlaylistLikesSelected': Array('menuitem-removeplaylists'),
   'ChannelLikesSelected': Array(),
-  'ChannelLikeSelected': Array('renamechannel', 'removechannel', 'updatechannel'),
+  'ChannelLikeSelected': Array('menuitem-renamechannel',
+                  'menuitem-removechannels', 'menuitem-updatechannels'),
   'ChannelsSelected': Array(),
   'VideoPlayable': Array(),
 }
@@ -425,10 +426,14 @@ jsBridge.prototype = {
      for(var i = 0; i < elements.length; i++) {
        var elt = this.document.getElementById(elements[i]);
        if(!elt) continue;
+       var commandID = elt.getAttribute('command');
+       if(!commandID) continue;
+       var command = this.document.getElementById(commandID);
+       if(!command) continue;
        if(!enabled) {
-         elt.setAttribute('disabled', true);
+         command.setAttribute('disabled', true);
        } else {
-         elt.removeAttribute('disabled');
+         command.removeAttribute('disabled');
        }
      }
   },
