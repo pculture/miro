@@ -134,16 +134,19 @@ class SelectionArea(object):
 
         self.switchView(view)
         selecting = False
+        toSelect = []
         for obj in view:
             id = getID(obj)
             if selecting and id not in self.currentSelection:
-                self.selectItem(view, id)
+                toSelect.append(id)
             if id == firstID:
                 selecting = True
                 if id not in self.currentSelection:
-                    self.selectItem(view, id)
+                    toSelect.append(id)
             if id == lastID:
                 break
+        for id in toSelect:
+            self.selectItem(view, id)
 
     def onRemove(self, obj, id):
         if id in self.currentSelection:
