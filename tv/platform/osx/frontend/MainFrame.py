@@ -340,7 +340,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def validateMenuItem_(self, item):
         action = item.action()
-        print action
         display = self.frame.mainDisplay.hostedDisplay
         
         if action == 'removeVideos:':
