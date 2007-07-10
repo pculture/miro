@@ -578,7 +578,8 @@ class SelectionHandler(object):
                                                         
                         self.itemListSelection.clearSelection()
                         self.updateMenus()
-                        mainDisplay.reInit(id = newId)
+                        if mainDisplay.kargs['id'] != newId:
+                            mainDisplay.reInit(id = newId)
                         return
         newDisplay = self._chooseDisplayForCurrentTab()
 
