@@ -167,7 +167,7 @@ add more menu elements later -NN -->
 <command id="RemoveChannels" oncommand="pybridge.removeCurrentChannel();" />
 <command id="UpdateChannels" oncommand="pybridge.updateCurrentChannel();" />
 <command id="UpdateAllChannels" oncommand="pybridge.updateChannels();" />
-<command id="CopyChannelLink" oncommand="pybridge.copyChannelLink();" />
+<command id="CopyChannelURL" oncommand="pybridge.copyChannelLink();" />
 <command id="MailChannel" oncommand="pybridge.recommendCurrentChannel();" />
 
 <command id="NewPlaylist" oncommand="pybridge.createNewPlaylist();" />
