@@ -102,7 +102,7 @@ add more menu elements later -NN -->
 <hbox flex="0" height="64" id="bottom" class="bottom" align="center">
 <hbox flex="0" container="1" width="245" height="64" minheight="64" id="bottom-left">
 <hbox flex="0" maxheight="29" id="bottom-left-search" >
-      <textbox type="autocomplete" flex="1" id="search-textbox" onkeydown="onSearchKeyDown(event);">
+      <textbox type="autocomplete" flex="1" id="search-textbox" onfocus="onSearchBoxFocus();" onblur="onSearchBoxBlur();" onkeydown="onSearchKeyDown(event);">
         <stack onclick="jsbridge.showSearchMenu();">
           <hbox>
           <image id="search-icon" />

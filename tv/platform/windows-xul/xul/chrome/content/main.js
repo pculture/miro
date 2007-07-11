@@ -431,7 +431,7 @@ function onKeyDown(event) {
   } else if(event.keyCode == 37 || event.keyCode == 39) {
     // Right/Left Keys
     var videoBox = document.getElementById('video-box');
-    if(videoBox.getAttribute("collapsed") == 'true') return true;
+    if(videoBox.getAttribute("collapsed") == 'true' || searchBoxFocused) return true;
     pybridge.handleKeyPress(event.keyCode, event.shiftKey, event.ctrlKey);
   } else if(event.keyCode == 27) {
     // Escape
@@ -440,4 +440,13 @@ function onKeyDown(event) {
     return true;
   }
   return false;
+}
+
+var searchBoxFocused = false;
+function onSearchBoxFocus() {
+  searchBoxFocused = true;
+}
+
+function onSearchBoxBlur() {
+  searchBoxFocused = false;
 }
