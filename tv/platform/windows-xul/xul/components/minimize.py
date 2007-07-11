@@ -1,6 +1,7 @@
 from xpcom import components
 import ctypes
-from ctypes.wintypes import DWORD, HWND, HANDLE, LPCWSTR, WPARAM, LPARAM, RECT
+import logging
+from ctypes.wintypes import DWORD, HWND, HANDLE, LPCWSTR, WPARAM, LPARAM, RECT, POINT
 UINT = ctypes.c_uint
 WCHAR = ctypes.c_wchar
 INT = ctypes.c_int
@@ -11,6 +12,10 @@ WM_GETICON = 0x007F
 WM_SETICON = 0x0080
 WM_STYLECHANGED = 0x007D
 WM_SIZE = 0x0005
+WM_GETMINMAXINFO = 0x0024
+WM_ACTIVATEAPP = 0x001C
+WM_ACTIVATE = 0x0006
+WM_INITMENUPOPUP = 0x0117
 WS_EX_APPWINDOW = 0x00040000L
 WS_MAXIMIZE = 0x01000000L
 SIZE_MAXIMIZED = 2
@@ -62,6 +67,7 @@ def LOWORD(dword): return dword & 0x0000ffff
 def HIWORD(dword): return dword >> 16
 
 WNDPROCTYPE = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, UINT, WPARAM, LPARAM)
+WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, LPARAM)
 
 import config
 import prefs
@@ -123,6 +129,30 @@ class STYLESTRUCT(ctypes.Structure):
     _fields_ = [("styleOld", DWORD),
                 ("styleNew", DWORD)]
 
+class MINMAXINFO(ctypes.Structure):
+    _fields_ = [("ptReserved", POINT),
+                ("ptMaxSize", POINT),
+                ("ptMaxPosition", POINT),
+                ("ptMinTrackSize", POINT),
+                ("ptMaxTrackSize",POINT)]
+
+def getTaskbarEdge():
+    appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
+    if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
+        return appBarData.uEdge
+    else:
+        return -1
+
+def getTaskbarHeight():
+    appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
+    if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
+        if appBarData.uEdge in [ABE_LEFT, ABE_RIGHT]:
+            return (appBarData.rc.right - appBarData.rc.left)
+        else:
+            return (appBarData.rc.bottom - appBarData.rc.top)
+    else:
+        return -1
+
 
 def PyWindProc(hWnd, uMsg, wParam, lParam):
     mousePos = ctypes.windll.user32.GetMessagePos()
@@ -133,17 +163,60 @@ def PyWindProc(hWnd, uMsg, wParam, lParam):
             Minimize.minimizers[hWnd].minimizeOrRestore()
         elif lParam == WM_RBUTTONUP:
             Minimize.minimizers[hWnd].showPopup(mouseX, mouseY)
+    elif uMsg == WM_ACTIVATEAPP:
+        pass
+        #logging.info("TACTIVATEAPP %d %d" % (wParam, lParam))
+        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
+        #jsbridge.hidePopup()
+    elif uMsg == WM_ACTIVATE:
+        pass
+        #logging.info("TACTIVATE %d %d" % (wParam, lParam))
+        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
+        #jsbridge.hidePopup()
+
     #components.classes['@mozilla.org/consoleservice;1'].getService(components.interfaces.nsIConsoleService).logStringMessage("PYWINPROC %d %d %d %d" % (hWnd, uMsg, wParam, lParam))
     return ctypes.windll.user32.CallWindowProcW(ctypes.windll.user32.DefWindowProcW,hWnd, uMsg, wParam, lParam)
 
 def PyMainWindProc(hWnd, uMsg, wParam, lParam):
-    if (uMsg == WM_SIZE):
-        if (wParam == SIZE_MAXIMIZED):
-            jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-            jsbridge.maximizeOrRestore()
-            #return ctypes.c_long(0)
-
+    if uMsg == WM_GETMINMAXINFO and len(Minimize.minimizers) > 0:
+        info = ctypes.cast(lParam, ctypes.POINTER(MINMAXINFO)).contents
+        edge = getTaskbarEdge()
+        height = getTaskbarHeight()
+        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        window = Minimize.minimizers[Minimize.minimizers.keys()[0]].window
+        if edge == 3: # Taskbar is on the bottom
+            info.ptMaxSize.x = window.screen.width
+            info.ptMaxSize.y = window.screen.height - height
+            info.ptMaxPosition.x = window.screen.left
+            info.ptMaxPosition.y = window.screen.top
+        elif edge == 2: # Taskbar is on the right
+            info.ptMaxSize.x = window.screen.width - height
+            info.ptMaxSize.y = window.screen.height
+            info.ptMaxPosition.x = window.screen.left
+            info.ptMaxPosition.y = window.screen.top
+        elif edge == 1: # Taskbar is on top
+            info.ptMaxSize.x = window.screen.width
+            info.ptMaxSize.y = window.screen.height - height
+            info.ptMaxPosition.x = window.screen.left
+            info.ptMaxPosition.y = window.screen.top+height
+        elif edge == 0: # Taskbar is on the left
+            info.ptMaxSize.x = window.screen.width - height
+            info.ptMaxSize.y = window.screen.height
+            info.ptMaxPosition.x = window.screen.left+height
+            info.ptMaxPosition.y = window.screen.top
+    elif uMsg == WM_ACTIVATEAPP:
+        pass
+        #logging.info("ACTIVATEAPP %d %d" % (wParam, lParam))
+        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
+        #jsbridge.hidePopup()
+    elif uMsg == WM_ACTIVATE:
+        pass
+        #logging.info("ACTIVATE %d %d" % (wParam, lParam))
+        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
+        #jsbridge.hidePopup()
+            
     return ctypes.windll.user32.CallWindowProcW(Minimize.oldWindowProcs[hWnd],hWnd, uMsg, wParam, lParam)
+
 
 WindProc = WNDPROCTYPE(PyWindProc)
 MainWindProc = WNDPROCTYPE(PyMainWindProc)
@@ -197,7 +270,6 @@ class Minimize:
         self.hIcon = ctypes.windll.user32.LoadImageW(0, self.iconloc, IMAGE_ICON, 0, 0, LR_LOADFROMFILE)
 
         self.minimized = []
-        self.updateIcon()
 
     def updateIcon(self):
         if config.get(prefs.MINIMIZE_TO_TRAY):
@@ -210,6 +282,7 @@ class Minimize:
         self.delTrayIcon()
 
     def registerMainWindowProc(self, win):
+        self.window = win
         href = self.getHREFFromDOMWindow(win)
         Minimize.oldWindowProcs[href.value] = ctypes.windll.user32.SetWindowLongW(href,GWL_WNDPROC, MainWindProc)
 
@@ -290,23 +363,6 @@ class Minimize:
             return trayRect
         # Give up
         return None
-
-    def getTaskbarEdge(self):
-        appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
-        if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
-            return appBarData.uEdge
-        else:
-            return -1
-
-    def getTaskbarHeight(self):
-        appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
-        if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
-            if appBarData.uEdge in [ABE_LEFT, ABE_RIGHT]:
-                return (appBarData.rc.right - appBarData.rc.left)
-            else:
-                return (appBarData.rc.bottom - appBarData.rc.top)
-        else:
-            return -1
     
     def showPopup(self, x, y):
         print "x and y is %d  %d" % (x, y)

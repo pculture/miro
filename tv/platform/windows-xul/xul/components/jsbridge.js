@@ -110,42 +110,6 @@ jsBridge.prototype = {
     this.window.close();
   },
 
-  maximizeOrRestore: function() {
-    // XUL doesn't properly recognize the taskbar if we don't have it
-    // draw the window chrome, so we have to do all of this ourselves
-  if (this.window.maximized) {
-      this.window.moveTo(this.window.oldLeft, this.window.oldTop);
-      this.window.resizeTo(this.window.oldWidth, this.window.oldHeight);
-      this.window.maximized = false;
-  } else {
-      // if the os thinks the window is maximized
-      if (this.window.windowState == 1) {
-        this.window.restore();
-      }
-      this.window.oldTop = this.window.screenY;
-      this.window.oldLeft = this.window.screenX;
-      this.window.oldWidth = this.window.outerWidth;
-      this.window.oldHeight = this.window.outerHeight;
-
-    if (minimizer.getTaskbarEdge() == 3) {    // Taskbar is on the bottom
-        this.window.moveTo(this.window.screen.left,this.window.screen.top);
-        this.window.resizeTo(this.window.screen.width,this.window.screen.height - minimizer.getTaskbarHeight());
-
-    } else if (minimizer.getTaskbarEdge() == 1) { // Taskbar is on top
-        this.window.moveTo(this.window.screen.left,this.window.screen.top+minimizer.getTaskbarHeight());
-        this.window.resizeTo(this.window.screen.width,this.window.screen.height - minimizer.getTaskbarHeight());
-    } else if (minimizer.getTaskbarEdge() == 0) { // Taskbar is on the left
-        this.window.moveTo(this.window.screen.left+minimizer.getTaskbarHeight(),this.window.screen.top);
-        this.window.resizeTo(this.window.screen.width - minimizer.getTaskbarHeight(),this.window.screen.height);
-    } else if (minimizer.getTaskbarEdge() == 2) { // Taskbar is on the right
-        this.window.moveTo(this.window.screen.left,this.window.screen.top);
-        this.window.resizeTo(this.window.screen.width - minimizer.getTaskbarHeight(),this.window.screen.height);
-    }
-    this.window.maximized = true;
-  }
-
-  },
-
   initBrowser: function(area) {
     var browser = this.document.getElementById(area);
     var listener = new LoadFinishedListener(area);
@@ -660,6 +624,9 @@ jsBridge.prototype = {
     }
     this.prefDocument.selectDirectoryWatch(true);
   },
+  hidePopup: function() {
+      this.popup.hidePopup();
+  },
   showPopup: function(x, y) {
       // show popup and adjust position once we know width / height
       // Based on core.js from Firefox minimizetotray extension
@@ -667,7 +634,7 @@ jsBridge.prototype = {
       var screenheight = this.window.screen.height;
       var document = this.document;
 
-      popup = document.getElementById('traypopup');
+      this.popup = document.getElementById('traypopup');
 
       function minimize_onshown(event, x, y, screenWidth, screenHeight, document) {
 
@@ -691,12 +658,12 @@ jsBridge.prototype = {
                           "context",
                           "", "");
       }
-      popup._minimizetotray_onshown = function(event){ return minimize_onshown(event, x, y, screenwidth, screenheight, document); };
-      popup.addEventListener("popupshown",
-                             popup._minimizetotray_onshown,
+      this.popup._minimizetotray_onshown = function(event){ return minimize_onshown(event, x, y, screenwidth, screenheight, document); };
+      this.popup.addEventListener("popupshown",
+                             this.popup._minimizetotray_onshown,
                              true);
 
-      popup.showPopup(document.documentElement,   // anchoring element
+      this.popup.showPopup(document.documentElement,   // anchoring element
                       -10000,                    // x
                       -10000,                    // y
                       "context",                  // type

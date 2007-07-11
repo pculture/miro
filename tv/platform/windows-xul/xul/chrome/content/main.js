@@ -203,6 +203,7 @@ function onLoad() {
 
     setupHandlers();
     jsdump("onload done");
+    minimizer.updateIcon();
 }
 
 function setSearchEngine(engine) {
@@ -304,9 +305,11 @@ function jsdump(str) {
 }
 
 function maximizeOrRestore() {
-    // XUL doesn't properly recognize the taskbar if we don't have it
-    // draw the window chrome, so we have to do all of this ourselves
-    jsbridge.maximizeOrRestore();
+  if (window.windowState == window.STATE_MAXIMIZED) { 
+      window.restore(); 
+  } else { 
+      window.maximize(); 
+  } 
 }
 
 function closeApp() {

@@ -8,8 +8,7 @@ interface pcfIDTVMinimize : nsISupports
 {
   void minimizeOrRestore();
   void delTrayIcon();
+  void updateIcon();
   boolean isMinimized();
-  PRInt32 getTaskbarEdge();
-  PRInt32 getTaskbarHeight();
   void registerMainWindowProc(in nsIDOMWindow window);
 };

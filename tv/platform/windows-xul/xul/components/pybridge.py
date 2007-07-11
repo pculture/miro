@@ -756,6 +756,11 @@ class PyBridge:
 
     @asUrgent
     def playUnwatched(self):
+        minimizer = makeService(
+            "@participatoryculture.org/dtv/minimize;1",
+            components.interfaces.pcfIDTVMinimize)
+        if minimizer.isMinimized():
+            minimizer.minimizeOrRestore()
         app.controller.frame.mainDisplayCallback(u'action:playUnwatched')
 
     @asIdle
