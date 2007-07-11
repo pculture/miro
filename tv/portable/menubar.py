@@ -213,5 +213,5 @@ traymenu = Menu("Miro","Miro",
                 Separator(),
                 MenuItem(_("Minimize"),"RestoreWindow", (),
                          restore=_("Restore")),
-                MenuItem(_("Close"),"Quit", ()),
+                MenuItem(_("Quit"),"Quit", ()),
                 )                
