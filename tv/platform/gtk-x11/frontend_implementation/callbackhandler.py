@@ -327,9 +327,7 @@ class CallbackHandler(object):
                 control = True
             key = portable_keys_mapping[event.keyval]
             keyboard.handleKey(key, shift, control)
-            return True
-        else:
-            return False
+        return False
 
     def on_play_pause_button_clicked(self, event = None):
         videoDisplay = self.mainApp.videoDisplay
