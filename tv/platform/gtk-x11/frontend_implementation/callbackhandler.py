@@ -326,9 +326,11 @@ class CallbackHandler(object):
             if event.state & gtk.gdk.CONTROL_MASK:
                 control = True
             key = portable_keys_mapping[event.keyval]
+            searchBox = self.mainFrame.widgetTree['entry-chrome-search-term']
             if (key in (keyboard.RIGHT, keyboard.LEFT) and 
-                    self.mainApp.videoDisplay.currentFrame is None):
-                # don't handle RIGHT/LEFT if the video dispaly isn't shown
+                    (self.mainApp.videoDisplay.currentFrame is None or
+                    searchBox.is_focus())):
+                # hack to make sure the search box gets RIGHT/LEFT key events.
                 return False
             keyboard.handleKey(key, shift, control)
             return True
