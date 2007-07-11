@@ -31,7 +31,7 @@ def checkForUpdates(notifyIfUpToDate=False):
 def _handleError(error):
     global checkInProgress
     checkInProgress = False
-    logging.warn("HTTP error while checking for updates: %s" % error)
+    logging.warn("HTTP error while checking for updates")
     eventloop.addTimeout (86400, checkForUpdates, "Check for updates")
 
 # Handle appcast data when it's correctly fetched
