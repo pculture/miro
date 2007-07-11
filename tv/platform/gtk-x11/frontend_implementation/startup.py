@@ -44,7 +44,7 @@ class _Search:
         self.finished(found)
 
 def performStartupTasks(terminationCallback):
-    widgetTree = MainFrame.WidgetTree(resources.path('miro.glade'), 'dialog-startup', 'democracyplayer')
+    widgetTree = MainFrame.WidgetTree(resources.path('miro.glade'), 'dialog-startup', 'miro')
     dialog = widgetTree['dialog-startup']
     widgetTree['image-startup-tv'].set_from_file (resources.sharePath('pixmaps/miro-128x128.png'))
     dialog.set_icon_from_file (resources.sharePath('pixmaps/miro-128x128.png'))

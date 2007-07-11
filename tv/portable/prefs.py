@@ -33,6 +33,9 @@ STARTUP_TASKS_DONE          = Pref( key='startupTasksDone',      default=False, 
 SINGLE_VIDEO_PLAYBACK_MODE  = Pref( key='singleVideoPlaybackMode',default=False,platformSpecific=False )
 RESUME_VIDEOS_MODE          = Pref( key='resumeVideosMode',      default=True,  platformSpecific=False )
 
+# This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.
+SHOW_ERROR_DIALOG           = Pref( key='showErrorDialog',       default=True,  platformSpecific=True )
+
 # Only used on particular platforms.
 XINE_VIZ                    = Pref( key="xineViz",               default=u"goom",platformSpecific=False )
 

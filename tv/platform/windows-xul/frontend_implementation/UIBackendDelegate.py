@@ -207,7 +207,8 @@ class UIBackendDelegate:
         pass
 
     def notifyUnkownErrorOccurence(self, when, log = ''):
-        frontend.jsBridge.showBugReportDialog(when, log)
+        if config.get(prefs.SHOW_ERROR_DIALOG):
+            frontend.jsBridge.showBugReportDialog(when, log)
 
     def copyTextToClipboard(self, text):
         frontend.jsBridge.copyTextToClipboard(text)

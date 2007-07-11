@@ -294,7 +294,7 @@ class mypy2app(py2app):
         else:
             for source in glob(os.path.join(localeDir, '*.mo')):
                 lang = os.path.basename(source)[:-3]
-                dest = os.path.join(lclDir, lang, 'LC_MESSAGES/democracyplayer.mo')
+                dest = os.path.join(lclDir, lang, 'LC_MESSAGES/miro.mo')
                 os.makedirs(os.path.dirname(dest))
                 shutil.copy2(source, dest)
                 print "    %s" % dest

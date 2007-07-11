@@ -313,9 +313,9 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         os.environ["LANGUAGE"] = "fr"
         gtcache._gtcache = {}
 
-        gettext.bindtextdomain("democracyplayer",resources.path("../../locale"))
-        gettext.textdomain("democracyplayer")
-        gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
+        gettext.bindtextdomain("miro",resources.path("../../locale"))
+        gettext.textdomain("miro")
+        gettext.bind_textdomain_codeset("miro","UTF-8")
         self.assertEqual(gtcache.gettext("Settings"),u'R\xe9glages')
         if oldLang is None:
             del os.environ["LANGUAGE"]
@@ -334,9 +334,9 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         os.environ["LANGUAGE"] = "fr"
         gtcache._gtcache = {}
 
-        gettext.bindtextdomain("democracyplayer",resources.path("../../locale"))
-        gettext.textdomain("democracyplayer")
-        gettext.bind_textdomain_codeset("democracyplayer","UTF-8")
+        gettext.bindtextdomain("miro",resources.path("../../locale"))
+        gettext.textdomain("miro")
+        gettext.bind_textdomain_codeset("miro","UTF-8")
 
         out = template.fillStaticTemplate("unittest/simpleunicode", "gtk-x11", "noCookie")
         self.assert_(type(out)==types.UnicodeType)

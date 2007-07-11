@@ -465,7 +465,7 @@ class bdist_xul_dumb(Command):
 
         for source in glob (os.path.join (locale_dir, "*.mo")):
             lang = os.path.basename(source)[:-3]
-            dest = os.path.join (self.dist_dir, 'resources', 'locale', lang, "LC_MESSAGES", "democracyplayer.mo")
+            dest = os.path.join (self.dist_dir, 'resources', 'locale', lang, "LC_MESSAGES", "miro.mo")
             self.mkpath(os.path.dirname(dest))
             self.copy_file(source, dest)
 

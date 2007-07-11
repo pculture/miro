@@ -16,9 +16,9 @@ def init():
         raise Exception, "locale not initialized"
     locale.setlocale(locale.LC_ALL, '')
 
-    _gt.bindtextdomain("democracyplayer", config.get(prefs.GETTEXT_PATHNAME))
-    _gt.textdomain("democracyplayer")
-    _gt.bind_textdomain_codeset("democracyplayer","UTF-8")
+    _gt.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
+    _gt.textdomain("miro")
+    _gt.bind_textdomain_codeset("miro","UTF-8")
 
 def gettext(text):
     text = text.encode('utf-8')

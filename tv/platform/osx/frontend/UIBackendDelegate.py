@@ -163,8 +163,9 @@ class UIBackendDelegate:
     
     @platformutils.onMainThread
     def notifyUnkownErrorOccurence(self, when, log = ''):
-        controller = ExceptionReporterController.alloc().initWithMoment_log_(when, log)
-        controller.showPanel()
+        if config.get(prefs.SHOW_ERROR_DIALOG):
+            controller = ExceptionReporterController.alloc().initWithMoment_log_(when, log)
+            controller.showPanel()
         return True
 
     def copyTextToClipboard(self, text):

@@ -18,8 +18,8 @@ class Application:
         #print "Application init"
         pass
     def Run(self):
-        gtk.glade.bindtextdomain("democracyplayer", config.get(prefs.GETTEXT_PATHNAME))
-        gtk.glade.textdomain("democracyplayer")
+        gtk.glade.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
+        gtk.glade.textdomain("miro")
 
         queue.main_thread = threading.currentThread()
         platformutils.setMainThread()
