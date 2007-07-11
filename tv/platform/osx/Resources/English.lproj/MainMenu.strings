@@ -4,6 +4,9 @@
 /* NSMenuItem : <title:Add Channel...> (oid:227) */
 "Add Channel..." = "Add Channel...";
 
+/* NSMenuItem : <title:Add Guide...> (oid:317) */
+"Add Guide..." = "Add Guide...";
+
 /* NSMenuItem : <title:Bring All to Front> (oid:5) */
 "Bring All to Front" = "Bring All to Front";
 
@@ -72,9 +75,6 @@
 
 /* NSMenuItem : <title:New Channel Folder...> (oid:312) */
 "New Channel Folder..." = "New Channel Folder...";
-
-/* NSMenuItem : <title:New Miro Guide...> (oid:317) */
-"New Miro Guide..." = "New Miro Guide...";
 
 /* NSMenuItem : <title:New Playlist Folder...> (oid:307) */
 "New Playlist Folder..." = "New Playlist Folder...";
