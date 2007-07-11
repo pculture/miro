@@ -273,15 +273,10 @@ class UIBackendDelegate:
     def handleNewUpdate(self, update_item):
         url = update_item['enclosures'][0]['href']
         try:
-            releaseNotes = update_item['releasenoteslink']
+            releaseNotes = update_item['description']
         except KeyError:
-            try:
-                # The first key should work, but sometimes I've seen this
-                # one...
-                releaseNotes = update_item['sparkle_releasenoteslink']
-            except KeyError:
-                logging.warn("Couldn't fetch release notes")
-                releaseNotes = ''
+            logging.warn("Couldn't fetch release notes")
+            releaseNotes = ''
         dialog = UpdateAvailableDialog(releaseNotes)
         def callback(dialog):
             if dialog.choice == dialogs.BUTTON_DOWNLOAD:
