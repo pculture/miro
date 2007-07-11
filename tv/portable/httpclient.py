@@ -29,6 +29,7 @@ import eventloop
 import util
 import sys
 import time
+import urllib
 
 PIPELINING_ENABLED = True
 SOCKET_READ_TIMEOUT = 60
@@ -805,7 +806,8 @@ class HTTPConnection(ConnectionHandler):
 
     def sendRequestData(self, method, path, headers, data = None):
         sendOut = []
-        path = path.encode('ascii', 'replace')
+        path = path.encode("ascii", "replace")
+        path = urllib.quote(path, safe="-_.!~*'();/?:@&=+$,%#")
         sendOut.append('%s %s HTTP/1.1\r\n' % (method, path))
         for header, value in headers.items():
             sendOut.append('%s: %s\r\n' % (header, value))
