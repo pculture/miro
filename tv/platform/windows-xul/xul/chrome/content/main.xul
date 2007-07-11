@@ -15,7 +15,7 @@
         onclose="return onClose();"
         orient="vertical"
         sizemode="normal"
-        onkeydown="onKeyDown(event);"
+        onkeydown="return onKeyDown(event);"
         width="1000" height="680"
         persist="screenX screenY width height">
         <script src="chrome://dtv/content/dnd.js"/>

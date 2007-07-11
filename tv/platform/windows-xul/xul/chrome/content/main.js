@@ -425,11 +425,19 @@ function onKeyDown(event) {
   } else if((event.keyCode == 8 && event.ctrlKey) || event.keyCode == 46) {
     // Ctrl-Backspace or Delete
     runCommand("RemoveCurrentSelection");
-  } else if(event.keyCode >= 37 && event.keyCode <= 40) {
-    // Arrow keys
+  } else if(event.keyCode == 38 || event.keyCode == 40) {
+    // Up/Down keys
+    pybridge.handleKeyPress(event.keyCode, event.shiftKey, event.ctrlKey);
+  } else if(event.keyCode == 37 || event.keyCode == 39) {
+    // Right/Left Keys
+    var videoBox = document.getElementById('video-box');
+    if(videoBox.getAttribute("collapsed") == 'true') return true;
     pybridge.handleKeyPress(event.keyCode, event.shiftKey, event.ctrlKey);
   } else if(event.keyCode == 27) {
     // Escape
     jsbridge.leaveFullscreen();
-  } 
+  } else {
+    return true;
+  }
+  return false;
 }
