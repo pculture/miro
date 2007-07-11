@@ -520,8 +520,30 @@ def upgrade40(objectList):
             changed.add(o)
     return changed
 
+# Turns all strings in data structure to unicode, used by upgrade 41 and 47
+def unicodify(d):
+    from feedparser import FeedParserDict
+    from types import StringType
+    if isinstance(d, FeedParserDict):
+        for key in d.keys():
+            try:
+                d[key] = unicodify(d[key])
+            except KeyError:
+                # Feedparser dicts sometime return names in keys() that can't
+                # actually be used in keys.  I guess the best thing to do here
+                # is ignore it -- Ben
+                pass
+    elif isinstance(d, dict):
+        for key in d.keys():
+            d[key] = unicodify(d[key])
+    elif isinstance(d, list):
+        for key in range(len(d)):
+            d[key] = unicodify(d[key])
+    elif type(d) == StringType:
+        d = d.decode('ascii','replace')
+    return d
+
 def upgrade41(objectList):
-    from util import unicodify
     from platformutils import FilenameType
     # This is where John Lennon's ghost sings "Binary Fields Forever"
     if FilenameType == str:
@@ -641,7 +663,6 @@ def upgrade46(objectList):
 
 def upgrade47(objectList):
     """Parsed item entries must be unicode"""
-    from util import unicodify
     changed = set()
     for o in objectList:
         if o.classString == 'item':
@@ -679,22 +700,6 @@ def upgrade48(objectList):
 
 upgrade49 = upgrade42
 
-#         if o.classString == 'item':
-#             objChanged = False
-#             for field in ('pendingReason','videoFilename'):
-#                 if (o.savedData[field] is not None and
-#                     type(o.savedData[field]) != types.UnicodeType):
-#                     objChanged = True
-#                     o.savedData[field] = unicodify(o.savedData[field])
-#         elif o.classString == 'file-item':
-#             objChanged = False
-#             for field in ('pendingReason','videoFilename','filename','shortFilename','offsetPath'):
-#                 if (o.savedData[field] is not None and
-#                     type(o.savedData[field]) != types.UnicodeType):
-#                     objChanged = True
-#                     o.savedData[field] = unicodify(o.savedData[field])
-#         o.savedData['entry'] = unicodify
-            
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
