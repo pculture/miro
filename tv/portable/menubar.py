@@ -136,7 +136,7 @@ ChannelItems = [
     MenuItem(_("Add _Channel"), "NewChannel", (Key("n",MOD),)),
     MenuItem(_("New Searc_h Channel..."), "NewSearchChannel", ()),
     MenuItem(_("New _Folder..."), "NewChannelFolder", (Key("n",MOD,SHIFT),)),
-    MenuItem(_("New Channel _Guide..."), "NewGuide", ()),
+    MenuItem(_("Add Channel _Guide..."), "NewGuide", ()),
     Separator(),
     MenuItem(_("Re_name Channel..."), "RenameChannel", (), False),
     MenuItem(_("_Remove Channel..."), "RemoveChannels", (Key(DELETE),Key(BKSPACE, MOD)), False,
@@ -206,10 +206,11 @@ menubar = \
                 )
 
 traymenu = Menu("Miro","Miro",
-                MenuItem(_("Options"), "EditPreferences", ()),
                 MenuItem(_("Play Unwatched ($numUnwatched)"), "PlayUnwatched", ()),
                 MenuItem(_("Pause All Downloads ($numDownloading)"), "PauseDownloads", ()),
                 MenuItem(_("Resume All Downloads ($numPaused)"), "ResumeDownloads", ()),
+                Separator(),
+                MenuItem(_("Options"), "EditPreferences", ()),
                 Separator(),
                 MenuItem(_("Minimize"),"RestoreWindow", (),
                          restore=_("Restore")),
