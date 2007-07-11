@@ -326,8 +326,14 @@ class CallbackHandler(object):
             if event.state & gtk.gdk.CONTROL_MASK:
                 control = True
             key = portable_keys_mapping[event.keyval]
+            if (key in (keyboard.RIGHT, keyboard.LEFT) and 
+                    self.mainApp.videoDisplay.currentFrame is None):
+                # don't handle RIGHT/LEFT if the video dispaly isn't shown
+                return False
             keyboard.handleKey(key, shift, control)
-        return False
+            return True
+        else:
+            return False
 
     def on_play_pause_button_clicked(self, event = None):
         videoDisplay = self.mainApp.videoDisplay
