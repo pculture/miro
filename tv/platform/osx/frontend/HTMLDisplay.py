@@ -10,6 +10,7 @@ from Foundation import *
 import app
 import prefs
 import config
+import keyboard
 import resources
 import platformutils
 import templatehelper
@@ -150,6 +151,15 @@ class HTMLDisplay (app.Display):
 ###############################################################################
 
 class ManagedWebHTMLView (WebHTMLView):
+
+    def keyDown_(self, event):
+        key = event.characters().characterAtIndex_(0) - 0xF6FF
+        if key in (keyboard.UP, keyboard.DOWN):
+            shift = event.modifierFlags() & NSShiftKeyMask
+            control = event.modifierFlags() & NSControlKeyMask
+            keyboard.handleKey(key, shift, control)
+        else:
+            super(ManagedWebHTMLView, self).keyDown_(event)
 
     def rightMouseDown_(self, event):
         # We want a right click to also select what's underneath so we intercept
