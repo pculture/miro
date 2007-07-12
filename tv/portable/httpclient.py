@@ -1588,11 +1588,13 @@ class HTTPClient(object):
 
         for fmt in fmts:
             try:
-                return time.mktime(time.strptime(val, fmt))
+                x = time.strptime(val, fmt)
+                print repr(x)
+                return time.mktime(x)
+            except OverflowError, oe:
+                return 1341766800.0
             except ValueError, ve:
                 pass
-            except OverflowError, oe:
-                print "DTV: Warning: overflow error on cookie expiration: '%s'" % val
 
         print "DTV: Warning: Can't process cookie expiration: '%s'" % val
         return 0
