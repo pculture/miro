@@ -1709,7 +1709,7 @@ class HTTPClient(object):
                 pass
             else:
                 if name.strip().lower() == targetName.lower():
-                    return value.strip()
+                    return value.strip().strip('"')
         return None
 
     def getFilenameFromResponse(self, response):
