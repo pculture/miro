@@ -423,7 +423,7 @@ SectionEnd
 Function .onInit
   ; Is the app running?  Stop it if so.
 TestRunning:
-  ${nsProcess::FindProcess} "democracy.exe" $R0
+  ${nsProcess::FindProcess} "miro.exe" $R0
   StrCmp $R0 0 0 NotRunning
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "It looks like you're already running ${CONFIG_LONG_APP_NAME}.$\n\
@@ -432,11 +432,26 @@ Please shut it down before continuing." \
   Quit
 NotRunning:
 
+TestOldRunning:
+  ${nsProcess::FindProcess} "democracy.exe" $R0
+  StrCmp $R0 0 0 NotOldRunning
+  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+  "It looks like you're running Democracy Player.$\n\
+Please shut it down before continuing." \
+       IDOK TestOldRunning
+  Quit
+NotOldRunning:
+
+  ; Is the downloader running?  Stop it if so.
+  ${nsProcess::FindProcess} "miro-downloader.exe" $R0
+  StrCmp $R0 0 0 NotDownloaderRunning
+  ${nsProcess::KillProcess} "miro-downloader.exe" $R0
+NotDownloaderRunning:
   ; Is the downloader running?  Stop it if so.
   ${nsProcess::FindProcess} "democracy-downloader.exe" $R0
-  StrCmp $R0 0 0 NotDownloaderRunning
+  StrCmp $R0 0 0 NotOldDownloaderRunning
   ${nsProcess::KillProcess} "democracy-downloader.exe" $R0
-NotDownloaderRunning:
+NotOldDownloaderRunning:
 
   ; Is the app already installed? Bail if so.
   ReadRegStr $R0 HKLM "${INST_KEY}" "InstallDir"
