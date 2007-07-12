@@ -1588,9 +1588,7 @@ class HTTPClient(object):
 
         for fmt in fmts:
             try:
-                x = time.strptime(val, fmt)
-                print repr(x)
-                return time.mktime(x)
+                return time.mktime(time.strptime(val, fmt))
             except OverflowError, oe:
                 return 1341766800.0
             except ValueError, ve:
