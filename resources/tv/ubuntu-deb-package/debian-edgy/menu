@@ -1,2 +1,0 @@
-?package(democracyplayer):needs="X11" section="Apps/Net" \
-  title="Democracy Player" command="/usr/bin/democracyplayer"
