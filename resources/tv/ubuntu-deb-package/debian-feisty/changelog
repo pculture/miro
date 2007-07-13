@@ -1,3 +1,9 @@
+miro (0.9.8rc1-1ubuntupcf) feisty; urgency=low
+
+  * New Upstream version
+  * Democracy Player is now Miro 
+
+ -- elmargol <elmargol@googlemail.com>  Fri, 13 Jul 2007 15:02:49 +0200
 democracyplayer (0.9.6-2ubuntupcf) unstable; urgency=low
 
   * Actual fix for the LD_LIBRARY_PATH problem.  This one uses the wrapper
