@@ -14,6 +14,7 @@ import config
 import folder
 import dialogs
 import playlist
+import keyboard
 import resources
 import eventloop
 import searchengines
@@ -230,12 +231,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
     ### Events ###
 
     def keyDown_(self, event):
-        if self.frame.mainDisplay.hostedDisplay is app.controller.videoDisplay:
-            app.controller.playbackController.handleKeyDownShortcut(event)
-
-    def keyUp_(self, event):
-        if self.frame.mainDisplay.hostedDisplay is app.controller.videoDisplay:
-            app.controller.playbackController.handleKeyUpShortcut(event)
+        handleKey(event)
 
     ### Actions ###
 
@@ -851,6 +847,29 @@ def _makeSearchIcon(engine):
         searchIcon.unlockFocus()
 
     return searchIcon
-    
 
 ###############################################################################
+#### KEYBOARD MAP                                                          ####
+###############################################################################
+
+KEYMAP = {
+    0x20:   keyboard.SPACE,
+    0x1B:   keyboard.ESCAPE,
+    0xF700: keyboard.UP,
+    0xF701: keyboard.DOWN,
+    0xF702: keyboard.LEFT,
+    0xF703: keyboard.RIGHT,
+}
+
+def mapKey(event):
+    try:
+        key = event.characters().characterAtIndex_(0)
+        return KEYMAP[key]
+    except KeyError:
+        return keyboard.UNSUPPORTED
+
+def handleKey(event):
+    key = mapKey(event)
+    shift = event.modifierFlags() & NSShiftKeyMask
+    control = event.modifierFlags() & NSControlKeyMask
+    keyboard.handleKey(key, shift, control)

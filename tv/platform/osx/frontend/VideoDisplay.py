@@ -11,6 +11,7 @@ import eventloop
 import platformcfg
 import platformutils
 
+from MainFrame import handleKey
 from QuicktimeRenderer import QuicktimeRenderer
 from QTKit import QTMovieDidEndNotification
 
@@ -38,32 +39,6 @@ objc.loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity
 
 class PlaybackController (app.PlaybackControllerBase):
     
-    def handleKeyDownShortcut(self, event):
-        if event.characters().characterAtIndex_(0) == 0x1B:
-            app.controller.videoDisplay.exitFullScreen()
-        elif event.characters().characterAtIndex_(0) == 0x20:
-            eventloop.addUrgentCall(lambda:app.controller.playbackController.playPause(), "Play/Pause")
-        elif event.characters().characterAtIndex_(0) == 0xF702:
-            app.controller.videoDisplay.controller.fastSeek(-1)
-        elif event.characters().characterAtIndex_(0) == 0xF703:
-            app.controller.videoDisplay.controller.fastSeek(1)
-        elif event.characters().characterAtIndex_(0) == 0xF700:
-            if event.modifierFlags() & NSControlKeyMask:
-                eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(1.0), "Pumping volume to max")
-            else:
-                volume = app.controller.videoDisplay.getVolume()
-                eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(volume+0.1), "Pumping volume up")
-        elif event.characters().characterAtIndex_(0) == 0xF701:
-            if event.modifierFlags() & NSControlKeyMask:
-                eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(0.0), "Pumping volume to lowest")
-            else:
-                volume = app.controller.videoDisplay.getVolume()
-                eventloop.addUrgentCall(lambda:app.controller.videoDisplay.setVolume(volume-0.1), "Pumping volume down")
-
-    def handleKeyUpShortcut(self, event):
-        if event.characters().characterAtIndex_(0) in (0xF702, 0xF703):
-            app.controller.videoDisplay.controller.stopSeeking()
-
     def playItemExternally(self, itemID):
         item = app.PlaybackControllerBase.playItemExternally(self, itemID)
         moviePath = item.getVideoFilename()
@@ -492,13 +467,12 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         if self.isFullScreen:
             if event.type() == NSLeftMouseDown:
                 if NSApplication.sharedApplication().isActive():
-                    app.controller.videoDisplay.exitFullScreen()
+                    if event.clickCount() > 1:
+                        app.controller.videoDisplay.exitFullScreen()
                 else:
                     NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
             elif event.type() == NSKeyDown:
-                app.controller.playbackController.handleKeyDownShortcut(event)
-            elif event.type() == NSKeyUp:
-                app.controller.playbackController.handleKeyUpShortcut(event)
+                handleKey(event)
             elif event.type() == NSMouseMoved:
                 if not self.palette.isVisible():
                     self.palette.reveal(self)
@@ -507,7 +481,8 @@ class VideoWindow (NibClassBuilder.AutoBaseClass):
         else:
             if event.type() == NSLeftMouseDown:
                 if NSApplication.sharedApplication().isActive():
-                    app.controller.videoDisplay.goFullScreen()
+                    if event.clickCount() > 1:
+                        app.controller.videoDisplay.goFullScreen()
                 else:
                     NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
     

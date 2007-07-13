@@ -15,6 +15,8 @@ import resources
 import platformutils
 import templatehelper
 
+from MainFrame import mapKey, handleKey
+
 ###############################################################################
 # These are used by the channel guide. This platform uses the
 # old-style 'magic URL' guide API, so we just return None. See
@@ -153,11 +155,9 @@ class HTMLDisplay (app.Display):
 class ManagedWebHTMLView (WebHTMLView):
 
     def keyDown_(self, event):
-        key = event.characters().characterAtIndex_(0) - 0xF6FF
+        key = mapKey(event)
         if key in (keyboard.UP, keyboard.DOWN):
-            shift = event.modifierFlags() & NSShiftKeyMask
-            control = event.modifierFlags() & NSControlKeyMask
-            keyboard.handleKey(key, shift, control)
+            handleKey(event)
         else:
             super(ManagedWebHTMLView, self).keyDown_(event)
 

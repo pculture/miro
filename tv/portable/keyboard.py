@@ -10,6 +10,9 @@ UP = 1
 DOWN = 2
 LEFT = 3
 RIGHT = 4
+SPACE = 5
+ESCAPE = 6
+UNSUPPORTED = -1
 
 @eventloop.asUrgent
 def handleKey(key, shiftDown, controlDown):
@@ -48,17 +51,23 @@ def handleKeyPlayback(key, shiftDown, controlDown):
         if controlDown:
             app.controller.playbackController.skip(1)
         else:
-            time = app.controller.videoDisplay.getCurrentTime()
-            app.controller.videoDisplay.setCurrentTime(time + 1.5)
+            time = app.controller.videoDisplay.getCurrentTime() + 30.0
+            if time < app.controller.videoDisplay.getDuration():
+                app.controller.videoDisplay.setCurrentTime(time)
     elif key == LEFT:
         if controlDown:
             app.controller.playbackController.skip(-1)
         else:
-            time = app.controller.videoDisplay.getCurrentTime()
-            app.controller.videoDisplay.setCurrentTime(time - 0.5)
+            time = app.controller.videoDisplay.getCurrentTime() - 10.0
+            if time > 0.0:
+                app.controller.videoDisplay.setCurrentTime(time)
     elif key == UP:
         volume = app.controller.videoDisplay.getVolume()
         app.controller.videoDisplay.setVolume(volume + 0.05)
     elif key == DOWN:
         volume = app.controller.videoDisplay.getVolume()
         app.controller.videoDisplay.setVolume(volume - 0.05)
+    elif key == SPACE:
+        app.controller.playbackController.playPause()
+    elif key == ESCAPE:
+        app.controller.videoDisplay.exitFullScreen()
