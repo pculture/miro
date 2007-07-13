@@ -121,6 +121,12 @@ class VideoDisplay (app.VideoDisplayBase):
         self.isPlaying = True
         app.controller.frame.windowChanger.updatePlayPauseButton()
 
+    def playPause(self):
+        if self.isPlaying:
+            self.pause()
+        else:
+            self.play(-1)
+
     def playFromTime(self, startTime):
         self.play (startTime)
 

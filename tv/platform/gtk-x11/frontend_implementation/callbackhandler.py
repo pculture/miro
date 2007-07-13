@@ -338,12 +338,8 @@ class CallbackHandler(object):
             return False
 
     def on_play_pause_button_clicked(self, event = None):
-        videoDisplay = self.mainApp.videoDisplay
-        if videoDisplay.isPlaying:
-            videoDisplay.pause()
-        else:
-            videoDisplay.play(-1)
-        self.mainFrame.windowChanger.updatePlayPauseButton()
+        eventloop.addUrgentCall(app.controller.playbackController.playPause,
+                'play/pause video')
 
     def on_previous_button_clicked(self, event):
         eventloop.addIdle(lambda:app.controller.playbackController.skip(-1), "Skip to previous track")
@@ -434,21 +430,9 @@ class CallbackHandler(object):
         CallbackHandler.current_folder = chooser.get_current_folder()
         chooser.destroy()
 
-    def on_play_activate(self, event):
-        currentDisplay = self.mainApp.playbackController.currentDisplay
-        if currentDisplay == self.mainApp.videoDisplay:
-            self.mainApp.videoDisplay.play()
-        else:
-            self.mainApp.playbackController.enterPlayback()
-
     def on_stop_activate(self, event):
-        currentDisplay = self.mainApp.playbackController.currentDisplay
-        if currentDisplay == self.mainApp.videoDisplay:
-            self.mainApp.videoDisplay.pause()
-        else:
-            pass
-            # I think this will happen if we play an item externally.  Not
-            # sure what to do here.
+        eventloop.addUrgentCall(app.controller.playbackController.stop,
+                "stop playback")
 
     def on_quit_activate(self, event):
         app.controller.quit()
