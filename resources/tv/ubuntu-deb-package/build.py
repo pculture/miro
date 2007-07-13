@@ -17,7 +17,7 @@ def usage():
 Usage: build.py [version] [distribution-name] [source tarball url]
 
 For example:
-    build.py 0.9.5 feisty http://example.com/Miro-0.9.5.tar.gz
+    build.py 0.9.5 feisty http://example.com/Democracy-0.9.5.tar.gz
 """)
     sys.exit(1)
 
@@ -27,7 +27,7 @@ if len(sys.argv) != 4:
 version = sys.argv[1]
 distro = sys.argv[2]
 debian_dir = os.path.normpath(os.path.join(__file__, '..', 'debian-%s' % distro))
-tarball_name = 'Miro-%s.tar.gz' % version
+tarball_name = 'Democracy-%s.tar.gz' % version
 tarball_url = sys.argv[3]
 user = os.environ['USER']
 
@@ -54,9 +54,9 @@ print "downloading tarball"
 call('wget %s' % tarball_url)
 print "extracting files"
 call('tar zxvf %s' %  tarball_name)
-os.rename('Miro-%s' % version, 'miro-%s' % version)
-shutil.copytree(debian_dir, 'miro-%s/debian' % version)
-os.chdir('miro-%s' % version)
+os.rename('Democracy-%s' % version, 'democracyplayer-%s' % version)
+shutil.copytree(debian_dir, 'democracyplayer-%s/debian' % version)
+os.chdir('democracyplayer-%s' % version)
 print "building debs"
 call('dpkg-buildpackage -us -uc -rfakeroot')
 os.chdir('../..')

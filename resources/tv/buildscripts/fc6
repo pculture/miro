@@ -8,20 +8,20 @@ mkdir $2$3/fc6
 #Make tarball and copy it into directory
 svn co https://svn.participatoryculture.org/svn/dtv/trunk/resources/
 resources/tv/maketarball $2$3
-cp Miro-$2$3.tar.gz $2$3/src/
+cp Democracy-$2$3.tar.gz $2$3/src/
 
 #Get the spec
-svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/Miro.spec > Miro.spec
-sudo cp Miro-$2$3.tar.gz /usr/src/redhat/SOURCES 
-sudo cp Miro.spec /usr/src/redhat/SPECS 
+svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/Democracy.spec > Democracy.spec
+sudo cp Democracy-$2$3.tar.gz /usr/src/redhat/SOURCES 
+sudo cp Democracy.spec /usr/src/redhat/SPECS 
 
 #build the rpm
-sudo rpmbuild --ba /usr/src/redhat/SPECS/Miro.spec 
+sudo rpmbuild --ba /usr/src/redhat/SPECS/Democracy.spec 
 
 #Copy the RPMs into the directory
-cp /usr/src/redhat/SRPMS/Miro-$2-1.src.rpm $2$3/fc6/Miro-$2-1.src.rpm
-cp /usr/src/redhat/RPMS/i386/Miro-$2-1.i386.rpm $2$3/fc6/Miro-$2-1.i386.rpm
-cp /usr/src/redhat/RPMS/i386/Miro-debuginfo-$2-1.i386.rpm $2$3/fc6/Miro-debuginfo-$2-1.i386.rpm 
+cp /usr/src/redhat/SRPMS/Democracy-$2-1.src.rpm $2$3/fc6/Democracy-$2-1.src.rpm
+cp /usr/src/redhat/RPMS/i386/Democracy-$2-1.i386.rpm $2$3/fc6/Democracy-$2-1.i386.rpm
+cp /usr/src/redhat/RPMS/i386/Democracy-debuginfo-$2-1.i386.rpm $2$3/fc6/Democracy-debuginfo-$2-1.i386.rpm 
 
 #copy Directory onto PCF2 user's home directory
 echo "Press enter to upload files..."
@@ -31,9 +31,9 @@ scp -r $2$3 $1@pcf2.osuosl.org:.
 
 #File Cleanup
 echo "Cleaning up files..."
-rm -rf Miro-$2$3.tar.gz
+rm -rf Democracy-$2$3.tar.gz
 rm -rf resources/
-rm -f Miro*
-sudo rm -rf /usr/src/redhat/SRPMS/Miro-$2-1.src.rpm
-sudo rm -rf /usr/src/redhat/RPMS/i386/Miro-$2-1.i386.rpm
-sudo rm -rf /usr/src/redhat/RPMS/i386/Miro-debuginfo-$2-1.i386.rpm 
+rm -f Democracy*
+rm -rf /usr/src/redhat/SRPMS/Democracy-$2-1.src.rpm
+rm -rf /usr/src/redhat/RPMS/i386/Democracy-$2-1.i386.rpm
+rm -rf /usr/src/redhat/RPMS/i386/Democracy-debuginfo-$2-1.i386.rpm 

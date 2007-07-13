@@ -1,11 +1,11 @@
---- platform/gtk-x11/platformcfg.py     (Revision 4869)
-+++ platform/gtk-x11/platformcfg.py     (Arbeitskopie)
+--- platform/gtk-x11/platformcfg.py.orig	2007-02-03 21:43:13.000000000 +0100
++++ platform/gtk-x11/platformcfg.py	2007-02-03 21:44:00.000000000 +0100
 @@ -92,14 +92,14 @@
      value = descriptor.default
  
      if descriptor == prefs.MOVIES_DIRECTORY:
--        value = os.path.expanduser('~/Movies/Miro')
-+        value = os.path.expanduser('~/.miro/Movies')
+-        value = os.path.expanduser('~/Movies/Democracy')
++        value = os.path.expanduser('~/.democracy/Movies')
          try:
              os.makedirs (value)
          except:
@@ -13,8 +13,7 @@
  
      elif descriptor == prefs.NON_VIDEO_DIRECTORY:
 -        value = os.path.expanduser('~/Desktop')
-+        value = os.path.expanduser('~/.miro/Nonvideo')
++        value = os.path.expanduser('~/.democracy/Nonvideo')
  
      elif descriptor == prefs.GETTEXT_PATHNAME:
          value = resources.path("../../locale")
-

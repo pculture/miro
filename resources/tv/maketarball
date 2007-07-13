@@ -1,5 +1,5 @@
-mkdir temp-miro
-cd temp-miro
+mkdir temp-democracy
+cd temp-democracy
 if [ "x-$1" == "x-" ]; then
     svn co https://svn.participatoryculture.org/svn/dtv/trunk/tv
     tag=`date +%Y-%m-%d`
@@ -7,9 +7,9 @@ else
     svn co https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$1/tv
     tag=$1
 fi
-mv tv Miro-$tag
-tar zcvf Miro-$tag.tar.gz --exclude=.svn Miro-$tag
-mv Miro-$tag.tar.gz ..
+mv tv Democracy-$tag
+tar zcvf Democracy-$tag.tar.gz --exclude=.svn Democracy-$tag
+mv Democracy-$tag.tar.gz ..
 cd ..
-rm -Rf temp-miro
+rm -Rf temp-democracy
 

@@ -1,30 +1,20 @@
---- portable/app.py     (Revision 4869)
-+++ portable/app.py     (Arbeitskopie)
-@@ -27,7 +27,7 @@
- import storedatabase
- import subscription
- import downloader
--import autoupdate
-+#import autoupdate
- import xhtmltools
- import guide
- import idlenotifier 
-@@ -603,7 +603,7 @@
+--- portable/app.py.orig	2007-02-03 21:45:43.000000000 +0100
++++ portable/app.py	2007-02-03 21:46:07.000000000 +0100
+@@ -522,7 +522,7 @@
              global delegate
              feed.setDelegate(delegate)
              feed.setSortFunc(sorts.item)
 -            autoupdate.setDelegate(delegate)
-+            #autoupdate.setDelegate(delegate)
++            # autoupdate.setDelegate(delegate)
              database.setDelegate(delegate)
              dialogs.setDelegate(delegate)
              
-@@ -732,7 +732,7 @@
+@@ -645,7 +645,7 @@
  
              util.print_mem_usage("Post-item reconnect memory check")
  
 -            eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
-+            #aeventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
++            # eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
              feed.expireItems()
  
              self.tabDisplay = TemplateDisplay('tablist','default',
-

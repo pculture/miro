@@ -700,6 +700,16 @@ def upgrade48(objectList):
 
 upgrade49 = upgrade42
 
+def upgrade50(objectList):
+    """Parsed item entries must be unicode"""
+    changed = set()
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            if o.savedData['videoFilename'] and o.savedData['videoFilename'][0] == '\\':
+                o.savedData['videoFilename'] = o.savedData['videoFilename'][1:]
+                changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
