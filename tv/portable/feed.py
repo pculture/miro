@@ -1437,7 +1437,7 @@ class RSSFeedImpl(FeedImpl):
         # wait a little while before we start the update
         FeedImpl.onRestore(self)
         self.download = None
-        self.scheduleUpdateEvents(0.1)
+        #self.scheduleUpdateEvents(0.1)
 
 
 ##
