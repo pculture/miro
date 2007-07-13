@@ -1,2 +1,2 @@
-?package(democracyplayer):needs="X11" section="Apps/Net" \
-  title="Democracy Player" command="/usr/bin/democracyplayer"
+?package(miro):needs="X11" section="Apps/Net" \
+  title="Miro" command="/usr/bin/miro"
