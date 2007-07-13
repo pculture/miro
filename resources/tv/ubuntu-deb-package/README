@@ -21,10 +21,13 @@ Debian packages.  Here's how to use it:
    For example: build.py 0.9.5 feisty http://example.com/Democracy-0.9.5.tar.gz
 
 4) If everything goes well, you should have your .deb packages in the
-   ubuntu-deb-package directory.  
-   
-   You should combine all the .deb packages for
-   one distro into a single dire
+   ubuntu-deb-package directory.  If things go wrong, you need to update the
+   way packages get built, but that's outside the scope of this README.
+
+5) To create an apt repository, combine all the .deb packages for one distro
+   into a single dir.  Then run:
+
+   apt-ftparchive packages <directory> | gzip > <directory>/Packages.gz
 
 6) Now test the packages manually and via the tools lintian/linda:
    - $ apt-get install lintian linda
