@@ -16,6 +16,7 @@ interface pcfIDTVVLCRenderer : nsISupports
     void stop();
     void goToBeginningOfMovie();
     float getCurrentTime();
+    float getDuration();
     void setCurrentTime(in float position);
     void setVolume(in float volume);
     void goFullscreen();
