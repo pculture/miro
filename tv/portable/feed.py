@@ -1906,8 +1906,12 @@ class DirectoryFeedImpl(FeedImpl):
                         else:
                             found = 0
                             not_found = []
-                            contents = [osFilenameToFilenameType(os.path.normcase(os.path.join(file, f))) 
-                                        for f in os.listdir(file)]
+                            try:
+                                contents = os.listdir(file)
+                            except OSError:
+                                # probable permission denied
+                                contents = []
+                            contents = [osFilenameToFilenameType(os.path.normcase(os.path.join(file, f))) for f in contents]
                             for subfile in contents:
                                 if subfile in knownFiles:
                                     found = found + 1
