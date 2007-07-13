@@ -227,7 +227,7 @@ jsBridge.prototype = {
         "defaultLabel": defaultLabel, "otherLabel": otherLabel, 
         "releaseNotes": releaseNotes }
     this.window.openDialog("chrome://dtv/content/update_available_dialog.xul",
-            "dialog", "chrome,dependent,centerscreen,modal", params);
+            "dialog", "chrome,dependent,centerscreen,modal,resizable", params);
   },
 
   setCollapsed: function(id, value) {
