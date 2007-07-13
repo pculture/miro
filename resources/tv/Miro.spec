@@ -9,15 +9,15 @@
 %define RELEASE 1
 %define mozversion 1.5.0.8
 
-Name:           Democracy
+Name:           Miro
 Version:        %{VERSION}
 Release:        %{?RELEASE_CANDIDATE:0.}%{RELEASE}%{?RELEASE_CANDIDATE:.%{RELEASE_CANDIDATE}}%{?dist}
-Summary:        Democracy Player
+Summary:        Miro Player
 
 Group:          Applications/Multimedia
 License:        GPL
-URL:            http://www.getdemocracy.com/
-Source0:        ftp://ftp.osuosl.org/pub/pculture.org/democracy/src/Democracy-%{FULL_VERSION}.tar.gz
+URL:            http://www.getmiro.com/
+Source0:        ftp://ftp.osuosl.org/pub/pculture.org/miro/src/Miro-%{FULL_VERSION}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch:      i386 x86_64
@@ -30,11 +30,11 @@ Requires:	xine-lib gnome-python2-gtkmozembed libfame gnome-python2-gconf dbus-py
 Requires:       firefox = %{mozversion}
 
 %description
-Democracy Player
+Miro Player
 
 
 %prep
-%setup -q -n Democracy-%{FULL_VERSION}
+%setup -q -n Miro-%{FULL_VERSION}
 #%patch1
 
 
@@ -60,27 +60,27 @@ update-desktop-database %{_datadir}/applications
 %files
 %defattr(-,root,root,-)
 /usr/bin/*
-%{_datadir}/democracy
+%{_datadir}/miro
 %{_datadir}/pixmaps/*
 %{_datadir}/applications/*.desktop
 %{_datadir}/man/man1/*
 %{_datadir}/mime/packages/*.xml
-%{_datadir}/locale/*/LC_MESSAGES/democracyplayer.mo
-%dir %{python_sitearch}/democracy
-%dir %{python_sitearch}/democracy/compiled_templates
-%dir %{python_sitearch}/democracy/dl_daemon
-%dir %{python_sitearch}/democracy/dl_daemon/private
-%dir %{python_sitearch}/democracy/frontend_implementation
-%{python_sitearch}/democracy/*.so
-%{python_sitearch}/democracy/*.py
-%{python_sitearch}/democracy/*.pyc
-%ghost %{python_sitearch}/democracy/*.pyo
-%{python_sitearch}/democracy/*/*.py
-%{python_sitearch}/democracy/*/*.pyc
-%ghost %{python_sitearch}/democracy/*/*.pyo
-%{python_sitearch}/democracy/*/*/*.py
-%{python_sitearch}/democracy/*/*/*.pyc
-%ghost %{python_sitearch}/democracy/*/*/*.pyo
+%{_datadir}/locale/*/LC_MESSAGES/miro.mo
+%dir %{python_sitearch}/miro
+%dir %{python_sitearch}/miro/compiled_templates
+%dir %{python_sitearch}/miro/dl_daemon
+%dir %{python_sitearch}/miro/dl_daemon/private
+%dir %{python_sitearch}/miro/frontend_implementation
+%{python_sitearch}/miro/*.so
+%{python_sitearch}/miro/*.py
+%{python_sitearch}/miro/*.pyc
+%ghost %{python_sitearch}/miro/*.pyo
+%{python_sitearch}/miro/*/*.py
+%{python_sitearch}/miro/*/*.pyc
+%ghost %{python_sitearch}/miro/*/*.pyo
+%{python_sitearch}/miro/*/*/*.py
+%{python_sitearch}/miro/*/*/*.pyc
+%ghost %{python_sitearch}/miro/*/*/*.pyo
 %doc
 
 
