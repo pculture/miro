@@ -271,8 +271,13 @@ class UIBackendDelegate:
                 stdin=subprocess.PIPE,
                 startupinfo=startupinfo)
 
-    def handleNewUpdate(self, releaseNotes, update_item):
+    def handleNewUpdate(self, update_item):
         url = update_item['enclosures'][0]['href']
+        try:
+            releaseNotes = update_item['description']
+        except:
+            logging.warn("Couldn't fetch release notes")
+            releaseNotes = ''
         dialog = UpdateAvailableDialog(releaseNotes)
         def callback(dialog):
             if dialog.choice == dialogs.BUTTON_DOWNLOAD:
