@@ -202,7 +202,7 @@ class Item(DDBObject):
                 for video in videos:
                     assert video.startswith(filename_root)
                     self.videoFilename = video[len(filename_root):]
-                    if self.videoFilename[0] == '/':
+                    if self.videoFilename[0] in ('/', '\\'):
                         self.videoFilename = self.videoFilename[1:]
                     self.isVideo = True
             else:
