@@ -295,7 +295,7 @@ class UIBackendDelegate:
                         0.0)
         NSMenu.popUpContextMenu_withEvent_forView_(nsmenu, event, view)
 
-    def handleNewUpdate(self, latest):
+    def handleNewUpdate(self, releaseNotes, latest):
         SparkleUpdater.handleNewUpdate(latest)
 
 ###############################################################################

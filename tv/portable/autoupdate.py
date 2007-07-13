@@ -47,11 +47,16 @@ def _handleAppCast(data, notifyIfUpToDate):
             if latest is not None:
                 serial = int(config.get(prefs.APP_SERIAL))
                 upToDate = (serial >= _getItemSerial(latest))
+            try:
+                releaseNotes = appcast['feed']['description']
+            except KeyError:
+                logging.warn("Couldn't fetch release notes")
+                releaseNotes = ''
         
             if not upToDate:
                 logging.info('New update available.')
                 if hasattr(delegate, 'handleNewUpdate'):
-                    delegate.handleNewUpdate(latest)
+                    delegate.handleNewUpdate(releaseNotes, latest)
                 else:
                     _handleNewUpdate(latest)
             elif notifyIfUpToDate:
