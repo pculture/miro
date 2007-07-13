@@ -1,3 +1,10 @@
+miro (0.9.8rc1-1ubuntupcf) dapper; urgency=low
+
+  * New Upstream version
+  * Democracy Player is now Miro 
+
+ -- elmargol <elmargol@googlemail.com>  Fri, 13 Jul 2007 15:02:49 +0200
+
 democracyplayer (0.9.6-1ubuntupcf) unstable; urgency=low
 
   * New upstream release
