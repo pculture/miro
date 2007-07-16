@@ -298,7 +298,7 @@ class CallbackHandler(object):
             ('Quit', gtk.STOCK_QUIT, menubar.getLabel('Quit'), menubar.getShortcut('Quit').GTKString(), None, self.on_quit_activate),
             ('UpdateAllChannels', None, menubar.getLabel('UpdateAllChannels'), menubar.getShortcut('UpdateAllChannels').GTKString(), None, self.on_update_all_channels_activate),
             ('Help', None, menubar.getLabel('Help')),
-            ('ReportBug', None, menubar.getLabel('ReportBug')),
+            ('ReportBug', None, menubar.getLabel('ReportBug'), menubar.getShortcut('ReportBug').GTKString(), None, self.on_report_bug_clicked),
             ('About', gtk.STOCK_ABOUT, menubar.getLabel('About'), menubar.getShortcut('About').GTKString(), None, self.on_about_clicked),
             ('Donate', None, menubar.getLabel('Donate'), menubar.getShortcut('Donate').GTKString(), None, self.on_donate_clicked),
 
@@ -599,6 +599,9 @@ class CallbackHandler(object):
             new_disk = config.get(prefs.PRESERVE_X_GB_FREE)
         else:
             new_disk = 0
+
+    def on_report_bug_clicked(self, event=None):
+        app.delegate.openExternalURL(config.get(prefs.BUG_REPORT_URL))
 
     def on_about_clicked(self, event = None):
         self.mainFrame.about()
