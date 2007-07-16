@@ -169,7 +169,7 @@ else:
     fullscreen_shortcuts = (Key("f", MOD), )
 
 PlaybackItems = [
-    MenuItem(_("_Play"), "PlayPauseVideo", (Key(SPACE),), False),
+    MenuItem(_("_Play"), "PlayPauseVideo", (Key(SPACE, MOD), ), False),
     MenuItem(_("_Stop"), "StopVideo", (Key("d",MOD),), False),
     Separator(),
     MenuItem(_("_Next Video"), "NextVideo", (Key(RIGHT_ARROW, MOD),), False),

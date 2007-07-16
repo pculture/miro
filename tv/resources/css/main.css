@@ -623,7 +623,7 @@ a.download-bar-action:hover {
 /* Around  the "empty folder" message */
 .channel-blank {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 110px;
     padding: 30px;
 }
 .channel-message {

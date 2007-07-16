@@ -252,7 +252,11 @@ VLCRenderer.prototype = {
   },
 
   getDuration: function() {
-    rv = this.vlc.input.length;
+    try {
+      rv = this.vlc.input.length;
+    } catch (e) {
+      rv = -1;
+    }
     return rv;
   },
 

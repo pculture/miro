@@ -422,8 +422,8 @@ function onKeyDown(event) {
   if(event.keyCode == 13 && event.altKey) { 
     // Alt+Enter
     runMenuItemCommand('menuitem-fullscreen');
-  } else if(event.keyCode == 32) {
-    // Space
+  } else if(event.keyCode == 32 && event.ctrlKey) {
+    // Ctrl+Space
     runMenuItemCommand('menuitem-playpausevideo');
   } else if((event.keyCode == 8 && event.ctrlKey) || event.keyCode == 46) {
     // Ctrl-Backspace or Delete
