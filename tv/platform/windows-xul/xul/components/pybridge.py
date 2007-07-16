@@ -586,11 +586,9 @@ class PyBridge:
     def removeCurrentPlaylist(self):
         app.controller.removeCurrentPlaylist()
 
-    @asUrgent
     def openDonatePage(self):
         self.delegate.openExternalURL(config.get(prefs.DONATE_URL))
 
-    @asUrgent
     def openBugTracker(self):
         self.delegate.openExternalURL(config.get(prefs.BUG_TRACKER_URL))
 
