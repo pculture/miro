@@ -67,7 +67,7 @@ DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getdemocracy.com/
                          platformSpecific=False)
 HELP_URL          = Pref(key='HelpURL', default=u"http://www.getdemocracy.com/help/",
                          platformSpecific=False)
-BUG_REPORT_URL    = Pref(key='ReportURL', default=u"https://develop.participatoryculture.org/trac/democracy/newticket",
+BUG_REPORT_URL    = Pref(key='ReportURL', default=u"http://www.getmiro.com/bug.html",
                          platformSpecific=False)
 # These can be safely ignored on platforms without minimize to tray
 MINIMIZE_TO_TRAY = \
