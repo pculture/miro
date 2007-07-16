@@ -275,7 +275,7 @@ class UIBackendDelegate:
         url = update_item['enclosures'][0]['href']
         try:
             releaseNotes = update_item['description']
-        except KeyError:
+        except:
             logging.warn("Couldn't fetch release notes")
             releaseNotes = ''
         dialog = UpdateAvailableDialog(releaseNotes)

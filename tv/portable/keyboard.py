@@ -51,16 +51,20 @@ def handleKeyPlayback(key, shiftDown, controlDown):
         if controlDown:
             app.controller.playbackController.skip(1)
         else:
-            time = app.controller.videoDisplay.getCurrentTime() + 30.0
-            if time < app.controller.videoDisplay.getDuration():
-                app.controller.videoDisplay.setCurrentTime(time)
+            time = app.controller.videoDisplay.getCurrentTime()
+            if time is not None:
+                time += 30.0
+                if time < app.controller.videoDisplay.getDuration():
+                    app.controller.videoDisplay.setCurrentTime(time)
     elif key == LEFT:
         if controlDown:
             app.controller.playbackController.skip(-1)
         else:
-            time = app.controller.videoDisplay.getCurrentTime() - 10.0
-            if time > 0.0:
-                app.controller.videoDisplay.setCurrentTime(time)
+            time = app.controller.videoDisplay.getCurrentTime()
+            if time is not None:
+                time -= 10.0
+                if time > 0.0:
+                    app.controller.videoDisplay.setCurrentTime(time)
     elif key == UP:
         volume = app.controller.videoDisplay.getVolume()
         app.controller.videoDisplay.setVolume(volume + 0.05)
