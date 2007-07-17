@@ -45,7 +45,7 @@ XINE_VIZ                    = Pref( key="xineViz",               default=u"goom"
 if 'DTV_CHANNELGUIDE_URL' in os.environ:
     effectiveChannelGuide = util.unicodify(os.environ['DTV_CHANNELGUIDE_URL'])
 else:
-    effectiveChannelGuide = u'https://channelguide.participatoryculture.org/'
+    effectiveChannelGuide = u'https://www.miroguide.com/'
 
 if 'DTV_VIDEOBOMB_URL' in os.environ:
     effectiveVideobomb = util.unicodify(os.environ['DTV_VIDEOBOMB_URL'])
