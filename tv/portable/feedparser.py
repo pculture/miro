@@ -2492,7 +2492,7 @@ def _getCharacterEncoding(http_headers, xml_data):
     # section F of the XML specification:
     # http://www.w3.org/TR/REC-xml/#sec-guessing-no-ext-info
     try:
-        if xml_data[:4] == '\x4c\x6f\xa7\x94':
+
             # EBCDIC
             xml_data = _ebcdic_to_ascii(xml_data)
         elif xml_data[:4] == '\x00\x3c\x00\x3f':
