@@ -229,7 +229,7 @@ from database import DDBObject
 from downloader import RemoteDownloader, HTTPAuthPassword
 from feed import Feed, FeedImpl, RSSFeedImpl, ScraperFeedImpl
 from feed import SearchFeedImpl, DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
-from feed import ManualFeedImpl
+from feed import ManualFeedImpl, SingleFeedImpl
 from folder import ChannelFolder, PlaylistFolder
 from guide import ChannelGuide
 from item import Item, FileItem
@@ -378,6 +378,11 @@ class ManualFeedImplSchema(FeedImplSchema):
     classString = 'manual-feed-impl'
     # no addition fields over FeedImplSchema
 
+class SingleFeedImplSchema(FeedImplSchema):
+    klass = SingleFeedImpl
+    classString = 'single-feed-impl'
+    # no addition fields over FeedImplSchema
+
 class RemoteDownloaderSchema(DDBObjectSchema):
     klass = RemoteDownloader
     classString = 'remote-downloader'
@@ -450,7 +455,7 @@ objectSchemas = [
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
-    HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema,
+    HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema, SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
     TabOrderSchema
 ]

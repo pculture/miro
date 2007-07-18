@@ -34,7 +34,7 @@ def initialize():
         global items, fileItems, toplevelItems, nonContainerItems, unwatchedItems
         global watchableItems, newWatchableItems, feeds, remoteDownloads
         global httpauths, staticTabsObjects, autoUploads, guides, default_guide
-        global manualFeed, directoryFeed, newlyDownloadedItems
+        global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
         global downloadingItems, pausedItems, manualDownloads, autoDownloads
         global playlists, playlistFolders, channelFolders, searchEngines
         db.createIndex(indexes.objectsByClass)
@@ -89,6 +89,7 @@ def initialize():
         guides.createIndex(indexes.guidesByURL)
         default_guide = guides.filter(lambda x: x.getDefault())
         manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
+        singleFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:singleFeed')
         directoryFeed = feeds.filterWithIndex(indexes.feedsByURL,
                                               'dtv:directoryfeed')
 

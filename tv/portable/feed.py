@@ -839,6 +839,8 @@ class Feed(DDBObject):
             newFeed = SearchDownloadsFeedImpl(self)
         elif (self.origURL == u"dtv:manualFeed"):
             newFeed = ManualFeedImpl(self)
+        elif (self.origURL == u"dtv:singleFeed"):
+            newFeed = SingleFeedImpl(self)
         elif (self.origURL.startswith (u"dtv:searchTerm:")):
 
             url = self.origURL[len(u"dtv:searchTerm:"):]
@@ -2042,10 +2044,9 @@ class SearchDownloadsFeedImpl(FeedImpl):
         return _(u'Search')
 
 class ManualFeedImpl(FeedImpl):
-    """Videos/Torrents that have been added using by the user opening them
-    with democracy.
+    """Downloaded Videos/Torrents that have been added using by the
+    user opening them with democracy.
     """
-
     def __init__(self, ufeed):
         FeedImpl.__init__(self, url=u'dtv:manualFeed', ufeed=ufeed, 
                 title=None, visible=False)
@@ -2054,7 +2055,21 @@ class ManualFeedImpl(FeedImpl):
 
     @returnsUnicode
     def getTitle(self):
-        return _(u'Local File')
+        return _(u'Local Files')
+
+class SingleFeedImpl(FeedImpl):
+    """Single Video that is playing that has been added by the user
+    opening them with democracy.
+    """
+    def __init__(self, ufeed):
+        FeedImpl.__init__(self, url=u'dtv:singleFeed', ufeed=ufeed, 
+                title=None, visible=False)
+        self.ufeed.expire = u'never'
+        self.setUpdateFrequency(-1)
+
+    @returnsUnicode
+    def getTitle(self):
+        return _(u'Playing File')
 
 ##
 # Parse HTML document and grab all of the links and their title

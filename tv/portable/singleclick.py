@@ -33,7 +33,7 @@ _commandLineArgs = []
 commandLineVideoIds = None
 commandLineView = None 
 
-def addVideo(path):
+def addVideo(path, single = False):
     path = os.path.abspath(path)
     views.items.confirmDBThread()
     for i in views.items:
@@ -44,8 +44,14 @@ def addVideo(path):
             print "Not adding duplicate video: %s" % path.decode('ascii', 'ignore')
             commandLineVideoIds.add(i.getID())
             return
-    manualFeed = util.getSingletonDDBObject(views.manualFeed)
-    fileItem = item.FileItem(path, feed_id=manualFeed.getID())
+    if (single):
+        correctFeed = util.getSingletonDDBObject(views.singleFeed)
+        items = [i for i in correctFeed.items]
+        for i in items:
+            i.executeExpire()
+    else:
+        correctFeed = util.getSingletonDDBObject(views.manualFeed)
+    fileItem = item.FileItem(path, feed_id=correctFeed.getID())
     fileItem.markItemSeen()
     commandLineVideoIds.add(fileItem.getID())
 
@@ -221,7 +227,7 @@ def parseCommandLineArgs(args=None):
             elif ext in ('.miro', '.democracy', '.dem', '.opml'):
                 addSubscriptions(arg)
             else:
-                addVideo(arg)
+                addVideo(arg, len(args) == 1)
                 addedVideos = True
         else:
             print "WARNING: %s doesn't exist" % arg

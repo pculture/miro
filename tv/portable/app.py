@@ -643,6 +643,7 @@ class Controller (frontend.Application):
             util.print_mem_usage("Post-downloader memory check")
 
             self.setupGlobalFeed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
+            self.setupGlobalFeed(u'dtv:singleFeed', initiallyAutoDownloadable=False)
 
             # Set up the search objects
             self.setupGlobalFeed(u'dtv:search', initiallyAutoDownloadable=False)
@@ -1642,6 +1643,11 @@ class ModelActionHandler:
     def expirePlayingItem(self, item):
         self.expireItem(item)
         controller.playbackController.skip(1)
+
+    def addItemToLibrary(self, item):
+        obj = db.getObjectByID(int(item))
+        manualFeed = util.getSingletonDDBObject(views.manualFeed)
+        obj.setFeed(manualFeed.getID())
 
     def keepItem(self, item):
         obj = db.getObjectByID(int(item))

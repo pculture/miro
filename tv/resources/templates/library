@@ -16,7 +16,7 @@
 global searchFilter
 searchFilter = lambda x: filters.matchingItems(x, None)
 
-matchingItems = views.watchableItems.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortLibrary.sort,resort=True)
+matchingItems = views.watchableItems.filter(lambda x:searchFilter(x) and x.getFeedURL() != "dtv:singleFeed",sortFunc=sorts.itemSortLibrary.sort,resort=True)
 
 def updateSearchString(newSearch):
     global searchFilter

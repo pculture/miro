@@ -1637,7 +1637,7 @@ class FileItem(Item):
         else:
             # external item that the user deleted in DP
             url = self.getFeedURL()
-            if url.startswith ("dtv:manualFeed"):
+            if url.startswith ("dtv:manualFeed") or url.startswith ("dtv:singleFeed"):
                 self.remove()
             else:
                 self.deleted = True
