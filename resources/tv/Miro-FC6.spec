@@ -28,6 +28,7 @@ BuildRequires:  firefox-devel = %{mozversion}
 Requires:   	python-abi = %(%{__python} -c "import sys ; print sys.version[:3]")
 Requires:	xine-lib gnome-python2-gtkmozembed libfame gnome-python2-gconf dbus-python
 Requires:       firefox = %{mozversion}
+Patch1:         necko.patch
 
 %description
 Miro Player
@@ -35,7 +36,7 @@ Miro Player
 
 %prep
 %setup -q -n Miro-%{FULL_VERSION}
-#%patch1
+%patch1
 
 
 %build
