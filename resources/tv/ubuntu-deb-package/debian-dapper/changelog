@@ -1,3 +1,9 @@
+miro (0.9.8-2ubuntupcf) dapper; urgency=low
+
+  * New movies directory patch.
+
+ -- Chris Lahey <clahey@clahey.net>  Thu, 19 Jul 2007 17:15:07 -0400
+
 miro (0.9.8-1ubuntupcf) dapper; urgency=low
 
   * New Upstream version
