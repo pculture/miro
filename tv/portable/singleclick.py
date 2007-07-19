@@ -55,6 +55,19 @@ def addVideo(path, single = False):
     fileItem.markItemSeen()
     commandLineVideoIds.add(fileItem.getID())
 
+def addDownload(url):
+    manualFeed = util.getSingletonDDBObject(views.manualFeed)
+    manualFeed.confirmDBThread()
+    for i in manualFeed.items:
+        if (i.getURL() == url):
+            print ("Not downloading %s, it's already a "
+                   "download for %s" % (url, i))
+            if i.downloader is not None and i.downloader.getState() in ('paused', 'stopped'):
+                i.download()
+            return
+    newItem = item.Item(item.getEntryForURL(url), feed_id=manualFeed.getID())
+    newItem.download()
+
 def addTorrent(path, torrentInfohash):
     manualFeed = util.getSingletonDDBObject(views.manualFeed)
     manualFeed.confirmDBThread()
@@ -202,13 +215,16 @@ def parseCommandLineArgs(args=None):
     resetCommandLineView()
 
     addedVideos = False
-    addedTorrents = False
+    addedDownloads = False
 
     for arg in args:
         if arg.startswith('miro:'):
             addSubscriptionURL('miro:', 'application/x-miro', arg)
         elif arg.startswith('democracy:'):
             addSubscriptionURL('democracy:', 'application/x-democracy', arg)
+        elif arg.startswith('http:') or arg.startswith('https:'):
+            addDownload(platformutils.filenameToUnicode(arg))
+            addedDownloads = True
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):
@@ -221,7 +237,7 @@ def parseCommandLineArgs(args=None):
                     dialogs.MessageBoxDialog(title, msg).run()
                     continue
                 addTorrent(arg, torrentInfohash)
-                addedTorrents = True
+                addedDownloads = True
             elif ext in ('.rss', '.rdf', '.atom', '.ato'):
                 addFeed(arg)
             elif ext in ('.miro', '.democracy', '.dem', '.opml'):
@@ -235,7 +251,7 @@ def parseCommandLineArgs(args=None):
     if addedVideos:
         app.controller.selection.selectTabByTemplateBase('librarytab', False)
         playCommandLineView()
-    elif addedTorrents:
+    elif addedDownloads:
         app.controller.selection.selectTabByTemplateBase('downloadtab')
 
 def openFile(path):

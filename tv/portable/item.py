@@ -1570,6 +1570,10 @@ def getEntryForFile(filename):
     return FeedParserDict({'title':platformutils.filenameToUnicode(os.path.basename(filename)),
             'enclosures':[{'url': resources.url(filename)}]})
 
+def getEntryForURL(url):
+    return FeedParserDict({'title' : url,
+            'enclosures':[{'url' : url}]})
+
 ##
 # An Item that exists as a local file
 class FileItem(Item):
