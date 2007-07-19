@@ -1,18 +1,20 @@
 <!ENTITY prefs.title "Preferenze">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
+<!ENTITY prefs.runonstartup "Esegui automaticamente $longAppName al login">
 <!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.title "Preferenze">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.minimize.to.tray "Minimize $longAppName to the system tray when I close the program">
+<!ENTITY prefs.run.on.startup "Esegui automaticamente $longAppName al login">
+<!ENTITY prefs.close_to_tray_start "Quando seleziono il bottone rosso di chiusura:">
+<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
+<!ENTITY prefs.no_close_to_tray "Esci completamente da Miro">
 
 <!ENTITY prefs.general "Importazioni generali">
 
 <!ENTITY prefs.channels "Canali">
 <!ENTITY prefs.channels.check "Controlla se ci sono nuovi video nei canali">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check.thirty "Ogni 30 minuti">
+<!ENTITY prefs.channels.check.sixty "Ogni ora">
+<!ENTITY prefs.channels.check.manually "Manualmente">
 
 <!ENTITY prefs.playback "Riproduzione">
 <!ENTITY prefs.playback.remember.pos "Ricorda posizione del video">
@@ -20,7 +22,7 @@
 <!ENTITY prefs.playback.stop.after.each "Ferma dopo ogni video.">
 
 <!ENTITY prefs.folder.movies "Cartella dei fil">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.downloads "Memorizza i file scaricati in questa cartella:">
 <!ENTITY prefs.folder.change "Modifica">
 
 <!ENTITY prefs.folder.others.caption "Controlla per nuovi video in queste cartelle e aggiungili alla mia collezione">
@@ -36,7 +38,7 @@
 <!ENTITY prefs.disk.space "Spazio su disco">
 <!ENTITY prefs.disk.space.min.part1 "Non avviare lo scaricamento se lascia meno di">
 <!ENTITY prefs.disk.space.min.part2 "GB liberi.">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "ATTENZIONE: questa impostazione sarò attiva soltanto dopo il prossimo riavvio di $longAppName.">
 
 <!ENTITY prefs.videos.expire "Di norma, i video scadono dopo">
 <!ENTITY prefs.videos.expire.one "1 giorno">

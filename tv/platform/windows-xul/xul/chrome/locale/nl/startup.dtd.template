@@ -1,53 +1,53 @@
 <!ENTITY nbsp				" ">
 <!ENTITY rsaquo				"'">
 
-<!ENTITY startup.title			"$shortAppName Initiële Configuratie Assistent">
+<!ENTITY startup.title			"$shortAppName Configuratie Assistent">
 <!ENTITY startup.description		"De volgende vraagjes zullen u assisteren bij het optimaal instellen van uw $longAppName voorkeuren voor uw gebruik.">
 <!ENTITY startup.autostart.description	"Het is aan te raden om $longAppName automatisch te openen na inloggen. Bestaande downloads kunnen zo voortgezet worden, en nieuwe downloads zullen in de achtergrond gestart worden, en klaarstaan voor wanneer u deze wenst te bekijken.">
 <!ENTITY startup.autostart.question	"Wilt u $shortAppName openen na het inloggen op uw computer?">
 <!ENTITY startup.search.description	"$longAppName kan alle video's op uw computer vinden en u helpen bij het organiseren van uw collectie.">
 <!ENTITY startup.search.question        "Wilt u dat $longAppName zoekt naar video's op uw computer?">
-<!ENTITY startup.search.restrict	"Beperk tot alleen mijn persoonlijke bestanden.">
-<!ENTITY startup.search.custom          "Zoek aangepaste map:">
-<!ENTITY startup.search.searching	"Op zoek naar video's">
-<!ENTITY startup.change	                "Verander">
-<!ENTITY startup.cancel	                "Zoeken annuleren">
-<!ENTITY startup.undo	                "Zoekopdracht wissen">
+<!ENTITY startup.search.restrict	"Beperk tot al mijn persoonlijke bestanden.">
+<!ENTITY startup.search.custom          "Zoek in andere map:">
+<!ENTITY startup.search.searching	"Zoeken naar Video's">
+<!ENTITY startup.change	                "Wijzig">
+<!ENTITY startup.cancel	                "Annuleer Zoekopdracht">
+<!ENTITY startup.undo	                "Wis Zoekopdracht">
 <!ENTITY startup.done1			"U bent klaar!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Laat het aanstaan:">
+<!ENTITY startup.done3.heading		"Laat het Aanstaan:">
 <!ENTITY startup.done3.text		"$longAppName werkt regelmatig uw abonnementen bij en download video's in de achtergrond. Dit betekent dat er steeds nieuwe video's klaar zullen staan voor u.">
 <!ENTITY startup.done4.heading		"Maakt u zich geen zorgen over schijfruimte:">
 <!ENTITY startup.done4.text		"Net zoals de Amerikaanse TiVo's, bevat $longAppName een systeem welke u helpt ruimte vrij the maken voor nieuwe video's door oudere automatisch te verwijderen. U kunt uiteraard ook altijd een video permanent bewaren door simpelweg op 'BEWAAR' te klikken en u kunt eveneens per kanaal aan te geven dat u de video's van deze altijd wilt bewaren.">
 <!ENTITY startup.done5.heading		"Ga groot:">
-<!ENTITY startup.done5.text		"De knop rechts van de afspeelknop speelt video's in volledig scherm af.">
+<!ENTITY startup.done5.text		"De knop rechts van de afspeelknop speelt video's schermvullend af.">
 <!ENTITY startup.done6.heading		"Zoek video's:">
-<!ENTITY startup.done6.text		"The $shortAppName Gids bevat honderden internet-TV kanalen, welke allen gratis zijn. Klik simpelweg op 'VOEG TOE' om u op een kanaal te abonneren en deze te bekijken.">
+<!ENTITY startup.done6.text		"De $shortAppName Gids bevat honderden internet-TV kanalen, welke allen gratis zijn. Klik simpelweg op 'VOEG TOE' om u op een kanaal te abonneren en deze te bekijken.">
 <!ENTITY startup.answer.yes		"Ja">
 <!ENTITY startup.answer.no		"Nee">
-<!ENTITY startup.title			"$shortAppName Initiële Configuratie Assistent">
+<!ENTITY startup.title			"$shortAppName Configuratie Assistent">
 <!ENTITY startup.description		"De volgende vraagjes zullen u assisteren bij het optimaal instellen van uw $longAppName voorkeuren voor uw gebruik.">
 <!ENTITY startup.autostart.description	"Het is aan te raden om $longAppName automatisch te openen na inloggen. Bestaande downloads kunnen zo voortgezet worden, en nieuwe downloads zullen in de achtergrond gestart worden, en klaarstaan voor wanneer u deze wenst te bekijken.">
 <!ENTITY startup.autostart.question	"Wilt u $shortAppName openen na het inloggen op uw computer?">
 <!ENTITY startup.search.description	"$longAppName kan alle video's op uw computer vinden en u helpen bij het organiseren van uw collectie.">
 <!ENTITY startup.search.question        "Wilt u dat $longAppName zoekt naar video's op uw computer?">
-<!ENTITY startup.search.restrict	"Beperk tot alleen mijn persoonlijke bestanden.">
-<!ENTITY startup.search.custom          "Zoek aangepaste map:">
-<!ENTITY startup.search.searching	"Op zoek naar video's">
-<!ENTITY startup.change	                "Verander">
-<!ENTITY startup.cancel	                "Zoeken annuleren">
-<!ENTITY startup.undo	                "Zoekopdracht wissen">
+<!ENTITY startup.search.restrict	"Beperk tot al mijn persoonlijke bestanden.">
+<!ENTITY startup.search.custom          "Zoek in andere map:">
+<!ENTITY startup.search.searching	"Zoeken naar Video's">
+<!ENTITY startup.change	                "Wijzig">
+<!ENTITY startup.cancel	                "Annuleer Zoekopdracht">
+<!ENTITY startup.undo	                "Wis Zoekopdracht">
 <!ENTITY startup.done1			"U bent klaar!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Laat het aanstaan:">
+<!ENTITY startup.done3.heading		"Laat het Aanstaan:">
 <!ENTITY startup.done3.text		"$longAppName werkt regelmatig uw abonnementen bij en download video's in de achtergrond. Dit betekent dat er steeds nieuwe video's klaar zullen staan voor u.">
 <!ENTITY startup.done4.heading		"Maakt u zich geen zorgen over schijfruimte:">
 <!ENTITY startup.done4.text		"Net zoals de Amerikaanse TiVo's, bevat $longAppName een systeem welke u helpt ruimte vrij the maken voor nieuwe video's door oudere automatisch te verwijderen. U kunt uiteraard ook altijd een video permanent bewaren door simpelweg op 'BEWAAR' te klikken en u kunt eveneens per kanaal aan te geven dat u de video's van deze altijd wilt bewaren.">
 <!ENTITY startup.done5.heading		"Ga groot:">
-<!ENTITY startup.done5.text		"De knop rechts van de afspeelknop speelt video's in volledig scherm af.">
+<!ENTITY startup.done5.text		"De knop rechts van de afspeelknop speelt video's schermvullend af.">
 <!ENTITY startup.done6.heading		"Zoek video's:">
-<!ENTITY startup.done6.text		"The $shortAppName Gids bevat honderden internet-TV kanalen, welke allen gratis zijn. Klik simpelweg op 'VOEG TOE' om u op een kanaal te abonneren en deze te bekijken.">
+<!ENTITY startup.done6.text		"De $shortAppName Gids bevat honderden internet-TV kanalen, welke allen gratis zijn. Klik simpelweg op 'VOEG TOE' om u op een kanaal te abonneren en deze te bekijken.">
 <!ENTITY startup.answer.yes		"Ja">
 <!ENTITY startup.answer.no		"Nee">

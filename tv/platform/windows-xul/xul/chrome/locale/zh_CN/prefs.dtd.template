@@ -1,18 +1,20 @@
 <!ENTITY prefs.title "配置">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.runonstartup "当我登录时自动运行 $longAppName">
+<!ENTITY prefs.restart "(警告：更改直到您重启 $longAppName 后才会生效。)">
 <!ENTITY prefs.title "配置">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.minimize.to.tray "Minimize $longAppName to the system tray when I close the program">
+<!ENTITY prefs.run.on.startup "当我登录时自动运行 $longAppName">
+<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
+<!ENTITY prefs.close_to_tray "最小化到托盘以便继续下载">
+<!ENTITY prefs.no_close_to_tray "完全退出Miro">
 
 <!ENTITY prefs.general "主选项">
 
 <!ENTITY prefs.channels "频道">
 <!ENTITY prefs.channels.check "检查频道的新内容">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check.thirty "每30分钟">
+<!ENTITY prefs.channels.check.sixty "每小时">
+<!ENTITY prefs.channels.check.manually "手动">
 
 <!ENTITY prefs.playback "播放">
 <!ENTITY prefs.playback.remember.pos "记住影片位置">
@@ -26,7 +28,7 @@
 <!ENTITY prefs.folder.others.caption "寻找在这些文件夹内的新影片并把他们收集到我的收藏：">
 <!ENTITY prefs.folder.others.location "文件夹位置">
 <!ENTITY prefs.folder.others.shown "作为频道显示">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.add "添加文件夹...">
 <!ENTITY prefs.folder.others.remove "移除">
 
 <!ENTITY prefs.downloads.max "下载">
@@ -46,7 +48,7 @@
 <!ENTITY prefs.videos.expire.thirty "一个月">
 <!ENTITY prefs.videos.expire.never "从不">
 
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.torrent.restart.warning "(警告：更改直到您重启 $longAppName 后才会生效。)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "为了防止速度过慢，上传上限设置为">
 <!ENTITY prefs.torrent.limit.upstream.part2 "千字节/每秒(当我的电脑处于活跃状态时)">
 <!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent使用这之间的端口">

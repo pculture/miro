@@ -4,7 +4,9 @@
 <!ENTITY prefs.title "Nastaveni">
 
 <!ENTITY prefs.run.on.startup "AUtomaticky spouštět $longAppName, když se přihlásím">
-<!ENTITY prefs.minimize.to.tray "Minimalizovat $longAppName do systémové lišty, pokud zavřu aplikaci.">
+<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
+<!ENTITY prefs.close_to_tray "Minimalizovat, aby se npřerušila stahování.">
+<!ENTITY prefs.no_close_to_tray "Ukončit Miro">
 
 <!ENTITY prefs.general "Obecné">
 

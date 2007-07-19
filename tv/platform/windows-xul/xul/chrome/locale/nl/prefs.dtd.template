@@ -1,42 +1,44 @@
-<!ENTITY prefs.title "Instellingen">
+<!ENTITY prefs.title "Voorkeuren">
 <!ENTITY prefs.runonstartup "Open $longAppName na inloggen">
-<!ENTITY prefs.restart "(OPGEPAST: De wijzigingen in $longAppName gaan in wanneer u deze opnieuw opent.)">
-<!ENTITY prefs.title "Instellingen">
+<!ENTITY prefs.restart "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
+<!ENTITY prefs.title "Voorkeuren">
 
 <!ENTITY prefs.run.on.startup "Open $longAppName na inloggen">
-<!ENTITY prefs.minimize.to.tray "Minimaliseer $longAppName naar het systeemvak wanneer ik het sluit">
+<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
+<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
 
 <!ENTITY prefs.general "Algemeen">
 
 <!ENTITY prefs.channels "Kanalen">
-<!ENTITY prefs.channels.check "Controleer kanalen op nieuwe inhoud">
+<!ENTITY prefs.channels.check "Werk Kanalen bij">
 <!ENTITY prefs.channels.check.thirty "Elke 30 minuten">
 <!ENTITY prefs.channels.check.sixty "Elk uur">
 <!ENTITY prefs.channels.check.manually "Handmatig">
 
-<!ENTITY prefs.playback "Afspelen">
-<!ENTITY prefs.playback.remember.pos "Herinner positie video">
-<!ENTITY prefs.playback.auto.next.video "Video's na elkaar afspelen.">
-<!ENTITY prefs.playback.stop.after.each "Na elke video stoppen.">
+<!ENTITY prefs.playback "Weergave">
+<!ENTITY prefs.playback.remember.pos "Onthoud afspeelpositie video.">
+<!ENTITY prefs.playback.auto.next.video "Speel video's achtereen af.">
+<!ENTITY prefs.playback.stop.after.each "Stop na elke video.">
 
-<!ENTITY prefs.folder.movies "Filmsmap">
-<!ENTITY prefs.folder.downloads "Bewaar gedownloade video's in deze map:">
-<!ENTITY prefs.folder.change "Wijzigen...">
+<!ENTITY prefs.folder.movies "Locatie map Video's">
+<!ENTITY prefs.folder.downloads "Locatie gedownloade video's:">
+<!ENTITY prefs.folder.change "Wijzig...">
 
-<!ENTITY prefs.folder.others.caption "Kijk naar nieuwe videos in deze mappen en stop ze in Mijn Collectie">
-<!ENTITY prefs.folder.others.location "Maplokatie">
-<!ENTITY prefs.folder.others.shown "Toon als kanaal">
+<!ENTITY prefs.folder.others.caption "Monitor deze locaties voor nieuwe video's en voeg toe aan mijn Bibliotheek.">
+<!ENTITY prefs.folder.others.location "Locatie Map">
+<!ENTITY prefs.folder.others.shown "Als Kanaal">
 <!ENTITY prefs.folder.others.add "Voeg Map Toe...">
-<!ENTITY prefs.folder.others.remove "Verwijderen">
+<!ENTITY prefs.folder.others.remove "Verwijder">
 
 <!ENTITY prefs.downloads.max "Downloads">
 <!ENTITY prefs.downloads.max.part1 "Download hooguit">
-<!ENTITY prefs.downloads.max.part2 "video's in een keer.">
+<!ENTITY prefs.downloads.max.part2 "video's tegelijkertijd.">
 
-<!ENTITY prefs.disk.space "Schijfruimte">
-<!ENTITY prefs.disk.space.min.part1 "Download niet starten wanneer minder overblijft dan">
-<!ENTITY prefs.disk.space.min.part2 "GB gratis.">
-<!ENTITY prefs.disk.space.warning.restart "De wijzigingen in $longAppName gaan in wanneer u deze opnieuw opent.">
+<!ENTITY prefs.disk.space "Vrije Ruimte">
+<!ENTITY prefs.disk.space.min.part1 "Stop downloads en houd minstens vrij">
+<!ENTITY prefs.disk.space.min.part2 "GB vrij.">
+<!ENTITY prefs.disk.space.warning.restart "NB: De wijzigingen in $longAppName gaan in wanneer u deze opnieuw opent.">
 
 <!ENTITY prefs.videos.expire "Video's vervallen standaard na">
 <!ENTITY prefs.videos.expire.one "1 dag">
@@ -46,8 +48,8 @@
 <!ENTITY prefs.videos.expire.thirty "1 maand">
 <!ENTITY prefs.videos.expire.never "Nooit">
 
-<!ENTITY prefs.torrent.restart.warning "(OPGEPAST: De wijzigingen in $longAppName gaan in wanneer u deze opnieuw opent.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Om vertragingen te voorkomen, beperk de uitvoersnelheid tot">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s als mijn computer actief is.">
-<!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent gebruikt poorten tussen">
+<!ENTITY prefs.torrent.restart.warning "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Voorkom vertragingen, en beperk de uploads">
+<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s wanneer mijn computer actief is.">
+<!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent gebruikt de poorten">
 <!ENTITY prefs.torrent.uses.ports.part2 "en">
