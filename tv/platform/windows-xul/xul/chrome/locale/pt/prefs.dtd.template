@@ -4,7 +4,9 @@
 <!ENTITY prefs.title "Preferências">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.minimize.to.tray "Minimize $longAppName to the system tray when I close the program">
+<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
+<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
 
 <!ENTITY prefs.general "General">
 
@@ -15,7 +17,7 @@
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.playback "Reproduzir">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback.remember.pos "Relembrar a posição do vídeo.">
 <!ENTITY prefs.playback.auto.next.video "Reproduzir videos continuamente.">
 <!ENTITY prefs.playback.stop.after.each "Parar depois de cada video.">
 
@@ -23,17 +25,17 @@
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Modificar...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
+<!ENTITY prefs.folder.others.caption "Procurar por novos vídeos nestas pastas e incluí-los na Minha Colecção:">
 <!ENTITY prefs.folder.others.location "Folder Location">
-<!ENTITY prefs.folder.others.shown "Show as Channel">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.shown "Mostrar como canal">
+<!ENTITY prefs.folder.others.add "Adicionar Pasta...">
 <!ENTITY prefs.folder.others.remove "Remover">
 
 <!ENTITY prefs.downloads.max "Downloads">
 <!ENTITY prefs.downloads.max.part1 "Descarregar no máximo">
 <!ENTITY prefs.downloads.max.part2 "vídeos de uma vez.">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "Espaço ocupado em disco">
 <!ENTITY prefs.disk.space.min.part1 "Não começar uma transferência se deixar menos de">
 <!ENTITY prefs.disk.space.min.part2 "GB livres.">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">

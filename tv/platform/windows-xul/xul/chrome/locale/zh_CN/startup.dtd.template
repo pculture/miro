@@ -2,11 +2,11 @@
 <!ENTITY rsaquo				"’">
 
 <!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
+<!ENTITY startup.description		"下面的几个屏幕将帮助您设置 $longAppName 以便它以最佳状态为您工作。">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
+<!ENTITY startup.autostart.question	"您希望让$shortAppName随系统启动吗？">
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
+<!ENTITY startup.search.question        "您希望让$longAppName在您的计算机上寻找视频吗？">
 <!ENTITY startup.search.restrict	"限定于我个人的配置文件。">
 <!ENTITY startup.search.custom          "搜索自定义文件夹：">
 <!ENTITY startup.search.searching	"正在搜索视频文件">
@@ -27,11 +27,11 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.answer.yes		"确定">
 <!ENTITY startup.answer.no		"不">
 <!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
+<!ENTITY startup.description		"下面的几个屏幕将帮助您设置 $longAppName 以便它以最佳状态为您工作。">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
+<!ENTITY startup.autostart.question	"您希望让$shortAppName随系统启动吗？">
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
+<!ENTITY startup.search.question        "您希望让$longAppName在您的计算机上寻找视频吗？">
 <!ENTITY startup.search.restrict	"限定于我个人的配置文件。">
 <!ENTITY startup.search.custom          "搜索自定义文件夹：">
 <!ENTITY startup.search.searching	"正在搜索视频文件">

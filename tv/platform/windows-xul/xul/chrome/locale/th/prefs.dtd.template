@@ -4,22 +4,24 @@
 <!ENTITY prefs.title "ปรับแต่ง">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.minimize.to.tray "Minimize $longAppName to the system tray when I close the program">
+<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
+<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
 
-<!ENTITY prefs.general "General">
+<!ENTITY prefs.general "ค่าทั่วไป">
 
-<!ENTITY prefs.channels "ช่อง">
+<!ENTITY prefs.channels "แชนเนล">
 <!ENTITY prefs.channels.check "ตรวจหาวิดีโอใหม่ในแต่ละช่อง">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "Playback">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback "เล่น">
+<!ENTITY prefs.playback.remember.pos "จดจำตำแหน่งของวิดิโอ">
 <!ENTITY prefs.playback.auto.next.video "เล่นวิดีโอเรื่องถัดไปเรื่อยๆ">
 <!ENTITY prefs.playback.stop.after.each "หยุดหลังเล่นจบแต่ละเรื่อง">
 
-<!ENTITY prefs.folder.movies "Movies Directory">
+<!ENTITY prefs.folder.movies "ไดเร็คทอรี่ของไฟล์วิดิโอ">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "เปลี่ยน...">
 
@@ -29,11 +31,11 @@
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "ลบ">
 
-<!ENTITY prefs.downloads.max "Downloads">
+<!ENTITY prefs.downloads.max "ดาวน์โหลด">
 <!ENTITY prefs.downloads.max.part1 "ดาวน์โหลดวิดีโอพร้อมกันครั้งละไม่เกิน">
 <!ENTITY prefs.downloads.max.part2 "เรื่อง">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "ที่ว่างในดิสก์">
 <!ENTITY prefs.disk.space.min.part1 "ไม่ต้องดาวน์โหลดถ้าทำให้เหลือที่ว่างน้อยกว่า">
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">

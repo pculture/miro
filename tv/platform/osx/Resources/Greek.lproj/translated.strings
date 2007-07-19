@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-07-06 14:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-07-19 19:03-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -18,14 +18,18 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "The fall of $shortAppName??" = "Αποτυχία του $shortAppName??";
 
-"About Democracy" = "Σχετικά με το Democracy";
+/* Flag: untranslated */
+"About Miro" = "About Miro";
 
 "Add Channel..." = "Πρόσθήκη Καναλιού...";
 
+/* Flag: untranslated */
+"Add Guide..." = "Add Guide...";
+
 "Bring All to Front" = "Μεταφορά μπροστά";
 
-/* File: ../../platform/osx/frontend/Preferences.py:39 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
+/* File: ../..//platform/osx/frontend/Preferences.py:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
 "Channels" = "Κανάλια";
 
 "Check for New Version" = "Έλεγχος για νέα έκδοση";
@@ -42,12 +46,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Cut" = "Αποκοπή";
 
-/* File: ../../portable/dialogs.py:77 */
+/* File: ../..//portable/dialogs.py:77 */
 "Delete" = "Διαγραφή";
-
-"Democracy" = "Democracy";
-
-"Democracy Help" = "H Βοήθεια  του Democracy";
 
 "Donate" = "Συνεισφορά";
 
@@ -59,7 +59,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Help" = "Βοήθεια";
 
-"Hide Democracy" = "Απόκρυψη Democracy";
+/* Flag: untranslated */
+"Hide Miro" = "Hide Miro";
 
 "Hide Others" = "Απόκρυψη άλλων";
 
@@ -67,11 +68,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "MainMenu" = "Κυρίως Μενού";
 
+/* File: ../..//portable/menubar.py:215 */
 "Minimize" = "Ελαχιστοποίηση";
 
-"New Channel Folder..." = "Νέος Φάκελος Καναλιών...";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* Flag: untranslated */
+"Miro" = "Miro";
 
-"New Channel Guide..." = "Νέος Οδηγός Καναλιών...";
+/* Flag: untranslated */
+"Miro Help" = "Miro Help";
+
+"New Channel Folder..." = "Νέος Φάκελος Καναλιών...";
 
 "New Playlist Folder..." = "Νέος Φάκελος για Λίστες Αναπαραγωγής...";
 
@@ -87,11 +94,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Paste" = "Επικόλληση";
 
-/* File: ../../platform/osx/frontend/Application.py:234 */
+/* File: ../..//platform/osx/frontend/Application.py:234 */
 "Play Video" = "Αναπαραγωγή βίντεο";
 
-/* File: ../../platform/osx/frontend/Preferences.py:43 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
+/* File: ../..//platform/osx/frontend/Preferences.py:43 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
 "Playback" = "Αναπαραγωγή";
 
 "Playlists" = "Λίστες αναπαραγωγής";
@@ -100,11 +107,15 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Previous Video" = "Προηγούμενο video";
 
-"Quit Democracy" = "Έξοδος";
+/* Flag: untranslated */
+"Quit Miro" = "Quit Miro";
 
 "Remove..." = "Αφαίρεση...";
 
 "Rename..." = "Μετονομασία...";
+
+/* Flag: untranslated */
+"Report a bug" = "Report a bug";
 
 "Save Video As..." = "Αποθήκευση βίντεο ως...";
 
@@ -140,13 +151,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "FullScreen Controls" = "Λειτουργίες πλήρους οθόνης";
 
-/* File: ../../portable/feed.py:1957 */
-/* File: ../../portable/feed.py:2020 */
-"Search" = "Αναζήτηση";
+/* File: ../..//portable/tabs.py:28 */
+"Video Search" = "Αναζήτηση βίντεο";
 
 "VideoWindow" = "Παράθυρο βίντεο";
 
-/* File: ../../portable/dialogs.py:60 */
+/* File: ../..//portable/dialogs.py:60 */
 "Cancel" = "Ακύρωση";
 
 "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Η ιστοσελίδα http://foo.bar.com/baz απαιτεί όνομα χρήστη και κωδικό πρόσβασης για \"κείμενο παρέχεται από τον κόμβο\". (δοκιμαστικά δεδομένα)\n";
@@ -161,18 +171,21 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "(You must restart Democracy for this change to take effect)\n" = "(πρέπει να επανεκκινήσετε το πρόγραμμα για να εφαρμοστούν οι αλλαγές σας)\n";
 
+/* Flag: untranslated */
+"(You must restart Miro for this change to take effect)\n" = "(You must restart Miro for this change to take effect)\n";
+
 "(movies directory path goes here)" = "(εδώ γράφετε το φάκελο για ταινίες)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "1 day" = "1 μέρα";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
 "1 month" = "1 μήνας";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
 "10 days" = "10 μέρες";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
 "3 days" = "3 μέρες";
 
 "3 hours" = "3 ώρες";
@@ -181,7 +194,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "5" = "5";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
 "6 days" = "6 μέρες";
 
 "99999" = "99999";
@@ -192,67 +205,68 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "By default, videos expire after:" = "Εξ' ορισμού, τα βίντεο λήγουν μετά από:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26 */
 "Change..." = "Αλλαγή...";
 
 "Check channels for new content:" = "Έλεγχος καναλιών για νέο περιεχόμενο";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:41 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
 "Don't start a download if it leaves less than" = "Μην ξεκινάς κατέβασμα άμα μείνει λιγότερο από";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:42 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
 "Download at most" = "Μέγιστο κατέβασμα";
 
 "Folder location" = "Τοποθεσία φακέλου";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
 "GB free." = "GB ελεύθερα.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
 "KB/s when my computer is active." = "KB/s όταν ο υπολογιστής μου είναι ενεργός.";
 
 "Maximum:" = "Μέγιστο:";
 
 "Minimum:" = "Ελάχιστο:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
 "Never" = "Ποτέ";
 
 "OtherViews" = "Απόψεις άλλων";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
 "Play videos one after another." = "Αναπαραγωγή βίντεο το ένα μετά το άλλο.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
 "Remember video position." = "Μνημόνευση θέσης video";
 
-/* File: ../../portable/menu.py:48 */
-/* File: ../../portable/menu.py:53 */
-/* File: ../../portable/folder.py:139 */
-/* File: ../../portable/folder.py:194 */
-/* File: ../../portable/feed.py:769 */
-/* File: ../../portable/guide.py:38 */
-/* File: ../../portable/playlist.py:180 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
+/* File: ../..//portable/feed.py:781 */
+/* File: ../..//portable/folder.py:139 */
+/* File: ../..//portable/folder.py:194 */
+/* File: ../..//portable/guide.py:38 */
+/* File: ../..//portable/menu.py:48 */
+/* File: ../..//portable/menu.py:53 */
+/* File: ../..//portable/playlist.py:180 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
 "Remove" = "Κατάργηση";
 
-"Run Democracy at startup" = "Εκκίνηση Democracy με την έναρξη";
+/* Flag: untranslated */
+"Run Miro at startup" = "Run Miro at startup";
 
 "Save downloaded videos in this folder:" = "Σώσε κατεβασμένα βίντεο στον φάκελο:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:528 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+/* File: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:540 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
 "Show as Channel" = "Προβολή ώς Κανάλι";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
 "Stop after each video." = "Σταμάτημα μέτα από κάθε βίντεο.";
 
 "To avoid internet slowdowns:" = "Για αποφυγή καθυστέρησης απο το Internet:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26 */
-"Watch for new videos in these folders and include them in My Collection:" = "Να παρακολουθείς για νέα βίντεο σε αυτούς τους φακέλους και να τα συμπεριλαμβάνεις στο Η Συλλογή Μου:";
+/* Flag: untranslated */
+"Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:";
 
 "every 30 minutes" = "κάθε 30 λεπτά";
 
@@ -260,7 +274,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "manually" = "χειροκίνητα";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36 */
 "videos at once." = "βίντεο άμεσα.";
 
 "$label$" = "$επικεφαλίδα$";
@@ -269,7 +283,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Channel" = "Κανάλι";
 
-/* File: ../../portable/dialogs.py:72 */
+/* File: ../..//portable/dialogs.py:72 */
 "Create" = "Δημιουργία";
 
 "In this:" = "Σε αυτό:";
@@ -282,8 +296,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "URL" = "Διεύθυνση";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/startup.py:31 */
-/* File: ../../platform/windows-xul/frontend_implementation/startup.py:25 */
+/* File: ../..//platform/gtk-x11/frontend_implementation/startup.py:31 */
+/* File: ../..//platform/windows-xul/frontend_implementation/startup.py:25 */
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(αναλύθηκαν %d αρχεία - βρέθηκαν %d βίντεο)";
 
@@ -291,13 +305,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Browse" = "Ψάχνω";
 
-"Democracy Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Democracy Player to look for video files on your computer?" = "Το Democracy Player μπορεί να βρεί όλα τα αρχεία βίντεο στον υπολογιστή σας και να σας βοηθήσει να οργανώσετε τη συλλογή σας.\n\n\nΘέλετε να αναζητήσω αρχεία βίντεο στον υπολογιστή σας;";
-
-/* File: ../../platform/osx/frontend/StartupPanel.py:90 */
-/* File: ../../platform/osx/frontend/StartupPanel.py:116 */
+/* File: ../..//platform/osx/frontend/StartupPanel.py:90 */
+/* File: ../..//platform/osx/frontend/StartupPanel.py:116 */
 "Next" = "Επόμενο";
 
-/* File: ../../portable/dialogs.py:62 */
+/* File: ../..//portable/dialogs.py:62 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "Όχι";
 
@@ -310,1598 +322,1434 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37 */
 "Searching for Videos" = "Αναζήτηση για βίντεο";
 
-"The next few screens will help you set up Democracy Player so that it works best for you. Here's the first question." = "Οι επόμενες οθόνες θα βοηθήσει τον Democracy Player να λειτουργήσει καλύτερα για εσάς.  Η πρώτη ερώτηση είναι.";
+/* Flag: untranslated */
+"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?";
 
-"We recommend that you allow Democracy Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Democracy when your computer starts up?" = "Σας προτείνουμε να επιτρέπετε τον Democracy Player να ξεκινάει όταν ανοίγετε τον υπολογιστή σας. Με αυτόν τον τρόπο, τα βίντεο που δεν έχουν ακόμη κατέβει, νε τελειώσουν το κατέβασμα και νέα βίντεο από τα κανάλια σας να είναι έτοιμα όταν θα θελήσετε να τα δείτε.\n\n\nΘέλετε να ξεκινάει ο Democracy Player όταν ανοίγετε τον υπολογιστή σας;";
+/* Flag: untranslated */
+"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question.";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:67 */
+/* Flag: untranslated */
+"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
 "Welcome to Internet TV!" = "Καλώς ήρθατε στην διαδυκτιακή τηλεόραση!";
 
-"Welcome to Internet TV. There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Καλώς ήρθατε στην διαδυκτιακή τηλεόραση.  Υπάρχουν πολλά πράγματα που μπορείτε να κάνετε με τον Democracy Player: αυτόματο κατέβασμα βίντεο από τα αγαπήμενα σας κανάλια, να δείτε νέα βίντεο το ένα μέτα το άλλο, να κατεβάζετε torrents, να προτείνετε βίντεο σε φίλους σας, και πολλά περισσότερα.\n\n";
+/* Flag: untranslated */
+"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
 
-/* File: ../../portable/dialogs.py:61 */
+/* File: ../..//portable/dialogs.py:61 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
 "Yes" = "Ναι";
 
-"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Democracy is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Democracy Player regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Democracy Channel Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "Τα καταφέρατε!\n\nΤο στήσιμο του προγράμματος ολοκληρώθηκε -- τώρα μπορείτε να βρείτε κανάλια και να τα παρακολουθήσετε.\n\nΜην περιμένετε: Το Democracy είναι διαφορετικό από το να βλέπετε βίντεο από ιστοσελίδες -- οι παραγωγοί προσφέρουν μεγάλα, υψήλης ποιότητας βίντεο.  Γι' αύτο μην περιμένετε άλλο για τα βίντεο σας: αρχίστε να κατεβάζετε και ελέγξε αργότερα. \n\nΑφήστε το να λειτουργεί:  Το Democracy Player ελέγχει συχνά τα κανάλια για νέα βίντεο και τα κατέβάζει στο παρασκήνιο.  Αύτο σήμαινει ότι θα έχετε νέα βίντεο όταν θα είστε έτοιμοι να τα παρακολουθήσετε.\n\nΜην ανησυχείτε για το χώρο του δίσκου σας: Όπως το TiVo, το Democracy Player περιέχει ένα σύστημα \"ημερομηνίας λήξης\" το οποίο βοηθάει να διαγράφονται τα παλαιότερα βίντεο για να έχετε χώρο για καινούργια.  Μπορείτε να κρατήσετε ένα βίντεο για πάντα επιλέγοντας την επιλογή \"αποθήκευση\" και μπορείτε να θέσετε τις επιλογές ενός καναλιού ώστε να αποθηκεύονται τα βίντεο αυτόματα.\n\nΜεγενθύνετε: Η επιλογή στα δεξιά του πλήκτρου αναπαραγωγής δείχνει το βίντεο σε πλήρη οθόνη.\n\nΒρείτε βίντεο: Ο οδηγός καναλιών του προγράμματος έχει εκατοντάδες ιντερνετικών καναλιών, τα οποία είναι δωρεάν.  Απλά κάνετε κλικ στην επιλογή \"Προσθήκη\" για να δείτε το κανάλι.\n";
+/* Flag: untranslated */
+"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Miro is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Miro regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Miro Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Miro is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Miro regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Miro Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n";
 
 "%message%\n%message%" = "%μήνυμα%\n%μήνυμα%";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:25 */
-/* File: ../../portable/compiled_templates/unittest/simpleunicode.py:36 */
-/* File: ../../portable/test/unicodetest.py:319 */
+/* File: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:295 */
+"New Channel _Guide..." = "_Οδήγος νέου καναλιού...";
+
+/* File: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:531 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+"Folder Location" = "Τοποθεσία Φακέλου";
+
+/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:25 */
 "Settings" = "Ρυθμίσεις";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:28 */
+/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:28 */
 "Hide" = "Απόκρυψη";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:30 */
+/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:30 */
 "Show" = "Προβολή";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:31 */
-/* File: ../../portable/dialogs.py:63 */
+/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:31 */
+/* File: ../..//portable/dialogs.py:63 */
+/* File: ../..//portable/menubar.py:217 */
 "Quit" = "'Εξοδος";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:153 */
+/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:153 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
 "Username:" = "Όνομα Χρήστη:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:164 */
+/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:164 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
 "Password:" = "Κωδικός Πρόσβασης:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:351 */
+/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:352 */
 "Unknown Runtime Error" = "Άγνωστο Σφάλμα";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:352 */
+/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:353 */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "Υπήρξε ένα άγνωστο σφάλμα: %s.";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:293 */
-/* File: ../../portable/menubar.py:129 */
-"New Channel _Guide..." = "_Οδήγος νέου καναλιού...";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:519 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
-"Folder Location" = "Τοποθεσία Φακέλου";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:43 */
-/* Flag: python-format */
-"Error importing modules:\n%s" = "Σφάλμα κατά την εισαγωγή υπομονάδων:\n%s";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:47 */
-"Starting up" = "Γίνεται εκκίνηση";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:240 */
-"Loading window" = "Φόρτωση παραθύρου";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:241 */
-"onStartup called twice" = "Το onStartup καλέσθηκε δύο φορές";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:56 */
-"Update Available" = "Υπάρχει διαθέσιμη ενημέρωση";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57 */
-/* Flag: python-format */
-"A new version of %s is available for download." = "Υπαρχει μια νέα έκδοση του %s για μεταφόρτωση.";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:182 */
-"Error Bombing Item" = "Σφάλμα Αντικειμένου Bombing";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:184 */
-"Error Recommending Item" = "Σφάλμα συνιστώμενου αντικειμένου";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:186 */
-"Error Opening Website" = "Σφάλμα στο άνοιγμα ιστοσελίδας";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:190 */
-/* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "Έγινε σφάλμα κατα το άνοιμα του %s. Παρακαλώ προσπαθήστε ξανά σε λίγα δευτερόλεπτα";
-
-/* File: ../../platform/osx/frontend/StartupPanel.py:114 */
-"Search!" = "Αναζήτηση!";
-
-/* File: ../../platform/osx/frontend/Application.py:231 */
+/* File: ../..//platform/osx/frontend/Application.py:231 */
 "Pause Video" = "Πάυση Video";
 
-/* File: ../../platform/osx/frontend/Application.py:240 */
+/* File: ../..//platform/osx/frontend/Application.py:240 */
 "Unsupported version of Quicktime" = "Η έκδοση του Quicktime δεν υποστηρίζεται";
 
-/* File: ../../platform/osx/frontend/Application.py:241 */
+/* File: ../..//platform/osx/frontend/Application.py:241 */
 /* Flag: python-format */
 "To run %s you need the most recent version of Quicktime, which is a free update." = "Για να τρέξει το %s χρειάζεστε την πιο πρόσφατη έκδοση του Quicktime, που είναι αναβαθμίσιμη δωρεάν.";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:265 */
-"Subscribe to Channel" = "Εγγραφή στο Κανάλι";
-
-/* File: ../../platform/osx/frontend/MainFrame.py:266 */
-"Enter the URL of the channel you would like to subscribe to." = "Εισάγετε το URL του καναλιού που θα θέλατε να εγγραφείτε.";
-
-/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:219 */
-"Audio" = "Ήχος";
-
-/* File: ../../platform/osx/frontend/Preferences.py:38 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
-"General" = "Γενικά";
-
-/* File: ../../platform/osx/frontend/Preferences.py:40 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
-"Downloads" = "Μεταφορτώσεις";
-
-/* File: ../../platform/osx/frontend/Preferences.py:41 */
-"Folders" = "Φάκελοι";
-
-/* File: ../../platform/osx/frontend/Preferences.py:42 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36 */
-"Disk Space" = "Χώρος στο δίσκο";
-
-/* File: ../../platform/osx/frontend/Preferences.py:164 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
-"Movies Directory" = "Φάκελος Ταινιών";
-
-/* File: ../../platform/osx/frontend/Preferences.py:165 */
-"Select a Directory to store Democracy downloads in." = "Επιλέξτε ένα φάκελο για να αποθηκεύονται τα αρχεία που κατεβάζει το Democracy.";
-
-/* File: ../../platform/osx/frontend/Preferences.py:166 */
-/* File: ../../platform/osx/frontend/Preferences.py:230 */
-"Select" = "Επιλέξτε";
-
-/* File: ../../platform/osx/frontend/Preferences.py:175 */
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:51 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
-"Migrate existing movies?" = "Μεταφορά υπάρχουσων ταινιών?";
-
-/* File: ../../platform/osx/frontend/Preferences.py:176 */
-"You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Έχετε επιλέξει ένα νέο φάκελο αποθήκευσης των κατεβασμένων ταινιών.  Θέλετε το Democracy να μεταφέρει σε αυτόν τις ήδη κατεβασμένες?  (Οι ταινίες που κατεβαίνουν τώρα θα μεταφερθούν αφού τελειώσει η μεταφορά τους).";
-
-/* File: ../../platform/osx/frontend/Preferences.py:228 */
-"View this Directory in My Collection" = "Προβολή αυτού του φακέλου στο Η Συλλογή Μου";
-
-/* File: ../../platform/osx/frontend/Preferences.py:229 */
-"Select a Directory to view in My Collection." = "Επιλέξτε ένα φάκελο για προβολή στο Η Συλλογή Μου.";
-
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:27 */
+/* File: ../..//platform/osx/frontend/GrowlNotifier.py:27 */
 "Download Completed" = "Το κατέβασμα ολοκληρώθηκε";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:28 */
+/* File: ../..//platform/osx/frontend/GrowlNotifier.py:28 */
 /* Flag: python-format */
 "Download of video '%s' is finished." = "Το κατέβασμα του βίντεο '%s' έχει τελειώσει.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:37 */
+/* File: ../..//platform/osx/frontend/GrowlNotifier.py:37 */
 "Download Failed" = "Το κατέβασμα απέτυχε";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:38 */
+/* File: ../..//platform/osx/frontend/GrowlNotifier.py:38 */
 /* Flag: python-format */
 "Download of video '%s' has failed." = "Η μεταφόρτωση του video '%s' απέτυχε";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:5 */
+/* File: ../..//platform/osx/frontend/MainFrame.py:261 */
+"Subscribe to Channel" = "Εγγραφή στο Κανάλι";
+
+/* File: ../..//platform/osx/frontend/MainFrame.py:262 */
+"Enter the URL of the channel you would like to subscribe to." = "Εισάγετε το URL του καναλιού που θα θέλατε να εγγραφείτε.";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:38 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
+"General" = "Γενικά";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
+"Downloads" = "Μεταφορτώσεις";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:41 */
+"Folders" = "Φάκελοι";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
+"Disk Space" = "Χώρος στο δίσκο";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:164 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+"Movies Directory" = "Φάκελος Ταινιών";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:165 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Select a Directory to store %s downloads in." = "Select a Directory to store %s downloads in.";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:166 */
+/* File: ../..//platform/osx/frontend/Preferences.py:230 */
+"Select" = "Επιλέξτε";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:175 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
+"Migrate existing movies?" = "Μεταφορά υπάρχουσων ταινιών?";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:176 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:228 */
+/* Flag: untranslated */
+"View this Directory in the Library" = "View this Directory in the Library";
+
+/* File: ../..//platform/osx/frontend/Preferences.py:229 */
+/* Flag: untranslated */
+"Select a Directory to view in the Library." = "Select a Directory to view in the Library.";
+
+/* File: ../..//platform/osx/frontend/QuicktimeRenderer.py:219 */
+"Audio" = "Ήχος";
+
+/* File: ../..//platform/osx/frontend/StartupPanel.py:114 */
+"Search!" = "Αναζήτηση!";
+
+/* File: ../..//platform/osx/frontend/UIStrings.py:5 */
 "_Remove..." = "_Απομάκρυνση...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:6 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:6 */
 "_Remove Playlist..." = "_Απομάκρυνση λίστας...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:7 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:7 */
 "_Remove Playlists..." = "_Απομάκρυνση λιστών...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:8 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:8 */
 "_Remove Playlist Folder..." = "_Απομάκρυνση φακέλλου λίστας...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:9 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:9 */
 "_Remove Playlist Folders..." = "_Απομάκρυνση φακέλλων λίστας...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:10 */
-/* File: ../../portable/menubar.py:132 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:10 */
+/* File: ../..//portable/menubar.py:142 */
 "_Remove Channel..." = "_Απομάκρυνση καναλιου...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:11 */
-/* File: ../../portable/menubar.py:133 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:11 */
+/* File: ../..//portable/menubar.py:143 */
 "_Remove Channels..." = "_Απομάκρυνση καναλιών...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:12 */
-/* File: ../../portable/menubar.py:135 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:12 */
+/* File: ../..//portable/menubar.py:145 */
 "_Remove Channel Folder..." = "_Απομακρυνση φακέλλου καναλιού...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:13 */
-/* File: ../../portable/menubar.py:134 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:13 */
+/* File: ../..//portable/menubar.py:144 */
 "_Remove Channel Folders..." = "_Απομάκρυνση φακέλλων καναλιού...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:14 */
-"_Remove Channel Guide..." = "_Απομάκρυνση οδηγού καναλιών...";
+/* File: ../..//platform/osx/frontend/UIStrings.py:14 */
+/* Flag: untranslated */
+"_Remove Miro Guide..." = "_Remove Miro Guide...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:15 */
-"_Remove Channel Guides..." = "_Απομάκρυνση οδηγών καναλιού...";
+/* File: ../..//platform/osx/frontend/UIStrings.py:15 */
+/* Flag: untranslated */
+"_Remove Miro Guides..." = "_Remove Miro Guides...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:16 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:16 */
 "_Remove Video..." = "_Απομάκρυνση βίντεο...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:17 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:17 */
 "_Remove Videos..." = "_Απομάκρυνση πολλών βίντεο...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:18 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:18 */
 "Re_name..." = "Μετ_ονομασία...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:19 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:19 */
 "Re_name Playlist..." = "Μετ_ονομασία Λίστας...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:20 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:20 */
 "Re_name Playlist Folder..." = "Μετ_ονομασία φακέλλου λίστας...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:21 */
-/* File: ../../portable/menubar.py:131 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:21 */
+/* File: ../..//portable/menubar.py:141 */
 "Re_name Channel..." = "Μετ_ονομασία καναλιού...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:22 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:22 */
 "Re_name Channel Folder..." = "Μετ_ονομασία φακέλλου καναλιού...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:23 */
-"Re_name Channel Guide..." = "Μετ-ονομασία οδηγού καναλιού...";
+/* File: ../..//platform/osx/frontend/UIStrings.py:23 */
+/* Flag: untranslated */
+"Re_name Miro Guide..." = "Re_name Miro Guide...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:24 */
-/* File: ../../portable/menubar.py:137 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:24 */
+/* File: ../..//portable/menubar.py:147 */
 "_Update Channel..." = "_Ενημέρωση καναλιού...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:25 */
-/* File: ../../portable/menubar.py:138 */
+/* File: ../..//platform/osx/frontend/UIStrings.py:25 */
+/* File: ../..//portable/menubar.py:148 */
 "_Update Channels..." = "_Ενημέρωση καναλιών...";
 
-/* File: ../../portable/compiled_templates/new.py:126 */
-/* File: ../../portable/tabs.py:27 */
-"New Videos" = "Νέα Βίντεο";
+/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:56 */
+"Update Available" = "Υπάρχει διαθέσιμη ενημέρωση";
 
-/* File: ../../portable/compiled_templates/new.py:128 */
-/* File: ../../portable/compiled_templates/download.py:414 */
-/* File: ../../portable/compiled_templates/library.py:127 */
-"Find" = "Εύρεση";
-
-/* File: ../../portable/compiled_templates/external_playback.py:54 */
-/* File: ../../portable/compiled_templates/video_info.py:42 */
-/* File: ../../portable/compiled_templates/external_playback_continue.py:51 */
-"STAR" = "ΑΣΤΕΡΙ";
-
-/* File: ../../portable/compiled_templates/external_playback.py:64 */
-/* File: ../../portable/compiled_templates/download_item_details.py:75 */
-/* File: ../../portable/compiled_templates/video_info.py:52 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:158 */
-/* File: ../../portable/compiled_templates/external_playback_continue.py:61 */
-"KEEP" = "ΚΡΑΤΑ";
-
-/* File: ../../portable/compiled_templates/external_playback.py:69 */
-/* File: ../../portable/compiled_templates/download_item_details.py:85 */
-/* File: ../../portable/compiled_templates/video_info.py:57 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:168 */
-/* File: ../../portable/compiled_templates/external_playback_continue.py:66 */
-"DELETE" = "ΔΙΑΓΡΑΦΗ";
-
-/* File: ../../portable/compiled_templates/external_playback.py:84 */
-/* File: ../../portable/compiled_templates/external_playback_continue.py:81 */
-"Democracy - External Playback Template" = "Democracy - Πρότυπο Εξωτερικής Αναπαραγωγής";
-
-/* File: ../../portable/compiled_templates/external_playback.py:107 */
-"Democracy can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<Br></Br><strong>File type:</strong> ${format}" = "Ο Democracy δεν μπορεί να παίξει αυτό το αρχείο. Μπορεί να καταφέρετε να το ανοίξετε με ενα άλλο πρόγραμμα.<br></br><br></br><strong>Όνομα αρχείου:</strong> ${filename}<Br></Br><strong>Τύπος αρχείου:</strong> ${format}";
-
-/* File: ../../portable/compiled_templates/external_playback.py:111 */
-"REVEAL FILE" = "ΕΜΦΑΝΙΣΗ ΑΡΧΕΙΟΥ";
-
-/* File: ../../portable/compiled_templates/external_playback.py:115 */
-"Play Externally" = "Αναπαραγωγή Εξωτερικά";
-
-/* File: ../../portable/compiled_templates/external_playback.py:124 */
-"Skip >> ${countdown}" = "Παράλειψη >> ${countdown}";
-
-/* File: ../../portable/compiled_templates/download.py:39 */
+/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57 */
 /* Flag: python-format */
-"%0.1f KB/s uploading" = "%0.1f KB/s ανεβάζονται";
+"A new version of %s is available for download." = "Υπαρχει μια νέα έκδοση του %s για μεταφόρτωση.";
 
-/* File: ../../portable/compiled_templates/download.py:42 */
+/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:182 */
+"Error Bombing Item" = "Σφάλμα Αντικειμένου Bombing";
+
+/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:184 */
+"Error Recommending Item" = "Σφάλμα συνιστώμενου αντικειμένου";
+
+/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:186 */
+"Error Opening Website" = "Σφάλμα στο άνοιγμα ιστοσελίδας";
+
+/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:190 */
 /* Flag: python-format */
-"%0.1f KB/s downloading" = "%0.1f KB/s κατέβασμα";
+"There was an error opening %s.  Please try again in a few seconds" = "Έγινε σφάλμα κατα το άνοιμα του %s. Παρακαλώ προσπαθήστε ξανά σε λίγα δευτερόλεπτα";
 
-/* File: ../../portable/compiled_templates/download.py:140 */
-"External Torrents" = "Εξωτερικά Torrents";
-
-/* File: ../../portable/compiled_templates/download.py:142 */
-"Clear Completed Torrents" = "Εκκαθάριση Ολοκληρωμένων Torrents";
-
-/* File: ../../portable/compiled_templates/download.py:157 */
-"Seeding Torrents" = "Μοιρασμα Torrent";
-
-/* File: ../../portable/compiled_templates/download.py:177 */
-"${size} free for downloads" = "${size} ελέυθερα για κατέβασμα";
-
-/* File: ../../portable/compiled_templates/download.py:412 */
-/* File: ../../portable/tabs.py:29 */
-"Downloading" = "Γίνεται λήψη";
-
-/* File: ../../portable/compiled_templates/download.py:426 */
-"Pause All" = "Παύση Όλων";
-
-/* File: ../../portable/compiled_templates/download.py:438 */
-"Resume All" = "Σνέχιση Όλων";
-
-/* File: ../../portable/compiled_templates/download.py:447 */
-"${size} free on disk" = "${size} fελεύθερα στον δίσκο";
-
-/* File: ../../portable/compiled_templates/download.py:461 */
-"Channel Downloads" = "Μεταφορτώσεις Καναλιών";
-
-/* File: ../../portable/compiled_templates/go_to_guide.py:40 */
-/* File: ../../portable/compiled_templates/guide_loading.py:42 */
-"Loading Channel Guide" = "Φόρτωση Οδηγού Καναλιών";
-
-/* File: ../../portable/compiled_templates/channel_folder.py:172 */
-"Empty Channel Folder" = "Άδειασμα του Φακέλου Καναλιών";
-
-/* File: ../../portable/compiled_templates/channel_folder.py:174 */
-"Drag channels to this folder to add them." = "Τραβήξτε οποιοδήποτε κανάλι θέλετε σε αυτόν τον φάκελο για να το προσθέσετε";
-
-/* File: ../../portable/compiled_templates/channel_folder.py:280 */
-/* File: ../../portable/compiled_templates/channel.py:427 */
-/* File: ../../portable/compiled_templates/channel_content.py:116 */
-"AUTO DOWNLOAD" = "ΑΥΤΟΜΑΤΟ ΚΑΤΕΒΑΣΜΑ";
-
-/* File: ../../portable/compiled_templates/channel_folder.py:354 */
-/* File: ../../portable/compiled_templates/channel.py:501 */
-/* File: ../../portable/compiled_templates/channel_content.py:190 */
-"${len} Downloaded" = "${len} έχουν κατέβει";
-
-/* File: ../../portable/compiled_templates/feed_settings.py:53 */
-/* File: ../../portable/compiled_templates/channel.py:195 */
-"Settings for ${title}" = "Ρυθμίσεις για ${title}";
-
-/* File: ../../portable/compiled_templates/feed_settings.py:55 */
-/* File: ../../portable/compiled_templates/channel.py:197 */
-"Videos expire after" = "Τα Videos λήγουν μετά τις";
-
-/* File: ../../portable/compiled_templates/feed_settings.py:59 */
-/* File: ../../portable/compiled_templates/channel.py:201 */
-"Default" = "Προεπιλεγμένα";
-
-/* File: ../../portable/compiled_templates/feed_settings.py:66 */
-/* File: ../../portable/compiled_templates/channel.py:208 */
-"default" = "προεπιλεγμένο";
-
-/* File: ../../portable/compiled_templates/feed_settings.py:132 */
-/* File: ../../portable/compiled_templates/channel.py:274 */
-"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Να μην γίνεται Αυτόματο Κατέβασμα όταν περισσότερα από ${maxnew} ${maxnew2} βίντεο αναμένουν προβολή.";
-
-/* File: ../../portable/compiled_templates/feed_settings.py:134 */
-/* File: ../../portable/compiled_templates/channel.py:276 */
-"Prevents this channel from using unlimited disk space." = "Εμπόδισε αυτό το κανάλι να χρησιμοποιεί απεριόριστο χώρο δίσκου.";
-
-/* File: ../../portable/compiled_templates/download_item_details.py:40 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:123 */
-"Details" = "Λεπτομέρειες";
-
-/* File: ../../portable/compiled_templates/download_item_details.py:49 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:132 */
-"Close" = "Κλείσιμο";
-
-/* File: ../../portable/compiled_templates/download_item_details.py:68 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:151 */
-".torrent" = ".torrent";
-
-/* File: ../../portable/compiled_templates/download_item_details.py:107 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:190 */
-"Email to a friend" = "Στείλτο με email σε ένα φίλο";
-
-/* File: ../../portable/compiled_templates/download_item_details.py:113 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:196 */
-"Post to Video Bomb" = "Αποστολή στο Video Bomb";
-
-/* File: ../../portable/compiled_templates/download_item_details.py:121 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:204 */
-"Post to del.icio.us" = "Δημοσίευση στο del.icio.us";
-
-/* File: ../../portable/compiled_templates/download_item_details.py:127 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:210 */
-"Post to digg" = "Δημοσίευση στο digg";
-
-/* File: ../../portable/compiled_templates/download_item_details.py:135 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:218 */
-"Post to Reddit" = "Δημοσίευση στο Reddit";
-
-/* File: ../../portable/compiled_templates/download_item_details.py:205 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:288 */
-"Pending Auto Download" = "Εκκρεμεί Αυτόματο Κατέβασμα";
-
-/* File: ../../portable/compiled_templates/download_item_details.py:224 */
-/* File: ../../portable/compiled_templates/download_item_inner.py:307 */
-"STOP SEEDING" = "ΣΤΑΜΑΤΗΜΑ SEEDING";
-
-/* File: ../../portable/compiled_templates/channel.py:680 */
-"VISIT WEBSITE" = "ΕΠΙΣΚΕΥΤΕΙΤΕ ΤΟ SITE";
-
-/* File: ../../portable/compiled_templates/channel.py:687 */
-"SEND TO FRIEND" = "ΑΠΟΣΤΟΛΗ ΣΕ ΦΙΛΟ";
-
-/* File: ../../portable/compiled_templates/channel.py:689 */
-"SETTINGS" = "ΡΥΘΜΙΣΕΙΣ";
-
-/* File: ../../portable/compiled_templates/channel.py:694 */
-"Find in channel" = "Εύρεση σε κανάλι";
-
-/* File: ../../portable/compiled_templates/channel.py:714 */
-"Looking for videos at this URL" = "Αναζητώντας για βίντεο στη διεύθυνση";
-
-/* File: ../../portable/compiled_templates/multi_playlist.py:59 */
-"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} Φάκελοι Λιστών Αναπαραγωγής Επιλέγθηκαν<br></br>(περιέχει ${containedcount} λίστες αναπαραγωγής)";
-
-/* File: ../../portable/compiled_templates/multi_playlist.py:71 */
-"${count} Playlists Selected" = "${count} Επιλεγμένες Λίστες Αναπαραγωγής";
-
-/* File: ../../portable/compiled_templates/library.py:125 */
-/* File: ../../portable/tabs.py:26 */
-"My Collection" = "Η συλλογή μου";
-
-/* File: ../../portable/compiled_templates/multi_channel.py:59 */
-"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} Επιλεγμένοι Φακέλοι Καναλιών<br></br>(περιέχει ${containedcount} κανάλια)";
-
-/* File: ../../portable/compiled_templates/multi_channel.py:71 */
-"${count} Channels Selected" = "${count} Επιλεγμένα Κανάλια";
-
-/* File: ../../portable/compiled_templates/playlist_folder.py:61 */
-"Empty Playlist Folder" = "Άδειασμα Φακέλου Λιστών Αναπαραγωγής";
-
-/* File: ../../portable/compiled_templates/playlist_folder.py:73 */
-"This folder contains ${count} playlists, but the playlists do not contain any items." = "Αυτός ο φάκελος περιέχει ${count} λίστες αναπαραγωγής, αλλά οι λίστες αναπαραγωγής δεν περιέχουν κανένα αντικείμενο.";
-
-/* File: ../../portable/compiled_templates/playlist_folder.py:78 */
-"Drag playlists to this folder to add them." = "Τραβήξτε λίστες αναπαραγωγής σε αυτό το φάκελο για να τις προσθέσετε.";
-
-/* File: ../../portable/compiled_templates/search.py:60 */
-"Nothing to display.<br></br> Enter a query in the search field above." = "Τίποτα για προβολή.<br></br> Εισάγετε μια ερώτηση στο πεδίο αναζήτησης πιο πάνω.";
-
-/* File: ../../portable/compiled_templates/search.py:65 */
-"Searching..." = "Αναζήτηση...";
-
-/* File: ../../portable/compiled_templates/search.py:77 */
-"Results for \"${query}\"" = "Αποτελέσματα για \"${query}\"";
-
-/* File: ../../portable/compiled_templates/search.py:161 */
-/* File: ../../portable/tabs.py:28 */
-"Video Search" = "Αναζήτηση βίντεο";
-
-/* File: ../../portable/compiled_templates/unittest/translationtest.py:45 */
-"Simple translation" = "Απλή μετάφραση";
-
-/* File: ../../portable/compiled_templates/unittest/translationtest.py:59 */
-/* Flag: untranslated */
-"truck stop in a ${can}" = "truck stop in a ${can}";
-
-/* File: ../../portable/compiled_templates/unittest/translationtest.py:63 */
-"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "Αυτό είναι ενα ${car} και αυτό ένα ${truck} <span>Αυτό το κείμενο είναι <b style=\"color:red\">raw</b> text</span>";
-
-/* File: ../../portable/compiled_templates/external_playback_continue.py:91 */
-"Continue To Next Video" = "Συνέχεια στο επόμενο Video";
-
-/* File: ../../portable/compiled_templates/playlist.py:58 */
-"Empty Playlist" = "Άδειασμα Λίστας Αναπαραγωγής";
-
-/* File: ../../portable/compiled_templates/playlist.py:60 */
-"Drag downloaded videos to this playlist to add them." = "Τραβήξτε τα κατεβασμένα βίντεο σε αυτή τη λίστα αναπαραγωγής για να τα προσθέσετε.";
-
-/* File: ../../portable/item.py:449 */
+/* File: ../..//platform/windows-xul/xul/components/pybridge.py:45 */
 /* Flag: python-format */
-"Deleting %s" = "Διαγραφή του %s";
+"Error importing modules:\n%s" = "Σφάλμα κατά την εισαγωγή υπομονάδων:\n%s";
 
-/* File: ../../portable/item.py:450 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Αυτό το αντικείμενο είναι φάκελος. Όταν καταργείτε ένα φάκελο, ό,τι στοιχεία περιέχει θα διαγραφούν.";
+/* File: ../..//platform/windows-xul/xul/components/pybridge.py:49 */
+"Starting up" = "Γίνεται εκκίνηση";
 
-/* File: ../../portable/item.py:476 */
-/* File: ../../portable/feed.py:375 */
-/* Flag: python-format */
-"%d days" = "%d ημέρες";
+/* File: ../..//platform/windows-xul/xul/components/pybridge.py:256 */
+"Loading window" = "Φόρτωση παραθύρου";
 
-/* File: ../../portable/item.py:478 */
-/* File: ../../portable/feed.py:371 */
-/* Flag: python-format */
-"%d hours" = "%d ώρες";
+/* File: ../..//platform/windows-xul/xul/components/pybridge.py:257 */
+"onStartup called twice" = "Το onStartup καλέσθηκε δύο φορές";
 
-/* File: ../../portable/item.py:480 */
-/* Flag: python-format */
-"%d minutes" = "%d λεπτά";
-
-/* File: ../../portable/item.py:490 */
-/* Flag: python-format */
-"Expires in %s" = "Λήγει σε %s";
-
-/* File: ../../portable/item.py:502 */
-/* Flag: python-format */
-"Will retry in %s" = "Επόμενη προσπάθεια σε %s";
-
-/* File: ../../portable/item.py:504 */
-"Paused" = "Παύθηκε";
-
-/* File: ../../portable/item.py:878 */
-"TORRENT" = "TORRENT";
-
-/* File: ../../portable/item.py:880 */
-"WEB PAGE" = "ΙΣΤΟΣΕΛΙΔΑ";
-
-/* File: ../../portable/item.py:890 */
-"Total Down:" = "Σύνολο κάτω:";
-
-/* File: ../../portable/item.py:897 */
-"Seeders:" = "Χρήστες που μοιράζονται:";
-
-/* File: ../../portable/item.py:898 */
-"Leachers:" = "Χρήστες που κατεβάζουν:";
-
-/* File: ../../portable/item.py:899 */
-"Down Rate:" = "Κάτω ταχύτητα:";
-
-/* File: ../../portable/item.py:900 */
-"Down Total:" = "Κάτω σύνολο:";
-
-/* File: ../../portable/item.py:902 */
-"Up Rate:" = "Πάνω ταχύτητα:";
-
-/* File: ../../portable/item.py:903 */
-"Up Total:" = "Πάνω σύνολο:";
-
-/* File: ../../portable/item.py:908 */
-"Web page:" = "Ιστοσελίδα:";
-
-/* File: ../../portable/item.py:908 */
-/* Flag: untranslated */
-"permalink" = "permalink" /* = "μόνιμη υπερσύνδεση" */;
-
-/* File: ../../portable/item.py:909 */
-"File link:" = "Σύνδεσμος στο αρχείο:";
-
-/* File: ../../portable/item.py:909 */
-"direct link to file" = "απευθείας σύνδεσμος στο αρχείο";
-
-/* File: ../../portable/item.py:911 */
-"File type:" = "Τύπος αρχείου:";
-
-/* File: ../../portable/item.py:918 */
-"REVEAL LOCAL FOLDER" = "ΑΠΟΚΑΛΥΨΗ ΤΟΠΙΚΟΥ ΦΑΚΕΛΟΥ";
-
-/* File: ../../portable/item.py:920 */
-"REVEAL LOCAL FILE" = "ΑΠΟΚΑΛΥΨΗ ΤΟΠΙΚΟΥ ΑΡΧΕΙΟΥ";
-
-/* File: ../../portable/item.py:922 */
-"Filename:" = "Όνομα αρχείου:";
-
-/* File: ../../portable/item.py:929 */
-"Down Total" = "Κάτω σύνολο";
-
-/* File: ../../portable/item.py:931 */
-"Up Total" = "Πάνω σύνολο";
-
-/* File: ../../portable/item.py:949 */
-"Item Details" = "Λεπτομέρειες στοιχείου";
-
-/* File: ../../portable/item.py:956 */
-"Torrent Details" = "Λεπτομέρειες Torrent";
-
-/* File: ../../portable/item.py:961 */
-"Download Details" = "Λεπτομέρειες κατεβάσματος";
-
-/* File: ../../portable/item.py:1175 */
-"downloading..." = "κατεβάζει...";
-
-/* File: ../../portable/item.py:1182 */
-/* File: ../../portable/item.py:1185 */
-/* Flag: python-format */
-"%s remaining" = "απομένουν %s";
-
-/* File: ../../portable/item.py:1194 */
-"starting up..." = "εκκίνηση...";
-
-/* File: ../../portable/item.py:1387 */
-/* File: ../../portable/menu.py:80 */
-"Remove From Playlist" = "Αφαίρεση από τη λίστα αναπαραγωγής";
-
-/* File: ../../portable/item.py:1389 */
-/* File: ../../portable/menu.py:82 */
-"Remove From My Collection" = "Κατάργηση από το Η Συλλογή μου";
-
-/* File: ../../portable/item.py:1391 */
-/* File: ../../portable/menu.py:77 */
-"Play" = "Αναπαραγωγή";
-
-/* File: ../../portable/item.py:1393 */
-"Play Just This Video" = "Αναπαραγωγή μόνο αυτού του βίντεο";
-
-/* File: ../../portable/item.py:1394 */
-/* File: ../../portable/menu.py:78 */
-"Add to new playlist" = "Προσθήκη σε νέα λίστα αναπαραγωγής";
-
-/* File: ../../portable/item.py:1398 */
-/* File: ../../portable/menu.py:88 */
-"Mark as Unwatched" = "Σημείωσε ως Αθέατο";
-
-/* File: ../../portable/item.py:1400 */
-/* File: ../../portable/menu.py:106 */
-"Restart Upload" = "Επανεκκίνηση Ανεβάσματος";
-
-/* File: ../../portable/item.py:1402 */
-/* File: ../../portable/menu.py:101 */
-"Cancel Download" = "Ακύρωση Μεταφόρτωσης";
-
-/* File: ../../portable/item.py:1402 */
-/* File: ../../portable/menu.py:103 */
-"Pause Download" = "Παύση Μεταφόρτωσης";
-
-/* File: ../../portable/item.py:1404 */
-/* File: ../../portable/dialogs.py:66 */
-/* File: ../../portable/menu.py:94 */
-"Download" = "Λήψη αρχείου";
-
-/* File: ../../portable/item.py:1650 */
-/* Flag: python-format */
-"Removing %s" = "Αφαίρεση του %s";
-
-/* File: ../../portable/item.py:1652 */
-"Would you like to delete this folder and all of its videos or just remove its entry from My Collection?" = "Θα θέλατε να διαγράψετε αυτό τον φάκελο και τα video που περιέχει ή απλώς να το αφαιρέσετε από την Συλλογή σας;";
-
-/* File: ../../portable/item.py:1657 */
-"Would you like to delete this file or just remove its entry from My Collection?" = "Θα θέλατε να διαγράψετε αυτό το αρχείο ή απλώς να το αφαιρέσετε από την Συλλογή σας;";
-
-/* File: ../../portable/item.py:1762 */
-/* Flag: python-format */
-"Removing %s items" = "Αφαιρούνται %s αντικείμενα";
-
-/* File: ../../portable/item.py:1764 */
-/* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from My Collection?";
-
-/* File: ../../portable/item.py:1772 */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Ένα ή περισσότερα από αυτά τα αντικείμενα είναι φάκελος. Όταν αφαιρείτε ή διαγράφετε ένα φάκελο, όλα τα αντικείμενα που βρίσκονται μέσα σε αυτόν το φάκελο θα αφαιρεθούν ή θα διαγραφούν επίσης.";
-
-/* File: ../../portable/httpclient.py:52 */
-/* Flag: python-format */
-"Error: %s" = "Σφάλμα: %s";
-
-/* File: ../../portable/httpclient.py:67 */
-/* File: ../../portable/httpclient.py:72 */
-"Can't connect" = "Αδυναμία σύνδεσης";
-
-/* File: ../../portable/httpclient.py:68 */
-/* Flag: python-format */
-"Connection Error: %s" = "Σφάλμα Σύνδεσης: %s";
-
-/* File: ../../portable/httpclient.py:73 */
-"SSL connection error" = "σφάλμα σύνδεσης SSL";
-
-/* File: ../../portable/httpclient.py:77 */
-"HTTP error" = "σφάλμα HTTP";
-
-/* File: ../../portable/httpclient.py:80 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Status Line: %s" = "Bad Status Line: %s";
-
-/* File: ../../portable/httpclient.py:83 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Header Line: %s" = "Bad Header Line: %s";
-
-/* File: ../../portable/httpclient.py:86 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Chunk size: %s" = "Bad Chunk size: %s";
-
-/* File: ../../portable/httpclient.py:89 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Expected CRLF got: %r" = "Expected CRLF got: %r";
-
-/* File: ../../portable/httpclient.py:92 */
-/* Flag: python-format */
-"%s closed connection" = "%s τερμάτισε τη σύνδεση";
-
-/* File: ../../portable/httpclient.py:97 */
-/* File: ../../portable/downloader.py:232 */
-"File not found" = "Το αρχείο δεν βρέθηκε";
-
-/* File: ../../portable/httpclient.py:98 */
-/* Flag: untranslated */
-"Got 404 status code" = "Got 404 status code";
-
-/* File: ../../portable/httpclient.py:100 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Status Code: %s" = "Bad Status Code: %s";
-
-/* File: ../../portable/httpclient.py:104 */
-"Authorization failed" = "Η πιστοποίηση απέτυχε";
-
-/* File: ../../portable/httpclient.py:109 */
-"Internal Error" = "Εσωτερικό σφάλμα";
-
-/* File: ../../portable/httpclient.py:110 */
-/* Flag: untranslated */
-"Pipeline request never started" = "Pipeline request never started";
-
-/* File: ../../portable/httpclient.py:114 */
-"Timeout" = "Χρονική λήξη";
-
-/* File: ../../portable/httpclient.py:115 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Connection to %s timed out" = "Connection to %s timed out";
-
-/* File: ../../portable/httpclient.py:119 */
-"Invalid URL" = "Μη έγκυση διεύθυνση";
-
-/* File: ../../portable/httpclient.py:120 */
-/* Flag: untranslated */
-"%s is not a valid URL" = "%s is not a valid URL" /* = "Η %s δεν είναι έγκυρη διεύθυνση" */;
-
-/* File: ../../portable/httpclient.py:313 */
-"Connection closed" = "Η σύνδεση τερματίστηκε";
-
-/* File: ../../portable/httpclient.py:743 */
-"Unknown" = "Άγνωστο";
-
-/* File: ../../portable/httpclient.py:744 */
-/* Flag: untranslated */
-"Internal Error: Not ready to send" = "Internal Error: Not ready to send" /* = "Εσωτερικό Σφάλμα: Δεν είναι έτοιμη η αποστολή" */;
-
-/* File: ../../portable/util.py:388 */
-/* Flag: python-format */
-"%1.1fGB" = "%1.1fGB";
-
-/* File: ../../portable/util.py:390 */
-/* Flag: python-format */
-"%dGB" = "%dGB";
-
-/* File: ../../portable/util.py:394 */
-/* Flag: python-format */
-"%1.1fMB" = "%1.1fMB";
-
-/* File: ../../portable/util.py:396 */
-/* Flag: python-format */
-"%dMB" = "%dMB";
-
-/* File: ../../portable/util.py:400 */
-/* Flag: python-format */
-"%1.1fKB" = "%1.1fKB";
-
-/* File: ../../portable/util.py:402 */
-/* Flag: python-format */
-"%dKB" = "%dKB";
-
-/* File: ../../portable/util.py:406 */
-/* Flag: python-format */
-"%1.1fB" = "%1.1fB";
-
-/* File: ../../portable/util.py:408 */
-/* Flag: python-format */
-"%dB" = "%dB";
-
-/* File: ../../portable/storedatabase.py:808 */
-/* File: ../../portable/storedatabase.py:1164 */
-/* Flag: untranslated */
-"%s database save succeeded" = "%s database save succeeded" /* = "%s βάση δεδομένων αποθηκεύτηκε επιτυχώς" */;
-
-/* File: ../../portable/storedatabase.py:809 */
-/* File: ../../portable/storedatabase.py:1165 */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "Η βάση δεδομένων έχει αποθηκευτεί επιτυχώς. Μπορείτε τώρα να τερματίσετε χωρίς να χάσετε δεδομένα.";
-
-/* File: ../../portable/storedatabase.py:816 */
-/* File: ../../portable/storedatabase.py:1173 */
-/* Flag: python-format */
-"%s database save failed" = "Η αποθήκευση της βάσης δεδομένων %s απέτυχε";
-
-/* File: ../../portable/storedatabase.py:817 */
-/* File: ../../portable/storedatabase.py:1174 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.";
-
-/* File: ../../portable/dl_daemon/download.py:370 */
-"Error" = "Σφάλμα";
-
-/* File: ../../portable/dl_daemon/download.py:443 */
-/* Flag: python-format */
-"Could not write to %s" = "Αδυναμία εγγραφής στο %s";
-
-/* File: ../../portable/dl_daemon/download.py:462 */
-"Not enough disk space" = "Δεν υπάρχει αρκετός χώρος στο δίσκο";
-
-/* File: ../../portable/dl_daemon/download.py:463 */
-/* Flag: untranslated */
-"%s MB required to store this video" = "%s MB required to store this video" /* = "Χρειάζονται %s MB για την αποθήκευση αυτού του βίντεο" */;
-
-/* File: ../../portable/dl_daemon/download.py:796 */
-/* Flag: untranslated */
-"Corrupt Torrent" = "Corrupt Torrent";
-
-/* File: ../../portable/dl_daemon/download.py:797 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"The torrent file at %s was not valid" = "The torrent file at %s was not valid";
-
-/* File: ../../portable/dl_daemon/download.py:823 */
-/* Flag: untranslated */
-"Torrent file deleted" = "Torrent file deleted" /* = "Το αρχείο torrent διαγράφηκε" */;
-
-/* File: ../../portable/dl_daemon/download.py:824 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted " = "The torrent file for this item was deleted ";
-
-/* File: ../../portable/dl_daemon/download.py:825 */
-/* Flag: untranslated */
-"outside of democracy." = "outside of democracy.";
-
-/* File: ../../portable/dialogs.py:59 */
-"Ok" = "Εντάξει";
-
-/* File: ../../portable/dialogs.py:64 */
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:50 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-/* Flag: untranslated */
-"Migrate" = "Migrate";
-
-/* File: ../../portable/dialogs.py:65 */
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:40 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-/* Flag: untranslated */
-"Don't Migrate" = "Don't Migrate";
-
-/* File: ../../portable/dialogs.py:67 */
-"Remove Entry" = "Αφαίρεση Καταχώρησης";
-
-/* File: ../../portable/dialogs.py:68 */
-"Delete File" = "Διαγραφή αρχείου";
-
-/* File: ../../portable/dialogs.py:69 */
-"Delete Files" = "Διαγραφή αρχείων";
-
-/* File: ../../portable/dialogs.py:70 */
-/* Flag: untranslated */
-"Keep Videos" = "Keep Videos" /* = "Κράτα τα Βίντεο" */;
-
-/* File: ../../portable/dialogs.py:71 */
-/* Flag: untranslated */
-"Delete Videos" = "Delete Videos";
-
-/* File: ../../portable/dialogs.py:73 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-/* Flag: untranslated */
-"Create Channel" = "Create Channel";
-
-/* File: ../../portable/dialogs.py:74 */
-/* Flag: untranslated */
-"Add" = "Add";
-
-/* File: ../../portable/dialogs.py:75 */
-"Add Into New Folder" = "Προσθήκη Σε Νέο Φάκελο";
-
-/* File: ../../portable/dialogs.py:76 */
-"Keep" = "Διατήρηση";
-
-/* File: ../../portable/dialogs.py:78 */
-"Not Now" = "Όχι Τώρα";
-
-/* File: ../../portable/dialogs.py:193 */
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:52 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-/* Flag: untranslated */
-"New Search Channel" = "New Search Channel" /* = "Νέα Αναζήτηση Καναλιού" */;
-
-/* File: ../../portable/dialogs.py:193 */
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:31 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
-/* Flag: untranslated */
-"A search channel contains items that match a search term." = "A search channel contains items that match a search term.";
-
-/* File: ../../portable/autoupdate.py:99 */
-/* Flag: untranslated */
-"%s Version Alert" = "%s Version Alert" /* = "Συναγερμός Έκδοσης %s" */;
-
-/* File: ../../portable/autoupdate.py:100 */
-/* Flag: untranslated */
-"A new version of %s is available. Would you like to download it now?" = "A new version of %s is available. Would you like to download it now?" /* = "Μία νέα έκδοση του %s είναι διαθέσιμη; Θέλτε να κάνετε λήψη τώρα;" */;
-
-/* File: ../../portable/autoupdate.py:106 */
-/* Flag: python-format */
-"%s Version Check" = "Έλεγχος Έκδοσης %s";
-
-/* File: ../../portable/autoupdate.py:107 */
-/* Flag: untranslated */
-"%s is up to date." = "%s is up to date." /* = "%s είναι ενημερωμένο." */;
-
-/* File: ../../portable/downloader.py:196 */
-"activity" = "δραστηριότητα";
-
-/* File: ../../portable/downloader.py:233 */
-/* Flag: untranslated */
-"Flash URL Scraping Error" = "Flash URL Scraping Error";
-
-/* File: ../../portable/downloader.py:412 */
-/* Flag: untranslated */
-"starting up" = "starting up";
-
-/* File: ../../portable/menubar.py:98 */
-"_Open" = "Άν_οιγμα";
-
-/* File: ../../portable/menubar.py:100 */
-"Check _Version" = "Έλεγχος_Έκδοσης";
-
-/* File: ../../portable/menubar.py:102 */
-"_Remove Video" = "_Απομάκρυνση βίντεο";
-
-/* File: ../../portable/menubar.py:103 */
-/* Flag: untranslated */
-"_Remove Videos" = "_Remove Videos";
-
-/* File: ../../portable/menubar.py:104 */
-/* Flag: untranslated */
-"Re_name Video" = "Re_name Video";
-
-/* File: ../../portable/menubar.py:105 */
-"Save Video _As..." = "Αποθήκευση αυτού του βίντεο ως";
-
-/* File: ../../portable/menubar.py:106 */
-/* Flag: untranslated */
-"Save Videos _As..." = "Save Videos _As...";
-
-/* File: ../../portable/menubar.py:107 */
-/* Flag: untranslated */
-"Copy Video _URL" = "Copy Video _URL";
-
-/* File: ../../portable/menubar.py:109 */
-"_Options" = "Επιλογές";
-
-/* File: ../../portable/menubar.py:110 */
-"_Quit" = "_Έξοδος";
-
-/* File: ../../portable/menubar.py:118 */
-"Cu_t" = "Αποκοπή";
-
-/* File: ../../portable/menubar.py:119 */
-"_Copy" = "Αντιγραφή";
-
-/* File: ../../portable/menubar.py:120 */
-"_Paste" = "Επικόλληση";
-
-/* File: ../../portable/menubar.py:121 */
-"Select _All" = "Επιλογή Όλων";
-
-/* File: ../../portable/menubar.py:122 */
-"_Delete" = "Διαγραφή";
-
-/* File: ../../portable/menubar.py:126 */
-/* Flag: untranslated */
-"Add _Channel" = "Add _Channel";
-
-/* File: ../../portable/menubar.py:127 */
-"New Searc_h Channel..." = "Νέα αναζήτησ_η καναλιού...";
-
-/* File: ../../portable/menubar.py:128 */
-"New _Folder..." = "Νέος Φάκελος...";
-
-/* File: ../../portable/menubar.py:139 */
-/* Flag: untranslated */
-"Update _All Channels" = "Update _All Channels";
-
-/* File: ../../portable/menubar.py:141 */
-"_Send this channel to a friend" = "_Στείλτε αυτό το κανάλι σε έναν φίλο";
-
-/* File: ../../portable/menubar.py:142 */
-"Copy Channel _Link" = "Αντι_γραφή συνδέσμου καναλιού";
-
-/* File: ../../portable/menubar.py:145 */
-"New _Playlist" = "Νέα Λίστα Αναπαραγωγής";
-
-/* File: ../../portable/menubar.py:146 */
-/* Flag: untranslated */
-"New Playlist Fol_der" = "New Playlist Fol_der";
-
-/* File: ../../portable/menubar.py:148 */
-"Re_name Playlist" = "Μετ_ονομασία λίστας";
-
-/* File: ../../portable/menubar.py:149 */
-"_Remove Playlist" = "_Απομάκρυνση λίστας";
-
-/* File: ../../portable/menubar.py:150 */
-/* Flag: untranslated */
-"_Remove Playlists" = "_Remove Playlists";
-
-/* File: ../../portable/menubar.py:151 */
-/* Flag: untranslated */
-"_Remove Playlist Folders" = "_Remove Playlist Folders";
-
-/* File: ../../portable/menubar.py:152 */
-/* Flag: untranslated */
-"_Remove Playlist Folder" = "_Remove Playlist Folder";
-
-/* File: ../../portable/menubar.py:157 */
-/* Flag: untranslated */
-"_Play" = "_Play";
-
-/* File: ../../portable/menubar.py:158 */
-/* Flag: untranslated */
-"_Stop" = "_Stop";
-
-/* File: ../../portable/menubar.py:160 */
-"_Next Video" = "_Επόμενο βίντεο";
-
-/* File: ../../portable/menubar.py:161 */
-"_Previous Video" = "_Προηγούμενο βίντεο";
-
-/* File: ../../portable/menubar.py:163 */
-/* Flag: untranslated */
-"Skip _Forward" = "Skip _Forward";
-
-/* File: ../../portable/menubar.py:164 */
-/* Flag: untranslated */
-"Skip _Back" = "Skip _Back";
-
-/* File: ../../portable/menubar.py:166 */
-/* Flag: untranslated */
-"Volume _Up" = "Volume _Up";
-
-/* File: ../../portable/menubar.py:167 */
-/* Flag: untranslated */
-"Volume _Down" = "Volume _Down";
-
-/* File: ../../portable/menubar.py:169 */
-"_Fullscreen" = "Πλήρης _Οθόνη";
-
-/* File: ../../portable/menubar.py:173 */
-/* Flag: untranslated */
-"_About" = "_About";
-
-/* File: ../../portable/menubar.py:174 */
-"_Donate" = "_Συνεισφέρετε";
-
-/* File: ../../portable/menubar.py:175 */
-/* File: ../../portable/menubar.py:183 */
-"_Help" = "_Βοήθεια";
-
-/* File: ../../portable/menubar.py:179 */
-"_Video" = "_Βίντεο";
-
-/* File: ../../portable/menubar.py:180 */
-"_Channels" = "_Κανάλια";
-
-/* File: ../../portable/menubar.py:181 */
-"_Playlists" = "_Λίστες";
-
-/* File: ../../portable/menubar.py:182 */
-"P_layback" = "Α_ναπαραγωγή";
-
-/* File: ../../portable/menu.py:52 */
-/* Flag: untranslated */
-"Update Channels Now" = "Update Channels Now";
-
-/* File: ../../portable/menu.py:75 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%d Downloaded Items" = "%d Downloaded Items";
-
-/* File: ../../portable/menu.py:93 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%d Available Items" = "%d Available Items";
-
-/* File: ../../portable/menu.py:99 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%d Downloading Items" = "%d Downloading Items";
-
-/* File: ../../portable/folder.py:115 */
-/* File: ../../portable/folder.py:138 */
-/* Flag: untranslated */
-"Rename Channel Folder" = "Rename Channel Folder";
-
-/* File: ../../portable/folder.py:117 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Enter a new name for the channel folder %s";
-
-/* File: ../../portable/folder.py:193 */
-/* File: ../../portable/folder.py:198 */
-/* Flag: untranslated */
-"Rename Playlist Folder" = "Rename Playlist Folder";
-
-/* File: ../../portable/folder.py:200 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Enter a new name for the playlist folder %s";
-
-/* File: ../../portable/folder.py:208 */
-/* Flag: untranslated */
-"Create Channel Folder" = "Create Channel Folder";
-
-/* File: ../../portable/folder.py:209 */
-/* File: ../../portable/singleclick.py:140 */
-/* Flag: untranslated */
-"Enter a name for the new channel folder" = "Enter a name for the new channel folder";
-
-/* File: ../../portable/folder.py:222 */
-/* Flag: untranslated */
-"Create Playlist Folder" = "Create Playlist Folder";
-
-/* File: ../../portable/folder.py:223 */
-/* Flag: untranslated */
-"Enter a name for the new playlist folder" = "Enter a name for the new playlist folder";
-
-/* File: ../../portable/singleclick.py:125 */
-/* Flag: untranslated */
-"Subscribing to multiple channels" = "Subscribing to multiple channels";
-
-/* File: ../../portable/singleclick.py:126 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Create %d channels?" = "Create %d channels?";
-
-/* File: ../../portable/singleclick.py:139 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Adding %d channels to a new folder" = "Adding %d channels to a new folder";
-
-/* File: ../../portable/singleclick.py:143 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
-
-/* File: ../../portable/singleclick.py:154 */
-/* Flag: untranslated */
-"Subscription error" = "Subscription error";
-
-/* File: ../../portable/singleclick.py:164 */
-/* Flag: untranslated */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.";
-
-/* File: ../../portable/singleclick.py:172 */
-/* Flag: untranslated */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.";
-
-/* File: ../../portable/singleclick.py:176 */
-/* Flag: untranslated */
-"Could not download the $shortAppName channel file: $url." = "Could not download the $shortAppName channel file: $url.";
-
-/* File: ../../portable/singleclick.py:210 */
-/* Flag: untranslated */
-"Invalid Torrent" = "Invalid Torrent";
-
-/* File: ../../portable/singleclick.py:211 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]";
-
-/* File: ../../portable/feed.py:369 */
-"never" = "ποτέ";
-
-/* File: ../../portable/feed.py:373 */
-/* Flag: python-format */
-"%d day" = "%d ημέρα";
-
-/* File: ../../portable/feed.py:377 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%d months" = "%d months";
-
-/* File: ../../portable/feed.py:761 */
-/* Flag: untranslated */
-"Update Channel Now" = "Update Channel Now";
-
-/* File: ../../portable/feed.py:763 */
-/* File: ../../portable/guide.py:35 */
+/* File: ../..//platform/windows-xul/xul/components/pybridge.py:656 */
 /* Flag: untranslated */
-"Copy URL to clipboard" = "Copy URL to clipboard";
+"Spacebar" = "Spacebar";
 
-/* File: ../../portable/feed.py:764 */
-/* File: ../../portable/feed.py:773 */
+/* File: ../..//platform/windows-xul/xul/components/pybridge.py:803 */
 /* Flag: untranslated */
-"Rename Channel" = "Rename Channel";
-
-/* File: ../../portable/feed.py:768 */
-/* Flag: untranslated */
-"Revert Title to Default" = "Revert Title to Default";
-
-/* File: ../../portable/feed.py:774 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Enter a new name for the channel %s" = "Enter a new name for the channel %s";
-
-/* File: ../../portable/feed.py:859 */
-/* Flag: untranslated */
-"Error loading feed" = "Error loading feed";
-
-/* File: ../../portable/feed.py:860 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s).";
-
-/* File: ../../portable/feed.py:863 */
-/* Flag: untranslated */
-"Would you like to keep the feed?" = "Would you like to keep the feed?";
-
-/* File: ../../portable/feed.py:974 */
-/* Flag: untranslated */
-"Bad content-type" = "Bad content-type";
-
-/* File: ../../portable/feed.py:987 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-/* Flag: untranslated */
-"Channel is not compatible with $shortAppName!" = "Channel is not compatible with $shortAppName!";
-
-/* File: ../../portable/feed.py:988 */
-/* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
-
-/* File: ../../portable/feed.py:2035 */
-"Local File" = "Τοπικό αρχείο";
+"Close to tray?" = "Close to tray?";
 
-/* File: ../../portable/guide.py:58 */
+/* File: ../..//platform/windows-xul/xul/components/pybridge.py:804 */
 /* Flag: untranslated */
-"Channel Guide" = "Channel Guide";
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options.";
 
-/* File: ../../portable/app.py:749 */
+/* File: ../..//portable/app.py:775 */
 /* Flag: untranslated */
 "Database too new" = "Database too new";
 
-/* File: ../../portable/app.py:750 */
+/* File: ../..//portable/app.py:776 */
 /* Flag: untranslated */
 "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that.";
 
-/* File: ../../portable/app.py:908 */
-/* File: ../../portable/app.py:922 */
-/* File: ../../portable/app.py:966 */
-/* File: ../../portable/app.py:992 */
-/* File: ../../portable/app.py:1012 */
+/* File: ../..//portable/app.py:934 */
+/* File: ../..//portable/app.py:948 */
+/* File: ../..//portable/app.py:992 */
+/* File: ../..//portable/app.py:1018 */
+/* File: ../..//portable/app.py:1038 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Remove %s" = "Remove %s";
 
-/* File: ../../portable/app.py:909 */
+/* File: ../..//portable/app.py:935 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove the guide %s?" = "Are you sure you want to remove the guide %s?";
 
-/* File: ../../portable/app.py:923 */
+/* File: ../..//portable/app.py:949 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove %s" = "Are you sure you want to remove %s";
 
-/* File: ../../portable/app.py:926 */
-/* File: ../../portable/app.py:971 */
-/* File: ../../portable/app.py:997 */
-/* File: ../../portable/app.py:1016 */
+/* File: ../..//portable/app.py:952 */
+/* File: ../..//portable/app.py:997 */
+/* File: ../..//portable/app.py:1023 */
+/* File: ../..//portable/app.py:1042 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Remove %s channels" = "Remove %s channels";
 
-/* File: ../../portable/app.py:928 */
+/* File: ../..//portable/app.py:954 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
 
-/* File: ../../portable/app.py:967 */
+/* File: ../..//portable/app.py:993 */
 /* Flag: untranslated */
 "What would you like to do with the videos in this channel that you've downloaded?" = "What would you like to do with the videos in this channel that you've downloaded?";
 
-/* File: ../../portable/app.py:972 */
+/* File: ../..//portable/app.py:998 */
 /* Flag: untranslated */
 "What would you like to do with the videos in these channels that you've downloaded?" = "What would you like to do with the videos in these channels that you've downloaded?";
 
-/* File: ../../portable/app.py:993 */
+/* File: ../..//portable/app.py:1019 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Are you sure you want to remove %s?  Any downloads in progress will be canceled.";
 
-/* File: ../../portable/app.py:998 */
+/* File: ../..//portable/app.py:1024 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
 
-/* File: ../../portable/app.py:1013 */
+/* File: ../..//portable/app.py:1039 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove %s?" = "Are you sure you want to remove %s?";
 
-/* File: ../../portable/app.py:1017 */
+/* File: ../..//portable/app.py:1043 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove these %s channels?" = "Are you sure you want to remove these %s channels?";
 
-/* File: ../../portable/app.py:1030 */
+/* File: ../..//portable/app.py:1056 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Stop watching %s" = "Stop watching %s";
 
-/* File: ../../portable/app.py:1031 */
+/* File: ../..//portable/app.py:1057 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to stop watching %s?" = "Are you sure you want to stop watching %s?";
 
-/* File: ../../portable/app.py:1034 */
+/* File: ../..//portable/app.py:1060 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Stop watching %s directories" = "Stop watching %s directories";
 
-/* File: ../../portable/app.py:1035 */
+/* File: ../..//portable/app.py:1061 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to stop watching these %s directories?" = "Are you sure you want to stop watching these %s directories?";
 
-/* File: ../../portable/app.py:1065 */
+/* File: ../..//portable/app.py:1091 */
 "Are you sure you want to quit?" = "Θέλετε σίγουρα να κλείσετε την εφαρμογή;";
 
-/* File: ../../portable/app.py:1513 */
+/* File: ../..//portable/app.py:1548 */
 /* Flag: untranslated */
 "Invalid Value" = "Invalid Value";
 
-/* File: ../../portable/app.py:1514 */
+/* File: ../..//portable/app.py:1549 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number.";
 
-/* File: ../../portable/app.py:1791 */
+/* File: ../..//portable/app.py:1829 */
 /* Flag: untranslated */
 " - Invalid URL" = " - Invalid URL";
 
-/* File: ../../portable/app.py:1792 */
+/* File: ../..//portable/app.py:1830 */
 /* Flag: untranslated */
 "The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "The address you entered is not a valid URL.\nPlease double check and try again.\n\n";
 
-/* File: ../../portable/app.py:1816 */
+/* File: ../..//portable/app.py:1854 */
 /* Flag: untranslated */
 "$shortAppName - Add Channel" = "$shortAppName - Add Channel";
 
-/* File: ../../portable/app.py:1816 */
+/* File: ../..//portable/app.py:1854 */
 /* Flag: untranslated */
 "Enter the URL of the channel to add" = "Enter the URL of the channel to add";
 
-/* File: ../../portable/app.py:1837 */
+/* File: ../..//portable/app.py:1875 */
 /* Flag: untranslated */
-"$shortAppName - Add Channel Guide" = "$shortAppName - Add Channel Guide";
+"$shortAppName - Add Miro Guide" = "$shortAppName - Add Miro Guide";
 
-/* File: ../../portable/app.py:1837 */
+/* File: ../..//portable/app.py:1875 */
 /* Flag: untranslated */
-"Enter the URL of the channel guide to add" = "Enter the URL of the channel guide to add";
+"Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add";
 
-/* File: ../../portable/app.py:2122 */
+/* File: ../..//portable/app.py:2169 */
 /* Flag: untranslated */
 "News and Tech" = "News and Tech";
 
-/* File: ../../portable/app.py:2129 */
+/* File: ../..//portable/app.py:2176 */
 /* Flag: untranslated */
 "Entertainment" = "Entertainment";
 
-/* File: ../../portable/app.py:2136 */
+/* File: ../..//portable/app.py:2182 */
 /* Flag: untranslated */
 "High-Def" = "High-Def";
 
-/* File: ../../portable/app.py:2144 */
+/* File: ../..//portable/app.py:2190 */
 /* Flag: untranslated */
 "Mac" = "Mac";
 
-/* File: ../../portable/app.py:2155 */
+/* File: ../..//portable/app.py:2205 */
 /* Flag: untranslated */
 "Example Playlist" = "Example Playlist";
 
-/* File: ../../portable/app.py:2174 */
+/* File: ../..//portable/app.py:2224 */
 /* Flag: untranslated */
 "Custom Channels" = "Custom Channels";
 
-/* File: ../../portable/app.py:2174 */
+/* File: ../..//portable/app.py:2224 */
 /* Flag: untranslated */
 "You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels.";
 
-/* File: ../../portable/playlist.py:179 */
-/* File: ../../portable/playlist.py:184 */
+/* File: ../..//portable/autoupdate.py:104 */
+/* Flag: untranslated */
+"%s Version Alert" = "%s Version Alert" /* = "Συναγερμός Έκδοσης %s" */;
+
+/* File: ../..//portable/autoupdate.py:105 */
+/* Flag: untranslated */
+"A new version of %s is available. Would you like to download it now?" = "A new version of %s is available. Would you like to download it now?" /* = "Μία νέα έκδοση του %s είναι διαθέσιμη; Θέλτε να κάνετε λήψη τώρα;" */;
+
+/* File: ../..//portable/autoupdate.py:111 */
+/* Flag: python-format */
+"%s Version Check" = "Έλεγχος Έκδοσης %s";
+
+/* File: ../..//portable/autoupdate.py:112 */
+/* Flag: untranslated */
+"%s is up to date." = "%s is up to date." /* = "%s είναι ενημερωμένο." */;
+
+/* File: ../..//portable/dialogs.py:59 */
+"Ok" = "Εντάξει";
+
+/* File: ../..//portable/dialogs.py:64 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
+/* Flag: untranslated */
+"Migrate" = "Migrate";
+
+/* File: ../..//portable/dialogs.py:65 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
+/* Flag: untranslated */
+"Don't Migrate" = "Don't Migrate";
+
+/* File: ../..//portable/dialogs.py:66 */
+/* File: ../..//portable/item.py:1404 */
+/* File: ../..//portable/menu.py:94 */
+"Download" = "Λήψη αρχείου";
+
+/* File: ../..//portable/dialogs.py:67 */
+"Remove Entry" = "Αφαίρεση Καταχώρησης";
+
+/* File: ../..//portable/dialogs.py:68 */
+"Delete File" = "Διαγραφή αρχείου";
+
+/* File: ../..//portable/dialogs.py:69 */
+"Delete Files" = "Διαγραφή αρχείων";
+
+/* File: ../..//portable/dialogs.py:70 */
+/* Flag: untranslated */
+"Keep Videos" = "Keep Videos" /* = "Κράτα τα Βίντεο" */;
+
+/* File: ../..//portable/dialogs.py:71 */
+/* Flag: untranslated */
+"Delete Videos" = "Delete Videos";
+
+/* File: ../..//portable/dialogs.py:73 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
+/* Flag: untranslated */
+"Create Channel" = "Create Channel";
+
+/* File: ../..//portable/dialogs.py:74 */
+/* Flag: untranslated */
+"Add" = "Add";
+
+/* File: ../..//portable/dialogs.py:75 */
+"Add Into New Folder" = "Προσθήκη Σε Νέο Φάκελο";
+
+/* File: ../..//portable/dialogs.py:76 */
+"Keep" = "Διατήρηση";
+
+/* File: ../..//portable/dialogs.py:78 */
+"Not Now" = "Όχι Τώρα";
+
+/* File: ../..//portable/dialogs.py:79 */
+/* Flag: untranslated */
+"Close to Tray" = "Close to Tray";
+
+/* File: ../..//portable/dialogs.py:194 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
+/* Flag: untranslated */
+"New Search Channel" = "New Search Channel" /* = "Νέα Αναζήτηση Καναλιού" */;
+
+/* File: ../..//portable/dialogs.py:194 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
+/* Flag: untranslated */
+"A search channel contains items that match a search term." = "A search channel contains items that match a search term.";
+
+/* File: ../..//portable/dl_daemon/download.py:370 */
+"Error" = "Σφάλμα";
+
+/* File: ../..//portable/dl_daemon/download.py:443 */
+/* Flag: python-format */
+"Could not write to %s" = "Αδυναμία εγγραφής στο %s";
+
+/* File: ../..//portable/dl_daemon/download.py:462 */
+"Not enough disk space" = "Δεν υπάρχει αρκετός χώρος στο δίσκο";
+
+/* File: ../..//portable/dl_daemon/download.py:463 */
+/* Flag: untranslated */
+"%s MB required to store this video" = "%s MB required to store this video" /* = "Χρειάζονται %s MB για την αποθήκευση αυτού του βίντεο" */;
+
+/* File: ../..//portable/dl_daemon/download.py:796 */
+/* Flag: untranslated */
+"Corrupt Torrent" = "Corrupt Torrent";
+
+/* File: ../..//portable/dl_daemon/download.py:797 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"The torrent file at %s was not valid" = "The torrent file at %s was not valid";
+
+/* File: ../..//portable/dl_daemon/download.py:823 */
+/* Flag: untranslated */
+"Torrent file deleted" = "Torrent file deleted" /* = "Το αρχείο torrent διαγράφηκε" */;
+
+/* File: ../..//portable/dl_daemon/download.py:824 */
+/* Flag: untranslated */
+"The torrent file for this item was deleted " = "The torrent file for this item was deleted ";
+
+/* File: ../..//portable/downloader.py:196 */
+"activity" = "δραστηριότητα";
+
+/* File: ../..//portable/downloader.py:232 */
+/* File: ../..//portable/httpclient.py:98 */
+"File not found" = "Το αρχείο δεν βρέθηκε";
+
+/* File: ../..//portable/downloader.py:233 */
+/* Flag: untranslated */
+"Flash URL Scraping Error" = "Flash URL Scraping Error";
+
+/* File: ../..//portable/downloader.py:412 */
+/* Flag: untranslated */
+"starting up" = "starting up";
+
+/* File: ../..//portable/feed.py:374 */
+"never" = "ποτέ";
+
+/* File: ../..//portable/feed.py:376 */
+/* File: ../..//portable/item.py:478 */
+/* Flag: python-format */
+"%d hours" = "%d ώρες";
+
+/* File: ../..//portable/feed.py:378 */
+/* Flag: python-format */
+"%d day" = "%d ημέρα";
+
+/* File: ../..//portable/feed.py:380 */
+/* File: ../..//portable/item.py:476 */
+/* Flag: python-format */
+"%d days" = "%d ημέρες";
+
+/* File: ../..//portable/feed.py:382 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%d months" = "%d months";
+
+/* File: ../..//portable/feed.py:773 */
+/* Flag: untranslated */
+"Update Channel Now" = "Update Channel Now";
+
+/* File: ../..//portable/feed.py:775 */
+/* File: ../..//portable/guide.py:35 */
+/* Flag: untranslated */
+"Copy URL to clipboard" = "Copy URL to clipboard";
+
+/* File: ../..//portable/feed.py:776 */
+/* File: ../..//portable/feed.py:785 */
+/* Flag: untranslated */
+"Rename Channel" = "Rename Channel";
+
+/* File: ../..//portable/feed.py:780 */
+/* Flag: untranslated */
+"Revert Title to Default" = "Revert Title to Default";
+
+/* File: ../..//portable/feed.py:786 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Enter a new name for the channel %s";
+
+/* File: ../..//portable/feed.py:871 */
+/* Flag: untranslated */
+"Error loading feed" = "Error loading feed";
+
+/* File: ../..//portable/feed.py:872 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s).";
+
+/* File: ../..//portable/feed.py:875 */
+/* Flag: untranslated */
+"Would you like to keep the feed?" = "Would you like to keep the feed?";
+
+/* File: ../..//portable/feed.py:992 */
+/* Flag: untranslated */
+"Bad content-type" = "Bad content-type";
+
+/* File: ../..//portable/feed.py:1005 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+/* Flag: untranslated */
+"Channel is not compatible with $shortAppName!" = "Channel is not compatible with $shortAppName!";
+
+/* File: ../..//portable/feed.py:1006 */
+/* Flag: untranslated */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
+
+/* File: ../..//portable/feed.py:1979 */
+/* File: ../..//portable/feed.py:2042 */
+"Search" = "Αναζήτηση";
+
+/* File: ../..//portable/feed.py:2057 */
+"Local File" = "Τοπικό αρχείο";
+
+/* File: ../..//portable/folder.py:115 */
+/* File: ../..//portable/folder.py:138 */
+/* Flag: untranslated */
+"Rename Channel Folder" = "Rename Channel Folder";
+
+/* File: ../..//portable/folder.py:117 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "Enter a new name for the channel folder %s";
+
+/* File: ../..//portable/folder.py:193 */
+/* File: ../..//portable/folder.py:198 */
+/* Flag: untranslated */
+"Rename Playlist Folder" = "Rename Playlist Folder";
+
+/* File: ../..//portable/folder.py:200 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "Enter a new name for the playlist folder %s";
+
+/* File: ../..//portable/folder.py:208 */
+/* Flag: untranslated */
+"Create Channel Folder" = "Create Channel Folder";
+
+/* File: ../..//portable/folder.py:209 */
+/* File: ../..//portable/singleclick.py:140 */
+/* Flag: untranslated */
+"Enter a name for the new channel folder" = "Enter a name for the new channel folder";
+
+/* File: ../..//portable/folder.py:222 */
+/* Flag: untranslated */
+"Create Playlist Folder" = "Create Playlist Folder";
+
+/* File: ../..//portable/folder.py:223 */
+/* Flag: untranslated */
+"Enter a name for the new playlist folder" = "Enter a name for the new playlist folder";
+
+/* File: ../..//portable/guide.py:58 */
+/* Flag: untranslated */
+"Miro Guide" = "Miro Guide";
+
+/* File: ../..//portable/httpclient.py:53 */
+/* Flag: python-format */
+"Error: %s" = "Σφάλμα: %s";
+
+/* File: ../..//portable/httpclient.py:68 */
+/* File: ../..//portable/httpclient.py:73 */
+"Can't connect" = "Αδυναμία σύνδεσης";
+
+/* File: ../..//portable/httpclient.py:69 */
+/* Flag: python-format */
+"Connection Error: %s" = "Σφάλμα Σύνδεσης: %s";
+
+/* File: ../..//portable/httpclient.py:74 */
+"SSL connection error" = "σφάλμα σύνδεσης SSL";
+
+/* File: ../..//portable/httpclient.py:78 */
+"HTTP error" = "σφάλμα HTTP";
+
+/* File: ../..//portable/httpclient.py:81 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Bad Status Line: %s" = "Bad Status Line: %s";
+
+/* File: ../..//portable/httpclient.py:84 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Bad Header Line: %s" = "Bad Header Line: %s";
+
+/* File: ../..//portable/httpclient.py:87 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "Bad Chunk size: %s";
+
+/* File: ../..//portable/httpclient.py:90 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "Expected CRLF got: %r";
+
+/* File: ../..//portable/httpclient.py:93 */
+/* Flag: python-format */
+"%s closed connection" = "%s τερμάτισε τη σύνδεση";
+
+/* File: ../..//portable/httpclient.py:99 */
+/* Flag: untranslated */
+"Got 404 status code" = "Got 404 status code";
+
+/* File: ../..//portable/httpclient.py:101 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Bad Status Code: %s" = "Bad Status Code: %s";
+
+/* File: ../..//portable/httpclient.py:105 */
+"Authorization failed" = "Η πιστοποίηση απέτυχε";
+
+/* File: ../..//portable/httpclient.py:110 */
+"Internal Error" = "Εσωτερικό σφάλμα";
+
+/* File: ../..//portable/httpclient.py:111 */
+/* Flag: untranslated */
+"Pipeline request never started" = "Pipeline request never started";
+
+/* File: ../..//portable/httpclient.py:115 */
+"Timeout" = "Χρονική λήξη";
+
+/* File: ../..//portable/httpclient.py:116 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Connection to %s timed out" = "Connection to %s timed out";
+
+/* File: ../..//portable/httpclient.py:120 */
+"Invalid URL" = "Μη έγκυση διεύθυνση";
+
+/* File: ../..//portable/httpclient.py:121 */
+/* Flag: untranslated */
+"%s is not a valid URL" = "%s is not a valid URL" /* = "Η %s δεν είναι έγκυρη διεύθυνση" */;
+
+/* File: ../..//portable/httpclient.py:314 */
+"Connection closed" = "Η σύνδεση τερματίστηκε";
+
+/* File: ../..//portable/httpclient.py:744 */
+"Unknown" = "Άγνωστο";
+
+/* File: ../..//portable/httpclient.py:745 */
+/* Flag: untranslated */
+"Internal Error: Not ready to send" = "Internal Error: Not ready to send" /* = "Εσωτερικό Σφάλμα: Δεν είναι έτοιμη η αποστολή" */;
+
+/* File: ../..//portable/item.py:449 */
+/* Flag: python-format */
+"Deleting %s" = "Διαγραφή του %s";
+
+/* File: ../..//portable/item.py:450 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Αυτό το αντικείμενο είναι φάκελος. Όταν καταργείτε ένα φάκελο, ό,τι στοιχεία περιέχει θα διαγραφούν.";
+
+/* File: ../..//portable/item.py:480 */
+/* Flag: python-format */
+"%d minutes" = "%d λεπτά";
+
+/* File: ../..//portable/item.py:490 */
+/* Flag: python-format */
+"Expires in %s" = "Λήγει σε %s";
+
+/* File: ../..//portable/item.py:502 */
+/* Flag: python-format */
+"Will retry in %s" = "Επόμενη προσπάθεια σε %s";
+
+/* File: ../..//portable/item.py:504 */
+"Paused" = "Παύθηκε";
+
+/* File: ../..//portable/item.py:878 */
+"TORRENT" = "TORRENT";
+
+/* File: ../..//portable/item.py:880 */
+"WEB PAGE" = "ΙΣΤΟΣΕΛΙΔΑ";
+
+/* File: ../..//portable/item.py:890 */
+"Total Down:" = "Σύνολο κάτω:";
+
+/* File: ../..//portable/item.py:897 */
+"Seeders:" = "Χρήστες που μοιράζονται:";
+
+/* File: ../..//portable/item.py:898 */
+"Leachers:" = "Χρήστες που κατεβάζουν:";
+
+/* File: ../..//portable/item.py:899 */
+"Down Rate:" = "Κάτω ταχύτητα:";
+
+/* File: ../..//portable/item.py:900 */
+"Down Total:" = "Κάτω σύνολο:";
+
+/* File: ../..//portable/item.py:902 */
+"Up Rate:" = "Πάνω ταχύτητα:";
+
+/* File: ../..//portable/item.py:903 */
+"Up Total:" = "Πάνω σύνολο:";
+
+/* File: ../..//portable/item.py:908 */
+"Web page:" = "Ιστοσελίδα:";
+
+/* File: ../..//portable/item.py:908 */
+/* Flag: untranslated */
+"permalink" = "permalink" /* = "μόνιμη υπερσύνδεση" */;
+
+/* File: ../..//portable/item.py:909 */
+"File link:" = "Σύνδεσμος στο αρχείο:";
+
+/* File: ../..//portable/item.py:909 */
+"direct link to file" = "απευθείας σύνδεσμος στο αρχείο";
+
+/* File: ../..//portable/item.py:911 */
+"File type:" = "Τύπος αρχείου:";
+
+/* File: ../..//portable/item.py:918 */
+"REVEAL LOCAL FOLDER" = "ΑΠΟΚΑΛΥΨΗ ΤΟΠΙΚΟΥ ΦΑΚΕΛΟΥ";
+
+/* File: ../..//portable/item.py:920 */
+"REVEAL LOCAL FILE" = "ΑΠΟΚΑΛΥΨΗ ΤΟΠΙΚΟΥ ΑΡΧΕΙΟΥ";
+
+/* File: ../..//portable/item.py:922 */
+"Filename:" = "Όνομα αρχείου:";
+
+/* File: ../..//portable/item.py:929 */
+"Down Total" = "Κάτω σύνολο";
+
+/* File: ../..//portable/item.py:931 */
+"Up Total" = "Πάνω σύνολο";
+
+/* File: ../..//portable/item.py:949 */
+"Item Details" = "Λεπτομέρειες στοιχείου";
+
+/* File: ../..//portable/item.py:956 */
+"Torrent Details" = "Λεπτομέρειες Torrent";
+
+/* File: ../..//portable/item.py:961 */
+"Download Details" = "Λεπτομέρειες κατεβάσματος";
+
+/* File: ../..//portable/item.py:1175 */
+"downloading..." = "κατεβάζει...";
+
+/* File: ../..//portable/item.py:1182 */
+/* File: ../..//portable/item.py:1185 */
+/* Flag: python-format */
+"%s remaining" = "απομένουν %s";
+
+/* File: ../..//portable/item.py:1194 */
+"starting up..." = "εκκίνηση...";
+
+/* File: ../..//portable/item.py:1387 */
+/* File: ../..//portable/menu.py:80 */
+"Remove From Playlist" = "Αφαίρεση από τη λίστα αναπαραγωγής";
+
+/* File: ../..//portable/item.py:1389 */
+/* File: ../..//portable/menu.py:82 */
+/* Flag: untranslated */
+"Remove From the Library" = "Remove From the Library";
+
+/* File: ../..//portable/item.py:1391 */
+/* File: ../..//portable/menu.py:77 */
+"Play" = "Αναπαραγωγή";
+
+/* File: ../..//portable/item.py:1393 */
+"Play Just This Video" = "Αναπαραγωγή μόνο αυτού του βίντεο";
+
+/* File: ../..//portable/item.py:1394 */
+/* File: ../..//portable/menu.py:78 */
+"Add to new playlist" = "Προσθήκη σε νέα λίστα αναπαραγωγής";
+
+/* File: ../..//portable/item.py:1398 */
+/* File: ../..//portable/menu.py:88 */
+"Mark as Unwatched" = "Σημείωσε ως Αθέατο";
+
+/* File: ../..//portable/item.py:1400 */
+/* File: ../..//portable/menu.py:106 */
+"Restart Upload" = "Επανεκκίνηση Ανεβάσματος";
+
+/* File: ../..//portable/item.py:1402 */
+/* File: ../..//portable/menu.py:101 */
+"Cancel Download" = "Ακύρωση Μεταφόρτωσης";
+
+/* File: ../..//portable/item.py:1402 */
+/* File: ../..//portable/menu.py:103 */
+"Pause Download" = "Παύση Μεταφόρτωσης";
+
+/* File: ../..//portable/item.py:1650 */
+/* Flag: python-format */
+"Removing %s" = "Αφαίρεση του %s";
+
+/* File: ../..//portable/item.py:1652 */
+/* Flag: untranslated */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Would you like to delete this folder and all of its videos or just remove its entry from the Library?";
+
+/* File: ../..//portable/item.py:1657 */
+"Would you like to delete this file or just remove its entry from My Collection?" = "Θα θέλατε να διαγράψετε αυτό το αρχείο ή απλώς να το αφαιρέσετε από την Συλλογή σας;";
+
+/* File: ../..//portable/item.py:1762 */
+/* Flag: python-format */
+"Removing %s items" = "Αφαιρούνται %s αντικείμενα";
+
+/* File: ../..//portable/item.py:1764 */
+/* Flag: untranslated */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?";
+
+/* File: ../..//portable/item.py:1772 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Ένα ή περισσότερα από αυτά τα αντικείμενα είναι φάκελος. Όταν αφαιρείτε ή διαγράφετε ένα φάκελο, όλα τα αντικείμενα που βρίσκονται μέσα σε αυτόν το φάκελο θα αφαιρεθούν ή θα διαγραφούν επίσης.";
+
+/* File: ../..//portable/menu.py:52 */
+/* Flag: untranslated */
+"Update Channels Now" = "Update Channels Now";
+
+/* File: ../..//portable/menu.py:75 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%d Downloaded Items" = "%d Downloaded Items";
+
+/* File: ../..//portable/menu.py:93 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%d Available Items" = "%d Available Items";
+
+/* File: ../..//portable/menu.py:99 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%d Downloading Items" = "%d Downloading Items";
+
+/* File: ../..//portable/menubar.py:108 */
+"_Open" = "Άν_οιγμα";
+
+/* File: ../..//portable/menubar.py:110 */
+"Check _Version" = "Έλεγχος_Έκδοσης";
+
+/* File: ../..//portable/menubar.py:112 */
+"_Remove Video" = "_Απομάκρυνση βίντεο";
+
+/* File: ../..//portable/menubar.py:113 */
+/* Flag: untranslated */
+"_Remove Videos" = "_Remove Videos";
+
+/* File: ../..//portable/menubar.py:114 */
+/* Flag: untranslated */
+"Re_name Video" = "Re_name Video";
+
+/* File: ../..//portable/menubar.py:115 */
+"Save Video _As..." = "Αποθήκευση αυτού του βίντεο ως";
+
+/* File: ../..//portable/menubar.py:116 */
+/* Flag: untranslated */
+"Save Videos _As..." = "Save Videos _As...";
+
+/* File: ../..//portable/menubar.py:117 */
+/* Flag: untranslated */
+"Copy Video _URL" = "Copy Video _URL";
+
+/* File: ../..//portable/menubar.py:119 */
+"_Options" = "Επιλογές";
+
+/* File: ../..//portable/menubar.py:120 */
+"_Quit" = "_Έξοδος";
+
+/* File: ../..//portable/menubar.py:128 */
+"Cu_t" = "Αποκοπή";
+
+/* File: ../..//portable/menubar.py:129 */
+"_Copy" = "Αντιγραφή";
+
+/* File: ../..//portable/menubar.py:130 */
+"_Paste" = "Επικόλληση";
+
+/* File: ../..//portable/menubar.py:131 */
+"Select _All" = "Επιλογή Όλων";
+
+/* File: ../..//portable/menubar.py:132 */
+"_Delete" = "Διαγραφή";
+
+/* File: ../..//portable/menubar.py:136 */
+/* Flag: untranslated */
+"Add _Channel" = "Add _Channel";
+
+/* File: ../..//portable/menubar.py:137 */
+"New Searc_h Channel..." = "Νέα αναζήτησ_η καναλιού...";
+
+/* File: ../..//portable/menubar.py:138 */
+"New _Folder..." = "Νέος Φάκελος...";
+
+/* File: ../..//portable/menubar.py:139 */
+/* Flag: untranslated */
+"Add Channel _Guide..." = "Add Channel _Guide...";
+
+/* File: ../..//portable/menubar.py:149 */
+/* Flag: untranslated */
+"Update _All Channels" = "Update _All Channels";
+
+/* File: ../..//portable/menubar.py:151 */
+"_Send this channel to a friend" = "_Στείλτε αυτό το κανάλι σε έναν φίλο";
+
+/* File: ../..//portable/menubar.py:152 */
+"Copy Channel _Link" = "Αντι_γραφή συνδέσμου καναλιού";
+
+/* File: ../..//portable/menubar.py:155 */
+"New _Playlist" = "Νέα Λίστα Αναπαραγωγής";
+
+/* File: ../..//portable/menubar.py:156 */
+/* Flag: untranslated */
+"New Playlist Fol_der" = "New Playlist Fol_der";
+
+/* File: ../..//portable/menubar.py:158 */
+"Re_name Playlist" = "Μετ_ονομασία λίστας";
+
+/* File: ../..//portable/menubar.py:159 */
+"_Remove Playlist" = "_Απομάκρυνση λίστας";
+
+/* File: ../..//portable/menubar.py:160 */
+/* Flag: untranslated */
+"_Remove Playlists" = "_Remove Playlists";
+
+/* File: ../..//portable/menubar.py:161 */
+/* Flag: untranslated */
+"_Remove Playlist Folders" = "_Remove Playlist Folders";
+
+/* File: ../..//portable/menubar.py:162 */
+/* Flag: untranslated */
+"_Remove Playlist Folder" = "_Remove Playlist Folder";
+
+/* File: ../..//portable/menubar.py:172 */
+/* Flag: untranslated */
+"_Play" = "_Play";
+
+/* File: ../..//portable/menubar.py:173 */
+/* Flag: untranslated */
+"_Stop" = "_Stop";
+
+/* File: ../..//portable/menubar.py:175 */
+"_Next Video" = "_Επόμενο βίντεο";
+
+/* File: ../..//portable/menubar.py:176 */
+"_Previous Video" = "_Προηγούμενο βίντεο";
+
+/* File: ../..//portable/menubar.py:178 */
+/* Flag: untranslated */
+"Skip _Forward" = "Skip _Forward";
+
+/* File: ../..//portable/menubar.py:179 */
+/* Flag: untranslated */
+"Skip _Back" = "Skip _Back";
+
+/* File: ../..//portable/menubar.py:181 */
+/* Flag: untranslated */
+"Volume _Up" = "Volume _Up";
+
+/* File: ../..//portable/menubar.py:182 */
+/* Flag: untranslated */
+"Volume _Down" = "Volume _Down";
+
+/* File: ../..//portable/menubar.py:184 */
+"_Fullscreen" = "Πλήρης _Οθόνη";
+
+/* File: ../..//portable/menubar.py:188 */
+/* Flag: untranslated */
+"_About" = "_About";
+
+/* File: ../..//portable/menubar.py:189 */
+"_Donate" = "_Συνεισφέρετε";
+
+/* File: ../..//portable/menubar.py:190 */
+/* File: ../..//portable/menubar.py:205 */
+"_Help" = "_Βοήθεια";
+
+/* File: ../..//portable/menubar.py:192 */
+/* Flag: untranslated */
+"Report a _Bug" = "Report a _Bug";
+
+/* File: ../..//portable/menubar.py:196 */
+"_Video" = "_Βίντεο";
+
+/* File: ../..//portable/menubar.py:198 */
+/* Flag: untranslated */
+"_File" = "_File";
+
+/* File: ../..//portable/menubar.py:202 */
+"_Channels" = "_Κανάλια";
+
+/* File: ../..//portable/menubar.py:203 */
+"_Playlists" = "_Λίστες";
+
+/* File: ../..//portable/menubar.py:204 */
+"P_layback" = "Α_ναπαραγωγή";
+
+/* File: ../..//portable/menubar.py:209 */
+/* Flag: untranslated */
+"Play Unwatched ($numUnwatched)" = "Play Unwatched ($numUnwatched)";
+
+/* File: ../..//portable/menubar.py:210 */
+/* Flag: untranslated */
+"Pause All Downloads ($numDownloading)" = "Pause All Downloads ($numDownloading)";
+
+/* File: ../..//portable/menubar.py:211 */
+/* Flag: untranslated */
+"Resume All Downloads ($numPaused)" = "Resume All Downloads ($numPaused)";
+
+/* File: ../..//portable/menubar.py:213 */
+/* Flag: untranslated */
+"Options" = "Options";
+
+/* File: ../..//portable/menubar.py:216 */
+/* Flag: untranslated */
+"Restore" = "Restore";
+
+/* File: ../..//portable/playlist.py:179 */
+/* File: ../..//portable/playlist.py:184 */
 /* Flag: untranslated */
 "Rename Playlist" = "Rename Playlist";
 
-/* File: ../../portable/playlist.py:185 */
+/* File: ../..//portable/playlist.py:185 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Enter a new name for the playlist %s" = "Enter a new name for the playlist %s";
 
-/* File: ../../portable/playlist.py:207 */
+/* File: ../..//portable/playlist.py:207 */
 /* Flag: untranslated */
 "Create Playlist" = "Create Playlist";
 
-/* File: ../../portable/playlist.py:208 */
+/* File: ../..//portable/playlist.py:208 */
 /* Flag: untranslated */
 "Enter a name for the new playlist" = "Enter a name for the new playlist";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:1 */
+/* File: ../..//portable/singleclick.py:125 */
 /* Flag: untranslated */
-"(Changes won't go into effect until you restart Democracy Player)" = "(Changes won't go into effect until you restart Democracy Player)";
+"Subscribing to multiple channels" = "Subscribing to multiple channels";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:2 */
+/* File: ../..//portable/singleclick.py:126 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Create %d channels?" = "Create %d channels?";
+
+/* File: ../..//portable/singleclick.py:139 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Adding %d channels to a new folder";
+
+/* File: ../..//portable/singleclick.py:143 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
+
+/* File: ../..//portable/singleclick.py:154 */
+/* Flag: untranslated */
+"Subscription error" = "Subscription error";
+
+/* File: ../..//portable/singleclick.py:164 */
+/* Flag: untranslated */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.";
+
+/* File: ../..//portable/singleclick.py:172 */
+/* Flag: untranslated */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.";
+
+/* File: ../..//portable/singleclick.py:176 */
+/* Flag: untranslated */
+"Could not download the $shortAppName channel file: $url." = "Could not download the $shortAppName channel file: $url.";
+
+/* File: ../..//portable/singleclick.py:212 */
+/* Flag: untranslated */
+"Invalid Torrent" = "Invalid Torrent";
+
+/* File: ../..//portable/singleclick.py:213 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]";
+
+/* File: ../..//portable/storedatabase.py:808 */
+/* File: ../..//portable/storedatabase.py:1169 */
+/* Flag: untranslated */
+"%s database save succeeded" = "%s database save succeeded" /* = "%s βάση δεδομένων αποθηκεύτηκε επιτυχώς" */;
+
+/* File: ../..//portable/storedatabase.py:809 */
+/* File: ../..//portable/storedatabase.py:1170 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Η βάση δεδομένων έχει αποθηκευτεί επιτυχώς. Μπορείτε τώρα να τερματίσετε χωρίς να χάσετε δεδομένα.";
+
+/* File: ../..//portable/storedatabase.py:816 */
+/* File: ../..//portable/storedatabase.py:1178 */
+/* Flag: python-format */
+"%s database save failed" = "Η αποθήκευση της βάσης δεδομένων %s απέτυχε";
+
+/* File: ../..//portable/storedatabase.py:817 */
+/* File: ../..//portable/storedatabase.py:1179 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.";
+
+/* File: ../..//portable/tabs.py:26 */
+/* Flag: untranslated */
+"Library" = "Library";
+
+/* File: ../..//portable/tabs.py:27 */
+/* Flag: untranslated */
+"New" = "New";
+
+/* File: ../..//portable/tabs.py:29 */
+"Downloading" = "Γίνεται λήψη";
+
+/* File: ../..//portable/util.py:388 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGB";
+
+/* File: ../..//portable/util.py:390 */
+/* Flag: python-format */
+"%dGB" = "%dGB";
+
+/* File: ../..//portable/util.py:394 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMB";
+
+/* File: ../..//portable/util.py:396 */
+/* Flag: python-format */
+"%dMB" = "%dMB";
+
+/* File: ../..//portable/util.py:400 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fKB";
+
+/* File: ../..//portable/util.py:402 */
+/* Flag: python-format */
+"%dKB" = "%dKB";
+
+/* File: ../..//portable/util.py:406 */
+/* Flag: python-format */
+"%1.1fB" = "%1.1fB";
+
+/* File: ../..//portable/util.py:408 */
+/* Flag: python-format */
+"%dB" = "%dB";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
+/* Flag: untranslated */
+"(Changes won't go into effect until you restart Miro)" = "(Changes won't go into effect until you restart Miro)";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 /* Flag: untranslated */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 day\n3 days\n6 days\n10 days\n1 month\nNever";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:8 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:8 */
 /* Flag: untranslated */
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:9 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
 "<b>Channels</b>" = "<b>Κανάλια</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:10 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
 "<b>Disk Space</b>" = "<b>Ελεύθερος Χώρος</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:11 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
 "<b>Downloads</b>" = "<b>Μεταφορές</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:12 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
 /* Flag: untranslated */
-"<b>Folders in My Collection</b>" = "<b>Folders in My Collection</b>";
+"<b>Folders in the Library</b>" = "<b>Folders in the Library</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:13 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
 /* Flag: untranslated */
 "<b>General</b>" = "<b>General</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:14 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
 /* Flag: untranslated */
 "<b>Playback</b>" = "<b>Playback</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:15 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:15 */
 /* Flag: untranslated */
 "<b>Searching for Videos</b>" = "<b>Searching for Videos</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:16 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:16 */
 /* Flag: untranslated */
-"<b>Would you like Democracy Player to look for video files on your computer?</b>" = "<b>Would you like Democracy Player to look for video files on your computer?</b>";
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Would you like Miro to look for video files on your computer?</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:17 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:17 */
 /* Flag: untranslated */
-"<b>Would you like to run Democracy when your computer starts up?</b>" = "<b>Would you like to run Democracy when your computer starts up?</b>";
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Would you like to run Miro when your computer starts up?</b>";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:18 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:18 */
 /* Flag: untranslated */
-"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Democracy is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Democracy is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Democracy Player regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Democracy Player features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Democracy Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:32 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
 /* Flag: untranslated */
-"Automatically run Democracy Player when I log in" = "Automatically run Democracy Player when I log in";
+"Automatically run Miro when I log in" = "Automatically run Miro when I log in";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:33 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
 /* Flag: untranslated */
 "Bit Torrent uses ports between" = "Bit Torrent uses ports between";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:34 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
 /* Flag: untranslated */
 "By default, videos expire after" = "By default, videos expire after";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:35 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
 /* Flag: untranslated */
 "C_hannel:" = "C_hannel:";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:36 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
 /* Flag: untranslated */
 "C_reate Channel" = "C_reate Channel";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:37 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
 /* Flag: untranslated */
 "Check Channels for new content" = "Check Channels for new content";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:38 */
-"Democracy Player" = "Democracy Player";
-
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:39 */
-/* Flag: untranslated */
-"Democracy Player can find all the videos on your computer to help you organize your collection." = "Democracy Player can find all the videos on your computer to help you organize your collection.";
-
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:43 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 /* Flag: untranslated */
 "Every 30 minutes\nEvery hour\nManually" = "Every 30 minutes\nEvery hour\nManually";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:46 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
 "GB free" = "GB ελεύθερα";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:47 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
 "Go" = "Πάμε";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:48 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 /* Flag: untranslated */
 "In This:" = "In This:";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:49 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
 "KB/s when my computer is active" = "KB/s όταν ο υπολογιστής είναι ενεργός";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:53 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
+/* Flag: untranslated */
+"Miro can find all the videos on your computer to help you organize your collection." = "Miro can find all the videos on your computer to help you organize your collection.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
 /* Flag: untranslated */
 "Play videos one after another" = "Play videos one after another";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:54 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
 "Preferences" = "Επιλογές";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:55 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
 /* Flag: untranslated */
 "Restrict to my full _home folder" = "Restrict to my full _home folder";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:56 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
 /* Flag: untranslated */
 "Resume playback of videos from the point where they were stopped" = "Resume playback of videos from the point where they were stopped";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:57 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
 /* Flag: untranslated */
 "Search _Engine:" = "Search _Engine:";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:58 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
 /* Flag: untranslated */
 "Search _custom folder:" = "Search _custom folder:";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:59 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
 /* Flag: untranslated */
 "Select Movies Directory" = "Select Movies Directory";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:60 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
 /* Flag: untranslated */
 "Select custom search directory" = "Select custom search directory";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:61 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
 /* Flag: untranslated */
 "Stop after each video" = "Stop after each video";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:62 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
 /* Flag: untranslated */
-"The next few screens will help you set up democracy player so that it works best for you.  Here's the first question." = "The next few screens will help you set up democracy player so that it works best for you.  Here's the first question.";
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "The next few screens will help you set up Miro so that it works best for you.  Here's the first question.";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:63 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 /* Flag: untranslated */
 "To avoid slowdowns, limit upstream to" = "To avoid slowdowns, limit upstream to";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:64 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
 "Volume:" = "Ένταση:";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:65 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
 /* Flag: untranslated */
-"Watch for new videos in these folders and include them in My Collection" = "Watch for new videos in these folders and include them in My Collection";
+"Watch for new videos in these folders and include them in the Library" = "Watch for new videos in these folders and include them in the Library";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:66 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
 /* Flag: untranslated */
-"We recommend that you allow Democracy Player to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Democracy Player to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.";
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:68 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
 /* Flag: untranslated */
-"Welcome to Internet TV.  There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Democracy Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.";
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:69 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
 /* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Democracy migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:70 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
 /* Flag: untranslated */
 "_Add Folder" = "_Add Folder";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:71 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
 /* Flag: untranslated */
 "_Search" = "_Search";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:72 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
 /* Flag: untranslated */
 "_Search For:" = "_Search For:";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:73 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
 /* Flag: untranslated */
 "_Store downloaded videos in this folder:" = "_Store downloaded videos in this folder:";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:74 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
 /* Flag: untranslated */
 "_URL" = "_URL";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:75 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
 /* Flag: untranslated */
 "and" = "and";
 
-/* File: ../../platform/gtk-x11/glade/democracy.glade.h:76 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
 /* Flag: untranslated */
 "videos at once" = "videos at once";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
 /* Flag: untranslated */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 $publisher.";
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
 /* Flag: untranslated */
@@ -1970,11 +1818,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Please enter the username and password given to you by this channel's publisher." = "Please enter the username and password given to you by this channel's publisher.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
 /* Flag: untranslated */
 "(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(WARNING: Changes won't go into effect until you restart $longAppName.)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
 /* Flag: untranslated */
 "Add Folder..." = "Add Folder...";
 
@@ -1982,29 +1830,40 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Automatically run $longAppName when I login" = "Automatically run $longAppName when I login";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
 /* Flag: untranslated */
-"Every 30 minutes" = "Every 30 minutes";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
-/* Flag: untranslated */
-"Every hour" = "Every hour";
+"Close to tray so that downloads can continue." = "Close to tray so that downloads can continue.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 /* Flag: untranslated */
+"Every 30 minutes" = "Every 30 minutes";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
+/* Flag: untranslated */
+"Every hour" = "Every hour";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
+/* Flag: untranslated */
 "Manually" = "Manually";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
 /* Flag: untranslated */
-"Minimize $longAppName to the system tray when I close the program" = "Minimize $longAppName to the system tray when I close the program";
+"Quit Miro completely" = "Quit Miro completely";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
 /* Flag: untranslated */
 "Store downloaded videos in this folder:" = "Store downloaded videos in this folder:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
 /* Flag: untranslated */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "WARNING: This setting will not go into effect until you restart $longAppName.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+"Watch for new videos in these folders and include them in My Collection:" = "Να παρακολουθείς για νέα βίντεο σε αυτούς τους φακέλους και να τα συμπεριλαμβάνεις στο Η Συλλογή Μου:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7 */
+/* Flag: untranslated */
+"When I click the red close button:" = "When I click the red close button:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
 /* Flag: untranslated */

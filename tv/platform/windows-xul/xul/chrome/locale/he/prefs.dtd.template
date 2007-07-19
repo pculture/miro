@@ -4,9 +4,11 @@
 <!ENTITY prefs.title "Preferences">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.minimize.to.tray "Minimize $longAppName to the system tray when I close the program">
+<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
+<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
 
-<!ENTITY prefs.general "General">
+<!ENTITY prefs.general "כללי">
 
 <!ENTITY prefs.channels "ערוצים">
 <!ENTITY prefs.channels.check "Check Channels for new content">
@@ -15,25 +17,25 @@
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.playback "השמעה">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback.remember.pos "זכור מיקום וידיאו.">
 <!ENTITY prefs.playback.auto.next.video "נגן וידאו אחד אחרי השני">
 <!ENTITY prefs.playback.stop.after.each "עצור לאחר כל וידאו">
 
-<!ENTITY prefs.folder.movies "Movies Directory">
+<!ENTITY prefs.folder.movies "תיקיית סרטים">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "שנה ...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Folder Location">
+<!ENTITY prefs.folder.others.location "מיקום תיקייה">
 <!ENTITY prefs.folder.others.shown "Show as Channel">
 <!ENTITY prefs.folder.others.add "Add Folder...">
-<!ENTITY prefs.folder.others.remove "Remove">
+<!ENTITY prefs.folder.others.remove "הסר">
 
-<!ENTITY prefs.downloads.max "Downloads">
+<!ENTITY prefs.downloads.max "הורדות">
 <!ENTITY prefs.downloads.max.part1 "Download at most">
 <!ENTITY prefs.downloads.max.part2 "videos at once.">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "מקום בכונן">
 <!ENTITY prefs.disk.space.min.part1 "אל תתחיל להוריד עם משאיר פחות מ">
 <!ENTITY prefs.disk.space.min.part2 "גיגות פנויים">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">

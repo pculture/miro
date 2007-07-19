@@ -4,7 +4,9 @@
 <!ENTITY prefs.title "Préférences">
 
 <!ENTITY prefs.run.on.startup "Lancer automatiquement $longAppName lorsque je me connecte">
-<!ENTITY prefs.minimize.to.tray "Minimiser $longAppName vers ma barre des tâches lorsque je ferme le programme">
+<!ENTITY prefs.close_to_tray_start "Lorsque je clique le bouton de fermeture rouge :">
+<!ENTITY prefs.close_to_tray "Minimisez dans la barre de tâche afin que les téléchargements se poursuivent.">
+<!ENTITY prefs.no_close_to_tray "Quitter Miro completement">
 
 <!ENTITY prefs.general "Général">
 
@@ -29,7 +31,7 @@
 <!ENTITY prefs.folder.others.add "Ajouter un dossier...">
 <!ENTITY prefs.folder.others.remove "Supprimer">
 
-<!ENTITY prefs.downloads.max "Telechargements">
+<!ENTITY prefs.downloads.max "Téléchargements">
 <!ENTITY prefs.downloads.max.part1 "Télécharger un maximun de">
 <!ENTITY prefs.downloads.max.part2 "vidéos immédiatement.">
 

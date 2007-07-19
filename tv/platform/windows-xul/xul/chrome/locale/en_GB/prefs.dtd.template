@@ -4,7 +4,9 @@
 <!ENTITY prefs.title "Preferences">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.minimize.to.tray "Minimise $longAppName to the system tray when I close the program">
+<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
+<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
 
 <!ENTITY prefs.general "General">
 

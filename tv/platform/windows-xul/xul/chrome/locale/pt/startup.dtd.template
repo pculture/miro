@@ -2,11 +2,11 @@
 <!ENTITY rsaquo				"&quot;">
 
 <!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
+<!ENTITY startup.description		"Os próximos ecrãs ajudarão-o a configurar o $longAppName para que ele funcione da melhor maneira para si.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
 <!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
+<!ENTITY startup.search.description	"$longAppName consegue encontrar todos os vídeos no seu computador para o ajudar a organizar a sua collecção.">
+<!ENTITY startup.search.question        "Você deseja que o $longAppName procure por vídeos no seu computador?">
 <!ENTITY startup.search.restrict	"Restringir aos meus ficheiros pessoais.">
 <!ENTITY startup.search.custom          "Procurar numa pasta à escolha:">
 <!ENTITY startup.search.searching	"A Procurar por vídeos">
@@ -27,11 +27,11 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.answer.yes		"Sim">
 <!ENTITY startup.answer.no		"Não">
 <!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
+<!ENTITY startup.description		"Os próximos ecrãs ajudarão-o a configurar o $longAppName para que ele funcione da melhor maneira para si.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
 <!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
+<!ENTITY startup.search.description	"$longAppName consegue encontrar todos os vídeos no seu computador para o ajudar a organizar a sua collecção.">
+<!ENTITY startup.search.question        "Você deseja que o $longAppName procure por vídeos no seu computador?">
 <!ENTITY startup.search.restrict	"Restringir aos meus ficheiros pessoais.">
 <!ENTITY startup.search.custom          "Procurar numa pasta à escolha:">
 <!ENTITY startup.search.searching	"A Procurar por vídeos">
