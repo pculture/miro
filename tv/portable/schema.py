@@ -9,7 +9,7 @@ The goals of this modules are:
 
 Module-level variables:
     objectSchemas -- Schemas to use with the current database.
-    VERISON -- Current schema version.  If you change the schema you must bump
+    VERSION -- Current schema version.  If you change the schema you must bump
     this number and add a function in the dbupgrade module.
 
 Go to the bottom of this file for the current database schema.

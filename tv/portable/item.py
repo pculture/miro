@@ -8,6 +8,7 @@ from util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeUR
 from platformutils import FilenameType
 import locale
 import os
+import os.path
 import urllib
 import shutil
 import traceback
@@ -1705,7 +1706,7 @@ Collection?""")
     def getDownloadedTime(self):
         self.confirmDBThread()
         try:
-            return datetime.fromtimestamp(os.getctime(self.filename))
+            return datetime.fromtimestamp(os.path.getctime(self.filename))
         except:
             return datetime.min
 

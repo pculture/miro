@@ -64,6 +64,9 @@ class DatabaseError(Exception):
 class BadFileFormatError(DatabaseError):
     pass
 
+class NotImplementError(DatabaseError):
+    pass
+
 # _BootStrapClass is used to as the initial class when we restore an object.
 class _BootStrapClass:
     pass

@@ -18,6 +18,8 @@ from urlparse import urlparse, urljoin
 from collections import deque
 from gtcache import gettext as _
 
+from base64 import b64encode
+
 from clock import clock
 
 import httpauth
@@ -266,7 +268,7 @@ class AsyncSocket(object):
                 return
             if rv in (0, errno.EINPROGRESS, errno.EWOULDBLOCK):
                 eventloop.addWriteCallback(self.socket, onWriteReady)
-                self.socketConnectTimeout =  eventloop.addTimeout(
+                self.socketConnectTimeout = eventloop.addTimeout(
                         SOCKET_CONNECT_TIMEOUT, onWriteTimeout,
                         "socket connect timeout")
             else:
@@ -595,10 +597,7 @@ class ConnectionHandler(object):
         self.name = ""
 
     def __str__(self):
-        if self.name:
-            return "%s: %s" % (type(self).__name__, self.name)
-        else:
-            return "Unknown %s" % (type(self).__name__,)
+        return "%s -- %s" % (self.__class__, self.state)
 
     def openConnection(self, host, port, callback, errback):
         self.name = "Outgoing %s:%s" % (host, port)
@@ -650,8 +649,6 @@ class ConnectionHandler(object):
         """
         raise NotImplementedError()
 
-    def __str__(self):
-        return "%s -- %s" % (self.__class__, self.state)
 
 class HTTPConnection(ConnectionHandler):
     scheme = 'http'

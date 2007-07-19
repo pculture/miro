@@ -44,7 +44,6 @@ import types
 import random
 import datetime
 import traceback
-import datetime
 import threading
 import platform
 import dialogs
@@ -112,11 +111,11 @@ class PlaybackControllerBase:
         view = itemSelection.currentView
         if itemSelection.currentView is None:
             return
-        firstItemId = None
+
         for item in view:
-            id = item.getID()
-            if itemSelection.isSelected(view, id) and item.isDownloaded():
-                self.configure(view, id)
+            itemid = item.getID()
+            if itemSelection.isSelected(view, itemid) and item.isDownloaded():
+                self.configure(view, itemid)
                 break
     
     def enterPlayback(self):
@@ -215,9 +214,9 @@ class PlaybackControllerBase:
             self.updateVideoTimeDC = None
 
     def updateVideoTime(self, repeat=True):
-        time = controller.videoDisplay.getCurrentTime()
-        if time != None and self.currentItem:
-            self.currentItem.setResumeTime (time)
+        t = controller.videoDisplay.getCurrentTime()
+        if t != None and self.currentItem:
+            self.currentItem.setResumeTime(t)
         if repeat:
             self.updateVideoTimeDC = eventloop.addTimeout(.5, self.updateVideoTime, "Update Video Time")
 
@@ -369,9 +368,9 @@ class VideoDisplayBase (Display):
     def selectItem(self, anItem, renderer):
         self.stopOnDeselect = True
         controller.videoInfoItem = anItem
-        template = TemplateDisplay('video-info','default')
+        templ = TemplateDisplay('video-info', 'default')
         area = controller.frame.videoInfoDisplay
-        controller.frame.selectDisplay(template, area)
+        controller.frame.selectDisplay(templ, area)
 
         self.setActiveRenderer(renderer)
         self.activeRenderer.selectItem(anItem)
@@ -665,6 +664,7 @@ class Controller (frontend.Application):
             # Set up search engines
             searchengines.createEngines()
 
+            # FIXME - channelGuide never gets used.
             channelGuide = _getInitialChannelGuide()
 
             # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
@@ -736,7 +736,7 @@ class Controller (frontend.Application):
             eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
             feed.expireItems()
 
-            self.tabDisplay = TemplateDisplay('tablist','default',
+            self.tabDisplay = TemplateDisplay('tablist', 'default',
                     playlistTabOrder=playlistTabOrder,
                     channelTabOrder=channelTabOrder)
             self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
@@ -765,9 +765,9 @@ class Controller (frontend.Application):
 
             util.print_mem_usage("Post single-click memory check")
 
-            start = clock()
+            starttime = clock()
             iconcache.clearOrphans()
-            logging.timing ("Icon clear: %.3f", clock() - start)
+            logging.timing ("Icon clear: %.3f", clock() - starttime)
 
             logging.info ("Finished startup sequence")
             self.finishStartupSequence()
@@ -796,6 +796,7 @@ You must download the latest version of $shortAppName and run that.""")).substit
         try:
             if feedView.len() == 0:
                 logging.info ("Spawning global feed %s", url)
+                # FIXME - variable d never gets used.
                 d = feed.Feed(url, *args, **kwargs)
             elif feedView.len() > 1:
                 allFeeds = [f for f in feedView]
@@ -814,11 +815,11 @@ You must download the latest version of $shortAppName and run that.""")).substit
     def removeGlobalFeed(self, url):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
         feedView.resetCursor()
-        feed = feedView.getNext()
+        nextfeed = feedView.getNext()
         feedView.unlink()
-        if feed is not None:
+        if nextfeed is not None:
             logging.info ("Removing global feed %s", url)
-            feed.remove()
+            nextfeed.remove()
 
     def copyCurrentFeedURL(self):
         tabs = self.selection.getSelectedTabs()
@@ -841,14 +842,14 @@ You must download the latest version of $shortAppName and run that.""")).substit
             selection = self.selection.tabListSelection
         else:
             selection = self.selection.itemListSelection
-        type = selection.getType()
-        if type == 'channeltab':
+        seltype = selection.getType()
+        if seltype == 'channeltab':
             self.removeCurrentFeed()
-        elif type == 'addedguidetab':
+        elif seltype == 'addedguidetab':
             self.removeCurrentGuide()
-        elif type == 'playlisttab':
+        elif seltype == 'playlisttab':
             self.removeCurrentPlaylist()
-        elif type == 'item':
+        elif seltype == 'item':
             self.removeCurrentItems()
 
     def removeCurrentFeed(self):
