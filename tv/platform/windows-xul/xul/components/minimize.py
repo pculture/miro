@@ -50,6 +50,9 @@ IDI_APPLICATION = 32512
 IDI_WINLOGO = 32517
 
 ABM_GETTASKBARPOS = 5
+ABM_GETSTATE      = 4
+
+ABS_AUTOHIDE   = 1
 ABE_LEFT       = 0
 ABE_TOP        = 1
 ABE_RIGHT      = 2
@@ -62,6 +65,8 @@ SW_HIDE = 0
 SW_SHOW = 5
 
 GWL_WNDPROC = -4
+
+MONITOR_DEFAULTTONEAREST = 0x00000002
 
 def LOWORD(dword): return dword & 0x0000ffff
 def HIWORD(dword): return dword >> 16
@@ -145,6 +150,8 @@ def getTaskbarEdge():
 
 def getTaskbarHeight():
     appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
+    if ((ctypes.windll.shell32.SHAppBarMessage(ABM_GETSTATE,ctypes.byref(appBarData)) & ABS_AUTOHIDE) != 0):
+        return 1
     if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
         if appBarData.uEdge in [ABE_LEFT, ABE_RIGHT]:
             return (appBarData.rc.right - appBarData.rc.left)
@@ -153,6 +160,17 @@ def getTaskbarHeight():
     else:
         return -1
 
+# Returns true iff the Windows task bar is on the current monitor
+def taskbarOnCurrentMonitor():
+    if len(Minimize.oldWindowProcs) > 0:
+        appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
+        if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
+            taskbarMonitor = ctypes.windll.user32.MonitorFromRect(ctypes.pointer(appBarData.rc), MONITOR_DEFAULTTONEAREST)
+            appMonitor = ctypes.windll.user32.MonitorFromWindow (Minimize.oldWindowProcs.keys()[0], MONITOR_DEFAULTTONEAREST)
+            return appMonitor == taskbarMonitor
+
+    # Assume that if there's trouble, the task bar is on the current monitor
+    return True
 
 def PyWindProc(hWnd, uMsg, wParam, lParam):
     mousePos = ctypes.windll.user32.GetMessagePos()
@@ -178,7 +196,7 @@ def PyWindProc(hWnd, uMsg, wParam, lParam):
     return ctypes.windll.user32.CallWindowProcW(ctypes.windll.user32.DefWindowProcW,hWnd, uMsg, wParam, lParam)
 
 def PyMainWindProc(hWnd, uMsg, wParam, lParam):
-    if uMsg == WM_GETMINMAXINFO and len(Minimize.minimizers) > 0:
+    if uMsg == WM_GETMINMAXINFO and len(Minimize.minimizers) > 0 and taskbarOnCurrentMonitor():
         info = ctypes.cast(lParam, ctypes.POINTER(MINMAXINFO)).contents
         edge = getTaskbarEdge()
         height = getTaskbarHeight()
@@ -187,23 +205,23 @@ def PyMainWindProc(hWnd, uMsg, wParam, lParam):
         if edge == 3: # Taskbar is on the bottom
             info.ptMaxSize.x = window.screen.width
             info.ptMaxSize.y = window.screen.height - height
-            info.ptMaxPosition.x = window.screen.left
-            info.ptMaxPosition.y = window.screen.top
+            info.ptMaxPosition.x = 0
+            info.ptMaxPosition.y = 0
         elif edge == 2: # Taskbar is on the right
             info.ptMaxSize.x = window.screen.width - height
             info.ptMaxSize.y = window.screen.height
-            info.ptMaxPosition.x = window.screen.left
-            info.ptMaxPosition.y = window.screen.top
+            info.ptMaxPosition.x = 0
+            info.ptMaxPosition.y = 0
         elif edge == 1: # Taskbar is on top
             info.ptMaxSize.x = window.screen.width
             info.ptMaxSize.y = window.screen.height - height
-            info.ptMaxPosition.x = window.screen.left
-            info.ptMaxPosition.y = window.screen.top+height
+            info.ptMaxPosition.x = 0
+            info.ptMaxPosition.y = height
         elif edge == 0: # Taskbar is on the left
             info.ptMaxSize.x = window.screen.width - height
             info.ptMaxSize.y = window.screen.height
-            info.ptMaxPosition.x = window.screen.left+height
-            info.ptMaxPosition.y = window.screen.top
+            info.ptMaxPosition.x = height
+            info.ptMaxPosition.y = 0
     elif uMsg == WM_ACTIVATEAPP:
         pass
         #logging.info("ACTIVATEAPP %d %d" % (wParam, lParam))
