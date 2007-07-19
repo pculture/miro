@@ -50,6 +50,9 @@ IDI_APPLICATION = 32512
 IDI_WINLOGO = 32517
 
 ABM_GETTASKBARPOS = 5
+ABM_GETSTATE      = 4
+
+ABS_AUTOHIDE   = 1
 ABE_LEFT       = 0
 ABE_TOP        = 1
 ABE_RIGHT      = 2
@@ -147,6 +150,8 @@ def getTaskbarEdge():
 
 def getTaskbarHeight():
     appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
+    if ((ctypes.windll.shell32.SHAppBarMessage(ABM_GETSTATE,ctypes.byref(appBarData)) & ABS_AUTOHIDE) != 0):
+        return 1
     if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
         if appBarData.uEdge in [ABE_LEFT, ABE_RIGHT]:
             return (appBarData.rc.right - appBarData.rc.left)
