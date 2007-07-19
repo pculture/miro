@@ -1,3 +1,15 @@
+miro (0.9.8-2ubuntupcf) dapper; urgency=low
+
+  * New movies directory patch.
+
+ -- Chris Lahey <clahey@clahey.net>  Thu, 19 Jul 2007 17:15:07 -0400
+
+miro (0.9.8-2ubuntupcf) feisty; urgency=low
+
+  * Patch for the movies directory getting movies
+
+ -- Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>  Thu, 19 Jul 2007 17:19:43 -0400
+
 miro (0.9.8-1ubuntupcf) feisty; urgency=low
 
   * New Upstream version
