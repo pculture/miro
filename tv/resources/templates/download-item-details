@@ -86,19 +86,19 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="main-video-details-delicious" onclick="return eventURL('http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=@@@this.getURL()@@@&amp;title=@@@this.getTitle()@@@');" >
+                    <a href="#" class="main-video-details-delicious" onclick="return eventURL('http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=@@@this.getQuotedURL()@@@&amp;title=@@@this.getQuotedTitle()@@@');" >
                         <img src="resource:images/delicious.gif" alt="delicious icon" />
                         <span i18n:translate=""> Post to del.icio.us</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="main-video-details-digg" onclick="return eventURL('http://www.digg.com/submit?phrase=2&amp;url=@@@this.getURL()@@@');" >
+                    <a href="#" class="main-video-details-digg" onclick="return eventURL('http://www.digg.com/submit?phrase=2&amp;url=@@@this.getQuotedURL()@@@');" >
                         <img src="resource:images/digg.gif" alt="digg icon" />
                         <span i18n:translate=""> Post to digg</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="main-video-details-reddit" onclick="return eventURL('http://reddit.com/submit?url=@@@this.getURL()@@@&amp;title=@@@this.getTitle()@@@');">
+                    <a href="#" class="main-video-details-reddit" onclick="return eventURL('http://reddit.com/submit?url=@@@this.getQuotedURL()@@@&amp;title=@@@this.getQuotedTitle()@@@');">
                         <img src="resource:images/reddit.gif" alt="reddit icon" />
                         <span i18n:translate=""> Post to Reddit</span>
                     </a>

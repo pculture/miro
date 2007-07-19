@@ -8,6 +8,7 @@ from util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeUR
 from platformutils import FilenameType
 import locale
 import os
+import urllib
 import shutil
 import traceback
 
@@ -357,6 +358,12 @@ class Item(DDBObject):
             return quoteUnicodeURL(videoEnclosure['url'])
         else:
             return u''
+
+    ##
+    # returns the title of the item quoted for inclusion in URLs
+    @returnsUnicode
+    def getQuotedURL(self):
+        return urllib.quote_plus(urllib.unquote(self.getURL().encode('ascii'))).decode('ascii')
 
     def hasSharableURL(self):
         """Does this item have a URL that the user can share with others?
@@ -795,6 +802,12 @@ folder will be deleted.""")
                 return enclosure["url"].decode('ascii','replace')
             except:
                 return u""
+
+    ##
+    # returns the title of the item quoted for inclusion in URLs
+    @returnsUnicode
+    def getQuotedTitle(self):
+        return unicode(urllib.quote_plus(self.getTitle()))
 
     @returnsUnicode
     def getChannelTitle(self, allowSearchFeedTitle=False):
