@@ -23,7 +23,7 @@ Index: platform/gtk-x11/upgrade.py
 ===================================================================
 --- platform/gtk-x11/upgrade.py	(revision 4934)
 +++ platform/gtk-x11/upgrade.py	(working copy)
-@@ -66,9 +66,30 @@
+@@ -66,9 +66,34 @@
          _copy_gconf("/apps/democracy/player", "/apps/miro")
          client.recursive_unset("/apps/democracy", 1)
          if client.get("/apps/miro/MoviesDirectory") is None:
@@ -36,22 +36,26 @@ Index: platform/gtk-x11/upgrade.py
                  pass
 +
 +    # Restore movie directory to old location, since we moved the parent directory.
-+    dir = client.get_string("/apps/miro/MoviesDirectory")
-+    oldsupportdir = os.path.expanduser('~/.democracy')
-+    newsupportdir = os.path.expanduser('~/.miro')
-+    if dir.startswith(oldsupportdir):
-+        olddir = dir
-+        newdir = newsupportdir + dir[len(oldsupportdir):]
-+        while olddir.endswith('/'):
-+            olddir = olddir[:-1]
-+        while newdir.endswith('/'):
-+            newdir = newdir[:-1]
-+        try:
-+            os.makedirs(os.path.dirname(olddir))
-+        except:
-+            pass
-+        try:
-+            shutil.move(newdir, olddir)
-+        except:
-+            pass
++    try:
++        dir = client.get_string("/apps/miro/MoviesDirectory")
++    except:
++        pass
++    else:
++        oldsupportdir = os.path.expanduser('~/.democracy')
++        newsupportdir = os.path.expanduser('~/.miro')
++        if dir.startswith(oldsupportdir):
++            olddir = dir
++            newdir = newsupportdir + dir[len(oldsupportdir):]
++            while olddir.endswith('/'):
++                olddir = olddir[:-1]
++            while newdir.endswith('/'):
++                newdir = newdir[:-1]
++            try:
++                os.makedirs(os.path.dirname(olddir))
++            except:
++                pass
++            try:
++                shutil.move(newdir, olddir)
++            except:
++                pass
 +        
