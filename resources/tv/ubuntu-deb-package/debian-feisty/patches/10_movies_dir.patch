@@ -47,7 +47,7 @@ Index: platform/gtk-x11/upgrade.py
 +        while newdir.endswith('/'):
 +            newdir = newdir[:-1]
 +        try:
-+            os.makedirs(dirname(olddir))
++            os.makedirs(os.path.dirname(olddir))
 +        except:
 +            pass
 +        try:
