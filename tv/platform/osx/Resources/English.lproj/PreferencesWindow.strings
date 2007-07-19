@@ -4,9 +4,8 @@
 /* NSButton ( limit upstream to) : <title: limit upstream to> (oid:30) */
 " limit upstream to" = " limit upstream to";
 
-/* NSTextField ((You must restart Democracy for this change to take effect) ) : <title:(You must restart Democracy for this change to take effect)
-> (oid:127) */
-"(You must restart Democracy for this change to take effect)\n" = "(You must restart Democracy for this change to take effect)\n";
+/* NSTextField ((You must restart Miro for this change to take effect)) : <title:(You must restart Miro for this change to take effect)> (oid:127) */
+"(You must restart Miro for this change to take effect)" = "(You must restart Miro for this change to take effect)";
 
 /* NSTextField ((You must restart Miro for this change to take effect) ) : <title:(You must restart Miro for this change to take effect)
 > (oid:100) */
