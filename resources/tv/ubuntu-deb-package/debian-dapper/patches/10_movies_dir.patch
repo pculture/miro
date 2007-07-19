@@ -23,15 +23,35 @@ Index: platform/gtk-x11/upgrade.py
 ===================================================================
 --- platform/gtk-x11/upgrade.py	(revision 4934)
 +++ platform/gtk-x11/upgrade.py	(working copy)
-@@ -21,6 +21,7 @@
+@@ -21,6 +21,27 @@
  import gconf
  
  def upgrade():
++    # gconf settings
 +    client = gconf.client_get_default()
++    def _copy_gconf(src, dst):
++        for entry in client.all_entries(src):
++            entry_dst = dst + '/' + entry.key.split('/')[-1]
++            client.set(entry_dst, entry.value)
++        for subdir in client.all_dirs(src):
++            subdir_dst = dst + '/' + subdir.split('/')[-1]
++            _copy_gconf (subdir, subdir_dst)
++
++    if client.dir_exists ("/apps/democracy/player") and not client.dir_exists ("/apps/miro"):
++        _copy_gconf("/apps/democracy/player", "/apps/miro")
++        client.recursive_unset("/apps/democracy", 1)
++        if client.get("/apps/miro/MoviesDirectory") is None:
++            value = os.path.expanduser('~/.democracy/Movies')
++            client.set_string("/apps/miro/MoviesDirectory", value)
++            try:
++                os.makedirs (value)
++            except:
++                pass
++
      # dot directory
      src = os.path.expanduser('~/.democracy')
      dst = os.path.expanduser('~/.miro')
-@@ -28,6 +29,27 @@
+@@ -28,6 +49,27 @@
          shutil.move(src, dst)
          shutil.rmtree(os.path.join(dst, "icon-cache"), True)
  
@@ -59,21 +79,30 @@ Index: platform/gtk-x11/upgrade.py
      # autostart file
      config_home = os.environ.get ('XDG_CONFIG_HOME',
                                    '~/.config')
-@@ -52,8 +74,6 @@
- 
-     # gconf settings
- 
+@@ -49,26 +91,3 @@
+                 os.remove (old_file)
+             except:
+                 pass
+-
+-    # gconf settings
+-
 -    client = gconf.client_get_default()
 -
-     def _copy_gconf(src, dst):
-         for entry in client.all_entries(src):
-             entry_dst = dst + '/' + entry.key.split('/')[-1]
-@@ -66,7 +86,7 @@
-         _copy_gconf("/apps/democracy/player", "/apps/miro")
-         client.recursive_unset("/apps/democracy", 1)
-         if client.get("/apps/miro/MoviesDirectory") is None:
+-    def _copy_gconf(src, dst):
+-        for entry in client.all_entries(src):
+-            entry_dst = dst + '/' + entry.key.split('/')[-1]
+-            client.set(entry_dst, entry.value)
+-        for subdir in client.all_dirs(src):
+-            subdir_dst = dst + '/' + subdir.split('/')[-1]
+-            _copy_gconf (subdir, subdir_dst)
+-
+-    if client.dir_exists ("/apps/democracy/player") and not client.dir_exists ("/apps/miro"):
+-        _copy_gconf("/apps/democracy/player", "/apps/miro")
+-        client.recursive_unset("/apps/democracy", 1)
+-        if client.get("/apps/miro/MoviesDirectory") is None:
 -            value = os.path.expanduser('~/Movies/Democracy')
-+            value = os.path.expanduser('~/.democracy/Movies')
-             client.set_string("/apps/miro/MoviesDirectory", value)
-             try:
-                 os.makedirs (value)
+-            client.set_string("/apps/miro/MoviesDirectory", value)
+-            try:
+-                os.makedirs (value)
+-            except:
+-                pass
