@@ -100,9 +100,9 @@ class PlaylistMixin:
 
     def handleDNDReorder(self, anchorItem, draggedItems):
         """Handle drag-and-drop reordering of the playlist."""
-        for id in draggedItems:
-            if id not in self.trackedItems:
-                raise ValueError("id not in playlist folder: %s", sourceID)
+        for iid in draggedItems:
+            if iid not in self.trackedItems:
+                raise ValueError("id not in playlist folder: %s", iid)
         if anchorItem is not None:
             self.trackedItems.moveIDList(draggedItems, anchorItem.getID())
         else:

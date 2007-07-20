@@ -1412,7 +1412,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
             for key in argLists.keys():
                 value = argLists[key]
                 if len(value) != 1:
-                    raise template.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, url)
+                    import template_compiler
+                    raise template_compiler.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, url)
                 # Cast the value results back to unicode
                 try:
                     args[key.encode('ascii','replace')] = value[0].decode('utf8')
@@ -1964,7 +1965,7 @@ class TemplateActionHandler:
     def playNewVideos(self, id):
         try:
             obj = db.getObjectByID(int(id))
-        except ObjectNotFoundError:
+        except database.ObjectNotFoundError:
             return
 
         def myUnwatchedItems(obj):

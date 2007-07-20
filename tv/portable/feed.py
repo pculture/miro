@@ -307,17 +307,6 @@ class FeedImpl:
     def hasLibrary(self):
         return False
 
-    ##
-    # Downloads the next available item taking into account maxNew,
-    # fallbehind, and getEverything
-    def downloadNextAuto(self, dontUse = []):
-        nextAuto = self.getNextAutoDownload()
-        if nextAuto is not None:
-            nextAuto.download(autodl=True)
-            return True
-        else:
-            return False
-
     def startManualDownload(self):
         next = None
         for item in self.items:

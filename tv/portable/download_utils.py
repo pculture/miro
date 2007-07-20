@@ -9,6 +9,8 @@ import util
 from util import checkF, checkU, returnsFilename
 from platformutils import unicodeToFilename
 
+URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
+
 def fixFileURLS(url):
     """Fix file URLS that start with file:// instead of file:///.  Note: this
     breaks for file URLS that include a hostname, but we never use those and

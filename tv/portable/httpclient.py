@@ -25,7 +25,7 @@ from clock import clock
 import httpauth
 import config
 import prefs
-from download_utils import cleanFilename, parseURL, defaultPort
+from download_utils import URIPattern, cleanFilename, parseURL, defaultPort
 from xhtmltools import URLEncodeDict, multipartEncode
 import eventloop
 import util
@@ -37,9 +37,6 @@ PIPELINING_ENABLED = True
 SOCKET_READ_TIMEOUT = 60
 SOCKET_INITIAL_READ_TIMEOUT = 30
 SOCKET_CONNECT_TIMEOUT = 15
-
-# This pattern matches all possible strings.  I promise.
-URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
 
 class NetworkError(Exception):
     """Base class for all errors that will be passed to errbacks from getURL

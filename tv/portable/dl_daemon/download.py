@@ -30,9 +30,6 @@ from util import checkF, checkU
 import platformutils
 import string
 
-# This pattern matches all possible strings.  I promise.
-URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
-
 chatter = True
 
 # a hash of download ids to downloaders

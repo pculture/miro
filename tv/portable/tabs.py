@@ -259,9 +259,9 @@ class TabOrder(database.DDBObject):
     def handleDNDReorder(self, anchorItem, draggedIDs):
         """Handle drag-and-drop reordering of the tab order."""
 
-        for id in draggedIDs:
-            if id not in self.trackedTabs:
-                raise ValueError("ID not in TabOrder: %s", sourceID)
+        for iid in draggedIDs:
+            if iid not in self.trackedTabs:
+                raise ValueError("ID not in TabOrder: %s", iid)
         if anchorItem is None:
             newFolder = None
         else:

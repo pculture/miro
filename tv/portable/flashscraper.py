@@ -163,7 +163,7 @@ def _scrapeVeohTVCallback(info, callback):
         print "DTV: WARNING, unable to scrape Veoh URL data: %s" % url
         callback(None)
 
-def _scrapeVeohTVErrback(err):
+def _scrapeVeohTVErrback(err, callback):
     print "DTV: WARNING, network error scraping Veoh TV Video URL"
     callback(None)
 
