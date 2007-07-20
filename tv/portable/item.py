@@ -808,7 +808,7 @@ folder will be deleted.""")
     # returns the title of the item quoted for inclusion in URLs
     @returnsUnicode
     def getQuotedTitle(self):
-        return unicode(urllib.quote_plus(self.getTitle()))
+        return unicode(urllib.quote_plus(self.getTitle().encode('utf8')))
 
     @returnsUnicode
     def getChannelTitle(self, allowSearchFeedTitle=False):
