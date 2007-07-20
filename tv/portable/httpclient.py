@@ -12,10 +12,8 @@ reference (http://www.w3.org/Protocols/rfc2616/rfc2616.html).
 import errno
 import re
 import socket
-import threading
 import traceback
-from urlparse import urlparse, urljoin
-from collections import deque
+from urlparse import urljoin
 from gtcache import gettext as _
 
 from base64 import b64encode
@@ -522,7 +520,7 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
             eventloop.callInThread(onSSLOpen, handleSSLError, lambda: openProxyConnection(self),
                                    "ProxiedAsyncSSL openProxyConnection()")
         def openProxyConnection(self):
-            headers = {'User-Agent': '%s/%s (%s)' %(
+            headers = {'User-Agent': '%s/%s (%s)' % (
                 config.get(prefs.SHORT_APP_NAME),
                 config.get(prefs.APP_VERSION),
                 config.get(prefs.PROJECT_URL)),
@@ -534,7 +532,7 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
                 authString = b64encode(authString)
                 headers['ProxyAuthorization'] = "Basic " + authString
 
-            connectString = "CONNECT %s:%d HTTP/1.1\r\n" % (host,port)
+            connectString = "CONNECT %s:%d HTTP/1.1\r\n" % (host, port)
             for header, value in headers.items():
                 connectString += ('%s: %s\r\n' % (header, value))
             connectString += "\r\n"
@@ -1353,7 +1351,10 @@ class HTTPClient(object):
 
     def __init__(self, url, callback, errback, headerCallback=None,
             bodyDataCallback=None, method="GET", start=0, etag=None,
-            modified=None, cookies={}, postVariables = None, postFiles = None):
+            modified=None, cookies=None, postVariables = None, postFiles = None):
+        if cookies == None:
+            cookies = {}
+        
         self.url = url
         self.callback = callback
         self.errback = errback
@@ -1445,16 +1446,16 @@ class HTTPClient(object):
         if len(self.cookies) > 0:
             header = "$Version=1"
             for name in self.cookies:
-                header = '%s;%s=%s' % (header,name,self.cookies[name]['Value'])
+                header = '%s;%s=%s' % (header, name, self.cookies[name]['Value'])
                 if self.cookies[name].has_key('origPath'):
                     header = '%s;$Path=%s' % \
-                                       (header,self.cookies[name]['origPath'])
+                                       (header, self.cookies[name]['origPath'])
                 if self.cookies[name].has_key('origDomain'):
                     header = '%s;$Domain=%s' % \
-                                       (header,self.cookies[name]['origDomain'])
+                                       (header, self.cookies[name]['origDomain'])
                 if self.cookies[name].has_key('origPort'):
                     header = '%s;$Port=%s' % \
-                                       (header,self.cookies[name]['origPort'])
+                                       (header, self.cookies[name]['origPort'])
             self.headers['Cookie'] = header
 
     def startRequest(self):
@@ -1599,7 +1600,7 @@ class HTTPClient(object):
         """Generates a cookie dictionary from headers in response
         """
         def getAttrPair(attr):
-            result = attr.strip().split('=',1)
+            result = attr.strip().split('=', 1)
             if len(result) == 2:
                 (name, value) = result
             else:
@@ -1623,7 +1624,7 @@ class HTTPClient(object):
                     (temp[-1].count('"')%2 == 1) or
                     (string.find('=') == -1) or
                     (string.find('=') > string.find(';')))):
-                    temp[-1] = '%s,%s' % (temp[-1],string)
+                    temp[-1] = '%s,%s' % (temp[-1], string)
                 else:
                     temp.append(string)
             cookieStrings = temp
@@ -1637,7 +1638,7 @@ class HTTPClient(object):
                 for pair in pairs:
                     if (len(temp) > 0 and
                         (temp[-1].count('"')%2 == 1)):
-                        temp[-1] = '%s;%s' % (temp[-1],pair)
+                        temp[-1] = '%s;%s' % (temp[-1], pair)
                     else:
                         temp.append(pair)
                 pairs = temp
@@ -1690,7 +1691,7 @@ class HTTPClient(object):
                     cookie['Discard'] = not cookie.has_key('Max-Age')
                 if not cookie.has_key('Max-Age'):
                     cookie['Max-Age'] = str(2**30)
-                if self.isValidCookie(cookie,scheme, host, port, path):
+                if self.isValidCookie(cookie, scheme, host, port, path):
                     cookies[name] = cookie
         return cookies
 
@@ -1795,8 +1796,10 @@ class HTTPClient(object):
 # defaultMimeType is used for file:// URLs
 def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,
-        modified=None, cookies = {}, postVariables = None, postFiles = None,
+        modified=None, cookies=None, postVariables = None, postFiles = None,
         defaultMimeType='application/octet-stream', clientClass = HTTPClient):
+    if cookies == None:
+        cookies = {}
     if url.startswith("file://"):
         callback({"body":file(url[7:]).read(),
                       "updated-url":url,
