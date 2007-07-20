@@ -1334,7 +1334,7 @@ class HTTPConnectionPool(object):
                 if (conn.idleSince is not None and 
                         conn.idleSince + self.CONNECTION_TIMEOUT <= clock()):
                     toRemove.append(conn)
-            for x in toRemove:
+            for conn in toRemove:
                 conn.closeConnection()
             if len(conns['free']) == len(conns['active']) == 0:
                 del self.connections[serverKey]
