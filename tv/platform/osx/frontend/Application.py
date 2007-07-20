@@ -128,6 +128,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
         # Startup
         app.controller.onStartup()
 
+        # The database should be ready at this point, check Miro migration.
+        import migrateappname
+        migrateappname.migrateVideos('Democracy', 'Miro')
+
         # Initialize the Growl notifier
         GrowlNotifier.register()
     
