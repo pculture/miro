@@ -108,8 +108,3 @@ def __notifyListeners(key, value):
     for callback in __callbacks:
         eventloop.addIdle(callback, 'config callback: %s' % callback,
                 args=(key,value))
-
-def ensureMigratedMoviePath(pathname):
-    if hasattr(platformcfg, 'ensureMigratedMoviePath'):
-        pathname = platformcfg.ensureMigratedMoviePath(pathname)
-    return pathname

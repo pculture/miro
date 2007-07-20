@@ -29,6 +29,9 @@ def launchApplication():
     # conflict between the standard OS X sqlite lib and our own most recent one.
     from pysqlite2 import dbapi2
 
+    import migrateappname
+    migrateappname.migrateSupport('Democracy', 'Miro')
+
     # We can now import our stuff
     import platformutils
     platformutils.initializeLocale()
