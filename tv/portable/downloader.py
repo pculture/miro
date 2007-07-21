@@ -349,7 +349,7 @@ WARNING: can't migrate download because we don't have a filename!
 URL was %s""" % self.url
                 return
             if os.path.exists(filename):
-                if 'channelName' in self.status:
+                if 'channelName' in self.status and self.status['channelName'] is not None:
                     channelName = filterDirectoryName(self.status['channelName'])
                     directory = os.path.join (directory, channelName)
                 try:
