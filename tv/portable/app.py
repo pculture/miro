@@ -283,10 +283,19 @@ class PlaybackControllerBase:
 
     def onMovieFinished(self):
         self.stopUpdateVideoTime()
+        setToStart = False
         if self.currentItem:
             self.currentItem.setResumeTime(0)
-        self.currentItem = None
-        return self.skip(1, False)
+            if self.currentItem.getFeedURL() == 'dtv:singleFeed':
+                setToStart = True
+        if setToStart:
+            frame = controller.frame
+            currentDisplay = frame.getDisplay(frame.mainDisplay)
+            currentDisplay.pause()
+            currentDisplay.goToBeginningOfMovie()
+            currentDisplay.pause()
+        else:
+            return self.skip(1, False)
 
 
 ###############################################################################
