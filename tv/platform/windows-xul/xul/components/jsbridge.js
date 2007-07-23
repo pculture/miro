@@ -299,8 +299,9 @@ jsBridge.prototype = {
 
     var self = this;
     this.mousedown = false;
-    this.mousemoveListener = function(event) { 
-        if(!self.mousedown) self.onMouseMoveFullscreen(); 
+    this.justResized = false
+    this.mousemoveListener = function(event) {
+        if((!self.mousedown) && (!self.justResized)) self.onMouseMoveFullscreen(); 
     }
     this.mousedownListener = function(event) { 
         self.mousedown = true;
@@ -331,9 +332,20 @@ jsBridge.prototype = {
   startHideVideoControlsTimer: function() {
     var bottom = this.document.getElementById('bottom')
     var videoInfoDisplay = this.document.getElementById('videoInfoDisplay')
+    var self = this;
+    // If we don't have this second callback, we ALWAYs immediately
+    // get a mouse move event in Vista and go out of "totally
+    // fullscreen" mode as soon as we go into it
+    var callback2 = {notify: function() {
+        self.justResized = false;
+    }};
     var callback = {notify: function() {
+        self.justResized = true;
         videoInfoDisplay.collapsed = bottom.collapsed = true;
         pybridge.showCursor(false);
+        self.hideVideoControlsTimer.initWithCallback(callback2, 100,
+                          Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+
     }};
     this.hideVideoControlsTimer.initWithCallback(callback, 3000,
             Components.interfaces.nsITimer.TYPE_ONE_SHOT);
