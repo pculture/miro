@@ -50,7 +50,7 @@ class QuicktimeRenderer (app.VideoRenderer):
 
     def checkComponentCompatibility(self, name):
         if "Perian" in name or "AC3" in name or "A52" in name:
-            if platformutils.getMajorOSVersion <= 7:
+            if platformutils.getMajorOSVersion() <= 7:
                 return False
         return True
 
@@ -133,7 +133,7 @@ class QuicktimeRenderer (app.VideoRenderer):
         (qtmovie, error) = QTMovie.movieWithFile_error_(osfilename)
         if qtmovie is not None:
             movie_data["duration"] = int(movieDuration(qtmovie) * 1000)
-            if platformutils.getMajorOSVersion > 7:
+            if platformutils.getMajorOSVersion() > 7:
                 movie_data["screenshot"] = extractIcon(qtmovie, filename)
             del qtmovie
             return True
