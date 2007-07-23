@@ -43,6 +43,7 @@ interface pcfIDTVPyBridge : nsISupports
   void onMovieFinished();
   void stop();
   void playPause();
+  void pause();
   void playUnwatched();
   void pauseDownloads();
   void resumeDownloads();

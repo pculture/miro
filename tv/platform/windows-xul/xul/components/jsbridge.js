@@ -276,7 +276,7 @@ jsBridge.prototype = {
   },
 
   hideForFullscreen: Array('channelsDisplay', 'mainSplitter',
-        'resizer-left', 'bottom-left', 'resizer-bottom-right'),
+        'resizer-left', 'bottom-left', 'resizer-bottom-right','titlebar'),
   showForFullscreen: Array('bottom-left-blank', 'bottom-right-blank'),
 
   toggleFullscreen: function() {
@@ -299,8 +299,9 @@ jsBridge.prototype = {
 
     var self = this;
     this.mousedown = false;
-    this.mousemoveListener = function(event) { 
-        if(!self.mousedown) self.onMouseMoveFullscreen(); 
+    this.justResized = false;
+    this.mousemoveListener = function(event) {
+        if((!self.mousedown) && (!self.justResized)) self.onMouseMoveFullscreen(); 
     }
     this.mousedownListener = function(event) { 
         self.mousedown = true;
@@ -317,7 +318,6 @@ jsBridge.prototype = {
   },
 
   leaveTotallyFullscreen: function() {
-    this.document.getElementById('titlebar').collapsed = false;
     this.document.getElementById('bottom').collapsed = false;
     this.document.getElementById('videoInfoDisplay').collapsed = false;
     this.hideVideoControlsTimer.cancel();
@@ -332,10 +332,20 @@ jsBridge.prototype = {
   startHideVideoControlsTimer: function() {
     var bottom = this.document.getElementById('bottom')
     var videoInfoDisplay = this.document.getElementById('videoInfoDisplay')
-    var titlebar = this.document.getElementById('titlebar');
+    var self = this;
+    // If we don't have this second callback, we ALWAYs immediately
+    // get a mouse move event in Vista and go out of "totally
+    // fullscreen" mode as soon as we go into it
+    var callback2 = {notify: function() {
+        self.justResized = false;
+    }};
     var callback = {notify: function() {
-        titlebar.collapsed = videoInfoDisplay.collapsed = bottom.collapsed = true;
+        self.justResized = true;
+        videoInfoDisplay.collapsed = bottom.collapsed = true;
         pybridge.showCursor(false);
+        self.hideVideoControlsTimer.initWithCallback(callback2, 100,
+                          Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+
     }};
     this.hideVideoControlsTimer.initWithCallback(callback, 3000,
             Components.interfaces.nsITimer.TYPE_ONE_SHOT);

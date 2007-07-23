@@ -140,6 +140,12 @@ class PlaybackControllerBase:
         else:
             self.enterPlayback()
 
+    def pause(self):
+        videoDisplay = controller.videoDisplay
+        frame = controller.frame
+        if frame.getDisplay(frame.mainDisplay) == videoDisplay:
+            videoDisplay.pause()
+
     def removeItem(self, item):
         if item.idExists():
             item.executeExpire()
