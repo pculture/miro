@@ -109,6 +109,7 @@ class VideoDisplay (app.VideoDisplayBase):
         self.stopVideoTimeUpdate()
         self.videoUpdateTimeout = gobject.timeout_add(500,
                 app.controller.frame.updateVideoTime)
+        app.controller.frame.updateVideoTime()
 
     def stopVideoTimeUpdate(self):
         if self.videoUpdateTimeout is not None:
