@@ -299,7 +299,7 @@ jsBridge.prototype = {
 
     var self = this;
     this.mousedown = false;
-    this.justResized = false
+    this.justResized = false;
     this.mousemoveListener = function(event) {
         if((!self.mousedown) && (!self.justResized)) self.onMouseMoveFullscreen(); 
     }
