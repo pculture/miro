@@ -405,13 +405,14 @@ class Minimize:
         ctypes.windll.user32.ShowWindow(href, ctypes.c_int(SW_SHOW))
 
     def minimizeOrRestore(self):
+        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
         if len(self.minimized) > 0:
             for href in self.minimized:
                 self.restore(href)
             self.minimized = []
         else:
             self.minimizeAll()
-        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+            pybridge.pause()
         pybridge.updateTrayMenus()
 
     def isMinimized(self):

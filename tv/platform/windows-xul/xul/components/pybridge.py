@@ -455,6 +455,10 @@ class PyBridge:
         app.controller.playbackController.playPause()
 
     @asUrgent
+    def pause(self):
+        app.controller.playbackController.pause()
+
+    @asUrgent
     def stop(self):
         app.controller.playbackController.stop()
 
