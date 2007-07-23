@@ -186,6 +186,19 @@ elif re.search("^firefox-xpcom", packages, re.MULTILINE):
     gtkmozembed = 'firefox-gtkmozembed'
 else:
     sys.exit("Can't find xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
+
+# build a miro script that wraps the miro.real script with an LD_LIBRARY_PATH
+# environment variable to pick up the xpcom we decided to use.
+try:
+    fflib = getCommandOutput("pkg-config --variable=libdir %s" % xpcom)
+    # pluck off the last \n
+    fflib = fflib[:-1]
+    f = open(os.path.join(platform_dir, "miro"), "w")
+    f.write("#!/bin/sh\nLD_LIBRARY_PATH=%s miro.real" % fflib)
+    f.close()
+except RuntimeError, error:
+    sys.exit("Package config error:\n%s" % (error,))
+
 mozilla_browser_options = parsePkgConfig("pkg-config" , 
         "gtk+-2.0 glib-2.0 pygtk-2.0 %s %s" % (gtkmozembed, xpcom))
 mozilla_lib_path = parsePkgConfig('pkg-config', 
@@ -433,6 +446,9 @@ class bdist_deb (Command):
         log.info("running %s" % dpkg_command)
         os.system(dpkg_command)
         dir_util.remove_tree(self.bdist_dir)
+
+print "IS_FILE: %s" % repr(os.path.isfile(os.path.join(platform_dir, "miro.real")))
+
 #### Run setup ####
 setup(name='miro', 
     version=appVersion,
@@ -440,7 +456,10 @@ setup(name='miro',
     author_email='feedback@pculture.org',
     url='http://www.getmiro.com/',
     download_url='http://www.getmiro.com/downloads/',
-    scripts=[os.path.join(platform_dir, 'miro')],
+    scripts = [
+        os.path.join(platform_dir, 'miro'), 
+        os.path.join(platform_dir, 'miro.real')
+    ],
     data_files=data_files,
     ext_modules = [
         fasttypes_ext, mozilla_browser_ext, xine_ext, xlib_ext,
