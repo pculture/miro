@@ -276,7 +276,7 @@ jsBridge.prototype = {
   },
 
   hideForFullscreen: Array('channelsDisplay', 'mainSplitter',
-        'resizer-left', 'bottom-left', 'resizer-bottom-right'),
+        'resizer-left', 'bottom-left', 'resizer-bottom-right','titlebar'),
   showForFullscreen: Array('bottom-left-blank', 'bottom-right-blank'),
 
   toggleFullscreen: function() {
@@ -317,7 +317,6 @@ jsBridge.prototype = {
   },
 
   leaveTotallyFullscreen: function() {
-    this.document.getElementById('titlebar').collapsed = false;
     this.document.getElementById('bottom').collapsed = false;
     this.document.getElementById('videoInfoDisplay').collapsed = false;
     this.hideVideoControlsTimer.cancel();
@@ -332,9 +331,8 @@ jsBridge.prototype = {
   startHideVideoControlsTimer: function() {
     var bottom = this.document.getElementById('bottom')
     var videoInfoDisplay = this.document.getElementById('videoInfoDisplay')
-    var titlebar = this.document.getElementById('titlebar');
     var callback = {notify: function() {
-        titlebar.collapsed = videoInfoDisplay.collapsed = bottom.collapsed = true;
+        videoInfoDisplay.collapsed = bottom.collapsed = true;
         pybridge.showCursor(false);
     }};
     this.hideVideoControlsTimer.initWithCallback(callback, 3000,
