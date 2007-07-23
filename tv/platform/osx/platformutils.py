@@ -319,3 +319,9 @@ def getResizedJPEGData(source, width, height):
     jpegData = str(jpegData.bytes())
     
     return jpegData
+
+# Returns the major version of the OS we are currently running on
+def getMajorOSVersion():
+    versionInfo = os.uname()
+    versionInfo = versionInfo[2].split('.')
+    return int(versionInfo[0])
