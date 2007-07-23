@@ -862,8 +862,11 @@ KEYMAP = {
 }
 
 def mapKey(event):
+    chars = event.characters()
+    if chars == '':
+        return keyboard.UNSUPPORTED
     try:
-        key = event.characters().characterAtIndex_(0)
+        key = chars.characterAtIndex_(0)
         return KEYMAP[key]
     except KeyError:
         return keyboard.UNSUPPORTED
