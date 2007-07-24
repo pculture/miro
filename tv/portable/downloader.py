@@ -38,6 +38,7 @@ import platformutils
 import flashscraper
 import logging
 import traceback
+import templatehelper
 
 # a hash of download ids that the server knows about.
 _downloads = {}
@@ -289,7 +290,7 @@ class RemoteDownloader(DDBObject):
                 shutil.rmtree (filename)
         except:
             logging.warn("Error deleting downloaded file: %s\n%s" % 
-                    (filename, traceback.format_exc()))
+                    (templatehelper.toUni(filename), traceback.format_exc()))
 
         parent = os.path.join(filename, os.path.pardir)
         parent = os.path.normpath(parent)
@@ -301,7 +302,7 @@ class RemoteDownloader(DDBObject):
                 os.rmdir(parent)
             except:
                 logging.warn("Error deleting empty download directory: %s\n%s" %
-                        (parent, traceback.format_exc()))
+                        (templatehelper.toUni(parent), traceback.format_exc()))
 
     ##
     # Continues a paused, stopped, or failed download thread
