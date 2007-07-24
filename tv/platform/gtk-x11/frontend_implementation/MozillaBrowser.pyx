@@ -20,7 +20,7 @@
 import gtkmozembed
 import logging
 
-cdef extern from "MozillaBrowser.h":
+cdef extern from "MozillaBrowserIncludes.h":
     ctypedef struct GtkMozEmbed
     ctypedef struct GObject 
     ctypedef struct PyGObject:
@@ -64,11 +64,19 @@ cdef extern from "MozillaBrowserXPCOM.h":
 cdef extern from "DragAndDrop.h":
     nsresult setupDragAndDrop(GtkMozEmbed *gtkembed)
 
+cdef extern from "PromptService.h":
+    nsresult installPromptService()
+
 cdef extern from "HttpObserver.h":
     nsresult startObserving()
 
 cdef extern from "stdio.h":
     int printf(char* str, ...)
+
+cdef public void log_warning(char* msg):
+    gil = PyGILState_Ensure()
+    logging.warn(msg)
+    PyGILState_Release(gil)
 
 class DOMError(Exception):
     pass
@@ -85,7 +93,7 @@ cdef class MozillaBrowser:
         self.cWidget = self.pygtkmozembed_to_c(self.widget)
 
     def __init__(self):
-        setupHttpObserver()
+        initializeXPCOMComponents()
         self.URICallBack = None
         self.finishedCallBack = None
         self.destroyCallBack = None
@@ -243,12 +251,15 @@ cdef gint on_dom_mouse_down (GtkMozEmbed *embed, gpointer domEvent,
         PyGILState_Release(gil)
     return 0
 
-_httpObserverSetup = False
-def setupHttpObserver():
-    global _httpObserverSetup
-    if _httpObserverSetup:
+_xpcomComponentsInitialized = False
+def initializeXPCOMComponents():
+    global _xpcomComponentsInitialized
+    if _xpcomComponentsInitialized:
         return
-    _httpObserverSetup = True
+    _xpcomComponentsInitialized = True
     result = startObserving()
     if result != NS_OK:
         logging.warn("Error setting up HTTP observer")
+    result = installPromptService()
+    if result != NS_OK:
+        logging.warn("Error setting up Prompt service")
