@@ -149,7 +149,7 @@ class Item(DDBObject):
 
     def toggleShowMoreInfo(self):
         self.showMoreInfo = not self.showMoreInfo
-        self.signalChange(needsSave=False, needsUpdateXML=True);
+        self.signalChange(needsSave=False, needsUpdateXML=True)
 
     @returnsUnicode
     def getMoreInfoState(self):

@@ -55,7 +55,10 @@ class ExceptionContainer:
 class MainloopQueue:
     # Class to send data back to the other thread.
     class ReturnData:
-        def __init__ (self, callback, args = [], kwargs = {}):
+        def __init__ (self, callback, args = None, kwargs = None):
+            if args == None: args = []
+            if kwargs == None: kwargs = {}
+
             # The action to take
             self.callback = callback
             self.args = args
@@ -96,7 +99,10 @@ class MainloopQueue:
         self.idle_running = 0
         self.main_thread = main_thread
 
-    def call_nowait(self, callback, args = [], kwargs = {}):
+    def call_nowait(self, callback, args = None, kwargs = None):
+        if args == None: args = []
+        if kwargs == None: kwargs = {}
+
         # put the action on the queue and then make sure the idle is running.
         self.queue.put((callback, args, kwargs))
         self.idle_running_lock.acquire()
@@ -105,7 +111,10 @@ class MainloopQueue:
             self.idle_running = 1
         self.idle_running_lock.release()
 
-    def call(self, callback, args = [], kwargs = {}):
+    def call(self, callback, args = None, kwargs = None):
+        if args == None: args = []
+        if kwargs == None: kwargs = {}
+
         # If we're in the main thread, just call the function
         if self.main_thread == threading.currentThread():
             return callback (*args, **kwargs)

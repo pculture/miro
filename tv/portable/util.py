@@ -111,9 +111,9 @@ def writeSimpleConfigFile(path, data):
 # this checkout. Going to fail without Cygwin. Yeah, oh well. Pass the
 # file or directory you want to use as a reference point. Returns an
 # integer on success or None on failure.
-def queryRevision(file):
+def queryRevision(f):
     try:
-        p = subprocess.Popen(["svn", "info", file], stdout=subprocess.PIPE) 
+        p = subprocess.Popen(["svn", "info", f], stdout=subprocess.PIPE) 
         info = p.stdout.read()
         p.stdout.close()
         url = re.search("URL: (.*)", info).group(1)

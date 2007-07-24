@@ -563,16 +563,17 @@ def cleanupIncompleteDownloads():
                     filename = os.path.join(downloadDir, filename)
                 filesInUse.add(filename)
 
-    for file in os.listdir(downloadDir):
-        file = os.path.join(downloadDir, file)
-        if file not in filesInUse:
+    for f in os.listdir(downloadDir):
+        f = os.path.join(downloadDir, f)
+        if f not in filesInUse:
             try:
-                if os.path.isfile(file):
-                    os.remove (file)
-                elif os.path.isdir(file):
-                    shutil.rmtree (file)
+                if os.path.isfile(f):
+                    os.remove (f)
+                elif os.path.isdir(f):
+                    shutil.rmtree (f)
             except:
-                pass # maybe a permissions error?  
+                # FIXME - maybe a permissions error?
+                pass
 
 def restartDownloads():
     views.remoteDownloads.confirmDBThread()

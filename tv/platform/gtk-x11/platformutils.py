@@ -178,8 +178,8 @@ def findConvert():
     except NameError:
         _convert_path_cache = None
         search_path = os.environ.get('PATH', os.defpath)
-        for dir in search_path.split(os.pathsep):
-            convert_path = os.path.join(dir, 'convert')
+        for d in search_path.split(os.pathsep):
+            convert_path = os.path.join(d, 'convert')
             if os.path.exists(convert_path):
                 _convert_path_cache = convert_path
         return _convert_path_cache

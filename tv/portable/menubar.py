@@ -64,17 +64,20 @@ class Menu:
                 if item.stateLabels:
                     self.stateLabels[item.action] = item.stateLabels
             
-    def getLabel(self, action, state=None, variables={}):
+    def getLabel(self, action, state=None, variables=None):
+        if variables == None:
+            variables = {}
         if state is None:
-           try:
-               return Template(self.labels[action]).substitute(**variables)
-           except KeyError:
-               return action
+            try:
+                return Template(self.labels[action]).substitute(**variables)
+            except KeyError:
+                return action
         else:
             try:
                 return Template(self.stateLabels[action][state]).substitute(**variables)
             except KeyError:
                 return self.getLabel(action)
+
     def getShortcuts(self, action):
         try:
             return self.shortcuts[action]
@@ -95,7 +98,11 @@ class MenuBar:
     def __iter__(self):
         for menu in self.menus:
             yield menu
-    def getLabel(self, action, state=None, variables={}):
+
+    def getLabel(self, action, state=None, variables=None):
+        if variables == None:
+            variables = {}
+
         if state is None:
             try:
                 return Template(self.labels[action]).substitute(**variables)
