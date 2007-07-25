@@ -79,14 +79,14 @@ elif options.profile:
     profile.run ('main()', options.profile)
 else:
     try:
-	import dbus
-	try:
-	    import dbus_bindings
-	except ImportError, main_error:
-	    try:
-		dbus_bindings = dbus.dbus_bindings
-	    except:
-		raise main_error
+        import dbus
+        try:
+            import dbus_bindings
+        except ImportError, main_error:
+            try:
+                dbus_bindings = dbus.dbus_bindings
+            except:
+                raise main_error
         import onetime
         try:
             onetime.OneTime()
