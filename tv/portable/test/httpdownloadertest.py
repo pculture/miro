@@ -68,7 +68,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
 #        self.assertEquals(self.failed, None)
 #
     def testDownload(self):
-        url = 'http://participatoryculture.org/democracytest/normalpage.txt'
+        url = u'http://participatoryculture.org/democracytest/normalpage.txt'
         self.downloader = TestingDownloader(self, url, "ID1")
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
@@ -76,7 +76,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
 
     def testStop(self):
         # nice large download so that we have time to interrupt it
-        url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
+        url = u'http://www.getdemocracy.com/images/linux-screen.jpg'
         self.downloader = TestingDownloader(self, url, "ID1")
         def stopOnData():
             if (self.downloader.state == 'downloading' and 
@@ -98,7 +98,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         self.assertEquals(self.downloader.totalSize, 45572)
 
     def testPause(self):
-        url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
+        url = u'http://www.getdemocracy.com/images/linux-screen.jpg'
         self.downloader = TestingDownloader(self, url, "ID1")
         def pauseOnData():
             if (self.downloader.state == 'downloading' and 
@@ -120,7 +120,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         self.assertEquals(self.downloader.totalSize, 45572)
 
     def testRestore(self):
-        url = 'http://www.getdemocracy.com/images/linux-screen.jpg'
+        url = u'http://www.getdemocracy.com/images/linux-screen.jpg'
         self.downloader = TestingDownloader(self, url, "ID1")
         def pauseInMiddle():
             if (self.downloader.state == 'downloading' and 
