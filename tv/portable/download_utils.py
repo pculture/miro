@@ -147,7 +147,7 @@ def filenameFromURL(url):
 @returnsFilename
 def cleanFilename(filename):
     if type(filename) == str:
-        return unicodeToFilename(filename.decode('ascii','replace'))
+        return unicodeToFilename(filename.decode('ascii', 'replace'))
     else:
         return unicodeToFilename(filename)
 
