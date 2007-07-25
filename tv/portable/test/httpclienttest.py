@@ -1,5 +1,4 @@
 import unittest
-#import rfc822
 import email.Utils
 import socket
 import tempfile
@@ -225,6 +224,7 @@ class DumbFakeStream(FakeStream):
 class TestingHTTPConnection(httpclient.HTTPConnection):
     """HTTPConnection that doesn't actually connect to the network."""
     streamFactory = FakeStream
+
 class TestingHTTPSConnection(httpclient.HTTPSConnection):
     """HTTPSConnection that doesn't actually connect to the network."""
     streamFactory = FakeStream
@@ -275,6 +275,7 @@ class DumbTestingHTTPConnectionPool(TestingHTTPConnectionPool):
 
 class DumbTestHTTPClient(httpclient.HTTPClient):
     connectionPool = DumbTestingHTTPConnectionPool()
+
 class TestHTTPClient(httpclient.HTTPClient):
     connectionPool = TestingHTTPConnectionPool()
 
@@ -503,7 +504,7 @@ class DumbHTTPClientTest(AsyncSocketTest):
         AsyncSocketTest.setUp(self)
         self.testRequest = DumbTestingHTTPConnection()
         self.testRequest.openConnection('foo.com', 80, lambda x: None,lambda x: None)
-        self.testRequest.sendRequest(self.callback, self.errback, 
+        self.testRequest.sendRequest(self.callback, self.errback, "", 80,
                 method='GET', path='/bar/baz;123?a=b') 
         self.authDelegate = TestingAuthDelegate()
         dialogs.setDelegate(self.authDelegate)
@@ -659,7 +660,7 @@ HELLO: WORLD\r\n"""
         self.testRequest.handleData(startResponse(
             headers={'Content-Length': 128}))
         self.assertEquals(self.testRequest.canSendRequest(), True)
-        self.testRequest.sendRequest(self.callback, self.errback,
+        self.testRequest.sendRequest(self.callback, self.errback, "", 80,
                 path="/pipelined/path")
         self.assertEquals(self.testRequest.pipelinedRequest[6],
                 '/pipelined/path')
@@ -680,7 +681,7 @@ HELLO: WORLD\r\n"""
         # no content length means we can't pipeline a request
         self.assertEquals(self.testRequest.canSendRequest(), False)
         self.assertRaises(httpclient.NetworkError,
-            self.testRequest.sendRequest, self.callback, self.errback)
+            self.testRequest.sendRequest, self.callback, self.errback, "", 80)
 
     def testPipelineNeverStarted(self):
         self.pipelineError = None
@@ -688,7 +689,7 @@ HELLO: WORLD\r\n"""
             headers={'Content-Length': 128}))
         def pipelineErrback(error):
             self.pipelineError = error
-        self.testRequest.sendRequest(self.callback, pipelineErrback,
+        self.testRequest.sendRequest(self.callback, pipelineErrback, "", 80, 
                 path="/pipelined/path")
         self.testRequest.handleClose(socket.SHUT_RDWR)
         self.assert_(isinstance(self.pipelineError,
@@ -700,7 +701,7 @@ HELLO: WORLD\r\n"""
             headers={'Content-Length': 128}))
         def pipelineErrback(error):
             self.pipelineError = error
-        self.testRequest.sendRequest(self.callback, pipelineErrback,
+        self.testRequest.sendRequest(self.callback, pipelineErrback, "", 80,
                 path="/pipelined/path")
         self.testRequest.closeConnection()
         self.assert_(isinstance(self.pipelineError,
@@ -800,13 +801,12 @@ HELLO: WORLD\r\n"""
         self.assert_(self.errbackCalled)
         self.assert_(isinstance(self.data, httpclient.ServerClosedConnection))
 
-class HTTPClientTest(AsyncSocketTest):
+class HTTPClientTestBase(AsyncSocketTest):
     def setUp(self):
         AsyncSocketTest.setUp(self)
         self.testRequest = TestingHTTPConnection()
         self.testRequest.openConnection('foo.com', 80, lambda x: None,lambda x: None)
-        self.testRequest.sendRequest(self.callback, self.errback, 
-                method='GET', path='/bar/baz;123?a=b') 
+        self.testRequest.sendRequest(self.callback, self.errback, "", 80, method='GET', path='/bar/baz;123?a=b') 
         self.authDelegate = TestingAuthDelegate()
         dialogs.setDelegate(self.authDelegate)
         TestHTTPClient.connectionPool = TestingHTTPConnectionPool()
@@ -816,6 +816,8 @@ class HTTPClientTest(AsyncSocketTest):
         # clear out any HTTPAuth objects in there
         AsyncSocketTest.tearDown(self)
 
+
+class HTTPClientTest(HTTPClientTestBase):
     def testRealRequest(self):
         url = 'http://participatoryculture.org/democracytest/normalpage.txt'
         httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
@@ -865,14 +867,20 @@ class HTTPClientTest(AsyncSocketTest):
     def testMultipleRequests(self):
         def middleCallback(data):
             self.firstData = data
-            req.sendRequest(self.callback, self.errback, method='GET', path='/democracytest/normalpage.txt')
+            req.sendRequest(self.callback, self.errback, "", 80, method='GET', path='/democracytest/normalpage.txt')
 
         req = TestingHTTPConnection()
         def stopEventLoop(conn):
             self.stopEventLoop(False)
         self.addIdle(lambda: req.openConnection('participatoryculture.org', 80, stopEventLoop, stopEventLoop), "Open connection")
         self.runEventLoop()
-        self.addIdle(lambda: req.sendRequest(middleCallback, self.errback, method='GET', path='/democracytest/normalpage.txt'), "Send Request")
+        self.addIdle(lambda: req.sendRequest(middleCallback,
+                                             self.errback,
+                                             "",
+                                             80,
+                                             method='GET',
+                                             path='/democracytest/normalpage.txt'),
+                     "Send Request")
         self.runEventLoop()
         self.assertEquals(self.firstData['body'], self.data['body'])
 
@@ -996,8 +1004,8 @@ class HTTPClientTest(AsyncSocketTest):
         self.assertEquals(self.gotData, 'I AM A NORMAL PAGE\n')
 
     def testAuth(self):
-        self.authDelegate.addLogin('ben', 'baddpassword')
-        self.authDelegate.addLogin('guest', 'guest')
+        self.authDelegate.addLogin(u'ben', u'baddpassword')
+        self.authDelegate.addLogin(u'guest', u'guest')
         url = 'http://jigsaw.w3.org/HTTP/Basic/'
         client = TestHTTPClient(url, self.callback, self.errback)
         client.startRequest()
@@ -1007,9 +1015,9 @@ class HTTPClientTest(AsyncSocketTest):
         self.assertEquals(client.authAttempts, 2)
 
     def testBadAuth(self):
-        self.authDelegate.addLogin('baduser', 'baddpass')
-        self.authDelegate.addLogin('anotherbadtry', 'god')
-        self.authDelegate.addLogin('billgates', 'password')
+        self.authDelegate.addLogin(u'baduser', u'baddpass')
+        self.authDelegate.addLogin(u'anotherbadtry', u'god')
+        self.authDelegate.addLogin(u'billgates', u'password')
         url = 'http://jigsaw.w3.org/HTTP/Basic/'
         client = TestHTTPClient(url, self.callback, self.errback)
         client.startRequest()
@@ -1166,31 +1174,34 @@ class HTTPClientTest(AsyncSocketTest):
         testIt(u'\xf8???.\xf2\xf3x')
 
     def testGetFilenameFromResponse(self):
-        client = TestHTTPClient('http://www.foo.com', self.callback,
-                self.errback)
+        client = TestHTTPClient('http://www.foo.com', self.callback, self.errback)
+
         def getIt(path, cd=None):
             response = {'path': path}
             if cd:
                 response['content-disposition'] = cd
             return client.getFilenameFromResponse(response)
+
         self.assertEquals("unknown", getIt("/"))
         self.assertEquals("index.html", getIt("/index.html"))
         self.assertEquals("index.html", getIt("/path/path2/index.html"))
         self.assertEquals("unknown", getIt("/path/path2/"))
         self.assertEquals("myfile.txt", getIt("/", 'filename="myfile.txt"'))
-        self.assertEquals("myfile.txt", getIt("/",
-            'filename="myfile.txt"; size=45'))
-        self.assertEquals("myfile.txt", getIt("/",
-            ' filename =  "myfile.txt"'))
+        self.assertEquals("myfile.txt",
+                          getIt("/", 'filename="myfile.txt"; size=45'))
+        self.assertEquals("myfile.txt",
+                          getIt("/", ' filename =  "myfile.txt"'))
         self.assertEquals("myfile.txt", getIt("/", 'filename=myfile.txt'))
-        self.assertEquals("myfile.txt", getIt("/index.html",
-            cd='filename="myfile.txt"'))
+        self.assertEquals("myfile.txt",
+                          getIt("/index.html", 'filename="myfile.txt"'))
         self.assertEquals("lots.of.extensions",
-            getIt("/", 'filename="lots.of.extensions"'))
+                          getIt("/", 'filename="lots.of.extensions"'))
+
+        # FIXME - these two fail
         self.assertEquals("uncleanfilename", 
-                getIt("/index", 'filename="\\un/cl:ean*fi?lena<m>|e"'))
+                          getIt("/index", 'filename="\\un/cl:ean*fi?lena<m>|e"'))
         self.assertEquals("uncleanfil-ename2", 
-                getIt('/uncl*ean"fil?"ena|m""e2"'))
+                          getIt('/uncl*ean"fil?"ena|m""e2"'))
 
     def testGetCharsetFromResponse(self):
         client = TestHTTPClient('http://participatoryculture.org/democracytest/normal.txt', self.callback,
@@ -1521,7 +1532,7 @@ class GrabURLTest(AsyncSocketTest):
 #         self.runPendingIdles()
 #         self.checkPipelineCanceled()
 
-class BadURLTest(HTTPClientTest):
+class BadURLTest(HTTPClientTestBase):
     def testScheme(self):
         url = 'participatoryculture.org/democracytest/normalpage.txt'
         httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
