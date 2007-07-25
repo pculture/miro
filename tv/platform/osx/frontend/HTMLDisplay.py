@@ -6,6 +6,7 @@ from objc import YES, NO, nil
 from AppKit import *
 from WebKit import *
 from Foundation import *
+from PyObjCTools import AppHelper
 
 import app
 import prefs
@@ -179,6 +180,8 @@ class ManagedWebView (NSObject):
         self.onLoadURL = onLoadURL
         self.initialLoadFinished = False
         self.view = existingView
+        self.openPanelContextID = 1
+        self.openPanelContext = dict()
         platformutils.callOnMainThreadAndWaitUntilDone(self.initWebView, initialHTML, sizeHint, baseURL)        
         return self
 
@@ -290,6 +293,27 @@ class ManagedWebView (NSObject):
             request.setValue_forHTTPHeaderField_(u'1', u'X-Miro')
         
         return request
+
+    def webView_runOpenPanelForFileButtonWithResultListener_(self, webview, listener):
+        self.openPanelContextID += 1
+        self.openPanelContext[self.openPanelContextID] = listener
+        panel = NSOpenPanel.openPanel()
+        panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+            NSHomeDirectory(),
+            nil,
+            nil,
+            self.view.window(),
+            self,
+            'openPanelDidEnd:returnCode:contextInfo:',
+            self.openPanelContextID)
+
+    @AppHelper.endSheetMethod
+    def openPanelDidEnd_returnCode_contextInfo_(self, panel, result, contextID):
+        listener = self.openPanelContext[contextID]
+        del self.openPanelContext[contextID]
+        if result == NSOKButton:
+            filenames = panel.filenames()
+            listener.chooseFilename_(filenames[0])
 
     # Return the actual WebView that we're managing
     def getView(self):
