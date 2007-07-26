@@ -11,11 +11,15 @@ from test.framework import EventLoopTest
 class PlaylistTestBase(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
-        self.feed = Feed("http://feed.uk")
-        self.i1 = Item(FeedParserDict({'title': 'item1'}), feed_id=self.feed.id)
-        self.i2 = Item(FeedParserDict({'title': 'item2'}), feed_id=self.feed.id)
-        self.i3 = Item(FeedParserDict({'title': 'item3'}), feed_id=self.feed.id)
-        self.i4 = Item(FeedParserDict({'title': 'item4'}), feed_id=self.feed.id)
+        self.feed = Feed(u"http://feed.uk")
+        self.i1 = Item(FeedParserDict({'title': u'item1'}),
+                       feed_id=self.feed.id)
+        self.i2 = Item(FeedParserDict({'title': u'item2'}),
+                       feed_id=self.feed.id)
+        self.i3 = Item(FeedParserDict({'title': u'item3'}),
+                       feed_id=self.feed.id)
+        self.i4 = Item(FeedParserDict({'title': u'item4'}),
+                       feed_id=self.feed.id)
 
     def checkList(self, playlist, correctOrder):
         realPositions = {}
@@ -133,7 +137,7 @@ class PlaylistTestCase(PlaylistTestBase):
 class PlaylistFolderTestCase(PlaylistTestBase):
     def setUp(self):
         PlaylistTestBase.setUp(self)
-        self.playlistTabOrder = tabs.TabOrder('playlist')
+        self.playlistTabOrder = tabs.TabOrder(u'playlist')
         self.p1 = SavedPlaylist("rocketboom", [self.i1, self.i3])
         self.p2 = SavedPlaylist("telemusicvision", [self.i4, self.i3])
         self.p3 = SavedPlaylist("digg", [self.i1, self.i2, self.i3, self.i4])

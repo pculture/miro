@@ -17,7 +17,7 @@ class DatabaseUpgradeTest(DemocracyTestCase):
     def testUpgrade23(self):
         pl = playlist.SavedPlaylist("foo")
         fold = folder.PlaylistFolder("bar")
-        fd = feed.Feed("http://feed.uk")
+        fd = feed.Feed(u"http://feed.uk")
         it = item.Item({}, feed_id=fd.id)
         container = item.Item({}, feed_id=fd.id)
         container.isContainerItem = True

@@ -329,11 +329,11 @@ class TemplatePerformance(DemocracyTestCase):
         self.feeds = []
         self.items = []
         for x in range(50):
-            self.feeds.append(feed.Feed('http://www.getdemocracy.com/50'))
+            self.feeds.append(feed.Feed(u'http://www.getdemocracy.com/50'))
             for y in range(50):
                 self.items.append(item.Item(feedparser.FeedParserDict(
-                    {'title':"%d-%d" % (x,y),
-                     'enclosures':[{'url': 'file://%d-%d.mpg' % (x,y)}]}),
+                    {'title': u"%d-%d" % (x, y),
+                     'enclosures': [{'url': u'file://%d-%d.mpg' % (x, y)}]}),
                                             feed_id = self.feeds[-1].id
                                             ))
         
@@ -342,10 +342,10 @@ class TemplatePerformance(DemocracyTestCase):
         for x in range(50):
             for y in range(450):
                 self.items.append(item.Item(feedparser.FeedParserDict(
-                    {'title':"%d-%d" % (x,y),
-                     'enclosures':[{'url': 'file://%d-%d.mpg' % (x,y)}]}),
-                                       feed_id = self.feeds[x].id
-                                       ))
+                    {'title': u"%d-%d" % (x, y),
+                     'enclosures': [{'url': u'file://%d-%d.mpg' % (x, y)}]}),
+                                            feed_id = self.feeds[x].id
+                                            ))
         time2 = self.timeIt(self.fillAndUnlink, 10)
 
         # print "Filling in a 500 item feed took roughly %.4f secs" % (time2/10.0)

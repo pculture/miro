@@ -45,7 +45,7 @@ class SanityCheckingTest(DemocracyTestCase):
         databasesanity.checkSanity(objectList)
 
     def testPhantomFeedChecking(self):
-        f = feed.Feed("http://feed.uk")
+        f = feed.Feed(u"http://feed.uk")
         i = item.Item({}, feed_id=f.id)
         i2 = item.FileItem('/foo/bar.txt', feed_id=f.id)
         self.checkObjectListFailsTest([i])
@@ -54,9 +54,9 @@ class SanityCheckingTest(DemocracyTestCase):
         self.checkObjectListPassesTest([])
 
     def testManualFeedChecking(self):
-        f = feed.Feed("dtv:manualFeed")
-        f2 = feed.Feed("dtv:manualFeed")
-        f3 = feed.Feed("dtv:manualFeed")
+        f = feed.Feed(u"dtv:manualFeed")
+        f2 = feed.Feed(u"dtv:manualFeed")
+        f3 = feed.Feed(u"dtv:manualFeed")
         self.checkObjectListPassesTest([f])
         self.checkObjectListFailsTest([f, f2])
         self.failedCalled = False

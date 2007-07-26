@@ -98,17 +98,17 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
     # This is a latin1 feed that claims to be UTF-8
     def testInvalidLatin1Feed(self):
         [handle, self.filename] = mkstemp(".xml")
-        handle =file(self.filename,"wb")
+        handle = file(self.filename,"wb")
         handle.write('<?xml version="1.0"?>\n<rss version="2.0">\n   <channel>\n      <title>H\xe4ppy Birthday</title>\n      <description>H\xe4ppy Birthday</description>\n <language>zh-zh</language>\n      <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      <generator>Weblog Editor 2.0</generator>\n      <managingEditor>editor@example.com</managingEditor>\n      <webMaster>webmaster@example.com</webMaster>\n      <item>\n         <title>H\xe4ppy Birthday</title>\n         <link>http://participatoryculture.org/boguslink</link>\n         <description>H\xe4ppy Birthday</description>\n         <enclosure url="file://crap" length="0" type="video/mpeg"/>\n         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      </item>\n   </channel>\n</rss>')
         handle.close()
 
         dialogs.delegate = UnicodeTestDelegate()
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
 
         # Make sure the feed shows up as invalid
-        self.assertEqual(dialogs.delegate.numCalls,1)
+        self.assertEqual(dialogs.delegate.numCalls, 1)
 
     # This is latin1 HTML that claims to be Latin 1
     def testLatin1HTML(self):
@@ -120,13 +120,13 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         dialogs.delegate = UnicodeTestDelegate()
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
         
-        self.assertEqual(dialogs.delegate.numCalls,1)
+        self.assertEqual(dialogs.delegate.numCalls, 1)
         myFeed.update()
-        self.assertEqual(len(myFeed.items),1)
+        self.assertEqual(len(myFeed.items), 1)
         myItem = myFeed.items[0]
-        self.assertEqual(len(myItem.getTitle()),14)
+        self.assertEqual(len(myItem.getTitle()), 14)
         self.assertEqual(myItem.getTitle(), u"H\xe4ppy Birthday")
 
     # This is latin1 HTML that claims to be UTF-8
@@ -139,7 +139,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         dialogs.delegate = UnicodeTestDelegate()
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
         
         self.assertEqual(dialogs.delegate.numCalls,1)
         myFeed.update()
@@ -158,7 +158,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         dialogs.delegate = UnicodeTestDelegate()
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
         
         self.assertEqual(dialogs.delegate.numCalls,1)
         myFeed.update()
@@ -176,7 +176,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         dialogs.delegate = UnicodeTestDelegate()
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
         
         self.assertEqual(dialogs.delegate.numCalls,1)
         myFeed.update()
@@ -196,7 +196,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         dialogs.delegate = UnicodeTestDelegate()
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
         
         self.assertEqual(dialogs.delegate.numCalls,1)
         myFeed.update()
@@ -216,7 +216,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         dialogs.delegate = UnicodeTestDelegate()
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
         
         self.assertEqual(dialogs.delegate.numCalls,1)
         myFeed.update()
@@ -236,7 +236,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         dialogs.delegate = UnicodeTestDelegate()
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
         
         self.assertEqual(dialogs.delegate.numCalls,1)
         myFeed.update()
@@ -259,7 +259,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         dialogs.delegate = UnicodeTestDelegate()
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
         
         self.assertEqual(dialogs.delegate.numCalls,1)
         myFeed.update()
@@ -282,7 +282,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         dialogs.delegate = UnicodeTestDelegate()
         dialogs.delegate.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed("file://"+self.filename)
+        myFeed = feed.Feed(u"file://"+self.filename)
         
         self.assertEqual(dialogs.delegate.numCalls,1)
         myFeed.update()
@@ -356,7 +356,7 @@ class TemplateCompilerTest(framework.DemocracyTestCase):
     def testNonUnicode(self):
         # genRepeatText
         self.assertRaises(TemplateError,
-                          lambda : template_compiler.genRepeatText("out","123","    ","boo"))
+                          lambda : template_compiler.genRepeatText("out","123","    ",u"boo"))
         self.assertRaises(TemplateError,
                           lambda : template_compiler.genRepeatText("out","123","    ","Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d"))
         self.assertEqual(u"    out.write(u'Chinese Numbers \\u25cb\\u4e00\\u4e8c\\u4e09\\u56db\\u4e94\\u516d\\u4e03\\u516b\\u4e5d')\n",

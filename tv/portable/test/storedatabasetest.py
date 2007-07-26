@@ -101,12 +101,12 @@ class SchemaTest(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         storedatabase.skipUpgrade = True
-        self.lee = Human("lee", 25, 1.4, [], {'virtual bowling': 212})
-        self.joe = Human("joe", 14, 1.4, [self.lee])
-        self.forbesSt = House('45 Forbs St', 'Blue', [self.lee, self.joe],
-                {'view': 'pretty', 'next-party': datetime(2005, 4, 5)})
-        self.scruffy = Dog('Scruffy', 3, self.lee)
-        self.spike = Dog('Spike', 4, owner=None)
+        self.lee = Human(u"lee", 25, 1.4, [], {u'virtual bowling': 212})
+        self.joe = Human(u"joe", 14, 1.4, [self.lee])
+        self.forbesSt = House(u'45 Forbs St', u'Blue', [self.lee, self.joe],
+                {'view': u'pretty', 'next-party': datetime(2005, 4, 5)})
+        self.scruffy = Dog(u'Scruffy', 3, self.lee)
+        self.spike = Dog(u'Spike', 4, owner=None)
         self.db = [ self.lee, self.joe, self.forbesSt, self.scruffy, 
             self.spike]
         self.savePath = tempfile.mktemp()
@@ -120,10 +120,10 @@ class SchemaTest(DemocracyTestCase):
         DemocracyTestCase.tearDown(self)
 
     def addSubclassObjects(self):
-        self.ben = PCFProgramer('ben', 25, 3.4, [], 'programmer',
-                'Teleportation')
-        self.holmes = PCFProgramer('ben', 25, 3.4, [], 'co-director', 
-                'Mind Control')
+        self.ben = PCFProgramer(u'ben', 25, 3.4, [], u'programmer',
+                u'Teleportation')
+        self.holmes = PCFProgramer(u'ben', 25, 3.4, [], u'co-director', 
+                u'Mind Control')
         self.forbesSt.occupants.extend([self.ben, self.holmes])
         self.db.extend([self.ben, self.holmes])
 
@@ -162,11 +162,11 @@ class TestValidation(SchemaTest):
         self.assertDbInvalid()
 
     def testListValidation(self):
-        self.lee.friends = ['joe']
+        self.lee.friends = [u'joe']
         self.assertDbInvalid()
 
     def testDictValidation(self):
-        self.joe.high_scores['pong'] = "One Million"
+        self.joe.high_scores['pong'] = u"One Million"
         self.assertDbInvalid()
         del self.joe.high_scores['pong']
         self.joe.high_scores[1943] = 1234123
@@ -177,7 +177,7 @@ class TestValidation(SchemaTest):
         self.assertDbValid()
         class HumanSubclassWithoutObjectSchema(Human):
             pass
-        jimmy = HumanSubclassWithoutObjectSchema("Luc", 23, 3.4, [])
+        jimmy = HumanSubclassWithoutObjectSchema(u"Luc", 23, 3.4, [])
         self.joe.friends.append(jimmy)
         self.assertDbInvalid()
 
@@ -208,15 +208,15 @@ class TestRestore(SchemaTest):
             self.assertEquals(getattr(self.joe, attr), getattr(joe2, attr))
         self.assertEquals(joe2.friends, [lee2])
         # check out the house
-        self.assertEquals(forbesSt2.address, '45 Forbs St')
-        self.assertEquals(forbesSt2.color, 'Blue')
+        self.assertEquals(forbesSt2.address, u'45 Forbs St')
+        self.assertEquals(forbesSt2.color, u'Blue')
         self.assertEquals(forbesSt2.occupants, [lee2, joe2])
         self.assertEquals(forbesSt2.stuff,
-                {'view': 'pretty', 'next-party': datetime(2005, 4, 5)})
+                {'view': u'pretty', 'next-party': datetime(2005, 4, 5)})
         # check out the dogs
-        self.assertEquals(scruffy2.name, 'Scruffy')
+        self.assertEquals(scruffy2.name, u'Scruffy')
         self.assertEquals(scruffy2.age, 3)
-        self.assertEquals(spike2.name, 'Spike')
+        self.assertEquals(spike2.name, u'Spike')
         self.assertEquals(spike2.age, 4)
         self.assertEquals(scruffy2.owner, lee2)
         self.assertEquals(spike2.owner, None)
@@ -234,12 +234,12 @@ class TestRestore(SchemaTest):
         self.assertEquals(forbesSt2.occupants, [lee2, joe2, ben2, holmes2])
 
     def testOnRestoreCalled(self):
-        resto = RestorableHuman('resto', 23, 1.3, [])
+        resto = RestorableHuman(u'resto', 23, 1.3, [])
         self.db.append(resto)
         storedatabase.saveObjectList(self.db, self.savePath, testObjectSchemas)
         db2 = storedatabase.restoreObjectList(self.savePath, testObjectSchemas)
         lee2, joe2, forbesSt2, scruffy2, spike2, resto2, = db2
-        self.assertEquals(resto2.name, 'resto')
+        self.assertEquals(resto2.name, u'resto')
         self.assert_(hasattr(resto2, 'iveBeenRestored'))
         self.assertEquals(resto2.iveBeenRestored, True)
 
@@ -269,7 +269,7 @@ class UpgradeTest(SchemaTest):
         def upgrade3(objects):
             for o in objects:
                 if o.classString == 'dog':
-                    o.savedData['color'] = "Unknown"
+                    o.savedData['color'] = u"Unknown"
         databaseupgrade.upgrade2 = upgrade2
         databaseupgrade.upgrade3 = upgrade3
         storedatabase.skipUpgrade = False
@@ -359,7 +359,7 @@ class TestConstraintChecking(LiveStorageTest):
 
     def testConstraintCheck2(self):
         # test changing an item to have an invalid feed id
-        f = feed.Feed("http://feed.uk")
+        f = feed.Feed(u"http://feed.uk")
         i = item.Item({}, feed_id=f.id)
         i.feed_id = 123456789
         self.assertRaises(database.DatabaseConstraintError, i.signalChange)
@@ -372,7 +372,7 @@ class TestConstraintChecking(LiveStorageTest):
 class TestHighLevelFunctions(LiveStorageTest):
     def setUp(self):
         LiveStorageTest.setUp(self)
-        self.f = feed.Feed("http://feed.uk")
+        self.f = feed.Feed(u"http://feed.uk")
         i = item.Item({}, feed_id=self.f.id)
         i2 = item.Item({}, feed_id=self.f.id)
         self.objects = [self.f, i, i2]
