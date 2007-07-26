@@ -1373,7 +1373,7 @@ class DDBObject:
         if not self.dd.idExists(self.id):
             msg = "signalChange() called on non-existant object (id is %s)" \
                     % self.id
-            raise DatabaseConstraintError(msg)
+            raise DatabaseConstraintError, msg
         self.dd.saveCursor()
         try:
             self.dd.resetCursor()

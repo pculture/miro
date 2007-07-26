@@ -15,8 +15,8 @@ class DatabaseUpgradeTest(DemocracyTestCase):
         return [storedatabase.objectToSavable(o) for o in objects]
 
     def testUpgrade23(self):
-        pl = playlist.SavedPlaylist("foo")
-        fold = folder.PlaylistFolder("bar")
+        pl = playlist.SavedPlaylist(u"foo")
+        fold = folder.PlaylistFolder(u"bar")
         fd = feed.Feed(u"http://feed.uk")
         it = item.Item({}, feed_id=fd.id)
         container = item.Item({}, feed_id=fd.id)

@@ -49,6 +49,9 @@ class DummyVideoDisplay:
     def fileDuration (self, filename, callback):
         pass
 
+    def fillMovieData (self, filename, movie_data, callback):
+        pass
+
 class DummyController:
     def __init__(self):
         self.selection = selection.SelectionHandler()
