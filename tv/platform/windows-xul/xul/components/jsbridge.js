@@ -87,6 +87,8 @@ jsBridge.prototype = {
     this.initBrowser("channelsDisplay");
     this.hideVideoControlsTimer = Components.classes["@mozilla.org/timer;1"].
           createInstance(Components.interfaces.nsITimer);
+    this.hidePopupTimer = Components.classes["@mozilla.org/timer;1"].
+          createInstance(Components.interfaces.nsITimer);
     this.videoFilename = null;
     this.searchEngineTitles = this.searchEngineNames = null;
 
@@ -634,8 +636,18 @@ jsBridge.prototype = {
     }
     this.prefDocument.selectDirectoryWatch(true);
   },
+  // Hide the popup after 250ms. Without this delay, our WH_MOUSE_LL
+  // hack in minimize.py causes us to miss some mouse clicks. --NN
   hidePopup: function() {
-      this.popup.hidePopup();
+    var popup = this.popup;
+    var callback = {notify: function() {
+        popup.hidePopup();
+    }};
+    this.hidePopupTimer.cancel();
+    if (!popup.hidden) {
+        this.hidePopupTimer.initWithCallback(callback, 250,
+              Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+    }
   },
   showPopup: function(x, y) {
       // show popup and adjust position once we know width / height
@@ -645,6 +657,7 @@ jsBridge.prototype = {
       var document = this.document;
 
       this.popup = document.getElementById('traypopup');
+      var self = this;
 
       function minimize_onshown(event, x, y, screenWidth, screenHeight, document) {
 
@@ -667,6 +680,7 @@ jsBridge.prototype = {
                           x, y,
                           "context",
                           "", "");
+          self.hidePopupTimer.cancel();
       }
       this.popup._minimizetotray_onshown = function(event){ return minimize_onshown(event, x, y, screenwidth, screenheight, document); };
       this.popup.addEventListener("popupshown",

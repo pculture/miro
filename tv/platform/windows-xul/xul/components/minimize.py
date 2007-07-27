@@ -6,6 +6,9 @@ UINT = ctypes.c_uint
 WCHAR = ctypes.c_wchar
 INT = ctypes.c_int
 
+WH_MOUSE_LL = 14
+WH_MOUSE    = 7
+
 WM_USER = 0x0400
 WM_TRAYICON = WM_USER+0x1EEF
 WM_GETICON = 0x007F
@@ -16,6 +19,7 @@ WM_GETMINMAXINFO = 0x0024
 WM_ACTIVATEAPP = 0x001C
 WM_ACTIVATE = 0x0006
 WM_INITMENUPOPUP = 0x0117
+WM_MOUSEMOVE = 0x0200
 WS_EX_APPWINDOW = 0x00040000L
 WS_MAXIMIZE = 0x01000000L
 SIZE_MAXIMIZED = 2
@@ -73,6 +77,7 @@ def HIWORD(dword): return dword >> 16
 
 WNDPROCTYPE = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, UINT, WPARAM, LPARAM)
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, LPARAM)
+LLMOUSEPROC = ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.c_int, WPARAM, LPARAM)
 
 import config
 import prefs
@@ -235,9 +240,21 @@ def PyMainWindProc(hWnd, uMsg, wParam, lParam):
             
     return ctypes.windll.user32.CallWindowProcW(Minimize.oldWindowProcs[hWnd],hWnd, uMsg, wParam, lParam)
 
+# Part of a hack to close the context menu on mouse actions outside of
+# Democracy. There's probably a better solution for this, but this
+# works for now. --NN
+def PyMouseProc(nCode, wParam, lParam):
+    try:
+        if wParam != WM_MOUSEMOVE:
+            jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
+            jsbridge.hidePopup()
+    except:
+        pass
+    return ctypes.windll.user32.CallNextHookEx(0, nCode, wParam, lParam)
 
 WindProc = WNDPROCTYPE(PyWindProc)
 MainWindProc = WNDPROCTYPE(PyMainWindProc)
+LLMouseProc = LLMOUSEPROC(PyMouseProc)
 
 class Minimize:
     _com_interfaces_ = [components.interfaces.pcfIDTVMinimize]
@@ -303,6 +320,16 @@ class Minimize:
         self.window = win
         href = self.getHREFFromDOMWindow(win)
         Minimize.oldWindowProcs[href.value] = ctypes.windll.user32.SetWindowLongW(href,GWL_WNDPROC, MainWindProc)
+
+        #Also register mouse hook, so we can hide the tray context
+        #menu when someone clicks off of it.
+        # This is a big hack --NN
+        result = ctypes.windll.user32.SetWindowsHookExW(WH_MOUSE_LL, LLMouseProc, self.hInst, 0)
+        if result == 0:
+            print ctypes.FormatError(ctypes.GetLastError())
+#         result = ctypes.windll.user32.SetWindowsHookExW(WH_MOUSE, LLMouseProc, self.hInst, 0)
+#         if result == 0:
+#             print ctypes.FormatError(ctypes.GetLastError())
 
     def getHREFFromBaseWindow(self, win):
         return ctypes.c_int(self._gethrefcomp.getit(win))
@@ -383,7 +410,6 @@ class Minimize:
         return None
     
     def showPopup(self, x, y):
-        print "x and y is %d  %d" % (x, y)
         jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
         jsbridge.showPopup(x, y)
 
