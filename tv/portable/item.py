@@ -444,7 +444,8 @@ class Item(DDBObject):
         self.confirmDBThread()
         self.removeFromPlaylists()
         UandA = self.getUandA()
-        self.deleteFiles()
+        if not self.isExternal():
+            self.deleteFiles()
         self.expired = True
         if self.isContainerItem:
             for item in self.getChildren():
@@ -462,16 +463,43 @@ class Item(DDBObject):
                 pass
         # This should be done even if screenshot = ""
         self.screenshot = None
-        if self.getFeedURL() != "dtv:manualFeed":
-            self.signalChange()
-        else:
+        if self.isExternal():
+            if self.isDownloaded():
+                new_item = FileItem (self.getVideoFilename(), feed_id=self.feed_id, parent_id=self.parent_id, deleted=True)
+                if self.downloader is not None:
+                    self.downloader.setDeleteFiles(False)
             self.remove()
+        else:
+            self.signalChange()
 
     ##
     # Marks this item as expired
     def expire(self):
-        if self.isContainerItem:
-            title = _("Deleting %s") % (os.path.basename(self.getTitle()))
+        title = _("Removing %s") % os.path.basename(self.getTitle())
+        if self.isExternal():
+            if self.isContainerItem:
+                description = _("""\
+Would you like to delete this folder and all of its videos or just remove \
+its entry from the Library?""")
+                button = dialogs.BUTTON_DELETE_FILES
+            else:
+                description = _("""\
+Would you like to delete this file or just remove its entry from My \
+Collection?""")
+                button = dialogs.BUTTON_DELETE_FILE
+            d = dialogs.ThreeChoiceDialog(title, description,
+                    dialogs.BUTTON_REMOVE_ENTRY, button,
+                    dialogs.BUTTON_CANCEL)
+            def callback(dialog):
+                if not self.idExists():
+                    return
+                if dialog.choice == button:
+                    self.deleteFiles()
+                if dialog.choice in (button, dialogs.BUTTON_REMOVE_ENTRY):
+                    self.executeExpire()
+    
+            d.run(callback)
+        elif self.isContainerItem:
             description = _("""\
 This item is a folder.  When you remove a folder, any items inside that \
 folder will be deleted.""")
@@ -1512,7 +1540,7 @@ folder will be deleted.""")
         """Returns True iff this item was not downloaded from a Democracy
         channel.
         """
-        return False
+        return self.feed_id is not None and self.getFeedURL() == 'dtv:manualFeed'
 
     def isPlayable(self):
         """Returns True iff this item should have a play button."""
@@ -1596,11 +1624,11 @@ def getEntryForURL(url):
 # An Item that exists as a local file
 class FileItem(Item):
 
-    def __init__(self,filename, feed_id=None, parent_id=None, offsetPath=None):
+    def __init__(self,filename, feed_id=None, parent_id=None, offsetPath=None, deleted=False):
         checkF(filename)
         filename = os.path.abspath(filename)
         self.filename = filename
-        self.deleted = False
+        self.deleted = deleted
         self.offsetPath = offsetPath
         self.shortFilename = cleanFilename(os.path.basename(self.filename))
         Item.__init__(self, getEntryForFile(filename), feed_id=feed_id, parent_id=parent_id)
@@ -1677,34 +1705,6 @@ class FileItem(Item):
             else:
                 self.deleted = True
                 self.signalChange()
-
-    def expire(self):
-        if not self.isExternal():
-            self.executeExpire()
-            return
-        title = _("Removing %s") % os.path.basename(platformutils.filenameToUnicode(self.filename))
-        if self.isContainerItem:
-            description = _("""\
-Would you like to delete this folder and all of its videos or just remove \
-its entry from the Library?""")
-            button = dialogs.BUTTON_DELETE_FILES
-        else:
-            description = _("""\
-Would you like to delete this file or just remove its entry from My \
-Collection?""")
-            button = dialogs.BUTTON_DELETE_FILE
-        d = dialogs.ThreeChoiceDialog(title, description,
-                dialogs.BUTTON_REMOVE_ENTRY, button,
-                dialogs.BUTTON_CANCEL)
-        def callback(dialog):
-            if not self.idExists():
-                return
-            if dialog.choice == button:
-                self.deleteFiles()
-            if dialog.choice in (button, dialogs.BUTTON_REMOVE_ENTRY):
-                self.executeExpire()
-
-        d.run(callback)
 
     def deleteFiles(self):
         try:
