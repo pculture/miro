@@ -1037,6 +1037,8 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assert_(isinstance(self.data, httpclient.AuthorizationFailed))
         self.assertEquals(client.authAttempts, 0)
 
+
+
 #     def testChunkedData(self):
 #         url = 'http://jigsaw.w3.org/HTTP/ChunkedScript'
 #         httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
@@ -1612,3 +1614,34 @@ class BadURLTest(HTTPClientTestBase):
 #         self.runEventLoop()
 #         self.assertEquals(self.count, 1)
 
+
+class CookieExpirationDateTestCase(unittest.TestCase):
+    def testCookieExpirationDate(self):
+        """Tests get_cookie_expiration_date to make sure it's returning
+        sane values and handles cookie expiration formats we've had
+        problems with.
+        """
+        from time import mktime, strptime, localtime
+        from httpclient import get_cookie_expiration_date
+        
+        for cd in ( ("Thu, 03-May-07 22:48:52 GMT", "2007-05-03 22:48:52 GMT" ),
+                    ("Fri, 03-Jun-11 13:41:15 GMT", "2011-06-03 13:41:15 GMT" ),
+                    ("Sun, 17-Jan-2038 19:14:07 GMT", "2038-01-17 19:14:07 GMT" ),
+                    ("Mon, 09-Apr-07 23:50:49 GMT", "2007-04-09 23:50:49 GMT" ),
+                    ("Tue, 01-Jan-2030 10:00:00 GMT", "2030-01-01 10:00:00 GMT" ),
+                    ("Tue, 17-Jul-2007 02:09:00 GMT", "2007-07-17 02:09:00 GMT") ):
+            
+            # compare the 9-tuple we get from localtime because tuples are
+            # easier to compare (and more accurate for what we're looking for)
+            self.assertEquals( localtime(get_cookie_expiration_date(cd[0])),
+                               localtime(mktime(strptime(cd[1], "%Y-%m-%d %H:%M:%S %Z"))) )
+            
+    def testOverflowCookieExpirationDate(self):
+        """tests the case of get_cookie_expiration_date where the cookie
+        expiration date causes an overflow error when parsing it.
+        """
+        from time import localtime
+        from httpclient import get_cookie_expiration_date, DATEINFUTURE
+            
+        self.assertEquals( localtime(get_cookie_expiration_date("Tue, 26-Jul-2050 10:00:00 GMT")),
+                           localtime(httpclient.DATEINFUTURE) )

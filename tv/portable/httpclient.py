@@ -140,6 +140,33 @@ def trapCall(object, function, *args, **kwargs):
     """
     return util.timeTrapCall("Calling %s on %s" % (function, object), function, *args, **kwargs)
 
+
+DATEINFUTURE = time.mktime( (2030, 7, 12, 12, 0, 0, 4, 193, -1) )
+
+def get_cookie_expiration_date(val):
+    """Tries a bunch of possible cookie expiration date formats
+    until it finds the magic one (or doesn't and returns 0).
+    """
+    fmts = ( '%a, %d %b %Y %H:%M:%S %Z',
+             '%a, %d %b %y %H:%M:%S %Z',
+             '%a, %d-%b-%Y %H:%M:%S %Z',
+             '%a, %d-%b-%y %H:%M:%S %Z' )
+    
+    for fmt in fmts:
+        try:
+            return time.mktime(time.strptime(val, fmt))
+        except OverflowError, oe:
+            # an overflow error means the cookie expiration is far in the
+            # future.  so we return a date that's not so far in the
+            # future.
+            return DATEINFUTURE
+        except ValueError, ve:
+            pass
+
+    print "DTV: Warning: Can't process cookie expiration: '%s'" % val
+    return 0
+
+
 class NetworkBuffer(object):
     """Responsible for storing incomming network data and doing some basic
     parsing of it.  I think this is about as fast as we can do things in pure
@@ -1589,30 +1616,6 @@ class HTTPClient(object):
             traceback.print_exc()
         return response
 
-    def getCookieExpirationDate(self, val):
-        """Tries a bunch of possible cookie expiration date formats
-        until it finds the magic one (or doesn't and returns 0).
-        """
-        fmts = ( '%a, %d %b %Y %H:%M:%S %Z',
-                 '%a, %d %b %y %H:%M:%S %Z',
-                 '%a, %d-%b-%Y %H:%M:%S %Z',
-                 '%a, %d-%b-%y %H:%M:%S %Z' )
-
-        for fmt in fmts:
-            try:
-                return time.mktime(time.strptime(val, fmt))
-            except OverflowError, oe:
-                # an overflow error means the cookie expiration is far in the
-                # future.  so we return a date that's not so far in the
-                # future.
-                return time.mktime( (2030, 7, 12, 12, 0, 0, 4, 193, -1) )
-            except ValueError, ve:
-                pass
-
-        print "DTV: Warning: Can't process cookie expiration: '%s'" % val
-        return 0
-
-
     def getCookiesFromResponse(self, response):
         """Generates a cookie dictionary from headers in response
         """
@@ -1688,7 +1691,7 @@ class HTTPClient(object):
                         # FIXME: "expires" isn't very well defined and
                         # this code will probably puke in certain cases
                         cookieval = getAttrPair(attr)[1].strip()
-                        expires = self.getCookieExpirationDate(cookieval)
+                        expires = get_cookie_expiration_date(cookieval)
                         
                         expires -= time.timezone
                         if expires < now:
