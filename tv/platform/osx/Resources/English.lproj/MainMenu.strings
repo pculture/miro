@@ -40,6 +40,9 @@
 /* NSMenuItem : <title:Donate> (oid:341) */
 "Donate" = "Donate";
 
+/* NSMenuItem : <title:Download Video...> (oid:363) */
+"Download Video..." = "Download Video...";
+
 /* NSMenu : <title:Edit> (oid:169) */
 "Edit" = "Edit";
 

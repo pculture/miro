@@ -303,7 +303,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
         if result == NSOKButton:
             filenames = osFilenamesToFilenameTypes(openPanel.filenames())
             eventloop.addUrgentCall(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
-                
+    
+    def downloadVideo_(self, sender):
+        app.controller.newDownload()
+    
     def shutdown_(self, sender):
         self.internalShutdown = True
         app.controller.quit()
@@ -311,6 +314,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def validateMenuItem_(self, item):
         return item.action() in ('donate:', 'checkForUpdates:', 'showMainWindow:',
                                  'showPreferencesWindow:', 'addGuide:', 
-                                 'openFile:', 'shutdown:')
+                                 'openFile:', 'downloadVideo:', 'shutdown:')
 
 ###############################################################################

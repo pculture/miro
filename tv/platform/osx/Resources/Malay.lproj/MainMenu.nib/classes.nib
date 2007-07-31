@@ -5,6 +5,7 @@
                 addGuide = id; 
                 checkForUpdates = id; 
                 donate = id; 
+                downloadVideo = id; 
                 openFile = id; 
                 removeGuide = id; 
                 showMainWindow = id; 
