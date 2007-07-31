@@ -273,3 +273,6 @@ def parseCommandLineArgs(args=None):
 
 def openFile(path):
     parseCommandLineArgs([path])
+
+def downloadURL(url):
+    parseCommandLineArgs([url])

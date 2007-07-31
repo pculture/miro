@@ -163,6 +163,7 @@ add more menu elements later -NN -->
 <command id="NewSearchChannel" oncommand="pybridge.createNewSearchChannel();" />
 <command id="NewChannelFolder" oncommand="pybridge.createNewChannelFolder();" />
 <command id="NewGuide" oncommand="pybridge.createNewChannelGuide();" />
+<command id="NewDownload" oncommand="pybridge.createNewDownload();" />
 <command id="RenameChannel" oncommand="pybridge.renameCurrentChannel();" />
 <command id="RemoveChannels" oncommand="pybridge.removeCurrentChannel();" />
 <command id="UpdateChannels" oncommand="pybridge.updateCurrentChannel();" />

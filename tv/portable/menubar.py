@@ -21,6 +21,7 @@ from gtcache import gettext as _
 import config
 import prefs
 from string import Template
+import app
 
 CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12 = range(24)
 _ = lambda x : x
@@ -39,12 +40,13 @@ class ShortCut:
 Key = ShortCut
 
 class MenuItem:
-    def __init__(self, label, action, shortcuts, enabled = True, **stateLabels):
+    def __init__(self, label, action, shortcuts, impl = None, enabled = True, **stateLabels):
         self.label = label
         self.action = action
         self.shortcuts = shortcuts
         self.enabled = enabled
         self.stateLabels = stateLabels
+        self.impl = impl
 
 class Separator:
     pass
@@ -56,11 +58,13 @@ class Menu:
         self.labels = {action:label}
         self.stateLabels = {}
         self.shortcuts = {}
+        self.impls = {}
         self.menuitems = menuitems
         for item in menuitems:
             if not isinstance(item, Separator):
                 self.labels[item.action] = item.label
                 self.shortcuts[item.action] = item.shortcuts
+                self.impls[item.action] = item.impl
                 if item.stateLabels:
                     self.stateLabels[item.action] = item.stateLabels
             
@@ -90,10 +94,12 @@ class MenuBar:
         self.labels = {}
         self.stateLabels = {}
         self.shortcuts = {}
+        self.impls = {}
         for menu in menus:
             self.labels.update(menu.labels)
             self.stateLabels.update(menu.stateLabels)
             self.shortcuts.update(menu.shortcuts)
+            self.impls.update(menu.impls)
 
     def __iter__(self):
         for menu in self.menus:
@@ -128,17 +134,24 @@ class MenuBar:
         else:
             return ShortCut(None)
 
+    def getImpl(self, action):
+        try:
+            return self.impls[action]
+        except KeyError:
+            return None
+
 VideoItems = [
     MenuItem(_("_Open"), "Open", (Key("o", MOD),)),
+    MenuItem(_("_Download Video"), "NewDownload", (), impl=lambda:app.controller.newDownload()),
     #MenuItem(_("Op_en Recent"), "OpenRecent", ()),
     MenuItem(_("Check _Version"), "CheckVersion", ()),
     Separator(),
-    MenuItem(_("_Remove Video"), "RemoveVideos", (Key(DELETE),Key(BKSPACE, MOD)), False,
+    MenuItem(_("_Remove Video"), "RemoveVideos", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,
              plural=_("_Remove Videos")),
-    MenuItem(_("Re_name Video"), "RenameVideo", (), False),
-    MenuItem(_("Save Video _As..."), "SaveVideo", (Key("s",MOD),), False,
+    MenuItem(_("Re_name Video"), "RenameVideo", (), enabled=False),
+    MenuItem(_("Save Video _As..."), "SaveVideo", (Key("s",MOD),), enabled=False,
              plural=_("Save Videos _As...")),
-    MenuItem(_("Copy Video _URL"), "CopyVideoURL", (Key("u", MOD),), False),
+    MenuItem(_("Copy Video _URL"), "CopyVideoURL", (Key("u", MOD),), enabled=False),
     Separator(),
     MenuItem(_("_Options"), "EditPreferences", ()),
     MenuItem(_("_Quit"),"Quit", (Key("q",MOD),)),
@@ -162,25 +175,25 @@ ChannelItems = [
     MenuItem(_("New _Folder..."), "NewChannelFolder", (Key("n",MOD,SHIFT),)),
     MenuItem(_("Add Channel _Guide..."), "NewGuide", ()),
     Separator(),
-    MenuItem(_("Re_name Channel..."), "RenameChannel", (), False),
-    MenuItem(_("_Remove Channel..."), "RemoveChannels", (Key(DELETE),Key(BKSPACE, MOD)), False,
+    MenuItem(_("Re_name Channel..."), "RenameChannel", (), enabled=False),
+    MenuItem(_("_Remove Channel..."), "RemoveChannels", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,
              plural=_("_Remove Channels..."),
              folders=_("_Remove Channel Folders..."),
              folder=_("_Remove Channel Folder..."),
              ),
-    MenuItem(_("_Update Channel..."), "UpdateChannels", (Key("r",MOD),Key(F5)), False,
+    MenuItem(_("_Update Channel..."), "UpdateChannels", (Key("r",MOD),Key(F5)), enabled=False,
              plural=_("_Update Channels...")),
     MenuItem(_("Update _All Channels"), "UpdateAllChannels", (Key("r",MOD,SHIFT),)),
     Separator(),
-    MenuItem(_("_Send this channel to a friend"), "MailChannel", (), False),
-    MenuItem(_("Copy Channel _Link"), "CopyChannelURL", (), False),
+    MenuItem(_("_Send this channel to a friend"), "MailChannel", (), enabled=False),
+    MenuItem(_("Copy Channel _Link"), "CopyChannelURL", (), enabled=False),
 ]
 PlaylistItems = [
     MenuItem(_("New _Playlist"), "NewPlaylist", (Key("p",MOD),)),
     MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",(Key("p",MOD,SHIFT),)),
     Separator(),
-    MenuItem(_("Re_name Playlist"),"RenamePlaylist",(), False),
-    MenuItem(_("_Remove Playlist"),"RemovePlaylists", (Key(DELETE),Key(BKSPACE, MOD)), False,
+    MenuItem(_("Re_name Playlist"),"RenamePlaylist",(), enabled=False),
+    MenuItem(_("_Remove Playlist"),"RemovePlaylists", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,
              plural=_("_Remove Playlists"),
              folders=_("_Remove Playlist Folders"),
              folder=_("_Remove Playlist Folder"),
@@ -193,19 +206,19 @@ else:
     fullscreen_shortcuts = (Key("f", MOD), )
 
 PlaybackItems = [
-    MenuItem(_("_Play"), "PlayPauseVideo", (Key(SPACE, MOD), ), False),
-    MenuItem(_("_Stop"), "StopVideo", (Key("d",MOD),), False),
+    MenuItem(_("_Play"), "PlayPauseVideo", (Key(SPACE, MOD), ), enabled=False),
+    MenuItem(_("_Stop"), "StopVideo", (Key("d",MOD),), enabled=False),
     Separator(),
-    MenuItem(_("_Next Video"), "NextVideo", (Key(RIGHT_ARROW, MOD),), False),
-    MenuItem(_("_Previous Video"), "PreviousVideo", (Key(LEFT_ARROW, MOD),), False),
+    MenuItem(_("_Next Video"), "NextVideo", (Key(RIGHT_ARROW, MOD),), enabled=False),
+    MenuItem(_("_Previous Video"), "PreviousVideo", (Key(LEFT_ARROW, MOD),), enabled=False),
     Separator(),
-    MenuItem(_("Skip _Forward"), "FastForward", (Key(RIGHT_ARROW),), False),
-    MenuItem(_("Skip _Back"), "Rewind", (Key(LEFT_ARROW),), False),
+    MenuItem(_("Skip _Forward"), "FastForward", (Key(RIGHT_ARROW),), enabled=False),
+    MenuItem(_("Skip _Back"), "Rewind", (Key(LEFT_ARROW),), enabled=False),
     Separator(),
-    MenuItem(_("Volume _Up"), "UpVolume", (Key(UP_ARROW, MOD),), False),
-    MenuItem(_("Volume _Down"), "DownVolume", (Key(DOWN_ARROW,MOD),), False),
+    MenuItem(_("Volume _Up"), "UpVolume", (Key(UP_ARROW, MOD),), enabled=False),
+    MenuItem(_("Volume _Down"), "DownVolume", (Key(DOWN_ARROW,MOD),), enabled=False),
     Separator(),
-    MenuItem(_("_Fullscreen"), "Fullscreen", fullscreen_shortcuts, False),
+    MenuItem(_("_Fullscreen"), "Fullscreen", fullscreen_shortcuts, enabled=False),
 ]
 
 HelpItems = [

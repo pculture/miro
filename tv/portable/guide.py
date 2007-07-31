@@ -41,6 +41,7 @@ class ChannelGuide(DDBObject):
     def __init__(self, url=None):
         checkU(url)
         self.url = url
+        self.title = None
         DDBObject.__init__(self)
 
     def __str__(self):
@@ -73,6 +74,8 @@ class ChannelGuide(DDBObject):
     def getTitle(self):
         if self.getDefault():
             return _('Miro Guide')
+        elif self.title:
+            return title
         else:
             return self.getURL()
 

@@ -227,6 +227,15 @@ class Mediator:
         if isinstance (mapped.actualFeed, feed.DirectoryWatchFeedImpl):
             self.removeDirectory (id)
 
+def _buildAction(action):
+    impl = menubar.getImpl(action)
+    if impl:
+        return (action, None, menubar.getLabel(action), menubar.getShortcut(action).GTKString(), None, lambda event: eventloop.addIdle(impl, action))
+    else:
+        return (action, None, menubar.getLabel(action), menubar.getShortcut(action).GTKString(), None, None)
+        
+    
+
 class CallbackHandler(object):
     """Class to handle menu item activation, button presses, etc.  The method
     names for this class correspond to the event handler that they implement.
@@ -310,6 +319,7 @@ class CallbackHandler(object):
             ('NewChannel', None, menubar.getLabel('NewChannel'), menubar.getShortcut('NewChannel').GTKString(), None, self.on_add_channel_button_clicked),
             ('NewSearchChannel', None, menubar.getLabel('NewSearchChannel'), menubar.getShortcut('NewSearchChannel').GTKString(), None, self.on_add_search_channel_button_clicked),
             ('NewGuide', None, _("New Channel _Guide..."), None, None, self.on_add_guide_button_clicked),
+            _buildAction('NewDownload'),
 
             ('EditPreferences', gtk.STOCK_PREFERENCES, menubar.getLabel('EditPreferences'), menubar.getShortcut('EditPreferences').GTKString(), None, self.on_preference),
             ('Quit', gtk.STOCK_QUIT, menubar.getLabel('Quit'), menubar.getShortcut('Quit').GTKString(), None, self.on_quit_activate),

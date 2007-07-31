@@ -571,6 +571,10 @@ class PyBridge:
         app.controller.addAndSelectGuide()
 
     @asUrgent
+    def createNewDownload(self):
+        app.controller.newDownload()
+
+    @asUrgent
     def addChannel(self):
         app.controller.addAndSelectFeed()
 
