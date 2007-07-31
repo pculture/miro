@@ -319,7 +319,7 @@ def timeTrapCall(when, function, *args, **kwargs):
     end = clock()
     if cancel:
         return retval
-    if end-start > 0.5:
+    if end-start > 1.0:
         logging.timing ("WARNING: %s too slow (%.3f secs)",
             when, end-start)
     if TRACK_CUMULATIVE:

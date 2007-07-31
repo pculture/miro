@@ -1214,7 +1214,7 @@ class RSSFeedImpl(FeedImpl):
         self.updateUsingParsed(parsed)
         self.feedparser_finished()
         end = clock()
-        if end - start > 0.1:
+        if end - start > 1.0:
             logging.timing ("feed update for: %s too slow (%.3f secs)", self.url, end - start)
 
     def call_feedparser (self, html):
