@@ -184,7 +184,7 @@ def fillTemplate(templatepath, outpath, **vars):
     f.close()
 
 def dtdQuoteHack(path):
-    """Replace the "'" charactor with "&quot;" instead. 
+    """Replace the "'" charactor with "&apos;" instead. 
 
     As far as I (BDK) can tell, it's legal for the XML spec, but we have had
     reports of it not working in the wild (#3579).
@@ -193,7 +193,7 @@ def dtdQuoteHack(path):
     content = f.read()
     f.close()
     f = open(path, 'w')
-    f.write(content.replace("'", "&quot;"))
+    f.write(content.replace("'", "&apos;"))
     f.close()
 
 

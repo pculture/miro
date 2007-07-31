@@ -11,7 +11,7 @@ import os
 import re
 
 space = r'\s+'
-reference = r'(&#[0-9]+;)|(&#x[0-9a-fA-F]+)|(&quot;)|(&copy)'
+reference = r'(&#[0-9]+;)|(&#x[0-9a-fA-F]+)|(&quot;)|(&copy;)|(&apos;)'
 entity_value = r'"(([^%&"\']|' + reference+ r')*)"'
 name = r'[a-zA-Z_:][a-zA-Z_:0-9\-\.]*'
 entity_start = r'<!ENTITY'
