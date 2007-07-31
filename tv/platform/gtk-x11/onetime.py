@@ -86,7 +86,7 @@ class BusNameFlags(object):
     # we can delete the low-level name here because these objects
     # are guaranteed to exist only once for each bus name
     def __del__(self):
-        dbus_bindings.bus_release_name(self._bus.get_connection(), self._name)
+        dbus.dbus_bindings.bus_release_name(self._bus.get_connection(), self._name)
         pass
 
     def get_bus(self):
@@ -108,7 +108,10 @@ class BusNameFlags(object):
 class OneTime (dbus.service.Object):
     def __init__(self):
         bus = dbus.SessionBus()
-        bus_name = BusNameFlags('org.participatoryculture.dtv.onetime', bus=bus, flags=dbus.dbus_bindings.NAME_FLAG_DO_NOT_QUEUE)
+        try:
+            bus_name = dbus.service.BusName('org.participatoryculture.dtv.onetime', bus=bus, do_not_queue = True)
+        except:
+            bus_name = BusNameFlags('org.participatoryculture.dtv.onetime', bus=bus, flags=dbus.dbus_bindings.NAME_FLAG_DO_NOT_QUEUE)
         dbus.service.Object.__init__(self, bus_name, '/org/participatoryculture/dtv/OneTime')
 
     @dbus.service.method('org.participatoryculture.dtv.OneTimeIface')
