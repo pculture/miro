@@ -166,6 +166,8 @@ def guideTabs(x, y):
     yguide = y[1].obj
     if xguide.getDefault() and not yguide.getDefault():
         return True
+    if not xguide.getDefault() and yguide.getDefault():
+        return False
     return xguide.getURL() < yguide.getURL()
 
 def staticTabs(x, y):
