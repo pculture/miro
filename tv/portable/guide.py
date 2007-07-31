@@ -19,6 +19,7 @@ import resources
 from database import DDBObject
 from template import fillStaticTemplate
 from httpclient import grabURL
+from urlparse import urlparse
 from xhtmltools import urlencode
 from copy import copy
 from util import returnsUnicode, unicodify, checkU
@@ -36,6 +37,14 @@ import logging
 from gtcache import gettext as _
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
+
+def isPartOfGuide(url, guideURL):
+    """Return if url is part of a channel guide where guideURL is the base URL
+    for that guide.
+    """
+    guideHost = urlparse(guideURL)[1]
+    urlHost = urlparse(url)[1]
+    return urlHost.endswith(guideHost)
 
 class ChannelGuide(DDBObject):
     def __init__(self, url=None):
@@ -63,6 +72,9 @@ class ChannelGuide(DDBObject):
 
     def remove(self):
         DDBObject.remove(self)
+
+    def isPartOfGuide(self, url):
+        return isPartOfGuide(url, self.getURL())
 
     def getURL(self):
         if self.url is not None:

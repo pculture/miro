@@ -81,7 +81,6 @@ import menubar # Needed because the XUL port only includes this in pybridge
 from gtcache import gettext as _
 from gtcache import ngettext
 from clock import clock
-from urlparse import urlparse
 
 # Global Controller singleton
 controller = None
@@ -612,7 +611,6 @@ class Controller (frontend.Application):
         delegate = frontend.UIBackendDelegate()
         self.frame = None
         self.inQuit = False
-        self.guideHost = None
         self.guideURL = None
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
         self.finishedStartup = False
@@ -1153,10 +1151,8 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         onURLLoad().
         """
         if guideURL is not None:
-            self.guideHost = urlparse(guideURL)[1]
             self.guideURL = guideURL
         else:
-            self.guideHost = None
             self.guideURL = None
 
     @eventloop.asIdle
@@ -1168,7 +1164,11 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             logging.warn("setLastVisitedGuideURL called, but a channelguide "
                     "isn't selected.  Selection: %s" % selectedObjects)
             return
-        selectedObjects[0].lastVisitedURL = url
+        if selectedObjects[0].isPartOfGuide(url):
+            selectedObjects[0].lastVisitedURL = url
+        else:
+            logging.warn("setLastVisitedGuideURL called, but the guide is no "
+                    "longer selected")
 
     def onShutdown(self):
         try:
@@ -1503,8 +1503,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return False
 
             # Let channel guide URLs pass through
-            if (controller.guideHost is not None and
-                    urlparse(url)[1].endswith(controller.guideHost)):
+            if (controller.guideURL is not None and
+                    guide.isPartOfGuide(url, controller.guideURL)):
                 controller.setLastVisitedGuideURL(url)
                 return True
             if url.startswith(u'file://'):
@@ -1534,7 +1534,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
         # check if the url that came from a guide, but the user switched tabs
         # before it went through.
         for guide in views.guides:
-            if url.startswith(guide.getURL()):
+            if guide.isPartOfGuide(url):
                 return
 
         # check for subscribe.getdemocracy.com links
