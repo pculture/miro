@@ -28,7 +28,7 @@
 <!ENTITY prefs.folder.others.caption "Controlla per nuovi video in queste cartelle e aggiungili alla mia collezione">
 <!ENTITY prefs.folder.others.location "Percorso cartella">
 <!ENTITY prefs.folder.others.shown "Mostra come canale">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.add "Aggiungi Cartella...">
 <!ENTITY prefs.folder.others.remove "_Rimuovi">
 
 <!ENTITY prefs.downloads.max "File Scaricati">
@@ -51,5 +51,5 @@
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Per evitare rallentamenti, limita la banda in uscita a">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s quando il mio computer è attivo.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "and">
+<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent utilizza le porte tra">
+<!ENTITY prefs.torrent.uses.ports.part2 "e">

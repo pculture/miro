@@ -1,12 +1,12 @@
 <!ENTITY prefs.title "Preferencias">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.runonstartup "Ejecutar $longAppName automáticamente al iniciar sesión">
+<!ENTITY prefs.restart "(CUIDADO: Los cambios no tendrán efecto hasta que reinicies $longAppName)">
 <!ENTITY prefs.title "Preferencias">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
+<!ENTITY prefs.run.on.startup "Ejecutar $longAppName automáticamente al iniciar sesión">
 <!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
+<!ENTITY prefs.close_to_tray "Minimizar en la barra de tareas para que las descargas puedan continuar.">
+<!ENTITY prefs.no_close_to_tray "Salir de Miro completamente">
 
 <!ENTITY prefs.general "General">
 
@@ -38,7 +38,7 @@
 <!ENTITY prefs.disk.space "Espacio en disco">
 <!ENTITY prefs.disk.space.min.part1 "No empezar una descarga si deja menos de">
 <!ENTITY prefs.disk.space.min.part2 "GB libres.">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "ATENCIÓN: Este ajuste no surtirá efecto hasta que reinicie $longAppName.">
 
 <!ENTITY prefs.videos.expire "Por defecto, los vídeos caducan después de">
 <!ENTITY prefs.videos.expire.one "1 día">
@@ -48,7 +48,7 @@
 <!ENTITY prefs.videos.expire.thirty "1 mes">
 <!ENTITY prefs.videos.expire.never "Nunca">
 
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.torrent.restart.warning "(CUIDADO: Los cambios no tendrán efecto hasta que reinicies $longAppName)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Para evitar velocidades de descarga bajas, limitar la subida a">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s cuando mi ordenador está activo.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent utiliza puertos entre">

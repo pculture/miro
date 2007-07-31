@@ -1,34 +1,34 @@
 <!ENTITY prefs.title "Indstillinger">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.runonstartup "Kør automatisk $longAppName når jeg logger på">
+<!ENTITY prefs.restart "ADVARSEL: Ændringer effektueres først når du har genstartet $longAppName).">
 <!ENTITY prefs.title "Indstillinger">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
+<!ENTITY prefs.run.on.startup "Kør automatisk $longAppName når jeg logger på">
+<!ENTITY prefs.close_to_tray_start "Når jeg klikker på den røde Luk knap:">
+<!ENTITY prefs.close_to_tray "Minimér så downloads kan fortsætte.">
+<!ENTITY prefs.no_close_to_tray "Afslut Miro">
 
 <!ENTITY prefs.general "Generel">
 
 <!ENTITY prefs.channels "Kanaler">
 <!ENTITY prefs.channels.check "Check kanaler for nyt indhold">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check.thirty "Hver 30. minut">
+<!ENTITY prefs.channels.check.sixty "Hver time">
+<!ENTITY prefs.channels.check.manually "Manuelt">
 
 <!ENTITY prefs.playback "Afspil">
 <!ENTITY prefs.playback.remember.pos "Husk video position.">
 <!ENTITY prefs.playback.auto.next.video "Afspil videoer efter hinanden.">
 <!ENTITY prefs.playback.stop.after.each "Stop efter hver video.">
 
-<!ENTITY prefs.folder.movies "Movies Directory">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.movies "Film mappe">
+<!ENTITY prefs.folder.downloads "Gem hentede videoer idenne mappe:">
 <!ENTITY prefs.folder.change "Ændr...">
 
 <!ENTITY prefs.folder.others.caption "Se efter nye videoer i disse mapper og inkluder dem i Min Samling">
 <!ENTITY prefs.folder.others.location "Mappens lokation">
 <!ENTITY prefs.folder.others.shown "Vis som Kanal">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.add "Tilføj Mappe...">
 <!ENTITY prefs.folder.others.remove "Fjern">
 
 <!ENTITY prefs.downloads.max "Downloads">
@@ -38,7 +38,7 @@
 <!ENTITY prefs.disk.space "Diskplads">
 <!ENTITY prefs.disk.space.min.part1 "Start ikke download hvis det efterlader mindre end">
 <!ENTITY prefs.disk.space.min.part2 "GB ledig.">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "ADVARSEL: Denne ændring kræver at genstarter $longAppName.">
 
 <!ENTITY prefs.videos.expire "Som standard udløber videoer efter">
 <!ENTITY prefs.videos.expire.one "1 dag">
@@ -48,8 +48,8 @@
 <!ENTITY prefs.videos.expire.thirty "1 måned">
 <!ENTITY prefs.videos.expire.never "Aldrig">
 
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.torrent.restart.warning "ADVARSEL: Ændringer effektueres først når du har genstartet $longAppName).">
 <!ENTITY prefs.torrent.limit.upstream.part1 "For at undgå overbelastning, begræns upstream til">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s når min computer er aktiv.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "and">
+<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent benytter porte mellem">
+<!ENTITY prefs.torrent.uses.ports.part2 "og">

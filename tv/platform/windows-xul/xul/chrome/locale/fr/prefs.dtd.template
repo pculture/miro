@@ -32,12 +32,12 @@
 <!ENTITY prefs.folder.others.remove "Supprimer">
 
 <!ENTITY prefs.downloads.max "Téléchargements">
-<!ENTITY prefs.downloads.max.part1 "Télécharger un maximun de">
+<!ENTITY prefs.downloads.max.part1 "Télécharger au maximum">
 <!ENTITY prefs.downloads.max.part2 "vidéos immédiatement.">
 
 <!ENTITY prefs.disk.space "Espace disque">
-<!ENTITY prefs.disk.space.min.part1 "Ne pas démarrer de téléchargement si il laisse moins de">
-<!ENTITY prefs.disk.space.min.part2 "Go libre(s).">
+<!ENTITY prefs.disk.space.min.part1 "Ne pas démarrer de téléchargement s'il reste moins de">
+<!ENTITY prefs.disk.space.min.part2 "Gb libre(s).">
 <!ENTITY prefs.disk.space.warning.restart "AVERTISSEMENT: Cette option n'aura pas d'effet tant que vous ne redémarrez pas $longAppName.">
 
 <!ENTITY prefs.videos.expire "Par défaut, les vidéos expirent après">
@@ -50,6 +50,6 @@
 
 <!ENTITY prefs.torrent.restart.warning "(ATTENTION: Les changements ne seront effectifs qu'après un redémarrage de $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Pour éviter les ralentissements, limiter l'upload à">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Ko/s lorsque mon ordinateur est actif.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Kb/s lorsque mon ordinateur est actif.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent utilise les ports entre">
 <!ENTITY prefs.torrent.uses.ports.part2 "et">

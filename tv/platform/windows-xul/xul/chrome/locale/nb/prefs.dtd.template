@@ -1,12 +1,12 @@
 <!ENTITY prefs.title "Innstillinger">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.runonstartup "Kjør $longAppName automatisk ved innlogging">
+<!ENTITY prefs.restart "(ADVARSEL: Endringer tas ikke i bruk før $longAppName startes på nytt.)">
 <!ENTITY prefs.title "Innstillinger">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
+<!ENTITY prefs.run.on.startup "Kjør $longAppName automatisk ved innlogging">
+<!ENTITY prefs.close_to_tray_start "Når jeg trykker lukk-knappen">
+<!ENTITY prefs.close_to_tray "Lukk til systemkurv slik at nedlastinger kan fortsette.">
+<!ENTITY prefs.no_close_to_tray "Avslutt Miro fullstendig">
 
 <!ENTITY prefs.general "Genrelt">
 
@@ -25,7 +25,7 @@
 <!ENTITY prefs.folder.downloads "Lagre nedlastede filmer i denne mappen:">
 <!ENTITY prefs.folder.change "Endre …">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
+<!ENTITY prefs.folder.others.caption "Se etter nye filmer i disse mappene og legg dem til i samlingen:">
 <!ENTITY prefs.folder.others.location "Mappeplassering">
 <!ENTITY prefs.folder.others.shown "Vis som kanal">
 <!ENTITY prefs.folder.others.add "Legg til mappe …">
@@ -37,8 +37,8 @@
 
 <!ENTITY prefs.disk.space "Ledig diskplass">
 <!ENTITY prefs.disk.space.min.part1 "Ikke begynn nedlasting hvis det etterlater mindre enn">
-<!ENTITY prefs.disk.space.min.part2 "GB ledig">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.min.part2 "GB ledig.">
+<!ENTITY prefs.disk.space.warning.restart "ADVARSEL: Denne innstillingen tas ikke i bruk før $longAppName startes på nytt.">
 
 <!ENTITY prefs.videos.expire "Som standard utløper filmer etter">
 <!ENTITY prefs.videos.expire.one "1 dag">
@@ -48,8 +48,8 @@
 <!ENTITY prefs.videos.expire.thirty "1 måned">
 <!ENTITY prefs.videos.expire.never "Aldri">
 
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.torrent.restart.warning "(ADVARSEL: Endringer tas ikke i bruk før $longAppName startes på nytt.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "For å unngå overbelastning, begrens opplasting til">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s når datamaskinen er aktiv.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s når datamaskinen er i bruk.">
 <!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent bruker porter mellom">
 <!ENTITY prefs.torrent.uses.ports.part2 "og">

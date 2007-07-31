@@ -1,34 +1,34 @@
 <!ENTITY prefs.title "Seçenekler">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.runonstartup "Sisteme kendimi tanıttığımda $longAppName progamını otomatik olarak başlat">
+<!ENTITY prefs.restart "(DİKKAT: Değişiklikler $longAppName programını tekrar başlatana kadar etkin hale gelmeyecek.)">
 <!ENTITY prefs.title "Seçenekler">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
+<!ENTITY prefs.run.on.startup "Sisteme kendimi tanıttığımda $longAppName progamını otomatik olarak başlat">
+<!ENTITY prefs.close_to_tray_start "Kırmızı kapat düğmesine tıkladığımda:">
+<!ENTITY prefs.close_to_tray "İndirmelerin devam edebilmesi için görev çubuğu çekmecesine kapatın.">
+<!ENTITY prefs.no_close_to_tray "Miro'yu tamamen kapat">
 
 <!ENTITY prefs.general "Genel">
 
 <!ENTITY prefs.channels "Kanallar">
 <!ENTITY prefs.channels.check "Yeni içerik için Kanalları kontrol et">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check.thirty "Her 30 dakikada">
+<!ENTITY prefs.channels.check.sixty "Her saatte">
+<!ENTITY prefs.channels.check.manually "Siz istediğinizde">
 
-<!ENTITY prefs.playback "Gerisar">
+<!ENTITY prefs.playback "Çalma">
 <!ENTITY prefs.playback.remember.pos "Vıdeonun nerede kaldığını hatırla">
 <!ENTITY prefs.playback.auto.next.video "Videoları arka arkaya oynat.">
 <!ENTITY prefs.playback.stop.after.each "Her videodan sonra dur.">
 
 <!ENTITY prefs.folder.movies "Filmler Dizini">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.downloads "İndirilmiş videoları bu dizinde sakla:">
 <!ENTITY prefs.folder.change "Değişim...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Folder Location">
+<!ENTITY prefs.folder.others.caption "Bu dizinlerdeki yeni videoları takip et ve Koleksiyonuma ekle:">
+<!ENTITY prefs.folder.others.location "Dizin Yeri">
 <!ENTITY prefs.folder.others.shown "Kanal olarak göster">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.add "Dizin Ekle...">
 <!ENTITY prefs.folder.others.remove "Kaldır">
 
 <!ENTITY prefs.downloads.max "İndirmeler">
@@ -38,7 +38,7 @@
 <!ENTITY prefs.disk.space "Sabit Disk Alanı">
 <!ENTITY prefs.disk.space.min.part1 "İndirmeyi başlatma eğer şu değerden az bırakırsa">
 <!ENTITY prefs.disk.space.min.part2 "GB boş.">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "DİKKAT: Bu ayar $longAppName programını tekrar başlatman etkin hale geçmeyecek.">
 
 <!ENTITY prefs.videos.expire "Varsayılan olarak, videoların süresi dolar">
 <!ENTITY prefs.videos.expire.one "1 gün">
@@ -48,7 +48,7 @@
 <!ENTITY prefs.videos.expire.thirty "1 ay">
 <!ENTITY prefs.videos.expire.never "Asla">
 
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.torrent.restart.warning "(DİKKAT: Değişiklikler $longAppName programını tekrar başlatana kadar etkin hale gelmeyecek.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Yavaşlamalardan sakınmak için, yayımlayı limitle">
 <!ENTITY prefs.torrent.limit.upstream.part2 "Bilgisayarım aktifken KB/s">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent şu aralıktaki portları kullanır">

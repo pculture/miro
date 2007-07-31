@@ -1,20 +1,20 @@
 <!ENTITY prefs.title "ปรับแต่ง">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
+<!ENTITY prefs.runonstartup "เริ่ม $longAppName อัตโนมัติหลังจากล็อกอิน">
 <!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.title "ปรับแต่ง">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
+<!ENTITY prefs.run.on.startup "เริ่ม $longAppName อัตโนมัติหลังจากล็อกอิน">
+<!ENTITY prefs.close_to_tray_start "เมื่อคลิกปุ่มปิดสีแดง">
+<!ENTITY prefs.close_to_tray "ปิดลงข้างล่างเพื่อจะได้สามารถดำเนินการดาวน์โหลดต่อได้">
+<!ENTITY prefs.no_close_to_tray "ออกจาก Miro">
 
 <!ENTITY prefs.general "ค่าทั่วไป">
 
 <!ENTITY prefs.channels "แชนเนล">
-<!ENTITY prefs.channels.check "ตรวจหาวิดีโอใหม่ในแต่ละช่อง">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check "ตรวจหาวิดีโอใหม่ในแต่ละแชนแนล">
+<!ENTITY prefs.channels.check.thirty "ทุกๆ 30 นาที">
+<!ENTITY prefs.channels.check.sixty "ทุกๆชั่วโมง">
+<!ENTITY prefs.channels.check.manually "ด้วยตัวผู้ใช้">
 
 <!ENTITY prefs.playback "เล่น">
 <!ENTITY prefs.playback.remember.pos "จดจำตำแหน่งของวิดิโอ">
@@ -22,11 +22,11 @@
 <!ENTITY prefs.playback.stop.after.each "หยุดหลังเล่นจบแต่ละเรื่อง">
 
 <!ENTITY prefs.folder.movies "ไดเร็คทอรี่ของไฟล์วิดิโอ">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.downloads "เก็บวิดิโอที่ดาวน์โหลดไว้ในโฟลเดอร์นี้:">
 <!ENTITY prefs.folder.change "เปลี่ยน...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Folder Location">
+<!ENTITY prefs.folder.others.caption "ค้นหาวิดิโอใหม่ๆในโฟลเดอร์และใส่รายการลงในคอลเล็คชัน">
+<!ENTITY prefs.folder.others.location "ที่อยู่โฟลเดอร์">
 <!ENTITY prefs.folder.others.shown "Show as Channel">
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "ลบ">
@@ -38,7 +38,7 @@
 <!ENTITY prefs.disk.space "ที่ว่างในดิสก์">
 <!ENTITY prefs.disk.space.min.part1 "ไม่ต้องดาวน์โหลดถ้าทำให้เหลือที่ว่างน้อยกว่า">
 <!ENTITY prefs.disk.space.min.part2 "GB">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "อันตราย: การตั้งค่าจะไม่มีผลจนกว่าคุณทำการรีสตาท $longAppName">
 
 <!ENTITY prefs.videos.expire "โดยปกติให้วิดีโอหมดอายุหลังผ่านไปแล้ว">
 <!ENTITY prefs.videos.expire.one "1 วัน">
@@ -49,7 +49,7 @@
 <!ENTITY prefs.videos.expire.never "ไม่จำกัด">
 
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "ลดความช้าในการใช้งาน โดยจำกัดข้อมูลขาออกไว้ที่">
+<!ENTITY prefs.torrent.limit.upstream.part1 "เพื่อเลี่ยงความช้าในการใช้งาน โดยจำกัดข้อมูลขาออกไว้ที่">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s เมื่อคอมพิวเตอร์ถูกใช้งานอยู่">
 <!ENTITY prefs.torrent.uses.ports.part1 "ใช้พอร์ต BitTorrent ระหว่าง">
 <!ENTITY prefs.torrent.uses.ports.part2 "ถึง">

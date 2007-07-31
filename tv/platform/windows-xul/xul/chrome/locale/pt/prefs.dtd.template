@@ -5,7 +5,7 @@
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
 <!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
+<!ENTITY prefs.close_to_tray "Feche para a barra de tarefas para que os descarregamentos possam continuar.">
 <!ENTITY prefs.no_close_to_tray "Quit Miro completely">
 
 <!ENTITY prefs.general "General">
@@ -14,7 +14,7 @@
 <!ENTITY prefs.channels.check "Verificar canal para novos conteúdos">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check.manually "Manualmente">
 
 <!ENTITY prefs.playback "Reproduzir">
 <!ENTITY prefs.playback.remember.pos "Relembrar a posição do vídeo.">

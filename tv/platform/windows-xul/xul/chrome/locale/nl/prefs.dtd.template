@@ -4,9 +4,9 @@
 <!ENTITY prefs.title "Voorkeuren">
 
 <!ENTITY prefs.run.on.startup "Open $longAppName na inloggen">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
+<!ENTITY prefs.close_to_tray_start "Wanneer ik het Miro venster sluit:">
+<!ENTITY prefs.close_to_tray "Minimaliseer naar systeemvak en blijf downloaden.">
+<!ENTITY prefs.no_close_to_tray "Stop Miro volledig">
 
 <!ENTITY prefs.general "Algemeen">
 
@@ -16,14 +16,14 @@
 <!ENTITY prefs.channels.check.sixty "Elk uur">
 <!ENTITY prefs.channels.check.manually "Handmatig">
 
-<!ENTITY prefs.playback "Weergave">
+<!ENTITY prefs.playback "Afspelen">
 <!ENTITY prefs.playback.remember.pos "Onthoud afspeelpositie video.">
-<!ENTITY prefs.playback.auto.next.video "Speel video's achtereen af.">
+<!ENTITY prefs.playback.auto.next.video "Video's na elkaar afspelen.">
 <!ENTITY prefs.playback.stop.after.each "Stop na elke video.">
 
 <!ENTITY prefs.folder.movies "Locatie map Video's">
 <!ENTITY prefs.folder.downloads "Locatie gedownloade video's:">
-<!ENTITY prefs.folder.change "Wijzig...">
+<!ENTITY prefs.folder.change "Wijzigen...">
 
 <!ENTITY prefs.folder.others.caption "Monitor deze locaties voor nieuwe video's en voeg toe aan mijn Bibliotheek.">
 <!ENTITY prefs.folder.others.location "Locatie Map">
@@ -49,7 +49,7 @@
 <!ENTITY prefs.videos.expire.never "Nooit">
 
 <!ENTITY prefs.torrent.restart.warning "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Voorkom vertragingen, en beperk de uploads">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Voorkom vertragingen, en beperk uploads tot">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s wanneer mijn computer actief is.">
 <!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent gebruikt de poorten">
 <!ENTITY prefs.torrent.uses.ports.part2 "en">

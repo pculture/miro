@@ -1,20 +1,20 @@
 <!ENTITY prefs.title "Inställningar">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.runonstartup "Starta $longAppName automatiskt när jag loggar in.">
+<!ENTITY prefs.restart "(VARNING: Ändringar ger ingen effekt innan du startar om $longAppName.)">
 <!ENTITY prefs.title "Inställningar">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
+<!ENTITY prefs.run.on.startup "Starta $longAppName automatiskt när jag loggar in.">
+<!ENTITY prefs.close_to_tray_start "När jag klickar på den röda stängknappen:">
+<!ENTITY prefs.close_to_tray "Minimera till aktivitetsfältet så att nedladdningar kan fortsätta">
+<!ENTITY prefs.no_close_to_tray "Avsluta Miro helt">
 
-<!ENTITY prefs.general "General">
+<!ENTITY prefs.general "Allmänt">
 
 <!ENTITY prefs.channels "Kanaler">
 <!ENTITY prefs.channels.check "Kontrollera kanaler efter nytt innehåll">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check.thirty "Var 30e minut">
+<!ENTITY prefs.channels.check.sixty "Varje timme">
+<!ENTITY prefs.channels.check.manually "Manuellt">
 
 <!ENTITY prefs.playback "Uppspelning">
 <!ENTITY prefs.playback.remember.pos "Kom ihåg videoposition.">
@@ -22,23 +22,23 @@
 <!ENTITY prefs.playback.stop.after.each "Stoppa efter varje film.">
 
 <!ENTITY prefs.folder.movies "Filmkatalog">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.downloads "Lagra nedladdade videor i denna katalog:">
 <!ENTITY prefs.folder.change "Ändra...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
+<!ENTITY prefs.folder.others.caption "Leta efter nya videor i dessa kataloger och lägg till dem i Min Samling:">
 <!ENTITY prefs.folder.others.location "Mapplats">
 <!ENTITY prefs.folder.others.shown "Visa som kanal">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.add "Lägg till katalog...">
 <!ENTITY prefs.folder.others.remove "Ta bort">
 
-<!ENTITY prefs.downloads.max "Downloads">
+<!ENTITY prefs.downloads.max "Nedladdningar">
 <!ENTITY prefs.downloads.max.part1 "Hämta som mest">
 <!ENTITY prefs.downloads.max.part2 "filmer samtidigt.">
 
 <!ENTITY prefs.disk.space "Diskutrymme">
 <!ENTITY prefs.disk.space.min.part1 "Starta inte en hämtning om den lämnar kvar mindre än">
 <!ENTITY prefs.disk.space.min.part2 "GB ledigt.">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "VARNING: Denna inställning ger ingen effekt innan du startar om $longAppName.">
 
 <!ENTITY prefs.videos.expire "Som standard går filmerna ut efter">
 <!ENTITY prefs.videos.expire.one "1 dag">
@@ -48,7 +48,7 @@
 <!ENTITY prefs.videos.expire.thirty "1 månad">
 <!ENTITY prefs.videos.expire.never "Aldrig">
 
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.torrent.restart.warning "(VARNING: Ändringar ger ingen effekt innan du startar om $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "För att undvika långsam anslutning, begränsa sändning till">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s när min dator är aktiv.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit torrent använder portar mellan">

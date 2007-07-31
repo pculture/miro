@@ -1,53 +1,53 @@
 <!ENTITY nbsp				" ">
 <!ENTITY rsaquo				"'">
 
-<!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
-<!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.title			"$shortAppName første gangs konfiguration">
+<!ENTITY startup.description		"De næste skærmbilleder vil hjælpe dig med at opsætte  $longAppName så programmet fungerer bedste muligt for dig.">
+<!ENTITY startup.autostart.description	"Vi anbefaler at  $longAppName  starter når din computer starter. På denne måde kan videoer der er igang med at blive hentet blive færdige og nyer videoer kan hentes i baggrunden og være klar til når du vil se dem.">
+<!ENTITY startup.autostart.question	"Vil du have  $longAppName til at køre når din maskine starter?">
+<!ENTITY startup.search.description	"$longAppName kan finde alle videoer på din computer og hjælpe dig med at organisere disse.">
+<!ENTITY startup.search.question        "Vil du have  $longAppName til at lede efter videoer på din computer?">
+<!ENTITY startup.search.restrict	"Begræns til alle mine personlige filer.">
+<!ENTITY startup.search.custom          "Søg i mappen:">
 <!ENTITY startup.search.searching	"Søger efter videoer">
 <!ENTITY startup.change	                "Ændr">
-<!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
+<!ENTITY startup.cancel	                "Afbryd søgning">
+<!ENTITY startup.undo	                "Rens søgefeltet">
 <!ENTITY startup.done1			"Du er færdig!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done3.heading		"Lad Miro køre">
+<!ENTITY startup.done3.text		"$longAppName tjekker jævnligt om der er nye videoer og henter dem i baggrunden. Ved at lade programmet køre har du altid nye videoer klar til når du vil se dem.">
+<!ENTITY startup.done4.heading		"Tænk ikke på harddiskplads">
+<!ENTITY startup.done4.text		"$longAppName har &quot;Sidste salgsdato&quot; system, som hjælper dig med at slette gamle videoer, så du får plads til nye. Du kan altid beholde en video ved at trykke på Gem/Save">
+<!ENTITY startup.done5.heading		"Fuld skærm:">
+<!ENTITY startup.done5.text		"Knappen til højre for Play knappen viser videoerne i fuld skærm.">
+<!ENTITY startup.done6.heading		"Find videoer:">
+<!ENTITY startup.done6.text		"$shortAppName kanal guiden har hundreder af internet tv kanaler, ale gratis. Klik på Tilføj for at se en kanal.">
 <!ENTITY startup.answer.yes		"Ja">
 <!ENTITY startup.answer.no		"Nej">
-<!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
-<!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.title			"$shortAppName første gangs konfiguration">
+<!ENTITY startup.description		"De næste skærmbilleder vil hjælpe dig med at opsætte  $longAppName så programmet fungerer bedste muligt for dig.">
+<!ENTITY startup.autostart.description	"Vi anbefaler at  $longAppName  starter når din computer starter. På denne måde kan videoer der er igang med at blive hentet blive færdige og nyer videoer kan hentes i baggrunden og være klar til når du vil se dem.">
+<!ENTITY startup.autostart.question	"Vil du have  $longAppName til at køre når din maskine starter?">
+<!ENTITY startup.search.description	"$longAppName kan finde alle videoer på din computer og hjælpe dig med at organisere disse.">
+<!ENTITY startup.search.question        "Vil du have  $longAppName til at lede efter videoer på din computer?">
+<!ENTITY startup.search.restrict	"Begræns til alle mine personlige filer.">
+<!ENTITY startup.search.custom          "Søg i mappen:">
 <!ENTITY startup.search.searching	"Søger efter videoer">
 <!ENTITY startup.change	                "Ændr">
-<!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
+<!ENTITY startup.cancel	                "Afbryd søgning">
+<!ENTITY startup.undo	                "Rens søgefeltet">
 <!ENTITY startup.done1			"Du er færdig!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done3.heading		"Lad Miro køre">
+<!ENTITY startup.done3.text		"$longAppName tjekker jævnligt om der er nye videoer og henter dem i baggrunden. Ved at lade programmet køre har du altid nye videoer klar til når du vil se dem.">
+<!ENTITY startup.done4.heading		"Tænk ikke på harddiskplads">
+<!ENTITY startup.done4.text		"$longAppName har &quot;Sidste salgsdato&quot; system, som hjælper dig med at slette gamle videoer, så du får plads til nye. Du kan altid beholde en video ved at trykke på Gem/Save">
+<!ENTITY startup.done5.heading		"Fuld skærm:">
+<!ENTITY startup.done5.text		"Knappen til højre for Play knappen viser videoerne i fuld skærm.">
+<!ENTITY startup.done6.heading		"Find videoer:">
+<!ENTITY startup.done6.text		"$shortAppName kanal guiden har hundreder af internet tv kanaler, ale gratis. Klik på Tilføj for at se en kanal.">
 <!ENTITY startup.answer.yes		"Ja">
 <!ENTITY startup.answer.no		"Nej">

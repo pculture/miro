@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2007-07-17 14:36-0400\n"
+"POT-Creation-Date: 2007-07-30 13:31-0400\n"
 "PO-Revision-Date: 2007-03-18 16:25+0000\n"
 "Last-Translator: Channy <channy@mozilla.or.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=(0);\n"
-"X-Rosetta-Export-Date: 2007-07-18 20:38:37+0000\n"
+"X-Rosetta-Export-Date: 2007-07-30 22:19:20+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -92,7 +92,7 @@ msgstr "동영상 URL 복사"
 msgid "Cut"
 msgstr "잘라내기"
 
-#: ../..//portable/dialogs.py:77
+#: ../..//portable/dialogs.py:94
 msgid "Delete"
 msgstr "지우기"
 
@@ -123,7 +123,6 @@ msgstr "기본 창"
 msgid "MainMenu"
 msgstr "기본 메뉴"
 
-#: ../..//portable/menubar.py:215
 msgid "Minimize"
 msgstr "최소화"
 
@@ -158,7 +157,7 @@ msgstr "열기"
 msgid "Paste"
 msgstr "붙여 넣기"
 
-#: ../..//platform/osx/frontend/Application.py:234
+#: ../..//platform/osx/frontend/Application.py:238
 msgid "Play Video"
 msgstr "동영상 재생"
 
@@ -239,14 +238,14 @@ msgstr "상자"
 msgid "FullScreen Controls"
 msgstr "전체 화면"
 
-#: ../..//portable/tabs.py:28
+#: ../..//portable/tabs.py:45
 msgid "Video Search"
 msgstr "동영상 검색"
 
 msgid "VideoWindow"
 msgstr "동영상 창"
 
-#: ../..//portable/dialogs.py:60
+#: ../..//portable/dialogs.py:77
 msgid "Cancel"
 msgstr "취소"
 
@@ -273,8 +272,8 @@ msgstr ""
 msgid " limit upstream to"
 msgstr " limit upstream to"
 
-msgid "(You must restart Democracy for this change to take effect)\n"
-msgstr "(변경 사항을 적용하려면 Democracy를 재시작 해야 합니다)\n"
+msgid "(You must restart Miro for this change to take effect)"
+msgstr ""
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr ""
@@ -372,10 +371,10 @@ msgstr "동영상을 차례 대로 재생합니다."
 msgid "Remember video position."
 msgstr ""
 
-#: ../..//portable/feed.py:781 ../..//portable/folder.py:139
-#: ../..//portable/folder.py:194 ../..//portable/guide.py:38
-#: ../..//portable/menu.py:48 ../..//portable/menu.py:53
-#: ../..//portable/playlist.py:180
+#: ../..//portable/feed.py:787 ../..//portable/folder.py:156
+#: ../..//portable/folder.py:211 ../..//portable/guide.py:55
+#: ../..//portable/menu.py:65 ../..//portable/menu.py:70
+#: ../..//portable/playlist.py:197
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
 msgid "Remove"
 msgstr "삭제"
@@ -386,7 +385,7 @@ msgstr ""
 msgid "Save downloaded videos in this folder:"
 msgstr "동영상 저장 폴더:"
 
-#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:540
+#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:557
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Show as Channel"
 msgstr ""
@@ -424,7 +423,7 @@ msgstr "$title$"
 msgid "Channel"
 msgstr "채널"
 
-#: ../..//portable/dialogs.py:72
+#: ../..//portable/dialogs.py:89
 msgid "Create"
 msgstr "만들기"
 
@@ -443,7 +442,7 @@ msgstr "찾기:"
 msgid "URL"
 msgstr "URL"
 
-#: ../..//platform/gtk-x11/frontend_implementation/startup.py:31
+#: ../..//platform/gtk-x11/frontend_implementation/startup.py:48
 #: ../..//platform/windows-xul/frontend_implementation/startup.py:25
 #, python-format
 msgid "(parsed %d files - found %d videos)"
@@ -460,7 +459,7 @@ msgstr "보기"
 msgid "Next"
 msgstr "다음"
 
-#: ../..//portable/dialogs.py:62
+#: ../..//portable/dialogs.py:79
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
 msgid "No"
 msgstr "아니오"
@@ -512,7 +511,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../..//portable/dialogs.py:61
+#: ../..//portable/dialogs.py:78
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
 msgid "Yes"
 msgstr "예"
@@ -548,68 +547,68 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:295
+#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:312
 msgid "New Channel _Guide..."
 msgstr "새 채널 가이드..."
 
-#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:531
+#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:548
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Folder Location"
 msgstr ""
 
-#: ../..//platform/gtk-x11/frontend_implementation/startup.py:59
-#: ../..//platform/gtk-x11/frontend_implementation/startup.py:157
+#: ../..//platform/gtk-x11/frontend_implementation/startup.py:76
+#: ../..//platform/gtk-x11/frontend_implementation/startup.py:174
 #: ../..//platform/windows-xul/frontend_implementation/startup.py:33
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
 msgstr[0] "%d개의 동영상이 검색되었습니다."
 
-#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:25
+#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:42
 msgid "Settings"
 msgstr "설정"
 
-#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:28
+#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:45
 msgid "Hide"
 msgstr ""
 
-#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:30
+#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:47
 msgid "Show"
 msgstr ""
 
-#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:31
-#: ../..//portable/dialogs.py:63 ../..//portable/menubar.py:217
+#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:48
+#: ../..//portable/dialogs.py:80 ../..//portable/menubar.py:241
 msgid "Quit"
 msgstr "종료"
 
-#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:153
+#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:170
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
 msgid "Username:"
 msgstr "사용자명"
 
-#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:164
+#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:181
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
 msgid "Password:"
 msgstr "암호"
 
-#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:352
+#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:369
 msgid "Unknown Runtime Error"
 msgstr "알수 없는 Runtime 오류"
 
-#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:353
+#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:370
 #, python-format
 msgid "An unknown error has occurred %s."
 msgstr "알 수 없는 오류가 발생했습니다 %s."
 
-#: ../..//platform/osx/frontend/Application.py:231
+#: ../..//platform/osx/frontend/Application.py:235
 msgid "Pause Video"
 msgstr "동영상 중지"
 
-#: ../..//platform/osx/frontend/Application.py:240
+#: ../..//platform/osx/frontend/Application.py:244
 msgid "Unsupported version of Quicktime"
 msgstr ""
 
-#: ../..//platform/osx/frontend/Application.py:241
+#: ../..//platform/osx/frontend/Application.py:245
 #, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
@@ -698,7 +697,7 @@ msgstr ""
 msgid "Select a Directory to view in the Library."
 msgstr ""
 
-#: ../..//platform/osx/frontend/QuicktimeRenderer.py:219
+#: ../..//platform/osx/frontend/QuicktimeRenderer.py:217
 msgid "Audio"
 msgstr ""
 
@@ -726,19 +725,19 @@ msgstr "재생 목록 폴더 삭제..."
 msgid "_Remove Playlist Folders..."
 msgstr "재생 목록 폴더 삭제..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:10 ../..//portable/menubar.py:142
+#: ../..//platform/osx/frontend/UIStrings.py:10 ../..//portable/menubar.py:166
 msgid "_Remove Channel..."
 msgstr "채널 삭제..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:11 ../..//portable/menubar.py:143
+#: ../..//platform/osx/frontend/UIStrings.py:11 ../..//portable/menubar.py:167
 msgid "_Remove Channels..."
 msgstr "채널 삭제..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:12 ../..//portable/menubar.py:145
+#: ../..//platform/osx/frontend/UIStrings.py:12 ../..//portable/menubar.py:169
 msgid "_Remove Channel Folder..."
 msgstr "채널 폴더 삭제..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:13 ../..//portable/menubar.py:144
+#: ../..//platform/osx/frontend/UIStrings.py:13 ../..//portable/menubar.py:168
 msgid "_Remove Channel Folders..."
 msgstr "채널 폴더 삭제..."
 
@@ -770,7 +769,7 @@ msgstr "재생 목록 이름 변경..."
 msgid "Re_name Playlist Folder..."
 msgstr "재생 목록 폴더 이름 변경..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:21 ../..//portable/menubar.py:141
+#: ../..//platform/osx/frontend/UIStrings.py:21 ../..//portable/menubar.py:165
 msgid "Re_name Channel..."
 msgstr "채널 이름 변경..."
 
@@ -782,13 +781,56 @@ msgstr "채널 폴더 이름 변경..."
 msgid "Re_name Miro Guide..."
 msgstr ""
 
-#: ../..//platform/osx/frontend/UIStrings.py:24 ../..//portable/menubar.py:147
+#: ../..//platform/osx/frontend/UIStrings.py:24 ../..//portable/menubar.py:171
 msgid "_Update Channel..."
 msgstr "채널 갱신..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:25 ../..//portable/menubar.py:148
+#: ../..//platform/osx/frontend/UIStrings.py:25 ../..//portable/menubar.py:172
 msgid "_Update Channels..."
 msgstr "채널 갱신..."
+
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:367
+#: ../..//portable/dl_daemon/download.py:367
+msgid "Error"
+msgstr "오류"
+
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:440
+#: ../..//portable/dl_daemon/download.py:440
+#, python-format
+msgid "Could not write to %s"
+msgstr "%s에 저장할 수 없음"
+
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:459
+#: ../..//portable/dl_daemon/download.py:459
+msgid "Not enough disk space"
+msgstr "용량 없음"
+
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:460
+#: ../..//portable/dl_daemon/download.py:460
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "이 비디오를 저장하는 데 %s MB가 필요합니다."
+
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:793
+#: ../..//portable/dl_daemon/download.py:793
+msgid "Corrupt Torrent"
+msgstr "토런트 오류"
+
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:794
+#: ../..//portable/dl_daemon/download.py:794
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "%s 토런트 파일이 유효하지 않음"
+
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:820
+#: ../..//portable/dl_daemon/download.py:820
+msgid "Torrent file deleted"
+msgstr "지워진 토런트 파일"
+
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:821
+#: ../..//portable/dl_daemon/download.py:821
+msgid "The torrent file for this item was deleted "
+msgstr "이 항목에 대한 토런트 파일이 지워짐 "
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:56
 msgid "Update Available"
@@ -835,138 +877,138 @@ msgstr "창 여는 중"
 msgid "onStartup called twice"
 msgstr "시작 시 두번 호출됨"
 
-#: ../..//platform/windows-xul/xul/components/pybridge.py:656
+#: ../..//platform/windows-xul/xul/components/pybridge.py:658
 msgid "Spacebar"
 msgstr ""
 
-#: ../..//platform/windows-xul/xul/components/pybridge.py:803
+#: ../..//platform/windows-xul/xul/components/pybridge.py:805
 msgid "Close to tray?"
 msgstr ""
 
-#: ../..//platform/windows-xul/xul/components/pybridge.py:804
+#: ../..//platform/windows-xul/xul/components/pybridge.py:806
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
 
-#: ../..//portable/app.py:775
+#: ../..//portable/app.py:808
 msgid "Database too new"
 msgstr "새 데이터 베이스"
 
-#: ../..//portable/app.py:776
+#: ../..//portable/app.py:809
 msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
 
-#: ../..//portable/app.py:934 ../..//portable/app.py:948
-#: ../..//portable/app.py:992 ../..//portable/app.py:1018
-#: ../..//portable/app.py:1038
+#: ../..//portable/app.py:968 ../..//portable/app.py:982
+#: ../..//portable/app.py:1026 ../..//portable/app.py:1052
+#: ../..//portable/app.py:1072
 #, python-format
 msgid "Remove %s"
 msgstr "%s 제거"
 
-#: ../..//portable/app.py:935
+#: ../..//portable/app.py:969
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
 msgstr "%s 가이드를 제거 하시겠습니까?"
 
-#: ../..//portable/app.py:949
+#: ../..//portable/app.py:983
 #, python-format
 msgid "Are you sure you want to remove %s"
 msgstr "%s를 제거하시겠습니까?"
 
-#: ../..//portable/app.py:952 ../..//portable/app.py:997
-#: ../..//portable/app.py:1023 ../..//portable/app.py:1042
+#: ../..//portable/app.py:986 ../..//portable/app.py:1031
+#: ../..//portable/app.py:1057 ../..//portable/app.py:1076
 #, python-format
 msgid "Remove %s channels"
 msgstr "%s 채널 제거"
 
-#: ../..//portable/app.py:954
+#: ../..//portable/app.py:988
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
 msgstr "%s 재생 목록을 제거 하시겠습니까"
 
-#: ../..//portable/app.py:993
+#: ../..//portable/app.py:1027
 msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
 msgstr "다운로드한 채널 내 비디오에 적용하시겠습니까?"
 
-#: ../..//portable/app.py:998
+#: ../..//portable/app.py:1032
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
 msgstr "다운로드한 채널 내 비디오에 적용하시겠습니까?"
 
-#: ../..//portable/app.py:1019
+#: ../..//portable/app.py:1053
 #, python-format
 msgid ""
 "Are you sure you want to remove %s?  Any downloads in progress will be "
 "canceled."
 msgstr "%s를 제거 하시겠습니까? 모든 다운로드 작업을 취소합니다."
 
-#: ../..//portable/app.py:1024
+#: ../..//portable/app.py:1058
 #, python-format
 msgid ""
 "Are you sure you want to remove these %s channels?  Any downloads in "
 "progress will be canceled."
 msgstr "현재 %s 채널을 제거 하시겠습니까? 모든 다운로드 작업을 취소합니다."
 
-#: ../..//portable/app.py:1039
+#: ../..//portable/app.py:1073
 #, python-format
 msgid "Are you sure you want to remove %s?"
 msgstr ""
 
-#: ../..//portable/app.py:1043
+#: ../..//portable/app.py:1077
 #, python-format
 msgid "Are you sure you want to remove these %s channels?"
 msgstr ""
 
-#: ../..//portable/app.py:1056
+#: ../..//portable/app.py:1090
 #, python-format
 msgid "Stop watching %s"
 msgstr ""
 
-#: ../..//portable/app.py:1057
+#: ../..//portable/app.py:1091
 #, python-format
 msgid "Are you sure you want to stop watching %s?"
 msgstr ""
 
-#: ../..//portable/app.py:1060
+#: ../..//portable/app.py:1094
 #, python-format
 msgid "Stop watching %s directories"
 msgstr ""
 
-#: ../..//portable/app.py:1061
+#: ../..//portable/app.py:1095
 #, python-format
 msgid "Are you sure you want to stop watching these %s directories?"
 msgstr ""
 
-#: ../..//portable/app.py:1091
+#: ../..//portable/app.py:1125
 msgid "Are you sure you want to quit?"
 msgstr "프로그램을 종료하시겠습니까?"
 
-#: ../..//portable/app.py:1092
+#: ../..//portable/app.py:1126
 #, python-format
 msgid "You have %d download still in progress."
-msgid_plural "You have %d download still in progress."
+msgid_plural "You have %d downloads still in progress."
 msgstr[0] "지금 %d개를 다운로드 중입니다."
 
-#: ../..//portable/app.py:1548
+#: ../..//portable/app.py:1583
 msgid "Invalid Value"
 msgstr "유효하지 않음."
 
-#: ../..//portable/app.py:1549
+#: ../..//portable/app.py:1584
 #, python-format
 msgid "%s is invalid.  You must enter a non-negative number."
 msgstr "%s는 유효하지 않습니다. 숫자를 사용하셔야 합니다."
 
-#: ../..//portable/app.py:1829
+#: ../..//portable/app.py:1869
 msgid " - Invalid URL"
 msgstr " - 유효하지 않은 URL"
 
-#: ../..//portable/app.py:1830
+#: ../..//portable/app.py:1870
 msgid ""
 "The address you entered is not a valid URL.\n"
 "Please double check and try again.\n"
@@ -976,264 +1018,229 @@ msgstr ""
 "다시 한번 확인해 주세요.\n"
 "\n"
 
-#: ../..//portable/app.py:1854
+#: ../..//portable/app.py:1894
 msgid "$shortAppName - Add Channel"
 msgstr ""
 
-#: ../..//portable/app.py:1854
+#: ../..//portable/app.py:1894
 msgid "Enter the URL of the channel to add"
 msgstr "추가할 채널 URL 입력"
 
-#: ../..//portable/app.py:1875
+#: ../..//portable/app.py:1915
 msgid "$shortAppName - Add Miro Guide"
 msgstr ""
 
-#: ../..//portable/app.py:1875
+#: ../..//portable/app.py:1915
 msgid "Enter the URL of the Miro Guide to add"
 msgstr ""
 
-#: ../..//portable/app.py:2169
+#: ../..//portable/app.py:2209
 msgid "News and Tech"
 msgstr ""
 
-#: ../..//portable/app.py:2176
+#: ../..//portable/app.py:2216
 msgid "Entertainment"
 msgstr ""
 
-#: ../..//portable/app.py:2182
+#: ../..//portable/app.py:2222
 msgid "High-Def"
 msgstr ""
 
-#: ../..//portable/app.py:2190
+#: ../..//portable/app.py:2230
 msgid "Mac"
 msgstr ""
 
-#: ../..//portable/app.py:2205
+#: ../..//portable/app.py:2245
 msgid "Example Playlist"
 msgstr "재생 목록 예제"
 
-#: ../..//portable/app.py:2224
+#: ../..//portable/app.py:2264
 msgid "Custom Channels"
 msgstr "채널 설정"
 
-#: ../..//portable/app.py:2224
+#: ../..//portable/app.py:2264
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
 msgstr ""
 
-#: ../..//portable/autoupdate.py:104
+#: ../..//portable/autoupdate.py:121
 #, python-format
 msgid "%s Version Alert"
 msgstr ""
 
-#: ../..//portable/autoupdate.py:105
+#: ../..//portable/autoupdate.py:122
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
 msgstr ""
 
-#: ../..//portable/autoupdate.py:111
+#: ../..//portable/autoupdate.py:128
 #, python-format
 msgid "%s Version Check"
 msgstr ""
 
-#: ../..//portable/autoupdate.py:112
+#: ../..//portable/autoupdate.py:129
 #, python-format
 msgid "%s is up to date."
 msgstr ""
 
-#: ../..//portable/dialogs.py:59
+#: ../..//portable/dialogs.py:76
 msgid "Ok"
 msgstr "확인"
 
-#: ../..//portable/dialogs.py:64 ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../..//portable/dialogs.py:81 ../../platform/gtk-x11/glade/miro.glade.h:48
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr "이전"
 
-#: ../..//portable/dialogs.py:65 ../../platform/gtk-x11/glade/miro.glade.h:38
+#: ../..//portable/dialogs.py:82 ../../platform/gtk-x11/glade/miro.glade.h:38
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr "이전 안함"
 
-#: ../..//portable/dialogs.py:66 ../..//portable/item.py:1404
-#: ../..//portable/menu.py:94
+#: ../..//portable/dialogs.py:83 ../..//portable/item.py:1463
+#: ../..//portable/menu.py:111
 msgid "Download"
 msgstr "다운로드"
 
-#: ../..//portable/dialogs.py:67
+#: ../..//portable/dialogs.py:84
 msgid "Remove Entry"
 msgstr "항목 제거"
 
-#: ../..//portable/dialogs.py:68
+#: ../..//portable/dialogs.py:85
 msgid "Delete File"
 msgstr "파일 삭제"
 
-#: ../..//portable/dialogs.py:69
+#: ../..//portable/dialogs.py:86
 msgid "Delete Files"
 msgstr "파일 삭제"
 
-#: ../..//portable/dialogs.py:70
+#: ../..//portable/dialogs.py:87
 msgid "Keep Videos"
 msgstr "동영상 유지"
 
-#: ../..//portable/dialogs.py:71
+#: ../..//portable/dialogs.py:88
 msgid "Delete Videos"
 msgstr "동영상 삭제"
 
-#: ../..//portable/dialogs.py:73
+#: ../..//portable/dialogs.py:90
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
 msgid "Create Channel"
 msgstr "채널 만들기"
 
-#: ../..//portable/dialogs.py:74
+#: ../..//portable/dialogs.py:91
 msgid "Add"
 msgstr "추가"
 
-#: ../..//portable/dialogs.py:75
+#: ../..//portable/dialogs.py:92
 msgid "Add Into New Folder"
 msgstr "새 폴더로 추가"
 
-#: ../..//portable/dialogs.py:76
+#: ../..//portable/dialogs.py:93
 msgid "Keep"
 msgstr "유지"
 
-#: ../..//portable/dialogs.py:78
+#: ../..//portable/dialogs.py:95
 msgid "Not Now"
 msgstr ""
 
-#: ../..//portable/dialogs.py:79
+#: ../..//portable/dialogs.py:96
 msgid "Close to Tray"
 msgstr ""
 
-#: ../..//portable/dialogs.py:194 ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../..//portable/dialogs.py:211 ../../platform/gtk-x11/glade/miro.glade.h:52
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
 msgstr "새 검색 채널"
 
-#: ../..//portable/dialogs.py:194 ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../..//portable/dialogs.py:211 ../../platform/gtk-x11/glade/miro.glade.h:31
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr "검색 채널에는 검색어와 부합하는 항목이 포함됩니다."
 
-#: ../..//portable/dl_daemon/download.py:370
-msgid "Error"
-msgstr "오류"
-
-#: ../..//portable/dl_daemon/download.py:443
-#, python-format
-msgid "Could not write to %s"
-msgstr "%s에 저장할 수 없음"
-
-#: ../..//portable/dl_daemon/download.py:462
-msgid "Not enough disk space"
-msgstr "용량 없음"
-
-#: ../..//portable/dl_daemon/download.py:463
-#, python-format
-msgid "%s MB required to store this video"
-msgstr "이 비디오를 저장하는 데 %s MB가 필요합니다."
-
-#: ../..//portable/dl_daemon/download.py:796
-msgid "Corrupt Torrent"
-msgstr "토런트 오류"
-
-#: ../..//portable/dl_daemon/download.py:797
-#, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "%s 토런트 파일이 유효하지 않음"
-
-#: ../..//portable/dl_daemon/download.py:823
-msgid "Torrent file deleted"
-msgstr "지워진 토런트 파일"
-
-#: ../..//portable/dl_daemon/download.py:824
-msgid "The torrent file for this item was deleted "
-msgstr "이 항목에 대한 토런트 파일이 지워짐 "
-
-#: ../..//portable/downloader.py:196
+#: ../..//portable/downloader.py:214
 msgid "activity"
 msgstr ""
 
-#: ../..//portable/downloader.py:232 ../..//portable/httpclient.py:98
+#: ../..//portable/downloader.py:250 ../..//portable/httpclient.py:112
 msgid "File not found"
 msgstr "파일을 찾을 수 없음"
 
-#: ../..//portable/downloader.py:233
+#: ../..//portable/downloader.py:251
 msgid "Flash URL Scraping Error"
 msgstr "플래시 URL 찾기 오류"
 
-#: ../..//portable/downloader.py:412
+#: ../..//portable/downloader.py:430
 msgid "starting up"
 msgstr "시작 중"
 
-#: ../..//portable/feed.py:374
+#: ../..//portable/feed.py:380
 msgid "never"
 msgstr ""
 
-#: ../..//portable/feed.py:376 ../..//portable/item.py:478
+#: ../..//portable/feed.py:382 ../..//portable/item.py:531
 #, python-format
 msgid "%d hours"
 msgstr "%d 시간"
 
-#: ../..//portable/feed.py:378
+#: ../..//portable/feed.py:384
 #, python-format
 msgid "%d day"
 msgstr ""
 
-#: ../..//portable/feed.py:380 ../..//portable/item.py:476
+#: ../..//portable/feed.py:386 ../..//portable/item.py:529
 #, python-format
 msgid "%d days"
 msgstr "%d 일"
 
-#: ../..//portable/feed.py:382
+#: ../..//portable/feed.py:388
 #, python-format
 msgid "%d months"
 msgstr ""
 
-#: ../..//portable/feed.py:773
+#: ../..//portable/feed.py:779
 msgid "Update Channel Now"
 msgstr "현재 채널 업그레이드"
 
-#: ../..//portable/feed.py:775 ../..//portable/guide.py:35
+#: ../..//portable/feed.py:781 ../..//portable/guide.py:52
 msgid "Copy URL to clipboard"
 msgstr "URL을 클립보드로 복사"
 
-#: ../..//portable/feed.py:776 ../..//portable/feed.py:785
+#: ../..//portable/feed.py:782 ../..//portable/feed.py:791
 msgid "Rename Channel"
 msgstr "채널 이름 변경"
 
-#: ../..//portable/feed.py:780
+#: ../..//portable/feed.py:786
 msgid "Revert Title to Default"
 msgstr "제목을 기본으로 변경"
 
-#: ../..//portable/feed.py:786
+#: ../..//portable/feed.py:792
 #, python-format
 msgid "Enter a new name for the channel %s"
 msgstr "%s 채널 이름 변경"
 
-#: ../..//portable/feed.py:871
+#: ../..//portable/feed.py:879
 msgid "Error loading feed"
 msgstr "피드 읽기 오류"
 
-#: ../..//portable/feed.py:872
+#: ../..//portable/feed.py:880
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
 msgstr "다음 피드 항목 읽기 오류: %s (%s)"
 
-#: ../..//portable/feed.py:875
+#: ../..//portable/feed.py:883
 msgid "Would you like to keep the feed?"
 msgstr "현재 피드를 유지하시겠습니까?"
 
-#: ../..//portable/feed.py:992
+#: ../..//portable/feed.py:1000
 msgid "Bad content-type"
 msgstr "컨텐츠 형식 오류"
 
-#: ../..//portable/feed.py:1005
+#: ../..//portable/feed.py:1013
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
 msgstr ""
 
-#: ../..//portable/feed.py:1006
+#: ../..//portable/feed.py:1014
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny.  Please contact the publishers of "
@@ -1243,662 +1250,665 @@ msgid ""
 "Do you want to try to load this channel anyway?"
 msgstr ""
 
-#: ../..//portable/feed.py:1979 ../..//portable/feed.py:2042
+#: ../..//portable/feed.py:1987 ../..//portable/feed.py:2050
 msgid "Search"
 msgstr "검색"
 
-#: ../..//portable/feed.py:2057
-msgid "Local File"
-msgstr "로컬 파일"
+#: ../..//portable/feed.py:2064
+msgid "Local Files"
+msgstr ""
 
-#: ../..//portable/folder.py:115 ../..//portable/folder.py:138
+#: ../..//portable/feed.py:2078
+msgid "Playing File"
+msgstr ""
+
+#: ../..//portable/folder.py:132 ../..//portable/folder.py:155
 msgid "Rename Channel Folder"
 msgstr "채널 폴더 이름 변경"
 
-#: ../..//portable/folder.py:117
+#: ../..//portable/folder.py:134
 #, python-format
 msgid "Enter a new name for the channel folder %s"
 msgstr "채널 폴더 %s에 대한 새 이름 입력"
 
-#: ../..//portable/folder.py:193 ../..//portable/folder.py:198
+#: ../..//portable/folder.py:210 ../..//portable/folder.py:215
 msgid "Rename Playlist Folder"
 msgstr "재생 목록 폴더 이름 변경"
 
-#: ../..//portable/folder.py:200
+#: ../..//portable/folder.py:217
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
 msgstr "재생 목록 폴더 %s에 대한 새 이름 입력"
 
-#: ../..//portable/folder.py:208
+#: ../..//portable/folder.py:225
 msgid "Create Channel Folder"
 msgstr "채널 폴더 만들기"
 
-#: ../..//portable/folder.py:209 ../..//portable/singleclick.py:140
+#: ../..//portable/folder.py:226 ../..//portable/singleclick.py:176
 msgid "Enter a name for the new channel folder"
 msgstr "새 채널 폴더에 대한 이름 입력"
 
-#: ../..//portable/folder.py:222
+#: ../..//portable/folder.py:239
 msgid "Create Playlist Folder"
 msgstr "재생 목록 폴더 만들기"
 
-#: ../..//portable/folder.py:223
+#: ../..//portable/folder.py:240
 msgid "Enter a name for the new playlist folder"
 msgstr "새 재생 목록 폴더 이름 입력"
 
-#: ../..//portable/guide.py:58
+#: ../..//portable/guide.py:75
 msgid "Miro Guide"
 msgstr ""
 
-#: ../..//portable/httpclient.py:53
+#: ../..//portable/httpclient.py:67
 #, python-format
 msgid "Error: %s"
 msgstr "오류: %s"
 
-#: ../..//portable/httpclient.py:68 ../..//portable/httpclient.py:73
+#: ../..//portable/httpclient.py:82 ../..//portable/httpclient.py:87
 msgid "Can't connect"
 msgstr "접속할 수 없음"
 
-#: ../..//portable/httpclient.py:69
+#: ../..//portable/httpclient.py:83
 #, python-format
 msgid "Connection Error: %s"
 msgstr "접속 오류: %s"
 
-#: ../..//portable/httpclient.py:74
+#: ../..//portable/httpclient.py:88
 msgid "SSL connection error"
 msgstr "SSL 연결 오류"
 
-#: ../..//portable/httpclient.py:78
+#: ../..//portable/httpclient.py:92
 msgid "HTTP error"
 msgstr "HTTP 오류"
 
-#: ../..//portable/httpclient.py:81
+#: ../..//portable/httpclient.py:95
 #, python-format
 msgid "Bad Status Line: %s"
 msgstr "줄 상태 오류 : %s"
 
-#: ../..//portable/httpclient.py:84
+#: ../..//portable/httpclient.py:98
 #, python-format
 msgid "Bad Header Line: %s"
 msgstr "헤더 오류: %s"
 
-#: ../..//portable/httpclient.py:87
+#: ../..//portable/httpclient.py:101
 #, python-format
 msgid "Bad Chunk size: %s"
 msgstr "Chuck 크기 오류: %s"
 
-#: ../..//portable/httpclient.py:90
+#: ../..//portable/httpclient.py:104
 #, python-format
 msgid "Expected CRLF got: %r"
 msgstr "CRLF가 필요함: %r"
 
-#: ../..//portable/httpclient.py:93
+#: ../..//portable/httpclient.py:107
 #, python-format
 msgid "%s closed connection"
 msgstr "%s 연결 끊김"
 
-#: ../..//portable/httpclient.py:99
+#: ../..//portable/httpclient.py:113
 msgid "Got 404 status code"
 msgstr "404 오류 코드"
 
-#: ../..//portable/httpclient.py:101
+#: ../..//portable/httpclient.py:115
 #, python-format
 msgid "Bad Status Code: %s"
 msgstr "오류 상태 코드: %s"
 
-#: ../..//portable/httpclient.py:105
+#: ../..//portable/httpclient.py:119
 msgid "Authorization failed"
 msgstr "인증 실패"
 
-#: ../..//portable/httpclient.py:110
+#: ../..//portable/httpclient.py:124
 msgid "Internal Error"
 msgstr "내부 오류"
 
-#: ../..//portable/httpclient.py:111
+#: ../..//portable/httpclient.py:125
 msgid "Pipeline request never started"
 msgstr "다중 요청 실패"
 
-#: ../..//portable/httpclient.py:115
+#: ../..//portable/httpclient.py:129
 msgid "Timeout"
 msgstr "시간 초과"
 
-#: ../..//portable/httpclient.py:116
+#: ../..//portable/httpclient.py:130
 #, python-format
 msgid "Connection to %s timed out"
 msgstr "%s 연결 시간 초과"
 
-#: ../..//portable/httpclient.py:120
+#: ../..//portable/httpclient.py:134
 msgid "Invalid URL"
 msgstr "유효하지 않은 URL"
 
-#: ../..//portable/httpclient.py:121
+#: ../..//portable/httpclient.py:135
 #, python-format
 msgid "%s is not a valid URL"
 msgstr "%s는 유효하지 않음"
 
-#: ../..//portable/httpclient.py:314
+#: ../..//portable/httpclient.py:355
 msgid "Connection closed"
 msgstr "연결 종료"
 
-#: ../..//portable/httpclient.py:744
+#: ../..//portable/httpclient.py:780
 msgid "Unknown"
 msgstr "알 수 없음"
 
-#: ../..//portable/httpclient.py:745
+#: ../..//portable/httpclient.py:781
 msgid "Internal Error: Not ready to send"
 msgstr "내부 오류: 전송 준비 되지 않음"
 
-#: ../..//portable/item.py:449
-#, python-format
-msgid "Deleting %s"
-msgstr "%s 삭제"
-
-#: ../..//portable/item.py:450
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr "이 항목은 폴더입니다. 폴더를 삭제하시면 내부의 모든 항목이 삭제됩니다."
-
-#: ../..//portable/item.py:480
-#, python-format
-msgid "%d minutes"
-msgstr "%d 분"
-
-#: ../..//portable/item.py:490
-#, python-format
-msgid "Expires in %s"
-msgstr "만료 시간: %s"
-
-#: ../..//portable/item.py:502
-#, python-format
-msgid "Will retry in %s"
-msgstr ""
-
-#: ../..//portable/item.py:504
-msgid "Paused"
-msgstr ""
-
-#: ../..//portable/item.py:878
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../..//portable/item.py:880
-msgid "WEB PAGE"
-msgstr "WEB PAGE"
-
-#: ../..//portable/item.py:890
-msgid "Total Down:"
-msgstr ""
-
-#: ../..//portable/item.py:897
-msgid "Seeders:"
-msgstr ""
-
-#: ../..//portable/item.py:898
-msgid "Leachers:"
-msgstr ""
-
-#: ../..//portable/item.py:899
-msgid "Down Rate:"
-msgstr ""
-
-#: ../..//portable/item.py:900
-msgid "Down Total:"
-msgstr ""
-
-#: ../..//portable/item.py:902
-msgid "Up Rate:"
-msgstr ""
-
-#: ../..//portable/item.py:903
-msgid "Up Total:"
-msgstr ""
-
-#: ../..//portable/item.py:908
-msgid "Web page:"
-msgstr ""
-
-#: ../..//portable/item.py:908
-msgid "permalink"
-msgstr ""
-
-#: ../..//portable/item.py:909
-msgid "File link:"
-msgstr ""
-
-#: ../..//portable/item.py:909
-msgid "direct link to file"
-msgstr ""
-
-#: ../..//portable/item.py:911
-msgid "File type:"
-msgstr ""
-
-#: ../..//portable/item.py:918
-msgid "REVEAL LOCAL FOLDER"
-msgstr ""
-
-#: ../..//portable/item.py:920
-msgid "REVEAL LOCAL FILE"
-msgstr ""
-
-#: ../..//portable/item.py:922
-msgid "Filename:"
-msgstr ""
-
-#: ../..//portable/item.py:929
-msgid "Down Total"
-msgstr ""
-
-#: ../..//portable/item.py:931
-msgid "Up Total"
-msgstr ""
-
-#: ../..//portable/item.py:949
-msgid "Item Details"
-msgstr ""
-
-#: ../..//portable/item.py:956
-msgid "Torrent Details"
-msgstr ""
-
-#: ../..//portable/item.py:961
-msgid "Download Details"
-msgstr ""
-
-#: ../..//portable/item.py:1175
-msgid "downloading..."
-msgstr "다운로드 중..."
-
-#: ../..//portable/item.py:1182 ../..//portable/item.py:1185
-#, python-format
-msgid "%s remaining"
-msgstr "%s 남음"
-
-#: ../..//portable/item.py:1194
-msgid "starting up..."
-msgstr "시작 중..."
-
-#: ../..//portable/item.py:1387 ../..//portable/menu.py:80
-msgid "Remove From Playlist"
-msgstr "재생 목록에서 삭제"
-
-#: ../..//portable/item.py:1389 ../..//portable/menu.py:82
-msgid "Remove From the Library"
-msgstr ""
-
-#: ../..//portable/item.py:1391 ../..//portable/menu.py:77
-msgid "Play"
-msgstr "재생"
-
-#: ../..//portable/item.py:1393
-msgid "Play Just This Video"
-msgstr "현재 동영상만 재생"
-
-#: ../..//portable/item.py:1394 ../..//portable/menu.py:78
-msgid "Add to new playlist"
-msgstr "새 재생 목록에 추가"
-
-#: ../..//portable/item.py:1398 ../..//portable/menu.py:88
-msgid "Mark as Unwatched"
-msgstr "미시청 항목으로 표시"
-
-#: ../..//portable/item.py:1400 ../..//portable/menu.py:106
-msgid "Restart Upload"
-msgstr ""
-
-#: ../..//portable/item.py:1402 ../..//portable/menu.py:101
-msgid "Cancel Download"
-msgstr "다운로드 취소"
-
-#: ../..//portable/item.py:1402 ../..//portable/menu.py:103
-msgid "Pause Download"
-msgstr ""
-
-#: ../..//portable/item.py:1650
+#: ../..//portable/item.py:478
 #, python-format
 msgid "Removing %s"
 msgstr "%s 제거"
 
-#: ../..//portable/item.py:1652
+#: ../..//portable/item.py:481
 msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from the Library?"
 msgstr ""
 
-#: ../..//portable/item.py:1657
+#: ../..//portable/item.py:486
 msgid ""
 "Would you like to delete this file or just remove its entry from My "
 "Collection?"
 msgstr "내 항목에 있는 동영상만 삭제하시겠습니까?"
 
-#: ../..//portable/item.py:1762
+#: ../..//portable/item.py:503
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr "이 항목은 폴더입니다. 폴더를 삭제하시면 내부의 모든 항목이 삭제됩니다."
+
+#: ../..//portable/item.py:533
+#, python-format
+msgid "%d minutes"
+msgstr "%d 분"
+
+#: ../..//portable/item.py:543
+#, python-format
+msgid "Expires in %s"
+msgstr "만료 시간: %s"
+
+#: ../..//portable/item.py:555
+#, python-format
+msgid "Will retry in %s"
+msgstr ""
+
+#: ../..//portable/item.py:557
+msgid "Paused"
+msgstr ""
+
+#: ../..//portable/item.py:937
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../..//portable/item.py:939
+msgid "WEB PAGE"
+msgstr "WEB PAGE"
+
+#: ../..//portable/item.py:949
+msgid "Total Down:"
+msgstr ""
+
+#: ../..//portable/item.py:956
+msgid "Seeders:"
+msgstr ""
+
+#: ../..//portable/item.py:957
+msgid "Leachers:"
+msgstr ""
+
+#: ../..//portable/item.py:958
+msgid "Down Rate:"
+msgstr ""
+
+#: ../..//portable/item.py:959
+msgid "Down Total:"
+msgstr ""
+
+#: ../..//portable/item.py:961
+msgid "Up Rate:"
+msgstr ""
+
+#: ../..//portable/item.py:962
+msgid "Up Total:"
+msgstr ""
+
+#: ../..//portable/item.py:967
+msgid "Web page:"
+msgstr ""
+
+#: ../..//portable/item.py:967
+msgid "permalink"
+msgstr ""
+
+#: ../..//portable/item.py:968
+msgid "File link:"
+msgstr ""
+
+#: ../..//portable/item.py:968
+msgid "direct link to file"
+msgstr ""
+
+#: ../..//portable/item.py:970
+msgid "File type:"
+msgstr ""
+
+#: ../..//portable/item.py:977
+msgid "REVEAL LOCAL FOLDER"
+msgstr ""
+
+#: ../..//portable/item.py:979
+msgid "REVEAL LOCAL FILE"
+msgstr ""
+
+#: ../..//portable/item.py:981
+msgid "Filename:"
+msgstr ""
+
+#: ../..//portable/item.py:988
+msgid "Down Total"
+msgstr ""
+
+#: ../..//portable/item.py:990
+msgid "Up Total"
+msgstr ""
+
+#: ../..//portable/item.py:1008
+msgid "Item Details"
+msgstr ""
+
+#: ../..//portable/item.py:1015
+msgid "Torrent Details"
+msgstr ""
+
+#: ../..//portable/item.py:1020
+msgid "Download Details"
+msgstr ""
+
+#: ../..//portable/item.py:1234
+msgid "downloading..."
+msgstr "다운로드 중..."
+
+#: ../..//portable/item.py:1241 ../..//portable/item.py:1244
+#, python-format
+msgid "%s remaining"
+msgstr "%s 남음"
+
+#: ../..//portable/item.py:1253
+msgid "starting up..."
+msgstr "시작 중..."
+
+#: ../..//portable/item.py:1446 ../..//portable/menu.py:97
+msgid "Remove From Playlist"
+msgstr "재생 목록에서 삭제"
+
+#: ../..//portable/item.py:1448 ../..//portable/menu.py:99
+msgid "Remove From the Library"
+msgstr ""
+
+#: ../..//portable/item.py:1450 ../..//portable/menu.py:94
+msgid "Play"
+msgstr "재생"
+
+#: ../..//portable/item.py:1452
+msgid "Play Just This Video"
+msgstr "현재 동영상만 재생"
+
+#: ../..//portable/item.py:1453 ../..//portable/menu.py:95
+msgid "Add to new playlist"
+msgstr "새 재생 목록에 추가"
+
+#: ../..//portable/item.py:1457 ../..//portable/menu.py:105
+msgid "Mark as Unwatched"
+msgstr "미시청 항목으로 표시"
+
+#: ../..//portable/item.py:1459 ../..//portable/menu.py:123
+msgid "Restart Upload"
+msgstr ""
+
+#: ../..//portable/item.py:1461 ../..//portable/menu.py:118
+msgid "Cancel Download"
+msgstr "다운로드 취소"
+
+#: ../..//portable/item.py:1461 ../..//portable/menu.py:120
+msgid "Pause Download"
+msgstr ""
+
+#: ../..//portable/item.py:1797
 #, python-format
 msgid "Removing %s items"
 msgstr "%s 항목 제거"
 
-#: ../..//portable/item.py:1764
+#: ../..//portable/item.py:1799
 msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from the Library?"
 msgstr ""
 
-#: ../..//portable/item.py:1772
+#: ../..//portable/item.py:1807
 msgid ""
 "One or more of these items is a folder.  When you remove or delete a folder, "
 "any items inside that folder will also be removed or deleted."
 msgstr "이 항목은 폴더 입니다. 폴더를 삭제하거나 제거하면 폴더 내 모든 항목이 삭제 되거나 제거됩니다."
 
-#: ../..//portable/menu.py:52
+#: ../..//portable/menu.py:69
 msgid "Update Channels Now"
 msgstr "현재 채널 갱신"
 
-#: ../..//portable/menu.py:75
+#: ../..//portable/menu.py:92
 #, python-format
 msgid "%d Downloaded Items"
 msgstr "%d 항목 다운로드"
 
-#: ../..//portable/menu.py:93
+#: ../..//portable/menu.py:110
 #, python-format
 msgid "%d Available Items"
 msgstr "%d 항목 사용 가능"
 
-#: ../..//portable/menu.py:99
+#: ../..//portable/menu.py:116
 #, python-format
 msgid "%d Downloading Items"
 msgstr "%d 항목 다운로드 중"
 
-#: ../..//portable/menubar.py:108
+#: ../..//portable/menubar.py:132
 msgid "_Open"
 msgstr ""
 
-#: ../..//portable/menubar.py:110
+#: ../..//portable/menubar.py:134
 msgid "Check _Version"
 msgstr ""
 
-#: ../..//portable/menubar.py:112
+#: ../..//portable/menubar.py:136
 msgid "_Remove Video"
 msgstr "동영상 제거"
 
-#: ../..//portable/menubar.py:113
+#: ../..//portable/menubar.py:137
 msgid "_Remove Videos"
 msgstr ""
 
-#: ../..//portable/menubar.py:114
+#: ../..//portable/menubar.py:138
 msgid "Re_name Video"
 msgstr ""
 
-#: ../..//portable/menubar.py:115
+#: ../..//portable/menubar.py:139
 msgid "Save Video _As..."
 msgstr "다른 이름으로 저장..."
 
-#: ../..//portable/menubar.py:116
+#: ../..//portable/menubar.py:140
 msgid "Save Videos _As..."
 msgstr ""
 
-#: ../..//portable/menubar.py:117
+#: ../..//portable/menubar.py:141
 msgid "Copy Video _URL"
 msgstr ""
 
-#: ../..//portable/menubar.py:119
+#: ../..//portable/menubar.py:143
 msgid "_Options"
 msgstr ""
 
-#: ../..//portable/menubar.py:120
+#: ../..//portable/menubar.py:144
 msgid "_Quit"
 msgstr "종료하기"
 
-#: ../..//portable/menubar.py:128
+#: ../..//portable/menubar.py:152
 msgid "Cu_t"
 msgstr ""
 
-#: ../..//portable/menubar.py:129
+#: ../..//portable/menubar.py:153
 msgid "_Copy"
 msgstr ""
 
-#: ../..//portable/menubar.py:130
+#: ../..//portable/menubar.py:154
 msgid "_Paste"
 msgstr ""
 
-#: ../..//portable/menubar.py:131
+#: ../..//portable/menubar.py:155
 msgid "Select _All"
 msgstr ""
 
-#: ../..//portable/menubar.py:132
+#: ../..//portable/menubar.py:156
 msgid "_Delete"
 msgstr ""
 
-#: ../..//portable/menubar.py:136
+#: ../..//portable/menubar.py:160
 msgid "Add _Channel"
 msgstr ""
 
-#: ../..//portable/menubar.py:137
+#: ../..//portable/menubar.py:161
 msgid "New Searc_h Channel..."
 msgstr "새 검색 채널..."
 
-#: ../..//portable/menubar.py:138
+#: ../..//portable/menubar.py:162
 msgid "New _Folder..."
 msgstr ""
 
-#: ../..//portable/menubar.py:139
+#: ../..//portable/menubar.py:163
 msgid "Add Channel _Guide..."
 msgstr ""
 
-#: ../..//portable/menubar.py:149
+#: ../..//portable/menubar.py:173
 msgid "Update _All Channels"
 msgstr ""
 
-#: ../..//portable/menubar.py:151
+#: ../..//portable/menubar.py:175
 msgid "_Send this channel to a friend"
 msgstr "이 채널을 친구에게 보내기"
 
-#: ../..//portable/menubar.py:152
+#: ../..//portable/menubar.py:176
 msgid "Copy Channel _Link"
 msgstr "채널 링크 복사"
 
-#: ../..//portable/menubar.py:155
+#: ../..//portable/menubar.py:179
 msgid "New _Playlist"
 msgstr ""
 
-#: ../..//portable/menubar.py:156
+#: ../..//portable/menubar.py:180
 msgid "New Playlist Fol_der"
 msgstr ""
 
-#: ../..//portable/menubar.py:158
+#: ../..//portable/menubar.py:182
 msgid "Re_name Playlist"
 msgstr "재생 목록 이름 변경"
 
-#: ../..//portable/menubar.py:159
+#: ../..//portable/menubar.py:183
 msgid "_Remove Playlist"
 msgstr "재생 목록 제거"
 
-#: ../..//portable/menubar.py:160
+#: ../..//portable/menubar.py:184
 msgid "_Remove Playlists"
 msgstr ""
 
-#: ../..//portable/menubar.py:161
+#: ../..//portable/menubar.py:185
 msgid "_Remove Playlist Folders"
 msgstr ""
 
-#: ../..//portable/menubar.py:162
+#: ../..//portable/menubar.py:186
 msgid "_Remove Playlist Folder"
 msgstr ""
 
-#: ../..//portable/menubar.py:172
+#: ../..//portable/menubar.py:196
 msgid "_Play"
 msgstr ""
 
-#: ../..//portable/menubar.py:173
+#: ../..//portable/menubar.py:197
 msgid "_Stop"
 msgstr ""
 
-#: ../..//portable/menubar.py:175
+#: ../..//portable/menubar.py:199
 msgid "_Next Video"
 msgstr "다음 동영상"
 
-#: ../..//portable/menubar.py:176
+#: ../..//portable/menubar.py:200
 msgid "_Previous Video"
 msgstr "이전 동영상"
 
-#: ../..//portable/menubar.py:178
+#: ../..//portable/menubar.py:202
 msgid "Skip _Forward"
 msgstr ""
 
-#: ../..//portable/menubar.py:179
+#: ../..//portable/menubar.py:203
 msgid "Skip _Back"
 msgstr ""
 
-#: ../..//portable/menubar.py:181
+#: ../..//portable/menubar.py:205
 msgid "Volume _Up"
 msgstr ""
 
-#: ../..//portable/menubar.py:182
+#: ../..//portable/menubar.py:206
 msgid "Volume _Down"
 msgstr ""
 
-#: ../..//portable/menubar.py:184
+#: ../..//portable/menubar.py:208
 msgid "_Fullscreen"
 msgstr "전체 화면"
 
-#: ../..//portable/menubar.py:188
+#: ../..//portable/menubar.py:212
 msgid "_About"
 msgstr ""
 
-#: ../..//portable/menubar.py:189
+#: ../..//portable/menubar.py:213
 msgid "_Donate"
 msgstr "기부하기"
 
-#: ../..//portable/menubar.py:190 ../..//portable/menubar.py:205
+#: ../..//portable/menubar.py:214 ../..//portable/menubar.py:229
 msgid "_Help"
 msgstr "도움말"
 
-#: ../..//portable/menubar.py:192
+#: ../..//portable/menubar.py:216
 msgid "Report a _Bug"
 msgstr ""
 
-#: ../..//portable/menubar.py:196
+#: ../..//portable/menubar.py:220
 msgid "_Video"
 msgstr "동영상"
 
-#: ../..//portable/menubar.py:198
+#: ../..//portable/menubar.py:222
 msgid "_File"
 msgstr ""
 
-#: ../..//portable/menubar.py:202
+#: ../..//portable/menubar.py:226
 msgid "_Channels"
 msgstr "채널"
 
-#: ../..//portable/menubar.py:203
+#: ../..//portable/menubar.py:227
 msgid "_Playlists"
 msgstr "재생 목록"
 
-#: ../..//portable/menubar.py:204
+#: ../..//portable/menubar.py:228
 msgid "P_layback"
 msgstr "재생"
 
-#: ../..//portable/menubar.py:209
+#: ../..//portable/menubar.py:233
 msgid "Play Unwatched ($numUnwatched)"
 msgstr ""
 
-#: ../..//portable/menubar.py:210
+#: ../..//portable/menubar.py:234
 msgid "Pause All Downloads ($numDownloading)"
 msgstr ""
 
-#: ../..//portable/menubar.py:211
+#: ../..//portable/menubar.py:235
 msgid "Resume All Downloads ($numPaused)"
 msgstr ""
 
-#: ../..//portable/menubar.py:213
+#: ../..//portable/menubar.py:237
 msgid "Options"
 msgstr ""
 
-#: ../..//portable/menubar.py:216
-msgid "Restore"
+#: ../..//portable/menubar.py:239
+msgid "Hide Window"
 msgstr ""
 
-#: ../..//portable/playlist.py:179 ../..//portable/playlist.py:184
+#: ../..//portable/menubar.py:240
+msgid "Show Window"
+msgstr ""
+
+#: ../..//portable/playlist.py:196 ../..//portable/playlist.py:201
 msgid "Rename Playlist"
 msgstr "재생 목록 이름 변경"
 
-#: ../..//portable/playlist.py:185
+#: ../..//portable/playlist.py:202
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr "%s에 대해 바꿀 이름을 입력하세요."
 
-#: ../..//portable/playlist.py:207
+#: ../..//portable/playlist.py:224
 msgid "Create Playlist"
 msgstr "재생 목록 만들기"
 
-#: ../..//portable/playlist.py:208
+#: ../..//portable/playlist.py:225
 msgid "Enter a name for the new playlist"
 msgstr "새 재생 목록에 대한 이름을 입력하세요."
 
-#: ../..//portable/singleclick.py:125
+#: ../..//portable/singleclick.py:161
 msgid "Subscribing to multiple channels"
 msgstr "여러 채널을 구독 하기"
 
-#: ../..//portable/singleclick.py:126
+#: ../..//portable/singleclick.py:162
 #, python-format
 msgid "Create %d channels?"
 msgstr "%d 채널을 만드시겠습니까?"
 
-#: ../..//portable/singleclick.py:139
+#: ../..//portable/singleclick.py:175
 #, python-format
 msgid "Adding %d channels to a new folder"
 msgstr "%d 채널을 새 폴더에 추가"
 
-#: ../..//portable/singleclick.py:143
+#: ../..//portable/singleclick.py:179
 #, python-format
 msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
 "will stay where they currently are."
 msgstr "주의: 현재 채널에 %d 항목을 구독하고 있습니다. 이 채널은 계속 사용하고 있습니다."
 
-#: ../..//portable/singleclick.py:154
+#: ../..//portable/singleclick.py:190
 msgid "Subscription error"
 msgstr "구독 오류"
 
-#: ../..//portable/singleclick.py:164
+#: ../..//portable/singleclick.py:200
 msgid ""
 "This $shortAppName channel file has an invalid format: $url. Please notify "
 "the publisher of this file."
 msgstr ""
 
-#: ../..//portable/singleclick.py:172
+#: ../..//portable/singleclick.py:208
 msgid ""
 "This $shortAppName channel file has the wrong content type: $url. Please "
 "notify the publisher of this file."
 msgstr ""
 
-#: ../..//portable/singleclick.py:176
+#: ../..//portable/singleclick.py:212
 msgid "Could not download the $shortAppName channel file: $url."
 msgstr ""
 
-#: ../..//portable/singleclick.py:212
+#: ../..//portable/singleclick.py:251
 msgid "Invalid Torrent"
 msgstr "유효하지 않은 토런트"
 
-#: ../..//portable/singleclick.py:213
+#: ../..//portable/singleclick.py:252
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
 msgstr "토런트 파일 %s가 파손됐거나 열 수 없습니다. [확인]"
 
-#: ../..//portable/storedatabase.py:808 ../..//portable/storedatabase.py:1169
+#: ../..//portable/storedatabase.py:828 ../..//portable/storedatabase.py:1189
 #, python-format
 msgid "%s database save succeeded"
 msgstr "%s 데이터베이스 저장 완료"
 
-#: ../..//portable/storedatabase.py:809 ../..//portable/storedatabase.py:1170
+#: ../..//portable/storedatabase.py:829 ../..//portable/storedatabase.py:1190
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "데이터베이스를 저장했습니다. 데이터 분실 없이 안전하게 종료할 수 있습니다."
 
-#: ../..//portable/storedatabase.py:816 ../..//portable/storedatabase.py:1178
+#: ../..//portable/storedatabase.py:836 ../..//portable/storedatabase.py:1198
 #, python-format
 msgid "%s database save failed"
 msgstr "%s 데이터베이스 저장 실패"
 
-#: ../..//portable/storedatabase.py:817 ../..//portable/storedatabase.py:1179
+#: ../..//portable/storedatabase.py:837 ../..//portable/storedatabase.py:1199
 #, python-format
 msgid ""
 "%s was unable to save its database: Disk Full.\n"
@@ -1910,54 +1920,54 @@ msgstr ""
 "저장 공간 일부를 삭제하거나 저장된 다른 동영상 파일을 삭제하세요.\n"
 "최근 변경 사항은 저장 되지 않습니다."
 
-#: ../..//portable/tabs.py:26
+#: ../..//portable/tabs.py:43
 msgid "Library"
 msgstr ""
 
-#: ../..//portable/tabs.py:27
+#: ../..//portable/tabs.py:44
 msgid "New"
 msgstr ""
 
-#: ../..//portable/tabs.py:29
+#: ../..//portable/tabs.py:46
 msgid "Downloading"
 msgstr "다운로드 중"
 
-#: ../..//portable/util.py:388
+#: ../..//portable/util.py:405
 #, python-format
 msgid "%1.1fGB"
 msgstr "%1.1fGB"
 
-#: ../..//portable/util.py:390
+#: ../..//portable/util.py:407
 #, python-format
 msgid "%dGB"
 msgstr ""
 
-#: ../..//portable/util.py:394
+#: ../..//portable/util.py:411
 #, python-format
 msgid "%1.1fMB"
 msgstr "%1.1fMB"
 
-#: ../..//portable/util.py:396
+#: ../..//portable/util.py:413
 #, python-format
 msgid "%dMB"
 msgstr ""
 
-#: ../..//portable/util.py:400
+#: ../..//portable/util.py:417
 #, python-format
 msgid "%1.1fKB"
 msgstr "%1.1fKB"
 
-#: ../..//portable/util.py:402
+#: ../..//portable/util.py:419
 #, python-format
 msgid "%dKB"
 msgstr ""
 
-#: ../..//portable/util.py:406
+#: ../..//portable/util.py:423
 #, python-format
 msgid "%1.1fB"
 msgstr ""
 
-#: ../..//portable/util.py:408
+#: ../..//portable/util.py:425
 #, python-format
 msgid "%dB"
 msgstr ""
@@ -2503,6 +2513,9 @@ msgstr "질문"
 #~ msgid "Quit Democracy"
 #~ msgstr "Democracy 종료"
 
+#~ msgid "(You must restart Democracy for this change to take effect)\n"
+#~ msgstr "(변경 사항을 적용하려면 Democracy를 재시작 해야 합니다)\n"
+
 #~ msgid "Run Democracy at startup"
 #~ msgstr "시스템 시작 시 Democracy 실행"
 
@@ -2959,6 +2972,10 @@ msgstr "질문"
 #~ msgid "%0.0fB"
 #~ msgstr "%0.0fB"
 
+#, python-format
+#~ msgid "Deleting %s"
+#~ msgstr "%s 삭제"
+
 #~ msgid "Remove From My Collection"
 #~ msgstr "내 항목에서 삭제"
 
@@ -3008,6 +3025,9 @@ msgstr "질문"
 #~ "Democracy에 동작 가능한지 여부를 확인해 보시기 바랍니다.\n"
 #~ "\n"
 #~ "그래도 이 채널을 계속 읽으시겠습니까?"
+
+#~ msgid "Local File"
+#~ msgstr "로컬 파일"
 
 #, python-format
 #~ msgid ""

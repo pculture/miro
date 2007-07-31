@@ -1,7 +1,7 @@
-<!ENTITY searchchannel.description	"En søkekanal inneholder gjenstander som stemmer overens med et søk.">
+<!ENTITY searchchannel.description	"En søkekanal inneholder objekter som stemmer overens med et søk.">
 <!ENTITY searchchannel.termlabel 	"Søk etter:">
 <!ENTITY searchchannel.title            "Ny søkekanal">
-<!ENTITY searchchannel.inthis "In This:">
+<!ENTITY searchchannel.inthis "Her:">
 <!ENTITY searchchannel.channel "Kanal:">
 <!ENTITY searchchannel.searchengine "Søkemotor:">
 <!ENTITY searchchannel.url "URL:">

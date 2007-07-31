@@ -1,20 +1,20 @@
 <!ENTITY prefs.title "Einstellungen">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.runonstartup "$longAppName automatisch starten, wenn ich mich am Computer anmelde">
+<!ENTITY prefs.restart "(ACHTUNG: Änderungen werden erst nach einem Neustart von $longAppName wirksam.)">
 <!ENTITY prefs.title "Einstellungen">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
+<!ENTITY prefs.run.on.startup "$longAppName automatisch starten, wenn ich mich am Computer anmelde">
+<!ENTITY prefs.close_to_tray_start "Wenn ich auf den roten Schließen-Knopf klicke:">
+<!ENTITY prefs.close_to_tray "Ins Tray minimieren, damit Downloads im Hintergrund fortgesetzt werden können.">
+<!ENTITY prefs.no_close_to_tray "Miro komplett beenden">
 
-<!ENTITY prefs.general "Allgemein">
+<!ENTITY prefs.general "&Allgemein">
 
 <!ENTITY prefs.channels "Kanäle">
 <!ENTITY prefs.channels.check "Kanäle auf neue Inhalte überprüfen">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check.thirty "Alle 30 Minuten">
+<!ENTITY prefs.channels.check.sixty "Jede Stunde">
+<!ENTITY prefs.channels.check.manually "Manuell">
 
 <!ENTITY prefs.playback "Wiedergabe">
 <!ENTITY prefs.playback.remember.pos "Abspielposition merken.">
@@ -22,13 +22,13 @@
 <!ENTITY prefs.playback.stop.after.each "Nach jedem Video anhalten.">
 
 <!ENTITY prefs.folder.movies "Verzeichnis der Filme">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.downloads "Speichere heruntergeladene Videos in diesem Verzeichnis:">
 <!ENTITY prefs.folder.change "Ändern...">
 
 <!ENTITY prefs.folder.others.caption "In den folgenden Ordnern nach neuen Videos suchen und zu Meiner Sammlung hinzufügen:">
 <!ENTITY prefs.folder.others.location "Speicherort des Ordners">
 <!ENTITY prefs.folder.others.shown "Als Kanal anzeigen">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.add "Verzeichnis hinzufügen...">
 <!ENTITY prefs.folder.others.remove "Entfernen">
 
 <!ENTITY prefs.downloads.max "Downloads">
@@ -38,7 +38,7 @@
 <!ENTITY prefs.disk.space "Festplatten-Platz">
 <!ENTITY prefs.disk.space.min.part1 "Keine Downloads beginnen, wenn danach weniger Speicherplatz bleibt als">
 <!ENTITY prefs.disk.space.min.part2 "GB frei bleiben.">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "ACHTUNG: Diese Einstellung wird erst nach einen Neustart von $longAppName wirksam.">
 
 <!ENTITY prefs.videos.expire "Videos werden automatisch gelöscht nach">
 <!ENTITY prefs.videos.expire.one "1 Tag">
@@ -48,8 +48,8 @@
 <!ENTITY prefs.videos.expire.thirty "1 Monat">
 <!ENTITY prefs.videos.expire.never "Niemals">
 
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf begrenzen">
+<!ENTITY prefs.torrent.restart.warning "(ACHTUNG: Änderungen werden erst nach einem Neustart von $longAppName wirksam.)">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf %s begrenzen">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s, wenn mein Computer in Gebrauch ist.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent benutzt Ports zwischen">
 <!ENTITY prefs.torrent.uses.ports.part2 "und">
