@@ -42,7 +42,11 @@ class ChannelGuide(DDBObject):
         checkU(url)
         self.url = url
         self.title = None
+        self.lastVisitedURL = None
         DDBObject.__init__(self)
+
+    def onRestore(self):
+        self.lastVisitedURL = None
 
     def __str__(self):
         return "Miro Guide <%s>" % (self.url,)
@@ -65,6 +69,12 @@ class ChannelGuide(DDBObject):
             return self.url
         else:
             return config.get(prefs.CHANNEL_GUIDE_URL)
+
+    def getLastVisitedURL(self):
+        if self.lastVisitedURL is not None:
+            return self.lastVisitedURL
+        else:
+            return self.getURL()
 
     def getDefault(self):
         return self.url is None

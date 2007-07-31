@@ -1159,6 +1159,17 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             self.guideHost = None
             self.guideURL = None
 
+    @eventloop.asIdle
+    def setLastVisitedGuideURL(self, url):
+        selectedTabs = self.selection.getSelectedTabs()
+        selectedObjects = [t.obj for t in selectedTabs]
+        if (len(selectedTabs) != 1 or 
+                not isinstance(selectedObjects[0], guide.ChannelGuide)):
+            logging.warn("setLastVisitedGuideURL called, but a channelguide "
+                    "isn't selected.  Selection: %s" % selectedObjects)
+            return
+        selectedObjects[0].lastVisitedURL = url
+
     def onShutdown(self):
         try:
             self.databaseIsSetup.wait()
@@ -1494,6 +1505,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
             # Let channel guide URLs pass through
             if (controller.guideHost is not None and
                     urlparse(url)[1].endswith(controller.guideHost)):
+                controller.setLastVisitedGuideURL(url)
                 return True
             if url.startswith(u'file://'):
                 path = url[len(u"file://"):]
