@@ -81,6 +81,7 @@ import menubar # Needed because the XUL port only includes this in pybridge
 from gtcache import gettext as _
 from gtcache import ngettext
 from clock import clock
+from urlparse import urlparse
 
 # Global Controller singleton
 controller = None
@@ -611,6 +612,7 @@ class Controller (frontend.Application):
         delegate = frontend.UIBackendDelegate()
         self.frame = None
         self.inQuit = False
+        self.guideHost = None
         self.guideURL = None
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
         self.finishedStartup = False
@@ -1150,7 +1152,12 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         platform code.  URLs that begin with guideURL will be allow through in
         onURLLoad().
         """
-        self.guideURL = guideURL
+        if guideURL is not None:
+            self.guideHost = urlparse(guideURL)[1]
+            self.guideURL = guideURL
+        else:
+            self.guideHost = None
+            self.guideURL = None
 
     def onShutdown(self):
         try:
@@ -1359,6 +1366,10 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         for i in selected:
             i.startUpload()
 
+    def newDownload(self, url = None):
+        return GUIActionHandler().addDownload(url)
+        
+
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
 ###############################################################################
@@ -1481,8 +1492,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return False
 
             # Let channel guide URLs pass through
-            if (controller.guideURL is not None and
-                    url.startswith(controller.guideURL)):
+            if (controller.guideHost is not None and
+                    urlparse(url)[1].endswith(controller.guideHost)):
                 return True
             if url.startswith(u'file://'):
                 path = url[len(u"file://"):]
@@ -1913,6 +1924,12 @@ class GUIActionHandler:
             if selected == '1':
                 controller.selection.selectTabByObject(myGuide)
         self.addURL (Template(_("$shortAppName - Add Miro Guide")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME)), _("Enter the URL of the Miro Guide to add"), doAdd, url)
+
+    def addDownload(self, url = None):
+        def doAdd(url):
+            db.confirmDBThread()
+            singleclick.downloadURL(platformutils.unicodeToFilename(url))
+        self.addURL (Template(_("$shortAppName - Download Video")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME)), _("Enter the URL of the video to download"), doAdd, url)
 
     def handleDrop(self, data, type, sourcedata):
         controller.handleDrop(data, type, sourcedata)
