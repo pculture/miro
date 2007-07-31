@@ -8,7 +8,7 @@
 <!ENTITY prefs.close_to_tray "Ins Tray minimieren, damit Downloads im Hintergrund fortgesetzt werden können.">
 <!ENTITY prefs.no_close_to_tray "Miro komplett beenden">
 
-<!ENTITY prefs.general "&Allgemein">
+<!ENTITY prefs.general "Allgemein">
 
 <!ENTITY prefs.channels "Kanäle">
 <!ENTITY prefs.channels.check "Kanäle auf neue Inhalte überprüfen">
@@ -49,7 +49,7 @@
 <!ENTITY prefs.videos.expire.never "Niemals">
 
 <!ENTITY prefs.torrent.restart.warning "(ACHTUNG: Änderungen werden erst nach einem Neustart von $longAppName wirksam.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf %s begrenzen">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf begrenzen">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s, wenn mein Computer in Gebrauch ist.">
 <!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent benutzt Ports zwischen">
 <!ENTITY prefs.torrent.uses.ports.part2 "und">

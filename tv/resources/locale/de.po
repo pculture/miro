@@ -700,7 +700,7 @@ msgstr "Gib die URL von dem Channel ein den Du abonnieren möchtest."
 #: ../..//platform/osx/frontend/Preferences.py:38
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "General"
-msgstr "&Allgemein"
+msgstr "Allgemein"
 
 #: ../..//platform/osx/frontend/Preferences.py:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
@@ -2305,7 +2305,7 @@ msgstr ""
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "To avoid slowdowns, limit upstream to"
 msgstr ""
-"Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf %s "
+"Um eine Verlangsamung der Internetverbindung zu vermeiden, Upload auf "
 "begrenzen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
