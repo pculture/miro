@@ -464,9 +464,10 @@ class ChannelGuideSchema(DDBObjectSchema):
     classString = 'channel-guide'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL(noneOk=True)),
+        ('title', SchemaString(noneOk=True)),
     ]
 
-VERSION = 50
+VERSION = 51
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

@@ -727,6 +727,15 @@ def upgrade50(objectList):
                 changed.add(o)
     return changed
 
+def upgrade51(objectList):
+    """Added title field to channel guides"""
+    changed = set()
+    for o in objectList:
+        if o.classString in ('channel-guide'):
+            o.savedData['title'] = None
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
