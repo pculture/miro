@@ -259,9 +259,15 @@ xlib_ext = \
 xine_options = parsePkgConfig('pkg-config', 
         'libxine pygtk-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
 xine_ext = Extension('miro.xine', [
-        os.path.join(xine_dir, 'xine.pyx'),
-        os.path.join(xine_dir, 'xine_impl.c'),
-        ], **xine_options)
+                         os.path.join(xine_dir, 'xine.pyx'),
+                         os.path.join(xine_dir, 'xine_impl.c'),
+                         ],
+                     # If you get XINE crashes, please comment this out
+                     #
+                     # We have a horrible workaround for buggy X
+                     # drivers in xine_impl.c controled by this variable
+                     define_macros=[('INCLUDE_XINE_DRIVER_HACK', '1')],
+                     **xine_options)
 
 #### Build the data_files list ####
 def listfiles(path):

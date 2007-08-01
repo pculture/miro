@@ -24,6 +24,7 @@ import eventloop
 import config
 import prefs
 import os
+import frontend
 from download_utils import nextFreeFilename
 
 def waitForAttach(func):
@@ -58,7 +59,7 @@ class Renderer(app.VideoRenderer):
         # flush gdk output to ensure that our window is created
         gtk.gdk.flush()
         displayName = gtk.gdk.display_get_default().get_name()
-        self.xine.attach(displayName, widget.window.xid)
+        self.xine.attach(displayName, widget.window.xid, int(frontend.shouldSyncX))
         self.attached = True
         for func, args in self.attachQueue:
             try:

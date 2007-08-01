@@ -18,6 +18,9 @@
 import os
 import config
 import prefs
+import sys
+
+shouldSyncX = '--sync' in sys.argv
 
 # Switch to a dummy frontend in the case we're running tests and
 # DISPLAY isn't set

@@ -35,7 +35,6 @@
 #include <string.h>
 #include "xine_impl.h"
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <xine/video_out.h>
 
 const char *viz_available (_Xine* xine, const char *viz)
 {
@@ -226,7 +225,7 @@ void _xineSwitchToNormal(_Xine* xine)
   xine->viz = NULL;
 }
 
-void xineAttach(_Xine* xine, const char* displayName, Drawable d)
+void xineAttach(_Xine* xine, const char* displayName, Drawable d, int sync)
 {
     x11_visual_t vis;
     double screenWidth, screenHeight;
@@ -239,6 +238,8 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d)
     xine->drawable = d;
 
     xine->display = XOpenDisplay(displayName);
+    XSynchronize(xine->display, sync);
+
     xine->screen = XDefaultScreen(xine->display);
     screenWidth = (DisplayWidth(xine->display, xine->screen) * 1000 /
             DisplayWidthMM(xine->display, xine->screen));
@@ -279,18 +280,23 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d)
 void xineDetach(_Xine* xine)
 {
     xine_event_queue_t* eventQueue;
+    xv_driver_t* driver;
+    xine_list_iterator_t ite;
 
     if(!xine->attached) return;
 
-    // FIXME-maybe? Commenting out xine_port_send_gui_data(),
-    // xine_close_audio_driver(), and xine_close_video_driver()
-    // prevents X error in #7132 on my Debian Etch box, but causes
-    // #8349  --NN
+    // HACK ALERT!  For some reason, setting the XV port attributes
+    //causes problems with certain xine-lib/X11 combinations this
+    //caused #7132
 
-    // This was a XINE_GUI_SEND_SELECT_VISUAL, but that was crashing
-    // See ticket #3649
-    xine_port_send_gui_data(xine->videoPort,
-    		    XINE_GUI_SEND_WILL_DESTROY_DRAWABLE, NULL);
+#ifdef INCLUDE_XINE_DRIVER_HACK
+    driver = (xv_driver_t*)xine->videoPort->driver;
+  
+    while ((ite = xine_list_front(driver->port_attributes)) != NULL) {
+      xine_list_remove (driver->port_attributes, ite);
+    }
+#endif
+
     xine_close(xine->stream);
     xine_dispose(xine->stream);
     xine_close_audio_driver(xine->xine, xine->audioPort);

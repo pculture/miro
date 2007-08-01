@@ -30,8 +30,100 @@
 
 #include <glib.h>
 #include <X11/Xlib.h>
+#include <X11/extensions/XShm.h>
+#include <X11/extensions/Xvlib.h>
+#include <X11/Xutil.h>
+
 #define XINE_ENABLE_EXPERIMENTAL_FEATURES 1
-#include <xine.h>
+#include <xine/video_out.h>
+#include <xine/list.h>
+#include <xine/configfile.h>
+#include <xine/vo_scale.h>
+#include <xine/alphablend.h>
+
+// Taken from XINE headers
+typedef struct x11osd x11osd;
+
+typedef struct xv_driver_s xv_driver_t;
+
+typedef struct {
+  vo_frame_t         vo_frame;
+
+  int                width, height, format;
+  double             ratio;
+
+  XvImage           *image;
+  XShmSegmentInfo    shminfo;
+
+} xv_frame_t;
+
+typedef struct {
+  int                value;
+  int                min;
+  int                max;
+  Atom               atom;
+
+  cfg_entry_t       *entry;
+
+  xv_driver_t       *this;
+} xv_property_t;
+
+
+struct xv_driver_s {
+
+  vo_driver_t        vo_driver;
+
+  config_values_t   *config;
+
+  /* X11 / Xv related stuff */
+  Display           *display;
+  int                screen;
+  Drawable           drawable;
+  unsigned int       xv_format_yv12;
+  unsigned int       xv_format_yuy2;
+  XVisualInfo        vinfo;
+  GC                 gc;
+  XvPortID           xv_port;
+  XColor             black;
+
+  int                use_shm;
+  int                use_pitch_alignment;
+  xv_property_t      props[VO_NUM_PROPERTIES];
+  uint32_t           capabilities;
+
+  int                ovl_changed;
+  xv_frame_t        *recent_frames[VO_NUM_RECENT_FRAMES];
+  xv_frame_t        *cur_frame;
+  x11osd            *xoverlay;
+
+  /* all scaling information goes here */
+  vo_scale_t         sc;
+
+  xv_frame_t         deinterlace_frame;
+  int                deinterlace_method;
+  int                deinterlace_enabled;
+
+  int                use_colorkey;
+  uint32_t           colorkey;
+
+  /* hold initial port attributes values to restore on exit */
+  xine_list_t       *port_attributes;
+
+  int              (*x11_old_error_handler)  (Display *, XErrorEvent *);
+
+  xine_t            *xine;
+
+  alphablend_t       alphablend_extra_data;
+
+  void             (*lock_display) (void *);
+
+  void             (*unlock_display) (void *);
+
+  void              *user_data;
+
+};
+
+//End structures taken from internal xine headers
 
 typedef struct {
     GMutex* lock;
@@ -73,6 +165,8 @@ typedef struct {
     } data_mine;
 } _Xine;
 
+
+
 /* Construct a Xine object */
 _Xine* xineCreate(xine_event_listener_cb_t event_callback, 
         void* event_callback_data);
@@ -81,7 +175,7 @@ _Xine* xineCreate(xine_event_listener_cb_t event_callback,
 void xineDestroy(_Xine* xine);
 
 /* Set the X drawble that Xine outputs to */
-void xineAttach(_Xine* xine, const char* displayName, Drawable d);
+void xineAttach(_Xine* xine, const char* displayName, Drawable d, int sync);
 
 /* Set the area that xine will draw to
 
