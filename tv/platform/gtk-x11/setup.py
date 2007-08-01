@@ -448,7 +448,7 @@ class bdist_deb (Command):
         os.system(dpkg_command)
         dir_util.remove_tree(self.bdist_dir)
 
-print "IS_FILE: %s" % repr(os.path.isfile(os.path.join(platform_dir, "miro.real")))
+#print "IS_FILE: %s" % repr(os.path.isfile(os.path.join(platform_dir, "miro.real")))
 
 #### Run setup ####
 setup(name='miro', 
