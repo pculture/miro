@@ -282,14 +282,18 @@ void xineDetach(_Xine* xine)
 
     if(!xine->attached) return;
 
+    // FIXME-maybe? I commented out xine_port_send_gui_data(),
+    // xine_close_audio_driver(), and xine_close_video_driver()
+    // because I get an X error on my Debian Etach box. See #7132
+
     // This was a XINE_GUI_SEND_SELECT_VISUAL, but that was crashing
     // See ticket #3649
-    xine_port_send_gui_data(xine->videoPort,
-			    XINE_GUI_SEND_WILL_DESTROY_DRAWABLE, NULL);
+    //xine_port_send_gui_data(xine->videoPort,
+    //		    XINE_GUI_SEND_WILL_DESTROY_DRAWABLE, NULL);
     xine_close(xine->stream);
     xine_dispose(xine->stream);
-    xine_close_audio_driver(xine->xine, xine->audioPort);
-    xine_close_video_driver(xine->xine, xine->videoPort);
+    //xine_close_audio_driver(xine->xine, xine->audioPort);
+    //xine_close_video_driver(xine->xine, xine->videoPort);
     XCloseDisplay(xine->display);
     xine->attached = 0;
 
