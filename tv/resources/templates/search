@@ -55,11 +55,15 @@ searchItems.unlink()
         <div id="main-container">
             <div t:updateForView="searchFeed">
                 <div class="search-message" t:showIf="feed.getStatus() == 'idle-empty'">
-                    <span i18n:translate="">Nothing to display.<br />
+                    <span i18n:translate="">No videos found.<br />
                     Enter a query in the search field above.</span>
                 </div>
                 <div class="search-message" t:showIf="feed.getStatus() == 'searching'">
                     <span i18n:translate="">Searching...</span>
+                </div>
+                <div class="search-message" t:showIf="feed.getStatus() == 'idle-no-results'">
+                    <span i18n:translate="">No matching videos found.<br />
+                        Enter a different query in the search field above.</span>
                 </div>
                 <div class="search-results-bar" t:showIf="feed.getStatus() == 'idle-with-results'">
 			<div id="results-text" i18n:translate="">Results for 

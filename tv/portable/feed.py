@@ -1993,6 +1993,8 @@ class SearchFeedImpl (RSSFeedImpl):
             status =  u'searching'
         elif len(self.items) > 0:
             status =  u'idle-with-results'
+        elif self.url:
+            status = u'idle-no-results'
         return status
 
     def reset(self, url=u'', searchState=False):
