@@ -315,6 +315,9 @@ class ManagedWebView (NSObject):
             filenames = panel.filenames()
             listener.chooseFilename_(filenames[0])
 
+    def webView_runJavaScriptAlertPanelWithMessage_(self, webview, message):
+        logging.jsalert(message)
+
     # Return the actual WebView that we're managing
     def getView(self):
         return self.view
