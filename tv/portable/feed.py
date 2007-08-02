@@ -31,7 +31,7 @@ from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, urlencode,
 import os
 import string
 import re
-import traceback 
+import traceback
 import xml
 
 from database import defaultDatabase, DatabaseConstraintError
@@ -47,6 +47,7 @@ import folder
 import menu
 import prefs
 import resources
+import downloader
 from util import returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL
 from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
 import filetypes
@@ -2022,6 +2023,33 @@ class SearchFeedImpl (RSSFeedImpl):
         self.lastEngine = engine
         self.update()
         self.ufeed.signalChange()
+
+    def _handleNewEntry(self, entry):
+        """Handle getting a new entry from a feed."""
+        videoEnc = getFirstVideoEnclosure(entry)
+        if videoEnc is not None:
+            url = videoEnc.get('url')
+            if url is not None:
+                dl = downloader.getExistingDownloaderByURL(url)
+                if dl is not None:
+                    for item in dl.itemList:
+                        if item.getFeedURL() == 'dtv:searchDownloads' and item.getURL() == url:
+                            try:
+                                if entry["id"] == item.getRSSID():
+                                    item.setFeed(self.ufeed.id)
+                                    if not _entry_equal(entry, item.getRSSEntry()):
+                                        self._handleNewEntryForItem(item, entry)
+                                    return
+                            except KeyError:
+                                pass
+                            title = entry.get("title")
+                            oldtitle = item.entry.get("title")
+                            if title == oldtitle:
+                                item.setFeed(self.ufeed.id)
+                                if not _entry_equal(entry, item.getRSSEntry()):
+                                    self._handleNewEntryForItem(item, entry)
+                                return
+        RSSFeedImpl._handleNewEntry(self, entry)
 
     def updateUsingParsed(self, parsed):
         self.searching = False

@@ -616,6 +616,10 @@ def shutdownDownloader(callback = None):
 def lookupDownloader(url):
     return views.remoteDownloads.getItemWithIndex(indexes.downloadsByURL, url)
 
+def getExistingDownloaderByURL(url):
+    downloader = lookupDownloader(url)
+    return downloader
+
 def getExistingDownloader(item):
     downloader = lookupDownloader(item.getURL())
     if downloader:

@@ -736,6 +736,87 @@ def upgrade51(objectList):
             changed.add(o)
     return changed
 
+def upgrade52(objectList):
+    import filetypes
+    changed = set()
+    removed = set()
+    search_id = 0
+    downloads_id = 0
+
+    def getVideoInfo(o):
+        """Find the first video enclosure in a feedparser entry.  Returns the
+        enclosure, or None if no video enclosure is found.
+        """
+        entry = o.savedData['entry']
+        enc = None
+        try:
+            enclosures = entry.enclosures
+        except (KeyError, AttributeError):
+            pass
+        else:
+            for enclosure in enclosures:
+                if filetypes.isVideoEnclosure(enclosure):
+                    enc = enclosure
+        if enc is not None:
+            url = enc.get('url')
+        else:
+            url = None
+        id = entry.get('id')
+        id = entry.get('guid', id)
+        title = entry.get('title')
+        return (url, id, title)
+
+
+    for o in objectList:
+        if o.classString == 'feed':
+            feedImpl = o.savedData['actualFeed']
+            if feedImpl.classString == 'search-feed-impl':
+                search_id = o.savedData['id']
+            elif feedImpl.classString == 'search-downloads-feed-impl':
+                downloads_id = o.savedData['id']
+
+    items_by_idURL = {}
+    items_by_titleURL = {}
+    if search_id != 0:
+        for o in objectList:
+            if o.classString == 'item':
+                if o.savedData['feed_id'] == search_id:
+                    (url, id, title) = getVideoInfo(o)
+                    if url and id:
+                        items_by_idURL[(id, url)] = o
+                    if url and title:
+                        items_by_titleURL[(title, url)] = o
+    if downloads_id != 0:
+        for i in xrange (len(objectList) - 1, -1, -1):
+            o = objectList [i]
+            if o.classString == 'item':
+                if o.savedData['feed_id'] == downloads_id:
+                    remove = False
+                    (url, id, title) = getVideoInfo(o)
+                    if url and id:
+                        if items_by_idURL.has_key((id, url)):
+                            remove = True
+                        else:
+                            items_by_idURL[(id, url)] = o
+                    if url and title:
+                        if items_by_titleURL.has_key((title, url)):
+                            remove = True
+                        else:
+                            items_by_titleURL[(title, url)] = o
+                    if remove:
+                        removed.add (o.savedData['id'])
+                        changed.add(o)
+                        del objectList[i]
+
+        for i in xrange (len(objectList) - 1, -1, -1):
+            o = objectList [i]
+            if o.classString == 'file-item':
+                if o.savedData['parent_id'] in removed:
+                    changed.add(o)
+                    del objectList[i]
+    return changed
+                        
+        
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
