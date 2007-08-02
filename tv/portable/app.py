@@ -1727,7 +1727,6 @@ class ModelActionHandler:
         obj = db.getObjectByID(int(item))
         filename = obj.getFilename()
         self.backEndDelegate.revealFile(filename)
-        obj.save()
 
     def clearTorrents (self):
         items = views.items.filter(lambda x: x.getFeed().url == u'dtv:manualFeed' and x.isNonVideoFile() and not x.getState() == u"downloading")
