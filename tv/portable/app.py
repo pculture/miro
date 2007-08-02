@@ -24,7 +24,7 @@ db = database.defaultDatabase
 import views
 import indexes
 import sorts
-import filters
+# import filters
 import maps
 
 import menu
@@ -53,13 +53,13 @@ import searchengines
 
 import os
 import re
-import sys
+# import sys
 import cgi
-import copy
-import time
-import types
-import random
-import datetime
+# import copy
+# import time
+# import types
+# import random
+# import datetime
 import traceback
 import threading
 import platform
@@ -75,7 +75,7 @@ from string import Template
 # Something needs to import this outside of Pyrex. Might as well be app
 import templatehelper
 import databasehelper
-import fasttypes
+# import fasttypes
 import urllib
 import menubar # Needed because the XUL port only includes this in pybridge
 from gtcache import gettext as _
@@ -1387,7 +1387,10 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
     def __init__(self, templateName, templateState, frameHint=None, areaHint=None, 
             baseURL=None, *args, **kargs):
-        "'templateName' is the name of the inital template file. 'data' is keys for the template. 'templateState' is a string with the state of the template"
+        """'templateName' is the name of the inital template file.  'data' is
+        keys for the template. 'templateState' is a string with the state of the
+        template.
+        """
 
         logging.debug ("Processing %s", templateName)
         self.templateName = templateName
@@ -1411,6 +1414,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
         if newPage:
             self.templateHandle.unlinkTemplate()
+            # FIXME - url is undefined here!
             self.__init__(re.compile(r"^template:(.*)$").match(url).group(1), frameHint, areaHint, baseURL)
         else:
             frontend.HTMLDisplay.__init__(self, html, frameHint=frameHint, areaHint=areaHint, baseURL=baseURL)
