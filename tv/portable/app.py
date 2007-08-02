@@ -615,6 +615,7 @@ class Controller (frontend.Application):
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
         self.finishedStartup = False
         self.databaseIsSetup = threading.Event()
+        self.idlingNotifier = None
 
     ### Startup and shutdown ###
 
@@ -726,8 +727,6 @@ class Controller (frontend.Application):
                 logging.info ("Spawning idle notifier")
                 self.idlingNotifier = idlenotifier.IdleNotifier(self)
                 self.idlingNotifier.start()
-            else:
-                self.idlingNotifier = None
 
             # Set up the playback controller
             self.playbackController = frontend.PlaybackController()
@@ -810,11 +809,10 @@ class Controller (frontend.Application):
 You have a database that was saved with a newer version of $shortAppName. \
 You must download the latest version of $shortAppName and run that.""")).substitute(shortAppName = config.get(prefs.SHORT_APP_NAME))
             def callback(dialog):
+                self.databaseIsSetup.set()
                 eventloop.quit()
                 frontend.quit()
             dialogs.MessageBoxDialog(title, description).run(callback)
-            logging.info ("Starting event loop thread")
-            eventloop.startup()
         except:
             util.failedExn("while finishing starting up")
             frontend.exit(1)
