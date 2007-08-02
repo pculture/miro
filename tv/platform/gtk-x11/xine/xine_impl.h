@@ -41,6 +41,7 @@
 #include <xine/alphablend.h>
 
 // Taken from XINE headers
+#ifdef INCLUDE_XINE_DRIVER_HACK
 typedef struct xine_list_s xine_list_t;
 typedef void* xine_list_iterator_t;
 
@@ -129,6 +130,7 @@ struct xv_driver_s {
   void              *user_data;
 
 };
+#endif
 
 //End structures taken from internal xine headers
 
