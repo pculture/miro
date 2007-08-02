@@ -253,6 +253,26 @@ class ManagedWebView (NSObject):
             scriptObj = self.view.windowScriptObject()
             scriptObj.setValue_forKey_(self, u'frontend')
 
+    def webView_didFailProvisionalLoadWithError_forFrame_(self, webview, error, frame):
+        urlError = (error.domain() == NSURLErrorDomain)
+        certError = (error.code() in (NSURLErrorServerCertificateHasBadDate, 
+                                      NSURLErrorServerCertificateHasUnknownRoot, 
+                                      NSURLErrorServerCertificateUntrusted))
+
+        if urlError and certError:
+            request = frame.provisionalDataSource().request()
+            if request is nil:
+                request = frame.dataSource().request()
+            url = request.URL()
+            if url.absoluteString() == config.get(prefs.CHANNEL_GUIDE_URL):
+                # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
+                # not documented anywhere, so I assume it is not public. It is however 
+                # a very clean and easy way to allow us to load our channel guide from
+                # https, so let's use it here anyway :)
+                NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, url.host())
+                # Now reload
+                frame.loadRequest_(request)
+
     # Intercept navigation actions and give program a chance to respond
     def webView_decidePolicyForNavigationAction_request_frame_decisionListener_(self, webview, action, request, frame, listener):
         platformutils.warnIfNotOnMainThread('ManagedWebView.webView_decidePolicyForNavigationAction_request_frame_decisionListener_')

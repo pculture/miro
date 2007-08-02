@@ -117,14 +117,6 @@ class AppController (NibClassBuilder.AutoBaseClass):
         self.emergencyShutdown = False
         
     def applicationDidFinishLaunching_(self, notification):
-        # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
-        # not documented anywhere, so I assume it is not public. It is however 
-        # a very clean and easy way to allow us to load our channel guide from
-        # https, so let's use it here anyway :)
-        components = urlparse.urlparse(config.get(prefs.CHANNEL_GUIDE_URL))
-        channelGuideHost = components[1]
-        NSURLRequest.setAllowsAnyHTTPSCertificate_forHost_(YES, unicode(channelGuideHost))
-
         # Startup
         app.controller.onStartup()
 
