@@ -320,7 +320,7 @@ class AsyncSocket(object):
             if rv == 0:
                 trapCall(self, callback, self)
             else:
-                msg = errno.errorcode[rv]
+                msg = errno.errorcode.get(rv, _('Unknown Error code'))
                 trapCall(self, errback, ConnectionError(msg))
             self.connectionErrback = None
         def onWriteTimeout():
