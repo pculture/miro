@@ -16,7 +16,6 @@
 #include <string.h>
 #include "xine_impl.h"
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <xine/video_out.h>
 
 const char *viz_available (_Xine* xine, const char *viz)
 {
@@ -57,6 +56,43 @@ static void build_tables() {
   }
   tables_initialized = 1;
 }
+
+#ifdef INCLUDE_XINE_DRIVER_HACK
+static void miro_xine_list_recycle_elem(xine_list_t *list,  xine_list_elem_t *elem) {
+  elem->next = list->free_elem_list;
+  elem->prev = NULL;
+
+  list->free_elem_list = elem;
+  list->free_elem_list_size++;
+}
+
+
+void miro_xine_list_remove(xine_list_t *list, xine_list_iterator_t position) {
+  xine_list_elem_t *elem = (xine_list_elem_t*)position;
+
+  if (elem) {
+    xine_list_elem_t *prev = elem->prev;
+    xine_list_elem_t *next = elem->next;
+
+    if (prev)
+      prev->next = next;
+    else
+      list->elem_list_front = next;
+
+    if (next)
+      next->prev = prev;
+    else
+      list->elem_list_back = prev;
+
+    miro_xine_list_recycle_elem(list, elem);
+    list->elem_list_size--;
+  }
+}
+
+xine_list_iterator_t miro_xine_list_front(xine_list_t *list) {
+  return list->elem_list_front;
+}
+#endif
 
 void _make_new_data_mine(_Xine* xine) {
     xine->data_mine.videoPort = xine_open_video_driver(xine->data_mine.xine, "none", XINE_VISUAL_TYPE_NONE, NULL);
@@ -207,7 +243,7 @@ void _xineSwitchToNormal(_Xine* xine)
   xine->viz = NULL;
 }
 
-void xineAttach(_Xine* xine, const char* displayName, Drawable d)
+void xineAttach(_Xine* xine, const char* displayName, Drawable d, int sync)
 {
     x11_visual_t vis;
     double screenWidth, screenHeight;
@@ -220,6 +256,8 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d)
     xine->drawable = d;
 
     xine->display = XOpenDisplay(displayName);
+    XSynchronize(xine->display, sync);
+
     xine->screen = XDefaultScreen(xine->display);
     screenWidth = (DisplayWidth(xine->display, xine->screen) * 1000 /
             DisplayWidthMM(xine->display, xine->screen));
@@ -260,13 +298,24 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d)
 void xineDetach(_Xine* xine)
 {
     xine_event_queue_t* eventQueue;
+    xv_driver_t* driver;
 
     if(!xine->attached) return;
 
-    // This was a XINE_GUI_SEND_SELECT_VISUAL, but that was crashing
-    // See ticket #3649
-    xine_port_send_gui_data(xine->videoPort,
-			    XINE_GUI_SEND_WILL_DESTROY_DRAWABLE, NULL);
+    // HACK ALERT!  For some reason, setting the XV port attributes
+    //causes problems with certain xine-lib/X11 combinations this
+    //caused #7132
+
+#ifdef INCLUDE_XINE_DRIVER_HACK
+    xine_list_iterator_t ite;
+
+    driver = (xv_driver_t*)xine->videoPort->driver;
+  
+    while ((ite = miro_xine_list_front(driver->port_attributes)) != NULL) {
+      miro_xine_list_remove (driver->port_attributes, ite);
+    }
+#endif
+
     xine_close(xine->stream);
     xine_dispose(xine->stream);
     xine_close_audio_driver(xine->xine, xine->audioPort);

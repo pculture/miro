@@ -35,7 +35,7 @@ cdef extern from "xine_impl.h":
     _Xine* xineCreate(xine_event_listener_cb_t event_callback, 
             void* event_callback_data)
     void xineDestroy(_Xine* xine)
-    void xineAttach(_Xine* xine, char* displayName, Drawable d)
+    void xineAttach(_Xine* xine, char* displayName, Drawable d, int sync)
     void xineSetArea(_Xine* xine, int xpos, int ypos, int width, int height)
     void xineDetach(_Xine* xine)
     int xineCanPlayFile(_Xine* xine, char* filename)
@@ -64,8 +64,8 @@ cdef class Xine:
         self.eosCallback = None
     def __dealloc__(self):
         xineDestroy(self.xine)
-    def attach(self, char* displayName, int drawable):
-        xineAttach(self.xine, displayName, drawable)
+    def attach(self, char* displayName, int drawable, sync=0):
+        xineAttach(self.xine, displayName, drawable, sync)
     def detach(self):
         xineDetach(self.xine)
     def setArea(self, int xpos, int ypos, int width, int height):

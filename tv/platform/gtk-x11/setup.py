@@ -17,11 +17,36 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
+# This needs to be above Paths and configuration :(
+#
+# It currently looks for Debian 4.0 Etch and Ubuntu 7.04 Feisty
+def use_xine_hack_default():
+    try:
+        # Non-debian based system will throw an exception here
+        f = open('/etc/debian_version')
+        if f.read().strip() == '4.0': # Debian etch
+            f.close()
+            return True
+        else:
+            # Ubuntu Feisty is Debian based but lists testing/unstable
+            # in /etc/debian_version, so we check /etc/issue
+            f.close()
+            f = open('/etc/issue')
+            osname = f.read()
+            if (osname.find("Ubuntu") > -1) and (osname.find("7.04")>-1):
+                f.close()
+                return True
+    except:
+        pass
+    return False
+
 ##############################################################################
 ## Paths and configuration                                                   ##
 ###############################################################################
 
 BOOST_LIB = 'boost_python'
+
+USE_XINE_HACK = use_xine_hack_default()
 
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
@@ -244,10 +269,22 @@ xlib_ext = \
 #### Xine Extension ####
 xine_options = parsePkgConfig('pkg-config', 
         'libxine pygtk-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
+
+# If you get XINE crashes, uncommenting this might fix it. It's
+# necessary on Debian Etch and Ubuntu Feisty right now.
+#
+# We have a horrible workaround for buggy X drivers in xine_impl.c
+# controled by this variable
+if USE_XINE_HACK:
+    print "Using the Xine driver hack. If you experience trouble playing video,\n   try setting USE_XINE_HACK to False in setup.py."
+    if xine_options.has_key('define_macros'):
+        xine_options['define_macros'].append(('INCLUDE_XINE_DRIVER_HACK', '1'))
+    else:
+        xine_options['define_macros'] = [('INCLUDE_XINE_DRIVER_HACK', '1')]
 xine_ext = Extension('miro.xine', [
-        os.path.join(xine_dir, 'xine.pyx'),
-        os.path.join(xine_dir, 'xine_impl.c'),
-        ], **xine_options)
+                         os.path.join(xine_dir, 'xine.pyx'),
+                         os.path.join(xine_dir, 'xine_impl.c'),],
+                     **xine_options)
 
 #### Build the data_files list ####
 def listfiles(path):
