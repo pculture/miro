@@ -373,7 +373,7 @@ class Item(DDBObject):
         self.confirmDBThread()
         videoEnclosure = self.getFirstVideoEnclosure()
         if videoEnclosure is not None and 'url' in videoEnclosure:
-            return quoteUnicodeURL(videoEnclosure['url'])
+            return quoteUnicodeURL(videoEnclosure['url'].replace('+', '%20'))
         else:
             return u''
 
