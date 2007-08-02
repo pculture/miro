@@ -1613,6 +1613,13 @@ class ModelActionHandler:
         except database.ObjectNotFoundError:
             pass
 
+    def removeFeed(self, id):
+        try:
+            feed = db.getObjectByID(int(id))
+            controller.removeFeed(feed)
+        except database.ObjectNotFoundError:
+            pass
+
     def removeCurrentFeed(self):
         controller.removeCurrentFeed()
 

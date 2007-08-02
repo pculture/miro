@@ -9,7 +9,7 @@
 guide = views.guides.getObjectByID(int(kargs['id']))
 ]]></t:execOnLoad>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="refresh" content="0;url=***guide.getURL()***" />
+<meta http-equiv="refresh" content="0;url=***guide.getLastVisitedURL()***" />
 <link rel="stylesheet" type="text/css" href="resource:css/style.css" />
 </head>
 <body class="channel-guide-body">

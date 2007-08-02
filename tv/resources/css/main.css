@@ -79,6 +79,11 @@ img {
     top: 20px;
     color: #999;
     font-size: 11px;
+    text-align: right;
+}
+
+#channel-url a.remove-channel {
+    color: #f00;
 }
 
 .settings-small {
