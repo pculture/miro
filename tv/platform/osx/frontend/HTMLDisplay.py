@@ -221,14 +221,10 @@ class ManagedWebView (NSObject):
     def isKeyExcludedFromWebScript_(self,key):
         return YES
 
-    def isSelectorExcludedFromWebScript_(self,sel):
-        if (str(sel) == 'eventURL'):
-            return NO
-        else:
-            return YES
+    def isSelectorExcludedFromWebScript_(self, sel):
+        return (str(sel) != 'eventURL')
 
     def eventURL(self,url):
-        url = urllib.unquote(str(url)).decode('utf8')
         self.onLoadURL(url)
 
     def webView_contextMenuItemsForElement_defaultMenuItems_(self,webView,contextMenu,defaultMenuItems):
@@ -263,12 +259,12 @@ class ManagedWebView (NSObject):
         method = request.HTTPMethod()
         url = unicode(request.URL())
         body = request.HTTPBody()
-        type = action['WebActionNavigationTypeKey']
-        #print "policy %d for url %s" % (type, url)
+        ntype = action['WebActionNavigationTypeKey']
+        #print "policy %d for url %s" % (ntype, url)
         # setting document.location.href in Javascript (our preferred
         # method of triggering an action) comes out as an
         # WebNavigationTypeOther.
-        if type == WebNavigationTypeLinkClicked or type == WebNavigationTypeFormSubmitted or type == WebNavigationTypeOther:
+        if ntype in (WebNavigationTypeLinkClicked, WebNavigationTypeFormSubmitted, WebNavigationTypeOther):
             # Make sure we have a real, bona fide Python string, not an
             # NSString. Unfortunately, == can tell the difference.
             if (not self.onLoadURL) or self.onLoadURL(url):
