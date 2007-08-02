@@ -258,18 +258,23 @@ class mypy2app(py2app):
             print "    (all skipped, already bundled)"
         else:
             os.mkdir(prsrcRoot)
-            excludedRsrc = ['app.config.template', 'locale', 'testdata']
-            for resource in glob(os.path.join(root, 'resources/*')):
-                rsrcName = os.path.basename(resource)
-                if rsrcName not in excludedRsrc:
-                    if os.path.isdir(resource):
-                        dest = os.path.join(prsrcRoot, rsrcName)
-                        copy = shutil.copytree
-                    else:
-                        dest = os.path.join(prsrcRoot, rsrcName)
-                        copy = shutil.copy
-                    copy(resource, dest)
-                    print "    %s" % dest
+            for resource in ('css', 'images', 'searchengines', 'dtvapi.js', 'statictabs.xml'):
+                src = os.path.join(root, 'resources', resource)
+                rsrcName = os.path.basename(src)
+                if os.path.isdir(src):
+                    dest = os.path.join(prsrcRoot, rsrcName)
+                    copy = shutil.copytree
+                else:
+                    dest = os.path.join(prsrcRoot, rsrcName)
+                    copy = shutil.copy
+                copy(src, dest)
+                print "    %s" % dest
+            os.mkdir(os.path.join(prsrcRoot, 'templates'))
+            for js in glob(os.path.join(root, 'resources', 'templates/*.js')):
+                dest = os.path.join(prsrcRoot, 'templates', os.path.basename(js))
+                copy(js, dest)
+                print "    %s" % dest
+                
 
         # Install the final app.config file
 
