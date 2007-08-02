@@ -1,3 +1,10 @@
+miro (0.9.8.2-1ubuntupcf) dapper; urgency=low
+
+  * New Upstream release.
+  * Fixed xine crash.
+
+ -- Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>  Thu, 02 Aug 2007 15:21:21 -0400
+
 miro (0.9.8-3ubuntupcf) dapper; urgency=low
 
   * Even newer movies directory patch.
