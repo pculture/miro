@@ -667,10 +667,15 @@ class BTDownloader(BGDownloader):
             logging.exception ("DTV: Warning: Error shutting down torrent")
 
     def _startTorrent(self):
-        self.torrent = bittorrentdtv.TorrentDownload(self.metainfo,
-                self.filename, self.fastResumeData)
-        self.torrent.set_status_callback(self.updateStatus)
-        self.torrent.start()
+        try:
+            self.torrent = bittorrentdtv.TorrentDownload(self.metainfo,
+                    self.filename, self.fastResumeData)
+        except:
+            self.handleError(_('BitTorrent failure'), 
+                    _('BitTorrent failed to startup'))
+        else:
+            self.torrent.set_status_callback(self.updateStatus)
+            self.torrent.start()
 
     @eventloop.asIdle
     def updateStatus(self, newStatus):
