@@ -621,3 +621,18 @@ def call_command(*args):
     else:
         return stdout
 
+
+def getsize(path):
+    """Get the size of a path.  If it's a file, return the size of the file.
+    If it's a directory return the total size of all the files it contains.
+    """
+
+    if os.path.isdir(path):
+        size = 0
+        for (dirpath, dirnames, filenames) in os.walk(path):
+            for name in filenames:
+                size += os.path.getsize(os.path.join(dirpath, name))
+            size += os.path.getsize(dirpath)
+        return size
+    else:
+        return os.path.getsize(path)

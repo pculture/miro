@@ -1150,21 +1150,21 @@ folder will be deleted.""")
         return util.formatSizeForUser(self._size)
     
     ##
-    # Returns the size of the item. If the item has a corresponding downloaded 
-    # enclosure we use the pysical size of the file, otherwise we use the RSS 
-    # enclosure tag values.
+    # Returns the size of the item. We use the following methods to get the
+    # size:
+    #
+    # Physical size of a downloaded file
+    # HTTP content-length
+    # RSS enclosure tag value.
     def getSize(self):
         fname = self.getFilename()
-        if os.path.exists(fname):
-            if os.path.isdir(fname):
-                size = 0
-                for (dirpath, dirnames, filenames) in os.walk(fname):
-                    for name in filenames:
-                        size += os.path.getsize(os.path.join(dirpath, name))
-                    size += os.path.getsize(dirpath)
-                return size
-            else:
-                return os.path.getsize(fname)
+        if self.isDownloaded():
+            try:
+                return util.getsize(fname)
+            except OSError:
+                return 0
+        elif self.downloader is not None:
+            return self.downloader.getTotalSize()
         else:
             try:
                 return int(self.getFirstVideoEnclosure()['length'])
