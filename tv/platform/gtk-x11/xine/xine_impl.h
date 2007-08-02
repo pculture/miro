@@ -36,12 +36,19 @@
 
 #define XINE_ENABLE_EXPERIMENTAL_FEATURES 1
 #include <xine/video_out.h>
-#include <xine/list.h>
 #include <xine/configfile.h>
 #include <xine/vo_scale.h>
 #include <xine/alphablend.h>
 
 // Taken from XINE headers
+typedef struct xine_list_s xine_list_t;
+typedef void* xine_list_iterator_t;
+
+xine_list_iterator_t xine_list_front(xine_list_t *list);
+void xine_list_remove(xine_list_t *list, xine_list_iterator_t position);
+
+
+
 typedef struct x11osd x11osd;
 
 typedef struct xv_driver_s xv_driver_t;
