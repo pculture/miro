@@ -42,13 +42,40 @@
 
 // Taken from XINE headers
 #ifdef INCLUDE_XINE_DRIVER_HACK
+typedef struct xine_list_chunk_s xine_list_chunk_t;
 typedef struct xine_list_s xine_list_t;
 typedef void* xine_list_iterator_t;
+typedef struct xine_list_elem_s xine_list_elem_t;
 
-xine_list_iterator_t xine_list_front(xine_list_t *list);
-void xine_list_remove(xine_list_t *list, xine_list_iterator_t position);
+struct xine_list_chunk_s {
+  xine_list_chunk_t *next_chunk;            /* singly linked list of chunks */
 
+  xine_list_elem_t *elem_array;             /* the allocated elements */
+  int chunk_size;                          /* element count in the chunk */
+  int current_elem_id;                     /* next free elem in the chunk */
+};
 
+struct xine_list_s {
+  /* list of chunks */
+  xine_list_chunk_t *chunk_list;
+  size_t            chunk_list_size;
+  xine_list_chunk_t *last_chunk;
+
+  /* list elements */
+  xine_list_elem_t  *elem_list_front;
+  xine_list_elem_t  *elem_list_back;
+  size_t            elem_list_size;
+
+  /* list of free elements */
+  xine_list_elem_t  *free_elem_list;
+  size_t            free_elem_list_size;
+};
+
+struct xine_list_elem_s {
+  xine_list_elem_t *prev;
+  xine_list_elem_t *next;
+  void            *value;
+};
 
 typedef struct x11osd x11osd;
 
@@ -130,6 +157,10 @@ struct xv_driver_s {
   void              *user_data;
 
 };
+#else
+
+typedef vo_driver_t xv_driver_t;
+
 #endif
 
 //End structures taken from internal xine headers

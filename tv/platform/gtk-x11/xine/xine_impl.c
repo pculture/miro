@@ -76,6 +76,43 @@ static void build_tables() {
   tables_initialized = 1;
 }
 
+#ifdef INCLUDE_XINE_DRIVER_HACK
+static void miro_xine_list_recycle_elem(xine_list_t *list,  xine_list_elem_t *elem) {
+  elem->next = list->free_elem_list;
+  elem->prev = NULL;
+
+  list->free_elem_list = elem;
+  list->free_elem_list_size++;
+}
+
+
+void miro_xine_list_remove(xine_list_t *list, xine_list_iterator_t position) {
+  xine_list_elem_t *elem = (xine_list_elem_t*)position;
+
+  if (elem) {
+    xine_list_elem_t *prev = elem->prev;
+    xine_list_elem_t *next = elem->next;
+
+    if (prev)
+      prev->next = next;
+    else
+      list->elem_list_front = next;
+
+    if (next)
+      next->prev = prev;
+    else
+      list->elem_list_back = prev;
+
+    miro_xine_list_recycle_elem(list, elem);
+    list->elem_list_size--;
+  }
+}
+
+xine_list_iterator_t miro_xine_list_front(xine_list_t *list) {
+  return list->elem_list_front;
+}
+#endif
+
 void _make_new_data_mine(_Xine* xine) {
     xine->data_mine.videoPort = xine_open_video_driver(xine->data_mine.xine, "none", XINE_VISUAL_TYPE_NONE, NULL);
     xine->data_mine.audioPort = xine_open_audio_driver(xine->data_mine.xine, "none", NULL);
@@ -281,7 +318,6 @@ void xineDetach(_Xine* xine)
 {
     xine_event_queue_t* eventQueue;
     xv_driver_t* driver;
-    xine_list_iterator_t ite;
 
     if(!xine->attached) return;
 
@@ -290,10 +326,12 @@ void xineDetach(_Xine* xine)
     //caused #7132
 
 #ifdef INCLUDE_XINE_DRIVER_HACK
+    xine_list_iterator_t ite;
+
     driver = (xv_driver_t*)xine->videoPort->driver;
   
-    while ((ite = xine_list_front(driver->port_attributes)) != NULL) {
-      xine_list_remove (driver->port_attributes, ite);
+    while ((ite = miro_xine_list_front(driver->port_attributes)) != NULL) {
+      miro_xine_list_remove (driver->port_attributes, ite);
     }
 #endif
 
