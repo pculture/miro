@@ -35,7 +35,7 @@ def _setFeed(kargs):
 def _updateView ():
     global showNewItems, allItemsMode
 
-    showNewItems = (len(watchableItems) == 0) or len(newItems) > 0 or feed.getURL().startswith('dtv:directoryfeed')
+    showNewItems = (len(watchableItems) == 0) or (len(newItems) > 0 and feed.getAutoDownloadMode() == 'off') or feed.getURL().startswith('dtv:directoryfeed')
 
     if len(newItems) == 0:
         allItemsMode = True
