@@ -22,8 +22,10 @@ import eventloop
 import config
 import prefs
 import os
+import logging
 from download_utils import nextFreeFilename
-from gtk_queue import gtkAsyncMethod
+from platformutils import confirmMainThread
+from gtk_queue import gtkAsyncMethod, gtkSyncMethod
 
 from threading import Event
 
@@ -37,6 +39,7 @@ import gst.interfaces
 
 class Tester:
     def __init__(self, filename):
+        confirmMainThread()
         self.playbin = gst.element_factory_make('playbin')
         self.videosink = gst.element_factory_make("fakesink", "videosink")
         self.playbin.set_property("video-sink", self.videosink)
@@ -59,6 +62,7 @@ class Tester:
         return self.success
 
     def onBusMessage(self, bus, message):
+        confirmMainThread()
         if message.src == self.playbin:
             if message.type == gst.MESSAGE_STATE_CHANGED:
                 prev, new, pending = message.parse_state_changed()
@@ -71,6 +75,7 @@ class Tester:
                 self.done.set()
 
     def disconnect (self):
+        confirmMainThread()
         self.bus.disconnect (self.watch_id)
         self.playbin.set_state(gst.STATE_NULL)
         del self.bus
@@ -80,6 +85,7 @@ class Tester:
 
 class Extracter:
     def __init__(self, filename, thumbnail_filename, callback):
+        confirmMainThread()
         self.thumbnail_filename = thumbnail_filename
         self.grabit = False
         self.first_pause = True
@@ -104,9 +110,11 @@ class Extracter:
         self.pipeline.set_state(gst.STATE_PAUSED)
 
     def done (self):
+        confirmMainThread()
         self.callback(self.success)
 
     def onBusMessage(self, bus, message):
+        confirmMainThread()
         if message.src == self.pipeline:
             if message.type == gst.MESSAGE_STATE_CHANGED:
                 prev, new, pending = message.parse_state_changed()
@@ -146,6 +154,7 @@ class Extracter:
 
     @gtkAsyncMethod
     def disconnect (self):
+        confirmMainThread()
         if self.pipeline is not None:
             self.pipeline.set_state(gst.STATE_NULL)
             for sink in self.pipeline.sinks():
@@ -163,14 +172,27 @@ class Extracter:
 
 class Renderer(app.VideoRenderer):
     def __init__(self):
+        confirmMainThread()
         self.playbin = gst.element_factory_make("playbin", "player")
         self.bus = self.playbin.get_bus()
         self.bus.add_signal_watch()
+        self.bus.enable_sync_message_emission()        
         self.watch_id = self.bus.connect("message", self.onBusMessage)
+        self.bus.connect('sync-message::element', self.onSyncMessage)
         self.sink = gst.element_factory_make("ximagesink", "sink")
         self.playbin.set_property("video-sink", self.sink)
+
+    def onSyncMessage(self, bus, message):
+        if message.structure is None:
+            return
+        message_name = message.structure.get_name()
+        if message_name == 'prepare-xwindow-id':
+            imagesink = message.src
+            imagesink.set_property('force-aspect-ratio', True)
+            imagesink.set_xwindow_id(self.widget.window.xid)        
         
     def onBusMessage(self, bus, message):
+        confirmMainThread()
         "recieves message posted on the GstBus"
         if message.type == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
@@ -179,29 +201,27 @@ class Renderer(app.VideoRenderer):
 #            print "onBusMessage: end of stream"
             eventloop.addIdle(app.controller.playbackController.onMovieFinished,
                               "onBusMessage: skipping to next track")
-        else:
-            if not message.structure == None:
-                if message.structure.get_name() == 'prepare-xwindow-id':
-                    sink = message.src
-                    sink.set_xwindow_id(self.widget.window.xid)
-                    sink.set_property("force-aspect-ratio", True)
-        return True
+        return None
             
     def setWidget(self, widget):
+        confirmMainThread()
         widget.connect_after("realize", self.onRealize)
         widget.connect("unrealize", self.onUnrealize)
         widget.connect("expose-event", self.onExpose)
         self.widget = widget
 
     def onRealize(self, widget):
+        confirmMainThread()
         self.gc = widget.window.new_gc()
         self.gc.foreground = gtk.gdk.color_parse("black")
         
     def onUnrealize(self, widget):
+        confirmMainThread()
 #        print "onUnrealize"
         self.sink = None
         
     def onExpose(self, widget, event):
+        confirmMainThread()
         if self.sink:
             self.sink.expose()
         else:
@@ -211,12 +231,16 @@ class Renderer(app.VideoRenderer):
                                          widget.allocation.width,
                                          widget.allocation.height)
         return True
-        
+
     def canPlayFile(self, filename):
+        logging.warning("canPlayFile() not implemented for gstRenderer")
+        return True
+        confirmMainThread()
         """whether or not this renderer can play this data"""
         return Tester(filename).result()
 
     def fillMovieData(self, filename, movie_data, callback):
+        confirmMainThread()
         dir = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
         try:
             os.makedirs(dir)
@@ -237,23 +261,30 @@ class Renderer(app.VideoRenderer):
 	extracter = Extracter(filename, movie_data["screenshot"], handle_result)
 
     def goFullscreen(self):
+        confirmMainThread()
         """Handle when the video window goes fullscreen."""
         print "haven't implemented goFullscreen method yet!"
         
     def exitFullscreen(self):
+        confirmMainThread()
         """Handle when the video window exits fullscreen mode."""
         print "haven't implemented exitFullscreen method yet!"
 
+    @gtkAsyncMethod
     def selectFile(self, filename):
+        confirmMainThread()
         """starts playing the specified file"""
         self.stop()
         self.playbin.set_property("uri", "file://%s" % filename)
 #        print "selectFile: playing file %s" % filename
 
     def getProgress(self):
+        confirmMainThread()
         print "getProgress: what does this do?"
 
+    @gtkSyncMethod
     def getCurrentTime(self):
+        confirmMainThread()
         try:
             position, format = self.playbin.query_position(gst.FORMAT_TIME)
             position = position / 1000000000
@@ -263,6 +294,7 @@ class Renderer(app.VideoRenderer):
         return position
 
     def seek(self, seconds):
+        confirmMainThread()
         event = gst.event_new_seek(1.0,
                                    gst.FORMAT_TIME,
                                    gst.SEEK_FLAG_FLUSH|gst.SEEK_FLAG_ACCURATE,
@@ -274,12 +306,14 @@ class Renderer(app.VideoRenderer):
             print "seek failed"
         
     def playFromTime(self, seconds):
+        confirmMainThread()
         #self.playbin.set_state(gst.STATE_NULL)
 	self.seek(seconds)
         self.play()
 #        print "playFromTime: starting playback from %s sec" % seconds
 
     def getDuration(self):
+        confirmMainThread()
         try:
             duration, format = self.playbin.query_duration(gst.FORMAT_TIME)
             duration = duration / 1000000000
@@ -287,29 +321,41 @@ class Renderer(app.VideoRenderer):
             print "getDuration: caught exception: %s" % e
             duration = 1
         return duration
-        
+
+    @gtkAsyncMethod
     def reset(self):
+        confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
 #        print "** RESET **"
 
+    @gtkAsyncMethod
     def setVolume(self, level):
+        confirmMainThread()
 #        print "setVolume: set volume to %s" % level
         self.playbin.set_property("volume", level * 4.0)
-        
+
+    @gtkAsyncMethod
     def play(self):
+        confirmMainThread()
         self.playbin.set_state(gst.STATE_PLAYING)
 #        print "** PLAY **"
-        
+
+    @gtkAsyncMethod
     def pause(self):
+        confirmMainThread()
         self.playbin.set_state(gst.STATE_PAUSED)
 #        print "** PAUSE **"
-        
+
+    @gtkAsyncMethod
     def stop(self):
+        confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
 #        print "** STOP **"
         
     def getRate(self):
+        confirmMainThread()
         return 256
     
     def setRate(self, rate):
+        confirmMainThread()
         print "setRate: set rate to %s" % rate
