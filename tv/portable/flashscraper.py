@@ -31,7 +31,6 @@ def tryScrapingURL(url, callback):
     if scrape is not None:
         scrape(url,lambda x:_actualURLCallback(url,callback,x))
     else:
-        # print "Not scraping %s" % url
         callback(url)
     
 # =============================================================================
@@ -210,7 +209,7 @@ def _scrapeGreenPeaceVideoURL(url, callback):
 # =============================================================================
 
 scraperInfoMap = [
-    {'pattern': 'http://([^/]+\.)?youtube.com/',         'func': _scrapeYouTubeURL},
+    {'pattern': 'http://([^/]+\.)?youtube.com/(?!get_video\.php)',         'func': _scrapeYouTubeURL},
     {'pattern': 'http://video.google.com/googleplayer.swf', 'func': _scrapeGoogleVideoURL},
     {'pattern': 'http://([^/]+\.)?lulu.tv/wp-content/flash_play/flvplayer', 'func': _scrapeLuLuVideoURL},
     {'pattern': 'http://([^/]+\.)?vmix.com/flash/super_player.swf', 'func': _scrapeVMixVideoURL},

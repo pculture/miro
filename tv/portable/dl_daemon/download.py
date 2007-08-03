@@ -488,7 +488,12 @@ class HTTPDownloader(BGDownloader):
             self.currentSize = 0
             self.totalSize = -1
             self.resetBlockTimes()
-            return self.onHeaders(info)
+            if not self.client.gotBadStatusCode:
+                self.onHeaders(info)
+            else:
+                self.cancelRequest()
+                self.startNewDownload()
+            return
         try:
             self.parseContentRange(info['content-range'])
         except ValueError:
