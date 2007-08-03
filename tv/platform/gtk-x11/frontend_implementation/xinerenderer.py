@@ -26,6 +26,8 @@ import prefs
 import os
 import frontend
 from download_utils import nextFreeFilename
+from platformutils import confirmMainThread
+from gtk_queue import gtkSyncMethod, gtkAsyncMethod
 
 def waitForAttach(func):
     """Many xine calls can't be made until we attach the object to a X window.
@@ -46,6 +48,7 @@ class Renderer(app.VideoRenderer):
         self.attached = False
 
     def setWidget(self, widget):
+        confirmMainThread()
         widget.connect_after("realize", self.onRealize)
         widget.connect("unrealize", self.onUnrealize)
         widget.connect("configure-event", self.onConfigureEvent)
@@ -56,6 +59,7 @@ class Renderer(app.VideoRenderer):
         eventloop.addIdle(app.controller.playbackController.onMovieFinished, "onEos: Skip to next track")
 
     def onRealize(self, widget):
+        confirmMainThread()
         # flush gdk output to ensure that our window is created
         gtk.gdk.flush()
         displayName = gtk.gdk.display_get_default().get_name()
@@ -70,20 +74,26 @@ class Renderer(app.VideoRenderer):
         self.attachQueue = []
 
     def onUnrealize(self, widget):
+        confirmMainThread()
         self.xine.detach()
         self.attached = False
 
     def onConfigureEvent(self, widget, event):
+        confirmMainThread()
         self.xine.setArea(event.x, event.y, event.width, event.height)
 
     def onExposeEvent(self, widget, event):
+        confirmMainThread()
         self.xine.gotExposeEvent(event.area.x, event.area.y, event.area.width,
                 event.area.height)
 
+    @gtkSyncMethod
     def canPlayFile(self, filename):
+        confirmMainThread()
         return self.xine.canPlayFile(filename)
 
     def fillMovieData(self, filename, movie_data, callback):
+        confirmMainThread()
         dir = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
         try:
             os.makedirs(dir)
@@ -103,6 +113,7 @@ class Renderer(app.VideoRenderer):
 
     def goFullscreen(self):
         """Handle when the video window goes fullscreen."""
+        confirmMainThread()
         # Sometimes xine doesn't seem to handle the expose events properly and
         # only thinks part of the window is exposed.  To work around this we
         # send it a couple of fake expose events for the entire window, after
@@ -122,10 +133,12 @@ class Renderer(app.VideoRenderer):
     def exitFullscreen(self):
         """Handle when the video window exits fullscreen mode."""
         # nothing to do here
-        pass
+        confirmMainThread()
 
+    @gtkAsyncMethod
     @waitForAttach
     def selectFile(self, filename):
+        confirmMainThread()
         viz = config.get(prefs.XINE_VIZ);
         self.xine.setViz(viz);
         self.xine.selectFile(filename)
@@ -140,12 +153,15 @@ class Renderer(app.VideoRenderer):
         gobject.timeout_add(500, exposeWorkaround)
 
     def getProgress(self):
+        confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
         except:
             pass
 
+    @gtkSyncMethod
     def getCurrentTime(self):
+        confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
             return pos / 1000.0
@@ -153,16 +169,20 @@ class Renderer(app.VideoRenderer):
             return None
 
     def setCurrentTime(self, seconds):
+        confirmMainThread()
         self.seek(seconds)
 
     def playFromTime(self, seconds):
+        confirmMainThread()
         self.seek (seconds)
 
     @waitForAttach
     def seek(self, seconds):
+        confirmMainThread()
         self.xine.seek(int(seconds * 1000))
 
     def getDuration(self):
+        confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
             return length / 1000
@@ -171,27 +191,39 @@ class Renderer(app.VideoRenderer):
 
     @waitForAttach
     def reset(self):
+        confirmMainThread()
         self.stop()
 
+    @gtkAsyncMethod
     @waitForAttach
     def setVolume(self, level):
+        confirmMainThread()
         self.xine.setVolume(int(level * 100))
 
+    @gtkAsyncMethod
     @waitForAttach
     def play(self):
+        confirmMainThread()
         self.xine.play()
 
+    @gtkAsyncMethod
     @waitForAttach
     def pause(self):
+        confirmMainThread()
         self.xine.pause()
 
     @waitForAttach
     def stop(self):
+        # confirmMainThread() -- Not necessary since pause does this
         self.pause()
 
+    @gtkSyncMethod
     def getRate(self):
+        confirmMainThread()
         return self.xine.getRate()
 
+    @gtkAsyncMethod
     @waitForAttach
     def setRate(self, rate):
+        confirmMainThread()
         self.xine.setRate(rate)
