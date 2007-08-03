@@ -1014,7 +1014,7 @@ folder will be deleted.""")
             if self.isTransferring():
                 addTable(_('Torrent Details'), self.getTorrentDetails())
             elif self.downloader and self.downloader.isFinished():
-                addTable(u'Torrent Details <i>not connected</i>',
+                addTable(_('Torrent Details <i>stopped</i>'),
                         self.getTorrentDetailsFinished())
         elif self.getState() == u'downloading' and not self.pendingManualDL:
             addTable(_('Download Details'), self.getDownloadDetails())
