@@ -74,8 +74,8 @@ class VideoDisplay (app.VideoDisplayBase):
         values = gconf.client_get_default().get("/apps/miro/renderers")
         if values == None:
             # Using both renderers causes segfaults --NN
-            # self.add_renderer("gstrenderer")
             self.add_renderer("xinerenderer")
+            self.add_renderer("gstrenderer")
         else:
             for value in values.get_list():
                 self.add_renderer(value.get_string())
