@@ -39,6 +39,12 @@ import gst.interfaces
 
 class Tester:
     def __init__(self, filename):
+        self.done = Event()
+        self.success = False
+        self.actualInit(filename)
+
+    @gtkSyncMethod
+    def actualInit(self, filename):
         confirmMainThread()
         self.playbin = gst.element_factory_make('playbin')
         self.videosink = gst.element_factory_make("fakesink", "videosink")
@@ -49,8 +55,6 @@ class Tester:
         self.bus = self.playbin.get_bus()
         self.bus.add_signal_watch()
         self.watch_id = self.bus.connect("message", self.onBusMessage)
-        self.done = Event()
-        self.success = False
 
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
@@ -74,6 +78,7 @@ class Tester:
                 self.success = False
                 self.done.set()
 
+    @gtkAsyncMethod
     def disconnect (self):
         confirmMainThread()
         self.bus.disconnect (self.watch_id)
@@ -233,9 +238,6 @@ class Renderer(app.VideoRenderer):
         return True
 
     def canPlayFile(self, filename):
-        logging.warning("canPlayFile() not implemented for gstRenderer")
-        return True
-        confirmMainThread()
         """whether or not this renderer can play this data"""
         return Tester(filename).result()
 
