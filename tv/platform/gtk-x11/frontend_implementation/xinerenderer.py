@@ -189,9 +189,9 @@ class Renderer(app.VideoRenderer):
         except:
             return None
 
-    @waitForAttach
+    # @waitForAttach  -- Not necessary because stop does this
     def reset(self):
-        confirmMainThread()
+        # confirmMainThread() -- Not necessary because stop does this
         self.stop()
 
     @gtkAsyncMethod
@@ -212,7 +212,7 @@ class Renderer(app.VideoRenderer):
         confirmMainThread()
         self.xine.pause()
 
-    @waitForAttach
+    #@waitForAttach -- Not necessary because stop does this
     def stop(self):
         # confirmMainThread() -- Not necessary since pause does this
         self.pause()
