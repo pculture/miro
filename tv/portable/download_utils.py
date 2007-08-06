@@ -146,6 +146,10 @@ def filenameFromURL(url):
 # version of it
 @returnsFilename
 def cleanFilename(filename):
+    for char in ':?><|*/\\"\'':
+        filename = filename.replace(char,'')
+    if len(filename) == 0:
+        return unicodeToFilename(u'_')
     if type(filename) == str:
         return unicodeToFilename(filename.decode('ascii', 'replace'))
     else:
