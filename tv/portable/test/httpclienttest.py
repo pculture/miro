@@ -867,21 +867,23 @@ class HTTPClientTest(HTTPClientTestBase):
     def testMultipleRequests(self):
         def middleCallback(data):
             self.firstData = data
-            req.sendRequest(self.callback, self.errback, "", 80, method='GET', path='/democracytest/normalpage.txt')
+            req.sendRequest(self.callback, self.errback, "participatoryculture.org", 80, method='GET', path='/democracytest/normalpage.txt')
 
         req = TestingHTTPConnection()
         def stopEventLoop(conn):
             self.stopEventLoop(False)
-        self.addIdle(lambda: req.openConnection('participatoryculture.org', 80, stopEventLoop, stopEventLoop), "Open connection")
+        self.addIdle(lambda: req.openConnection('participatoryculture.org', 80, stopEventLoop, self.errback), "Open connection")
         self.runEventLoop()
+        self.assert_(not self.errbackCalled)
         self.addIdle(lambda: req.sendRequest(middleCallback,
                                              self.errback,
-                                             "",
+                                             "participatoryculture.org",
                                              80,
                                              method='GET',
                                              path='/democracytest/normalpage.txt'),
                      "Send Request")
         self.runEventLoop()
+        self.assert_(not self.errbackCalled)
         self.assertEquals(self.firstData['body'], self.data['body'])
 
     def testUnexpectedStatusCode(self):
