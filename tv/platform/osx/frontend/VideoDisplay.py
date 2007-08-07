@@ -378,7 +378,7 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
     def windowDidBecomeKey_(self, notification):
         self.adjustVideoWindowFrame()
         self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
-        self.window().makeKeyAndOrderFront_(nil)
+        self.window().orderFront_(nil)
     
     @platformutils.onMainThread
     def enterFullScreen(self):
@@ -391,9 +391,10 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
     @platformutils.onMainThread
     def exitFullScreen(self):
         if self.videoWindow.isFullScreen:
+            self.window().orderFront_(nil)
             self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
-            self.window().makeKeyAndOrderFront_(nil)
             self.videoWindow.exitFullScreen()
+            self.window().makeKeyWindow()
     
 
 ###############################################################################
