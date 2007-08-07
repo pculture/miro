@@ -48,6 +48,7 @@
 <!ENTITY prefs.videos.expire.thirty "1 month">
 <!ENTITY prefs.videos.expire.never "Never">
 
+<!ENTITY prefs.torrent.label "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">

@@ -23,152 +23,142 @@
         </hbox>
     </richlistitem>
 </box>
-<vbox>
-
-    <!--GENERAL-->
-    <groupbox orient="horizontal">
-        <caption label="&prefs.general;"/>
-        <vbox>
-          <checkbox id="runonstartup" label="&prefs.run.on.startup;" value="1" oncommand="runOnStartupChange()"/>
-          <separator />
-          <caption label="&prefs.close_to_tray_start;" />
-          <radiogroup id="close-to-tray" oncommand="closeToTrayChange();">
-            <radio label="&prefs.close_to_tray;" id="close-to-tray-yes" />
-            <radio label="&prefs.no_close_to_tray;" id="close-to-tray-no" />
-          </radiogroup>
-        </vbox>
-    </groupbox>
-    <!--/GENERAL-->
-
-    <!--CHANNELS-->
-    <groupbox orient="horizontal">
-        <caption label="&prefs.channels;"/>
-        <hbox>
+<tabbox>
+    <tabs>
+        <tab label=" &prefs.general;" />
+        <tab label="&prefs.channels;"/>
+        <tab label="&prefs.playback;"/>
+        <tab label="&prefs.folder.movies;"/>
+        <tab label="&prefs.downloads.max;"/>
+        <tab label="&prefs.disk.space;"/>
+        <tab label="&prefs.torrent.label;" />
+    </tabs>
+    <tabpanels>
+        <tabpanel orient="vertical">
+            <!-- GENERAL -->
+            <checkbox id="runonstartup" label="&prefs.run.on.startup;" value="1" oncommand="runOnStartupChange()"/>
+            <separator />
+            <description>&prefs.close_to_tray_start;</description>
+            <radiogroup id="close-to-tray" oncommand="closeToTrayChange();">
+                <radio label="&prefs.close_to_tray;" id="close-to-tray-yes" />
+                <radio label="&prefs.no_close_to_tray;" id="close-to-tray-no" />
+            </radiogroup>
+        </tabpanel>
+        <tabpanel orient="vertical">
+            <!-- CHANNELS -->
             <description style="padding-top:4px;">&prefs.channels.check;</description>
-            <menulist id="checkevery">
-                <menupopup>
-                    <menuitem label="&prefs.channels.check.thirty;" oncommand="checkEveryChange(30);" id="check30" value="30"/>
-                    <menuitem label="&prefs.channels.check.sixty;" oncommand="checkEveryChange(60);" id="check60" value="60"/>
-                    <menuitem label="&prefs.channels.check.manually;" oncommand="checkEveryChange(-1);" id="checknever" value="never"/>
-                </menupopup>
-            </menulist>
-        </hbox>
-    </groupbox>
-    <!--/CHANNELS-->
-
-    <!--PLAYBACK-->
-    <groupbox orient="horizontal">
-        <caption label="&prefs.playback;"/>
+            <hbox>
+                <menulist id="checkevery">
+                    <menupopup>
+                        <menuitem label="&prefs.channels.check.thirty;" oncommand="checkEveryChange(30);" id="check30" value="30"/>
+                        <menuitem label="&prefs.channels.check.sixty;" oncommand="checkEveryChange(60);" id="check60" value="60"/>
+                        <menuitem label="&prefs.channels.check.manually;" oncommand="checkEveryChange(-1);" id="checknever" value="never"/>
+                    </menupopup>
+                </menulist>
+                <spacer flex="1" />
+            </hbox>
+        </tabpanel>
+        <tabpanel orient="vertical">
+            <!--PLAYBACK-->
             <checkbox id="resumeVideos" checked="true" label="&prefs.playback.remember.pos;" value="1" oncommand="resumeVideosModeChange();"/>
             <radiogroup id="play-mode-radiogroup"
-                    oncommand="singlePlayModeChange();" >
+                oncommand="singlePlayModeChange();" >
                 <radio label="&prefs.playback.auto.next.video;"
-                        id="continuous-play-mode-radio" />
+                    id="continuous-play-mode-radio" />
                 <radio label="&prefs.playback.stop.after.each;"
-                        id="single-play-mode-radio" />
+                    id="single-play-mode-radio" />
             </radiogroup>
-    </groupbox>
-    <!--/PLAYBACK-->
-
-    <!--MOVIES DIRECTORY-->
-    <groupbox orient="vertical">
-	<caption label="&prefs.folder.movies;"/>
-	<hbox>
-            <description style="padding-top:5px;">
-                &prefs.folder.downloads;
+        </tabpanel>
+        <tabpanel orient="vertical">
+            <!--MOVIES DIRECTORY-->
+            <hbox>
+                <description style="padding-top:5px;">
+                    &prefs.folder.downloads;
+                </description>
+                <textbox id="movies-directory" flex="0" value=""
+                    readonly="true" style="width: l00px;" />
+                <button id="movies-directory-button" flex="0"
+                    label="&prefs.folder.change;"
+                    oncommand="selectMoviesDirectory();" />
+            </hbox>
+            <description>
+                &prefs.folder.others.caption;
             </description>
-            <textbox id="movies-directory" flex="0" value=""
-                 readonly="true" style="width: 300px;" />
-            <button id="movies-directory-button" flex="0"
-                label="&prefs.folder.change;"
-                oncommand="selectMoviesDirectory();" />
-	</hbox>
-        <description>
-            &prefs.folder.others.caption;
-        </description>
-	<hbox>
-            <vbox flex="1">
-                <hbox>
-		    <label flex="1">
-			&prefs.folder.others.location;
-		    </label>
-                    <hbox pack="center" width="100">
-    			<label>
-    			    &prefs.folder.others.shown;
-    			</label>
+            <hbox>
+                <vbox flex="1">
+                    <hbox>
+                        <label flex="1">
+                            &prefs.folder.others.location;
+                        </label>
+                        <hbox pack="center" width="100">
+                            <label>
+                                &prefs.folder.others.shown;
+                            </label>
+                        </hbox>
                     </hbox>
-		</hbox>
-                <richlistbox id="movies-collection-listbox" flex="1" rows="2" onselect="selectDirectoryWatch(false);"/>
-            </vbox>
-            <vbox>
-	        <button id="movies-collection-add-folder" flex="0"
-	            label="&prefs.folder.others.add;"
-	            oncommand="addDirectoryWatch();" />
-	        <button id="movies-collection-remove-folder" flex="0"
-	            label="&prefs.folder.others.remove;"
-                    oncommand="removeDirectoryWatch();" />
-	    </vbox>
-	</hbox>
-    </groupbox>
-    <!--/MOVIES DIRECTORY-->
+                    <richlistbox id="movies-collection-listbox" flex="1" rows="2" onselect="selectDirectoryWatch(false);"/>
+                </vbox>
+                <vbox>
+                    <button id="movies-collection-add-folder" flex="0"
+                        label="&prefs.folder.others.add;"
+                        oncommand="addDirectoryWatch();" />
+                    <button id="movies-collection-remove-folder" flex="0"
+                        label="&prefs.folder.others.remove;"
+                        oncommand="removeDirectoryWatch();" />
+                </vbox>
+            </hbox>
+        </tabpanel>
+        <tabpanel orient="vertical">
+            <!--DOWNLOADS-->
+            <hbox>
+                <description>&prefs.downloads.max.part1;</description>
+                <textbox id="maxmanual" flex="0" value="300" style="max-width: 30px;" onchange="maxManualChange()"/>
+                <description>&prefs.downloads.max.part2;</description>
+            </hbox>
+        </tabpanel>
 
-    <!--DOWNLOADS-->
-    <groupbox orient="vertical">
-            <caption label="&prefs.downloads.max;"/>
-        <hbox>
-            <description>&prefs.downloads.max.part1;</description>
-            <textbox id="maxmanual" flex="0" value="300" style="max-width: 30px;" onchange="maxManualChange()"/>
-            <description>&prefs.downloads.max.part2;</description>
-        </hbox>
-    </groupbox>
-    <!--/DOWNLOADS-->
-    
-    <!--DISK SPACE-->
-    <groupbox orient="vertical">
-        <caption label="&prefs.disk.space;"/>
-        <hbox>
-            <checkbox id="hasminspace" checked="true" label="&prefs.disk.space.min.part1;" value="1" oncommand="hasMinSpaceChange();"/>
-            <textbox id="minspace" flex="0" value="1" style="max-width: 30px;" onchange="minSpaceChange()"/>
-                        <description style="padding-top:5px;">&prefs.disk.space.min.part2;</description>
-        </hbox>				
-                <description style="margin-bottom: 10px;">&prefs.disk.space.warning.restart;</description>
-        <hbox>
-            <description style="padding-top:4px;">&prefs.videos.expire;</description>
-            <menulist id="expiration">
-                <menupopup>
-                    <menuitem label="&prefs.videos.expire.one;" oncommand="expirationChange(1);" value="1"/>
-                    <menuitem label="&prefs.videos.expire.three;" oncommand="expirationChange(3);" value="3"/>
-                    <menuitem label="&prefs.videos.expire.six;" oncommand="expirationChange(6);" value="6"/>
-                    <menuitem label="&prefs.videos.expire.ten;" oncommand="expirationChange(10);" value="10"/>
-                    <menuitem label="&prefs.videos.expire.thirty;" oncommand="expirationChange(30);" value="30"/>
-                    <menuitem label="&prefs.videos.expire.never;" oncommand="expirationChange(-1);" value="never"/>
-                </menupopup>
-            </menulist>
-        </hbox>
-    </groupbox>
-    <!--/DISK SPACE-->
+        <tabpanel orient="vertical">
+            <!--DISK SPACE-->
+            <hbox>
+                <checkbox id="hasminspace" checked="true" label="&prefs.disk.space.min.part1;" value="1" oncommand="hasMinSpaceChange();"/>
+                <textbox id="minspace" flex="0" value="1" style="max-width: 30px;" onchange="minSpaceChange()"/>
+                <description style="padding-top:5px;">&prefs.disk.space.min.part2;</description>
+            </hbox>				
+            <description style="margin-bottom: 10px;">&prefs.disk.space.warning.restart;</description>
+            <hbox>
+                <description style="padding-top:4px;">&prefs.videos.expire;</description>
+                <menulist id="expiration">
+                    <menupopup>
+                        <menuitem label="&prefs.videos.expire.one;" oncommand="expirationChange(1);" value="1"/>
+                        <menuitem label="&prefs.videos.expire.three;" oncommand="expirationChange(3);" value="3"/>
+                        <menuitem label="&prefs.videos.expire.six;" oncommand="expirationChange(6);" value="6"/>
+                        <menuitem label="&prefs.videos.expire.ten;" oncommand="expirationChange(10);" value="10"/>
+                        <menuitem label="&prefs.videos.expire.thirty;" oncommand="expirationChange(30);" value="30"/>
+                        <menuitem label="&prefs.videos.expire.never;" oncommand="expirationChange(-1);" value="never"/>
+                    </menupopup>
+                </menulist>
+            </hbox>
+        </tabpanel>
 
-    <!--BITTORRENT-->
-    <groupbox orient="vertical">
-            <caption label="BitTorrent"/>
-                <description>&prefs.torrent.restart.warning;</description>
-        <hbox>
-            <checkbox id="limitupstream" checked="true" label="&prefs.torrent.limit.upstream.part1;" value="1" oncommand="limitUpstreamChange()"/>
-            <textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
-            <description style="padding-top:5px;">&prefs.torrent.limit.upstream.part2;</description>
-        </hbox>				
-                <hbox align="end">
-                        <description>&prefs.torrent.uses.ports.part1;</description>
-                        <textbox id="btminport" flex="0" value="300" 
-                                size="5" onchange="btMinPortChange()" />
-                        <description>&prefs.torrent.uses.ports.part2;</description>
-                        <textbox id="btmaxport" flex="0" value="300" 
-                                size="5" onchange="btMaxPortChange()" />
-                </hbox>
-    </groupbox>
-    <!--/BITTORRENT-->
-</vbox>
-
+        <tabpanel orient="vertical">
+            <!--BITTORRENT-->
+            <description>&prefs.torrent.restart.warning;</description>
+            <hbox>
+                <checkbox id="limitupstream" checked="true" label="&prefs.torrent.limit.upstream.part1;" value="1" oncommand="limitUpstreamChange()"/>
+                <textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
+                <description style="padding-top:5px;">&prefs.torrent.limit.upstream.part2;</description>
+            </hbox>				
+            <hbox align="end">
+                <description>&prefs.torrent.uses.ports.part1;</description>
+                <textbox id="btminport" flex="0" value="300" 
+                    size="5" onchange="btMinPortChange()" />
+                <description>&prefs.torrent.uses.ports.part2;</description>
+                <textbox id="btmaxport" flex="0" value="300" 
+                    size="5" onchange="btMaxPortChange()" />
+            </hbox>
+        </tabpanel>
+    </tabpanels>
+</tabbox>
 </dialog>
 
 
