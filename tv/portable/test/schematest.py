@@ -55,19 +55,19 @@ class TestValidation(DemocracyTestCase):
     def testStringValidation(self):
         schemastring = SchemaString()
         self.assertRaises(ValidationError, schemastring.validate, 10123)
-        schemastring.validate("10123")
+        self.assertRaises(ValidationError, schemastring.validate, "10123")
         schemastring.validate(u"10123")
 
     def testSimpleContainerValidation(self):
         schemasimple = SchemaSimpleContainer()
-        schemasimple.validate({1: "Ben", "pie": 3.1415})
-        schemasimple.validate([1, 1, "two", "three", 5])
-        schemasimple.validate({'y2k': datetime.datetime(2000, 1, 1),
+        schemasimple.validate({1: u"Ben", u"pie": 3.1415})
+        schemasimple.validate([1, 1, u"two", u"three", 5])
+        schemasimple.validate({u'y2k': datetime.datetime(2000, 1, 1),
                 'now': time.localtime()})
         schemasimple.validate({
-                'fib': (1, 1, "two", "three", 5),
-                'square': (1, 4, "nine", 16),
-                'fact': (1, 2.0, 6, "twenty-four"),
+                'fib': (1, 1, u"two", u"three", 5),
+                'square': (1, 4, u"nine", 16),
+                'fact': (1, 2.0, 6, u"twenty-four"),
             })
         #make sure circular refrences doen't screw it up
         l = []
