@@ -108,8 +108,13 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         myFeed = feed.Feed(u"file://"+self.filename)
 
-        # Make sure the feed shows up as invalid
-        self.assertEqual(dialogs.delegate.numCalls, 1)
+        myFeed.update()
+        self.processThreads()
+        self.processIdles()
+        self.assertEqual(len(myFeed.items), 1)
+        myItem = myFeed.items[0]
+        self.assertEqual(len(myItem.getTitle()), 14)
+        self.assertEqual(myItem.getTitle(), u"H\xe4ppy Birthday")
 
     # This is latin1 HTML that claims to be Latin 1
     def testLatin1HTML(self):

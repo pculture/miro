@@ -1,6 +1,7 @@
 import os
 import tempfile
 
+import util # This adds logging.timing
 import download_utils
 import httpclient
 from test import schedulertest

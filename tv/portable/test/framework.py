@@ -11,6 +11,7 @@ import databaseupgrade
 import storedatabase
 import subscription
 import selection
+from time import sleep
 
 # Generally, all test cases should extend DemocracyTestCase or
 # EventLoopTest.  DemocracyTestCase cleans up any database changes you
@@ -137,6 +138,15 @@ class EventLoopTest(DemocracyTestCase):
     def hasIdles(self):
         return not (eventloop._eventLoop.idleQueue.queue.empty() and
                     eventloop._eventLoop.urgentQueue.queue.empty())
+
+    def processThreads(self):
+        eventloop._eventLoop.threadPool.initThreads()
+        if hasattr(eventloop._eventLoop.threadPool.queue,"join"):
+            eventloop._eventLoop.threadPool.queue.join()
+        else:
+            while not eventloop._eventLoop.threadPool.queue.empty():
+                sleep(0.05)
+        eventloop._eventLoop.threadPool.closeThreads()
 
     def processIdles(self):
         eventloop._eventLoop.idleQueue.processIdles()
