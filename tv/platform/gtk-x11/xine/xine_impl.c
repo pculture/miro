@@ -36,6 +36,8 @@
 #include "xine_impl.h"
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+static int miro_using_xv_driver = 0;
+
 const char *viz_available (_Xine* xine, const char *viz)
 {
   int j;
@@ -293,8 +295,16 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d, int sync)
     vis.user_data = xine;
   
     /* opening xine output ports */
-    xine->videoPort = xine_open_video_driver(xine->xine, "auto", 
+    xine->videoPort = xine_open_video_driver(xine->xine, "xv",
             XINE_VISUAL_TYPE_X11, (void *)&vis);
+    if (!xine->videoPort) {
+      xine->videoPort = xine_open_video_driver(xine->xine, "auto",
+           XINE_VISUAL_TYPE_X11, (void *)&vis);
+      miro_using_xv_driver = 0;
+
+    } else {
+      miro_using_xv_driver = 1;
+    }
     xine->audioPort = xine_open_audio_driver(xine->xine, "auto", NULL);
 
     /* open a xine stream connected to these ports */
@@ -326,12 +336,14 @@ void xineDetach(_Xine* xine)
     //caused #7132
 
 #ifdef INCLUDE_XINE_DRIVER_HACK
-    xine_list_iterator_t ite;
+    if (miro_using_xv_driver) {
+      xine_list_iterator_t ite;
 
-    driver = (xv_driver_t*)xine->videoPort->driver;
+      driver = (xv_driver_t*)xine->videoPort->driver;
   
-    while ((ite = miro_xine_list_front(driver->port_attributes)) != NULL) {
-      miro_xine_list_remove (driver->port_attributes, ite);
+      while ((ite = miro_xine_list_front(driver->port_attributes)) != NULL) {
+        miro_xine_list_remove (driver->port_attributes, ite);
+      }
     }
 #endif
 
