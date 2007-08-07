@@ -639,6 +639,7 @@ jsBridge.prototype = {
   // Hide the popup after 250ms. Without this delay, our WH_MOUSE_LL
   // hack in minimize.py causes us to miss some mouse clicks. --NN
   hidePopup: function() {
+    if(!this.popup) return;
     var popup = this.popup;
     var callback = {notify: function() {
         popup.hidePopup();
