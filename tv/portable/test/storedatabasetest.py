@@ -335,8 +335,6 @@ class LiveStorageTest(DemocracyTestCase):
         self.database.liveStorage = storedatabase.LiveStorage(self.savePath,
                 restore=False)
 
-        database.DDBObject.dd = self.database
-
     def tearDown(self):
         storedatabase.skipUpgrade = False
         try:
@@ -393,8 +391,7 @@ class TestHighLevelFunctions(LiveStorageTest):
         self.database.liveStorage.saveDatabase()
 
     def restoreDatabase(self):
-        database.defaultDatabase = database.DynamicDatabase()
-        self.database=database.defaultDatabase
+        database.resetDefaultDatabase()
         self.database.liveStorage = storedatabase.LiveStorage(self.savePath,
                 restore=True)
 

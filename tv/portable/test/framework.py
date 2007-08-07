@@ -154,7 +154,7 @@ class EventLoopTest(DemocracyTestCase):
 
 class DownloaderTestCase(EventLoopTest):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        EventLoopTest.setUp(self)
         # FIXME: This is kind of ugly
         app.delegate = frontend.UIBackendDelegate()
         downloader.startupDownloader()
