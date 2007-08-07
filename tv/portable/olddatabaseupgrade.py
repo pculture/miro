@@ -34,10 +34,13 @@ import pickle
 import shutil
 import threading
 import types
+import time
 
-from schema import ObjectSchema, SchemaInt, SchemaFloat
+from schema import ObjectSchema, SchemaInt, SchemaFloat, SchemaSimpleItem
 from schema import SchemaObject, SchemaBool, SchemaDateTime, SchemaTimeDelta
-from schema import SchemaList, SchemaDict, SchemaString, SchemaSimpleContainer
+from schema import SchemaList, SchemaDict
+from fasttypes import LinkedList
+from types import NoneType
 import storedatabase
 
 ######################### STAGE 1 helpers  #############################
@@ -326,6 +329,48 @@ class DDBObjectSchema(ObjectSchema):
     fields = [
         ('id', SchemaInt())
     ]
+
+# Unlike the SchemaString in schema.py, this allows binary strings or
+# unicode strings
+class SchemaString(SchemaSimpleItem):
+    def validate(self, data):
+        super(SchemaSimpleItem, self).validate(data)
+        self.validateTypes(data, (unicode, str))
+
+# Unlike the simple container in schema.py, this allows binary strings
+class SchemaSimpleContainer(SchemaSimpleItem):
+    """Allows nested dicts, lists and tuples, however the only thing they can
+    store are simple objects.  This currently includes bools, ints, longs,
+    floats, strings, unicode, None, datetime and struct_time objects.
+    """
+
+    def validate(self, data):
+        super(SchemaSimpleContainer, self).validate(data)
+        self.validateTypes(data, (dict, list, tuple))
+        self.memory = set()
+        toValidate = LinkedList()
+        while data:
+            if id(data) in self.memory:
+                return
+            else:
+                self.memory.add(id(data))
+    
+            if isinstance(data, list) or isinstance(data, tuple):
+                for item in data:
+                    toValidate.append(item)
+            elif isinstance(data, dict):
+                for key, value in data.items():
+                    self.validateTypes(key, [bool, int, long, float, unicode,
+                        str, NoneType, datetime, time.struct_time])
+                    toValidate.append(value)
+            else:
+                self.validateTypes(data, [bool, int, long, float, unicode,str,
+                        NoneType, datetime, time.struct_time])
+            try:
+                data = toValidate.pop()
+            except:
+                data = None
+
 
 class ItemSchema(DDBObjectSchema):
     klass = OldItem

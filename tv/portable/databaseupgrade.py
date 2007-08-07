@@ -586,7 +586,8 @@ def upgrade41(objectList):
                 if field == 'actualFeed':
                     o.savedData[field].__dict__ = \
                          unicodify(o.savedData[field].__dict__)
-                elif field == 'iconCache':
+                elif (field == 'iconCache' and
+                      o.savedData['iconCache'] is not None):
                     for icfield in icStrings:
                         o.savedData['iconCache'].savedData[icfield] = \
                           unicodify(o.savedData['iconCache'].savedData[icfield])
@@ -654,7 +655,7 @@ def upgrade43(objectList):
 def upgrade44(objectList):
     changed = set()
     for o in objectList:
-        if 'iconCache' in o.savedData:
+        if 'iconCache' in o.savedData and o.savedData['iconCache'] is not None:
             iconCache = o.savedData['iconCache']
             iconCache.savedData['resized_filenames'] = {}
             changed.add(o)
