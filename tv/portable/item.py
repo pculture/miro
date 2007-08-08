@@ -1737,7 +1737,6 @@ class FileItem(Item):
     def download(self,autodl=False):
         self.deleted = False
         self.signalChange()
-        
 
     def migrate(self, newDir):
         self.confirmDBThread()

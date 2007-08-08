@@ -13,6 +13,8 @@ import subscription
 import selection
 from time import sleep
 
+util.setupLogging()
+
 # Generally, all test cases should extend DemocracyTestCase or
 # EventLoopTest.  DemocracyTestCase cleans up any database changes you
 # might have made, and EventLoopTest provides an API for accessing the
@@ -141,11 +143,8 @@ class EventLoopTest(DemocracyTestCase):
 
     def processThreads(self):
         eventloop._eventLoop.threadPool.initThreads()
-        if hasattr(eventloop._eventLoop.threadPool.queue,"join"):
-            eventloop._eventLoop.threadPool.queue.join()
-        else:
-            while not eventloop._eventLoop.threadPool.queue.empty():
-                sleep(0.05)
+        while not eventloop._eventLoop.threadPool.queue.empty():
+            sleep(0.05)
         eventloop._eventLoop.threadPool.closeThreads()
 
     def processIdles(self):

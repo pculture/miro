@@ -1272,7 +1272,7 @@ class RSSFeedImpl(FeedImpl):
     def _updateCallback(self,info):
         if not self.ufeed.idExists():
             return
-        if info['status'] == 304:
+        if info.get('status') == 304:
             self.scheduleUpdateEvents(-1)
             self.updating = False
             self.ufeed.signalChange()
@@ -1333,7 +1333,9 @@ class RSSFeedImpl(FeedImpl):
         items_byid = {}
         items_byURLTitle = {}
         items_nokey = []
+        old_items = set()
         for item in self.items:
+            old_items.add(item)
             try:
                 items_byid[item.getRSSID()] = item
             except KeyError:
@@ -1357,6 +1359,7 @@ class RSSFeedImpl(FeedImpl):
                     if not _entry_equal(entry, item.getRSSEntry()):
                         self._handleNewEntryForItem(item, entry)
                     new = False
+                    old_items.discard(item)
             if new:
                 videoEnc = getFirstVideoEnclosure(entry)
                 if videoEnc is not None:
@@ -1370,6 +1373,7 @@ class RSSFeedImpl(FeedImpl):
                         if not _entry_equal(entry, item.getRSSEntry()):
                             self._handleNewEntryForItem(item, entry)
                         new = False
+                        old_items.discard(item)
             if new:
                 for item in items_nokey:
                     if _entry_equal(entry, item.getRSSEntry()):
@@ -1379,6 +1383,7 @@ class RSSFeedImpl(FeedImpl):
                             if _entry_equal (entry["enclosures"], item.getRSSEntry()["enclosures"]):
                                 self._handleNewEntryForItem(item, entry)
                                 new = False
+                                old_items.discard(item)
                         except:
                             pass
             if (new and entry.has_key('enclosures') and
@@ -1406,6 +1411,31 @@ class RSSFeedImpl(FeedImpl):
                     item.eligibleForAutoDownload = False
                 item.signalChange()
             self.ufeed.signalChange()
+
+        self.truncateOldItems(old_items)
+
+    def truncateOldItems(self, old_items):
+        """Truncate items so that the number of items in this feed doesn't
+        exceed prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS.
+
+        old_items should be an iterable that contains items that aren't in the
+        feed anymore.
+
+        Items are only truncated if they don't exist in the feed anymore, and
+        if the user hasn't downloaded them.
+        """
+        limit = config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
+        extra = len(self.items) - limit
+        if extra <= 0:
+            return
+
+        candidates = []
+        for item in old_items:
+            if item.downloader is None:
+                candidates.append((item.creationTime, item))
+        candidates.sort()
+        for time, item in candidates[:extra]:
+            item.remove()
 
     def addScrapedThumbnail(self,entry):
         # skip this if the entry already has a thumbnail.

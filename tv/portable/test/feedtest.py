@@ -2,64 +2,101 @@ import unittest
 from tempfile import mkstemp
 from time import sleep
 
-from feed import *
-from database import *
+import config
+import prefs
+import dialogs
+import database
+from feed import validateFeedURL, normalizeFeedURL, Feed
 
-from test.framework import DemocracyTestCase
+from test.framework import DemocracyTestCase, EventLoopTest
+
+class FakeDownloader:
+    pass
+
+class AcceptScrapeTestDelegate:
+    def __init__(self):
+        self.calls = 0
+
+    def runDialog(self, dialog):
+        self.calls += 1
+        if not isinstance(dialog, dialogs.ChoiceDialog):
+            raise AssertionError("Only expected ChoiceDialogs")
+        if not dialog.title.startswith("Channel is not compatible"):
+            raise AssertionError("Only expected scrape dialogs")
+        dialog.choice = dialogs.BUTTON_YES
+        dialog.callback(dialog)
 
 class FeedURLValidationTest(DemocracyTestCase):
     def test(self):
-        self.assertEqual(validateFeedURL("http://foo.bar.com"), True)
-        self.assertEqual(validateFeedURL("https://foo.bar.com"), True)
-        self.assertEqual(validateFeedURL("feed://foo.bar.com"), True)
+        self.assertEqual(validateFeedURL(u"http://foo.bar.com/"), True)
+        self.assertEqual(validateFeedURL(u"https://foo.bar.com/"), True)
                          
-        self.assertEqual(validateFeedURL("http:foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("https:foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("feed:foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("http:/foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("https:/foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("feed:/foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("http:///foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("https:///foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("feed:///foo.bar.com"), False)
+        self.assertEqual(validateFeedURL(u"feed://foo.bar.com/"), False)
+        self.assertEqual(validateFeedURL(u"http://foo.bar.com"), False)
+        self.assertEqual(validateFeedURL(u"http:foo.bar.com/"), False)
+        self.assertEqual(validateFeedURL(u"https:foo.bar.com/"), False)
+        self.assertEqual(validateFeedURL(u"feed:foo.bar.com/"), False)
+        self.assertEqual(validateFeedURL(u"http:/foo.bar.com/"), False)
+        self.assertEqual(validateFeedURL(u"https:/foo.bar.com/"), False)
+        self.assertEqual(validateFeedURL(u"feed:/foo.bar.com/"), False)
+        self.assertEqual(validateFeedURL(u"http:///foo.bar.com/"), False)
+        self.assertEqual(validateFeedURL(u"https:///foo.bar.com/"), False)
+        self.assertEqual(validateFeedURL(u"feed:///foo.bar.com/"), False)
 
-        self.assertEqual(validateFeedURL("foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("crap:foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("crap:/foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("crap://foo.bar.com"), False)
-        self.assertEqual(validateFeedURL("crap:///foo.bar.com"), False)
+        self.assertEqual(validateFeedURL(u"foo.bar.com"), False)
+        self.assertEqual(validateFeedURL(u"crap:foo.bar.com"), False)
+        self.assertEqual(validateFeedURL(u"crap:/foo.bar.com"), False)
+        self.assertEqual(validateFeedURL(u"crap://foo.bar.com"), False)
+        self.assertEqual(validateFeedURL(u"crap:///foo.bar.com"), False)
 
 class FeedURLNormalizationTest(DemocracyTestCase):
     def test(self):
-        self.assertEqual(normalizeFeedURL("http://foo.bar.com"), "http://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("https://foo.bar.com"), "https://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("feed://foo.bar.com"), "feed://foo.bar.com")
+        self.assertEqual(normalizeFeedURL(u"http://foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalizeFeedURL(u"https://foo.bar.com"), u"https://foo.bar.com/")
+        self.assertEqual(normalizeFeedURL(u"feed://foo.bar.com"), u"http://foo.bar.com/")
 
-        self.assertEqual(normalizeFeedURL("http:foo.bar.com"), "http://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("https:foo.bar.com"), "https://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("feed:foo.bar.com"), "feed://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("http:/foo.bar.com"), "http://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("https:/foo.bar.com"), "https://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("feed:/foo.bar.com"), "feed://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("http:///foo.bar.com"), "http://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("https:///foo.bar.com"), "https://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("feed:///foo.bar.com"), "feed://foo.bar.com")
+        self.assertEqual(normalizeFeedURL(u"http:foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalizeFeedURL(u"https:foo.bar.com"), u"https://foo.bar.com/")
+        self.assertEqual(normalizeFeedURL(u"feed:foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalizeFeedURL(u"http:/foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalizeFeedURL(u"https:/foo.bar.com"), u"https://foo.bar.com/")
+        self.assertEqual(normalizeFeedURL(u"feed:/foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalizeFeedURL(u"http:///foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalizeFeedURL(u"https:///foo.bar.com"), u"https://foo.bar.com/")
+        self.assertEqual(normalizeFeedURL(u"feed:///foo.bar.com"), u"http://foo.bar.com/")
 
-        self.assertEqual(normalizeFeedURL("foo.bar.com"), "http://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("crap:foo.bar.com"), "http://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("crap:/foo.bar.com"), "http://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("crap://foo.bar.com"), "http://foo.bar.com")
-        self.assertEqual(normalizeFeedURL("crap:///foo.bar.com"), "http://foo.bar.com")
+        self.assertEqual(normalizeFeedURL(u"foo.bar.com"), u"http://foo.bar.com/")
 
-class SimpleFeedTestCase(DemocracyTestCase):
+class FeedTestCase(EventLoopTest):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
+        EventLoopTest.setUp(self)
+        self.everything = database.defaultDatabase
         [handle, self.filename] = mkstemp(".xml")
-        handle =file(self.filename,"wb")
+
+    def writefile(self, content):
+        self.url = u'file://%s' % self.filename
+        handle = file(self.filename,"wb")
 #RSS 2.0 example feed
 #http://cyber.law.harvard.edu/blogs/gems/tech/rss2sample.xml
-        handle.write("""<?xml version="1.0"?>
+        handle.write(content)
+        handle.close()
+
+    def makeFeed(self):
+        feed = Feed(self.url)
+        self.updateFeed(feed)
+        return feed
+
+    def updateFeed(self, feed):
+        feed.update()
+        self.processThreads()
+        self.processIdles()
+
+class SimpleFeedTestCase(FeedTestCase):
+    def setUp(self):
+        FeedTestCase.setUp(self)
+        # Based on 
+        # http://cyber.law.harvard.edu/blogs/gems/tech/rss2sample.xml
+        self.writefile("""<?xml version="1.0"?>
 <rss version="2.0">
    <channel>
       <title>Liftoff News</title>
@@ -76,7 +113,7 @@ class SimpleFeedTestCase(DemocracyTestCase):
       <item>
 
          <title>Star City</title>
-         <link>http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp</link>
+         <link>http://liftoff.msfc.nasa.gov/news/2003/news-starcity.mov</link>
          <description>How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's &lt;a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm"&gt;Star City&lt;/a&gt;.</description>
          <pubDate>Tue, 03 Jun 2003 09:39:21 GMT</pubDate>
          <guid>http://liftoff.msfc.nasa.gov/2003/06/03.html#item573</guid>
@@ -106,26 +143,25 @@ class SimpleFeedTestCase(DemocracyTestCase):
       </item>
    </channel>
 </rss>""")
-        handle.close()
     def testRun(self):
-        myFeed = RSSFeed(self.filename)
-        self.assertEqual(self.everything.len(),5)
+        dialogs.delegate = AcceptScrapeTestDelegate()
+        myFeed = self.makeFeed()
+        self.assertEqual(dialogs.delegate.calls, 1)
+        self.assertEqual(self.everything.len(), 2) 
+        # the Feed, plus the 1 item that is a video
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
-        self.assertEqual(items.len(),4)
+        self.assertEqual(items.len(),1)
         #Make sure that re-updating doesn't re-create the items
         myFeed.update()
-        self.assertEqual(self.everything.len(),5)
+        self.assertEqual(self.everything.len(),2)
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
-        self.assertEqual(items.len(),4)
+        self.assertEqual(items.len(),1)
         myFeed.remove()
 
-class EnclosureFeedTestCase(DemocracyTestCase):
+class EnclosureFeedTestCase(FeedTestCase):
     def setUp(self):
-        DDBObject.dd = DynamicDatabase()
-        self.everything = DDBObject.dd
-        [handle, self.filename] = mkstemp(".xml")
-        handle =file(self.filename,"wb")
-        handle.write("""<?xml version="1.0"?>
+        FeedTestCase.setUp(self)
+        self.writefile("""<?xml version="1.0"?>
 <rss version="2.0">
    <channel>
       <title>Downhill Battle Pics</title>
@@ -134,17 +170,20 @@ class EnclosureFeedTestCase(DemocracyTestCase):
       <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
       <item>
          <title>Bumper Sticker</title>
-         <enclosure url="http://downhillbattle.org/key/gallery/chriscA.jpg" />
+         <enclosure url="http://downhillbattle.org/key/gallery/chriscA.mpg" />
          <description>I'm a musician and I support filesharing.</description>
 
       </item>
       <item>
          <title>T-shirt</title>
-         <enclosure url="http://downhillbattle.org/key/gallery/payola_tshirt.jpg" />
+         <enclosure url="http://downhillbattle.org/key/gallery/payola_tshirt.mpg" />
       </item>
       <item>
-         <enclosure url="http://downhillbattle.org/key/gallery/chriscE.jpg" />
+         <enclosure url="http://downhillbattle.org/key/gallery/chriscE.mpg" />
          <description>Flyer in Yucaipa, CA</description>
+      </item>
+      <item>
+         <enclosure url="http://downhillbattle.org/key/gallery/jalabel_nov28.mpg" />
       </item>
       <item>
          <enclosure url="http://downhillbattle.org/key/gallery/jalabel_nov28.jpg" />
@@ -152,9 +191,8 @@ class EnclosureFeedTestCase(DemocracyTestCase):
       
    </channel>
 </rss>""")
-        handle.close()
     def testRun(self):
-        myFeed = RSSFeed(self.filename)
+        myFeed = self.makeFeed()
         self.assertEqual(self.everything.len(),5)
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
         self.assertEqual(items.len(),4)
@@ -165,17 +203,82 @@ class EnclosureFeedTestCase(DemocracyTestCase):
         self.assertEqual(items.len(),4)
         for item in items:
             #Generate an exception if we didn't get one of the enclosures
-            item["enclosures"][0]
-            self.assertRaises(IndexError,lambda :item["enclosures"][1])
-        items[0].download()
-        dlers = items[0].getDownloaders()
-        self.assertEqual(len(dlers),1)
-        self.assertEqual(dlers[0].getURL(),items[0]["enclosures"][0]["url"])
-        while dlers[0].getState() == "downloading":
-            sleep(1)
-        self.assertEqual(dlers[0].getState(),"finished")
-        dlers[0].stop()
+            item.entry["enclosures"][0]
+            self.assertRaises(IndexError,lambda :item.entry["enclosures"][1])
         myFeed.remove()
-            
+
+class OldItemExpireTest(FeedTestCase):
+    # Test that old items expire when the feed gets too big
+    def setUp(self):
+        FeedTestCase.setUp(self)
+        self.counter = 0
+        self.writeNewFeed()
+        self.feed = self.makeFeed()
+        self.items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
+        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
+
+    def writeNewFeed(self, entryCount=2):
+        # make a feed with a new item and parse it
+        items = []
+        for x in range(entryCount):
+            self.counter += 1
+
+            items.append("""\
+<item>
+ <title>Bumper Sticker</title>
+ <guid>guid-%s</guid>
+ <enclosure url="http://downhillbattle.org/key/gallery/%s.mpg" />
+ <description>I'm a musician and I support filesharing.</description>
+</item>
+""" % (self.counter, self.counter))
+
+        self.writefile("""<?xml version="1.0"?>
+<rss version="2.0">
+   <channel>
+      <title>Downhill Battle Pics</title>
+      <link>http://downhillbattle.org/</link>
+      <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
+      <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
+      %s
+   </channel>
+</rss>""" % '\n'.join(items))
+
+    def checkGuids(self, *ids):
+        actual = set()
+        for i in self.items:
+            actual.add(i.getRSSID())
+        correct = set(['guid-%d' % i for i in ids])
+        self.assertEquals(actual, correct)
+
+    def parseNewFeed(self, entryCount=2):
+        self.writeNewFeed(entryCount)
+        self.updateFeed(self.feed)
+
+    def testSimpleOverflow(self):
+        self.assertEqual(self.items.len(), 2)
+        self.parseNewFeed()
+        self.assertEqual(self.items.len(), 4)
+        self.parseNewFeed()
+        self.assertEqual(self.items.len(), 4)
+        self.checkGuids(3, 4, 5, 6)
+
+    def testOverflowWithDownloads(self):
+        self.items[0].downloader = FakeDownloader()
+        self.items[1].downloader = FakeDownloader()
+        self.assertEqual(self.items.len(), 2)
+        self.parseNewFeed()
+        self.parseNewFeed()
+        self.checkGuids(1, 2, 5, 6)
+
+    def testOverflowStillInFeed(self):
+        self.parseNewFeed(6)
+        self.checkGuids(3, 4, 5, 6, 7, 8)
+
+    def testOverflowWithReplacement(self):
+        # Keep item with guid-2 in the feed.
+        self.counter = 1
+        self.parseNewFeed(5)
+        self.checkGuids(2, 3, 4, 5, 6)
+
 if __name__ == "__main__":
     unittest.main()

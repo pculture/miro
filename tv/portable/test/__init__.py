@@ -16,6 +16,7 @@ from test.subscriptiontest import *
 from test.schedulertest import *
 from test.httpclienttest import *
 from test.httpdownloadertest import *
+from test.feedtest import *
 from test.feedparsertest import *
 from test.parseurltest import *
 from test.utiltest import *
