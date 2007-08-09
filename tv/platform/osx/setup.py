@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import string
 import py2app
 import shutil
@@ -84,6 +85,9 @@ def fillTemplate(templatepath, outpath, **vars):
 
 fillTemplate(appConfigTemplatePath,
              appConfigPath,
+             BUILD_MACHINE="%s@%s" % (os.getlogin(),
+                                      os.uname()[1]),
+             BUILD_TIME=str(time.time()),
              APP_REVISION = revision, 
              APP_REVISION_URL = revisionURL, 
              APP_REVISION_NUM = revisionNum, 
