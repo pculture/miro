@@ -1,0 +1,6 @@
+<searchengine>
+   <id>yahoosearch</id>
+   <displayname>Yahoo! Search</displayname>
+   <url>http://api.search.yahoo.com/WebSearchService/rss/webSearch.xml?appid=yahoosearchwebrss&amp;query=%s+originurlextension:mpg+OR+originurlextension:mov+OR+originurlextension:mp4+OR+originurlextension:wmv+OR+originurlextension:torrent+OR+originurlextension:flv+OR+originurlextension:xvid+OR+originurlextension:avi&amp;aadult_ok=%a</url>
+   <sort>7</sort>
+</searchengine>
