@@ -263,7 +263,7 @@ class BGDownloader:
         """
         if chatter:
             logging.info ("moving to movies directory filename is %s", self.filename)
-        self.moveToDirectory(cleanFilename(config.get(prefs.MOVIES_DIRECTORY)))
+        self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
 
     def moveToDirectory (self, directory):
         checkF(directory)
