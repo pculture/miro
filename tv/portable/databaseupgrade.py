@@ -24,6 +24,8 @@ olddatabaseupgrade.py)
 import schema
 import util
 import types
+from urlparse import urlparse
+from storedatabase import SavableObject
 
 class DatabaseTooNewError(Exception):
     """Error that we raise when we see a database that is newer than the
@@ -815,6 +817,17 @@ def upgrade52(objectList):
                 if o.savedData['parent_id'] in removed:
                     changed.add(o)
                     del objectList[i]
+    return changed
+
+def upgrade53(objectList):
+    """Added favicon and icon cache field to channel guides"""
+    changed = set()
+    for o in objectList:
+        if o.classString in ('channel-guide'):
+            o.savedData['favicon'] = None
+            o.savedData['iconCache'] = None
+            o.savedData['updated_url'] = o.savedData['url']
+            changed.add(o)
     return changed
                         
         

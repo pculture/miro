@@ -221,6 +221,7 @@ class IconCache:
                 self.filename = nextFreeFilename (self.filename)
                 needsSave = True
             self._removeFile(self.filename)
+
             try:
                 os.rename (tmp_filename, self.filename)
             except:
@@ -228,7 +229,8 @@ class IconCache:
                 needsSave = True
             else:
                 self.resizeIcon()
-        
+
+
             if (info.has_key ("etag")):
                 etag = unicodify(info["etag"])
             else:
