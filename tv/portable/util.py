@@ -636,3 +636,15 @@ def getsize(path):
         return size
     else:
         return os.path.getsize(path)
+
+def partition(list, size):
+    """Partiction list into smaller lists such that none is larger than
+    size elements.
+
+    Returns a list of lists.  The lists appended together will be the original
+    list.
+    """
+    retval = []
+    for start in range(0, len(list), size):
+        retval.append(list[start:start+size])
+    return retval

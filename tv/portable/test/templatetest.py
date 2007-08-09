@@ -167,11 +167,14 @@ class ViewTest(DemocracyTestCase):
         self.assertEqual(len(match),2)
         self.assertNotEqual(match[0], match[1])
         handle.trackedViews[0].onResort()
-        self.assertEqual(len(self.domHandle.callList),2)
+        self.assertEqual(len(self.domHandle.callList),3)
         self.assertEqual(self.domHandle.callList[1]['name'],'changeItem')
         self.assertEqual(self.domHandle.callList[1]['id'],id)
         self.assertEqual(self.domHandle.callList[1]['xml'],
-                '<div id="%s">%s</div>' % (id, initialXML))
+                '<div id="%s"></div>' % id)
+        self.assertEqual(self.domHandle.callList[2]['name'],'addItemAtEnd')
+        self.assertEqual(self.domHandle.callList[2]['id'],id)
+        self.assertEqual(self.domHandle.callList[2]['xml'], initialXML)
 
     def testUpdate(self):
         (tch, handle) = fillTemplate("unittest/update",self.domHandle,'gtk-x11-MozillaBrowser','platform')

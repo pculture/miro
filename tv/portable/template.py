@@ -27,6 +27,7 @@ from xhtmltools import urlencode
 from template_compiler import checkU
 from itertools import chain
 import logging
+import util
 
 # FIXME add support for onlyBody parameter for static templates so we
 #       don't need to strip the outer HTML
@@ -153,13 +154,7 @@ class TrackedView:
 
         #print "Filling in %d items" % self.view.len()
         #start = time.clock()
-        xmls = []
-        for x in self.view:
-            xmls.append(self.initialXML(x))
-        # Web Kit treats adding the empty string like adding "&nbsp;",
-        # so we don't add the HTML unless it's non-empty
-        if len(xmls) > 0:
-            self.doAdd(''.join(xmls))
+        self.addObjects(self.view)
         self.view.addChangeCallback(self.onChange)
         self.view.addAddCallback(self.onAdd)
         self.view.addResortCallback(self.onResort)
@@ -183,11 +178,7 @@ class TrackedView:
 
     def callback (self):
         if self.parent.domHandler:
-            if len (self.toAdd) > 0:
-                adds = [self.initialXML(obj) for obj in self.toAdd]
-                addXml = "".join (adds)
-                self.doAdd(addXml)
-
+            self.addObjects(self.toAdd)
             changes = []
             for id in self.toChange:
                 obj = self.toChange[id]
@@ -218,19 +209,14 @@ class TrackedView:
         self.toAdd = []
         self.addBefore = None
 
-        newXML = ''.join(self.initialXML(x) for x in self.view)
-
         if self.anchorType == 'containerDiv':
-            newXML = '<div id="%s">%s</div>' % (self.anchorId, newXML)
-            self.parent.domHandler.changeItem(self.anchorId, newXML, None)
+            emptyXML = '<div id="%s"></div>' % (self.anchorId, )
+            self.parent.domHandler.changeItem(self.anchorId, emptyXML, None)
         else:
             removeTids = [self.tid(obj) for obj in self.view]
             if len(removeTids) > 0:
                 self.parent.domHandler.removeItems(removeTids)
-            # Web Kit treats adding the empty string like adding "&nbsp;",
-            # so we don't add the HTML unless it's non-empty
-            if newXML:
-                self.doAdd(newXML)
+        self.addObjects(self.view)
 
     def onChange(self,obj,id):
         if obj in self.toAdd:
@@ -261,7 +247,20 @@ class TrackedView:
                 self.addBefore = nextTid
                 self.addCallback()
 
-    def doAdd(self, xml):
+    def addObjects(self, objects):
+        """Insert the XML for a list of objects into the DOM tree."""
+
+        if len(objects) == 0:
+            # Web Kit treats adding the empty string like adding "&nbsp;", so
+            # we don't add the HTML unless it's non-empty
+            return
+        xmls = [self.initialXML(x) for x in objects]
+        # only render with 100 picees at a time, otherwise we can end up
+        # trying to allocate huge strings (#8320)
+        for xmls_part in util.partition(xmls, 100):
+            self.addXML(''.join(xmls_part))
+
+    def addXML(self, xml):
         # Adding it at the end of the list. Must add it relative to
         # the anchor.
 
