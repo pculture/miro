@@ -170,6 +170,8 @@ def failed(when, withExn = False, details = None):
         header += "Version:    %s\n" % config.get(prefs.APP_VERSION)
         header += "Serial:     %s\n" % config.get(prefs.APP_SERIAL)
         header += "Revision:   %s\n" % config.get(prefs.APP_REVISION)
+        header += "Builder:    %s\n" % config.get(prefs.BUILD_MACHINE)
+        header += "Build Time: %s\n" % config.get(prefs.BUILD_TIME)
     except KeyboardInterrupt:
         raise
     except:

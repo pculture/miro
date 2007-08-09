@@ -157,3 +157,7 @@ APP_SERIAL = \
     Pref(key='appSerial-unknown', default=u"0",  platformSpecific=False)
 MOZILLA_LIB_PATH = \
     Pref(key='mozillaLibPath',    default=None, platformSpecific=False)
+BUILD_MACHINE = \
+    Pref(key='buildMachine',      default=None, platformSpecific=False)
+BUILD_TIME = \
+    Pref(key='buildTime',         default=None, platformSpecific=False)

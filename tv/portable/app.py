@@ -622,8 +622,10 @@ class Controller (frontend.Application):
     def onStartup(self, gatheredVideos=None):
         try:
             logging.info ("Starting up %s", config.get(prefs.LONG_APP_NAME))
-            logging.info ("Version:  %s", config.get(prefs.APP_VERSION))
-            logging.info ("Revision: %s", config.get(prefs.APP_REVISION))
+            logging.info ("Version:    %s", config.get(prefs.APP_VERSION))
+            logging.info ("Revision:   %s", config.get(prefs.APP_REVISION))
+            logging.info ("Builder:    %s", config.get(prefs.BUILD_MACHINE))
+            logging.info ("Build Time: %s", config.get(prefs.BUILD_TIME))
 
             util.print_mem_usage("Pre everything memory check")
             
