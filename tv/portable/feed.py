@@ -2088,11 +2088,11 @@ class SearchFeedImpl (RSSFeedImpl):
                 # This is a HACK for Yahoo! search which doesn't provide
                 # enclosures
                 url = entry['link']
-                if ((link[-4:].lower() in
+                if ((url[-4:].lower() in
                     ['.mov', '.mp4', '.m4v', '.wmv', '.flv', '.avi']) or
-                    (link[-5:].lower() in ['.mpeg', '.xvid'])):
+                    (url[-5:].lower() in ['.mpeg', '.xvid'])):
                     mimetype = 'video/unknown'
-                elif link[-8].lower() == '.torrent':
+                elif url[-8].lower() == '.torrent':
                     mimetype = 'application-xbittorrent'
                 else:
                     logging.info('unknown url type %s, not generating enclosure' % url)
