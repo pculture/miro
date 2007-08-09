@@ -1,5 +1,7 @@
 import os.path
 import os
+import time
+import socket
 import copy
 import sys
 import string
@@ -652,7 +654,10 @@ class bdist_xul_dumb(Command):
 
         path = os.path.join(root, 'resources', 'app.config')
         fillTemplate("%s.template" % path, path,
-            APP_REVISION = revision, APP_PLATFORM = 'windows-xul')
+                     BUILD_MACHINE="%s@%s" % (os.environ['username'],
+                                              socket.gethostname()),
+                     BUILD_TIME=str(time.time()),
+                     APP_REVISION = revision, APP_PLATFORM = 'windows-xul')
         self.templateVars = util.readSimpleConfigFile(path)
 
     def makeStubEXE(self):
