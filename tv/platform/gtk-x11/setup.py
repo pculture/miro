@@ -67,6 +67,8 @@ import os
 import subprocess
 import sys
 import re
+import time
+import shutil
 
 from Pyrex.Distutils import build_ext
 
@@ -350,11 +352,16 @@ class install_data (distutils.command.install_data.install_data):
         if self.root:
             dest = change_root(self.root, dest)
         self.mkpath(os.path.dirname(dest))
-        self.copy_file(source, dest)
+        # We don't use the dist utils copy_file() because it only copies
+        # the file if the timestamp is newer
+        shutil.copyfile(source,dest)
         expand_file_contents(dest, APP_REVISION=revision,
                              APP_REVISION_NUM=revisionnum,
                              APP_REVISION_URL=revisionurl,
                              APP_PLATFORM='gtk-x11',
+                             BUILD_MACHINE="%s@%s" % (os.getlogin(),
+                                                      os.uname()[1]),
+                             BUILD_TIME=str(time.time()),
                              MOZILLA_LIB_PATH=mozilla_lib_path[0])
         self.outfiles.append(dest)
 
