@@ -348,3 +348,7 @@ wizard.startup {
   margin-top: 8px;
   list-style-image: url(images/search-arrow.gif);
 }
+
+tabs.prefs tab {
+   font-size: 150%;
+}

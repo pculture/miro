@@ -24,14 +24,13 @@
     </richlistitem>
 </box>
 <tabbox>
-    <tabs>
-        <tab label=" &prefs.general;" />
-        <tab label="&prefs.channels;"/>
-        <tab label="&prefs.playback;"/>
-        <tab label="&prefs.folder.movies;"/>
-        <tab label="&prefs.downloads.max;"/>
-        <tab label="&prefs.disk.space;"/>
-        <tab label="&prefs.torrent.label;" />
+    <tabs class="prefs">
+            <tab label=" &prefs.general;" image="chrome://dtv/content/images/pref-tabs/general.png" />
+            <tab label="&prefs.channels;" image="chrome://dtv/content/images/pref-tabs/channels.png" />
+            <tab label="&prefs.downloads.max;" image="chrome://dtv/content/images/pref-tabs/downloads.png" />
+            <tab label="&prefs.folder.movies;" image="chrome://dtv/content/images/pref-tabs/folders.png" />
+            <tab label="&prefs.disk.space;" image="chrome://dtv/content/images/pref-tabs/disk-space.png" />
+            <tab label="&prefs.playback;" image="chrome://dtv/content/images/pref-tabs/playback.png" />
     </tabs>
     <tabpanels>
         <tabpanel orient="vertical">
@@ -59,15 +58,28 @@
             </hbox>
         </tabpanel>
         <tabpanel orient="vertical">
-            <!--PLAYBACK-->
-            <checkbox id="resumeVideos" checked="true" label="&prefs.playback.remember.pos;" value="1" oncommand="resumeVideosModeChange();"/>
-            <radiogroup id="play-mode-radiogroup"
-                oncommand="singlePlayModeChange();" >
-                <radio label="&prefs.playback.auto.next.video;"
-                    id="continuous-play-mode-radio" />
-                <radio label="&prefs.playback.stop.after.each;"
-                    id="single-play-mode-radio" />
-            </radiogroup>
+            <!--DOWNLOADS-->
+            <hbox>
+                <description>&prefs.downloads.max.part1;</description>
+                <textbox id="maxmanual" flex="0" value="300" style="max-width: 30px;" onchange="maxManualChange()"/>
+                <description>&prefs.downloads.max.part2;</description>
+            </hbox>
+            <separator class="groove" />
+            <hbox>
+                <checkbox id="limitupstream" checked="true" label="&prefs.torrent.limit.upstream.part1;" value="1" oncommand="limitUpstreamChange()"/>
+                <textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
+                <description style="padding-top:5px;">&prefs.torrent.limit.upstream.part2;</description>
+            </hbox>				
+            <separator class="groove" />
+            <hbox align="end">
+                <description>&prefs.torrent.uses.ports.part1;</description>
+                <textbox id="btminport" flex="0" value="300" 
+                    size="5" onchange="btMinPortChange()" />
+                <description>&prefs.torrent.uses.ports.part2;</description>
+                <textbox id="btmaxport" flex="0" value="300" 
+                    size="5" onchange="btMaxPortChange()" />
+            </hbox>
+            <description>&prefs.torrent.restart.warning;</description>
         </tabpanel>
         <tabpanel orient="vertical">
             <!--MOVIES DIRECTORY-->
@@ -108,14 +120,6 @@
                 </vbox>
             </hbox>
         </tabpanel>
-        <tabpanel orient="vertical">
-            <!--DOWNLOADS-->
-            <hbox>
-                <description>&prefs.downloads.max.part1;</description>
-                <textbox id="maxmanual" flex="0" value="300" style="max-width: 30px;" onchange="maxManualChange()"/>
-                <description>&prefs.downloads.max.part2;</description>
-            </hbox>
-        </tabpanel>
 
         <tabpanel orient="vertical">
             <!--DISK SPACE-->
@@ -124,7 +128,6 @@
                 <textbox id="minspace" flex="0" value="1" style="max-width: 30px;" onchange="minSpaceChange()"/>
                 <description style="padding-top:5px;">&prefs.disk.space.min.part2;</description>
             </hbox>				
-            <description style="margin-bottom: 10px;">&prefs.disk.space.warning.restart;</description>
             <hbox>
                 <description style="padding-top:4px;">&prefs.videos.expire;</description>
                 <menulist id="expiration">
@@ -139,23 +142,16 @@
                 </menulist>
             </hbox>
         </tabpanel>
-
         <tabpanel orient="vertical">
-            <!--BITTORRENT-->
-            <description>&prefs.torrent.restart.warning;</description>
-            <hbox>
-                <checkbox id="limitupstream" checked="true" label="&prefs.torrent.limit.upstream.part1;" value="1" oncommand="limitUpstreamChange()"/>
-                <textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
-                <description style="padding-top:5px;">&prefs.torrent.limit.upstream.part2;</description>
-            </hbox>				
-            <hbox align="end">
-                <description>&prefs.torrent.uses.ports.part1;</description>
-                <textbox id="btminport" flex="0" value="300" 
-                    size="5" onchange="btMinPortChange()" />
-                <description>&prefs.torrent.uses.ports.part2;</description>
-                <textbox id="btmaxport" flex="0" value="300" 
-                    size="5" onchange="btMaxPortChange()" />
-            </hbox>
+            <!--PLAYBACK-->
+            <checkbox id="resumeVideos" checked="true" label="&prefs.playback.remember.pos;" value="1" oncommand="resumeVideosModeChange();"/>
+            <radiogroup id="play-mode-radiogroup"
+                oncommand="singlePlayModeChange();" >
+                <radio label="&prefs.playback.auto.next.video;"
+                    id="continuous-play-mode-radio" />
+                <radio label="&prefs.playback.stop.after.each;"
+                    id="single-play-mode-radio" />
+            </radiogroup>
         </tabpanel>
     </tabpanels>
 </tabbox>
