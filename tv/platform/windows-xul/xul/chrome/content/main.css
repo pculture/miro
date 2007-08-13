@@ -349,6 +349,18 @@ wizard.startup {
   list-style-image: url(images/search-arrow.gif);
 }
 
-tabs.prefs tab {
+tabbox.prefs tab {
    font-size: 150%;
+}
+
+tabbox.prefs tabpanel {
+   padding-top: 20px;
+}
+
+radiogroup.indented radio {
+   margin-left: 20px;
+}
+
+tabbox.prefs caption {
+    background-color: #f6f6f6;
 }

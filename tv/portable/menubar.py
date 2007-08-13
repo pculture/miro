@@ -153,7 +153,7 @@ VideoItems = [
              plural=_("Save Videos _As...")),
     MenuItem(_("Copy Video _URL"), "CopyVideoURL", (Key("u", MOD),), enabled=False),
     Separator(),
-    MenuItem(_("_Options"), "EditPreferences", ()),
+    MenuItem(_("_Options..."), "EditPreferences", ()),
     MenuItem(_("_Quit"),"Quit", (Key("q",MOD),)),
 ]
 
@@ -247,7 +247,7 @@ traymenu = Menu("Miro","Miro",
                 MenuItem(_("Pause All Downloads ($numDownloading)"), "PauseDownloads", ()),
                 MenuItem(_("Resume All Downloads ($numPaused)"), "ResumeDownloads", ()),
                 Separator(),
-                MenuItem(_("Options"), "EditPreferences", ()),
+                MenuItem(_("Options..."), "EditPreferences", ()),
                 Separator(),
                 MenuItem(_("Hide Window"),"RestoreWindow", (),
                          restore=_("Show Window")),
