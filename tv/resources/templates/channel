@@ -37,7 +37,7 @@ def _updateView ():
 
     showNewItems = (len(watchableItems) == 0) or (len(newItems) > 0 and feed.getAutoDownloadMode() == 'off') or feed.getURL().startswith('dtv:directoryfeed')
 
-    if len(newItems) == 0:
+    if len(newItems) == 0 or not showNewItems:
         allItemsMode = True
         matchingItems.recomputeFilter(newItems)
 
