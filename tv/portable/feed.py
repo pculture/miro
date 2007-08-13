@@ -48,7 +48,7 @@ import menu
 import prefs
 import resources
 import downloader
-from util import returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL
+from util import returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL, miro_listdir
 from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
 import filetypes
 import views
@@ -1852,19 +1852,17 @@ class DirectoryWatchFeedImpl(FeedImpl):
         #Adds any files we don't know about
         #Files on the filesystem
         if os.path.isdir(self.dir):
-            existingFiles = [os.path.normcase(os.path.join(self.dir, f)) 
-                    for f in os.listdir(self.dir)]
-            toAdd = []
-            for existingFile in existingFiles:
-                if os.path.isdir(existingFile) and not isBasenameHidden(existingFile):
-                    toAdd += [os.path.normcase(os.path.join(existingFile, f)) 
-                              for f in os.listdir(existingFile)]
-            existingFiles += toAdd
-            for existingFile in existingFiles:
-                if os.path.isfile(existingFile) and not isBasenameHidden(existingFile):
-                    if not existingFile in knownFiles:
-                        if filetypes.isVideoFilename(platformutils.filenameToUnicode(existingFile)):
-                            FileItem(existingFile, feed_id=self.ufeed.id)
+            all_files = []
+            files, dirs = miro_listdir(self.dir)
+            for file in files:
+                all_files.append(file)
+            for dir in dirs:
+                subfiles, subdirs = miro_listdir(dir)
+                for subfile in subfiles:
+                    all_files.append(subfile)
+            for file in all_files:
+                if file not in knownFiles and filetypes.isVideoFilename(platformutils.filenameToUnicode(file)):
+                    FileItem(file, feed_id=self.ufeed.id)
 
         for item in self.items:
             if not os.path.isfile(item.getFilename()):
@@ -1935,48 +1933,42 @@ class DirectoryFeedImpl(FeedImpl):
         #Adds any files we don't know about
         #Files on the filesystem
         if os.path.isdir(moviesDir):
-            existingFiles = [osFilenameToFilenameType(os.path.normcase(os.path.join(moviesDir, f)))
-                    for f in os.listdir(moviesDir)]
-            for file in existingFiles:
-                if (os.path.exists(file) and os.path.basename(file)[0] != '.'):
-                    if not file in knownFiles:
-                        if not os.path.isdir(file):
-                            FileItem(file, feed_id=self.ufeed.id)
-                        else:
-                            found = 0
-                            not_found = []
-                            try:
-                                contents = os.listdir(file)
-                            except OSError:
-                                # probable permission denied
-                                contents = []
-                            contents = [osFilenameToFilenameType(os.path.normcase(os.path.join(file, f))) for f in contents]
-                            for subfile in contents:
-                                if subfile in knownFiles:
-                                    found = found + 1
-                                else:
-                                    not_found.append(subfile)
-                            # If every subfile or subdirectory is
-                            # already in the database (including
-                            # the case where the directory is
-                            # empty) do nothing.
-                            if len(not_found) > 0:
-                                # If there were any files found,
-                                # this is probably a channel
-                                # directory that someone added
-                                # some thing to.  There are few
-                                # other cases where a directory
-                                # would have some things shown.
-                                if found != 0:
-                                    for subfile in not_found:
-                                        FileItem (subfile, feed_id=self.ufeed.id)
-                                        
-                                # But if not, it's probably a
-                                # directory added wholesale.
-                                
-                                else:
-                                    FileItem (file, feed_id=self.ufeed.id)
-                                
+            files, dirs = miro_listdir(moviesDir)
+            for file in files:
+                if not file in knownFiles:
+                    FileItem(file, feed_id=self.ufeed.id)
+            for dir in dirs:
+                if dir in knownFiles:
+                    continue
+                found = 0
+                not_found = []
+                subfiles, subdirs = miro_listdir(dir)
+                for subfile in subfiles:
+                    if subfile in knownFiles:
+                        found = found + 1
+                    else:
+                        not_found.append(subfile)
+                for subdir in subdirs:
+                    if subdir in knownFiles:
+                        found = found + 1
+                # If every subfile or subdirectory is
+                # already in the database (including
+                # the case where the directory is
+                # empty) do nothing.
+                if len(not_found) > 0:
+                    # If there were any files found,
+                    # this is probably a channel
+                    # directory that someone added
+                    # some thing to.  There are few
+                    # other cases where a directory
+                    # would have some things shown.
+                    if found != 0:
+                        for subfile in not_found:
+                            FileItem(subfile, feed_id=self.ufeed.id)
+                    # But if not, it's probably a
+                    # directory added wholesale.
+                    else:
+                        FileItem(dir, feed_id=self.ufeed.id)
 
         for item in self.items:
             if not os.path.exists(item.getFilename()):

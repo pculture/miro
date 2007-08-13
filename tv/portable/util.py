@@ -650,3 +650,32 @@ def partition(list, size):
     for start in range(0, len(list), size):
         retval.append(list[start:start+size])
     return retval
+
+def miro_listdir(directory):
+    """Directory listing that's safe and convenient for finding new videos in
+    a directory.
+
+    Returns the tuple (files, directories) where both elements are a list of
+    absolute pathnames.  OSErrors are silently ignored.  Hidden files aren't
+    returned.  Pathnames are run through os.path.normcase.
+    """
+
+    files = []
+    directories = []
+    directory = os.path.abspath(os.path.normcase(directory))
+    try:
+        listing = os.listdir(directory)
+    except OSError:
+        return [], []
+    for name in listing:
+        if name[0] == '.':
+            continue
+        path = os.path.join(directory, os.path.normcase(name))
+        try:
+            if os.path.isdir(path):
+                directories.append(path)
+            else:
+                files.append(path)
+        except OSError:
+            pass
+    return files, directories
