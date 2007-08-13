@@ -161,7 +161,7 @@ img {
 /* Search box */
 #search-box-container {
     position: absolute;
-    bottom: 8px;
+    bottom: 10px;
     left: 98px;
 }
 
@@ -633,7 +633,7 @@ a.download-bar-action:hover {
 }
 .channel-message {
     font-size: 28px;
-    color:      #999;
+    color:      #666;
     text-align: center;
     margin-top: 50px;
     font-weight: bold;
@@ -837,7 +837,8 @@ an element is dragged, the drag-highlight class is added to it */
 .channel-title {
     text-align: right;
     color: #666;
-    height: 13px;
+    line-height: 130%;
+    height: 1.3em;
     overflow: hidden;
     margin-right: 5px;
 }

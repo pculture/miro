@@ -46,7 +46,7 @@ searchItems.unlink()
          <form name="search" onsubmit="return performSearch();">
          <t:staticReplaceMarkup t:replaceData="searchengines.getSearchEnginesHTML()"/>
          <input id="search-box" type="search" name="query" value="***feed.quoteLastQuery()***" onKeyUp="return fillSearch();" onKeyPress="return validateSearch(event);" />
-         <input type="submit" value="GO" />      
+         <input type="submit" value="***_('Search')***" />      
          </form>
       </div>
       </div>
