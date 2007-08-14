@@ -6,6 +6,8 @@
                 checkForUpdates = id; 
                 donate = id; 
                 downloadVideo = id; 
+                exportChannels = id; 
+                importChannels = id; 
                 openFile = id; 
                 removeGuide = id; 
                 showMainWindow = id; 

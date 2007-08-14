@@ -46,6 +46,9 @@
 /* NSMenu : <title:Edit> (oid:169) */
 "Edit" = "Edit";
 
+/* NSMenuItem : <title:Export Channels (OPML)...> (oid:367) */
+"Export Channels (OPML)..." = "Export Channels (OPML)...";
+
 /* NSMenuItem : <title:File> (oid:83) */
 "File" = "File";
 
@@ -60,6 +63,9 @@
 
 /* NSMenuItem : <title:Hide Others> (oid:145) */
 "Hide Others" = "Hide Others";
+
+/* NSMenuItem : <title:Import Channels (OPML)...> (oid:366) */
+"Import Channels (OPML)..." = "Import Channels (OPML)...";
 
 /* NSMenuItem : <title:Main Window> (oid:352) */
 "Main Window" = "Main Window";

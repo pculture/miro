@@ -131,6 +131,7 @@ def initialize():
 
         channelFolders = db.filterWithIndex(indexes.objectsByClass,
                                             folder.ChannelFolder)
+        channelFolders.createIndex(indexes.foldersByTitle)
         searchEngines = db.filterWithIndex(indexes.objectsByClass,
                                            searchengines.SearchEngine)
         searchEngines = searchEngines.sort(sorts.searchEngines)

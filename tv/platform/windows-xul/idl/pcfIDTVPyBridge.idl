@@ -86,6 +86,8 @@ interface pcfIDTVPyBridge : nsISupports
   void createNewSearchChannel();
   void createNewChannelFolder();
   void createNewDownload();
+  void importChannels();
+  void exportChannels();
   void handleDrop(in AString dropData, in AString dropType, in AString sourceData);
   void removeCurrentSelection();
   void checkForUpdates();

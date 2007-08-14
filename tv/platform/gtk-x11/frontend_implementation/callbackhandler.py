@@ -320,6 +320,8 @@ class CallbackHandler(object):
             ('NewSearchChannel', None, menubar.getLabel('NewSearchChannel'), menubar.getShortcut('NewSearchChannel').GTKString(), None, self.on_add_search_channel_button_clicked),
             ('NewGuide', None, _("New Channel _Guide..."), None, None, self.on_add_guide_button_clicked),
             _buildAction('NewDownload'),
+            _buildAction('ImportChannels'),
+            _buildAction('ExportChannels'),
 
             ('EditPreferences', gtk.STOCK_PREFERENCES, menubar.getLabel('EditPreferences'), menubar.getShortcut('EditPreferences').GTKString(), None, self.on_preference),
             ('Quit', gtk.STOCK_QUIT, menubar.getLabel('Quit'), menubar.getShortcut('Quit').GTKString(), None, self.on_quit_activate),

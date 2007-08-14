@@ -248,3 +248,6 @@ def createNewPlaylistFolder(childIDs=None):
 
     dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
             dialogs.BUTTON_CANCEL).run(callback)
+
+def getFolderByTitle(title):
+    return views.channelFolders.getItemWithIndex(indexes.foldersByTitle, title)

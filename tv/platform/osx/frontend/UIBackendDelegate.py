@@ -8,7 +8,7 @@ import threading
 from objc import YES, NO, nil, signature
 from AppKit import *
 from Foundation import *
-from PyObjCTools import NibClassBuilder, Conversion
+from PyObjCTools import NibClassBuilder, Conversion, AppHelper
 
 import app
 import feed
@@ -69,11 +69,21 @@ class UIBackendDelegate:
 
     def __init__(self):
         self.contextItemHandler = ContextItemHandler.alloc().init()
+        self.openPanelHandler = OpenPanelHandler.alloc().init()
+        self.savePanelHandler = SavePanelHandler.alloc().init()
 
     def performStartupTasks(self, terminationCallback):
         NSApplication.sharedApplication().delegate().checkQuicktimeVersion(True)
         startupController = StartupPanelController.alloc().init()
         startupController.run(terminationCallback)
+
+    @platformutils.onMainThread
+    def askForSavePathname(self, callback, defaultFilename=None):
+        self.savePanelHandler.run(callback, defaultFilename)
+
+    @platformutils.onMainThread
+    def askForOpenPathname(self, callback, defaultDirectory=None, types=None):
+        self.openPanelHandler.run(callback, defaultDirectory, types)
 
     @platformutils.onMainThread
     def runDialog(self, dialog):
@@ -305,6 +315,50 @@ class ContextItemHandler (NSObject):
     @signature("v@:@")
     def processContextItem_(self, item):
         item.representedObject().activate()
+
+###############################################################################
+
+class OpenPanelHandler (NSObject):
+
+    def run(self, callback, defaultDirectory, types):
+        self.callback = callback
+        if defaultDirectory is None:
+            defaultDirectory = NSHomeDirectory()
+        panel = NSOpenPanel.openPanel()
+        panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+            defaultDirectory,
+            nil,
+            types,
+            NSApplication.sharedApplication().mainWindow(),
+            self,
+            'openPanelDidEnd:returnCode:contextInfo:',
+            0)
+    
+    @AppHelper.endSheetMethod
+    def openPanelDidEnd_returnCode_contextInfo_(self, panel, result, contextID):
+        if result == NSOKButton:
+            filenames = panel.filenames()
+            self.callback(filenames[0])
+
+###############################################################################
+
+class SavePanelHandler (NSObject):
+    
+    def run(self, callback, defaultFilename):
+        self.callback = callback
+        panel = NSSavePanel.savePanel()
+        panel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+            NSHomeDirectory(),
+            defaultFilename,
+            NSApplication.sharedApplication().mainWindow(),
+            self,
+            'savePanelDidEnd:returnCode:contextInfo:',
+            0)
+    
+    @AppHelper.endSheetMethod
+    def savePanelDidEnd_returnCode_contextInfo_(self, panel, result, contextID):
+        if result == NSOKButton:
+            self.callback(panel.filename())
 
 ###############################################################################
 

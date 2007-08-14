@@ -575,6 +575,14 @@ class PyBridge:
         app.controller.newDownload()
 
     @asUrgent
+    def importChannels(self):
+        app.controller.importChannels()
+
+    @asUrgent
+    def exportChannels(self):
+        app.controller.exportChannels()
+
+    @asUrgent
     def addChannel(self):
         app.controller.addAndSelectFeed()
 

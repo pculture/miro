@@ -459,6 +459,12 @@ class UIBackendDelegate:
         else:
             dialog.runCallback (None)
 
+    def askForOpenPathname(self, callback, defaultDirectory=None, types=None):
+        pass
+
+    def askForSavePathname(self, callback, defaultFilename=None):
+        pass
+
     @gtkAsyncMethod
     def showContextMenu(self, menuItems):
         menu = gtk.Menu()

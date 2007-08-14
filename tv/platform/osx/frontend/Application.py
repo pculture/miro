@@ -299,6 +299,12 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def downloadVideo_(self, sender):
         app.controller.newDownload()
     
+    def importChannels_(self, sender):
+        app.controller.importChannels()
+    
+    def exportChannels_(self, sender):
+        app.controller.exportChannels()
+    
     def shutdown_(self, sender):
         self.internalShutdown = True
         app.controller.quit()
@@ -306,6 +312,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
     def validateMenuItem_(self, item):
         return item.action() in ('donate:', 'checkForUpdates:', 'showMainWindow:',
                                  'showPreferencesWindow:', 'addGuide:', 
-                                 'openFile:', 'downloadVideo:', 'shutdown:')
+                                 'openFile:', 'downloadVideo:', 'importChannels:', 
+                                 'exportChannels:', 'shutdown:')
 
 ###############################################################################

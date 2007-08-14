@@ -34,6 +34,7 @@ import item
 import playlist
 import tabs
 
+import opml
 import folder
 import autodler
 import databaseupgrade
@@ -1379,6 +1380,14 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
 
     def newDownload(self, url = None):
         return GUIActionHandler().addDownload(url)
+        
+    def importChannels(self):
+        importer = opml.Importer()
+        importer.importSubscriptions()
+    
+    def exportChannels(self):
+        exporter = opml.Exporter()
+        exporter.exportSubscriptions()
         
 
 ###############################################################################

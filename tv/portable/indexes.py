@@ -84,3 +84,6 @@ def tabOrderType(tabOrder):
 
 def byFolder(obj):
     return obj.getFolder()
+
+def foldersByTitle(obj):
+    return obj.title

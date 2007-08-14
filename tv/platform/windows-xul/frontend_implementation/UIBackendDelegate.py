@@ -138,6 +138,12 @@ class UIBackendDelegate:
             del self.openDialogs[id]
             dialog.runCallback(None)
 
+    def askForOpenPathname(self, callback, defaultDirectory=None, types=None):
+        pass
+
+    def askForSavePathname(self, callback, defaultFilename=None):
+        pass
+
     def handleContextMenu(self, index):
         self.currentMenuItems[index].activate()
 

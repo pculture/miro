@@ -185,6 +185,9 @@ ChannelItems = [
              plural=_("_Update Channels...")),
     MenuItem(_("Update _All Channels"), "UpdateAllChannels", (Key("r",MOD,SHIFT),)),
     Separator(),
+    MenuItem(_("_Import Channels (OPML)..."), "ImportChannels", (), impl=lambda:app.controller.importChannels()),
+    MenuItem(_("E_xport Channels (OPML)..."), "ExportChannels", (), impl=lambda:app.controller.exportChannels()),
+    Separator(),
     MenuItem(_("_Send this channel to a friend"), "MailChannel", (), enabled=False),
     MenuItem(_("Copy Channel _Link"), "CopyChannelURL", (), enabled=False),
 ]
