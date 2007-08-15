@@ -953,8 +953,8 @@ folder will be deleted.""")
     def getTorrentDetails(self):
         status = self.downloader.status
         return [
-            (_('Seeders:'), status.get('seeders', 0)),
-            (_('Leachers:'), status.get('leachers', 0)),
+#            (_('Seeders:'), status.get('seeders', 0)),
+#            (_('Leechers:'), status.get('leechers', 0)),
             (_('Down Rate:'), formatRateForDetails(status.get('rate', 0))),
             (_('Down Total:'), formatSizeForDetails(
                 status.get('currentSize', 0))),
