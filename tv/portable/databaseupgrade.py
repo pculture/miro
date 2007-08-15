@@ -26,6 +26,8 @@ import util
 import types
 from urlparse import urlparse
 from storedatabase import SavableObject
+import config
+import prefs
 
 class DatabaseTooNewError(Exception):
     """Error that we raise when we see a database that is newer than the
@@ -829,7 +831,17 @@ def upgrade53(objectList):
             o.savedData['updated_url'] = o.savedData['url']
             changed.add(o)
     return changed
-                        
+
+def upgrade54(objectList):
+    changed = set()
+    if config.get(prefs.APP_PLATFORM) != "windows-xul":
+        return changed
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            o.savedData['screenshot'] = None
+            o.savedData['duration'] = None
+            changed.add(o)
+    return changed
         
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """

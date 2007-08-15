@@ -18,6 +18,7 @@
 from fasttypes import LinkedList
 from eventloop import asIdle
 from platformutils import FilenameType
+import os.path
 import app
 
 RUNNING_MAX = 3
@@ -31,7 +32,8 @@ class MovieDataUpdater:
     def requestUpdate (self, item):
         if self.inShutdown:
             return
-        if not item.getVideoFilename():
+        filename = item.getVideoFilename()
+        if not filename or not os.path.isfile(filename):
             return
         if item.downloader and not item.downloader.isFinished():
             return

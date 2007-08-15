@@ -387,7 +387,9 @@ VLCRenderer.prototype = {
 //	}
       try {
 	  this.duration_extract = this.vlc_extract.input.length;
-          this.extractMovieDataStepJump();
+//          this.extractMovieDataStepJump();
+	  this.extractMovieDataDone(true);
+	  return
       } catch (e) {
 	  if (this.vlc_extract.playlist.items.count == 0) {
 	      this.extractMovieDataDone(true);

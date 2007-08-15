@@ -470,7 +470,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('iconCache', SchemaObject(IconCache, noneOk=True)),
     ]
 
-VERSION = 53
+VERSION = 54
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
