@@ -2,6 +2,7 @@ import os
 
 from xml.dom import minidom
 from xml.sax import saxutils
+from xml.parsers import expat
 from datetime import datetime
 from StringIO import StringIO
 
@@ -50,6 +51,9 @@ class Exporter (object):
             elif tab.isFeed():
                 self._writeFeedEntry(tab.obj)
     
+        if self.currentFolder is not None:
+            self._closeFolderEntry()
+    
         self.io.write(u'\t</body>\n')
         self.io.write(u'</opml>\n')
     
@@ -95,13 +99,21 @@ class Importer (object):
         content = f.read()
         f.close()
         
-        dom = minidom.parseString(content)
-        root = dom.documentElement
-        body = root.getElementsByTagName("body").pop()
-        self._walkOutline(body)
-        dom.unlink()
-        
-        self.showImportSummary()
+        try:
+            dom = minidom.parseString(content)
+            root = dom.documentElement
+            body = root.getElementsByTagName("body").pop()
+            self._walkOutline(body)
+            dom.unlink()
+            self.showImportSummary()
+        except expat.ExpatError:
+            self.showXMLError()
+
+    def showXMLError(self):
+        title = _(u"OPML Import failed")
+        message = _(u"The selected OPML file appears to be invalid. Import was interrupted.")
+        dialog = dialogs.MessageBoxDialog(title, message)
+        dialog.run()
 
     def showImportSummary(self):
         title = _(u"OPML Import summary")
