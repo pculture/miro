@@ -2324,7 +2324,7 @@ def _getInitialChannelGuide():
 @eventloop.asUrgent
 def changeMoviesDirectory(newDir, migrate):
     if not util.directoryWritable(newDir):
-        dialog = dialogs.MessageBoxDialog(_("Error Changing Movies"), 
+        dialog = dialogs.MessageBoxDialog(_("Error Changing Movies Directory"), 
                 _("You don't have permission to write to the movies directory you selected.  Miro will continue to use the old movies directory."))
         dialog.run()
         return
