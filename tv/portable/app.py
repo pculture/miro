@@ -2328,8 +2328,9 @@ def changeMoviesDirectory(newDir, migrate):
     if migrate:
         views.remoteDownloads.confirmDBThread()
         for download in views.remoteDownloads:
-            logging.info ("migrating %s", download.getFilename())
-            download.migrate(newDir)
+            if download.isFinished():
+                logging.info ("migrating %s", download.getFilename())
+                download.migrate(newDir)
         for item in views.fileItems:
             # Only migrate top level items.
             if item.parent_id is None:
