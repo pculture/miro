@@ -607,7 +607,7 @@ a.download-bar-action:hover {
 /* used in search view */
 .search-message {
     font-size: 28px;
-    color: #DDD;
+    color:      #666;
     text-align: center;
     margin-top: 50px;
 }
