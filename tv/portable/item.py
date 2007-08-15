@@ -484,8 +484,8 @@ its entry from the Library?""")
                 button = dialogs.BUTTON_DELETE_FILES
             else:
                 description = _("""\
-Would you like to delete this file or just remove its entry from My \
-Collection?""")
+Would you like to delete this file or just remove its entry from the \
+Library?""")
                 button = dialogs.BUTTON_DELETE_FILE
             d = dialogs.ThreeChoiceDialog(title, description,
                     dialogs.BUTTON_REMOVE_ENTRY, button,
