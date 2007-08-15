@@ -549,6 +549,7 @@ class CallbackHandler(object):
         AttachCombo   (dialog, widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
         AttachBooleanRadio (dialog, widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         AttachBoolean (dialog, widgetTree['checkbutton-resumemode'], prefs.RESUME_VIDEOS_MODE)
+        AttachBoolean (dialog, widgetTree['checkbutton-warnonquit'], prefs.WARN_IF_DOWNLOADING_ON_QUIT)
 
         treeview = widgetTree['treeview-collection-dirs']
         listmodel = gtk.TreeStore(gobject.TYPE_INT, gobject.TYPE_STRING, gobject.TYPE_BOOLEAN)

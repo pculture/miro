@@ -110,13 +110,18 @@ def EscapeMessagePart(message_part):
 def BuildDialog (title, message, buttons, default):
     flags = gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT
     dialog = gtk.Dialog(title, dialogParent, flags, buttons)
+    dialog.myvbox = gtk.VBox()
+    dialog.myvbox.set_border_width(6)
+    dialog.vbox.add(dialog.myvbox)
+    dialog.myvbox.show()
+
     dialog.set_default_size(425, -1)
     label = gtk.Label()
     label.set_line_wrap(True)
     label.set_selectable(True)
     label.set_markup(message)
     label.set_padding (6, 6)
-    dialog.vbox.add(label)
+    dialog.myvbox.add(label)
     label.show()
     dialog.set_default_response (default)
     return dialog
@@ -125,7 +130,7 @@ def BuildTextEntryDialog(title, message, buttons, default, prefillCallback, fill
     dialog = BuildDialog(title, message, buttons, default)
     dialog.entry = gtk.Entry()
     dialog.entry.set_activates_default(True)
-    dialog.vbox.add(dialog.entry)
+    dialog.myvbox.add(dialog.entry)
     
     prefill = None
     if fillWithClipboardURL:
@@ -146,6 +151,17 @@ def BuildTextEntryDialog(title, message, buttons, default, prefillCallback, fill
     dialog.entry.show()
     return dialog
 
+def BuildCheckboxDialog(title, message, checkbox_text, buttons, default, checkbox_value):
+    dialog = BuildDialog(title, message, buttons, default)
+    alignment = gtk.Alignment(.5, 0, 0, 0)
+    dialog.myvbox.add(alignment)
+    alignment.show()
+    dialog.checkbox = gtk.CheckButton(checkbox_text)
+    dialog.checkbox.set_active (checkbox_value)
+    alignment.add(dialog.checkbox)
+    dialog.checkbox.show()
+    return dialog
+
 def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     """Ask the user for HTTP login information for a location, identified
     to the user by its URL and the domain string provided by the
@@ -157,7 +173,7 @@ def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
     dialog.set_default_size(425, -1)
     table = gtk.Table()
-    dialog.vbox.add(table)
+    dialog.myvbox.add(table)
     
     label = gtk.Label()
     label.set_line_wrap(True)
@@ -310,6 +326,12 @@ def ShowTextEntryDialogAsync(title, description, buttons, default, prefillCallba
     gtkDialog.connect("response", callback)
     gtkDialog.show()
 
+@gtkAsyncMethod
+def ShowCheckboxDialogAsync(title, description, checkbox_text, buttons, default, checkbox_value, callback):
+    gtkDialog = BuildCheckboxDialog (title, description, checkbox_text, buttons, default, checkbox_value)
+    gtkDialog.connect("response", callback)
+    gtkDialog.show()
+
 def pidIsRunning(pid):
     if pid is None:
         return False
@@ -424,6 +446,20 @@ class UIBackendDelegate:
             ShowTextEntryDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), self.makeButtonTuple(dialog), default=0,
                                       prefillCallback=dialog.prefillCallback, fillWithClipboardURL=dialog.fillWithClipboardURL,
                                       callback = AsyncDialogResponse)
+        elif isinstance(dialog, dialogs.CheckboxDialog):
+            def AsyncDialogResponse(gtkDialog, response):
+                retval = None
+                if response == gtk.RESPONSE_DELETE_EVENT:
+                    dialog.runCallback (None)
+                elif response >= 0 and response < len(dialog.buttons):
+                    dialog.runCallback (dialog.buttons [response], gtkDialog.checkbox.get_active())
+                else:
+                    dialog.runCallback (None)
+                gtkDialog.destroy()
+
+            ShowCheckboxDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), EscapeMessagePart(dialog.checkbox_text), self.makeButtonTuple(dialog), default=0,
+                                     checkbox_value = dialog.checkbox_value,
+                                     callback = AsyncDialogResponse)
         elif isinstance(dialog, dialogs.SearchChannelDialog):
             def AsyncDialogResponse(gtkDialog, response):
                 retval = None

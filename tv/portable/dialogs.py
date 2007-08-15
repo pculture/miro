@@ -263,3 +263,20 @@ class TextEntryDialog(Dialog):
     def runCallback(self, choice, value=None):
         self.value = value
         super(TextEntryDialog, self).runCallback(choice)
+
+class CheckboxDialog(Dialog):
+    """Like the ChoiceDialog, but also contains a checkbox for the user to
+    enter a value into.  This is used for things like asking whether to show
+    the dialog again.  There's also a mesage for the checkbox and an initial
+    value.
+    """
+
+    def __init__(self, title, description, checkbox_text, checkbox_value, defaultButton, otherButton):
+        super(CheckboxDialog, self).__init__(title, description,
+                [defaultButton, otherButton])
+        self.checkbox_text = checkbox_text
+        self.checkbox_value = checkbox_value
+
+    def runCallback(self, choice, checkbox_value=False):
+        self.checkbox_value = checkbox_value
+        super(CheckboxDialog, self).runCallback(choice)
