@@ -254,8 +254,8 @@ class BGDownloader:
             os.makedirs(downloadDir)
         except:
             pass
-        baseFilename = os.path.join(downloadDir, self.shortFilename+".part")
-        self.filename = nextFreeFilename(cleanFilename(baseFilename))
+        cleaned = cleanFilename(self.shortFilename+".part")
+        self.filename = nextFreeFilename(os.path.join(downloadDir, cleaned))
 
     def moveToMoviesDirectory(self):
         """Move our downloaded file from the Incomplete Downloads directoy to
