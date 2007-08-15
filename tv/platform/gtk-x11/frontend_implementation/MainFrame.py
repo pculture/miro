@@ -219,8 +219,8 @@ class MainFrame:
         ui_string = "<ui>\n"
         ui_string += "  <menubar>\n"
         for menu in menubar.menubar:
-            if actions.has_key(menu.action):
-                ui_string += '  <menu action="%s">\n' % menu.action
+            if actions.has_key('toplevel-%s' % menu.action):
+                ui_string += '  <menu action="toplevel-%s">\n' % menu.action
                 for menuitem in menu.menuitems:
                     if isinstance(menuitem, menubar.Separator):
                         ui_string += '      <separator/>\n'

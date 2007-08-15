@@ -307,12 +307,13 @@ class CallbackHandler(object):
             ('RemovePlaylists', None, menubar.getLabel('RemovePlaylists'), menubar.getShortcut('RemovePlaylists').GTKString(), None, self.on_remove_playlist_activate),
             ])
         actionGroups["Ubiquitous"].add_actions ([
-            ('Video', None, menubar.getLabel('Video')),
-            ('Channels', None, menubar.getLabel('Channels')),
-            ('Playlists', None, menubar.getLabel('Playlists')),
-            ('Playback', None, menubar.getLabel('Playback')),
-            ('Open', gtk.STOCK_OPEN, menubar.getLabel('Open'), menubar.getShortcut('Open').GTKString(), None, self.on_open_video_activate),
+            ('toplevel-Video', None, menubar.getLabel('Video')),
+            ('toplevel-Channels', None, menubar.getLabel('Channels')),
+            ('toplevel-Playlists', None, menubar.getLabel('Playlists')),
+            ('toplevel-Playback', None, menubar.getLabel('Playback')),
+            ('toplevel-Help', None, menubar.getLabel('Help')),
 
+            ('Open', gtk.STOCK_OPEN, menubar.getLabel('Open'), menubar.getShortcut('Open').GTKString(), None, self.on_open_video_activate),
             ('NewPlaylist', None, menubar.getLabel('NewPlaylist'), menubar.getShortcut('NewPlaylist').GTKString(), None, self.on_new_playlist_activate),
             ('NewPlaylistFolder', None, menubar.getLabel('NewPlaylistFolder'), menubar.getShortcut('NewPlaylistFolder').GTKString(), None, self.on_new_playlist_folder_activate),
             ('NewChannelFolder', None, menubar.getLabel('NewChannelFolder'), menubar.getShortcut('NewChannelFolder').GTKString(), None, self.on_new_channel_folder_activate),
@@ -326,7 +327,7 @@ class CallbackHandler(object):
             ('EditPreferences', gtk.STOCK_PREFERENCES, menubar.getLabel('EditPreferences'), menubar.getShortcut('EditPreferences').GTKString(), None, self.on_preference),
             ('Quit', gtk.STOCK_QUIT, menubar.getLabel('Quit'), menubar.getShortcut('Quit').GTKString(), None, self.on_quit_activate),
             ('UpdateAllChannels', None, menubar.getLabel('UpdateAllChannels'), menubar.getShortcut('UpdateAllChannels').GTKString(), None, self.on_update_all_channels_activate),
-            ('Help', None, menubar.getLabel('Help')),
+            ('Help', None, menubar.getLabel('Help'), menubar.getShortcut('Help').GTKString(), None, self.on_help_clicked),
             ('ReportBug', None, menubar.getLabel('ReportBug'), menubar.getShortcut('ReportBug').GTKString(), None, self.on_report_bug_clicked),
             ('About', gtk.STOCK_ABOUT, menubar.getLabel('About'), menubar.getShortcut('About').GTKString(), None, self.on_about_clicked),
             ('Donate', None, menubar.getLabel('Donate'), menubar.getShortcut('Donate').GTKString(), None, self.on_donate_clicked),
@@ -619,8 +620,11 @@ class CallbackHandler(object):
     def on_about_clicked(self, event = None):
         self.mainFrame.about()
 
+    def on_help_clicked(self, event=None):
+        app.delegate.openExternalURL(config.get(prefs.HELP_URL))
+
     def on_donate_clicked(self, event = None):
-        print "Donate unimplemented"
+        app.delegate.openExternalURL(config.get(prefs.DONATE_URL))
 
     def on_delete(self, event = None):
         eventloop.addUrgentCall(app.controller.removeCurrentSelection, 
