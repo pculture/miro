@@ -351,10 +351,11 @@ wizard.startup {
 
 tabbox.prefs tab {
    font-size: 150%;
+   padding: 2px 10px;
 }
 
 tabbox.prefs tabpanel {
-   padding-top: 20px;
+   padding-top: 12px;
 }
 
 radiogroup.indented radio {
@@ -363,4 +364,8 @@ radiogroup.indented radio {
 
 tabbox.prefs caption {
     background-color: #f6f6f6;
+}
+
+tabbox.prefs groupbox {
+    border-color: #ccc;
 }

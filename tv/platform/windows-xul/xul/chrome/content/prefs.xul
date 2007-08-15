@@ -62,7 +62,7 @@
             <!--DOWNLOADS-->
             <groupbox orient="horizontal" align="center">
                 <description>&prefs.downloads.max.part1;</description>
-                <textbox id="maxmanual" flex="0" value="300" onchange="maxManualChange()"/>
+                <textbox id="maxmanual" flex="0" size="3" value="300" onchange="maxManualChange()"/>
                 <description>&prefs.downloads.max.part2;</description>
             </groupbox>
             <groupbox>
@@ -100,6 +100,7 @@
                 <description>
                     &prefs.folder.others.caption;
                 </description>
+                <separator />
                 <grid>
                     <columns>
                         <column flex="1" />

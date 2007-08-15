@@ -23,7 +23,7 @@
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Change...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library:">
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
 <!ENTITY prefs.folder.others.location "Folder">
 <!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Add Folder...">
