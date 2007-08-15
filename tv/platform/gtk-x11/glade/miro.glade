@@ -200,7 +200,8 @@
 			  <property name="text" translatable="yes"></property>
 			  <property name="has_frame">True</property>
 			  <property name="invisible_char">•</property>
-			  <property name="activates_default">True</property>
+			  <property name="activates_default">False</property>
+			  <signal name="activate" handler="on_search_activate" last_modification_time="Wed, 15 Aug 2007 20:34:17 GMT"/>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -217,7 +218,7 @@
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
-			  <signal name="clicked" handler="on_button_chrome_search_go_clicked" last_modification_time="Wed, 18 Oct 2006 21:38:42 GMT"/>
+			  <signal name="clicked" handler="on_search_activate" last_modification_time="Wed, 15 Aug 2007 20:34:29 GMT"/>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>

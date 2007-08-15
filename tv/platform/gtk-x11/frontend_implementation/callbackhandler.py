@@ -632,7 +632,7 @@ class CallbackHandler(object):
         eventloop.addUrgentCall(app.controller.removeCurrentSelection, 
                 "remove current selection")
 
-    def on_button_chrome_search_go_clicked (self, event=None):
+    def on_search_activate (self, event=None):
         widgetTree = self.mainFrame.widgetTree
         term = widgetTree["entry-chrome-search-term"].get_text()
         iter = widgetTree["combobox-chrome-search-engine"].get_active_iter()
