@@ -533,6 +533,7 @@ class CallbackHandler(object):
         movie_dir = config.get(prefs.MOVIES_DIRECTORY)
         widgetTree = MainFrame.WidgetTree(resources.path('miro.glade'), 'dialog-preferences', 'miro')
         dialog = widgetTree['dialog-preferences']
+        widgetTree['prefs-notebook'].set_property("homogeneous", True)
         dialog.integerWidgets = []
         dialog.floatWidgets = []
         mainWindow = self.mainFrame.widgetTree['main-window']

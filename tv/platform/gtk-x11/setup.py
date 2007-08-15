@@ -95,6 +95,7 @@ compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
 compiled_templates_unittest_dir = os.path.join(compiled_templates_dir,'unittest')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
+glade_dir = os.path.join(platform_dir, 'glade')
 xine_dir = os.path.join(platform_dir, 'xine')
 frontend_implementation_dir = os.path.join(platform_dir,
         'frontend_implementation')
@@ -310,7 +311,8 @@ data_files = []
 # filter out app.config.template (which is handled specially)
 files = [f for f in listfiles(resource_dir) \
         if os.path.basename(f) != 'app.config.template']
-files.append(os.path.join(platform_dir, 'glade', 'miro.glade'))
+files.extend(listfiles(os.path.join(glade_dir, 'pixmaps')))
+files.append(os.path.join(glade_dir, 'miro.glade'))
 data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
 for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','unittest'), 'searchengines'):
