@@ -129,6 +129,7 @@ class QuicktimeRenderer (app.VideoRenderer):
 
     @platformutils.onMainThreadWithReturn
     def fillMovieData(self, filename, movie_data):
+        logging.info("Processing movie %s" % filename)
         osfilename = platformutils.filenameTypeToOSFilename(filename)
         (qtmovie, error) = QTMovie.movieWithFile_error_(osfilename)
         if qtmovie is not None:
