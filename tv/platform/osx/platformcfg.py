@@ -10,6 +10,7 @@ import prefs
 import config
 import keychain
 import resources
+import platformutils
 
 sysconfPath = objc.pathForFramework('/System/Library/Frameworks/SystemConfiguration.framework')
 sysconfBundle = NSBundle.bundleWithPath_(sysconfPath)
@@ -38,6 +39,8 @@ def load():
                 pydict[k] = int(v)
             elif type(v) is objc._pythonify.OC_PythonLong:
                 pydict[k] = long(v)
+            elif k == prefs.MOVIES_DIRECTORY.key:
+                pydict[k] = platformutils.osFilenameToFilenameType(v)
 
     return pydict
 
