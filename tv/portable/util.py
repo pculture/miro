@@ -25,6 +25,7 @@ import urllib
 import socket
 import logging
 import filetypes
+import tempfile
 import threading
 import traceback
 import subprocess
@@ -679,3 +680,13 @@ def miro_listdir(directory):
         except OSError:
             pass
     return files, directories
+
+def directoryWritable(directory):
+    """Check if we can write to a directory."""
+    try:
+        f = tempfile.TemporaryFile(dir=directory)
+    except OSError:
+        return False
+    else:
+        f.close()
+        return True
