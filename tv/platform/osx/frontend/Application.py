@@ -18,6 +18,7 @@ import views
 import prefs
 import config
 import dialogs
+import filetypes
 import eventloop
 import autoupdate
 import singleclick
@@ -249,7 +250,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
     @signature('v@:@@')
     def openURL_withReplyEvent_(self, event, replyEvent):
         keyDirectObject = struct.unpack(">i", "----")[0]
-        url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue()
+        url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue().decode('utf8')
 
         urlPattern = re.compile(r"^(.*?)://(.*)$")
         match = urlPattern.match(url)
@@ -257,10 +258,15 @@ class AppController (NibClassBuilder.AutoBaseClass):
             url = match.group(2)
             match = urlPattern.match(url)
             if not match:
-                url = 'http://%s' % url
+                url = u'http://%s' % url
 
         if url.startswith('http'):
-            command = [lambda:app.controller.addAndSelectFeed(url), "Open HTTP URL"]
+            components = urlparse.urlparse(url)
+            path = components[2]
+            if filetypes.isVideoFilename(path):
+                command = [lambda:app.controller.newDownload(url), "Open HTTP Movie"]
+            else:
+                command = [lambda:app.controller.addAndSelectFeed(url), "Open HTTP URL"]
         elif url.startswith('miro:'):
             command = [lambda:singleclick.addSubscriptionURL('miro:', 'application/x-miro', url), "Open Miro URL"]
         elif url.startswith('democracy:'):
