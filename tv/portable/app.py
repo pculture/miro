@@ -103,6 +103,19 @@ def start():
     util.setupLogging()
     Controller().runNonblocking()
 
+def startupFunction(func):
+    """Decorator for startup functions.  If they throw an exception, miro will
+    show a error dialog and quit.
+    """
+
+    def wrapped(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except:
+            util.failedExn("while finishing starting up")
+            frontend.exit(1)
+    return wrapped
+
 ###############################################################################
 #### The Playback Controller base class                                    ####
 ###############################################################################
@@ -615,210 +628,223 @@ class Controller (frontend.Application):
         self.guideURL = None
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
         self.finishedStartup = False
-        self.databaseIsSetup = threading.Event()
         self.idlingNotifier = None
+        self.gatheredVideos = None
 
     ### Startup and shutdown ###
 
     def onStartup(self, gatheredVideos=None):
-        try:
-            logging.info ("Starting up %s", config.get(prefs.LONG_APP_NAME))
-            logging.info ("Version:    %s", config.get(prefs.APP_VERSION))
-            logging.info ("Revision:   %s", config.get(prefs.APP_REVISION))
-            logging.info ("Builder:    %s", config.get(prefs.BUILD_MACHINE))
-            logging.info ("Build Time: %s", config.get(prefs.BUILD_TIME))
+        logging.info ("Starting up %s", config.get(prefs.LONG_APP_NAME))
+        logging.info ("Version:    %s", config.get(prefs.APP_VERSION))
+        logging.info ("Revision:   %s", config.get(prefs.APP_REVISION))
+        logging.info ("Builder:    %s", config.get(prefs.BUILD_MACHINE))
+        logging.info ("Build Time: %s", config.get(prefs.BUILD_TIME))
 
-            util.print_mem_usage("Pre everything memory check")
-            
-            logging.info ("Loading preferences...")
+        util.print_mem_usage("Pre everything memory check")
+        
+        logging.info ("Loading preferences...")
 
-            config.load()
-            config.addChangeCallback(self.configDidChange)
-            
-            global delegate
-            feed.setDelegate(delegate)
-            feed.setSortFunc(sorts.item)
-            autoupdate.setDelegate(delegate)
-            database.setDelegate(delegate)
-            dialogs.setDelegate(delegate)
-            
-            if not config.get(prefs.STARTUP_TASKS_DONE):
-                logging.info ("Showing startup dialog...")
-                delegate.performStartupTasks(self.finishStartup)
-                config.set(prefs.STARTUP_TASKS_DONE, True)
-                config.save()
-            else:
-                self.finishStartup(gatheredVideos)
-            logging.info ("Starting event loop thread")
-            eventloop.startup()
-            #self.databaseIsSetup.wait()
-        except:
-            util.failedExn("while starting up")
-            frontend.exit(1)
+        config.load()
+        config.addChangeCallback(self.configDidChange)
+        
+        global delegate
+        feed.setDelegate(delegate)
+        feed.setSortFunc(sorts.item)
+        autoupdate.setDelegate(delegate)
+        database.setDelegate(delegate)
+        dialogs.setDelegate(delegate)
+        
+        if not config.get(prefs.STARTUP_TASKS_DONE):
+            logging.info ("Showing startup dialog...")
+            delegate.performStartupTasks(self.finishStartup)
+            config.set(prefs.STARTUP_TASKS_DONE, True)
+            config.save()
+        else:
+            self.finishStartup(gatheredVideos)
+        logging.info ("Starting event loop thread")
+        eventloop.startup()
 
     def finishStartup(self, gatheredVideos=None):
-        eventloop.addIdle(lambda :self._finishStartup(gatheredVideos), "Finishing startup")
-    def _finishStartup(self, gatheredVideos=None):
+        self.gatheredVideos = gatheredVideos
+        eventloop.addIdle(self.initializeDatabase, "Initializing database")
+
+    @startupFunction
+    def initializeDatabase(self):
         try:
             views.initialize()
-
-            #Restoring
             util.print_mem_usage("Pre-database memory check:")
             logging.info ("Restoring database...")
-            #            try:
             database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
-            #            except Exception:
-            #                util.failedExn("While restoring database")
-            util.print_mem_usage("Post-database memory check")
-            logging.info ("Recomputing filters...")
             db.recomputeFilters()
-
-            downloader.startupDownloader()
-
-            util.print_mem_usage("Post-downloader memory check")
-
-            self.setupGlobalFeed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
-            self.setupGlobalFeed(u'dtv:singleFeed', initiallyAutoDownloadable=False)
-
-            # Set up the search objects
-            self.setupGlobalFeed(u'dtv:search', initiallyAutoDownloadable=False)
-            self.setupGlobalFeed(u'dtv:searchDownloads')
-
-            # Set up tab list
-            tabs.reloadStaticTabs()
-            try:
-                channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
-            except LookupError:
-                logging.info ("Creating channel tab order")
-                channelTabOrder = tabs.TabOrder(u'channel')
-            try:
-                playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
-            except LookupError:
-                logging.info ("Creating playlist tab order")
-                playlistTabOrder = tabs.TabOrder(u'playlist')
-
-            # Set up search engines
-            searchengines.createEngines()
-
-            # FIXME - channelGuide never gets used.
-            channelGuide = _getInitialChannelGuide()
-
-            # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
-            self.newTab = None
-            self.downloadTab = None
-            for tab in views.allTabs:
-                if tab.tabTemplateBase == 'newtab':
-                    self.newTab = tab
-                elif tab.tabTemplateBase == 'downloadtab':
-                    self.downloadTab = tab
-            views.unwatchedItems.addAddCallback(self.onUnwatchedItemsCountChange)
-            views.unwatchedItems.addRemoveCallback(self.onUnwatchedItemsCountChange)
-            views.downloadingItems.addAddCallback(self.onDownloadingItemsCountChange)
-            views.downloadingItems.addRemoveCallback(self.onDownloadingItemsCountChange)
-            self.onUnwatchedItemsCountChange(None, None)
-            self.onDownloadingItemsCountChange(None, None)
-
-            # If we're missing the file system videos feed, create it
-            self.setupGlobalFeed(u'dtv:directoryfeed')
-
-            # Start the automatic downloader daemon
-            logging.info ("Spawning auto downloader...")
-            autodler.startDownloader()
-
-            # Start the idle notifier daemon
-            if config.get(prefs.LIMIT_UPSTREAM) is True:
-                logging.info ("Spawning idle notifier")
-                self.idlingNotifier = idlenotifier.IdleNotifier(self)
-                self.idlingNotifier.start()
-
-            # Set up the playback controller
-            self.playbackController = frontend.PlaybackController()
-
-            util.print_mem_usage("Pre-UI memory check")
-
-            # Put up the main frame
-            logging.info ("Displaying main frame...")
-            self.frame = frontend.MainFrame(self)
-
-            logging.info ("Creating video display...")
-            # Set up the video display
-            self.videoDisplay = frontend.VideoDisplay()
-            self.videoDisplay.initRenderers()
-            self.videoDisplay.playbackController = self.playbackController
-            self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
-            util.print_mem_usage("Post-UI memory check")
-
-            # create our selection handler
-            
-            self.selection = selection.SelectionHandler()
-
-            self.selection.selectFirstGuide()
-
-            if self.initial_feeds:
-                views.feedTabs.resetCursor()
-                tab = views.feedTabs.getNext()
-                if tab is not None:
-                    self.selection.selectTabByObject(tab.obj)
-
-            util.print_mem_usage("Post-selection memory check")
-
-            # Reconnect items to downloaders.
-            item.reconnectDownloaders()
-
-            util.print_mem_usage("Post-item reconnect memory check")
-
-            eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
-            feed.expireItems()
-
-            self.tabDisplay = TemplateDisplay('tablist', 'default',
-                    playlistTabOrder=playlistTabOrder,
-                    channelTabOrder=channelTabOrder)
-            self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
-
-            # If we have newly available items, provide feedback
-            self.updateAvailableItemsCountFeedback()
-
-            # Now adding the video files we possibly gathered from the startup
-            # dialog
-            if gatheredVideos is not None and len(gatheredVideos) > 0:
-                singleclick.resetCommandLineView()
-                for v in gatheredVideos:
-                    try:
-                        singleclick.addVideo(v)
-                    except Exception, e:
-                        logging.info ("error while adding file %s", v)
-                        logging.info (e)
-
-            util.print_mem_usage("Pre single-click memory check")
-
-            # Use an idle for parseCommandLineArgs because the frontend may
-            # have put in idle calls to do set up video playback or similar
-            # things.
-            eventloop.addIdle(singleclick.parseCommandLineArgs, 
-                    'parse command line')
-
-            util.print_mem_usage("Post single-click memory check")
-
-            starttime = clock()
-            iconcache.clearOrphans()
-            logging.timing ("Icon clear: %.3f", clock() - starttime)
-
-            logging.info ("Finished startup sequence")
-            self.finishStartupSequence()
-            self.databaseIsSetup.set()
+            eventloop.addIdle(self.checkMoviesDirectoryGone, 
+                    "checking movies directory")
         except databaseupgrade.DatabaseTooNewError:
             title = _("Database too new")
             description = Template(_("""\
 You have a database that was saved with a newer version of $shortAppName. \
 You must download the latest version of $shortAppName and run that.""")).substitute(shortAppName = config.get(prefs.SHORT_APP_NAME))
             def callback(dialog):
-                self.databaseIsSetup.set()
                 eventloop.quit()
                 frontend.quit()
             dialogs.MessageBoxDialog(title, description).run(callback)
-        except:
-            util.failedExn("while finishing starting up")
-            frontend.exit(1)
+
+    @startupFunction
+    def checkMoviesDirectoryGone(self):
+        if not self.moviesDirectoryGone():
+            eventloop.addIdle(self.finalizeStartup, "finalizing startup")
+            return
+
+        title = _("Video Directory Missing")
+        description = _("""
+Miro can't find your primary video directory.  This may be because it's \
+located on an external drive that is currently disconnected.
+
+If you continue, the video directory will be reset to a location on this \
+drive (this will cause you to lose some details about the videos on the \
+external drive).  You can also quit, connect the drive, and relaunch Miro.""")
+
+        def callback(dialog):
+            if dialog.choice == dialogs.BUTTON_LAUNCH_MIRO:
+                eventloop.addIdle(self.finalizeStartup, "finalizing startup")
+            else:
+                eventloop.quit()
+                frontend.quit()
+        dialog.run(callback)
+
+    @startupFunction
+    def finalizeStartup(self):
+        downloader.startupDownloader()
+
+        util.print_mem_usage("Post-downloader memory check")
+
+        self.setupGlobalFeed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
+        self.setupGlobalFeed(u'dtv:singleFeed', initiallyAutoDownloadable=False)
+
+        # Set up the search objects
+        self.setupGlobalFeed(u'dtv:search', initiallyAutoDownloadable=False)
+        self.setupGlobalFeed(u'dtv:searchDownloads')
+
+        # Set up tab list
+        tabs.reloadStaticTabs()
+        try:
+            channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
+        except LookupError:
+            logging.info ("Creating channel tab order")
+            channelTabOrder = tabs.TabOrder(u'channel')
+        try:
+            playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
+        except LookupError:
+            logging.info ("Creating playlist tab order")
+            playlistTabOrder = tabs.TabOrder(u'playlist')
+
+        # Set up search engines
+        searchengines.createEngines()
+
+        # FIXME - channelGuide never gets used.
+        channelGuide = _getInitialChannelGuide()
+
+        # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
+        self.newTab = None
+        self.downloadTab = None
+        for tab in views.allTabs:
+            if tab.tabTemplateBase == 'newtab':
+                self.newTab = tab
+            elif tab.tabTemplateBase == 'downloadtab':
+                self.downloadTab = tab
+        views.unwatchedItems.addAddCallback(self.onUnwatchedItemsCountChange)
+        views.unwatchedItems.addRemoveCallback(self.onUnwatchedItemsCountChange)
+        views.downloadingItems.addAddCallback(self.onDownloadingItemsCountChange)
+        views.downloadingItems.addRemoveCallback(self.onDownloadingItemsCountChange)
+        self.onUnwatchedItemsCountChange(None, None)
+        self.onDownloadingItemsCountChange(None, None)
+
+        # If we're missing the file system videos feed, create it
+        self.setupGlobalFeed(u'dtv:directoryfeed')
+
+        # Start the automatic downloader daemon
+        logging.info ("Spawning auto downloader...")
+        autodler.startDownloader()
+
+        # Start the idle notifier daemon
+        if config.get(prefs.LIMIT_UPSTREAM) is True:
+            logging.info ("Spawning idle notifier")
+            self.idlingNotifier = idlenotifier.IdleNotifier(self)
+            self.idlingNotifier.start()
+
+        # Set up the playback controller
+        self.playbackController = frontend.PlaybackController()
+
+        util.print_mem_usage("Pre-UI memory check")
+
+        # Put up the main frame
+        logging.info ("Displaying main frame...")
+        self.frame = frontend.MainFrame(self)
+
+        logging.info ("Creating video display...")
+        # Set up the video display
+        self.videoDisplay = frontend.VideoDisplay()
+        self.videoDisplay.initRenderers()
+        self.videoDisplay.playbackController = self.playbackController
+        self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
+        util.print_mem_usage("Post-UI memory check")
+
+        # create our selection handler
+        
+        self.selection = selection.SelectionHandler()
+
+        self.selection.selectFirstGuide()
+
+        if self.initial_feeds:
+            views.feedTabs.resetCursor()
+            tab = views.feedTabs.getNext()
+            if tab is not None:
+                self.selection.selectTabByObject(tab.obj)
+
+        util.print_mem_usage("Post-selection memory check")
+
+        # Reconnect items to downloaders.
+        item.reconnectDownloaders()
+
+        util.print_mem_usage("Post-item reconnect memory check")
+
+        eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
+        feed.expireItems()
+
+        self.tabDisplay = TemplateDisplay('tablist', 'default',
+                playlistTabOrder=playlistTabOrder,
+                channelTabOrder=channelTabOrder)
+        self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
+
+        # If we have newly available items, provide feedback
+        self.updateAvailableItemsCountFeedback()
+
+        # Now adding the video files we possibly gathered from the startup
+        # dialog
+        if self.gatheredVideos is not None and len(self.gatheredVideos) > 0:
+            singleclick.resetCommandLineView()
+            for v in self.gatheredVideos:
+                try:
+                    singleclick.addVideo(v)
+                except Exception, e:
+                    logging.info ("error while adding file %s", v)
+                    logging.info (e)
+
+        util.print_mem_usage("Pre single-click memory check")
+
+        # Use an idle for parseCommandLineArgs because the frontend may
+        # have put in idle calls to do set up video playback or similar
+        # things.
+        eventloop.addIdle(singleclick.parseCommandLineArgs, 
+                'parse command line')
+
+        util.print_mem_usage("Post single-click memory check")
+
+        starttime = clock()
+        iconcache.clearOrphans()
+        logging.timing ("Icon clear: %.3f", clock() - starttime)
+
+        logging.info ("Finished startup sequence")
+        self.finishStartupSequence()
 
     def finishStartupSequence(self):
         self.finishedStartup = True
@@ -838,6 +864,27 @@ You must download the latest version of $shortAppName and run that.""")).substit
                 util.failed("Too many db objects for %s" % url)
         finally:
             feedView.unlink()
+
+    def moviesDirectoryGone(self):
+        movies_dir = config.get(prefs.MOVIES_DIRECTORY)
+        if not movies_dir.endswith(os.path.sep):
+            movies_dir += os.path.sep
+        try:
+            contents = os.listdir(movies_dir)
+        except OSError:
+            # We can't access the directory.  Seems like it's gone.
+            return True
+        if contents != []:
+            # There's something inside the directory consider it present  (even
+            # if all our items are missing.
+            return False
+        # make sure that we have actually downloaded something into the movies
+        # directory. 
+        for downloader in views.remoteDownloads:
+            if (downloader.isFinished() and
+                    downloader.getFilename().startswith(movies_dir)):
+                return True
+        return False
 
     def getGlobalFeed(self, url):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
@@ -1175,7 +1222,6 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
 
     def onShutdown(self):
         try:
-            self.databaseIsSetup.wait()
             eventloop.join()        
             logging.info ("Saving preferences...")
             config.save()
