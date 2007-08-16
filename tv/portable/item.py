@@ -1618,7 +1618,7 @@ def getEntryForFile(filename):
 
 def getEntryForURL(url):
     return FeedParserDict({'title' : url,
-            'enclosures':[{'url' : url}]})
+            'enclosures':[{'url' : url, 'type' : u'video/x-unknown'}]})
 
 ##
 # An Item that exists as a local file
