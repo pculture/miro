@@ -166,7 +166,7 @@ def failed(when, withExn = False, details = None):
         header += "App:        %s\n" % config.get(prefs.LONG_APP_NAME)
         header += "Publisher:  %s\n" % config.get(prefs.PUBLISHER)
         header += "Platform:   %s\n" % config.get(prefs.APP_PLATFORM)
-        header += "Python:     %s\n" % sys.version
+        header += "Python:     %s\n" % sys.version.replace("\r\n"," ").replace("\n"," ").replace("\r"," ")
         header += "Py Path:    %s\n" % repr(sys.path)
         header += "Version:    %s\n" % config.get(prefs.APP_VERSION)
         header += "Serial:     %s\n" % config.get(prefs.APP_SERIAL)
