@@ -496,10 +496,29 @@ class UIBackendDelegate:
             dialog.runCallback (None)
 
     def askForOpenPathname(self, callback, defaultDirectory=None, types=None):
-        pass
+        dialog = gtk.FileSelection("File Selection")
+        def okButton(w):
+            print dialog.get_filename()
+            callback(dialog.get_filename())
+            dialog.destroy()
+        dialog.ok_button.connect("clicked", okButton)
+        dialog.cancel_button.connect("clicked", lambda w: dialog.destroy())
+        if defaultDirectory is not None:
+            dialog.set_filename(defaultDirectory)
+        dialog.show()
 
     def askForSavePathname(self, callback, defaultFilename=None):
-        pass
+        dialog = gtk.FileSelection("File Selection")
+        def okButton(w):
+            print dialog.get_filename()
+            callback(dialog.get_filename())
+            dialog.destroy()
+        dialog.ok_button.connect("clicked", okButton)
+        dialog.cancel_button.connect("clicked", lambda w: dialog.destroy())
+        if defaultFilename is not None:
+            dialog.set_filename(defaultFilename)
+        dialog.show()
+
 
     @gtkAsyncMethod
     def showContextMenu(self, menuItems):
