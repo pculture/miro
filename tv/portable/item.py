@@ -483,10 +483,14 @@ Would you like to delete this folder and all of its videos or just remove \
 its entry from the Library?""")
                 button = dialogs.BUTTON_DELETE_FILES
             else:
-                description = _("""\
+                if self.isDownloaded():
+                    description = _("""\
 Would you like to delete this file or just remove its entry from the \
 Library?""")
-                button = dialogs.BUTTON_DELETE_FILE
+                    button = dialogs.BUTTON_DELETE_FILE
+                else:
+                    self.executeExpire()
+                    return
             d = dialogs.ThreeChoiceDialog(title, description,
                     dialogs.BUTTON_REMOVE_ENTRY, button,
                     dialogs.BUTTON_CANCEL)

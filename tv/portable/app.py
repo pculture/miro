@@ -954,7 +954,7 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
             return
         selected = self.selection.getSelectedItems()
         if self.selection.tabListSelection.getType() != 'playlisttab':
-            removable = [i for i in selected if i.isDownloaded() ]
+            removable = [i for i in selected if (i.isDownloaded() or i.isExternal()) ]
             if removable:
                 item.expireItems(removable)
         else:

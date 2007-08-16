@@ -153,7 +153,7 @@ allPausedDownloads.unlink()
         <div t:hideIf="matchingExternalDLs.len() == 0">
             <div class="main-channelbar downloading-channelbar no-arrow">
                 <span i18n:translate="">External Downloads</span>
-                <a i18n:translate="" href="#" onclick="return eventURL('action:clearTorrents');" class="clear-completed-link" title="Clear Completed Downloads">Clear Completed Downloads</a>
+                <a i18n:translate="" href="#" onclick="return eventURL('action:clearTorrents');" class="clear-completed-link" title="Clear Completed and Failed Downloads">Clear Completed and Failed Downloads</a>
             </div>
         </div>
     </div> 
