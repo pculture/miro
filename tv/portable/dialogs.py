@@ -29,7 +29,7 @@ Simple Choices:
         if dialog.choice is None:
             # handle the user closing the dialog windows
         elif dialog.choice == dialog.BUTTON_YES:
-            # handle yes response
+           # handle yes response
         elif dialog.choice == dialag.BUTTON_NO:
             # handle no respnose
     dialog.run(handlePizzaAnswer)
@@ -78,6 +78,8 @@ BUTTON_CANCEL = DialogButton(_("Cancel"))
 BUTTON_YES = DialogButton(_("Yes"))
 BUTTON_NO = DialogButton(_("No"))
 BUTTON_QUIT = DialogButton(_("Quit"))
+BUTTON_IGNORE = DialogButton(_("Ignore"))
+BUTTON_SUBMIT_REPORT = DialogButton(_("Submit Crash Repport"))
 BUTTON_MIGRATE = DialogButton(_("Migrate"))
 BUTTON_DONT_MIGRATE = DialogButton(_("Don't Migrate"))
 BUTTON_DOWNLOAD = DialogButton(_("Download"))

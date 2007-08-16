@@ -40,6 +40,8 @@ chatter = True
 inDownloader = False
 # this gets set to True when we're in the download process.
 
+ignoreErrors = False
+
 # Perform escapes needed for Javascript string contents.
 def quoteJS(x):
     x = x.replace("\\", "\\\\") # \       -> \\
@@ -249,15 +251,42 @@ def failed(when, withExn = False, details = None):
 
     if not inDownloader:
         try:
-            import app
-            app.delegate. \
-                notifyUnkownErrorOccurence(when, log = report)
+            import dialogs
+            from gtcache import gettext as _
+            if not ignoreErrors:
+                chkboxdialog = dialogs.CheckboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
+                chkboxdialog.run(lambda x: _sendReport(report, x))
         except Exception, e:
             logging.exception ("Execption when reporting errror..")
     else:
         from dl_daemon import command, daemon
         c = command.DownloaderErrorCommand(daemon.lastDaemon, report)
         c.send()
+
+def _sendReport(report, dialog):
+    def callback(result):
+        if result['status'] != 200 or result['body'] != 'OK':
+            logging.warning(u"Failed to submit crash report. Server returned %r" % result)
+        else:
+            logging.info(u"Crash report submitted successfully")
+    def errback(error):
+        logging.warning(u"Failed to submit crash report %r" % error)
+    description = u"Description text not implemented"
+    import dialogs
+    import httpclient
+    import config
+    import prefs
+    global ignoreErrors
+    if dialog.choice == dialogs.BUTTON_IGNORE:
+        ignoreErrors = True
+        return
+
+    description = description.encode("utf-8")
+    postVars = {"description":description,
+            "app_name": config.get(prefs.LONG_APP_NAME),
+            "log": report}
+    httpclient.grabURL("http://www.participatoryculture.org/bogondeflector", callback, errback, method="POST", postVariables = postVars)
+
 
 class AutoflushingStream:
     """Converts a stream to an auto-flushing one.  It behaves in exactly the
