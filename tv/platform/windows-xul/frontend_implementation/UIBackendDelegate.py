@@ -81,10 +81,16 @@ class UIBackendDelegate:
     def runDialog(self, dialog):
         id = nextDialogId()
         self.openDialogs[id] = dialog
-        if isinstance(dialog, dialogs.ChoiceDialog) or isinstance(dialog, dialogs.CheckboxDialog):
+        if isinstance(dialog, dialogs.ChoiceDialog):
             frontend.jsBridge.showChoiceDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text)
+        elif isinstance(dialog, dialogs.CheckboxDialog):
+            print 'VALUE: ', dialog.checkbox_value
+            frontend.jsBridge.showCheckboxDialog(id, dialog.title,
+                    dialog.description, dialog.buttons[0].text,
+                    dialog.buttons[1].text, dialog.checkbox_text, 
+                    dialog.checkbox_value)
         elif isinstance(dialog, dialogs.ThreeChoiceDialog):
             frontend.jsBridge.showThreeChoiceDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,

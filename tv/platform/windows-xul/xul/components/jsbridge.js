@@ -176,6 +176,17 @@ jsBridge.prototype = {
             "dialog", "chrome,dependent,centerscreen,modal", params);
   },
 
+  showCheckboxDialog: function(id, title, description, defaultLabel,
+              otherLabel, checkboxText, checkboxValue) {
+    var params = { "id": id, "title": title, "description" : description, 
+        "defaultLabel": defaultLabel, "otherLabel": otherLabel, 
+        "checkboxText": checkboxText, "checkboxValue": checkboxValue,
+        "out" : -1};
+    this.window.openDialog("chrome://dtv/content/checkbox_dialog.xul",
+            "dialog", "chrome,dependent,centerscreen,modal", params);
+  },
+
+
   showThreeChoiceDialog: function(id, title, description, defaultLabel,
                         secondLabel, thirdLabel) {
     var params = { "id": id, "title": title, "description" : description, 

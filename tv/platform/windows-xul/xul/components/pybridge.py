@@ -430,6 +430,11 @@ class PyBridge:
         self.delegate.handleDialog(id, buttonIndex)
 
     @asUrgent
+    def handleCheckboxDialog(self, id, buttonIndex, checkbox_value):
+        self.delegate.handleDialog(id, buttonIndex,
+                checkbox_value=checkbox_value)
+
+    @asUrgent
     def handleHTTPAuthDialog(self, id, buttonIndex, username, password):
         self.delegate.handleDialog(id, buttonIndex, username=username,
                 password=password)
