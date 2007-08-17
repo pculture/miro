@@ -582,6 +582,7 @@ class CallbackHandler(object):
             pass
         chooser = widgetTree['filechooserbutton-movies-directory']
         chooser.set_filename (movie_dir + "/")
+        chooser.set_current_folder (movie_dir)
         # run the dialog
         response = dialog.run()
         for descriptor, widget in dialog.integerWidgets:
