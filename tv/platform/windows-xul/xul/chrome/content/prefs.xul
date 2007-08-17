@@ -60,6 +60,16 @@
         </tabpanel>
         <tabpanel orient="vertical">
             <!--DOWNLOADS-->
+            <groupbox orient="horizontal">
+                <description style="padding-top:5px;">
+                    &prefs.folder.downloads;
+                </description>
+                <textbox id="movies-directory" flex="0" value=""
+                    readonly="true" style="width: l00px;" />
+                <button id="movies-directory-button" flex="0"
+                    label="&prefs.folder.change;"
+                    oncommand="selectMoviesDirectory();" />
+            </groupbox>
             <groupbox orient="horizontal" align="center">
                 <description>&prefs.downloads.max.part1;</description>
                 <textbox id="maxmanual" flex="0" size="3" value="300" onchange="maxManualChange()"/>
@@ -85,17 +95,7 @@
             </groupbox>
         </tabpanel>
         <tabpanel orient="vertical">
-            <!--MOVIES DIRECTORY-->
-            <groupbox orient="horizontal">
-                <description style="padding-top:5px;">
-                    &prefs.folder.downloads;
-                </description>
-                <textbox id="movies-directory" flex="0" value=""
-                    readonly="true" style="width: l00px;" />
-                <button id="movies-directory-button" flex="0"
-                    label="&prefs.folder.change;"
-                    oncommand="selectMoviesDirectory();" />
-            </groupbox>
+            <!-- FOLDERS -->
             <groupbox>
                 <description>
                     &prefs.folder.others.caption;
