@@ -86,7 +86,6 @@ class UIBackendDelegate:
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text)
         elif isinstance(dialog, dialogs.CheckboxDialog):
-            print 'VALUE: ', dialog.checkbox_value
             frontend.jsBridge.showCheckboxDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text, dialog.checkbox_text, 
