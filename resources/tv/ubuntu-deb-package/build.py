@@ -63,5 +63,7 @@ os.chdir('../..')
 
 if os.path.exists(distro):
     shutil.rmtree(distro)
-call('mv build-tmp/*.deb .')
+os.mkdir(distro)
+call('mv build-tmp/*.deb %s' % distro)
+call('mv build-tmp/miro_* %s' % distro)
 print 'done'
