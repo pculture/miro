@@ -702,7 +702,8 @@ located on an external drive that is currently disconnected.
 If you continue, the video directory will be reset to a location on this \
 drive (this will cause you to lose some details about the videos on the \
 external drive).  You can also quit, connect the drive, and relaunch Miro.""")
-
+        dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_QUIT,
+                dialogs.BUTTON_LAUNCH_MIRO)
         def callback(dialog):
             if dialog.choice == dialogs.BUTTON_LAUNCH_MIRO:
                 eventloop.addIdle(self.finalizeStartup, "finalizing startup")
