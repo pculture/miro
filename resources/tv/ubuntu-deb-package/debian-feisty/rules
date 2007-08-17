@@ -20,13 +20,6 @@ include /usr/share/cdbs/1/rules/simple-patchsys.mk
 # Install everything into debian/tmp, as we have a multi-binary package.
 DEB_DH_INSTALL_SOURCEDIR := debian/tmp
 
-#install the wrapper
-install/miro::
-	mv $(CURDIR)/debian/tmp/usr/bin/miro \
-	   $(CURDIR)/debian/tmp/usr/bin/miro.real
-	/usr/bin/install --mode 755 debian/miro.wrapper \
-	   $(CURDIR)/debian/tmp/usr/bin/miro
-
 # Remove unneeded files from the deb.
 binary-post-install/miro::
 	rm -rf debian/miro/usr/share/python-support/miro/miro/compiled_templates/unittest
