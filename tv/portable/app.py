@@ -685,7 +685,7 @@ You have a database that was saved with a newer version of $shortAppName. \
 You must download the latest version of $shortAppName and run that.""")).substitute(shortAppName = config.get(prefs.SHORT_APP_NAME))
             def callback(dialog):
                 eventloop.quit()
-                frontend.quit()
+                frontend.quit(True)
             dialogs.MessageBoxDialog(title, description).run(callback)
 
     @startupFunction
@@ -709,7 +709,7 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
                 eventloop.addIdle(self.finalizeStartup, "finalizing startup")
             else:
                 eventloop.quit()
-                frontend.quit()
+                frontend.quit(True)
         dialog.run(callback)
 
     @startupFunction

@@ -17,7 +17,7 @@ vlcRenderer = None
 
 currentVideoPath = None # gets changed in MainFrame.onSelectedTabChange()
 
-def quit():
+def quit(emergencyExit=False):
     jsBridge.closeWindow()
 
 # Python's sys.exit isn't sufficient in a Windows application. It's not

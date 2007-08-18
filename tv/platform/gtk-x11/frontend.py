@@ -84,7 +84,7 @@ def exit(returnCode):
 
 if hasGTK:
     @gtkAsyncMethod
-    def quit():
+    def quit(emergencyExit=False):
         gtk.main_quit()
 
     @gtkAsyncMethod

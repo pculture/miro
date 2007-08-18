@@ -16,11 +16,11 @@ import platformutils
 def exit(returnCode):
     NSApplication.sharedApplication().stop_(nil)
 
-def quit():
-    if app.controller.databaseIsSetup:
-        app.delegate.ensureDownloadDaemonIsTerminated()
-    else:
+def quit(emergencyExit=False):
+    if emergencyExit:
         NSApplication.sharedApplication().delegate().internalShutdown = True
+    else:
+        app.delegate.ensureDownloadDaemonIsTerminated()
     NSApplication.sharedApplication().terminate_(nil)
 
 ###############################################################################
