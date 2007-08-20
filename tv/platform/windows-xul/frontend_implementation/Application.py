@@ -5,9 +5,12 @@ import resources
 import config
 import prefs
 import os
+import searchengines
+import views
 from platformutils import _getLocale as getLocale
 
 from frontend_implementation import HTMLDisplay
+import migrateappname
 
 ###############################################################################
 #### Application object                                                    ####
@@ -51,7 +54,18 @@ class Application:
     def finishStartupSequence(self):
         from xpcom import components
         pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        self.initializeSearchEngines()
+        migrateappname.migrateVideos('Democracy', 'Miro')
         pybridge.updateTrayMenus()
+
+    def initializeSearchEngines(self):
+        names = []
+        titles = []
+        for engine in views.searchEngines:
+            names.append(engine.name)
+            titles.append(engine.title)
+        frontend.jsBridge.setSearchEngineInfo(names, titles)
+        frontend.jsBridge.setSearchEngine(searchengines.getLastEngine())
 
     def onShutdown(self):
         # For overriding

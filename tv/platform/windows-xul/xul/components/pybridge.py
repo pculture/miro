@@ -263,10 +263,6 @@ class PyBridge:
         registerHttpObserver()
         app.main()
         initializeHTTPProxy()
-        views.waitForInit()
-        self.initializeSearchEngines()
-        
-        migrateappname.migrateVideos('Democracy', 'Miro')
 
     @asUrgent
     def initializeViews(self):
@@ -645,18 +641,6 @@ class PyBridge:
 
     def createProxyObjects(self):
         createProxyObjects()
-
-    @asUrgent
-    def initializeSearchEngines(self):
-        # Send the search engine info to jsbridge.  This is a little tricky
-        # because we need to access views.searchEngines from the main thread.
-        names = []
-        titles = []
-        for engine in views.searchEngines:
-            names.append(engine.name)
-            titles.append(engine.title)
-        frontend.jsBridge.setSearchEngineInfo(names, titles)
-        frontend.jsBridge.setSearchEngine(searchengines.getLastEngine())
 
     def printOut(self, output):
         print output
