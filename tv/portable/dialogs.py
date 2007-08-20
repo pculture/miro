@@ -283,3 +283,20 @@ class CheckboxDialog(Dialog):
     def runCallback(self, choice, checkbox_value=False):
         self.checkbox_value = checkbox_value
         super(CheckboxDialog, self).runCallback(choice)
+
+class CheckboxTextboxDialog(CheckboxDialog):
+    """Like CheckboxDialog but also with a text area. Used for
+    capturing bug report data"""
+
+    def __init__(self, title, description, checkbox_text,
+        checkbox_value, textbox_value, defaultButton, otherButton):
+        super(CheckboxTextboxDialog, self).__init__(title, description,
+                                                    checkbox_text,
+                                                    checkbox_value,
+                                                    defaultButton,
+                                                    otherButton)
+        self.textbox_value = textbox_value
+
+    def runCallback(self, choice, checkbox_value=False, textbox_value=""):
+        self.textbox_value = textbox_value
+        super(CheckboxTextboxDialog, self).runCallback(choice, checkbox_value)

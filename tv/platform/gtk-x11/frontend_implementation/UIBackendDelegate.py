@@ -162,6 +162,22 @@ def BuildCheckboxDialog(title, message, checkbox_text, buttons, default, checkbo
     dialog.checkbox.show()
     return dialog
 
+def BuildCheckboxTextboxDialog(title, message, checkbox_text, buttons, default, checkbox_value, textbox_value):
+    dialog = BuildCheckboxDialog(title, message, checkbox_text, buttons, default, checkbox_value)
+    dialog.textbox = gtk.TextView()
+    dialog.scrollWindow = gtk.ScrolledWindow()
+    dialog.scrollWindow.set_policy(gtk.POLICY_AUTOMATIC,gtk.POLICY_AUTOMATIC)
+    dialog.scrollWindow.add(dialog.textbox)
+    dialog.scrollWindow.set_shadow_type(gtk.SHADOW_IN)
+    
+    textbuffer = dialog.textbox.get_buffer();
+    textbuffer.set_text(textbox_value)
+    dialog.textbox.set_editable(True)
+    dialog.myvbox.add(dialog.scrollWindow)
+    dialog.textbox.show()
+    dialog.scrollWindow.show()
+    return dialog
+
 def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     """Ask the user for HTTP login information for a location, identified
     to the user by its URL and the domain string provided by the
@@ -332,6 +348,12 @@ def ShowCheckboxDialogAsync(title, description, checkbox_text, buttons, default,
     gtkDialog.connect("response", callback)
     gtkDialog.show()
 
+@gtkAsyncMethod
+def ShowCheckboxTextboxDialogAsync(title, description, checkbox_text, buttons, default, checkbox_value, textbox_value, callback):
+    gtkDialog = BuildCheckboxTextboxDialog (title, description, checkbox_text, buttons, default, checkbox_value, textbox_value)
+    gtkDialog.connect("response", callback)
+    gtkDialog.show()
+
 def pidIsRunning(pid):
     if pid is None:
         return False
@@ -446,6 +468,21 @@ class UIBackendDelegate:
             ShowTextEntryDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), self.makeButtonTuple(dialog), default=0,
                                       prefillCallback=dialog.prefillCallback, fillWithClipboardURL=dialog.fillWithClipboardURL,
                                       callback = AsyncDialogResponse)
+        elif isinstance(dialog, dialogs.CheckboxTextboxDialog):
+            def AsyncDialogResponse(gtkDialog, response):
+                retval = None
+                if response == gtk.RESPONSE_DELETE_EVENT:
+                    dialog.runCallback (None)
+                elif response >= 0 and response < len(dialog.buttons):
+                    dialog.runCallback (dialog.buttons [response], gtkDialog.checkbox.get_active(), gtkDialog.textbox.get_buffer().get_text(gtkDialog.textbox.get_buffer().get_start_iter(),gtkDialog.textbox.get_buffer().get_end_iter()))
+                else:
+                    dialog.runCallback (None)
+                gtkDialog.destroy()
+
+            ShowCheckboxTextboxDialogAsync (EscapeMessagePart(dialog.title), EscapeMessagePart(dialog.description), EscapeMessagePart(dialog.checkbox_text), self.makeButtonTuple(dialog), default=0,
+                                     checkbox_value = dialog.checkbox_value,
+                                     textbox_value = EscapeMessagePart(dialog.textbox_value),
+                                     callback = AsyncDialogResponse)
         elif isinstance(dialog, dialogs.CheckboxDialog):
             def AsyncDialogResponse(gtkDialog, response):
                 retval = None

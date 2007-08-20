@@ -254,7 +254,10 @@ def failed(when, withExn = False, details = None):
             import dialogs
             from gtcache import gettext as _
             if not ignoreErrors:
-                chkboxdialog = dialogs.CheckboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
+                if (config.get(prefs.APP_PLATFORM) == 'gtk-x11'):
+                    chkboxdialog = dialogs.CheckboxTextboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, _("Describe what you were doing that caused this error"), dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
+                else:
+                    chkboxdialog = dialogs.CheckboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
                 chkboxdialog.run(lambda x: _sendReport(report, x))
         except Exception, e:
             logging.exception ("Execption when reporting errror..")
@@ -271,7 +274,7 @@ def _sendReport(report, dialog):
             logging.info(u"Crash report submitted successfully")
     def errback(error):
         logging.warning(u"Failed to submit crash report %r" % error)
-    description = u"Description text not implemented"
+
     import dialogs
     import httpclient
     import config
@@ -281,10 +284,14 @@ def _sendReport(report, dialog):
         ignoreErrors = True
         return
 
+    description = u"Description text not implemented"
+    if hasattr(dialog,"textbox_value"):
+        description = dialog.textbox_value
+
     description = description.encode("utf-8")
     postVars = {"description":description,
-            "app_name": config.get(prefs.LONG_APP_NAME),
-            "log": report}
+                "app_name": config.get(prefs.LONG_APP_NAME),
+                "log": report}
     httpclient.grabURL("http://www.participatoryculture.org/bogondeflector", callback, errback, method="POST", postVariables = postVars)
 
 
