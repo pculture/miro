@@ -254,7 +254,7 @@ def failed(when, withExn = False, details = None):
             import dialogs
             from gtcache import gettext as _
             if not ignoreErrors:
-                if (config.get(prefs.APP_PLATFORM) == 'gtk-x11'):
+                if (config.get(prefs.APP_PLATFORM) in ['gtk-x11','windows-xul']):
                     chkboxdialog = dialogs.CheckboxTextboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, _("Describe what you were doing that caused this error"), dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
                 else:
                     chkboxdialog = dialogs.CheckboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)

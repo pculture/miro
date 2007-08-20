@@ -31,6 +31,9 @@ interface pcfIDTVPyBridge : nsISupports
   void handleCheckboxDialog(in unsigned long id, 
         in unsigned short buttonIndex, 
         in boolean checkbox_value);
+  void handleCheckboxTextboxDialog(in unsigned long id, 
+        in unsigned short buttonIndex, 
+        in boolean checkbox_value, in AString textbox_value);
   void handleHTTPAuthDialog(in unsigned long id, 
           in unsigned short buttonIndex, in AString username, 
           in AString password);

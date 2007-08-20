@@ -30,6 +30,10 @@ interface pcfIDTVJSBridge : nsISupports
         in AString description, in AString defaultLabel, 
         in AString otherLabel, in Astring checkboxText,
         in boolean checkboxValue);
+  void showCheckboxTextboxDialog(in unsigned long id, in AString title, 
+        in AString description, in AString defaultLabel, 
+        in AString otherLabel, in Astring checkboxText,
+        in boolean checkboxValue, in AString textboxText);
   void showThreeChoiceDialog(in unsigned long id, in AString title, 
         in AString description, in AString defaultLabel, 
         in AString secondLabel, in AString thirdLabel);

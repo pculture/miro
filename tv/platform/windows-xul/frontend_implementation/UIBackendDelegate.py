@@ -86,6 +86,11 @@ class UIBackendDelegate:
             frontend.jsBridge.showChoiceDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text)
+        elif isinstance(dialog, dialogs.CheckboxTextboxDialog):
+            frontend.jsBridge.showCheckboxTextboxDialog(id, dialog.title,
+                    dialog.description, dialog.buttons[0].text,
+                    dialog.buttons[1].text, dialog.checkbox_text, 
+                    dialog.checkbox_value, dialog.textbox_value)
         elif isinstance(dialog, dialogs.CheckboxDialog):
             frontend.jsBridge.showCheckboxDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,

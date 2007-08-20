@@ -192,6 +192,15 @@ jsBridge.prototype = {
     this.window.openDialog("chrome://dtv/content/checkbox_dialog.xul",
             "dialog", "chrome,dependent,centerscreen,modal", params);
   },
+  showCheckboxTextboxDialog: function(id, title, description, defaultLabel,
+              otherLabel, checkboxText, checkboxValue, textboxValue) {
+    var params = { "id": id, "title": title, "description" : description, 
+        "defaultLabel": defaultLabel, "otherLabel": otherLabel, 
+        "checkboxText": checkboxText, "checkboxValue": checkboxValue,
+        "out" : -1, "textboxValue": textboxValue};
+    this.window.openDialog("chrome://dtv/content/checkboxtextbox_dialog.xul",
+            "dialog", "chrome,dependent,centerscreen,modal", params);
+  },
 
 
   showThreeChoiceDialog: function(id, title, description, defaultLabel,
