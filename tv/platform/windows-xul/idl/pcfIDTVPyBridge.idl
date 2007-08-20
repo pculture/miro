@@ -39,6 +39,7 @@ interface pcfIDTVPyBridge : nsISupports
   void handleSearchChannelDialog(in unsigned long id, 
         in unsigned short buttonIndex, in AString term,
         in unsigned short style, in AString loc);
+  void handleFileDialog(in unsigned long id, in AString pathname);
   void openURL(in AString url);
   void loadURLInBrowser(in AString browserAreaId, in AString url);
   void skip(in short step);

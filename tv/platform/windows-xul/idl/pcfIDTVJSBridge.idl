@@ -71,4 +71,6 @@ interface pcfIDTVJSBridge : nsISupports
   void directoryWatchRemoved(in AString id);
   void showPopup(in PRInt32 x, in PRInt32 y);
   void hidePopup();
+  void showOpenDialog(in unsigned long id, in AString title, in AString defaultDirectory, in nsIVariant types);
+  void showSaveDialog(in unsigned long id, in AString title, in AString defaultFilename);
 };

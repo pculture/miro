@@ -446,6 +446,9 @@ class PyBridge:
     @asUrgent
     def handleSearchChannelDialog(self, id, buttonIndex, term, style, loc):
         self.delegate.handleDialog(id, buttonIndex, term=term, style=style, loc=loc)
+    @asUrgent
+    def handleFileDialog(self, id, pathname):
+        self.delegate.handleFileDialog(id, pathname)
 
     @asUrgent
     def addChannel(self, url):

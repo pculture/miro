@@ -15,6 +15,7 @@ import dialogs
 import feed
 import frontend
 import clipboard
+import util
 
 currentId = 1
 def nextDialogId():
@@ -144,10 +145,21 @@ class UIBackendDelegate:
             dialog.runCallback(None)
 
     def askForOpenPathname(self, callback, defaultDirectory=None, types=None):
-        pass
+        id = nextDialogId()
+        self.openDialogs[id] = callback
+        frontend.jsBridge.showOpenDialog(id, _('Select a File'), defaultDirectory, types)
 
     def askForSavePathname(self, callback, defaultFilename=None):
-        pass
+        id = nextDialogId()
+        self.openDialogs[id] = callback
+        frontend.jsBridge.showSaveDialog(id, _('Save File to'), defaultFilename)
+
+    def handleFileDialog(self, dialogID, pathname):
+        try:
+            callback = self.openDialogs.pop(dialogID)
+        except KeyError:
+            return
+        util.trapCall('File dialog callback', callback, pathname)
 
     def handleContextMenu(self, index):
         self.currentMenuItems[index].activate()

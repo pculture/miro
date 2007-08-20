@@ -17,6 +17,13 @@ function twoDigits(data) {
     else return ""+data;
 }
 
+function makeLocalFile(path) {
+    var file = Components.classes["@mozilla.org/file/local;1"].
+            createInstance(Components.interfaces.nsILocalFile);
+    file.initWithPath(path);
+    return file;
+}
+
 function LoadFinishedListener(area)
 {
     this.area = area;
@@ -705,6 +712,43 @@ jsBridge.prototype = {
                       "context",                  // type
                       "",                         // popupanchor (ignored)
                       "");
+
+  },
+
+  showOpenDialog: function (id, title, defaultDirectory, types) {
+      var nsIFilePicker = Components.interfaces.nsIFilePicker;
+      var fp = Components.classes["@mozilla.org/filepicker;1"]
+                      .createInstance(nsIFilePicker);
+      fp.init(this.window, title, nsIFilePicker.modeOpen);
+      if(defaultDirectory) {
+          fp.setDefaultDirectory(makeLocalFile(defaultDirectory));
+      }
+      if(types) {
+        var filters = new Array();
+        for(var i = 0; i < types.length; i++) {
+          filters[i] = "*." + types[i];
+        }
+        // This is a little bit ugly since we don't know what a good human
+        // readable name is for the types.  Just comma-separate them.
+        fp.appendFilter(filters.join(', '), filters.join(";"));
+      }
+      fp.appendFilters(nsIFilePicker.filterAll);
+      if (fp.show() == nsIFilePicker.returnOK){
+        pybridge.handleFileDialog(id, fp.file.path);
+    }
+  },
+
+  showSaveDialog: function (id, title, defaultFilename) {
+      var nsIFilePicker = Components.interfaces.nsIFilePicker;
+      var fp = Components.classes["@mozilla.org/filepicker;1"]
+                      .createInstance(nsIFilePicker);
+      fp.init(this.window, title, nsIFilePicker.modeSave);
+      if(defaultFilename) {
+          fp.defaultString = defaultFilename;
+      }
+      if (fp.show() == nsIFilePicker.returnOK){
+        pybridge.handleFileDialog(id, fp.file.path);
+    }
 
   },
 };
