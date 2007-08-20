@@ -368,6 +368,10 @@ class PyBridge:
         return config.get(prefs.STARTUP_TASKS_DONE)
     def setStartupTasksDone(self, value):
         return config.set(prefs.STARTUP_TASKS_DONE, value)
+    def getWarnIfDownloadingOnQuit(self):
+        return config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT)
+    def setWarnIfDownloadingOnQuit(self, value):
+        return config.set(prefs.WARN_IF_DOWNLOADING_ON_QUIT, value)
 
     @asUrgent
     def handleCommandLine(self, commandLine):

@@ -7,6 +7,7 @@
 <!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
 <!ENTITY prefs.general "General">
+<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Channels">
 <!ENTITY prefs.channels.check "Check channels for new content">

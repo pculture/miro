@@ -87,6 +87,8 @@ interface pcfIDTVPyBridge : nsISupports
   void setStartupTasksDone(in boolean value);
   boolean getResumeVideosMode();
   void setResumeVideosMode(in boolean value);
+  boolean getWarnIfDownloadingOnQuit();
+  void setWarnIfDownloadingOnQuit(in boolean value);
   void showCursor(in boolean display);
   void createNewPlaylist();
   void createNewPlaylistFolder();

@@ -38,6 +38,7 @@
         <tabpanel orient="vertical">
             <!-- GENERAL -->
             <checkbox id="runonstartup" label="&prefs.run.on.startup;" value="1" oncommand="runOnStartupChange()"/>
+            <checkbox id="warn-on-quit" label="&prefs.general.warn_on_quit;" value="1" oncommand="warnOnQuitChange()"/>
             <separator />
             <description>&prefs.close_to_tray_start;</description>
             <radiogroup class="indented" id="close-to-tray" oncommand="closeToTrayChange();">

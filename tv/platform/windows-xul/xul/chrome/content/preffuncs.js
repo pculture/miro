@@ -10,6 +10,7 @@ function onload() {
   selectDirectoryWatch(false);
   document.getElementById("runonstartup").checked = pybridge.getRunAtStartup();
   setCloseToTray(pybridge.minimizeToTray());
+  document.getElementById('warn-on-quit').checked = pybridge.getWarnIfDownloadingOnQuit();
   setCheckEvery(pybridge.getCheckEvery());
   setMoviesDir(pybridge.getMoviesDirectory());
   originalMoviesDir = pybridge.getMoviesDirectory();
@@ -52,6 +53,13 @@ function runOnStartupChange() {
       pybridge.setRunAtStartup(true);
   else
       pybridge.setRunAtStartup(false);
+}
+
+function warnOnQuitChange() {
+  if (document.getElementById("warn-on-quit").checked)
+      pybridge.setWarnIfDownloadingOnQuit(true);
+  else
+      pybridge.setWarnIfDownloadingOnQuit(false);
 }
 
 function closeToTrayChange() {
