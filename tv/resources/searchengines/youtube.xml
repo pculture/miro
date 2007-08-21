@@ -2,5 +2,5 @@
    <id>youtube</id>
    <displayname>YouTube</displayname>
    <url>http://www.youtube.com/rss/tag/%s.rss</url>
-   <sort>6</sort>
+   <sort>0</sort>
 </searchengine>
