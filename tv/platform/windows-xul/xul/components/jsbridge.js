@@ -24,6 +24,23 @@ function makeLocalFile(path) {
     return file;
 }
 
+function pickSavePath(window, title, defaultFilename) {
+    var nsIFilePicker = Components.interfaces.nsIFilePicker;
+    var fp = Components.classes["@mozilla.org/filepicker;1"]
+                  .createInstance(nsIFilePicker);
+    fp.init(window, title, nsIFilePicker.modeSave);
+    if(defaultFilename) {
+      fp.defaultString = defaultFilename;
+    }
+    var returncode = fp.show();
+    if (returncode == nsIFilePicker.returnOK || 
+            returncode == nsIFilePicker.returnReplace) {
+       return fp.file.path;
+    }  else {
+       return null;
+    }
+}
+
 function LoadFinishedListener(area)
 {
     this.area = area;
@@ -480,19 +497,13 @@ jsBridge.prototype = {
     if(newFilename) this.videoFilename = newFilename;
     else this.videoFilename = null;
   },
+
   saveVideo: function() {
     if(this.videoFilename == null) return;
-
-    var fp = Components.classes["@mozilla.org/filepicker;1"]
-            .createInstance(Components.interfaces.nsIFilePicker);
     var saveMenuItem = this.document.getElementById('menuitem-savevideo');
-    fp.init(this.window, saveMenuItem.getAttribute('label'),
-        Components.interfaces.nsIFilePicker.modeSave);
-    fp.defaultString = this.videoFilename;
-    var res = fp.show();
-    if (res == Components.interfaces.nsIFilePicker.returnOK){
-        pybridge.saveVideoFile(fp.file.path);
-    }
+    var picked = pickSavePath(this.window, saveMenuItem.getAttribute('label'),
+            this.videoFilename);
+    if (picked) pybridge.saveVideoFile(picked);
   },
 
   performStartupTasks: function() {
@@ -748,17 +759,8 @@ jsBridge.prototype = {
   },
 
   showSaveDialog: function (id, title, defaultFilename) {
-      var nsIFilePicker = Components.interfaces.nsIFilePicker;
-      var fp = Components.classes["@mozilla.org/filepicker;1"]
-                      .createInstance(nsIFilePicker);
-      fp.init(this.window, title, nsIFilePicker.modeSave);
-      if(defaultFilename) {
-          fp.defaultString = defaultFilename;
-      }
-      if (fp.show() == nsIFilePicker.returnOK){
-        pybridge.handleFileDialog(id, fp.file.path);
-    }
-
+      var picked = pickSavePath(this.window, title, defaultFilename);
+      if (picked) pybridge.handleFileDialog(id, picked);
   },
 };
 
