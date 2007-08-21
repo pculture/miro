@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=((n % 10 == 1 && n % 100 != 11) ? 0 : 1);\n"
-"X-Rosetta-Export-Date: 2007-07-31 02:08:59+0000\n"
+"X-Rosetta-Export-Date: 2007-08-21 13:58:54+0000\n"
 
 msgid "$log"
 msgstr ""

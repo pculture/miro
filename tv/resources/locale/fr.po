@@ -8,18 +8,18 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-07-28 08:56+0000\n"
-"Last-Translator: alma49 <alma49@club-internet.fr>\n"
+"PO-Revision-Date: 2007-08-19 00:40+0000\n"
+"Last-Translator: Robin Cura <cutdealer@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:18:17+0000\n"
+"X-Rosetta-Export-Date: 2007-08-21 13:58:18+0000\n"
 
 msgid "$log"
-msgstr "$Journal"
+msgstr "$log"
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
@@ -30,7 +30,7 @@ msgstr ""
 "<font face=\"Lucida Grande\" size=\"-1\">Notre traqueur de bogues : <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Dites-nous ce que vous étiez en "
 "train de faire, collez le message d'erreur de la boîte ci-dessus puis "
-"répondez à quelques questions, et nous nous mettrons immédiatement au "
+"répondez à quelques questions, et nous pourrons nous mettre immédiatement au "
 "travail.</font>"
 
 msgid ""
@@ -42,10 +42,9 @@ msgstr ""
 "En fait, si vous aviez une minute, seriez-vous disposé à envoyer un rapport "
 "d'anomalie à notre système de traquage de bogues ?\n"
 "Nous aurions besoin, au moins,  d'une description de ce que vous faisiez "
-"juste avant ce bogue -- aussi précise que possible -- et du charabia "
-"technique dans la boite ci-dessous :"
+"juste avant ce bogue -aussi précise que possible- et du charabia technique "
+"dans la boite ci-dessous:"
 
-#, fuzzy
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
 "wrong-headedness $when. We apologize and suggest that you exit and restart "
@@ -64,7 +63,7 @@ msgid "The fall of $shortAppName??"
 msgstr "L'échec de $shortAppName??"
 
 msgid "About Miro"
-msgstr "A propos de Miro"
+msgstr "À propos de Miro"
 
 msgid "Add Channel..."
 msgstr "Ajouter une chaîne..."
@@ -73,7 +72,7 @@ msgid "Add Guide..."
 msgstr "Ajouter un guide..."
 
 msgid "Bring All to Front"
-msgstr "Mettre tout au premier plan"
+msgstr "Tout ramener au premier plan"
 
 #: ../..//platform/osx/frontend/Preferences.py:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
@@ -93,10 +92,10 @@ msgid "Copy"
 msgstr "Copier"
 
 msgid "Copy Channel URL"
-msgstr "Copier l'adresse URL de la chaîne"
+msgstr "Copier l'URL de la chaîne"
 
 msgid "Copy Video URL"
-msgstr "Copier l'adresse URL de la vidéo"
+msgstr "Copier l'URL de la vidéo"
 
 msgid "Cut"
 msgstr "Couper"
@@ -133,7 +132,7 @@ msgid "MainMenu"
 msgstr "Menu principal"
 
 msgid "Minimize"
-msgstr "Minimiser"
+msgstr "Réduire"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "Miro"
@@ -178,7 +177,6 @@ msgstr "Rejouer"
 msgid "Playlists"
 msgstr "Listes de lecture"
 
-#, fuzzy
 msgid "Preferencesâ¦"
 msgstr "Préférencesâ¦"
 
@@ -250,7 +248,7 @@ msgstr "Contrôles plein écran"
 
 #: ../..//portable/tabs.py:45
 msgid "Video Search"
-msgstr "Recherche de vidéos"
+msgstr "Rechercher"
 
 msgid "VideoWindow"
 msgstr "FenêtreVidéo"
@@ -259,7 +257,6 @@ msgstr "FenêtreVidéo"
 msgid "Cancel"
 msgstr "Annuler"
 
-#, fuzzy
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
@@ -285,6 +282,7 @@ msgstr " limiter la vitesse de téléversement à"
 
 msgid "(You must restart Miro for this change to take effect)"
 msgstr ""
+"(Vous devez redémarrer Miro pour que ces changements soient pris en compte)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr ""
@@ -332,19 +330,19 @@ msgid "BitTorrent ports:"
 msgstr "Ports BitTorrent :"
 
 msgid "By default, videos expire after:"
-msgstr "Par défaut, les vidéos expirent après :"
+msgstr "Les vidéos expirent après :"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26
 msgid "Change..."
 msgstr "Modifier..."
 
 msgid "Check channels for new content:"
-msgstr "Vérifier la présence de nouveau contenu sur les chaînes :"
+msgstr "Actualiser les chaînes :"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "Don't start a download if it leaves less than"
-msgstr "Ne pas démarrer de téléchargement s'il reste moins de"
+msgstr "Bloquer les téléchargements s'il y a moins de"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
@@ -392,10 +390,10 @@ msgid "Remove"
 msgstr "Supprimer"
 
 msgid "Run Miro at startup"
-msgstr "Executer Miro au démarrage"
+msgstr "Lancer Miro au démarrage"
 
 msgid "Save downloaded videos in this folder:"
-msgstr "Sauvegarder les téléchargements dans ce dossier :"
+msgstr "Télécharger dans ce dossier :"
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:557
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
@@ -429,10 +427,10 @@ msgid "videos at once."
 msgstr "vidéos immédiatement."
 
 msgid "$label$"
-msgstr "$nom$"
+msgstr "$label$"
 
 msgid "$title$"
-msgstr "$titre$"
+msgstr "$title$"
 
 msgid "Channel"
 msgstr "Chaîne"
@@ -444,7 +442,6 @@ msgstr "Créer"
 msgid "In this:"
 msgstr "Dans ceci :"
 
-#, fuzzy
 msgid "Item1"
 msgstr "Objet1"
 
@@ -482,7 +479,6 @@ msgstr "Non"
 msgid "Only search my Movies folder."
 msgstr "Rechercher seulement dans le répertoire Mes Vidéos."
 
-#, fuzzy
 msgid "Search my entire Home folder."
 msgstr "Rechercher dans tout le dossier local"
 
@@ -547,7 +543,6 @@ msgstr ""
 msgid "Yes"
 msgstr "Oui"
 
-#, fuzzy
 msgid ""
 "You're done!\n"
 "\n"
@@ -573,13 +568,13 @@ msgid ""
 msgstr ""
 "Vous avez fini !\n"
 "\n"
-"L'installation est terminée -- Vous pouvez dès à présent dénicher quelques "
+"L'installation est terminée -- vous pouvez dès à présent dénicher quelques "
 "chaînes et commencer à les regarder.\n"
 "\n"
-"N'attendez pas : N'utilisez pas Miro comme vous regardez des vidéos sur des "
-"sites web -- De larges vidéos hautes définition sont offertes par les "
-"diffuseurs de contenu. Ne restez pas assis à attendre les vidéos : commencez "
-"des téléchargements et revenez plus tard. \n"
+"N'attendez pas : N'utilisez pas Miro comme un site web ! Sur Miro, des "
+"vidéos hautes définition sont offertes par les diffuseurs de contenu. Ne "
+"restez pas donc assis à attendre les vidéos : commencez des téléchargements "
+"et revenez plus tard. \n"
 "\n"
 "Ne quittez pas Miro : L'application vérifie régulièrement l'arrivée de "
 "nouvelles vidéos sur chaque chaîne et télécharge en arrière-plan. Gardez "
@@ -595,9 +590,9 @@ msgstr ""
 "Voyez grand : Le bouton à la droite du bouton de lecture permet de regarder "
 "les vidéos en plein écran.\n"
 "\n"
-"Dénichez des vidéos : Le Guide Miro contient des centaines de chaînes web-TV "
-"hébergées sur internet, toutes gratuites. Cliquez simplement sur \"ajouter\" "
-"pour en regarder une.\n"
+"Dénichez des vidéos : Le Guide Miro contient des centaines de chaînes de TV "
+"sur internet, toutes gratuites. Cliquez simplement sur \"ajouter\" pour en "
+"regarder une.\n"
 
 msgid ""
 "%message%\n"
@@ -630,7 +625,7 @@ msgstr "Réglages"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:45
 msgid "Hide"
-msgstr "Cacher"
+msgstr "Masquer"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:47
 msgid "Show"
@@ -741,7 +736,7 @@ msgstr "Sélectionner"
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
-msgstr "Déplacer les films existants?"
+msgstr "Déplacer les videos existantes?"
 
 #: ../..//platform/osx/frontend/Preferences.py:176
 #, python-format
@@ -768,7 +763,7 @@ msgstr "Audio"
 
 #: ../..//platform/osx/frontend/StartupPanel.py:114
 msgid "Search!"
-msgstr "Recherche!"
+msgstr "Rechercher!"
 
 #: ../..//platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
@@ -808,11 +803,11 @@ msgstr "_Supprimer les dossiers de chaînes"
 
 #: ../..//platform/osx/frontend/UIStrings.py:14
 msgid "_Remove Miro Guide..."
-msgstr "_Supprimer le Guide Miro ..."
+msgstr "_Supprimer ce Guide Miro ..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:15
 msgid "_Remove Miro Guides..."
-msgstr "_Supprimer le Guide Miro ..."
+msgstr "_Supprimer ces Guide Miro ..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:16
 msgid "_Remove Video..."
@@ -844,15 +839,15 @@ msgstr "Re_nommer le dossier des chaînes..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:23
 msgid "Re_name Miro Guide..."
-msgstr "Re_nommer le Guide Miro ..."
+msgstr "Re_nommer ce Guide Miro ..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:24 ../..//portable/menubar.py:171
 msgid "_Update Channel..."
-msgstr "_Mise à jour de la chaîne..."
+msgstr "_Actualiser la chaîne..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:25 ../..//portable/menubar.py:172
 msgid "_Update Channels..."
-msgstr "_Mise à jour des chaînes..."
+msgstr "_Actualiser des chaînes..."
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:367
 #: ../..//portable/dl_daemon/download.py:367
@@ -874,7 +869,7 @@ msgstr "Espace disque insuffisant"
 #: ../..//portable/dl_daemon/download.py:460
 #, python-format
 msgid "%s MB required to store this video"
-msgstr "%s Mo requis pour conserver cette vidéo"
+msgstr "%s Mo sont requis pour conserver cette vidéo"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:793
 #: ../..//portable/dl_daemon/download.py:793
@@ -1352,11 +1347,11 @@ msgstr "Rechercher"
 
 #: ../..//portable/feed.py:2064
 msgid "Local Files"
-msgstr ""
+msgstr "Ficher Locaux"
 
 #: ../..//portable/feed.py:2078
 msgid "Playing File"
-msgstr ""
+msgstr "Lecture en cours"
 
 #: ../..//portable/folder.py:132 ../..//portable/folder.py:155
 msgid "Rename Channel Folder"
@@ -1554,14 +1549,12 @@ msgid "Total Down:"
 msgstr "Total entrant:"
 
 #: ../..//portable/item.py:956
-#, fuzzy
 msgid "Seeders:"
-msgstr "Clients :"
+msgstr "Seeders :"
 
 #: ../..//portable/item.py:957
-#, fuzzy
 msgid "Leachers:"
-msgstr "Profiteurs :"
+msgstr "Leachers :"
 
 #: ../..//portable/item.py:958
 msgid "Down Rate:"
@@ -1787,9 +1780,8 @@ msgid "Add _Channel"
 msgstr "Ajouter une _Chaîne"
 
 #: ../..//portable/menubar.py:161
-#, fuzzy
 msgid "New Searc_h Channel..."
-msgstr "Nouvelle rec_herche de chaîne"
+msgstr "Nouvelle chaîne de rec_herche"
 
 #: ../..//portable/menubar.py:162
 msgid "New _Folder..."
@@ -1929,11 +1921,11 @@ msgstr "Options"
 
 #: ../..//portable/menubar.py:239
 msgid "Hide Window"
-msgstr ""
+msgstr "Masquer la fenêtre"
 
 #: ../..//portable/menubar.py:240
 msgid "Show Window"
-msgstr ""
+msgstr "Montrer la fenêtre"
 
 #: ../..//portable/playlist.py:196 ../..//portable/playlist.py:201
 msgid "Rename Playlist"
@@ -2040,7 +2032,6 @@ msgstr ""
 "Les changements récents peuvent avoir été perdus"
 
 #: ../..//portable/tabs.py:43
-#, fuzzy
 msgid "Library"
 msgstr "Bibliothèque"
 

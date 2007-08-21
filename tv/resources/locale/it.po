@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Democracy\n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-07-25 22:51+0000\n"
-"Last-Translator: lpalli <lpalli@palli.ch>\n"
+"PO-Revision-Date: 2007-08-19 11:33+0000\n"
+"Last-Translator: n1k4ro <nikaro666@yahoo.it>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:18:23+0000\n"
+"X-Rosetta-Export-Date: 2007-08-21 13:58:26+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -274,7 +274,7 @@ msgid " limit upstream to"
 msgstr " limita upstream a"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(Devi riavviare Miro perchè questa modifica abbia effetto)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr "(Devi riavviare Miro affinché le modifiche abbiano effetto)\n"
@@ -533,7 +533,6 @@ msgstr ""
 msgid "Yes"
 msgstr "Sì"
 
-#, fuzzy
 msgid ""
 "You're done!\n"
 "\n"
@@ -565,9 +564,23 @@ msgstr ""
 "Non attendere: la filosofia di Miro è differente da quela di vedere video "
 "sul web -- chi pubblica offre video di elevate dimensioni e di qualità "
 "elevata. Quindi non attendere il download di ogni video: fai partire il "
-"dowload di più video e torna più tari a guardarli.\n"
+"dowload di più video e torna più tardi a guardarli. \n"
 "\n"
-"Lascialo fare: Miro\n"
+"Lascialo attivo: Miro controlla regolarmente i canali e i download mentre è "
+"attivo anche se nacosto. Lasciarlo attivo significa che avrai nuovi video "
+"quando sarai pronto a guardarli.\n"
+"\n"
+"Non preoccuparti dello spazio sul disco: Miro, come TiVo, implementa un "
+"sistema di 'scadenze' che automaticamente cancella i vecchi video in modo da "
+"fare spazio per quelli nuovi. Puoi comunque tenere un video cliccando "
+"'salva' ed è possibile settare i canali in modo che salvino automaticamente "
+"i video.\n"
+"\n"
+"Espanditi: Il bottone alla destra del tasto play mostra il video a schermo "
+"pieno.\n"
+"\n"
+"Cerca i video: La Guida di Miro contiene centinaia di canali di internet TV "
+"tutti gratuiti. È sufficiente cliccare su 'AGGIUNGI' per vedere un canale.\n"
 
 msgid ""
 "%message%\n"
@@ -577,9 +590,8 @@ msgstr ""
 "%message%"
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:312
-#, fuzzy
 msgid "New Channel _Guide..."
-msgstr "Nuova _guida canali"
+msgstr "Nuova _Guida canali"
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:548
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
@@ -669,7 +681,6 @@ msgid "Subscribe to Channel"
 msgstr "Sottoscrivi al canale"
 
 #: ../..//platform/osx/frontend/MainFrame.py:262
-#, fuzzy
 msgid "Enter the URL of the channel you would like to subscribe to."
 msgstr "Inserisci l' URL del canale a cui vuoi iscriverti"
 
@@ -768,7 +779,6 @@ msgid "_Remove Channels..."
 msgstr "_Rimuovi canali"
 
 #: ../..//platform/osx/frontend/UIStrings.py:12 ../..//portable/menubar.py:169
-#, fuzzy
 msgid "_Remove Channel Folder..."
 msgstr "_Rimuovi Cartella Dei Canali..."
 
@@ -1019,9 +1029,9 @@ msgid "Stop watching %s"
 msgstr "Ferma la visione di %s"
 
 #: ../..//portable/app.py:1091
-#, fuzzy
+#, python-format
 msgid "Are you sure you want to stop watching %s?"
-msgstr "Vuoi fermare il monitoraggio di %s ?"
+msgstr "Sei sicuro di voler cancellare l'iscrizione a %s ?"
 
 #: ../..//portable/app.py:1094
 #, fuzzy
@@ -1315,11 +1325,12 @@ msgstr "Ricerca"
 
 #: ../..//portable/feed.py:2064
 msgid "Local Files"
-msgstr ""
+msgstr "File locali"
 
 #: ../..//portable/feed.py:2078
+#, fuzzy
 msgid "Playing File"
-msgstr ""
+msgstr "Playing File"
 
 #: ../..//portable/folder.py:132 ../..//portable/folder.py:155
 msgid "Rename Channel Folder"
@@ -1399,7 +1410,7 @@ msgstr "Errore di dimensione: %s"
 #: ../..//portable/httpclient.py:104
 #, python-format
 msgid "Expected CRLF got: %r"
-msgstr ""
+msgstr "Expected CRLF got: %r"
 
 #: ../..//portable/httpclient.py:107
 #, python-format
@@ -1781,7 +1792,7 @@ msgstr "Copia _Link al Canale"
 
 #: ../..//portable/menubar.py:179
 msgid "New _Playlist"
-msgstr ""
+msgstr "Nuova _Playlist"
 
 #: ../..//portable/menubar.py:180
 msgid "New Playlist Fol_der"
@@ -1901,11 +1912,11 @@ msgstr "Opzioni"
 
 #: ../..//portable/menubar.py:239
 msgid "Hide Window"
-msgstr ""
+msgstr "Nascondi finestra"
 
 #: ../..//portable/menubar.py:240
 msgid "Show Window"
-msgstr ""
+msgstr "Mostra finestra"
 
 #: ../..//portable/playlist.py:196 ../..//portable/playlist.py:201
 msgid "Rename Playlist"
@@ -2108,7 +2119,7 @@ msgstr "<b>Scaricamenti</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12
 msgid "<b>Folders in the Library</b>"
-msgstr ""
+msgstr "<b>Cartele nella libreria</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:13
 msgid "<b>General</b>"
@@ -2283,6 +2294,8 @@ msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr ""
+"Le prossime poche schermate ti aiuteranno a configurare Miro in modo che "
+"lavori al meglio. Ecco la prima dmanda."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
@@ -2295,7 +2308,7 @@ msgstr "Volume:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "Watch for new videos in these folders and include them in the Library"
-msgstr ""
+msgstr "Cerca nuovi video in queste cartelle e includile nella libreria"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid ""
@@ -2323,6 +2336,9 @@ msgid ""
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
+"Hai selezionato una nuova cartella dove scaricare i film. Miro deve spostare "
+"i tuoi download esistenti nella nuova cartella? (Attualmente i file in "
+"donwload non vengono spostati finchè non ne è completato il download)."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "_Add Folder"
@@ -2360,6 +2376,9 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName versione $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$publisher. $longAppName e i  loghi $longAppName sono marchi registrati di "
+"$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
@@ -2387,13 +2406,20 @@ msgid ""
 "information into our bug tracker and tell us what you were doing when the\n"
 "problem occurred."
 msgstr ""
+"Per piacere aiutaci a correggerlo. Copia e incolla tutte le\n"
+"informazioni nel nostro bug tracker e spiega cosa stavi facendo quando\n"
+"hai riscontrato il problema."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
+#, fuzzy
 msgid ""
 "Then, please restart $longAppName (or you may keep getting related errors). "
 "Sorry for the inconvenience. $longAppName is still in beta, but with your "
 "help we're fixing problems fast!"
 msgstr ""
+"A questo punto riavvia $longAppName (o tieni traccia degli errori "
+"correlati). Scusa per l'inconveniente. $longAppName è ancora in sviluppo "
+"(beta), ma con il tuo aiuto risolveremo i problemi velocemente!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
 #, fuzzy
@@ -2427,6 +2453,8 @@ msgid ""
 "and ask if they can supply a feed in a format that will work with "
 "$shortAppName."
 msgstr ""
+"e chiedi se possono fornire un feed in un formato supportato da "
+"$shortAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
 msgid "$longAppName"
@@ -2438,6 +2466,9 @@ msgid ""
 "migrate your existing downloads there?(Currently dowloading movies will not "
 "be moved until they finish)"
 msgstr ""
+"Hai selezionato una nuova cartella per scaricare i film. $shortAppName deve "
+"spostare i download correnti in questa nuova cartella?(Attualmente i film in "
+"download non saranno spostati finchè non saranno terminati)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
@@ -2455,6 +2486,8 @@ msgstr ""
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
 msgstr ""
+"(ATTENZIONE: le modifiche non avranno effetto finchè $longAppName non sarà "
+"riavviato)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Add Folder..."
@@ -2467,6 +2500,7 @@ msgstr "Esegui automaticamente $longAppName al login"
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
 msgid "Close to tray so that downloads can continue."
 msgstr ""
+"Riduci nella tray bar in modo che i download correnti possano continuare."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Every 30 minutes"
@@ -2577,6 +2611,11 @@ msgid ""
 "permanently by clicking 'save' and you can set a channel's settings to save "
 "videos automatically."
 msgstr ""
+"Allo stesso modo di TiVo, $longAppName attua un sistema di scadenza per cui "
+"i vecchi video vengono eliminati in modo da liberare spazio a quelli nuovi. "
+"Puoi sempre decidere di conservare un video selezionando 'salva' e puoi "
+"configurare i parametri di un canale in modo che i suoi video vengano "
+"conservati automaticamente."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
 #, fuzzy
@@ -2635,7 +2674,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
 msgid "Would you like $longAppName to look for video files on your computer?"
-msgstr "Vuoi che $longAppName ricerchi file video ne tuo computer?"
+msgstr "Vuoi che $longAppName ricerchi file video nel tuo computer?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
 msgid "Would you like to run $shortAppName on startup?"

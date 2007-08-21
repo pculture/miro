@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-07-30 17:17+0000\n"
-"Last-Translator: Ricardo Macari <macari@gmail.com>\n"
+"PO-Revision-Date: 2007-07-31 03:41+0000\n"
+"Last-Translator: Joildo Santos <joildo@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:18:36+0000\n"
+"X-Rosetta-Export-Date: 2007-08-03 15:30:52+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -284,7 +284,7 @@ msgid " limit upstream to"
 msgstr " limitar velocidade de envio de dados a"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "Você deve reiniciar o Miro para que esta mudança tenha efeito."
 
 #, fuzzy
 msgid "(You must restart Miro for this change to take effect)\n"
@@ -981,6 +981,9 @@ msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
+"Você tem uma base de dados que foi salva com uma nova versão de "
+"$shortAppName. Você deve descarregar a última versão de $shortAppName e "
+"utilizá-lo."
 
 #: ../..//portable/app.py:968 ../..//portable/app.py:982
 #: ../..//portable/app.py:1026 ../..//portable/app.py:1052
@@ -1349,11 +1352,11 @@ msgstr "Pesquisar"
 
 #: ../..//portable/feed.py:2064
 msgid "Local Files"
-msgstr ""
+msgstr "Arquivos Locais"
 
 #: ../..//portable/feed.py:2078
 msgid "Playing File"
-msgstr ""
+msgstr "Tocando Arquivo"
 
 #: ../..//portable/folder.py:132 ../..//portable/folder.py:155
 msgid "Rename Channel Folder"
@@ -1934,11 +1937,11 @@ msgstr "Opções"
 
 #: ../..//portable/menubar.py:239
 msgid "Hide Window"
-msgstr ""
+msgstr "Ocultar Janela"
 
 #: ../..//portable/menubar.py:240
 msgid "Show Window"
-msgstr ""
+msgstr "Mostrar Janela"
 
 #: ../..//portable/playlist.py:196 ../..//portable/playlist.py:201
 msgid "Rename Playlist"

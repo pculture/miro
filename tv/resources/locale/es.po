@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-07-27 22:44+0000\n"
-"Last-Translator: favelill <favelill@gmail.com>\n"
+"PO-Revision-Date: 2007-08-11 19:49+0000\n"
+"Last-Translator: quinof <quino@quinofernandez.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:18:51+0000\n"
+"X-Rosetta-Export-Date: 2007-08-18 21:28:57+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -27,10 +27,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
-"<font face=\"Lucida Grande\" size=\"-1\">Nuestro rastreador de errores se "
-"encuentra en <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Solo indícanos "
-"lo que estabas haciendo cuando ocurrió el problema, pega el mensaje de la "
-"caja de arriba, contesta unas cuantas preguntas, y nos pondremos enseguida a "
+"<font face=\"Lucida Grande\" size=\"-1\">Nuestro gestor de errores se "
+"encuentra en <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Dinos lo que "
+"estabas haciendo cuando ocurrió el problema, pega el mensaje de la caja de "
+"arriba, contesta unas cuantas preguntas, y nos pondremos en seguida a "
 "trabajar.</font>"
 
 msgid ""
@@ -39,11 +39,10 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"De hecho, si tienes un minuto, ¿serías tan amable de enviarnos un informe "
-"del incidente a nuestro sistema rastreador de errores? Como mínimo, "
-"necesitaríamos una descripción —tan precisa como te sea posible— de lo que "
-"estabas haciendo en el momento, más la diestramente-fraseada jeringonza que "
-"aparece en el cuadro de abajo:"
+"Realmente, si tienes un momento, ¿querrías enviar un informe del problema a "
+"nuestro sistema de seguimiento de errores? Como mínimo, necesitaríamos una "
+"descripción de lo que estabas haciendo en ese momento (tan precisa como te "
+"sea posible) más la frase aparentemente sin sentido en la caja de abajo:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -51,13 +50,13 @@ msgid ""
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
-"¡Que Mala suerte! $longAppName ha encontrado un error interno o ha tenido un "
-"comportamiento inesperado $when. Te pedimos disculpas y sugerimos que salgas "
-"y reinicies $shortAppName. Eso hará que aprenda, y también reducirá el "
-"riesgo de que se pierdan tus preferencias o tus suscripciones a los canales."
+"¡Infortunio! $los longAppName tumbaró la presa a alguna clase de confusión "
+"interna ó malo-pensamiento $cuando. Nosotros nos disculpamos y sugerimos que "
+"usted sale y reinicia $el shortAppName. Eso lo enseñará, y también reducirá "
+"su oportunidad de perder sus preferencias ó subscripciones del canal."
 
 msgid "OK"
-msgstr "ACEPTAR"
+msgstr "OK"
 
 msgid "The fall of $shortAppName??"
 msgstr "La caída de $shortAppName??"
@@ -66,13 +65,13 @@ msgid "About Miro"
 msgstr "Acerca de Miro"
 
 msgid "Add Channel..."
-msgstr "Añadir canal..."
+msgstr "Añadir Canal..."
 
 msgid "Add Guide..."
-msgstr "Añadir guía..."
+msgstr "Añadir Guía..."
 
 msgid "Bring All to Front"
-msgstr "Traer todo al frente"
+msgstr "Traer Todo al Frente"
 
 #: ../..//platform/osx/frontend/Preferences.py:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
@@ -80,32 +79,32 @@ msgid "Channels"
 msgstr "Canales"
 
 msgid "Check for New Version"
-msgstr "Comprobar si hay una nueva versión"
+msgstr "Comprobar para una nueva versión"
 
 msgid "Clear Menu"
 msgstr "Limpiar Menú"
 
 msgid "Close Window"
-msgstr "Cerrar ventana"
+msgstr "Cerrar Ventana"
 
 msgid "Copy"
-msgstr "Copiar"
+msgstr "Copia"
 
 msgid "Copy Channel URL"
-msgstr "Copiar dirección del canal"
+msgstr "Copia el URL de la Canal"
 
 msgid "Copy Video URL"
-msgstr "Copiar dirección del vídeo"
+msgstr "Copia el URL del video"
 
 msgid "Cut"
-msgstr "Cortar"
+msgstr "Corta"
 
 #: ../..//portable/dialogs.py:94
 msgid "Delete"
-msgstr "Borrar"
+msgstr "Borre"
 
 msgid "Donate"
-msgstr "Haz una donación"
+msgstr "Done"
 
 msgid "Edit"
 msgstr "Editar"
@@ -129,7 +128,7 @@ msgid "Main Window"
 msgstr "Ventana Principal"
 
 msgid "MainMenu"
-msgstr "Menú principal"
+msgstr "Menú Principal"
 
 msgid "Minimize"
 msgstr "Minimizar"
@@ -157,7 +156,7 @@ msgid "Next Video"
 msgstr "Siguiente Vídeo"
 
 msgid "Open Recent"
-msgstr "Abrir Reciente"
+msgstr "Abra Reciente"
 
 msgid "Open..."
 msgstr "Abrir..."
@@ -167,12 +166,12 @@ msgstr "Pegar"
 
 #: ../..//platform/osx/frontend/Application.py:238
 msgid "Play Video"
-msgstr "Reproducir Vídeo"
+msgstr "Reproduce Vídeo"
 
 #: ../..//platform/osx/frontend/Preferences.py:43
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid "Playback"
-msgstr "Reproducción"
+msgstr "Reproducir"
 
 msgid "Playlists"
 msgstr "Listas de Reproducción"
@@ -184,22 +183,22 @@ msgid "Previous Video"
 msgstr "Anterior vídeo"
 
 msgid "Quit Miro"
-msgstr "Cerrar Miro"
+msgstr "Cerra Miro"
 
 msgid "Remove..."
 msgstr "Eliminar..."
 
 msgid "Rename..."
-msgstr "Renombrar…"
+msgstr "Rename..."
 
 msgid "Report a bug"
-msgstr "Informar sobre un error"
+msgstr "Reporte un error"
 
 msgid "Save Video As..."
 msgstr "Guardar Vídeo Como..."
 
 msgid "Select All"
-msgstr "Seleccionar Todo"
+msgstr "Seleccione Todo"
 
 msgid "Send This Channel to a Friend"
 msgstr "Enviar Este Canal a un Amigo"
@@ -282,7 +281,7 @@ msgid " limit upstream to"
 msgstr " limitar velocidad de subida a"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(Debes reiniciar Miro para que este cambio tenga efecto)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr "(Debes reiniciar Miro para que este cambio tenga efecto)\n"
@@ -1345,11 +1344,11 @@ msgstr "Buscar"
 
 #: ../..//portable/feed.py:2064
 msgid "Local Files"
-msgstr ""
+msgstr "Archivos Locales"
 
 #: ../..//portable/feed.py:2078
 msgid "Playing File"
-msgstr ""
+msgstr "Reproduciendo archivo"
 
 #: ../..//portable/folder.py:132 ../..//portable/folder.py:155
 msgid "Rename Channel Folder"
@@ -1922,11 +1921,11 @@ msgstr "Opciones"
 
 #: ../..//portable/menubar.py:239
 msgid "Hide Window"
-msgstr ""
+msgstr "Ocultar Ventana"
 
 #: ../..//portable/menubar.py:240
 msgid "Show Window"
-msgstr ""
+msgstr "Mostrar Ventana"
 
 #: ../..//portable/playlist.py:196 ../..//portable/playlist.py:201
 msgid "Rename Playlist"

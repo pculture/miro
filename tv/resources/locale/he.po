@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-07-30 23:29+0000\n"
-"Last-Translator: mark125 <mark125@gmail.com>\n"
+"PO-Revision-Date: 2007-08-16 23:20+0000\n"
+"Last-Translator: brudy <brudye@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-07-31 02:08:49+0000\n"
+"X-Rosetta-Export-Date: 2007-08-18 21:28:41+0000\n"
 
 msgid "$log"
 msgstr "$יומן"
@@ -27,8 +27,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
+"<font face=\"Lucida Grande\" size=\"-1\">מערכת מעקב אחרי באגים שלנו נימצאת ב-"
+" <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. ספרו לנו מה עשיתם, הדביקו את "
+"הודעת הלוג מהתא מעל, ענו על מספר שאלות ואנחנו נשב לעבוד על זה.</font>"
 
-#, fuzzy
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
 "report to our bug-tracking system? At a minimum, what we'd need is "
@@ -36,7 +38,7 @@ msgid ""
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
 "בעצם, אם יש לך דקה האם תואיל לשלוח למערכת מעקב הבאגים שלנו דוח קריסה? אנו "
-"זקוקים לתיאור מדוייק ככל האפשר של פעולותיך בעת הארוע, בתוספת גבב השטויות "
+"זקוקים לתיאור מדויק ככל האפשר של פעולותיך בעת האירוע, בתוספת גבב השטויות "
 "שמופיע בחלון למטה:"
 
 msgid ""
@@ -46,12 +48,11 @@ msgid ""
 "your preferences or channel subscriptions."
 msgstr ""
 
-#, fuzzy
 msgid "OK"
 msgstr "אישור"
 
 msgid "The fall of $shortAppName??"
-msgstr ""
+msgstr "התמוטטות של $shortAppName??"
 
 msgid "About Miro"
 msgstr "אודות מירו"
@@ -147,7 +148,6 @@ msgstr "ערוץ חיפוש חדש..."
 msgid "Next Video"
 msgstr "וידאו הבא"
 
-#, fuzzy
 msgid "Open Recent"
 msgstr "פתח אחרונים"
 
@@ -218,13 +218,13 @@ msgid "Zoom"
 msgstr "זום"
 
 msgid "%channel feed%"
-msgstr ""
+msgstr "%channel feed%"
 
 msgid "%channel title%"
-msgstr ""
+msgstr "%channel title%"
 
 msgid "%donation label%"
-msgstr ""
+msgstr "%donation label%"
 
 msgid "-00:00:00"
 msgstr "-00:00:00"
@@ -273,13 +273,13 @@ msgid " limit upstream to"
 msgstr " הגבל קצב העלאה ל"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(עליכם להתחיל מחדש את מירו כדי ששינוים אלה ישפיעו)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr "(חובה להפעיל מחדש כדי שהשינויים יתבצעו)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(כתובת תיקיית הסרטים פה)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid "1 day"
@@ -316,9 +316,8 @@ msgstr "99999"
 msgid "Add..."
 msgstr "הוסף...‏"
 
-#, fuzzy
 msgid "BitTorrent ports:"
-msgstr "כניסות ביטוררנט"
+msgstr "כניסות ביטורנט"
 
 msgid "By default, videos expire after:"
 msgstr "כברירת מחדל יפוג תוקפו של יודאו לאחר:"
@@ -346,11 +345,11 @@ msgstr "מיקום תיקייה"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid "GB free."
-msgstr "גיגות פנויים"
+msgstr "GB פנוי"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "KB/s when my computer is active."
-msgstr "קילובייטים\\שנייה מתי שהמחשב שלי הוא אקטיבי"
+msgstr "KB/s מתי שהמחשב שלי הוא פעיל"
 
 msgid "Maximum:"
 msgstr "מקסימום:"
@@ -382,28 +381,26 @@ msgid "Remove"
 msgstr "הסר"
 
 msgid "Run Miro at startup"
-msgstr "הרץ את מירו עם אתחול"
+msgstr "הרץ את מירו בזמן העלייה"
 
 msgid "Save downloaded videos in this folder:"
 msgstr "שמור וידאוים מורדים בתקייה הזאת :"
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:557
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
-#, fuzzy
 msgid "Show as Channel"
-msgstr "הצג כתחנה"
+msgstr "הצג כערוץ"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Stop after each video."
 msgstr "עצור לאחר כל וידאו"
 
-#, fuzzy
 msgid "To avoid internet slowdowns:"
-msgstr "בשביל למנוע שיבושים באינטרנט"
+msgstr "בשביל למנוע איטיות בחיבור האינטרנט"
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
-msgstr "חפש קליפים חדשים בתיקיות הללו והוסך אותם לספרייה"
+msgstr "חפש קליפים חדשים בתיקיות הללו והוסף אותם לספרייה"
 
 msgid "every 30 minutes"
 msgstr "כל 30 דקות"
@@ -416,26 +413,26 @@ msgstr "ידני"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36
 msgid "videos at once."
-msgstr ""
+msgstr "סרטים בו זמנית."
 
 msgid "$label$"
-msgstr ""
+msgstr "$label$"
 
 msgid "$title$"
-msgstr ""
+msgstr "$title$"
 
 msgid "Channel"
 msgstr "ערוץ"
 
 #: ../..//portable/dialogs.py:89
 msgid "Create"
-msgstr "צור"
+msgstr "יצירה"
 
 msgid "In this:"
 msgstr "בזה:"
 
 msgid "Item1"
-msgstr ""
+msgstr "פריט1"
 
 msgid "Search Engine"
 msgstr "מנוע חיפוש"
@@ -450,7 +447,7 @@ msgstr "כתובת/נתיב"
 #: ../..//platform/windows-xul/frontend_implementation/startup.py:25
 #, python-format
 msgid "(parsed %d files - found %d videos)"
-msgstr ""
+msgstr "(ניבדקו %d קבצים - נימצאו %d  קבצי וידאו)"
 
 msgid "Back"
 msgstr "אחורה"
@@ -469,13 +466,13 @@ msgid "No"
 msgstr "לא"
 
 msgid "Only search my Movies folder."
-msgstr "חפש רק בתיקיית הסרטים שלי"
+msgstr "חפש רק בתיקיית הסרטים שלי."
 
 msgid "Search my entire Home folder."
-msgstr "חפש בכל התיקייה המקומית שלי"
+msgstr "חפש בכל התיקייה המקומית שלי."
 
 msgid "Search this folder:"
-msgstr "חיפוש בתיקייה"
+msgstr "חיפוש בתיקייה:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37
 msgid "Searching for Videos"
@@ -488,11 +485,18 @@ msgid ""
 "\n"
 "Would you like Miro to look for video files on your computer?"
 msgstr ""
+"נגן המירו יכול למצוא את כל הווידאו על המחשב שלכם כדי לעזור בסידור האוסף "
+"שלכם.\n"
+"\n"
+"\n"
+"האם תירצו ש-Miro יחפש קבצי וידאו על המחשב שלכם?"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"המסכים הבאים יעזרו לכל להגדיר את נגן מירו כך יעבוד הכי טוב בשבילכם. השאלה "
+"הראשונה."
 
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
@@ -502,6 +506,12 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
+"אנחנו ממליצים לכם לאפשר ל-Miro לעלות ביחד עם הפעלת המחשב. כך, הורדות שעדיין "
+"לא הושלמו יוכלו להסתיים וקטעי וידאו חדשים מהערוצים שלכם יהיו מוכנים לצפייה "
+"כשתירצו ליראות אותם.\n"
+"\n"
+"\n"
+"האם תירצו  ש-Miro יופעל כשהמחשב עולה?"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "Welcome to Internet TV!"
@@ -514,6 +524,10 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"ברוכים הבאים לטלוויזיית האינטרנט. יש דרים רבים שתוכלו לעשות עם הנגן Miro: "
+"להוריד קטעי וידאו מהערוצי האהובים עליכם, צפייה בקטעי וידאו חדשים אחד אחרי "
+"השני, להוריד טורנטים, להמליץ על קטעי וידאו לחברים ועוד רבים.\n"
+"\n"
 
 #: ../..//portable/dialogs.py:78
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
@@ -543,15 +557,38 @@ msgid ""
 "Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
 "them are free. Just click 'ADD' to watch a channel.\n"
 msgstr ""
+"סיימתם!\n"
+"\n"
+"ההתקנה הושלמה -- עכשיו אתם יכולים לחפש ערוצים ולהתחיל לצפות.\n"
+"\n"
+"אל תחכו: מירו שונה מצפייה בווידאו על דפי אינטרנט -- המפיצים יכולים להציע "
+"קטעי וידאו גדולים ואיכותיים. אז אם תשבו ותחכו לווידאו: התחילו כמה הורדו "
+"וחיזרו מאוחר יותר לצפות. \n"
+"\n"
+"השאירו אותו פעיל: מירו באופן קבוע בודק את הערוצים עבור קטעי וידאו חדשים "
+"ומבצע הורדת ברקע. כשתשאירו אותו פועל תוכלו לצפות בקטעי וידאו חדשים כשתהיו "
+"מוכנים לצפות בהם.\n"
+"\n"
+"אל תדאגו בקשר למקום פנוי: כמו TiVo, נכללת כאן מערכת של 'תאריך תפוגה' שעוזרת "
+"לפנות קטעי וידאו ישנים כדי לפנות מקום לקטעי וידאו חדשים. תמיד אפשר לשמור את "
+"קטעי הווידאו לתמיד על ידי לחיצה על שמור ואתם יכולים לשנות את הגדרות ערוץ כדי "
+"לשמור וידאו אוטומטית.\n"
+"\n"
+"מסך מלא:הכפתור בצד ימין מראה את הווידאו במסך מלא.\n"
+"\n"
+"חיפוש וידאו: למדריך מירו יש מאות ערוצי טלוויזיית אינטרנט, כולם בחינם. רק "
+"לחצו על 'הוספה' כדי לצפות בערוץ.\n"
 
 msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
+"%message%\n"
+"%message%"
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:312
 msgid "New Channel _Guide..."
-msgstr ""
+msgstr "מדריך ערוצים חדש..."
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:548
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
@@ -565,7 +602,7 @@ msgstr "מיקום תיקייה"
 msgid "%d video found"
 msgid_plural "%d videos found"
 msgstr[0] "%d קליפים נמצאו"
-msgstr[1] ""
+msgstr[1] "%d קליפים נמצאו"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:42
 msgid "Settings"
@@ -573,7 +610,7 @@ msgstr "הגדרות"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:45
 msgid "Hide"
-msgstr "החבא"
+msgstr "הסתר"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:47
 msgid "Show"
@@ -595,9 +632,8 @@ msgid "Password:"
 msgstr "סיסמה:"
 
 #: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:369
-#, fuzzy
 msgid "Unknown Runtime Error"
-msgstr "שגיאת רצף זמן לא ידועה"
+msgstr "שגיאת זמן ריצה לא ידועה"
 
 #: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:370
 #, python-format
@@ -618,9 +654,8 @@ msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
 msgstr ""
-"כדי להריץ את %s you need the most recent version of Quicktime, which is a "
-"free update.\n"
-"אתם צריכים את הגרסה החדשה ביותר של Quicktime, שהיא עדכון חינם."
+"כדי להריץ את %s אתם צריכים את הגרסה החדשה ביותר של Quicktime, שהיא עדכון "
+"חינם."
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:27
 msgid "Download Completed"
@@ -646,7 +681,7 @@ msgstr "הוסף את הערוץ"
 
 #: ../..//platform/osx/frontend/MainFrame.py:262
 msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr ""
+msgstr "הקלידו את כתובת הערוץ שאתם רוצים להצטרף אליו."
 
 #: ../..//platform/osx/frontend/Preferences.py:38
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
@@ -686,7 +721,7 @@ msgstr "בחירה"
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
-msgstr ""
+msgstr "העברת סרטים קיימים?"
 
 #: ../..//platform/osx/frontend/Preferences.py:176
 #, python-format
@@ -695,14 +730,16 @@ msgid ""
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"בחרתם בתיקייה חדשה  להורדת סרטים. האם %s יעביר את כל ההורדות הקיימות לשם? "
+"(סרטים שכרגע יורדים לא יועברו על שלא יסתיימו)."
 
 #: ../..//platform/osx/frontend/Preferences.py:228
 msgid "View this Directory in the Library"
-msgstr ""
+msgstr "צפייה בתיקייה הזאת בתוך הספרייה"
 
 #: ../..//platform/osx/frontend/Preferences.py:229
 msgid "Select a Directory to view in the Library."
-msgstr ""
+msgstr "בחירת תיקייה לצפייה בספרייה"
 
 #: ../..//platform/osx/frontend/QuicktimeRenderer.py:217
 msgid "Audio"
@@ -730,7 +767,7 @@ msgstr "_הסר תיקיית רשימת השמעה..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:9
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "_הסירו את תיקיות רשימת ההשמעה..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:10 ../..//portable/menubar.py:166
 msgid "_Remove Channel..."
@@ -738,27 +775,27 @@ msgstr "הסר תחנה"
 
 #: ../..//platform/osx/frontend/UIStrings.py:11 ../..//portable/menubar.py:167
 msgid "_Remove Channels..."
-msgstr "הסר תחנות"
+msgstr "הסר ערוצים"
 
 #: ../..//platform/osx/frontend/UIStrings.py:12 ../..//portable/menubar.py:169
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "_הסירו את תיקיית הערוצים..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:13 ../..//portable/menubar.py:168
 msgid "_Remove Channel Folders..."
-msgstr ""
+msgstr "_הסירו את תיקיות הערוצים..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:14
 msgid "_Remove Miro Guide..."
-msgstr ""
+msgstr "הסרת מדריף מירו..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:15
 msgid "_Remove Miro Guides..."
-msgstr ""
+msgstr "_הסרת מדריכי מירו..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:16
 msgid "_Remove Video..."
-msgstr "הסר קליפ"
+msgstr "הסר וידאו"
 
 #: ../..//platform/osx/frontend/UIStrings.py:17
 msgid "_Remove Videos..."
@@ -770,11 +807,11 @@ msgstr "שינוי שם..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:19
 msgid "Re_name Playlist..."
-msgstr ""
+msgstr "שינוי שם רשימת השמעה..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:20
 msgid "Re_name Playlist Folder..."
-msgstr ""
+msgstr "שינוי שם תיקיית רשימת השמעה..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:21 ../..//portable/menubar.py:165
 msgid "Re_name Channel..."
@@ -782,11 +819,11 @@ msgstr "שינוי שם לערוץ..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:22
 msgid "Re_name Channel Folder..."
-msgstr ""
+msgstr "שינוי שם תיקיית הערוץ..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:23
 msgid "Re_name Miro Guide..."
-msgstr ""
+msgstr "שנוי שם מדריך מירו"
 
 #: ../..//platform/osx/frontend/UIStrings.py:24 ../..//portable/menubar.py:171
 msgid "_Update Channel..."
@@ -805,7 +842,7 @@ msgstr "בעיה"
 #: ../..//portable/dl_daemon/download.py:440
 #, python-format
 msgid "Could not write to %s"
-msgstr ""
+msgstr "לא ניתן לכתוב ל-%s"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:459
 #: ../..//portable/dl_daemon/download.py:459
@@ -816,18 +853,18 @@ msgstr "אין מספיק מקום בדיסק"
 #: ../..//portable/dl_daemon/download.py:460
 #, python-format
 msgid "%s MB required to store this video"
-msgstr ""
+msgstr "%s MB נידרש כדי לאחסן את הווידאו"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:793
 #: ../..//portable/dl_daemon/download.py:793
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "טורנט פגום"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:794
 #: ../..//portable/dl_daemon/download.py:794
 #, python-format
 msgid "The torrent file at %s was not valid"
-msgstr ""
+msgstr "קובץ הטורנט ב-%s לא תקין"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:820
 #: ../..//portable/dl_daemon/download.py:820
@@ -837,7 +874,7 @@ msgstr "קובץ שטף נמחק"
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:821
 #: ../..//portable/dl_daemon/download.py:821
 msgid "The torrent file for this item was deleted "
-msgstr "קובץ שטף בשביל פריט זה נמחק "
+msgstr "קובץ טורנט בשביל פריט זה נמחק "
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:56
 msgid "Update Available"
@@ -846,24 +883,24 @@ msgstr "עדכון זמין"
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr ""
+msgstr "גרסה חדשה של %s זמינה להורדה."
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:182
 msgid "Error Bombing Item"
-msgstr ""
+msgstr "טעות בזמן הפצצת חפץ"
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:184
 msgid "Error Recommending Item"
-msgstr ""
+msgstr "שגיאה בהמלצה על הפריט"
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:186
 msgid "Error Opening Website"
-msgstr ""
+msgstr "שגיאה בפתיחת האתר"
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:190
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr ""
+msgstr "התרחשה שגיאה בפתיחת %s. אנא נסו שוב בעוד מספר שניות"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:45
 #, python-format
@@ -871,6 +908,8 @@ msgid ""
 "Error importing modules:\n"
 "%s"
 msgstr ""
+"שגיאה בייבוא מודולים:\n"
+"%s"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:49
 msgid "Starting up"
@@ -886,17 +925,19 @@ msgstr ""
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:658
 msgid "Spacebar"
-msgstr ""
+msgstr "ריווח"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:805
 msgid "Close to tray?"
-msgstr ""
+msgstr "סגירה לשורת משימות?"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:806
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"כשאתם לוחצים על כפתור הסגירה האדום, תירצו שמירו ייסגר למגש המערכת או ייסגר? "
+"אתם יכולים לשנות את ההגדרה הזו מאוחר יותר בהגדרות."
 
 #: ../..//portable/app.py:808
 msgid "Database too new"
@@ -907,6 +948,8 @@ msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
+"יש לכם מסד נתונים שנשמר עם גרסה חדשה יותר של $shortAppName. עליכם להוריד את "
+"הגרסה העדכנית של $shortAppName ולהריץ את זה."
 
 #: ../..//portable/app.py:968 ../..//portable/app.py:982
 #: ../..//portable/app.py:1026 ../..//portable/app.py:1052
@@ -918,7 +961,7 @@ msgstr "הסר %s"
 #: ../..//portable/app.py:969
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
-msgstr ""
+msgstr "אתם בטוחים שאתם רוצים להסיר את המדריך %s?"
 
 #: ../..//portable/app.py:983
 #, python-format
@@ -934,19 +977,19 @@ msgstr "הסרצ %s ערוצים"
 #: ../..//portable/app.py:988
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
+msgstr "אתם בטוחים שאתם רוצים להסיר את כל %s רשימות ההשמעה?"
 
 #: ../..//portable/app.py:1027
 msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
-msgstr "מה היית רוצה לעשות עם הוידיאוים בערוץ הזה שהורדת ?"
+msgstr "מה היית רוצה לעשות עם קטעי הווידאו בערוץ שהורדתם ?"
 
 #: ../..//portable/app.py:1032
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
-msgstr ""
+msgstr "מה תרצו לעשות עם קטעי הווידאו בערוצים האלה שהורדתם?"
 
 #: ../..//portable/app.py:1053
 #, python-format
@@ -976,43 +1019,42 @@ msgstr "אתם בטוחים שאתם רוצים להסיר את %s ערוצים?
 #: ../..//portable/app.py:1090
 #, python-format
 msgid "Stop watching %s"
-msgstr ""
+msgstr "הפקת צפייה ב-%s"
 
 #: ../..//portable/app.py:1091
 #, python-format
 msgid "Are you sure you want to stop watching %s?"
-msgstr ""
+msgstr "האם תרצו להפסיק לצפות ב-%s?"
 
 #: ../..//portable/app.py:1094
 #, python-format
 msgid "Stop watching %s directories"
-msgstr ""
+msgstr "הפסק לצפות %s תיקיות"
 
 #: ../..//portable/app.py:1095
 #, python-format
 msgid "Are you sure you want to stop watching these %s directories?"
-msgstr ""
+msgstr "אתם בטוחים שאתם רוצים להפסיק לצפות ב-%s התיקיות האלו?"
 
 #: ../..//portable/app.py:1125
-#, fuzzy
 msgid "Are you sure you want to quit?"
-msgstr "האם לסיים?"
+msgstr "האם אתה בטוח שאתה רוצה לצאת?"
 
 #: ../..//portable/app.py:1126
 #, python-format
 msgid "You have %d download still in progress."
-msgid_plural "You have %d downloads still in progress."
-msgstr[0] ""
-msgstr[1] ""
+msgid_plural "You have %d download still in progress."
+msgstr[0] "יש לכם %d הורדה עדיין פעיל"
+msgstr[1] "יש לכם %d הורדות עדיין פעיללות"
 
 #: ../..//portable/app.py:1583
 msgid "Invalid Value"
-msgstr ""
+msgstr "ערך לא תקין."
 
 #: ../..//portable/app.py:1584
 #, python-format
 msgid "%s is invalid.  You must enter a non-negative number."
-msgstr ""
+msgstr "%s לא תקין.  אתם ייבים להכניס מספר חיובי."
 
 #: ../..//portable/app.py:1869
 msgid " - Invalid URL"
@@ -1025,7 +1067,7 @@ msgid ""
 "\n"
 msgstr ""
 "הכתובת שהזנתם לא תקינה.\n"
-"אנא בידקו אותה ונסו שוב\n"
+"אנא בדקו אותה ונסו שוב\n"
 "\n"
 
 #: ../..//portable/app.py:1894
@@ -1038,11 +1080,11 @@ msgstr "הזינו את כתובת הערוץ להוספה"
 
 #: ../..//portable/app.py:1915
 msgid "$shortAppName - Add Miro Guide"
-msgstr ""
+msgstr "$shortAppName - הוספת מדריך מירו"
 
 #: ../..//portable/app.py:1915
 msgid "Enter the URL of the Miro Guide to add"
-msgstr ""
+msgstr "הכנס את הכתובת אינטרנט של מדריך המירו כדי להוסיף"
 
 #: ../..//portable/app.py:2209
 msgid "News and Tech"
@@ -1054,7 +1096,7 @@ msgstr "בידור"
 
 #: ../..//portable/app.py:2222
 msgid "High-Def"
-msgstr ""
+msgstr "הפרדה גבוהה"
 
 #: ../..//portable/app.py:2230
 msgid "Mac"
@@ -1062,36 +1104,36 @@ msgstr "מק"
 
 #: ../..//portable/app.py:2245
 msgid "Example Playlist"
-msgstr ""
+msgstr "רשימת השמעה לדוגמה"
 
 #: ../..//portable/app.py:2264
 msgid "Custom Channels"
-msgstr ""
+msgstr "ערוצים מותאמים אישית"
 
 #: ../..//portable/app.py:2264
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
-msgstr ""
+msgstr "אתם מריצים גרסה של $longAppName עם אוסף ערוצים מוצאפ אישית."
 
 #: ../..//portable/autoupdate.py:121
 #, python-format
 msgid "%s Version Alert"
-msgstr ""
+msgstr "%s התראת גרסה"
 
 #: ../..//portable/autoupdate.py:122
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
-msgstr ""
+msgstr "גרסה חדשה של %s זמינה. אתם רוצים להוריד אותה עכשיו?"
 
 #: ../..//portable/autoupdate.py:128
 #, python-format
 msgid "%s Version Check"
-msgstr ""
+msgstr "%s בדיקת גרסה"
 
 #: ../..//portable/autoupdate.py:129
 #, python-format
 msgid "%s is up to date."
-msgstr ""
+msgstr "%s מעודכן."
 
 #: ../..//portable/dialogs.py:76
 msgid "Ok"
@@ -1100,12 +1142,12 @@ msgstr "אוקי"
 #: ../..//portable/dialogs.py:81 ../../platform/gtk-x11/glade/miro.glade.h:48
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
-msgstr "נדוד"
+msgstr "הגירה"
 
 #: ../..//portable/dialogs.py:82 ../../platform/gtk-x11/glade/miro.glade.h:38
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
-msgstr "אל תנדוד"
+msgstr "לא להגר"
 
 #: ../..//portable/dialogs.py:83 ../..//portable/item.py:1463
 #: ../..//portable/menu.py:111
@@ -1114,32 +1156,32 @@ msgstr "הורד"
 
 #: ../..//portable/dialogs.py:84
 msgid "Remove Entry"
-msgstr ""
+msgstr "הסר רשומה"
 
 #: ../..//portable/dialogs.py:85
 msgid "Delete File"
-msgstr ""
+msgstr "מחקית קובץ"
 
 #: ../..//portable/dialogs.py:86
 msgid "Delete Files"
-msgstr ""
+msgstr "מחיקת קבצים"
 
 #: ../..//portable/dialogs.py:87
 msgid "Keep Videos"
-msgstr ""
+msgstr "לשמור על קטעי הווידאו"
 
 #: ../..//portable/dialogs.py:88
 msgid "Delete Videos"
-msgstr ""
+msgstr "מחיקת קטעי הווידאו"
 
 #: ../..//portable/dialogs.py:90
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
 msgid "Create Channel"
-msgstr ""
+msgstr "יצירת ערוץ"
 
 #: ../..//portable/dialogs.py:91
 msgid "Add"
-msgstr ""
+msgstr "הוספה"
 
 #: ../..//portable/dialogs.py:92
 msgid "Add Into New Folder"
@@ -1151,11 +1193,11 @@ msgstr "השאיר"
 
 #: ../..//portable/dialogs.py:95
 msgid "Not Now"
-msgstr ""
+msgstr "לא עכשיו"
 
 #: ../..//portable/dialogs.py:96
 msgid "Close to Tray"
-msgstr ""
+msgstr "סגירה למגש מערכת"
 
 #: ../..//portable/dialogs.py:211 ../../platform/gtk-x11/glade/miro.glade.h:52
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
@@ -1169,7 +1211,7 @@ msgstr "חיפוש בערוץ מכיל פריט שלא מתאים לתנאים"
 
 #: ../..//portable/downloader.py:214
 msgid "activity"
-msgstr ""
+msgstr "פעילות"
 
 #: ../..//portable/downloader.py:250 ../..//portable/httpclient.py:112
 msgid "File not found"
@@ -1181,65 +1223,65 @@ msgstr ""
 
 #: ../..//portable/downloader.py:430
 msgid "starting up"
-msgstr ""
+msgstr "מתחיל"
 
 #: ../..//portable/feed.py:380
 msgid "never"
-msgstr ""
+msgstr "אף פעם"
 
 #: ../..//portable/feed.py:382 ../..//portable/item.py:531
 #, python-format
 msgid "%d hours"
-msgstr ""
+msgstr "%d שעות"
 
 #: ../..//portable/feed.py:384
 #, python-format
 msgid "%d day"
-msgstr ""
+msgstr "%d יום"
 
 #: ../..//portable/feed.py:386 ../..//portable/item.py:529
 #, python-format
 msgid "%d days"
-msgstr ""
+msgstr "%d ימים"
 
 #: ../..//portable/feed.py:388
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d חודשים"
 
 #: ../..//portable/feed.py:779
 msgid "Update Channel Now"
-msgstr ""
+msgstr "עדכון הערוץ עכשיו"
 
 #: ../..//portable/feed.py:781 ../..//portable/guide.py:52
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "העתק את הכתובת ללוח גזירות"
 
 #: ../..//portable/feed.py:782 ../..//portable/feed.py:791
 msgid "Rename Channel"
-msgstr ""
+msgstr "שינוי שם ערוץ"
 
 #: ../..//portable/feed.py:786
 msgid "Revert Title to Default"
-msgstr ""
+msgstr "החזרת הכותרת לברירת המחדל"
 
 #: ../..//portable/feed.py:792
 #, python-format
 msgid "Enter a new name for the channel %s"
-msgstr ""
+msgstr "הכניסו של חדש לערוץ %s"
 
 #: ../..//portable/feed.py:879
 msgid "Error loading feed"
-msgstr ""
+msgstr "שגיאה בטעינת הערוץ"
 
 #: ../..//portable/feed.py:880
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
-msgstr ""
+msgstr "לא ניתן לקרוא את הערוץ ב-%s (%s)."
 
 #: ../..//portable/feed.py:883
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "תירצו לשמור את הערוץ?"
 
 #: ../..//portable/feed.py:1000
 msgid "Bad content-type"
@@ -1248,7 +1290,7 @@ msgstr ""
 #: ../..//portable/feed.py:1013
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
-msgstr ""
+msgstr "הערוץ לא תואם עם $shortAppName!"
 
 #: ../..//portable/feed.py:1014
 msgid ""
@@ -1259,6 +1301,11 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"אבל נעשה את המיטב כדי לספק את הקבצים. יצירת רשימה של קבצי וידאו יכולה לקחת "
+"יותר זמן, ותיאורים יכולים להיראות מצחיק. אנא צרו קשר עם המפיצים של $url "
+"ותשאלו אם הם יכולים לספק ערוץ בפורמט שיעבוד עם $shortAppName.\n"
+"\n"
+"אתם רוצים לנסות לטעון את הערוץ בכל זאת?"
 
 #: ../..//portable/feed.py:1987 ../..//portable/feed.py:2050
 msgid "Search"
@@ -1266,11 +1313,11 @@ msgstr "חיפוש"
 
 #: ../..//portable/feed.py:2064
 msgid "Local Files"
-msgstr ""
+msgstr "קבצים מקומיים"
 
 #: ../..//portable/feed.py:2078
 msgid "Playing File"
-msgstr ""
+msgstr "מנגן קובץ"
 
 #: ../..//portable/folder.py:132 ../..//portable/folder.py:155
 msgid "Rename Channel Folder"
@@ -1279,7 +1326,7 @@ msgstr "שנה את שם תקיית הערוץ"
 #: ../..//portable/folder.py:134
 #, python-format
 msgid "Enter a new name for the channel folder %s"
-msgstr ""
+msgstr "הכניסו שם חדש עבור תיקיית הערוץ %s"
 
 #: ../..//portable/folder.py:210 ../..//portable/folder.py:215
 msgid "Rename Playlist Folder"
@@ -1288,7 +1335,7 @@ msgstr "שנה את שם תקיית רשימת ההשמעה"
 #: ../..//portable/folder.py:217
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
-msgstr ""
+msgstr "הכניסו שם חדש עבור תיקיית רשימת ההשמעה %s"
 
 #: ../..//portable/folder.py:225
 msgid "Create Channel Folder"
@@ -1300,20 +1347,20 @@ msgstr "הכנס את השם לתקיית הערוץ החדשה"
 
 #: ../..//portable/folder.py:239
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "יצירת תקיית רשימת השמעה"
 
 #: ../..//portable/folder.py:240
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "הכניסו שם עבור תיקיית רשימת ההשמעה החדשה"
 
 #: ../..//portable/guide.py:75
 msgid "Miro Guide"
-msgstr ""
+msgstr "מדריך מירו"
 
 #: ../..//portable/httpclient.py:67
 #, python-format
 msgid "Error: %s"
-msgstr ""
+msgstr "שגיאה: %s"
 
 #: ../..//portable/httpclient.py:82 ../..//portable/httpclient.py:87
 msgid "Can't connect"
@@ -1322,20 +1369,20 @@ msgstr "לא יכל להתחבר"
 #: ../..//portable/httpclient.py:83
 #, python-format
 msgid "Connection Error: %s"
-msgstr ""
+msgstr "שיאת חיבור :%s"
 
 #: ../..//portable/httpclient.py:88
 msgid "SSL connection error"
-msgstr ""
+msgstr "שגיאת חיבור SSL"
 
 #: ../..//portable/httpclient.py:92
 msgid "HTTP error"
-msgstr ""
+msgstr "שגיאת HTTP"
 
 #: ../..//portable/httpclient.py:95
 #, python-format
 msgid "Bad Status Line: %s"
-msgstr ""
+msgstr "שורת סטטוס לא טובה: %s"
 
 #: ../..//portable/httpclient.py:98
 #, python-format
@@ -1355,7 +1402,7 @@ msgstr ""
 #: ../..//portable/httpclient.py:107
 #, python-format
 msgid "%s closed connection"
-msgstr ""
+msgstr "%s החיבור ניסגר"
 
 #: ../..//portable/httpclient.py:113
 msgid "Got 404 status code"
@@ -1385,24 +1432,24 @@ msgstr "פסק זמן"
 #: ../..//portable/httpclient.py:130
 #, python-format
 msgid "Connection to %s timed out"
-msgstr ""
+msgstr "פג התוקף החיבור ל-%s"
 
 #: ../..//portable/httpclient.py:134
 msgid "Invalid URL"
-msgstr ""
+msgstr "כתובת אינטרנט לא תקינה"
 
 #: ../..//portable/httpclient.py:135
 #, python-format
 msgid "%s is not a valid URL"
-msgstr ""
+msgstr "%s כתובת לא תקינה"
 
 #: ../..//portable/httpclient.py:355
 msgid "Connection closed"
-msgstr ""
+msgstr "חיבור נסגר"
 
 #: ../..//portable/httpclient.py:780
 msgid "Unknown"
-msgstr ""
+msgstr "לא יודע"
 
 #: ../..//portable/httpclient.py:781
 msgid "Internal Error: Not ready to send"
@@ -1411,48 +1458,51 @@ msgstr "בעיה פנימית לא מוכן לשליחה"
 #: ../..//portable/item.py:478
 #, python-format
 msgid "Removing %s"
-msgstr ""
+msgstr "מסיר את %s"
 
 #: ../..//portable/item.py:481
 msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from the Library?"
 msgstr ""
+"אתם רוצים למחוק את התיקייה הזו וכל קטעי הווידאו שנמצאים בא או רק למחוק את "
+"הרשומה בספריה?"
 
 #: ../..//portable/item.py:486
 msgid ""
 "Would you like to delete this file or just remove its entry from My "
 "Collection?"
-msgstr ""
+msgstr "אתם רוצים להסיר את התיקייה אם רק להסיר אותה מהאוסף שלי?"
 
 #: ../..//portable/item.py:503
 msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
 msgstr ""
+"הפריט הזה הוא תיקייה. כשתסירו את התיקייה, כל הפריטים בתוך התיקייה הזו ימחקו."
 
 #: ../..//portable/item.py:533
 #, python-format
 msgid "%d minutes"
-msgstr ""
+msgstr "%d דקות"
 
 #: ../..//portable/item.py:543
 #, python-format
 msgid "Expires in %s"
-msgstr ""
+msgstr "פג תוקף ב-%s"
 
 #: ../..//portable/item.py:555
 #, python-format
 msgid "Will retry in %s"
-msgstr ""
+msgstr "ינסה לחדש בתוך %s"
 
 #: ../..//portable/item.py:557
 msgid "Paused"
-msgstr ""
+msgstr "הושהה"
 
 #: ../..//portable/item.py:937
 msgid "TORRENT"
-msgstr ""
+msgstr "טורנט"
 
 #: ../..//portable/item.py:939
 msgid "WEB PAGE"
@@ -1460,11 +1510,11 @@ msgstr "דף אינטרנט"
 
 #: ../..//portable/item.py:949
 msgid "Total Down:"
-msgstr ""
+msgstr "סה\"כ הורדה:"
 
 #: ../..//portable/item.py:956
 msgid "Seeders:"
-msgstr ""
+msgstr "מפיצים:"
 
 #: ../..//portable/item.py:957
 msgid "Leachers:"
@@ -1472,23 +1522,23 @@ msgstr ""
 
 #: ../..//portable/item.py:958
 msgid "Down Rate:"
-msgstr ""
+msgstr "קצב הורדה:"
 
 #: ../..//portable/item.py:959
 msgid "Down Total:"
-msgstr ""
+msgstr "סה\"כ הורדה:"
 
 #: ../..//portable/item.py:961
 msgid "Up Rate:"
-msgstr ""
+msgstr "קצב העלאה:"
 
 #: ../..//portable/item.py:962
 msgid "Up Total:"
-msgstr ""
+msgstr "סה\"כ הועלאה:"
 
 #: ../..//portable/item.py:967
 msgid "Web page:"
-msgstr ""
+msgstr "אתר אינטרנט:"
 
 #: ../..//portable/item.py:967
 msgid "permalink"
@@ -1496,47 +1546,47 @@ msgstr ""
 
 #: ../..//portable/item.py:968
 msgid "File link:"
-msgstr ""
+msgstr "לינק קובץ:"
 
 #: ../..//portable/item.py:968
 msgid "direct link to file"
-msgstr ""
+msgstr "קישור ישיר לקובץ"
 
 #: ../..//portable/item.py:970
 msgid "File type:"
-msgstr ""
+msgstr "סוג קובץ:"
 
 #: ../..//portable/item.py:977
 msgid "REVEAL LOCAL FOLDER"
-msgstr ""
+msgstr "חשיפת תיקייה מקומית"
 
 #: ../..//portable/item.py:979
 msgid "REVEAL LOCAL FILE"
-msgstr ""
+msgstr "חשיפת קובץ מקומי"
 
 #: ../..//portable/item.py:981
 msgid "Filename:"
-msgstr ""
+msgstr "שם הקובץ:"
 
 #: ../..//portable/item.py:988
 msgid "Down Total"
-msgstr ""
+msgstr "סה\"כ ירד"
 
 #: ../..//portable/item.py:990
 msgid "Up Total"
-msgstr ""
+msgstr "סה\"כ העלאה"
 
 #: ../..//portable/item.py:1008
 msgid "Item Details"
-msgstr ""
+msgstr "נתוני הפריט"
 
 #: ../..//portable/item.py:1015
 msgid "Torrent Details"
-msgstr ""
+msgstr "פרטי הטורנט"
 
 #: ../..//portable/item.py:1020
 msgid "Download Details"
-msgstr ""
+msgstr "פרטי ההורדה"
 
 #: ../..//portable/item.py:1234
 msgid "downloading..."
@@ -1545,7 +1595,7 @@ msgstr "מוריד ..."
 #: ../..//portable/item.py:1241 ../..//portable/item.py:1244
 #, python-format
 msgid "%s remaining"
-msgstr ""
+msgstr "%s נותרו"
 
 #: ../..//portable/item.py:1253
 msgid "starting up..."
@@ -1557,7 +1607,7 @@ msgstr "הסר מרשימת ההשמעה"
 
 #: ../..//portable/item.py:1448 ../..//portable/menu.py:99
 msgid "Remove From the Library"
-msgstr ""
+msgstr "הסרה מהספירה"
 
 #: ../..//portable/item.py:1450 ../..//portable/menu.py:94
 msgid "Play"
@@ -1565,7 +1615,7 @@ msgstr "נגן"
 
 #: ../..//portable/item.py:1452
 msgid "Play Just This Video"
-msgstr "נגן רק את הוידיאו הזה"
+msgstr "נגן רק את הווידיאו הזה"
 
 #: ../..//portable/item.py:1453 ../..//portable/menu.py:95
 msgid "Add to new playlist"
@@ -1573,153 +1623,155 @@ msgstr "הוסף לרשימת ההשמעה"
 
 #: ../..//portable/item.py:1457 ../..//portable/menu.py:105
 msgid "Mark as Unwatched"
-msgstr ""
+msgstr "סימון כלא ניצפה"
 
 #: ../..//portable/item.py:1459 ../..//portable/menu.py:123
 msgid "Restart Upload"
-msgstr ""
+msgstr "הפעל מחדש העלאה"
 
 #: ../..//portable/item.py:1461 ../..//portable/menu.py:118
 msgid "Cancel Download"
-msgstr ""
+msgstr "ביטול הורדה"
 
 #: ../..//portable/item.py:1461 ../..//portable/menu.py:120
 msgid "Pause Download"
-msgstr ""
+msgstr "ההיית הורדה"
 
 #: ../..//portable/item.py:1797
 #, python-format
 msgid "Removing %s items"
-msgstr ""
+msgstr "הסרת %s פריטים"
 
 #: ../..//portable/item.py:1799
 msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from the Library?"
 msgstr ""
+"אחד או יותר מסרטי הוידאו לא הורד מערוץ. האם תרצה למחוק את הפריטים האלו או רק "
+"למחוק את הכניסות שלהם מהסיפריה?"
 
 #: ../..//portable/item.py:1807
 msgid ""
 "One or more of these items is a folder.  When you remove or delete a folder, "
 "any items inside that folder will also be removed or deleted."
 msgstr ""
+"יש בתיקייה הזאת פריט אחד או יותר. כשתסירו או תימחקו תיקייה, כל הפריטים בתוך "
+"אותה תיקייה יוסרו או ימחקו."
 
 #: ../..//portable/menu.py:69
 msgid "Update Channels Now"
-msgstr ""
+msgstr "עדכון הערוצים עכשיו"
 
 #: ../..//portable/menu.py:92
 #, python-format
 msgid "%d Downloaded Items"
-msgstr ""
+msgstr "%d פריטים שהורדו"
 
 #: ../..//portable/menu.py:110
 #, python-format
 msgid "%d Available Items"
-msgstr ""
+msgstr "%d פריטים זמינים"
 
 #: ../..//portable/menu.py:116
 #, python-format
 msgid "%d Downloading Items"
-msgstr ""
+msgstr "%d מוריד פריטים"
 
 #: ../..//portable/menubar.py:132
 msgid "_Open"
-msgstr ""
+msgstr "_פתיחה"
 
 #: ../..//portable/menubar.py:134
 msgid "Check _Version"
-msgstr ""
+msgstr "בדיקת גרסה"
 
 #: ../..//portable/menubar.py:136
 msgid "_Remove Video"
-msgstr ""
+msgstr "_הסרת וידאו"
 
 #: ../..//portable/menubar.py:137
 msgid "_Remove Videos"
-msgstr ""
+msgstr "_הסרת קטעי וידאו"
 
 #: ../..//portable/menubar.py:138
 msgid "Re_name Video"
-msgstr ""
+msgstr "שינוי שם קטע וידאו"
 
 #: ../..//portable/menubar.py:139
 msgid "Save Video _As..."
-msgstr ""
+msgstr "שמירת וידאו _בשם..."
 
 #: ../..//portable/menubar.py:140
 msgid "Save Videos _As..."
-msgstr ""
+msgstr "שמירת קטעי הוידאו _בשם..."
 
 #: ../..//portable/menubar.py:141
 msgid "Copy Video _URL"
-msgstr ""
+msgstr "העתקת כתובת הווידאו"
 
 #: ../..//portable/menubar.py:143
 msgid "_Options"
-msgstr ""
+msgstr "_אפשרויות"
 
 #: ../..//portable/menubar.py:144
-#, fuzzy
 msgid "_Quit"
-msgstr "_סיים"
+msgstr "_יציאה"
 
 #: ../..//portable/menubar.py:152
 msgid "Cu_t"
-msgstr ""
+msgstr "ג_זור"
 
 #: ../..//portable/menubar.py:153
 msgid "_Copy"
-msgstr ""
+msgstr "_העתקה"
 
 #: ../..//portable/menubar.py:154
 msgid "_Paste"
-msgstr ""
+msgstr "_הדבק"
 
 #: ../..//portable/menubar.py:155
 msgid "Select _All"
-msgstr ""
+msgstr "בחירת _הכל"
 
 #: ../..//portable/menubar.py:156
 msgid "_Delete"
-msgstr ""
+msgstr "_מחיקה"
 
 #: ../..//portable/menubar.py:160
 msgid "Add _Channel"
-msgstr ""
+msgstr "הוספת ערוץ"
 
 #: ../..//portable/menubar.py:161
 msgid "New Searc_h Channel..."
-msgstr ""
+msgstr "חיפוש ערוץ חדש..."
 
 #: ../..//portable/menubar.py:162
 msgid "New _Folder..."
-msgstr ""
+msgstr "תיקייה חדשה..."
 
 #: ../..//portable/menubar.py:163
 msgid "Add Channel _Guide..."
-msgstr ""
+msgstr "הוספת מדריך ערוצים..."
 
 #: ../..//portable/menubar.py:173
 msgid "Update _All Channels"
-msgstr ""
+msgstr "עדכון כל הערוצים..."
 
 #: ../..//portable/menubar.py:175
 msgid "_Send this channel to a friend"
 msgstr "_שלח ערוץ זה לחבר"
 
 #: ../..//portable/menubar.py:176
-#, fuzzy
 msgid "Copy Channel _Link"
-msgstr "העתק ערוץ _קישור"
+msgstr "העתק את קישור הערוץ"
 
 #: ../..//portable/menubar.py:179
 msgid "New _Playlist"
-msgstr ""
+msgstr "רשימת השמעה חדשה"
 
 #: ../..//portable/menubar.py:180
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "תיקיית רשימת השמעה חדשה"
 
 #: ../..//portable/menubar.py:182
 msgid "Re_name Playlist"
@@ -1731,27 +1783,27 @@ msgstr "_הסר רשימת השמעה"
 
 #: ../..//portable/menubar.py:184
 msgid "_Remove Playlists"
-msgstr ""
+msgstr "_הסרת תיקיית השמעה"
 
 #: ../..//portable/menubar.py:185
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "_הסרת תיקיות רשימת השמעה"
 
 #: ../..//portable/menubar.py:186
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "_הסרת תיקיית רשימת השמעה"
 
 #: ../..//portable/menubar.py:196
 msgid "_Play"
-msgstr ""
+msgstr "_השמעה"
 
 #: ../..//portable/menubar.py:197
 msgid "_Stop"
-msgstr ""
+msgstr "_עצור"
 
 #: ../..//portable/menubar.py:199
 msgid "_Next Video"
-msgstr ""
+msgstr "_הווידאו הבא"
 
 #: ../..//portable/menubar.py:200
 msgid "_Previous Video"
@@ -1759,19 +1811,19 @@ msgstr "_וידאו קודם"
 
 #: ../..//portable/menubar.py:202
 msgid "Skip _Forward"
-msgstr ""
+msgstr "דילוג _קדימה"
 
 #: ../..//portable/menubar.py:203
 msgid "Skip _Back"
-msgstr ""
+msgstr "דילוג _אחורה"
 
 #: ../..//portable/menubar.py:205
 msgid "Volume _Up"
-msgstr ""
+msgstr "הגבר עוצמה"
 
 #: ../..//portable/menubar.py:206
 msgid "Volume _Down"
-msgstr ""
+msgstr "ה_קטן עוצמה"
 
 #: ../..//portable/menubar.py:208
 msgid "_Fullscreen"
@@ -1779,7 +1831,7 @@ msgstr "_מסך מלא"
 
 #: ../..//portable/menubar.py:212
 msgid "_About"
-msgstr ""
+msgstr "_אודות"
 
 #: ../..//portable/menubar.py:213
 msgid "_Donate"
@@ -1791,7 +1843,7 @@ msgstr "_עזרה"
 
 #: ../..//portable/menubar.py:216
 msgid "Report a _Bug"
-msgstr ""
+msgstr "דיווח על _באג"
 
 #: ../..//portable/menubar.py:220
 msgid "_Video"
@@ -1799,7 +1851,7 @@ msgstr "_וידאו"
 
 #: ../..//portable/menubar.py:222
 msgid "_File"
-msgstr ""
+msgstr "_קובץ"
 
 #: ../..//portable/menubar.py:226
 msgid "_Channels"
@@ -1811,62 +1863,62 @@ msgstr "_רשימות השמעה"
 
 #: ../..//portable/menubar.py:228
 msgid "P_layback"
-msgstr ""
+msgstr "רשימת השמעה"
 
 #: ../..//portable/menubar.py:233
 msgid "Play Unwatched ($numUnwatched)"
-msgstr ""
+msgstr "ניגון מה שלא ניצפה ($numUnwatched)"
 
 #: ../..//portable/menubar.py:234
 msgid "Pause All Downloads ($numDownloading)"
-msgstr ""
+msgstr "השההית כל ההורדות ($numDownloading)"
 
 #: ../..//portable/menubar.py:235
 msgid "Resume All Downloads ($numPaused)"
-msgstr ""
+msgstr "המשך את כל ההורדות ($numPaused)"
 
 #: ../..//portable/menubar.py:237
 msgid "Options"
-msgstr ""
+msgstr "אפשרויות"
 
 #: ../..//portable/menubar.py:239
 msgid "Hide Window"
-msgstr ""
+msgstr "הסתר חלון"
 
 #: ../..//portable/menubar.py:240
 msgid "Show Window"
-msgstr ""
+msgstr "הצגצ חלון"
 
 #: ../..//portable/playlist.py:196 ../..//portable/playlist.py:201
 msgid "Rename Playlist"
-msgstr ""
+msgstr "שינוי שם לרשימת השמעה"
 
 #: ../..//portable/playlist.py:202
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "הכניסו שם חדש עבור רשימת ההשמעה %s"
 
 #: ../..//portable/playlist.py:224
 msgid "Create Playlist"
-msgstr ""
+msgstr "יצירת רשימת השמעה"
 
 #: ../..//portable/playlist.py:225
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "הכניסו שם עבור רשימת ההשמעה החדשה"
 
 #: ../..//portable/singleclick.py:161
 msgid "Subscribing to multiple channels"
-msgstr ""
+msgstr "מינוי לערוצים מרובים"
 
 #: ../..//portable/singleclick.py:162
 #, python-format
 msgid "Create %d channels?"
-msgstr ""
+msgstr "יצירת %d ערוצים"
 
 #: ../..//portable/singleclick.py:175
 #, python-format
 msgid "Adding %d channels to a new folder"
-msgstr ""
+msgstr "הוספת %d ערוצים לתיקייה חדשה"
 
 #: ../..//portable/singleclick.py:179
 #, python-format
@@ -1874,10 +1926,12 @@ msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
 "will stay where they currently are."
 msgstr ""
+"הערה: אתם כבר רשומים ב-%d מהערוצים האלו. הערוצים האלו יישארו איפה שהם כרגע "
+"נמצאים."
 
 #: ../..//portable/singleclick.py:190
 msgid "Subscription error"
-msgstr ""
+msgstr "שגיאה בהצטרפות"
 
 #: ../..//portable/singleclick.py:200
 msgid ""
@@ -1893,21 +1947,21 @@ msgstr ""
 
 #: ../..//portable/singleclick.py:212
 msgid "Could not download the $shortAppName channel file: $url."
-msgstr ""
+msgstr "הורדת קובץ ערוץ ה$shortAppName לא הצליחה:$url"
 
 #: ../..//portable/singleclick.py:251
 msgid "Invalid Torrent"
-msgstr ""
+msgstr "טורנט לא תקין"
 
 #: ../..//portable/singleclick.py:252
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr ""
+msgstr "קובץ הטורנט %s ככל הנראה פגום ולא ניתן לגשת אליו. [OK]"
 
 #: ../..//portable/storedatabase.py:828 ../..//portable/storedatabase.py:1189
 #, python-format
 msgid "%s database save succeeded"
-msgstr ""
+msgstr "%s שמירת מסד הנתונים הצליחה"
 
 #: ../..//portable/storedatabase.py:829 ../..//portable/storedatabase.py:1190
 msgid ""
@@ -1918,7 +1972,7 @@ msgstr "מסד הנתונים נשמר בהצלחה , עכשיו בטוח לצא
 #: ../..//portable/storedatabase.py:836 ../..//portable/storedatabase.py:1198
 #, python-format
 msgid "%s database save failed"
-msgstr ""
+msgstr "%s שמירת מסד הנתונים לא הצליחה"
 
 #: ../..//portable/storedatabase.py:837 ../..//portable/storedatabase.py:1199
 #, python-format
@@ -1928,14 +1982,17 @@ msgid ""
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
+"%s לא הצליח לשמור את המסד נתונים שלו: הכונן מלה.\n"
+"אנו מציעים למחוק קבצים מהכונן או פשוט למחוק כמה סרטים מהאוסף שלכם.\n"
+"שינויים שבוצעו לא מיזמן עלולים ללכת לאיבוד."
 
 #: ../..//portable/tabs.py:43
 msgid "Library"
-msgstr ""
+msgstr "ספרייה"
 
 #: ../..//portable/tabs.py:44
 msgid "New"
-msgstr ""
+msgstr "חדש"
 
 #: ../..//portable/tabs.py:46
 msgid "Downloading"
@@ -1944,46 +2001,46 @@ msgstr "מוריד"
 #: ../..//portable/util.py:405
 #, python-format
 msgid "%1.1fGB"
-msgstr ""
+msgstr "%1.1fGB"
 
 #: ../..//portable/util.py:407
 #, python-format
 msgid "%dGB"
-msgstr ""
+msgstr "%dGB"
 
 #: ../..//portable/util.py:411
 #, python-format
 msgid "%1.1fMB"
-msgstr ""
+msgstr "%1.1fMB"
 
 #: ../..//portable/util.py:413
 #, python-format
 msgid "%dMB"
-msgstr ""
+msgstr "%dMB"
 
 #: ../..//portable/util.py:417
 #, python-format
 msgid "%1.1fKB"
-msgstr ""
+msgstr "%1.1fKB"
 
 #: ../..//portable/util.py:419
 #, python-format
 msgid "%dKB"
-msgstr ""
+msgstr "%dKB"
 
 #: ../..//portable/util.py:423
 #, python-format
 msgid "%1.1fB"
-msgstr ""
+msgstr "%1.1fB"
 
 #: ../..//portable/util.py:425
 #, python-format
 msgid "%dB"
-msgstr ""
+msgstr "%dB"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "(Changes won't go into effect until you restart Miro)"
-msgstr ""
+msgstr "(השינויים יופעלו רק אחרי שתפעילו מחדש את מירו)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -1994,46 +2051,52 @@ msgid ""
 "1 month\n"
 "Never"
 msgstr ""
+"יום 1\n"
+"3 ימים\n"
+"6 ימים\n"
+"10 ימים\n"
+"חודש\n"
+"לעולם לא"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:8
 msgid "<b>BitTorrent</b>"
-msgstr ""
+msgstr "<b>ביטורנט</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
 msgid "<b>Channels</b>"
-msgstr ""
+msgstr "<b>ערוצים</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:10
 msgid "<b>Disk Space</b>"
-msgstr ""
+msgstr "<b>במקום בדיסק</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Downloads</b>"
-msgstr ""
+msgstr "<b>הורדות</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12
 msgid "<b>Folders in the Library</b>"
-msgstr ""
+msgstr "<b>תיקיות בספריה</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:13
 msgid "<b>General</b>"
-msgstr ""
+msgstr "<b/>כללי<b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:14
 msgid "<b>Playback</b>"
-msgstr ""
+msgstr "<b>השמעה</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:15
 msgid "<b>Searching for Videos</b>"
-msgstr ""
+msgstr "<b>חיפוש אחר קטעי וידאו</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:16
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
-msgstr ""
+msgstr "<b>תירצו ש-Miro יחפש קטעי וידאו על המחשב שלכם?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:17
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
-msgstr ""
+msgstr "<b>תירצו להפעיל את Miro כשהמחשב שלכם עולה?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:18
 msgid ""
@@ -2060,33 +2123,54 @@ msgid ""
 "<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
 "of them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"<b>סיימתם!</b>\n"
+"\n"
+"ההתקנה הושלמה -- עכשיו אתם יכולים לחפש ערוצים ולהתחיל לצפות.\n"
+"\n"
+"<b>אל תחכו:</b> מירו שונה מצפייה בווידאו על דפי אינטרנט -- המפיצים יכולים "
+"להציע קטעי וידאו גדולים ואיכותיים. אז אם תשבו ותחכו לווידאו: התחילו כמה "
+"הורדו וחיזרו מאוחר יותר לצפות. \n"
+"\n"
+"<b>השאירו אותו פעיל:</b> מירו באופן קבוע בודק את הערוצים עבור קטעי וידאו "
+"חדשים ומבצע הורדת ברקע. כשתשאירו אותו פועל תוכלו לצפות בקטעי וידאו חדשים "
+"כשתהיו מוכנים לצפות בהם.\n"
+"\n"
+"<b>אל תדאגו בקשר למקום פנוי:</b> כמו TiVo, נכללת כאן מערכת של 'תאריך תפוגה' "
+"שעוזרת לפנות קטעי וידאו ישנים כדי לפנות מקום לקטעי וידאו חדשים. תמיד אפשר "
+"לשמור את קטעי הווידאו לתמיד על ידי לחיצה על שמור ואתם יכולים לשנות את הגדרות "
+"ערוץ כדי לשמור וידאו אוטומטית.\n"
+"\n"
+"<b>מסך מלא:</b>הכפתור בצד ימין מראה את הווידאו במסך מלא.\n"
+"\n"
+"<b>חיפוש וידאו:</b> למדריך מירו יש מאות ערוצי טלוויזיית אינטרנט, כולם בחינם. "
+"רק לחצו על 'הוספה' כדי לצפות בערוץ."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:32
 msgid "Automatically run Miro when I log in"
-msgstr ""
+msgstr "הפעל אוטומטית את Miro כשאני מתחבר"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Bit Torrent uses ports between"
-msgstr ""
+msgstr "ביטורנט ישתמש בפורטים בין"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "By default, videos expire after"
-msgstr ""
+msgstr "כברירת מחדל יפוג תוקפו של יודאו לאחר"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "C_hannel:"
-msgstr ""
+msgstr "ערוץ:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:36
 msgid "C_reate Channel"
-msgstr ""
+msgstr "יצירת ערוץ"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:37
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Check Channels for new content"
-msgstr ""
+msgstr "בדיקת תוכן חדש בערוצים"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid ""
@@ -2094,85 +2178,91 @@ msgid ""
 "Every hour\n"
 "Manually"
 msgstr ""
+"כל 30 דקות\n"
+"כל שעה\n"
+"ידנית"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid "GB free"
-msgstr ""
+msgstr "GB פנוי"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:45
 msgid "Go"
-msgstr ""
+msgstr "עבור"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
-msgstr ""
+msgstr "בתוך זה:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "KB/s when my computer is active"
-msgstr ""
+msgstr "KB/s כשהמחשב שלי פעיל"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
+"מירו יכול למצוא את כל קבצי הווידאו במחשב שלכם כדי לעזור בארגון האוסף שלכם."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid "Play videos one after another"
-msgstr ""
+msgstr "ניגון הסרטים אחד אחרי השני"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:54
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Preferences"
-msgstr ""
+msgstr "מאפיינים"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:55
 msgid "Restrict to my full _home folder"
-msgstr ""
+msgstr "הגבלה לתיקיית הבית שלי במלואה"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgstr "חדש את הפלייבק של סרטי הוידאו מהנקודה בה הם הופסקו"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Search _Engine:"
-msgstr ""
+msgstr "מנוע חיפוש:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:58
 msgid "Search _custom folder:"
-msgstr ""
+msgstr "חיפוש בתוך התיקייה:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Select Movies Directory"
-msgstr ""
+msgstr "בחירת תיקיית סרטים"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid "Select custom search directory"
-msgstr ""
+msgstr "בחירת תקיית חיפוש"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid "Stop after each video"
-msgstr ""
+msgstr "עצור אחרי כל וידאו"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr ""
+"המסכים הבאים יעזרו לכם להגדיר את מירו כך שזה יעבוד בצורה הטובה ביותר עבורכם. "
+"השאלה הראשונה."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "To avoid slowdowns, limit upstream to"
-msgstr ""
+msgstr "על מנת להימנע מהאטה, הגבל העלה ל"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "Volume:"
-msgstr ""
+msgstr "עוצמת קול:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "Watch for new videos in these folders and include them in the Library"
-msgstr ""
+msgstr "מעקב אחרי קטעי וידאו חדשים בתיקיות האלו ולכלול אותם בספריה"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid ""
@@ -2180,6 +2270,9 @@ msgid ""
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr ""
+"אנו ממליצים לאפשר למירו לעלות עם עליית המחשב. בדרך זו, קטעי וידאו שעדיין לא "
+"הסתיימו יוכלו להסתיים וקטעי וידאו חדשים בערוץ שלכם יהיו זמינים לפייה מתי "
+"שתרצו."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid ""
@@ -2187,6 +2280,9 @@ msgid ""
 "download videos from your favorite channels, watch new videos one after the "
 "other, download torrents, recommend videos to friends, and lots more."
 msgstr ""
+"ברוכים הבאים לטלוויזיית האינטרנט. יש דברים רבים שאתם יכולים לעשות עם מירו: "
+"להוריד אוטומטית קטעי וידאו מהערוצים המועדפים עליכם, צפייה בקטעי וידאו אחד "
+"אחרי השני, הורדת טורנטים, המלצת וידאו לחברים ועוד הרבה."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid ""
@@ -2194,35 +2290,37 @@ msgid ""
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
+"בחרתם בתיקייה חדשת להורדת סרטים. הם מירו צריך להעביר את כל ההורדות הקיימות "
+"לשם? (הורדות שכרגע פעילות לא יועברו עד שהם לא יסתיימו.)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "_Add Folder"
-msgstr ""
+msgstr "_הוסף תיקייה"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
-msgstr ""
+msgstr "_חיפוש"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "_Search For:"
-msgstr ""
+msgstr "_חפש את:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid "_Store downloaded videos in this folder:"
-msgstr ""
+msgstr "_אחסון כל קטעי הווידאו שירדו לתיקייה הזאת:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "_URL"
-msgstr ""
+msgstr "_כתובת"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
 msgid "and"
-msgstr ""
+msgstr "וגם"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "videos at once"
-msgstr ""
+msgstr "קטעי וידאו בו זמנית"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
@@ -2230,10 +2328,13 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName גרסה $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$publisher.  $longAppName והלוגו של $longAppName  הם סימנים רשומים של "
+"$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
-msgstr ""
+msgstr "אודות $longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
 msgid "Add Channel"
@@ -2241,15 +2342,15 @@ msgstr "הוסף ערוץ"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
 msgid "Please enter the URL of the channel you'd like to add."
-msgstr ""
+msgstr "אנא הכניסו את כתובת הערוץ שאתם רוצים להוסיף."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
 msgid "Copy log to clipboard"
-msgstr ""
+msgstr "בהעתק לוג ללוח עריכה"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
 msgid "Open up the bug tracker"
-msgstr ""
+msgstr "הפעילו את הבאג טראקר"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
 msgid ""
@@ -2257,6 +2358,9 @@ msgid ""
 "information into our bug tracker and tell us what you were doing when the\n"
 "problem occurred."
 msgstr ""
+"אנא עזרו לנו לתקן את זה. העתיקו והדביקו את כל\n"
+"המידע לתוך הבאג טראקר שלנו וספרו לנו מה עשיתם\n"
+"כשהתרחשה השגיאה."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
 msgid ""
@@ -2264,10 +2368,13 @@ msgid ""
 "Sorry for the inconvenience. $longAppName is still in beta, but with your "
 "help we're fixing problems fast!"
 msgstr ""
+"אז, הפעילו מחדש את $longAppName (או שעדיין תמשיכו לקבל שגיאות). סליחה על אי "
+"הנוחות. $longAppName עדיין במצג של בטא, אבל עם העזרה שלכם אנחנו מתקנים בעיות "
+"מהר!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
 msgid "You found a bug in $longAppName!"
-msgstr ""
+msgstr "מצאתם באג ב-$longAppName!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
@@ -2277,27 +2384,29 @@ msgstr " "
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
 msgid "'"
-msgstr ""
+msgstr "'"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
 msgstr ""
+"אבל נעשה את המיטב כדי להשיג את הקבצים. יצירת רשימת קבצי וידאו יכולה לקחת "
+"יותר זמן והתיאורים עלולים להראות מצחיק."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
 msgid "Please contact the publishers of"
-msgstr ""
+msgstr "אנא צרו קשר עם המפיצים של"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
 msgid ""
 "and ask if they can supply a feed in a format that will work with "
 "$shortAppName."
-msgstr ""
+msgstr "ותישאלו אם הם יכולים לספק ערוץ בפורמט שיעבוד עם $shortAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
 msgid "$longAppName"
-msgstr ""
+msgstr "$longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4
 msgid ""
@@ -2305,89 +2414,93 @@ msgid ""
 "migrate your existing downloads there?(Currently dowloading movies will not "
 "be moved until they finish)"
 msgstr ""
+"בחרתם בתיקייה חדשת להורדת סרטים. הם $shortAppName  צריך להעביר את כל ההורדות "
+"הקיימות לשם? (הורדות שכרגע פעילות לא יועברו עד שהם לא יסתיימו.)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
-msgstr ""
+msgstr "הערוץ דורש אימות"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2
 msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
-msgstr ""
+msgstr "אנא הכניסו את שם המשתמש והסיסמה שניתנו לכם על ידי מפיצי הערוץ."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
-msgstr ""
+msgstr "(אזהרה: השינויים לא יכנסו לתוקף עד שלא תפעילו מחדש את $longAppName.)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Add Folder..."
-msgstr ""
+msgstr "הוסף תיקייה..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Automatically run $longAppName when I login"
-msgstr ""
+msgstr "הרץ אוטומטית את $longAppName בזמן ההתחברות"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
 msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgstr "סגירה למגש מערכת כך שההורדות יוכלו להמשיך."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "כל 30 דקות"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Every hour"
-msgstr ""
+msgstr "כל שעה"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Manually"
-msgstr ""
+msgstr "ידנית"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "Quit Miro completely"
-msgstr ""
+msgstr "יציאה ממירו לגמרי"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid "Store downloaded videos in this folder:"
-msgstr ""
+msgstr "אחסון קטעי וידאו שירדו בתוך התיקייה:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
-msgstr ""
+msgstr "אזהרה: השינויים לא יכנסו לתוקף עד שלא תפעילו מחדש את $longAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid ""
 "Watch for new videos in these folders and include them in My Collection:"
-msgstr ""
+msgstr "צפייה בקטעי וידאו חדשים בתוך התיקיות האלה וכלול אותם בתוך האוסף שלי:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
 msgid "When I click the red close button:"
-msgstr ""
+msgstr "כשאני מקליד על כפתור הסגירה האדום:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
-msgstr ""
+msgstr "ערוץ:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
 msgid "Search Engine:"
-msgstr ""
+msgstr "מנוע חיפוש:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
 msgid "Search For:"
-msgstr ""
+msgstr "חיפוש אחר:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
-msgstr ""
+msgstr "כתובת אינטרנט (URL):"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
 msgid ""
 "$longAppName can find all the videos on your computer to help you organize "
 "your collection."
 msgstr ""
+"$longAppName יכול לאתר את כל הווידאו על המחשב שלכם כדי לעזור בארגן את האוסף "
+"שלכם."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
 msgid ""
@@ -2395,14 +2508,16 @@ msgid ""
 "background.  Leaving it running means you'll have new videos when you're "
 "ready to watch."
 msgstr ""
+"$longAppName בודק באופן קבוע בערוצים קטעי וידאו חדשים ומוריד אותם ברקע. "
+"השארת התוכנה פועלת אומר שיהיו לכם קטעי וידאו חדשים כשתרצו לצפות בהם."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
 msgid "$shortAppName First Time Setup"
-msgstr ""
+msgstr "$shortAppName התקנה ראשונה"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
-msgstr ""
+msgstr "ביטול חיפוש"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
 msgid "Change"
@@ -2410,19 +2525,19 @@ msgstr "שנה"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46
 msgid "Don't Worry About Disk Space:"
-msgstr ""
+msgstr "לא לדאוג למקום פנוי:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50
 msgid "Find Videos:"
-msgstr ""
+msgstr "חיפוש קטעי וידאו:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
 msgid "Go Big:"
-msgstr ""
+msgstr "לך לגדול:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
 msgid "Leave it On:"
-msgstr ""
+msgstr "השאר פועל:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
 msgid ""
@@ -2431,40 +2546,50 @@ msgid ""
 "permanently by clicking 'save' and you can set a channel's settings to save "
 "videos automatically."
 msgstr ""
+"כמו ב-TiVo, התוכנה כוללת אפשרות של 'תאריך תפוגה' שעוזרת בפינוי קטעי וידאו "
+"ישנים כדי לפנות מקום עבור חדשים. אתם תמיד יכולים לשמור את קטעי הווידאו שלכם "
+"לתמיד על ידי לחיצה על שמירה ואתם יכולים לקבוע בהגדרות ערוץ לשמור קטעי וידאו "
+"אוטומטית."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
 msgid ""
 "Now you can explore the Channel Guide\n"
 "and start watching.  A few tips to get started:"
 msgstr ""
+"עכשיו אתם יכולים לגלוש במדריך הערוצים\n"
+"ולהתחיל בצפייה. כמה טיפים להתחלה:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
 msgid "Reset Search"
-msgstr ""
+msgstr "אפס חיפוש"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "הגבל לכל הקבצים האישיים שלי."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
 msgid "Search custom folder:"
-msgstr ""
+msgstr "חיפוש בתיקייה:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
 msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels, all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"מדריך הערוצים של $shortAppName כולל מאות ערוצי טלוויזיית אינטרנט, כולם "
+"בחינם. רק לחצו על הוספה כדי לצפות בערוץ."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."
-msgstr ""
+msgstr "הכפתור שלימין כפתור ההפעלה מציג וידיאו במסך מלא"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30
 msgid ""
 "The next few screens will help you set up $longAppName so that it works best "
 "for you."
 msgstr ""
+"המסכים הבאים יעזרו לכם להגדיר את $longAppName כל יעבוד בצורה הטובה ביותר "
+"עבורכם."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
 msgid ""
@@ -2472,26 +2597,29 @@ msgid ""
 " This way, videos in progress can finish downloading and new videos can be "
 "downloaded in the background, ready when you want to watch."
 msgstr ""
+"אנו ממליצים לאפשר ל$longAppName לעלות עם עליית המחשב. בדרך זו, קטעי וידאו "
+"שעדיין לא הסתיימו יוכלו להסתיים וקטעי וידאו חדשים בערוץ שלכם יהיו זמינים "
+"לפייה מתי שתרצו."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
 msgid "Would you like $longAppName to look for video files on your computer?"
-msgstr ""
+msgstr "תירצו ש$longAppName יחפש קטעי וידאו על המחשב שלכם?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
 msgid "Would you like to run $shortAppName on startup?"
-msgstr ""
+msgstr "תירצו להפעיל את $shortAppName כשהמחשב שלכם עולה?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
 msgid "You're done!"
-msgstr ""
+msgstr "סיימתם"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
 msgid "Release Notes:"
-msgstr ""
+msgstr "הערות שחרור:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"
-msgstr ""
+msgstr "שאלה"
 
 #~ msgid "About Democracy"
 #~ msgstr "אודות נגן דמוקרטיה"

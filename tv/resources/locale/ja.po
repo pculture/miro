@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the democracy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-07-19 14:31+0000\n"
-"Last-Translator: benjamin <pentelicus@gmail.com>\n"
+"PO-Revision-Date: 2007-08-20 07:32+0000\n"
+"Last-Translator: vinceshortino <vince@vshortino.com>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=(0);\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:20:29+0000\n"
+"X-Rosetta-Export-Date: 2007-08-21 13:58:44+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -291,7 +290,7 @@ msgid " limit upstream to"
 msgstr " アップストリーム制限"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "（この変更が反映されるには、Miroを再起動する必要がある）"
 
 #, fuzzy
 msgid "(You must restart Miro for this change to take effect)\n"
@@ -390,7 +389,7 @@ msgid "Never"
 msgstr "設定しない"
 
 msgid "OtherViews"
-msgstr ""
+msgstr "その他のビュー"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 #, fuzzy
@@ -411,7 +410,7 @@ msgid "Remove"
 msgstr "削除"
 
 msgid "Run Miro at startup"
-msgstr ""
+msgstr "起動する際に、Miroを起動する"
 
 #, fuzzy
 msgid "Save downloaded videos in this folder:"
@@ -585,13 +584,14 @@ msgid ""
 msgstr ""
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:312
+#, fuzzy
 msgid "New Channel _Guide..."
-msgstr ""
+msgstr "新規Channel_Guide..."
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:548
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Folder Location"
-msgstr ""
+msgstr "フョルだの場所"
 
 #: ../..//platform/gtk-x11/frontend_implementation/startup.py:76
 #: ../..//platform/gtk-x11/frontend_implementation/startup.py:174
@@ -603,15 +603,15 @@ msgstr[0] ""
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:42
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:45
 msgid "Hide"
-msgstr ""
+msgstr "表示しない"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:47
 msgid "Show"
-msgstr ""
+msgstr "表示する"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:48
 #: ../..//portable/dialogs.py:80 ../..//portable/menubar.py:241
@@ -639,11 +639,11 @@ msgstr "不明なエラー %s"
 
 #: ../..//platform/osx/frontend/Application.py:235
 msgid "Pause Video"
-msgstr ""
+msgstr "ビデオ一時停止"
 
 #: ../..//platform/osx/frontend/Application.py:244
 msgid "Unsupported version of Quicktime"
-msgstr ""
+msgstr "このバージョンのQicktimeは、サポートされていません"
 
 #: ../..//platform/osx/frontend/Application.py:245
 #, python-format
@@ -653,40 +653,42 @@ msgid ""
 msgstr ""
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:27
+#, fuzzy
 msgid "Download Completed"
-msgstr ""
+msgstr "ダウンロード終了"
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:28
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "'%s'のビデオのダウンロードは完了しました。"
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:37
+#, fuzzy
 msgid "Download Failed"
-msgstr ""
+msgstr "ダウンロードが失敗しました"
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:38
 #, python-format
 msgid "Download of video '%s' has failed."
-msgstr ""
+msgstr "'%s'のビデオのダウンロードは失敗しました。"
 
 #: ../..//platform/osx/frontend/MainFrame.py:261
 msgid "Subscribe to Channel"
-msgstr ""
+msgstr "このチャネルに加入します。"
 
 #: ../..//platform/osx/frontend/MainFrame.py:262
 msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr ""
+msgstr "加入したいチャネルを入力して下さい。"
 
 #: ../..//platform/osx/frontend/Preferences.py:38
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "General"
-msgstr ""
+msgstr "一般"
 
 #: ../..//platform/osx/frontend/Preferences.py:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Downloads"
-msgstr ""
+msgstr "ダウンロード"
 
 #: ../..//platform/osx/frontend/Preferences.py:41
 msgid "Folders"
@@ -1682,7 +1684,7 @@ msgstr ""
 
 #: ../..//portable/menubar.py:143
 msgid "_Options"
-msgstr ""
+msgstr "_設定"
 
 #: ../..//portable/menubar.py:144
 msgid "_Quit"
@@ -1694,19 +1696,19 @@ msgstr ""
 
 #: ../..//portable/menubar.py:153
 msgid "_Copy"
-msgstr ""
+msgstr "_コピー"
 
 #: ../..//portable/menubar.py:154
 msgid "_Paste"
-msgstr ""
+msgstr "_貼り付け"
 
 #: ../..//portable/menubar.py:155
 msgid "Select _All"
-msgstr ""
+msgstr "全て_選択"
 
 #: ../..//portable/menubar.py:156
 msgid "_Delete"
-msgstr ""
+msgstr "_削除"
 
 #: ../..//portable/menubar.py:160
 msgid "Add _Channel"
@@ -2603,7 +2605,7 @@ msgstr "リリースノート:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"
-msgstr ""
+msgstr "質問"
 
 #~ msgid "About Democracy"
 #~ msgstr "Democracyについて"

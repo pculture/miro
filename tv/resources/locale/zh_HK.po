@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-06-02 01:13+0000\n"
-"Last-Translator: cal_t <calvin.tsang@gmail.com>\n"
+"PO-Revision-Date: 2007-08-01 18:02+0000\n"
+"Last-Translator: sunye <000852@gmail.com>\n"
 "Language-Team: Chinese (Hong Kong) <zh_HK@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=(0);\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:20:48+0000\n"
+"X-Rosetta-Export-Date: 2007-08-02 13:48:29+0000\n"
 
 msgid "$log"
 msgstr ""
@@ -43,13 +43,13 @@ msgid ""
 msgstr ""
 
 msgid "OK"
-msgstr "確定"
+msgstr "確認"
 
 msgid "The fall of $shortAppName??"
 msgstr ""
 
 msgid "About Miro"
-msgstr ""
+msgstr "關於Miro"
 
 msgid "Add Channel..."
 msgstr ""
@@ -66,7 +66,7 @@ msgid "Channels"
 msgstr ""
 
 msgid "Check for New Version"
-msgstr "檢查有無新版本"
+msgstr "檢查更新"
 
 msgid "Clear Menu"
 msgstr "清除選單"
@@ -78,23 +78,23 @@ msgid "Copy"
 msgstr "複製"
 
 msgid "Copy Channel URL"
-msgstr ""
+msgstr "複製頻道網址"
 
 msgid "Copy Video URL"
-msgstr ""
+msgstr "複製影片網址"
 
 msgid "Cut"
-msgstr "剪"
+msgstr "剪下"
 
 #: ../..//portable/dialogs.py:94
 msgid "Delete"
 msgstr "刪除"
 
 msgid "Donate"
-msgstr ""
+msgstr "捐助"
 
 msgid "Edit"
-msgstr ""
+msgstr "編輯"
 
 msgid "File"
 msgstr "檔案"
@@ -106,44 +106,44 @@ msgid "Help"
 msgstr "說明"
 
 msgid "Hide Miro"
-msgstr ""
+msgstr "隱藏Miro"
 
 msgid "Hide Others"
 msgstr ""
 
 msgid "Main Window"
-msgstr ""
+msgstr "主視窗"
 
 msgid "MainMenu"
-msgstr ""
+msgstr "主選單"
 
 msgid "Minimize"
 msgstr "最小化"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "Miro"
-msgstr ""
+msgstr "Miro"
 
 msgid "Miro Help"
-msgstr ""
+msgstr "Miro 說明"
 
 msgid "New Channel Folder..."
-msgstr ""
+msgstr "新增頻道資料夾"
 
 msgid "New Playlist Folder..."
-msgstr ""
+msgstr "新增播放清單資料夾"
 
 msgid "New Playlist..."
-msgstr ""
+msgstr "新增播放清單"
 
 msgid "New Search Channel..."
-msgstr ""
+msgstr "新增頻道搜尋"
 
 msgid "Next Video"
-msgstr ""
+msgstr "下一個影片"
 
 msgid "Open Recent"
-msgstr ""
+msgstr "最近開啟"
 
 msgid "Open..."
 msgstr ""
@@ -153,171 +153,174 @@ msgstr ""
 
 #: ../..//platform/osx/frontend/Application.py:238
 msgid "Play Video"
-msgstr ""
+msgstr "播放影片"
 
 #: ../..//platform/osx/frontend/Preferences.py:43
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid "Playback"
-msgstr ""
+msgstr "播放"
 
 msgid "Playlists"
-msgstr ""
+msgstr "播放清單"
 
 msgid "Preferencesâ¦"
-msgstr ""
+msgstr "選項"
 
 msgid "Previous Video"
-msgstr ""
+msgstr "上一個影片"
 
 msgid "Quit Miro"
-msgstr ""
+msgstr "離開 Miro"
 
 msgid "Remove..."
-msgstr ""
+msgstr "移除"
 
 msgid "Rename..."
-msgstr ""
+msgstr "重新命名..."
 
 msgid "Report a bug"
-msgstr ""
+msgstr "問題報告"
 
 msgid "Save Video As..."
-msgstr ""
+msgstr "另存影片為"
 
 msgid "Select All"
-msgstr ""
+msgstr "全選"
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "與朋友分享頻道"
 
 msgid "Services"
-msgstr ""
+msgstr "服務"
 
 msgid "Show All"
-msgstr ""
+msgstr "全部顯示"
 
 msgid "Stop Video"
-msgstr ""
+msgstr "停止播放"
 
 msgid "Update All Channels"
-msgstr ""
+msgstr "更新所有頻道"
 
 msgid "Update Channel"
-msgstr ""
+msgstr "更新頻道"
 
 msgid "Window"
-msgstr ""
+msgstr "視窗"
 
 msgid "Zoom"
-msgstr ""
+msgstr "縮放"
 
 msgid "%channel feed%"
-msgstr ""
+msgstr "訂閱頻道"
 
 msgid "%channel title%"
-msgstr ""
+msgstr "頻道名稱"
 
 msgid "%donation label%"
-msgstr ""
+msgstr "捐助標籤"
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
-msgstr ""
+msgstr "00:00:00"
 
 msgid "Box"
 msgstr ""
 
 msgid "FullScreen Controls"
-msgstr ""
+msgstr "全熒幕控制"
 
 #: ../..//portable/tabs.py:45
 msgid "Video Search"
-msgstr ""
+msgstr "影片搜尋"
 
 msgid "VideoWindow"
-msgstr ""
+msgstr "影片視窗"
 
 #: ../..//portable/dialogs.py:77
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
+"\"http://foo.bar.com/baz\" 網站要求用戶名稱及密碼作 \"text supplied by server\".\n"
 
 msgid "Password:\n"
-msgstr ""
+msgstr "密碼:\n"
 
 msgid "Username and password required"
-msgstr ""
+msgstr "需要用戶名稱和密碼"
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
+"用戶名稱:\n"
+"\n"
 
 msgid " limit upstream to"
-msgstr ""
+msgstr " 上傳限制"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(你必須重新啟動，所作的變更才會生效)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
-msgstr ""
+msgstr "(你必須重新啟動，所作的變更才會生效)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(影片位置在此)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid "1 day"
-msgstr ""
+msgstr "1 天"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "1 month"
-msgstr ""
+msgstr "1個月"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "10 days"
-msgstr ""
+msgstr "10 天"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
 msgid "3 days"
-msgstr ""
+msgstr "3 天"
 
 msgid "3 hours"
-msgstr ""
+msgstr "3 小時"
 
 msgid "4"
-msgstr ""
+msgstr "4"
 
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid "6 days"
-msgstr ""
+msgstr "6 天"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "Add..."
-msgstr ""
+msgstr "新增..."
 
 msgid "BitTorrent ports:"
-msgstr ""
+msgstr "BitTorrent 連接埠:"
 
 msgid "By default, videos expire after:"
-msgstr ""
+msgstr "預設情況下，影片會於下列時間後過期:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26
 msgid "Change..."
-msgstr ""
+msgstr "更換..."
 
 msgid "Check channels for new content:"
-msgstr ""
+msgstr "檢查頻道最新內容"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39

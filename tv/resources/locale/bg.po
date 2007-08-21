@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-01-31 00:58+0000\n"
-"Last-Translator: joffer <root@securitydot.net>\n"
+"PO-Revision-Date: 2007-07-31 10:49+0000\n"
+"Last-Translator: Ve4ernik <ve4ernik@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:20:23+0000\n"
+"X-Rosetta-Export-Date: 2007-08-03 15:30:46+0000\n"
 
 msgid "$log"
 msgstr "Slog"
@@ -60,14 +60,16 @@ msgstr "ОК"
 msgid "The fall of $shortAppName??"
 msgstr "Повреда на $shortAppName??"
 
+#, fuzzy
 msgid "About Miro"
-msgstr ""
+msgstr "За Miro"
 
 msgid "Add Channel..."
 msgstr "Добави канал..."
 
+#, fuzzy
 msgid "Add Guide..."
-msgstr ""
+msgstr "Добави Guide..."
 
 msgid "Bring All to Front"
 msgstr "Изведи всичко на преден план"
@@ -80,8 +82,9 @@ msgstr "Канали"
 msgid "Check for New Version"
 msgstr "Провери за нова версия"
 
+#, fuzzy
 msgid "Clear Menu"
-msgstr "Чисто меню"
+msgstr "Изчисти менюто"
 
 msgid "Close Window"
 msgstr "Затвори прозореца"
@@ -117,8 +120,9 @@ msgstr "Цял екран"
 msgid "Help"
 msgstr "Помощ"
 
+#, fuzzy
 msgid "Hide Miro"
-msgstr ""
+msgstr "Скрий Miro"
 
 msgid "Hide Others"
 msgstr "Скрий другите"
@@ -133,11 +137,13 @@ msgid "Minimize"
 msgstr "Минимизирай"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
+#, fuzzy
 msgid "Miro"
-msgstr ""
+msgstr "Miro(Миро)"
 
+#, fuzzy
 msgid "Miro Help"
-msgstr ""
+msgstr "Miro Помощ"
 
 msgid "New Channel Folder..."
 msgstr "Нова папка за канали..."
@@ -148,11 +154,13 @@ msgstr "Нова папка за плейлиста"
 msgid "New Playlist..."
 msgstr "Нова плейлиста"
 
+#, fuzzy
 msgid "New Search Channel..."
-msgstr ""
+msgstr "Нов канал за търсене..."
 
+#, fuzzy
 msgid "Next Video"
-msgstr ""
+msgstr "Следващо видео..."
 
 msgid "Open Recent"
 msgstr "Отвори предишен"

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-07-22 14:02+0000\n"
-"Last-Translator: Aramil <parisz@freemail.gr>\n"
+"PO-Revision-Date: 2007-08-19 16:54+0000\n"
+"Last-Translator: fokusakos <fokusakos@yahoo.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:19:01+0000\n"
+"X-Rosetta-Export-Date: 2007-08-21 13:58:38+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -37,7 +37,7 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Αν είχατε στην διάθεση σας λίγο χρόνο, θα θέλατε να μας αποστείλετε μια "
+"Αν είχατε στην διάθεση σας ένα λεπτό, θα θέλατε να μας αποστείλετε μια "
 "αναφορά λάθους στο σύστημα εξεύρεσης λαθών; Το ελάχιστο που χρειαζόμαστε "
 "είναι μια περιγραφή το τι ήταν αυτό που κάνατε αυτή τη στιγμή -- με όση "
 "μεγαλύτερη ακρίβεια γίνεται -- στο παρακάτω πλαίσιο:"
@@ -54,7 +54,7 @@ msgstr ""
 "μειώσει τις πιθανότητες να χάσετε τις προτιμήσεις σας ή τις συνδρομές σας."
 
 msgid "OK"
-msgstr "Εντάξει"
+msgstr "OK"
 
 msgid "The fall of $shortAppName??"
 msgstr "Αποτυχία του $shortAppName??"
@@ -63,13 +63,14 @@ msgid "About Miro"
 msgstr "Σχετικά με το Μiro"
 
 msgid "Add Channel..."
-msgstr "Πρόσθήκη Καναλιού..."
+msgstr "Προσθήκη Καναλιού..."
 
 msgid "Add Guide..."
 msgstr "Προσθήκη Οδηγού..."
 
+#, fuzzy
 msgid "Bring All to Front"
-msgstr "Μεταφορά μπροστά"
+msgstr "Μεταφορά Όλων Μπροστά"
 
 #: ../..//platform/osx/frontend/Preferences.py:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
@@ -77,10 +78,10 @@ msgid "Channels"
 msgstr "Κανάλια"
 
 msgid "Check for New Version"
-msgstr "Έλεγχος για νέα έκδοση"
+msgstr "Έλεγχος για  μια νέα έκδοση"
 
 msgid "Clear Menu"
-msgstr "Καθαρισμός Μενού"
+msgstr "Εκκαθάριση του Μενού"
 
 msgid "Close Window"
 msgstr "Κλείσιμο Παραθύρου"
@@ -88,11 +89,12 @@ msgstr "Κλείσιμο Παραθύρου"
 msgid "Copy"
 msgstr "Αντιγραφή"
 
+#, fuzzy
 msgid "Copy Channel URL"
-msgstr "Αντιγράφη διεύθυνσης καναλιού"
+msgstr "Αντιγραφή διεύθυνσης δικτύου (url)  του καναλιού"
 
 msgid "Copy Video URL"
-msgstr "Αντιγραφή διεύθυνσης βίντεο"
+msgstr "Αντιγραφή διεύθυνσης δικτύου ( url)  του βίντεο"
 
 msgid "Cut"
 msgstr "Αποκοπή"
@@ -111,19 +113,19 @@ msgid "File"
 msgstr "Αρχείο"
 
 msgid "Full Screen"
-msgstr "Πλήρης οθόνη"
+msgstr "Πλήρης Οθόνη"
 
 msgid "Help"
 msgstr "Βοήθεια"
 
 msgid "Hide Miro"
-msgstr ""
+msgstr "Απόκρυψη του Miro"
 
 msgid "Hide Others"
 msgstr "Απόκρυψη άλλων"
 
 msgid "Main Window"
-msgstr "Κυρίως παράθυρο"
+msgstr "Κύριο Παραθυρο"
 
 msgid "MainMenu"
 msgstr "Κυρίως Μενού"
@@ -136,7 +138,7 @@ msgid "Miro"
 msgstr "Μiro"
 
 msgid "Miro Help"
-msgstr ""
+msgstr "Βοήθεια για το  Miro"
 
 msgid "New Channel Folder..."
 msgstr "Νέος Φάκελος Καναλιών..."
@@ -154,7 +156,7 @@ msgid "Next Video"
 msgstr "Επόμενο video"
 
 msgid "Open Recent"
-msgstr "Άνοιγμα πρόσφατου"
+msgstr "Άνοιγμα πρόσφατου αρχείου"
 
 msgid "Open..."
 msgstr "Άνοιγμα..."
@@ -181,7 +183,7 @@ msgid "Previous Video"
 msgstr "Προηγούμενο video"
 
 msgid "Quit Miro"
-msgstr ""
+msgstr "'Εξοδος απο το Miro"
 
 msgid "Remove..."
 msgstr "Αφαίρεση..."
@@ -190,7 +192,7 @@ msgid "Rename..."
 msgstr "Μετονομασία..."
 
 msgid "Report a bug"
-msgstr ""
+msgstr "Αναφέρετε σφάλμα"
 
 msgid "Save Video As..."
 msgstr "Αποθήκευση βίντεο ως..."
@@ -205,7 +207,7 @@ msgid "Services"
 msgstr "Υπηρεσίες"
 
 msgid "Show All"
-msgstr "Εμφάνιση Όλων"
+msgstr "Εμφάνιση όλων"
 
 msgid "Stop Video"
 msgstr "Τερματισμός video"
@@ -220,7 +222,7 @@ msgid "Window"
 msgstr "Παράθυρο"
 
 msgid "Zoom"
-msgstr "Μεγέθυνση:"
+msgstr "Μεγέθυνση"
 
 msgid "%channel feed%"
 msgstr "%channel feed%"
@@ -265,7 +267,7 @@ msgid "Password:\n"
 msgstr "Κωδικός πρόσβασης:\n"
 
 msgid "Username and password required"
-msgstr "όνομα χρήστη και κωδικός πρόσβασης απαιτείται"
+msgstr "Απαιτούνται το όνομα χρήστη και ο κωδικός πρόσβασης"
 
 msgid ""
 "Username:\n"
@@ -275,20 +277,21 @@ msgstr ""
 "\n"
 
 msgid " limit upstream to"
-msgstr " περιορισμός ανεβάσματος σε"
+msgstr " περιορισμός ανεβάσματος δεδομένων σε"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(Πρέπει να επανεκκινήσετε τον Miro για να έχει η αλλαγή αποτέλεσμα)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr ""
+"(Πρέπει να επανεκκινήσετε τον Miro για να έχει η αλλαγή αποτέλεσμα)\n"
 
 msgid "(movies directory path goes here)"
 msgstr "(εδώ γράφετε το φάκελο για ταινίες)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid "1 day"
-msgstr "1 μέρα"
+msgstr "1 ημέρα"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "1 month"
@@ -322,14 +325,14 @@ msgid "Add..."
 msgstr "Προσθήκη..."
 
 msgid "BitTorrent ports:"
-msgstr "BitTorrent θύρες:"
+msgstr "Θύρες BitTorrent :"
 
 msgid "By default, videos expire after:"
 msgstr "Εξ' ορισμού, τα βίντεο λήγουν μετά από:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26
 msgid "Change..."
-msgstr "Αλλαγή..."
+msgstr "Τροποποίηση..."
 
 msgid "Check channels for new content:"
 msgstr "Έλεγχος καναλιών για νέο περιεχόμενο"
@@ -337,7 +340,7 @@ msgstr "Έλεγχος καναλιών για νέο περιεχόμενο"
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "Don't start a download if it leaves less than"
-msgstr "Μην ξεκινάς κατέβασμα άμα μείνει λιγότερο από"
+msgstr "Μην ξεκινάς κατέβασμα αν μένει λιγότερο από"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
@@ -374,7 +377,7 @@ msgstr "Αναπαραγωγή βίντεο το ένα μετά το άλλο."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "Remember video position."
-msgstr "Μνημόνευση θέσης video"
+msgstr "Να θυμάσαι τη θέση του video"
 
 #: ../..//portable/feed.py:787 ../..//portable/folder.py:156
 #: ../..//portable/folder.py:211 ../..//portable/guide.py:55
@@ -382,10 +385,10 @@ msgstr "Μνημόνευση θέσης video"
 #: ../..//portable/playlist.py:197
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
 msgid "Remove"
-msgstr "Κατάργηση"
+msgstr "Αφαίρεση"
 
 msgid "Run Miro at startup"
-msgstr ""
+msgstr "Έναρξη του Miro με την εκκίνηση του υπολογιστή σας"
 
 msgid "Save downloaded videos in this folder:"
 msgstr "Σώσε κατεβασμένα βίντεο στον φάκελο:"
@@ -393,11 +396,11 @@ msgstr "Σώσε κατεβασμένα βίντεο στον φάκελο:"
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:557
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Show as Channel"
-msgstr "Προβολή ώς Κανάλι"
+msgstr "Προβολή ως Κανάλι"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Stop after each video."
-msgstr "Σταμάτημα μέτα από κάθε βίντεο."
+msgstr "Σταμάτημα μετά από κάθε βίντεο."
 
 msgid "To avoid internet slowdowns:"
 msgstr "Για αποφυγή καθυστέρησης απο το Internet:"
@@ -405,6 +408,8 @@ msgstr "Για αποφυγή καθυστέρησης απο το Internet:"
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
 msgstr ""
+"Ψάξε για νέα βίντεο σε αυτούς τους φακέλους και συμπεριέλαβε τους στην "
+"Βιβλιοθήκη Μέσων (library)"
 
 msgid "every 30 minutes"
 msgstr "κάθε 30 λεπτά"
@@ -417,13 +422,13 @@ msgstr "χειροκίνητα"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36
 msgid "videos at once."
-msgstr "βίντεο άμεσα."
+msgstr "βίντεο ταυτόχρονα."
 
 msgid "$label$"
-msgstr "$επικεφαλίδα$"
+msgstr "$label$"
 
 msgid "$title$"
-msgstr "$τίτλος$"
+msgstr "$title$"
 
 msgid "Channel"
 msgstr "Κανάλι"
@@ -445,7 +450,7 @@ msgid "Search for:"
 msgstr "Αναζήτηση για:"
 
 msgid "URL"
-msgstr "Διεύθυνση"
+msgstr "Διεύθυνση δικτύου (url)"
 
 #: ../..//platform/gtk-x11/frontend_implementation/startup.py:48
 #: ../..//platform/windows-xul/frontend_implementation/startup.py:25
@@ -489,11 +494,18 @@ msgid ""
 "\n"
 "Would you like Miro to look for video files on your computer?"
 msgstr ""
+"Ο Miro μπορεί να βρει όλα τα βίντεο στον υπολογιστή σας για να σας βοηθήσει "
+"να οργανώσετε τη συλλογή σας.\n"
+"\n"
+"\n"
+"Θέλετε ο Miro να ψάξει για αρχεία βίντεο στον υπολογιστή σας;"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"Οι επόμενες οθόνες θα σας βοηθήσουν να ρυθμίσετε τον Miro ώστε να δουλεύει "
+"καλύτερα για εσάς. Ιδού η πρώτη ερώτηση."
 
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
@@ -503,6 +515,13 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
+"Προτείνουμε να επιτρέψετε στον Miro να ξεκινά όταν ανάβετε τον υπολογιστή "
+"σας. Με τον τρόπο αυτό, τα βίντεο των οποίων το κατέβασμα δεν ολοκληρώθηκε "
+"θα κατεβούν και νέα βίντεο στα κανάλια θα είναι έτοιμα όταν θελήσετε να "
+"παρακολουθήσετε.\n"
+"\n"
+"\n"
+"Θέλετε ο Miro να ξεκινά όταν ανάβετε τον υπολογιστή σας;"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "Welcome to Internet TV!"
@@ -515,6 +534,11 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Καλώς ήρθατε στην διαδικτυακή τηλεόραση. Υπάρχουν πολλά που μπορείτε να "
+"κάνετε με τον Miro: να κατεβάζετε αυτόματα βίντεο από τα αγαπημένα σας "
+"κανάλια, να παρακολουθείτε νέα βίντεο διαδοχικά, να κατεβάζετε torrents, να "
+"προτείνετε βίντεο σε φίλους και άλλα πολλά.\n"
+"\n"
 
 #: ../..//portable/dialogs.py:78
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
@@ -544,13 +568,39 @@ msgid ""
 "Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
 "them are free. Just click 'ADD' to watch a channel.\n"
 msgstr ""
+"Είστε έτοιμοι!\n"
+"\n"
+"Η ρύθμιση ολοκληρώθηκε - τώρα μπορείτε να βρείτε κανάλια και να ξεκινήσετε "
+"να παρακολουθείτε.\n"
+"\n"
+"Μην Αργείτε: Ο Miro διαφέρει από την παρακολούθηση βίντεο από ιστοσελίδες - "
+"οι παραγωγοί μπορεί να προσφέρουν μεγάλα βίντεο υψηλής ποιότητας. Γι' αυτό "
+"μην περιμένετε για τα βίντεο: ξεκινήστε να κατεβάζετε και επιστρέφετε ξανά "
+"αργότερα. \n"
+"\n"
+"Αφήστε τον ενεργό: Ο Miro ελέγχει τακτικά τα κανάλια για νέα βίντεο και τα "
+"κατεβάζει στο παρασκήνιο. Αν τον αφήσετε ενεργό θα έχετε τα νέα βίντεο όταν "
+"θα είσαστε έτοιμοι να παρακολουθήσετε.\n"
+"\n"
+"Μην ανησυχείτε για τον ελεύθερο χώρο στον δίσκο: Ο Miro έχει ένα σύστημα "
+"'λήξης' που βοηθάει να σβήνονται παλιά βίντεο ώστε να υπάρχει χώρος για "
+"καινούρια. Μπορείτε πάντα να φυλάξετε μόνιμα ένα βίντεο επιλέγοντας "
+"'αποθήκευση' και μπορείτε να ρυθμίσετε ένα κανάλι ώστε τα βίντεο του να "
+"αποθηκεύονται αυτόματα.\n"
+"\n"
+"Μεγεθύνετε: Το πλήκτρο στα δεξιά του πλήκτρου αναπαραγωγής προβάλλει τα "
+"βίντεο σε πλήρη οθόνη.\n"
+"\n"
+"Βρείτε βίντεο: Ο Οδηγός του Miro περιέχει εκατοντάδες διαδικτυακά τηλεοπτικά "
+"κανάλια, όλα δωρεάν. Απλά επιλέξτε 'προσθήκη' να να παρακολουθήσετε ένα "
+"κανάλι.\n"
 
 msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
-"%μήνυμα%\n"
-"%μήνυμα%"
+"%message%\n"
+"%message%"
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:312
 msgid "New Channel _Guide..."
@@ -608,7 +658,7 @@ msgstr "Υπήρξε ένα άγνωστο σφάλμα: %s."
 
 #: ../..//platform/osx/frontend/Application.py:235
 msgid "Pause Video"
-msgstr "Πάυση Video"
+msgstr "Παύση του βίντεο"
 
 #: ../..//platform/osx/frontend/Application.py:244
 msgid "Unsupported version of Quicktime"
@@ -639,7 +689,7 @@ msgstr "Το κατέβασμα απέτυχε"
 #: ../..//platform/osx/frontend/GrowlNotifier.py:38
 #, python-format
 msgid "Download of video '%s' has failed."
-msgstr "Η μεταφόρτωση του video '%s' απέτυχε"
+msgstr "Το κατέβασμα του βίντεο '%s' απέτυχε"
 
 #: ../..//platform/osx/frontend/MainFrame.py:261
 msgid "Subscribe to Channel"
@@ -657,7 +707,7 @@ msgstr "Γενικά"
 #: ../..//platform/osx/frontend/Preferences.py:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Downloads"
-msgstr "Μεταφορτώσεις"
+msgstr "Λήψεις"
 
 #: ../..//platform/osx/frontend/Preferences.py:41
 msgid "Folders"
@@ -676,18 +726,18 @@ msgstr "Φάκελος Ταινιών"
 #: ../..//platform/osx/frontend/Preferences.py:165
 #, python-format
 msgid "Select a Directory to store %s downloads in."
-msgstr ""
+msgstr "Επιλέξτε έναν φάκελο για να αποθηκεύονται οι λήψεις %s"
 
 #: ../..//platform/osx/frontend/Preferences.py:166
 #: ../..//platform/osx/frontend/Preferences.py:230
 msgid "Select"
-msgstr "Επιλέξτε"
+msgstr "Επιλογή"
 
 #: ../..//platform/osx/frontend/Preferences.py:175
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
-msgstr "Μεταφορά υπάρχουσων ταινιών?"
+msgstr "Μεταφορά υπαρχουσών ταινιών;"
 
 #: ../..//platform/osx/frontend/Preferences.py:176
 #, python-format
@@ -696,14 +746,17 @@ msgid ""
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"Επιλέξατε ένα νέο φάκελο για να αποθηκεύετε τις ταινίες. Θέλετε το %s να "
+"μεταφέρει τις υπάρχουσες λήψεις σας εκεί; (Οι ταινίες που κατεβαίνουν ήδη "
+"δεν θα μεταφερθούν μέχρι να ολοκληρωθούν)."
 
 #: ../..//platform/osx/frontend/Preferences.py:228
 msgid "View this Directory in the Library"
-msgstr ""
+msgstr "Προβολή του φακέλου στην Βιβλιοθήκη"
 
 #: ../..//platform/osx/frontend/Preferences.py:229
 msgid "Select a Directory to view in the Library."
-msgstr ""
+msgstr "Επιλέξτε έναν φάκελο για να δείτε στην Βιβλιοθήκη."
 
 #: ../..//platform/osx/frontend/QuicktimeRenderer.py:217
 msgid "Audio"
@@ -715,79 +768,79 @@ msgstr "Αναζήτηση!"
 
 #: ../..//platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
-msgstr "_Απομάκρυνση..."
+msgstr "_Διαγραφή..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:6
 msgid "_Remove Playlist..."
-msgstr "_Απομάκρυνση λίστας..."
+msgstr "_Διαγραφή λίστας..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:7
 msgid "_Remove Playlists..."
-msgstr "_Απομάκρυνση λιστών..."
+msgstr "_Διαγραφή λιστών..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:8
 msgid "_Remove Playlist Folder..."
-msgstr "_Απομάκρυνση φακέλλου λίστας..."
+msgstr "_Διαγραφή φακέλλου λίστας..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:9
 msgid "_Remove Playlist Folders..."
-msgstr "_Απομάκρυνση φακέλλων λίστας..."
+msgstr "_Διαγραφή φακέλλων λίστας..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:10 ../..//portable/menubar.py:166
 msgid "_Remove Channel..."
-msgstr "_Απομάκρυνση καναλιου..."
+msgstr "_Διαγραφή καναλιού..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:11 ../..//portable/menubar.py:167
 msgid "_Remove Channels..."
-msgstr "_Απομάκρυνση καναλιών..."
+msgstr "_Διαγραφή καναλιών..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:12 ../..//portable/menubar.py:169
 msgid "_Remove Channel Folder..."
-msgstr "_Απομακρυνση φακέλλου καναλιού..."
+msgstr "_Διαγραφή φακέλλου καναλιού..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:13 ../..//portable/menubar.py:168
 msgid "_Remove Channel Folders..."
-msgstr "_Απομάκρυνση φακέλλων καναλιού..."
+msgstr "_Διαγραφή φακέλλων καναλιών..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:14
 msgid "_Remove Miro Guide..."
-msgstr ""
+msgstr "_Διαγραφή του Οδηγού του Miro..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:15
 msgid "_Remove Miro Guides..."
-msgstr ""
+msgstr "_Διαγραφή των Οδηγών του Miro..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:16
 msgid "_Remove Video..."
-msgstr "_Απομάκρυνση βίντεο..."
+msgstr "_Διαγραφή βίντεο..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:17
 msgid "_Remove Videos..."
-msgstr "_Απομάκρυνση πολλών βίντεο..."
+msgstr "_Διαγραφή πολλών βίντεο..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:18
 msgid "Re_name..."
-msgstr "Μετ_ονομασία..."
+msgstr "Μετονομασία..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:19
 msgid "Re_name Playlist..."
-msgstr "Μετ_ονομασία Λίστας..."
+msgstr "Μετονομασία Λίστας..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:20
 msgid "Re_name Playlist Folder..."
-msgstr "Μετ_ονομασία φακέλλου λίστας..."
+msgstr "Μετονομασία φακέλλου λίστας..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:21 ../..//portable/menubar.py:165
 msgid "Re_name Channel..."
-msgstr "Μετ_ονομασία καναλιού..."
+msgstr "Μετονομασία καναλιού..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:22
 msgid "Re_name Channel Folder..."
-msgstr "Μετ_ονομασία φακέλλου καναλιού..."
+msgstr "Μετονομασία φακέλλου καναλιού..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:23
 msgid "Re_name Miro Guide..."
-msgstr ""
+msgstr "Μετονομασία του Οδηγού του Miro..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:24 ../..//portable/menubar.py:171
 msgid "_Update Channel..."
@@ -815,31 +868,30 @@ msgstr "Δεν υπάρχει αρκετός χώρος στο δίσκο"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:460
 #: ../..//portable/dl_daemon/download.py:460
-#, fuzzy
+#, python-format
 msgid "%s MB required to store this video"
 msgstr "Χρειάζονται %s MB για την αποθήκευση αυτού του βίντεο"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:793
 #: ../..//portable/dl_daemon/download.py:793
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "Κατεστραμμένο Torrent"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:794
 #: ../..//portable/dl_daemon/download.py:794
 #, python-format
 msgid "The torrent file at %s was not valid"
-msgstr ""
+msgstr "Το αρχείο torrent στο %s δεν είναι έγκυρο"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:820
 #: ../..//portable/dl_daemon/download.py:820
-#, fuzzy
 msgid "Torrent file deleted"
 msgstr "Το αρχείο torrent διαγράφηκε"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:821
 #: ../..//portable/dl_daemon/download.py:821
 msgid "The torrent file for this item was deleted "
-msgstr ""
+msgstr "Το αρχείο torrent για το αντικείμενο αυτό διαγράφηκε "
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:56
 msgid "Update Available"
@@ -848,7 +900,7 @@ msgstr "Υπάρχει διαθέσιμη ενημέρωση"
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr "Υπαρχει μια νέα έκδοση του %s για μεταφόρτωση."
+msgstr "Υπαρχει μια νέα έκδοση του %s για λήψη."
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:182
 msgid "Error Bombing Item"
@@ -866,7 +918,7 @@ msgstr "Σφάλμα στο άνοιγμα ιστοσελίδας"
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
-"Έγινε σφάλμα κατα το άνοιμα του %s. Παρακαλώ προσπαθήστε ξανά σε λίγα "
+"Υπήρξε σφάλμα κατά το άνοιγμα του %s. Παρακαλώ προσπαθήστε ξανά σε λίγα "
 "δευτερόλεπτα"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:45
@@ -888,71 +940,77 @@ msgstr "Φόρτωση παραθύρου"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:257
 msgid "onStartup called twice"
-msgstr "Το onStartup καλέσθηκε δύο φορές"
+msgstr "Το onStartup κλήθηκε δύο φορές"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:658
 msgid "Spacebar"
-msgstr ""
+msgstr "Πλήκτρο κενού"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:805
 msgid "Close to tray?"
-msgstr ""
+msgstr "Ελαχιστοποίηση στην μπάρα εργαλείων;"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:806
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Όταν πατάτε στο κόκκινο πλήκτρο τερματισμού, θέλετε ο Miro να "
+"ελαχιστοποιείται στην μπάρα εργαλείων ή να τερματίζεται; Μπορείτε να "
+"αλλάξετε αυτή την ρύθμιση αργότερα στις Επιλογές."
 
 #: ../..//portable/app.py:808
 msgid "Database too new"
-msgstr ""
+msgstr "Η βάση δεδομένων είναι πολύ καινούρια"
 
 #: ../..//portable/app.py:809
 msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
+"Έχετε μία βάση δεδομένων που αποθηκεύτηκε από μία νεότερη έκδοση του "
+"$shortAppName. Πρέπει να κατεβάσετε τη νεότερη έκδοση του $shortAppName και "
+"να την τρέξετε."
 
 #: ../..//portable/app.py:968 ../..//portable/app.py:982
 #: ../..//portable/app.py:1026 ../..//portable/app.py:1052
 #: ../..//portable/app.py:1072
 #, python-format
 msgid "Remove %s"
-msgstr ""
+msgstr "Διαγραφή του %s"
 
 #: ../..//portable/app.py:969
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
-msgstr ""
+msgstr "Είσαστε σίγουρος ότι θέλετε να διαγράψετε τον οδηγό %s;"
 
 #: ../..//portable/app.py:983
 #, python-format
 msgid "Are you sure you want to remove %s"
-msgstr ""
+msgstr "Είσαστε σίγουρος ότι θέλετε να διαγράψετε το %s"
 
 #: ../..//portable/app.py:986 ../..//portable/app.py:1031
 #: ../..//portable/app.py:1057 ../..//portable/app.py:1076
 #, python-format
 msgid "Remove %s channels"
-msgstr ""
+msgstr "Διαγραφή καναλιών %s"
 
 #: ../..//portable/app.py:988
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
+msgstr "Είσαστε σίγουρος ότι θέλετε να διαγράψετε τις λίστες %s"
 
 #: ../..//portable/app.py:1027
 msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
-msgstr ""
+msgstr "Τι θέλετε να κάνετε τα βίντεο που κατεβάσατε σε αυτό το κανάλι;"
 
 #: ../..//portable/app.py:1032
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
-msgstr ""
+msgstr "Τι θέλετε να κάνετε τα βίντεο που κατεβάσατε σε αυτά τα κανάλια;"
 
 #: ../..//portable/app.py:1053
 #, python-format
@@ -960,6 +1018,8 @@ msgid ""
 "Are you sure you want to remove %s?  Any downloads in progress will be "
 "canceled."
 msgstr ""
+"Είστε σίγουρος ότι θέλετε να διαγράψετε το %s; Όλες οι τρέχουσες λήψεις θα "
+"ακυρωθούν."
 
 #: ../..//portable/app.py:1058
 #, python-format
@@ -967,36 +1027,40 @@ msgid ""
 "Are you sure you want to remove these %s channels?  Any downloads in "
 "progress will be canceled."
 msgstr ""
+"Είστε σίγουρος ότι θέλετε να διαγράψετε τα κανάλια %s; Όλες οι τρέχουσες "
+"λήψεις θα ακυρωθούν."
 
 #: ../..//portable/app.py:1073
 #, python-format
 msgid "Are you sure you want to remove %s?"
-msgstr ""
+msgstr "Είσαστε σίγουρος ότι θέλετε να διαγράψετε το %s;"
 
 #: ../..//portable/app.py:1077
 #, python-format
 msgid "Are you sure you want to remove these %s channels?"
-msgstr ""
+msgstr "Είσαστε σίγουρος ότι θέλετε να διαγράψετε τα κανάλια %s;"
 
 #: ../..//portable/app.py:1090
 #, python-format
 msgid "Stop watching %s"
-msgstr ""
+msgstr "Τερματισμός παρακολούθησης του %s"
 
 #: ../..//portable/app.py:1091
 #, python-format
 msgid "Are you sure you want to stop watching %s?"
-msgstr ""
+msgstr "Είσαστε σίγουρος ότι θέλετε να σταματήσετε να παρακολουθείτε το %s;"
 
 #: ../..//portable/app.py:1094
 #, python-format
 msgid "Stop watching %s directories"
-msgstr ""
+msgstr "Τερματισμός παρακολούθησης των φακέλων %s"
 
 #: ../..//portable/app.py:1095
 #, python-format
 msgid "Are you sure you want to stop watching these %s directories?"
 msgstr ""
+"Είσαστε σίγουρος ότι θέλετε να σταματήσετε να παρακολουθείτε τους φακέλους "
+"%s;"
 
 #: ../..//portable/app.py:1125
 msgid "Are you sure you want to quit?"
@@ -1006,21 +1070,21 @@ msgstr "Θέλετε σίγουρα να κλείσετε την εφαρμογ�
 #, python-format
 msgid "You have %d download still in progress."
 msgid_plural "You have %d download still in progress."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Έχετε %d λήψη ακόμη σε εξέλιξη."
+msgstr[1] "Έχετε %d λήψεις ακόμη σε εξέλιξη."
 
 #: ../..//portable/app.py:1583
 msgid "Invalid Value"
-msgstr ""
+msgstr "Μη έγκυρη τιμή"
 
 #: ../..//portable/app.py:1584
 #, python-format
 msgid "%s is invalid.  You must enter a non-negative number."
-msgstr ""
+msgstr "Το %s είναι μη έγκυρο. Πρέπει να εισάγετε έναν μη αρνητικό αριθμό."
 
 #: ../..//portable/app.py:1869
 msgid " - Invalid URL"
-msgstr ""
+msgstr " - Άκυρο URL"
 
 #: ../..//portable/app.py:1870
 msgid ""
@@ -1028,51 +1092,55 @@ msgid ""
 "Please double check and try again.\n"
 "\n"
 msgstr ""
+"Η διεύθυνση που εισάγατε δεν είναι έγκυρο URL.\n"
+"Παρακαλώ ελέγξτε ξανά και προσπαθήστε πάλι.\n"
+"\n"
 
 #: ../..//portable/app.py:1894
 msgid "$shortAppName - Add Channel"
-msgstr ""
+msgstr "$shortAppName - Προσθήκη Καναλιού"
 
 #: ../..//portable/app.py:1894
 msgid "Enter the URL of the channel to add"
-msgstr ""
+msgstr "Εισάγετε το URL του καναλιού που θα προσθέσετε"
 
 #: ../..//portable/app.py:1915
 msgid "$shortAppName - Add Miro Guide"
-msgstr ""
+msgstr "$shortAppName - Προσθήκη Οδηγού του Miro"
 
 #: ../..//portable/app.py:1915
 msgid "Enter the URL of the Miro Guide to add"
-msgstr ""
+msgstr "Εισάγετε το URL του Οδηγού του Miro που θα προσθέσετε"
 
 #: ../..//portable/app.py:2209
 msgid "News and Tech"
-msgstr ""
+msgstr "Νέα και Τεχνολογία"
 
 #: ../..//portable/app.py:2216
 msgid "Entertainment"
-msgstr ""
+msgstr "Διασκέδαση"
 
 #: ../..//portable/app.py:2222
 msgid "High-Def"
-msgstr ""
+msgstr "Υψηλή-Ποιότητα"
 
 #: ../..//portable/app.py:2230
 msgid "Mac"
-msgstr ""
+msgstr "Mac"
 
 #: ../..//portable/app.py:2245
 msgid "Example Playlist"
-msgstr ""
+msgstr "Δείγμα Λίστας Αναπαραγωγής"
 
 #: ../..//portable/app.py:2264
 msgid "Custom Channels"
-msgstr ""
+msgstr "Καθορισμένα απο το χρήστη κανάλια"
 
 #: ../..//portable/app.py:2264
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
 msgstr ""
+"Τρέχετε μια έκδοση του $longAppName  με  καθορισμένα απο  το χρήστη κανάλια"
 
 #: ../..//portable/autoupdate.py:121
 #, fuzzy
@@ -1080,9 +1148,9 @@ msgid "%s Version Alert"
 msgstr "Συναγερμός Έκδοσης %s"
 
 #: ../..//portable/autoupdate.py:122
-#, fuzzy
+#, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
-msgstr "Μία νέα έκδοση του %s είναι διαθέσιμη; Θέλτε να κάνετε λήψη τώρα;"
+msgstr "Μία νέα έκδοση του %s είναι διαθέσιμη. Θέλτε να κάνετε λήψη τώρα;"
 
 #: ../..//portable/autoupdate.py:128
 #, python-format
@@ -1090,9 +1158,9 @@ msgid "%s Version Check"
 msgstr "Έλεγχος Έκδοσης %s"
 
 #: ../..//portable/autoupdate.py:129
-#, fuzzy
+#, python-format
 msgid "%s is up to date."
-msgstr "%s είναι ενημερωμένο."
+msgstr "Το %s είναι ενημερωμένο."
 
 #: ../..//portable/dialogs.py:76
 msgid "Ok"
@@ -1101,12 +1169,12 @@ msgstr "Εντάξει"
 #: ../..//portable/dialogs.py:81 ../../platform/gtk-x11/glade/miro.glade.h:48
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
-msgstr ""
+msgstr "Μεταφορά"
 
 #: ../..//portable/dialogs.py:82 ../../platform/gtk-x11/glade/miro.glade.h:38
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
-msgstr ""
+msgstr "Μην μεταφέρεις"
 
 #: ../..//portable/dialogs.py:83 ../..//portable/item.py:1463
 #: ../..//portable/menu.py:111
@@ -1132,16 +1200,16 @@ msgstr "Κράτα τα Βίντεο"
 
 #: ../..//portable/dialogs.py:88
 msgid "Delete Videos"
-msgstr ""
+msgstr "Διαγραφή των βίντεο"
 
 #: ../..//portable/dialogs.py:90
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
 msgid "Create Channel"
-msgstr ""
+msgstr "Δημιουργία καναλιού"
 
 #: ../..//portable/dialogs.py:91
 msgid "Add"
-msgstr ""
+msgstr "Προσθήκη"
 
 #: ../..//portable/dialogs.py:92
 msgid "Add Into New Folder"
@@ -1157,18 +1225,17 @@ msgstr "Όχι Τώρα"
 
 #: ../..//portable/dialogs.py:96
 msgid "Close to Tray"
-msgstr ""
+msgstr "Ελαχιστοποίηση στην μπάρα εργαλείων"
 
 #: ../..//portable/dialogs.py:211 ../../platform/gtk-x11/glade/miro.glade.h:52
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
-#, fuzzy
 msgid "New Search Channel"
 msgstr "Νέα Αναζήτηση Καναλιού"
 
 #: ../..//portable/dialogs.py:211 ../../platform/gtk-x11/glade/miro.glade.h:31
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
-msgstr ""
+msgstr "Έναστοιχείο της αναζήτησης σας περιελαμβάνεται  σε ενα κανάλι"
 
 #: ../..//portable/downloader.py:214
 msgid "activity"
@@ -1184,7 +1251,7 @@ msgstr ""
 
 #: ../..//portable/downloader.py:430
 msgid "starting up"
-msgstr ""
+msgstr "εκκίνηση"
 
 #: ../..//portable/feed.py:380
 msgid "never"
@@ -1208,50 +1275,50 @@ msgstr "%d ημέρες"
 #: ../..//portable/feed.py:388
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d μήνες"
 
 #: ../..//portable/feed.py:779
 msgid "Update Channel Now"
-msgstr ""
+msgstr "Ενημέρωση καναλιού τώρα"
 
 #: ../..//portable/feed.py:781 ../..//portable/guide.py:52
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "Αντιγραφή του  URL στο πρόχειρο"
 
 #: ../..//portable/feed.py:782 ../..//portable/feed.py:791
 msgid "Rename Channel"
-msgstr ""
+msgstr "Μετονομασία Καναλιού"
 
 #: ../..//portable/feed.py:786
 msgid "Revert Title to Default"
-msgstr ""
+msgstr "Άλλαξε τον Τίτλο στο προκαθορισμένο"
 
 #: ../..//portable/feed.py:792
 #, python-format
 msgid "Enter a new name for the channel %s"
-msgstr ""
+msgstr "Εισάγετε νέο όνομα για το κανάλι %s"
 
 #: ../..//portable/feed.py:879
 msgid "Error loading feed"
-msgstr ""
+msgstr "Σφάλμα φόρτωσης του feed"
 
 #: ../..//portable/feed.py:880
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
-msgstr ""
+msgstr "Δεν μπόρεσα να φορτώσω το feed  σε %s(%s)"
 
 #: ../..//portable/feed.py:883
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "Θέλετε να κρατήσετε το feed"
 
 #: ../..//portable/feed.py:1000
 msgid "Bad content-type"
-msgstr ""
+msgstr "Κατεστραμένου τύπου-αρχείο"
 
 #: ../..//portable/feed.py:1013
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
-msgstr ""
+msgstr "Το κανάλι δεν είναι συμβατό με το $shortAppName!"
 
 #: ../..//portable/feed.py:1014
 msgid ""
@@ -1269,49 +1336,49 @@ msgstr "Αναζήτηση"
 
 #: ../..//portable/feed.py:2064
 msgid "Local Files"
-msgstr ""
+msgstr "Τοπικά Αρχεία"
 
 #: ../..//portable/feed.py:2078
 msgid "Playing File"
-msgstr ""
+msgstr "Aρχείο που παίζει τωρα"
 
 #: ../..//portable/folder.py:132 ../..//portable/folder.py:155
 msgid "Rename Channel Folder"
-msgstr ""
+msgstr "Επανονομασία  Φακέλου  του Καναλιού"
 
 #: ../..//portable/folder.py:134
 #, python-format
 msgid "Enter a new name for the channel folder %s"
-msgstr ""
+msgstr "Βάλτε ενα νέο όνομα για το φάκελο του καναλιού %s"
 
 #: ../..//portable/folder.py:210 ../..//portable/folder.py:215
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Μετονομασία φακέλου λίστας αναπαραγωγής"
 
 #: ../..//portable/folder.py:217
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
-msgstr ""
+msgstr "Εισάγετε νέο όνομα για τον φάκελο %s της λίστας αναπαραγωγής"
 
 #: ../..//portable/folder.py:225
 msgid "Create Channel Folder"
-msgstr ""
+msgstr "Δημιουργία φακέλου καναλιού"
 
 #: ../..//portable/folder.py:226 ../..//portable/singleclick.py:176
 msgid "Enter a name for the new channel folder"
-msgstr ""
+msgstr "Εισάγετε όνομα για το νέο φάκελο καναλιού"
 
 #: ../..//portable/folder.py:239
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Δημιουργία φακέλου λίστας αναπαραγωγής"
 
 #: ../..//portable/folder.py:240
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Εισάγετε όνομα για το νέο φάκελο της λίστας αναπαραγωγής"
 
 #: ../..//portable/guide.py:75
 msgid "Miro Guide"
-msgstr ""
+msgstr "Όδηγός του Miro"
 
 #: ../..//portable/httpclient.py:67
 #, python-format
@@ -1336,9 +1403,9 @@ msgid "HTTP error"
 msgstr "σφάλμα HTTP"
 
 #: ../..//portable/httpclient.py:95
-#, python-format
+#, fuzzy
 msgid "Bad Status Line: %s"
-msgstr ""
+msgstr "Κακή γραμμή %s"
 
 #: ../..//portable/httpclient.py:98
 #, python-format
@@ -1353,7 +1420,7 @@ msgstr ""
 #: ../..//portable/httpclient.py:104
 #, python-format
 msgid "Expected CRLF got: %r"
-msgstr ""
+msgstr "Αναμενόμενο CRLF δέκτηκα %r"
 
 #: ../..//portable/httpclient.py:107
 #, python-format
@@ -1362,7 +1429,7 @@ msgstr "%s τερμάτισε τη σύνδεση"
 
 #: ../..//portable/httpclient.py:113
 msgid "Got 404 status code"
-msgstr ""
+msgstr "Σφάλμα 404"
 
 #: ../..//portable/httpclient.py:115
 #, python-format
@@ -1379,7 +1446,7 @@ msgstr "Εσωτερικό σφάλμα"
 
 #: ../..//portable/httpclient.py:125
 msgid "Pipeline request never started"
-msgstr ""
+msgstr "Ο αγωγός δεδομένων  (pipeline)ζήτησε να μην αρχίσει ξανά"
 
 #: ../..//portable/httpclient.py:129
 msgid "Timeout"
@@ -1388,16 +1455,16 @@ msgstr "Χρονική λήξη"
 #: ../..//portable/httpclient.py:130
 #, python-format
 msgid "Connection to %s timed out"
-msgstr ""
+msgstr "Η σύνδεση σε %s έληξε"
 
 #: ../..//portable/httpclient.py:134
 msgid "Invalid URL"
-msgstr "Μη έγκυση διεύθυνση"
+msgstr "Μη έγκυρη διεύθυνση δικτύου URL"
 
 #: ../..//portable/httpclient.py:135
-#, fuzzy
+#, python-format
 msgid "%s is not a valid URL"
-msgstr "Η %s δεν είναι έγκυρη διεύθυνση"
+msgstr "Η %s δεν είναι έγκυρη διεύθυνση URL"
 
 #: ../..//portable/httpclient.py:355
 msgid "Connection closed"
@@ -1408,7 +1475,6 @@ msgid "Unknown"
 msgstr "Άγνωστο"
 
 #: ../..//portable/httpclient.py:781
-#, fuzzy
 msgid "Internal Error: Not ready to send"
 msgstr "Εσωτερικό Σφάλμα: Δεν είναι έτοιμη η αποστολή"
 
@@ -1422,6 +1488,8 @@ msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from the Library?"
 msgstr ""
+"Θα θέλατε να διαγράψετε αυτόν τον φάκελο και όλα του τα βίντεο ή απλά να τον "
+"αφαιρέσετε από την βιβλιοθήκη;"
 
 #: ../..//portable/item.py:486
 msgid ""
@@ -1479,20 +1547,22 @@ msgid "Leachers:"
 msgstr "Χρήστες που κατεβάζουν:"
 
 #: ../..//portable/item.py:958
+#, fuzzy
 msgid "Down Rate:"
-msgstr "Κάτω ταχύτητα:"
+msgstr "ταχύτητα κατεβάσματος"
 
 #: ../..//portable/item.py:959
+#, fuzzy
 msgid "Down Total:"
-msgstr "Κάτω σύνολο:"
+msgstr "σύνολο κατεβασμένων αρχείων:"
 
 #: ../..//portable/item.py:961
 msgid "Up Rate:"
-msgstr "Πάνω ταχύτητα:"
+msgstr "ταχύτητα ανεβάσματος:"
 
 #: ../..//portable/item.py:962
 msgid "Up Total:"
-msgstr "Πάνω σύνολο:"
+msgstr "σύνολο ανεβασμένων:"
 
 #: ../..//portable/item.py:967
 msgid "Web page:"
@@ -1566,7 +1636,7 @@ msgstr "Αφαίρεση από τη λίστα αναπαραγωγής"
 
 #: ../..//portable/item.py:1448 ../..//portable/menu.py:99
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Διαγραφή από τη Βιβλιοθήκη"
 
 #: ../..//portable/item.py:1450 ../..//portable/menu.py:94
 msgid "Play"
@@ -1606,6 +1676,8 @@ msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from the Library?"
 msgstr ""
+"Ένα ή περισσότερα από αυτά τα βίντεο δεν λήφθηκε από ένα κανάλι. Θέλετε να "
+"τα διαγράψετε ή απλά να τα αφαιρέσετε από τη βιβλιοθήκη;"
 
 #: ../..//portable/item.py:1807
 msgid ""
@@ -1618,22 +1690,22 @@ msgstr ""
 
 #: ../..//portable/menu.py:69
 msgid "Update Channels Now"
-msgstr ""
+msgstr "Ανανέωση καναλιών τώρα"
 
 #: ../..//portable/menu.py:92
 #, python-format
 msgid "%d Downloaded Items"
-msgstr ""
+msgstr "%d αντικείμενα λήφθηκαν"
 
 #: ../..//portable/menu.py:110
 #, python-format
 msgid "%d Available Items"
-msgstr ""
+msgstr "%d διαθέσιμα αντικείμενα"
 
 #: ../..//portable/menu.py:116
 #, python-format
 msgid "%d Downloading Items"
-msgstr ""
+msgstr "%d αντικείμενα λαμβάνονται"
 
 #: ../..//portable/menubar.py:132
 msgid "_Open"
@@ -1649,11 +1721,11 @@ msgstr "_Απομάκρυνση βίντεο"
 
 #: ../..//portable/menubar.py:137
 msgid "_Remove Videos"
-msgstr ""
+msgstr "_Αφαίρεση Βίντεο"
 
 #: ../..//portable/menubar.py:138
 msgid "Re_name Video"
-msgstr ""
+msgstr "Αλλαγή_ονόματος Βίντεο"
 
 #: ../..//portable/menubar.py:139
 msgid "Save Video _As..."
@@ -1661,11 +1733,11 @@ msgstr "Αποθήκευση αυτού του βίντεο ως"
 
 #: ../..//portable/menubar.py:140
 msgid "Save Videos _As..."
-msgstr ""
+msgstr "Σώσε τα Βίντεο"
 
 #: ../..//portable/menubar.py:141
 msgid "Copy Video _URL"
-msgstr ""
+msgstr "Αντέγραψε το Βίντεο στη διεύθυνση _URL"
 
 #: ../..//portable/menubar.py:143
 msgid "_Options"
@@ -1697,7 +1769,7 @@ msgstr "Διαγραφή"
 
 #: ../..//portable/menubar.py:160
 msgid "Add _Channel"
-msgstr ""
+msgstr "Πρόσθεσε"
 
 #: ../..//portable/menubar.py:161
 msgid "New Searc_h Channel..."
@@ -1749,15 +1821,17 @@ msgstr ""
 
 #: ../..//portable/menubar.py:186
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "_Αφαίρεσε τον Φάκελο του Playlist"
 
 #: ../..//portable/menubar.py:196
+#, fuzzy
 msgid "_Play"
-msgstr ""
+msgstr "_Αναπαραγωγή"
 
 #: ../..//portable/menubar.py:197
+#, fuzzy
 msgid "_Stop"
-msgstr ""
+msgstr "_Διακοπή"
 
 #: ../..//portable/menubar.py:199
 msgid "_Next Video"
@@ -1768,28 +1842,33 @@ msgid "_Previous Video"
 msgstr "_Προηγούμενο βίντεο"
 
 #: ../..//portable/menubar.py:202
+#, fuzzy
 msgid "Skip _Forward"
-msgstr ""
+msgstr "Παράκαμψη προς τα _Μπροστά"
 
 #: ../..//portable/menubar.py:203
+#, fuzzy
 msgid "Skip _Back"
-msgstr ""
+msgstr "Παράκαμψη προς τα _Πίσω"
 
 #: ../..//portable/menubar.py:205
+#, fuzzy
 msgid "Volume _Up"
-msgstr ""
+msgstr "_Αύξυση έντασης"
 
 #: ../..//portable/menubar.py:206
 msgid "Volume _Down"
-msgstr ""
+msgstr "_Μείωση έντασης"
 
 #: ../..//portable/menubar.py:208
+#, fuzzy
 msgid "_Fullscreen"
-msgstr "Πλήρης _Οθόνη"
+msgstr "_Πλήρης οθόνη"
 
 #: ../..//portable/menubar.py:212
+#, fuzzy
 msgid "_About"
-msgstr ""
+msgstr "_Πληροφορίες"
 
 #: ../..//portable/menubar.py:213
 msgid "_Donate"
@@ -1801,7 +1880,7 @@ msgstr "_Βοήθεια"
 
 #: ../..//portable/menubar.py:216
 msgid "Report a _Bug"
-msgstr ""
+msgstr "Ανέφερε ενα _Σφάλμα"
 
 #: ../..//portable/menubar.py:220
 msgid "_Video"
@@ -1809,7 +1888,7 @@ msgstr "_Βίντεο"
 
 #: ../..//portable/menubar.py:222
 msgid "_File"
-msgstr ""
+msgstr "Αρχείο"
 
 #: ../..//portable/menubar.py:226
 msgid "_Channels"
@@ -1825,58 +1904,58 @@ msgstr "Α_ναπαραγωγή"
 
 #: ../..//portable/menubar.py:233
 msgid "Play Unwatched ($numUnwatched)"
-msgstr ""
+msgstr "Αναπαραγωγή  όσων δεν έχουν παιχτεί ($numUnwatched)"
 
 #: ../..//portable/menubar.py:234
 msgid "Pause All Downloads ($numDownloading)"
-msgstr ""
+msgstr "Πάγωμα όλων των λήψεων ($numDownloading)"
 
 #: ../..//portable/menubar.py:235
 msgid "Resume All Downloads ($numPaused)"
-msgstr ""
+msgstr "Επαναφορά όλων των λήψεων  ($numPaused)"
 
 #: ../..//portable/menubar.py:237
 msgid "Options"
-msgstr ""
+msgstr "Επιλογές"
 
 #: ../..//portable/menubar.py:239
 msgid "Hide Window"
-msgstr ""
+msgstr "Απόκρυψη Παραθύρου"
 
 #: ../..//portable/menubar.py:240
 msgid "Show Window"
-msgstr ""
+msgstr "Εμφάνιση Παραθύρου"
 
 #: ../..//portable/playlist.py:196 ../..//portable/playlist.py:201
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Μετονομασία λίστας αναπαραγωγής"
 
 #: ../..//portable/playlist.py:202
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Εισάγετε ένα νεο όνομα για την λίστα αναπαραγωγής %s"
 
 #: ../..//portable/playlist.py:224
 msgid "Create Playlist"
-msgstr ""
+msgstr "Δημιουργία λίστας αναπαραγωγής"
 
 #: ../..//portable/playlist.py:225
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Εισάγετε ένα όνομα για την νέα λίστα αναπαραγωγής"
 
 #: ../..//portable/singleclick.py:161
 msgid "Subscribing to multiple channels"
-msgstr ""
+msgstr "Γίνετε συνδρομητές σε πολλαπλά κανάλια"
 
 #: ../..//portable/singleclick.py:162
 #, python-format
 msgid "Create %d channels?"
-msgstr ""
+msgstr "Δημιουργία %d  καναλιών;"
 
 #: ../..//portable/singleclick.py:175
 #, python-format
 msgid "Adding %d channels to a new folder"
-msgstr ""
+msgstr "Πρόσθεσε %d κανάλια σε ενα νέο φάκελο"
 
 #: ../..//portable/singleclick.py:179
 #, python-format
@@ -1884,10 +1963,12 @@ msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
 "will stay where they currently are."
 msgstr ""
+"ΣΗΜΕΙΩΣΗ: Είσαστε ήδη εγγεγραμμένος σε %d από αυτά τα κανάλια. Αυτά θα "
+"παραμείνουν εκεί που ήδη βρίσκονται."
 
 #: ../..//portable/singleclick.py:190
 msgid "Subscription error"
-msgstr ""
+msgstr "Σφάλμα εγγραφής"
 
 #: ../..//portable/singleclick.py:200
 msgid ""
@@ -1907,17 +1988,19 @@ msgstr ""
 
 #: ../..//portable/singleclick.py:251
 msgid "Invalid Torrent"
-msgstr ""
+msgstr "Μη έγκυρο Torrent"
 
 #: ../..//portable/singleclick.py:252
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
 msgstr ""
+"Το αρχείο torrent %s φαίνεται να είναι κατεστραμμένο και δε μπορεί να "
+"ανοίξει. [ΟΚ]"
 
 #: ../..//portable/storedatabase.py:828 ../..//portable/storedatabase.py:1189
-#, fuzzy
+#, python-format
 msgid "%s database save succeeded"
-msgstr "%s βάση δεδομένων αποθηκεύτηκε επιτυχώς"
+msgstr "Επιτυχής αποθήκευση βάσης δεδομένων %s"
 
 #: ../..//portable/storedatabase.py:829 ../..//portable/storedatabase.py:1190
 msgid ""
@@ -1943,11 +2026,11 @@ msgstr ""
 
 #: ../..//portable/tabs.py:43
 msgid "Library"
-msgstr ""
+msgstr "Βιβλιοθήκη"
 
 #: ../..//portable/tabs.py:44
 msgid "New"
-msgstr ""
+msgstr "Νέο"
 
 #: ../..//portable/tabs.py:46
 msgid "Downloading"
@@ -1995,7 +2078,7 @@ msgstr "%dB"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "(Changes won't go into effect until you restart Miro)"
-msgstr ""
+msgstr "(Οι αλλαγές δεν θα ισχύσουν αν δεν επανεκκινήσετε τον Miro)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -2006,10 +2089,16 @@ msgid ""
 "1 month\n"
 "Never"
 msgstr ""
+"1 ημέρα\n"
+"3 ημέρες\n"
+"6 ημέρες\n"
+"10 ημέρες\n"
+"1 μήνας\n"
+"Ποτέ"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:8
 msgid "<b>BitTorrent</b>"
-msgstr ""
+msgstr "<b>BitTorrent</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
 msgid "<b>Channels</b>"
@@ -2025,19 +2114,19 @@ msgstr "<b>Μεταφορές</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12
 msgid "<b>Folders in the Library</b>"
-msgstr ""
+msgstr "<b>Φάκελοι στην Βιβλιοθήκη</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:13
 msgid "<b>General</b>"
-msgstr ""
+msgstr "<b>Γενικά</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:14
 msgid "<b>Playback</b>"
-msgstr ""
+msgstr "<b>Αναπαραγωγή</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:15
 msgid "<b>Searching for Videos</b>"
-msgstr ""
+msgstr "<b>Ψάχνω για Βίντεο</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:16
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
@@ -2080,12 +2169,12 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Bit Torrent uses ports between"
-msgstr ""
+msgstr "Το Bit Torrent χρησιμοποιεί τις θύρες μεταξύ"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "By default, videos expire after"
-msgstr ""
+msgstr "Εξ' ορισμού, τα βίντεο λήγουν μετά από"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "C_hannel:"
@@ -2098,7 +2187,7 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/miro.glade.h:37
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Check Channels for new content"
-msgstr ""
+msgstr "Ελέγχος καναλιών για νέο περιεχόμενο"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid ""
@@ -2106,6 +2195,9 @@ msgid ""
 "Every hour\n"
 "Manually"
 msgstr ""
+"Κάθε 30 λεπτά\n"
+"Κάθε ώρα\n"
+"Χειροκίνητα"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid "GB free"
@@ -2118,7 +2210,7 @@ msgstr "Πάμε"
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
-msgstr ""
+msgstr "Σ' αυτό:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "KB/s when my computer is active"
@@ -2129,10 +2221,12 @@ msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
+"Ο Miro μπορεί να βρει όλα τα βίντεο στον υπολογιστή σας για να σας βοηθήσει "
+"να οργανώσετε τη συλλογή σας."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid "Play videos one after another"
-msgstr ""
+msgstr "Αναπαραγωγή βίντεο διαδοχικά"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:54
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
@@ -2146,6 +2240,7 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "Resume playback of videos from the point where they were stopped"
 msgstr ""
+"Συνεχίσε την αναπαραγωγή των βίντεο από το σημείο στο οποίο σταμάτησε"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Search _Engine:"
@@ -2157,7 +2252,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Select Movies Directory"
-msgstr ""
+msgstr "Επιλογή φακέλου ταινιών"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid "Select custom search directory"
@@ -2209,11 +2304,11 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "_Add Folder"
-msgstr ""
+msgstr "_Προσθήκη καταλόγου"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
-msgstr ""
+msgstr "_Αναζήτηση"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "_Search For:"
@@ -2225,7 +2320,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "_URL"
-msgstr ""
+msgstr "_URL"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
@@ -2234,18 +2329,22 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "videos at once"
-msgstr ""
+msgstr "βίντεο ταυτόχρονα"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
+#, fuzzy
 msgid ""
 "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName έκδοση $appVersion ($appRevision); προστασία δικαιωμάτων ( "
+"copyright) (c) 2005-2007 $publisher.$longAppName και το $longAppName  "
+"λογότυπο  ειναι χαρακτηριστικά του $publisher"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
-msgstr ""
+msgstr "Πληροφορίες για το $longAppNAme"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
 msgid "Add Channel"
@@ -2254,14 +2353,16 @@ msgstr "Προσθήκη καναλιού"
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
 msgid "Please enter the URL of the channel you'd like to add."
 msgstr ""
+"Παρακαλώ εισάγετε το URL του καναλιού που θέλετε να προσθέσετε στην συλλογή "
+"σας."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
 msgid "Copy log to clipboard"
-msgstr ""
+msgstr "Αντιγραφή του log στην προσωρινή μνήμη (clipboard)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
 msgid "Open up the bug tracker"
-msgstr ""
+msgstr "Άνοιξε τον ανιχνευτή σφαλμάτων"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
 msgid ""
@@ -2269,6 +2370,11 @@ msgid ""
 "information into our bug tracker and tell us what you were doing when the\n"
 "problem occurred."
 msgstr ""
+"Παρακαλούμε βοηθήστε μας να  επιδιορθώσουμε τη βλάβη. Αντιγράψτε και "
+"επικολλήστε όλες τις\n"
+"πληροφορίες στον ανιχνευτή σφαλμάτων και περιγράψτε μας τι ακριβώς κάνατε "
+"όταν εμφανίστηκε το\n"
+"πρόβλημα."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
 msgid ""
@@ -2276,10 +2382,14 @@ msgid ""
 "Sorry for the inconvenience. $longAppName is still in beta, but with your "
 "help we're fixing problems fast!"
 msgstr ""
+"Μετά, κάντε επανεκκίνηση του $longAppName (αλλιώς θα συνεχίζετε να λαμβάνετε "
+"ανάλογα μηνύματα λαθών). Λυπούμαστε για την δύσκολη θεση που σας φέραμε. Το "
+"$longAppName είναι ακόμα σε δοκιμαστική έκδοση-'βήτα'(beta), αλλά με την "
+"βοήθειά σας λύνουμε τα προβλήματα που προκύπτουν σύντομα!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
 msgid "You found a bug in $longAppName!"
-msgstr ""
+msgstr "Βρήκατε ενα σφάλμα στο $longAppName!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
@@ -2289,34 +2399,43 @@ msgstr " "
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
 msgid "'"
-msgstr ""
+msgstr "'"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
 msgstr ""
+"Αλλά εμείς θα προσπαθήσουμε να μεταφέρουμε τα αρχεία. Μπορεί να πάρει "
+"επιπλέον χρόνο να δημιουργηθεί μια λίστα των βίντεο και οι περιγραφές τους "
+"μπορεί να είναι αστείες."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
 msgid "Please contact the publishers of"
-msgstr ""
+msgstr "Παρακαλούμε επικοινωνήστε με τον εκδότη του"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
 msgid ""
 "and ask if they can supply a feed in a format that will work with "
 "$shortAppName."
 msgstr ""
+"και ρωτήστε εάν μπορεί να σας παράσχει κάποια ροή συνεχούς ενημέρωσης "
+"(feed), η οποία θα είναι συμβατή με το $shortAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
 msgid "$longAppName"
-msgstr ""
+msgstr "$longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4
+#, fuzzy
 msgid ""
 "You've selected a new folder to download movies to.  Should $shortAppName "
 "migrate your existing downloads there?(Currently dowloading movies will not "
 "be moved until they finish)"
 msgstr ""
+"Έχετε επιλέξει εναν νέο φάκελο για να αποθηκεύετε τις ταινίες σας. Θέλετε το "
+" $shortAppName να μεταφέρει τις υπάρχουσες καταχωρήσεις εκεί; (Οι ταινίες οι "
+"οποίες ήδη κατεβαίνουν δεν θα μετακινηθούν έως ότου ολοκληρωθεί η λήψη τους)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
@@ -2327,15 +2446,20 @@ msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
 msgstr ""
+"Παρακαλούμε  εισάγετε το όνομα χρήστη (username) και τον κωδικό πρόσβασης "
+"(password) που σας παρείχε ο παραγωγός του καναλιού"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
+#, fuzzy
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
 msgstr ""
+"(ΠΡΟΣΟΧΗ: Οι αλλαγές δεν θα έχουν αποτέλεσμα εάν δεν επανεκκινήσετε το "
+"$longAppName.)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Add Folder..."
-msgstr ""
+msgstr "Προσθήκη φακέλου..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Automatically run $longAppName when I login"
@@ -2343,27 +2467,27 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
 msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgstr "Ελαχιστοποίηση στην μπάρα εργαλείων ώστε οι λήψεις να συνεχίζονται."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "Κάθε 30 λεπτά"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Every hour"
-msgstr ""
+msgstr "Κάθε ώρα"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Manually"
-msgstr ""
+msgstr "Χειροκίνητα"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "Quit Miro completely"
-msgstr ""
+msgstr "Πλήρης έξοδος από τον Miro"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid "Store downloaded videos in this folder:"
-msgstr ""
+msgstr "Αποθήκευση ληφθέντων βίντεο σε αυτόν τον φάκελο:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid ""
@@ -2378,30 +2502,34 @@ msgstr ""
 "συμπεριλαμβάνεις στο Η Συλλογή Μου:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
+#, fuzzy
 msgid "When I click the red close button:"
-msgstr ""
+msgstr "Όταν πατήσω πάνω στο κόκκινο κουμπί για τον τερματισμό του Miro:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
-msgstr ""
+msgstr "Κανάλι:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
 msgid "Search Engine:"
-msgstr ""
+msgstr "Μηχανή αναζήτησης:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
 msgid "Search For:"
-msgstr ""
+msgstr "Ψάξε για:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
-msgstr ""
+msgstr "Διεύθυνση δικτύου:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
+#, fuzzy
 msgid ""
 "$longAppName can find all the videos on your computer to help you organize "
 "your collection."
 msgstr ""
+"Το $longAppName μπορεί να βρεί όλα τα βίντεο που είναι αποθηκευμένα στον "
+"υπολογιστή σας και να σας βοηθήσει να οργανώσετε την συλλογή σας."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
 msgid ""
@@ -2435,11 +2563,11 @@ msgstr "Αναζήτηση Βίντεο:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
 msgid "Go Big:"
-msgstr ""
+msgstr "Πήγαινε μεγάλε:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
 msgid "Leave it On:"
-msgstr ""
+msgstr "Άφησε το σε μένα:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
 msgid ""

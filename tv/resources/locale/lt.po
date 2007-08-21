@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Rosetta-Export-Date: 2007-07-31 02:08:57+0000\n"
+"X-Rosetta-Export-Date: 2007-08-21 13:58:52+0000\n"
 
 msgid "$log"
 msgstr ""

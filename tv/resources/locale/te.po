@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-07-27 11:40+0000\n"
+"PO-Revision-Date: 2007-08-02 11:08+0000\n"
 "Last-Translator: వీవెన్ (Veeven) <veeven@gmail.com>\n"
 "Language-Team: Telugu <te@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:21:55+0000\n"
+"X-Rosetta-Export-Date: 2007-08-03 15:30:01+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -52,7 +52,7 @@ msgid "About Miro"
 msgstr "మీరో గురించి"
 
 msgid "Add Channel..."
-msgstr ""
+msgstr "వాహిని చేర్చు..."
 
 msgid "Add Guide..."
 msgstr ""
@@ -63,7 +63,7 @@ msgstr ""
 #: ../..//platform/osx/frontend/Preferences.py:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Channels"
-msgstr ""
+msgstr "వాహినులు"
 
 msgid "Check for New Version"
 msgstr ""
@@ -72,10 +72,10 @@ msgid "Clear Menu"
 msgstr ""
 
 msgid "Close Window"
-msgstr ""
+msgstr "కిటికీ మూసేయి"
 
 msgid "Copy"
-msgstr ""
+msgstr "కాపీచేయి"
 
 msgid "Copy Channel URL"
 msgstr ""
@@ -91,7 +91,7 @@ msgid "Delete"
 msgstr "తొలగించు"
 
 msgid "Donate"
-msgstr ""
+msgstr "విరాళమివ్వు"
 
 msgid "Edit"
 msgstr ""
@@ -2321,11 +2321,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "ప్రతీ 30 నిమిషాలు"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Every hour"
-msgstr ""
+msgstr "ప్రతీ గంట"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Manually"
@@ -2343,6 +2343,7 @@ msgstr ""
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr ""
+"హెచ్చరిక: ఈ అమరిక మీరు $longAppName ను పునఃప్రారంభించే వరకు ప్రభావంలోకి రాదు."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid ""
@@ -2355,15 +2356,15 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
-msgstr ""
+msgstr "వాహిని:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
 msgid "Search Engine:"
-msgstr ""
+msgstr "శోధన యంత్రం:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
 msgid "Search For:"
-msgstr ""
+msgstr "వెతుకు:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
@@ -2388,7 +2389,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
-msgstr ""
+msgstr "శోధన రద్దుచెయ్యి"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
 msgid "Change"
@@ -2400,7 +2401,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50
 msgid "Find Videos:"
-msgstr ""
+msgstr "వీడియోలు వెతుకు:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
 msgid "Go Big:"

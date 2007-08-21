@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-07-24 06:54+0000\n"
-"Last-Translator: Ahmad Farghal <ahmad.farghal@gmail.com>\n"
+"PO-Revision-Date: 2007-08-11 17:35+0000\n"
+"Last-Translator: moutarjim05 <w05elcome@hotmail.com>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0 : n == 2 ? 1 : 2);\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:20:26+0000\n"
+"X-Rosetta-Export-Date: 2007-08-18 21:29:01+0000\n"
 
 #, fuzzy
 msgid "$log"
@@ -63,12 +63,12 @@ msgid "Add Guide..."
 msgstr "أضف دليلاً..."
 
 msgid "Bring All to Front"
-msgstr "أظهر الجميع في المقدمة"
+msgstr "أجلب الكل الى الواجهة"
 
 #: ../..//platform/osx/frontend/Preferences.py:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Channels"
-msgstr "القنوات"
+msgstr "قنوات"
 
 msgid "Check for New Version"
 msgstr "تحقق من وجود إصدار جديد"
@@ -80,7 +80,7 @@ msgid "Close Window"
 msgstr "أغلق النافذة"
 
 msgid "Copy"
-msgstr "إنسخ"
+msgstr "نسخ"
 
 msgid "Copy Channel URL"
 msgstr "انسخ عنوان القناة"
@@ -93,7 +93,7 @@ msgstr "قصّ"
 
 #: ../..//portable/dialogs.py:94
 msgid "Delete"
-msgstr "احذف"
+msgstr "حذف"
 
 msgid "Donate"
 msgstr "تبرع"
@@ -111,32 +111,33 @@ msgid "Help"
 msgstr "مساعدة"
 
 msgid "Hide Miro"
-msgstr ""
+msgstr "إخفاء ميرو"
 
 msgid "Hide Others"
 msgstr "إخفِ الآخرين"
 
 msgid "Main Window"
-msgstr "النافذة الرئيسية"
+msgstr "نافذة رئيسية"
 
 msgid "MainMenu"
-msgstr "القائمة الرئيسية"
+msgstr "قائمة رئيسية"
 
 msgid "Minimize"
 msgstr "صغّر"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "Miro"
-msgstr ""
+msgstr "ميرو"
 
+#, fuzzy
 msgid "Miro Help"
-msgstr ""
+msgstr "مساعدة ميرو"
 
 msgid "New Channel Folder..."
-msgstr "مجلد قنوات جديد..."
+msgstr "مجلد قنات جديد..."
 
 msgid "New Playlist Folder..."
-msgstr "مجلد قوائم تشغيل جديد..."
+msgstr "مجلد قائمة تشغيل جديد..."
 
 msgid "New Playlist..."
 msgstr "قائمة تشغيل جديدة..."
@@ -175,8 +176,9 @@ msgstr "تفضيلات"
 msgid "Previous Video"
 msgstr "الفيديو السابق"
 
+#, fuzzy
 msgid "Quit Miro"
-msgstr ""
+msgstr "الخروج"
 
 msgid "Remove..."
 msgstr "أزل..."
@@ -185,7 +187,7 @@ msgid "Rename..."
 msgstr "أ_عِد التسمية..."
 
 msgid "Report a bug"
-msgstr ""
+msgstr "تقرير عن الخطأ"
 
 msgid "Save Video As..."
 msgstr "احفظ الفيديو باسم..."
@@ -227,7 +229,7 @@ msgid "%donation label%"
 msgstr "ملصق تبرٌع"
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
 msgstr "00:00:00"
@@ -240,7 +242,7 @@ msgstr "تحكم الشاشه الكامله"
 
 #: ../..//portable/tabs.py:45
 msgid "Video Search"
-msgstr ""
+msgstr "البحث عن فيديو"
 
 msgid "VideoWindow"
 msgstr "شباك الفيديو"
@@ -271,10 +273,10 @@ msgid " limit upstream to"
 msgstr " حدٌد جريان البث"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(يجب عليك إعادة تشغيل ميرو لكي يصبح هذا التغيير ساري المفعول)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
-msgstr ""
+msgstr "يمثّل كسر سطر. بداية سطر جديد في الموقع المكافئ في الترجمة.\n"
 
 msgid "(movies directory path goes here)"
 msgstr "(مسار الأفلام يأتي هنا)"
@@ -309,10 +311,10 @@ msgid "6 days"
 msgstr "6"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "Add..."
-msgstr ""
+msgstr "أضف. . ."
 
 msgid "BitTorrent ports:"
 msgstr ""
@@ -322,7 +324,7 @@ msgstr "مقرر سلفا الفيديو تنتهي مدته بعد:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26
 msgid "Change..."
-msgstr ""
+msgstr "تغيير..."
 
 msgid "Check channels for new content:"
 msgstr "إبحث في الاقنيه عن محتوى جديد"
@@ -335,10 +337,10 @@ msgstr "لا تبدأ التحميل إذا بقي أقل من"
 #: ../../platform/gtk-x11/glade/miro.glade.h:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Download at most"
-msgstr ""
+msgstr "تنزيل على الأغلب"
 
 msgid "Folder location"
-msgstr ""
+msgstr "موقع الدليل"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid "GB free."
@@ -366,8 +368,9 @@ msgid "Play videos one after another."
 msgstr "شغل الفيديو  واحد تلو الاخر"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
+#, fuzzy
 msgid "Remember video position."
-msgstr ""
+msgstr "تذكر نقطة العرض"
 
 #: ../..//portable/feed.py:787 ../..//portable/folder.py:156
 #: ../..//portable/folder.py:211 ../..//portable/guide.py:55
@@ -375,10 +378,10 @@ msgstr ""
 #: ../..//portable/playlist.py:197
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
 msgid "Remove"
-msgstr ""
+msgstr "إزالة"
 
 msgid "Run Miro at startup"
-msgstr ""
+msgstr "شغّل ميرو عند البدأ"
 
 msgid "Save downloaded videos in this folder:"
 msgstr "احفظ الفيديو المحمل في هذا الملف"
@@ -386,7 +389,7 @@ msgstr "احفظ الفيديو المحمل في هذا الملف"
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:557
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Show as Channel"
-msgstr ""
+msgstr "أظهر كقناة"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Stop after each video."
@@ -397,7 +400,7 @@ msgstr "لتجنب بطىء الانترنت:"
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
-msgstr ""
+msgstr "ترقّب فيديوات جديدة في هذه المجلّدات وضمّنها في المكتبة:"
 
 msgid "every 30 minutes"
 msgstr "كل 30 دقيقة"
@@ -413,10 +416,10 @@ msgid "videos at once."
 msgstr ""
 
 msgid "$label$"
-msgstr ""
+msgstr "$علامة$"
 
 msgid "$title$"
-msgstr ""
+msgstr "$ عنوان $"
 
 msgid "Channel"
 msgstr "قناة"
@@ -426,16 +429,16 @@ msgid "Create"
 msgstr "أنشئ"
 
 msgid "In this:"
-msgstr ""
+msgstr "في هذا:"
 
 msgid "Item1"
-msgstr ""
+msgstr "بند 1"
 
 msgid "Search Engine"
-msgstr ""
+msgstr "محرّك بحث"
 
 msgid "Search for:"
-msgstr ""
+msgstr "ابحث عن:"
 
 msgid "URL"
 msgstr ""
@@ -444,13 +447,13 @@ msgstr ""
 #: ../..//platform/windows-xul/frontend_implementation/startup.py:25
 #, python-format
 msgid "(parsed %d files - found %d videos)"
-msgstr ""
+msgstr "(%d ملفات محلّلة -  %d فيديوات وجدت)"
 
 msgid "Back"
 msgstr "رجوع"
 
 msgid "Browse"
-msgstr ""
+msgstr "استعرض"
 
 #: ../..//platform/osx/frontend/StartupPanel.py:90
 #: ../..//platform/osx/frontend/StartupPanel.py:116
@@ -466,7 +469,7 @@ msgid "Only search my Movies folder."
 msgstr "ابحث في ملفاتي للفيديو فقط"
 
 msgid "Search my entire Home folder."
-msgstr ""
+msgstr "بحث مجلدي الرئيسي كاملا."
 
 msgid "Search this folder:"
 msgstr "ابحث في هذه الحافظة:"
@@ -482,6 +485,10 @@ msgid ""
 "\n"
 "Would you like Miro to look for video files on your computer?"
 msgstr ""
+"يمكن لميرو إيجاد كل ملفات الفيديو في جهازك لمساعدتك في تنظيم مجموعتك.\n"
+"\n"
+"\n"
+"هل تود أن يبحث ميرو عن ملفات الفيديو في جهازك؟"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
@@ -542,15 +549,17 @@ msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
+"%رسالة%\n"
+"%رسالة%"
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:312
 msgid "New Channel _Guide..."
-msgstr ""
+msgstr "قناة جديدة _ دليل. . ."
 
 #: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:548
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Folder Location"
-msgstr ""
+msgstr "موقع المجلّد"
 
 #: ../..//platform/gtk-x11/frontend_implementation/startup.py:76
 #: ../..//platform/gtk-x11/frontend_implementation/startup.py:174
@@ -558,45 +567,45 @@ msgstr ""
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] ""
+msgstr[0] "وجد %d فيديو"
 msgstr[1] ""
 msgstr[2] ""
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:42
 msgid "Settings"
-msgstr ""
+msgstr "الاعدادات"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:45
 msgid "Hide"
-msgstr ""
+msgstr "إخفاء"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:47
 msgid "Show"
-msgstr ""
+msgstr "اعرض"
 
 #: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:48
 #: ../..//portable/dialogs.py:80 ../..//portable/menubar.py:241
 msgid "Quit"
-msgstr ""
+msgstr "الخروج"
 
 #: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:170
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
 msgid "Username:"
-msgstr ""
+msgstr "إسم المستخدِم:"
 
 #: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:181
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
 msgid "Password:"
-msgstr ""
+msgstr "كلمة المرور :"
 
 #: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:369
 msgid "Unknown Runtime Error"
-msgstr ""
+msgstr "خطأ وقت التّشغيل مجهول"
 
 #: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:370
 #, python-format
 msgid "An unknown error has occurred %s."
-msgstr ""
+msgstr "حدث %s خطأ مجهول ."
 
 #: ../..//platform/osx/frontend/Application.py:235
 msgid "Pause Video"
@@ -611,29 +620,29 @@ msgstr ""
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
-msgstr ""
+msgstr "لتشغيل %s تحتاج آخر نسخة من كويكتايم ، الذي هو تحديث مجاني ."
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:27
 msgid "Download Completed"
-msgstr ""
+msgstr "أكمل التنزيل"
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:28
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "إنتهى '%s' من تنزيل الفيديو."
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:37
 msgid "Download Failed"
-msgstr ""
+msgstr "فشل التنزيل"
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:38
 #, python-format
 msgid "Download of video '%s' has failed."
-msgstr ""
+msgstr "فشل'%s' من تنزيل الفيديو."
 
 #: ../..//platform/osx/frontend/MainFrame.py:261
 msgid "Subscribe to Channel"
-msgstr ""
+msgstr "اشترك بالقناة"
 
 #: ../..//platform/osx/frontend/MainFrame.py:262
 msgid "Enter the URL of the channel you would like to subscribe to."
@@ -642,16 +651,16 @@ msgstr ""
 #: ../..//platform/osx/frontend/Preferences.py:38
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "General"
-msgstr ""
+msgstr "عـام"
 
 #: ../..//platform/osx/frontend/Preferences.py:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Downloads"
-msgstr ""
+msgstr "تنزيلات"
 
 #: ../..//platform/osx/frontend/Preferences.py:41
 msgid "Folders"
-msgstr ""
+msgstr "المجلدات:"
 
 #: ../..//platform/osx/frontend/Preferences.py:42
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
@@ -671,13 +680,13 @@ msgstr ""
 #: ../..//platform/osx/frontend/Preferences.py:166
 #: ../..//platform/osx/frontend/Preferences.py:230
 msgid "Select"
-msgstr ""
+msgstr "إختر"
 
 #: ../..//platform/osx/frontend/Preferences.py:175
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
-msgstr ""
+msgstr "هجّر الأفلام الموجودة ؟"
 
 #: ../..//platform/osx/frontend/Preferences.py:176
 #, python-format
@@ -689,23 +698,23 @@ msgstr ""
 
 #: ../..//platform/osx/frontend/Preferences.py:228
 msgid "View this Directory in the Library"
-msgstr ""
+msgstr "شاهد هذا الدّليل في المكتبة"
 
 #: ../..//platform/osx/frontend/Preferences.py:229
 msgid "Select a Directory to view in the Library."
-msgstr ""
+msgstr "إختر دليلا لمشاهدته في المكتبة."
 
 #: ../..//platform/osx/frontend/QuicktimeRenderer.py:217
 msgid "Audio"
-msgstr ""
+msgstr "صوتي"
 
 #: ../..//platform/osx/frontend/StartupPanel.py:114
 msgid "Search!"
-msgstr ""
+msgstr "بحث !"
 
 #: ../..//platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
-msgstr ""
+msgstr "_حذف..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:6
 msgid "_Remove Playlist..."
@@ -717,59 +726,59 @@ msgstr ""
 
 #: ../..//platform/osx/frontend/UIStrings.py:8
 msgid "_Remove Playlist Folder..."
-msgstr ""
+msgstr "_نقل مجلّد قائمة التشغيل. . ."
 
 #: ../..//platform/osx/frontend/UIStrings.py:9
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "_نقل مجلّدات قائمة التشغيل. . ."
 
 #: ../..//platform/osx/frontend/UIStrings.py:10 ../..//portable/menubar.py:166
 msgid "_Remove Channel..."
-msgstr ""
+msgstr "_حذف القناة..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:11 ../..//portable/menubar.py:167
 msgid "_Remove Channels..."
-msgstr ""
+msgstr "_حذف القنوات..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:12 ../..//portable/menubar.py:169
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "_نقل مجلّد قناة. . ."
 
 #: ../..//platform/osx/frontend/UIStrings.py:13 ../..//portable/menubar.py:168
 msgid "_Remove Channel Folders..."
-msgstr ""
+msgstr "_نقل مجلّدات قناة. . ."
 
 #: ../..//platform/osx/frontend/UIStrings.py:14
 msgid "_Remove Miro Guide..."
-msgstr ""
+msgstr "_نقل دليل ميرو. . ."
 
 #: ../..//platform/osx/frontend/UIStrings.py:15
 msgid "_Remove Miro Guides..."
-msgstr ""
+msgstr "_نقل أدلة ميرو. . ."
 
 #: ../..//platform/osx/frontend/UIStrings.py:16
 msgid "_Remove Video..."
-msgstr ""
+msgstr "_نقل فيديو. . ."
 
 #: ../..//platform/osx/frontend/UIStrings.py:17
 msgid "_Remove Videos..."
-msgstr ""
+msgstr "_إزالة فيديوات..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:18
 msgid "Re_name..."
-msgstr ""
+msgstr "إعادة_تسمية..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:19
 msgid "Re_name Playlist..."
-msgstr ""
+msgstr "إعادة_تسمية قائمة التّشغيل. . ."
 
 #: ../..//platform/osx/frontend/UIStrings.py:20
 msgid "Re_name Playlist Folder..."
-msgstr ""
+msgstr "إعادة_تسمية مجلّد قائمة التّشغيل. . ."
 
 #: ../..//platform/osx/frontend/UIStrings.py:21 ../..//portable/menubar.py:165
 msgid "Re_name Channel..."
-msgstr ""
+msgstr "إعادة_تسمية قناة. . ."
 
 #: ../..//platform/osx/frontend/UIStrings.py:22
 msgid "Re_name Channel Folder..."
@@ -790,7 +799,7 @@ msgstr ""
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:367
 #: ../..//portable/dl_daemon/download.py:367
 msgid "Error"
-msgstr ""
+msgstr "خطأ"
 
 #: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:440
 #: ../..//portable/dl_daemon/download.py:440
@@ -832,12 +841,12 @@ msgstr ""
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:56
 msgid "Update Available"
-msgstr ""
+msgstr "تحديث متوفّر"
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr ""
+msgstr "إصدار جديد %s متوفّر للتنزيل."
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:182
 msgid "Error Bombing Item"
@@ -849,7 +858,7 @@ msgstr ""
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:186
 msgid "Error Opening Website"
-msgstr ""
+msgstr "خطأ في فتح موقع الويب"
 
 #: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:190
 #, python-format
@@ -862,6 +871,8 @@ msgid ""
 "Error importing modules:\n"
 "%s"
 msgstr ""
+"خطأ إستيراد وحدات:\n"
+"%s"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:49
 msgid "Starting up"
@@ -877,7 +888,7 @@ msgstr ""
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:658
 msgid "Spacebar"
-msgstr ""
+msgstr "عارضة المسافة"
 
 #: ../..//platform/windows-xul/xul/components/pybridge.py:805
 msgid "Close to tray?"
@@ -891,7 +902,7 @@ msgstr ""
 
 #: ../..//portable/app.py:808
 msgid "Database too new"
-msgstr ""
+msgstr "قاعدة بيانات جديدة جدا"
 
 #: ../..//portable/app.py:809
 msgid ""
@@ -904,28 +915,28 @@ msgstr ""
 #: ../..//portable/app.py:1072
 #, python-format
 msgid "Remove %s"
-msgstr ""
+msgstr "إزالة %s"
 
 #: ../..//portable/app.py:969
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
-msgstr ""
+msgstr "هل أنت متأكّد تريد إزالة الدليل %s ؟"
 
 #: ../..//portable/app.py:983
 #, python-format
 msgid "Are you sure you want to remove %s"
-msgstr ""
+msgstr "هل أنت متأكّد تريد إزالة %s ؟"
 
 #: ../..//portable/app.py:986 ../..//portable/app.py:1031
 #: ../..//portable/app.py:1057 ../..//portable/app.py:1076
 #, python-format
 msgid "Remove %s channels"
-msgstr ""
+msgstr "أزل %s قناة"
 
 #: ../..//portable/app.py:988
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
+msgstr "هل أنت متأكّد أنّك تريد إزالة هذه %s قوائم التشغيل"
 
 #: ../..//portable/app.py:1027
 msgid ""

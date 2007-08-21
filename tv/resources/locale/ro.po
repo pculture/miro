@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2007-07-30 13:31-0400\n"
-"PO-Revision-Date: 2007-07-21 00:33+0000\n"
-"Last-Translator: Aremith <vladzaharia@gmail.com>\n"
+"PO-Revision-Date: 2007-08-13 21:20+0000\n"
+"Last-Translator: racealav <raceala.victor@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1)));\n"
-"X-Rosetta-Export-Date: 2007-07-30 22:18:45+0000\n"
+"X-Rosetta-Export-Date: 2007-08-18 21:28:46+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -99,7 +99,7 @@ msgid "Delete"
 msgstr "Șterge"
 
 msgid "Donate"
-msgstr "Donați"
+msgstr "Donează"
 
 msgid "Edit"
 msgstr "Editează"
@@ -108,7 +108,7 @@ msgid "File"
 msgstr "Fișier"
 
 msgid "Full Screen"
-msgstr "Ecran Complet"
+msgstr "Tot ecranul"
 
 msgid "Help"
 msgstr "Ajutor"
@@ -187,7 +187,7 @@ msgid "Rename..."
 msgstr "Redenumește"
 
 msgid "Report a bug"
-msgstr ""
+msgstr "Raporteaza o defectiune"
 
 msgid "Save Video As..."
 msgstr "Salvează Video ca..."
@@ -279,7 +279,7 @@ msgid " limit upstream to"
 msgstr " limitează traficul ascendent la"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(Trebuie sa reporniti Miro pentru ca schimbarile sa aiba loc)"
 
 #, fuzzy
 msgid "(You must restart Miro for this change to take effect)\n"
@@ -410,7 +410,7 @@ msgstr "Pentru a evita încetinirea internetului:"
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
-msgstr ""
+msgstr "Urmareste aparitia a noi fisiere video si include-le in Biblioteca:"
 
 msgid "every 30 minutes"
 msgstr "la fiecare 30 de minute"
@@ -497,11 +497,18 @@ msgid ""
 "\n"
 "Would you like Miro to look for video files on your computer?"
 msgstr ""
+"Miro poate gasi toate fisierele video de pe calculatorul tau pentru a te "
+"putea ajuta in a-ti organiza colectia.\n"
+"\n"
+"\n"
+"Ai vrea ca Miro sa caute fisiere video in calculatorul tau?"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"Urmatoarele ecrane te vor ajuta sa setezi Miro astfel incat sa functioneze "
+"cat mai bine pentru tine. Iata prima intrebare."
 
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
@@ -511,6 +518,12 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
+"Iti recomandam sa lasi Miro sa lanseze la pornirea calculatorului tau. "
+"Astfel, fisierele video care n-au terminat descarcarea vor termina si vei "
+"avea noi fisiere video in canalele tale cand vei fi gata sa le urmaresti.\n"
+"\n"
+"\n"
+"Vrei sa lasi Miro sa lanseze la pornirea calculatorului tau?"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "Welcome to Internet TV!"
@@ -523,6 +536,11 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Bineaivenit la Internet TV. Sunt multe lucruri care poti sa le faci cu Miro: "
+"descarci automat fisiere video din canalele tale favorite, urmaresti fisiere "
+"video noi unul dupa altul, descarci torrenti, recomanzi fisiere video "
+"prietenilor, si multe altele.\n"
+"\n"
 
 #: ../..//portable/dialogs.py:78
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
@@ -636,29 +654,29 @@ msgstr ""
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:27
 msgid "Download Completed"
-msgstr ""
+msgstr "Descarcare Terminata"
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:28
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "Descarcarea fisierului video '%s' e completa."
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:37
 msgid "Download Failed"
-msgstr ""
+msgstr "Descarcare Esuata"
 
 #: ../..//platform/osx/frontend/GrowlNotifier.py:38
 #, python-format
 msgid "Download of video '%s' has failed."
-msgstr ""
+msgstr "Descarcarea fisierului video '%s' a esuat."
 
 #: ../..//platform/osx/frontend/MainFrame.py:261
 msgid "Subscribe to Channel"
-msgstr ""
+msgstr "Aboneaza-te la Canal"
 
 #: ../..//platform/osx/frontend/MainFrame.py:262
 msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr ""
+msgstr "Introdu URL-ul canalului la care vrei sa te abonezi."
 
 #: ../..//platform/osx/frontend/Preferences.py:38
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
@@ -687,7 +705,7 @@ msgstr "Dosar filme"
 #: ../..//platform/osx/frontend/Preferences.py:165
 #, python-format
 msgid "Select a Directory to store %s downloads in."
-msgstr ""
+msgstr "Selecteaza un Director in care sa stochezi %s fisierele descarcate."
 
 #: ../..//platform/osx/frontend/Preferences.py:166
 #: ../..//platform/osx/frontend/Preferences.py:230
@@ -707,14 +725,17 @@ msgid ""
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"Ai selectat un nou director in care sa descarci filme. Vrei ca %s sa migreze "
+"fisierele descarcate exisistente acolo? (Fisierele in curs de descarcare nu "
+"vor fi migrate decat dupa terminare)"
 
 #: ../..//platform/osx/frontend/Preferences.py:228
 msgid "View this Directory in the Library"
-msgstr ""
+msgstr "Vezi acest Director in Biblioteca"
 
 #: ../..//platform/osx/frontend/Preferences.py:229
 msgid "Select a Directory to view in the Library."
-msgstr ""
+msgstr "Selecteaza un Director care vrei sa il vezi in Biblioteca."
 
 #: ../..//platform/osx/frontend/QuicktimeRenderer.py:217
 msgid "Audio"
@@ -762,11 +783,11 @@ msgstr "_Înlătură Dosarele Canalelor..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:14
 msgid "_Remove Miro Guide..."
-msgstr ""
+msgstr "_Sterge Ghidul Miro..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:15
 msgid "_Remove Miro Guides..."
-msgstr ""
+msgstr "_Sterge Ghidul Miro..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:16
 #, fuzzy
@@ -780,27 +801,27 @@ msgstr "_Înlătură Clipuri..."
 
 #: ../..//platform/osx/frontend/UIStrings.py:18
 msgid "Re_name..."
-msgstr ""
+msgstr "Redenumeste"
 
 #: ../..//platform/osx/frontend/UIStrings.py:19
 msgid "Re_name Playlist..."
-msgstr ""
+msgstr "Redenumeste Lista de Redare"
 
 #: ../..//platform/osx/frontend/UIStrings.py:20
 msgid "Re_name Playlist Folder..."
-msgstr ""
+msgstr "Redenumeste Dosarul cu Liste de Redare"
 
 #: ../..//platform/osx/frontend/UIStrings.py:21 ../..//portable/menubar.py:165
 msgid "Re_name Channel..."
-msgstr ""
+msgstr "Redenumeste Canal"
 
 #: ../..//platform/osx/frontend/UIStrings.py:22
 msgid "Re_name Channel Folder..."
-msgstr ""
+msgstr "Redenumeste Dosarul cu Canale"
 
 #: ../..//platform/osx/frontend/UIStrings.py:23
 msgid "Re_name Miro Guide..."
-msgstr ""
+msgstr "Redenumeste Ghidul Miro"
 
 #: ../..//platform/osx/frontend/UIStrings.py:24 ../..//portable/menubar.py:171
 msgid "_Update Channel..."
@@ -948,7 +969,7 @@ msgstr ""
 #: ../..//portable/app.py:1057 ../..//portable/app.py:1076
 #, python-format
 msgid "Remove %s channels"
-msgstr ""
+msgstr "Sterge canalele %s"
 
 #: ../..//portable/app.py:988
 #, python-format
@@ -959,13 +980,13 @@ msgstr ""
 msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
-msgstr ""
+msgstr "Ce ai vrea sa faci cu fisierul video descarcat din canal?"
 
 #: ../..//portable/app.py:1032
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
-msgstr ""
+msgstr "Ce ai vrea sa faci cu fisierele video descarcate din canal?"
 
 #: ../..//portable/app.py:1053
 #, python-format
@@ -1042,10 +1063,13 @@ msgid ""
 "Please double check and try again.\n"
 "\n"
 msgstr ""
+"Adresa  pe care a-ti introdusa nu este un URL valid\n"
+"Va rugam verificati si reincercati.\n"
+"\n"
 
 #: ../..//portable/app.py:1894
 msgid "$shortAppName - Add Channel"
-msgstr ""
+msgstr "$shortAppName - Adauga un Canal"
 
 #: ../..//portable/app.py:1894
 msgid "Enter the URL of the channel to add"
@@ -1053,15 +1077,15 @@ msgstr "Introdu URL-ul canalului de adăugat"
 
 #: ../..//portable/app.py:1915
 msgid "$shortAppName - Add Miro Guide"
-msgstr ""
+msgstr "$shortAppName - Adauga un Ghid Miro"
 
 #: ../..//portable/app.py:1915
 msgid "Enter the URL of the Miro Guide to add"
-msgstr ""
+msgstr "Introdu URL-ul Ghidului Miro de adaugat"
 
 #: ../..//portable/app.py:2209
 msgid "News and Tech"
-msgstr ""
+msgstr "Stiri si Tehnologie"
 
 #: ../..//portable/app.py:2216
 msgid "Entertainment"
@@ -1069,7 +1093,7 @@ msgstr "Divertisment"
 
 #: ../..//portable/app.py:2222
 msgid "High-Def"
-msgstr ""
+msgstr "Inalta-Definitie"
 
 #: ../..//portable/app.py:2230
 msgid "Mac"
@@ -1077,21 +1101,21 @@ msgstr "Mac"
 
 #: ../..//portable/app.py:2245
 msgid "Example Playlist"
-msgstr ""
+msgstr "Exemplu de Lista de Redare"
 
 #: ../..//portable/app.py:2264
 msgid "Custom Channels"
-msgstr ""
+msgstr "Canale Personalizate"
 
 #: ../..//portable/app.py:2264
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
-msgstr ""
+msgstr "Rulezi o versiune a $longAppName cu un set de canale personalizate."
 
 #: ../..//portable/autoupdate.py:121
 #, python-format
 msgid "%s Version Alert"
-msgstr ""
+msgstr "%s Alerta de Versiune"
 
 #: ../..//portable/autoupdate.py:122
 #, python-format
@@ -1227,11 +1251,11 @@ msgstr "%d luni"
 
 #: ../..//portable/feed.py:779
 msgid "Update Channel Now"
-msgstr ""
+msgstr "Actualizeaza Canalul Acum"
 
 #: ../..//portable/feed.py:781 ../..//portable/guide.py:52
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "Copiaza URL-ul"
 
 #: ../..//portable/feed.py:782 ../..//portable/feed.py:791
 msgid "Rename Channel"
@@ -1239,12 +1263,12 @@ msgstr "Redenumeşte canalul"
 
 #: ../..//portable/feed.py:786
 msgid "Revert Title to Default"
-msgstr ""
+msgstr "Readu Titlul la Standard"
 
 #: ../..//portable/feed.py:792
 #, python-format
 msgid "Enter a new name for the channel %s"
-msgstr ""
+msgstr "Introdu un nou nume pentru canalul %s"
 
 #: ../..//portable/feed.py:879
 msgid "Error loading feed"
