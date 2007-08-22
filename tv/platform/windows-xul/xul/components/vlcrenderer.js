@@ -151,6 +151,18 @@ VLCRenderer.prototype = {
   },
 
   canPlayURL: function(url) {
+    try {
+      this.switchToPlayMode();
+
+      if (this.vlc.playlist.items.count > 0) {
+          this.stop();
+          this.vlc.playlist.items.clear();
+      }
+      this.item = this.vlc.playlist.add(url);
+    } catch (e) {
+      this.switchToExtractMode();
+      return false;
+    }
     return true;
   },
 
