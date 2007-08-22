@@ -24,11 +24,14 @@ function makeLocalFile(path) {
     return file;
 }
 
-function pickSavePath(window, title, defaultFilename) {
+function pickSavePath(window, title, defaultDirectory, defaultFilename) {
     var nsIFilePicker = Components.interfaces.nsIFilePicker;
     var fp = Components.classes["@mozilla.org/filepicker;1"]
                   .createInstance(nsIFilePicker);
     fp.init(window, title, nsIFilePicker.modeSave);
+    if(defaultDirectory) {
+       fp.setDefaultDirectory(makeLocalFile(defaultDirectory));
+    }
     if(defaultFilename) {
       fp.defaultString = defaultFilename;
     }
@@ -502,7 +505,7 @@ jsBridge.prototype = {
     if(this.videoFilename == null) return;
     var saveMenuItem = this.document.getElementById('menuitem-savevideo');
     var picked = pickSavePath(this.window, saveMenuItem.getAttribute('label'),
-            this.videoFilename);
+            null, this.videoFilename);
     if (picked) pybridge.saveVideoFile(picked);
   },
 
@@ -735,7 +738,7 @@ jsBridge.prototype = {
 
   },
 
-  showOpenDialog: function (id, title, defaultDirectory, types) {
+  showOpenDialog: function (id, title, defaultDirectory, typeString, types) {
       var nsIFilePicker = Components.interfaces.nsIFilePicker;
       var fp = Components.classes["@mozilla.org/filepicker;1"]
                       .createInstance(nsIFilePicker);
@@ -748,9 +751,7 @@ jsBridge.prototype = {
         for(var i = 0; i < types.length; i++) {
           filters[i] = "*." + types[i];
         }
-        // This is a little bit ugly since we don't know what a good human
-        // readable name is for the types.  Just comma-separate them.
-        fp.appendFilter(filters.join(', '), filters.join(";"));
+        fp.appendFilter(typeString, filters.join(";"));
       }
       fp.appendFilters(nsIFilePicker.filterAll);
       if (fp.show() == nsIFilePicker.returnOK){
@@ -758,8 +759,8 @@ jsBridge.prototype = {
     }
   },
 
-  showSaveDialog: function (id, title, defaultFilename) {
-      var picked = pickSavePath(this.window, title, defaultFilename);
+  showSaveDialog: function (id, title, defaultDirectory, defaultFilename) {
+      var picked = pickSavePath(this.window, title, defaultDirectory, defaultFilename);
       if (picked) pybridge.handleFileDialog(id, picked);
   },
 };

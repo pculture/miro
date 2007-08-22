@@ -28,11 +28,11 @@ interface pcfIDTVJSBridge : nsISupports
         in AString otherLabel);
   void showCheckboxDialog(in unsigned long id, in AString title, 
         in AString description, in AString defaultLabel, 
-        in AString otherLabel, in Astring checkboxText,
+        in AString otherLabel, in AString checkboxText,
         in boolean checkboxValue);
   void showCheckboxTextboxDialog(in unsigned long id, in AString title, 
         in AString description, in AString defaultLabel, 
-        in AString otherLabel, in Astring checkboxText,
+        in AString otherLabel, in AString checkboxText,
         in boolean checkboxValue, in AString textboxText);
   void showThreeChoiceDialog(in unsigned long id, in AString title, 
         in AString description, in AString defaultLabel, 
@@ -75,6 +75,6 @@ interface pcfIDTVJSBridge : nsISupports
   void directoryWatchRemoved(in AString id);
   void showPopup(in PRInt32 x, in PRInt32 y);
   void hidePopup();
-  void showOpenDialog(in unsigned long id, in AString title, in AString defaultDirectory, in nsIVariant types);
-  void showSaveDialog(in unsigned long id, in AString title, in AString defaultFilename);
+  void showOpenDialog(in unsigned long id, in AString title, in AString defaultDirectory, in AString typesString, in nsIVariant types);
+  void showSaveDialog(in unsigned long id, in AString title, in AString defaultDirectory, in AString defaultFilename);
 };
