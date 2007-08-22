@@ -29,6 +29,7 @@ to be called in the existing democracy process.
 
 from gtcache import gettext as _
 import os
+import logging
 
 from util import getTorrentInfoHash
 import app
@@ -36,6 +37,7 @@ import dialogs
 import download_utils
 import item
 import feed
+import filetypes
 import folder
 import httpclient
 import views
@@ -49,6 +51,11 @@ from string import Template
 _commandLineArgs = []
 commandLineVideoIds = None
 commandLineView = None 
+
+def getManualFeed():
+    manualFeed = util.getSingletonDDBObject(views.manualFeed)
+    manualFeed.confirmDBThread()
+    return manualFeed
 
 def addVideo(path, single = False):
     path = os.path.abspath(path)
@@ -67,27 +74,78 @@ def addVideo(path, single = False):
         for i in items:
             i.executeExpire()
     else:
-        correctFeed = util.getSingletonDDBObject(views.manualFeed)
+        correctFeed = getManualFeed()
     fileItem = item.FileItem(path, feed_id=correctFeed.getID())
     fileItem.markItemSeen()
     commandLineVideoIds.add(fileItem.getID())
 
-def addDownload(url):
-    manualFeed = util.getSingletonDDBObject(views.manualFeed)
-    manualFeed.confirmDBThread()
+def checkURLExists(url):
+    manualFeed = getManualFeed()
     for i in manualFeed.items:
         if (i.getURL() == url):
-            print ("Not downloading %s, it's already a "
-                   "download for %s" % (url, i))
+            title = _("Download already exists")
+            text1 = _("That URL is already an external download.")
             if i.downloader is not None and i.downloader.getState() in ('paused', 'stopped'):
                 i.download()
+                text2 = _("Miro will begin downloading it now.")
+            else:
+                text2 = _("It has already been downloaded")
+            dialogs.MessageBoxDialog(title, "%s  %s" % (text1, text2)).run()
+            return True
+    existingFeed = feed.getFeedByURL(url)
+    if existingFeed is not None:
+        existingFeed.blink()
+        return True
+    return False
+
+def addDownload(url):
+    if checkURLExists(url):
+        return
+    # We need to figure out if the URL is a external video link, or a link to
+    # a channel.
+    def callback(headers):
+        if checkURLExists(url):
             return
-    newItem = item.Item(item.getEntryForURL(url), feed_id=manualFeed.getID())
+        contentType = headers.get('content-type')
+        if filetypes.isFeedContentType(contentType):
+            addFeeds([url])
+        else:
+            entry = item.getEntryForURL(url, contentType)
+            if filetypes.isVideoEnclosure(entry['enclosures'][0]):
+                downloadVideo(entry)
+            else:
+                downloadUnknownMimeType(url)
+    def errback(error):
+        title = _("Download Error")
+        text = _("""\
+Miro is not able to download a file at this URL:
+
+URL: %s""") % url
+        dialogs.MessageBoxDialog(title, text).run()
+    httpclient.grabHeaders(url, callback, errback)
+
+def downloadUnknownMimeType(url):
+    title = _('File Download')
+    text = _("""\
+This file at %s does not appear to be audio, video, or an RSS feed.""") % url
+    dialog = dialogs.ChoiceDialog(title, text, 
+            dialogs.BUTTON_DOWNLOAD_ANYWAY, dialogs.BUTTON_CANCEL)
+    def callback(dialog):
+        if checkURLExists(url):
+            return
+        if dialog.choice == dialogs.BUTTON_DOWNLOAD_ANYWAY:
+            # Fake a viedo mime type, so we will download the item.
+            downloadVideo(item.getEntryForURL(url, 'video/x-unknown'))
+    dialog.run(callback)
+
+def downloadVideo(entry):
+    manualFeed = getManualFeed()
+    newItem = item.Item(entry, feed_id=manualFeed.getID())
     newItem.download()
+    app.controller.selection.selectTabByTemplateBase('downloadtab')
 
 def addTorrent(path, torrentInfohash):
-    manualFeed = util.getSingletonDDBObject(views.manualFeed)
-    manualFeed.confirmDBThread()
+    manualFeed = getManualFeed()
     for i in manualFeed.items:
         if (i.downloader is not None and
                 i.downloader.status.get('infohash') == torrentInfohash):
@@ -241,7 +299,6 @@ def parseCommandLineArgs(args=None):
             addSubscriptionURL('democracy:', 'application/x-democracy', arg)
         elif arg.startswith('http:') or arg.startswith('https:'):
             addDownload(platformutils.filenameToUnicode(arg))
-            addedDownloads = True
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):

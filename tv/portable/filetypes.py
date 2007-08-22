@@ -93,6 +93,18 @@ def _hasVideoType(enclosure):
 def _hasVideoExtension(enclosure, key):
     return (key in enclosure and isAllowedFilename(enclosure[key]))
 
+def isFeedContentType(contentType):
+    """Is a content-type for a RSS feed?"""
+
+    feedTypes = [ u'application/rdf+xml', u'application/atom+xml',
+            u'application/rss+xml', u'application/podcast+xml', u'text/xml',
+            u'application/xml', 
+        ]
+    for type in feedTypes:
+        if contentType.startswith(type):
+            return True
+    return False
+
 def guessExtension(mimetype):
     """
     Pass a mime type to this method and it will return a corresponding file

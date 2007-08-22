@@ -1620,9 +1620,13 @@ def getEntryForFile(filename):
     return FeedParserDict({'title':platformutils.filenameToUnicode(os.path.basename(filename)),
             'enclosures':[{'url': resources.url(filename)}]})
 
-def getEntryForURL(url):
+def getEntryForURL(url, contentType=None):
+    if contentType is None:
+        contentType = u'video/x-unknown'
+    else:
+        contentType = unicode(contentType)
     return FeedParserDict({'title' : url,
-            'enclosures':[{'url' : url, 'type' : u'video/x-unknown'}]})
+            'enclosures':[{'url' : url, 'type' : contentType}]})
 
 ##
 # An Item that exists as a local file
