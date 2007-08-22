@@ -78,11 +78,12 @@ class UIBackendDelegate:
         startupController.run(terminationCallback)
 
     @platformutils.onMainThread
-    def askForSavePathname(self, callback, defaultFilename=None):
+    def askForSavePathname(self, title, callback, defaultDirectory=None, defaultFilename=None):
         self.savePanelHandler.run(callback, defaultFilename)
 
     @platformutils.onMainThread
-    def askForOpenPathname(self, callback, defaultDirectory=None, types=None):
+    def askForOpenPathname(self, title, callback, defaultDirectory=None,
+            typeString=None, types=None):
         self.openPanelHandler.run(callback, defaultDirectory, types)
 
     @platformutils.onMainThread

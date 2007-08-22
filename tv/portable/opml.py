@@ -29,7 +29,8 @@ class Exporter (object):
 
     def exportSubscriptions(self):
         callback = lambda p: self.exportSubscriptionsTo(p)
-        app.delegate.askForSavePathname(callback, u"miro_subscriptions.opml")
+        title = _("Export OPML File")
+        app.delegate.askForSavePathname(title, callback, None, u"miro_subscriptions.opml")
 
     @eventloop.asIdle
     def exportSubscriptionsTo(self, pathname):
@@ -92,7 +93,9 @@ class Importer (object):
 
     def importSubscriptions(self):
         callback = lambda p: self.importSubscriptionsFrom(p)
-        app.delegate.askForOpenPathname(callback, None, ['opml'])
+        title = _("Import OPML File")
+        app.delegate.askForOpenPathname(title, callback, None, 
+                _("OPML Files"), ['opml'])
 
     @eventloop.asIdle
     def importSubscriptionsFrom(self, pathname):

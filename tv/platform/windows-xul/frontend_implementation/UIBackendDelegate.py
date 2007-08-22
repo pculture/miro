@@ -149,12 +149,14 @@ class UIBackendDelegate:
             del self.openDialogs[id]
             dialog.runCallback(None)
 
-    def askForOpenPathname(self, callback, defaultDirectory=None, types=None):
+    def askForOpenPathname(self, title, callback, defaultDirectory=None, 
+            typeString=None, types=None):
         id = nextDialogId()
         self.openDialogs[id] = callback
         frontend.jsBridge.showOpenDialog(id, _('Select a File'), defaultDirectory, types)
 
-    def askForSavePathname(self, callback, defaultFilename=None):
+    def askForSavePathname(self, title, callback, defaultDirectory=None, 
+            defaultFilename=None):
         id = nextDialogId()
         self.openDialogs[id] = callback
         frontend.jsBridge.showSaveDialog(id, _('Save File to'), defaultFilename)

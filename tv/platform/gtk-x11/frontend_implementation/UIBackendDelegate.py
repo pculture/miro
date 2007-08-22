@@ -532,7 +532,9 @@ class UIBackendDelegate:
         else:
             dialog.runCallback (None)
 
-    def askForOpenPathname(self, callback, defaultDirectory=None, types=None):
+
+    def askForOpenPathname(self, title, callback, defaultDirectory=None,
+            typeString=None, types=None):
         dialog = gtk.FileSelection("File Selection")
         def okButton(w):
             print dialog.get_filename()
@@ -544,7 +546,8 @@ class UIBackendDelegate:
             dialog.set_filename(defaultDirectory)
         dialog.show()
 
-    def askForSavePathname(self, callback, defaultFilename=None):
+    def askForSavePathname(self, title, callback, defaultDirectory=None, 
+            defaultFilename=None):
         dialog = gtk.FileSelection("File Selection")
         def okButton(w):
             print dialog.get_filename()
