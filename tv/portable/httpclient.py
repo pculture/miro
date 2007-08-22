@@ -284,11 +284,12 @@ class AsyncSocket(object):
             self.readTimeout.cancel()
             self.readTimeout = None
 
-    def openConnection(self, host, port, callback, errback, disableReadTimeout = False):
+    def openConnection(self, host, port, callback, errback, disableReadTimeout = None):
         """Open a connection.  On success, callback will be called with this
         object.
         """
-        self.disableReadTimeout = disableReadTimeout
+        if disableReadTimeout is not None:
+            self.disableReadTimeout = disableReadTimeout
         self.name = "Outgoing %s:%s" % (host, port)
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -482,7 +483,7 @@ class AsyncSSLStream(AsyncSocket):
         super(AsyncSSLStream, self).__init__(closeCallback)
         self.interruptedOperation = None
 
-    def openConnection(self, host, port, callback, errback, disableReadTimeout = False):
+    def openConnection(self, host, port, callback, errback, disableReadTimeout = None):
         def onSocketOpen(self):
             self.socket.setblocking(1)
             eventloop.callInThread(onSSLOpen, handleSSLError, socket.ssl,
@@ -638,7 +639,7 @@ class ConnectionHandler(object):
     def __str__(self):
         return "%s -- %s" % (self.__class__, self.state)
 
-    def openConnection(self, host, port, callback, errback, disableReadTimeout=False):
+    def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
         self.name = "Outgoing %s:%s" % (host, port)
         self.host = host
         self.port = port
