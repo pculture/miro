@@ -1,0 +1,55 @@
+<!ENTITY prefs.title "Opsjes">
+<!ENTITY prefs.restart "(WARSKOGING: Wizigings binne aktyf nei dat jo $longAppName op 'e nij start hawwe.)">
+
+<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
+<!ENTITY prefs.close_to_tray_start "As ik klik op de reade slútknop:">
+<!ENTITY prefs.close_to_tray "Slút nei systeemfak, sadat it ynladen trochgean kin.">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+
+<!ENTITY prefs.general "Algemien">
+<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+
+<!ENTITY prefs.channels "Kanalen">
+<!ENTITY prefs.channels.check "Check channels for new content">
+<!ENTITY prefs.channels.check.thirty "Elke 30 minuten">
+<!ENTITY prefs.channels.check.sixty "Elk oer">
+<!ENTITY prefs.channels.check.manually "Hânmjitich">
+
+<!ENTITY prefs.playback "Ofspylje">
+<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
+<!ENTITY prefs.playback.auto.next.video "Spylje fideos efter inoar.">
+<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+
+<!ENTITY prefs.folder.movies "Mappen">
+<!ENTITY prefs.folder.downloads "Bewarje ynladeen fideos yn dizze map:">
+<!ENTITY prefs.folder.change "Wizigje...">
+
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
+<!ENTITY prefs.folder.others.location "Folder">
+<!ENTITY prefs.folder.others.shown "Show as a Channel">
+<!ENTITY prefs.folder.others.add "Foech Map ta...">
+<!ENTITY prefs.folder.others.remove "Fuortsmite">
+
+<!ENTITY prefs.downloads.max "Ynladen Bestannen">
+<!ENTITY prefs.downloads.max.part1 "Laad maksimaal yn">
+<!ENTITY prefs.downloads.max.part2 "fideos direkt.">
+
+<!ENTITY prefs.disk.space "Skiifromte">
+<!ENTITY prefs.disk.space.min.part1 "Start gjin ynlaad as it minder achterlit as">
+<!ENTITY prefs.disk.space.min.part2 "GB frij">
+<!ENTITY prefs.disk.space.warning.restart "(WARSKOGING: Dizze ynstelling is aktyf nei dat jo $longAppName op 'e nij start hawwe.)">
+
+<!ENTITY prefs.videos.expire "Standert, ferrinne fideos nei">
+<!ENTITY prefs.videos.expire.one "1 dei">
+<!ENTITY prefs.videos.expire.three "3 dagen">
+<!ENTITY prefs.videos.expire.six "6 dagen">
+<!ENTITY prefs.videos.expire.ten "10 dagen">
+<!ENTITY prefs.videos.expire.thirty "1 moanne">
+<!ENTITY prefs.videos.expire.never "Nea">
+
+<!ENTITY prefs.torrent "BitTorrent">
+<!ENTITY prefs.torrent.restart.warning "(WARSKOGING: Wizigings binne aktyf nei dat jo $longAppName op 'e nij start hawwe.)">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Om fertragings foar te kommen, behein oplaad oant">
+<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s as myn kompjûter aktyf is.">
+<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
+<!ENTITY prefs.torrent.uses.ports.part2 "en">

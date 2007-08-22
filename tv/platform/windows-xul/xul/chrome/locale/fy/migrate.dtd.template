@@ -1,0 +1,4 @@
+<!ENTITY migrate.title "Migrearje besteande films?">
+<!ENTITY migrate.accept "Migrearje">
+<!ENTITY migrate.cancel "Net Migrearje">
+<!ENTITY migrate.description "Jo hawwe in nije map selektearre om films nei yn te laden. Moat $shortAppName jo besteande ynladen bestannen derhinne migrearje? (Aktuele ynladen films sille net ferpleatst wurde oant se dien binne).">
