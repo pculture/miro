@@ -630,6 +630,7 @@ class Controller (frontend.Application):
         self.finishedStartup = False
         self.idlingNotifier = None
         self.gatheredVideos = None
+        self.sendingCrashReport = False
 
     ### Startup and shutdown ###
 
@@ -1170,17 +1171,27 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         if self.inQuit:
             return
         downloadsCount = views.downloadingItems.len()
-        if downloadsCount > 0 and config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT):
+            
+        if (downloadsCount > 0 and config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT)) or self.sendingCrashReport:
             title = _("Are you sure you want to quit?")
-            message = ngettext ("You have %d download still in progress.  Quit Anyway?", 
-                                "You have %d downloads still in progress.  Quit Anyway?", 
-                                downloadsCount) % (downloadsCount,)
-            warning = _ ("Warn me when I attempt to quit with downloads in progress")
-            dialog = dialogs.CheckboxDialog(title, message, warning, True,
-                    dialogs.BUTTON_QUIT, dialogs.BUTTON_CANCEL)
+            if self.sendingCrashReport:
+                message = _("Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?")
+                dialog = dialogs.ChoiceDialog(title, message,
+                                              dialogs.BUTTON_QUIT,
+                                              dialogs.BUTTON_CANCEL)
+            else:
+                message = ngettext ("You have %d download still in progress.  Quit Anyway?", 
+                                    "You have %d downloads still in progress.  Quit Anyway?", 
+                                    downloadsCount) % (downloadsCount,)
+                warning = _ ("Warn me when I attempt to quit with downloads in progress")
+                dialog = dialogs.CheckboxDialog(title, message, warning, True,
+                        dialogs.BUTTON_QUIT, dialogs.BUTTON_CANCEL)
+
             def callback(dialog):
                 if dialog.choice == dialogs.BUTTON_QUIT:
-                    config.set(prefs.WARN_IF_DOWNLOADING_ON_QUIT, dialog.checkbox_value)
+                    if isinstance(dialog, dialogs.CheckboxDialog):
+                        config.set(prefs.WARN_IF_DOWNLOADING_ON_QUIT,
+                                   dialog.checkbox_value)
                     self.quitStage2()
                 else:
                     self.inQuit = False

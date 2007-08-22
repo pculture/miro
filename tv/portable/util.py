@@ -265,17 +265,21 @@ def failed(when, withExn = False, details = None):
 
 def _sendReport(report, dialog):
     def callback(result):
+        app.controller.sendingCrashReport = False
         if result['status'] != 200 or result['body'] != 'OK':
             logging.warning(u"Failed to submit crash report. Server returned %r" % result)
         else:
             logging.info(u"Crash report submitted successfully")
     def errback(error):
+        app.controller.sendingCrashReport = False
         logging.warning(u"Failed to submit crash report %r" % error)
 
     import dialogs
     import httpclient
     import config
     import prefs
+    import app
+
     global ignoreErrors
     if dialog.choice == dialogs.BUTTON_IGNORE:
         ignoreErrors = True
@@ -304,6 +308,7 @@ def _sendReport(report, dialog):
         postFiles = {"databasebackup": {"filename":"databasebackup.zip", "mimetype":"application/octet-stream", "handle":open(backupfile, "rb")}}
     else:
         postFiles = None
+    app.controller.sendingCrashReport = True
     httpclient.grabURL("http://participatoryculture.org/bogondeflector/index.php", callback, errback, method="POST", postVariables = postVars, postFiles = postFiles)
 
 class AutoflushingStream:
