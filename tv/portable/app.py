@@ -630,7 +630,7 @@ class Controller (frontend.Application):
         self.finishedStartup = False
         self.idlingNotifier = None
         self.gatheredVideos = None
-        self.sendingCrashReport = False
+        self.sendingCrashReport = 0
 
     ### Startup and shutdown ###
 
@@ -1172,9 +1172,9 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             return
         downloadsCount = views.downloadingItems.len()
             
-        if (downloadsCount > 0 and config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT)) or self.sendingCrashReport:
+        if (downloadsCount > 0 and config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT)) or (self.sendingCrashReport > 0):
             title = _("Are you sure you want to quit?")
-            if self.sendingCrashReport:
+            if self.sendingCrashReport > 0:
                 message = _("Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?")
                 dialog = dialogs.ChoiceDialog(title, message,
                                               dialogs.BUTTON_QUIT,
