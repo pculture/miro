@@ -301,7 +301,7 @@ def _sendReport(report, dialog):
                 "app_name": config.get(prefs.LONG_APP_NAME),
                 "log": report}
     if backupfile:
-        postFiles = {"databasebackup": {"filename":"databasebackup.zip", "mimetype":"application/octet-stream", "handle":open(backupfile, "r")}}
+        postFiles = {"databasebackup": {"filename":"databasebackup.zip", "mimetype":"application/octet-stream", "handle":open(backupfile, "rb")}}
     else:
         postFiles = None
     httpclient.grabURL("http://participatoryculture.org/bogondeflector/index.php", callback, errback, method="POST", postVariables = postVars, postFiles = postFiles)
