@@ -248,7 +248,7 @@ VLCRenderer.prototype = {
   },
 
   goToBeginningOfMovie: function() {
-    this.vlc.input.time = 0;
+    this.setCurrentTime(0);
   },
 
   getDuration: function() {
