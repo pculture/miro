@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-07-30 22:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-08-22 16:47-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -22,12 +22,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Add Channel..." = "Legg til kanal …";
 
-"Add Guide..." = "Kanalveileder …";
+"Add Guide..." = "Legg til kanalveileder …";
 
 "Bring All to Front" = "Bring alle til front";
 
-/* File: ../..//platform/osx/frontend/Preferences.py:39 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+/* File: ../../platform/osx/frontend/Preferences.py:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
 "Channels" = "Kanaler";
 
 "Check for New Version" = "Se etter ny versjon";
@@ -44,12 +44,18 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Cut" = "Klipp ut";
 
-/* File: ../..//portable/dialogs.py:94 */
+/* File: ../../portable/dialogs.py:96 */
 "Delete" = "Slett";
 
 "Donate" = "Doner";
 
+/* Flag: untranslated */
+"Download Video..." = "Download Video...";
+
 "Edit" = "Rediger";
+
+/* Flag: untranslated */
+"Export Channels (OPML)..." = "Export Channels (OPML)...";
 
 "File" = "Fil";
 
@@ -61,13 +67,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Hide Others" = "Skjul andre";
 
+/* Flag: untranslated */
+"Import Channels (OPML)..." = "Import Channels (OPML)...";
+
 "Main Window" = "Hovedvindu";
 
 "MainMenu" = "Hovedmeny";
 
 "Minimize" = "Minimer";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 "Miro" = "Miro";
 
 "Miro Help" = "Miro hjelp";
@@ -88,11 +97,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Paste" = "Lim inn";
 
-/* File: ../..//platform/osx/frontend/Application.py:238 */
+/* File: ../../platform/osx/frontend/Application.py:231 */
 "Play Video" = "Spill av film";
 
-/* File: ../..//platform/osx/frontend/Preferences.py:43 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+/* File: ../../platform/osx/frontend/Preferences.py:43 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
 "Playback" = "Avspilling";
 
 "Playlists" = "Spillelister";
@@ -143,12 +152,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "FullScreen Controls" = "Kontroller for fullskjerm";
 
-/* File: ../..//portable/tabs.py:45 */
+/* File: ../../portable/tabs.py:45 */
 "Video Search" = "Filmsøk";
 
 "VideoWindow" = "Filmvindu";
 
-/* File: ../..//portable/dialogs.py:77 */
+/* File: ../../portable/dialogs.py:77 */
 "Cancel" = "Avbryt";
 
 "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
@@ -167,16 +176,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "(movies directory path goes here)" = "(filmers mappesti går her)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
 "1 day" = "1 dag";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
 "1 month" = "1 måned";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
 "10 days" = "10 dager";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "3 days" = "3 dager";
 
 "3 hours" = "3 timer";
@@ -185,7 +194,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "5" = "5";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
 "6 days" = "6 dager";
 
 "99999" = "99999";
@@ -196,22 +205,20 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "By default, videos expire after:" = "Som standard utløper filmer etter:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
 "Change..." = "Endre …";
 
 "Check channels for new content:" = "Sjekk kanaler for nytt innhold:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
 "Don't start a download if it leaves less than" = "Ikke begynn nedlasting hvis det etterlater mindre enn";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
 "Download at most" = "Last ned høyst";
 
 "Folder location" = "Mappeplassering";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
 "GB free." = "GB ledig.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
@@ -221,36 +228,33 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Minimum:" = "Minimum:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
 "Never" = "Aldri";
 
 "OtherViews" = "Andre visninger";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
 "Play videos one after another." = "Spill av filmer én etter én";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
 "Remember video position." = "Husk filmposisjon";
 
-/* File: ../..//portable/feed.py:787 */
-/* File: ../..//portable/folder.py:156 */
-/* File: ../..//portable/folder.py:211 */
-/* File: ../..//portable/guide.py:55 */
-/* File: ../..//portable/menu.py:65 */
-/* File: ../..//portable/menu.py:70 */
-/* File: ../..//portable/playlist.py:197 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
+/* File: ../../portable/guide.py:86 */
+/* File: ../../portable/playlist.py:197 */
+/* File: ../../portable/feed.py:788 */
+/* File: ../../portable/menu.py:65 */
+/* File: ../../portable/menu.py:70 */
+/* File: ../../portable/folder.py:156 */
+/* File: ../../portable/folder.py:211 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
 "Remove" = "Fjern";
 
 "Run Miro at startup" = "Kjør Miro ved oppstart";
 
 "Save downloaded videos in this folder:" = "Lagre nedlastede filmer i denne mappen:";
 
-/* File: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:557 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:572 */
 "Show as Channel" = "Vis som kanal";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
 "Stop after each video." = "Stopp etter hver film";
 
 "To avoid internet slowdowns:" = "For å unngå overbelastet nettverk:";
@@ -263,7 +267,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "manually" = "manuelt";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
 "videos at once." = "filmer på én gang.";
 
 "$label$" = "$label$";
@@ -272,7 +276,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Channel" = "Kanal";
 
-/* File: ../..//portable/dialogs.py:89 */
+/* File: ../../portable/dialogs.py:91 */
 "Create" = "Lag";
 
 "In this:" = "I denne:";
@@ -285,8 +289,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "URL" = "URL";
 
-/* File: ../..//platform/gtk-x11/frontend_implementation/startup.py:48 */
-/* File: ../..//platform/windows-xul/frontend_implementation/startup.py:25 */
+/* File: ../../platform/windows-xul/frontend_implementation/startup.py:25 */
+/* File: ../../platform/gtk-x11/frontend_implementation/startup.py:48 */
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(søkte i %d filer – fant %d filmer)";
 
@@ -294,11 +298,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Browse" = "Bla gjennom";
 
-/* File: ../..//platform/osx/frontend/StartupPanel.py:90 */
-/* File: ../..//platform/osx/frontend/StartupPanel.py:116 */
+/* File: ../../platform/osx/frontend/StartupPanel.py:90 */
+/* File: ../../platform/osx/frontend/StartupPanel.py:116 */
 "Next" = "Neste";
 
-/* File: ../..//portable/dialogs.py:79 */
+/* File: ../../portable/dialogs.py:79 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "Nei";
 
@@ -317,12 +321,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Det er anbefalt å la Miro starte når datamaskinen startes. Slik kan filmer som ikke er ferdig nedlastet fullføres, og nye filmer er klare når du vil se dem.\n\n\nVil du la Miro starte når datamaskinen startes?";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
 "Welcome to Internet TV!" = "Velkommen til internett-TV!";
 
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Velkommen til internett-TV. Det er mye du kan gjøre med Miro: laste ned filmer fra dine favorittkanaler automatisk, se filmer én etter én, laste ned BitTorrent-filer, anbefale filmer til venner og mye mer.\n\n";
 
-/* File: ../..//portable/dialogs.py:78 */
+/* File: ../../portable/dialogs.py:78 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
 "Yes" = "Ja";
 
@@ -330,1089 +334,1181 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "%message%\n%message%" = "%message%\n%message%";
 
-/* File: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:312 */
-"New Channel _Guide..." = "Ny kanal_veileder";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:548 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
-"Folder Location" = "Mappeplassering";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:42 */
-"Settings" = "Innstillinger";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:45 */
-"Hide" = "Skjul";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:47 */
-"Show" = "Vis";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:48 */
-/* File: ../..//portable/dialogs.py:80 */
-/* File: ../..//portable/menubar.py:241 */
-"Quit" = "Avslutt";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:170 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
-"Username:" = "Brukernavn:";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:181 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
-"Password:" = "Passord:";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:369 */
-"Unknown Runtime Error" = "Ukjent kjøretidsfeil";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:370 */
-/* Flag: python-format */
-"An unknown error has occurred %s." = "Det oppstod en ukjent feil %s.";
-
-/* File: ../..//platform/osx/frontend/Application.py:235 */
-"Pause Video" = "Stopp film midlertidig";
-
-/* File: ../..//platform/osx/frontend/Application.py:244 */
-"Unsupported version of Quicktime" = "Denne versjonen av Quicktime støttes ikke";
-
-/* File: ../..//platform/osx/frontend/Application.py:245 */
-/* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "For å kjøre %s trenger du siste versjon av Quicktime.";
-
-/* File: ../..//platform/osx/frontend/GrowlNotifier.py:27 */
-"Download Completed" = "Nedlasting ferdig";
-
-/* File: ../..//platform/osx/frontend/GrowlNotifier.py:28 */
-/* Flag: python-format */
-"Download of video '%s' is finished." = "Nedlastingen av filmen «%s» er fullført.";
-
-/* File: ../..//platform/osx/frontend/GrowlNotifier.py:37 */
-"Download Failed" = "Nedlasting mislyktes";
-
-/* File: ../..//platform/osx/frontend/GrowlNotifier.py:38 */
-/* Flag: python-format */
-"Download of video '%s' has failed." = "Nedlastingen av filmen «%s» mislyktes.";
-
-/* File: ../..//platform/osx/frontend/MainFrame.py:261 */
-"Subscribe to Channel" = "Abonner på kanal";
-
-/* File: ../..//platform/osx/frontend/MainFrame.py:262 */
-"Enter the URL of the channel you would like to subscribe to." = "Skriv inn adressen til kanalen du vil abonnere på.";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:38 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
-"General" = "Genrelt";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:40 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-"Downloads" = "Nedlastinger";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:41 */
-"Folders" = "Mapper";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:42 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-"Disk Space" = "Ledig diskplass";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:164 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
-"Movies Directory" = "Filmmappe";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:165 */
-/* Flag: python-format */
-"Select a Directory to store %s downloads in." = "Velg en mappe å lagre %s nedlastinger i.";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:166 */
-/* File: ../..//platform/osx/frontend/Preferences.py:230 */
-"Select" = "Velg";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:175 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
-"Migrate existing movies?" = "Flytte lagrede filmer?";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:176 */
-/* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Du har valgt en ny mappe for nedlasting av filmer. Vil du at %s skal flytte ferdige nedlastinger dit? (Filmer som for øyeblikket lastes ned flyttes ikke før de er ferdige.)";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:228 */
-"View this Directory in the Library" = "Vis denne mappen i biblioteket";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:229 */
-"Select a Directory to view in the Library." = "Velg en mappe for visning i biblioteket";
-
-/* File: ../..//platform/osx/frontend/QuicktimeRenderer.py:217 */
-"Audio" = "Lyd";
-
-/* File: ../..//platform/osx/frontend/StartupPanel.py:114 */
-"Search!" = "Søk!";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:5 */
-"_Remove..." = "_Fjern …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:6 */
-"_Remove Playlist..." = "_Fjern spilleliste …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:7 */
-"_Remove Playlists..." = "_Fjern spillelister …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:8 */
-"_Remove Playlist Folder..." = "_Fjern mappe for spillelister …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:9 */
-"_Remove Playlist Folders..." = "_Fjern mapper for spillelister …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:10 */
-/* File: ../..//portable/menubar.py:166 */
-"_Remove Channel..." = "_Fjern kanal …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:11 */
-/* File: ../..//portable/menubar.py:167 */
-"_Remove Channels..." = "_Fjern kanaler …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:12 */
-/* File: ../..//portable/menubar.py:169 */
-"_Remove Channel Folder..." = "_Fjern mappe for kanaler …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:13 */
-/* File: ../..//portable/menubar.py:168 */
-"_Remove Channel Folders..." = "_Fjern mapper for kanaler …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:14 */
-"_Remove Miro Guide..." = "_Fjern Miro-veileder …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:15 */
-"_Remove Miro Guides..." = "_Fjern Miro-veiledere …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:16 */
-"_Remove Video..." = "_Fjern film …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:17 */
-"_Remove Videos..." = "_Fjern filmer …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:18 */
-"Re_name..." = "Gi nytt _navn …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:19 */
-"Re_name Playlist..." = "Gi nytt _navn til spilleliste …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:20 */
-"Re_name Playlist Folder..." = "Gi nytt _navn til mappe for spillelister …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:21 */
-/* File: ../..//portable/menubar.py:165 */
-"Re_name Channel..." = "Gi nytt _navn til kanal …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:22 */
-"Re_name Channel Folder..." = "Gi nytt _navn til mappe for kanaler …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:23 */
-"Re_name Miro Guide..." = "Gi nytt _navn til Miro-veileder …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:24 */
-/* File: ../..//portable/menubar.py:171 */
-"_Update Channel..." = "_Oppdater kanal …";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:25 */
-/* File: ../..//portable/menubar.py:172 */
-"_Update Channels..." = "_Oppdater kanaler …";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:367 */
-/* File: ../..//portable/dl_daemon/download.py:367 */
-"Error" = "Feil";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:440 */
-/* File: ../..//portable/dl_daemon/download.py:440 */
-/* Flag: python-format */
-"Could not write to %s" = "Klarte ikke skrive til %s";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:459 */
-/* File: ../..//portable/dl_daemon/download.py:459 */
-"Not enough disk space" = "Ikke nok lagringsplass";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:460 */
-/* File: ../..//portable/dl_daemon/download.py:460 */
-/* Flag: python-format */
-"%s MB required to store this video" = "%s MB er nødvendig for å lagre denne filmen";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:793 */
-/* File: ../..//portable/dl_daemon/download.py:793 */
-"Corrupt Torrent" = "Ødelagt torrent";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:794 */
-/* File: ../..//portable/dl_daemon/download.py:794 */
-/* Flag: python-format */
-"The torrent file at %s was not valid" = "Torrent-filen på %s er ikke gyldig";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:820 */
-/* File: ../..//portable/dl_daemon/download.py:820 */
-"Torrent file deleted" = "Torrent-fil slettet";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:821 */
-/* File: ../..//portable/dl_daemon/download.py:821 */
-"The torrent file for this item was deleted " = "Torrent-filen for dette objektet er slettet ";
-
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:56 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57 */
 "Update Available" = "Oppdatering tilgjengelig";
 
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:58 */
 /* Flag: python-format */
 "A new version of %s is available for download." = "En ny versjon av %s er tilgjengelig for nedlasting.";
 
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:182 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:155 */
+/* Flag: untranslated */
+"Select a File" = "Select a File";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:160 */
+/* Flag: untranslated */
+"Save File to" = "Save File to";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:210 */
 "Error Bombing Item" = "Feil ved bombing av objekt";
 
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:184 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:212 */
 "Error Recommending Item" = "Feil ved anbefaling av objekt";
 
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:186 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214 */
 "Error Opening Website" = "Feil ved åpning av nettside";
 
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:190 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218 */
 /* Flag: python-format */
 "There was an error opening %s.  Please try again in a few seconds" = "Det skjedde en feil ved åpning av %s. Prøv igjen om noen sekunder";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:45 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:45 */
 /* Flag: python-format */
 "Error importing modules:\n%s" = "Feil ved import av moduler:\n%s";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:49 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:49 */
 "Starting up" = "Starter";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:256 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:256 */
 "Loading window" = "Laster vindu";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:257 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:257 */
 "onStartup called twice" = "onStartup påkalt to ganger";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:658 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:672 */
 "Spacebar" = "Mellomrom";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:805 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:819 */
 "Close to tray?" = "Lukke til systemkurv?";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:806 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:820 */
 "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Når du trykker lukk-knappen, vil du at Miro skal lukke til systemkurven eller avslutte? Du kan endre denne innstillingen senere under «Alternativer».";
 
-/* File: ../..//portable/app.py:808 */
-"Database too new" = "Databasen er for ny";
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:27 */
+"Download Completed" = "Nedlasting ferdig";
 
-/* File: ../..//portable/app.py:809 */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Du har en database som har blitt lagret med en nyere versjon av $shortAppName. Du må laste ned og kjøre siste versjon av $shortAppName.";
-
-/* File: ../..//portable/app.py:968 */
-/* File: ../..//portable/app.py:982 */
-/* File: ../..//portable/app.py:1026 */
-/* File: ../..//portable/app.py:1052 */
-/* File: ../..//portable/app.py:1072 */
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:28 */
 /* Flag: python-format */
-"Remove %s" = "Fjern %s";
+"Download of video '%s' is finished." = "Nedlastingen av filmen «%s» er fullført.";
 
-/* File: ../..//portable/app.py:969 */
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:37 */
+"Download Failed" = "Nedlasting mislyktes";
+
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:38 */
 /* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Er du sikker på at du vil fjerne veilederen %s?";
+"Download of video '%s' has failed." = "Nedlastingen av filmen «%s» mislyktes.";
 
-/* File: ../..//portable/app.py:983 */
+/* File: ../../platform/osx/frontend/MainFrame.py:261 */
+"Subscribe to Channel" = "Abonner på kanal";
+
+/* File: ../../platform/osx/frontend/MainFrame.py:262 */
+"Enter the URL of the channel you would like to subscribe to." = "Skriv inn adressen til kanalen du vil abonnere på.";
+
+/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:218 */
+"Audio" = "Lyd";
+
+/* File: ../../platform/osx/frontend/Preferences.py:38 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
+"General" = "Genrelt";
+
+/* File: ../../platform/osx/frontend/Preferences.py:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+"Downloads" = "Nedlastinger";
+
+/* File: ../../platform/osx/frontend/Preferences.py:41 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
+"Folders" = "Mapper";
+
+/* File: ../../platform/osx/frontend/Preferences.py:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+"Disk Space" = "Ledig diskplass";
+
+/* File: ../../platform/osx/frontend/Preferences.py:164 */
+"Movies Directory" = "Filmmappe";
+
+/* File: ../../platform/osx/frontend/Preferences.py:165 */
 /* Flag: python-format */
-"Are you sure you want to remove %s" = "Er du sikker på at du vil fjerne %s?";
+"Select a Directory to store %s downloads in." = "Velg en mappe å lagre %s nedlastinger i.";
 
-/* File: ../..//portable/app.py:986 */
-/* File: ../..//portable/app.py:1031 */
-/* File: ../..//portable/app.py:1057 */
-/* File: ../..//portable/app.py:1076 */
+/* File: ../../platform/osx/frontend/Preferences.py:166 */
+/* File: ../../platform/osx/frontend/Preferences.py:230 */
+"Select" = "Velg";
+
+/* File: ../../platform/osx/frontend/Preferences.py:175 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
+"Migrate existing movies?" = "Flytte lagrede filmer?";
+
+/* File: ../../platform/osx/frontend/Preferences.py:176 */
 /* Flag: python-format */
-"Remove %s channels" = "Fjern %s kanaler";
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Du har valgt en ny mappe for nedlasting av filmer. Vil du at %s skal flytte ferdige nedlastinger dit? (Filmer som for øyeblikket lastes ned flyttes ikke før de er ferdige.)";
 
-/* File: ../..//portable/app.py:988 */
+/* File: ../../platform/osx/frontend/Preferences.py:228 */
+"View this Directory in the Library" = "Vis denne mappen i biblioteket";
+
+/* File: ../../platform/osx/frontend/Preferences.py:229 */
+"Select a Directory to view in the Library." = "Velg en mappe for visning i biblioteket";
+
+/* File: ../../platform/osx/frontend/StartupPanel.py:114 */
+"Search!" = "Søk!";
+
+/* File: ../../platform/osx/frontend/Application.py:228 */
+"Pause Video" = "Stopp film midlertidig";
+
+/* File: ../../platform/osx/frontend/Application.py:237 */
+"Unsupported version of Quicktime" = "Denne versjonen av Quicktime støttes ikke";
+
+/* File: ../../platform/osx/frontend/Application.py:238 */
 /* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Er du sikker på at du vil fjerne disse %s spillelistene?";
+"To run %s you need the most recent version of Quicktime, which is a free update." = "For å kjøre %s trenger du siste versjon av Quicktime.";
 
-/* File: ../..//portable/app.py:1027 */
-"What would you like to do with the videos in this channel that you've downloaded?" = "Hva ønsker du gjøre å med filmene i kanalen du har lastet ned?";
+/* File: ../../platform/osx/frontend/UIStrings.py:5 */
+"_Remove..." = "_Fjern …";
 
-/* File: ../..//portable/app.py:1032 */
-"What would you like to do with the videos in these channels that you've downloaded?" = "Hva ønsker du gjøre å med filmene i kanalene du har lastet ned?";
+/* File: ../../platform/osx/frontend/UIStrings.py:6 */
+"_Remove Playlist..." = "_Fjern spilleliste …";
 
-/* File: ../..//portable/app.py:1053 */
+/* File: ../../platform/osx/frontend/UIStrings.py:7 */
+"_Remove Playlists..." = "_Fjern spillelister …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:8 */
+"_Remove Playlist Folder..." = "_Fjern mappe for spillelister …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:9 */
+"_Remove Playlist Folders..." = "_Fjern mapper for spillelister …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:10 */
+/* File: ../../portable/menubar.py:179 */
+"_Remove Channel..." = "_Fjern kanal …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:11 */
+/* File: ../../portable/menubar.py:180 */
+"_Remove Channels..." = "_Fjern kanaler …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:12 */
+/* File: ../../portable/menubar.py:182 */
+"_Remove Channel Folder..." = "_Fjern mappe for kanaler …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:13 */
+/* File: ../../portable/menubar.py:181 */
+"_Remove Channel Folders..." = "_Fjern mapper for kanaler …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:14 */
+"_Remove Miro Guide..." = "_Fjern Miro-veileder …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:15 */
+"_Remove Miro Guides..." = "_Fjern Miro-veiledere …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:16 */
+"_Remove Video..." = "_Fjern film …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:17 */
+"_Remove Videos..." = "_Fjern filmer …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:18 */
+"Re_name..." = "Gi nytt _navn …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:19 */
+"Re_name Playlist..." = "Gi nytt _navn til spilleliste …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:20 */
+"Re_name Playlist Folder..." = "Gi nytt _navn til mappe for spillelister …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:21 */
+/* File: ../../portable/menubar.py:178 */
+"Re_name Channel..." = "Gi nytt _navn til kanal …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:22 */
+"Re_name Channel Folder..." = "Gi nytt _navn til mappe for kanaler …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:23 */
+"Re_name Miro Guide..." = "Gi nytt _navn til Miro-veileder …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:24 */
+/* File: ../../portable/menubar.py:184 */
+"_Update Channel..." = "_Oppdater kanal …";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:25 */
+/* File: ../../portable/menubar.py:185 */
+"_Update Channels..." = "_Oppdater kanaler …";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42 */
+"Settings" = "Innstillinger";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45 */
+"Hide" = "Skjul";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47 */
+"Show" = "Vis";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48 */
+/* File: ../../portable/dialogs.py:80 */
+/* File: ../../portable/menubar.py:257 */
+"Quit" = "Avslutt";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:322 */
+"New Channel _Guide..." = "Ny kanal_veileder";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:563 */
+"Folder Location" = "Mappeplassering";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
+"Username:" = "Brukernavn:";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
+"Password:" = "Passord:";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:413 */
+"Unknown Runtime Error" = "Ukjent kjøretidsfeil";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:414 */
 /* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Er du sikker på at du vil fjerne %s? Uferdige nedlastinger blir avbrutt.";
+"An unknown error has occurred %s." = "Det oppstod en ukjent feil %s.";
 
-/* File: ../..//portable/app.py:1058 */
+/* File: ../../portable/dl_daemon/download.py:367 */
+"Error" = "Feil";
+
+/* File: ../../portable/dl_daemon/download.py:440 */
 /* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Er du sikker på at du vil fjerne disse %s kanalene? Uferdige nedlastinger blir avbrutt.";
+"Could not write to %s" = "Klarte ikke skrive til %s";
 
-/* File: ../..//portable/app.py:1073 */
+/* File: ../../portable/dl_daemon/download.py:459 */
+"Not enough disk space" = "Ikke nok lagringsplass";
+
+/* File: ../../portable/dl_daemon/download.py:460 */
 /* Flag: python-format */
-"Are you sure you want to remove %s?" = "Er du sikker på at du vil fjerne %s?";
+"%s MB required to store this video" = "%s MB er nødvendig for å lagre denne filmen";
 
-/* File: ../..//portable/app.py:1077 */
+/* File: ../../portable/dl_daemon/download.py:679 */
+/* Flag: untranslated */
+"BitTorrent failure" = "BitTorrent failure";
+
+/* File: ../../portable/dl_daemon/download.py:680 */
+/* Flag: untranslated */
+"BitTorrent failed to startup" = "BitTorrent failed to startup";
+
+/* File: ../../portable/dl_daemon/download.py:803 */
+"Corrupt Torrent" = "Ødelagt torrent";
+
+/* File: ../../portable/dl_daemon/download.py:804 */
 /* Flag: python-format */
-"Are you sure you want to remove these %s channels?" = "Er du sikker på at du vil fjerne disse %s kanalene?";
+"The torrent file at %s was not valid" = "Torrent-filen på %s er ikke gyldig";
 
-/* File: ../..//portable/app.py:1090 */
-/* Flag: python-format */
-"Stop watching %s" = "Stopp visning av %s";
+/* File: ../../portable/dl_daemon/download.py:830 */
+"Torrent file deleted" = "Torrent-fil slettet";
 
-/* File: ../..//portable/app.py:1091 */
-/* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "Er du sikker på at du vil stoppe visning av %s?";
+/* File: ../../portable/dl_daemon/download.py:831 */
+"The torrent file for this item was deleted " = "Torrent-filen for dette objektet er slettet ";
 
-/* File: ../..//portable/app.py:1094 */
-/* Flag: python-format */
-"Stop watching %s directories" = "Stopp visning av %s mapper";
+/* File: ../../portable/dl_daemon/download.py:832 */
+"outside of democracy." = "utenfor Democracy";
 
-/* File: ../..//portable/app.py:1095 */
-/* Flag: python-format */
-"Are you sure you want to stop watching these %s directories?" = "Er du sikker på at du vil stoppe visningen av %s mapper?";
+/* File: ../../portable/tabs.py:43 */
+"Library" = "Bibliotek";
 
-/* File: ../..//portable/app.py:1125 */
-"Are you sure you want to quit?" = "Er du sikker på at du vil avslutte?";
+/* File: ../../portable/tabs.py:44 */
+"New" = "Nye";
 
-/* File: ../..//portable/app.py:1583 */
-"Invalid Value" = "Ugyldig verdi";
+/* File: ../../portable/tabs.py:46 */
+"Downloading" = "Under nedlasting";
 
-/* File: ../..//portable/app.py:1584 */
-/* Flag: python-format */
-"%s is invalid.  You must enter a non-negative number." = "%s er ugyldig. Du må skrive inn et ikke-negativt nummer.";
-
-/* File: ../..//portable/app.py:1869 */
-" - Invalid URL" = " – Ugyldig URL";
-
-/* File: ../..//portable/app.py:1870 */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Adressen du skrev inn er ikke en gyldig URL.\nSjekk adressen på nytt og prøv igjen.\n\n";
-
-/* File: ../..//portable/app.py:1894 */
-"$shortAppName - Add Channel" = "$shortAppName – Legg til kanal";
-
-/* File: ../..//portable/app.py:1894 */
-"Enter the URL of the channel to add" = "Tast inn URL-adressen for kanalen som skal legges til";
-
-/* File: ../..//portable/app.py:1915 */
-"$shortAppName - Add Miro Guide" = "$shortAppName – Legg til Miro-veileder";
-
-/* File: ../..//portable/app.py:1915 */
-"Enter the URL of the Miro Guide to add" = "Skriv inn URL-adressen til Miro-veilederen som skal legges til";
-
-/* File: ../..//portable/app.py:2209 */
-"News and Tech" = "Nyeheter og teknologi";
-
-/* File: ../..//portable/app.py:2216 */
-"Entertainment" = "Underholdning";
-
-/* File: ../..//portable/app.py:2222 */
-"High-Def" = "Høyoppløsning";
-
-/* File: ../..//portable/app.py:2230 */
-"Mac" = "Mac";
-
-/* File: ../..//portable/app.py:2245 */
-"Example Playlist" = "Eksempel-spilleliste";
-
-/* File: ../..//portable/app.py:2264 */
-"Custom Channels" = "Ikke-forvalgte kanaler";
-
-/* File: ../..//portable/app.py:2264 */
-"You are running a version of $longAppName with a custom set of channels." = "Du kjører en versjon av $longAppName med et egendefinert kanalsett.";
-
-/* File: ../..//portable/autoupdate.py:121 */
-/* Flag: python-format */
-"%s Version Alert" = "%s versjonsvarsling";
-
-/* File: ../..//portable/autoupdate.py:122 */
-/* Flag: python-format */
-"A new version of %s is available. Would you like to download it now?" = "En ny versjon av %s er tilgjengelig. Vil du laste den ned nå?";
-
-/* File: ../..//portable/autoupdate.py:128 */
-/* Flag: python-format */
-"%s Version Check" = "%s versjonssjekk";
-
-/* File: ../..//portable/autoupdate.py:129 */
-/* Flag: python-format */
-"%s is up to date." = "%s er oppdatert";
-
-/* File: ../..//portable/dialogs.py:76 */
-"Ok" = "OK";
-
-/* File: ../..//portable/dialogs.py:81 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-"Migrate" = "Flytt";
-
-/* File: ../..//portable/dialogs.py:82 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-"Don't Migrate" = "Ikke flytt";
-
-/* File: ../..//portable/dialogs.py:83 */
-/* File: ../..//portable/item.py:1463 */
-/* File: ../..//portable/menu.py:111 */
-"Download" = "Last ned";
-
-/* File: ../..//portable/dialogs.py:84 */
-"Remove Entry" = "Fjern oppføring";
-
-/* File: ../..//portable/dialogs.py:85 */
-"Delete File" = "Slett fil";
-
-/* File: ../..//portable/dialogs.py:86 */
-"Delete Files" = "Slett filer";
-
-/* File: ../..//portable/dialogs.py:87 */
-"Keep Videos" = "Behold filmer";
-
-/* File: ../..//portable/dialogs.py:88 */
-"Delete Videos" = "Slett filer";
-
-/* File: ../..//portable/dialogs.py:90 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-"Create Channel" = "Lag kanal";
-
-/* File: ../..//portable/dialogs.py:91 */
-"Add" = "Legg til";
-
-/* File: ../..//portable/dialogs.py:92 */
-"Add Into New Folder" = "Legg til i ny mappe";
-
-/* File: ../..//portable/dialogs.py:93 */
-"Keep" = "Behold";
-
-/* File: ../..//portable/dialogs.py:95 */
-"Not Now" = "Ikke nå";
-
-/* File: ../..//portable/dialogs.py:96 */
-"Close to Tray" = "Lukk til systemkurv";
-
-/* File: ../..//portable/dialogs.py:211 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-"New Search Channel" = "Ny søkekanal";
-
-/* File: ../..//portable/dialogs.py:211 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
-"A search channel contains items that match a search term." = "En søkekanal inneholder objekter som stemmer overens med et søk.";
-
-/* File: ../..//portable/downloader.py:214 */
-"activity" = "aktivitet";
-
-/* File: ../..//portable/downloader.py:250 */
-/* File: ../..//portable/httpclient.py:112 */
-"File not found" = "Fil ikke funnet";
-
-/* File: ../..//portable/downloader.py:251 */
-"Flash URL Scraping Error" = "Feil ved Flash-URL-innhenting";
-
-/* File: ../..//portable/downloader.py:430 */
-"starting up" = "starter";
-
-/* File: ../..//portable/feed.py:380 */
-"never" = "aldri";
-
-/* File: ../..//portable/feed.py:382 */
-/* File: ../..//portable/item.py:531 */
-/* Flag: python-format */
-"%d hours" = "%d timer";
-
-/* File: ../..//portable/feed.py:384 */
-/* Flag: python-format */
-"%d day" = "%d dag";
-
-/* File: ../..//portable/feed.py:386 */
-/* File: ../..//portable/item.py:529 */
-/* Flag: python-format */
-"%d days" = "%d dager";
-
-/* File: ../..//portable/feed.py:388 */
-/* Flag: python-format */
-"%d months" = "%d måneder";
-
-/* File: ../..//portable/feed.py:779 */
-"Update Channel Now" = "Oppdater kanal nå";
-
-/* File: ../..//portable/feed.py:781 */
-/* File: ../..//portable/guide.py:52 */
+/* File: ../../portable/guide.py:83 */
+/* File: ../../portable/feed.py:782 */
 "Copy URL to clipboard" = "Kopier URL til utklippstavle";
 
-/* File: ../..//portable/feed.py:782 */
-/* File: ../..//portable/feed.py:791 */
-"Rename Channel" = "Gi nytt navn til kanal";
-
-/* File: ../..//portable/feed.py:786 */
-"Revert Title to Default" = "Sett tittel tilbake til forvalgt";
-
-/* File: ../..//portable/feed.py:792 */
-/* Flag: python-format */
-"Enter a new name for the channel %s" = "Skriv inn et nytt navn for kanalen %s";
-
-/* File: ../..//portable/feed.py:879 */
-"Error loading feed" = "Feil ved lasting av kilde";
-
-/* File: ../..//portable/feed.py:880 */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Kunne ikke laste kilden på %s (%s).";
-
-/* File: ../..//portable/feed.py:883 */
-"Would you like to keep the feed?" = "Ønsker du å beholde kilden?";
-
-/* File: ../..//portable/feed.py:1000 */
-"Bad content-type" = "Ugyldig innholdstype";
-
-/* File: ../..//portable/feed.py:1013 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-"Channel is not compatible with $shortAppName!" = "Kanalen er ikke kompatibel med $shortAppName";
-
-/* File: ../..//portable/feed.py:1014 */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Men vi vil gjøre vårt ytterste for å innhente filene. Det kan ta lengre tid å føre opp filmene, og beskrivelsene kan se rare ut. Kontakt utgiveren av $url og spør om de kan tilby en kilde i et format som virker med $shortAppName.\n\nVil du likevel prøve å laste inn denne kanalen?";
-
-/* File: ../..//portable/feed.py:1987 */
-/* File: ../..//portable/feed.py:2050 */
-"Search" = "Søk";
-
-/* File: ../..//portable/feed.py:2064 */
-"Local Files" = "Lokale filer";
-
-/* File: ../..//portable/feed.py:2078 */
-"Playing File" = "Spiller av fil";
-
-/* File: ../..//portable/folder.py:132 */
-/* File: ../..//portable/folder.py:155 */
-"Rename Channel Folder" = "Gi nytt navn til mappe for kanaler";
-
-/* File: ../..//portable/folder.py:134 */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Skriv inn et nytt navn for kanalmappen %s";
-
-/* File: ../..//portable/folder.py:210 */
-/* File: ../..//portable/folder.py:215 */
-"Rename Playlist Folder" = "Gi nytt navn til mappe for spillelister";
-
-/* File: ../..//portable/folder.py:217 */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Skriv inn et nytt navn for spillelistemappen %s";
-
-/* File: ../..//portable/folder.py:225 */
-"Create Channel Folder" = "Lag mappe for kanaler";
-
-/* File: ../..//portable/folder.py:226 */
-/* File: ../..//portable/singleclick.py:176 */
-"Enter a name for the new channel folder" = "Skriv inn et nytt navn for den nye mappen for kanaler";
-
-/* File: ../..//portable/folder.py:239 */
-"Create Playlist Folder" = "Lag mappe for spillelister";
-
-/* File: ../..//portable/folder.py:240 */
-"Enter a name for the new playlist folder" = "Skriv inn et nytt navn for den nye mappen for spillelister";
-
-/* File: ../..//portable/guide.py:75 */
+/* File: ../../portable/guide.py:118 */
 "Miro Guide" = "Miro-veileder";
 
-/* File: ../..//portable/httpclient.py:67 */
-/* Flag: python-format */
-"Error: %s" = "Feil: %s";
+/* File: ../../portable/downloader.py:214 */
+"activity" = "aktivitet";
 
-/* File: ../..//portable/httpclient.py:82 */
-/* File: ../..//portable/httpclient.py:87 */
-"Can't connect" = "Klarte ikke koble til";
+/* File: ../../portable/downloader.py:250 */
+/* File: ../../portable/httpclient.py:112 */
+"File not found" = "Fil ikke funnet";
 
-/* File: ../..//portable/httpclient.py:83 */
-/* Flag: python-format */
-"Connection Error: %s" = "Tilkoblingsfeil: %s";
+/* File: ../../portable/downloader.py:251 */
+"Flash URL Scraping Error" = "Feil ved Flash-URL-innhenting";
 
-/* File: ../..//portable/httpclient.py:88 */
-"SSL connection error" = "Feil ved SSL-tilkobling";
+/* File: ../../portable/downloader.py:430 */
+"starting up" = "starter";
 
-/* File: ../..//portable/httpclient.py:92 */
-"HTTP error" = "HTTP-feil";
-
-/* File: ../..//portable/httpclient.py:95 */
-/* Flag: python-format */
-"Bad Status Line: %s" = "Ugyldig statuslinje : %s";
-
-/* File: ../..//portable/httpclient.py:98 */
-/* Flag: python-format */
-"Bad Header Line: %s" = "Ugyldig hodelinje: %s";
-
-/* File: ../..//portable/httpclient.py:101 */
-/* Flag: python-format */
-"Bad Chunk size: %s" = "Ugyldig oppdelingsstørrelse: %s";
-
-/* File: ../..//portable/httpclient.py:104 */
-/* Flag: python-format */
-"Expected CRLF got: %r" = "Forventet CRLF, fikk: %r";
-
-/* File: ../..//portable/httpclient.py:107 */
-/* Flag: python-format */
-"%s closed connection" = "%s lukket tilkoblingen";
-
-/* File: ../..//portable/httpclient.py:113 */
-"Got 404 status code" = "Fikk statuskode 404";
-
-/* File: ../..//portable/httpclient.py:115 */
-/* Flag: python-format */
-"Bad Status Code: %s" = "Ugyldig statuskode: %s";
-
-/* File: ../..//portable/httpclient.py:119 */
-"Authorization failed" = "Autorisering mislyktes";
-
-/* File: ../..//portable/httpclient.py:124 */
-"Internal Error" = "Intern feil";
-
-/* File: ../..//portable/httpclient.py:125 */
-/* Flag: untranslated */
-"Pipeline request never started" = "Pipeline request never started" /* = "Forespørsel for kommandokø aldri startet" */;
-
-/* File: ../..//portable/httpclient.py:129 */
-"Timeout" = "Tidsavbrudd";
-
-/* File: ../..//portable/httpclient.py:130 */
-/* Flag: python-format */
-"Connection to %s timed out" = "Tilkobling til %s fikk tidsavbrudd";
-
-/* File: ../..//portable/httpclient.py:134 */
-"Invalid URL" = "Ugyldig URL";
-
-/* File: ../..//portable/httpclient.py:135 */
-/* Flag: python-format */
-"%s is not a valid URL" = "%s er ikke en gyldig URL";
-
-/* File: ../..//portable/httpclient.py:355 */
-"Connection closed" = "Tilkobling lukket";
-
-/* File: ../..//portable/httpclient.py:780 */
-"Unknown" = "Ukjent";
-
-/* File: ../..//portable/httpclient.py:781 */
-"Internal Error: Not ready to send" = "Intern feil: Ikke klar til å sende";
-
-/* File: ../..//portable/item.py:478 */
-/* Flag: python-format */
-"Removing %s" = "Fjerner %s";
-
-/* File: ../..//portable/item.py:481 */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Vil du slette denne mappen og alle dens filmer eller bare fjerne oppføringen fra biblioteket?";
-
-/* File: ../..//portable/item.py:486 */
-"Would you like to delete this file or just remove its entry from My Collection?" = "Vil du slette denne filen eller bare fjerne den fra samlingen?";
-
-/* File: ../..//portable/item.py:503 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Dette er en mapppe. Når du sletter en mappe, slettes også alle objekter i mappen.";
-
-/* File: ../..//portable/item.py:533 */
-/* Flag: python-format */
-"%d minutes" = "%d minutter";
-
-/* File: ../..//portable/item.py:543 */
-/* Flag: python-format */
-"Expires in %s" = "Utløper om %s";
-
-/* File: ../..//portable/item.py:555 */
-/* Flag: python-format */
-"Will retry in %s" = "Prøver på nytt om %s.";
-
-/* File: ../..//portable/item.py:557 */
-"Paused" = "Pause";
-
-/* File: ../..//portable/item.py:937 */
-"TORRENT" = "TORRENT";
-
-/* File: ../..//portable/item.py:939 */
-"WEB PAGE" = "NETTSIDE";
-
-/* File: ../..//portable/item.py:949 */
-"Total Down:" = "Totalt ned:";
-
-/* File: ../..//portable/item.py:956 */
-"Seeders:" = "Opplastere:";
-
-/* File: ../..//portable/item.py:957 */
-"Leachers:" = "Nedlastere:";
-
-/* File: ../..//portable/item.py:958 */
-"Down Rate:" = "Nedlastingshastighet:";
-
-/* File: ../..//portable/item.py:959 */
-"Down Total:" = "Ned totalt:";
-
-/* File: ../..//portable/item.py:961 */
-"Up Rate:" = "Opplastingshastighet:";
-
-/* File: ../..//portable/item.py:962 */
-"Up Total:" = "Opp totalt:";
-
-/* File: ../..//portable/item.py:967 */
-"Web page:" = "Nettside:";
-
-/* File: ../..//portable/item.py:967 */
-"permalink" = "varig lenke";
-
-/* File: ../..//portable/item.py:968 */
-"File link:" = "Fillenke:";
-
-/* File: ../..//portable/item.py:968 */
-"direct link to file" = "direkte lenke til fil";
-
-/* File: ../..//portable/item.py:970 */
-"File type:" = "Filtype:";
-
-/* File: ../..//portable/item.py:977 */
-"REVEAL LOCAL FOLDER" = "Vis lokal mappe";
-
-/* File: ../..//portable/item.py:979 */
-"REVEAL LOCAL FILE" = "Vis lokal fil";
-
-/* File: ../..//portable/item.py:981 */
-"Filename:" = "Filnavn:";
-
-/* File: ../..//portable/item.py:988 */
-"Down Total" = "Ned totalt";
-
-/* File: ../..//portable/item.py:990 */
-"Up Total" = "Opp totalt";
-
-/* File: ../..//portable/item.py:1008 */
-"Item Details" = "Objektdetaljer";
-
-/* File: ../..//portable/item.py:1015 */
-"Torrent Details" = "Torrent-detaljer";
-
-/* File: ../..//portable/item.py:1020 */
-"Download Details" = "Nedlastingsdetaljer";
-
-/* File: ../..//portable/item.py:1234 */
-"downloading..." = "laster ned …";
-
-/* File: ../..//portable/item.py:1241 */
-/* File: ../..//portable/item.py:1244 */
-/* Flag: python-format */
-"%s remaining" = "%s gjenstår";
-
-/* File: ../..//portable/item.py:1253 */
-"starting up..." = "starter …";
-
-/* File: ../..//portable/item.py:1446 */
-/* File: ../..//portable/menu.py:97 */
-"Remove From Playlist" = "Fjern fra spilleliste";
-
-/* File: ../..//portable/item.py:1448 */
-/* File: ../..//portable/menu.py:99 */
-"Remove From the Library" = "Fjern fra biblioteket";
-
-/* File: ../..//portable/item.py:1450 */
-/* File: ../..//portable/menu.py:94 */
-"Play" = "Spill av";
-
-/* File: ../..//portable/item.py:1452 */
-"Play Just This Video" = "Spill av kun denne filmen";
-
-/* File: ../..//portable/item.py:1453 */
-/* File: ../..//portable/menu.py:95 */
-"Add to new playlist" = "Legg til i ny spilleliste";
-
-/* File: ../..//portable/item.py:1457 */
-/* File: ../..//portable/menu.py:105 */
-"Mark as Unwatched" = "Merk som usett";
-
-/* File: ../..//portable/item.py:1459 */
-/* File: ../..//portable/menu.py:123 */
-"Restart Upload" = "Start opplasting på nytt";
-
-/* File: ../..//portable/item.py:1461 */
-/* File: ../..//portable/menu.py:118 */
-"Cancel Download" = "Avbryt nedlasting";
-
-/* File: ../..//portable/item.py:1461 */
-/* File: ../..//portable/menu.py:120 */
-"Pause Download" = "Stopp nedlasting midlertidig";
-
-/* File: ../..//portable/item.py:1797 */
-/* Flag: python-format */
-"Removing %s items" = "Fjerner %s objekter";
-
-/* File: ../..//portable/item.py:1799 */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Én eller flere av disse filmene er ikke lastet ned fra en kanal. Vil du slette disse objektene eller bare fjerne oppføringene fra biblioteket?";
-
-/* File: ../..//portable/item.py:1807 */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Én eller flere av disse objektene er en mappe. Når du fjerner eller sletter en mappe, fjernes eller slettes også alle objekter i mappen.";
-
-/* File: ../..//portable/menu.py:69 */
-"Update Channels Now" = "Oppdater kanaler nå";
-
-/* File: ../..//portable/menu.py:92 */
-/* Flag: python-format */
-"%d Downloaded Items" = "%d nedlastede objekter";
-
-/* File: ../..//portable/menu.py:110 */
-/* Flag: python-format */
-"%d Available Items" = "%d tilgjengelige objekter";
-
-/* File: ../..//portable/menu.py:116 */
-/* Flag: python-format */
-"%d Downloading Items" = "%d objekter lastes ned";
-
-/* File: ../..//portable/menubar.py:132 */
-"_Open" = "_Åpne";
-
-/* File: ../..//portable/menubar.py:134 */
-"Check _Version" = "Sjekk _versjon";
-
-/* File: ../..//portable/menubar.py:136 */
-"_Remove Video" = "_Fjern film";
-
-/* File: ../..//portable/menubar.py:137 */
-"_Remove Videos" = "_Fjern filmer";
-
-/* File: ../..//portable/menubar.py:138 */
-"Re_name Video" = "Gi nytt _navn til film";
-
-/* File: ../..//portable/menubar.py:139 */
-"Save Video _As..." = "Lagre film _som …";
-
-/* File: ../..//portable/menubar.py:140 */
-"Save Videos _As..." = "Lagre filmer _som …";
-
-/* File: ../..//portable/menubar.py:141 */
-"Copy Video _URL" = "Kopier film-_URL";
-
-/* File: ../..//portable/menubar.py:143 */
-"_Options" = "_Alternativer";
-
-/* File: ../..//portable/menubar.py:144 */
-"_Quit" = "Av_slutt";
-
-/* File: ../..//portable/menubar.py:152 */
-"Cu_t" = "Klipp u_t";
-
-/* File: ../..//portable/menubar.py:153 */
-"_Copy" = "_Kopier";
-
-/* File: ../..//portable/menubar.py:154 */
-"_Paste" = "Lim _inn";
-
-/* File: ../..//portable/menubar.py:155 */
-"Select _All" = "Velg _alt";
-
-/* File: ../..//portable/menubar.py:156 */
-"_Delete" = "_Slett";
-
-/* File: ../..//portable/menubar.py:160 */
-"Add _Channel" = "Legg til _kanal";
-
-/* File: ../..//portable/menubar.py:161 */
-"New Searc_h Channel..." = "Ny _søkekanal …";
-
-/* File: ../..//portable/menubar.py:162 */
-"New _Folder..." = "Ny _mappe";
-
-/* File: ../..//portable/menubar.py:163 */
-"Add Channel _Guide..." = "Legg til kanal_veileder";
-
-/* File: ../..//portable/menubar.py:173 */
-"Update _All Channels" = "Oppdater _alle kanaler";
-
-/* File: ../..//portable/menubar.py:175 */
-"_Send this channel to a friend" = "_Send denne kanalen til en venn";
-
-/* File: ../..//portable/menubar.py:176 */
-"Copy Channel _Link" = "Kopier kanal_lenke";
-
-/* File: ../..//portable/menubar.py:179 */
-"New _Playlist" = "Ny _spilleliste";
-
-/* File: ../..//portable/menubar.py:180 */
-"New Playlist Fol_der" = "Ny _mappe for spillelister";
-
-/* File: ../..//portable/menubar.py:182 */
-"Re_name Playlist" = "Gi nytt _navn til spilleliste";
-
-/* File: ../..//portable/menubar.py:183 */
-"_Remove Playlist" = "_Fjern spilleliste";
-
-/* File: ../..//portable/menubar.py:184 */
-"_Remove Playlists" = "_Fjern spillelister";
-
-/* File: ../..//portable/menubar.py:185 */
-"_Remove Playlist Folders" = "_Fjern mapper for spillelister";
-
-/* File: ../..//portable/menubar.py:186 */
-"_Remove Playlist Folder" = "_Fjern mappe for spilleliste";
-
-/* File: ../..//portable/menubar.py:196 */
-"_Play" = "S_pill av";
-
-/* File: ../..//portable/menubar.py:197 */
-"_Stop" = "_Stopp";
-
-/* File: ../..//portable/menubar.py:199 */
-"_Next Video" = "_Neste film";
-
-/* File: ../..//portable/menubar.py:200 */
-"_Previous Video" = "Fo_rrige film";
-
-/* File: ../..//portable/menubar.py:202 */
-"Skip _Forward" = "Hopp _fremover";
-
-/* File: ../..//portable/menubar.py:203 */
-"Skip _Back" = "Hopp _bakover";
-
-/* File: ../..//portable/menubar.py:205 */
-"Volume _Up" = "Lydstyrke _opp";
-
-/* File: ../..//portable/menubar.py:206 */
-"Volume _Down" = "Lydstyrke ne_d";
-
-/* File: ../..//portable/menubar.py:208 */
-"_Fullscreen" = "_Fullskjerm";
-
-/* File: ../..//portable/menubar.py:212 */
-"_About" = "_Om";
-
-/* File: ../..//portable/menubar.py:213 */
-"_Donate" = "_Doner";
-
-/* File: ../..//portable/menubar.py:214 */
-/* File: ../..//portable/menubar.py:229 */
-"_Help" = "_Hjelp";
-
-/* File: ../..//portable/menubar.py:216 */
-"Report a _Bug" = "Rappoter _feil";
-
-/* File: ../..//portable/menubar.py:220 */
-"_Video" = "_Film";
-
-/* File: ../..//portable/menubar.py:222 */
-"_File" = "_Fil";
-
-/* File: ../..//portable/menubar.py:226 */
-"_Channels" = "_Kanaler";
-
-/* File: ../..//portable/menubar.py:227 */
-"_Playlists" = "_Spillelister";
-
-/* File: ../..//portable/menubar.py:228 */
-"P_layback" = "_Avspilling";
-
-/* File: ../..//portable/menubar.py:233 */
-"Play Unwatched ($numUnwatched)" = "Spill av ikke tildigere sett ($numUnwatched)";
-
-/* File: ../..//portable/menubar.py:234 */
-"Pause All Downloads ($numDownloading)" = "Stopp alle nedlastinger midlertidig ($numDownloading)";
-
-/* File: ../..//portable/menubar.py:235 */
-"Resume All Downloads ($numPaused)" = "Fortsett alle nedlastinger ($numPaused)";
-
-/* File: ../..//portable/menubar.py:237 */
-"Options" = "Alternativer";
-
-/* File: ../..//portable/menubar.py:239 */
-"Hide Window" = "Skjul vindu";
-
-/* File: ../..//portable/menubar.py:240 */
-"Show Window" = "Vis vindu";
-
-/* File: ../..//portable/playlist.py:196 */
-/* File: ../..//portable/playlist.py:201 */
+/* File: ../../portable/playlist.py:196 */
+/* File: ../../portable/playlist.py:201 */
 "Rename Playlist" = "Gi nytt navn til spilleliste";
 
-/* File: ../..//portable/playlist.py:202 */
+/* File: ../../portable/playlist.py:202 */
 /* Flag: python-format */
 "Enter a new name for the playlist %s" = "Skriv inn et nytt navn for spillelisten %s";
 
-/* File: ../..//portable/playlist.py:224 */
+/* File: ../../portable/playlist.py:224 */
 "Create Playlist" = "Lag spilleliste";
 
-/* File: ../..//portable/playlist.py:225 */
+/* File: ../../portable/playlist.py:225 */
 "Enter a name for the new playlist" = "Skriv inn et navn for den nye spillelisten";
 
-/* File: ../..//portable/singleclick.py:161 */
-"Subscribing to multiple channels" = "Abonnerer på flere kanaler";
+/* File: ../../portable/feed.py:381 */
+"never" = "aldri";
 
-/* File: ../..//portable/singleclick.py:162 */
+/* File: ../../portable/feed.py:383 */
+/* File: ../../portable/item.py:535 */
 /* Flag: python-format */
-"Create %d channels?" = "Lage %d kanaler?";
+"%d hours" = "%d timer";
 
-/* File: ../..//portable/singleclick.py:175 */
+/* File: ../../portable/feed.py:385 */
 /* Flag: python-format */
-"Adding %d channels to a new folder" = "Legger %d kanaler til i en ny mappe";
+"%d day" = "%d dag";
 
-/* File: ../..//portable/singleclick.py:179 */
+/* File: ../../portable/feed.py:387 */
+/* File: ../../portable/item.py:533 */
 /* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "MERKNAD: Du abonnerer allerede på %d av disse kanalene. Disse kanalene vil forbli der de er nå.";
+"%d days" = "%d dager";
 
-/* File: ../..//portable/singleclick.py:190 */
-"Subscription error" = "Abonnementsfeil";
-
-/* File: ../..//portable/singleclick.py:200 */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Denne $shortAppName-kanalfilen har et ugyldig format: $url. Underrett utgiveren om denne filen.";
-
-/* File: ../..//portable/singleclick.py:208 */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Denne $shortAppName-kanalfilen har feil innholdstype: $url. Underrett utgiveren om denne filen.";
-
-/* File: ../..//portable/singleclick.py:212 */
-"Could not download the $shortAppName channel file: $url." = "Klarte ikke laste ned $shortAppName-kanalfil: $url.";
-
-/* File: ../..//portable/singleclick.py:251 */
-"Invalid Torrent" = "Ugyldig torrent";
-
-/* File: ../..//portable/singleclick.py:252 */
+/* File: ../../portable/feed.py:389 */
 /* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Torrent-filen %s ser ut til å være ødelagt og kan ikke åpnes. [OK]";
+"%d months" = "%d måneder";
 
-/* File: ../..//portable/storedatabase.py:828 */
-/* File: ../..//portable/storedatabase.py:1189 */
+/* File: ../../portable/feed.py:780 */
+"Update Channel Now" = "Oppdater kanal nå";
+
+/* File: ../../portable/feed.py:783 */
+/* File: ../../portable/feed.py:792 */
+"Rename Channel" = "Gi nytt navn til kanal";
+
+/* File: ../../portable/feed.py:787 */
+"Revert Title to Default" = "Sett tittel tilbake til forvalgt";
+
+/* File: ../../portable/feed.py:793 */
 /* Flag: python-format */
-"%s database save succeeded" = "%s lagring av database vellykket";
+"Enter a new name for the channel %s" = "Skriv inn et nytt navn for kanalen %s";
 
-/* File: ../..//portable/storedatabase.py:829 */
-/* File: ../..//portable/storedatabase.py:1190 */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "Databasen er lagret uten feil. Det er nå trygt å avslutte uten å miste data.";
+/* File: ../../portable/feed.py:880 */
+"Error loading feed" = "Feil ved lasting av kilde";
 
-/* File: ../..//portable/storedatabase.py:836 */
-/* File: ../..//portable/storedatabase.py:1198 */
+/* File: ../../portable/feed.py:881 */
 /* Flag: python-format */
-"%s database save failed" = "%s lagring av databasen feilet";
+"Couldn't load the feed at %s (%s)." = "Kunne ikke laste kilden på %s (%s).";
 
-/* File: ../..//portable/storedatabase.py:837 */
-/* File: ../..//portable/storedatabase.py:1199 */
+/* File: ../../portable/feed.py:884 */
+"Would you like to keep the feed?" = "Ønsker du å beholde kilden?";
+
+/* File: ../../portable/feed.py:1001 */
+"Bad content-type" = "Ugyldig innholdstype";
+
+/* File: ../../portable/feed.py:1014 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "Kanalen er ikke kompatibel med $shortAppName";
+
+/* File: ../../portable/feed.py:1015 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Men vi vil gjøre vårt ytterste for å innhente filene. Det kan ta lengre tid å føre opp filmene, og beskrivelsene kan se rare ut. Kontakt utgiveren av $url og spør om de kan tilby en kilde i et format som virker med $shortAppName.\n\nVil du likevel prøve å laste inn denne kanalen?";
+
+/* File: ../../portable/feed.py:2010 */
+/* File: ../../portable/feed.py:2118 */
+/* File: ../../portable/extrastrings.py:5 */
+"Search" = "Søk";
+
+/* File: ../../portable/feed.py:2132 */
+"Local Files" = "Lokale filer";
+
+/* File: ../../portable/feed.py:2146 */
+"Playing File" = "Spiller av fil";
+
+/* File: ../../portable/menu.py:69 */
+"Update Channels Now" = "Oppdater kanaler nå";
+
+/* File: ../../portable/menu.py:92 */
 /* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s klarte ikke lagre databasen sin: Lagringsenheten er full.\nVi anbefaler å slette filer fra lagringsenheten eller å slette noen filmer fra samlingen din.\nNye endringer kan være tapt.";
+"%d Downloaded Items" = "%d nedlastede objekter";
 
-/* File: ../..//portable/tabs.py:43 */
-"Library" = "Bibliotek";
+/* File: ../../portable/menu.py:94 */
+/* File: ../../portable/item.py:1454 */
+"Play" = "Spill av";
 
-/* File: ../..//portable/tabs.py:44 */
-"New" = "Nye";
+/* File: ../../portable/menu.py:95 */
+/* File: ../../portable/item.py:1457 */
+"Add to new playlist" = "Legg til i ny spilleliste";
 
-/* File: ../..//portable/tabs.py:46 */
-"Downloading" = "Under nedlasting";
+/* File: ../../portable/menu.py:97 */
+/* File: ../../portable/item.py:1450 */
+"Remove From Playlist" = "Fjern fra spilleliste";
 
-/* File: ../..//portable/util.py:405 */
+/* File: ../../portable/menu.py:99 */
+/* File: ../../portable/item.py:1452 */
+"Remove From the Library" = "Fjern fra biblioteket";
+
+/* File: ../../portable/menu.py:105 */
+/* File: ../../portable/item.py:1461 */
+"Mark as Unwatched" = "Merk som usett";
+
+/* File: ../../portable/menu.py:110 */
+/* Flag: python-format */
+"%d Available Items" = "%d tilgjengelige objekter";
+
+/* File: ../../portable/menu.py:111 */
+/* File: ../../portable/dialogs.py:85 */
+/* File: ../../portable/item.py:1467 */
+"Download" = "Last ned";
+
+/* File: ../../portable/menu.py:116 */
+/* Flag: python-format */
+"%d Downloading Items" = "%d objekter lastes ned";
+
+/* File: ../../portable/menu.py:118 */
+/* File: ../../portable/item.py:1465 */
+"Cancel Download" = "Avbryt nedlasting";
+
+/* File: ../../portable/menu.py:120 */
+/* File: ../../portable/item.py:1465 */
+"Pause Download" = "Stopp nedlasting midlertidig";
+
+/* File: ../../portable/menu.py:123 */
+/* File: ../../portable/item.py:1463 */
+"Restart Upload" = "Start opplasting på nytt";
+
+/* File: ../../portable/autoupdate.py:121 */
+/* Flag: python-format */
+"%s Version Alert" = "%s versjonsvarsling";
+
+/* File: ../../portable/autoupdate.py:122 */
+/* Flag: python-format */
+"A new version of %s is available. Would you like to download it now?" = "En ny versjon av %s er tilgjengelig. Vil du laste den ned nå?";
+
+/* File: ../../portable/autoupdate.py:128 */
+/* Flag: python-format */
+"%s Version Check" = "%s versjonssjekk";
+
+/* File: ../../portable/autoupdate.py:129 */
+/* Flag: python-format */
+"%s is up to date." = "%s er oppdatert";
+
+/* File: ../../portable/util.py:257 */
+/* File: ../../portable/httpclient.py:124 */
+"Internal Error" = "Intern feil";
+
+/* File: ../../portable/util.py:257 */
+/* Flag: untranslated */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report.";
+
+/* File: ../../portable/util.py:257 */
+/* Flag: untranslated */
+"Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
+
+/* File: ../../portable/util.py:257 */
+/* Flag: untranslated */
+"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
+
+/* File: ../../portable/util.py:441 */
 /* Flag: python-format */
 "%1.1fGB" = "%1.1f GB";
 
-/* File: ../..//portable/util.py:407 */
+/* File: ../../portable/util.py:443 */
 /* Flag: python-format */
 "%dGB" = "%d GB";
 
-/* File: ../..//portable/util.py:411 */
+/* File: ../../portable/util.py:447 */
 /* Flag: python-format */
 "%1.1fMB" = "%1.1f MB";
 
-/* File: ../..//portable/util.py:413 */
+/* File: ../../portable/util.py:449 */
 /* Flag: python-format */
 "%dMB" = "%d MB";
 
-/* File: ../..//portable/util.py:417 */
+/* File: ../../portable/util.py:453 */
 /* Flag: python-format */
 "%1.1fKB" = "%1.1f KB";
 
-/* File: ../..//portable/util.py:419 */
+/* File: ../../portable/util.py:455 */
 /* Flag: python-format */
 "%dKB" = "%d KB";
 
-/* File: ../..//portable/util.py:423 */
+/* File: ../../portable/util.py:459 */
 /* Flag: python-format */
 "%1.1fB" = "%1.1f B";
 
-/* File: ../..//portable/util.py:425 */
+/* File: ../../portable/util.py:461 */
 /* Flag: python-format */
 "%dB" = "%d B";
+
+/* File: ../../portable/storedatabase.py:828 */
+/* File: ../../portable/storedatabase.py:1189 */
+/* Flag: python-format */
+"%s database save succeeded" = "%s lagring av database vellykket";
+
+/* File: ../../portable/storedatabase.py:829 */
+/* File: ../../portable/storedatabase.py:1190 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Databasen er lagret uten feil. Det er nå trygt å avslutte uten å miste data.";
+
+/* File: ../../portable/storedatabase.py:836 */
+/* File: ../../portable/storedatabase.py:1198 */
+/* Flag: python-format */
+"%s database save failed" = "%s lagring av databasen feilet";
+
+/* File: ../../portable/storedatabase.py:837 */
+/* File: ../../portable/storedatabase.py:1199 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s klarte ikke lagre databasen sin: Lagringsenheten er full.\nVi anbefaler å slette filer fra lagringsenheten eller å slette noen filmer fra samlingen din.\nNye endringer kan være tapt.";
+
+/* File: ../../portable/dialogs.py:76 */
+"Ok" = "OK";
+
+/* File: ../../portable/dialogs.py:81 */
+/* Flag: untranslated */
+"Ignore" = "Ignore";
+
+/* File: ../../portable/dialogs.py:82 */
+/* Flag: untranslated */
+"Submit Crash Repport" = "Submit Crash Repport";
+
+/* File: ../../portable/dialogs.py:83 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
+"Migrate" = "Flytt";
+
+/* File: ../../portable/dialogs.py:84 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
+"Don't Migrate" = "Ikke flytt";
+
+/* File: ../../portable/dialogs.py:86 */
+"Remove Entry" = "Fjern oppføring";
+
+/* File: ../../portable/dialogs.py:87 */
+"Delete File" = "Slett fil";
+
+/* File: ../../portable/dialogs.py:88 */
+"Delete Files" = "Slett filer";
+
+/* File: ../../portable/dialogs.py:89 */
+"Keep Videos" = "Behold filmer";
+
+/* File: ../../portable/dialogs.py:90 */
+"Delete Videos" = "Slett filer";
+
+/* File: ../../portable/dialogs.py:92 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
+"Create Channel" = "Lag kanal";
+
+/* File: ../../portable/dialogs.py:93 */
+"Add" = "Legg til";
+
+/* File: ../../portable/dialogs.py:94 */
+"Add Into New Folder" = "Legg til i ny mappe";
+
+/* File: ../../portable/dialogs.py:95 */
+"Keep" = "Behold";
+
+/* File: ../../portable/dialogs.py:97 */
+"Not Now" = "Ikke nå";
+
+/* File: ../../portable/dialogs.py:98 */
+"Close to Tray" = "Lukk til systemkurv";
+
+/* File: ../../portable/dialogs.py:99 */
+/* Flag: untranslated */
+"Launch Miro" = "Launch Miro";
+
+/* File: ../../portable/dialogs.py:214 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
+"New Search Channel" = "Ny søkekanal";
+
+/* File: ../../portable/dialogs.py:214 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:25 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
+"A search channel contains items that match a search term." = "En søkekanal inneholder objekter som stemmer overens med et søk.";
+
+/* File: ../../portable/singleclick.py:161 */
+"Subscribing to multiple channels" = "Abonnerer på flere kanaler";
+
+/* File: ../../portable/singleclick.py:162 */
+/* Flag: python-format */
+"Create %d channels?" = "Lage %d kanaler?";
+
+/* File: ../../portable/singleclick.py:175 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Legger %d kanaler til i en ny mappe";
+
+/* File: ../../portable/singleclick.py:176 */
+/* File: ../../portable/folder.py:226 */
+"Enter a name for the new channel folder" = "Skriv inn et nytt navn for den nye mappen for kanaler";
+
+/* File: ../../portable/singleclick.py:179 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "MERKNAD: Du abonnerer allerede på %d av disse kanalene. Disse kanalene vil forbli der de er nå.";
+
+/* File: ../../portable/singleclick.py:190 */
+"Subscription error" = "Abonnementsfeil";
+
+/* File: ../../portable/singleclick.py:200 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Denne $shortAppName-kanalfilen har et ugyldig format: $url. Underrett utgiveren om denne filen.";
+
+/* File: ../../portable/singleclick.py:208 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Denne $shortAppName-kanalfilen har feil innholdstype: $url. Underrett utgiveren om denne filen.";
+
+/* File: ../../portable/singleclick.py:212 */
+"Could not download the $shortAppName channel file: $url." = "Klarte ikke laste ned $shortAppName-kanalfil: $url.";
+
+/* File: ../../portable/singleclick.py:251 */
+"Invalid Torrent" = "Ugyldig torrent";
+
+/* File: ../../portable/singleclick.py:252 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Torrent-filen %s ser ut til å være ødelagt og kan ikke åpnes. [OK]";
+
+/* File: ../../portable/menubar.py:144 */
+"_Open" = "_Åpne";
+
+/* File: ../../portable/menubar.py:145 */
+/* Flag: untranslated */
+"_Download Video" = "_Download Video";
+
+/* File: ../../portable/menubar.py:147 */
+"Check _Version" = "Sjekk _versjon";
+
+/* File: ../../portable/menubar.py:149 */
+"_Remove Video" = "_Fjern film";
+
+/* File: ../../portable/menubar.py:150 */
+"_Remove Videos" = "_Fjern filmer";
+
+/* File: ../../portable/menubar.py:151 */
+"Re_name Video" = "Gi nytt _navn til film";
+
+/* File: ../../portable/menubar.py:152 */
+"Save Video _As..." = "Lagre film _som …";
+
+/* File: ../../portable/menubar.py:153 */
+"Save Videos _As..." = "Lagre filmer _som …";
+
+/* File: ../../portable/menubar.py:154 */
+"Copy Video _URL" = "Kopier film-_URL";
+
+/* File: ../../portable/menubar.py:156 */
+/* Flag: untranslated */
+"_Options..." = "_Options...";
+
+/* File: ../../portable/menubar.py:157 */
+"_Quit" = "Av_slutt";
+
+/* File: ../../portable/menubar.py:165 */
+"Cu_t" = "Klipp u_t";
+
+/* File: ../../portable/menubar.py:166 */
+"_Copy" = "_Kopier";
+
+/* File: ../../portable/menubar.py:167 */
+"_Paste" = "Lim _inn";
+
+/* File: ../../portable/menubar.py:168 */
+"Select _All" = "Velg _alt";
+
+/* File: ../../portable/menubar.py:169 */
+"_Delete" = "_Slett";
+
+/* File: ../../portable/menubar.py:173 */
+"Add _Channel" = "Legg til _kanal";
+
+/* File: ../../portable/menubar.py:174 */
+"New Searc_h Channel..." = "Ny _søkekanal …";
+
+/* File: ../../portable/menubar.py:175 */
+"New _Folder..." = "Ny _mappe";
+
+/* File: ../../portable/menubar.py:176 */
+"Add Channel _Guide..." = "Legg til kanal_veileder";
+
+/* File: ../../portable/menubar.py:186 */
+"Update _All Channels" = "Oppdater _alle kanaler";
+
+/* File: ../../portable/menubar.py:188 */
+/* Flag: untranslated */
+"_Import Channels (OPML)..." = "_Import Channels (OPML)...";
+
+/* File: ../../portable/menubar.py:189 */
+/* Flag: untranslated */
+"E_xport Channels (OPML)..." = "E_xport Channels (OPML)...";
+
+/* File: ../../portable/menubar.py:191 */
+"_Send this channel to a friend" = "_Send denne kanalen til en venn";
+
+/* File: ../../portable/menubar.py:192 */
+"Copy Channel _Link" = "Kopier kanal_lenke";
+
+/* File: ../../portable/menubar.py:195 */
+"New _Playlist" = "Ny _spilleliste";
+
+/* File: ../../portable/menubar.py:196 */
+"New Playlist Fol_der" = "Ny _mappe for spillelister";
+
+/* File: ../../portable/menubar.py:198 */
+"Re_name Playlist" = "Gi nytt _navn til spilleliste";
+
+/* File: ../../portable/menubar.py:199 */
+"_Remove Playlist" = "_Fjern spilleliste";
+
+/* File: ../../portable/menubar.py:200 */
+"_Remove Playlists" = "_Fjern spillelister";
+
+/* File: ../../portable/menubar.py:201 */
+"_Remove Playlist Folders" = "_Fjern mapper for spillelister";
+
+/* File: ../../portable/menubar.py:202 */
+"_Remove Playlist Folder" = "_Fjern mappe for spilleliste";
+
+/* File: ../../portable/menubar.py:212 */
+"_Play" = "S_pill av";
+
+/* File: ../../portable/menubar.py:213 */
+"_Stop" = "_Stopp";
+
+/* File: ../../portable/menubar.py:215 */
+"_Next Video" = "_Neste film";
+
+/* File: ../../portable/menubar.py:216 */
+"_Previous Video" = "Fo_rrige film";
+
+/* File: ../../portable/menubar.py:218 */
+"Skip _Forward" = "Hopp _fremover";
+
+/* File: ../../portable/menubar.py:219 */
+"Skip _Back" = "Hopp _bakover";
+
+/* File: ../../portable/menubar.py:221 */
+"Volume _Up" = "Lydstyrke _opp";
+
+/* File: ../../portable/menubar.py:222 */
+"Volume _Down" = "Lydstyrke ne_d";
+
+/* File: ../../portable/menubar.py:224 */
+"_Fullscreen" = "_Fullskjerm";
+
+/* File: ../../portable/menubar.py:228 */
+"_About" = "_Om";
+
+/* File: ../../portable/menubar.py:229 */
+"_Donate" = "_Doner";
+
+/* File: ../../portable/menubar.py:230 */
+/* File: ../../portable/menubar.py:245 */
+"_Help" = "_Hjelp";
+
+/* File: ../../portable/menubar.py:232 */
+"Report a _Bug" = "Rappoter _feil";
+
+/* File: ../../portable/menubar.py:236 */
+"_Video" = "_Film";
+
+/* File: ../../portable/menubar.py:238 */
+"_File" = "_Fil";
+
+/* File: ../../portable/menubar.py:242 */
+"_Channels" = "_Kanaler";
+
+/* File: ../../portable/menubar.py:243 */
+"_Playlists" = "_Spillelister";
+
+/* File: ../../portable/menubar.py:244 */
+"P_layback" = "_Avspilling";
+
+/* File: ../../portable/menubar.py:249 */
+"Play Unwatched ($numUnwatched)" = "Spill av ikke tildigere sett ($numUnwatched)";
+
+/* File: ../../portable/menubar.py:250 */
+"Pause All Downloads ($numDownloading)" = "Stopp alle nedlastinger midlertidig ($numDownloading)";
+
+/* File: ../../portable/menubar.py:251 */
+"Resume All Downloads ($numPaused)" = "Fortsett alle nedlastinger ($numPaused)";
+
+/* File: ../../portable/menubar.py:253 */
+/* Flag: untranslated */
+"Options..." = "Options...";
+
+/* File: ../../portable/menubar.py:255 */
+"Hide Window" = "Skjul vindu";
+
+/* File: ../../portable/menubar.py:256 */
+"Show Window" = "Vis vindu";
+
+/* File: ../../portable/item.py:478 */
+/* Flag: python-format */
+"Removing %s" = "Fjerner %s";
+
+/* File: ../../portable/item.py:481 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Vil du slette denne mappen og alle dens filmer eller bare fjerne oppføringen fra biblioteket?";
+
+/* File: ../../portable/item.py:487 */
+/* Flag: untranslated */
+"Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
+
+/* File: ../../portable/item.py:507 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Dette er en mapppe. Når du sletter en mappe, slettes også alle objekter i mappen.";
+
+/* File: ../../portable/item.py:537 */
+/* Flag: python-format */
+"%d minutes" = "%d minutter";
+
+/* File: ../../portable/item.py:547 */
+/* Flag: python-format */
+"Expires in %s" = "Utløper om %s";
+
+/* File: ../../portable/item.py:559 */
+/* Flag: python-format */
+"Will retry in %s" = "Prøver på nytt om %s.";
+
+/* File: ../../portable/item.py:561 */
+"Paused" = "Pause";
+
+/* File: ../../portable/item.py:941 */
+"TORRENT" = "TORRENT";
+
+/* File: ../../portable/item.py:943 */
+"WEB PAGE" = "NETTSIDE";
+
+/* File: ../../portable/item.py:953 */
+"Total Down:" = "Totalt ned:";
+
+/* File: ../../portable/item.py:962 */
+"Down Rate:" = "Nedlastingshastighet:";
+
+/* File: ../../portable/item.py:963 */
+"Down Total:" = "Ned totalt:";
+
+/* File: ../../portable/item.py:965 */
+"Up Rate:" = "Opplastingshastighet:";
+
+/* File: ../../portable/item.py:966 */
+"Up Total:" = "Opp totalt:";
+
+/* File: ../../portable/item.py:971 */
+"Web page:" = "Nettside:";
+
+/* File: ../../portable/item.py:971 */
+"permalink" = "varig lenke";
+
+/* File: ../../portable/item.py:972 */
+"File link:" = "Fillenke:";
+
+/* File: ../../portable/item.py:972 */
+"direct link to file" = "direkte lenke til fil";
+
+/* File: ../../portable/item.py:974 */
+"File type:" = "Filtype:";
+
+/* File: ../../portable/item.py:981 */
+"REVEAL LOCAL FOLDER" = "Vis lokal mappe";
+
+/* File: ../../portable/item.py:983 */
+"REVEAL LOCAL FILE" = "Vis lokal fil";
+
+/* File: ../../portable/item.py:985 */
+"Filename:" = "Filnavn:";
+
+/* File: ../../portable/item.py:992 */
+"Down Total" = "Ned totalt";
+
+/* File: ../../portable/item.py:994 */
+"Up Total" = "Opp totalt";
+
+/* File: ../../portable/item.py:1012 */
+"Item Details" = "Objektdetaljer";
+
+/* File: ../../portable/item.py:1019 */
+"Torrent Details" = "Torrent-detaljer";
+
+/* File: ../../portable/item.py:1021 */
+/* Flag: untranslated */
+"Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
+
+/* File: ../../portable/item.py:1024 */
+"Download Details" = "Nedlastingsdetaljer";
+
+/* File: ../../portable/item.py:1238 */
+"downloading..." = "laster ned …";
+
+/* File: ../../portable/item.py:1245 */
+/* File: ../../portable/item.py:1248 */
+/* Flag: python-format */
+"%s remaining" = "%s gjenstår";
+
+/* File: ../../portable/item.py:1257 */
+"starting up..." = "starter …";
+
+/* File: ../../portable/item.py:1456 */
+"Play Just This Video" = "Spill av kun denne filmen";
+
+/* File: ../../portable/item.py:1800 */
+/* Flag: python-format */
+"Removing %s items" = "Fjerner %s objekter";
+
+/* File: ../../portable/item.py:1802 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Én eller flere av disse filmene er ikke lastet ned fra en kanal. Vil du slette disse objektene eller bare fjerne oppføringene fra biblioteket?";
+
+/* File: ../../portable/item.py:1810 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Én eller flere av disse objektene er en mappe. Når du fjerner eller sletter en mappe, fjernes eller slettes også alle objekter i mappen.";
+
+/* File: ../../portable/folder.py:132 */
+/* File: ../../portable/folder.py:155 */
+"Rename Channel Folder" = "Gi nytt navn til mappe for kanaler";
+
+/* File: ../../portable/folder.py:134 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "Skriv inn et nytt navn for kanalmappen %s";
+
+/* File: ../../portable/folder.py:210 */
+/* File: ../../portable/folder.py:215 */
+"Rename Playlist Folder" = "Gi nytt navn til mappe for spillelister";
+
+/* File: ../../portable/folder.py:217 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "Skriv inn et nytt navn for spillelistemappen %s";
+
+/* File: ../../portable/folder.py:225 */
+"Create Channel Folder" = "Lag mappe for kanaler";
+
+/* File: ../../portable/folder.py:239 */
+"Create Playlist Folder" = "Lag mappe for spillelister";
+
+/* File: ../../portable/folder.py:240 */
+"Enter a name for the new playlist folder" = "Skriv inn et nytt navn for den nye mappen for spillelister";
+
+/* File: ../../portable/httpclient.py:67 */
+/* Flag: python-format */
+"Error: %s" = "Feil: %s";
+
+/* File: ../../portable/httpclient.py:82 */
+/* File: ../../portable/httpclient.py:87 */
+"Can't connect" = "Klarte ikke koble til";
+
+/* File: ../../portable/httpclient.py:83 */
+/* Flag: python-format */
+"Connection Error: %s" = "Tilkoblingsfeil: %s";
+
+/* File: ../../portable/httpclient.py:88 */
+"SSL connection error" = "Feil ved SSL-tilkobling";
+
+/* File: ../../portable/httpclient.py:92 */
+"HTTP error" = "HTTP-feil";
+
+/* File: ../../portable/httpclient.py:95 */
+/* Flag: python-format */
+"Bad Status Line: %s" = "Ugyldig statuslinje : %s";
+
+/* File: ../../portable/httpclient.py:98 */
+/* Flag: python-format */
+"Bad Header Line: %s" = "Ugyldig hodelinje: %s";
+
+/* File: ../../portable/httpclient.py:101 */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "Ugyldig oppdelingsstørrelse: %s";
+
+/* File: ../../portable/httpclient.py:104 */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "Forventet CRLF, fikk: %r";
+
+/* File: ../../portable/httpclient.py:107 */
+/* Flag: python-format */
+"%s closed connection" = "%s lukket tilkoblingen";
+
+/* File: ../../portable/httpclient.py:113 */
+"Got 404 status code" = "Fikk statuskode 404";
+
+/* File: ../../portable/httpclient.py:115 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "Ugyldig statuskode: %s";
+
+/* File: ../../portable/httpclient.py:119 */
+"Authorization failed" = "Autorisering mislyktes";
+
+/* File: ../../portable/httpclient.py:125 */
+"Pipeline request never started" = "Forespørsel for kommandokø aldri startet";
+
+/* File: ../../portable/httpclient.py:129 */
+"Timeout" = "Tidsavbrudd";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Connection to %s timed out" = "Tilkobling til %s fikk tidsavbrudd";
+
+/* File: ../../portable/httpclient.py:134 */
+"Invalid URL" = "Ugyldig URL";
+
+/* File: ../../portable/httpclient.py:135 */
+/* Flag: python-format */
+"%s is not a valid URL" = "%s er ikke en gyldig URL";
+
+/* File: ../../portable/httpclient.py:323 */
+/* Flag: untranslated */
+"Unknown Error code" = "Unknown Error code";
+
+/* File: ../../portable/httpclient.py:355 */
+"Connection closed" = "Tilkobling lukket";
+
+/* File: ../../portable/httpclient.py:780 */
+"Unknown" = "Ukjent";
+
+/* File: ../../portable/httpclient.py:781 */
+"Internal Error: Not ready to send" = "Intern feil: Ikke klar til å sende";
+
+/* File: ../../portable/app.py:682 */
+"Database too new" = "Databasen er for ny";
+
+/* File: ../../portable/app.py:683 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Du har en database som har blitt lagret med en nyere versjon av $shortAppName. Du må laste ned og kjøre siste versjon av $shortAppName.";
+
+/* File: ../../portable/app.py:697 */
+/* Flag: untranslated */
+"Video Directory Missing" = "Video Directory Missing";
+
+/* File: ../../portable/app.py:698 */
+/* Flag: untranslated */
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro.";
+
+/* File: ../../portable/app.py:1017 */
+/* File: ../../portable/app.py:1031 */
+/* File: ../../portable/app.py:1075 */
+/* File: ../../portable/app.py:1101 */
+/* File: ../../portable/app.py:1121 */
+/* Flag: python-format */
+"Remove %s" = "Fjern %s";
+
+/* File: ../../portable/app.py:1018 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "Er du sikker på at du vil fjerne veilederen %s?";
+
+/* File: ../../portable/app.py:1032 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "Er du sikker på at du vil fjerne %s?";
+
+/* File: ../../portable/app.py:1035 */
+/* File: ../../portable/app.py:1080 */
+/* File: ../../portable/app.py:1106 */
+/* File: ../../portable/app.py:1125 */
+/* Flag: python-format */
+"Remove %s channels" = "Fjern %s kanaler";
+
+/* File: ../../portable/app.py:1037 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "Er du sikker på at du vil fjerne disse %s spillelistene?";
+
+/* File: ../../portable/app.py:1076 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Hva ønsker du gjøre å med filmene i kanalen du har lastet ned?";
+
+/* File: ../../portable/app.py:1081 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Hva ønsker du gjøre å med filmene i kanalene du har lastet ned?";
+
+/* File: ../../portable/app.py:1102 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Er du sikker på at du vil fjerne %s? Uferdige nedlastinger blir avbrutt.";
+
+/* File: ../../portable/app.py:1107 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Er du sikker på at du vil fjerne disse %s kanalene? Uferdige nedlastinger blir avbrutt.";
+
+/* File: ../../portable/app.py:1122 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "Er du sikker på at du vil fjerne %s?";
+
+/* File: ../../portable/app.py:1126 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "Er du sikker på at du vil fjerne disse %s kanalene?";
+
+/* File: ../../portable/app.py:1139 */
+/* Flag: python-format */
+"Stop watching %s" = "Stopp visning av %s";
+
+/* File: ../../portable/app.py:1140 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "Er du sikker på at du vil stoppe visning av %s?";
+
+/* File: ../../portable/app.py:1143 */
+/* Flag: python-format */
+"Stop watching %s directories" = "Stopp visning av %s mapper";
+
+/* File: ../../portable/app.py:1144 */
+/* Flag: python-format */
+"Are you sure you want to stop watching these %s directories?" = "Er du sikker på at du vil stoppe visningen av %s mapper?";
+
+/* File: ../../portable/app.py:1174 */
+"Are you sure you want to quit?" = "Er du sikker på at du vil avslutte?";
+
+/* File: ../../portable/app.py:1178 */
+/* Flag: untranslated */
+"Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
+
+/* File: ../../portable/app.py:1668 */
+"Invalid Value" = "Ugyldig verdi";
+
+/* File: ../../portable/app.py:1669 */
+/* Flag: python-format */
+"%s is invalid.  You must enter a non-negative number." = "%s er ugyldig. Du må skrive inn et ikke-negativt nummer.";
+
+/* File: ../../portable/app.py:1960 */
+" - Invalid URL" = " – Ugyldig URL";
+
+/* File: ../../portable/app.py:1961 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Adressen du skrev inn er ikke en gyldig URL.\nSjekk adressen på nytt og prøv igjen.\n\n";
+
+/* File: ../../portable/app.py:1985 */
+"$shortAppName - Add Channel" = "$shortAppName – Legg til kanal";
+
+/* File: ../../portable/app.py:1985 */
+"Enter the URL of the channel to add" = "Tast inn URL-adressen for kanalen som skal legges til";
+
+/* File: ../../portable/app.py:2006 */
+"$shortAppName - Add Miro Guide" = "$shortAppName – Legg til Miro-veileder";
+
+/* File: ../../portable/app.py:2006 */
+"Enter the URL of the Miro Guide to add" = "Skriv inn URL-adressen til Miro-veilederen som skal legges til";
+
+/* File: ../../portable/app.py:2012 */
+/* Flag: untranslated */
+"$shortAppName - Download Video" = "$shortAppName - Download Video";
+
+/* File: ../../portable/app.py:2012 */
+/* Flag: untranslated */
+"Enter the URL of the video to download" = "Enter the URL of the video to download";
+
+/* File: ../../portable/app.py:2306 */
+"News and Tech" = "Nyeheter og teknologi";
+
+/* File: ../../portable/app.py:2313 */
+"Entertainment" = "Underholdning";
+
+/* File: ../../portable/app.py:2319 */
+"High-Def" = "Høyoppløsning";
+
+/* File: ../../portable/app.py:2327 */
+"Mac" = "Mac";
+
+/* File: ../../portable/app.py:2342 */
+"Example Playlist" = "Eksempel-spilleliste";
+
+/* File: ../../portable/app.py:2361 */
+"Custom Channels" = "Ikke-forvalgte kanaler";
+
+/* File: ../../portable/app.py:2361 */
+"You are running a version of $longAppName with a custom set of channels." = "Du kjører en versjon av $longAppName med et egendefinert kanalsett.";
+
+/* File: ../../portable/app.py:2376 */
+/* Flag: untranslated */
+"Error Changing Movies Directory" = "Error Changing Movies Directory";
+
+/* File: ../../portable/app.py:2377 */
+/* Flag: untranslated */
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory.";
+
+/* File: ../../portable/opml.py:113 */
+/* Flag: untranslated */
+"OPML Import failed" = "OPML Import failed";
+
+/* File: ../../portable/opml.py:114 */
+/* Flag: untranslated */
+"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
+
+/* File: ../../portable/opml.py:119 */
+/* Flag: untranslated */
+"OPML Import summary" = "OPML Import summary";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
 "(Changes won't go into effect until you restart Miro)" = "(Endringer tas ikke i bruk før Miro startes på nytt)";
@@ -1424,127 +1520,147 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-"<b>Channels</b>" = "<b>Kanaler</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
-"<b>Disk Space</b>" = "<b>Lagringsplass</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-"<b>Downloads</b>" = "<b>Nedlastinger</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
-"<b>Folders in the Library</b>" = "<b>Mapper i biblioteket</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
-"<b>General</b>" = "<b>Generelt</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
-"<b>Playback</b>" = "<b>Avspilling</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:15 */
 "<b>Searching for Videos</b>" = "<b>Søker etter filmer</b>";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:16 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
 "<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Vil du la Miro se etter videofiler på datamaskinen din?</b>";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:17 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
 "<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Vil du at Miro skal kjøre når datamaskinen starter opp?</b>";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:18 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
 "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Du er ferdig!</b>\n\nOppsettet er fullført – du kan nå finne noen kanaler og begynne å se filmer.\n\n<b>Ikke vent:</b> Miro er annerledes enn å se filmer på nettsider – utgivere kan tilby store filmer med høy kvalitet. Så ikke sitt og vent på filmer: begynn å laste ned og sjekk igjen senere.\n\n<b>La programmet kjøre:</b> Miro sjekker regelmessig kanaler for nye filmer og laster dem ned i bakgrunnen. Lar du programmet kjøre, har du nye filmer når du er klar for å se dem.\n\n<b>Ikke bekymre deg for diskplass:</b> Miro har et «utløpssystem» som hjelper til med å fjerne gamle filmer for å gi rom til nye filmer. Du kan alltid beholde en film ved å trykke «lagre», og du kan stille inn en kanal til å lagre filmer automatisk.\n\n<b>Gjør det stort:</b> Knappen til høyre for avspillingsknappen lar deg vise filmer i fullskjerm.\n\n<b>Finn filmer:</b> Miro-veilederen har hundrevis av nett-TV-kanaler, og alle er gratis. Bare trykk «Legg til» for å se på en kanal.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
-"Automatically run Miro when I log in" = "Kjør Miro automatisk ved innlogging";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:26 */
+/* Flag: untranslated */
+"By default, videos _expire after" = "By default, videos _expire after";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
-"Bit Torrent uses ports between" = "BitTorrent bruker porter mellom";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-"By default, videos expire after" = "Som standard utløper filmer etter";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
 "C_hannel:" = "_Kanal:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
+/* Flag: untranslated */
+"C_hannels" = "C_hannels";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
 "C_reate Channel" = "_Lag kanal";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
-"Check Channels for new content" = "Sjekk kanaler for nytt innhold";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
+/* Flag: untranslated */
+"Check Channels for _new content" = "Check Channels for _new content";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
+/* Flag: untranslated */
+"Disk _Space" = "Disk _Space";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
+/* Flag: untranslated */
+"Don't start a download _if it leaves less than" = "Don't start a download _if it leaves less than";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
+/* Flag: untranslated */
+"Download at _most" = "Download at _most";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
 "Every 30 minutes\nEvery hour\nManually" = "Hvert 30. minutt\nHver time\nManuelt";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
-"GB free" = "GB ledig";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
+/* Flag: untranslated */
+"G_B free" = "G_B free";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
 "Go" = "Start";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 "In This:" = "Her:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-"KB/s when my computer is active" = "KB/s når datamaskinen er i bruk";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
 "Miro can find all the videos on your computer to help you organize your collection." = "Miro kan finne alle filmene på datamaskinen din for å hjelpe deg med å organisere samlingen din.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
-"Play videos one after another" = "Spill av filmer én etter én";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
+/* Flag: untranslated */
+"Play _videos one after another" = "Play _videos one after another";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
 "Preferences" = "Innstillinger";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
 "Restrict to my full _home folder" = "Begrens til hele _hjemmemappen";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-"Resume playback of videos from the point where they were stopped" = "Fortsett å spille av filmer fra stedet de er stoppet";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
+/* Flag: untranslated */
+"S_top after each video" = "S_top after each video";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* Flag: untranslated */
+"S_tore downloaded videos in this folder:" = "S_tore downloaded videos in this folder:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
 "Search _Engine:" = "Søke_motor:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
 "Search _custom folder:" = "Søk i _egendefinert mappe:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
 "Select Movies Directory" = "Velg filmbibliotek";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
 "Select custom search directory" = "Velg egendefinert søkemappe";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
-"Stop after each video" = "Stopp etter hver film";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "De følgende skjermbildene hjelper deg med å sette opp Miro slik at det virker best for deg. Her er første spørsmål.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
-"To avoid slowdowns, limit upstream to" = "For å unngå overbelastning, begrens opplasting til";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
+/* Flag: untranslated */
+"To a_void slowdowns, limit upstream to" = "To a_void slowdowns, limit upstream to";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
 "Volume:" = "Lydstyrke:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
-"Watch for new videos in these folders and include them in the Library" = "Se etter nye filmer i disse mappene og legg dem til i biblioteket";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
 "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Det er anbefalt å la Miro starte når datamaskinen startes. Slik kan filmer som ikke er ferdig nedlastet fullføres, og nye filmer vil være klare når du vil se dem.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Velkommen til internett-TV. Det er mye du kan gjøre med Miro: laste ned filmer fra dine favorittkanaler automatisk, se filmer én etter én, laste ned BitTorrent-filer, anbefale filmer til venner og mye mer.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
 "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Du har valgt en ny mappe for nedlasting av filmer. Vil du at Miro skal flytte ferdige nedlastinger dit? (Filmer som for øyeblikket lastes ned flyttes ikke før de er ferdige.)";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
 "_Add Folder" = "_Legg til mappe";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
+/* Flag: untranslated */
+"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
+/* Flag: untranslated */
+"_Bit Torrent uses ports between" = "_Bit Torrent uses ports between";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
+/* Flag: untranslated */
+"_Downloads" = "_Downloads";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
+/* Flag: untranslated */
+"_Folders" = "_Folders";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
+/* Flag: untranslated */
+"_General" = "_General";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
+/* Flag: untranslated */
+"_KB/s when my computer is active" = "_KB/s when my computer is active";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
+/* Flag: untranslated */
+"_Playback" = "_Playback";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
+/* Flag: untranslated */
+"_Resume playback of videos from the point where they were stopped" = "_Resume playback of videos from the point where they were stopped";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
 "_Search" = "_Søk";
@@ -1553,16 +1669,21 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Search For:" = "_Søk etter:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
-"_Store downloaded videos in this folder:" = "_Lagre nedlastede filmer i denne mappen:";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
 "_URL" = "_URL";
 
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
+/* Flag: untranslated */
+"_Warn me when I attempt to quit with downloads in progress" = "_Warn me when I attempt to quit with downloads in progress";
+
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
-"and" = "og";
+/* Flag: untranslated */
+"_Watch for new videos in these folders and include them in the Library" = "_Watch for new videos in these folders and include them in the Library";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
+/* Flag: untranslated */
+"_and" = "_and";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
 "videos at once" = "filmer på én gang";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
@@ -1587,8 +1708,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "Hjelp oss med å løse problemet. Kopier og lim inn all\ninformasjonen i feilsporingen vår og fortell oss hva du gjorde da\nproblemet oppsto.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7 */
-/* Flag: untranslated */
-"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" /* = "Start deretter $longAppName på nytt (ellers kan beslektede feil oppstå). $longAppName er fortsatt på prøvestadiet, men med din hjelp løser vi problemer fortere." */;
+"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Start deretter $longAppName på nytt (ellers kan beslektede feil oppstå). $longAppName er fortsatt på prøvestadiet, men med din hjelp løser vi problemer fortere.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1 */
 "You found a bug in $longAppName!" = "Du fant en feil i $longAppName.";
@@ -1625,38 +1745,85 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
 "(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(ADVARSEL: Endringer tas ikke i bruk før $longAppName startes på nytt.)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
 "Add Folder..." = "Legg til mappe …";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
-"Automatically run $longAppName when I login" = "Kjør $longAppName automatisk ved innlogging";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+/* Flag: untranslated */
+"Automatically run $longAppName when I login." = "Automatically run $longAppName when I login.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
+/* Flag: untranslated */
+"BitTorrent" = "BitTorrent";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+"By default, videos expire after" = "Som standard utløper filmer etter";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+/* Flag: untranslated */
+"Check channels for new content" = "Check channels for new content";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
 "Close to tray so that downloads can continue." = "Lukk til systemkurv slik at nedlastinger kan fortsette.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
 "Every 30 minutes" = "Hvert 30. minutt";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Every hour" = "Hver time";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+/* Flag: untranslated */
+"Folder" = "Folder";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
 "Manually" = "Manuelt";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
-"Quit Miro completely" = "Avslutt Miro fullstendig";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
+"Options" = "Alternativer";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
-"Store downloaded videos in this folder:" = "Lagre nedlastede filmer i denne mappen:";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
-"WARNING: This setting will not go into effect until you restart $longAppName." = "ADVARSEL: Denne innstillingen tas ikke i bruk før $longAppName startes på nytt.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
-"Watch for new videos in these folders and include them in My Collection:" = "Se etter nye filmer i disse mappene og legg dem til i samlingen:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
+/* Flag: untranslated */
+"Play one video, then stop." = "Play one video, then stop.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7 */
+/* Flag: untranslated */
+"Quit Miro completely." = "Quit Miro completely.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+/* Flag: untranslated */
+"Remember where I stopped watching a video and continue playing from that point." = "Remember where I stopped watching a video and continue playing from that point.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+/* Flag: untranslated */
+"Show as a Channel" = "Show as a Channel";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+"Store downloaded videos in this folder:" = "Lagre nedlastede filmer i denne mappen:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
+"To avoid slowdowns, limit upstream to" = "For å unngå overbelastning, begrens opplasting til";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
+/* Flag: untranslated */
+"Use BitTorrent ports between" = "Use BitTorrent ports between";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
+"WARNING: This setting will not go into effect until you restart $longAppName." = "ADVARSEL: Denne innstillingen tas ikke i bruk før $longAppName startes på nytt.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10 */
+/* Flag: untranslated */
+"Warn me when I attempt to quit with downloads in progress." = "Warn me when I attempt to quit with downloads in progress.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+/* Flag: untranslated */
+"Watch for new videos in these folders and include them in my Library." = "Watch for new videos in these folders and include them in my Library.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
 "When I click the red close button:" = "Når jeg trykker lukk-knappen";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
+"and" = "og";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
 "Channel:" = "Kanal:";

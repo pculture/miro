@@ -1,33 +1,32 @@
-<!ENTITY prefs.title "Preferências">
-<!ENTITY prefs.runonstartup "Rodar o $longAppName quando eu me logar">
+<!ENTITY prefs.title "Opções">
 <!ENTITY prefs.restart "(ATENÇÃO: as alterações apenas terão efeito após o re-inicio do $longAppName.)">
-<!ENTITY prefs.title "Preferências">
 
-<!ENTITY prefs.run.on.startup "Rodar o $longAppName quando eu me logar">
+<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "Quando clicar no botão vermelho de fechar:">
 <!ENTITY prefs.close_to_tray "Minimizar para a bandeja para que seus recebimentos possam continuar.">
-<!ENTITY prefs.no_close_to_tray "Sair completamente do Miro">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
 <!ENTITY prefs.general "Geral">
+<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Canais">
-<!ENTITY prefs.channels.check "Verificar se há novo conteúdo nos canais">
+<!ENTITY prefs.channels.check "Check channels for new content">
 <!ENTITY prefs.channels.check.thirty "A cada 30 minutos">
 <!ENTITY prefs.channels.check.sixty "A cada hora">
 <!ENTITY prefs.channels.check.manually "Manualmente">
 
 <!ENTITY prefs.playback "Reprodução">
-<!ENTITY prefs.playback.remember.pos "Salvar a posição do vídeo.">
+<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
 <!ENTITY prefs.playback.auto.next.video "Exibir vídeos um após o outro.">
-<!ENTITY prefs.playback.stop.after.each "Parar depois de cada vídeo.">
+<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Diretório dos Filmes">
+<!ENTITY prefs.folder.movies "Pastas">
 <!ENTITY prefs.folder.downloads "Guardar vídeos baixados nesta pasta:">
 <!ENTITY prefs.folder.change "Alterar...">
 
-<!ENTITY prefs.folder.others.caption "Monitorar por novos vídeos nestas pastas e incluí-los em Minha Coleção:">
-<!ENTITY prefs.folder.others.location "Localização da Pasta">
-<!ENTITY prefs.folder.others.shown "Mostrar como Canal">
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
+<!ENTITY prefs.folder.others.location "Folder">
+<!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Adicionar Pasta...">
 <!ENTITY prefs.folder.others.remove "Remover">
 
@@ -48,8 +47,9 @@
 <!ENTITY prefs.videos.expire.thirty "1 mês">
 <!ENTITY prefs.videos.expire.never "Nunca">
 
+<!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ATENÇÃO: as alterações apenas terão efeito após o re-inicio do $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Para evitar diminuição da velocidade, limitar a taxa de envio de dados a">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s quando meu computador estiver em atividade.">
-<!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent usa portas entre">
+<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "e">

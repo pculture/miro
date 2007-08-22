@@ -6,7 +6,7 @@
 <!ENTITY startup.autostart.description	"Raccomandiamo di eseguire $longAppName all'avvio del computer. In questo modo potrà essere ultimato il download di eventuali video in coda e nuovi video potranno essere scaricati in background in modo che siano disponibli quando vorrai guardarli.">
 <!ENTITY startup.autostart.question	"Vuoi eseguire $shortAppName all'avvio del computer?">
 <!ENTITY startup.search.description	"$longAppName può trovare tutti i video nel tuo computer per aiutarti ad organizzare la tua collezione.">
-<!ENTITY startup.search.question        "Vuoi che $longAppName ricerchi file video ne tuo computer?">
+<!ENTITY startup.search.question        "Vuoi che $longAppName ricerchi file video nel tuo computer?">
 <!ENTITY startup.search.restrict	"Applica soltanto ai miei file personali.">
 <!ENTITY startup.search.custom          "Cerca cartella personalizzata:">
 <!ENTITY startup.search.searching	"In cerca di video">
@@ -19,7 +19,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Lascialo così:">
 <!ENTITY startup.done3.text		"$longAppName controlla periodicamente i canali alla ricerca di nuovi video e li scarica in background. Lascialo in esecuzione per avere sempre nuovi video da vedere.">
 <!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
+<!ENTITY startup.done4.text		"Allo stesso modo di TiVo, $longAppName attua un sistema di scadenza per cui i vecchi video vengono eliminati in modo da liberare spazio a quelli nuovi. Puoi sempre decidere di conservare un video selezionando 'salva' e puoi configurare i parametri di un canale in modo che i suoi video vengano conservati automaticamente.">
 <!ENTITY startup.done5.heading		"Vai alla Grande:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
 <!ENTITY startup.done6.heading		"Find Videos:">
@@ -31,7 +31,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.autostart.description	"Raccomandiamo di eseguire $longAppName all'avvio del computer. In questo modo potrà essere ultimato il download di eventuali video in coda e nuovi video potranno essere scaricati in background in modo che siano disponibli quando vorrai guardarli.">
 <!ENTITY startup.autostart.question	"Vuoi eseguire $shortAppName all'avvio del computer?">
 <!ENTITY startup.search.description	"$longAppName può trovare tutti i video nel tuo computer per aiutarti ad organizzare la tua collezione.">
-<!ENTITY startup.search.question        "Vuoi che $longAppName ricerchi file video ne tuo computer?">
+<!ENTITY startup.search.question        "Vuoi che $longAppName ricerchi file video nel tuo computer?">
 <!ENTITY startup.search.restrict	"Applica soltanto ai miei file personali.">
 <!ENTITY startup.search.custom          "Cerca cartella personalizzata:">
 <!ENTITY startup.search.searching	"In cerca di video">
@@ -44,7 +44,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Lascialo così:">
 <!ENTITY startup.done3.text		"$longAppName controlla periodicamente i canali alla ricerca di nuovi video e li scarica in background. Lascialo in esecuzione per avere sempre nuovi video da vedere.">
 <!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
+<!ENTITY startup.done4.text		"Allo stesso modo di TiVo, $longAppName attua un sistema di scadenza per cui i vecchi video vengono eliminati in modo da liberare spazio a quelli nuovi. Puoi sempre decidere di conservare un video selezionando 'salva' e puoi configurare i parametri di un canale in modo che i suoi video vengano conservati automaticamente.">
 <!ENTITY startup.done5.heading		"Vai alla Grande:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
 <!ENTITY startup.done6.heading		"Find Videos:">

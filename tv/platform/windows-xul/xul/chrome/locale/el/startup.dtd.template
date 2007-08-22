@@ -16,11 +16,11 @@
 <!ENTITY startup.done1			"Τελειώσατε!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
+<!ENTITY startup.done3.heading		"Άφησε το σε μένα:">
 <!ENTITY startup.done3.text		"Το $longAppName ελέγχει τακτικά τα κανάλια για νέα βίντεο και τα κατεβάζει στο παρασκήνιο. Αφήνοντάς το να τρέχει σημαίνει ότι θα έχετε νέα βίντεο όταν θα μπορείτε να δείτε.">
 <!ENTITY startup.done4.heading		"Μην ανησυχείς για το χώρο στο δίσκο:">
 <!ENTITY startup.done4.text		"Όπως το σύστημα TiVo, το $longAppName έχει ένα μηχανισμό 'λήξης' που βοηθάει να ξεκαθαρίσετε τα παλιά βίντεο κάνοντας χώρο για νέα. Μπορείτε να κρατήσετε ένα βίντεο μόνιμα πατώντας 'αποθήκευση' και μπορείτε να ρυθμίσετε ένα κανάλι να αποθηκεύει τα βίντεο αυτόματα.">
-<!ENTITY startup.done5.heading		"Go Big:">
+<!ENTITY startup.done5.heading		"Πήγαινε μεγάλε:">
 <!ENTITY startup.done5.text		"Το κουμπί δεξιά από το κουμπί αναπαραγωγής δείχνει τα βίντεο σε πλήρη οθόνη.">
 <!ENTITY startup.done6.heading		"Αναζήτηση Βίντεο:">
 <!ENTITY startup.done6.text		"Ο Οδηγών Καναλιών $shortAppName περιέχει εκατοντάδες ιντερνετικά κανάλια TV, όλα δωρεάν. Απλά πατήστε 'ADD' για να παρακολουθήσετε ένα κανάλι.">
@@ -41,11 +41,11 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done1			"Τελειώσατε!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
+<!ENTITY startup.done3.heading		"Άφησε το σε μένα:">
 <!ENTITY startup.done3.text		"Το $longAppName ελέγχει τακτικά τα κανάλια για νέα βίντεο και τα κατεβάζει στο παρασκήνιο. Αφήνοντάς το να τρέχει σημαίνει ότι θα έχετε νέα βίντεο όταν θα μπορείτε να δείτε.">
 <!ENTITY startup.done4.heading		"Μην ανησυχείς για το χώρο στο δίσκο:">
 <!ENTITY startup.done4.text		"Όπως το σύστημα TiVo, το $longAppName έχει ένα μηχανισμό 'λήξης' που βοηθάει να ξεκαθαρίσετε τα παλιά βίντεο κάνοντας χώρο για νέα. Μπορείτε να κρατήσετε ένα βίντεο μόνιμα πατώντας 'αποθήκευση' και μπορείτε να ρυθμίσετε ένα κανάλι να αποθηκεύει τα βίντεο αυτόματα.">
-<!ENTITY startup.done5.heading		"Go Big:">
+<!ENTITY startup.done5.heading		"Πήγαινε μεγάλε:">
 <!ENTITY startup.done5.text		"Το κουμπί δεξιά από το κουμπί αναπαραγωγής δείχνει τα βίντεο σε πλήρη οθόνη.">
 <!ENTITY startup.done6.heading		"Αναζήτηση Βίντεο:">
 <!ENTITY startup.done6.text		"Ο Οδηγών Καναλιών $shortAppName περιέχει εκατοντάδες ιντερνετικά κανάλια TV, όλα δωρεάν. Απλά πατήστε 'ADD' για να παρακολουθήσετε ένα κανάλι.">

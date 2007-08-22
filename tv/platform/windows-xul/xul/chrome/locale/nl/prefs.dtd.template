@@ -1,33 +1,32 @@
 <!ENTITY prefs.title "Voorkeuren">
-<!ENTITY prefs.runonstartup "Open $longAppName na inloggen">
 <!ENTITY prefs.restart "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
-<!ENTITY prefs.title "Voorkeuren">
 
-<!ENTITY prefs.run.on.startup "Open $longAppName na inloggen">
+<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "Wanneer ik het Miro venster sluit:">
 <!ENTITY prefs.close_to_tray "Minimaliseer naar systeemvak en blijf downloaden.">
-<!ENTITY prefs.no_close_to_tray "Stop Miro volledig">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
 <!ENTITY prefs.general "Algemeen">
+<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Kanalen">
-<!ENTITY prefs.channels.check "Werk Kanalen bij">
+<!ENTITY prefs.channels.check "Check channels for new content">
 <!ENTITY prefs.channels.check.thirty "Elke 30 minuten">
 <!ENTITY prefs.channels.check.sixty "Elk uur">
 <!ENTITY prefs.channels.check.manually "Handmatig">
 
 <!ENTITY prefs.playback "Afspelen">
-<!ENTITY prefs.playback.remember.pos "Onthoud afspeelpositie video.">
+<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
 <!ENTITY prefs.playback.auto.next.video "Video's na elkaar afspelen.">
-<!ENTITY prefs.playback.stop.after.each "Stop na elke video.">
+<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Locatie map Video's">
+<!ENTITY prefs.folder.movies "Mappen">
 <!ENTITY prefs.folder.downloads "Locatie gedownloade video's:">
 <!ENTITY prefs.folder.change "Wijzigen...">
 
-<!ENTITY prefs.folder.others.caption "Monitor deze locaties voor nieuwe video's en voeg toe aan mijn Bibliotheek.">
-<!ENTITY prefs.folder.others.location "Locatie Map">
-<!ENTITY prefs.folder.others.shown "Als Kanaal">
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
+<!ENTITY prefs.folder.others.location "Folder">
+<!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Voeg Map Toe...">
 <!ENTITY prefs.folder.others.remove "Verwijder">
 
@@ -48,8 +47,9 @@
 <!ENTITY prefs.videos.expire.thirty "1 maand">
 <!ENTITY prefs.videos.expire.never "Nooit">
 
+<!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Voorkom vertragingen, en beperk uploads tot">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s wanneer mijn computer actief is.">
-<!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent gebruikt de poorten">
+<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "en">

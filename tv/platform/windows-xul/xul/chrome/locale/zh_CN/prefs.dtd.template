@@ -1,33 +1,32 @@
-<!ENTITY prefs.title "配置">
-<!ENTITY prefs.runonstartup "当我登录时自动运行 $longAppName">
+<!ENTITY prefs.title "选项">
 <!ENTITY prefs.restart "(警告：更改直到您重启 $longAppName 后才会生效。)">
-<!ENTITY prefs.title "配置">
 
-<!ENTITY prefs.run.on.startup "当我登录时自动运行 $longAppName">
+<!ENTITY prefs.run.on.startup "当我登陆时，自动运行 $longAppName">
 <!ENTITY prefs.close_to_tray_start "When I click the red close button:">
 <!ENTITY prefs.close_to_tray "最小化到托盘以便继续下载">
 <!ENTITY prefs.no_close_to_tray "完全退出Miro">
 
 <!ENTITY prefs.general "主选项">
+<!ENTITY prefs.general.warn_on_quit "当下载任务进行时，如果要退出请提醒我">
 
 <!ENTITY prefs.channels "频道">
-<!ENTITY prefs.channels.check "检查频道的新内容">
+<!ENTITY prefs.channels.check "查找频道的新内容">
 <!ENTITY prefs.channels.check.thirty "每30分钟">
 <!ENTITY prefs.channels.check.sixty "每小时">
 <!ENTITY prefs.channels.check.manually "手动">
 
 <!ENTITY prefs.playback "播放">
-<!ENTITY prefs.playback.remember.pos "记住影片位置">
+<!ENTITY prefs.playback.remember.pos "记住我停止观看节目的位置，并且下次从这个位置继续播放。">
 <!ENTITY prefs.playback.auto.next.video "连续播放视频">
-<!ENTITY prefs.playback.stop.after.each "每个视频播放完后停止">
+<!ENTITY prefs.playback.stop.after.each "播放一个节目，然后停止。">
 
-<!ENTITY prefs.folder.movies "影片目录">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.movies "文件夹">
+<!ENTITY prefs.folder.downloads "在这个文件夹保存下载的节目：">
 <!ENTITY prefs.folder.change "更改…">
 
-<!ENTITY prefs.folder.others.caption "寻找在这些文件夹内的新影片并把他们收集到我的收藏：">
-<!ENTITY prefs.folder.others.location "文件夹位置">
-<!ENTITY prefs.folder.others.shown "作为频道显示">
+<!ENTITY prefs.folder.others.caption "观看这些文件夹内的新节目并且把它们加入我的节目库中">
+<!ENTITY prefs.folder.others.location "文件夹">
+<!ENTITY prefs.folder.others.shown "作为一个频道显示">
 <!ENTITY prefs.folder.others.add "添加文件夹...">
 <!ENTITY prefs.folder.others.remove "移除">
 
@@ -48,8 +47,9 @@
 <!ENTITY prefs.videos.expire.thirty "一个月">
 <!ENTITY prefs.videos.expire.never "从不">
 
+<!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(警告：更改直到您重启 $longAppName 后才会生效。)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "为了防止速度过慢，上传上限设置为">
 <!ENTITY prefs.torrent.limit.upstream.part2 "千字节/每秒(当我的电脑处于活跃状态时)">
-<!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent使用这之间的端口">
+<!ENTITY prefs.torrent.uses.ports.part1 "使用一下BT端口">
 <!ENTITY prefs.torrent.uses.ports.part2 "和">

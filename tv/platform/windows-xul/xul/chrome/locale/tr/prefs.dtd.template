@@ -1,33 +1,32 @@
-<!ENTITY prefs.title "Seçenekler">
-<!ENTITY prefs.runonstartup "Sisteme kendimi tanıttığımda $longAppName progamını otomatik olarak başlat">
+<!ENTITY prefs.title "Seçenekler:">
 <!ENTITY prefs.restart "(DİKKAT: Değişiklikler $longAppName programını tekrar başlatana kadar etkin hale gelmeyecek.)">
-<!ENTITY prefs.title "Seçenekler">
 
-<!ENTITY prefs.run.on.startup "Sisteme kendimi tanıttığımda $longAppName progamını otomatik olarak başlat">
+<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "Kırmızı kapat düğmesine tıkladığımda:">
 <!ENTITY prefs.close_to_tray "İndirmelerin devam edebilmesi için görev çubuğu çekmecesine kapatın.">
-<!ENTITY prefs.no_close_to_tray "Miro'yu tamamen kapat">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
 <!ENTITY prefs.general "Genel">
+<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Kanallar">
-<!ENTITY prefs.channels.check "Yeni içerik için Kanalları kontrol et">
+<!ENTITY prefs.channels.check "Check channels for new content">
 <!ENTITY prefs.channels.check.thirty "Her 30 dakikada">
 <!ENTITY prefs.channels.check.sixty "Her saatte">
 <!ENTITY prefs.channels.check.manually "Siz istediğinizde">
 
 <!ENTITY prefs.playback "Çalma">
-<!ENTITY prefs.playback.remember.pos "Vıdeonun nerede kaldığını hatırla">
+<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
 <!ENTITY prefs.playback.auto.next.video "Videoları arka arkaya oynat.">
-<!ENTITY prefs.playback.stop.after.each "Her videodan sonra dur.">
+<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Filmler Dizini">
+<!ENTITY prefs.folder.movies "Dizinler">
 <!ENTITY prefs.folder.downloads "İndirilmiş videoları bu dizinde sakla:">
 <!ENTITY prefs.folder.change "Değişim...">
 
-<!ENTITY prefs.folder.others.caption "Bu dizinlerdeki yeni videoları takip et ve Koleksiyonuma ekle:">
-<!ENTITY prefs.folder.others.location "Dizin Yeri">
-<!ENTITY prefs.folder.others.shown "Kanal olarak göster">
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
+<!ENTITY prefs.folder.others.location "Folder">
+<!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Dizin Ekle...">
 <!ENTITY prefs.folder.others.remove "Kaldır">
 
@@ -48,8 +47,9 @@
 <!ENTITY prefs.videos.expire.thirty "1 ay">
 <!ENTITY prefs.videos.expire.never "Asla">
 
+<!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(DİKKAT: Değişiklikler $longAppName programını tekrar başlatana kadar etkin hale gelmeyecek.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Yavaşlamalardan sakınmak için, yayımlayı limitle">
 <!ENTITY prefs.torrent.limit.upstream.part2 "Bilgisayarım aktifken KB/s">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent şu aralıktaki portları kullanır">
+<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "ve">

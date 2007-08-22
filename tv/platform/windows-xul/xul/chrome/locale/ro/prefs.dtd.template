@@ -1,33 +1,32 @@
-<!ENTITY prefs.title "Preferinţe">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
+<!ENTITY prefs.title "Options">
 <!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.title "Preferinţe">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
+<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "When I click the red close button:">
 <!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
 <!ENTITY prefs.general "Generale">
+<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Canale">
-<!ENTITY prefs.channels.check "Verfic canalul daca are conţinut nou">
+<!ENTITY prefs.channels.check "Check channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manual">
 
 <!ENTITY prefs.playback "Redare">
-<!ENTITY prefs.playback.remember.pos "Ţine minte poziţia video">
+<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
 <!ENTITY prefs.playback.auto.next.video "Redă videourile unul după altul.">
-<!ENTITY prefs.playback.stop.after.each "Oprire după fiecare video.">
+<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Dosar filme">
+<!ENTITY prefs.folder.movies "Dosare">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Modifică:">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Locaţia dosarului">
-<!ENTITY prefs.folder.others.shown "Arată ca şi Canal">
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
+<!ENTITY prefs.folder.others.location "Folder">
+<!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Adaugă dosar...">
 <!ENTITY prefs.folder.others.remove "Înlătură">
 
@@ -48,8 +47,9 @@
 <!ENTITY prefs.videos.expire.thirty "1 month">
 <!ENTITY prefs.videos.expire.never "Niciodată">
 
+<!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Pentru a evita descărcările lente, mareşte stream-ul la">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s cînd calculatorul meu este activ.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
+<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "şi">

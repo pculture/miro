@@ -1,33 +1,32 @@
-<!ENTITY prefs.title "Nastaveni">
-<!ENTITY prefs.runonstartup "AUtomaticky spouštět $longAppName, když se přihlásím">
+<!ENTITY prefs.title "Options">
 <!ENTITY prefs.restart "(VAROVÁNÍ: Změny se neprojeví dokud $longAppName neukončíte a znovu nespustíte.)">
-<!ENTITY prefs.title "Nastaveni">
 
-<!ENTITY prefs.run.on.startup "AUtomaticky spouštět $longAppName, když se přihlásím">
+<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "When I click the red close button:">
 <!ENTITY prefs.close_to_tray "Minimalizovat, aby se npřerušila stahování.">
-<!ENTITY prefs.no_close_to_tray "Ukončit Miro">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
 <!ENTITY prefs.general "Obecné">
+<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Kanály">
-<!ENTITY prefs.channels.check "Zontrolovat kanály pro nový obsah">
+<!ENTITY prefs.channels.check "Check channels for new content">
 <!ENTITY prefs.channels.check.thirty "Každých 30 minut">
 <!ENTITY prefs.channels.check.sixty "Každou hodinu">
 <!ENTITY prefs.channels.check.manually "Ručně">
 
 <!ENTITY prefs.playback "Přehrát">
-<!ENTITY prefs.playback.remember.pos "Zapamatovat si pozici videa.">
+<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
 <!ENTITY prefs.playback.auto.next.video "Přehrávat videa jedno po druhém.">
-<!ENTITY prefs.playback.stop.after.each "Zastav přehrávání po každém videu.">
+<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Složka filmů">
+<!ENTITY prefs.folder.movies "Složky">
 <!ENTITY prefs.folder.downloads "Uládat stažená videa do této složky:">
 <!ENTITY prefs.folder.change "Změnit...">
 
-<!ENTITY prefs.folder.others.caption "Sleduj tyto složky přo nová videa a zařaď je do Mé sbírky:">
-<!ENTITY prefs.folder.others.location "Adresa složky">
-<!ENTITY prefs.folder.others.shown "Zobrazit jako kanál">
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
+<!ENTITY prefs.folder.others.location "Folder">
+<!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Přidat složku...">
 <!ENTITY prefs.folder.others.remove "Odstranit">
 
@@ -48,8 +47,9 @@
 <!ENTITY prefs.videos.expire.thirty "1 měsíc">
 <!ENTITY prefs.videos.expire.never "Nikdy">
 
+<!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(VAROVÁNÍ: Změny se neprojeví dokud $longAppName neukončíte a znovu nespustíte.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Aby nedocházelo ke zpomalení připojení, omezit odchozí tok na">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s ve chvílích, kdy svůj počítač využívám.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent používá porty mezi">
+<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "a">

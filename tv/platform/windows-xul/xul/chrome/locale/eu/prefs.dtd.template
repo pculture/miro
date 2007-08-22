@@ -1,33 +1,32 @@
-<!ENTITY prefs.title "Xehetasunak">
-<!ENTITY prefs.runonstartup "Automatically run $longAppName when I login">
+<!ENTITY prefs.title "Options">
 <!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.title "Xehetasunak">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login">
+<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "When I click the red close button:">
 <!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely">
+<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
 <!ENTITY prefs.general "General">
+<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Kanalak">
-<!ENTITY prefs.channels.check "Eduki berri bila Kanalak aztertu">
+<!ENTITY prefs.channels.check "Check channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.playback "Erreproduzitu">
-<!ENTITY prefs.playback.remember.pos "Remember video position.">
+<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
 <!ENTITY prefs.playback.auto.next.video "Bideoak bata bestearen atzetik jo">
-<!ENTITY prefs.playback.stop.after.each "Bideo bakoitzaren ostean gelditu.">
+<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Movies Directory">
+<!ENTITY prefs.folder.movies "Folders">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Aldatu...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in My Collection:">
-<!ENTITY prefs.folder.others.location "Folder Location">
-<!ENTITY prefs.folder.others.shown "Show as Channel">
+<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
+<!ENTITY prefs.folder.others.location "Folder">
+<!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "Ezabatu">
 
@@ -48,8 +47,9 @@
 <!ENTITY prefs.videos.expire.thirty "hilabete 1">
 <!ENTITY prefs.videos.expire.never "Inoiz ere ez">
 
+<!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "Abiadura galera sahiesteko, jarioa mugatu">
 <!ENTITY prefs.torrent.limit.upstream.part2 "KB/s nire ordenagailua aktibo dagoenean.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bit Torrent uses ports between">
+<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "and">

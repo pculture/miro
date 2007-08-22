@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-07-30 22:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-08-22 16:47-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 "$log" = "$log";
 
@@ -29,8 +29,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Bring All to Front" = "นำไปไว้ข้างหน้า";
 
-/* File: ../..//platform/osx/frontend/Preferences.py:39 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+/* File: ../../platform/osx/frontend/Preferences.py:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
 "Channels" = "แชนเนล";
 
 "Check for New Version" = "ตรวจสอบเวอร์ชันใหม่";
@@ -47,12 +47,18 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Cut" = "ตัด";
 
-/* File: ../..//portable/dialogs.py:94 */
+/* File: ../../portable/dialogs.py:96 */
 "Delete" = "ลบ";
 
 "Donate" = "บริจาค";
 
+/* Flag: untranslated */
+"Download Video..." = "Download Video...";
+
 "Edit" = "แก้ไข";
+
+/* Flag: untranslated */
+"Export Channels (OPML)..." = "Export Channels (OPML)...";
 
 "File" = "แฟ้ม";
 
@@ -64,13 +70,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Hide Others" = "ซ่อนส่วนอื่น";
 
+/* Flag: untranslated */
+"Import Channels (OPML)..." = "Import Channels (OPML)...";
+
 "Main Window" = "หน้าต่างหลัก";
 
 "MainMenu" = "เมนูหลัก";
 
 "Minimize" = "ย่อเล็กสุด";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 "Miro" = "Miro";
 
 "Miro Help" = "Miro Help";
@@ -91,11 +100,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Paste" = "วาง";
 
-/* File: ../..//platform/osx/frontend/Application.py:238 */
+/* File: ../../platform/osx/frontend/Application.py:231 */
 "Play Video" = "เล่นวิดีโอ";
 
-/* File: ../..//platform/osx/frontend/Preferences.py:43 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+/* File: ../../platform/osx/frontend/Preferences.py:43 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
 "Playback" = "เล่น";
 
 "Playlists" = "เพลย์ลิสต์";
@@ -147,13 +156,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "FullScreen Controls" = "FullScreen Controls" /* = "FullScreen Controls" */;
 
-/* File: ../..//portable/tabs.py:45 */
+/* File: ../../portable/tabs.py:45 */
 "Video Search" = "ค้นหาวิดีโอ";
 
 /* Flag: untranslated */
 "VideoWindow" = "VideoWindow" /* = "VideoWindow" */;
 
-/* File: ../..//portable/dialogs.py:77 */
+/* File: ../../portable/dialogs.py:77 */
 "Cancel" = "ยกเลิก";
 
 "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\".\n";
@@ -174,16 +183,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "(movies directory path goes here)" = "(movies directory path goes here)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
 "1 day" = "1 วัน";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
 "1 month" = "1 เดือน";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
 "10 days" = "10 วัน";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "3 days" = "3 วัน";
 
 "3 hours" = "3 ชั่วโมง";
@@ -192,7 +201,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "5" = "5";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
 "6 days" = "6 วัน";
 
 "99999" = "99999";
@@ -203,24 +212,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "By default, videos expire after:" = "กำหนดอายุไฟล์วิดิโอเป็นมาตรฐาน หมดอายุหลังจาก:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
 "Change..." = "เปลี่ยน...";
 
 /* Flag: untranslated */
 "Check channels for new content:" = "Check channels for new content:" /* = "ตรวจแชนแนลสำหรับสิ่งใหม่ๆ" */;
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
 "Don't start a download if it leaves less than" = "ไม่ต้องดาวน์โหลดถ้าทำให้เหลือที่ว่างน้อยกว่า";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
 "Download at most" = "ดาวน์โหลดวิดีโอพร้อมกันครั้งละไม่เกิน";
 
 /* Flag: untranslated */
 "Folder location" = "Folder location";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
 "GB free." = "GB";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
@@ -230,38 +237,35 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Minimum:" = "ต่ำสุด:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
 "Never" = "ไม่จำกัด";
 
 /* Flag: untranslated */
 "OtherViews" = "OtherViews";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
 "Play videos one after another." = "เล่นวิดีโอเรื่องถัดไปเรื่อยๆ";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
 "Remember video position." = "จดจำตำแหน่งของวิดิโอ";
 
-/* File: ../..//portable/feed.py:787 */
-/* File: ../..//portable/folder.py:156 */
-/* File: ../..//portable/folder.py:211 */
-/* File: ../..//portable/guide.py:55 */
-/* File: ../..//portable/menu.py:65 */
-/* File: ../..//portable/menu.py:70 */
-/* File: ../..//portable/playlist.py:197 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
+/* File: ../../portable/guide.py:86 */
+/* File: ../../portable/playlist.py:197 */
+/* File: ../../portable/feed.py:788 */
+/* File: ../../portable/menu.py:65 */
+/* File: ../../portable/menu.py:70 */
+/* File: ../../portable/folder.py:156 */
+/* File: ../../portable/folder.py:211 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
 "Remove" = "ลบ";
 
 "Run Miro at startup" = "รัน Miro เมื่อเริ่มระบบ";
 
 "Save downloaded videos in this folder:" = "บันทึกวิดีโอที่ดาวน์โหลดมาไว้ที่โฟลเดอร์:";
 
-/* File: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:557 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:572 */
 /* Flag: untranslated */
 "Show as Channel" = "Show as Channel";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
 "Stop after each video." = "หยุดหลังเล่นจบแต่ละเรื่อง";
 
 "To avoid internet slowdowns:" = "เพื่อหลีกเลี่ยงการใช้งานอินเทอร์เน็ตที่ช้าลง:";
@@ -274,7 +278,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "manually" = "ตรวจสอบเอง";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
 "videos at once." = "เรื่อง";
 
 "$label$" = "$label$";
@@ -283,7 +287,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Channel" = "แชนแนล";
 
-/* File: ../..//portable/dialogs.py:89 */
+/* File: ../../portable/dialogs.py:91 */
 "Create" = "สร้าง";
 
 /* Flag: untranslated */
@@ -298,8 +302,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "URL" = "URL";
 
-/* File: ../..//platform/gtk-x11/frontend_implementation/startup.py:48 */
-/* File: ../..//platform/windows-xul/frontend_implementation/startup.py:25 */
+/* File: ../../platform/windows-xul/frontend_implementation/startup.py:25 */
+/* File: ../../platform/gtk-x11/frontend_implementation/startup.py:48 */
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)";
 
@@ -307,11 +311,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Browse" = "เลือกแฟ้ม";
 
-/* File: ../..//platform/osx/frontend/StartupPanel.py:90 */
-/* File: ../..//platform/osx/frontend/StartupPanel.py:116 */
+/* File: ../../platform/osx/frontend/StartupPanel.py:90 */
+/* File: ../../platform/osx/frontend/StartupPanel.py:116 */
 "Next" = "ถัดไป";
 
-/* File: ../..//portable/dialogs.py:79 */
+/* File: ../../portable/dialogs.py:79 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "ไม่ใช่";
 
@@ -333,13 +337,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" /* = "เราแนะนำให้คุณอนุญาตให้ Miro Player ทำงานเมื่อระบบเริ่มต้น ด้วยวิธีนี้วิดิโอที่ยังดาวน์โหลดไม่เสร็จจะสามารถทำการดาวน์โหลดต่อได้ และวิดิโอในแชนแนลจะพร้อมให้คุณดูเมื่อคุณต้องการ\n\n\nคุณต้องการให้เริ่มต้น Miro เมื่อเริ่มระบบหรือไม่?" */;
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
 "Welcome to Internet TV!" = "ยินดีต้อนรับสู่อินเทอร์เน็ททีวี";
 
 /* Flag: untranslated */
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" /* = "ยินดีต้อนรับสู่อินเทอร์เน็ททีวี ที่นี่มีสิ่งมากมายที่คุณจะทำได้ด้วยโปรแกรม Miro Player ดาวน์โหลดวิดิโอโดยอัตโนมัติจากแชนแนลโปรด  หรือดูวิดิโอใหม่อย่างต่อเนื่องกันไป ดาวน์โหลดบิททอร์เรนท์ แนะนำวิดิโอให้เพื่อน และอื่นๆอีกมากมาย\n\n" */;
 
-/* File: ../..//portable/dialogs.py:78 */
+/* File: ../../portable/dialogs.py:78 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
 "Yes" = "ใช่";
 
@@ -348,1123 +352,1217 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "%message%\n%message%" = "%message%\n%message%";
 
-/* File: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:312 */
-/* Flag: untranslated */
-"New Channel _Guide..." = "New Channel _Guide...";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:548 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
-"Folder Location" = "ที่อยู่โฟลเดอร์";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:42 */
-"Settings" = "ตั้งค่า";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:45 */
-"Hide" = "ซ่อน";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:47 */
-"Show" = "แสดง";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:48 */
-/* File: ../..//portable/dialogs.py:80 */
-/* File: ../..//portable/menubar.py:241 */
-"Quit" = "ออก";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:170 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
-"Username:" = "ชื่อผู้ใช้:";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:181 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
-"Password:" = "รหัสผ่าน:";
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:369 */
-/* Flag: untranslated */
-"Unknown Runtime Error" = "Unknown Runtime Error" /* = "รันไทม์เออร์เรอร์โดยไม่ทราบสาเหตุ" */;
-
-/* File: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:370 */
-/* Flag: python-format */
-"An unknown error has occurred %s." = "มีปัญหาไม่ทราบสาเหตุเกิดขึ้น %s.";
-
-/* File: ../..//platform/osx/frontend/Application.py:235 */
-"Pause Video" = "หยุดวิดิโอ";
-
-/* File: ../..//platform/osx/frontend/Application.py:244 */
-"Unsupported version of Quicktime" = "Quicktime รุ่นที่ไม่ได้รับการสนับสนุน";
-
-/* File: ../..//platform/osx/frontend/Application.py:245 */
-/* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "เพื่อเล่น %s คุณจะเป็นต้องอัพเดทเวอร์ชันของ Quicktime ซึ่งหาโหลดได้ฟรี";
-
-/* File: ../..//platform/osx/frontend/GrowlNotifier.py:27 */
-"Download Completed" = "ดาวน์โหลดเสร็จสิ้น";
-
-/* File: ../..//platform/osx/frontend/GrowlNotifier.py:28 */
-/* Flag: python-format */
-"Download of video '%s' is finished." = "ดาวน์โหลดวิดิโอ '%s' เสร็จสิ้น";
-
-/* File: ../..//platform/osx/frontend/GrowlNotifier.py:37 */
-"Download Failed" = "ดาวน์โหลดล้มเหลว";
-
-/* File: ../..//platform/osx/frontend/GrowlNotifier.py:38 */
-/* Flag: python-format */
-"Download of video '%s' has failed." = "ดาวน์โหลดวิดิโอ '%s' ล้มเหลว";
-
-/* File: ../..//platform/osx/frontend/MainFrame.py:261 */
-/* Flag: untranslated */
-"Subscribe to Channel" = "Subscribe to Channel";
-
-/* File: ../..//platform/osx/frontend/MainFrame.py:262 */
-/* Flag: untranslated */
-"Enter the URL of the channel you would like to subscribe to." = "Enter the URL of the channel you would like to subscribe to.";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:38 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
-"General" = "ค่าทั่วไป";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:40 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-"Downloads" = "ดาวน์โหลด";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:41 */
-"Folders" = "โฟลเดอร์";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:42 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-"Disk Space" = "ที่ว่างในดิสก์";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:164 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
-"Movies Directory" = "ไดเร็คทอรี่ของไฟล์วิดิโอ";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:165 */
-/* Flag: python-format */
-"Select a Directory to store %s downloads in." = "เลือกไดเร็คทอรี่ที่จะเก็บ %s เอาไว้";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:166 */
-/* File: ../..//platform/osx/frontend/Preferences.py:230 */
-"Select" = "เลือก";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:175 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
-"Migrate existing movies?" = "ย้ายวิดิโอที่มีปัจจุบัน?";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:176 */
-/* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "คุณได้เลือกโฟล์เดอร์ที่จะดาวน์โหลดวิดิโอใหม่เข้าไป %s ควรจะย้ายวิดิโอดาวน์โหลดในปัจจุบันไปด้วยไหม? (วิดิโอที่ดาวน์โหลดอยู่จะไม่ถูกย้ายจนกว่าจะทำการดาวน์โหลดสำเร็จ)";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:228 */
-"View this Directory in the Library" = "ดูไดเรคทอรีนี้ในไลบรารี";
-
-/* File: ../..//platform/osx/frontend/Preferences.py:229 */
-"Select a Directory to view in the Library." = "ค้นหาไดเรคทอรีเพื่อดูในไลบรารี";
-
-/* File: ../..//platform/osx/frontend/QuicktimeRenderer.py:217 */
-"Audio" = "เสียง";
-
-/* File: ../..//platform/osx/frontend/StartupPanel.py:114 */
-"Search!" = "ค้นหา!";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:5 */
-"_Remove..." = "_ลบ...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:6 */
-"_Remove Playlist..." = "_ลบเพลย์ลิสท์...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:7 */
-"_Remove Playlists..." = "_ลบเพลย์ลิสท์...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:8 */
-"_Remove Playlist Folder..." = "_ลบโฟลเดอร์เพลย์ลิสท์...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:9 */
-"_Remove Playlist Folders..." = "_ลบโฟลเดอร์เพลย์ลิสท์...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:10 */
-/* File: ../..//portable/menubar.py:166 */
-"_Remove Channel..." = "_ลบแชนแนล...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:11 */
-/* File: ../..//portable/menubar.py:167 */
-"_Remove Channels..." = "_ลบแชนแนล...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:12 */
-/* File: ../..//portable/menubar.py:169 */
-"_Remove Channel Folder..." = "_ลบโฟลเดอร์แชนแนล...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:13 */
-/* File: ../..//portable/menubar.py:168 */
-"_Remove Channel Folders..." = "_ลบโฟลเดอร์แชนแนล...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:14 */
-/* Flag: untranslated */
-"_Remove Miro Guide..." = "_Remove Miro Guide..." /* = "_ลบ Miro Guide..." */;
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:15 */
-/* Flag: untranslated */
-"_Remove Miro Guides..." = "_Remove Miro Guides..." /* = "_ลบ Miro Guides..." */;
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:16 */
-"_Remove Video..." = "_ลบวิดีโอ...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:17 */
-"_Remove Videos..." = "_ลบวิดีโอ...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:18 */
-"Re_name..." = "เ_ปลี่ยนชื่อ...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:19 */
-"Re_name Playlist..." = "เ_ปลี่ยนชื่อเพลย์ลิสท์...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:20 */
-"Re_name Playlist Folder..." = "เ_ปลี่ยนชื่อเพลย์ลิสท์...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:21 */
-/* File: ../..//portable/menubar.py:165 */
-"Re_name Channel..." = "เ_ปลี่ยนชื่อแชนแนล...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:22 */
-"Re_name Channel Folder..." = "เ_ปลี่ยนชื่อโฟลเดอร์แชนแนล...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:23 */
-"Re_name Miro Guide..." = "เ_ปลี่ยนชื่อMiro Guide...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:24 */
-/* File: ../..//portable/menubar.py:171 */
-"_Update Channel..." = "_อัพเดตแชนแนล...";
-
-/* File: ../..//platform/osx/frontend/UIStrings.py:25 */
-/* File: ../..//portable/menubar.py:172 */
-"_Update Channels..." = "_อัพเดตแชนแนล...";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:367 */
-/* File: ../..//portable/dl_daemon/download.py:367 */
-"Error" = "ผิดพลาด";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:440 */
-/* File: ../..//portable/dl_daemon/download.py:440 */
-/* Flag: python-format */
-"Could not write to %s" = "ไม่สามารถเขียน %s";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:459 */
-/* File: ../..//portable/dl_daemon/download.py:459 */
-"Not enough disk space" = "เนื้อที่ในดิสก์ไม่เพียงพอ";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:460 */
-/* File: ../..//portable/dl_daemon/download.py:460 */
-/* Flag: python-format */
-"%s MB required to store this video" = "ต้องการ %s MB เพื่อเก็บวิดิโอนี้";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:793 */
-/* File: ../..//portable/dl_daemon/download.py:793 */
-"Corrupt Torrent" = "ทอร์เรนท์ผิดพลาด";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:794 */
-/* File: ../..//portable/dl_daemon/download.py:794 */
-/* Flag: python-format */
-"The torrent file at %s was not valid" = "ทอรเรนท์ไฟล์ที่ %s ไม่ถูกต้อง";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:820 */
-/* File: ../..//portable/dl_daemon/download.py:820 */
-"Torrent file deleted" = "ทอร์เรนท์ไฟล์ถูกลบ";
-
-/* File: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:821 */
-/* File: ../..//portable/dl_daemon/download.py:821 */
-"The torrent file for this item was deleted " = "ทอร์เรนท์ไฟล์สำหรับไอเท็มนี้ถูกลบ ";
-
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:56 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57 */
 "Update Available" = "มีรุ่นใหม่";
 
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:58 */
 /* Flag: python-format */
 "A new version of %s is available for download." = "เวอร์ชันใหม่ของ %s มีให้ดาวน์โหลดแล้ว";
 
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:182 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:155 */
+/* Flag: untranslated */
+"Select a File" = "Select a File";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:160 */
+/* Flag: untranslated */
+"Save File to" = "Save File to";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:210 */
 "Error Bombing Item" = "มีปัญหา Bombing Item";
 
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:184 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:212 */
 "Error Recommending Item" = "มีปัญหา Recommending Item";
 
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:186 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214 */
 "Error Opening Website" = "มีปัญหา Opening Website";
 
-/* File: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:190 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218 */
 /* Flag: python-format */
 "There was an error opening %s.  Please try again in a few seconds" = "มีปัญหาในการเปิด %s กรุณาเริ่มใหม่ในสองสามวินาทีถัดไป";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:45 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:45 */
 /* Flag: python-format */
 "Error importing modules:\n%s" = "โมดูลสำคัญ error:\n%s";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:49 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:49 */
 "Starting up" = "กำลังเริ่ม";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:256 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:256 */
 /* Flag: untranslated */
 "Loading window" = "Loading window";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:257 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:257 */
 /* Flag: untranslated */
 "onStartup called twice" = "onStartup called twice";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:658 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:672 */
 /* Flag: untranslated */
 "Spacebar" = "Spacebar";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:805 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:819 */
 "Close to tray?" = "ปิดลงแถบล่าง";
 
-/* File: ../..//platform/windows-xul/xul/components/pybridge.py:806 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:820 */
 /* Flag: untranslated */
 "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." /* = "เมื่อคุณคลิกที่ปุ่มปิดสีแดง คุณต้องการปิดลงแถบล่างหรือออกจากโปรแกรม? คุณสามารถเปลี่ยนการตั้งค่านี้ได้ภายหลังที่ Options" */;
 
-/* File: ../..//portable/app.py:808 */
-"Database too new" = "ฐานข้อมูลใหม่เกินไป";
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:27 */
+"Download Completed" = "ดาวน์โหลดเสร็จสิ้น";
 
-/* File: ../..//portable/app.py:809 */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "คุณใช้ฐานข้อมูลที่ถูกบันทึกด้วยเวอร์ชันใหม่ของ $shortAppName คุณต้องดาวน์โหลด $shortAppName เวอร์ชันล่าสุดเพื่อใช้งาน";
-
-/* File: ../..//portable/app.py:968 */
-/* File: ../..//portable/app.py:982 */
-/* File: ../..//portable/app.py:1026 */
-/* File: ../..//portable/app.py:1052 */
-/* File: ../..//portable/app.py:1072 */
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:28 */
 /* Flag: python-format */
-"Remove %s" = "ลบ %s";
+"Download of video '%s' is finished." = "ดาวน์โหลดวิดิโอ '%s' เสร็จสิ้น";
 
-/* File: ../..//portable/app.py:969 */
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:37 */
+"Download Failed" = "ดาวน์โหลดล้มเหลว";
+
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:38 */
+/* Flag: python-format */
+"Download of video '%s' has failed." = "ดาวน์โหลดวิดิโอ '%s' ล้มเหลว";
+
+/* File: ../../platform/osx/frontend/MainFrame.py:261 */
 /* Flag: untranslated */
-"Are you sure you want to remove the guide %s?" = "Are you sure you want to remove the guide %s?" /* = "คุณแน่ใจว่าต้องการลบไกด์ %s?" */;
+"Subscribe to Channel" = "Subscribe to Channel";
 
-/* File: ../..//portable/app.py:983 */
-/* Flag: python-format */
-"Are you sure you want to remove %s" = "คุณแน่ใจว่าต้องการลบ %s?";
-
-/* File: ../..//portable/app.py:986 */
-/* File: ../..//portable/app.py:1031 */
-/* File: ../..//portable/app.py:1057 */
-/* File: ../..//portable/app.py:1076 */
-/* Flag: python-format */
-"Remove %s channels" = "ลบ %s แชนแนล";
-
-/* File: ../..//portable/app.py:988 */
+/* File: ../../platform/osx/frontend/MainFrame.py:262 */
 /* Flag: untranslated */
-"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists" /* = "คุณแน่ใจหรือที่จะลบ %s เพลย์ลิสท์" */;
+"Enter the URL of the channel you would like to subscribe to." = "Enter the URL of the channel you would like to subscribe to.";
 
-/* File: ../..//portable/app.py:1027 */
-"What would you like to do with the videos in this channel that you've downloaded?" = "คุณต้องการลบวิดีโอที่ดาวน์โหลดมาแล้วของแชนแนลนี้ด้วยหรือไม่";
+/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:218 */
+"Audio" = "เสียง";
 
-/* File: ../..//portable/app.py:1032 */
-"What would you like to do with the videos in these channels that you've downloaded?" = "คุณต้องการลบวิดีโอที่ดาวน์โหลดมาแล้วของแชนแนลนี้ด้วยหรือไม่";
+/* File: ../../platform/osx/frontend/Preferences.py:38 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
+"General" = "ค่าทั่วไป";
 
-/* File: ../..//portable/app.py:1053 */
+/* File: ../../platform/osx/frontend/Preferences.py:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+"Downloads" = "ดาวน์โหลด";
+
+/* File: ../../platform/osx/frontend/Preferences.py:41 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
+"Folders" = "โฟลเดอร์";
+
+/* File: ../../platform/osx/frontend/Preferences.py:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+"Disk Space" = "ที่ว่างในดิสก์";
+
+/* File: ../../platform/osx/frontend/Preferences.py:164 */
+"Movies Directory" = "ไดเร็คทอรี่ของไฟล์วิดิโอ";
+
+/* File: ../../platform/osx/frontend/Preferences.py:165 */
 /* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "คุณแน่ใจหรือว่าต้องการลบ %s? ดาวน์โหลดใดๆที่อยู่ระหว่างดำเนินการจะถูกยกเลิก";
+"Select a Directory to store %s downloads in." = "เลือกไดเร็คทอรี่ที่จะเก็บ %s เอาไว้";
 
-/* File: ../..//portable/app.py:1058 */
+/* File: ../../platform/osx/frontend/Preferences.py:166 */
+/* File: ../../platform/osx/frontend/Preferences.py:230 */
+"Select" = "เลือก";
+
+/* File: ../../platform/osx/frontend/Preferences.py:175 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
+"Migrate existing movies?" = "ย้ายวิดิโอที่มีปัจจุบัน?";
+
+/* File: ../../platform/osx/frontend/Preferences.py:176 */
 /* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "คุณแน่ใจหรือว่าต้องการลบ %s แชนแนล? ดาวน์โหลดใดๆที่อยู่ระหว่างดำเนินการจะถูกยกเลิก";
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "คุณได้เลือกโฟล์เดอร์ที่จะดาวน์โหลดวิดิโอใหม่เข้าไป %s ควรจะย้ายวิดิโอดาวน์โหลดในปัจจุบันไปด้วยไหม? (วิดิโอที่ดาวน์โหลดอยู่จะไม่ถูกย้ายจนกว่าจะทำการดาวน์โหลดสำเร็จ)";
 
-/* File: ../..//portable/app.py:1073 */
+/* File: ../../platform/osx/frontend/Preferences.py:228 */
+"View this Directory in the Library" = "ดูไดเรคทอรีนี้ในไลบรารี";
+
+/* File: ../../platform/osx/frontend/Preferences.py:229 */
+"Select a Directory to view in the Library." = "ค้นหาไดเรคทอรีเพื่อดูในไลบรารี";
+
+/* File: ../../platform/osx/frontend/StartupPanel.py:114 */
+"Search!" = "ค้นหา!";
+
+/* File: ../../platform/osx/frontend/Application.py:228 */
+"Pause Video" = "หยุดวิดิโอ";
+
+/* File: ../../platform/osx/frontend/Application.py:237 */
+"Unsupported version of Quicktime" = "Quicktime รุ่นที่ไม่ได้รับการสนับสนุน";
+
+/* File: ../../platform/osx/frontend/Application.py:238 */
 /* Flag: python-format */
-"Are you sure you want to remove %s?" = "คุณแน่ใจที่จะลบ %s ?";
+"To run %s you need the most recent version of Quicktime, which is a free update." = "เพื่อเล่น %s คุณจะเป็นต้องอัพเดทเวอร์ชันของ Quicktime ซึ่งหาโหลดได้ฟรี";
 
-/* File: ../..//portable/app.py:1077 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?" = "คุณแน่ใจหรือว่าต้องการลบ %s แชนแนล?";
+/* File: ../../platform/osx/frontend/UIStrings.py:5 */
+"_Remove..." = "_ลบ...";
 
-/* File: ../..//portable/app.py:1090 */
-/* Flag: python-format */
-"Stop watching %s" = "หยุดดู %s";
+/* File: ../../platform/osx/frontend/UIStrings.py:6 */
+"_Remove Playlist..." = "_ลบเพลย์ลิสท์...";
 
-/* File: ../..//portable/app.py:1091 */
-/* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "คุณแน่ใจหรือว่าต้องการจะหยุดดู %s";
+/* File: ../../platform/osx/frontend/UIStrings.py:7 */
+"_Remove Playlists..." = "_ลบเพลย์ลิสท์...";
 
-/* File: ../..//portable/app.py:1094 */
+/* File: ../../platform/osx/frontend/UIStrings.py:8 */
+"_Remove Playlist Folder..." = "_ลบโฟลเดอร์เพลย์ลิสท์...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:9 */
+"_Remove Playlist Folders..." = "_ลบโฟลเดอร์เพลย์ลิสท์...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:10 */
+/* File: ../../portable/menubar.py:179 */
+"_Remove Channel..." = "_ลบแชนแนล...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:11 */
+/* File: ../../portable/menubar.py:180 */
+"_Remove Channels..." = "_ลบแชนแนล...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:12 */
+/* File: ../../portable/menubar.py:182 */
+"_Remove Channel Folder..." = "_ลบโฟลเดอร์แชนแนล...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:13 */
+/* File: ../../portable/menubar.py:181 */
+"_Remove Channel Folders..." = "_ลบโฟลเดอร์แชนแนล...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:14 */
 /* Flag: untranslated */
+"_Remove Miro Guide..." = "_Remove Miro Guide..." /* = "_ลบ Miro Guide..." */;
+
+/* File: ../../platform/osx/frontend/UIStrings.py:15 */
+/* Flag: untranslated */
+"_Remove Miro Guides..." = "_Remove Miro Guides..." /* = "_ลบ Miro Guides..." */;
+
+/* File: ../../platform/osx/frontend/UIStrings.py:16 */
+"_Remove Video..." = "_ลบวิดีโอ...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:17 */
+"_Remove Videos..." = "_ลบวิดีโอ...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:18 */
+"Re_name..." = "เ_ปลี่ยนชื่อ...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:19 */
+"Re_name Playlist..." = "เ_ปลี่ยนชื่อเพลย์ลิสท์...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:20 */
+"Re_name Playlist Folder..." = "เ_ปลี่ยนชื่อเพลย์ลิสท์...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:21 */
+/* File: ../../portable/menubar.py:178 */
+"Re_name Channel..." = "เ_ปลี่ยนชื่อแชนแนล...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:22 */
+"Re_name Channel Folder..." = "เ_ปลี่ยนชื่อโฟลเดอร์แชนแนล...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:23 */
+"Re_name Miro Guide..." = "เ_ปลี่ยนชื่อMiro Guide...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:24 */
+/* File: ../../portable/menubar.py:184 */
+"_Update Channel..." = "_อัพเดตแชนแนล...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:25 */
+/* File: ../../portable/menubar.py:185 */
+"_Update Channels..." = "_อัพเดตแชนแนล...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42 */
+"Settings" = "ตั้งค่า";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45 */
+"Hide" = "ซ่อน";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47 */
+"Show" = "แสดง";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48 */
+/* File: ../../portable/dialogs.py:80 */
+/* File: ../../portable/menubar.py:257 */
+"Quit" = "ออก";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:322 */
+/* Flag: untranslated */
+"New Channel _Guide..." = "New Channel _Guide...";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:563 */
+"Folder Location" = "ที่อยู่โฟลเดอร์";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
+"Username:" = "ชื่อผู้ใช้:";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
+"Password:" = "รหัสผ่าน:";
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:413 */
+/* Flag: untranslated */
+"Unknown Runtime Error" = "Unknown Runtime Error" /* = "รันไทม์เออร์เรอร์โดยไม่ทราบสาเหตุ" */;
+
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:414 */
 /* Flag: python-format */
-"Stop watching %s directories" = "Stop watching %s directories";
+"An unknown error has occurred %s." = "มีปัญหาไม่ทราบสาเหตุเกิดขึ้น %s.";
 
-/* File: ../..//portable/app.py:1095 */
-/* Flag: untranslated */
+/* File: ../../portable/dl_daemon/download.py:367 */
+"Error" = "ผิดพลาด";
+
+/* File: ../../portable/dl_daemon/download.py:440 */
 /* Flag: python-format */
-"Are you sure you want to stop watching these %s directories?" = "Are you sure you want to stop watching these %s directories?";
+"Could not write to %s" = "ไม่สามารถเขียน %s";
 
-/* File: ../..//portable/app.py:1125 */
-"Are you sure you want to quit?" = "คุณแน่ใจว่าต้องการออกหรือไม่?";
+/* File: ../../portable/dl_daemon/download.py:459 */
+"Not enough disk space" = "เนื้อที่ในดิสก์ไม่เพียงพอ";
 
-/* File: ../..//portable/app.py:1583 */
-"Invalid Value" = "ค่าไม่ถูกต้อง";
-
-/* File: ../..//portable/app.py:1584 */
+/* File: ../../portable/dl_daemon/download.py:460 */
 /* Flag: python-format */
-"%s is invalid.  You must enter a non-negative number." = "%s ไม่ถูกต้อง ค่าที่ใส่ต้องไม่ติดลบ";
+"%s MB required to store this video" = "ต้องการ %s MB เพื่อเก็บวิดิโอนี้";
 
-/* File: ../..//portable/app.py:1869 */
-" - Invalid URL" = " - URL ผิดพลาด";
-
-/* File: ../..//portable/app.py:1870 */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "แอดเดรสที่ใส่ไม่ถูกต้อง\nกรุณาเช็คอีกรอบ และลองอีกครั้ง\n\n";
-
-/* File: ../..//portable/app.py:1894 */
-"$shortAppName - Add Channel" = "$shortAppName - เพิ่มแชนแนล";
-
-/* File: ../..//portable/app.py:1894 */
-"Enter the URL of the channel to add" = "ใส่ URL ของช่องที่ต้องการเพิ่ม";
-
-/* File: ../..//portable/app.py:1915 */
-"$shortAppName - Add Miro Guide" = "$shortAppName - เพิ่ม Miro ไกด์";
-
-/* File: ../..//portable/app.py:1915 */
+/* File: ../../portable/dl_daemon/download.py:679 */
 /* Flag: untranslated */
-"Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add" /* = "ใส่ URL ของ Miro ไกด์ เพื่อเพิ่ม" */;
+"BitTorrent failure" = "BitTorrent failure";
 
-/* File: ../..//portable/app.py:2209 */
+/* File: ../../portable/dl_daemon/download.py:680 */
 /* Flag: untranslated */
-"News and Tech" = "News and Tech" /* = "ข่าวและเทคโนโลยี" */;
+"BitTorrent failed to startup" = "BitTorrent failed to startup";
 
-/* File: ../..//portable/app.py:2216 */
-"Entertainment" = "บันเทิง";
+/* File: ../../portable/dl_daemon/download.py:803 */
+"Corrupt Torrent" = "ทอร์เรนท์ผิดพลาด";
 
-/* File: ../..//portable/app.py:2222 */
-"High-Def" = "Hi-def";
+/* File: ../../portable/dl_daemon/download.py:804 */
+/* Flag: python-format */
+"The torrent file at %s was not valid" = "ทอรเรนท์ไฟล์ที่ %s ไม่ถูกต้อง";
 
-/* File: ../..//portable/app.py:2230 */
-"Mac" = "Mac";
+/* File: ../../portable/dl_daemon/download.py:830 */
+"Torrent file deleted" = "ทอร์เรนท์ไฟล์ถูกลบ";
 
-/* File: ../..//portable/app.py:2245 */
-"Example Playlist" = "ตัวอย่างรายการเล่น";
+/* File: ../../portable/dl_daemon/download.py:831 */
+"The torrent file for this item was deleted " = "ทอร์เรนท์ไฟล์สำหรับไอเท็มนี้ถูกลบ ";
 
-/* File: ../..//portable/app.py:2264 */
+/* File: ../../portable/dl_daemon/download.py:832 */
 /* Flag: untranslated */
-"Custom Channels" = "Custom Channels";
+"outside of democracy." = "outside of democracy.";
 
-/* File: ../..//portable/app.py:2264 */
+/* File: ../../portable/tabs.py:43 */
+"Library" = "ไลบรารี";
+
+/* File: ../../portable/tabs.py:44 */
+"New" = "ใหม่";
+
+/* File: ../../portable/tabs.py:46 */
+"Downloading" = "กำลังดาวน์โหลด";
+
+/* File: ../../portable/guide.py:83 */
+/* File: ../../portable/feed.py:782 */
+"Copy URL to clipboard" = "คัดลอก URL ลงคลิปบอร์ด";
+
+/* File: ../../portable/guide.py:118 */
+"Miro Guide" = "Miro ไกด์";
+
+/* File: ../../portable/downloader.py:214 */
+"activity" = "กิจกรรม";
+
+/* File: ../../portable/downloader.py:250 */
+/* File: ../../portable/httpclient.py:112 */
+"File not found" = "ไม่พบไฟล์";
+
+/* File: ../../portable/downloader.py:251 */
+"Flash URL Scraping Error" = "Flash URL ผิดพลาด";
+
+/* File: ../../portable/downloader.py:430 */
+"starting up" = "กำลังเริ่ม";
+
+/* File: ../../portable/playlist.py:196 */
+/* File: ../../portable/playlist.py:201 */
+"Rename Playlist" = "เปลี่ยนชื่อเพลย์ลิสต์";
+
+/* File: ../../portable/playlist.py:202 */
+/* Flag: python-format */
+"Enter a new name for the playlist %s" = "ใส่ชื่อใหม่ของเพลย์ลิสต์ %s";
+
+/* File: ../../portable/playlist.py:224 */
+"Create Playlist" = "สร้างเพลย์ลิสต์";
+
+/* File: ../../portable/playlist.py:225 */
+"Enter a name for the new playlist" = "ใส่ชื่อของเพลย์ลิสต์ที่จะสร้าง";
+
+/* File: ../../portable/feed.py:381 */
+"never" = "ไม่เคย";
+
+/* File: ../../portable/feed.py:383 */
+/* File: ../../portable/item.py:535 */
+/* Flag: python-format */
+"%d hours" = "%d ชั่วโมง";
+
+/* File: ../../portable/feed.py:385 */
+/* Flag: python-format */
+"%d day" = "%d วัน";
+
+/* File: ../../portable/feed.py:387 */
+/* File: ../../portable/item.py:533 */
+/* Flag: python-format */
+"%d days" = "%d วัน";
+
+/* File: ../../portable/feed.py:389 */
+/* Flag: python-format */
+"%d months" = "%d เดือน";
+
+/* File: ../../portable/feed.py:780 */
+"Update Channel Now" = "อัพเดตแชนแนลเดี๋ยวนี้";
+
+/* File: ../../portable/feed.py:783 */
+/* File: ../../portable/feed.py:792 */
+"Rename Channel" = "เปลี่ยนชื่อแชนแนล";
+
+/* File: ../../portable/feed.py:787 */
+"Revert Title to Default" = "เปลี่ยนไตเติลเป็นค่าอัตโนมัติ";
+
+/* File: ../../portable/feed.py:793 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "ใส่ชื่อใหม่ของแชนแนล %s";
+
+/* File: ../../portable/feed.py:880 */
+"Error loading feed" = "โหลดฟีดผิดพลาด";
+
+/* File: ../../portable/feed.py:881 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "ไม่สามารถโหลดฟีดที่ %s (%s).";
+
+/* File: ../../portable/feed.py:884 */
+"Would you like to keep the feed?" = "ต้องการเก็บฟีดนี้ไหม?";
+
+/* File: ../../portable/feed.py:1001 */
+"Bad content-type" = "คอนเทนต์ผิดประเภท";
+
+/* File: ../../portable/feed.py:1014 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "แชนแนลไม่สามารถเข้ากันได้กับ $shortAppName!";
+
+/* File: ../../portable/feed.py:1015 */
 /* Flag: untranslated */
-"You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels." /* = "คุณกำลังใช้เวอร์ชั่นของ $longAppName with a custom set of channels." */;
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" /* = "เราจะทำการโหลดไฟล์นี้อย่างดีที่สุด แต่อาจจะใช้เวลามากขึ้นสำหรับรายการวิดิโอ และรายละเอียดอาจผิดพลาด กรุณาติดต่อผู้เผยแพร่ของ $url และถามถึงการใช้รูปแบบฟีดที่ทำงานได้กับ $shortAppName\n\nคุณยังคงต้องการที่จะโหลดแชนแนลนี้ใช่ไหม?" */;
 
-/* File: ../..//portable/autoupdate.py:121 */
+/* File: ../../portable/feed.py:2010 */
+/* File: ../../portable/feed.py:2118 */
+/* File: ../../portable/extrastrings.py:5 */
+"Search" = "ค้นหา";
+
+/* File: ../../portable/feed.py:2132 */
+/* Flag: untranslated */
+"Local Files" = "Local Files";
+
+/* File: ../../portable/feed.py:2146 */
+/* Flag: untranslated */
+"Playing File" = "Playing File";
+
+/* File: ../../portable/menu.py:69 */
+"Update Channels Now" = "อัพเดตแชนแนลเดี๋ยวนี้";
+
+/* File: ../../portable/menu.py:92 */
+/* Flag: python-format */
+"%d Downloaded Items" = "ไฟล์ %d ดาวน์โหลดเสร็จ";
+
+/* File: ../../portable/menu.py:94 */
+/* File: ../../portable/item.py:1454 */
+"Play" = "เล่น";
+
+/* File: ../../portable/menu.py:95 */
+/* File: ../../portable/item.py:1457 */
+"Add to new playlist" = "เพิ่มในเพลย์ลิสท์ใหม่";
+
+/* File: ../../portable/menu.py:97 */
+/* File: ../../portable/item.py:1450 */
+"Remove From Playlist" = "ลบออกจากเพลย์ลิสต์";
+
+/* File: ../../portable/menu.py:99 */
+/* File: ../../portable/item.py:1452 */
+"Remove From the Library" = "ลบออกขสกไลบรารี";
+
+/* File: ../../portable/menu.py:105 */
+/* File: ../../portable/item.py:1461 */
+"Mark as Unwatched" = "ตั้งเป็นยังไม่ได้ดู";
+
+/* File: ../../portable/menu.py:110 */
+/* Flag: python-format */
+"%d Available Items" = "ไฟล์ %d มีให้โหลด";
+
+/* File: ../../portable/menu.py:111 */
+/* File: ../../portable/dialogs.py:85 */
+/* File: ../../portable/item.py:1467 */
+"Download" = "ดาวน์โหลด";
+
+/* File: ../../portable/menu.py:116 */
+/* Flag: python-format */
+"%d Downloading Items" = "กำลังโหลด %d";
+
+/* File: ../../portable/menu.py:118 */
+/* File: ../../portable/item.py:1465 */
+"Cancel Download" = "ยกเลิกการดาวน์โหลด";
+
+/* File: ../../portable/menu.py:120 */
+/* File: ../../portable/item.py:1465 */
+"Pause Download" = "พักการดาวน์โหลด";
+
+/* File: ../../portable/menu.py:123 */
+/* File: ../../portable/item.py:1463 */
+"Restart Upload" = "เริ่มอัพโหลดใหม่อีกครั้ง";
+
+/* File: ../../portable/autoupdate.py:121 */
 /* Flag: python-format */
 "%s Version Alert" = "แจ้งเตือนเวอร์ชัน %s";
 
-/* File: ../..//portable/autoupdate.py:122 */
+/* File: ../../portable/autoupdate.py:122 */
 /* Flag: python-format */
 "A new version of %s is available. Would you like to download it now?" = "เวอร์ชันใหม่ของ %s ออกแล้ว ต้องการจะอัพเดทใหม?";
 
-/* File: ../..//portable/autoupdate.py:128 */
+/* File: ../../portable/autoupdate.py:128 */
 /* Flag: python-format */
 "%s Version Check" = "ตรวจสอบเวอร์ชัน %s";
 
-/* File: ../..//portable/autoupdate.py:129 */
+/* File: ../../portable/autoupdate.py:129 */
 /* Flag: python-format */
 "%s is up to date." = "%s เป็นเวอร์ชันล่าสุดแล้ว";
 
-/* File: ../..//portable/dialogs.py:76 */
+/* File: ../../portable/util.py:257 */
+/* File: ../../portable/httpclient.py:124 */
+"Internal Error" = "เกิดข้อผิดพลาดภายใน";
+
+/* File: ../../portable/util.py:257 */
+/* Flag: untranslated */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report.";
+
+/* File: ../../portable/util.py:257 */
+/* Flag: untranslated */
+"Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
+
+/* File: ../../portable/util.py:257 */
+/* Flag: untranslated */
+"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
+
+/* File: ../../portable/util.py:441 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGB";
+
+/* File: ../../portable/util.py:443 */
+/* Flag: python-format */
+"%dGB" = "%dGB";
+
+/* File: ../../portable/util.py:447 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMB";
+
+/* File: ../../portable/util.py:449 */
+/* Flag: python-format */
+"%dMB" = "%dMB";
+
+/* File: ../../portable/util.py:453 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fKB";
+
+/* File: ../../portable/util.py:455 */
+/* Flag: python-format */
+"%dKB" = "%dKB";
+
+/* File: ../../portable/util.py:459 */
+/* Flag: python-format */
+"%1.1fB" = "%1.1fB";
+
+/* File: ../../portable/util.py:461 */
+/* Flag: python-format */
+"%dB" = "%dB";
+
+/* File: ../../portable/storedatabase.py:828 */
+/* File: ../../portable/storedatabase.py:1189 */
+/* Flag: python-format */
+"%s database save succeeded" = "%s การบันทึกฐานข้อมูลเสร็จสิ้น";
+
+/* File: ../../portable/storedatabase.py:829 */
+/* File: ../../portable/storedatabase.py:1190 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "ฐานข้อมูลได้ถูกบันทึกเสร็จสิ้น ขณะนี้ปลอดภัยที่จะออกจากโปรแกรมโดยไม่สูญเสียข้อมูลใดๆ";
+
+/* File: ../../portable/storedatabase.py:836 */
+/* File: ../../portable/storedatabase.py:1198 */
+/* Flag: python-format */
+"%s database save failed" = "%s การฐานข้อมูลบันทึกล้มเหลว";
+
+/* File: ../../portable/storedatabase.py:837 */
+/* File: ../../portable/storedatabase.py:1199 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s ไม่สามารถบันทึกฐานข้อมูลได้: ดิสก์เต็ม\nเราแนะนำให้ลบไฟล์ออกจากดิสก์ หรือลบวิดิโอบางอันออกจากคอลเล็คชัน\nการเปลี่ยนแปลงเร็วๆนี้อาจจะสูญหาย";
+
+/* File: ../../portable/dialogs.py:76 */
 "Ok" = "ตกลง";
 
-/* File: ../..//portable/dialogs.py:81 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+/* File: ../../portable/dialogs.py:81 */
+/* Flag: untranslated */
+"Ignore" = "Ignore";
+
+/* File: ../../portable/dialogs.py:82 */
+/* Flag: untranslated */
+"Submit Crash Repport" = "Submit Crash Repport";
+
+/* File: ../../portable/dialogs.py:83 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
 /* Flag: untranslated */
 "Migrate" = "Migrate";
 
-/* File: ../..//portable/dialogs.py:82 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
+/* File: ../../portable/dialogs.py:84 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
 /* Flag: untranslated */
 "Don't Migrate" = "Don't Migrate";
 
-/* File: ../..//portable/dialogs.py:83 */
-/* File: ../..//portable/item.py:1463 */
-/* File: ../..//portable/menu.py:111 */
-"Download" = "ดาวน์โหลด";
-
-/* File: ../..//portable/dialogs.py:84 */
+/* File: ../../portable/dialogs.py:86 */
 "Remove Entry" = "ลบรายการ";
 
-/* File: ../..//portable/dialogs.py:85 */
+/* File: ../../portable/dialogs.py:87 */
 "Delete File" = "ลบไฟล์";
 
-/* File: ../..//portable/dialogs.py:86 */
+/* File: ../../portable/dialogs.py:88 */
 "Delete Files" = "ลบไฟล์ออก";
 
-/* File: ../..//portable/dialogs.py:87 */
+/* File: ../../portable/dialogs.py:89 */
 "Keep Videos" = "เก็บวิดีโอ";
 
-/* File: ../..//portable/dialogs.py:88 */
+/* File: ../../portable/dialogs.py:90 */
 "Delete Videos" = "ลบวิดีโอ";
 
-/* File: ../..//portable/dialogs.py:90 */
+/* File: ../../portable/dialogs.py:92 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
 "Create Channel" = "สร้างแชนแนล";
 
-/* File: ../..//portable/dialogs.py:91 */
+/* File: ../../portable/dialogs.py:93 */
 "Add" = "เพิ่ม";
 
-/* File: ../..//portable/dialogs.py:92 */
+/* File: ../../portable/dialogs.py:94 */
 "Add Into New Folder" = "เพิ่มลงโฟลเดอร์ใหม่";
 
-/* File: ../..//portable/dialogs.py:93 */
+/* File: ../../portable/dialogs.py:95 */
 "Keep" = "เก็บ";
 
-/* File: ../..//portable/dialogs.py:95 */
+/* File: ../../portable/dialogs.py:97 */
 "Not Now" = "ไม่ใช่ตอนนี้";
 
-/* File: ../..//portable/dialogs.py:96 */
+/* File: ../../portable/dialogs.py:98 */
 "Close to Tray" = "ปิดลงข้างล่าง";
 
-/* File: ../..//portable/dialogs.py:211 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
+/* File: ../../portable/dialogs.py:99 */
+/* Flag: untranslated */
+"Launch Miro" = "Launch Miro";
+
+/* File: ../../portable/dialogs.py:214 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
 "New Search Channel" = "เพิ่มแชนแนลค้นหา";
 
-/* File: ../..//portable/dialogs.py:211 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
+/* File: ../../portable/dialogs.py:214 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:25 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
 /* Flag: untranslated */
 "A search channel contains items that match a search term." = "A search channel contains items that match a search term." /* = "แชนแนลค้นหามีของที่ตรงกับรายการค้นหา" */;
 
-/* File: ../..//portable/downloader.py:214 */
-"activity" = "กิจกรรม";
-
-/* File: ../..//portable/downloader.py:250 */
-/* File: ../..//portable/httpclient.py:112 */
-"File not found" = "ไม่พบไฟล์";
-
-/* File: ../..//portable/downloader.py:251 */
-"Flash URL Scraping Error" = "Flash URL ผิดพลาด";
-
-/* File: ../..//portable/downloader.py:430 */
-"starting up" = "กำลังเริ่ม";
-
-/* File: ../..//portable/feed.py:380 */
-"never" = "ไม่เคย";
-
-/* File: ../..//portable/feed.py:382 */
-/* File: ../..//portable/item.py:531 */
-/* Flag: python-format */
-"%d hours" = "%d ชั่วโมง";
-
-/* File: ../..//portable/feed.py:384 */
-/* Flag: python-format */
-"%d day" = "%d วัน";
-
-/* File: ../..//portable/feed.py:386 */
-/* File: ../..//portable/item.py:529 */
-/* Flag: python-format */
-"%d days" = "%d วัน";
-
-/* File: ../..//portable/feed.py:388 */
-/* Flag: python-format */
-"%d months" = "%d เดือน";
-
-/* File: ../..//portable/feed.py:779 */
-"Update Channel Now" = "อัพเดตแชนแนลเดี๋ยวนี้";
-
-/* File: ../..//portable/feed.py:781 */
-/* File: ../..//portable/guide.py:52 */
-"Copy URL to clipboard" = "คัดลอก URL ลงคลิปบอร์ด";
-
-/* File: ../..//portable/feed.py:782 */
-/* File: ../..//portable/feed.py:791 */
-"Rename Channel" = "เปลี่ยนชื่อแชนแนล";
-
-/* File: ../..//portable/feed.py:786 */
-"Revert Title to Default" = "เปลี่ยนไตเติลเป็นค่าอัตโนมัติ";
-
-/* File: ../..//portable/feed.py:792 */
-/* Flag: python-format */
-"Enter a new name for the channel %s" = "ใส่ชื่อใหม่ของแชนแนล %s";
-
-/* File: ../..//portable/feed.py:879 */
-"Error loading feed" = "โหลดฟีดผิดพลาด";
-
-/* File: ../..//portable/feed.py:880 */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "ไม่สามารถโหลดฟีดที่ %s (%s).";
-
-/* File: ../..//portable/feed.py:883 */
-"Would you like to keep the feed?" = "ต้องการเก็บฟีดนี้ไหม?";
-
-/* File: ../..//portable/feed.py:1000 */
-"Bad content-type" = "คอนเทนต์ผิดประเภท";
-
-/* File: ../..//portable/feed.py:1013 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-"Channel is not compatible with $shortAppName!" = "แชนแนลไม่สามารถเข้ากันได้กับ $shortAppName!";
-
-/* File: ../..//portable/feed.py:1014 */
-/* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" /* = "เราจะทำการโหลดไฟล์นี้อย่างดีที่สุด แต่อาจจะใช้เวลามากขึ้นสำหรับรายการวิดิโอ และรายละเอียดอาจผิดพลาด กรุณาติดต่อผู้เผยแพร่ของ $url และถามถึงการใช้รูปแบบฟีดที่ทำงานได้กับ $shortAppName\n\nคุณยังคงต้องการที่จะโหลดแชนแนลนี้ใช่ไหม?" */;
-
-/* File: ../..//portable/feed.py:1987 */
-/* File: ../..//portable/feed.py:2050 */
-"Search" = "ค้นหา";
-
-/* File: ../..//portable/feed.py:2064 */
-/* Flag: untranslated */
-"Local Files" = "Local Files";
-
-/* File: ../..//portable/feed.py:2078 */
-/* Flag: untranslated */
-"Playing File" = "Playing File";
-
-/* File: ../..//portable/folder.py:132 */
-/* File: ../..//portable/folder.py:155 */
-"Rename Channel Folder" = "เปลี่ยนชื่อโฟลเดอร์แชนแนล";
-
-/* File: ../..//portable/folder.py:134 */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "ใส่ชื่อใหม่ของโฟลเดอร์แชนแนล %s";
-
-/* File: ../..//portable/folder.py:210 */
-/* File: ../..//portable/folder.py:215 */
-"Rename Playlist Folder" = "เปลี่ยนชื่อโฟลเดอร์เพลย์ลิสท์";
-
-/* File: ../..//portable/folder.py:217 */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "ใส่ชื่อใหม่ของโฟลเดอร์เพลย์ลิสท์ %s";
-
-/* File: ../..//portable/folder.py:225 */
-"Create Channel Folder" = "สร้างโฟลเดอรแชนแนล";
-
-/* File: ../..//portable/folder.py:226 */
-/* File: ../..//portable/singleclick.py:176 */
-"Enter a name for the new channel folder" = "ใส่ชื่อของโฟลเดอร์แชนแนลที่ต้องการสร้าง";
-
-/* File: ../..//portable/folder.py:239 */
-"Create Playlist Folder" = "สร้างโฟลเดอร์เพลย์ลิสท์";
-
-/* File: ../..//portable/folder.py:240 */
-"Enter a name for the new playlist folder" = "ใส่ชื่อของโฟลเดอร์เพลย์ลิสท์ที่ต้องการสร้าง";
-
-/* File: ../..//portable/guide.py:75 */
-"Miro Guide" = "Miro ไกด์";
-
-/* File: ../..//portable/httpclient.py:67 */
-/* Flag: python-format */
-"Error: %s" = "ผิดพลาด: %s";
-
-/* File: ../..//portable/httpclient.py:82 */
-/* File: ../..//portable/httpclient.py:87 */
-"Can't connect" = "ไม่สามารถเชื่อมต่อได้";
-
-/* File: ../..//portable/httpclient.py:83 */
-/* Flag: python-format */
-"Connection Error: %s" = "การเชื่อมต่อผิดพลาด: %s";
-
-/* File: ../..//portable/httpclient.py:88 */
-"SSL connection error" = "การเชื่อมต่อ SSL ผิดพลาด";
-
-/* File: ../..//portable/httpclient.py:92 */
-"HTTP error" = "HTTP ผิดพลาด";
-
-/* File: ../..//portable/httpclient.py:95 */
-/* Flag: untranslated */
-"Bad Status Line: %s" = "Bad Status Line: %s" /* = "Bad Status Line: %s" */;
-
-/* File: ../..//portable/httpclient.py:98 */
-/* Flag: untranslated */
-"Bad Header Line: %s" = "Bad Header Line: %s" /* = "Bad Header Line: %s" */;
-
-/* File: ../..//portable/httpclient.py:101 */
-/* Flag: untranslated */
-"Bad Chunk size: %s" = "Bad Chunk size: %s" /* = "Bad Chunk size: %s" */;
-
-/* File: ../..//portable/httpclient.py:104 */
-/* Flag: untranslated */
-"Expected CRLF got: %r" = "Expected CRLF got: %r" /* = "Expected CRLF got: %r" */;
-
-/* File: ../..//portable/httpclient.py:107 */
-/* Flag: python-format */
-"%s closed connection" = "%s ปิดการเชื่อมต่อ";
-
-/* File: ../..//portable/httpclient.py:113 */
-"Got 404 status code" = "ได้รับ 404 status code";
-
-/* File: ../..//portable/httpclient.py:115 */
-/* Flag: untranslated */
-"Bad Status Code: %s" = "Bad Status Code: %s" /* = "Bad Status Code: %s" */;
-
-/* File: ../..//portable/httpclient.py:119 */
-"Authorization failed" = "การขออนุญาตล้มเหลว";
-
-/* File: ../..//portable/httpclient.py:124 */
-"Internal Error" = "เกิดข้อผิดพลาดภายใน";
-
-/* File: ../..//portable/httpclient.py:125 */
-/* Flag: untranslated */
-"Pipeline request never started" = "Pipeline request never started";
-
-/* File: ../..//portable/httpclient.py:129 */
-"Timeout" = "หมดเวลา";
-
-/* File: ../..//portable/httpclient.py:130 */
-/* Flag: python-format */
-"Connection to %s timed out" = "หมดเวลาการเชื่อมต่อไปยัง %s";
-
-/* File: ../..//portable/httpclient.py:134 */
-"Invalid URL" = "URL ไม่ถูกต้อง";
-
-/* File: ../..//portable/httpclient.py:135 */
-/* Flag: python-format */
-"%s is not a valid URL" = "%s ไม่ใช่ URL ที่ถูกต้อง";
-
-/* File: ../..//portable/httpclient.py:355 */
-"Connection closed" = "การเชื่อมต่อยุติ";
-
-/* File: ../..//portable/httpclient.py:780 */
-"Unknown" = "ไม่ทราบ";
-
-/* File: ../..//portable/httpclient.py:781 */
-"Internal Error: Not ready to send" = "มีข้อผิดพลาดภายใน: ไม่พร้อมที่จะส่ง";
-
-/* File: ../..//portable/item.py:478 */
-/* Flag: python-format */
-"Removing %s" = "ลบ %s";
-
-/* File: ../..//portable/item.py:481 */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "คุณต้องการลบโฟลเดอร์นี้และวิดิโอภายใน หรือคุณต้องการลบเพียงโฟลเดอร์ออกจากไลบรารี?";
-
-/* File: ../..//portable/item.py:486 */
-"Would you like to delete this file or just remove its entry from My Collection?" = "คุณต้องการลบไฟล์นี้ หรือเพียงต้องการลบออกจากคอลเล็คชัน?";
-
-/* File: ../..//portable/item.py:503 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "ไอเท็มนี้เป็นโฟลเดอร์ เมื่อคุณลบโฟลเดอร์ไอเท็มใดๆข้างในโฟลเดอร์จะถูกลบไปด้วย";
-
-/* File: ../..//portable/item.py:533 */
-/* Flag: python-format */
-"%d minutes" = "%d นาที";
-
-/* File: ../..//portable/item.py:543 */
-/* Flag: python-format */
-"Expires in %s" = "หมดอายุใน %s";
-
-/* File: ../..//portable/item.py:555 */
-/* Flag: python-format */
-"Will retry in %s" = "ลองใหม่ใน %s";
-
-/* File: ../..//portable/item.py:557 */
-"Paused" = "หยุด";
-
-/* File: ../..//portable/item.py:937 */
-"TORRENT" = "ทอร์เรนท์";
-
-/* File: ../..//portable/item.py:939 */
-"WEB PAGE" = "เว็บเพจ";
-
-/* File: ../..//portable/item.py:949 */
-/* Flag: untranslated */
-"Total Down:" = "Total Down:";
-
-/* File: ../..//portable/item.py:956 */
-"Seeders:" = "Seeders:";
-
-/* File: ../..//portable/item.py:957 */
-"Leachers:" = "Leachers:";
-
-/* File: ../..//portable/item.py:958 */
-"Down Rate:" = "อัตราการโหลด:";
-
-/* File: ../..//portable/item.py:959 */
-"Down Total:" = "ดาวน์โหลดรวม:";
-
-/* File: ../..//portable/item.py:961 */
-"Up Rate:" = "อัตราการอัพโหลด:";
-
-/* File: ../..//portable/item.py:962 */
-"Up Total:" = "อัพโหลดรวม:";
-
-/* File: ../..//portable/item.py:967 */
-"Web page:" = "เว็บเพจ:";
-
-/* File: ../..//portable/item.py:967 */
-/* Flag: untranslated */
-"permalink" = "permalink";
-
-/* File: ../..//portable/item.py:968 */
-/* Flag: untranslated */
-"File link:" = "File link:";
-
-/* File: ../..//portable/item.py:968 */
-"direct link to file" = "ลิงค์โดยตรงไปยังไฟล์";
-
-/* File: ../..//portable/item.py:970 */
-"File type:" = "ประเภทของไฟล์:";
-
-/* File: ../..//portable/item.py:977 */
-/* Flag: untranslated */
-"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
-
-/* File: ../..//portable/item.py:979 */
-/* Flag: untranslated */
-"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
-
-/* File: ../..//portable/item.py:981 */
-"Filename:" = "ชื่อไฟล์:";
-
-/* File: ../..//portable/item.py:988 */
-"Down Total" = "ดาวน์โหลดรวม";
-
-/* File: ../..//portable/item.py:990 */
-"Up Total" = "อัพโหลดรวม";
-
-/* File: ../..//portable/item.py:1008 */
-"Item Details" = "รายละเอียดของไอเท็ม";
-
-/* File: ../..//portable/item.py:1015 */
-"Torrent Details" = "รายละเอียดของทอร์เรนท์";
-
-/* File: ../..//portable/item.py:1020 */
-"Download Details" = "รายละเอียดของดาวน์โหลด";
-
-/* File: ../..//portable/item.py:1234 */
-"downloading..." = "กำลังดาวน์โหลด...";
-
-/* File: ../..//portable/item.py:1241 */
-/* File: ../..//portable/item.py:1244 */
-/* Flag: python-format */
-"%s remaining" = "เหลืออีก %s";
-
-/* File: ../..//portable/item.py:1253 */
-"starting up..." = "กำลังเริ่ม...";
-
-/* File: ../..//portable/item.py:1446 */
-/* File: ../..//portable/menu.py:97 */
-"Remove From Playlist" = "ลบออกจากเพลย์ลิสต์";
-
-/* File: ../..//portable/item.py:1448 */
-/* File: ../..//portable/menu.py:99 */
-"Remove From the Library" = "ลบออกขสกไลบรารี";
-
-/* File: ../..//portable/item.py:1450 */
-/* File: ../..//portable/menu.py:94 */
-"Play" = "เล่น";
-
-/* File: ../..//portable/item.py:1452 */
-"Play Just This Video" = "เล่นเฉพาะวิดีโอนี้";
-
-/* File: ../..//portable/item.py:1453 */
-/* File: ../..//portable/menu.py:95 */
-"Add to new playlist" = "เพิ่มในเพลย์ลิสท์ใหม่";
-
-/* File: ../..//portable/item.py:1457 */
-/* File: ../..//portable/menu.py:105 */
-"Mark as Unwatched" = "ตั้งเป็นยังไม่ได้ดู";
-
-/* File: ../..//portable/item.py:1459 */
-/* File: ../..//portable/menu.py:123 */
-"Restart Upload" = "เริ่มอัพโหลดใหม่อีกครั้ง";
-
-/* File: ../..//portable/item.py:1461 */
-/* File: ../..//portable/menu.py:118 */
-"Cancel Download" = "ยกเลิกการดาวน์โหลด";
-
-/* File: ../..//portable/item.py:1461 */
-/* File: ../..//portable/menu.py:120 */
-"Pause Download" = "พักการดาวน์โหลด";
-
-/* File: ../..//portable/item.py:1797 */
-/* Flag: python-format */
-"Removing %s items" = "ลบไอเท็ม %s";
-
-/* File: ../..//portable/item.py:1799 */
-/* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" /* = "วิดิโอหนึ่งไฟล์หรือมากกว่าไม่ได้ถูกดาวน์โหลดจากแชนแนล คุณต้องการลบไอเท็มนี้หรือแค่ลบออกจากไลบรารี?" */;
-
-/* File: ../..//portable/item.py:1807 */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "หนึ่งในนี้หรือมากกว่าเป็นโฟลเดอร์ เมื่อคุณลบโฟลเดอร์ ไฟล์ภายในโฟลเดอร์จะโดนลบออกจากไลบรารีหรือลบทิ้งจากดิสก์";
-
-/* File: ../..//portable/menu.py:69 */
-"Update Channels Now" = "อัพเดตแชนแนลเดี๋ยวนี้";
-
-/* File: ../..//portable/menu.py:92 */
-/* Flag: python-format */
-"%d Downloaded Items" = "ไฟล์ %d ดาวน์โหลดเสร็จ";
-
-/* File: ../..//portable/menu.py:110 */
-/* Flag: python-format */
-"%d Available Items" = "ไฟล์ %d มีให้โหลด";
-
-/* File: ../..//portable/menu.py:116 */
-/* Flag: python-format */
-"%d Downloading Items" = "กำลังโหลด %d";
-
-/* File: ../..//portable/menubar.py:132 */
-"_Open" = "_เปิด";
-
-/* File: ../..//portable/menubar.py:134 */
-"Check _Version" = "ตรวจสอบ_เวอร์ชัน";
-
-/* File: ../..//portable/menubar.py:136 */
-"_Remove Video" = "_ลบวิดีโอ";
-
-/* File: ../..//portable/menubar.py:137 */
-"_Remove Videos" = "_ลบวิดีโอ";
-
-/* File: ../..//portable/menubar.py:138 */
-"Re_name Video" = "_เปลี่ยนชื่อวิดีโอ";
-
-/* File: ../..//portable/menubar.py:139 */
-"Save Video _As..." = "_บันทึกวิดีโอเป็น...";
-
-/* File: ../..//portable/menubar.py:140 */
-"Save Videos _As..." = "_บันทึกวิดีโอเป็น...";
-
-/* File: ../..//portable/menubar.py:141 */
-"Copy Video _URL" = "_คัดลอก URL ของวิดิโอ";
-
-/* File: ../..//portable/menubar.py:143 */
-"_Options" = "_ตัวเลือก";
-
-/* File: ../..//portable/menubar.py:144 */
-"_Quit" = "_ออก";
-
-/* File: ../..//portable/menubar.py:152 */
-"Cu_t" = "_ตัด";
-
-/* File: ../..//portable/menubar.py:153 */
-"_Copy" = "_คัดลอก";
-
-/* File: ../..//portable/menubar.py:154 */
-"_Paste" = "_แปะ";
-
-/* File: ../..//portable/menubar.py:155 */
-"Select _All" = "เลือกทั้ง_หมด";
-
-/* File: ../..//portable/menubar.py:156 */
-"_Delete" = "_ลบออก";
-
-/* File: ../..//portable/menubar.py:160 */
-"Add _Channel" = "เพิ่มแชนแนล";
-
-/* File: ../..//portable/menubar.py:161 */
-"New Searc_h Channel..." = "เพิ่มแชนแนลค้_นหาใหม่...";
-
-/* File: ../..//portable/menubar.py:162 */
-"New _Folder..." = "โฟลเดอร์_ใหม่...";
-
-/* File: ../..//portable/menubar.py:163 */
-"Add Channel _Guide..." = "เพิ่มแชนแนล_ไกด์...";
-
-/* File: ../..//portable/menubar.py:173 */
-"Update _All Channels" = "อัพเดท_แชนแนลทั้งหมด";
-
-/* File: ../..//portable/menubar.py:175 */
-"_Send this channel to a friend" = "_ส่งแชนแนลนี้ให้เพื่อน";
-
-/* File: ../..//portable/menubar.py:176 */
-"Copy Channel _Link" = "คัดลอกลิ_งก์ของแชนแนล";
-
-/* File: ../..//portable/menubar.py:179 */
-"New _Playlist" = "เพลย์ลิสต์_ใหม่";
-
-/* File: ../..//portable/menubar.py:180 */
-"New Playlist Fol_der" = "โฟลเดอร์เพลย์ลิสต์_ใหม่";
-
-/* File: ../..//portable/menubar.py:182 */
-"Re_name Playlist" = "เ_ปลี่ยนชื่อเพลย์ลิสต์";
-
-/* File: ../..//portable/menubar.py:183 */
-"_Remove Playlist" = "_ลบเพลย์ลิสต์";
-
-/* File: ../..//portable/menubar.py:184 */
-"_Remove Playlists" = "_ลบเพลย์ลิสต์";
-
-/* File: ../..//portable/menubar.py:185 */
-"_Remove Playlist Folders" = "_ลบโฟลเดอร์เพลย์ลิสต์";
-
-/* File: ../..//portable/menubar.py:186 */
-"_Remove Playlist Folder" = "_ลบโฟลเดอร์เพลย์ลิสต์";
-
-/* File: ../..//portable/menubar.py:196 */
-"_Play" = "_เล่น";
-
-/* File: ../..//portable/menubar.py:197 */
-"_Stop" = "_หยุด";
-
-/* File: ../..//portable/menubar.py:199 */
-"_Next Video" = "_วิดิโอถัดไป";
-
-/* File: ../..//portable/menubar.py:200 */
-"_Previous Video" = "_วิดิโอก่อนหน้า";
-
-/* File: ../..//portable/menubar.py:202 */
-/* Flag: untranslated */
-"Skip _Forward" = "Skip _Forward";
-
-/* File: ../..//portable/menubar.py:203 */
-/* Flag: untranslated */
-"Skip _Back" = "Skip _Back";
-
-/* File: ../..//portable/menubar.py:205 */
-"Volume _Up" = "_เพิ่มเสียง";
-
-/* File: ../..//portable/menubar.py:206 */
-"Volume _Down" = "_ลดเสียง";
-
-/* File: ../..//portable/menubar.py:208 */
-"_Fullscreen" = "_แสดงผลเต็มหน้าจอ";
-
-/* File: ../..//portable/menubar.py:212 */
-"_About" = "_เกี่ยวกับ";
-
-/* File: ../..//portable/menubar.py:213 */
-"_Donate" = "_บริจาค";
-
-/* File: ../..//portable/menubar.py:214 */
-/* File: ../..//portable/menubar.py:229 */
-"_Help" = "_วิธีใช้";
-
-/* File: ../..//portable/menubar.py:216 */
-"Report a _Bug" = "รายงาน_บั๊ก";
-
-/* File: ../..//portable/menubar.py:220 */
-"_Video" = "_วิดีโอ";
-
-/* File: ../..//portable/menubar.py:222 */
-"_File" = "_ไฟล์";
-
-/* File: ../..//portable/menubar.py:226 */
-"_Channels" = "_แชนแนล";
-
-/* File: ../..//portable/menubar.py:227 */
-"_Playlists" = "_เพลย์ลิสต์";
-
-/* File: ../..//portable/menubar.py:228 */
-"P_layback" = "_ควบคุม";
-
-/* File: ../..//portable/menubar.py:233 */
-"Play Unwatched ($numUnwatched)" = "เล่นวิดิโอที่ยังไม่ได้ดู ($numUnwatched)";
-
-/* File: ../..//portable/menubar.py:234 */
-"Pause All Downloads ($numDownloading)" = "หยุดดาวน์โหลดทั้งหมด ($numDownloading)";
-
-/* File: ../..//portable/menubar.py:235 */
-"Resume All Downloads ($numPaused)" = "ดาวน์โหลดต่อทั้งหมด ($numPaused)";
-
-/* File: ../..//portable/menubar.py:237 */
-"Options" = "ออปชั่น";
-
-/* File: ../..//portable/menubar.py:239 */
-/* Flag: untranslated */
-"Hide Window" = "Hide Window";
-
-/* File: ../..//portable/menubar.py:240 */
-/* Flag: untranslated */
-"Show Window" = "Show Window";
-
-/* File: ../..//portable/playlist.py:196 */
-/* File: ../..//portable/playlist.py:201 */
-"Rename Playlist" = "เปลี่ยนชื่อเพลย์ลิสต์";
-
-/* File: ../..//portable/playlist.py:202 */
-/* Flag: python-format */
-"Enter a new name for the playlist %s" = "ใส่ชื่อใหม่ของเพลย์ลิสต์ %s";
-
-/* File: ../..//portable/playlist.py:224 */
-"Create Playlist" = "สร้างเพลย์ลิสต์";
-
-/* File: ../..//portable/playlist.py:225 */
-"Enter a name for the new playlist" = "ใส่ชื่อของเพลย์ลิสต์ที่จะสร้าง";
-
-/* File: ../..//portable/singleclick.py:161 */
+/* File: ../../portable/singleclick.py:161 */
 /* Flag: untranslated */
 "Subscribing to multiple channels" = "Subscribing to multiple channels";
 
-/* File: ../..//portable/singleclick.py:162 */
+/* File: ../../portable/singleclick.py:162 */
 /* Flag: python-format */
 "Create %d channels?" = "สร้างแชนแนล %d ?";
 
-/* File: ../..//portable/singleclick.py:175 */
+/* File: ../../portable/singleclick.py:175 */
 /* Flag: python-format */
 "Adding %d channels to a new folder" = "เพิ่มแชนแนล %d ลงในโฟลเดอร์ใหม่";
 
-/* File: ../..//portable/singleclick.py:179 */
+/* File: ../../portable/singleclick.py:176 */
+/* File: ../../portable/folder.py:226 */
+"Enter a name for the new channel folder" = "ใส่ชื่อของโฟลเดอร์แชนแนลที่ต้องการสร้าง";
+
+/* File: ../../portable/singleclick.py:179 */
 /* Flag: untranslated */
 "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." /* = "โน้ต: คุณได้ทำการ subscribe %d แชนแนลไปแล้ว แชนแนลนี้จะคงอยู่ที่ๆเดิมที่มันอยู่" */;
 
-/* File: ../..//portable/singleclick.py:190 */
+/* File: ../../portable/singleclick.py:190 */
 /* Flag: untranslated */
 "Subscription error" = "Subscription error";
 
-/* File: ../..//portable/singleclick.py:200 */
+/* File: ../../portable/singleclick.py:200 */
 "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "$shortAppName แชนแนลไฟล์นี้ผิดรูปแบบ: $url โปรดแจ้งผู้ทำสื่อนี้";
 
-/* File: ../..//portable/singleclick.py:208 */
+/* File: ../../portable/singleclick.py:208 */
 "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "$shortAppName แชนแนลไฟล์นี้ผิดประเภท: $url โปรดแจ้งผู้ทำสื่อนี้";
 
-/* File: ../..//portable/singleclick.py:212 */
+/* File: ../../portable/singleclick.py:212 */
 "Could not download the $shortAppName channel file: $url." = "ไม่สามารถดาวน์โหลดแชนแนล $shortAppName : $url";
 
-/* File: ../..//portable/singleclick.py:251 */
+/* File: ../../portable/singleclick.py:251 */
 "Invalid Torrent" = "ทอร์เรนท์ผิดพลาด";
 
-/* File: ../..//portable/singleclick.py:252 */
+/* File: ../../portable/singleclick.py:252 */
 /* Flag: python-format */
 "The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "ไฟล์ทอร์เรนท์ %s เสียและไม่สามารถเปิดได้ [OK]";
 
-/* File: ../..//portable/storedatabase.py:828 */
-/* File: ../..//portable/storedatabase.py:1189 */
+/* File: ../../portable/menubar.py:144 */
+"_Open" = "_เปิด";
+
+/* File: ../../portable/menubar.py:145 */
+/* Flag: untranslated */
+"_Download Video" = "_Download Video";
+
+/* File: ../../portable/menubar.py:147 */
+"Check _Version" = "ตรวจสอบ_เวอร์ชัน";
+
+/* File: ../../portable/menubar.py:149 */
+"_Remove Video" = "_ลบวิดีโอ";
+
+/* File: ../../portable/menubar.py:150 */
+"_Remove Videos" = "_ลบวิดีโอ";
+
+/* File: ../../portable/menubar.py:151 */
+"Re_name Video" = "_เปลี่ยนชื่อวิดีโอ";
+
+/* File: ../../portable/menubar.py:152 */
+"Save Video _As..." = "_บันทึกวิดีโอเป็น...";
+
+/* File: ../../portable/menubar.py:153 */
+"Save Videos _As..." = "_บันทึกวิดีโอเป็น...";
+
+/* File: ../../portable/menubar.py:154 */
+"Copy Video _URL" = "_คัดลอก URL ของวิดิโอ";
+
+/* File: ../../portable/menubar.py:156 */
+/* Flag: untranslated */
+"_Options..." = "_Options...";
+
+/* File: ../../portable/menubar.py:157 */
+"_Quit" = "_ออก";
+
+/* File: ../../portable/menubar.py:165 */
+"Cu_t" = "_ตัด";
+
+/* File: ../../portable/menubar.py:166 */
+"_Copy" = "_คัดลอก";
+
+/* File: ../../portable/menubar.py:167 */
+"_Paste" = "_แปะ";
+
+/* File: ../../portable/menubar.py:168 */
+"Select _All" = "เลือกทั้ง_หมด";
+
+/* File: ../../portable/menubar.py:169 */
+"_Delete" = "_ลบออก";
+
+/* File: ../../portable/menubar.py:173 */
+"Add _Channel" = "เพิ่มแชนแนล";
+
+/* File: ../../portable/menubar.py:174 */
+"New Searc_h Channel..." = "เพิ่มแชนแนลค้_นหาใหม่...";
+
+/* File: ../../portable/menubar.py:175 */
+"New _Folder..." = "โฟลเดอร์_ใหม่...";
+
+/* File: ../../portable/menubar.py:176 */
+"Add Channel _Guide..." = "เพิ่มแชนแนล_ไกด์...";
+
+/* File: ../../portable/menubar.py:186 */
+"Update _All Channels" = "อัพเดท_แชนแนลทั้งหมด";
+
+/* File: ../../portable/menubar.py:188 */
+/* Flag: untranslated */
+"_Import Channels (OPML)..." = "_Import Channels (OPML)...";
+
+/* File: ../../portable/menubar.py:189 */
+/* Flag: untranslated */
+"E_xport Channels (OPML)..." = "E_xport Channels (OPML)...";
+
+/* File: ../../portable/menubar.py:191 */
+"_Send this channel to a friend" = "_ส่งแชนแนลนี้ให้เพื่อน";
+
+/* File: ../../portable/menubar.py:192 */
+"Copy Channel _Link" = "คัดลอกลิ_งก์ของแชนแนล";
+
+/* File: ../../portable/menubar.py:195 */
+"New _Playlist" = "เพลย์ลิสต์_ใหม่";
+
+/* File: ../../portable/menubar.py:196 */
+"New Playlist Fol_der" = "โฟลเดอร์เพลย์ลิสต์_ใหม่";
+
+/* File: ../../portable/menubar.py:198 */
+"Re_name Playlist" = "เ_ปลี่ยนชื่อเพลย์ลิสต์";
+
+/* File: ../../portable/menubar.py:199 */
+"_Remove Playlist" = "_ลบเพลย์ลิสต์";
+
+/* File: ../../portable/menubar.py:200 */
+"_Remove Playlists" = "_ลบเพลย์ลิสต์";
+
+/* File: ../../portable/menubar.py:201 */
+"_Remove Playlist Folders" = "_ลบโฟลเดอร์เพลย์ลิสต์";
+
+/* File: ../../portable/menubar.py:202 */
+"_Remove Playlist Folder" = "_ลบโฟลเดอร์เพลย์ลิสต์";
+
+/* File: ../../portable/menubar.py:212 */
+"_Play" = "_เล่น";
+
+/* File: ../../portable/menubar.py:213 */
+"_Stop" = "_หยุด";
+
+/* File: ../../portable/menubar.py:215 */
+"_Next Video" = "_วิดิโอถัดไป";
+
+/* File: ../../portable/menubar.py:216 */
+"_Previous Video" = "_วิดิโอก่อนหน้า";
+
+/* File: ../../portable/menubar.py:218 */
+/* Flag: untranslated */
+"Skip _Forward" = "Skip _Forward";
+
+/* File: ../../portable/menubar.py:219 */
+/* Flag: untranslated */
+"Skip _Back" = "Skip _Back";
+
+/* File: ../../portable/menubar.py:221 */
+"Volume _Up" = "_เพิ่มเสียง";
+
+/* File: ../../portable/menubar.py:222 */
+"Volume _Down" = "_ลดเสียง";
+
+/* File: ../../portable/menubar.py:224 */
+"_Fullscreen" = "_แสดงผลเต็มหน้าจอ";
+
+/* File: ../../portable/menubar.py:228 */
+"_About" = "_เกี่ยวกับ";
+
+/* File: ../../portable/menubar.py:229 */
+"_Donate" = "_บริจาค";
+
+/* File: ../../portable/menubar.py:230 */
+/* File: ../../portable/menubar.py:245 */
+"_Help" = "_วิธีใช้";
+
+/* File: ../../portable/menubar.py:232 */
+"Report a _Bug" = "รายงาน_บั๊ก";
+
+/* File: ../../portable/menubar.py:236 */
+"_Video" = "_วิดีโอ";
+
+/* File: ../../portable/menubar.py:238 */
+"_File" = "_ไฟล์";
+
+/* File: ../../portable/menubar.py:242 */
+"_Channels" = "_แชนแนล";
+
+/* File: ../../portable/menubar.py:243 */
+"_Playlists" = "_เพลย์ลิสต์";
+
+/* File: ../../portable/menubar.py:244 */
+"P_layback" = "_ควบคุม";
+
+/* File: ../../portable/menubar.py:249 */
+"Play Unwatched ($numUnwatched)" = "เล่นวิดิโอที่ยังไม่ได้ดู ($numUnwatched)";
+
+/* File: ../../portable/menubar.py:250 */
+"Pause All Downloads ($numDownloading)" = "หยุดดาวน์โหลดทั้งหมด ($numDownloading)";
+
+/* File: ../../portable/menubar.py:251 */
+"Resume All Downloads ($numPaused)" = "ดาวน์โหลดต่อทั้งหมด ($numPaused)";
+
+/* File: ../../portable/menubar.py:253 */
+/* Flag: untranslated */
+"Options..." = "Options...";
+
+/* File: ../../portable/menubar.py:255 */
+/* Flag: untranslated */
+"Hide Window" = "Hide Window";
+
+/* File: ../../portable/menubar.py:256 */
+/* Flag: untranslated */
+"Show Window" = "Show Window";
+
+/* File: ../../portable/item.py:478 */
 /* Flag: python-format */
-"%s database save succeeded" = "%s การบันทึกฐานข้อมูลเสร็จสิ้น";
+"Removing %s" = "ลบ %s";
 
-/* File: ../..//portable/storedatabase.py:829 */
-/* File: ../..//portable/storedatabase.py:1190 */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "ฐานข้อมูลได้ถูกบันทึกเสร็จสิ้น ขณะนี้ปลอดภัยที่จะออกจากโปรแกรมโดยไม่สูญเสียข้อมูลใดๆ";
+/* File: ../../portable/item.py:481 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "คุณต้องการลบโฟลเดอร์นี้และวิดิโอภายใน หรือคุณต้องการลบเพียงโฟลเดอร์ออกจากไลบรารี?";
 
-/* File: ../..//portable/storedatabase.py:836 */
-/* File: ../..//portable/storedatabase.py:1198 */
+/* File: ../../portable/item.py:487 */
+/* Flag: untranslated */
+"Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
+
+/* File: ../../portable/item.py:507 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "ไอเท็มนี้เป็นโฟลเดอร์ เมื่อคุณลบโฟลเดอร์ไอเท็มใดๆข้างในโฟลเดอร์จะถูกลบไปด้วย";
+
+/* File: ../../portable/item.py:537 */
 /* Flag: python-format */
-"%s database save failed" = "%s การฐานข้อมูลบันทึกล้มเหลว";
+"%d minutes" = "%d นาที";
 
-/* File: ../..//portable/storedatabase.py:837 */
-/* File: ../..//portable/storedatabase.py:1199 */
+/* File: ../../portable/item.py:547 */
 /* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s ไม่สามารถบันทึกฐานข้อมูลได้: ดิสก์เต็ม\nเราแนะนำให้ลบไฟล์ออกจากดิสก์ หรือลบวิดิโอบางอันออกจากคอลเล็คชัน\nการเปลี่ยนแปลงเร็วๆนี้อาจจะสูญหาย";
+"Expires in %s" = "หมดอายุใน %s";
 
-/* File: ../..//portable/tabs.py:43 */
-"Library" = "ไลบรารี";
-
-/* File: ../..//portable/tabs.py:44 */
-"New" = "ใหม่";
-
-/* File: ../..//portable/tabs.py:46 */
-"Downloading" = "กำลังดาวน์โหลด";
-
-/* File: ../..//portable/util.py:405 */
+/* File: ../../portable/item.py:559 */
 /* Flag: python-format */
-"%1.1fGB" = "%1.1fGB";
+"Will retry in %s" = "ลองใหม่ใน %s";
 
-/* File: ../..//portable/util.py:407 */
-/* Flag: python-format */
-"%dGB" = "%dGB";
+/* File: ../../portable/item.py:561 */
+"Paused" = "หยุด";
 
-/* File: ../..//portable/util.py:411 */
-/* Flag: python-format */
-"%1.1fMB" = "%1.1fMB";
+/* File: ../../portable/item.py:941 */
+"TORRENT" = "ทอร์เรนท์";
 
-/* File: ../..//portable/util.py:413 */
-/* Flag: python-format */
-"%dMB" = "%dMB";
+/* File: ../../portable/item.py:943 */
+"WEB PAGE" = "เว็บเพจ";
 
-/* File: ../..//portable/util.py:417 */
-/* Flag: python-format */
-"%1.1fKB" = "%1.1fKB";
+/* File: ../../portable/item.py:953 */
+/* Flag: untranslated */
+"Total Down:" = "Total Down:";
 
-/* File: ../..//portable/util.py:419 */
-/* Flag: python-format */
-"%dKB" = "%dKB";
+/* File: ../../portable/item.py:962 */
+"Down Rate:" = "อัตราการโหลด:";
 
-/* File: ../..//portable/util.py:423 */
-/* Flag: python-format */
-"%1.1fB" = "%1.1fB";
+/* File: ../../portable/item.py:963 */
+"Down Total:" = "ดาวน์โหลดรวม:";
 
-/* File: ../..//portable/util.py:425 */
+/* File: ../../portable/item.py:965 */
+"Up Rate:" = "อัตราการอัพโหลด:";
+
+/* File: ../../portable/item.py:966 */
+"Up Total:" = "อัพโหลดรวม:";
+
+/* File: ../../portable/item.py:971 */
+"Web page:" = "เว็บเพจ:";
+
+/* File: ../../portable/item.py:971 */
+/* Flag: untranslated */
+"permalink" = "permalink";
+
+/* File: ../../portable/item.py:972 */
+/* Flag: untranslated */
+"File link:" = "File link:";
+
+/* File: ../../portable/item.py:972 */
+"direct link to file" = "ลิงค์โดยตรงไปยังไฟล์";
+
+/* File: ../../portable/item.py:974 */
+"File type:" = "ประเภทของไฟล์:";
+
+/* File: ../../portable/item.py:981 */
+/* Flag: untranslated */
+"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
+
+/* File: ../../portable/item.py:983 */
+/* Flag: untranslated */
+"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
+
+/* File: ../../portable/item.py:985 */
+"Filename:" = "ชื่อไฟล์:";
+
+/* File: ../../portable/item.py:992 */
+"Down Total" = "ดาวน์โหลดรวม";
+
+/* File: ../../portable/item.py:994 */
+"Up Total" = "อัพโหลดรวม";
+
+/* File: ../../portable/item.py:1012 */
+"Item Details" = "รายละเอียดของไอเท็ม";
+
+/* File: ../../portable/item.py:1019 */
+"Torrent Details" = "รายละเอียดของทอร์เรนท์";
+
+/* File: ../../portable/item.py:1021 */
+/* Flag: untranslated */
+"Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
+
+/* File: ../../portable/item.py:1024 */
+"Download Details" = "รายละเอียดของดาวน์โหลด";
+
+/* File: ../../portable/item.py:1238 */
+"downloading..." = "กำลังดาวน์โหลด...";
+
+/* File: ../../portable/item.py:1245 */
+/* File: ../../portable/item.py:1248 */
 /* Flag: python-format */
-"%dB" = "%dB";
+"%s remaining" = "เหลืออีก %s";
+
+/* File: ../../portable/item.py:1257 */
+"starting up..." = "กำลังเริ่ม...";
+
+/* File: ../../portable/item.py:1456 */
+"Play Just This Video" = "เล่นเฉพาะวิดีโอนี้";
+
+/* File: ../../portable/item.py:1800 */
+/* Flag: python-format */
+"Removing %s items" = "ลบไอเท็ม %s";
+
+/* File: ../../portable/item.py:1802 */
+/* Flag: untranslated */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" /* = "วิดิโอหนึ่งไฟล์หรือมากกว่าไม่ได้ถูกดาวน์โหลดจากแชนแนล คุณต้องการลบไอเท็มนี้หรือแค่ลบออกจากไลบรารี?" */;
+
+/* File: ../../portable/item.py:1810 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "หนึ่งในนี้หรือมากกว่าเป็นโฟลเดอร์ เมื่อคุณลบโฟลเดอร์ ไฟล์ภายในโฟลเดอร์จะโดนลบออกจากไลบรารีหรือลบทิ้งจากดิสก์";
+
+/* File: ../../portable/folder.py:132 */
+/* File: ../../portable/folder.py:155 */
+"Rename Channel Folder" = "เปลี่ยนชื่อโฟลเดอร์แชนแนล";
+
+/* File: ../../portable/folder.py:134 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "ใส่ชื่อใหม่ของโฟลเดอร์แชนแนล %s";
+
+/* File: ../../portable/folder.py:210 */
+/* File: ../../portable/folder.py:215 */
+"Rename Playlist Folder" = "เปลี่ยนชื่อโฟลเดอร์เพลย์ลิสท์";
+
+/* File: ../../portable/folder.py:217 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "ใส่ชื่อใหม่ของโฟลเดอร์เพลย์ลิสท์ %s";
+
+/* File: ../../portable/folder.py:225 */
+"Create Channel Folder" = "สร้างโฟลเดอรแชนแนล";
+
+/* File: ../../portable/folder.py:239 */
+"Create Playlist Folder" = "สร้างโฟลเดอร์เพลย์ลิสท์";
+
+/* File: ../../portable/folder.py:240 */
+"Enter a name for the new playlist folder" = "ใส่ชื่อของโฟลเดอร์เพลย์ลิสท์ที่ต้องการสร้าง";
+
+/* File: ../../portable/httpclient.py:67 */
+/* Flag: python-format */
+"Error: %s" = "ผิดพลาด: %s";
+
+/* File: ../../portable/httpclient.py:82 */
+/* File: ../../portable/httpclient.py:87 */
+"Can't connect" = "ไม่สามารถเชื่อมต่อได้";
+
+/* File: ../../portable/httpclient.py:83 */
+/* Flag: python-format */
+"Connection Error: %s" = "การเชื่อมต่อผิดพลาด: %s";
+
+/* File: ../../portable/httpclient.py:88 */
+"SSL connection error" = "การเชื่อมต่อ SSL ผิดพลาด";
+
+/* File: ../../portable/httpclient.py:92 */
+"HTTP error" = "HTTP ผิดพลาด";
+
+/* File: ../../portable/httpclient.py:95 */
+/* Flag: untranslated */
+"Bad Status Line: %s" = "Bad Status Line: %s" /* = "Bad Status Line: %s" */;
+
+/* File: ../../portable/httpclient.py:98 */
+/* Flag: untranslated */
+"Bad Header Line: %s" = "Bad Header Line: %s" /* = "Bad Header Line: %s" */;
+
+/* File: ../../portable/httpclient.py:101 */
+/* Flag: untranslated */
+"Bad Chunk size: %s" = "Bad Chunk size: %s" /* = "Bad Chunk size: %s" */;
+
+/* File: ../../portable/httpclient.py:104 */
+/* Flag: untranslated */
+"Expected CRLF got: %r" = "Expected CRLF got: %r" /* = "Expected CRLF got: %r" */;
+
+/* File: ../../portable/httpclient.py:107 */
+/* Flag: python-format */
+"%s closed connection" = "%s ปิดการเชื่อมต่อ";
+
+/* File: ../../portable/httpclient.py:113 */
+"Got 404 status code" = "ได้รับ 404 status code";
+
+/* File: ../../portable/httpclient.py:115 */
+/* Flag: untranslated */
+"Bad Status Code: %s" = "Bad Status Code: %s" /* = "Bad Status Code: %s" */;
+
+/* File: ../../portable/httpclient.py:119 */
+"Authorization failed" = "การขออนุญาตล้มเหลว";
+
+/* File: ../../portable/httpclient.py:125 */
+/* Flag: untranslated */
+"Pipeline request never started" = "Pipeline request never started";
+
+/* File: ../../portable/httpclient.py:129 */
+"Timeout" = "หมดเวลา";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Connection to %s timed out" = "หมดเวลาการเชื่อมต่อไปยัง %s";
+
+/* File: ../../portable/httpclient.py:134 */
+"Invalid URL" = "URL ไม่ถูกต้อง";
+
+/* File: ../../portable/httpclient.py:135 */
+/* Flag: python-format */
+"%s is not a valid URL" = "%s ไม่ใช่ URL ที่ถูกต้อง";
+
+/* File: ../../portable/httpclient.py:323 */
+/* Flag: untranslated */
+"Unknown Error code" = "Unknown Error code";
+
+/* File: ../../portable/httpclient.py:355 */
+"Connection closed" = "การเชื่อมต่อยุติ";
+
+/* File: ../../portable/httpclient.py:780 */
+"Unknown" = "ไม่ทราบ";
+
+/* File: ../../portable/httpclient.py:781 */
+"Internal Error: Not ready to send" = "มีข้อผิดพลาดภายใน: ไม่พร้อมที่จะส่ง";
+
+/* File: ../../portable/app.py:682 */
+"Database too new" = "ฐานข้อมูลใหม่เกินไป";
+
+/* File: ../../portable/app.py:683 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "คุณใช้ฐานข้อมูลที่ถูกบันทึกด้วยเวอร์ชันใหม่ของ $shortAppName คุณต้องดาวน์โหลด $shortAppName เวอร์ชันล่าสุดเพื่อใช้งาน";
+
+/* File: ../../portable/app.py:697 */
+/* Flag: untranslated */
+"Video Directory Missing" = "Video Directory Missing";
+
+/* File: ../../portable/app.py:698 */
+/* Flag: untranslated */
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro.";
+
+/* File: ../../portable/app.py:1017 */
+/* File: ../../portable/app.py:1031 */
+/* File: ../../portable/app.py:1075 */
+/* File: ../../portable/app.py:1101 */
+/* File: ../../portable/app.py:1121 */
+/* Flag: python-format */
+"Remove %s" = "ลบ %s";
+
+/* File: ../../portable/app.py:1018 */
+/* Flag: untranslated */
+"Are you sure you want to remove the guide %s?" = "Are you sure you want to remove the guide %s?" /* = "คุณแน่ใจว่าต้องการลบไกด์ %s?" */;
+
+/* File: ../../portable/app.py:1032 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "คุณแน่ใจว่าต้องการลบ %s?";
+
+/* File: ../../portable/app.py:1035 */
+/* File: ../../portable/app.py:1080 */
+/* File: ../../portable/app.py:1106 */
+/* File: ../../portable/app.py:1125 */
+/* Flag: python-format */
+"Remove %s channels" = "ลบ %s แชนแนล";
+
+/* File: ../../portable/app.py:1037 */
+/* Flag: untranslated */
+"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists" /* = "คุณแน่ใจหรือที่จะลบ %s เพลย์ลิสท์" */;
+
+/* File: ../../portable/app.py:1076 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "คุณต้องการลบวิดีโอที่ดาวน์โหลดมาแล้วของแชนแนลนี้ด้วยหรือไม่";
+
+/* File: ../../portable/app.py:1081 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "คุณต้องการลบวิดีโอที่ดาวน์โหลดมาแล้วของแชนแนลนี้ด้วยหรือไม่";
+
+/* File: ../../portable/app.py:1102 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "คุณแน่ใจหรือว่าต้องการลบ %s? ดาวน์โหลดใดๆที่อยู่ระหว่างดำเนินการจะถูกยกเลิก";
+
+/* File: ../../portable/app.py:1107 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "คุณแน่ใจหรือว่าต้องการลบ %s แชนแนล? ดาวน์โหลดใดๆที่อยู่ระหว่างดำเนินการจะถูกยกเลิก";
+
+/* File: ../../portable/app.py:1122 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "คุณแน่ใจที่จะลบ %s ?";
+
+/* File: ../../portable/app.py:1126 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "คุณแน่ใจหรือว่าต้องการลบ %s แชนแนล?";
+
+/* File: ../../portable/app.py:1139 */
+/* Flag: python-format */
+"Stop watching %s" = "หยุดดู %s";
+
+/* File: ../../portable/app.py:1140 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "คุณแน่ใจหรือว่าต้องการจะหยุดดู %s";
+
+/* File: ../../portable/app.py:1143 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Stop watching %s directories" = "Stop watching %s directories";
+
+/* File: ../../portable/app.py:1144 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Are you sure you want to stop watching these %s directories?" = "Are you sure you want to stop watching these %s directories?";
+
+/* File: ../../portable/app.py:1174 */
+"Are you sure you want to quit?" = "คุณแน่ใจว่าต้องการออกหรือไม่?";
+
+/* File: ../../portable/app.py:1178 */
+/* Flag: untranslated */
+"Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
+
+/* File: ../../portable/app.py:1668 */
+"Invalid Value" = "ค่าไม่ถูกต้อง";
+
+/* File: ../../portable/app.py:1669 */
+/* Flag: python-format */
+"%s is invalid.  You must enter a non-negative number." = "%s ไม่ถูกต้อง ค่าที่ใส่ต้องไม่ติดลบ";
+
+/* File: ../../portable/app.py:1960 */
+" - Invalid URL" = " - URL ผิดพลาด";
+
+/* File: ../../portable/app.py:1961 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "แอดเดรสที่ใส่ไม่ถูกต้อง\nกรุณาเช็คอีกรอบ และลองอีกครั้ง\n\n";
+
+/* File: ../../portable/app.py:1985 */
+"$shortAppName - Add Channel" = "$shortAppName - เพิ่มแชนแนล";
+
+/* File: ../../portable/app.py:1985 */
+"Enter the URL of the channel to add" = "ใส่ URL ของช่องที่ต้องการเพิ่ม";
+
+/* File: ../../portable/app.py:2006 */
+"$shortAppName - Add Miro Guide" = "$shortAppName - เพิ่ม Miro ไกด์";
+
+/* File: ../../portable/app.py:2006 */
+/* Flag: untranslated */
+"Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add" /* = "ใส่ URL ของ Miro ไกด์ เพื่อเพิ่ม" */;
+
+/* File: ../../portable/app.py:2012 */
+/* Flag: untranslated */
+"$shortAppName - Download Video" = "$shortAppName - Download Video";
+
+/* File: ../../portable/app.py:2012 */
+/* Flag: untranslated */
+"Enter the URL of the video to download" = "Enter the URL of the video to download";
+
+/* File: ../../portable/app.py:2306 */
+/* Flag: untranslated */
+"News and Tech" = "News and Tech" /* = "ข่าวและเทคโนโลยี" */;
+
+/* File: ../../portable/app.py:2313 */
+"Entertainment" = "บันเทิง";
+
+/* File: ../../portable/app.py:2319 */
+"High-Def" = "Hi-def";
+
+/* File: ../../portable/app.py:2327 */
+"Mac" = "Mac";
+
+/* File: ../../portable/app.py:2342 */
+"Example Playlist" = "ตัวอย่างรายการเล่น";
+
+/* File: ../../portable/app.py:2361 */
+/* Flag: untranslated */
+"Custom Channels" = "Custom Channels";
+
+/* File: ../../portable/app.py:2361 */
+/* Flag: untranslated */
+"You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels." /* = "คุณกำลังใช้เวอร์ชั่นของ $longAppName with a custom set of channels." */;
+
+/* File: ../../portable/app.py:2376 */
+/* Flag: untranslated */
+"Error Changing Movies Directory" = "Error Changing Movies Directory";
+
+/* File: ../../portable/app.py:2377 */
+/* Flag: untranslated */
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory.";
+
+/* File: ../../portable/opml.py:113 */
+/* Flag: untranslated */
+"OPML Import failed" = "OPML Import failed";
+
+/* File: ../../portable/opml.py:114 */
+/* Flag: untranslated */
+"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
+
+/* File: ../../portable/opml.py:119 */
+/* Flag: untranslated */
+"OPML Import summary" = "OPML Import summary";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
 "(Changes won't go into effect until you restart Miro)" = "(การเปลี่ยนแปลงจะไม่มีผลจนกว่าจะเริ่มต้น Miro ใหม่อีกครั้ง)";
@@ -1476,135 +1574,155 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>BitTorrent</b>" = "<b>บิททอร์เรนท์</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-"<b>Channels</b>" = "<b>แชนแนล</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
-"<b>Disk Space</b>" = "<b>ที่ในดิสก์</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-"<b>Downloads</b>" = "<b>ดาวน์โหลด</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
-"<b>Folders in the Library</b>" = "<b>โฟลเดอร์ในไลบรารี</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
-"<b>General</b>" = "<b>ทั่วไป</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
-"<b>Playback</b>" = "<b>ควบคุมการเล่น</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:15 */
 "<b>Searching for Videos</b>" = "<b>การค้นหาวิดีโอ</b>";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:16 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
 "<b>Would you like Miro to look for video files on your computer?</b>" = "<b>คุณต้องการให้ Miro ค้นหาวิดิโอในเครื่องของคุณไหม?</b>";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:17 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
 "<b>Would you like to run Miro when your computer starts up?</b>" = "<b>คุณต้องการให้เริ่มต้น Miro เมื่อเริ่มต้นระบบไหม?</b>";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:18 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
 /* Flag: untranslated */
 "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
-"Automatically run Miro when I log in" = "เริ่มต้น Miro อัตโนมัติเมื่อทำการล็อกอิน";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:26 */
+/* Flag: untranslated */
+"By default, videos _expire after" = "By default, videos _expire after";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
-"Bit Torrent uses ports between" = "ใช้พอร์ต BitTorrent ระหว่าง";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-"By default, videos expire after" = "โดยปกติให้วิดีโอหมดอายุหลังผ่านไปแล้ว";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
 "C_hannel:" = "_ช่อง:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
+/* Flag: untranslated */
+"C_hannels" = "C_hannels";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
 "C_reate Channel" = "_สร้างช่อง";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
-"Check Channels for new content" = "ตรวจหาวิดีโอใหม่ในแต่ละแชนแนล";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
+/* Flag: untranslated */
+"Check Channels for _new content" = "Check Channels for _new content";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
+/* Flag: untranslated */
+"Disk _Space" = "Disk _Space";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
+/* Flag: untranslated */
+"Don't start a download _if it leaves less than" = "Don't start a download _if it leaves less than";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
+/* Flag: untranslated */
+"Download at _most" = "Download at _most";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
 "Every 30 minutes\nEvery hour\nManually" = "ทุก 30 นาที\nทุกชั่วโมง\nด้วยตัวเอง";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
-"GB free" = "GB";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
+/* Flag: untranslated */
+"G_B free" = "G_B free";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
 "Go" = "หา";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 "In This:" = "ใน:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-"KB/s when my computer is active" = "KB/s เมื่อคอมพิวเตอร์ถูกใช้งานอยู่";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
 "Miro can find all the videos on your computer to help you organize your collection." = "Miro สามารถค้นหาวิดิโอทั้งหมดในเครื่องเพื่อทำการจัดเรียงในคอลเลคชันได้";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
-"Play videos one after another" = "เล่นวิดิโอต่อเนื่องกัน";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
+/* Flag: untranslated */
+"Play _videos one after another" = "Play _videos one after another";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
 "Preferences" = "ปรับแต่ง";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
 /* Flag: untranslated */
 "Restrict to my full _home folder" = "Restrict to my full _home folder" /* = "จำกัดโฟลเดอร์ full_home" */;
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-"Resume playback of videos from the point where they were stopped" = "เริ่มต้นการเล่นวิดิโอต่อจากที่หยุดเอาไว้";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
+/* Flag: untranslated */
+"S_top after each video" = "S_top after each video";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* Flag: untranslated */
+"S_tore downloaded videos in this folder:" = "S_tore downloaded videos in this folder:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
 "Search _Engine:" = "เซิร์ช_เอนจิ้น";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
 /* Flag: untranslated */
 "Search _custom folder:" = "Search _custom folder:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
 "Select Movies Directory" = "เลือกโฟลเดอร์เก็บวิดีโอ";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
 /* Flag: untranslated */
 "Select custom search directory" = "Select custom search directory";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
-"Stop after each video" = "หยุดหลังจากเล่นวิดิโอแต่ละอันเสร็จ";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "หน้าจอต่อไปนี้จะช่วยให้คุณตั้งค่า Miro ที่จะทำงานได้ดีที่สุดสำหรับคุณ และนี่เป็นคำถามแรก";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
-"To avoid slowdowns, limit upstream to" = "เพื่อเลี่ยงความช้าในการใช้งาน โดยจำกัดข้อมูลขาออกไว้ที่";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
+/* Flag: untranslated */
+"To a_void slowdowns, limit upstream to" = "To a_void slowdowns, limit upstream to";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
 "Volume:" = "ระดับเสียง:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
-"Watch for new videos in these folders and include them in the Library" = "คอยเฝ้าโฟลเดอร์นี้สำหรับวิดิโอใหม่ๆและใส่ลงไปในไลบรารี";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
 /* Flag: untranslated */
 "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
 /* Flag: untranslated */
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
 /* Flag: untranslated */
 "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
 /* Flag: untranslated */
 "_Add Folder" = "_Add Folder";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
+/* Flag: untranslated */
+"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
+/* Flag: untranslated */
+"_Bit Torrent uses ports between" = "_Bit Torrent uses ports between";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
+/* Flag: untranslated */
+"_Downloads" = "_Downloads";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
+/* Flag: untranslated */
+"_Folders" = "_Folders";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
+/* Flag: untranslated */
+"_General" = "_General";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
+/* Flag: untranslated */
+"_KB/s when my computer is active" = "_KB/s when my computer is active";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
+/* Flag: untranslated */
+"_Playback" = "_Playback";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
+/* Flag: untranslated */
+"_Resume playback of videos from the point where they were stopped" = "_Resume playback of videos from the point where they were stopped";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
 "_Search" = "_ค้นหา";
@@ -1613,16 +1731,21 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Search For:" = "_หาคำว่า:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
-"_Store downloaded videos in this folder:" = "เ_ก็บวิดีโอที่ดาวน์โหลดมาไว้ในโฟลเดอร์:";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
 "_URL" = "_URL";
 
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
+/* Flag: untranslated */
+"_Warn me when I attempt to quit with downloads in progress" = "_Warn me when I attempt to quit with downloads in progress";
+
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
-"and" = "ถึง";
+/* Flag: untranslated */
+"_Watch for new videos in these folders and include them in the Library" = "_Watch for new videos in these folders and include them in the Library";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
+/* Flag: untranslated */
+"_and" = "_and";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
 /* Flag: untranslated */
 "videos at once" = "videos at once";
 
@@ -1702,39 +1825,86 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(WARNING: Changes won't go into effect until you restart $longAppName.)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
 /* Flag: untranslated */
 "Add Folder..." = "Add Folder...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
-"Automatically run $longAppName when I login" = "เริ่ม $longAppName อัตโนมัติหลังจากล็อกอิน";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+/* Flag: untranslated */
+"Automatically run $longAppName when I login." = "Automatically run $longAppName when I login.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
+/* Flag: untranslated */
+"BitTorrent" = "BitTorrent";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+"By default, videos expire after" = "โดยปกติให้วิดีโอหมดอายุหลังผ่านไปแล้ว";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+/* Flag: untranslated */
+"Check channels for new content" = "Check channels for new content";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
 "Close to tray so that downloads can continue." = "ปิดลงข้างล่างเพื่อจะได้สามารถดำเนินการดาวน์โหลดต่อได้";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
 "Every 30 minutes" = "ทุกๆ 30 นาที";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Every hour" = "ทุกๆชั่วโมง";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+/* Flag: untranslated */
+"Folder" = "Folder";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
 "Manually" = "ด้วยตัวผู้ใช้";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
-"Quit Miro completely" = "ออกจาก Miro";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
+"Options" = "ออปชั่น";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
-"Store downloaded videos in this folder:" = "เก็บวิดิโอที่ดาวน์โหลดไว้ในโฟลเดอร์นี้:";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
-"WARNING: This setting will not go into effect until you restart $longAppName." = "อันตราย: การตั้งค่าจะไม่มีผลจนกว่าคุณทำการรีสตาท $longAppName";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
-"Watch for new videos in these folders and include them in My Collection:" = "ค้นหาวิดิโอใหม่ๆในโฟลเดอร์และใส่รายการลงในคอลเล็คชัน";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
+/* Flag: untranslated */
+"Play one video, then stop." = "Play one video, then stop.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7 */
+/* Flag: untranslated */
+"Quit Miro completely." = "Quit Miro completely.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+/* Flag: untranslated */
+"Remember where I stopped watching a video and continue playing from that point." = "Remember where I stopped watching a video and continue playing from that point.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+/* Flag: untranslated */
+"Show as a Channel" = "Show as a Channel";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+"Store downloaded videos in this folder:" = "เก็บวิดิโอที่ดาวน์โหลดไว้ในโฟลเดอร์นี้:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
+"To avoid slowdowns, limit upstream to" = "เพื่อเลี่ยงความช้าในการใช้งาน โดยจำกัดข้อมูลขาออกไว้ที่";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
+/* Flag: untranslated */
+"Use BitTorrent ports between" = "Use BitTorrent ports between";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
+"WARNING: This setting will not go into effect until you restart $longAppName." = "อันตราย: การตั้งค่าจะไม่มีผลจนกว่าคุณทำการรีสตาท $longAppName";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10 */
+/* Flag: untranslated */
+"Warn me when I attempt to quit with downloads in progress." = "Warn me when I attempt to quit with downloads in progress.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+/* Flag: untranslated */
+"Watch for new videos in these folders and include them in my Library." = "Watch for new videos in these folders and include them in my Library.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
 "When I click the red close button:" = "เมื่อคลิกปุ่มปิดสีแดง";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
+"and" = "ถึง";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
 "Channel:" = "แชนแนล:";
