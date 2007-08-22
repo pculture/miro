@@ -45,7 +45,8 @@ class Exporter (object):
         self.io.write(u'\t</head>\n')
         self.io.write(u'\t<body>\n')
     
-        for tab in util.getSingletonDDBObject(views.channelTabOrder).getView():
+        tabOrder = util.getSingletonDDBObject(views.channelTabOrder)
+        for tab in tabOrder.getAllTabs():
             if tab.isChannelFolder():
                 self._openFolderEntry(tab.obj)
             elif tab.isFeed():

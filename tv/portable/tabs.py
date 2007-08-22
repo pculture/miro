@@ -264,6 +264,13 @@ class TabOrder(database.DDBObject):
         """Get a database view for this tab ordering."""
         return self.trackedTabs.view
 
+    def getAllTabs(self):
+        """Get all the tabs in this tab ordering (in order), regardless if
+        they are visible in the tab list or not.
+        """
+        return [self.tabView.getObjectByID(id) for id in self.tab_ids \
+                if self.tabView.idExists(id) ]
+
     def onAddTab(self, obj, id):
         if id not in self.trackedTabs:
             self.trackedTabs.appendID(id, sendSignalChange=False)
