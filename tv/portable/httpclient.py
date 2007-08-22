@@ -284,11 +284,11 @@ class AsyncSocket(object):
             self.readTimeout.cancel()
             self.readTimeout = None
 
-    def openConnection(self, host, port, callback, errback):
+    def openConnection(self, host, port, callback, errback, disableReadTimeout = False):
         """Open a connection.  On success, callback will be called with this
         object.
         """
-
+        self.disableReadTimeout = disableReadTimeout
         self.name = "Outgoing %s:%s" % (host, port)
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -482,7 +482,7 @@ class AsyncSSLStream(AsyncSocket):
         super(AsyncSSLStream, self).__init__(closeCallback)
         self.interruptedOperation = None
 
-    def openConnection(self, host, port, callback, errback):
+    def openConnection(self, host, port, callback, errback, disableReadTimeout = False):
         def onSocketOpen(self):
             self.socket.setblocking(1)
             eventloop.callInThread(onSSLOpen, handleSSLError, socket.ssl,
@@ -499,7 +499,7 @@ class AsyncSSLStream(AsyncSocket):
         def handleSSLError(error):
             errback(SSLConnectionError())
         super(AsyncSSLStream, self).openConnection(host, port, onSocketOpen,
-                errback)
+                errback, disableReadTimeout)
 
     def resumeNormalCallbacks(self):
         if self.readCallback is not None:
@@ -558,7 +558,7 @@ class AsyncSSLStream(AsyncSocket):
             self.handleReadData(data)
 
 class ProxiedAsyncSSLStream(AsyncSSLStream):
-    def openConnection(self, host, port, callback, errback):
+    def openConnection(self, host, port, callback, errback, disableReadTimeout):
         def onSocketOpen(self):
             self.socket.setblocking(1)
             eventloop.callInThread(onSSLOpen, handleSSLError, lambda: openProxyConnection(self),
@@ -607,7 +607,7 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
         proxy_host = config.get(prefs.HTTP_PROXY_HOST)
         proxy_port = config.get(prefs.HTTP_PROXY_PORT)
         AsyncSocket.openConnection(self, proxy_host, proxy_port, onSocketOpen,
-                errback)
+                errback, disableReadTimeout)
     
     
 class ConnectionHandler(object):
@@ -638,14 +638,14 @@ class ConnectionHandler(object):
     def __str__(self):
         return "%s -- %s" % (self.__class__, self.state)
 
-    def openConnection(self, host, port, callback, errback):
+    def openConnection(self, host, port, callback, errback, disableReadTimeout=False):
         self.name = "Outgoing %s:%s" % (host, port)
         self.host = host
         self.port = port
         def callbackIntercept(asyncSocket):
             if callback:
                 trapCall(self, callback, self)
-        self.stream.openConnection(host, port, callbackIntercept, errback)
+        self.stream.openConnection(host, port, callbackIntercept, errback, disableReadTimeout)
 
     def closeConnection(self):
         if self.stream.isOpen():
@@ -797,7 +797,7 @@ class HTTPConnection(ConnectionHandler):
         elif method == "POST" and postFiles is not None:
             (postData, boundary) = multipartEncode(postVariables, postFiles)
             headers['Content-Type'] = 'multipart/form-data; boundary=%s' % boundary
-            headers['Content-Length'] = '%d' % len(postData)            
+            headers['Content-Length'] = '%d' % len(postData)
         else:
             postData = None
 
@@ -1300,6 +1300,7 @@ class HTTPConnectionPool(object):
                 self._dropAFreeConnection()
 
     def _makeNewConnection(self, req):
+        disableReadTimeout = req['postFiles'] is not None
         def openConnectionCallback(conn):
             conn.sendRequest(req['callback'], req['errback'],
                              req['host'], req['port'],
@@ -1344,12 +1345,14 @@ class HTTPConnectionPool(object):
         if req['proxy_host']:
             eventloop.addIdle(lambda : conn.openConnection(req['proxy_host'],
                                                            req['proxy_port'],
-                         openConnectionCallback, openConnectionErrback),
+                         openConnectionCallback, openConnectionErrback,
+                         disableReadTimeout),
                           "Open connection %s" % str(self))
         else:
             eventloop.addIdle(lambda : conn.openConnection(req['host'],
                                                            req['port'],
-                         openConnectionCallback, openConnectionErrback),
+                         openConnectionCallback, openConnectionErrback,
+                         disableReadTimeout),
                           "Open connection %s" % str(self))
         return conn
 

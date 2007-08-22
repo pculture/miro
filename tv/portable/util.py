@@ -281,6 +281,17 @@ def _sendReport(report, dialog):
         ignoreErrors = True
         return
 
+    backupfile = None
+    if hasattr(dialog,"checkbox_value") and dialog.checkbox_value:
+        try:
+            logging.info("Sending entire database")
+            import database
+            backupfile = database.defaultDatabase.liveStorage.backupDatabase()
+        except:
+            traceback.print_exc()
+            logging.warning(u"Failed to backup database")
+
+
     description = u"Description text not implemented"
     if hasattr(dialog,"textbox_value"):
         description = dialog.textbox_value
@@ -289,8 +300,11 @@ def _sendReport(report, dialog):
     postVars = {"description":description,
                 "app_name": config.get(prefs.LONG_APP_NAME),
                 "log": report}
-    httpclient.grabURL("http://www.participatoryculture.org/bogondeflector", callback, errback, method="POST", postVariables = postVars)
-
+    if backupfile:
+        postFiles = {"databasebackup": {"filename":"databasebackup.zip", "mimetype":"application/octet-stream", "handle":open(backupfile, "r")}}
+    else:
+        postFiles = None
+    httpclient.grabURL("http://participatoryculture.org/bogondeflector/index.php", callback, errback, method="POST", postVariables = postVars, postFiles = postFiles)
 
 class AutoflushingStream:
     """Converts a stream to an auto-flushing one.  It behaves in exactly the

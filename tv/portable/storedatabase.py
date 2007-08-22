@@ -57,6 +57,10 @@ import app
 import bsddb.db
 import dialogs
 import logging
+from zipfile import ZipFile
+import tempfile
+from random import randrange, seed
+import os.path
 try:
     from pysqlite2 import dbapi2 as sql
 except ImportError:
@@ -897,6 +901,9 @@ class LiveStorageBDB:
         except bsddb.db.DBNoSpaceError:
             pass
         eventloop.addTimeout(60, self.checkpoint, "Remove Unused Database Logs")
+    def backupDatabase(self):
+        return None
+
 class LiveStorage:
     TRANSACTION_TIMEOUT = 10
     TRANSACTION_NAME = "Save database"
@@ -1030,6 +1037,41 @@ class LiveStorage:
         indentation = indentation - 1
         output.write ('</database>\n')
         output.close()
+
+    def backupDatabase(self):
+        # backs up the database and support directories to a zip file
+        # returns the name of the zip file
+        logging.info("Attempting to back up database")
+        if not self.closed:
+            try:
+                self.conn.close()
+            except:
+                traceback.print_exc()
+        try:
+            try:
+                tempfilename = os.path.join(tempfile.gettempdir(),("%012ddatabasebackup.zip"%randrange(0,999999999999)))
+                zipfile = ZipFile(tempfilename,"w")
+                for root, dirs, files in os.walk(config.get(prefs.SUPPORT_DIRECTORY)):
+                    if ((os.path.normpath(root) !=
+                        os.path.normpath(config.get(prefs.ICON_CACHE_DIRECTORY)))
+                        and not os.path.islink(root)):
+                        relativeroot = root[len(config.get(prefs.SUPPORT_DIRECTORY)):]
+                        while len(relativeroot)>0 and relativeroot[0] in ['/','\\']:
+                            relativeroot = relativeroot[1:]
+                        for filen in files:
+                            if not os.path.islink(os.path.join(root,filen)):
+                                zipfile.write(os.path.join(root,filen),
+                                              os.path.join(relativeroot, filen).encode('ascii','replace'))
+                zipfile.close()
+                logging.info("Database backed up to %s" % tempfilename)
+                return tempfilename
+            except:
+                traceback.print_exc()
+        finally:
+            if not self.closed:
+                self.conn = sql.connect(self.dbPath, isolation_level=None)
+                self.cursor = self.conn.cursor()
+        return None
 
     def handleDatabaseLoadError(self):
         database.confirmDBThread()

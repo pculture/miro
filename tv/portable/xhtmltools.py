@@ -174,5 +174,6 @@ def multipartEncode(postVars, files):
             
             output.append(files[key]['handle'].read())
             output.append('\r\n')
+            files[key]['handle'].close()
     output.append('--%s--' % boundary)
     return (''.join(output), boundary)
