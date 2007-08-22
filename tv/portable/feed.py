@@ -69,6 +69,11 @@ def defaultFeedIconURL():
 def defaultFeedIconURLTablist():
     return resources.url(u"images/feedicon-tablist.png")
 
+def hasVideoExtension(link):
+    return ((link[-4:].lower() in ['.wmv', '.flv', '.mov','.wmv','.mp4','.m4v',
+                                   '.mp3','.ogg','.anx','.mpg','.avi']) or
+            (link[-5:].lower() in ['.mpeg', '.xvid']))
+
 # Notes on character set encoding of feeds:
 #
 # The parsing libraries built into Python mostly use byte strings
@@ -988,15 +993,11 @@ class Feed(DDBObject):
                 #print " Nevermind! it's HTML"
                 self.askForScrape(info, html, charset)
             else:
-                if handler.enclosureCount > 0 or handler.itemCount == 0:
-                    #print " It's RSS with enclosures"
-                    self.finishGenerateFeed(RSSFeedImpl(
-                        unicodify(info['updated-url']),
-                        initialHTML=xmldata, etag=etag, modified=modified,
-                        ufeed=self))
-                else:
-                    #print " It's pre-enclosure RSS"
-                    self.askForScrape(info, xmldata, charset)
+                #print " It's RSS with enclosures"
+                self.finishGenerateFeed(RSSFeedImpl(
+                    unicodify(info['updated-url']),
+                    initialHTML=xmldata, etag=etag, modified=modified,
+                    ufeed=self))
         else:
             self._handleFeedLoadingError(_("Bad content-type"))
 
@@ -1318,6 +1319,22 @@ class RSSFeedImpl(FeedImpl):
     def updateUsingParsed(self, parsed):
         """Update the feed using parsed XML passed in"""
         self.parsed = unicodify(parsed)
+
+        # This is a HACK for Yahoo! search which doesn't provide
+        # enclosures
+        for entry in parsed['entries']:
+            if 'enclosures' not in entry:
+                url = entry['link']
+                mimetype = None
+                if hasVideoExtension(url):
+                    mimetype = u'video/unknown'
+                elif url[-8].lower() == '.torrent':
+                    mimetype = u'application/x-bittorrent'
+                else:
+                    logging.info('unknown url type %s, not generating enclosure' % url)
+                if mimetype is not None:
+                    entry['enclosures'] = [{'url':url, 'type':mimetype}]
+
 
         try:
             self.title = self.parsed["feed"]["title"]
@@ -1647,9 +1664,7 @@ class ScraperFeedImpl(FeedImpl):
                 # file, so for now, we're being bad boys. Uncomment
                 # the elif to make this use mime types for HTTP GET URLs
 
-                if ((link[-4:].lower() in 
-                    ['.mov','.wmv','.mp4','.m4v','.mp3','.ogg','.anx','.mpg','.avi']) or
-                    (link[-5:].lower() in ['.mpeg'])):
+                if hasVideoExtension(link):
                     mimetype = 'video/unknown'
                 elif link[-8:].lower() == '.torrent':
                     mimetype = "application/x-bittorrent"
@@ -2075,22 +2090,6 @@ class SearchFeedImpl (RSSFeedImpl):
 
     def updateUsingParsed(self, parsed):
         self.searching = False
-        for entry in parsed['entries']:
-            if 'enclosures' not in entry:
-                # This is a HACK for Yahoo! search which doesn't provide
-                # enclosures
-                url = entry['link']
-                mimetype = None
-                if ((url[-4:].lower() in
-                    ['.mov', '.mp4', '.m4v', '.wmv', '.flv', '.avi']) or
-                    (url[-5:].lower() in ['.mpeg', '.xvid'])):
-                    mimetype = 'video/unknown'
-                elif url[-8].lower() == '.torrent':
-                    mimetype = 'application-xbittorrent'
-                else:
-                    logging.info('unknown url type %s, not generating enclosure' % url)
-                if mimetype is not None:
-                    entry['enclosures'] = [{'url':url, 'type':mimetype}]
         RSSFeedImpl.updateUsingParsed(self, parsed)
 
     def update(self):
