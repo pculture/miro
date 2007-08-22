@@ -132,7 +132,7 @@ class ConnectionTimeout(NetworkError):
 class MalformedURL(NetworkError):
     def __init__(self, url):
         NetworkError.__init__(self, _('Invalid URL'),
-                _('%s is not a valid URL') % url)
+                _('"%s" is not a valid URL') % url)
 
 def trapCall(object, function, *args, **kwargs):
     """Convenience function do a util.trapCall, where when = 'While talking to

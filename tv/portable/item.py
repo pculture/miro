@@ -949,10 +949,12 @@ folder will be deleted.""")
 
     def getDownloadDetails(self):
         status = self.downloader.status
-        return [
-            (_('Total Down:'), formatSizeForDetails(
-                status.get('currentSize', 0))),
+        details = [
+            (_('Total Down:'), formatSizeForDetails(status.get('currentSize', 0))),
         ]
+        if status.get("reasonFailed"):
+            details.append((_('Error:'), status['reasonFailed']))
+        return details
 
     def getTorrentDetails(self):
         status = self.downloader.status
@@ -1020,7 +1022,8 @@ folder will be deleted.""")
             elif self.downloader and self.downloader.isFinished():
                 addTable(_('Torrent Details <i>stopped</i>'),
                         self.getTorrentDetailsFinished())
-        elif self.getState() == u'downloading' and not self.pendingManualDL:
+        elif ((self.getState() == u'downloading' and not self.pendingManualDL)
+                or self.isFailedDownload()):
             addTable(_('Download Details'), self.getDownloadDetails())
         return u'\n'.join(details)
 
