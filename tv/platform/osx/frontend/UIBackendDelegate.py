@@ -28,6 +28,7 @@ import SparkleUpdater
 NibClassBuilder.extractClasses(u"PasswordWindow")
 NibClassBuilder.extractClasses(u"TextEntryWindow")
 NibClassBuilder.extractClasses(u"CheckboxDialogWindow")
+NibClassBuilder.extractClasses(u"CheckboxTextboxDialogWindow")
 NibClassBuilder.extractClasses(u'SearchChannelWindow')
 NibClassBuilder.extractClasses(u"ExceptionReporterPanel")
 
@@ -94,6 +95,11 @@ class UIBackendDelegate:
             dlog.run()
             call = lambda:dialog.runCallback(dlog.result, dlog.value)
             name = "TextEntryDialog"
+	elif isinstance(dialog, dialogs.CheckboxTextboxDialog):
+            dlog = CheckboxTextboxDialogController.alloc().initWithDialog_(dialog)
+            dlog.run()
+            call = lambda:dialog.runCallback(dlog.result, dlog.value, dlog.text)
+            name = "CheckboxTextboxDialog"
 	elif isinstance(dialog, dialogs.CheckboxDialog):
             dlog = CheckboxDialogController.alloc().initWithDialog_(dialog)
             dlog.run()
@@ -506,6 +512,47 @@ class CheckboxDialogController (NibClassBuilder.AutoBaseClass):
     def closeWithResult(self, result, value):
         self.result = result
         self.value = value
+        self.window().close()
+        NSApplication.sharedApplication().stopModal()
+
+###############################################################################
+
+class CheckboxTextboxDialogController (NibClassBuilder.AutoBaseClass):
+    
+    def initWithDialog_(self, dialog):
+        self = super(CheckboxTextboxDialogController, self).initWithWindowNibName_owner_(u"CheckboxTextboxDialogWindow", self)
+        self.dialog = dialog
+        self.window().setTitle_(unicode(dialog.title))
+        self.messageField.setStringValue_(dialog.description)
+        self.entryField.setStringValue_(unicode(dialog.textbox_value))
+        self.checkbox.setTitle_(unicode(dialog.checkbox_text))
+	if dialog.checkbox_value:
+	    self.checkbox.setState_(NSOnState)
+	else:
+	    self.checkbox.setState_(NSOffState)
+        self.mainButton.setTitle_(unicode(dialog.buttons[0].text))
+        self.secondaryButton.setTitle_(dialog.buttons[1].text)
+        self.result = None
+        self.value = None
+        return self
+
+    def run(self):
+        NSApplication.sharedApplication().runModalForWindow_(self.window())
+
+    def acceptEntry_(self, sender):
+        value = (self.checkbox.state() == NSOnState)
+        text = self.entryField.stringValue()
+        self.closeWithResult(self.dialog.buttons[0], value, text)
+
+    def cancelEntry_(self, sender):
+        value = (self.checkbox.state() == NSOnState)
+        text = self.entryField.stringValue()
+        self.closeWithResult(self.dialog.buttons[1], value, text)
+
+    def closeWithResult(self, result, value, text):
+        self.result = result
+        self.value = value
+	self.text = text
         self.window().close()
         NSApplication.sharedApplication().stopModal()
 
