@@ -81,8 +81,6 @@ class MainFrame:
         if area == self.mainDisplay:
             if isinstance(newDisplay, VideoDisplay):
                 frontend.jsBridge.showVideoDisplay()
-            elif app.controller.videoDisplay.isExternal:
-                frontend.jsBridge.setExternalVideoDisplay()
             else:
                 frontend.jsBridge.hideVideoDisplay()
                 frontend.jsBridge.leaveFullscreen()
