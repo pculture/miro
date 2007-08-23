@@ -108,12 +108,18 @@ class GeneralPrefsController (NibClassBuilder.AutoBaseClass):
     
     def awakeFromNib(self):
         run = config.get(prefs.RUN_DTV_AT_STARTUP)
+        run = config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT)
         self.runAtStartupCheckBox.setState_(run and NSOnState or NSOffState)
+        self.warnIfDownloadingCheckBox.setState_(run and NSOnState or NSOffState)
     
     def runAtStartup_(self, sender):
         run = (sender.state() == NSOnState)
         app.delegate.makeAppRunAtStartup(run)
         config.set(prefs.RUN_DTV_AT_STARTUP, run)
+
+    def warnIfDownloading_(self, sender):
+        warn = (sender.state() == NSOnState)
+        config.set(prefs.WARN_IF_DOWNLOADING_ON_QUIT, warn)
                     
 ###############################################################################
 
