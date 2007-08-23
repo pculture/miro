@@ -1,19 +1,13 @@
 {
     IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {acceptEntry = id; cancelEntry = id; }; 
-            CLASS = CheckboxTextboxDialogController; 
+            CLASS = TextEntryController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {
-                checkbox = id; 
-                entryField = id; 
-                mainButton = id; 
-                messageField = id; 
-                secondaryButton = id; 
-            }; 
+            OUTLETS = {entryField = id; mainButton = id; messageField = id; secondaryButton = id; }; 
             SUPERCLASS = NSWindowController; 
-        }, 
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+        }
     ); 
     IBVersion = 1; 
 }
