@@ -27,7 +27,7 @@ cp /usr/src/redhat/RPMS/i386/Miro-debuginfo-$2-1.i386.rpm $2$3/fc6/Miro-debuginf
 echo "Press enter to upload files..."
 read i
 
-scp -r $2$3 $1@pculture.org:.
+scp -r $2$3 $1@pcf2.osuosl.org:.
 
 #File Cleanup
 echo "Cleaning up files..."
