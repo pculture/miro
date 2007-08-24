@@ -53,7 +53,7 @@ WARN_IF_DOWNLOADING_ON_QUIT = Pref( key='warnIfDownloadingOnQuit',default=True, 
 TRUNCATE_CHANNEL_AFTER_X_ITEMS = Pref( key='TruncateChannelAFterXItems',  default=1000, platformSpecific=False)
 
 # This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.
-SHOW_ERROR_DIALOG           = Pref( key='showErrorDialog',       default=False, platformSpecific=True )
+SHOW_ERROR_DIALOG           = Pref( key='showErrorDialog',       default=True, platformSpecific=True )
 
 # Only used on particular platforms.
 XINE_VIZ                    = Pref( key="xineViz",               default=u"goom",platformSpecific=False )
