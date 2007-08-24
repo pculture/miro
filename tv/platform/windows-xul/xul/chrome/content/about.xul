@@ -9,5 +9,7 @@
         title="&about.title;"
         buttons="accept">
     
-   <label value="&about.body;" />
+   <description id="label1" width="500">
+     &about.body;
+   </description>
 </dialog>
