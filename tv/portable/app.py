@@ -2318,7 +2318,6 @@ def _defaultFeeds():
                          [u'http://jetset.blip.tv/?skin=rss',
                           u'http://revision3.com/diggnation/feed/quicktime-large',
                           u'http://www.democracynow.org/podcast-video.xml',
-                          u'http://downloads.bbc.co.uk/rmhttp/downloadtrial/bbc2/newsnightvideopodcast/rss.xml',
                           u'http://podcast.msnbc.com/audio/podcast/MSNBC-NN-NETCAST-M4V.xml',
                           u'http://feeds.feedburner.com/TEDTalks_video']),
                         (_('Entertainment'),
