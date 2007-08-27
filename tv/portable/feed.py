@@ -1324,7 +1324,10 @@ class RSSFeedImpl(FeedImpl):
         # enclosures
         for entry in parsed['entries']:
             if 'enclosures' not in entry:
-                url = entry['link']
+                try:
+                    url = entry['link']
+                except:
+                    continue
                 mimetype = None
                 if hasVideoExtension(url):
                     mimetype = u'video/unknown'
