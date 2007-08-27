@@ -82,11 +82,13 @@ class Exporter (object):
             spacer = u'\t\t\t'
 
         # FIXME - RSSFeedImpl items should be of type "rss", but
-        # it's not clear what type other things should be.
+        # it's not clear what type other things should be.  We
+        # mark them as "mirofeed"--this should get changed if there
+        # are issues.
         if isinstance(thefeed.getActualFeed(), feed.RSSFeedImpl):
             feedtype = u'type="rss"'
         else:
-            feedtype = u''
+            feedtype = u'type="mirofeed"'
 
         self.io.write(u'%s<outline %s text=%s xmlUrl=%s />\n' % (spacer, feedtype, saxutils.quoteattr(thefeed.getTitle()), saxutils.quoteattr(thefeed.getURL())))
 
