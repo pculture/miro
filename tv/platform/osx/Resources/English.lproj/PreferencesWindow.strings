@@ -110,6 +110,9 @@
 /* NSTextField (To avoid internet slowdowns:) : <title:To avoid internet slowdowns:> (oid:128) */
 "To avoid internet slowdowns:" = "To avoid internet slowdowns:";
 
+/* NSButton (Warn me when I attempt to quit with downloads in progress) : <title:Warn me when I attempt to quit with downloads in progress> (oid:160) */
+"Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
+
 /* NSTextField (Watch for new videos in these folders and include them in the Library:) : <title:Watch for new videos in these folders and include them in the Library:> (oid:144) */
 "Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:";
 
