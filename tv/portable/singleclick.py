@@ -85,11 +85,16 @@ def checkURLExists(url):
         if (i.getURL() == url):
             title = _("Download already exists")
             text1 = _("That URL is already an external download.")
-            if i.downloader is not None and i.downloader.getState() in ('paused', 'stopped'):
+            downloadState = None
+            if i.downloader is not None:
+                downloadState = i.downloader.getState()
+            if downloadState in ('paused', 'stopped'):
                 i.download()
                 text2 = _("Miro will begin downloading it now.")
+            elif downloadState == 'downloading':
+                text2 = _("It is downloading now.")
             else:
-                text2 = _("It has already been downloaded")
+                text2 = _("It has already been downloaded.")
             dialogs.MessageBoxDialog(title, "%s  %s" % (text1, text2)).run()
             return True
     existingFeed = feed.getFeedByURL(url)
