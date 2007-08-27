@@ -80,7 +80,7 @@ class Exporter (object):
             spacer = u'\t\t'
         else:
             spacer = u'\t\t\t'
-        self.io.write(u'%s<outline text=%s xmlUrl=%s />\n' % (spacer, saxutils.quoteattr(feed.getTitle()), saxutils.quoteattr(feed.getURL())))
+        self.io.write(u'%s<outline type="rss" text=%s xmlUrl=%s />\n' % (spacer, saxutils.quoteattr(feed.getTitle()), saxutils.quoteattr(feed.getURL())))
 
 # =============================================================================
 
