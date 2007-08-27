@@ -197,9 +197,15 @@ class SearchChannelDialog(Dialog):
         self.location = location
 
         self.channels = []
+
+        def shorten(s):
+            if len(s) > 50:
+                return s[:50] + u'...'
+            return s
+
         for feed in views.feeds:
             if feed.actualFeed.__class__ in (RSSFeedImpl, ScraperFeedImpl):
-                self.channels.append((feed.id, feed.getTitle()))
+                self.channels.append((feed.id, shorten(feed.getTitle())))
 
         self.engines = []
         for engine in views.searchEngines:
