@@ -2329,8 +2329,7 @@ def _defaultFeeds():
                         (_('High-Def'),
                          [u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml',
                           u'http://www.telemusicvision.com/videos/rss.php',
-                          u'http://www.onnetworks.com/videos/shows/25/podcast/hd',
-                          u'http://www.kqed.org/.pod/questvideo'])
+                          u'http://www.spacetelescope.org/rss/vodcast.xml'])
                         ])
     if platform.system() == "Darwin":
         defaultFeedURLs.append(
