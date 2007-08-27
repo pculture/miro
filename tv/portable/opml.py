@@ -72,15 +72,23 @@ class Exporter (object):
     def _closeFolderEntry(self):
         self.io.write(u'\t\t</outline>\n')
 
-    def _writeFeedEntry(self, feed):
-        if (self.currentFolder is not None) and (feed.getFolder() is None):
+    def _writeFeedEntry(self, thefeed):
+        if (self.currentFolder is not None) and (thefeed.getFolder() is None):
             self._closeFolderEntry()
             self.currentFolder = None
         if self.currentFolder is None:
             spacer = u'\t\t'
         else:
             spacer = u'\t\t\t'
-        self.io.write(u'%s<outline type="rss" text=%s xmlUrl=%s />\n' % (spacer, saxutils.quoteattr(feed.getTitle()), saxutils.quoteattr(feed.getURL())))
+
+        # FIXME - RSSFeedImpl items should be of type "rss", but
+        # it's not clear what type other things should be.
+        if isinstance(thefeed.getActualFeed(), feed.RSSFeedImpl):
+            feedtype = u'type="rss"'
+        else:
+            feedtype = u''
+
+        self.io.write(u'%s<outline %s text=%s xmlUrl=%s />\n' % (spacer, feedtype, saxutils.quoteattr(thefeed.getTitle()), saxutils.quoteattr(thefeed.getURL())))
 
 # =============================================================================
 
