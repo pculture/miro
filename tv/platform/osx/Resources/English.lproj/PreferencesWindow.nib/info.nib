@@ -15,7 +15,7 @@
 		<key>141</key>
 		<string>688 644 490 282 0 0 1920 1178 </string>
 		<key>46</key>
-		<string>712 288 490 202 0 0 1280 1002 </string>
+		<string>688 684 490 202 0 0 1920 1178 </string>
 		<key>9</key>
 		<string>688 684 490 202 0 0 1920 1178 </string>
 	</dict>
@@ -26,6 +26,6 @@
 		<integer>46</integer>
 	</array>
 	<key>IBSystem Version</key>
-	<string>8P2137</string>
+	<string>8R218</string>
 </dict>
 </plist>
