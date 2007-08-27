@@ -15,25 +15,34 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.rmvb']
+import os
+
+VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma']
 
 MIMETYPES_EXT_MAP = {
-    'video/quicktime':  '.mov',
-    'video/mpeg':       '.mpg',
-    'video/mp4':        '.mp4',
-    'video/flv':        '.flv',
-    'video/x-flv':      '.flv',
-    'video/x-ms-wmv':   '.wmv',
-    'video/x-msvideo':  '.avi',
-    'application/ogg':  '.ogg',
+    'video/quicktime':  ['.mov'],
+    'video/mpeg':       ['.mpeg', '.mpg'],
+    'video/mp4':        ['.mp4', '.m4v'],
+    'video/flv':        ['.flv'],
+    'video/x-flv':      ['.flv'],
+    'video/x-ms-wmv':   ['.wmv'],
+    'video/x-msvideo':  ['.avi'],
+    'application/ogg':  ['.ogg'],
+
+    'audio/mpeg':       ['.mp3'],
+    'audio/mp4':        ['.m4a'],
+    'audio/x-ms-wma':   ['.wma'],
     
-    'audio/mpeg':       '.mp3',
-    'audio/mp4':        '.m4a',
-    'audio/x-ms-wma':   '.wma',
-    
-    'application/x-bittorrent': '.torrent'
+    'application/x-bittorrent': ['.torrent']
 }
+
+EXT_MIMETYPES_MAP = {}
+for (mimetype, exts) in MIMETYPES_EXT_MAP.iteritems():
+    for ext in exts:
+        if ext not in EXT_MIMETYPES_MAP:
+            EXT_MIMETYPES_MAP[ext] = list()
+        EXT_MIMETYPES_MAP[ext].append(mimetype)
 
 def isAllowedFilename(filename):
     """
@@ -110,4 +119,24 @@ def guessExtension(mimetype):
     Pass a mime type to this method and it will return a corresponding file
     extension, or None if it doesn't know about the type.
     """
-    return MIMETYPES_EXT_MAP.get(mimetype)
+    possibleExtensions = MIMETYPES_EXT_MAP.get(mimetype)
+    if possibleExtensions is None:
+        return None
+    return possibleExtensions[0]
+
+def guessMimeType(filename):
+    """
+    Pass a filename to this method and it will return a corresponding mime type,
+    or 'video/unknown' if the filename has a known video extension but no 
+    corresponding mime type, or None if it doesn't know about the file extension.
+    """
+    root, ext = os.path.splitext(filename)
+    possibleTypes = EXT_MIMETYPES_MAP.get(ext)
+    if possibleTypes is None:
+        if isVideoFilename(filename):
+            return 'video/unknown'
+        elif isAudioFilename(filename):
+            return 'audio/unknown'
+        else:
+            return None
+    return possibleTypes[0]

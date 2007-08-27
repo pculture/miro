@@ -69,11 +69,6 @@ def defaultFeedIconURL():
 def defaultFeedIconURLTablist():
     return resources.url(u"images/feedicon-tablist.png")
 
-def hasVideoExtension(link):
-    return ((link[-4:].lower() in ['.wmv', '.flv', '.mov','.wmv','.mp4','.m4v',
-                                   '.mp3','.ogg','.anx','.mpg','.avi']) or
-            (link[-5:].lower() in ['.mpeg', '.xvid']))
-
 # Notes on character set encoding of feeds:
 #
 # The parsing libraries built into Python mostly use byte strings
@@ -1328,16 +1323,11 @@ class RSSFeedImpl(FeedImpl):
                     url = entry['link']
                 except:
                     continue
-                mimetype = None
-                if hasVideoExtension(url):
-                    mimetype = u'video/unknown'
-                elif url[-8].lower() == '.torrent':
-                    mimetype = u'application/x-bittorrent'
-                else:
-                    logging.info('unknown url type %s, not generating enclosure' % url)
+                mimetype = filetypes.guessMimeType(url)
                 if mimetype is not None:
                     entry['enclosures'] = [{'url':url, 'type':mimetype}]
-
+                else:
+                    logging.info('unknown url type %s, not generating enclosure' % url)
 
         try:
             self.title = self.parsed["feed"]["title"]
@@ -1667,35 +1657,29 @@ class ScraperFeedImpl(FeedImpl):
                 # file, so for now, we're being bad boys. Uncomment
                 # the elif to make this use mime types for HTTP GET URLs
 
-                if hasVideoExtension(link):
-                    mimetype = 'video/unknown'
-                elif link[-8:].lower() == '.torrent':
-                    mimetype = "application/x-bittorrent"
-                #elif link.find('?') > 0 and link.lower().find('.htm') == -1:
-                #    mimetype = self.getMimeType(link)
-                #    #print " mimetype is "+mimetype
-                else:
+                mimetype = filetypes.guessMimeType(link)
+                if mimetype is None:
                     mimetype = 'text/html'
-                if mimetype != None:
-                    #This is text of some sort: HTML, XML, etc.
-                    if ((mimetype.startswith('text/html') or
-                         mimetype.startswith('application/xhtml+xml') or 
-                         mimetype.startswith('text/xml')  or
-                         mimetype.startswith('application/xml') or
-                         mimetype.startswith('application/rss+xml') or
-                         mimetype.startswith('application/podcast+xml') or
-                         mimetype.startswith('application/atom+xml') or
-                         mimetype.startswith('application/rdf+xml') ) and
-                        depth < maxDepth -1):
-                        newURLs.append(link)
 
-                    #This is a video
-                    elif (mimetype.startswith('video/') or 
-                          mimetype.startswith('audio/') or
-                          mimetype == "application/ogg" or
-                          mimetype == "application/x-annodex" or
-                          mimetype == "application/x-bittorrent"):
-                        self.addVideoItem(link, links[link],linkNumber)
+                #This is text of some sort: HTML, XML, etc.
+                if ((mimetype.startswith('text/html') or
+                     mimetype.startswith('application/xhtml+xml') or 
+                     mimetype.startswith('text/xml')  or
+                     mimetype.startswith('application/xml') or
+                     mimetype.startswith('application/rss+xml') or
+                     mimetype.startswith('application/podcast+xml') or
+                     mimetype.startswith('application/atom+xml') or
+                     mimetype.startswith('application/rdf+xml') ) and
+                    depth < maxDepth -1):
+                    newURLs.append(link)
+
+                #This is a video
+                elif (mimetype.startswith('video/') or 
+                      mimetype.startswith('audio/') or
+                      mimetype == "application/ogg" or
+                      mimetype == "application/x-annodex" or
+                      mimetype == "application/x-bittorrent"):
+                    self.addVideoItem(link, links[link],linkNumber)
             if len(newURLs) > 0:
                 self.getHTML(newURLs, depth, linkNumber)
 
