@@ -68,7 +68,7 @@ def findSubscribeLinks(url):
         scheme, host, path, params, query, frag = urlparse.urlparse(url)
     except:
         return []
-    if host != 'subscribe.getdemocracy.com':
+    if host not in ('subscribe.getdemocracy.com', 'subscribe.getmiro.com'):
         return []
     if path in ('/', '/opml.php'):
         urls = []
