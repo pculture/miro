@@ -1556,7 +1556,6 @@ class HTTPClient(object):
             self.handleAuthorize(response)
         else:
             self.connection = None
-            expectedStatusCodes = [200]
             if not self.gotBadStatusCode:
                 if self.callback:
                     response = self.prepareResponse(response)
