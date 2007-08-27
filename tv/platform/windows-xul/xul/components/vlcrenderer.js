@@ -50,7 +50,7 @@ VLCRenderer.prototype = {
       if (this.extractMode) {
           return;
       }
-      pybridge.printOut("switchToExtractMode");
+      // FIXME - pybridge.printOut("switchToExtractMode");
       this.vlc_extract.audio.mute = true;
       this.extractMode = true;
       this.timer.cancel();
@@ -64,7 +64,7 @@ VLCRenderer.prototype = {
        if (!this.extractMode) {
           return;
       }
-      pybridge.printOut("switchToPlayMode");
+      // FIXME - pybridge.printOut("switchToPlayMode");
       this.vlc_extract.playlist.stop();
       this.timer_extract.cancel();
       this.vlc.audio.mute = false;
@@ -291,17 +291,17 @@ VLCRenderer.prototype = {
   },
 
   extractMovieDataDone: function (success) {
-      pybridge.printOut("Step extractMovieDataDone");
+      // FIXME - pybridge.printOut("Step extractMovieDataDone");
       this.url_extract = null;
       pybridge.extractFinish (this.duration_extract, success);
   },
 
   extractMovieDataStepSnapshot: function () {
-      pybridge.printOut("Step Snapshot");
+      // FIXME - pybridge.printOut("Step Snapshot");
       try {
-          pybridge.printOut("Calling takeSnapshot");
+          // FIXME - pybridge.printOut("Calling takeSnapshot");
 	  this.vlc_extract.video.takeSnapshot (this.screenshot_filename_extract);
-          pybridge.printOut("takeSnapshot returned");
+          // FIXME - pybridge.printOut("takeSnapshot returned");
 	  var callback = {
 	      notify: function(timer) {
 		  this.parent.extractMovieDataDone(true);
@@ -312,7 +312,7 @@ VLCRenderer.prototype = {
 	  this.vlc_extract.playlist.stop();
 	  this.timer_extract.initWithCallback(callback, 4000,
 					      Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-          pybridge.printOut("Step Finish Queued");
+          // FIXME - pybridge.printOut("Step Finish Queued");
       } catch (e) {
           pybridge.printOut("Step Snapshot Error");
 	    if (this.vlc_extract.input.state == 0) {
@@ -323,7 +323,7 @@ VLCRenderer.prototype = {
 		this.extractMovieDataDone(true);
                 return;
 	    } else {
-	        pybridge.printOut("Step Snapshot Retrying");
+	        // FIXME - pybridge.printOut("Step Snapshot Retrying");
 		this.extract_errors ++;
 		if (this.extract_errors > 100) {
 		    this.extractMovieDataDone(true);
@@ -342,8 +342,8 @@ VLCRenderer.prototype = {
   },
   
   extractMovieDataStepWaitForJump: function () {
-      pybridge.printOut("Step Wait For Jump");
-      pybridge.printOut(this.vlc_extract.input.time);
+      // FIXME - pybridge.printOut("Step Wait For Jump");
+      // FIXME - pybridge.printOut(this.vlc_extract.input.time);
       //      this.extractMovieDataStepSnapshot();
 //	return;
 //	} catch (e) {
@@ -364,7 +364,7 @@ VLCRenderer.prototype = {
   },
 
   extractMovieDataStepJump: function () {
-      pybridge.printOut("Step Jump");
+      // FIXME - pybridge.printOut("Step Jump");
       try {
 	  this.vlc_extract.input.time = this.duration_extract / 2.0;
           this.extractMovieDataStepWaitForJump();
@@ -392,7 +392,7 @@ VLCRenderer.prototype = {
   },
 
   extractMovieDataStepLength: function () {
-      pybridge.printOut("Step Length");
+      // FIXME - pybridge.printOut("Step Length");
 //	if (this.testing_extract) {
 //	    this.extractMovieDataDone(false);
 //	    return;
@@ -426,9 +426,9 @@ VLCRenderer.prototype = {
 
 
   extractMovieDataStepWaitPlay: function () {
-      pybridge.printOut("Step Wait Play");
-      pybridge.printOut(this.vlc_extract.input.state);
-      pybridge.printOut(this.vlc_extract.playlist.items.count);
+      // FIXME - pybridge.printOut("Step Wait Play");
+      // FIXME - pybridge.printOut(this.vlc_extract.input.state);
+      // FIXME - pybridge.printOut(this.vlc_extract.playlist.items.count);
       try {
 	  if (this.vlc_extract.input.state == 3) {
 	      this.extractMovieDataStepLength();
@@ -457,14 +457,14 @@ VLCRenderer.prototype = {
 
   extractMovieDataStepAdd: function () {
       var item;
-      pybridge.printOut("Step Add");
+      // FIXME - pybridge.printOut("Step Add");
       item = this.vlc_extract.playlist.add(this.url_extract);
       this.vlc_extract.playlist.playItem (item);
       this.extractMovieDataStepWaitPlay();
   },
 
   extractMovieDataStepWaitStop: function () {
-      pybridge.printOut("Step Wait Stop");
+      // FIXME - pybridge.printOut("Step Wait Stop");
       try {
 	  if (this.vlc_extract.input.state == 0) {
 	      this.extractMovieDataStepAdd();
@@ -488,7 +488,7 @@ VLCRenderer.prototype = {
   },
 
   extractMovieDataStepStart: function () {
-      pybridge.printOut("Step Start");
+      // FIXME - pybridge.printOut("Step Start");
       if (this.vlc_extract.playlist.items.count > 0) {
 	  this.vlc_extract.playlist.stop();
           this.vlc_extract.playlist.items.clear();
