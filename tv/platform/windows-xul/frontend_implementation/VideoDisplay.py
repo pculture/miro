@@ -73,9 +73,11 @@ class VideoDisplay (app.VideoDisplayBase):
 	self.movie_data = movie_data
 	self.callback = callback
 
-	print "Calling renderer"
-	frontend.vlcRenderer.extractMovieData (filename, movie_data["screenshot"]);
-	print "renderer returned"
+#       Uncomment this to enable duration extraction
+
+# 	print "Calling renderer"
+# 	frontend.vlcRenderer.extractMovieData (filename, movie_data["screenshot"]);
+# 	print "renderer returned"
 
     def extractFinish (self, duration, screenshot_success):
 	print "extractFinish (%d, %s)" % (duration, screenshot_success)
