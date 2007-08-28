@@ -54,6 +54,7 @@ import searchengines
 
 import os
 import re
+import shutil
 # import sys
 import cgi
 # import copy
@@ -2411,3 +2412,15 @@ def changeMoviesDirectory(newDir, migrate):
         except:
             pass
     util.getSingletonDDBObject(views.directoryFeed).update()
+
+@eventloop.asUrgent
+def saveVideo(currentPath, savePath):
+    logging.info("saving video %s to %s" % (currentPath, savePath))
+    try:
+        shutil.copyfile(currentPath, savePath)
+    except:
+        title = _('Error Saving Video')
+        name = os.path.basename(currentPath)
+        text = _('An error occured while trying to save %s.  Please check that the file has not been deleted and try again.') % util.clampText(name, 50)
+        dialogs.MessageBoxDialog(title, text).run()
+        logging.warn("Error saving video: %s" % traceback.format_exc())

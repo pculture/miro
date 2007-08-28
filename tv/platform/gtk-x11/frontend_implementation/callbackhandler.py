@@ -455,8 +455,7 @@ class CallbackHandler(object):
                 return os.path.splitext(path)[1]
             if getExt(savePath) == '':
                 savePath += getExt(videoPath)
-            logging.info ("saving %r to %r", videoPath, savePath)
-            shutil.copyfile(videoPath, savePath)
+            app.saveVideo(videoPath, savePath)
         CallbackHandler.current_folder = chooser.get_current_folder()
         chooser.destroy()
 
