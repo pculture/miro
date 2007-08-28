@@ -1325,7 +1325,7 @@ class RSSFeedImpl(FeedImpl):
                     continue
                 mimetype = filetypes.guessMimeType(url)
                 if mimetype is not None:
-                    entry['enclosures'] = [{'url':url, 'type':mimetype}]
+                    entry['enclosures'] = [{'url':toUni(url), 'type':toUni(mimetype)}]
                 else:
                     logging.info('unknown url type %s, not generating enclosure' % url)
 
