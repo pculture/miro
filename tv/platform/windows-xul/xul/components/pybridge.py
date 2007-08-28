@@ -626,8 +626,7 @@ class PyBridge:
     def saveVideoFile(self, path):
         if frontend.currentVideoPath is None:
             return
-        print "saving video %s to %s" % (frontend.currentVideoPath, path)
-        shutil.copyfile(frontend.currentVideoPath, path)
+        app.saveVideo(frontend.currentVideoPath, path)
 
     def startupDoSearch(self, path):
         if path.endswith(":"):
