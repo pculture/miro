@@ -151,7 +151,8 @@ def extract_binaries(source, target):
                 tar = tarfile.open(binary, 'r:gz')
                 try:
                     for member in tar.getmembers():
-                        tar.extract(member, target)
+                        if os.path.basename(member.name) not in ('._Icon\r', 'Icon\r'):
+                            tar.extract(member, target)
                 finally:
                     tar.close()
 
