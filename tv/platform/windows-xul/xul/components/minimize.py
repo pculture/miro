@@ -67,7 +67,9 @@ IDANI_OPEN         = 1
 IDANI_CAPTION      = 3
 
 SW_HIDE = 0
+SW_SHOWMINIMIZED = 2
 SW_SHOW = 5
+SW_RESTORE = 9
 
 GWL_WNDPROC = -4
 
@@ -145,6 +147,16 @@ class MINMAXINFO(ctypes.Structure):
                 ("ptMaxPosition", POINT),
                 ("ptMinTrackSize", POINT),
                 ("ptMaxTrackSize",POINT)]
+
+class WINDOWPLACEMENT(ctypes.Structure):
+    _fields_ = [
+                ("length", UINT),
+                ("flags", UINT),
+                ("showCmd", UINT),
+                ("ptMinPosition", POINT),
+                ("ptMaxPosition", POINT),
+                ("rcNormalPosition", RECT),
+    ]
 
 def getTaskbarEdge():
     appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
@@ -394,13 +406,22 @@ class Minimize:
         ctypes.windll.user32.ShowWindow(href, ctypes.c_int(SW_HIDE))
 
     def restore(self, href):
+        placement = WINDOWPLACEMENT()
+        rv = ctypes.windll.user32.GetWindowPlacement(href, 
+                ctypes.byref(placement))
+        if rv and placement.showCmd == SW_SHOWMINIMIZED:
+            show_flag = SW_RESTORE
+        else:
+            show_flag = SW_SHOW
+        ctypes.windll.user32.ShowWindow(href, ctypes.c_int(show_flag))
+        ctypes.windll.user32.SetForegroundWindow(href)
+
         fromer = RECT(0,0,0,0)
         ctypes.windll.user32.GetWindowRect(href,ctypes.byref(fromer))
         to = self.getTrayRect()
         if to:
             ctypes.windll.user32.DrawAnimatedRects(href,IDANI_CAPTION,ctypes.byref(to),ctypes.byref(fromer))
 
-        ctypes.windll.user32.ShowWindow(href, ctypes.c_int(SW_SHOW))
 
     def minimizeOrRestore(self):
         pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
