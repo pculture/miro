@@ -1,7 +1,19 @@
 %{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+
+# For final releases:
+# 1. set VERSION
+# 2. comment out RELEASE_CANDIDATE (change % to #)
+# 3. comment out NIGHTLY (change % to #)
+# 4. increase RELEASE if we do multiples
+
+# For release candidate:
+# 1. set VERSION
+# 2. set RELEASE_CANDIDATE
+# 3. increase RELEASE if we do multiples
+
 %define VERSION 0.9.9
-%define RELEASE_CANDIDATE rc0
+%define RELEASE_CANDIDATE rc1
 #define NIGHTLY 2006-07-20
 #define RELEASE_CANDIDATE 2006_07_20
 %define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-%{RELEASE_CANDIDATE}}
@@ -82,6 +94,5 @@ update-desktop-database %{_datadir}/applications
 %{python_sitearch}/miro/*/*/*.pyc
 %ghost %{python_sitearch}/miro/*/*/*.pyo
 %doc
-
 
 %changelog
