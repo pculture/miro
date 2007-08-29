@@ -11,5 +11,6 @@ interface pcfIDTVMinimize : nsISupports
   void updateIcon();
   boolean isMinimized();
   void registerMainWindowProc(in nsIDOMWindow window);
-  void contextMenuHack(in nsIDOMWindow window);
+  void contextMenuHack();
+  void contextMenuHack2();
 };

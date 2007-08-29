@@ -9,6 +9,7 @@ INT = ctypes.c_int
 WH_MOUSE_LL = 14
 WH_MOUSE    = 7
 
+WM_NULL = 0x0000
 WM_USER = 0x0400
 WM_TRAYICON = WM_USER+0x1EEF
 WM_GETICON = 0x007F
@@ -287,12 +288,20 @@ class Minimize:
         href = self.getHREFFromDOMWindow(win)
         Minimize.oldWindowProcs[href.value] = ctypes.windll.user32.SetWindowLongW(href,GWL_WNDPROC, MainWindProc)
 
-    def contextMenuHack(self, win):
+    def contextMenuHack(self):
+        """Hack to make context menus work, must be called BEFORE the menu is
+        shown.
+        """
         # Need to make the XUL window the foreground window.  See 
         # http://support.microsoft.com/kb/135788
         # If the msdn URL doesn't work, try searhing for Q135788
-        hWnd = self.getHREFFromDOMWindow(win)
-        ctypes.windll.user32.SetForegroundWindow(hWnd)
+        ctypes.windll.user32.SetForegroundWindow(self.trayIconWindow)
+
+    def contextMenuHack2(self):
+        """Hack to make context menus work, must be called AFTER the menu is
+        shown.
+        """
+        ctypes.windll.user32.PostMessage(self.trayIconWindow, WM_NULL, 0, 0)
 
     def getHREFFromBaseWindow(self, win):
         return ctypes.c_int(self._gethrefcomp.getit(win))

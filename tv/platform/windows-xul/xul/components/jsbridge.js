@@ -702,12 +702,13 @@ jsBridge.prototype = {
           // re-show the popup in the right position
           popup.hidePopup();
           document.popupNode = null;
-          minimizer.contextMenuHack(window);
+          minimizer.contextMenuHack();
           popup.showPopup(
                           document.documentElement,
                           x, y,
                           "context",
                           "", "");
+          minimizer.contextMenuHack2();
       }
       this.popup._minimizetotray_onshown = function(event){ return minimize_onshown(event, x, y, screenwidth, screenheight, document); };
       this.popup.addEventListener("popupshown",
