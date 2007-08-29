@@ -114,8 +114,6 @@ jsBridge.prototype = {
     this.initBrowser("channelsDisplay");
     this.hideVideoControlsTimer = Components.classes["@mozilla.org/timer;1"].
           createInstance(Components.interfaces.nsITimer);
-    this.hidePopupTimer = Components.classes["@mozilla.org/timer;1"].
-          createInstance(Components.interfaces.nsITimer);
     this.videoFilename = null;
     this.searchEngineTitles = this.searchEngineNames = null;
 
@@ -677,26 +675,13 @@ jsBridge.prototype = {
     }
     this.prefDocument.selectDirectoryWatch(true);
   },
-  // Hide the popup after 250ms. Without this delay, our WH_MOUSE_LL
-  // hack in minimize.py causes us to miss some mouse clicks. --NN
-  hidePopup: function() {
-    if(!this.popup) return;
-    var popup = this.popup;
-    var callback = {notify: function() {
-        popup.hidePopup();
-    }};
-    this.hidePopupTimer.cancel();
-    if (!popup.hidden) {
-        this.hidePopupTimer.initWithCallback(callback, 250,
-              Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-    }
-  },
   showPopup: function(x, y) {
       // show popup and adjust position once we know width / height
       // Based on core.js from Firefox minimizetotray extension
       var screenwidth = this.window.screen.width;
       var screenheight = this.window.screen.height;
       var document = this.document;
+      var window = this.window;
 
       this.popup = document.getElementById('traypopup');
       var self = this;
@@ -717,12 +702,12 @@ jsBridge.prototype = {
           // re-show the popup in the right position
           popup.hidePopup();
           document.popupNode = null;
+          minimizer.contextMenuHack(window);
           popup.showPopup(
                           document.documentElement,
                           x, y,
                           "context",
                           "", "");
-          self.hidePopupTimer.cancel();
       }
       this.popup._minimizetotray_onshown = function(event){ return minimize_onshown(event, x, y, screenwidth, screenheight, document); };
       this.popup.addEventListener("popupshown",

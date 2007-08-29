@@ -77,7 +77,6 @@ def HIWORD(dword): return dword >> 16
 
 WNDPROCTYPE = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, UINT, WPARAM, LPARAM)
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, LPARAM)
-LLMOUSEPROC = ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.c_int, WPARAM, LPARAM)
 
 import config
 import prefs
@@ -186,16 +185,6 @@ def PyWindProc(hWnd, uMsg, wParam, lParam):
             Minimize.minimizers[hWnd].minimizeOrRestore()
         elif lParam == WM_RBUTTONUP:
             Minimize.minimizers[hWnd].showPopup(mouseX, mouseY)
-    elif uMsg == WM_ACTIVATEAPP:
-        pass
-        #logging.info("TACTIVATEAPP %d %d" % (wParam, lParam))
-        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-        #jsbridge.hidePopup()
-    elif uMsg == WM_ACTIVATE:
-        pass
-        #logging.info("TACTIVATE %d %d" % (wParam, lParam))
-        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-        #jsbridge.hidePopup()
 
     #components.classes['@mozilla.org/consoleservice;1'].getService(components.interfaces.nsIConsoleService).logStringMessage("PYWINPROC %d %d %d %d" % (hWnd, uMsg, wParam, lParam))
     return ctypes.windll.user32.CallWindowProcW(ctypes.windll.user32.DefWindowProcW,hWnd, uMsg, wParam, lParam)
@@ -227,34 +216,11 @@ def PyMainWindProc(hWnd, uMsg, wParam, lParam):
             info.ptMaxSize.y = window.screen.height
             info.ptMaxPosition.x = height
             info.ptMaxPosition.y = 0
-    elif uMsg == WM_ACTIVATEAPP:
-        pass
-        #logging.info("ACTIVATEAPP %d %d" % (wParam, lParam))
-        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-        #jsbridge.hidePopup()
-    elif uMsg == WM_ACTIVATE:
-        pass
-        #logging.info("ACTIVATE %d %d" % (wParam, lParam))
-        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-        #jsbridge.hidePopup()
             
     return ctypes.windll.user32.CallWindowProcW(Minimize.oldWindowProcs[hWnd],hWnd, uMsg, wParam, lParam)
 
-# Part of a hack to close the context menu on mouse actions outside of
-# Democracy. There's probably a better solution for this, but this
-# works for now. --NN
-def PyMouseProc(nCode, wParam, lParam):
-    try:
-        if wParam != WM_MOUSEMOVE:
-            jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-            jsbridge.hidePopup()
-    except:
-        pass
-    return ctypes.windll.user32.CallNextHookEx(0, nCode, wParam, lParam)
-
 WindProc = WNDPROCTYPE(PyWindProc)
 MainWindProc = WNDPROCTYPE(PyMainWindProc)
-LLMouseProc = LLMOUSEPROC(PyMouseProc)
 
 class Minimize:
     _com_interfaces_ = [components.interfaces.pcfIDTVMinimize]
@@ -321,15 +287,12 @@ class Minimize:
         href = self.getHREFFromDOMWindow(win)
         Minimize.oldWindowProcs[href.value] = ctypes.windll.user32.SetWindowLongW(href,GWL_WNDPROC, MainWindProc)
 
-        #Also register mouse hook, so we can hide the tray context
-        #menu when someone clicks off of it.
-        # This is a big hack --NN
-        result = ctypes.windll.user32.SetWindowsHookExW(WH_MOUSE_LL, LLMouseProc, self.hInst, 0)
-        if result == 0:
-            print ctypes.FormatError(ctypes.GetLastError())
-#         result = ctypes.windll.user32.SetWindowsHookExW(WH_MOUSE, LLMouseProc, self.hInst, 0)
-#         if result == 0:
-#             print ctypes.FormatError(ctypes.GetLastError())
+    def contextMenuHack(self, win):
+        # Need to make the XUL window the foreground window.  See 
+        # http://support.microsoft.com/kb/135788
+        # If the msdn URL doesn't work, try searhing for Q135788
+        hWnd = self.getHREFFromDOMWindow(win)
+        ctypes.windll.user32.SetForegroundWindow(hWnd)
 
     def getHREFFromBaseWindow(self, win):
         return ctypes.c_int(self._gethrefcomp.getit(win))
