@@ -248,7 +248,7 @@ for dir in xpcom_includes['include_dirs']:
 if mozIncludeBase is None:
     raise ValueError("Can't find mozilla include base directory")
 for subdir in ['dom', 'gfx', 'widget', 'commandhandler', 'uriloader',
-            'webbrwsr', 'necko']:
+            'webbrwsr', 'necko', 'windowwatcher']:
     path = os.path.join(mozIncludeBase, subdir)
     mozilla_browser_options['include_dirs'].append(path)
 
