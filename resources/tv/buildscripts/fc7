@@ -23,9 +23,9 @@ sudo cp Miro.spec /usr/src/redhat/SPECS
 sudo rpmbuild --ba /usr/src/redhat/SPECS/Miro.spec 
 
 #Copy the RPMs into the directory
-cp /usr/src/redhat/SRPMS/Miro-$2-1.src.rpm $2$3/fc6/Miro-$2-1.src.rpm
-cp /usr/src/redhat/RPMS/i386/Miro-$2-1.i386.rpm $2$3/fc6/Miro-$2-1.i386.rpm
-cp /usr/src/redhat/RPMS/i386/Miro-debuginfo-$2-1.i386.rpm $2$3/fc6/Miro-debuginfo-$2-1.i386.rpm 
+cp /usr/src/redhat/SRPMS/Miro-$2-1.src.rpm $2$3/fc7/Miro-$2-1.src.rpm
+cp /usr/src/redhat/RPMS/i386/Miro-$2-1.i386.rpm $2$3/fc7/Miro-$2-1.i386.rpm
+cp /usr/src/redhat/RPMS/i386/Miro-debuginfo-$2-1.i386.rpm $2$3/fc7/Miro-debuginfo-$2-1.i386.rpm 
 
 #copy Directory onto PCF2 user's home directory
 echo "Press enter to upload files...  or ctrl-c"
