@@ -153,13 +153,24 @@ function setMaxUpstream(max) {
 
 function setLimitUpstream(limit) {
     document.getElementById("limitupstream").checked = limit;
-    document.getElementById("maxupstream").disabled = !limit;
+    setMaxUpstreamDisabled(!limit);
+}
+
+function setMaxUpstreamDisabled(disabled) {
+    var textbox = document.getElementById("maxupstream");
+    var description = document.getElementById("maxupstream-description");
+    if(disabled) {
+        textbox.setAttribute('disabled', true);
+        description.setAttribute('disabled', true);
+    } else {
+        textbox.removeAttribute('disabled');
+        description.removeAttribute('disabled');
+    }
 }
 
 function limitUpstreamChange() {
   var ret = (document.getElementById("limitupstream").checked);
-  var textbox = document.getElementById("maxupstream");
-  textbox.disabled = !ret;
+  setMaxUpstreamDisabled(!ret);
   pybridge.setLimitUpstream(ret);
 }
 function maxUpstreamChange() {

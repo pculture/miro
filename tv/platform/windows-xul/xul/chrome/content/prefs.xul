@@ -78,10 +78,10 @@
             </groupbox>
             <groupbox>
                 <caption label="&prefs.torrent;" />
-                <hbox align="center">
-                    <checkbox id="limitupstream" checked="true" label="&prefs.torrent.limit.upstream.part1;" value="1" oncommand="limitUpstreamChange()"/>
+                <checkbox id="limitupstream" checked="true" label="&prefs.torrent.limit.upstream.part1;" value="1" oncommand="limitUpstreamChange()"/>
+                <hbox class="suboption" align="center">
+                    <description id="maxupstream-description">&prefs.torrent.limit.upstream.part2;</description>
                     <textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
-                    <description>&prefs.torrent.limit.upstream.part2;</description>
                 </hbox>
                 <separator />
                 <hbox align="center">

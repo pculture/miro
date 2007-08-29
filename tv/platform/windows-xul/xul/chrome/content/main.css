@@ -3,6 +3,10 @@ wnindow, hbox, vbox, menu, menubar, menuitem, menupopup {
 	font: normal 11px "Tahoma", "Trebuchet MS", Arial;
 }
 
+description[disabled] {
+	color: #AAA;
+}
+
 /* TITLEBAR 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -368,4 +372,8 @@ tabbox.prefs caption {
 
 tabbox.prefs groupbox {
     border-color: #ccc;
+}
+
+tabbox.prefs .suboption {
+    margin-left: 20px;
 }
