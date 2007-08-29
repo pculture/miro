@@ -312,6 +312,15 @@ function maximizeOrRestore() {
   } 
 }
 
+function showOptionsDialog() {
+  if (minimizer.isMinimized()) {
+      var features = 'chrome,centerscreen';
+  } else { 
+      var features = 'chrome,dependent,centerscreen';
+  } 
+  window.openDialog('chrome://dtv/content/prefs.xul','prefs', features);
+}
+
 function closeApp() {
   var startup = Components.classes["@mozilla.org/toolkit/app-startup;1"].
        getService(Components.interfaces.nsIAppStartup);
