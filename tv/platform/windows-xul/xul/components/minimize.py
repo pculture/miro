@@ -301,7 +301,7 @@ class Minimize:
         """Hack to make context menus work, must be called AFTER the menu is
         shown.
         """
-        ctypes.windll.user32.PostMessage(self.trayIconWindow, WM_NULL, 0, 0)
+        ctypes.windll.user32.PostMessageA(self.trayIconWindow, WM_NULL, 0, 0)
 
     def getHREFFromBaseWindow(self, win):
         return ctypes.c_int(self._gethrefcomp.getit(win))
