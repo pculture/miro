@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2007-08-21 12:06-0400\n"
-"PO-Revision-Date: 2007-08-19 00:59+0000\n"
-"Last-Translator: Tom Janson <public.tom.janson@gmail.com>\n"
+"POT-Creation-Date: 2007-08-22 16:21-0400\n"
+"PO-Revision-Date: 2007-08-27 07:59+0000\n"
+"Last-Translator: seakayone <launchpad.net@dynamight.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-08-22 20:29:51+0000\n"
+"X-Rosetta-Export-Date: 2007-08-30 15:08:31+0000\n"
 
 msgid "$log"
 msgstr "$log"
@@ -33,17 +33,16 @@ msgstr ""
 "und beantworten Sie einige kurze Fragen. Wir machen uns danach sofort an die "
 "Arbeit.</font>"
 
-#, fuzzy
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
 "report to our bug-tracking system? At a minimum, what we'd need is "
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Haben Sie einen Moment Zeit? Wären Sie so freundlich, einen Fehlerbericht "
-"für unsere Fehlerverwaltung einzureichen? Wir brauchen mindestens eine kurze "
-"Beschreibung, was Sie gemacht haben -- so exakt, wie möglich -- und dazu "
-"noch den kunstvoll formulierten Schwachsinn in der unten stehenden Box:"
+"Haben Sie einen Moment Zeit und wären so freundlich, einen Fehlerbericht für "
+"unseren Bug-Tracking-System einzureichen? Wir brauchen mindestens eine kurze "
+"Beschreibung, was Sie gerade gemacht haben -- so exakt, wie möglich -- und "
+"dazu noch den kunstvoll formulierten Schwachsinn in der unten stehenden Box:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -75,7 +74,7 @@ msgstr "Guide hinzufügen..."
 msgid "Bring All to Front"
 msgstr "Alle in den Vordergrund bringen"
 
-#: ../../platform/osx/frontend/Preferences.py:39
+#: ../..//platform/osx/frontend/Preferences.py:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
 msgid "Channels"
 msgstr "Kanäle"
@@ -83,9 +82,8 @@ msgstr "Kanäle"
 msgid "Check for New Version"
 msgstr "Nach neuer Version suchen"
 
-#, fuzzy
 msgid "Clear Menu"
-msgstr "Menü löschen"
+msgstr "Menü leeren"
 
 msgid "Close Window"
 msgstr "Fenster schließen"
@@ -102,7 +100,7 @@ msgstr "Video-URL kopieren"
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: ../../portable/dialogs.py:96
+#: ../..//portable/dialogs.py:96
 msgid "Delete"
 msgstr "Löschen"
 
@@ -110,13 +108,13 @@ msgid "Donate"
 msgstr "Spenden"
 
 msgid "Download Video..."
-msgstr ""
+msgstr "Lade Video herunter..."
 
 msgid "Edit"
 msgstr "Bearbeiten"
 
 msgid "Export Channels (OPML)..."
-msgstr ""
+msgstr "Kanäle exportieren (OPML)..."
 
 msgid "File"
 msgstr "Datei"
@@ -134,7 +132,7 @@ msgid "Hide Others"
 msgstr "Andere ausblenden"
 
 msgid "Import Channels (OPML)..."
-msgstr ""
+msgstr "Kanäle importieren (OPML)..."
 
 msgid "Main Window"
 msgstr "Hauptfenster"
@@ -176,11 +174,11 @@ msgstr "Öffnen..."
 msgid "Paste"
 msgstr "Einfügen"
 
-#: ../../platform/osx/frontend/Application.py:231
+#: ../..//platform/osx/frontend/Application.py:231
 msgid "Play Video"
 msgstr "Video abspielen"
 
-#: ../../platform/osx/frontend/Preferences.py:43
+#: ../..//platform/osx/frontend/Preferences.py:43
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "Playback"
 msgstr "Wiedergabe"
@@ -257,14 +255,14 @@ msgstr "Box"
 msgid "FullScreen Controls"
 msgstr "Vollbild-Steuerelemente"
 
-#: ../../portable/tabs.py:45
+#: ../..//portable/tabs.py:45
 msgid "Video Search"
 msgstr "Videosuche"
 
 msgid "VideoWindow"
 msgstr "Video-Fenster"
 
-#: ../../portable/dialogs.py:77
+#: ../..//portable/dialogs.py:77
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -388,10 +386,10 @@ msgstr "Videos nacheinander wiedergeben."
 msgid "Remember video position."
 msgstr "Abspielposition merken."
 
-#: ../../portable/guide.py:86 ../../portable/playlist.py:197
-#: ../../portable/feed.py:788 ../../portable/menu.py:65
-#: ../../portable/menu.py:70 ../../portable/folder.py:156
-#: ../../portable/folder.py:211
+#: ../..//portable/feed.py:793 ../..//portable/folder.py:156
+#: ../..//portable/folder.py:211 ../..//portable/guide.py:86
+#: ../..//portable/menu.py:65 ../..//portable/menu.py:70
+#: ../..//portable/playlist.py:197
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Remove"
 msgstr "Entfernen"
@@ -402,7 +400,7 @@ msgstr "Miro beim Systemstart ausführen"
 msgid "Save downloaded videos in this folder:"
 msgstr "Geladene Videos in diesem Ordner speichern:"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:572
+#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:572
 msgid "Show as Channel"
 msgstr "Als Kanal anzeigen"
 
@@ -439,7 +437,7 @@ msgstr "$Titel$"
 msgid "Channel"
 msgstr "Kanal"
 
-#: ../../portable/dialogs.py:91
+#: ../..//portable/dialogs.py:91
 msgid "Create"
 msgstr "Anlegen"
 
@@ -458,8 +456,8 @@ msgstr "Suche nach:"
 msgid "URL"
 msgstr "URL"
 
-#: ../../platform/windows-xul/frontend_implementation/startup.py:25
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:48
+#: ../..//platform/gtk-x11/frontend_implementation/startup.py:48
+#: ../..//platform/windows-xul/frontend_implementation/startup.py:25
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "(%d Dateien bearbeitet - %d Videos gefunden)"
@@ -470,12 +468,12 @@ msgstr "Zurück"
 msgid "Browse"
 msgstr "Durchsuchen"
 
-#: ../../platform/osx/frontend/StartupPanel.py:90
-#: ../../platform/osx/frontend/StartupPanel.py:116
+#: ../..//platform/osx/frontend/StartupPanel.py:90
+#: ../..//platform/osx/frontend/StartupPanel.py:116
 msgid "Next"
 msgstr "Weiter"
 
-#: ../../portable/dialogs.py:79
+#: ../..//portable/dialogs.py:79
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
 msgid "No"
 msgstr "Nein"
@@ -542,7 +540,7 @@ msgstr ""
 "Freunden weiterempfehlen, und jede Menge mehr.\n"
 "\n"
 
-#: ../../portable/dialogs.py:78
+#: ../..//portable/dialogs.py:78
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
 msgid "Yes"
 msgstr "Ja"
@@ -605,158 +603,143 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57
-msgid "Update Available"
-msgstr "Ein Update ist verfügbar"
+#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:322
+msgid "New Channel _Guide..."
+msgstr "Neuer _Programmführer..."
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:58
-#, python-format
-msgid "A new version of %s is available for download."
-msgstr "Eine neue Version von %s steht zum herunterladen bereit."
+#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:563
+msgid "Folder Location"
+msgstr "Speicherort des Ordners"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:155
-msgid "Select a File"
-msgstr ""
-
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:160
-msgid "Save File to"
-msgstr ""
-
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:210
-msgid "Error Bombing Item"
-msgstr "Fehler beim \"Bomben\" der Datei"
-
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:212
-msgid "Error Recommending Item"
-msgstr "Fehler beim Weiterempfehlen des Objektes"
-
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214
-msgid "Error Opening Website"
-msgstr "Fehler beim Öffnen der Webseite"
-
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218
-#, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr ""
-"Fehler beim Öffnen von %s. Versuchen Sie es in ein paar Sekunden nochmals."
-
-#: ../../platform/windows-xul/frontend_implementation/startup.py:33
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:76
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:174
+#: ../..//platform/gtk-x11/frontend_implementation/startup.py:76
+#: ../..//platform/gtk-x11/frontend_implementation/startup.py:174
+#: ../..//platform/windows-xul/frontend_implementation/startup.py:33
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
 msgstr[0] "%d Video gefunden"
 msgstr[1] "%d Videos gefunden"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:45
+#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:42
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:45
+msgid "Hide"
+msgstr "Ausblenden"
+
+#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:47
+msgid "Show"
+msgstr "Anzeigen"
+
+#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:48
+#: ../..//portable/dialogs.py:80 ../..//portable/menubar.py:257
+msgid "Quit"
+msgstr "Beenden"
+
+#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
+msgid "Username:"
+msgstr "Benutzername:"
+
+#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
+msgid "Password:"
+msgstr "Passwort:"
+
+#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:413
+msgid "Unknown Runtime Error"
+msgstr "Unbekannter Laufzeitfehler"
+
+#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:414
+#, python-format
+msgid "An unknown error has occurred %s."
+msgstr "Ein unbekannter Fehler ist aufgetreten %s."
+
+#: ../..//platform/osx/frontend/Application.py:228
+msgid "Pause Video"
+msgstr "Video pausieren"
+
+#: ../..//platform/osx/frontend/Application.py:237
+msgid "Unsupported version of Quicktime"
+msgstr "Nicht unterstütze Quicktime-Version"
+
+#: ../..//platform/osx/frontend/Application.py:238
 #, python-format
 msgid ""
-"Error importing modules:\n"
-"%s"
+"To run %s you need the most recent version of Quicktime, which is a free "
+"update."
 msgstr ""
-"Fehler beim Importieren des Moduls:\n"
-"%s"
+"Um %s zu starten wird die neueste Quicktime-Version benötigt, die gratis "
+"erhältlich ist."
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:49
-msgid "Starting up"
-msgstr "Wird gestartet"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:256
-msgid "Loading window"
-msgstr "Lade Oberfläche"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:257
-msgid "onStartup called twice"
-msgstr "OnStartup zweimal geladen"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:672
-msgid "Spacebar"
-msgstr "Leertaste"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:819
-msgid "Close to tray?"
-msgstr "ins Tray minimieren?"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:820
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"Möchten Sie, dass Miro sich beendet oder minimiert, wenn Sie auf den roten "
-"Beenden-Knopf klicken? Sie können diese Einstellung später ändern."
-
-#: ../../platform/osx/frontend/GrowlNotifier.py:27
+#: ../..//platform/osx/frontend/GrowlNotifier.py:27
 msgid "Download Completed"
 msgstr "Download fertig"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:28
+#: ../..//platform/osx/frontend/GrowlNotifier.py:28
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "Das Video '%s' ist fertig geladen."
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:37
+#: ../..//platform/osx/frontend/GrowlNotifier.py:37
 msgid "Download Failed"
 msgstr "Fehler beim Download"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:38
+#: ../..//platform/osx/frontend/GrowlNotifier.py:38
 #, python-format
 msgid "Download of video '%s' has failed."
 msgstr "Fehlen beim Laden des Videos '%s'"
 
-#: ../../platform/osx/frontend/MainFrame.py:261
+#: ../..//platform/osx/frontend/MainFrame.py:261
 msgid "Subscribe to Channel"
 msgstr "Video-Channel abonnieren"
 
-#: ../../platform/osx/frontend/MainFrame.py:262
+#: ../..//platform/osx/frontend/MainFrame.py:262
 msgid "Enter the URL of the channel you would like to subscribe to."
 msgstr "Gib die URL von dem Channel ein den Du abonnieren möchtest."
 
-#: ../../platform/osx/frontend/QuicktimeRenderer.py:218
-msgid "Audio"
-msgstr "Audio"
-
-#: ../../platform/osx/frontend/Preferences.py:38
+#: ../..//platform/osx/frontend/Preferences.py:38
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "General"
 msgstr "Allgemein"
 
-#: ../../platform/osx/frontend/Preferences.py:40
+#: ../..//platform/osx/frontend/Preferences.py:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Downloads"
 msgstr "Downloads"
 
-#: ../../platform/osx/frontend/Preferences.py:41
+#: ../..//platform/osx/frontend/Preferences.py:41
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
 msgid "Folders"
 msgstr "Ordner"
 
-#: ../../platform/osx/frontend/Preferences.py:42
+#: ../..//platform/osx/frontend/Preferences.py:42
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Disk Space"
 msgstr "Festplatten-Platz"
 
-#: ../../platform/osx/frontend/Preferences.py:164
+#: ../..//platform/osx/frontend/Preferences.py:164
 msgid "Movies Directory"
 msgstr "Verzeichnis der Filme"
 
-#: ../../platform/osx/frontend/Preferences.py:165
+#: ../..//platform/osx/frontend/Preferences.py:165
 #, python-format
 msgid "Select a Directory to store %s downloads in."
 msgstr "Wähle einen Ordner zum speichern von %s downloads."
 
-#: ../../platform/osx/frontend/Preferences.py:166
-#: ../../platform/osx/frontend/Preferences.py:230
+#: ../..//platform/osx/frontend/Preferences.py:166
+#: ../..//platform/osx/frontend/Preferences.py:230
 msgid "Select"
 msgstr "Markieren"
 
-#: ../../platform/osx/frontend/Preferences.py:175
+#: ../..//platform/osx/frontend/Preferences.py:175
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
 msgstr "Vorhandene Videos übertragen?"
 
-#: ../../platform/osx/frontend/Preferences.py:176
+#: ../..//platform/osx/frontend/Preferences.py:176
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
@@ -767,327 +750,664 @@ msgstr ""
 "Downloads dorthin verschieben? (Filme die gerade downloaden werden erst "
 "bewegt wenn der Download beendet ist)."
 
-#: ../../platform/osx/frontend/Preferences.py:228
+#: ../..//platform/osx/frontend/Preferences.py:228
 msgid "View this Directory in the Library"
 msgstr "Zeige dieses Verzeichnis in der Bibliothek"
 
-#: ../../platform/osx/frontend/Preferences.py:229
+#: ../..//platform/osx/frontend/Preferences.py:229
 msgid "Select a Directory to view in the Library."
 msgstr "Wählen sie ein Verzeichnis, um es in der Bibliothek anzuzeigen"
 
-#: ../../platform/osx/frontend/StartupPanel.py:114
+#: ../..//platform/osx/frontend/QuicktimeRenderer.py:218
+msgid "Audio"
+msgstr "Audio"
+
+#: ../..//platform/osx/frontend/StartupPanel.py:114
 msgid "Search!"
 msgstr "Suchen"
 
-#: ../../platform/osx/frontend/Application.py:228
-msgid "Pause Video"
-msgstr "Video pausieren"
-
-#: ../../platform/osx/frontend/Application.py:237
-msgid "Unsupported version of Quicktime"
-msgstr "Nicht unterstütze Quicktime-Version"
-
-#: ../../platform/osx/frontend/Application.py:238
-#, python-format
-msgid ""
-"To run %s you need the most recent version of Quicktime, which is a free "
-"update."
-msgstr ""
-"Um %s zu starten wird die neueste Quicktime-Version benötigt, die gratis "
-"erhältlich ist."
-
-#: ../../platform/osx/frontend/UIStrings.py:5
+#: ../..//platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
 msgstr "_Entfernen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:6
+#: ../..//platform/osx/frontend/UIStrings.py:6
 msgid "_Remove Playlist..."
 msgstr "_Wiedergabeliste entfernen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:7
+#: ../..//platform/osx/frontend/UIStrings.py:7
 msgid "_Remove Playlists..."
 msgstr "_Widergabelisten entfernen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:8
+#: ../..//platform/osx/frontend/UIStrings.py:8
 msgid "_Remove Playlist Folder..."
 msgstr "_Ordner für Wiedergabeliste entfernen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:9
+#: ../..//platform/osx/frontend/UIStrings.py:9
 msgid "_Remove Playlist Folders..."
 msgstr "_Ordner für Widergabeliste entfernen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:10 ../../portable/menubar.py:179
+#: ../..//platform/osx/frontend/UIStrings.py:10 ../..//portable/menubar.py:179
 msgid "_Remove Channel..."
 msgstr "_Kanal entfernen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:11 ../../portable/menubar.py:180
+#: ../..//platform/osx/frontend/UIStrings.py:11 ../..//portable/menubar.py:180
 msgid "_Remove Channels..."
 msgstr "_Kanäle entfernen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:12 ../../portable/menubar.py:182
+#: ../..//platform/osx/frontend/UIStrings.py:12 ../..//portable/menubar.py:182
 msgid "_Remove Channel Folder..."
 msgstr "_Ordner für Kanal entfernen"
 
-#: ../../platform/osx/frontend/UIStrings.py:13 ../../portable/menubar.py:181
+#: ../..//platform/osx/frontend/UIStrings.py:13 ../..//portable/menubar.py:181
 msgid "_Remove Channel Folders..."
 msgstr "_Ordner für Kanal entfernen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:14
+#: ../..//platform/osx/frontend/UIStrings.py:14
 msgid "_Remove Miro Guide..."
 msgstr "Entfe_rne den Miro Programmführer..."
 
-#: ../../platform/osx/frontend/UIStrings.py:15
+#: ../..//platform/osx/frontend/UIStrings.py:15
 msgid "_Remove Miro Guides..."
 msgstr "Entfe_rne die Miro Guides..."
 
-#: ../../platform/osx/frontend/UIStrings.py:16
+#: ../..//platform/osx/frontend/UIStrings.py:16
 msgid "_Remove Video..."
 msgstr "_Video entfernen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:17
+#: ../..//platform/osx/frontend/UIStrings.py:17
 msgid "_Remove Videos..."
 msgstr "_Videos entfernen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:18
+#: ../..//platform/osx/frontend/UIStrings.py:18
 msgid "Re_name..."
 msgstr "um_benennen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:19
+#: ../..//platform/osx/frontend/UIStrings.py:19
 msgid "Re_name Playlist..."
 msgstr "Wi_edergabeliste umbenennen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:20
+#: ../..//platform/osx/frontend/UIStrings.py:20
 msgid "Re_name Playlist Folder..."
 msgstr "Or_dner für Wiedergabeliste umbenennen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:21 ../../portable/menubar.py:178
+#: ../..//platform/osx/frontend/UIStrings.py:21 ../..//portable/menubar.py:178
 msgid "Re_name Channel..."
 msgstr "Ka_nal umbenennen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:22
+#: ../..//platform/osx/frontend/UIStrings.py:22
 msgid "Re_name Channel Folder..."
 msgstr "Or_dner für Kanal umbenennen..."
 
-#: ../../platform/osx/frontend/UIStrings.py:23
+#: ../..//platform/osx/frontend/UIStrings.py:23
 msgid "Re_name Miro Guide..."
 msgstr "Miro Programmführer umbe_nennen"
 
-#: ../../platform/osx/frontend/UIStrings.py:24 ../../portable/menubar.py:184
+#: ../..//platform/osx/frontend/UIStrings.py:24 ../..//portable/menubar.py:184
 msgid "_Update Channel..."
 msgstr "_Kanal aktualisieren..."
 
-#: ../../platform/osx/frontend/UIStrings.py:25 ../../portable/menubar.py:185
+#: ../..//platform/osx/frontend/UIStrings.py:25 ../..//portable/menubar.py:185
 msgid "_Update Channels..."
 msgstr "_Kanäle aktualisieren..."
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45
-msgid "Hide"
-msgstr "Ausblenden"
-
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47
-msgid "Show"
-msgstr "Anzeigen"
-
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48
-#: ../../portable/dialogs.py:80 ../../portable/menubar.py:257
-msgid "Quit"
-msgstr "Beenden"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:322
-msgid "New Channel _Guide..."
-msgstr "Neuer _Programmführer..."
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:563
-msgid "Folder Location"
-msgstr "Speicherort des Ordners"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
-msgid "Username:"
-msgstr "Benutzername:"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
-msgid "Password:"
-msgstr "Passwort:"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:413
-msgid "Unknown Runtime Error"
-msgstr "Unbekannter Laufzeitfehler"
-
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:414
-#, python-format
-msgid "An unknown error has occurred %s."
-msgstr "Ein unbekannter Fehler ist aufgetreten %s."
-
-#: ../../portable/dl_daemon/download.py:367
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:367
+#: ../..//portable/dl_daemon/download.py:367
 msgid "Error"
 msgstr "Fehler"
 
-#: ../../portable/dl_daemon/download.py:440
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:440
+#: ../..//portable/dl_daemon/download.py:440
 #, python-format
 msgid "Could not write to %s"
 msgstr "%s unbeschreibbar"
 
-#: ../../portable/dl_daemon/download.py:459
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:459
+#: ../..//portable/dl_daemon/download.py:459
 msgid "Not enough disk space"
 msgstr "Nicht genügend Speicherplatz"
 
-#: ../../portable/dl_daemon/download.py:460
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:460
+#: ../..//portable/dl_daemon/download.py:460
 #, python-format
 msgid "%s MB required to store this video"
 msgstr "%s MB gebraucht zum Videospeichern"
 
-#: ../../portable/dl_daemon/download.py:679
-msgid "BitTorrent failure"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:680
-msgid "BitTorrent failed to startup"
-msgstr ""
-
-#: ../../portable/dl_daemon/download.py:803
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:793
+#: ../..//portable/dl_daemon/download.py:803
 msgid "Corrupt Torrent"
 msgstr "Korrupte Torrentdatei"
 
-#: ../../portable/dl_daemon/download.py:804
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:794
+#: ../..//portable/dl_daemon/download.py:804
 #, python-format
 msgid "The torrent file at %s was not valid"
 msgstr "Die Torrentdatei unter %s war ungültig"
 
-#: ../../portable/dl_daemon/download.py:830
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:820
+#: ../..//portable/dl_daemon/download.py:830
 msgid "Torrent file deleted"
 msgstr "Torrentdatei gelöscht"
 
-#: ../../portable/dl_daemon/download.py:831
+#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:821
+#: ../..//portable/dl_daemon/download.py:831
 msgid "The torrent file for this item was deleted "
 msgstr "Die Torrentdatei wurde gelöscht "
 
-#: ../../portable/dl_daemon/download.py:832
-msgid "outside of democracy."
-msgstr "Ausser democracy."
+#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57
+msgid "Update Available"
+msgstr "Ein Update ist verfügbar"
 
-#: ../../portable/tabs.py:43
-msgid "Library"
-msgstr "Medienbibliothek"
+#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:58
+#, python-format
+msgid "A new version of %s is available for download."
+msgstr "Eine neue Version von %s steht zum herunterladen bereit."
 
-#: ../../portable/tabs.py:44
-msgid "New"
-msgstr "neu"
+#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214
+msgid "Error Bombing Item"
+msgstr "Fehler beim \"Bomben\" der Datei"
 
-#: ../../portable/tabs.py:46
-msgid "Downloading"
-msgstr "wird heruntergeladen"
+#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:216
+msgid "Error Recommending Item"
+msgstr "Fehler beim Weiterempfehlen des Objektes"
 
-#: ../../portable/guide.py:83 ../../portable/feed.py:782
-msgid "Copy URL to clipboard"
-msgstr "URL in Zwischenablage kopieren"
+#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218
+msgid "Error Opening Website"
+msgstr "Fehler beim Öffnen der Webseite"
 
-#: ../../portable/guide.py:118
-msgid "Miro Guide"
-msgstr "Miro Programmführer"
+#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:222
+#, python-format
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr ""
+"Fehler beim Öffnen von %s. Versuchen Sie es in ein paar Sekunden nochmals."
 
-#: ../../portable/downloader.py:214
+#: ../..//platform/windows-xul/xul/components/pybridge.py:45
+#, python-format
+msgid ""
+"Error importing modules:\n"
+"%s"
+msgstr ""
+"Fehler beim Importieren des Moduls:\n"
+"%s"
+
+#: ../..//platform/windows-xul/xul/components/pybridge.py:49
+msgid "Starting up"
+msgstr "Wird gestartet"
+
+#: ../..//platform/windows-xul/xul/components/pybridge.py:256
+msgid "Loading window"
+msgstr "Lade Oberfläche"
+
+#: ../..//platform/windows-xul/xul/components/pybridge.py:257
+msgid "onStartup called twice"
+msgstr "OnStartup zweimal geladen"
+
+#: ../..//platform/windows-xul/xul/components/pybridge.py:672
+msgid "Spacebar"
+msgstr "Leertaste"
+
+#: ../..//platform/windows-xul/xul/components/pybridge.py:819
+msgid "Close to tray?"
+msgstr "ins Tray minimieren?"
+
+#: ../..//platform/windows-xul/xul/components/pybridge.py:820
+msgid ""
+"When you click the red close button, would you like Miro to close to the "
+"system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"Möchten Sie, dass Miro sich beendet oder minimiert, wenn Sie auf den roten "
+"Beenden-Knopf klicken? Sie können diese Einstellung später ändern."
+
+#: ../..//portable/app.py:683
+msgid "Database too new"
+msgstr "Datenbank zu neu"
+
+#: ../..//portable/app.py:684
+msgid ""
+"You have a database that was saved with a newer version of $shortAppName. "
+"You must download the latest version of $shortAppName and run that."
+msgstr ""
+"Ihre Datenbank wurde mit einer neueren Version von $shortAppName gesichert. "
+"Sie müssen die neuste Version von $shortAppName verwerden."
+
+#: ../..//portable/app.py:698
+msgid "Video Directory Missing"
+msgstr "Das Videoverzeichnis ist nicht auffindbar."
+
+#: ../..//portable/app.py:699
+#, fuzzy
+msgid ""
+"\n"
+"Miro can't find your primary video directory.  This may be because it's "
+"located on an external drive that is currently disconnected.\n"
+"\n"
+"If you continue, the video directory will be reset to a location on this "
+"drive (this will cause you to lose some details about the videos on the "
+"external drive).  You can also quit, connect the drive, and relaunch Miro."
+msgstr ""
+"\n"
+"Miro kann ihr primäres Videoverzeichnis nicht finden. Dies mag daran liegen, "
+"dass es sich auf einem externen Datenträger befindet, der derzeit nicht "
+"angeschlossen ist.\n"
+"\n"
+"Wenn sie fortfahren, dann wird das Videoverzeichnis auf eine Lokation auf "
+"der aktuellen Platte zurückgesetzt (dies wird dazu führen, dass Sie einige "
+"Details der Videos des externen Datenträgers verlieren). Sie können aber "
+"auch abbrechen, den externen Datenträger anschliessen und $shortAppName "
+"neustarten."
+
+#: ../..//portable/app.py:1018 ../..//portable/app.py:1032
+#: ../..//portable/app.py:1076 ../..//portable/app.py:1102
+#: ../..//portable/app.py:1122
+#, python-format
+msgid "Remove %s"
+msgstr "%s entfernen"
+
+#: ../..//portable/app.py:1019
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr "Wollen Sie den Programmführer %s endgültig entfernen?"
+
+#: ../..//portable/app.py:1033
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr "Wollen sie %s endgültig entfernen?"
+
+#: ../..//portable/app.py:1036 ../..//portable/app.py:1081
+#: ../..//portable/app.py:1107 ../..//portable/app.py:1126
+#, python-format
+msgid "Remove %s channels"
+msgstr "%s Kanäle entfernen"
+
+#: ../..//portable/app.py:1038
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr "Wollen Sie diese %s Wiedergabelisten endgültig entfernen?"
+
+#: ../..//portable/app.py:1077
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr "Was möchten Sie mit den heruntergeladenen Videos dieses Kanals tun?"
+
+#: ../..//portable/app.py:1082
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr "Was möchten Sie mit den heruntergeladenen Videos dieser Kanäle tun?"
+
+#: ../..//portable/app.py:1103
+#, python-format
+msgid ""
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
+msgstr ""
+"Möchten Sie %s wirklich entfernen? Laufende Downloads werden abgebrochen."
+
+#: ../..//portable/app.py:1108
+#, python-format
+msgid ""
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
+msgstr ""
+"Möchten Sie diese %s Kanäle wirklich entfernen? Laufende Downloads werden "
+"abgebrochen."
+
+#: ../..//portable/app.py:1123
+#, python-format
+msgid "Are you sure you want to remove %s?"
+msgstr "Wollen Sie %s wirklich löschen?"
+
+#: ../..//portable/app.py:1127
+#, python-format
+msgid "Are you sure you want to remove these %s channels?"
+msgstr "Sind sie sicher, dass Sie diese %s Kanäle entfernen möchten?"
+
+#: ../..//portable/app.py:1140
+#, python-format
+msgid "Stop watching %s"
+msgstr "Überwachung von %s beenden"
+
+#: ../..//portable/app.py:1141
+#, python-format
+msgid "Are you sure you want to stop watching %s?"
+msgstr "Sind Sie sicher, dass Sie die Überwachung von %s beenden möchten?"
+
+#: ../..//portable/app.py:1144
+#, python-format
+msgid "Stop watching %s directories"
+msgstr "Überwachung von %s Verzeichnissen beenden"
+
+#: ../..//portable/app.py:1145
+#, python-format
+msgid "Are you sure you want to stop watching these %s directories?"
+msgstr ""
+"Sind Sie sicher, dass Sie die Überwachung von %s Verzeichnissen beenden "
+"möchten?"
+
+#: ../..//portable/app.py:1176
+msgid "Are you sure you want to quit?"
+msgstr "Möchten Sie das Programm wirklich beenden?"
+
+#: ../..//portable/app.py:1178
+msgid ""
+"Miro is still uploading your crash report. If you quit now the upload will "
+"be canceled.  Quit Anyway?"
+msgstr ""
+"Miro lädt den Crashreport noch hoch. Wenn sie nun beenden wird das Hochladen "
+"beendet. Trotzdem beenden?"
+
+#: ../..//portable/app.py:1183
+#, python-format
+msgid "You have %d download still in progress.  Quit Anyway?"
+msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
+msgstr[0] "Es läuft noch %d Download. Dennoch beenden?"
+msgstr[1] "Es laufen noch %d Downloads. Dennoch beenden?"
+
+#: ../..//portable/app.py:1186
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr ""
+"Warnen, wenn ich versuche Miro zu beenden während noch heruntergeladen wird."
+
+#: ../..//portable/app.py:1679
+msgid "Invalid Value"
+msgstr "Ungültiger Wert"
+
+#: ../..//portable/app.py:1680
+#, python-format
+msgid "%s is invalid.  You must enter a non-negative number."
+msgstr "%s ist ungültig. Sie müssen eine positive Zahl eingeben."
+
+#: ../..//portable/app.py:1971
+msgid " - Invalid URL"
+msgstr " - ungültige URL"
+
+#: ../..//portable/app.py:1972
+msgid ""
+"The address you entered is not a valid URL.\n"
+"Please double check and try again.\n"
+"\n"
+msgstr ""
+"Die von Ihnen eingegebene Adresse haben, ist ungültig.\n"
+"Bitte überprüfen Sie die Adresse und versuchen Sie es noch einmal.\n"
+"\n"
+
+#: ../..//portable/app.py:1996
+msgid "$shortAppName - Add Channel"
+msgstr "$shortAppName - Kanal hinzufügen"
+
+#: ../..//portable/app.py:1996
+msgid "Enter the URL of the channel to add"
+msgstr "Geben Sie die Adresse des hinzuzufügenden Kanals ein"
+
+#: ../..//portable/app.py:2017
+msgid "$shortAppName - Add Miro Guide"
+msgstr "$shortAppName - Programmführer hinzufügen"
+
+#: ../..//portable/app.py:2017
+msgid "Enter the URL of the Miro Guide to add"
+msgstr ""
+"Geben Sie die URL des Programmführers ein, den Sie hinzufügen möchten"
+
+#: ../..//portable/app.py:2023
+msgid "$shortAppName - Download Video"
+msgstr "Video herunterladen"
+
+#: ../..//portable/app.py:2023
+msgid "Enter the URL of the video to download"
+msgstr "Geben sie die URL des herunterzuladenen Videos ein"
+
+#: ../..//portable/app.py:2317
+msgid "News and Tech"
+msgstr "Nachrichten und Technologie"
+
+#: ../..//portable/app.py:2324
+msgid "Entertainment"
+msgstr "Unterhaltung"
+
+#: ../..//portable/app.py:2330
+msgid "High-Def"
+msgstr "High-Definition (HD)"
+
+#: ../..//portable/app.py:2338
+msgid "Mac"
+msgstr "Mac"
+
+#: ../..//portable/app.py:2353
+msgid "Example Playlist"
+msgstr "Wiedergabeliste Beispiel"
+
+#: ../..//portable/app.py:2372
+msgid "Custom Channels"
+msgstr "Eigene Kanäle"
+
+#: ../..//portable/app.py:2372
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr ""
+"Sie benutzen eine Version von $longAppName mit selbst zusammengestellten "
+"Kanälen."
+
+#: ../..//portable/app.py:2387
+msgid "Error Changing Movies Directory"
+msgstr "Fehler beim Wechseln des Filmverzeichnisses"
+
+#: ../..//portable/app.py:2388
+msgid ""
+"You don't have permission to write to the directory you selected.  Miro will "
+"continue to use the old videos directory."
+msgstr ""
+"Sie haben keine Berechtigung in dem ausgewählten Ordner zu schreiben. Miro "
+"wird den alten Ordner weiterbenutzen."
+
+#: ../..//portable/autoupdate.py:121
+#, python-format
+msgid "%s Version Alert"
+msgstr "%s Versionsmeldung"
+
+#: ../..//portable/autoupdate.py:122
+#, python-format
+msgid "A new version of %s is available. Would you like to download it now?"
+msgstr ""
+"Eine neue Version von %s ist verfügbar. Möchten Sie diese jetzt "
+"herunterladen?"
+
+#: ../..//portable/autoupdate.py:128
+#, python-format
+msgid "%s Version Check"
+msgstr "%s Versionsüberprüfung"
+
+#: ../..//portable/autoupdate.py:129
+#, python-format
+msgid "%s is up to date."
+msgstr "%s ist auf dem neuesten Stand"
+
+#: ../..//portable/dialogs.py:76
+msgid "Ok"
+msgstr "OK"
+
+#: ../..//portable/dialogs.py:81
+msgid "Ignore"
+msgstr "Ignorieren"
+
+#: ../..//portable/dialogs.py:82
+msgid "Submit Crash Repport"
+msgstr "Übermittle Absturzbericht"
+
+#: ../..//portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
+msgid "Migrate"
+msgstr "Übertragen"
+
+#: ../..//portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
+msgid "Don't Migrate"
+msgstr "Nicht übertragen"
+
+#: ../..//portable/dialogs.py:85 ../..//portable/item.py:1470
+#: ../..//portable/menu.py:111
+msgid "Download"
+msgstr "Herunterladen"
+
+#: ../..//portable/dialogs.py:86
+msgid "Remove Entry"
+msgstr "Eintrag entfernen"
+
+#: ../..//portable/dialogs.py:87
+msgid "Delete File"
+msgstr "Datei löschen"
+
+#: ../..//portable/dialogs.py:88
+msgid "Delete Files"
+msgstr "Dateien löschen"
+
+#: ../..//portable/dialogs.py:89
+msgid "Keep Videos"
+msgstr "Videos behalten"
+
+#: ../..//portable/dialogs.py:90
+msgid "Delete Videos"
+msgstr "Videos löschen"
+
+#: ../..//portable/dialogs.py:92
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
+msgid "Create Channel"
+msgstr "Kanal erstellen"
+
+#: ../..//portable/dialogs.py:93
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: ../..//portable/dialogs.py:94
+msgid "Add Into New Folder"
+msgstr "Im neuen Ordner hinzufügen"
+
+#: ../..//portable/dialogs.py:95
+msgid "Keep"
+msgstr "Behalten"
+
+#: ../..//portable/dialogs.py:97
+msgid "Not Now"
+msgstr "Nicht jetzt"
+
+#: ../..//portable/dialogs.py:98
+msgid "Close to Tray"
+msgstr "ins Tray minimieren"
+
+#: ../..//portable/dialogs.py:99
+msgid "Launch Miro"
+msgstr "Miro starten"
+
+#: ../..//portable/dialogs.py:100
+msgid "Download Anyway"
+msgstr "Trotzdem herunterlade"
+
+#: ../..//portable/dialogs.py:215 ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
+msgid "New Search Channel"
+msgstr "Neue Kanalsuche"
+
+#: ../..//portable/dialogs.py:215 ../../platform/gtk-x11/glade/miro.glade.h:25
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
+msgid "A search channel contains items that match a search term."
+msgstr "Ein Suchkanal enthält Elemte, auf die ein Suchbegriff zutrifft."
+
+#: ../..//portable/dl_daemon/download.py:679
+msgid "BitTorrent failure"
+msgstr "BitTorrent Problem"
+
+#: ../..//portable/dl_daemon/download.py:680
+msgid "BitTorrent failed to startup"
+msgstr "BitTorrent konnte nicht starten"
+
+#: ../..//portable/downloader.py:214
 msgid "activity"
 msgstr "Aktivität"
 
-#: ../../portable/downloader.py:250 ../../portable/httpclient.py:112
+#: ../..//portable/downloader.py:250 ../..//portable/httpclient.py:112
 msgid "File not found"
 msgstr "Datei nicht gefunden"
 
-#: ../../portable/downloader.py:251
+#: ../..//portable/downloader.py:251
 msgid "Flash URL Scraping Error"
 msgstr "Flash URL Scraping (Datenbeschaffung) Fehler"
 
-#: ../../portable/downloader.py:430
+#: ../..//portable/downloader.py:430
 msgid "starting up"
 msgstr "wird gestartet"
 
-#: ../../portable/playlist.py:196 ../../portable/playlist.py:201
-msgid "Rename Playlist"
-msgstr "Wiedergabeliste umbenennen"
+#: ../..//portable/extrastrings.py:5 ../..//portable/feed.py:2025
+#: ../..//portable/feed.py:2117
+msgid "Search"
+msgstr "Suchen"
 
-#: ../../portable/playlist.py:202
-#, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Geben Sie einen neuen Namen für Wiedergabeliste %s ein"
-
-#: ../../portable/playlist.py:224
-msgid "Create Playlist"
-msgstr "Wiedergabeliste erstellen"
-
-#: ../../portable/playlist.py:225
-msgid "Enter a name for the new playlist"
-msgstr "Geben Sie einen Name für Wiedergabeliste ein"
-
-#: ../../portable/feed.py:381
+#: ../..//portable/feed.py:386
 msgid "never"
 msgstr "nie"
 
-#: ../../portable/feed.py:383 ../../portable/item.py:535
+#: ../..//portable/feed.py:388 ../..//portable/item.py:535
 #, python-format
 msgid "%d hours"
 msgstr "%d Stunden"
 
-#: ../../portable/feed.py:385
+#: ../..//portable/feed.py:390
 #, python-format
 msgid "%d day"
 msgstr "%d Tage"
 
-#: ../../portable/feed.py:387 ../../portable/item.py:533
+#: ../..//portable/feed.py:392 ../..//portable/item.py:533
 #, python-format
 msgid "%d days"
 msgstr "%d Tage"
 
-#: ../../portable/feed.py:389
+#: ../..//portable/feed.py:394
 #, python-format
 msgid "%d months"
 msgstr "%d Monate"
 
-#: ../../portable/feed.py:780
+#: ../..//portable/feed.py:785
 msgid "Update Channel Now"
 msgstr "Kanal jetzt aktualisieren"
 
-#: ../../portable/feed.py:783 ../../portable/feed.py:792
+#: ../..//portable/feed.py:787 ../..//portable/guide.py:83
+msgid "Copy URL to clipboard"
+msgstr "URL in Zwischenablage kopieren"
+
+#: ../..//portable/feed.py:788 ../..//portable/feed.py:797
 msgid "Rename Channel"
 msgstr "Kanal umbenennen"
 
-#: ../../portable/feed.py:787
+#: ../..//portable/feed.py:792
 msgid "Revert Title to Default"
 msgstr "Titel auf Standardnamen zurücksetzen"
 
-#: ../../portable/feed.py:793
+#: ../..//portable/feed.py:798
 #, python-format
 msgid "Enter a new name for the channel %s"
 msgstr "Geben Sie einen neuen Namen für Kanal %s ein"
 
-#: ../../portable/feed.py:880
+#: ../..//portable/feed.py:885
 msgid "Error loading feed"
 msgstr "Fehler beim Laden des Abonnements"
 
-#: ../../portable/feed.py:881
+#: ../..//portable/feed.py:886
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
 msgstr "Feed konnte nicht von %s (%s) geladen werden."
 
-#: ../../portable/feed.py:884
+#: ../..//portable/feed.py:889
 msgid "Would you like to keep the feed?"
 msgstr "Möchten Sie die RSS-Datei behalten?"
 
-#: ../../portable/feed.py:1001
+#: ../..//portable/feed.py:1002
 msgid "Bad content-type"
 msgstr "Ungültiger Inhalt"
 
-#: ../../portable/feed.py:1014
+#: ../..//portable/feed.py:1015
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
 msgstr "Dieser Video-Channel ist nicht kompatibel mit $shortAppName!"
 
-#: ../../portable/feed.py:1015
+#: ../..//portable/feed.py:1016
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny.  Please contact the publishers of "
@@ -1103,163 +1423,768 @@ msgstr ""
 "\n"
 "Wollen Sie trotzdem versuchen, diesen Video-Channel zu laden?"
 
-#: ../../portable/feed.py:2010 ../../portable/feed.py:2118
-#: ../../portable/extrastrings.py:5
-msgid "Search"
-msgstr "Suchen"
-
-#: ../../portable/feed.py:2132
+#: ../..//portable/feed.py:2131
 msgid "Local Files"
 msgstr "Lokale Dateien"
 
-#: ../../portable/feed.py:2146
+#: ../..//portable/feed.py:2145
 msgid "Playing File"
 msgstr "Datei abspielen"
 
-#: ../../portable/menu.py:69
+#: ../..//portable/folder.py:132 ../..//portable/folder.py:155
+msgid "Rename Channel Folder"
+msgstr "Ordner für Kanal umbenennen"
+
+#: ../..//portable/folder.py:134
+#, python-format
+msgid "Enter a new name for the channel folder %s"
+msgstr "Geben Sie einen neuen Namen für den Kanalordner %s ein."
+
+#: ../..//portable/folder.py:210 ../..//portable/folder.py:215
+msgid "Rename Playlist Folder"
+msgstr "Ordner für Wiedergabeliste umbenennen"
+
+#: ../..//portable/folder.py:217
+#, python-format
+msgid "Enter a new name for the playlist folder %s"
+msgstr ""
+"Geben Sie einen neuen Namen für den Ordner der Wiedergabeliste %s ein."
+
+#: ../..//portable/folder.py:225
+msgid "Create Channel Folder"
+msgstr "Ordner für Kanal erstellen"
+
+#: ../..//portable/folder.py:226 ../..//portable/singleclick.py:234
+msgid "Enter a name for the new channel folder"
+msgstr "Geben Sie einen neuen Namen für den Kanalordner ein"
+
+#: ../..//portable/folder.py:239
+msgid "Create Playlist Folder"
+msgstr "Ordner für Wiedergabeliste erstellen"
+
+#: ../..//portable/folder.py:240
+msgid "Enter a name for the new playlist folder"
+msgstr "Geben Sie einen neuen Namen für den Ordner der Wiedergabeliste ein."
+
+#: ../..//portable/guide.py:118
+msgid "Miro Guide"
+msgstr "Miro Programmführer"
+
+#: ../..//portable/httpclient.py:67
+#, python-format
+msgid "Error: %s"
+msgstr "Fehler: %s"
+
+#: ../..//portable/httpclient.py:82 ../..//portable/httpclient.py:87
+msgid "Can't connect"
+msgstr "Keine Verbindung hergestellt"
+
+#: ../..//portable/httpclient.py:83
+#, python-format
+msgid "Connection Error: %s"
+msgstr "Verbindungsfehler: %s"
+
+#: ../..//portable/httpclient.py:88
+msgid "SSL connection error"
+msgstr "SSL Verbindungsfehler"
+
+#: ../..//portable/httpclient.py:92
+msgid "HTTP error"
+msgstr "HTTP Fehler"
+
+#: ../..//portable/httpclient.py:95
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "Ungünstige Statuszeile: %s"
+
+#: ../..//portable/httpclient.py:98
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "Bad Header Line: %s"
+
+#: ../..//portable/httpclient.py:101
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr "Bad Chunk size: %s"
+
+#: ../..//portable/httpclient.py:104
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr "Expected CRLF got: %r"
+
+#: ../..//portable/httpclient.py:107
+#, python-format
+msgid "%s closed connection"
+msgstr "%s hat die Verbindung beendet."
+
+#: ../..//portable/httpclient.py:113
+msgid "Got 404 status code"
+msgstr "HTTP: Fehler 404 - Datei nicht gefunden."
+
+#: ../..//portable/httpclient.py:115
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "Fehlerhafter Statuscode: %s"
+
+#: ../..//portable/httpclient.py:119
+msgid "Authorization failed"
+msgstr "Autorisierung fehlgeschlagen"
+
+#: ../..//portable/httpclient.py:124 ../..//portable/util.py:257
+msgid "Internal Error"
+msgstr "Interner Fehler"
+
+#: ../..//portable/httpclient.py:125
+msgid "Pipeline request never started"
+msgstr "Pipelinegesuch wurde nie gestartet"
+
+#: ../..//portable/httpclient.py:129
+msgid "Timeout"
+msgstr "Zeitablauf"
+
+#: ../..//portable/httpclient.py:130
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "Verbindungzeit mit %s ist abgelaufen."
+
+#: ../..//portable/httpclient.py:134
+msgid "Invalid URL"
+msgstr "Ungültige URL"
+
+#: ../..//portable/httpclient.py:135
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr "\"%s\" ist keine gültige URL"
+
+#: ../..//portable/httpclient.py:324
+msgid "Unknown Error code"
+msgstr "Unbekannter Fehlercode"
+
+#: ../..//portable/httpclient.py:356
+msgid "Connection closed"
+msgstr "Verbindung beendet"
+
+#: ../..//portable/httpclient.py:781
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: ../..//portable/httpclient.py:782
+msgid "Internal Error: Not ready to send"
+msgstr "Interner Fehler: Nicht bereit zu senden"
+
+#: ../..//portable/item.py:478
+#, python-format
+msgid "Removing %s"
+msgstr "%s wird entfernt"
+
+#: ../..//portable/item.py:481
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr ""
+"Möchten Sie dieses Verzeichnis und alle darin enthaltenen Dateien löschen "
+"oder nur den Eintrag aus der Medienbibliothek entfernen?"
+
+#: ../..//portable/item.py:487
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
+msgstr ""
+"Möchten sie diese Datei löschen oder nur den Eintrag in der Bibliothek "
+"entfernen?"
+
+#: ../..//portable/item.py:507
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+"Dieser Eintrag ist ein Ordner. Wenn Sie einen Ordner löschen werden alle "
+"Einträge in diesem Ordner ebenfalls gelöscht."
+
+#: ../..//portable/item.py:537
+#, python-format
+msgid "%d minutes"
+msgstr "%d Minuten"
+
+#: ../..//portable/item.py:547
+#, python-format
+msgid "Expires in %s"
+msgstr "Ablaufzeit in %s"
+
+#: ../..//portable/item.py:559
+#, python-format
+msgid "Will retry in %s"
+msgstr "Versuche in %s erneut"
+
+#: ../..//portable/item.py:561
+msgid "Paused"
+msgstr "Pausiert"
+
+#: ../..//portable/item.py:941
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../..//portable/item.py:943
+msgid "WEB PAGE"
+msgstr "WEBSEITE"
+
+#: ../..//portable/item.py:953
+msgid "Total Down:"
+msgstr "Alles herunter:"
+
+#: ../..//portable/item.py:956
+msgid "Error:"
+msgstr "Fehler:"
+
+#: ../..//portable/item.py:964
+msgid "Down Rate:"
+msgstr "Download-Rate:"
+
+#: ../..//portable/item.py:965
+msgid "Down Total:"
+msgstr "Alles herunter:"
+
+#: ../..//portable/item.py:967
+msgid "Up Rate:"
+msgstr "Upload Rate:"
+
+#: ../..//portable/item.py:968
+msgid "Up Total:"
+msgstr "Alles hoch:"
+
+#: ../..//portable/item.py:973
+msgid "Web page:"
+msgstr "Webseite:"
+
+#: ../..//portable/item.py:973
+msgid "permalink"
+msgstr "Permalink"
+
+#: ../..//portable/item.py:974
+msgid "File link:"
+msgstr "Link zur Datei"
+
+#: ../..//portable/item.py:974
+msgid "direct link to file"
+msgstr "Direkter Link zur Datei"
+
+#: ../..//portable/item.py:976
+msgid "File type:"
+msgstr "Dateityp:"
+
+#: ../..//portable/item.py:983
+msgid "REVEAL LOCAL FOLDER"
+msgstr "LOKALEN ORDNER ANZEIGEN"
+
+#: ../..//portable/item.py:985
+msgid "REVEAL LOCAL FILE"
+msgstr "Datei im Dateimanager anzeigen"
+
+#: ../..//portable/item.py:987
+msgid "Filename:"
+msgstr "Dateiname:"
+
+#: ../..//portable/item.py:994
+msgid "Down Total"
+msgstr "Alles hoch:"
+
+#: ../..//portable/item.py:996
+msgid "Up Total"
+msgstr "Alles hoch:"
+
+#: ../..//portable/item.py:1014
+msgid "Item Details"
+msgstr "Details:"
+
+#: ../..//portable/item.py:1021
+msgid "Torrent Details"
+msgstr "Torrent Details"
+
+#: ../..//portable/item.py:1023
+msgid "Torrent Details <i>stopped</i>"
+msgstr "Torrent Details <i>gestoppt</i>"
+
+#: ../..//portable/item.py:1027
+msgid "Download Details"
+msgstr "Download-Details"
+
+#: ../..//portable/item.py:1241
+msgid "downloading..."
+msgstr "wird heruntergeladen..."
+
+#: ../..//portable/item.py:1248 ../..//portable/item.py:1251
+#, python-format
+msgid "%s remaining"
+msgstr "%s verbleibend"
+
+#: ../..//portable/item.py:1260
+msgid "starting up..."
+msgstr "wird gestartet..."
+
+#: ../..//portable/item.py:1453 ../..//portable/menu.py:97
+msgid "Remove From Playlist"
+msgstr "Aus der Wiedergabeliste entfernen"
+
+#: ../..//portable/item.py:1455 ../..//portable/menu.py:99
+msgid "Remove From the Library"
+msgstr "von der Medienbibliothek entfernen"
+
+#: ../..//portable/item.py:1457 ../..//portable/menu.py:94
+msgid "Play"
+msgstr "Wiedergabe"
+
+#: ../..//portable/item.py:1459
+msgid "Play Just This Video"
+msgstr "Nur dieses Video wiedergeben"
+
+#: ../..//portable/item.py:1460 ../..//portable/menu.py:95
+msgid "Add to new playlist"
+msgstr "Zur neuen Wiedergabeliste hinzufügen"
+
+#: ../..//portable/item.py:1464 ../..//portable/menu.py:105
+msgid "Mark as Unwatched"
+msgstr "Als nicht gespielt markieren"
+
+#: ../..//portable/item.py:1466 ../..//portable/menu.py:123
+msgid "Restart Upload"
+msgstr "Upload neu starten"
+
+#: ../..//portable/item.py:1468 ../..//portable/menu.py:118
+msgid "Cancel Download"
+msgstr "Download abbrechen"
+
+#: ../..//portable/item.py:1468 ../..//portable/menu.py:120
+msgid "Pause Download"
+msgstr "Download pausieren"
+
+#: ../..//portable/item.py:1807
+#, python-format
+msgid "Removing %s items"
+msgstr "Entferne %s Elemente"
+
+#: ../..//portable/item.py:1809
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+"Eines oder mehrere dieser Videos wurden von keinem Kanal heruntergeladen. "
+"Möchten Sie diese Videos wirklich löschen oder nur ihre Einträge aus der "
+"Medienbibliothek von Miro entfernen?"
+
+#: ../..//portable/item.py:1817
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"Ein oder mehrere dieser Elemente sind Ordner. Wenn Sie einen Ordner "
+"entfernen bzw. löschen, werden auch alle darin enthaltenen Dateien entfernt "
+"oder gelöscht."
+
+#: ../..//portable/menu.py:69
 msgid "Update Channels Now"
 msgstr "Kanäle jetzt aktualisieren"
 
-#: ../../portable/menu.py:92
+#: ../..//portable/menu.py:92
 #, python-format
 msgid "%d Downloaded Items"
 msgstr "%d heruntergeladene Elemente"
 
-#: ../../portable/menu.py:94 ../../portable/item.py:1454
-msgid "Play"
-msgstr "Wiedergabe"
-
-#: ../../portable/menu.py:95 ../../portable/item.py:1457
-msgid "Add to new playlist"
-msgstr "Zur neuen Wiedergabeliste hinzufügen"
-
-#: ../../portable/menu.py:97 ../../portable/item.py:1450
-msgid "Remove From Playlist"
-msgstr "Aus der Wiedergabeliste entfernen"
-
-#: ../../portable/menu.py:99 ../../portable/item.py:1452
-msgid "Remove From the Library"
-msgstr "von der Medienbibliothek entfernen"
-
-#: ../../portable/menu.py:105 ../../portable/item.py:1461
-msgid "Mark as Unwatched"
-msgstr "Als nicht gespielt markieren"
-
-#: ../../portable/menu.py:110
+#: ../..//portable/menu.py:110
 #, python-format
 msgid "%d Available Items"
 msgstr "%d verfügbare Elemente"
 
-#: ../../portable/menu.py:111 ../../portable/dialogs.py:85
-#: ../../portable/item.py:1467
-msgid "Download"
-msgstr "Herunterladen"
-
-#: ../../portable/menu.py:116
+#: ../..//portable/menu.py:116
 #, python-format
 msgid "%d Downloading Items"
 msgstr "%d herunterladende Elemente"
 
-#: ../../portable/menu.py:118 ../../portable/item.py:1465
-msgid "Cancel Download"
-msgstr "Download abbrechen"
+#: ../..//portable/menubar.py:144
+msgid "_Open"
+msgstr "_Öffnen..."
 
-#: ../../portable/menu.py:120 ../../portable/item.py:1465
-msgid "Pause Download"
-msgstr "Download pausieren"
+#: ../..//portable/menubar.py:145
+msgid "_Download Video"
+msgstr "_Lade Video herunter"
 
-#: ../../portable/menu.py:123 ../../portable/item.py:1463
-msgid "Restart Upload"
-msgstr "Upload neu starten"
+#: ../..//portable/menubar.py:147
+msgid "Check _Version"
+msgstr "auf Updates _überprüfen"
 
-#: ../../portable/autoupdate.py:121
-#, python-format
-msgid "%s Version Alert"
-msgstr "%s Versionsmeldung"
+#: ../..//portable/menubar.py:149
+msgid "_Remove Video"
+msgstr "_Video entfernen"
 
-#: ../../portable/autoupdate.py:122
-#, python-format
-msgid "A new version of %s is available. Would you like to download it now?"
+#: ../..//portable/menubar.py:150
+msgid "_Remove Videos"
+msgstr "Videos _löschen"
+
+#: ../..//portable/menubar.py:151
+msgid "Re_name Video"
+msgstr "Video um_benennen"
+
+#: ../..//portable/menubar.py:152
+msgid "Save Video _As..."
+msgstr "Video gespeichert _als..."
+
+#: ../..//portable/menubar.py:153
+msgid "Save Videos _As..."
+msgstr "Video speichern _als..."
+
+#: ../..//portable/menubar.py:154
+msgid "Copy Video _URL"
+msgstr "Video-_URL kopieren"
+
+#: ../..//portable/menubar.py:156
+msgid "_Options..."
+msgstr "_Optionen.."
+
+#: ../..//portable/menubar.py:157
+msgid "_Quit"
+msgstr "_Beenden"
+
+#: ../..//portable/menubar.py:165
+msgid "Cu_t"
+msgstr "Aus_schneiden"
+
+#: ../..//portable/menubar.py:166
+msgid "_Copy"
+msgstr "_Kopieren"
+
+#: ../..//portable/menubar.py:167
+msgid "_Paste"
+msgstr "Ein_fügen"
+
+#: ../..//portable/menubar.py:168
+msgid "Select _All"
+msgstr "Alles auswählen"
+
+#: ../..//portable/menubar.py:169
+msgid "_Delete"
+msgstr "_Löschen"
+
+#: ../..//portable/menubar.py:173
+msgid "Add _Channel"
+msgstr "_Video-Channel hinzufügen"
+
+#: ../..//portable/menubar.py:174
+msgid "New Searc_h Channel..."
+msgstr "Neue Kana_lsuche..."
+
+#: ../..//portable/menubar.py:175
+msgid "New _Folder..."
+msgstr "Neuer _Ordner..."
+
+#: ../..//portable/menubar.py:176
+msgid "Add Channel _Guide..."
+msgstr "Programmführer hinzufügen..."
+
+#: ../..//portable/menubar.py:186
+msgid "Update _All Channels"
+msgstr "_Alle Video-Channels updaten"
+
+#: ../..//portable/menubar.py:188
+msgid "_Import Channels (OPML)..."
+msgstr "_Importiere Kanäle (OPML)..."
+
+#: ../..//portable/menubar.py:189
+msgid "E_xport Channels (OPML)..."
+msgstr "E_xportiere Kanäle (OPML)..."
+
+#: ../..//portable/menubar.py:191
+msgid "_Send this channel to a friend"
+msgstr "_Schick diesen Kanal an einem Freund"
+
+#: ../..//portable/menubar.py:192
+msgid "Copy Channel _Link"
+msgstr "Kanal-_Link kopieren"
+
+#: ../..//portable/menubar.py:195
+msgid "New _Playlist"
+msgstr "Neue _Playlist"
+
+#: ../..//portable/menubar.py:196
+msgid "New Playlist Fol_der"
+msgstr "neues Playlisten_verzeichnis"
+
+#: ../..//portable/menubar.py:198
+msgid "Re_name Playlist"
+msgstr "Wi_edergabeliste umbenennen"
+
+#: ../..//portable/menubar.py:199
+msgid "_Remove Playlist"
+msgstr "_Wiedergabeliste entfernen"
+
+#: ../..//portable/menubar.py:200
+msgid "_Remove Playlists"
+msgstr "_Playlist löschen"
+
+#: ../..//portable/menubar.py:201
+msgid "_Remove Playlist Folders"
+msgstr "entfe_rne Playlist-Verzeichnisse"
+
+#: ../..//portable/menubar.py:202
+msgid "_Remove Playlist Folder"
+msgstr "entfe_rne Playlist-Verzeichnis"
+
+#: ../..//portable/menubar.py:212
+msgid "_Play"
+msgstr "Wiederg_abe"
+
+#: ../..//portable/menubar.py:213
+msgid "_Stop"
+msgstr "_Stop"
+
+#: ../..//portable/menubar.py:215
+msgid "_Next Video"
+msgstr "_Nächstes Video"
+
+#: ../..//portable/menubar.py:216
+msgid "_Previous Video"
+msgstr "_Letztes Video"
+
+#: ../..//portable/menubar.py:218
+msgid "Skip _Forward"
+msgstr "V_orspulen"
+
+#: ../..//portable/menubar.py:219
+msgid "Skip _Back"
+msgstr "_Zurückspulen"
+
+#: ../..//portable/menubar.py:221
+msgid "Volume _Up"
+msgstr "L_auter"
+
+#: ../..//portable/menubar.py:222
+msgid "Volume _Down"
+msgstr "L_eiser"
+
+#: ../..//portable/menubar.py:224
+msgid "_Fullscreen"
+msgstr "_Vollbildmodus"
+
+#: ../..//portable/menubar.py:228
+msgid "_About"
+msgstr "_Über..."
+
+#: ../..//portable/menubar.py:229
+msgid "_Donate"
+msgstr "_Spenden"
+
+#: ../..//portable/menubar.py:230 ../..//portable/menubar.py:245
+msgid "_Help"
+msgstr "_Hilfe"
+
+#: ../..//portable/menubar.py:232
+msgid "Report a _Bug"
+msgstr "einen Fehler _melden"
+
+#: ../..//portable/menubar.py:236
+msgid "_Video"
+msgstr "_Video"
+
+#: ../..//portable/menubar.py:238
+msgid "_File"
+msgstr "_Datei"
+
+#: ../..//portable/menubar.py:242
+msgid "_Channels"
+msgstr "_Kanäle"
+
+#: ../..//portable/menubar.py:243
+msgid "_Playlists"
+msgstr "_Wiedergabelisten"
+
+#: ../..//portable/menubar.py:244
+msgid "P_layback"
+msgstr "V_ideowiedergabe"
+
+#: ../..//portable/menubar.py:249
+msgid "Play Unwatched ($numUnwatched)"
+msgstr "ungesehenes abspielen ($numUnwatched)"
+
+#: ../..//portable/menubar.py:250
+msgid "Pause All Downloads ($numDownloading)"
+msgstr "alle Downloads anhalten ($numDownloading)"
+
+#: ../..//portable/menubar.py:251
+msgid "Resume All Downloads ($numPaused)"
+msgstr "alle Downloads fortsetzen ($numPaused)"
+
+#: ../..//portable/menubar.py:253
+msgid "Options..."
+msgstr "Optionen..."
+
+#: ../..//portable/menubar.py:255
+msgid "Hide Window"
+msgstr "Bildschirmfenster verbergen"
+
+#: ../..//portable/menubar.py:256
+msgid "Show Window"
+msgstr "Bildschirmfenster anzeigen"
+
+#: ../..//portable/opml.py:32
+msgid "Export OPML File"
+msgstr "Exportiere OPML Datei"
+
+#: ../..//portable/opml.py:96
+msgid "Import OPML File"
+msgstr "Importiere OPML Datei"
+
+#: ../..//portable/opml.py:98
+msgid "OPML Files"
+msgstr "OPML Dateien"
+
+#: ../..//portable/opml.py:117
+msgid "OPML Import failed"
+msgstr "OPML Import Problem"
+
+#: ../..//portable/opml.py:118
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
 msgstr ""
-"Eine neue Version von %s ist verfügbar. Möchten Sie diese jetzt "
-"herunterladen?"
+"Die ausgewählte OPML Datei scheint defekt zu sein. Der Import wurde "
+"abgebrochen."
 
-#: ../../portable/autoupdate.py:128
+#: ../..//portable/opml.py:123
+msgid "OPML Import summary"
+msgstr "OPML Import Zusammenfassung"
+
+#: ../..//portable/opml.py:124
 #, python-format
-msgid "%s Version Check"
-msgstr "%s Versionsüberprüfung"
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "Erfolgreich %d Feed importiert."
+msgstr[1] "Erfolgreich %d Feeds importiert."
 
-#: ../../portable/autoupdate.py:129
+#: ../..//portable/opml.py:127
 #, python-format
-msgid "%s is up to date."
-msgstr "%s ist auf dem neuesten Stand"
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] "%d Feed ist schon vorhanden."
+msgstr[1] "%d Feeds sind schon vorhanden."
 
-#: ../../portable/util.py:257 ../../portable/httpclient.py:124
-msgid "Internal Error"
-msgstr "Interner Fehler"
+#: ../..//portable/playlist.py:196 ../..//portable/playlist.py:201
+msgid "Rename Playlist"
+msgstr "Wiedergabeliste umbenennen"
 
-#: ../../portable/util.py:257
+#: ../..//portable/playlist.py:202
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr "Geben Sie einen neuen Namen für Wiedergabeliste %s ein"
+
+#: ../..//portable/playlist.py:224
+msgid "Create Playlist"
+msgstr "Wiedergabeliste erstellen"
+
+#: ../..//portable/playlist.py:225
+msgid "Enter a name for the new playlist"
+msgstr "Geben Sie einen Name für Wiedergabeliste ein"
+
+#: ../..//portable/singleclick.py:86
+msgid "Download already exists"
+msgstr "Download existiert bereits."
+
+#: ../..//portable/singleclick.py:87
+msgid "That URL is already an external download."
+msgstr "Diese URL ist bereits ein externe Download."
+
+#: ../..//portable/singleclick.py:90
+msgid "Miro will begin downloading it now."
+msgstr "Miro wird nun mit dem Herunterladen beginnen."
+
+#: ../..//portable/singleclick.py:92
+msgid "It has already been downloaded"
+msgstr "Wurde bereits heruntergeladen."
+
+#: ../..//portable/singleclick.py:119
+msgid "Download Error"
+msgstr "Fehler beim Herunterladen"
+
+#: ../..//portable/singleclick.py:120
+#, python-format
 msgid ""
-"Miro has encountered an internal error. You can help us track down this "
-"problem and fix it by submitting an error report."
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %s"
 msgstr ""
+"Miro kann die Datei der folgenden URL nicht herunterladen:\n"
+"\n"
+"URL: %s"
 
-#: ../../portable/util.py:257
+#: ../..//portable/singleclick.py:128
+msgid "File Download"
+msgstr "Datei Download"
+
+#: ../..//portable/singleclick.py:129
+#, python-format
+msgid "This file at %s does not appear to be audio, video, or an RSS feed."
+msgstr ""
+"Die Datei von %s scheint keine Audio-, Video- oder RSS-Datei zu sein."
+
+#: ../..//portable/singleclick.py:219
+msgid "Subscribing to multiple channels"
+msgstr "Mehrere Kanäle werden abonniert"
+
+#: ../..//portable/singleclick.py:220
+#, python-format
+msgid "Create %d channels?"
+msgstr "%d Kanäle erstellen?"
+
+#: ../..//portable/singleclick.py:233
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr "%d Kanäle werden zum neuen Ordner hinzugefügt"
+
+#: ../..//portable/singleclick.py:237
+#, python-format
 msgid ""
-"Include entire program database including all video and channel metadata "
-"with crash report"
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
 msgstr ""
+"ACHTUNG: Sie haben bereits %d dieser Kanäle abonniert. Diese Kanäle werden "
+"so bleiben."
 
-#: ../../portable/util.py:257
-msgid "Describe what you were doing that caused this error"
+#: ../..//portable/singleclick.py:248
+msgid "Subscription error"
+msgstr "Abonnementfehler"
+
+#: ../..//portable/singleclick.py:258
+msgid ""
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
 msgstr ""
+"Diese $shortAppName-Videochannel-Datei hat ein falsches Format: $url. Bitte "
+"setzten Sie den Autor davon in Kenntnis."
 
-#: ../../portable/util.py:441
+#: ../..//portable/singleclick.py:266
+msgid ""
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
+msgstr ""
+"Diese $shortAppName-Videochannel-Datei hat den falschen Inhaltstyp: $url. "
+"Bitte setzten Sie den Autor davon in Kenntnis."
+
+#: ../..//portable/singleclick.py:270
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr ""
+"Die $shortAppName-Videochannel-Datei konnte nicht geladen werden: $url."
+
+#: ../..//portable/singleclick.py:308
+msgid "Invalid Torrent"
+msgstr "Ungültige Torrentdatei"
+
+#: ../..//portable/singleclick.py:309
 #, python-format
-msgid "%1.1fGB"
-msgstr "%1.1fGB"
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr ""
+"Die Torrentdatei %s scheint ungültig zu sein und konnte nicht geöffnet "
+"werden. [OK]"
 
-#: ../../portable/util.py:443
-#, python-format
-msgid "%dGB"
-msgstr "%dGB"
-
-#: ../../portable/util.py:447
-#, python-format
-msgid "%1.1fMB"
-msgstr "%1.1fMB"
-
-#: ../../portable/util.py:449
-#, python-format
-msgid "%dMB"
-msgstr "%dMB"
-
-#: ../../portable/util.py:453
-#, python-format
-msgid "%1.1fKB"
-msgstr "%1.1fKB"
-
-#: ../../portable/util.py:455
-#, python-format
-msgid "%dKB"
-msgstr "%dKB"
-
-#: ../../portable/util.py:459
-#, python-format
-msgid "%1.1fB"
-msgstr "%1.1fB"
-
-#: ../../portable/util.py:461
-#, python-format
-msgid "%dB"
-msgstr "%dB"
-
-#: ../../portable/storedatabase.py:828 ../../portable/storedatabase.py:1189
+#: ../..//portable/storedatabase.py:832 ../..//portable/storedatabase.py:1231
 #, python-format
 msgid "%s database save succeeded"
 msgstr "%s Datenbankspeicherung erfolgreich."
 
-#: ../../portable/storedatabase.py:829 ../../portable/storedatabase.py:1190
+#: ../..//portable/storedatabase.py:833 ../..//portable/storedatabase.py:1232
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -1267,12 +2192,12 @@ msgstr ""
 "Die Datenbank wurde erfolgreich gespeichert. Sie können das Programm nun "
 "ohne Datenverlust beenden."
 
-#: ../../portable/storedatabase.py:836 ../../portable/storedatabase.py:1198
+#: ../..//portable/storedatabase.py:840 ../..//portable/storedatabase.py:1240
 #, python-format
 msgid "%s database save failed"
 msgstr "%s Datenbanksicherung fehlgeschlagen"
 
-#: ../../portable/storedatabase.py:837 ../../portable/storedatabase.py:1199
+#: ../..//portable/storedatabase.py:841 ../..//portable/storedatabase.py:1241
 #, python-format
 msgid ""
 "%s was unable to save its database: Disk Full.\n"
@@ -1285,917 +2210,77 @@ msgstr ""
 "einige Videos aus Ihrer Sammlung zu entfernen.\n"
 "Neuliche Änderungen könnten verloren gehen."
 
-#: ../../portable/dialogs.py:76
-msgid "Ok"
-msgstr "OK"
+#: ../..//portable/tabs.py:43
+msgid "Library"
+msgstr "Medienbibliothek"
 
-#: ../../portable/dialogs.py:81
-msgid "Ignore"
-msgstr ""
+#: ../..//portable/tabs.py:44
+msgid "New"
+msgstr "neu"
 
-#: ../../portable/dialogs.py:82
-msgid "Submit Crash Repport"
-msgstr ""
+#: ../..//portable/tabs.py:46
+msgid "Downloading"
+msgstr "wird heruntergeladen"
 
-#: ../../portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
-msgid "Migrate"
-msgstr "Übertragen"
-
-#: ../../portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
-msgid "Don't Migrate"
-msgstr "Nicht übertragen"
-
-#: ../../portable/dialogs.py:86
-msgid "Remove Entry"
-msgstr "Eintrag entfernen"
-
-#: ../../portable/dialogs.py:87
-msgid "Delete File"
-msgstr "Datei löschen"
-
-#: ../../portable/dialogs.py:88
-msgid "Delete Files"
-msgstr "Dateien löschen"
-
-#: ../../portable/dialogs.py:89
-msgid "Keep Videos"
-msgstr "Videos behalten"
-
-#: ../../portable/dialogs.py:90
-msgid "Delete Videos"
-msgstr "Videos löschen"
-
-#: ../../portable/dialogs.py:92
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
-msgid "Create Channel"
-msgstr "Kanal erstellen"
-
-#: ../../portable/dialogs.py:93
-msgid "Add"
-msgstr "Hinzufügen"
-
-#: ../../portable/dialogs.py:94
-msgid "Add Into New Folder"
-msgstr "Im neuen Ordner hinzufügen"
-
-#: ../../portable/dialogs.py:95
-msgid "Keep"
-msgstr "Behalten"
-
-#: ../../portable/dialogs.py:97
-msgid "Not Now"
-msgstr "Nicht jetzt"
-
-#: ../../portable/dialogs.py:98
-msgid "Close to Tray"
-msgstr "ins Tray minimieren"
-
-#: ../../portable/dialogs.py:99
-msgid "Launch Miro"
-msgstr ""
-
-#: ../../portable/dialogs.py:214 ../../platform/gtk-x11/glade/miro.glade.h:45
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
-msgid "New Search Channel"
-msgstr "Neue Kanalsuche"
-
-#: ../../portable/dialogs.py:214 ../../platform/gtk-x11/glade/miro.glade.h:25
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
-msgid "A search channel contains items that match a search term."
-msgstr "Ein Suchkanal enthält Elemte, auf die ein Suchbegriff zutrifft."
-
-#: ../../portable/singleclick.py:161
-msgid "Subscribing to multiple channels"
-msgstr "Mehrere Kanäle werden abonniert"
-
-#: ../../portable/singleclick.py:162
-#, python-format
-msgid "Create %d channels?"
-msgstr "%d Kanäle erstellen?"
-
-#: ../../portable/singleclick.py:175
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "%d Kanäle werden zum neuen Ordner hinzugefügt"
-
-#: ../../portable/singleclick.py:176 ../../portable/folder.py:226
-msgid "Enter a name for the new channel folder"
-msgstr "Geben Sie einen neuen Namen für den Kanalordner ein"
-
-#: ../../portable/singleclick.py:179
-#, python-format
+#: ../..//portable/util.py:257
 msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
+"Miro has encountered an internal error. You can help us track down this "
+"problem and fix it by submitting an error report."
 msgstr ""
-"ACHTUNG: Sie haben bereits %d dieser Kanäle abonniert. Diese Kanäle werden "
-"so bleiben."
+"Miro hat ein internes Problem entdeckt. Sie können uns helfen dieses Problem "
+"zu verfolgen und zu lösen, indem sie einen Fehlerreport einsenden."
 
-#: ../../portable/singleclick.py:190
-msgid "Subscription error"
-msgstr "Abonnementfehler"
-
-#: ../../portable/singleclick.py:200
+#: ../..//portable/util.py:257
 msgid ""
-"This $shortAppName channel file has an invalid format: $url. Please notify "
-"the publisher of this file."
+"Include entire program database including all video and channel metadata "
+"with crash report"
 msgstr ""
-"Diese $shortAppName-Videochannel-Datei hat ein falsches Format: $url. Bitte "
-"setzten Sie den Autor davon in Kenntnis."
+"Füge gesamte Programm-Datenbank (umfasst alle Videos und Kanal-Metadaten) "
+"dem Absturzbericht hinzu"
 
-#: ../../portable/singleclick.py:208
-msgid ""
-"This $shortAppName channel file has the wrong content type: $url. Please "
-"notify the publisher of this file."
-msgstr ""
-"Diese $shortAppName-Videochannel-Datei hat den falschen Inhaltstyp: $url. "
-"Bitte setzten Sie den Autor davon in Kenntnis."
+#: ../..//portable/util.py:257
+msgid "Describe what you were doing that caused this error"
+msgstr "Beschreiben sie, was sie getan haben als der Fehler auftrat"
 
-#: ../../portable/singleclick.py:212
-msgid "Could not download the $shortAppName channel file: $url."
-msgstr ""
-"Die $shortAppName-Videochannel-Datei konnte nicht geladen werden: $url."
-
-#: ../../portable/singleclick.py:251
-msgid "Invalid Torrent"
-msgstr "Ungültige Torrentdatei"
-
-#: ../../portable/singleclick.py:252
+#: ../..//portable/util.py:460
 #, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr ""
-"Die Torrentdatei %s scheint ungültig zu sein und konnte nicht geöffnet "
-"werden. [OK]"
+msgid "%1.1fGB"
+msgstr "%1.1fGB"
 
-#: ../../portable/menubar.py:144
-msgid "_Open"
-msgstr "_Öffnen..."
-
-#: ../../portable/menubar.py:145
-msgid "_Download Video"
-msgstr ""
-
-#: ../../portable/menubar.py:147
-msgid "Check _Version"
-msgstr "auf Updates _überprüfen"
-
-#: ../../portable/menubar.py:149
-msgid "_Remove Video"
-msgstr "_Video entfernen"
-
-#: ../../portable/menubar.py:150
-msgid "_Remove Videos"
-msgstr "Videos _löschen"
-
-#: ../../portable/menubar.py:151
-msgid "Re_name Video"
-msgstr "Video um_benennen"
-
-#: ../../portable/menubar.py:152
-msgid "Save Video _As..."
-msgstr "Video gespeichert _als..."
-
-#: ../../portable/menubar.py:153
-msgid "Save Videos _As..."
-msgstr "Video speichern _als..."
-
-#: ../../portable/menubar.py:154
-msgid "Copy Video _URL"
-msgstr "Video-_URL kopieren"
-
-#: ../../portable/menubar.py:156
-msgid "_Options..."
-msgstr ""
-
-#: ../../portable/menubar.py:157
-msgid "_Quit"
-msgstr "_Beenden"
-
-#: ../../portable/menubar.py:165
-msgid "Cu_t"
-msgstr "Aus_schneiden"
-
-#: ../../portable/menubar.py:166
-msgid "_Copy"
-msgstr "_Kopieren"
-
-#: ../../portable/menubar.py:167
-msgid "_Paste"
-msgstr "Ein_fügen"
-
-#: ../../portable/menubar.py:168
-msgid "Select _All"
-msgstr "Alles auswählen"
-
-#: ../../portable/menubar.py:169
-msgid "_Delete"
-msgstr "_Löschen"
-
-#: ../../portable/menubar.py:173
-msgid "Add _Channel"
-msgstr "_Video-Channel hinzufügen"
-
-#: ../../portable/menubar.py:174
-msgid "New Searc_h Channel..."
-msgstr "Neue Kana_lsuche..."
-
-#: ../../portable/menubar.py:175
-msgid "New _Folder..."
-msgstr "Neuer _Ordner..."
-
-#: ../../portable/menubar.py:176
-msgid "Add Channel _Guide..."
-msgstr "Programmführer hinzufügen..."
-
-#: ../../portable/menubar.py:186
-msgid "Update _All Channels"
-msgstr "_Alle Video-Channels updaten"
-
-#: ../../portable/menubar.py:188
-msgid "_Import Channels (OPML)..."
-msgstr ""
-
-#: ../../portable/menubar.py:189
-msgid "E_xport Channels (OPML)..."
-msgstr ""
-
-#: ../../portable/menubar.py:191
-msgid "_Send this channel to a friend"
-msgstr "_Schick diesen Kanal an einem Freund"
-
-#: ../../portable/menubar.py:192
-msgid "Copy Channel _Link"
-msgstr "Kanal-_Link kopieren"
-
-#: ../../portable/menubar.py:195
-msgid "New _Playlist"
-msgstr "Neue _Playlist"
-
-#: ../../portable/menubar.py:196
-msgid "New Playlist Fol_der"
-msgstr "neues Playlisten_verzeichnis"
-
-#: ../../portable/menubar.py:198
-msgid "Re_name Playlist"
-msgstr "Wi_edergabeliste umbenennen"
-
-#: ../../portable/menubar.py:199
-msgid "_Remove Playlist"
-msgstr "_Wiedergabeliste entfernen"
-
-#: ../../portable/menubar.py:200
-msgid "_Remove Playlists"
-msgstr "_Playlist löschen"
-
-#: ../../portable/menubar.py:201
-msgid "_Remove Playlist Folders"
-msgstr "entfe_rne Playlist-Verzeichnisse"
-
-#: ../../portable/menubar.py:202
-msgid "_Remove Playlist Folder"
-msgstr "entfe_rne Playlist-Verzeichnis"
-
-#: ../../portable/menubar.py:212
-msgid "_Play"
-msgstr "Wiederg_abe"
-
-#: ../../portable/menubar.py:213
-msgid "_Stop"
-msgstr "_Stop"
-
-#: ../../portable/menubar.py:215
-msgid "_Next Video"
-msgstr "_Nächstes Video"
-
-#: ../../portable/menubar.py:216
-msgid "_Previous Video"
-msgstr "_Letztes Video"
-
-#: ../../portable/menubar.py:218
-msgid "Skip _Forward"
-msgstr "V_orspulen"
-
-#: ../../portable/menubar.py:219
-msgid "Skip _Back"
-msgstr "_Zurückspulen"
-
-#: ../../portable/menubar.py:221
-msgid "Volume _Up"
-msgstr "L_auter"
-
-#: ../../portable/menubar.py:222
-msgid "Volume _Down"
-msgstr "L_eiser"
-
-#: ../../portable/menubar.py:224
-msgid "_Fullscreen"
-msgstr "_Vollbildmodus"
-
-#: ../../portable/menubar.py:228
-msgid "_About"
-msgstr "_Über..."
-
-#: ../../portable/menubar.py:229
-msgid "_Donate"
-msgstr "_Spenden"
-
-#: ../../portable/menubar.py:230 ../../portable/menubar.py:245
-msgid "_Help"
-msgstr "_Hilfe"
-
-#: ../../portable/menubar.py:232
-msgid "Report a _Bug"
-msgstr "einen Fehler _melden"
-
-#: ../../portable/menubar.py:236
-msgid "_Video"
-msgstr "_Video"
-
-#: ../../portable/menubar.py:238
-msgid "_File"
-msgstr "_Datei"
-
-#: ../../portable/menubar.py:242
-msgid "_Channels"
-msgstr "_Kanäle"
-
-#: ../../portable/menubar.py:243
-msgid "_Playlists"
-msgstr "_Wiedergabelisten"
-
-#: ../../portable/menubar.py:244
-msgid "P_layback"
-msgstr "V_ideowiedergabe"
-
-#: ../../portable/menubar.py:249
-msgid "Play Unwatched ($numUnwatched)"
-msgstr "ungesehenes abspielen ($numUnwatched)"
-
-#: ../../portable/menubar.py:250
-msgid "Pause All Downloads ($numDownloading)"
-msgstr "alle Downloads anhalten ($numDownloading)"
-
-#: ../../portable/menubar.py:251
-msgid "Resume All Downloads ($numPaused)"
-msgstr "alle Downloads fortsetzen ($numPaused)"
-
-#: ../../portable/menubar.py:253
-msgid "Options..."
-msgstr ""
-
-#: ../../portable/menubar.py:255
-msgid "Hide Window"
-msgstr "Bildschirmfenster verbergen"
-
-#: ../../portable/menubar.py:256
-msgid "Show Window"
-msgstr "Bildschirmfenster anzeigen"
-
-#: ../../portable/item.py:478
+#: ../..//portable/util.py:462
 #, python-format
-msgid "Removing %s"
-msgstr "%s wird entfernt"
+msgid "%dGB"
+msgstr "%dGB"
 
-#: ../../portable/item.py:481
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
-"Möchten Sie dieses Verzeichnis und alle darin enthaltenen Dateien löschen "
-"oder nur den Eintrag aus der Medienbibliothek entfernen?"
-
-#: ../../portable/item.py:487
-msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
-msgstr ""
-
-#: ../../portable/item.py:507
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
-"Dieser Eintrag ist ein Ordner. Wenn Sie einen Ordner löschen werden alle "
-"Einträge in diesem Ordner ebenfalls gelöscht."
-
-#: ../../portable/item.py:537
+#: ../..//portable/util.py:466
 #, python-format
-msgid "%d minutes"
-msgstr "%d Minuten"
+msgid "%1.1fMB"
+msgstr "%1.1fMB"
 
-#: ../../portable/item.py:547
+#: ../..//portable/util.py:468
 #, python-format
-msgid "Expires in %s"
-msgstr "Ablaufzeit in %s"
+msgid "%dMB"
+msgstr "%dMB"
 
-#: ../../portable/item.py:559
+#: ../..//portable/util.py:472
 #, python-format
-msgid "Will retry in %s"
-msgstr "Versuche in %s erneut"
+msgid "%1.1fKB"
+msgstr "%1.1fKB"
 
-#: ../../portable/item.py:561
-msgid "Paused"
-msgstr "Pausiert"
-
-#: ../../portable/item.py:941
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../../portable/item.py:943
-msgid "WEB PAGE"
-msgstr "WEBSEITE"
-
-#: ../../portable/item.py:953
-msgid "Total Down:"
-msgstr "Alles herunter:"
-
-#: ../../portable/item.py:962
-msgid "Down Rate:"
-msgstr "Download-Rate:"
-
-#: ../../portable/item.py:963
-msgid "Down Total:"
-msgstr "Alles herunter:"
-
-#: ../../portable/item.py:965
-msgid "Up Rate:"
-msgstr "Upload Rate:"
-
-#: ../../portable/item.py:966
-msgid "Up Total:"
-msgstr "Alles hoch:"
-
-#: ../../portable/item.py:971
-msgid "Web page:"
-msgstr "Webseite:"
-
-#: ../../portable/item.py:971
-msgid "permalink"
-msgstr "Permalink"
-
-#: ../../portable/item.py:972
-msgid "File link:"
-msgstr "Link zur Datei"
-
-#: ../../portable/item.py:972
-msgid "direct link to file"
-msgstr "Direkter Link zur Datei"
-
-#: ../../portable/item.py:974
-msgid "File type:"
-msgstr "Dateityp:"
-
-#: ../../portable/item.py:981
-msgid "REVEAL LOCAL FOLDER"
-msgstr "LOKALEN ORDNER ANZEIGEN"
-
-#: ../../portable/item.py:983
-msgid "REVEAL LOCAL FILE"
-msgstr "Datei im Dateimanager anzeigen"
-
-#: ../../portable/item.py:985
-msgid "Filename:"
-msgstr "Dateiname:"
-
-#: ../../portable/item.py:992
-msgid "Down Total"
-msgstr "Alles hoch:"
-
-#: ../../portable/item.py:994
-msgid "Up Total"
-msgstr "Alles hoch:"
-
-#: ../../portable/item.py:1012
-msgid "Item Details"
-msgstr "Details:"
-
-#: ../../portable/item.py:1019
-msgid "Torrent Details"
-msgstr "Torrent Details"
-
-#: ../../portable/item.py:1021
-msgid "Torrent Details <i>stopped</i>"
-msgstr ""
-
-#: ../../portable/item.py:1024
-msgid "Download Details"
-msgstr "Download-Details"
-
-#: ../../portable/item.py:1238
-msgid "downloading..."
-msgstr "wird heruntergeladen..."
-
-#: ../../portable/item.py:1245 ../../portable/item.py:1248
+#: ../..//portable/util.py:474
 #, python-format
-msgid "%s remaining"
-msgstr "%s verbleibend"
+msgid "%dKB"
+msgstr "%dKB"
 
-#: ../../portable/item.py:1257
-msgid "starting up..."
-msgstr "wird gestartet..."
-
-#: ../../portable/item.py:1456
-msgid "Play Just This Video"
-msgstr "Nur dieses Video wiedergeben"
-
-#: ../../portable/item.py:1800
+#: ../..//portable/util.py:478
 #, python-format
-msgid "Removing %s items"
-msgstr "Entferne %s Elemente"
+msgid "%1.1fB"
+msgstr "%1.1fB"
 
-#: ../../portable/item.py:1802
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
-"Eines oder mehrere dieser Videos wurden von keinem Kanal heruntergeladen. "
-"Möchten Sie diese Videos wirklich löschen oder nur ihre Einträge aus der "
-"Medienbibliothek von Miro entfernen?"
-
-#: ../../portable/item.py:1810
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
-msgstr ""
-"Ein oder mehrere dieser Elemente sind Ordner. Wenn Sie einen Ordner "
-"entfernen bzw. löschen, werden auch alle darin enthaltenen Dateien entfernt "
-"oder gelöscht."
-
-#: ../../portable/folder.py:132 ../../portable/folder.py:155
-msgid "Rename Channel Folder"
-msgstr "Ordner für Kanal umbenennen"
-
-#: ../../portable/folder.py:134
+#: ../..//portable/util.py:480
 #, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "Geben Sie einen neuen Namen für den Kanalordner %s ein."
-
-#: ../../portable/folder.py:210 ../../portable/folder.py:215
-msgid "Rename Playlist Folder"
-msgstr "Ordner für Wiedergabeliste umbenennen"
-
-#: ../../portable/folder.py:217
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr ""
-"Geben Sie einen neuen Namen für den Ordner der Wiedergabeliste %s ein."
-
-#: ../../portable/folder.py:225
-msgid "Create Channel Folder"
-msgstr "Ordner für Kanal erstellen"
-
-#: ../../portable/folder.py:239
-msgid "Create Playlist Folder"
-msgstr "Ordner für Wiedergabeliste erstellen"
-
-#: ../../portable/folder.py:240
-msgid "Enter a name for the new playlist folder"
-msgstr "Geben Sie einen neuen Namen für den Ordner der Wiedergabeliste ein."
-
-#: ../../portable/httpclient.py:67
-#, python-format
-msgid "Error: %s"
-msgstr "Fehler: %s"
-
-#: ../../portable/httpclient.py:82 ../../portable/httpclient.py:87
-msgid "Can't connect"
-msgstr "Keine Verbindung hergestellt"
-
-#: ../../portable/httpclient.py:83
-#, python-format
-msgid "Connection Error: %s"
-msgstr "Verbindungsfehler: %s"
-
-#: ../../portable/httpclient.py:88
-msgid "SSL connection error"
-msgstr "SSL Verbindungsfehler"
-
-#: ../../portable/httpclient.py:92
-msgid "HTTP error"
-msgstr "HTTP Fehler"
-
-#: ../../portable/httpclient.py:95
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr "Ungünstige Statuszeile: %s"
-
-#: ../../portable/httpclient.py:98
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr "Bad Header Line: %s"
-
-#: ../../portable/httpclient.py:101
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "Bad Chunk size: %s"
-
-#: ../../portable/httpclient.py:104
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr "Expected CRLF got: %r"
-
-#: ../../portable/httpclient.py:107
-#, python-format
-msgid "%s closed connection"
-msgstr "%s hat die Verbindung beendet."
-
-#: ../../portable/httpclient.py:113
-msgid "Got 404 status code"
-msgstr "HTTP: Fehler 404 - Datei nicht gefunden."
-
-#: ../../portable/httpclient.py:115
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "Fehlerhafter Statuscode: %s"
-
-#: ../../portable/httpclient.py:119
-msgid "Authorization failed"
-msgstr "Autorisierung fehlgeschlagen"
-
-#: ../../portable/httpclient.py:125
-msgid "Pipeline request never started"
-msgstr "Pipelinegesuch wurde nie gestartet"
-
-#: ../../portable/httpclient.py:129
-msgid "Timeout"
-msgstr "Zeitablauf"
-
-#: ../../portable/httpclient.py:130
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "Verbindungzeit mit %s ist abgelaufen."
-
-#: ../../portable/httpclient.py:134
-msgid "Invalid URL"
-msgstr "Ungültige URL"
-
-#: ../../portable/httpclient.py:135
-#, python-format
-msgid "%s is not a valid URL"
-msgstr "%s ist keine gültige URL"
-
-#: ../../portable/httpclient.py:323
-msgid "Unknown Error code"
-msgstr ""
-
-#: ../../portable/httpclient.py:355
-msgid "Connection closed"
-msgstr "Verbindung beendet"
-
-#: ../../portable/httpclient.py:780
-msgid "Unknown"
-msgstr "Unbekannt"
-
-#: ../../portable/httpclient.py:781
-msgid "Internal Error: Not ready to send"
-msgstr "Interner Fehler: Nicht bereit zu senden"
-
-#: ../../portable/app.py:682
-msgid "Database too new"
-msgstr "Datenbank zu neu"
-
-#: ../../portable/app.py:683
-msgid ""
-"You have a database that was saved with a newer version of $shortAppName. "
-"You must download the latest version of $shortAppName and run that."
-msgstr ""
-"Ihre Datenbank wurde mit einer neueren Version von $shortAppName gesichert. "
-"Sie müssen die neuste Version von $shortAppName verwerden."
-
-#: ../../portable/app.py:697
-msgid "Video Directory Missing"
-msgstr ""
-
-#: ../../portable/app.py:698
-msgid ""
-"\n"
-"Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected.\n"
-"\n"
-"If you continue, the video directory will be reset to a location on this "
-"drive (this will cause you to lose some details about the videos on the "
-"external drive).  You can also quit, connect the drive, and relaunch Miro."
-msgstr ""
-
-#: ../../portable/app.py:1017 ../../portable/app.py:1031
-#: ../../portable/app.py:1075 ../../portable/app.py:1101
-#: ../../portable/app.py:1121
-#, python-format
-msgid "Remove %s"
-msgstr "%s entfernen"
-
-#: ../../portable/app.py:1018
-#, python-format
-msgid "Are you sure you want to remove the guide %s?"
-msgstr "Wollen Sie den Programmführer %s endgültig entfernen?"
-
-#: ../../portable/app.py:1032
-#, python-format
-msgid "Are you sure you want to remove %s"
-msgstr "Wollen sie %s endgültig entfernen?"
-
-#: ../../portable/app.py:1035 ../../portable/app.py:1080
-#: ../../portable/app.py:1106 ../../portable/app.py:1125
-#, python-format
-msgid "Remove %s channels"
-msgstr "%s Kanäle entfernen"
-
-#: ../../portable/app.py:1037
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr "Wollen Sie diese %s Wiedergabelisten endgültig entfernen?"
-
-#: ../../portable/app.py:1076
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr "Was möchten Sie mit den heruntergeladenen Videos dieses Kanals tun?"
-
-#: ../../portable/app.py:1081
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr "Was möchten Sie mit den heruntergeladenen Videos dieser Kanäle tun?"
-
-#: ../../portable/app.py:1102
-#, python-format
-msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
-msgstr ""
-"Möchten Sie %s wirklich entfernen? Laufende Downloads werden abgebrochen."
-
-#: ../../portable/app.py:1107
-#, python-format
-msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
-msgstr ""
-"Möchten Sie diese %s Kanäle wirklich entfernen? Laufende Downloads werden "
-"abgebrochen."
-
-#: ../../portable/app.py:1122
-#, python-format
-msgid "Are you sure you want to remove %s?"
-msgstr "Wollen Sie %s wirklich löschen?"
-
-#: ../../portable/app.py:1126
-#, python-format
-msgid "Are you sure you want to remove these %s channels?"
-msgstr "Sind sie sicher, dass Sie diese %s Kanäle entfernen möchten?"
-
-#: ../../portable/app.py:1139
-#, python-format
-msgid "Stop watching %s"
-msgstr "Überwachung von %s beenden"
-
-#: ../../portable/app.py:1140
-#, python-format
-msgid "Are you sure you want to stop watching %s?"
-msgstr "Sind Sie sicher, dass Sie die Überwachung von %s beenden möchten?"
-
-#: ../../portable/app.py:1143
-#, python-format
-msgid "Stop watching %s directories"
-msgstr "Überwachung von %s Verzeichnissen beenden"
-
-#: ../../portable/app.py:1144
-#, python-format
-msgid "Are you sure you want to stop watching these %s directories?"
-msgstr ""
-"Sind Sie sicher, dass Sie die Überwachung von %s Verzeichnissen beenden "
-"möchten?"
-
-#: ../../portable/app.py:1174
-msgid "Are you sure you want to quit?"
-msgstr "Möchten Sie das Programm wirklich beenden?"
-
-#: ../../portable/app.py:1175
-#, python-format
-msgid "You have %d download still in progress.  Quit Anyway?"
-msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/app.py:1178
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
-
-#: ../../portable/app.py:1668
-msgid "Invalid Value"
-msgstr "Ungültiger Wert"
-
-#: ../../portable/app.py:1669
-#, python-format
-msgid "%s is invalid.  You must enter a non-negative number."
-msgstr "%s ist ungültig. Sie müssen eine positive Zahl eingeben."
-
-#: ../../portable/app.py:1960
-msgid " - Invalid URL"
-msgstr " - ungültige URL"
-
-#: ../../portable/app.py:1961
-msgid ""
-"The address you entered is not a valid URL.\n"
-"Please double check and try again.\n"
-"\n"
-msgstr ""
-"Die von Ihnen eingegebene Adresse haben, ist ungültig.\n"
-"Bitte überprüfen Sie die Adresse und versuchen Sie es noch einmal.\n"
-"\n"
-
-#: ../../portable/app.py:1985
-msgid "$shortAppName - Add Channel"
-msgstr "$shortAppName - Kanal hinzufügen"
-
-#: ../../portable/app.py:1985
-msgid "Enter the URL of the channel to add"
-msgstr "Geben Sie die Adresse des hinzuzufügenden Kanals ein"
-
-#: ../../portable/app.py:2006
-msgid "$shortAppName - Add Miro Guide"
-msgstr "$shortAppName - Programmführer hinzufügen"
-
-#: ../../portable/app.py:2006
-msgid "Enter the URL of the Miro Guide to add"
-msgstr ""
-"Geben Sie die URL des Programmführers ein, den Sie hinzufügen möchten"
-
-#: ../../portable/app.py:2012
-msgid "$shortAppName - Download Video"
-msgstr ""
-
-#: ../../portable/app.py:2012
-msgid "Enter the URL of the video to download"
-msgstr ""
-
-#: ../../portable/app.py:2306
-msgid "News and Tech"
-msgstr "Nachrichten und Technologie"
-
-#: ../../portable/app.py:2313
-msgid "Entertainment"
-msgstr "Unterhaltung"
-
-#: ../../portable/app.py:2319
-msgid "High-Def"
-msgstr "High-Definition (HD)"
-
-#: ../../portable/app.py:2327
-msgid "Mac"
-msgstr "Mac"
-
-#: ../../portable/app.py:2342
-msgid "Example Playlist"
-msgstr "Wiedergabeliste Beispiel"
-
-#: ../../portable/app.py:2361
-msgid "Custom Channels"
-msgstr "Eigene Kanäle"
-
-#: ../../portable/app.py:2361
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr ""
-"Sie benutzen eine Version von $longAppName mit selbst zusammengestellten "
-"Kanälen."
-
-#: ../../portable/app.py:2376
-msgid "Error Changing Movies Directory"
-msgstr ""
-
-#: ../../portable/app.py:2377
-msgid ""
-"You don't have permission to write to the directory you selected.  Miro will "
-"continue to use the old videos directory."
-msgstr ""
-
-#: ../../portable/opml.py:113
-msgid "OPML Import failed"
-msgstr ""
-
-#: ../../portable/opml.py:114
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
-
-#: ../../portable/opml.py:119
-msgid "OPML Import summary"
-msgstr ""
-
-#: ../../portable/opml.py:120
-#, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/opml.py:123
-#, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgid "%dB"
+msgstr "%dB"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "(Changes won't go into effect until you restart Miro)"
@@ -2289,8 +2374,9 @@ msgstr ""
 "Kanal anzuschauen."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
+#, fuzzy
 msgid "By default, videos _expire after"
-msgstr ""
+msgstr "Standardmäßig werden Videos gelöscht nach"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
@@ -2298,7 +2384,7 @@ msgstr "K_anal:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 msgid "C_hannels"
-msgstr ""
+msgstr "K_anäle"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "C_reate Channel"
@@ -2306,19 +2392,19 @@ msgstr "K_anal erstellen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Check Channels for _new content"
-msgstr ""
+msgstr "Überprüfe Kanäle auf _neue Inhalte"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "Disk _Space"
-msgstr ""
+msgstr "Platten_platz"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "Don't start a download _if it leaves less than"
-msgstr ""
+msgstr "Keinen Download starten, _wenn dieser weniger als"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Download at _most"
-msgstr ""
+msgstr "Herunterladen bis _höchstens"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid ""
@@ -2331,8 +2417,9 @@ msgstr ""
 "Manuell"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
+#, fuzzy
 msgid "G_B free"
-msgstr ""
+msgstr "G_B frei läßt."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 msgid "Go"
@@ -2353,7 +2440,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Play _videos one after another"
-msgstr ""
+msgstr "Spiele _Videos eins nach dem anderen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Preferences"
@@ -2365,11 +2452,12 @@ msgstr "Nur auf meinen vollen _Heimordner beschränken"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "S_top after each video"
-msgstr ""
+msgstr "S_top nach jedem Video."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
+#, fuzzy
 msgid "S_tore downloaded videos in this folder:"
-msgstr ""
+msgstr "S_peichere heruntergeladene Videos in diesem Ordner:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
@@ -2396,8 +2484,10 @@ msgstr ""
 "Vorlieben entsprechend anpassen. Hier ist die erste Frage."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
+#, fuzzy
 msgid "To a_void slowdowns, limit upstream to"
 msgstr ""
+"Um Geschwindigkeitsverringerung zu _vermeiden, limitiere Upstreams auf"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Volume:"
@@ -2440,35 +2530,41 @@ msgstr "_Verzeichnis hinzufügen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "_Automatically run Miro when I log in"
-msgstr ""
+msgstr "Miro automatisch starten, wenn ich mich anmelde"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "_Bit Torrent uses ports between"
-msgstr ""
+msgstr "_BitTorrent benutzt die Ports zwischen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "_Downloads"
-msgstr ""
+msgstr "_Downloads"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
+#, fuzzy
 msgid "_Folders"
-msgstr ""
+msgstr "_Ordner"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
+#, fuzzy
 msgid "_General"
-msgstr ""
+msgstr "_Allgemein"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "_KB/s when my computer is active"
-msgstr ""
+msgstr "_KB/s wenn mein Computer aktiv ist"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
+#, fuzzy
 msgid "_Playback"
-msgstr ""
+msgstr "_Abspielen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
+#, fuzzy
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr ""
+"_Starte das Abspielen von Videos an dem Punkt, an dem sie zuletzt gestoppt "
+"wurden"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
@@ -2484,16 +2580,19 @@ msgstr "_URL"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "_Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "_Warne wenn ich versuche Downloads abzubrechen, die noch aktiv sind."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr ""
+"_Überprüfe auf neue Videos in diesen Verzeichnissen und füge sie zur "
+"Bibliothek hinzu"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
+#, fuzzy
 msgid "_and"
-msgstr ""
+msgstr "_und"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "videos at once"
@@ -2622,11 +2721,11 @@ msgstr "Verzeichnis hinzufügen..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Automatically run $longAppName when I login."
-msgstr ""
+msgstr "$longAppName automatisch starten, wenn ich mich anmelde"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "By default, videos expire after"
@@ -2634,7 +2733,7 @@ msgstr "Videos werden automatisch gelöscht nach"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Check channels for new content"
-msgstr ""
+msgstr "Überprüfe Kanäle auf neuen Inhalt"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Close to tray so that downloads can continue."
@@ -2652,7 +2751,7 @@ msgstr "Jede Stunde"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Folder"
-msgstr ""
+msgstr "Verzeichnis"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
@@ -2664,21 +2763,23 @@ msgstr "Einstellungen"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "Spiele ein video und stop dann."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Miro komplett beenden."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
 msgstr ""
+"Merken, an welchem Punkt ich aufgehört habe ein Video zu schauen, um beim "
+"nächten Mal dort fortzufahren."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Show as a Channel"
-msgstr ""
+msgstr "Zeige als Kanal"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Store downloaded videos in this folder:"
@@ -2692,7 +2793,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
-msgstr ""
+msgstr "Benutze BitTorrent Ports zwischen"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid ""
@@ -2704,10 +2805,13 @@ msgstr ""
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
 msgid "Warn me when I attempt to quit with downloads in progress."
 msgstr ""
+"Warnen wenn ich versuche Miro zu beenden während noch heruntergeladen wird."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
 msgstr ""
+"Überprüfe auf neue Videos in diesen Verzeichnissen und füge sie zu meiner "
+"Bilbliothek hinzu."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "When I click the red close button:"
