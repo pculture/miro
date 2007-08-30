@@ -9,6 +9,7 @@ INT = ctypes.c_int
 WH_MOUSE_LL = 14
 WH_MOUSE    = 7
 
+WM_NULL = 0x0000
 WM_USER = 0x0400
 WM_TRAYICON = WM_USER+0x1EEF
 WM_GETICON = 0x007F
@@ -66,7 +67,9 @@ IDANI_OPEN         = 1
 IDANI_CAPTION      = 3
 
 SW_HIDE = 0
+SW_SHOWMINIMIZED = 2
 SW_SHOW = 5
+SW_RESTORE = 9
 
 GWL_WNDPROC = -4
 
@@ -77,7 +80,6 @@ def HIWORD(dword): return dword >> 16
 
 WNDPROCTYPE = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, UINT, WPARAM, LPARAM)
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, LPARAM)
-LLMOUSEPROC = ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.c_int, WPARAM, LPARAM)
 
 import config
 import prefs
@@ -146,6 +148,16 @@ class MINMAXINFO(ctypes.Structure):
                 ("ptMinTrackSize", POINT),
                 ("ptMaxTrackSize",POINT)]
 
+class WINDOWPLACEMENT(ctypes.Structure):
+    _fields_ = [
+                ("length", UINT),
+                ("flags", UINT),
+                ("showCmd", UINT),
+                ("ptMinPosition", POINT),
+                ("ptMaxPosition", POINT),
+                ("rcNormalPosition", RECT),
+    ]
+
 def getTaskbarEdge():
     appBarData = APPBARDATA(0,0,0,0,RECT(0,0,0,0),0)
     if (ctypes.windll.shell32.SHAppBarMessage(ABM_GETTASKBARPOS,ctypes.byref(appBarData)) != 0):
@@ -186,16 +198,6 @@ def PyWindProc(hWnd, uMsg, wParam, lParam):
             Minimize.minimizers[hWnd].minimizeOrRestore()
         elif lParam == WM_RBUTTONUP:
             Minimize.minimizers[hWnd].showPopup(mouseX, mouseY)
-    elif uMsg == WM_ACTIVATEAPP:
-        pass
-        #logging.info("TACTIVATEAPP %d %d" % (wParam, lParam))
-        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-        #jsbridge.hidePopup()
-    elif uMsg == WM_ACTIVATE:
-        pass
-        #logging.info("TACTIVATE %d %d" % (wParam, lParam))
-        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-        #jsbridge.hidePopup()
 
     #components.classes['@mozilla.org/consoleservice;1'].getService(components.interfaces.nsIConsoleService).logStringMessage("PYWINPROC %d %d %d %d" % (hWnd, uMsg, wParam, lParam))
     return ctypes.windll.user32.CallWindowProcW(ctypes.windll.user32.DefWindowProcW,hWnd, uMsg, wParam, lParam)
@@ -227,34 +229,11 @@ def PyMainWindProc(hWnd, uMsg, wParam, lParam):
             info.ptMaxSize.y = window.screen.height
             info.ptMaxPosition.x = height
             info.ptMaxPosition.y = 0
-    elif uMsg == WM_ACTIVATEAPP:
-        pass
-        #logging.info("ACTIVATEAPP %d %d" % (wParam, lParam))
-        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-        #jsbridge.hidePopup()
-    elif uMsg == WM_ACTIVATE:
-        pass
-        #logging.info("ACTIVATE %d %d" % (wParam, lParam))
-        #jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-        #jsbridge.hidePopup()
             
     return ctypes.windll.user32.CallWindowProcW(Minimize.oldWindowProcs[hWnd],hWnd, uMsg, wParam, lParam)
 
-# Part of a hack to close the context menu on mouse actions outside of
-# Democracy. There's probably a better solution for this, but this
-# works for now. --NN
-def PyMouseProc(nCode, wParam, lParam):
-    try:
-        if wParam != WM_MOUSEMOVE:
-            jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
-            jsbridge.hidePopup()
-    except:
-        pass
-    return ctypes.windll.user32.CallNextHookEx(0, nCode, wParam, lParam)
-
 WindProc = WNDPROCTYPE(PyWindProc)
 MainWindProc = WNDPROCTYPE(PyMainWindProc)
-LLMouseProc = LLMOUSEPROC(PyMouseProc)
 
 class Minimize:
     _com_interfaces_ = [components.interfaces.pcfIDTVMinimize]
@@ -321,15 +300,20 @@ class Minimize:
         href = self.getHREFFromDOMWindow(win)
         Minimize.oldWindowProcs[href.value] = ctypes.windll.user32.SetWindowLongW(href,GWL_WNDPROC, MainWindProc)
 
-        #Also register mouse hook, so we can hide the tray context
-        #menu when someone clicks off of it.
-        # This is a big hack --NN
-        result = ctypes.windll.user32.SetWindowsHookExW(WH_MOUSE_LL, LLMouseProc, self.hInst, 0)
-        if result == 0:
-            print ctypes.FormatError(ctypes.GetLastError())
-#         result = ctypes.windll.user32.SetWindowsHookExW(WH_MOUSE, LLMouseProc, self.hInst, 0)
-#         if result == 0:
-#             print ctypes.FormatError(ctypes.GetLastError())
+    def contextMenuHack(self):
+        """Hack to make context menus work, must be called BEFORE the menu is
+        shown.
+        """
+        # Need to make the XUL window the foreground window.  See 
+        # http://support.microsoft.com/kb/135788
+        # If the msdn URL doesn't work, try searhing for Q135788
+        ctypes.windll.user32.SetForegroundWindow(self.trayIconWindow)
+
+    def contextMenuHack2(self):
+        """Hack to make context menus work, must be called AFTER the menu is
+        shown.
+        """
+        ctypes.windll.user32.PostMessageA(self.trayIconWindow, WM_NULL, 0, 0)
 
     def getHREFFromBaseWindow(self, win):
         return ctypes.c_int(self._gethrefcomp.getit(win))
@@ -422,13 +406,22 @@ class Minimize:
         ctypes.windll.user32.ShowWindow(href, ctypes.c_int(SW_HIDE))
 
     def restore(self, href):
+        placement = WINDOWPLACEMENT()
+        rv = ctypes.windll.user32.GetWindowPlacement(href, 
+                ctypes.byref(placement))
+        if rv and placement.showCmd == SW_SHOWMINIMIZED:
+            show_flag = SW_RESTORE
+        else:
+            show_flag = SW_SHOW
+        ctypes.windll.user32.ShowWindow(href, ctypes.c_int(show_flag))
+        ctypes.windll.user32.SetForegroundWindow(href)
+
         fromer = RECT(0,0,0,0)
         ctypes.windll.user32.GetWindowRect(href,ctypes.byref(fromer))
         to = self.getTrayRect()
         if to:
             ctypes.windll.user32.DrawAnimatedRects(href,IDANI_CAPTION,ctypes.byref(to),ctypes.byref(fromer))
 
-        ctypes.windll.user32.ShowWindow(href, ctypes.c_int(SW_SHOW))
 
     def minimizeOrRestore(self):
         pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
