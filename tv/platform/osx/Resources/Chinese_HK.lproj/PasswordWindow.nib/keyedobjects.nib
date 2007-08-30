@@ -284,7 +284,7 @@
 				<integer>23</integer>
 			</dict>
 		</dict>
-		<string>Location http://foo.bar.com/baz requires a username and password for "text supplied by server". (Do not localize -- test data)
+		<string>"http://foo.bar.com/baz" 網站要求用戶名稱及密碼作 "text supplied by server".
 </string>
 		<dict>
 			<key>$class</key>
@@ -806,7 +806,7 @@
 				<integer>15</integer>
 			</dict>
 		</dict>
-		<string>Cancel</string>
+		<string>取消</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -963,7 +963,7 @@
 				<integer>15</integer>
 			</dict>
 		</dict>
-		<string>確定</string>
+		<string>確認</string>
 		<string></string>
 		<string>acceptEntry:</string>
 		<dict>
@@ -1042,7 +1042,7 @@
 			</dict>
 		</dict>
 		<string>{{314, 307}, {416, 213}}</string>
-		<string>Username and password required</string>
+		<string>需要用戶名稱和密碼</string>
 		<string>NSPanel</string>
 		<dict>
 			<key>$class</key>
@@ -1159,7 +1159,7 @@
 				<integer>23</integer>
 			</dict>
 		</dict>
-		<string>Username:
+		<string>用戶名稱:
 
 </string>
 		<dict>
@@ -1230,7 +1230,7 @@
 				<integer>23</integer>
 			</dict>
 		</dict>
-		<string>Password:
+		<string>密碼:
 </string>
 		<dict>
 			<key>$classes</key>

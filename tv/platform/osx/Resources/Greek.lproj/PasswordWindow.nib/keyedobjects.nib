@@ -963,7 +963,7 @@
 				<integer>15</integer>
 			</dict>
 		</dict>
-		<string>Εντάξει</string>
+		<string>OK</string>
 		<string></string>
 		<string>acceptEntry:</string>
 		<dict>
@@ -1042,7 +1042,7 @@
 			</dict>
 		</dict>
 		<string>{{314, 307}, {416, 213}}</string>
-		<string>όνομα χρήστη και κωδικός πρόσβασης απαιτείται</string>
+		<string>Απαιτούνται το όνομα χρήστη και ο κωδικός πρόσβασης</string>
 		<string>NSPanel</string>
 		<dict>
 			<key>$class</key>

@@ -48,10 +48,10 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {runAtStartup = id; }; 
+            ACTIONS = {runAtStartup = id; warnIfDownloading = id; }; 
             CLASS = GeneralPrefsController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {runAtStartupCheckBox = id; }; 
+            OUTLETS = {runAtStartupCheckBox = id; warnIfDownloadingCheckBox = id; }; 
             SUPERCLASS = NSObject; 
         }, 
         {

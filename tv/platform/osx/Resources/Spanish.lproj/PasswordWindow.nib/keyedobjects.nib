@@ -963,7 +963,7 @@
 				<integer>15</integer>
 			</dict>
 		</dict>
-		<string>ACEPTAR</string>
+		<string>OK</string>
 		<string></string>
 		<string>acceptEntry:</string>
 		<dict>
