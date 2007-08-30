@@ -19,7 +19,7 @@
 %define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-%{RELEASE_CANDIDATE}}
 #define FULL_VERSION %{NIGHTLY}
 %define RELEASE 1
-%define mozversion 1.5.0.8
+%define mozversion 1.5.0.12
 
 Name:           Miro
 Version:        %{VERSION}
