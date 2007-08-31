@@ -471,7 +471,8 @@ class PyBridge:
 
     @asUrgent
     def pause(self):
-        app.controller.playbackController.pause()
+        if hasattr(app.controller, 'playbackController'):
+            app.controller.playbackController.pause()
 
     @asUrgent
     def stop(self):
