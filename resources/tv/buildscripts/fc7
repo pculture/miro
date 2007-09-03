@@ -7,7 +7,7 @@
 #Make directory structure for easy upload
 mkdir $2$3
 mkdir $2$3/src
-mkdir $2$3/fc6
+mkdir $2$3/fc7
 
 #Make tarball and copy it into directory
 svn co https://svn.participatoryculture.org/svn/dtv/trunk/resources/
