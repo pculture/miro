@@ -395,7 +395,8 @@ class PyBridge:
 
     @asUrgent
     def quit(self):
-        app.controller.quit()
+        if app.controller.finishedStartup:
+            app.controller.quit()
 
     @asUrgent
     def removeCurrentChannel(self):
@@ -470,7 +471,8 @@ class PyBridge:
 
     @asUrgent
     def pause(self):
-        app.controller.playbackController.pause()
+        if hasattr(app.controller, 'playbackController'):
+            app.controller.playbackController.pause()
 
     @asUrgent
     def stop(self):
@@ -804,6 +806,8 @@ class PyBridge:
             keyboard.handleKey(key, shiftDown, controlDown)
 
     def handleCloseButton(self):
+        if not app.controller.finishedStartup:
+            return
         if config.get(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE):
             self.askUserForCloseBehaviour()
         elif config.get(prefs.MINIMIZE_TO_TRAY):

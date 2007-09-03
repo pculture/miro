@@ -668,7 +668,7 @@ class Controller (frontend.Application):
 
     def finishStartup(self, gatheredVideos=None):
         self.gatheredVideos = gatheredVideos
-        eventloop.addIdle(self.initializeDatabase, "Initializing database")
+        eventloop.addUrgentCall(self.initializeDatabase, "Initializing database")
 
     @startupFunction
     def initializeDatabase(self):
@@ -678,7 +678,7 @@ class Controller (frontend.Application):
             logging.info ("Restoring database...")
             database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
             db.recomputeFilters()
-            eventloop.addIdle(self.checkMoviesDirectoryGone, 
+            eventloop.addUrgentCall(self.checkMoviesDirectoryGone, 
                     "checking movies directory")
         except databaseupgrade.DatabaseTooNewError:
             title = _("Database too new")
@@ -693,7 +693,7 @@ You must download the latest version of $shortAppName and run that.""")).substit
     @startupFunction
     def checkMoviesDirectoryGone(self):
         if not self.moviesDirectoryGone():
-            eventloop.addIdle(self.finalizeStartup, "finalizing startup")
+            eventloop.addUrgentCall(self.finalizeStartup, "finalizing startup")
             return
 
         title = _("Video Directory Missing")
@@ -708,7 +708,7 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
                 dialogs.BUTTON_LAUNCH_MIRO)
         def callback(dialog):
             if dialog.choice == dialogs.BUTTON_LAUNCH_MIRO:
-                eventloop.addIdle(self.finalizeStartup, "finalizing startup")
+                eventloop.addUrgentCall(self.finalizeStartup, "finalizing startup")
             else:
                 eventloop.quit()
                 frontend.quit(True)
