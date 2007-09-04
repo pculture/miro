@@ -76,8 +76,8 @@ class FeedTestCase(EventLoopTest):
     def writefile(self, content):
         self.url = u'file://%s' % self.filename
         handle = file(self.filename,"wb")
-#RSS 2.0 example feed
-#http://cyber.law.harvard.edu/blogs/gems/tech/rss2sample.xml
+        # RSS 2.0 example feed
+        # http://cyber.law.harvard.edu/blogs/gems/tech/rss2sample.xml
         handle.write(content)
         handle.close()
 
@@ -96,6 +96,8 @@ class SimpleFeedTestCase(FeedTestCase):
         FeedTestCase.setUp(self)
         # Based on 
         # http://cyber.law.harvard.edu/blogs/gems/tech/rss2sample.xml
+
+        # this rss feed has no enclosures.
         self.writefile("""<?xml version="1.0"?>
 <rss version="2.0">
    <channel>
@@ -111,19 +113,16 @@ class SimpleFeedTestCase(FeedTestCase):
       <managingEditor>editor@example.com</managingEditor>
       <webMaster>webmaster@example.com</webMaster>
       <item>
-
          <title>Star City</title>
          <link>http://liftoff.msfc.nasa.gov/news/2003/news-starcity.mov</link>
          <description>How do Americans get ready to work with Russians aboard the International Space Station? They take a crash course in culture, language and protocol at Russia's &lt;a href="http://howe.iki.rssi.ru/GCTC/gctc_e.htm"&gt;Star City&lt;/a&gt;.</description>
          <pubDate>Tue, 03 Jun 2003 09:39:21 GMT</pubDate>
          <guid>http://liftoff.msfc.nasa.gov/2003/06/03.html#item573</guid>
-
       </item>
       <item>
          <description>Sky watchers in Europe, Asia, and parts of Alaska and Canada will experience a &lt;a href="http://science.nasa.gov/headlines/y2003/30may_solareclipse.htm"&gt;partial eclipse of the Sun&lt;/a&gt; on Saturday, May 31st.</description>
          <pubDate>Fri, 30 May 2003 11:06:42 GMT</pubDate>
          <guid>http://liftoff.msfc.nasa.gov/2003/05/30.html#item572</guid>
-
       </item>
       <item>
          <title>The Engine That Does More</title>
@@ -131,7 +130,6 @@ class SimpleFeedTestCase(FeedTestCase):
          <description>Before man travels to Mars, NASA hopes to design new engines that will let us fly through the Solar System more quickly.  The proposed VASIMR engine would do that.</description>
          <pubDate>Tue, 27 May 2003 08:37:32 GMT</pubDate>
          <guid>http://liftoff.msfc.nasa.gov/2003/05/27.html#item571</guid>
-
       </item>
       <item>
          <title>Astronauts' Dirty Laundry</title>
@@ -139,23 +137,28 @@ class SimpleFeedTestCase(FeedTestCase):
          <description>Compared to earlier spacecraft, the International Space Station has many luxuries, but laundry facilities are not one of them.  Instead, astronauts have other options.</description>
          <pubDate>Tue, 20 May 2003 08:56:02 GMT</pubDate>
          <guid>http://liftoff.msfc.nasa.gov/2003/05/20.html#item570</guid>
-
       </item>
    </channel>
 </rss>""")
     def testRun(self):
         dialogs.delegate = AcceptScrapeTestDelegate()
         myFeed = self.makeFeed()
-        self.assertEqual(dialogs.delegate.calls, 1)
+
+        # the feed has no enclosures, but we now insert enclosures into it.
+        # thus it should not cause a dialog to pop up and ask the user if they
+        # want to scrape.
+        self.assertEqual(dialogs.delegate.calls, 0)
         self.assertEqual(self.everything.len(), 2) 
+
         # the Feed, plus the 1 item that is a video
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
-        self.assertEqual(items.len(),1)
-        #Make sure that re-updating doesn't re-create the items
+        self.assertEqual(items.len(), 1)
+
+        # make sure that re-updating doesn't re-create the items
         myFeed.update()
-        self.assertEqual(self.everything.len(),2)
+        self.assertEqual(self.everything.len(), 2)
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
-        self.assertEqual(items.len(),1)
+        self.assertEqual(items.len(), 1)
         myFeed.remove()
 
 class EnclosureFeedTestCase(FeedTestCase):
