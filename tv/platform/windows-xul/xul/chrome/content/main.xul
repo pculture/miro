@@ -82,6 +82,7 @@ add more menu elements later -NN -->
              ondragdrop="return onDragDrop(event, 'mainDisplay');" />
         <vbox id="video-box" flex="1" collapsed="true">
             <browser flex="1" id="mainDisplayVideo" 
+                ondblclick="onFullscreenActivate();"
                 src="chrome://dtv/content/video-display-vlc.html" 
                 type="content" />
             <browser id="videoInfoDisplay" src="" type="content"
