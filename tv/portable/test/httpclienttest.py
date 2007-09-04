@@ -175,13 +175,14 @@ class FakeStream:
     def stopReadTimeout(self):
         pass
 
-    def openConnection(self, host, port, callback, errback):
+    def openConnection(self, host, port, callback, errback, disabledReadTimeout=None):
         self.name = "Outgoing %s:%s" % (host, port)
         self.output = ''
         self.host = host
         self.port = port
         self.open = True
         self.errback = errback
+        self.dsiabledReadTimeout = disabledReadTimeout
         callback(self)
 
     def acceptConnection(self, host, port, callback, errback):
@@ -805,7 +806,7 @@ class HTTPClientTestBase(AsyncSocketTest):
     def setUp(self):
         AsyncSocketTest.setUp(self)
         self.testRequest = TestingHTTPConnection()
-        self.testRequest.openConnection('foo.com', 80, lambda x: None,lambda x: None)
+        self.testRequest.openConnection('foo.com', 80, lambda x: None, lambda x: None)
         self.testRequest.sendRequest(self.callback, self.errback, "", 80, method='GET', path='/bar/baz;123?a=b') 
         self.authDelegate = TestingAuthDelegate()
         dialogs.setDelegate(self.authDelegate)
