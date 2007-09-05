@@ -162,6 +162,10 @@ class VideoDisplay (app.VideoDisplayBase):
 
     def setVolume(self, volume):
         app.VideoDisplayBase.setVolume(self, volume)
+        self.moveVolumeSlider(volume)
+
+    @gtkAsyncMethod
+    def moveVolumeSlider(self, volume):
         volumeScale = app.controller.frame.widgetTree['volume-scale']
         volumeScale.set_value(self.volume)
 
