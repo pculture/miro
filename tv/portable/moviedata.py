@@ -62,10 +62,11 @@ class MovieDataUpdater:
     def update (self, item):
         if item.updating_movie_info:
             return
-        item.updating_movie_info = True
-        movie_data = {"duration": -1, "screenshot": FilenameType("")}
-        self.runningCount += 1
-        app.controller.videoDisplay.fillMovieData (item.getVideoFilename(), movie_data, lambda: self.updateFinished (item, movie_data))
+        if hasattr(app.controller, 'videoDisplay'):
+            item.updating_movie_info = True
+            movie_data = {"duration": -1, "screenshot": FilenameType("")}
+            self.runningCount += 1
+            app.controller.videoDisplay.fillMovieData (item.getVideoFilename(), movie_data, lambda: self.updateFinished (item, movie_data))
 
     @asIdle
     def shutdown (self):
