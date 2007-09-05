@@ -17,6 +17,7 @@
 
 import logging
 from xpcom import components
+import locale
 
 nsIObserver = components.interfaces.nsIObserver
 nsIHttpChannel = components.interfaces.nsIHttpChannel
@@ -30,4 +31,8 @@ class HTTPRequestObserver:
     def observe(self, subject, topic, data):
         if topic == "http-on-modify-request":
               channel = subject.queryInterface(nsIHttpChannel)
+              currentLanguages = channel.getRequestHeader('Accept-Language')
+              language = local.getdefaultlocale()[0].replace('_', '-')
+              channel.setRequestHeader("Accept-Language", language, False)
+              channel.setRequestHeader("Accept-Lanugage", currentLanguages, True)
               channel.setRequestHeader("X-Miro", "1", False);
