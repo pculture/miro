@@ -43,10 +43,3 @@ Debian packages.  Here's how to use it:
 7) Once the build and the package itself works, clean up the debian/ directory:
    $ fakeroot debian/rules clean
    Then check in the updated debian/ directory to svn.
-
-8) You can create an apt archive by puting all the packages for one distro
-into a single directory, then running apt-ftparchive packages.  For example,
-if you have the 32bit and amd64 packages for feisty in a directory called
-"feisty", you can run the following:
-
-apt-ftparchive packages feisty | gzip > feisty/Packages.gz
