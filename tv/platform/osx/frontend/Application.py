@@ -213,16 +213,17 @@ class AppController (NibClassBuilder.AutoBaseClass):
         
     def workspaceWillSleep_(self, notification):
         def pauseRunningDownloaders(self=self):
-            views.remoteDownloads.confirmDBThread()
-            self.pausedDownloaders = list()
-            for dl in views.remoteDownloads:
-                if dl.getState() == 'downloading':
-                    self.pausedDownloaders.append(dl)
-            dlCount = len(self.pausedDownloaders)
-            if dlCount > 0:
-                logging.info("System is going to sleep, suspending %d download(s)." % dlCount)
-                for dl in self.pausedDownloaders:
-                    dl.pause(block=True)
+            if views.initialized:
+                views.remoteDownloads.confirmDBThread()
+                self.pausedDownloaders = list()
+                for dl in views.remoteDownloads:
+                    if dl.getState() == 'downloading':
+                        self.pausedDownloaders.append(dl)
+                dlCount = len(self.pausedDownloaders)
+                if dlCount > 0:
+                    logging.info("System is going to sleep, suspending %d download(s)." % dlCount)
+                    for dl in self.pausedDownloaders:
+                        dl.pause(block=True)
         dc = eventloop.addUrgentCall(lambda:pauseRunningDownloaders(), "Suspending downloaders for sleep")
         # Until we can get proper delayed call completion notification, we're
         # just going to wait a few seconds here :)
