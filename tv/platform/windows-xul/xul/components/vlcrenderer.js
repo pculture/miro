@@ -57,39 +57,6 @@ VLCRenderer.prototype = {
     this.item = null;
     this.playTime = 0;
     this.volume = 0;
-    this.extractMode = false;
-    this.url_extract = null;
-    this.timer_extract = Components.classes["@mozilla.org/timer;1"].
-	      createInstance(Components.interfaces.nsITimer);
-    var extractionBrowser = this.document.getElementById("mainExtractionVideo");
-    this.vlc_extract = extractionBrowser.contentDocument.getElementById("video2");
-    this.switchToExtractMode();
-  },
-
-  switchToExtractMode: function() {
-      if (this.extractMode) {
-          return;
-      }
-      pybridge.printOut("switchToExtractMode");
-      this.vlc_extract.audio.mute = true;
-      this.extractMode = true;
-      this.timer.cancel();
-      this.timer2.cancel();
-      if (this.url_extract != null) {
-          this.extractMovieDataStepStart();
-      }
-  },
-
-  switchToPlayMode: function() {
-       if (!this.extractMode) {
-          return;
-      }
-      pybridge.printOut("switchToPlayMode");
-      this.vlc_extract.playlist.stop();
-      this.timer_extract.cancel();
-      this.vlc.audio.mute = false;
-      this.vlc.audio.volume = this.volume;
-      this.extractMode = false;
   },
 
   doScheduleUpdates: function() {
@@ -128,6 +95,7 @@ VLCRenderer.prototype = {
       }
       if(this.scheduleUpdates) {
 	  this.doScheduleUpdates();
+
       }
     } catch (e) {
       if (this.startedPlaying) {
@@ -167,28 +135,22 @@ VLCRenderer.prototype = {
       // this.vlc.playlist.items.clear();
       this.showPlayButton();
       this.resetVideoControls();
-      this.switchToExtractMode();
   },
 
   canPlayURL: function(url) {
     try {
-      this.switchToPlayMode();
-
       if (this.vlc.playlist.items.count > 0) {
           this.stop();
           this.vlc.playlist.items.clear();
       }
       this.item = this.vlc.playlist.add(url);
     } catch (e) {
-      this.switchToExtractMode();
       return false;
     }
     return true;
   },
 
   selectURL: function(url) {
-      this.switchToPlayMode();
-
       if (this.vlc.playlist.items.count > 0) {
           this.stop();
           this.vlc.playlist.items.clear();
@@ -197,8 +159,6 @@ VLCRenderer.prototype = {
   },
 
   setCurrentTime: function(time) {
-      this.switchToPlayMode();
-
       try {
 	  this.vlc.input.time = time * 1000;
       } catch (e) {
@@ -215,8 +175,6 @@ VLCRenderer.prototype = {
     },
   
   play: function() {
-      this.switchToPlayMode();
-
       if (this.vlc.playlist.items.count > 0) {
 	  if(!this.vlc.playlist.isPlaying) {
 	      if (this.item != null) {
@@ -244,8 +202,6 @@ VLCRenderer.prototype = {
   },
 
   pause: function() {
-      this.switchToPlayMode();
-
       this.scheduleUpdates = false;
       this.active = false;
       if (this.vlc.playlist.isPlaying) {
@@ -257,8 +213,6 @@ VLCRenderer.prototype = {
   },
 
   pauseForDrag: function() {
-      this.switchToPlayMode();
-
       this.scheduleUpdates = false;
       this.active = false;
       if (this.vlc.playlist.isPlaying) {
@@ -276,7 +230,6 @@ VLCRenderer.prototype = {
       }
       this.showPlayButton();
       this.resetVideoControls();
-      this.switchToExtractMode();
   },
 
   goToBeginningOfMovie: function() {
@@ -310,221 +263,9 @@ VLCRenderer.prototype = {
     this.vlc.video.fullscreen = true;
   },
 
-  extractMovieDataDone: function (success) {
-      pybridge.printOut("Step extractMovieDataDone");
-      this.url_extract = null;
-      pybridge.extractFinish (this.duration_extract, success);
-  },
-
-  extractMovieDataStepSnapshot: function () {
-      pybridge.printOut("Step Snapshot");
-      try {
-          pybridge.printOut("Calling takeSnapshot");
-	  this.vlc_extract.video.takeSnapshot (this.screenshot_filename_extract);
-          pybridge.printOut("takeSnapshot returned");
-	  var callback = {
-	      notify: function(timer) {
-		  this.parent.extractMovieDataDone(true);
-                  return;
-	      }
-	  };
-	  callback.parent = this;
-	  this.vlc_extract.playlist.stop();
-	  this.timer_extract.initWithCallback(callback, 4000,
-					      Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-          pybridge.printOut("Step Finish Queued");
-      } catch (e) {
-          pybridge.printOut("Step Snapshot Error");
-	    if (this.vlc_extract.input.state == 0) {
-		this.extractMovieDataDone(false);
-		return;
-	    }
-	    if (this.vlc_extract.playlist.items.count == 0) {
-		this.extractMovieDataDone(true);
-                return;
-	    } else {
-	        pybridge.printOut("Step Snapshot Retrying");
-		this.extract_errors ++;
-		if (this.extract_errors > 100) {
-		    this.extractMovieDataDone(true);
-                    return;
-		}
-		var callback = {
-		    notify: function(timer) {
-			this.parent.extractMovieDataStepSnapshot();
-		    }
-		};
-		callback.parent = this;
-		this.timer_extract.initWithCallback(callback, 100,
-						    Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-	    }
-      }
-  },
-  
-  extractMovieDataStepWaitForJump: function () {
-      pybridge.printOut("Step Wait For Jump");
-      pybridge.printOut(this.vlc_extract.input.time);
-      //      this.extractMovieDataStepSnapshot();
-//	return;
-//	} catch (e) {
-//	}
-//	if (this.vlc_extract.playlist.items.count == 0) {
-//	    this.extractMovieDataDone(false);
-//            return;
-//	} else {
-      var callback = {
-	  notify: function(timer) {
-	      this.parent.extractMovieDataStepSnapshot();
-	  }
-      };
-      callback.parent = this;
-      this.timer_extract.initWithCallback(callback, 500,
-					  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-//	}
-  },
-
-  extractMovieDataStepJump: function () {
-      pybridge.printOut("Step Jump");
-      try {
-	  this.vlc_extract.input.time = this.duration_extract / 2.0;
-          this.extractMovieDataStepWaitForJump();
-      } catch (e) {
-	  if (this.vlc_extract.playlist.items.count == 0) {
-	      this.extractMovieDataDone(true);
-              return;
-	  } else {
-	      this.extract_errors ++;
-	      if (this.extract_errors > 100) {
-		  this.extractMovieDataDone(true);
-                  return;
-	      }
-	      var callback = {
-		  notify: function(timer) {
-		      this.parent.extractMovieDataStepJump();
-		  }
-	      };
-	      callback.parent = this;
-	      this.timer_extract.initWithCallback(callback, 100,
-						  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-	  }
-      }
-
-  },
-
-  extractMovieDataStepLength: function () {
-      pybridge.printOut("Step Length");
-//	if (this.testing_extract) {
-//	    this.extractMovieDataDone(false);
-//	    return;
-//	}
-      try {
-	  this.duration_extract = this.vlc_extract.input.length;
-//          this.extractMovieDataStepJump();
-	  this.extractMovieDataDone(true);
-	  return
-      } catch (e) {
-	  if (this.vlc_extract.playlist.items.count == 0) {
-	      this.extractMovieDataDone(true);
-              return;
-	  } else {
-	      this.extract_errors ++;
-	      if (this.extract_errors > 100) {
-		  this.extractMovieDataDone(false);
-                  return;
-	      }
-	      var callback = {
-		  notify: function(timer) {
-		      this.parent.extractMovieDataStepLength();
-		  }
-	      };
-	      callback.parent = this;
-	      this.timer_extract.initWithCallback(callback, 10,
-						  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-	  }
-      }
-  },
-
-
-  extractMovieDataStepWaitPlay: function () {
-      pybridge.printOut("Step Wait Play");
-      pybridge.printOut(this.vlc_extract.input.state);
-      pybridge.printOut(this.vlc_extract.playlist.items.count);
-      try {
-	  if (this.vlc_extract.input.state == 3) {
-	      this.extractMovieDataStepLength();
-	      return;
-	  }
-      } catch (e) {
-      }	
-      if (this.vlc_extract.playlist.items.count == 0) {
-	  this.extractMovieDataDone(true);
-	  return;
-      }
-      this.extract_errors ++;
-      if (this.extract_errors > 100) {
-	  this.extractMovieDataDone(false);
-          return;
-      }
-      var callback = {
-	  notify: function(timer) {
-	      this.parent.extractMovieDataStepWaitPlay();
-	  }
-      };
-      callback.parent = this;
-      this.timer_extract.initWithCallback(callback, 100,
-					  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-  },
-
-  extractMovieDataStepAdd: function () {
-      var item;
-      pybridge.printOut("Step Add");
-      item = this.vlc_extract.playlist.add(this.url_extract);
-      this.vlc_extract.playlist.playItem (item);
-      this.extractMovieDataStepWaitPlay();
-  },
-
-  extractMovieDataStepWaitStop: function () {
-      pybridge.printOut("Step Wait Stop");
-      try {
-	  if (this.vlc_extract.input.state == 0) {
-	      this.extractMovieDataStepAdd();
-	      return;
-	  }
-      } catch (e) {
-      }
-      this.extract_errors ++;
-      if (this.extract_errors > 100) {
-	  this.extractMovieDataDone(false);
-          return;
-      }
-      var callback = {
-	  notify: function(timer) {
-	      this.parent.extractMovieDataStepWaitStop();
-	  }
-      };
-      callback.parent = this;
-      this.timer_extract.initWithCallback(callback, 100,
-					  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-  },
-
-  extractMovieDataStepStart: function () {
-      pybridge.printOut("Step Start");
-      if (this.vlc_extract.playlist.items.count > 0) {
-	  this.vlc_extract.playlist.stop();
-          this.vlc_extract.playlist.items.clear();
-      }
-      this.extractMovieDataStepWaitStop()
-  },
-
   extractMovieData: function (url, screenshot_filename) {
-      this.screenshot_filename_extract = screenshot_filename;
-      this.url_extract = url;
-      this.extract_errors = 0;
-      this.duration_extract = -1;
-      this.testing_extract = false;
-      if (this.extractMode) {
-	  this.extractMovieDataStepStart();
-      }
+      var length = this.vlc.calcLength(url);
+      pybridge.extractFinish (length, false);
   },
 };
 

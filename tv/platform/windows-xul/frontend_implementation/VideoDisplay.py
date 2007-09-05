@@ -93,7 +93,7 @@ class VideoDisplay (app.VideoDisplayBase):
 #       Uncomment this to enable duration extraction
 
 # 	print "Calling renderer"
-# 	frontend.vlcRenderer.extractMovieData (filename, movie_data["screenshot"]);
+ 	frontend.vlcRenderer.extractMovieData (filename, movie_data["screenshot"]);
 # 	print "renderer returned"
 
     def extractFinish (self, duration, screenshot_success):

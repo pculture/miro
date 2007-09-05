@@ -88,12 +88,6 @@ add more menu elements later -NN -->
             <browser id="videoInfoDisplay" src="" type="content"
                     height="40px"/>
         </vbox>
-        <vbox id="extraction-box" flex="1" collapsed="true">
-            <browser flex="1" id="mainExtractionVideo" 
-                src="chrome://dtv/content/video-extraction-vlc.html" 
-                type="content" />
-        </vbox>
-
 <resizer id="resizer-right" dir="right" class="side-resizer" oncommand="return doResize(event);" />
 
 </hbox>
