@@ -32,7 +32,7 @@ class HTTPRequestObserver:
         if topic == "http-on-modify-request":
               channel = subject.queryInterface(nsIHttpChannel)
               currentLanguages = channel.getRequestHeader('Accept-Language')
-              language = local.getdefaultlocale()[0].replace('_', '-')
+              language = locale.getdefaultlocale()[0].replace('_', '-')
               channel.setRequestHeader("Accept-Language", language, False)
               channel.setRequestHeader("Accept-Lanugage", currentLanguages, True)
               channel.setRequestHeader("X-Miro", "1", False);
