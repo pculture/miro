@@ -15,6 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
+import os
 import re
 import urllib
 import logging
@@ -323,6 +324,8 @@ class ManagedWebView (NSObject):
             return NSURLRequest.requestWithURL_cachePolicy_timeoutInterval_(urlObject, NSURLRequestReloadIgnoringCacheData, 60)
 
         if isinstance(request, NSMutableURLRequest):
+            language = os.environ['LANGUAGE'].split(':')[0].replace('_', '-')
+            request.setValue_forHTTPHeaderField_(language, u'Accept-Language')
             request.setValue_forHTTPHeaderField_(u'1', u'X-Miro')
         
         return request
