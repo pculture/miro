@@ -1,3 +1,4 @@
+import os
 import re
 import urllib
 import logging
@@ -306,6 +307,8 @@ class ManagedWebView (NSObject):
             return NSURLRequest.requestWithURL_cachePolicy_timeoutInterval_(urlObject, NSURLRequestReloadIgnoringCacheData, 60)
 
         if isinstance(request, NSMutableURLRequest):
+            language = os.environ['LANGUAGE'].split(':')[0].replace('_', '-')
+            request.setValue_forHTTPHeaderField_(language, u'Accept-Language')
             request.setValue_forHTTPHeaderField_(u'1', u'X-Miro')
         
         return request

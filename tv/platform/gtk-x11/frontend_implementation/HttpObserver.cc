@@ -39,6 +39,7 @@
 #include <nsIObserver.h>
 #include <nsIObserverService.h>
 #include <nsString.h>
+#include <locale.h>
 
 class HttpObserver: public nsIObserver {     
 public:   
@@ -64,8 +65,20 @@ nsresult HttpObserver::Observe(nsISupports *subject, const char *topic,
 {
     if(strcmp(topic, "http-on-modify-request") == 0) {
         nsresult rv;
+        nsDependentCString locale, currentLanguages;
+        nsDependentCString language = nsDependentCString("");
+        PRUint32 sep;
         nsCOMPtr<nsIHttpChannel> channel(do_QueryInterface(subject, &rv));
         if(NS_FAILED(rv)) return rv;
+        channel->GetRequestHeader(nsDependentCString("Accept-Language"), currentLanguages);
+        locale = nsDependentCString(setlocale(LC_ALL, NULL));
+        sep = locale.FindChar('.');
+        locale.Left(language, sep);
+        language.ReplaceChar('_', '-');
+        channel->SetRequestHeader(nsDependentCString("Accept-Language"),
+                language, false);
+        channel->SetRequestHeader(nsDependentCString("Accept-Language"),
+                currentLanguages, true);
         channel->SetRequestHeader(nsDependentCString("X-Miro"), 
                 nsDependentCString("1"), false);
     }

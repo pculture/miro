@@ -174,7 +174,7 @@ def initializeLocale():
     languages = list(NSUserDefaults.standardUserDefaults()["AppleLanguages"])
     try:
         pos = languages.index('en')
-        languages = languages[:pos]
+        languages = languages[:pos+1]
     except:
         pass
 

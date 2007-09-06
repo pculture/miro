@@ -560,7 +560,7 @@ def setupLogging():
     logging.timing = lambda msg, *args, **kargs: logging.log(25, msg, *args, **kargs)
     logging.addLevelName(26, "JSALERT")
     logging.jsalert = lambda msg, *args, **kargs: logging.log(26, msg, *args, **kargs)
-
+    logging.basicConfig(level=logging.DEBUG)
 
 # Returned when input to a template function isn't unicode
 class DemocracyUnicodeError(StandardError):
