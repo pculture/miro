@@ -25,7 +25,7 @@ from sha import sha
 
 from dl_daemon import command, daemon, bittorrentdtv
 from datetime import timedelta
-from util import checkF, checkU
+from util import checkF, checkU, stringify
 
 import platformutils
 import string
@@ -437,7 +437,8 @@ class HTTPDownloader(BGDownloader):
         self.cancelRequest()
 
     def handleWriteError(self, error):
-        self.handleGenericError(_("Could not write to %s") % self.filename)
+        self.handleGenericError(_("Could not write to %s") % 
+                                  stringify(self.filename))
         if self.filehandle is not None:
             try:
                 self.filehandle.close()

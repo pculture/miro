@@ -622,6 +622,7 @@ def checkF(text):
     if text is not None and type(text) != FilenameType:
         raise DemocracyUnicodeError, (u"text \"%s\" is not a valid filename type" %
                                      text)
+
 # Decorator that raised an exception if the function doesn't return a filename
 def returnsFilename(func):
     def checkFunc(*args, **kwargs):
@@ -631,8 +632,9 @@ def returnsFilename(func):
         return result
     return checkFunc
 
-# Turns all strings in data structure to unicode
 def unicodify(d):
+    """Turns all strings in data structure to unicode.
+    """
     if isinstance(d, dict):
         for key in d.keys():
             d[key] = unicodify(d[key])
@@ -643,9 +645,20 @@ def unicodify(d):
         d = d.decode('ascii','replace')
     return d
 
-# Quote international characters contained in a URL according to w3c, see:
-# <http://www.w3.org/International/O-URL-code.html>
+def stringify(u):
+    """Takes a possibly unicode string and converts it to a string string.
+    This is required for some logging.
+    """
+    if isinstance(u, unicode):
+        return u.encode("ascii", errors="xmlcharrefreplace")
+    if not isinstance(u, str):
+        return str(u)
+    return u
+
 def quoteUnicodeURL(url):
+    """Quote international characters contained in a URL according to w3c, see:
+    <http://www.w3.org/International/O-URL-code.html>
+    """
     checkU(url)
     quotedChars = list()
     for c in url.encode('utf8'):
