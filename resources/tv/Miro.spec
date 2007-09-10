@@ -40,6 +40,7 @@ BuildRequires:  firefox-devel = %{mozversion}
 Requires:   	python-abi = %(%{__python} -c "import sys ; print sys.version[:3]")
 Requires:	xine-lib gnome-python2-gtkmozembed libfame gnome-python2-gconf dbus-python
 Requires:       firefox = %{mozversion}
+Requires:       python-sqlite2
 
 %description
 Miro Player
