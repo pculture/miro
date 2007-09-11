@@ -55,7 +55,7 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
         upgradeTo = schema.VERSION
 
     if saveVersion > upgradeTo:
-        msg = ("Database was created by a newer version of Democracy " 
+        msg = ("Database was created by a newer version of Miro " 
                "(db version is %s)" % saveVersion)
         raise DatabaseTooNewError(msg)
 

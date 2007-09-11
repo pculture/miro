@@ -830,7 +830,7 @@ class BTDownloader(BGDownloader):
                 except IOError:
                     self.handleError(_("Torrent file deleted"),
                             _("The torrent file for this item was deleted "
-                                "outside of democracy."))
+                                "outside of Miro."))
 
                     return
                 try:
