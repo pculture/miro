@@ -50,9 +50,6 @@ def unwatchedItems(obj):
 def expiringItems(obj):
     return obj.getState() == 'expiring' and not obj.isNonVideoFile()
 
-def newWatchableItems(obj):
-    return (obj.getState() in ('expiring','newly-downloaded')) and not obj.isNonVideoFile()
-
 def watchableItems(obj):
     return (obj.isDownloaded() and not obj.isNonVideoFile() and 
             not obj.isContainerItem)
@@ -64,7 +61,9 @@ def notDeleted(obj):
     return not (isinstance (obj, item.FileItem) and obj.deleted)
 
 newMemory = {}
+newlyDownloadedMemory = {}
 newMemoryFor = None
+
 def switchNewItemsChannel(newChannel):
     """The newItems() filter normally remembers which items were unwatched.
     This way items don't leave the new section while the user is viewing a
@@ -73,10 +72,12 @@ def switchNewItemsChannel(newChannel):
     newChannel should be the channel/channel folder object that's being
     displayed.
     """
-    global newMemoryFor, newMemory
+    global newMemoryFor, newMemory, newlyDownloadedMemory
     if newMemoryFor != newChannel:
         newMemory.clear()
+        newlyDownloadedMemory.clear()
         newMemoryFor = newChannel
+
 
 # This is "new" for the channel template
 def newItems(obj):
@@ -85,6 +86,16 @@ def newItems(obj):
     except KeyError:
         rv = not obj.getViewed()
         newMemory[obj.getID()] = rv
+    return rv
+
+def newWatchableItems(obj):
+    if not obj.isDownloaded() or obj.isNonVideoFile():
+        return False
+    try:
+        rv = newlyDownloadedMemory[obj.getID()]
+    except KeyError:
+        rv = (obj.getState() == u"newly-downloaded")
+        newlyDownloadedMemory[obj.getID()] = rv
     return rv
 
 # Return True if a tab should be shown for obj in the frontend. The filter

@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://www.participatorypolitics.org/"
+      xmlns:i18n="http://www.participatoryculture.org/i18n"
       eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -10,12 +11,13 @@
     <t:include filename="dynamic.js" />
     <t:include filename="settings.js" />
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
-
     <t:execOnLoad><![CDATA[
-sorts.switchUnwatchedFirstChannel(None)
+
+filters.switchNewItemsChannel("new")
+sorts.switchUnwatchedFirstChannel("new")
+views.nonContainerItems.recomputeFilter(views.newWatchableItems)
 
 global searchFilter
-
 searchFilter = lambda x: filters.matchingItems(x, None)
 
 matchingItems = views.newWatchableItems.filter(lambda x:searchFilter(x) and x.getFeedURL() != "dtv:singleFeed",sortFunc=sorts.itemSortNew.sort, resort=True)
