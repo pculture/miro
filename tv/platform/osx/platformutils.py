@@ -216,8 +216,8 @@ def unicodeToFilename(filename, path = None):
     checkU(filename)
     if path:
         checkB(path)
-    else:
-        path = os.getcwd()
+    #else:
+    #    path = os.getcwd()
 
     # Keep this a little shorter than the max length, so we can run
     # nextFilename
@@ -299,14 +299,18 @@ def filenameTypeToOSFilename(filename):
 def resizeImage(source_path, dest_path, width, height):
     source = NSImage.alloc().initWithContentsOfFile_(source_path)
     jpegData = getResizedJPEGData(source, width, height)
-    destinationFile = open(dest_path, "w")
-    try:
-        destinationFile.write(jpegData)
-    finally:
-        destinationFile.close()
+    if jpegData is not None:
+        destinationFile = open(dest_path, "w")
+        try:
+            destinationFile.write(jpegData)
+        finally:
+            destinationFile.close()
 
 # Returns a resized+letterboxed version of image source as JPEG data.
 def getResizedJPEGData(source, width, height):
+    if source is None:
+        return None
+
     sourceSize = source.size()
     sourceRatio = sourceSize.width / sourceSize.height
     destinationSize = NSSize(width, height)

@@ -282,11 +282,14 @@ def extractIcon(qtmovie, filename):
     frameRatio = frameSize.width / frameSize.height
     jpegData = platformutils.getResizedJPEGData(frame, 226.0, 170.0)
 
-    try:
-        target = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
-        iconFilename = os.path.basename(filename) + '.jpg'
-        iconFilename = download_utils.saveData(target, iconFilename, jpegData)
-    except:
+    if jpegData is not None:
+        try:
+            target = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+            iconFilename = os.path.basename(filename) + '.jpg'
+            iconFilename = download_utils.saveData(target, iconFilename, jpegData)
+        except:
+            return ""
+    else:
         return ""
 
     return iconFilename
