@@ -108,7 +108,7 @@ def generateDownloadID():
 class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
 
-    def __init__(self, url, item, contentType = None):
+    def __init__(self, url, item, contentType = None, channelName = None):
         checkU(url)
         if contentType:
             checkU(contentType)
@@ -126,7 +126,7 @@ class RemoteDownloader(DDBObject):
                 contentType = enclosureContentType
         self.contentType = u""
         self.deleteFiles = True
-        self.channelName = None
+        self.channelName = channelName
         self.manualUpload = False
         DDBObject.__init__(self)
         if contentType is None:
@@ -632,6 +632,9 @@ def getDownloader(item):
     if existing:
         return existing
     url = item.getURL()
+    channelName = platformutils.unicodeToFilename(item.getChannelTitle(True))
+    if not channelName:
+        channelName = None
     if url.startswith(u'file://'):
         scheme, host, port, path = parseURL(url)
         path = platformutils.unmakeURLSafe (path)
@@ -643,6 +646,6 @@ def getDownloader(item):
         except ValueError:
             raise ValueError("Don't know how to handle %s" % url)
         else:
-            return RemoteDownloader(url, item, u'application/x-bittorrent')
+            return RemoteDownloader(url, item, u'application/x-bittorrent', channelName=channelName)
     else:
-        return RemoteDownloader(url, item)
+        return RemoteDownloader(url, item, channelName=channelName)
