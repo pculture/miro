@@ -760,11 +760,12 @@ folder will be deleted.""")
 
         if self.downloader is None:
             self.downloader = downloader.getDownloader(self)
-        self.downloader.setChannelName (platformutils.unicodeToFilename(self.getChannelTitle(True)))
-        if self.downloader.isFinished():
-            self.onDownloadFinished()
-        else:
-            self.downloader.start()
+        if self.downloader is not None:
+            self.downloader.setChannelName (platformutils.unicodeToFilename(self.getChannelTitle(True)))
+            if self.downloader.isFinished():
+                self.onDownloadFinished()
+            else:
+                self.downloader.start()
         self.signalChange()
 
     def pause(self):

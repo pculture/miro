@@ -645,6 +645,8 @@ def getDownloader(item):
             getTorrentInfoHash(path)
         except ValueError:
             raise ValueError("Don't know how to handle %s" % url)
+        except IOError:
+            return None
         else:
             return RemoteDownloader(url, item, u'application/x-bittorrent', channelName=channelName)
     else:
