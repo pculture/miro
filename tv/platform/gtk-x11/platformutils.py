@@ -38,7 +38,14 @@ from os.path import samefile
 ###############################################################################
 
 def getAvailableBytesForMovies():
-    statinfo = os.statvfs (config.get(prefs.MOVIES_DIRECTORY))
+    dir = config.get(prefs.MOVIES_DIRECTORY)
+    # Create the download directory if it doesn't already exist.
+    try:
+        os.makedirs(dir)
+    except:
+        pass
+    
+    statinfo = os.statvfs (dir)
     return statinfo.f_frsize * statinfo.f_bavail
 
 main_thread = None
