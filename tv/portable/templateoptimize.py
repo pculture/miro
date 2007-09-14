@@ -16,6 +16,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 import re
+import logging
+
 from xml.sax.expatreader import ExpatParser
 from xml.sax.handler import ContentHandler
 
@@ -192,4 +194,7 @@ class HTMLChangeOptimizer:
 
     def removeElements(self, ids):
         for id in ids:
-            del self.elements[id]
+            if id in self.elements:
+                del self.elements[id]
+            else:
+                logging.warn("Trying to remove an unknown element.")
