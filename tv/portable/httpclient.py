@@ -92,16 +92,16 @@ class HTTPError(NetworkError):
         NetworkError.__init__(self, _("HTTP error"), longDescription)
 class BadStatusLine(HTTPError):
     def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Status Line: %s" % line))
+        HTTPError.__init__(self, _("Bad Status Line: %s") % line)
 class BadHeaderLine(HTTPError):
     def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Header Line: %s" % line))
+        HTTPError.__init__(self, _("Bad Header Line: %s") % line)
 class BadChunkSize(HTTPError):
     def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Chunk size: %s" % line))
+        HTTPError.__init__(self, _("Bad Chunk size: %s") % line)
 class CRLFExpected(HTTPError):
     def __init__(self, crlf):
-        HTTPError.__init__(self, _("Expected CRLF got: %r" % crlf))
+        HTTPError.__init__(self, _("Expected CRLF got: %r") % crlf)
 class ServerClosedConnection(HTTPError):
     def __init__(self, host):
         HTTPError.__init__(self, _('%s closed connection') % host)
@@ -112,7 +112,7 @@ class UnexpectedStatusCode(HTTPError):
             self.friendlyDescription = _("File not found")
             self.longDescription = _("Got 404 status code")
         else:
-            HTTPError.__init__(self, _("Bad Status Code: %s" % code))
+            HTTPError.__init__(self, _("Bad Status Code: %s") % code)
 
 class AuthorizationFailed(NetworkError):
     def __init__(self):
