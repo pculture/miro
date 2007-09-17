@@ -18,8 +18,8 @@
 import os
 import urlparse
 
-VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb']
-AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma']
+VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv']
+AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
 
 MIMETYPES_EXT_MAP = {
     'video/quicktime':  ['.mov'],
@@ -29,11 +29,13 @@ MIMETYPES_EXT_MAP = {
     'video/x-flv':      ['.flv'],
     'video/x-ms-wmv':   ['.wmv'],
     'video/x-msvideo':  ['.avi'],
+    'video/x-matroska': ['.mkv'],
     'application/ogg':  ['.ogg'],
 
     'audio/mpeg':       ['.mp3'],
     'audio/mp4':        ['.m4a'],
     'audio/x-ms-wma':   ['.wma'],
+    'audio/x-matroska': ['.mka'],
     
     'application/x-bittorrent': ['.torrent']
 }
