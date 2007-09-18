@@ -112,12 +112,12 @@ class UIBackendDelegate:
             dlog.run()
             call = lambda:dialog.runCallback(dlog.result, dlog.value)
             name = "TextEntryDialog"
-	elif isinstance(dialog, dialogs.CheckboxTextboxDialog):
+        elif isinstance(dialog, dialogs.CheckboxTextboxDialog):
             dlog = CheckboxTextboxDialogController.alloc().initWithDialog_(dialog)
             dlog.run()
             call = lambda:dialog.runCallback(dlog.result, dlog.value, dlog.text)
             name = "CheckboxTextboxDialog"
-	elif isinstance(dialog, dialogs.CheckboxDialog):
+        elif isinstance(dialog, dialogs.CheckboxDialog):
             dlog = CheckboxDialogController.alloc().initWithDialog_(dialog)
             dlog.run()
             call = lambda:dialog.runCallback(dlog.result, dlog.value)
@@ -505,10 +505,10 @@ class CheckboxDialogController (NibClassBuilder.AutoBaseClass):
         self.window().setTitle_(unicode(dialog.title))
         self.messageField.setStringValue_(dialog.description)
         self.checkbox.setTitle_(unicode(dialog.checkbox_text))
-	if dialog.checkbox_value:
-	    self.checkbox.setState_(NSOnState)
-	else:
-	    self.checkbox.setState_(NSOffState)
+        if dialog.checkbox_value:
+            self.checkbox.setState_(NSOnState)
+        else:
+            self.checkbox.setState_(NSOffState)
         self.mainButton.setTitle_(unicode(dialog.buttons[0].text))
         self.secondaryButton.setTitle_(dialog.buttons[1].text)
         self.result = None
@@ -542,11 +542,11 @@ class CheckboxTextboxDialogController (NibClassBuilder.AutoBaseClass):
         self.window().setTitle_(unicode(dialog.title))
         self.messageField.setStringValue_(dialog.description)
         self.entryField.setStringValue_(unicode(dialog.textbox_value))
-        self.checkbox.setTitle_(unicode(dialog.checkbox_text))
-	if dialog.checkbox_value:
-	    self.checkbox.setState_(NSOnState)
-	else:
-	    self.checkbox.setState_(NSOffState)
+        self.checkboxLabel.setStringValue_(unicode(dialog.checkbox_text))
+        if dialog.checkbox_value:
+            self.checkbox.setState_(NSOnState)
+        else:
+            self.checkbox.setState_(NSOffState)
         self.mainButton.setTitle_(unicode(dialog.buttons[0].text))
         self.secondaryButton.setTitle_(dialog.buttons[1].text)
         self.result = None
@@ -569,7 +569,7 @@ class CheckboxTextboxDialogController (NibClassBuilder.AutoBaseClass):
     def closeWithResult(self, result, value, text):
         self.result = result
         self.value = value
-	self.text = text
+        self.text = text
         self.window().close()
         NSApplication.sharedApplication().stopModal()
 

@@ -4,6 +4,6 @@
 /* NSButton (Cancel) : <title:Cancel> (oid:10) */
 "Cancel" = "Cancel";
 
-/* NSButton (OK) : <title:OK> (oid:9) */
-"OK" = "OK";
+/* NSButton (Ok) : <title:Ok> (oid:9) */
+"Ok" = "Ok";
 
