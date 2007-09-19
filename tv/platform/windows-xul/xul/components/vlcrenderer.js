@@ -264,8 +264,8 @@ VLCRenderer.prototype = {
   },
 
   extractMovieData: function (url, screenshot_filename) {
-      var length = this.vlc.calcLength(url);
-      pybridge.extractFinish (length, false);
+      // Disabled until the external helper application works.
+      pybridge.extractFinish (-1, false);
   },
 };
 
