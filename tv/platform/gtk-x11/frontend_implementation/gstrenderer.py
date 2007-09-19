@@ -223,6 +223,7 @@ class Renderer(app.VideoRenderer):
     def onUnrealize(self, widget):
         confirmMainThread()
 #        print "onUnrealize"
+        self.playbin.set_state(gst.STATE_NULL)
         self.sink = None
         
     def onExpose(self, widget, event):
