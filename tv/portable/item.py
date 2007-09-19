@@ -115,6 +115,11 @@ class Item(DDBObject):
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate()
+        # For unknown reason(s), some users still have databases with item 
+        # objects missing the isContainerItem attribute even after
+        # a db upgrade (#8819).
+        if not hasattr(self, 'isContainerItem'):
+            self.isContainerItem = None
         self._initRestore()
 
     def _initRestore(self):
