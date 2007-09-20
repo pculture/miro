@@ -74,7 +74,7 @@ def makeContextMenu(templateName, view, selection, clickedID):
 
 def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
     c = app.controller # easier/shorter to type
-    watched = downloaded = downloading = available = uploadable = 0
+    watched = unwatched = downloaded = downloading = available = uploadable = 0
     for i in selectedItems:
         if i.getState() == 'downloading':
             downloading += 1
@@ -84,6 +84,8 @@ def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
             downloaded += 1
             if i.getSeen():
                 watched += 1
+            else:
+                unwatched += 1
         else:
             available += 1
 
@@ -103,6 +105,11 @@ def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
                 for item in selectedItems:
                     item.markItemUnseen()
             items.append((markAllUnseen, _('Mark as Unwatched')))
+        if unwatched:
+            def markAllSeen():
+                for item in selectedItems:
+                    item.markItemSeen()
+            items.append((markAllSeen, _('Mark as Watched')))
 
     if available > 0:
         if len(items) > 0:

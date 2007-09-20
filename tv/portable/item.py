@@ -1468,6 +1468,9 @@ folder will be deleted.""")
             ]
             if self.getSeen():
                 items.append((self.markItemUnseen, _('Mark as Unwatched')))
+            else:
+                items.append((self.markItemSeen, _('Mark as Watched')))
+				
             if self.downloader and self.downloader.getState() == 'finished' and self.downloader.getType() == 'bittorrent':
                 items.append((self.startUpload, _('Restart Upload')))
         elif self.getState() == 'downloading':
