@@ -25,10 +25,6 @@
      <comment>Miro Subscription File</comment>
      <glob pattern="*.miro"/>
    </mime-type>
-</mime-info>
-
-<!-- Old style subscription files. -->
-<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
    <mime-type type="application/x-democracy">
      <comment>Democracy Subscription File</comment>
      <glob pattern="*.democracy"/>
