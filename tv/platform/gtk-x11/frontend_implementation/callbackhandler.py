@@ -147,7 +147,9 @@ def SetupDirList (widgetTree, toggleRenderer):
                                         gtk.STOCK_OK, gtk.RESPONSE_ACCEPT))
         response = dialog.run()
         if response == gtk.RESPONSE_ACCEPT:
-            addFeed (dialog.get_filename())
+            filename = dialog.get_filename()
+            if filename:
+                addFeed (filename)
         dialog.destroy()
 
     def toggled (renderer, path):
