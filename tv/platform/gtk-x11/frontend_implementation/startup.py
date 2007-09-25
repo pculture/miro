@@ -189,10 +189,13 @@ def performStartupTasks(terminationCallback):
         pass
 
 def updateAutostart():
-    config_home = os.environ.get ('XDG_CONFIG_HOME',
-                                  '~/.config')
-    config_home = os.path.expanduser (config_home)
-    autostart_dir = os.path.join (config_home, "autostart")
+    if "KDE_FULL_SESSION" in os.environ:
+        autostart_dir = "~/.kde/Autostart"
+    else:
+        config_home = os.environ.get ('XDG_CONFIG_HOME',
+                                      '~/.config')
+        autostart_dir = os.path.join (config_home, "autostart")
+    autostart_dir = os.path.expanduser(autostart_dir)
     destination = os.path.join (autostart_dir, "miro.desktop")
     if config.get(prefs.RUN_DTV_AT_STARTUP):
         if os.path.exists(destination):
