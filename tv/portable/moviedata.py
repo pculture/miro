@@ -32,8 +32,50 @@ import config
 import prefs
 import util
 
+MOVIE_DATA_UTIL_TIMEOUT = 60
+# Time in seconds that we wait for the utility to execute.  If it goes longer
+# than this, we assume it's hung and kill it.
+SLEEP_DELAY = 0.1
+# Time to sleep while we're polling the external movie command
+
 durationRE = re.compile("Miro-Movie-Data-Length: (\d+)")
-thumbnailRE = re.compile("Miro-Movie-Data-Thumbnail: Success")
+thumbnailSuccessRE = re.compile("Miro-Movie-Data-Thumbnail: Success")
+thumbnailRE = re.compile("Miro-Movie-Data-Thumbnail: (Success|Failure)")
+
+def thumbnailDirectory():
+    dir = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+    try:
+        os.makedirs(dir)
+    except:
+        pass
+    return dir
+
+
+class MovieDataInfo:
+    """Little utility class to keep track of data associated with each movie.
+    This is:
+
+    * The item.
+    * The path to the video.
+    * Path to the thumbnail we're trying to make.
+    * List of commands that we're trying to run, and their environments.
+    """
+
+    def __init__(self, item):
+        self.item = item
+        self.videoPath = item.getVideoFilename()
+        thumbnailFilename = os.path.basename(self.videoPath) + ".png"
+        self.thumbnailPath = os.path.join(thumbnailDirectory(), 
+                thumbnailFilename)
+        self.programInfo = []
+        for renderer in app.controller.videoDisplay.renderers:
+            try:
+                commandLine, env = renderer.movieDataProgramInfo(
+                        self.videoPath, self.thumbnailPath)
+            except NotImplementedError:
+                pass
+            else:
+                self.programInfo.append((commandLine, env))
 
 class MovieDataUpdater:
     def __init__ (self):
@@ -54,39 +96,69 @@ class MovieDataUpdater:
                 # shutdown() was called()
                 break
             try:
-                self.runMovieDataProgram(**movieDataInfo)
+                duration = -1
+                screenshotWorked = False
+                screenshot = None
+                for commandLine, env in movieDataInfo.programInfo:
+                    stdout = self.runMovieDataProgram(commandLine, env)
+                    if duration == -1:
+                        duration = self.parseDuration(stdout)
+                    if thumbnailSuccessRE.search(stdout):
+                        screenshotWorked = True
+                    if duration != -1 and screenshotWorked:
+                        break
+                if (screenshotWorked and
+                        os.path.exists(movieDataInfo.thumbnailPath)):
+                    # Need to check if the path exists, because the program
+                    # will report Sucess on audio files even if it didn't
+                    # create a thumbnail.
+                    screenshot = movieDataInfo.thumbnailPath
+                else:
+                    screenshot = None
+                self.updateFinished(movieDataInfo.item, duration, screenshot)
             except:
                 if self.inShutdown:
                     break
                 util.failedExn("When running external movie data program")
+                self.updateFinished(movieDataInfo.item, -1, None)
 
-    def runMovieDataProgram(self, item, thumbnailPath, commandLine, env):
-        duration = -1
-        screenshot = None
+    def runMovieDataProgram(self, commandLine, env):
+        start_time = time.time()
         pipe = subprocess.Popen(commandLine, stdout=subprocess.PIPE,
                 stdin=subprocess.PIPE, stderr=subprocess.PIPE, env=env,
                 startupinfo=util.no_console_startupinfo())
         while pipe.poll() is None and not self.inShutdown:
-            time.sleep(0.1)
+            time.sleep(SLEEP_DELAY)
+            if time.time() - start_time > MOVIE_DATA_UTIL_TIMEOUT:
+                logging.info("Movie data process hung, killing it")
+                self.killProcess(pipe.pid)
+                return ''
 
         if self.inShutdown:
             if pipe.poll() is None:
-                logging.info("Movie data process still going, trying to kill it")
-                try:
-                    app.delegate.killProcess(pipe.pid)
-                except:
-                    logging.warn("Error trying to kill the movie data process:\n%s", traceback.format_exc())
-                else:
-                    logging.info("Movie data process killed")
-            return
+                logging.info("Movie data process running after shutdown, killing it")
+                self.killProcess(pipe.pid)
+            return ''
+        return pipe.stdout.read()
 
-        stdout = pipe.stdout.read()
-        if thumbnailRE.search(stdout):
-            screenshot = thumbnailPath
+    def killProcess(self, pid):
+        try:
+            app.delegate.killProcess(pid)
+        except:
+            logging.warn("Error trying to kill the movie data process:\n%s", traceback.format_exc())
+        else:
+            logging.info("Movie data process killed")
+
+    def outputValid(self, stdout):
+        return (thumbnailRE.search(stdout) is not None and
+                durationRE.search(stdout) is not None)
+
+    def parseDuration(self, stdout):
         durationMatch = durationRE.search(stdout)
         if durationMatch:
-            duration = int(durationMatch.group(1))
-        self.updateFinished(item, duration, screenshot)
+            return int(durationMatch.group(1))
+        else:
+            return -1
 
     @asIdle
     def updateFinished (self, item, duration, screenshot):
@@ -107,28 +179,9 @@ class MovieDataUpdater:
             return
         if item.updating_movie_info:
             return
-        if not hasattr(app.delegate, 'movieDataProgramInfo'):
-            return
 
         item.updating_movie_info = True
-        videoPath = item.getVideoFilename()
-        thumbnailFilename = os.path.basename(videoPath) + ".png"
-        thumbnailPath = os.path.join(self.thumbnailDirectory(),
-                thumbnailFilename)
-        commandLine, env = app.delegate.movieDataProgramInfo(videoPath,
-                thumbnailPath)
-        movieDataInfo = {'item': item, 'thumbnailPath': thumbnailPath,
-                'commandLine': commandLine, 'env': env}
-        self.queue.put(movieDataInfo)
-
-    def thumbnailDirectory(self):
-        dir = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY),
-                "extracted")
-        try:
-            os.makedirs(dir)
-        except:
-            pass
-        return dir
+        self.queue.put(MovieDataInfo(item))
 
     def shutdown (self):
         self.inShutdown = True

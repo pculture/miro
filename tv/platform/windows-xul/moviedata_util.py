@@ -4,7 +4,6 @@ import os
 import sys
 from time import sleep, time
 
-
 path_list = os.environ.get('PATH', '').split(';')
 path_list.insert(0, 'xulrunner\\plugins\\')
 os.environ['PATH'] = ';'.join(path_list)

@@ -332,9 +332,3 @@ class UIBackendDelegate:
             if dialog.choice == dialogs.BUTTON_DOWNLOAD:
                 self.openExternalURL(url)
         dialog.run(callback)
-
-    def movieDataProgramInfo(self, videoPath, thumbnailPath):
-        appname = config.get(prefs.SHORT_APP_NAME)
-        moviedata_util_filename = "%s_MovieData.exe" % appname
-        cmdLine = [moviedata_util_filename, videoPath, thumbnailPath]
-        return cmdLine, None

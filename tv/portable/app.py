@@ -606,7 +606,9 @@ class VideoRenderer:
     
     def setRate(self, rate):
         pass
-        
+
+    def movieDataProgramInfo(self, videoPath, thumbnailPath):
+        raise NotImplementedError()
         
 # We can now safely import the frontend module
 import frontend

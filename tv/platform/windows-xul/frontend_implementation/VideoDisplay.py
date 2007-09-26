@@ -166,6 +166,12 @@ class VLCRenderer (app.VideoRenderer):
     def setRate(self, rate): 
         return frontend.vlcRenderer.setRate(rate)
 
+    def movieDataProgramInfo(self, videoPath, thumbnailPath):
+        appname = config.get(prefs.SHORT_APP_NAME)
+        moviedata_util_filename = "%s_MovieData.exe" % appname
+        cmdLine = [moviedata_util_filename, videoPath, thumbnailPath]
+        return cmdLine, None
+
 
 ###############################################################################
 ###############################################################################
