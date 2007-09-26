@@ -587,24 +587,24 @@ class UIBackendDelegate:
         clipboard.set_text(text)
         primary.set_text(text)
 
-    def killDownloadDaemon(self, oldpid):
-        if oldpid is None:
+    def killProcess(self, pid):
+        if pid is None:
             return
-        if pidIsRunning(oldpid):
+        if pidIsRunning(pid):
             try:
-                os.kill(oldpid, signal.SIGTERM)
+                os.kill(pid, signal.SIGTERM)
                 for i in xrange(100):
                     time.sleep(.01)
-                    if not pidIsRunning(oldpid):
+                    if not pidIsRunning(pid):
                         return
-                os.kill(oldpid, signal.SIGKILL)
+                os.kill(pid, signal.SIGKILL)
             except:
                 logging.exception ("error killing download daemon")
 
     def launchDownloadDaemon(self, oldpid, env):
         # Use UNIX style kill
         if oldpid is not None and pidIsRunning(oldpid):
-            self.killDownloadDaemon(oldpid)
+            self.killProcess(oldpid)
 
         environ = os.environ.copy()
         import miro

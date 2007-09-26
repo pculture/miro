@@ -222,7 +222,7 @@ class ControllerDaemon(Daemon):
         logging.warning ("killing download daemon")
         import app
         delegate = app.delegate
-        delegate.killDownloadDaemon(readPid())
+        delegate.killProcess(readPid())
         self.shutdownResponse()
 
     def shutdownResponse(self):

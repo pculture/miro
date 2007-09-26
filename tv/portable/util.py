@@ -668,27 +668,34 @@ def quoteUnicodeURL(url):
             quotedChars.append(c)
     return u''.join(quotedChars)
 
-def call_command(*args):
-    """Call an external command.  If the command doesn't exit with status 0,
-    or if it outputs to stderr, an exception will be raised.  Returns stdout.
+def no_console_startupinfo():
+    """Returns the startupinfo argument for subprocess.Popen so that we don't
+    open a console window.  On platforms other than windows, this is just
+    None.  On windows, it's some win32 sillyness.
     """
     if subprocess.mswindows:
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        return startupinfo
     else:
-        startupinfo = None
+        return None
+
+def call_command(*args):
+    """Call an external command.  If the command doesn't exit with status 0,
+    or if it outputs to stderr, an exception will be raised.  Returns stdout.
+    """
+
     pipe = subprocess.Popen(args, stdout=subprocess.PIPE,
             stdin=subprocess.PIPE, stderr=subprocess.PIPE,
-            startupinfo=startupinfo)
+            startupinfo=no_console_startupinfo())
     stdout, stderr = pipe.communicate()
     if pipe.returncode != 0:
-        raise OSError("call_command with %s has return code %s" % 
-                (args, pipe.returncode))
+        raise OSError("call_command with %s has return code %s\nstdout:%s\nstderr:%s" % 
+                (args, pipe.returncode, stdout, stderr))
     elif stderr:
         raise OSError("call_command outputed error text:\n%s" % stderr)
     else:
         return stdout
-
 
 def getsize(path):
     """Get the size of a path.  If it's a file, return the size of the file.

@@ -289,20 +289,20 @@ class UIBackendDelegate:
                 else:
                     raise
 
-    def killDownloadDaemon(self, oldpid):
+    def killProcess(self, pid):
         # Kill the old process, if it exists
-        if oldpid is not None:
+        if pid is not None:
             # This isn't guaranteed to kill the process, but it's likely the
             # best we can do
             # See http://support.microsoft.com/kb/q178893/
             # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/347462
             PROCESS_TERMINATE = 1
-            handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE, False, oldpid)
+            handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE, False, pid)
             ctypes.windll.kernel32.TerminateProcess(handle, -1)
             ctypes.windll.kernel32.CloseHandle(handle)
 
     def launchDownloadDaemon(self, oldpid, env):
-        self.killDownloadDaemon(oldpid)
+        self.killProcess(oldpid)
         for key, value in env.items():
             os.environ[key] = value
         os.environ['DEMOCRACY_DOWNLOADER_LOG'] = \
@@ -332,3 +332,9 @@ class UIBackendDelegate:
             if dialog.choice == dialogs.BUTTON_DOWNLOAD:
                 self.openExternalURL(url)
         dialog.run(callback)
+
+    def movieDataProgramInfo(self, videoPath, thumbnailPath):
+        appname = config.get(prefs.SHORT_APP_NAME)
+        moviedata_util_filename = "%s_MovieData.exe" % appname
+        cmdLine = [moviedata_util_filename, videoPath, thumbnailPath]
+        return cmdLine, None

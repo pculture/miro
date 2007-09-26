@@ -485,6 +485,7 @@ class bdist_xul_dumb(Command):
 
         # Finally, build the download daemon
         self.buildDownloadDaemon(self.dist_dir)
+        self.buildMovieDataUtil(self.dist_dir)
         
     def computePythonManifest(self, path=None, scripts=[], packages=[],
                               includes=[], excludes=[]):
@@ -570,6 +571,11 @@ class bdist_xul_dumb(Command):
         print "building download daemon"
         os.system("%s setup_daemon.py py2exe --dist-dir daemon --bundle-files 1" % PYTHON_BINARY)
         shutil.copy2(os.path.join("daemon","%s_Downloader.exe" % (self.getTemplateVariable('shortAppName'))), baseDir)
+
+    def buildMovieDataUtil(self, baseDir):
+        print "building movie data utility"
+        os.system("%s setup_moviedata.py py2exe --dist-dir moviedata_util --bundle-files 1" % PYTHON_BINARY)
+        shutil.copy2(os.path.join("moviedata_util","%s_MovieData.exe" % (self.getTemplateVariable('shortAppName'))), baseDir)
 
     # NEEDS: if you look at the usage of this function, we're dropping
     # the plugin into the xulrunner plugin directory, rather than the

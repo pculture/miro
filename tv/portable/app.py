@@ -67,6 +67,7 @@ import threading
 import platform
 import dialogs
 import iconcache
+import moviedata
 import platformutils
 import logging
 
@@ -845,6 +846,8 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
         starttime = clock()
         iconcache.clearOrphans()
         logging.timing ("Icon clear: %.3f", clock() - starttime)
+        logging.info ("Starting movie data updates")
+        moviedata.movieDataUpdater.startThread()
 
         logging.info ("Finished startup sequence")
         self.finishStartupSequence()
@@ -1245,6 +1248,8 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
 
             logging.info ("Shutting down icon cache updates")
             iconcache.iconCacheUpdater.shutdown()
+            logging.info ("Shutting down movie data updates")
+            moviedata.movieDataUpdater.shutdown()
 
 #             logging.info ("Removing static tabs...")
 #             views.allTabs.unlink() 

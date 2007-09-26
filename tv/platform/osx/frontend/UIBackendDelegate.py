@@ -243,17 +243,17 @@ class UIBackendDelegate:
             dlTask.waitUntilExit()
             dlTask = None      
 
-    def killDownloadDaemon(self, oldpid=None):
-        if oldpid is not None:
+    def killProcess(self, pid=None):
+        if pid is not None:
             try:
-                os.kill(oldpid, signal.SIGTERM)
+                os.kill(pid, signal.SIGTERM)
                 sleep(1)
-                os.kill(oldpid, signal.SIGKILL)
+                os.kill(pid, signal.SIGKILL)
             except:
                 pass
 
     def launchDownloadDaemon(self, oldpid, env):
-        self.killDownloadDaemon(oldpid)
+        self.killProcess(oldpid)
 
         env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
         env.update(os.environ)

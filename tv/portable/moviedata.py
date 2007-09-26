@@ -15,19 +15,87 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-from fasttypes import LinkedList
 from eventloop import asIdle
 from platformutils import FilenameType
 import os.path
-import app
+import re
+import subprocess
+import time
+import traceback
+import threading
+import Queue
 
-RUNNING_MAX = 3
+import app
+import eventloop
+import logging
+import config
+import prefs
+import util
+
+durationRE = re.compile("Miro-Movie-Data-Length: (\d+)")
+thumbnailRE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 
 class MovieDataUpdater:
     def __init__ (self):
-        self.vital = LinkedList()
-        self.runningCount = 0
         self.inShutdown = False
+        self.queue = Queue.Queue()
+        self.thread = None
+
+    def startThread(self):
+        self.thread = threading.Thread(name='Movie Data Thread',
+                target=self.threadLoop)
+        self.thread.setDaemon(True)
+        self.thread.start()
+
+    def threadLoop(self):
+        while not self.inShutdown:
+            movieDataInfo = self.queue.get(block=True)
+            if movieDataInfo is None:
+                # shutdown() was called()
+                break
+            try:
+                self.runMovieDataProgram(**movieDataInfo)
+            except:
+                if self.inShutdown:
+                    break
+                util.failedExn("When running external movie data program")
+
+    def runMovieDataProgram(self, item, thumbnailPath, commandLine, env):
+        duration = -1
+        screenshot = None
+        pipe = subprocess.Popen(commandLine, stdout=subprocess.PIPE,
+                stdin=subprocess.PIPE, stderr=subprocess.PIPE, env=env,
+                startupinfo=util.no_console_startupinfo())
+        while pipe.poll() is None and not self.inShutdown:
+            time.sleep(0.1)
+
+        if self.inShutdown:
+            if pipe.poll() is None:
+                logging.info("Movie data process still going, trying to kill it")
+                try:
+                    app.delegate.killProcess(pipe.pid)
+                except:
+                    logging.warn("Error trying to kill the movie data process:\n%s", traceback.format_exc())
+                else:
+                    logging.info("Movie data process killed")
+            return
+
+        stdout = pipe.stdout.read()
+        if thumbnailRE.search(stdout):
+            screenshot = thumbnailPath
+        durationMatch = durationRE.search(stdout)
+        if durationMatch:
+            duration = int(durationMatch.group(1))
+        self.updateFinished(item, duration, screenshot)
+
+    @asIdle
+    def updateFinished (self, item, duration, screenshot):
+        if item.idExists():
+            item.duration = duration
+            item.screenshot = screenshot
+            item.updating_movie_info = False
+            item.signalChange()
+
 
     def requestUpdate (self, item):
         if self.inShutdown:
@@ -37,39 +105,35 @@ class MovieDataUpdater:
             return
         if item.downloader and not item.downloader.isFinished():
             return
-        if self.runningCount < RUNNING_MAX:
-            self.update(item)
-        else:
-            self.vital.prepend(item)
-
-    @asIdle
-    def updateFinished (self, item, movie_data):
-        if item.idExists():
-            item.duration = movie_data["duration"]
-            item.screenshot = movie_data["screenshot"]
-            item.updating_movie_info = False
-            item.signalChange()
-
-        self.runningCount -= 1
-
-        if self.inShutdown:
-            return
-
-        while self.runningCount < RUNNING_MAX and len (self.vital) > 0:
-            next = self.vital.pop()
-            self.update (next)
-
-    def update (self, item):
         if item.updating_movie_info:
             return
-        if hasattr(app.controller, 'videoDisplay'):
-            item.updating_movie_info = True
-            movie_data = {"duration": -1, "screenshot": FilenameType("")}
-            self.runningCount += 1
-            app.controller.videoDisplay.fillMovieData (item.getVideoFilename(), movie_data, lambda: self.updateFinished (item, movie_data))
+        if not hasattr(app.delegate, 'movieDataProgramInfo'):
+            return
 
-    @asIdle
+        item.updating_movie_info = True
+        videoPath = item.getVideoFilename()
+        thumbnailFilename = os.path.basename(videoPath) + ".png"
+        thumbnailPath = os.path.join(self.thumbnailDirectory(),
+                thumbnailFilename)
+        commandLine, env = app.delegate.movieDataProgramInfo(videoPath,
+                thumbnailPath)
+        movieDataInfo = {'item': item, 'thumbnailPath': thumbnailPath,
+                'commandLine': commandLine, 'env': env}
+        self.queue.put(movieDataInfo)
+
+    def thumbnailDirectory(self):
+        dir = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY),
+                "extracted")
+        try:
+            os.makedirs(dir)
+        except:
+            pass
+        return dir
+
     def shutdown (self):
         self.inShutdown = True
+        self.queue.put(None) # wake up our thread
+        if self.thread is not None:
+            self.thread.join()
 
 movieDataUpdater = MovieDataUpdater()
