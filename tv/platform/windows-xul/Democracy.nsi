@@ -6,6 +6,7 @@
 ;  CONFIG_PUBLISHER      eg, "Participatory Culture Foundation"
 ;  CONFIG_EXECUTABLE     eg, "Democracy.exe
 ;  CONFIG_DL_EXECUTABLE  eg, "Democracy_Downloader.exe"
+;  CONFIG_MOVIE_DATA_EXECUTABLE     eg, "Democracy_MovieData.exe
 ;  CONFIG_ICON           eg, "Democracy.ico"
 ;  CONFIG_OUTPUT_FILE    eg, "Democracy-0.8.0.exe"
 ;  CONFIG_PROG_ID        eg, "Democracy.Player.1"
@@ -189,6 +190,7 @@ FunctionEnd
   Delete   "${directory}\${CONFIG_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_ICON}"
   Delete   "${directory}\${CONFIG_DL_EXECUTABLE}"
+  Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
   Delete   "${directory}\application.ini"
   Delete   "${directory}\msvcp71.dll"
   Delete   "${directory}\msvcr71.dll"
@@ -258,6 +260,7 @@ unzipok:
   File  ${CONFIG_EXECUTABLE}
   File  ${CONFIG_ICON}
   File  ${CONFIG_DL_EXECUTABLE}
+  File  ${CONFIG_MOVIE_DATA_EXECUTABLE}
   File  application.ini
   File  msvcp71.dll  
   File  msvcr71.dll  

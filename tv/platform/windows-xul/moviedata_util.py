@@ -71,12 +71,11 @@ def wait_for_vout(input):
     starttime = time()
     while True:
         if time() - starttime > 2.0:
-            print 'out of time'
-            raise AssertionError("Couldn't get a VOUT")
+            return False
         vout_exists = libvlc.libvlc_input_has_vout(input, byref(exception))
         check_exception()
         if vout_exists:
-            break
+            return True
         sleep(0.1)
 
 def wait_for_snapshot(path):
@@ -100,20 +99,15 @@ def stop_input():
         sleep(0.1)
 
 def make_snapshot(video_path, thumbnail_path):
-    print 'setup'
     setup_playlist(video_path, thumbnail_path)
-    print 'input'
     input = wait_for_input()
-    print 'set psoition'
     libvlc.libvlc_input_set_position(input, ctypes.c_float(0.5), byref(exception))
     check_exception()
-    print 'vout'
-    wait_for_vout(input)
-    print 'got vout'
+    if wait_for_vout(input):
+        wait_for_snapshot(thumbnail_path)
     time = libvlc.libvlc_input_get_length(input, byref(exception))
     check_exception()
     print "Miro-Movie-Data-Length: %d" % (time)
-    wait_for_snapshot(thumbnail_path)
     if os.path.exists(thumbnail_path):
         print "Miro-Movie-Data-Thumbnail: Success"
     else:
