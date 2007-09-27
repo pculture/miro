@@ -57,27 +57,6 @@ const char *const pref_viz[] = {
   NULL
 };
 
-static int Y_table[256];
-static int RCr_table[256];
-static int GCr_table[256];
-static int GCb_table[256];
-static int BCb_table[256];
-static int tables_initialized = 0;
-
-static void build_tables() {
-  int i;
-  if (tables_initialized)
-    return;
-  for (i = 0; i < 256; i++) {
-    Y_table[i] = (i - 16) * 255 * 256 / 219;
-    RCr_table[i] = (i - 128) * 127 * 256 * 1.402 / 112;
-    GCr_table[i] = (i - 128) * 127 * 256 * -.714 / 112;
-    GCb_table[i] = (i - 128) * 127 * 256 * -.344 / 112;
-    BCb_table[i] = (i - 128) * 127 * 256 * 1.772 / 112;
-  }
-  tables_initialized = 1;
-}
-
 #ifdef INCLUDE_XINE_DRIVER_HACK
 static void miro_xine_list_recycle_elem(xine_list_t *list,  xine_list_elem_t *elem) {
   elem->next = list->free_elem_list;
@@ -115,21 +94,13 @@ xine_list_iterator_t miro_xine_list_front(xine_list_t *list) {
 }
 #endif
 
-void _make_new_data_mine(_Xine* xine) {
-    xine->data_mine.videoPort = xine_open_video_driver(xine->data_mine.xine, "none", XINE_VISUAL_TYPE_NONE, NULL);
-    xine->data_mine.audioPort = xine_open_audio_driver(xine->data_mine.xine, "none", NULL);
-    xine->data_mine.stream = xine_stream_new(xine->data_mine.xine,
-            xine->data_mine.audioPort, xine->data_mine.videoPort);
-    xine->data_mine.current_filename = NULL;
-}
-
 
 _Xine* xineCreate(xine_event_listener_cb_t event_callback, 
         void* event_callback_data)
 {
     _Xine* xine;
     int i;
-    const char *const *video_plugins;
+    /*    const char *const *video_plugins;*/
 
     xine = (_Xine*)malloc(sizeof(_Xine));
     if(xine == NULL) return NULL;
@@ -168,16 +139,12 @@ _Xine* xineCreate(xine_event_listener_cb_t event_callback,
     xine->tester.stream = xine_stream_new(xine->tester.xine,
             xine->tester.audioPort, xine->tester.videoPort);
 
-    /* Create a third xine instance.  This one will be used for
-       querying data about the movie */
-    xine->data_mine.xine = xine_new();
-    xine_init(xine->data_mine.xine);
-    _make_new_data_mine(xine);
-
-    video_plugins = xine_list_audio_output_plugins (xine->data_mine.xine) ;
+    /*
+    video_plugins = xine_list_audio_output_plugins (xine->tester.xine) ;
     for (i = 0; video_plugins[i]; i++) {
       printf ("%s\n", video_plugins[i]);
     }
+    */
 
     return xine;
 }
@@ -386,151 +353,6 @@ int xineCanPlayFile(_Xine* xine, const char* filename)
         xine_close(xine->tester.stream);
     }
     return rv;
-}
-
-int xineDataMineFilename(_Xine* xine, const char* filename)
-{
-  int rv;
-  if (xine->data_mine.current_filename) {
-    if (!strcmp (filename, xine->data_mine.current_filename)) {
-      return 1;
-    }
-    xineDataMineClose(xine);
-  }
-  rv = xine_open(xine->data_mine.stream, filename);
-  if (rv) {
-    xine->data_mine.current_filename = strdup (filename);
-  }
-  return rv;
-}
-
-int xineFileDuration(_Xine* xine, const char* filename)
-{
-    int rv;
-    int duration;
-    int dummy, dummy2;
-    rv = xineDataMineFilename(xine, filename);
-    if (rv == 0)
-      return -1;
-    rv = xine_get_pos_length(xine->data_mine.stream, &dummy, &dummy2, &duration);
-    if (rv == 0)
-      return -1;
-    return duration;
-}
-
-static unsigned char normalize(int val) {
-  if (val < 0)
-    val = 0;
-  if (val > (255 << 8))
-    val = 255 << 8;
-  val = val + 127;
-  val = val >> 8;
-  return val;
-}
-
-int xineFileScreenshot(_Xine *xine, const char* filename, const char *screenshot)
-{
-    int rv;
-    int duration;
-    xine_video_frame_t frame;
-    int i, j;
-    int CbOffset;
-    int CrOffset;
-    unsigned char *out_data;
-    GdkPixbuf *pixbuf;
-    xine_video_port_t *video_out;
-
-    rv = xineDataMineFilename(xine, filename);
-    if (rv == 0)
-      return 1;
-    duration = xineFileDuration(xine, filename);
-    if(duration == -1)
-      return 1;
-    if (!xine_get_stream_info (xine->data_mine.stream, XINE_STREAM_INFO_HAS_VIDEO))
-      return 1;
-    rv = xine_play(xine->data_mine.stream, 0, duration / 2);
-    if (rv == 0)
-      return 1;
-    video_out = xine->data_mine.videoPort;
-    if (video_out->get_property (video_out, VO_PROP_NUM_STREAMS) == 0) {
-        return 1;
-    }
-    rv = xine_get_next_video_frame (video_out, &frame);
-    if (rv == 0)
-      return 1;
-    if (frame.colorspace != XINE_IMGFMT_YV12 &&
-	frame.colorspace != XINE_IMGFMT_YUY2) {
-      xine_free_video_frame (video_out, &frame);
-      return 0;
-    }
-    build_tables();
-    out_data = malloc (frame.width * frame.height * 3);
-    switch (frame.colorspace) {
-    case XINE_IMGFMT_YV12:
-      CrOffset = frame.width * frame.height;
-      CbOffset = frame.width * frame.height + (frame.width / 2) * (frame.height / 2);
-      for (j = 0; j < frame.height; j++) {
-	for (i = 0; i < frame.width; i++) {
-	  int pixel = j * frame.width + i;
-	  int subpixel = (j / 2) * (frame.width / 2) + (i / 2);
-	  int Y = Y_table[frame.data[pixel]];
-	  out_data[pixel * 3] =
-	    normalize(Y +
-		      RCr_table[frame.data[CrOffset + subpixel]]);
-	  out_data[pixel * 3 + 1] =
-	    normalize(Y +
-		      GCr_table[frame.data[CrOffset + subpixel]] +
-		      GCb_table[frame.data[CbOffset + subpixel]]);
-	  out_data[pixel * 3 + 2] =
-	    normalize(Y +
-		      BCb_table[frame.data[CbOffset + subpixel]]);
-	}
-      }
-      break;
-
-    case XINE_IMGFMT_YUY2:
-      CrOffset = 3;
-      CbOffset = 1;
-      for (j = 0; j < frame.height; j++) {
-	for (i = 0; i < frame.width; i++) {
-	  int pixel = j * frame.width + i;
-	  int subpixel = (j * frame.width + i) / 2 * 4;
-	  int Y = Y_table[frame.data[pixel * 2]];
-	  out_data[pixel * 3] =
-	    normalize(Y +
-		      RCr_table[frame.data[CrOffset + subpixel]]);
-	  out_data[pixel * 3 + 1] =
-	    normalize(Y +
-		      GCr_table[frame.data[CrOffset + subpixel]] +
-		      GCb_table[frame.data[CbOffset + subpixel]]);
-	  out_data[pixel * 3 + 2] =
-	    normalize(Y +
-		      BCb_table[frame.data[CbOffset + subpixel]]);
-	}
-      }
-      break;
-    }
-    pixbuf = gdk_pixbuf_new_from_data (out_data, GDK_COLORSPACE_RGB, 0,
-				       8, frame.width, frame.height, frame.width * 3,
-				       NULL, NULL);
-    gdk_pixbuf_save (pixbuf, screenshot, "png", NULL, NULL);
-    gdk_pixbuf_unref (pixbuf);
-    free (out_data);
-    xine_free_video_frame (xine->data_mine.videoPort, &frame);
-    return 1;
-}
-
-void xineDataMineClose(_Xine *xine)
-{
-  if (xine->data_mine.current_filename) {
-    free (xine->data_mine.current_filename);
-
-    xine_close(xine->data_mine.stream);
-    xine_dispose(xine->data_mine.stream);
-    xine_close_audio_driver(xine->data_mine.xine, xine->data_mine.audioPort);
-    xine_close_video_driver(xine->data_mine.xine, xine->data_mine.videoPort);
-    _make_new_data_mine(xine);
-  }
 }
 
 void xineSelectFile(_Xine* xine, const char* filename)

@@ -320,6 +320,12 @@ for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
 # add the desktop file, icons, mime data, and man page.
+
+rv = os.system ("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" % (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
+
+if rv != 0:
+    raise RuntimeError("xine_extractor compilation failed.  Possibly missing libxine, gdk-pixbuf-2.0, or glib-2.0.")
+
 data_files += [
     ('/usr/share/pixmaps', 
      glob(os.path.join(platform_dir, 'miro-*.png'))),
@@ -329,6 +335,8 @@ data_files += [
      [os.path.join(platform_dir, 'miro.xml')]),
     ('/usr/share/man/man1',
      [os.path.join(platform_dir, 'miro.1.gz')]),
+    ('/usr/libexec/',
+     [os.path.join(platform_dir, 'xine/xine_extractor')]),
 ]
 
 os.system ("gzip -9 < " + os.path.join(platform_dir, 'miro.1') + " > " + os.path.join(platform_dir, 'miro.1.gz'))

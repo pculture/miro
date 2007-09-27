@@ -25,6 +25,7 @@ import config
 import prefs
 import os
 import frontend
+import resources
 from download_utils import nextFreeFilename
 from platformutils import confirmMainThread
 from gtk_queue import gtkSyncMethod, gtkAsyncMethod
@@ -91,25 +92,6 @@ class Renderer(app.VideoRenderer):
     def canPlayFile(self, filename):
         confirmMainThread()
         return self.xine.canPlayFile(filename)
-
-    def fillMovieData(self, filename, movie_data, callback):
-        confirmMainThread()
-        dir = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
-        try:
-            os.makedirs(dir)
-        except:
-            pass
-        screenshot = os.path.join (dir, os.path.basename(filename) + ".png")
-        movie_data["screenshot"] = nextFreeFilename(screenshot)
-
-        success = self.xine.fillMovieData(filename, movie_data["screenshot"], movie_data)
-        
-        if success:
-            if not os.path.exists(movie_data["screenshot"]):
-                movie_data["screenshot"] = ""
-        else:
-            movie_data["screenshot"] = None
-        callback (success)
 
     def goFullscreen(self):
         """Handle when the video window goes fullscreen."""
@@ -227,3 +209,6 @@ class Renderer(app.VideoRenderer):
     def setRate(self, rate):
         confirmMainThread()
         self.xine.setRate(rate)
+
+    def movieDataProgramInfo(self, moviePath, thumbnailPath):
+        return ((resources.path('../../../libexec/xine_extractor'), moviePath, thumbnailPath), None)
