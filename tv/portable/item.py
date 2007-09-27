@@ -1622,14 +1622,14 @@ def reconnectDownloaders():
         reconnected.add(item.downloader)
     for downloader in views.remoteDownloads:
         if downloader not in reconnected:
-            print "removing orphaned downloader: ", downloader.url
+            logging.warn("removing orphaned downloader: %s", downloader.url)
             downloader.remove()
     manualFeed = util.getSingletonDDBObject(views.manualFeed)
     manualItems = views.items.filterWithIndex(indexes.itemsByFeed,
             manualFeed.getID())
     for item in manualItems:
         if item.downloader is None and item.__class__ == Item:
-            print "removing cancelled external torrent: ", item
+            logging.warn("removing cancelled external torrent: %s", item)
             item.remove()
 
 def getEntryForFile(filename):
@@ -1741,8 +1741,8 @@ class FileItem(Item):
             elif os.path.isdir(self.filename):
                 shutil.rmtree(self.filename)
         except:
-            print "WARNING: error deleting files"
-            traceback.print_exc()
+            logging.warn("WARNING: error deleting files:\n%s",
+                    traceback.format_exc())
 
     def getDownloadedTime(self):
         self.confirmDBThread()
@@ -1769,9 +1769,9 @@ class FileItem(Item):
             self.filename = os.path.join (parent.getFilename(), self.offsetPath)
             return
         if self.shortFilename is None:
-            print """\
-WARNING: can't migrate download because we don't have a shortFilename!
-filename was %s""" % self.filename
+            logging.warn("""\
+can't migrate download because we don't have a shortFilename!
+filename was %s""", self.filename)
             return
         newFilename = os.path.join(newDir, self.shortFilename)
         if self.filename == newFilename:
@@ -1781,7 +1781,7 @@ filename was %s""" % self.filename
             try:
                 shutil.move(self.filename, newFilename)
             except Exception, e:
-                print "WARNING: Error moving %s to %s (%s)" % (self.filename,
+                logging.warn("Error moving %s to %s (%s)", self.filename,
                         newFilename, e)
             else:
                 self.filename = newFilename
@@ -1800,7 +1800,8 @@ filename was %s""" % self.filename
                 if self.filename.startswith(parent_file):
                     self.shortFilename = cleanFilename(self.filename[len(parent_file):])
                 else:
-                    print "WARNING: %s is not a subdirectory of %s" % (self.filename, parent_file)
+                    logging.warn("%s is not a subdirectory of %s",
+                            self.filename, parent_file)
         Item.setupLinks(self)
 
 def expireItems(items):
