@@ -1137,9 +1137,6 @@ folder will be deleted.""")
     def isDownloaded(self):
         return self.getState() in (u"newly-downloaded", u"expiring", u"saved")
 
-    def isAudio(self):
-        return filetypes.isAudioFilename(self.getVideoFilename())
-
     def showSaveButton(self):
         return self.getState() in (u'newly-downloaded', u'expiring') and not self.keep
 
@@ -1608,8 +1605,7 @@ folder will be deleted.""")
         if self.screenshot and not os.path.exists(self.screenshot):
             self.screenshot = None
             self.signalChange()
-        if (self.duration == None or 
-                (self.screenshot == None and not self.isAudio())):
+        if self.duration is None or self.screenshot is None:
             moviedata.movieDataUpdater.requestUpdate (self)
 
     def __str__(self):

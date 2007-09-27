@@ -107,14 +107,14 @@ class MovieDataUpdater:
                         screenshotWorked = True
                     if duration != -1 and screenshotWorked:
                         break
-                if (screenshotWorked and
+                if (screenshotWorked and 
                         os.path.exists(movieDataInfo.thumbnailPath)):
-                    # Need to check if the path exists, because the program
-                    # will report Sucess on audio files even if it didn't
-                    # create a thumbnail.
                     screenshot = movieDataInfo.thumbnailPath
                 else:
-                    screenshot = None
+                    # All the programs failed, maybe it's an audio file?
+                    # Setting it to "" instead of None, means that we won't
+                    # try to take the screenshot again.
+                    screenshot = FilenameType("")
                 self.updateFinished(movieDataInfo.item, duration, screenshot)
             except:
                 if self.inShutdown:
