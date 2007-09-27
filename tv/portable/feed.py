@@ -569,7 +569,7 @@ class Feed(DDBObject):
         checkU(url)
         self.autoDownloadable = initiallyAutoDownloadable
         self.getEverything = False
-        self.maxNew = -1
+        self.maxNew = 3
         self.expire = u"system"
         self.expireTime = None
         self.fallBehind = -1
