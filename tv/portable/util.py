@@ -650,7 +650,7 @@ def stringify(u):
     This is required for some logging.
     """
     if isinstance(u, unicode):
-        return u.encode("ascii", errors="xmlcharrefreplace")
+        return u.encode("ascii", "replace")
     if not isinstance(u, str):
         return str(u)
     return u
