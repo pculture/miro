@@ -18,6 +18,7 @@ import eventloop
 import httpclient
 import datetime
 import logging
+import migrate
 
 import config
 import prefs
@@ -107,8 +108,6 @@ def migrateDownload(dlid, directory):
     else:
         if download.state in (u"finished", u"uploading"):
             download.moveToDirectory(directory)
-            download.updateClient()
-            print download.filename
 
 def getDownloadStatus(dlids = None):
     statuses = {}
@@ -278,17 +277,10 @@ class BGDownloader:
         if newfilename == self.filename:
             return
         newfilename = nextFreeFilename(newfilename)
-        try:
-            shutil.move(self.filename, newfilename)
-        except (IOError, OSError, shutil.Error), e:
-            logging.info ("WARNING: Error moving %s to %s (%s)", self.filename,
-                          newfilename, e)
-        except TypeError, e:
-            logging.warning ("Error moving %s (%s) to %s (%s) (%s)", self.filename, type(self.filename),
-                             newfilename, type(newfilename), e)
-        else:
+        def callback():
             self.filename = newfilename
-            logging.info ("new file name is %s", self.filename)
+            self.updateClient()
+        migrate.migrate_file(self.filename, newfilename, callback)
 
     ##
     # Returns a float with the estimated number of seconds left

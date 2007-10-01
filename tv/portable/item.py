@@ -61,6 +61,7 @@ import logging
 import platformutils
 import filetypes
 import searchengines
+import migrate
 
 _charset = locale.getpreferredencoding()
 
@@ -1774,14 +1775,10 @@ filename was %s""", self.filename)
             return
         if os.path.exists(self.filename):
             newFilename = nextFreeFilename(newFilename)
-            try:
-                shutil.move(self.filename, newFilename)
-            except Exception, e:
-                logging.warn("Error moving %s to %s (%s)", self.filename,
-                        newFilename, e)
-            else:
+            def callback():
                 self.filename = newFilename
                 self.signalChange()
+            migrate.migrate_file(self.filename, newFilename, callback)
         elif os.path.exists(newFilename):
             self.filename = newFilename
             self.signalChange()

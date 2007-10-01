@@ -39,6 +39,7 @@ import flashscraper
 import logging
 import traceback
 import templatehelper
+import migrate
 
 # a hash of download ids that the server knows about.
 _downloads = {}
@@ -361,14 +362,10 @@ URL was %s""" % self.url
                 if newfilename == filename:
                     return
                 newfilename = nextFreeFilename(newfilename)
-                try:
-                    shutil.move(filename, newfilename)
-                except (IOError, OSError), error:
-                    print "WARNING: Error moving %s to %s (%s)" % (self.status['filename'],
-                            newfilename, error)
-                else:
+                def callback():
                     self.status['filename'] = newfilename
-            self.signalChange()
+                    self.signalChange()
+                migrate.migrate_file(filename, newfilename, callback)
         for i in self.itemList:
             i.migrateChildren(directory)
 
