@@ -273,7 +273,7 @@ class TabOrder(database.DDBObject):
 
     def onAddTab(self, obj, id):
         if id not in self.trackedTabs:
-            self.trackedTabs.appendID(id, sendSignalChange=False)
+            self.trackedTabs.insertID(0, id, sendSignalChange=False)
             obj.signalChange(needsSave=False)
 
     def onRemoveTab(self, obj, id):

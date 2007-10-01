@@ -114,7 +114,7 @@ class TrackedIDList(object):
         if sendSignalChange:
             self._sendSignalChange(id)
 
-    def insertID(self, pos, id):
+    def insertID(self, pos, id, sendSignalChange=True):
         if id in self:
             raise ValueError("%s is already being tracked" % id)
         for toMove, oldPos in self.positions.items():
@@ -123,7 +123,8 @@ class TrackedIDList(object):
         self.positions[id] = pos
         self.list.insert(pos, id)
         self.trackedIDs.add(id)
-        self._sendSignalChange(id)
+        if sendSignalChange:
+            self._sendSignalChange(id)
 
     def removeID(self, id):
         removedPos = self.positions.pop(id)
