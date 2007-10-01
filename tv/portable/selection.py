@@ -396,7 +396,8 @@ class SelectionHandler(object):
             return
 
         # ignore control and shift when selecting static tabs
-        if isinstance(selectedObj, tabs.Tab) and selectedObj.isStatic():
+        if (isinstance(selectedObj, tabs.Tab) and 
+                selectedObj.type in ('statictab', 'guide')):
             controlSelect = shiftSelect = False
 
         if controlSelect:
