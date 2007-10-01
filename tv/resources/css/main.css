@@ -158,6 +158,32 @@ img {
     letter-spacing: -0.5px;
 }
 
+/* Just around auto-download */
+#auto-download {
+    position: absolute;
+    bottom: 30px;
+    left: 98px;
+    display: block;
+    height: 20px;
+    color: #FFFFFF;
+    padding: 0px;
+    margin: 0px 0 2px 0px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+#auto-download-menu {
+    font-weight: normal;
+}
+
+#auto-label {
+    float: left;
+    padding-right: 6px;
+    padding-top: 1px;
+}
+
 /* Search box */
 #search-box-container {
     position: absolute;
@@ -184,44 +210,6 @@ img {
 
 .main-titlebar-right li {
      margin-bottom: 10px;
-}
-
-/* Just around auto-download */
-#main-titlebar-auto {
-    position: absolute;
-    top: 6px;
-    right: 5px;
-    display: block;
-    height: 20px;
-    color: #FFFFFF;
-    padding: 0px;
-    margin: 0px 0 2px 0px;
-    text-transform: uppercase;
-    font-size: 11px;
-    font-weight: bold;
-    z-index: 2;
-}
-
-#auto-download-menu {
-    font-weight: normal;
-}
-
-#auto-checkbox-container {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-}
-
-#auto-checkbox-container input {
-    vertical-align: top;
-    padding: 0px;
-    margin: 0px;
-}
-
-#auto-label {
-    float: left;
-    padding-right: 6px;
-    padding-top: 1px;
 }
 
 /* Download page titlebar components */
