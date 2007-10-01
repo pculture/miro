@@ -122,7 +122,7 @@ class ChannelGuide(DDBObject):
             return self.getURL()
 
     def guideDownloaded(self, info):
-        self.updated_url = info["updated-url"]
+        self.updated_url = unicode(info["updated-url"])
         try:
             parser = GuideHTMLParser(self.updated_url)
             parser.feed(info["body"])
