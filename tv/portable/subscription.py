@@ -60,6 +60,13 @@ def parseContent(content):
             traceback.print_exc()
         return None
 
+def get_urls_from_query(query):
+    urls = []
+    for key, value in cgi.parse_qs(query).items():
+        if re.match(r'url\d+$', key):
+            urls.append(value[0])
+    return urls
+
 def findSubscribeLinks(url):
     """Given a URL, test if it's trying to subscribe the user using
     subscribe.getdemocracy.com.  Returns the list of parsed URLs.
@@ -67,17 +74,17 @@ def findSubscribeLinks(url):
     try:
         scheme, host, path, params, query, frag = urlparse.urlparse(url)
     except:
-        return []
+        return 'none', []
     if host not in ('subscribe.getdemocracy.com', 'subscribe.getmiro.com'):
-        return []
+        return 'none', []
     if path in ('/', '/opml.php'):
-        urls = []
-        for key, value in cgi.parse_qs(query).items():
-            if re.match(r'url\d+$', key):
-                urls.append(value[0])
-        return urls
+        return 'feed', get_urls_from_query(query)
+    elif path == '/download.php':
+        return 'download', get_urls_from_query(query)
+    elif path == '/channelguide.php':
+        return 'guide', get_urls_from_query(query)
     else:
-        return [urllib2.unquote(path[1:])]
+        return 'feed', [urllib2.unquote(path[1:])]
 
 # =========================================================================
 

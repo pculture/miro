@@ -1559,13 +1559,6 @@ class TemplateDisplay(frontend.HTMLDisplay):
             raise ValueError("Badly formed eventURL: %s" % url)
 
 
-    def addSubscribeLinks (self, subscribeLinks):
-        for url in subscribeLinks:
-            f = feed.getFeedByURL(url)
-            if f is None:
-                f = feed.Feed(url)
-            f.blink()
-
     # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
         util.checkU(url)
@@ -1614,14 +1607,33 @@ class TemplateDisplay(frontend.HTMLDisplay):
         """
         # check if the url that came from a guide, but the user switched tabs
         # before it went through.
-        for guide in views.guides:
-            if guide.isPartOfGuide(url):
+        for guideObj in views.guides:
+            if guideObj.isPartOfGuide(url):
                 return
 
         # check for subscribe.getdemocracy.com links
-        subscribeLinks = subscription.findSubscribeLinks(url)
-        if subscribeLinks:
-            self.addSubscribeLinks(subscribeLinks)
+        type, subscribeURLs = subscription.findSubscribeLinks(url)
+        normalizedURLs = []
+        for url in subscribeURLs:
+            normalized = feed.normalizeFeedURL(url)
+            if feed.validateFeedURL(normalized):
+                normalizedURLs.append(normalized)
+        if normalizedURLs:
+            if type == 'feed':
+                for url in normalizedURLs:
+                    if feed.getFeedByURL(url) is None:
+                        newFeed = feed.Feed(url)
+                        newFeed.blink()
+            elif type == 'download':
+                for url in normalizedURLs:
+                    filename = platformutils.unicodeToFilename(url)
+                    singleclick.downloadURL(filename)
+            elif type == 'guide':
+                for url in normalizedURLs:
+                    if guide.getGuideByURL (url) is None:
+                        guide.ChannelGuide(url)
+            else:
+                raise AssertionError("Unkown subscribe type")
             return
 
         if url.startswith(u'feed://'):
