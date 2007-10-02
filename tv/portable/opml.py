@@ -186,11 +186,7 @@ class Importer (object):
     
     def _handlerFolderEntry(self, entry):
         title = entry.getAttribute("text")
-        f = folder.getFolderByTitle(title)
-        if f is None:
-            self.currentFolder = folder.ChannelFolder(title)
-        else:
-            self.currentFolder = f
+        self.currentFolder = folder.ChannelFolder(title)
         self._walkOutline(entry)
 
 # =============================================================================
