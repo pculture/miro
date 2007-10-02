@@ -30,6 +30,7 @@ to be called in the existing democracy process.
 from gtcache import gettext as _
 import os
 import logging
+import urllib
 
 from util import getTorrentInfoHash
 import app
@@ -298,6 +299,8 @@ def parseCommandLineArgs(args=None):
     addedDownloads = False
 
     for arg in args:
+        if arg.startswith('file://'):
+            arg = urllib.unquote_plus(arg[len('file://'):])
         if arg.startswith('miro:'):
             addSubscriptionURL('miro:', 'application/x-miro', arg)
         elif arg.startswith('democracy:'):

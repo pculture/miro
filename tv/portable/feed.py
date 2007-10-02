@@ -129,6 +129,8 @@ def validateFeedURL(url):
             return False
     if re.match(r"^(http|https)://[^/ ]+/[^ ]*$", url) is not None:
         return True
+    if re.match(r"^file://.", url) is not None:
+        return True
     match = re.match(r"^dtv:searchTerm:(.*)\?(.*)$", url)
     if match is not None and validateFeedURL(urldecode(match.group(1))):
         return True

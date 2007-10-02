@@ -18,7 +18,7 @@
 import os
 import urlparse
 
-VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v']
+VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
 
 MIMETYPES_EXT_MAP = {
