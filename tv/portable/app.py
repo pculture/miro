@@ -2358,16 +2358,22 @@ def _defaultFeeds():
               u'http://libsyn.com/podcasts/donmc/_static/scoipod.xml',
               u'http://feeds.macworld.com/macworld/video']))
 
-    for default in defaultFeedURLs:
-        print repr(default)
-        if isinstance(default, tuple): # folder
-            defaultFolder = default
-            c_folder = folder.ChannelFolder(defaultFolder[0])
-            for url in defaultFolder[1]:
-                d_feed = feed.Feed(url, initiallyAutoDownloadable=False)
-                d_feed.setFolder(c_folder)
-        else: # feed
-            d_feed = feed.Feed(default, initiallyAutoDownloadable=False)
+    channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
+    channelTabOrder.addFromTop = False
+    try:
+        for default in defaultFeedURLs:
+            if isinstance(default, tuple): # folder
+                defaultFolder = default
+                c_folder = folder.ChannelFolder(defaultFolder[0])
+                for url in defaultFolder[1]:
+                    d_feed = feed.Feed(url, initiallyAutoDownloadable=False)
+                    d_feed.setFolder(c_folder)
+            else: # feed
+                d_feed = feed.Feed(default, initiallyAutoDownloadable=False)
+    finally:
+        channelTabOrder.addFromTop = True
+
+    # only one playlist, so we don't have to worry about addFromTop
     playlist.SavedPlaylist(_(u"Example Playlist"))
 
 def _getInitialChannelGuide():
