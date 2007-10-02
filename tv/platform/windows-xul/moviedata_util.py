@@ -1,5 +1,6 @@
 import ctypes
 from ctypes import byref
+import glob
 import os
 import sys
 from time import sleep, time
@@ -47,13 +48,12 @@ def init_vlc(*args):
     return vlc
 
 vlc = init_vlc( "vlc", "--noaudio", 
-    '--vout', 'image', '--image-out-replace', 
-    '--image-out-prefix', 'C:\\default',
+    '--vout', 'image', 
     '--quiet', '--nostats', '--intf', 'dummy', '--plugin-path', 'vlc-plugins')
 
 def setup_playlist(video_path, thumbnail_path):
     thumb_split = os.path.splitext(thumbnail_path)
-    options = make_string_list('image-out-prefix=%s' % thumb_split[0],
+    options = make_string_list('image-out-prefix=%s-temp' % thumb_split[0],
             'image-out-format=%s' % thumb_split[1][1:])
     libvlc.libvlc_playlist_add_extended(vlc, video_path, None, len(options),
             options, byref(exception))
@@ -70,7 +70,7 @@ def wait_for_input():
 def wait_for_vout(input):
     starttime = time()
     while True:
-        if time() - starttime > 2.0:
+        if time() - starttime > 4.0:
             return False
         vout_exists = libvlc.libvlc_input_has_vout(input, byref(exception))
         check_exception()
@@ -78,9 +78,25 @@ def wait_for_vout(input):
             return True
         sleep(0.1)
 
-def wait_for_snapshot(path):
+def temp_snapshot_path(thumbnail_path, index):
+    start, ext = os.path.splitext(thumbnail_path)
+    return '%s-temp%.6i%s' % (start, index, ext)
+
+def delete_temp_snapshots(path):
+    start, ext = os.path.splitext(path)
+    temp_snapshots = glob.glob('%s-temp*%s' % (start, ext))
+    for path in temp_snapshots:
+        try:
+            os.remove(path)
+        except:
+            pass
+
+def wait_for_snapshot(thumbnail_path):
     while True:
-        if os.path.exists(path):
+        if os.path.exists(temp_snapshot_path(thumbnail_path, 1)):
+            # check for the second snapshot because that means the 1st
+            # snapshot is definitely done writing
+            os.rename(temp_snapshot_path(thumbnail_path, 0), thumbnail_path)
             break
         input = libvlc.libvlc_playlist_get_input(vlc, None)
         if input is None:
@@ -99,6 +115,8 @@ def stop_input():
         sleep(0.1)
 
 def make_snapshot(video_path, thumbnail_path):
+    if os.path.exists(thumbnail_path):
+        os.remove(thumbnail_path)
     setup_playlist(video_path, thumbnail_path)
     input = wait_for_input()
     libvlc.libvlc_input_set_position(input, ctypes.c_float(0.5), byref(exception))
@@ -107,12 +125,13 @@ def make_snapshot(video_path, thumbnail_path):
         wait_for_snapshot(thumbnail_path)
     time = libvlc.libvlc_input_get_length(input, byref(exception))
     check_exception()
+    stop_input()
+    delete_temp_snapshots(thumbnail_path)
     print "Miro-Movie-Data-Length: %d" % (time)
     if os.path.exists(thumbnail_path):
         print "Miro-Movie-Data-Thumbnail: Success"
     else:
         print "Miro-Movie-Data-Thumbnail: Failure"
-    stop_input()
 
 if __name__ == '__main__':
     try:
