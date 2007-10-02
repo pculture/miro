@@ -259,6 +259,7 @@ class TabOrder(database.DDBObject):
         self.trackedTabs.setFilter(expandedFolderFilter)
         self.tabView.addAddCallback(self.onAddTab)
         self.tabView.addRemoveCallback(self.onRemoveTab)
+        self.addFromTop = True
 
     def getView(self):
         """Get a database view for this tab ordering."""
@@ -273,7 +274,10 @@ class TabOrder(database.DDBObject):
 
     def onAddTab(self, obj, id):
         if id not in self.trackedTabs:
-            self.trackedTabs.insertID(0, id, sendSignalChange=False)
+            if self.addFromTop:
+                self.trackedTabs.insertID(0, id, sendSignalChange=False)
+            else:
+                self.trackedTabs.appendID(id, sendSignalChange=False)
             obj.signalChange(needsSave=False)
 
     def onRemoveTab(self, obj, id):
