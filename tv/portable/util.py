@@ -238,7 +238,7 @@ def failed(when, withExn = False, details = None):
             logContents = readLog(downloaderLogFile)
 
     if logContents is not None:
-        report += "{{{\n%s}}}\n" % logContents
+        report += "{{{\n%s}}}\n" % stringify(logContents)
 
     # Dump the header for the report we just generated to the log, in
     # case there are multiple failures or the user sends in the log
