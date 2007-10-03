@@ -645,12 +645,21 @@ def unicodify(d):
         d = d.decode('ascii','replace')
     return d
 
-def stringify(u):
+def stringify(u, handleerror="xmlcharrefreplace"):
     """Takes a possibly unicode string and converts it to a string string.
-    This is required for some logging.
+    This is required for some logging especially where the things being
+    logged are filenames which can be Unicode in the Windows platform.
+
+    Note that this is not the inverse of unicodify.
+
+    You can pass in a handleerror argument which defaults to "xmlcharrefreplace".
+    This will increase the string size as it converts unicode characters that
+    don't have ascii equivalents into escape sequences.  If you don't want to
+    increase the string length, use "replace" which will use ? for unicode
+    characters that don't have ascii equivalents.
     """
     if isinstance(u, unicode):
-        return u.encode("ascii", "replace")
+        return u.encode("ascii", handleerror)
     if not isinstance(u, str):
         return str(u)
     return u

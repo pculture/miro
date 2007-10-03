@@ -40,3 +40,22 @@ class UtilTest(DemocracyTestCase):
         }
         for source, target in testPaths.items():
             self.assertEquals(util.absolutePathToFileURL(source), target)
+
+    def testStringify(self):
+        # input, handleerror, expected output
+        # if handlerror is None, then it isn't passed in as an argument
+        t = [
+              ( "", None, ""),
+              ( "abc", None, "abc"),
+              ( 5, None, "5"),
+              ( 5.5, None, "5.5"),
+              ( u"abc", None, "abc"),
+              ( u"abc\xe4", None, "abc&#228;"),
+              ( u"abc\xe4", "replace", "abc?")
+            ]
+
+        for i, h, o in t:
+            if h == None:
+                self.assertEquals(util.stringify(i), o)
+            else:
+                self.assertEquals(util.stringify(i, h), o)
