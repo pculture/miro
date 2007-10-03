@@ -21,7 +21,7 @@ from gtcache import gettext as _
 from math import ceil
 from xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
-from util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL
+from util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify
 from platformutils import FilenameType
 import locale
 import os
@@ -1768,7 +1768,7 @@ class FileItem(Item):
         if self.shortFilename is None:
             logging.warn("""\
 can't migrate download because we don't have a shortFilename!
-filename was %s""", self.filename)
+filename was %s""", stringify(self.filename))
             return
         newFilename = os.path.join(newDir, self.shortFilename)
         if self.filename == newFilename:
