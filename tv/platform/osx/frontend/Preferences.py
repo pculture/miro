@@ -42,6 +42,15 @@ class PreferenceItem (NSToolbarItem):
 
 ###############################################################################
 
+prefController = None
+def showWindow():
+    global prefController
+    if prefController is None:
+        prefController = PreferencesWindowController.alloc().init()
+    prefController.showWindow_(nil)
+
+###############################################################################
+
 class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
 
     def init(self):
@@ -294,7 +303,7 @@ class FoldersPrefsController (NibClassBuilder.AutoBaseClass):
         return len(self.folders)
         
     def tableView_objectValueForTableColumn_row_(self, tableView, col, row):
-        if not isinstance(self.folders[row].actualFeed, feed.DirectoryWatchFeedImpl):
+        if row > len(self.folders) or not isinstance(self.folders[row].actualFeed, feed.DirectoryWatchFeedImpl):
             # This feed has apparently not been fully created yet, schedule a refresh...
             self.foldersTable.reloadData()
         else:

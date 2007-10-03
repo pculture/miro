@@ -1,4 +1,4 @@
-# Miro - an RSS based video player application
+
 # Copyright (C) 2005-2007 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -43,7 +43,7 @@ import singleclick
 from platformutils import osFilenamesToFilenameTypes
 from gtcache import gettext as _
 
-from Preferences import PreferencesWindowController
+import Preferences
 import GrowlNotifier
 import SparkleUpdater
 
@@ -307,9 +307,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
             app.controller.frame.controller.window().makeKeyAndOrderFront_(sender)
 
     def showPreferencesWindow_(self, sender):
-        prefController = PreferencesWindowController.alloc().init()
-        prefController.retain()
-        prefController.showWindow_(nil)
+        Preferences.showWindow()
 
     def openFile_(self, sender):
         openPanel = NSOpenPanel.openPanel()
