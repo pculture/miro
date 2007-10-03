@@ -235,22 +235,24 @@ class TestSubscription (DemocracyTestCase):
 class TestFindSubscribeLinks (DemocracyTestCase):
     def testDifferstHost(self):
         url = 'http://youtoob.com'
-        self.assertEquals(subscription.findSubscribeLinks(url), [])
+        self.assertEquals(subscription.findSubscribeLinks(url), 
+                ('none', []))
 
     def testNoLinks(self):
         url = 'http://subscribe.getdemocracy.com/'
-        self.assertEquals(subscription.findSubscribeLinks(url), [])
+        self.assertEquals(subscription.findSubscribeLinks(url), 
+                ('feed', []))
 
     def testLinkInPath(self):
         url = 'http://subscribe.getdemocracy.com/http%3A//www.myblog.com/rss'
         self.assertEquals(subscription.findSubscribeLinks(url), 
-                ['http://www.myblog.com/rss'])
+                ('feed', ['http://www.myblog.com/rss']))
 
     def testLinkInQuery(self):
         url = ('http://subscribe.getdemocracy.com/'
              '?url1=http%3A//www.myblog.com/rss')
         self.assertEquals(subscription.findSubscribeLinks(url), 
-                ['http://www.myblog.com/rss'])
+                ('feed', ['http://www.myblog.com/rss']))
 
     def testMultipleLinksInQuery(self):
         url = ('http://subscribe.getdemocracy.com/'
@@ -258,10 +260,11 @@ class TestFindSubscribeLinks (DemocracyTestCase):
              '&url2=http%3A//www.yourblog.com/atom'
              '&url3=http%3A//www.herblog.com/scoobydoo')
 
-        self.assertEquals(set(subscription.findSubscribeLinks(url)),
-                set(['http://www.myblog.com/rss', 
-                    'http://www.yourblog.com/atom',
-                    'http://www.herblog.com/scoobydoo' ]))
+        type, links = subscription.findSubscribeLinks(url)
+        self.assertEquals(type, 'feed')
+        self.assertEquals(set(links), set(['http://www.myblog.com/rss',
+            'http://www.yourblog.com/atom',
+            'http://www.herblog.com/scoobydoo' ]))
 
     def testQueryGarbage(self):
         url = ('http://subscribe.getdemocracy.com/'
@@ -271,7 +274,20 @@ class TestFindSubscribeLinks (DemocracyTestCase):
              '&foo=bar'
              '&extra=garbage')
 
-        self.assertEquals(set(subscription.findSubscribeLinks(url)),
-                    set(['http://www.myblog.com/rss',
-                         'http://www.yourblog.com/atom',
-                         'http://www.herblog.com/scoobydoo']))
+        type, links = subscription.findSubscribeLinks(url)
+        self.assertEquals(type, 'feed')
+        self.assertEquals(set(links), set(['http://www.myblog.com/rss',
+            'http://www.yourblog.com/atom',
+            'http://www.herblog.com/scoobydoo']))
+
+    def testChannelGuideLinks(self):
+        url = ('http://subscribe.getdemocracy.com/channelguide.php'
+             '?url1=http%3A//www.mychannelguide.com/')
+        self.assertEquals(subscription.findSubscribeLinks(url), 
+                ('guide', ['http://www.mychannelguide.com/']))
+
+    def testDownloadLinks(self):
+        url = ('http://subscribe.getdemocracy.com/download.php'
+             '?url1=http%3A//www.myblog.com/videos/cats.ogm')
+        self.assertEquals(subscription.findSubscribeLinks(url), 
+                ('download', ['http://www.myblog.com/videos/cats.ogm']))
