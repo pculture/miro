@@ -94,7 +94,7 @@ class TorrentDownload:
         """Start downloading the torrent."""
         self.thread = Thread(target=self.download_thread)
         filename = path.basename(self.download_to)
-        self.thread.setName("BitTorrent Downloader - %s" % filename)
+        self.thread.setName("BitTorrent Downloader - %s" % util.stringify(filename, "replace"))
         self.thread.start()
 
     def shutdown(self):
