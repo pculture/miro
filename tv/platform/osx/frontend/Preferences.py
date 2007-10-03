@@ -303,7 +303,7 @@ class FoldersPrefsController (NibClassBuilder.AutoBaseClass):
         return len(self.folders)
         
     def tableView_objectValueForTableColumn_row_(self, tableView, col, row):
-        if row > len(self.folders) or not isinstance(self.folders[row].actualFeed, feed.DirectoryWatchFeedImpl):
+        if row >= len(self.folders) or not isinstance(self.folders[row].actualFeed, feed.DirectoryWatchFeedImpl):
             # This feed has apparently not been fully created yet, schedule a refresh...
             self.foldersTable.reloadData()
         else:
