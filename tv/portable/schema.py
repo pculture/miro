@@ -469,9 +469,10 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('favicon', SchemaURL(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
         ('iconCache', SchemaObject(IconCache, noneOk=True)),
+        ('firstTime', SchemaBool()),
     ]
 
-VERSION = 54
+VERSION = 56
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

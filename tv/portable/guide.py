@@ -61,6 +61,7 @@ class ChannelGuide(DDBObject):
         self.lastVisitedURL = None
         self.iconCache = iconcache.IconCache(self, is_vital = True)
         self.favicon = None
+        self.firstTime = True
 
         DDBObject.__init__(self)
         self.downloadGuide()
@@ -102,11 +103,21 @@ class ChannelGuide(DDBObject):
         else:
             return config.get(prefs.CHANNEL_GUIDE_URL)
 
+    def getFirstURL(self):
+        if self.url is not None:
+            return self.url
+        else:
+            return config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)
+
     def getLastVisitedURL(self):
         if self.lastVisitedURL is not None:
             return self.lastVisitedURL
         else:
-            return self.getURL()
+            if self.firstTime:
+                self.firstTime = False
+                return self.getFirstURL()
+            else:
+                return self.getURL()
 
     def getDefault(self):
         return self.url is None

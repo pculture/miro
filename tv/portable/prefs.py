@@ -66,6 +66,11 @@ if 'DTV_CHANNELGUIDE_URL' in os.environ:
 else:
     effectiveChannelGuide = u'https://www.miroguide.com/'
 
+if 'DTV_CHANNELGUIDE_FIRST_TIME_URL' in os.environ:
+    effectiveChannelGuideFirstTime = util.unicodify(os.environ['DTV_CHANNELGUIDE_FIRST_TIME_URL'])
+else:
+    effectiveChannelGuideFirstTime = u'https://www.miroguide.com/firsttime'
+
 if 'DTV_VIDEOBOMB_URL' in os.environ:
     effectiveVideobomb = util.unicodify(os.environ['DTV_VIDEOBOMB_URL'])
 else:
@@ -77,6 +82,8 @@ else:
     effectiveAutoupdate = u'http://www.participatoryculture.org/democracy-appcast.xml'
 
 CHANNEL_GUIDE_URL = Pref(key='ChannelGuideURL', default=effectiveChannelGuide,
+                         platformSpecific=False)
+CHANNEL_GUIDE_FIRST_TIME_URL = Pref(key='ChannelGuideFirstTimeURL', default=effectiveChannelGuideFirstTime,
                          platformSpecific=False)
 VIDEOBOMB_URL     = Pref(key='VideobombURL',    default=effectiveVideobomb,
                          platformSpecific=False)
