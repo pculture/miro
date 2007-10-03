@@ -131,6 +131,7 @@ fillTemplate(os.path.join(root, 'portable/dl_daemon/daemon.py.template'),
 
 excludedResources = ['.svn', '.DS_Store']
 resourceFiles = [os.path.join('Resources', x) for x in os.listdir('Resources') if x not in excludedResources]
+resourceFiles.append('qt_extractor.py')
 
 # Prepare the frameworks we're going to use
 

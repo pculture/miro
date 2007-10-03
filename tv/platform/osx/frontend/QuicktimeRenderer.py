@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 import os
+import sys
 import glob
 import logging
 
@@ -206,6 +207,18 @@ class QuicktimeRenderer (app.VideoRenderer):
     def setVolume(self, level):
         if self.movie is not nil:
             self.movie.setVolume_(level)
+
+    def movieDataProgramInfo(self, moviePath, thumbnailPath):
+        py_exe_path = os.path.join(os.path.dirname(NSBundle.mainBundle().executablePath()), 'python')
+        rsrc_path = NSBundle.mainBundle().resourcePath()
+        script_path = os.path.join(rsrc_path, 'qt_extractor.py')
+        options = NSBundle.mainBundle().infoDictionary().get('PyOptions')
+        env = None
+        if options['alias'] == 1:
+            env = {'PYTHONPATH': ':'.join(sys.path)}
+        else:
+            env = {'PYTHONHOME': rsrc_path}
+        return ((py_exe_path, script_path, moviePath, thumbnailPath), env)
 
 ###############################################################################
 
