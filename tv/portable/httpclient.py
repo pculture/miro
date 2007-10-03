@@ -80,7 +80,8 @@ class NetworkError(Exception):
 class ConnectionError(NetworkError):
     def __init__(self, errorMessage):
         self.friendlyDescription = _("Can't connect")
-        self.longDescription = _("Connection Error: %s") % errorMessage
+        self.longDescription = _("Connection Error: %s") % \
+                               util.stringify(errorMessage, "replace")
 
 class SSLConnectionError(ConnectionError):
     def __init__(self):
