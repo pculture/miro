@@ -842,6 +842,15 @@ def upgrade54(objectList):
             o.savedData['duration'] = None
             changed.add(o)
     return changed
+
+def upgrade55(objectList):
+    """Add resized_screenshots attribute. """
+    changed = set()
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            o.savedData['resized_screenshots'] = {}
+            changed.add(o)
+    return changed
         
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """

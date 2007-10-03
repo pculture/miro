@@ -62,6 +62,7 @@ import platformutils
 import filetypes
 import searchengines
 import migrate
+import imageresize
 
 _charset = locale.getpreferredencoding()
 
@@ -93,6 +94,7 @@ class Item(DDBObject):
         self.eligibleForAutoDownload = True
         self.duration = None
         self.screenshot = None
+        self.resized_screenshots = {}
         self.resumeTime = 0
 
         self.iconCache = IconCache(self)
@@ -831,21 +833,23 @@ folder will be deleted.""")
     @returnsUnicode
     def getThumbnail (self):
         self.confirmDBThread()
+        if self.showMoreInfo:
+            width, height = 226, 170
+        else:
+            width, height = 108, 81
         if self.iconCache.isValid():
-            if self.showMoreInfo:
-                width, height = 226, 170
-            else:
-                width, height = 108, 81
             path = self.iconCache.getResizedFilename(width, height)
             return resources.absoluteUrl(path)
         elif self.screenshot:
-            return resources.absoluteUrl(self.screenshot)
+            path = self.getResizedScreenshot(width, height)
+            return resources.absoluteUrl(path)
         elif self.isContainerItem:
             return resources.url(u"images/container-icon.png")
         else:
             if self.showMoreInfo:
                 return resources.url(u"images/thumb-more-info.png")
-            else: return resources.url(u"images/thumb.png")
+            else: 
+                return resources.url(u"images/thumb.png")
 
     ##
     # returns the title of the item
@@ -1512,6 +1516,20 @@ folder will be deleted.""")
         
         app.delegate.notifyDownloadCompleted(self)
 
+    def getResizedScreenshot(self, width, height):
+        try:
+            return imageresize.getImage(self.resized_screenshots, width, height)
+        except KeyError:
+            return self.screenshot
+
+    def resizeScreenshot(self):
+        imageresize.removeResizedFiles(self.resized_screenshots)
+        if self.screenshot:
+            self.resized_screenshots = imageresize.multiResizeImage(
+                    self.screenshot, self.ICON_CACHE_SIZES)
+        else:
+            self.resized_screenshots = {}
+
     def save(self):
         self.confirmDBThread()
         if self.keep != True:
@@ -1583,6 +1601,7 @@ folder will be deleted.""")
         if self.iconCache is not None:
             self.iconCache.remove()
             self.iconCache = None
+        imageresize.removeResizedFiles(self.resized_screenshots)
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()

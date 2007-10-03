@@ -297,6 +297,7 @@ class ItemSchema(DDBObjectSchema):
         ('eligibleForAutoDownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
         ('screenshot', SchemaFilename(noneOk=True)),
+        ('resized_screenshots', SchemaDict(SchemaString(), SchemaFilename())),
         ('resumeTime', SchemaInt()),
     ]
 
