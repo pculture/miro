@@ -101,6 +101,10 @@ MINIMIZE_TO_TRAY = \
 MINIMIZE_TO_TRAY_ASK_ON_CLOSE = \
     Pref(key='MinimizeToTrayAskOnClose', default=True, platformSpecific=False)
 
+# These can be safely ignored on non-GTK systems
+USE_XINE_XV_HACK  = Pref(key="UseXineXVHack", default=True, platformSpecific=False)
+DEFAULT_XINE_DRIVER  = Pref(key="DefaultXineDriver", default="xv", platformSpecific=False)
+
 # These are computed by special platform code.
 RUN_AT_STARTUP     = Pref( key='RunAtStartup',  default=False,  platformSpecific=True )
 MOVIES_DIRECTORY = \

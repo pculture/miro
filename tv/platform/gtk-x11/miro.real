@@ -62,7 +62,8 @@ def startapp():
     singleclick.setCommandLineArgs(args)
     import app
     import frontend
-    import gconf
+    import prefs
+    import config
 
     # These aren't in config because we can override them with the
     # command line, so config.get() wouldn't return the correct value
@@ -70,20 +71,11 @@ def startapp():
     # config support into prefs.py and config.py.
     frontend.use_xine_hack = options.use_xv_hack
     if frontend.use_xine_hack is None:
-        use_xine_hack = gconf.client_get_default().get("/apps/miro/use_xine_xv_hack")
-        if use_xine_hack is None or (use_xine_hack.type !=
-                                     gconf.VALUE_BOOL):
-            frontend.use_xine_hack = True
-        else:
-            frontend.use_xine_hack = use_xine_hack.get_bool()
+        frontend.use_xine_hack = config.get(prefs.USE_XINE_XV_HACK)
     #print "USING XINE XV HACK: %s" % frontend.use_xine_hack
     frontend.defaultXineDriver = options.xine_driver
     if frontend.defaultXineDriver is None:
-        driver = gconf.client_get_default().get("/apps/miro/default_xine_driver")
-        if driver is None or (driver.type != gconf.VALUE_STRING):
-            frontend.defaultXineDriver = "xv"
-        else:
-            frontend.defaultXineDriver = driver.get_string()
+        frontend.defaultXineDriver = config.get(prefs.DEFAULT_XINE_DRIVER)
     #print "Xine driver is %s" % frontend.defaultXineDriver
     app.main()
 if options.version:
