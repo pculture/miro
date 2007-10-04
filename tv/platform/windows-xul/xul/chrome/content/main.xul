@@ -108,10 +108,14 @@ add more menu elements later -NN -->
       </textbox>
 </hbox>
 </hbox>
-        <spacer flex="0" width="245" id="bottom-left-blank" collapsed="true" />
-        <stack flex="0" width="220" id="bottom-progress">
-                <label id="progress-text" left="5" top="7">00:00:00</label>
-                <image id="progress-slider" class="progress-slider-inactive" left="61" top="10"/>
+        <spacer flex="0" width="225" id="bottom-left-blank" collapsed="true" />
+        <stack id="bottom-progress">
+                <hbox align="center" flex="0">
+                        <label id="progress-text">00:00:00</label>
+                        <spacer flex="1" />
+                        <label id="duration-text">00:00:00</label>
+                </hbox>
+                <image id="progress-slider" class="progress-slider-inactive" left="61" top="10" />
         </stack>
         <spacer flex="1"/>
 

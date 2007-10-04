@@ -90,6 +90,7 @@ VLCRenderer.prototype = {
   	var progressSlider = this.document.getElementById("progress-slider");
   	if(!progressSlider.beingDragged) {
   	    jsbridge.setSliderText(elapsed);
+  	    jsbridge.setDuration(len);
   	    jsbridge.moveSlider(elapsed/len);
   	}
       }
@@ -111,6 +112,7 @@ VLCRenderer.prototype = {
 
   resetVideoControls: function () {
      jsbridge.setSliderText(0);
+     jsbridge.setDuration(-1);
      jsbridge.moveSlider(0);
   },
 

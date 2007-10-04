@@ -36,6 +36,16 @@ function twoDigits(data) {
     else return ""+data;
 }
 
+
+function formatTime(milliseconds) {
+    if(milliseconds < 0) milliseconds = 0;
+    total_seconds = Math.floor(milliseconds / 1000);
+    var hours = Math.floor(total_seconds/3600);
+    var mins = Math.floor((total_seconds - hours*3600)/60);
+    var secs = total_seconds - hours*3600 - mins*60;
+    return twoDigits(hours)+":"+twoDigits(mins)+":"+twoDigits(secs);
+}
+
 function makeLocalFile(path) {
     var file = Components.classes["@mozilla.org/file/local;1"].
             createInstance(Components.interfaces.nsILocalFile);
@@ -548,13 +558,13 @@ jsBridge.prototype = {
   },
 
   setSliderText: function(elapsed) {
-    elapsed = Math.floor(elapsed / 1000);
-    var hours = Math.floor(elapsed/3600);
-    var mins = Math.floor((elapsed - hours*3600)/60);
-    var secs = elapsed - hours*3600 - mins*60;
-    var text = twoDigits(hours)+":"+twoDigits(mins)+":"+twoDigits(secs);
     var sliderText = this.document.getElementById("progress-text");
-    sliderText.childNodes[0].nodeValue = text;
+    sliderText.childNodes[0].nodeValue = formatTime(elapsed);
+  },
+
+  setDuration: function(duration) {
+    var sliderText = this.document.getElementById("duration-text");
+    sliderText.childNodes[0].nodeValue = formatTime(duration);
   },
 
   moveSlider: function(fractionDone) {

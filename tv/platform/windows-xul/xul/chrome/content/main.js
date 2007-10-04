@@ -45,6 +45,14 @@ function getPageCoords (element) {
   return coords;
 }
 
+function isDecendentOf(element, id) {
+    while (element) {
+	if (element.nodeType == 1 && element.id == id) return true
+        element = element.parentNode;
+    }
+    return false;
+}
+
 /*****************************************************************************
  Volume Knob 
  *****************************************************************************/
@@ -78,9 +86,7 @@ function doVol() {
 
 function volumeKnobOut(event) {
   var slider = document.getElementById("knob");
-  if(event.relatedTarget.id != 'volume' && 
-        event.relatedTarget.id != "knob" &&
-        slider.beingDragged) {
+  if(!isDecendentOf(event.relatedTarget, "volume") && slider.beingDragged) {
     doVol();
     slider.beingDragged = false;
   }
@@ -144,10 +150,8 @@ function doSeek() {
 
 function videoProgressOut(event) {
   var slider = document.getElementById("progress-slider");
-  if(event.relatedTarget.id != 'bottom-progress' && 
-        event.relatedTarget.id != "progress-text" &&
-        event.relatedTarget.id != "progress-slider" &&
-        slider.beingDragged) {
+  if(!isDecendentOf(event.relatedTarget, "bottom-progress") &&
+                  slider.beingDragged) { 
     doSeek();
   }
 }

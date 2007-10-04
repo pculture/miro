@@ -218,10 +218,6 @@ resizer.side-resizer {
 	cursor: default;	
 }
 
-#bottom-progress {
-	margin: 9px 20px 0px 0px;
-}
-
 #bottom-buttons {
 }
 
@@ -309,21 +305,25 @@ resizer.side-resizer {
   height: 12px;
 }
 
-#progress-text {
+#bottom-progress hbox {
+  padding: 2px 5px 0px 5px;
+}
+
+#bottom-progress label {
   font: 10px "Courier New" Courier;
-  position: absolute;
   color: black;
-  width: 100px;
-  height: 20px;
+  margin: 0px;
+}
+
+#duration-text {
+  text-align: right;
 }
 
 #progress-slider {
   position: absolute;
+  padding: 0px;
   width: 5px;
   height: 7px;
-  margin: 0px;
-  padding: 0px;
-  z-index: 100;
 }
 
 .progress-slider {
@@ -334,7 +334,8 @@ resizer.side-resizer {
 }
 
 #bottom-progress {
-  width: 219px;
+  margin: 9px 20px 0px 0px;
+  width: 270px;
   height: 26px;
   background: url(images/progress.png) no-repeat;
 }
