@@ -215,7 +215,7 @@ _Xine* xineCreate(xine_event_listener_cb_t event_callback,
 void xineDestroy(_Xine* xine);
 
 /* Set the X drawble that Xine outputs to */
-void xineAttach(_Xine* xine, const char* displayName, Drawable d, int sync);
+void xineAttach(_Xine* xine, const char* displayName, Drawable d, const char*driver, int sync, int use_xv_hack);
 
 /* Set the area that xine will draw to
 

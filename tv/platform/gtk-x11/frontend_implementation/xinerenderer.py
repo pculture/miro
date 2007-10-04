@@ -64,7 +64,10 @@ class Renderer(app.VideoRenderer):
         # flush gdk output to ensure that our window is created
         gtk.gdk.flush()
         displayName = gtk.gdk.display_get_default().get_name()
-        self.xine.attach(displayName, widget.window.xid, int(frontend.shouldSyncX))
+        xineDriver = frontend.defaultXineDriver
+        if xineDriver is None:
+            xineDriver = "xv"
+        self.xine.attach(displayName, widget.window.xid, xineDriver, int(frontend.shouldSyncX), int(frontend.useXineHack))
         self.attached = True
         for func, args in self.attachQueue:
             try:

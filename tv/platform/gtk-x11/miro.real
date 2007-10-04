@@ -42,9 +42,13 @@ parser.add_option('--unittest', dest='unittest', default=False,
     help='run unittests instead of launching the program')
 parser.add_option('-v', '--version', dest='version', default=False,
     action='store_true', help='print version info')
-parser.add_option('--profile', metavar='FILE', help='write profiling information to FILE')
-parser.add_option('--bias', metavar='BIAS', help='set profiling bias to BIAS', type=float, default=None)
-parser.add_option('--sync', metavar='SYNC', help='Use X Syncronously', default=False, action="store_true")
+parser.add_option('--profile', metavar='<file>', help='write profiling information to FILE')
+parser.add_option('--bias', metavar='<bias>', help='set profiling bias to BIAS', type=float, default=None)
+parser.add_option('--sync', help='Use X Syncronously (for debugging)', default=False, action="store_true")
+parser.add_option("--xine-driver", metavar="<driver>",
+                  action="store", type="string", dest="xine_driver", help="Xine driver (xv, xshm, opengl, sdl, dxr3, aadxr3, aa, caca, or xxmc)")
+parser.add_option('--enable-xine-hack', dest="use_xv_hack", action="store_true", help='Enable the Xine XV Hack (default)')
+parser.add_option('--disable-xine-hack', dest="use_xv_hack", action="store_false", help='Disable the Xine XV Hack')
 (options, args) = parser.parse_args()
 
 def startapp():
@@ -57,6 +61,30 @@ def startapp():
             args[i] = args[i][len('file://'):]
     singleclick.setCommandLineArgs(args)
     import app
+    import frontend
+    import gconf
+
+    # These aren't in config because we can override them with the
+    # command line, so config.get() wouldn't return the correct value
+    # anyway.  Maybe, eventually, we should integrate command line
+    # config support into prefs.py and config.py.
+    frontend.use_xine_hack = options.use_xv_hack
+    if frontend.use_xine_hack is None:
+        use_xine_hack = gconf.client_get_default().get("/apps/miro/use_xine_xv_hack")
+        if use_xine_hack is None or (use_xine_hack.type !=
+                                     gconf.VALUE_BOOL):
+            frontend.use_xine_hack = True
+        else:
+            frontend.use_xine_hack = use_xine_hack.get_bool()
+    #print "USING XINE XV HACK: %s" % frontend.use_xine_hack
+    frontend.defaultXineDriver = options.xine_driver
+    if frontend.defaultXineDriver is None:
+        driver = gconf.client_get_default().get("/apps/miro/default_xine_driver")
+        if driver is None or (driver.type != gconf.VALUE_STRING):
+            frontend.defaultXineDriver = "xv"
+        else:
+            frontend.defaultXineDriver = driver.get_string()
+    #print "Xine driver is %s" % frontend.defaultXineDriver
     app.main()
 if options.version:
     print "Miro"

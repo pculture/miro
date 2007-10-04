@@ -36,7 +36,7 @@
 #include "xine_impl.h"
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-static int miro_using_xv_driver = 0;
+static int miro_using_xv_driver_hack = 0;
 
 const char *viz_available (_Xine* xine, const char *viz)
 {
@@ -57,7 +57,6 @@ const char *const pref_viz[] = {
   NULL
 };
 
-#ifdef INCLUDE_XINE_DRIVER_HACK
 static void miro_xine_list_recycle_elem(xine_list_t *list,  xine_list_elem_t *elem) {
   elem->next = list->free_elem_list;
   elem->prev = NULL;
@@ -92,7 +91,6 @@ void miro_xine_list_remove(xine_list_t *list, xine_list_iterator_t position) {
 xine_list_iterator_t miro_xine_list_front(xine_list_t *list) {
   return list->elem_list_front;
 }
-#endif
 
 
 _Xine* xineCreate(xine_event_listener_cb_t event_callback, 
@@ -231,7 +229,7 @@ void _xineSwitchToNormal(_Xine* xine)
   xine->viz = NULL;
 }
 
-void xineAttach(_Xine* xine, const char* displayName, Drawable d, int sync)
+void xineAttach(_Xine* xine, const char* displayName, Drawable d, const char *driver, int sync, int use_xv_hack)
 {
     x11_visual_t vis;
     double screenWidth, screenHeight;
@@ -262,15 +260,16 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d, int sync)
     vis.user_data = xine;
   
     /* opening xine output ports */
+    miro_using_xv_driver_hack = 0;    /* by default, don't use the hack */
     xine->videoPort = xine_open_video_driver(xine->xine, "xv",
             XINE_VISUAL_TYPE_X11, (void *)&vis);
     if (!xine->videoPort) {
       xine->videoPort = xine_open_video_driver(xine->xine, "auto",
            XINE_VISUAL_TYPE_X11, (void *)&vis);
-      miro_using_xv_driver = 0;
 
     } else {
-      miro_using_xv_driver = 1;
+      if (use_xv_hack && !strncmp("xv",driver,3))
+        miro_using_xv_driver_hack = 1;
     }
     xine->audioPort = xine_open_audio_driver(xine->xine, "auto", NULL);
 
@@ -295,6 +294,7 @@ void xineDetach(_Xine* xine)
 {
     xine_event_queue_t* eventQueue;
     xv_driver_t* driver;
+    xine_list_iterator_t ite;
 
     if(!xine->attached) return;
 
@@ -302,9 +302,7 @@ void xineDetach(_Xine* xine)
     //causes problems with certain xine-lib/X11 combinations this
     //caused #7132
 
-#ifdef INCLUDE_XINE_DRIVER_HACK
-    if (miro_using_xv_driver) {
-      xine_list_iterator_t ite;
+    if (miro_using_xv_driver_hack) {
 
       driver = (xv_driver_t*)xine->videoPort->driver;
   
@@ -312,7 +310,6 @@ void xineDetach(_Xine* xine)
         miro_xine_list_remove (driver->port_attributes, ite);
       }
     }
-#endif
 
     xine_close(xine->stream);
     xine_dispose(xine->stream);

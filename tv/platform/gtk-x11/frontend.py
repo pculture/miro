@@ -22,6 +22,10 @@ import sys
 
 shouldSyncX = '--sync' in sys.argv
 
+# These should be set by miro.real, but these are sane defaults
+useXineHack = True
+defaultXineDriver = "xv"
+
 # Switch to a dummy frontend in the case we're running tests and
 # DISPLAY isn't set
 try:
