@@ -105,13 +105,13 @@ def performStartupTasks(terminationCallback):
         elif step == 1:
             widgetTree['button-startup-back'].set_sensitive(True)
 
-            show_hide ('button-startup-forward', not searchSelected())
+            show_hide ('button-startup-forward', False)
             show_hide ('button-startup-search', searchSelected())
-            show_hide ('button-startup-ok', False)
+            show_hide ('button-startup-ok', not searchSelected())
 
             if status['inSearch']:
                 widgetTree['button-startup-search'].set_sensitive(False)
-                widgetTree['button-startup-forward'].set_sensitive(False)
+                widgetTree['button-startup-ok'].set_sensitive(False)
                 widgetTree['button-startup-back'].set_sensitive(False)
 
             if status['inSearch'] or status['searchSuccess']:
@@ -131,7 +131,7 @@ def performStartupTasks(terminationCallback):
     widgetTree ['radiobutton-search-custom'].connect("toggled", updateUI)
  
     step = 0
-    while (step < 3):
+    while (step < 2):
         # Setup step
 
         updateUI()
