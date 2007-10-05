@@ -55,13 +55,7 @@ import searchengines
 import os
 import re
 import shutil
-# import sys
 import cgi
-# import copy
-# import time
-# import types
-# import random
-# import datetime
 import traceback
 import threading
 import platform
