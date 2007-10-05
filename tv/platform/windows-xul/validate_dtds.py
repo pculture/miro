@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-"""Code to valitade the DTD files we use for democracy.  This is very
+"""Code to valitade the DTD files we use for Miro.  This is very
 important, since if the xulrunner can't parse the dtds then the program won't
 start.  See #3579.
 
