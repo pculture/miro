@@ -1,7 +1,7 @@
 # Originally taken from BitTornado written by John Hoffman
-# see LICENSE.txt for license information
+# see portable/BitTorrent/LICENSE.txt for license information.
 #
-# Rewritten by Nick Nassar <nassar@pculture dotorg> to be thread safe
+# Rewritten by Nick Nassar <nassar@pculture dotorg> to be thread safe.
 
 from time import *
 import sys
