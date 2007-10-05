@@ -113,14 +113,14 @@ class SingletonTest(SanityTest):
     def finished(self):
         if self.count == 0:
             # For all our singletons (currently at least), we don't need to
-            # create them here.  It'll happen when democracy is restarted.
+            # create them here.  It'll happen when Miro is restarted.
             # return "No %s in database" % self.singletonName
             pass
 
     def fixIfPossible(self, objectList):
         if self.count == 0:
             # For all our singletons (currently at least), we don't need to
-            # create them here.  It'll happen when democracy is restarted.
+            # create them here.  It'll happen when Miro is restarted.
             return
         else:
             seenObject = False
