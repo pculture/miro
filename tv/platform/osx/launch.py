@@ -1,3 +1,5 @@
+#!/usr/bin/env python2.4
+
 # Miro - an RSS based video player application
 # Copyright (C) 2005-2007 Participatory Culture Foundation
 #
@@ -14,8 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-#!/usr/bin/env python2.4
 
 import os
 import sys
