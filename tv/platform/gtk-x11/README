@@ -32,6 +32,9 @@ on GNOME.
 Miro requires at least Python 2.4; Pyrex is used for Python to C and
 C++ code.
 
+Updated instructions are at 
+https://develop.participatoryculture.org/trac/democracy/wiki/GTKX11BuildDocs
+
 
 Debian
 ------

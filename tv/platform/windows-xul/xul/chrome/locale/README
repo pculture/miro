@@ -10,8 +10,8 @@ tv/resources/locale/build-catalogs.py.  This populates all the other
 language directories with the .dtd.template files.
 
 * In setup.py we make .dtd files from the .dtd.template files by doing a
-couple simple substitutions.  For example "$longAppName" -> "Democracy".
+couple simple substitutions.  For example "$longAppName" -> "Miro".
 
-* When we startup democracy we pick the correct language directory to use
+* When we startup Miro we pick the correct language directory to use
 as the source of our .dtd files.  Translated strings are stored as XUL
 entities for example "&main.title;".

@@ -1,12 +1,12 @@
-To build DTV for distribution, run build.sh in this directory. The result
-is DTV.app, which is self-contained and should be safe to distribute.
+To build Miro for distribution, run build.sh in this directory. The result
+is Miro.app, which is self-contained and should be safe to distribute.
 
 To run the application quickly, without generating a distribution-safe
-package, run ./test.sh. DTV.app, if it exists, is in the process
+package, run ./test.sh. Miro.app, if it exists, is in the process
 overwritten with a non-distribution-safe bundle tree that contains
 symlinks that point outside the bundle.
 
-You'll need Pyrex, PyObjC and Boost to compile DTV. We use these for
+You'll need Pyrex, PyObjC and Boost to compile Miro. We use these for
 linking to C, Objective C, and C++ code. And you'll need Python 2.4 or
 later.
 
