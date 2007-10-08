@@ -13,7 +13,7 @@ from copy import copy
 from BitTorrent.bencode import bdecode
 from clock import clock
 from download_utils import cleanFilename, nextFreeFilename, checkFilenameExtension, filterDirectoryName
-from download_utils import filenameFromURL
+from download_utils import filenameFromURL, getFileURLPath
 import eventloop
 import httpclient
 import datetime
@@ -815,8 +815,7 @@ class BTDownloader(BGDownloader):
     def getMetainfo(self):
         if self.metainfo is None:
             if self.url.startswith('file://'):
-                path = self.url[len('file://'):]
-                path = platformutils.unmakeURLSafe(path)
+                path = getFileURLPath(self.url)
                 try:
                     metainfoFile = open(path, 'rb')
                 except IOError:

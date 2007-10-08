@@ -24,7 +24,7 @@ import filetypes
 import util
 
 from util import checkF, checkU, returnsFilename
-from platformutils import unicodeToFilename
+from platformutils import unicodeToFilename, unmakeURLSafe
 
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
 
@@ -60,14 +60,14 @@ def parseURL(url):
         host = host[0:host.rfind(':')]
 
     if scheme == '' and util.chatter:
-        print "WARNING: %s has no scheme" % url
+        print "WARNING: %r has no scheme" % url
 
     if ':' in host:
         host, port = host.split(':')
         try:
             port = int(port)
         except:
-            print "DTV: parseURL: WARNING: invalid port for %s" % url
+            print "DTV: parseURL: WARNING: invalid port for %r" % url
             port = defaultPort(scheme)
     else:
         port = defaultPort(scheme)
@@ -75,14 +75,26 @@ def parseURL(url):
     host = host.lower()
     scheme = scheme.lower()
 
+    path = path.replace('|', ':') 
+    # Windows drive names are often specified as "C|\foo\bar"
+
     if path == '' or path[0] != '/':
         path = '/' + path
+    elif re.match(r'/[a-zA-Z]:', path):
+        # Fix "/C:/foo" paths
+        path = path[1:]
     fullPath = path
     if params:
         fullPath += ';%s' % params
     if query:
         fullPath += '?%s' % query
     return scheme, host, port, fullPath
+
+def getFileURLPath(url):
+    scheme, host, port, path = parseURL(url)
+    if scheme != 'file':
+        raise ValueError("%r is not a file URL" % url)
+    return unmakeURLSafe(path)
 
 # If a filename doesn't have an extension, this tries to find a suitable one
 # based on the HTTP content-type info and add it if one is available.

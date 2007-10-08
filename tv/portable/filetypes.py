@@ -16,7 +16,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 import os
-import urlparse
 
 VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
@@ -103,9 +102,10 @@ def _hasVideoType(enclosure):
              enclosure['type'] == u"application/x-shockwave-flash"))
 
 def _hasVideoExtension(enclosure, key):
+    import download_utils
     if key in enclosure:
-        elems = urlparse.urlparse(enclosure[key])
-        return isAllowedFilename(elems[2])
+        elems = download_utils.parseURL(enclosure[key])
+        return isAllowedFilename(elems[3])
     return False
 
 def isFeedContentType(contentType):

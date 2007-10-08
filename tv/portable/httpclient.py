@@ -40,7 +40,7 @@ from clock import clock
 import httpauth
 import config
 import prefs
-from download_utils import URIPattern, cleanFilename, parseURL, defaultPort
+from download_utils import URIPattern, cleanFilename, parseURL, defaultPort, getFileURLPath
 from xhtmltools import URLEncodeDict, multipartEncode
 import eventloop
 import util
@@ -1825,7 +1825,7 @@ def grabURL(url, callback, errback, headerCallback=None,
     if cookies == None:
         cookies = {}
     if url.startswith("file://"):
-        callback({"body":file(url[7:]).read(),
+        callback({"body":file(getFileURLPath(url)).read(),
                       "updated-url":url,
                       "redirected-url":url,
                       "content-type": defaultMimeType,

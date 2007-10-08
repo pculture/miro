@@ -13,8 +13,11 @@ class TestParseURL(DemocracyTestCase):
         self.doCheck('file:///abc', 'file', '', None, '/abc')
         self.doCheck('file://abc', 'file', '', None, '/abc')
         self.doCheck('file:///C:\\Program%20Files', 'file', '', None, 
-                '/C:/Program%20Files')
-        self.doCheck('file://C:/abc', 'file', '', None, '/C:/abc')
+                'C:/Program%20Files')
+        self.doCheck('file:///C:/Program%20Files', 'file', '', None, 
+                'C:/Program%20Files')
+        self.doCheck('file://C:/abc', 'file', '', None, 'C:/abc')
+        self.doCheck('file://C|/abc', 'file', '', None, 'C:/abc')
         self.doCheck('file://abc', 'file', '', None, '/abc')
 
     def testHTTPUrls(self):

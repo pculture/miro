@@ -21,7 +21,7 @@ import threading
 import httpclient
 from fasttypes import LinkedList
 from eventloop import asIdle, addIdle, addTimeout
-from download_utils import nextFreeFilename
+from download_utils import nextFreeFilename, getFileURLPath
 from util import unicodify, call_command
 from platformutils import unicodeToFilename
 import config
@@ -313,7 +313,7 @@ class IconCache:
     def getFilename(self):
         self.dbItem.confirmDBThread()
         if self.url and self.url.startswith (u"file://"):
-            return self.url[len(u"file://"):]
+            return getFileURLPath(self.url)
         elif self.url and self.url.startswith (u"/"):
             return self.url
         else:

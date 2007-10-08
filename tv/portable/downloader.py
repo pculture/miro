@@ -24,7 +24,7 @@ import shutil
 
 from database import DDBObject, defaultDatabase
 from dl_daemon import daemon, command
-from download_utils import nextFreeFilename, parseURL, filterDirectoryName
+from download_utils import nextFreeFilename, getFileURLPath, filterDirectoryName
 from util import getTorrentInfoHash, returnsUnicode, checkU, returnsFilename, unicodify, checkF
 from platformutils import FilenameType
 import app
@@ -633,11 +633,7 @@ def getDownloader(item):
     if not channelName:
         channelName = None
     if url.startswith(u'file://'):
-        scheme, host, port, path = parseURL(url)
-        path = platformutils.unmakeURLSafe (path)
-        if re.match(r'/[a-zA-Z]:', path): 
-            # fix windows pathnames (/C:/blah/blah/blah)
-            path = path[1:]
+        path = getFileURLPath(url)
         try:
             getTorrentInfoHash(path)
         except ValueError:

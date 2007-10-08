@@ -51,6 +51,7 @@ import guide
 import idlenotifier 
 import eventloop
 import searchengines
+import download_utils
 
 import os
 import re
@@ -1369,8 +1370,8 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             if url == u"":
                 continue
             if url.startswith(u"file://"):
-                filename = url[len(u'file://'):]
-                filename = platformutils.unicodeToFilename(filename)
+                filename = download_utils.getFileURLPath(url)
+                filename = platformutils.osFilenameToFilenameType(filename)
                 eventloop.addIdle (singleclick.openFile,
                     "Open Dropped file", args=(filename,))
             elif url.startswith(u"http:") or url.startswith(u"https:"):
@@ -1576,7 +1577,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 controller.setLastVisitedGuideURL(url)
                 return True
             if url.startswith(u'file://'):
-                path = url[len(u"file://"):]
+                path = download_utils.getFileURLPath(url)
                 return os.path.exists(path)
 
             # If we get here, this isn't a DTV URL. We should open it
