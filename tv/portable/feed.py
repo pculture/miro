@@ -602,6 +602,7 @@ class Feed(DDBObject):
         self.itemSort = sorts.ItemSort()
         self.itemSortDownloading = sorts.ItemSort()
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
+        self.inlineSearchTerm = None
 
     isBlinking, setBlinking = makeSimpleGetSet('blinking',
             changeNeedsSave=False)
