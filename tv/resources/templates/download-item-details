@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="size">
-                    <span t:showIf="this.getURL() != this.getLink() and this.getLink() != ''"><span t:replace="this.getSizeForDisplay()" /></span>
+                    <span t:showIf="(this.getURL() != this.getLink() and this.getLink() != '') or this.isDownloaded()"><span t:replace="this.getSizeForDisplay()" /></span>
                 </div>
                 <div class="torrent">
                     <span t:showIf="this.looksLikeTorrent()">

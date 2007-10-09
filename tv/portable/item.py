@@ -1163,10 +1163,14 @@ folder will be deleted.""")
     ##
     # Returns the size of the item to be displayed.
     def getSizeForDisplay(self):
+        print "getSizeForDisplay (%s)" % (self,)
+        return util.formatSizeForUser(self.getSize())
+
+    def getSize(self):
         if not hasattr(self, "_size"):
-            self._size = self.getSize()
-        return util.formatSizeForUser(self._size)
-    
+            self._size = self._getSize()
+        return self._size
+
     ##
     # Returns the size of the item. We use the following methods to get the
     # size:
@@ -1174,7 +1178,7 @@ folder will be deleted.""")
     # Physical size of a downloaded file
     # HTTP content-length
     # RSS enclosure tag value.
-    def getSize(self):
+    def _getSize(self):
         fname = self.getFilename()
         if self.isDownloaded():
             try:
@@ -1778,6 +1782,13 @@ class FileItem(Item):
         self.deleted = False
         self.signalChange()
 
+    def updateReleaseDate(self):
+        # This should be called whenever we get a new entry
+        try:
+            self.releaseDateObj = datetime.fromtimestamp(os.path.getmtime(self.filename))
+        except:
+            self.releaseDateObj = datetime.min
+
     def migrate(self, newDir):
         self.confirmDBThread()
         if self.parent_id:
@@ -1814,6 +1825,7 @@ filename was %s""", stringify(self.filename))
                 else:
                     logging.warn("%s is not a subdirectory of %s",
                             self.filename, parent_file)
+        self.updateReleaseDate()
         Item.setupLinks(self)
 
 def expireItems(items):
