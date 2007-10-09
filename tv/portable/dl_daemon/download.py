@@ -463,7 +463,7 @@ class HTTPDownloader(BGDownloader):
             self.filehandle = file(self.filename,"w+b")
         except IOError:
             self.handleGenericError("Couldn't open %s for writing" % 
-                self.filename)
+                stringify(self.filename))
             return
         if self.totalSize > 0:
             try:
@@ -794,7 +794,7 @@ class BTDownloader(BGDownloader):
                 name = metainfo['info']['name']
             except (ValueError, KeyError):
                 self.handleError(_("Corrupt Torrent"),
-                        _("The torrent file at %s was not valid") % self.url)
+                        _("The torrent file at %s was not valid") % stringify(self.url))
                 return
             name = name.decode('utf-8', 'replace')
             self.shortFilename = cleanFilename(name)
