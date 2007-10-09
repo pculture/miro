@@ -17,23 +17,28 @@ filters.switchNewItemsChannel("new")
 sorts.switchUnwatchedFirstChannel("new")
 views.nonContainerItems.recomputeFilter(views.newWatchableItems)
 
-global searchFilter
-searchFilter = lambda x: filters.matchingItems(x, None)
+def searchFilter(x):
+    return filters.matchingItems(x, app.controller.newVideosSearchTerm)
 
 matchingItems = views.newWatchableItems.filter(lambda x:searchFilter(x) and x.getFeedURL() != "dtv:singleFeed",sortFunc=sorts.itemSortNew.sort, resort=True)
 
 def updateSearchString(newSearch):
-    global searchFilter
     if len(newSearch) == 0:
-        searchFilter = lambda x: filters.matchingItems(x, None)
+        app.controller.newVideosSearchTerm = None
     else:
-        searchFilter = lambda x: filters.matchingItems(x, newSearch)
+        app.controller.newVideosSearchTerm = newSearch
     views.newWatchableItems.recomputeFilter(matchingItems)
 
 def setSortBy(by, section, handle):
     sorts.itemSortNew.setSortBy(by)
     views.newWatchableItems.recomputeSort(matchingItems)
     handle.forceUpdate()
+
+def initialSearchText():
+    if app.controller.newVideosSearchTerm is None:
+        return _('Find')
+    else:
+        return app.controller.newVideosSearchTerm
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
@@ -50,7 +55,7 @@ matchingItems.unlink()
     <div id="main-icon" class="noborder"><img src="resource:images/newvideos-icon.png" /></div>
     <h1 id="main-title" i18n:translate="">New</h1>
     <div id="search-box-container">
-        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***"/>
+        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***initialSearchText()***"/>
     </div>
 </div>
 <!-- / TITLE BAR -->

@@ -630,6 +630,8 @@ class Controller (frontend.Application):
         self.idlingNotifier = None
         self.gatheredVideos = None
         self.sendingCrashReport = 0
+        self.librarySearchTerm = None
+        self.newVideosSearchTerm = None
 
     ### Startup and shutdown ###
 

@@ -16,23 +16,28 @@
 filters.switchNewItemsChannel("library")
 sorts.switchUnwatchedFirstChannel("library")
 
-global searchFilter
-searchFilter = lambda x: filters.matchingItems(x, None)
+def searchFilter(x):
+    return filters.matchingItems(x, app.controller.librarySearchTerm)
 
 matchingItems = views.watchableItems.filter(lambda x:searchFilter(x) and x.getFeedURL() != "dtv:singleFeed",sortFunc=sorts.itemSortLibrary.sort,resort=True)
 
 def updateSearchString(newSearch):
-    global searchFilter
     if len(newSearch) == 0:
-        searchFilter = lambda x: filters.matchingItems(x, None)
+        app.controller.librarySearchTerm = None
     else:
-        searchFilter = lambda x: filters.matchingItems(x, newSearch)
+        app.controller.librarySearchTerm = newSearch
     views.watchableItems.recomputeFilter(matchingItems)
 
 def setSortBy(by, section, handle):
     sorts.itemSortLibrary.setSortBy(by)
     views.watchableItems.recomputeSort(matchingItems)
     handle.forceUpdate()
+
+def initialSearchText():
+    if app.controller.librarySearchTerm is None:
+        return _('Find')
+    else:
+        return app.controller.librarySearchTerm
 
 ]]>
     </t:execOnLoad>
@@ -49,7 +54,7 @@ matchingItems.unlink()
     <div id="main-icon" class="noborder"><img src="resource:images/collection-icon.png" /></div>
     <h1 id="main-title" i18n:translate="">Library</h1>
     <div id="search-box-container">
-        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***"/>
+        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***initialSearchText()***"/>
     </div>
 </div>
 <!-- / TITLE BAR -->
