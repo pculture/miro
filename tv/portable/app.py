@@ -2418,12 +2418,6 @@ def changeMoviesDirectory(newDir, migrate):
             if download.isFinished():
                 logging.info ("migrating %s", download.getFilename())
                 download.migrate(newDir)
-        for item in views.fileItems:
-            # Only migrate top level items.
-            if item.parent_id is None:
-                currentFilename = item.getFilename()
-                if os.path.dirname(currentFilename) == oldDir:
-                    item.migrate(newDir)
         # Pass in case they don't exist or are not empty:
         try:
             os.rmdir(os.path.join (oldDir, 'Incomplete Downloads'))
