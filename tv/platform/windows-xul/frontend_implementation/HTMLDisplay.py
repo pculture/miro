@@ -25,8 +25,10 @@ import os
 
 import app
 import config
+import download_utils
 import tempfile
 import os
+import platformutils
 import prefs
 import frontend
 from frontend_implementation import urlcallbacks
@@ -66,6 +68,14 @@ def initTempDir():
     else:
         os.mkdir(tempdir)
 
+def compareFileUrls(url1, url2):
+    if not url1.startswith("file://") or not url2.startswith("file://"):
+        return False
+    def normalize(url):
+        path = download_utils.getFileURLPath(url)
+        return os.path.normpath(platformutils.getLongPathName(path))
+    return normalize(url1) == normalize(url2)
+
 class HTMLDisplay (app.Display):
     "Selectable Display that shows a HTML document."
 
@@ -100,7 +110,7 @@ class HTMLDisplay (app.Display):
         # make sure that the page that finished was our page, if we install
         # enough HTMLDisplays in a short time, then the last HTMLDisplay can
         # get callbacks for the earlier loads.
-        if url == self.url:
+        if url.startswith("file://") and compareFileUrls(url, self.url):
             self.pageLoadFinised = True
             for function, args in self.deferedCalls:
                 function(self, *args)
