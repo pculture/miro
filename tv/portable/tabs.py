@@ -293,7 +293,6 @@ class TabOrder(database.DDBObject):
             if list is None:
                 break
             tabToShow = last
-            print 'new last: %s' % last.id
         if hasattr(tabDisplay, 'navigateToFragment'):
             tabDisplay.navigateToFragment(tabToShow.getFragment())
         else:
