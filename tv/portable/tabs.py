@@ -31,6 +31,7 @@ from databasehelper import TrackedIDList
 
 from xml.dom.minidom import parse
 from gtcache import gettext as _
+import logging
 
 ###############################################################################
 #### Tabs                                                                  ####
@@ -253,6 +254,8 @@ class TabOrder(database.DDBObject):
 
     def onRestore(self):
         self._initRestore()
+        eventloop.addIdle(self.checkForNonExistentIds, 
+                "checking for non-existent TabOrder ids")
 
     def _initRestore(self):
         if self.type == u'channel':
@@ -266,17 +269,31 @@ class TabOrder(database.DDBObject):
         self.tabView.addAddCallback(self.onAddTab)
         self.tabView.addRemoveCallback(self.onRemoveTab)
 
-    def makeLastTabVisible(self):
+    def checkForNonExistentIds(self):
+        changed = False
+        for id in self.tab_ids[:]:
+            if not self.tabView.idExists(id):
+                self.trackedTabs.removeID(id)
+                logging.warn("Throwing away non-existent TabOrder id: %s", id)
+                changed = True
+        if changed:
+            self.signalChange()
+
+    def makeLastTabVisible(self, obj):
         try:
             tabDisplay = app.controller.tabDisplay
         except AttributeError:
             # haven't created the tab display yet, just ignore this call
             return
-        try:
-            idToShow = self.tab_ids[-3]
-        except IndexError:
-            idToShow = self.tab_ids[0]
-        tabToShow = self.tabView.getObjectByID(idToShow)
+        tabToShow = obj
+        # try to go back a little to make the view prettier
+        self.trackedTabs.view.moveCursorToID(obj.objID())
+        for i in range(3):
+            last = self.trackedTabs.view.getPrev()
+            if list is None:
+                break
+            tabToShow = last
+            print 'new last: %s' % last.id
         if hasattr(tabDisplay, 'navigateToFragment'):
             tabDisplay.navigateToFragment(tabToShow.getFragment())
         else:
@@ -298,11 +315,12 @@ class TabOrder(database.DDBObject):
             self.trackedTabs.appendID(id, sendSignalChange=False)
             obj.signalChange(needsSave=False)
             self.signalChange()
-            self.makeLastTabVisible()
+            self.makeLastTabVisible(obj)
 
     def onRemoveTab(self, obj, id):
         if id in self.trackedTabs:
             self.trackedTabs.removeID(id)
+        self.signalChange()
 
     def handleDNDReorder(self, anchorItem, draggedIDs):
         """Handle drag-and-drop reordering of the tab order."""
