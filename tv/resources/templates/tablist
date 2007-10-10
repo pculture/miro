@@ -59,14 +59,15 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	selectID="***this.objID()***" selectViewName="feedTabs"
 	selectArea='tablist' 
 	onmousedown="return handleContextMenuSelect(event);" 
-	onclick="return handleSelect(event)" >
-          <a name="***this.getFragment()***"></a>
+        onclick="return handleSelect(event)">
+        <div id="***this.getFragment()***">
 	  <div t:showIf="this.isFeed()">
 	      <t:includeTemplate filename="feedtab" />
 	    </div>
 	  <div t:showIf="this.isChannelFolder()">
 	      <t:includeTemplate filename="channelfoldertab" />
 	  </div>
+        </div>
       </li>
     </ul>
     <div class="dnd-reorder-indicator circle" />
@@ -85,14 +86,15 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	selectID="***this.objID()***" selectViewName="playlistTabs"
 	selectArea='tablist' 
 	onmousedown="return handleContextMenuSelect(event);" 
-	onclick="return handleSelect(event);" >
-          <a name="***this.getFragment()***"></a>
+        onclick="return handleSelect(event);">
+        <div id="***this.getFragment()***">
 	  <div t:showIf="this.isPlaylist()">
 	      <t:includeTemplate filename="playlisttab" />
 	  </div>
 	  <div t:showIf="this.isPlaylistFolder()">
               <t:includeTemplate filename="playlistfoldertab" />
 	  </div>
+        </div>
       </li>
     </ul>
   </div>

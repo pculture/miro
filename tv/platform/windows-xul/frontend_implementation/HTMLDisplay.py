@@ -134,6 +134,11 @@ class HTMLDisplay (app.Display):
         self.area = None
 
     @deferUntilLoad
+    def navigateToFragment(self, fragment):
+        fullUrl = "%s#%s" % (self.url, fragment)
+        frontend.jsBridge.xulNavigateDisplay(self.area, fullUrl)
+
+    @deferUntilLoad
     def addItemAtEnd(self, xml, id):
         frontend.jsBridge.xulAddElementAtEnd(self.area, xml, id)
 

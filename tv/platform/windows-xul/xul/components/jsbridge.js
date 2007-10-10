@@ -447,7 +447,7 @@ jsBridge.prototype = {
 
   xulNavigateDisplay: function(area, uri) {
     var browser = this.document.getElementById(area);
-    browser.contentDocument.location = uri;
+    browser.loadURI(uri);
   },
 
   getDocument: function(area) {
