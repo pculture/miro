@@ -16,11 +16,37 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 
+import os
 import sys
+import glob
 import objc
 import QTKit
 import AppKit
 import Foundation
+
+import qtcomp
+
+# =============================================================================
+
+def registerQuicktimeComponents():
+    bundlePath = Foundation.NSBundle.mainBundle().bundlePath()
+    componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
+    components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
+    for component in components:
+        cmpName = os.path.basename(component)
+        if checkComponentCompatibility(cmpName):
+            qtcomp.register(component.encode('utf-8'))
+
+def checkComponentCompatibility(name):
+    if "Perian" in name or "AC3" in name or "A52" in name:
+        if getMajorOSVersion() <= 7:
+            return False
+    return True
+
+def getMajorOSVersion():
+    versionInfo = os.uname()
+    versionInfo = versionInfo[2].split('.')
+    return int(versionInfo[0])
 
 # =============================================================================
 
@@ -95,6 +121,8 @@ thumbPath = sys.argv[2].decode('utf-8')
 info = AppKit.NSBundle.mainBundle().infoDictionary()
 info["LSBackgroundOnly"] = "1"
 AppKit.NSApplicationLoad()
+
+registerQuicktimeComponents()
 
 (qtmovie, error) = QTKit.QTMovie.movieWithFile_error_(moviePath)
 if qtmovie is None or error is not objc.nil:
