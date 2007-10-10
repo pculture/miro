@@ -483,10 +483,14 @@ def formatTimeForUser(seconds, sign=1):
     display a '-' sign.
     """
     _, _, _, h, m, s, _, _, _ = time.gmtime(seconds)
-    if int(seconds) in range(0, 3600):
-        return "%d:%02u" % (m*sign, s)
+    if sign < 0:
+        sign = '-'
     else:
-        return "%d:%02u:%02u" % (h*sign, m, s)
+        sign = ''
+    if int(seconds) in range(0, 3600):
+        return "%s%d:%02u" % (sign, m, s)
+    else:
+        return "%s%d:%02u:%02u" % (sign, h, m, s)
 
 def makeAnchor(label, href):
     return '<a href="%s">%s</a>' % (href, label)
