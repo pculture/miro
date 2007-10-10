@@ -64,6 +64,7 @@ import distutils.command.build_py
 import distutils.command.build_py
 import distutils.command.install_data
 import os
+import pwd
 import subprocess
 import sys
 import re
@@ -116,6 +117,17 @@ if 'bdist_rpm' in sys.argv:
     appVersion = appVersion.replace('-', '_')
 
 #### utility functions ####
+def getlogin():
+    try:
+        return os.environ['LOGNAME']
+    except KeyError:
+        pass
+    try:
+        return os.environ['USER']
+    except KeyError:
+        pass
+    pwd.getpwuid(os.getuid())[0] 
+
 def read_file(path):
     f = open(path)
     try:
@@ -369,7 +381,7 @@ class install_data (distutils.command.install_data.install_data):
                              APP_REVISION_NUM=revisionnum,
                              APP_REVISION_URL=revisionurl,
                              APP_PLATFORM='gtk-x11',
-                             BUILD_MACHINE="%s@%s" % (os.getlogin(),
+                             BUILD_MACHINE="%s@%s" % (getlogin(),
                                                       os.uname()[1]),
                              BUILD_TIME=str(time.time()),
                              MOZILLA_LIB_PATH=mozilla_lib_path[0])
