@@ -1163,7 +1163,6 @@ folder will be deleted.""")
     ##
     # Returns the size of the item to be displayed.
     def getSizeForDisplay(self):
-        print "getSizeForDisplay (%s)" % (self,)
         return util.formatSizeForUser(self.getSize())
 
     def getSize(self):
