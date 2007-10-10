@@ -34,11 +34,6 @@ def setSortBy(by, section, handle):
     views.newWatchableItems.recomputeSort(matchingItems)
     handle.forceUpdate()
 
-def initialSearchText():
-    if app.controller.newVideosSearchTerm is None:
-        return _('Find')
-    else:
-        return app.controller.newVideosSearchTerm
 ]]>
     </t:execOnLoad>
     <t:execOnUnload><![CDATA[
@@ -55,7 +50,12 @@ matchingItems.unlink()
     <div id="main-icon" class="noborder"><img src="resource:images/newvideos-icon.png" /></div>
     <h1 id="main-title" i18n:translate="">New</h1>
     <div id="search-box-container">
-        <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***initialSearchText()***"/>
+        <div t:showIf="app.controller.newVideosSearchTerm is None">
+            <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***" />
+        </div>
+        <div t:showIf="app.controller.newVideosSearchTerm is not None">
+            <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***app.controller.newVideosSearchTerm***" searching="1"/>
+        </div>
     </div>
 </div>
 <!-- / TITLE BAR -->

@@ -86,7 +86,7 @@ var editSearchTimer = null;
 var editSearchCallback = null;
 
 function onSearchFocus(obj){
-  if (!obj.searching){
+  if (obj.getAttribute('searching') != '1') {
 	obj.value="";
 	obj.searching = '1';
   }

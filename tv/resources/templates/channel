@@ -61,13 +61,6 @@ def reInit(*args, **kargs):
 
     _updateView()
 
-def initialSearchText():
-    global feed
-    if feed.inlineSearchTerm is None:
-        return _('Find in channel')
-    else:
-        return feed.inlineSearchTerm
-
 def showDownloadsFilter(x):
     return showDownloads
 
@@ -238,7 +231,12 @@ if feed.idExists():
                 </div>
             </div>
             <div id="search-box-container" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
-                <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***initialSearchText()***"/>
+                <div t:showIf="feed.inlineSearchTerm is None">
+                    <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***" />
+                </div>
+                <div t:showIf="feed.inlineSearchTerm is not None">
+                    <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***feed.inlineSearchTerm***" searching="1"/>
+                </div>
             </div>
             <div t:hideIf="feed.inlineSearchTerm is None or feed.getURL().startswith('dtv:directoryfeed')">
                 <div class="white-button-left save-search-channel">
