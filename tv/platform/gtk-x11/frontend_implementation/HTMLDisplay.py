@@ -182,6 +182,11 @@ class HTMLDisplayImpl:
         self.widget.load_url(self.urlToLoad)
         self.in_load_html = False
 
+    @deferUntilAfterLoad
+    def navigateToFragment(self, fragment):
+        url = '%s#%s' % (self.urlToLoad, fragment)
+        self.widget.load_url(url)
+
     def loadFinished(self, widget):
         platformutils.confirmMainThread()
 

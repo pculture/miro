@@ -129,8 +129,6 @@ class Importer (object):
         f = open(pathname, "r")
         content = f.read()
         f.close()
-        channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
-        channelTabOrder.addFromTop = False
         
         try:
             dom = minidom.parseString(content)
@@ -141,7 +139,6 @@ class Importer (object):
             self.showImportSummary()
         except expat.ExpatError:
             self.showXMLError()
-        channelTabOrder.addFromTop = True
 
     def showXMLError(self):
         title = _(u"OPML Import failed")

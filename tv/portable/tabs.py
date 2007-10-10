@@ -222,6 +222,12 @@ class Tab:
     def onDeselected(self, frame):
         self.display.onDeselect(frame)
 
+    def getFragment(self):
+        """URL fragment to use as an anchor.  This lets us scroll the tablist
+        so that this tab is on top.
+        """
+        return 'tab-%d' % self.obj.getID()
+
 def expandedFolderFilter(tab):
     folder = tab.obj.getFolder()
     return folder is None or folder.getExpanded()
@@ -259,7 +265,22 @@ class TabOrder(database.DDBObject):
         self.trackedTabs.setFilter(expandedFolderFilter)
         self.tabView.addAddCallback(self.onAddTab)
         self.tabView.addRemoveCallback(self.onRemoveTab)
-        self.addFromTop = True
+
+    def makeLastTabVisible(self):
+        try:
+            tabDisplay = app.controller.tabDisplay
+        except AttributeError:
+            # haven't created the tab display yet, just ignore this call
+            return
+        try:
+            idToShow = self.tab_ids[-3]
+        except IndexError:
+            idToShow = self.tab_ids[0]
+        tabToShow = self.tabView.getObjectByID(idToShow)
+        if hasattr(tabDisplay, 'navigateToFragment'):
+            tabDisplay.navigateToFragment(tabToShow.getFragment())
+        else:
+            logging.warn("HTMLDisplay.navigateToFragment not implemented")
 
     def getView(self):
         """Get a database view for this tab ordering."""
@@ -274,11 +295,10 @@ class TabOrder(database.DDBObject):
 
     def onAddTab(self, obj, id):
         if id not in self.trackedTabs:
-            if self.addFromTop:
-                self.trackedTabs.insertID(0, id, sendSignalChange=False)
-            else:
-                self.trackedTabs.appendID(id, sendSignalChange=False)
+            self.trackedTabs.appendID(id, sendSignalChange=False)
             obj.signalChange(needsSave=False)
+            self.signalChange()
+            self.makeLastTabVisible()
 
     def onRemoveTab(self, obj, id):
         if id in self.trackedTabs:
