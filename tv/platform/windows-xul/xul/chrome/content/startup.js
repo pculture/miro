@@ -35,7 +35,7 @@ var wizard;
 var homedir;
 function onload() {
     wizard = getWidget("democracy-startup");
-    initialButton = wizard.getButton("next").label;
+    initialButton = wizard.getButton("finish").label;
     homedir = pybridge.getSpecialFolder("My Documents");
     setSearchDir(homedir);
     
@@ -77,7 +77,7 @@ function updateUI ()
 	wizard.canAdvance = true;
 	wizard.canRewind = true;
     }
-    wizard.getButton("next").label = initialButton;
+    wizard.getButton("finish").label = initialButton;
     if (wizard.currentPage.id == "page-search") {
 	var meter = getWidget("progressmeter-search-progress");
 	if (searchSuccess) {
@@ -117,7 +117,7 @@ function updateUI ()
 	    getWidget("button-search-cancel").disabled = true;
 	}
 	if (searchPossible()) {
-	    wizard.getButton("next").label = "Search";
+	    wizard.getButton("finish").label = "Search";
 	}
     }
 }

@@ -66,26 +66,6 @@
 	    </vbox>
 	</vbox>
     </wizardpage>
-    <wizardpage id="page-done" onpageshow="updateUI();">
-        <description class="header">&startup.done1;</description>
-        <description>&startup.done2;</description>
-        <description>
-                <html:strong>&startup.done3.heading;</html:strong>
-                &startup.done3.text;
-        </description>
-        <description>
-                <html:strong>&startup.done4.heading;</html:strong>
-                &startup.done4.text;
-        </description>
-        <description>
-                <html:strong>&startup.done5.heading;</html:strong>
-                &startup.done5.text;
-        </description>
-        <description>
-                <html:strong>&startup.done6.heading;</html:strong>
-                &startup.done6.text;
-        </description>
-    </wizardpage>
 </wizard>
 
 
