@@ -32,6 +32,7 @@ import dialogs
 import feed
 import frontend
 import clipboard
+import urlcallbacks
 import util
 
 currentId = 1
@@ -71,12 +72,17 @@ class UpdateAvailableDialog(dialogs.Dialog):
     """
 
     def __init__(self, releaseNotes):
+        # let the dialog load the release note page
+        chromeURL = "chrome://dtv/content/update_available_dialog.xul"
+        urlcallbacks.installCallback(chromeURL, self.urlCallback)
         title = _("Update Available")
         description = _("A new version of %s is available for download.") % (config.get(prefs.LONG_APP_NAME))
         self.releaseNotes = releaseNotes
         super(UpdateAvailableDialog, self).__init__(title, description,
                 [dialogs.BUTTON_DOWNLOAD, dialogs.BUTTON_NOT_NOW])
 
+    def urlCallback(self, url):
+        return True
 
 class UIBackendDelegate:
     openDialogs = {}

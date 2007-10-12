@@ -12,6 +12,11 @@
         ondialogcancel="oncancel();"
         onload="onload()">
     <script type="text/javascript">
+var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
+                getService(Components.interfaces.pcfIDTVPyBridge);
+var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].
+                getService(Components.interfaces.pcfIDTVJSBridge);
+
 function onload() {
   var args = window.arguments[0];
   var description = document.getElementById("description");
@@ -20,17 +25,19 @@ function onload() {
   document.title = args['title'];
   dialog.getButton('accept').label = args['defaultLabel'];
   dialog.getButton('cancel').label = args['otherLabel'];
+
   var browser = document.getElementById('release-notes-browser');
   var releaseNotesDocument = browser.contentDocument;
-  var releaseNotes = jsbridge.createNode(releaseNotesDocument, 
+  var urlMatch = /\s*(https?:\/\/\S+)\s*$/.exec(args['releaseNotes']);
+  if(urlMatch) {
+    releaseNotesDocument.location = urlMatch[1];
+  } else {
+    var releaseNotes = jsbridge.createNode(releaseNotesDocument, 
           args['releaseNotes']);
-  releaseNotesDocument.body.insertBefore(releaseNotes, null);
+    releaseNotesDocument.body.insertBefore(releaseNotes, null);
+  }
 }
 
-var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
-                getService(Components.interfaces.pcfIDTVPyBridge);
-var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].
-                getService(Components.interfaces.pcfIDTVJSBridge);
 function onaccept() {
   pybridge.handleSimpleDialog(window.arguments[0]['id'], 0);
 }
