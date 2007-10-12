@@ -68,6 +68,10 @@ def initTempDir():
     else:
         os.mkdir(tempdir)
 
+def makeFileUrl(path):
+    path = platformutils.osFilenameToFilenameType(path.replace("\\", "/"))
+    return "file:///" + platformutils.makeURLSafe(path)
+
 def compareFileUrls(url1, url2):
     if not url1.startswith("file://") or not url2.startswith("file://"):
         return False
@@ -102,7 +106,7 @@ class HTMLDisplay (app.Display):
         finally:
             handle.close()
         self.location = os.path.abspath(location)
-        self.url = "file:///%s" % self.location.replace("\\", "/")
+        self.url = makeFileUrl(self.location)
         urlcallbacks.installCallback(self.url, self.onURLLoad)
         frontend.jsBridge.xulNavigateDisplay(self.area, self.url)
 
