@@ -165,6 +165,11 @@ jsBridge.prototype = {
   closeWindow: function() {
     this.window.close();
   },
+ 
+  maximizeWindow: function () {
+    this.window.maximize();
+    this.window.maximized = true;
+  },
 
   initBrowser: function(area) {
     var browser = this.document.getElementById(area);

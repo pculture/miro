@@ -376,6 +376,9 @@ def init_clipboard ():
 
 class UIBackendDelegate:
 
+    def maximizeWindow(self):
+        logging.warn("UIBackendDelegate.maximizeWindow() not implemented")
+
     def performStartupTasks(self, terminationCallback):
         import startup
         startup.performStartupTasks(terminationCallback)

@@ -17,3 +17,4 @@ appSerial-gtk-x11 = 20070905000
 appSerial-osx = 20070905000
 appSerial-windows-xul = 20070905000
 mozillaLibPath = $MOZILLA_LIB_PATH
+maximizeOnFirstRun = False

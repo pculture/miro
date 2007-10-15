@@ -91,6 +91,9 @@ class UIBackendDelegate:
         self.openPanelHandler = OpenPanelHandler.alloc().init()
         self.savePanelHandler = SavePanelHandler.alloc().init()
 
+    def maximizeWindow(self):
+        logging.warn("UIBackendDelegate.maximizeWindow() not implemented")
+
     def performStartupTasks(self, terminationCallback):
         NSApplication.sharedApplication().delegate().checkQuicktimeVersion(True)
         startupController = StartupPanelController.alloc().init()

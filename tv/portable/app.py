@@ -744,7 +744,10 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
         searchengines.createEngines()
 
         # FIXME - channelGuide never gets used.
-        channelGuide = _getInitialChannelGuide()
+        (newGuide, channelGuide) = _getInitialChannelGuide()
+
+        if (newGuide and config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']):
+            delegate.maximizeWindow()
 
         # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
         self.newTab = None
@@ -2368,13 +2371,14 @@ def _defaultFeeds():
 
 def _getInitialChannelGuide():
     default_guide = None
+    newGuide = False
     for guideObj in views.guides:
         if default_guide is None:
             if guideObj.getDefault():
                 default_guide = guideObj
-        else:
-            guideObj.remove()
+
     if default_guide is None:
+        newGuide = True
         logging.info ("Spawning Miro Guide...")
         default_guide = guide.ChannelGuide()
         initialFeeds = resources.path("initial-feeds.democracy")
@@ -2388,7 +2392,7 @@ def _getInitialChannelGuide():
             controller.initial_feeds = True
         else:
             _defaultFeeds()
-    return default_guide
+    return (newGuide, default_guide)
 
 # Race conditions:
 

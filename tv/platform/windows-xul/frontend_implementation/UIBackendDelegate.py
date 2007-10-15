@@ -102,6 +102,9 @@ class UIBackendDelegate:
         menuString = '\n'.join([getLabelString(m) for m in menuItems])
         frontend.jsBridge.showContextMenu(menuString)
 
+    def maximizeWindow(self):
+        frontend.jsBridge.maximizeWindow()
+
     def runDialog(self, dialog):
         id = nextDialogId()
         self.openDialogs[id] = dialog

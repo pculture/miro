@@ -58,6 +58,11 @@ SHOW_ERROR_DIALOG           = Pref( key='showErrorDialog',       default=True,  
 # Only used on particular platforms.
 XINE_VIZ                    = Pref( key="xineViz",               default=u"goom",platformSpecific=False )
 
+# These can be safely ignored on non-GTK systems
+USE_XINE_XV_HACK  = Pref(key="UseXineXVHack", default=True, platformSpecific=False)
+DEFAULT_XINE_DRIVER  = Pref(key="DefaultXineDriver", default="xv", platformSpecific=False)
+
+
 # These have a hardcoded default which can be overridden by setting an
 # environment variable.
 
@@ -100,10 +105,6 @@ MINIMIZE_TO_TRAY = \
     Pref(key='MinimizeToTray',   default=True, platformSpecific=False)
 MINIMIZE_TO_TRAY_ASK_ON_CLOSE = \
     Pref(key='MinimizeToTrayAskOnClose', default=True, platformSpecific=False)
-
-# These can be safely ignored on non-GTK systems
-USE_XINE_XV_HACK  = Pref(key="UseXineXVHack", default=True, platformSpecific=False)
-DEFAULT_XINE_DRIVER  = Pref(key="DefaultXineDriver", default="xv", platformSpecific=False)
 
 # These are computed by special platform code.
 RUN_AT_STARTUP     = Pref( key='RunAtStartup',  default=False,  platformSpecific=True )
@@ -173,3 +174,5 @@ BUILD_MACHINE = \
     Pref(key='buildMachine',      default=None, platformSpecific=False)
 BUILD_TIME = \
     Pref(key='buildTime',         default=None, platformSpecific=False)
+MAXIMIZE_ON_FIRST_RUN = \
+    Pref(key='maximizeOnFirstRun',default=None, platformSpecific=False)
