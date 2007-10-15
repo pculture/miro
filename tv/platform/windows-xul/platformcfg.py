@@ -79,10 +79,12 @@ def _getMoviesDirectory():
     return path
 
 def _getSupportDirectory():
+    # We don't get the publisher and long app name from the config so
+    # changing the app name doesn't change the support directory
     path = os.path.join(_appDataDirectory,
-                        config.get(prefs.PUBLISHER),
-                        config.get(prefs.LONG_APP_NAME),
-                        'Support')
+                        u'Participatory Culture Foundation',
+                        u'Miro',
+                        u'Support')
     try:
         os.makedirs(path)
     except:
