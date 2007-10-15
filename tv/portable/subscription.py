@@ -79,9 +79,9 @@ def findSubscribeLinks(url):
         return 'none', []
     if path in ('/', '/opml.php'):
         return 'feed', get_urls_from_query(query)
-    elif path == '/download.php':
+    elif path in ('/download.php','/download','/download/'):
         return 'download', get_urls_from_query(query)
-    elif path == '/channelguide.php':
+    elif path in ('/channelguide.php', '/channelguide', '/channelguide/'):
         return 'guide', get_urls_from_query(query)
     else:
         return 'feed', [urllib2.unquote(path[1:])]
