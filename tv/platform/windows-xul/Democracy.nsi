@@ -25,7 +25,7 @@
 !define OLD_UNINSTALL_SHORTCUT2 "Uninstall Democracy.lnk"
 
 Name "${CONFIG_LONG_APP_NAME} ${CONFIG_VERSION}"
-OutFile ${CONFIG_OUTPUT_FILE}
+OutFile "${CONFIG_OUTPUT_FILE}"
 InstallDir "$PROGRAMFILES\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
 InstallDirRegKey HKLM "${INST_KEY}" "Install_Dir"
 SetCompressor lzma
@@ -33,7 +33,7 @@ SetCompressor lzma
 SetOverwrite ifnewer
 CRCCheck on
 
-Icon ${CONFIG_ICON}
+Icon "${CONFIG_ICON}"
 
 Var STARTMENU_FOLDER
 
@@ -257,10 +257,10 @@ unzipok:
 
 !else
 
-  File  ${CONFIG_EXECUTABLE}
-  File  ${CONFIG_ICON}
-  File  ${CONFIG_DL_EXECUTABLE}
-  File  ${CONFIG_MOVIE_DATA_EXECUTABLE}
+  File  "${CONFIG_EXECUTABLE}"
+  File  "${CONFIG_ICON}"
+  File  "${CONFIG_DL_EXECUTABLE}"
+  File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
   File  application.ini
   File  msvcp71.dll  
   File  msvcr71.dll  
