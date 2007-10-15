@@ -477,7 +477,7 @@ class bdist_xul_dumb(Command):
                           os.path.join(self.dist_dir, 'resources'),
                           filterOut=['unittest', 'testdata'])
         shutil.copy2("Democracy.nsi", self.dist_dir)
-        shutil.copy2("%s.ico" % (self.getTemplateVariable('shortAppName')), self.dist_dir)
+        shutil.copy2("Miro.ico", os.path.join(self.dist_dir, "%s.ico" % (self.getTemplateVariable('shortAppName'))))
 
 
         locale_dir = os.path.join (self.appResources, "locale")
@@ -698,7 +698,9 @@ class bdist_xul_dumb(Command):
          os.chdir(stubDir)
          rv = os.system("rc Democracy.rc")
          if rv == 0:
-             rv = os.system('cl  /DXULRUNNER_BIN=\\"%s.exe\\" Democracy.cpp /link /subsystem:windows /machine:x86 Democracy.RES /out:%s.exe"' % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('shortAppName')))
+             cmd = 'cl  /DXULRUNNER_BIN="\\"%s.exe\\"" Democracy.cpp /link /subsystem:windows /machine:x86 Democracy.RES /out:"%s.exe"' % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('shortAppName'))
+             #print cmd
+             rv = os.system(cmd)
          os.chdir(olddir)
          if rv != 0:
             raise OSError("Making stub exe failed")
