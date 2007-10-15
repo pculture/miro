@@ -41,20 +41,33 @@ import iconcache
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
-def isPartOfGuide(url, guideURL):
+def isPartOfGuide(url, guideURL, allowedURLs = None):
     """Return if url is part of a channel guide where guideURL is the base URL
     for that guide.
     """
-    guideHost = urlparse(guideURL)[1]
-    urlHost = urlparse(url)[1]
-    return urlHost.endswith(guideHost)
-
+    if allowedURLs is None:
+        guideHost = urlparse(guideURL)[1]
+        urlHost = urlparse(url)[1]
+        return urlHost.endswith(guideHost)
+    else:
+        if isPartOfGuide(url, guideURL):
+            return True
+        for altURL in allowedURLs:
+            if isPartOfGuide(url, altURL):
+                return True
+        return False
 class ChannelGuide(DDBObject):
     ICON_CACHE_SIZES = [
 #        (20, 20),
     ]
-    def __init__(self, url=None):
+    def __init__(self, url=None, allowedURLs = None):
         checkU(url)
+        if allowedURLs is None:
+            self.allowedURLs = []
+        else:
+            self.allowedURLs = allowedURLs
+        if url is None and allowedURLs is None:
+            self.allowedURLs = config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS).split()
         self.url = url
         self.updated_url = url
         self.title = None
@@ -73,7 +86,12 @@ class ChannelGuide(DDBObject):
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
+        if self.getDefault():
+            self.allowedURLs = config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS).split()
+        else:
+            self.allowedURLs = []
         self.downloadGuide()
+
 
     def __str__(self):
         return "Miro Guide <%s>" % (self.url,)
@@ -95,7 +113,7 @@ class ChannelGuide(DDBObject):
         DDBObject.remove(self)
 
     def isPartOfGuide(self, url):
-        return isPartOfGuide(url, self.getURL())
+        return isPartOfGuide(url, self.getURL(), self.allowedURLs)
 
     def getURL(self):
         if self.url is not None:
@@ -125,10 +143,10 @@ class ChannelGuide(DDBObject):
     # For the tabs
     @returnsUnicode
     def getTitle(self):
-        if self.getDefault():
-            return _('Miro Guide')
-        elif self.title:
+        if self.title:
             return self.title
+        elif self.getDefault():
+            return _('Miro Guide')
         else:
             return self.getURL()
 
@@ -141,8 +159,8 @@ class ChannelGuide(DDBObject):
         except:
             pass
         else:
-            self.title = parser.title
-            self.favicon = parser.favicon
+            self.title = unicode(parser.title)
+            self.favicon = unicode(parser.favicon)
             self.iconCache.requestUpdate()
             self.signalChange()
 
@@ -154,7 +172,7 @@ class ChannelGuide(DDBObject):
 
     @returnsUnicode
     def getIconURL(self):
-        if not self.getDefault() and self.iconCache.isValid():
+        if self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(20, 20)
             return resources.absoluteUrl(path)
         else:
@@ -168,7 +186,7 @@ class ChannelGuide(DDBObject):
                 parsed = urlparse(self.updated_url)
             else:
                 parsed = urlparse(self.getURL())
-            return parsed[0] + "://" + parsed[1] + "/favicon.ico"
+            return parsed[0] + u"://" + parsed[1] + u"/favicon.ico"
 
 # Grabs the feed link from the given webpage
 class GuideHTMLParser(HTMLParser):
@@ -192,7 +210,6 @@ class GuideHTMLParser(HTMLParser):
             attrdict['type'].startswith("image/")):
 
             self.favicon = urljoin(self.baseurl,attrdict['href'])
-            print self.favicon
 
     def handle_data(self, data):
         if self.in_title:
