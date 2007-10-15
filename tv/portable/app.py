@@ -2327,6 +2327,16 @@ def mapToPlaylistItem(obj):
     return PlaylistItemFromItem(obj)
 
 def _defaultFeeds():
+    if config.get(prefs.DEFAULT_CHANNELS_FILE):
+        importer = opml.Importer()
+        try:
+            importer.importSubscriptionsFrom(os.path.join(
+                config.get(prefs.SUPPORT_DIRECTORY),
+                config.get(prefs.DEFAULT_CHANNELS_FILE)),
+                                             showSummary = False)
+        except:
+            logging.warn("Could not import %s" % config.get(prefs.DEFAULT_CHANNELS_FILE))
+        return
     if platform.system() == 'Darwin':
         defaultFeedURLs = [u'http://www.getmiro.com/screencasts/mac/mac.rss.php']
     elif platform.system() == 'Windows':

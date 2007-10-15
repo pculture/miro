@@ -178,3 +178,5 @@ BUILD_TIME = \
     Pref(key='buildTime',         default=None, platformSpecific=False)
 MAXIMIZE_ON_FIRST_RUN = \
     Pref(key='maximizeOnFirstRun',default=None, platformSpecific=False)
+DEFAULT_CHANNELS_FILE = \
+    Pref(key='defaultChannelsFile',default=None, platformSpecific=False)

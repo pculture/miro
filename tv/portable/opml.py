@@ -125,7 +125,7 @@ class Importer (object):
                 _("OPML Files"), ['opml'])
 
     @eventloop.asIdle
-    def importSubscriptionsFrom(self, pathname):
+    def importSubscriptionsFrom(self, pathname, showSummary = True):
         f = open(pathname, "r")
         content = f.read()
         f.close()
@@ -136,7 +136,8 @@ class Importer (object):
             body = root.getElementsByTagName("body").pop()
             self._walkOutline(body)
             dom.unlink()
-            self.showImportSummary()
+            if showSummary:
+                self.showImportSummary()
         except expat.ExpatError:
             self.showXMLError()
 
