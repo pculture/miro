@@ -746,8 +746,11 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
         # FIXME - channelGuide never gets used.
         (newGuide, channelGuide) = _getInitialChannelGuide()
 
-        if (newGuide and config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']):
-            delegate.maximizeWindow()
+        if newGuide:
+            if config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']:
+                delegate.maximizeWindow()
+            for temp_guide in unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split():
+                guide.ChannelGuide(temp_guide)
 
         # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
         self.newTab = None

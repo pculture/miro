@@ -92,6 +92,8 @@ CHANNEL_GUIDE_FIRST_TIME_URL = Pref(key='ChannelGuideFirstTimeURL', default=effe
                          platformSpecific=False)
 CHANNEL_GUIDE_ALLOWED_URLS = Pref(key='ChannelGuideAllowedURLs', default='',
                                   platformSpecific=False)
+ADDITIONAL_CHANNEL_GUIDES = Pref(key='additionalChannelGuides', default='',
+                                  platformSpecific=False)
 VIDEOBOMB_URL     = Pref(key='VideobombURL',    default=effectiveVideobomb,
                          platformSpecific=False)
 AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=effectiveAutoupdate,
