@@ -626,7 +626,7 @@ class PyBridge:
 
     @asUrgent
     def recommendCurrentChannel(self):
-        print "WARNING: recommendCurrentChannel not supported"
+        app.controller.recommendCurrentFeed()
 
     @asUrgent
     def renameCurrentPlaylist(self):
