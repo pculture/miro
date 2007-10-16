@@ -1297,22 +1297,19 @@ folder will be deleted.""")
     # Returns the published date of the item
     @returnsUnicode
     def getPubDate(self):
-        try:
-            return self.releaseDateObj.strftime("%b %d %Y").decode(_charset)
-        except: 
-            return u""
+        return getReleaseDate()
     
     ##
     # Returns the published date of the item as a datetime object
     def getPubDateParsed(self):
-        return self.releaseDateObj
+        return self.getReleaseDateObj()
 
     ##
     # returns the date this video was released or when it was published
     @returnsUnicode
     def getReleaseDate(self):
         try:
-            return self.releaseDateObj.strftime("%b %d %Y").decode(_charset)
+            return self.getReleaseDateObj().strftime("%b %d %Y").decode(_charset)
         except:
             return u""
 
@@ -1787,6 +1784,12 @@ class FileItem(Item):
             self.releaseDateObj = datetime.fromtimestamp(os.path.getmtime(self.filename))
         except:
             self.releaseDateObj = datetime.min
+
+    def getReleaseDateObj(self):
+        if self.parent_id:
+            return self.getParent().releaseDateObj
+        else:
+            return self.releaseDateObj
 
     def migrate(self, newDir):
         self.confirmDBThread()
