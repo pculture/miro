@@ -108,6 +108,7 @@ add more menu elements later -NN -->
       </textbox>
 </hbox>
 </hbox>
+        <spacer flex="0" width="20" id="bottom-left-blank" collapsed="true" />
         <stack id="bottom-progress">
                 <hbox align="center" flex="0">
                         <label id="progress-text">00:00:00</label>
