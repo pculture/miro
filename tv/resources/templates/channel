@@ -172,38 +172,40 @@ if feed.idExists():
 
 <div id="main-titlebar">
         <div t:updateForView="thisFeedView">
-          <img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
-        </div>
-        <div class="main-titlebar-right" t:hideIf="feed.getURL().startswith('dtv:directoryfeed')" t:updateHideOnView="thisFeedView">
-            <ul>
-                <li t:hideIf="feed.getLink() == ''">
-                    <a href="***feed.getLink()***" class="round-button-left black">
-                    <div class="round-button-right black">
-                    <div class="round-button-content black">
-                    <span i18n:translate="">VISIT WEBSITE</span>
-                    </div>
-                    </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" onclick="return recommendChannel('@@@feed.getTitle()@@@', '@@@feed.getURL()@@@');" class="round-button-left black">
-                    <div class="round-button-right black">
-                    <div class="round-button-content black">
-                    <span i18n:translate="">SEND TO FRIEND</span>
-                    </div>
-                    </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" onclick="return showSettings();" class="round-button-left black">
-                    <div class="round-button-right black">
-                    <div class="round-button-content black">
-                    <span i18n:translate="">SETTINGS</span>
-                    </div>
-                    </div>
-                    </a>
-                </li>
-            </ul>
+            <div>
+                <img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
+	    </div>
+            <div class="main-titlebar-right" t:hideIf="feed.getURL().startswith('dtv:directoryfeed')">
+                <ul>
+                    <li t:hideIf="feed.getLink() == ''">
+                        <a href="***feed.getLink()***" class="round-button-left black">
+                        <div class="round-button-right black">
+                        <div class="round-button-content black">
+                        <span i18n:translate="">VISIT WEBSITE</span>
+                        </div>
+                        </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return recommendChannel('@@@feed.getTitle()@@@', '@@@feed.getURL()@@@');" class="round-button-left black">
+                        <div class="round-button-right black">
+                        <div class="round-button-content black">
+                        <span i18n:translate="">SEND TO FRIEND</span>
+                        </div>
+                        </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return showSettings();" class="round-button-left black">
+                        <div class="round-button-right black">
+                        <div class="round-button-content black">
+                        <span i18n:translate="">SETTINGS</span>
+                        </div>
+                        </div>
+                        </a>
+                    </li>
+                </ul>
+	    </div>
         </div>
 
         <div t:updateForView="thisFeedView">
