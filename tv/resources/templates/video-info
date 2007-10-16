@@ -38,6 +38,7 @@ thisItemView.unlink()
 	  <a href="#" onclick="return eventURL('action:addItemToLibrary?item=@@@this.getID()@@@');"><span i18n:translate="">ADD TO LIBRARY</span></a> 
 	</span>
         <span t:hideIf="this.getFeedURL() == u'dtv:singleFeed'">
+        <span t:showIf="this.showSaveButton()"> - </span>
 	  <a href="#" onclick="return eventURL('action:expirePlayingItem?item=@@@this.getID()@@@');"><span i18n:translate="">DELETE</span></a>
         </span>
       </div>
