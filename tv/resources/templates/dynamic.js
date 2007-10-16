@@ -52,6 +52,7 @@ function recommendItem(title, url) {
 }
 
 function recommendChannel(title, url) {
+    // See also app.py if changing this URL
     loadURL('http://www.videobomb.com/democracy_channel/email_friend' +
         '?url=' + url + '&title=' + title);
     return false;

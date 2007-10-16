@@ -505,10 +505,10 @@ class CallbackHandler(object):
         eventloop.addIdle (app.controller.copyCurrentFeedURL, "Copy feed URL")
 
     def on_mail_channel_link_activate(self, event = None):
-        print "Mail Chanel Link unimplemented"
+        eventloop.addIdle (app.controller.recommendCurrentFeed, "Copy feed URL")
 
     def on_copy_video_link_activate(self, event = None):
-        print "Copy Video Link unimplemented"
+        eventloop.addIdle(lambda:app.controller.copyCurrentItemURL, "Copy Item URL")
 
     def on_add_channel_button_clicked(self, event = None):
         eventloop.addIdle(lambda:app.controller.addAndSelectFeed(), "Add Channel")

@@ -917,6 +917,13 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
         if len(tabs) == 1 and tabs[0].isFeed():
             delegate.copyTextToClipboard(tabs[0].obj.getURL())
 
+    def recommendCurrentFeed(self):
+        tabs = self.selection.getSelectedTabs()
+        if len(tabs) == 1 and tabs[0].isFeed():
+            # See also dynamic.js if changing this URL
+            feed = tabs[0].obj
+            delegate.openExternalURL('http://www.videobomb.com/democracy_channel/email_friend?url=%s&title=%s' % (feed.getURL(), feed.getTitle()))
+
     def copyCurrentItemURL(self):
         tabs = self.selection.getSelectedItems()
         if len(tabs) == 1 and isinstance(tabs[0], item.Item):
