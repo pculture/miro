@@ -1341,7 +1341,7 @@ folder will be deleted.""")
     ##
     # returns string with the format of the video
     KNOWN_MIME_TYPES = (u'audio', u'video')
-    KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', u'x-flv', u'x-msvideo')
+    KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', u'x-flv', u'x-msvideo', u'm4v', u'mkv', u'm2v')
     MIME_SUBSITUTIONS = {
         u'QUICKTIME': u'MOV',
     }
@@ -1367,10 +1367,9 @@ folder will be deleted.""")
                         format += u' AUDIO'
                     if format.startswith(u'X-'):
                         format = format[2:]
-                    return u'.%s' % self.MIME_SUBSITUTIONS.get(format, format).lowercase()
-            else:
-                if extension in self.KNOWN_MIME_SUBTYPES:
-                    return u'.%s' % extension
+                    return u'.%s' % self.MIME_SUBSITUTIONS.get(format, format).lower()
+            if extension in self.KNOWN_MIME_SUBTYPES:
+                return u'.%s' % extension
         except:
             pass
         if emptyForUnknown:
