@@ -980,12 +980,18 @@ folder will be deleted.""")
         ]
 
     def getItemDetails(self):
-        rv = [
-            (_('Web page:'), util.makeAnchor(_('permalink'), self.getLink())),
-            (_('File link:'), util.makeAnchor(_('direct link to file'),
-                self.getURL())),
-            (_('File type:'), self.getFormat())
-        ]
+        rv = []
+        
+        link = self.getLink()
+        if link:
+            rv.append((_('Web page:'), util.makeAnchor(_('permalink'), link)))
+
+        url = self.getURL()
+        if url and not url.startswith("file:"):
+            rv.append((_('File link:'), util.makeAnchor(_('direct link to file'),
+                                              url)))
+        rv.append((_('File type:'), self.getFormat()))
+
         if self.isDownloaded():
             basename = os.path.basename(self.getFilename())
             basename = util.clampText(basename, 40)
