@@ -816,7 +816,7 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
 
         util.print_mem_usage("Post-item reconnect memory check")
 
-        eventloop.addTimeout (30, autoupdate.checkForUpdates, "Check for updates")
+        eventloop.addTimeout (3, autoupdate.checkForUpdates, "Check for updates")
         feed.expireItems()
 
         self.tabDisplay = TemplateDisplay('tablist', 'default',
@@ -1823,7 +1823,13 @@ class ModelActionHandler:
     def revealItem(self, item):
         obj = db.getObjectByID(int(item))
         filename = obj.getFilename()
-        self.backEndDelegate.revealFile(filename)
+        if not os.path.exists(filename):
+            basename = os.path.basename(filename)
+            title = _("Error Revealing File")
+            msg = _("The file \"%s\" was deleted from outside Miro.") % basename
+            dialogs.MessageBoxDialog(title, msg).run()
+        else:
+            self.backEndDelegate.revealFile(filename)
 
     def clearTorrents (self):
         items = views.items.filter(lambda x: x.getFeed().url == u'dtv:manualFeed' and x.isNonVideoFile() and not x.getState() == u"downloading")
