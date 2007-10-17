@@ -303,7 +303,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
         eventloop.addIdle(app.controller.updateAllFeeds, "Update all channels")
 
     def tellAFriend_(self, sender):
-        print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
+        eventloop.addIdle(app.controller.recommendCurrentFeed, "Recommend current feed")
 
     def copyChannelURL_(self, sender):
         eventloop.addIdle(app.controller.copyCurrentFeedURL, "Copy channel URL")
