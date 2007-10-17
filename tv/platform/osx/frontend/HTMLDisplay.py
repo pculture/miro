@@ -82,8 +82,10 @@ class HTMLDisplay (app.Display):
 
     def getEventCookie(self):
         return ''
+
     def getDTVPlatformName(self):
         return 'webkit'
+
     def getBodyTagExtra(self):
         return 'ondragstart="handleDragStart(event);" ondragover="return handleDragOver(event);" ondragleave="return handleDragLeave(event);" ondrop="return handleDrop(event);" '
 
@@ -98,6 +100,9 @@ class HTMLDisplay (app.Display):
         except AttributeError:
             print "Couldn't exec javascript! Web view not initialized"
         #print "DISP: %s with %s" % (self.view, js)
+
+    def navigateToFragment(self, fragment):
+        self.web.navigateToFragment(fragment)
 
     # DOM hooks used by the dynamic template code -- do they need a 
     # try..except wrapper like the above?
@@ -167,7 +172,6 @@ class HTMLDisplay (app.Display):
         self.web.getView().stopLoading_(nil)
         self.readyToDisplay = False
         self.readyToDisplayHook = None
-                        
 
 ###############################################################################
 
@@ -382,6 +386,10 @@ class ManagedWebView (NSObject):
     @deferUntilAfterLoad
     def execJS(self, js):
         self.view.stringByEvaluatingJavaScriptFromString_(js)
+
+    def navigateToFragment(self, fragment):
+        command = "var tab = document.getElementById(\"%s\"); window.scrollTo(tab.offsetLeft, tab.offsetTop);" % fragment
+        self.execJS(command)
 
     ## DOM mutators called, ultimately, by dynamic template system ##
 
