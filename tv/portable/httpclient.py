@@ -135,6 +135,17 @@ class MalformedURL(NetworkError):
         NetworkError.__init__(self, _('Invalid URL'),
                 _('"%s" is not a valid URL') % url)
 
+class FileURLNotFoundError(NetworkError):
+    """A file: URL doesn't exist"""
+    def __init__(self, path):
+        NetworkError.__init__(self, _('File not found'),
+            _('The file: "%s" doesn\'t exist') % path)
+
+class FileURLReadError(NetworkError):
+    def __init__(self, path):
+        NetworkError.__init__(self, _('Read error'),
+            _('Error while reading from "%s"') % path)
+
 def trapCall(object, function, *args, **kwargs):
     """Convenience function do a util.trapCall, where when = 'While talking to
     the network'
@@ -1825,11 +1836,22 @@ def grabURL(url, callback, errback, headerCallback=None,
     if cookies == None:
         cookies = {}
     if url.startswith("file://"):
-        callback({"body":file(getFileURLPath(url)).read(),
-                      "updated-url":url,
-                      "redirected-url":url,
-                      "content-type": defaultMimeType,
-                   })
+        path = getFileURLPath(url)
+        try:
+            f = file(path)
+        except EnvironmentError:
+            errback(FileURLNotFoundError(path))
+        else:
+            try:
+                data = f.read()
+            except:
+                errback(FileURLReadError(path))
+            else:
+                callback({"body": data,
+                              "updated-url":url,
+                              "redirected-url":url,
+                              "content-type": defaultMimeType,
+                           })
     else:
         client = clientClass(url, callback, errback, headerCallback,
             bodyDataCallback, method, start, etag, modified, cookies, postVariables, postFiles)
