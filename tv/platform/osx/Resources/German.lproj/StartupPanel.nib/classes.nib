@@ -16,7 +16,6 @@
                 backButton = id; 
                 browseButton = id; 
                 customLocationField = id; 
-                doneMessage = id; 
                 findProgressIndicator = id; 
                 findProgressLabel = id; 
                 findProgressView = id; 

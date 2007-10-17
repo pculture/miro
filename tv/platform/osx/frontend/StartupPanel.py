@@ -51,18 +51,12 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
             {
                 'prepare':  self.prepareFindVideosPanel,
                 'perform':  self.performFindVideoTask
-            },
-            'done':
-            {
-                'prepare':  self.prepareLastPanel,
-                'perform':  self.terminate
             }
         }
         return self
     
     def awakeFromNib(self):
         self.findProgressLabelFormat = self.findProgressLabel.stringValue()
-        self.doneMessage.setBackgroundColor_(darkRuledLinesColor())
         self.tabView.selectFirstTabViewItem_(nil)
         self.preparePanel()
         
@@ -94,7 +88,6 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
         return perform()
                 
     def terminate(self):
-        self.progressIndicator.startAnimation_(nil)
         NSApplication.sharedApplication().stopModal()
         self.terminationCallback(self.gathered)
         self.window().close()
@@ -130,7 +123,7 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
         if find:
             self.validateButton.setTitle_(_(u'Search!'))
         else:
-            self.validateButton.setTitle_(_(u'Next'))
+            self.validateButton.setTitle_(_(u'Finish'))
 
     def setFindRestriction_(self, sender):
         tag = sender.selectedCell().tag()
@@ -167,6 +160,8 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
                 self.findProgressIndicator.startAnimation_(nil)
                 self.findProgressLabel.setStringValue_("")
                 NSThread.detachNewThreadSelector_toTarget_withObject_('performFind', self, nil)
+        else:
+            self.terminate()
         return not find
     
     def performFind(self):
@@ -198,29 +193,8 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
         self.findProgressIndicator.stopAnimation_(nil)
         self.findProgressView.setHidden_(YES)
         if goNext:
-            self.doGoNext()
+            self.terminate()
         else:
             self.prepareFindVideosPanel()
-
-    # -------------------------------------------------------------------------
-
-    def prepareLastPanel(self):
-        self.backButton.setEnabled_(YES)
-        self.validateButton.setEnabled_(YES)
-        self.validateButton.setTitle_(u'Finish')
-
-###############################################################################
-
-def darkRuledLinesColor():
-    # NSColor does not have a call to get the color of the darkened ruled lines 
-    # pattern like the one of NSBox and NSTabView, so we have to build it manually.
-    pattern = NSImage.alloc().initWithSize_((1.0, 4.0))
-    pattern.lockFocus()
-    NSColor.colorWithCalibratedWhite_alpha_(228.0/255.0, 1.0).set()
-    NSBezierPath.fillRect_(((0.0, 0.0), (1.0, 2.0)))
-    NSColor.colorWithCalibratedWhite_alpha_(232.0/255.0, 1.0).set()
-    NSBezierPath.fillRect_(((0.0, 2.0), (1.0, 2.0)))
-    pattern.unlockFocus()
-    return NSColor.colorWithPatternImage_(pattern)
 
 ###############################################################################
