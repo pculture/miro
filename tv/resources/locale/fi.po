@@ -3,20 +3,27 @@
 # This file is distributed under the same license as the democracy package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2007-08-22 16:21-0400\n"
-"PO-Revision-Date: 2007-07-31 16:02+0000\n"
-"Last-Translator: Nick Nassar <nassar@pculture.org>\n"
+"POT-Creation-Date: 2007-08-30 11:50-0400\n"
+"PO-Revision-Date: 2007-10-12 22:54+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Rosetta-Export-Date: 2007-08-30 15:11:40+0000\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2007-10-18 14:23+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../portable/dialogs.py:77
+msgid "Cancel"
+msgstr "Peruuta"
+
+msgid "OK"
+msgstr "OK"
 
 msgid "$log"
 msgstr "$log"
@@ -54,9 +61,6 @@ msgstr ""
 "uudelleenkännistät $shortAppName. Eiköhän se sillä parane. Lisäksi se myös "
 "vähentää todennäköisyyttä, että menettäisit asetuksesi tai kanavatilauksesi."
 
-msgid "OK"
-msgstr "OK"
-
 msgid "The fall of $shortAppName??"
 msgstr "$shortAppName tuho??"
 
@@ -72,7 +76,7 @@ msgstr "Lisää Opas..."
 msgid "Bring All to Front"
 msgstr "Tuo kaikki eteen"
 
-#: ../..//platform/osx/frontend/Preferences.py:39
+#: ../../platform/osx/frontend/Preferences.py:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
 msgid "Channels"
 msgstr "Kanavat"
@@ -98,7 +102,7 @@ msgstr "Kopioi videon osoite"
 msgid "Cut"
 msgstr "Leikkaa"
 
-#: ../..//portable/dialogs.py:96
+#: ../../portable/dialogs.py:96
 msgid "Delete"
 msgstr "Poista"
 
@@ -106,13 +110,13 @@ msgid "Donate"
 msgstr "Lahjoita"
 
 msgid "Download Video..."
-msgstr ""
+msgstr "Lataa video..."
 
 msgid "Edit"
 msgstr "Muokkaa"
 
 msgid "Export Channels (OPML)..."
-msgstr ""
+msgstr "Vie kanavat (OPML)..."
 
 msgid "File"
 msgstr "Tiedosto"
@@ -130,7 +134,7 @@ msgid "Hide Others"
 msgstr "Piilota muut"
 
 msgid "Import Channels (OPML)..."
-msgstr ""
+msgstr "Tuo kanavat (OPML)..."
 
 msgid "Main Window"
 msgstr "Pääikkuna"
@@ -146,7 +150,7 @@ msgid "Miro"
 msgstr "Miro"
 
 msgid "Miro Help"
-msgstr ""
+msgstr "Apua Miroon"
 
 msgid "New Channel Folder..."
 msgstr "Uusi kanavakansio..."
@@ -172,11 +176,11 @@ msgstr "Avaa..."
 msgid "Paste"
 msgstr "Liitä"
 
-#: ../..//platform/osx/frontend/Application.py:231
+#: ../../platform/osx/frontend/Application.py:231
 msgid "Play Video"
 msgstr "Toista video"
 
-#: ../..//platform/osx/frontend/Preferences.py:43
+#: ../../platform/osx/frontend/Preferences.py:43
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "Playback"
 msgstr "Toisto"
@@ -253,16 +257,12 @@ msgstr "Laatikko"
 msgid "FullScreen Controls"
 msgstr "Kokoruudun säätimet"
 
-#: ../..//portable/tabs.py:45
+#: ../../portable/tabs.py:45
 msgid "Video Search"
 msgstr "Videohaku"
 
 msgid "VideoWindow"
 msgstr "Videoikkuna"
-
-#: ../..//portable/dialogs.py:77
-msgid "Cancel"
-msgstr "Peruuta"
 
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
@@ -290,8 +290,8 @@ msgstr " rajoita lähetysnopeus"
 
 msgid "(You must restart Miro for this change to take effect)"
 msgstr ""
+"(Sinun pitää uudelleenkäynnistää Miro, jotta asetukset tulevat voimaan)"
 
-#, fuzzy
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr ""
 "(Sinun täytyy käynnistää Miro uudelleen, jotta tämä muutos tulee voimaan)\n"
@@ -353,7 +353,6 @@ msgstr ""
 "Älä aloita latausta, jos sen jälkeen jää vähemmän vapaata tilaa, kuin:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
-#, fuzzy
 msgid "Download at most"
 msgstr "Lataa enimmillään"
 
@@ -364,7 +363,6 @@ msgstr "Hakemiston sijainti"
 msgid "GB free."
 msgstr "Gt."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "KB/s when my computer is active."
 msgstr "Kt/s kun tietokoneeni on käytössä."
 
@@ -386,35 +384,40 @@ msgid "Play videos one after another."
 msgstr "Soita videot sarjassa."
 
 msgid "Remember video position."
-msgstr ""
+msgstr "Muista videon toistokohta."
 
-#: ../..//portable/feed.py:793 ../..//portable/folder.py:156
-#: ../..//portable/folder.py:211 ../..//portable/guide.py:86
-#: ../..//portable/menu.py:65 ../..//portable/menu.py:70
-#: ../..//portable/playlist.py:197
+#: ../../portable/guide.py:86 ../../portable/playlist.py:197
+#: ../../portable/feed.py:788 ../../portable/menu.py:65
+#: ../../portable/menu.py:70 ../../portable/folder.py:156
+#: ../../portable/folder.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Remove"
 msgstr "Poista"
 
 msgid "Run Miro at startup"
-msgstr ""
+msgstr "Käynnistä Miro järjestelmän mukana"
 
 msgid "Save downloaded videos in this folder:"
 msgstr "Tallenna ladatut videot tähän kansioon:"
 
-#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:572
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:571
 msgid "Show as Channel"
-msgstr ""
+msgstr "Näytä kanavana"
 
 msgid "Stop after each video."
 msgstr "Pysäytä soitto jokaisen jälkeen."
 
 msgid "To avoid internet slowdowns:"
+msgstr "Välttääksesi yhteyden hidastumista:"
+
+#: ../../portable/app.py:1187
+msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
+"Varoita minua jos yritän sulkea ohjelman vaikka latauksia on käynnissä"
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
-msgstr ""
+msgstr "Tarkkaile näitä kansioita ja lisää uudet videot Kirjastooni:"
 
 msgid "every 30 minutes"
 msgstr "joka 30. minuutti"
@@ -426,7 +429,6 @@ msgid "manually"
 msgstr "käsin"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
-#, fuzzy
 msgid "videos at once."
 msgstr "videota kerrallaan."
 
@@ -439,7 +441,7 @@ msgstr "$title$"
 msgid "Channel"
 msgstr "Kanava"
 
-#: ../..//portable/dialogs.py:91
+#: ../../portable/dialogs.py:91
 msgid "Create"
 msgstr "Luo"
 
@@ -458,8 +460,8 @@ msgstr "Etsi:"
 msgid "URL"
 msgstr "Osoite"
 
-#: ../..//platform/gtk-x11/frontend_implementation/startup.py:48
-#: ../..//platform/windows-xul/frontend_implementation/startup.py:25
+#: ../../platform/windows-xul/frontend_implementation/startup.py:25
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:48
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "(jäsennetty %d tiedostoa - löydetty %d videota)"
@@ -470,12 +472,12 @@ msgstr "Edellinen"
 msgid "Browse"
 msgstr "Selaa"
 
-#: ../..//platform/osx/frontend/StartupPanel.py:90
-#: ../..//platform/osx/frontend/StartupPanel.py:116
+#: ../../platform/osx/frontend/StartupPanel.py:90
+#: ../../platform/osx/frontend/StartupPanel.py:116
 msgid "Next"
 msgstr "Seuraava"
 
-#: ../..//portable/dialogs.py:79
+#: ../../portable/dialogs.py:79
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
 msgid "No"
 msgstr "Ei"
@@ -500,11 +502,18 @@ msgid ""
 "\n"
 "Would you like Miro to look for video files on your computer?"
 msgstr ""
+"Miro voi etsiä kaikki tietokoneellasi olevat videot helpottaakseen "
+"kokoelmasi järjestelyä.\n"
+"\n"
+"\n"
+"Haluatko Miron etsivän videotiedostot koneeltasi?"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"Seuraava muutama askel auttaa sinua asentamaan Miron sinulle parhaiten "
+"sopivaksi. Tässä ensimmäinen kysymys."
 
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
@@ -514,6 +523,12 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
+"Suosittelemme, että sallit Miron käynnistyvän tietokoneesi käynnistyksen "
+"yhteydessä. Näin kesken jääneet videoiden lataukset voidaan suorittaa "
+"loppuun ja kanavillasi olevat uudet videot ladataan valmiiksi sinulle.\n"
+"\n"
+"\n"
+"Haluatko Miron käynnistyvän, kun käynnistät tietokoneesi?"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Welcome to Internet TV!"
@@ -526,13 +541,16 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Tervetuloa Internet TV:n pariin. Miro Playeristä on moneksi: lataa "
+"lempikanavasi videot automaattisesti, katso uudet videot putkeen, lataa "
+"torrentteja, suosittele videoita ystäville, ja huimasti muuta.\n"
+"\n"
 
-#: ../..//portable/dialogs.py:78
+#: ../../portable/dialogs.py:78
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
 msgid "Yes"
 msgstr "Kyllä"
 
-#, fuzzy
 msgid ""
 "You're done!\n"
 "\n"
@@ -558,30 +576,29 @@ msgid ""
 msgstr ""
 "Olet valmis!\n"
 "\n"
-"Asennus on suoritettu loppuun. Voit nyt etsiä joitakin kanavia ja aloittaa "
+"Asennus on suoritettu loppuun. Voit nyt etsiä kanavia ja aloittaa "
 "katselemisen.\n"
 "\n"
-"Älä odota: Miro on erilainen kuin www-sivujen videoiden katsominen. "
-"Julkaisijat voivat tarjota isoja, korkealaatuisia videoita. Älä siis "
-"istuskele videoita odottaessasi - aloita joidenkin videoiden lataaminen ja "
-"palaa myöhemmin tarkastamaan tilanne.\n"
+"Älä odota: Miro eroaa videoiden katselemisesta Internetsivuilla siten, että "
+"julkaisijat voivat tarjota isoja, korkealaatuisia videoita. Älä siis "
+"istuskele videoita odottaessasi - aloita muutama lataus ja palaa myöhemmin "
+"tarkastamaan tilanne.\n"
 "\n"
 "Jätä se päälle: Miro tarkastaa säännöllisesti kanavat uusien videoiden ja "
-"latausten varalta taustalla. Miron päälle jättäminen tarkoittaa, että "
-"sinulla on uusia videoita katsottavanasi kun sinulla on aikaa "
-"katselemiseen.\n"
+"latausten varalta taustalla. Jättämällä Miron päälle sinulla on uusia "
+"videoita katsottavanasi kun sinulla on aikaa katselemiseen.\n"
 "\n"
-"Älä murehdi levytilasta: Kuten digitaalisissa videotallentimissa, Mirossakin "
-"on \"expiration\" järjestelmä, joka auttaa puhdistamalla levyn vanhoista "
-"videoista tehdäkseen tilaa uusille. Voit aina tallentaa videon pysyvästi "
-"painamalla \"tallenna\". Voit lisäksi asettaa kanavan asetukset siten, että "
-"kanavan videot tallentuvat automaattisesti.\n"
+"Älä murehdi levytilasta: Kuten monissa digitaalisissa videotallentimissa, "
+"Mirossakin on automaattinen vanhojen videoiden poisto, joka auttaa "
+"poistamalla vanhat videot tehdäkseen tilaa uusille. Voit aina tallentaa "
+"videon pysyvästi painamalla \"Pidä\". Voit lisäksi asettaa kanavan asetukset "
+"siten, että kanavan videot pidetään automaattisesti.\n"
 "\n"
-"Katsele isosti: Play-nappulan oikealla puolella oleva nappi näyttää videot "
-"koko näytöllä.\n"
+"Nauti suuruudesta: Play-nappulan oikealla puolella oleva nappi näyttää "
+"videot koko näytöllä.\n"
 "\n"
 "Etsi videoita: Miro-oppaassa on satoja ilmaisia internet-TV- kanavia. "
-"Klikkaa vain \"ADD\" katsoaksesi kanavaa.\n"
+"Klikkaa vain \"Lisää\" katsoaksesi kanavaa.\n"
 
 msgid ""
 "%message%\n"
@@ -590,70 +607,184 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:322
-msgid "New Channel _Guide..."
-msgstr "Uusi kanavaopas..."
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57
+msgid "Update Available"
+msgstr "Päivitys saatavilla"
 
-#: ../..//platform/gtk-x11/frontend_implementation/callbackhandler.py:563
-msgid "Folder Location"
-msgstr "Hakemiston sijainti"
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:58
+#, python-format
+msgid "A new version of %s is available for download."
+msgstr "Uusi versio ohjelmasta %s on valmis ladattavaksi."
 
-#: ../..//platform/gtk-x11/frontend_implementation/startup.py:76
-#: ../..//platform/gtk-x11/frontend_implementation/startup.py:174
-#: ../..//platform/windows-xul/frontend_implementation/startup.py:33
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214
+msgid "Error Bombing Item"
+msgstr "Virhe suositeltaessa kohdetta Bomb-palveluun"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:216
+msgid "Error Recommending Item"
+msgstr "Virhe suositeltaessa kohdetta"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218
+msgid "Error Opening Website"
+msgstr "Virhe avattaessa sivustoa"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:222
+#, python-format
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr ""
+"Tapahtui virhe avattaessa kohdetta %s. Yritä uudelleen muutaman sekunnin "
+"kuluttua."
+
+#: ../../platform/windows-xul/frontend_implementation/startup.py:33
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:76
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:174
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
 msgstr[0] "%d video löytyi"
 msgstr[1] "%d videota löytyi"
 
-#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:42
-msgid "Settings"
-msgstr "Asetukset"
-
-#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:45
-msgid "Hide"
-msgstr "Piilota"
-
-#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:47
-msgid "Show"
-msgstr "Näytä"
-
-#: ../..//platform/gtk-x11/frontend_implementation/trayicon.py:48
-#: ../..//portable/dialogs.py:80 ../..//portable/menubar.py:257
-msgid "Quit"
-msgstr "Lopeta"
-
-#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
-msgid "Username:"
-msgstr "Käyttäjätunnus:"
-
-#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
-msgid "Password:"
-msgstr "Salasana:"
-
-#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:413
-msgid "Unknown Runtime Error"
-msgstr "Tuntematon ajonaikainen virhe"
-
-#: ../..//platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:414
+#: ../../platform/windows-xul/xul/components/pybridge.py:45
 #, python-format
-msgid "An unknown error has occurred %s."
-msgstr "Tuntematon virhe tapahtui %s."
+msgid ""
+"Error importing modules:\n"
+"%s"
+msgstr ""
+"Moduulien tuonti epäonnistui:\n"
+"%s"
 
-#: ../..//platform/osx/frontend/Application.py:228
-#, fuzzy
+#: ../../platform/windows-xul/xul/components/pybridge.py:49
+msgid "Starting up"
+msgstr "Käynnistyy"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:256
+msgid "Loading window"
+msgstr "Ladataan ikkunaa"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:257
+msgid "onStartup called twice"
+msgstr "onStartup kutsuttu kahdesti."
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:671
+msgid "Spacebar"
+msgstr "Välilyönti"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:818
+msgid "Close to tray?"
+msgstr "Suljetaanko järjestelmäpalkkiin?"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:819
+msgid ""
+"When you click the red close button, would you like Miro to close to the "
+"system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"Kun klikkaat punaista sulkemisnappulaa, haluatko Miron sulkeutuvan "
+"järjestelmäpalkkiin vai sulkeutuvan kokonaan? Voit vaihtaa tämän toiminnon "
+"myöhemmin Asetuksista."
+
+#: ../../platform/osx/frontend/GrowlNotifier.py:27
+msgid "Download Completed"
+msgstr "Lataus valmis"
+
+#: ../../platform/osx/frontend/GrowlNotifier.py:28
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "Videon '%s' lataus on valmis."
+
+#: ../../platform/osx/frontend/GrowlNotifier.py:37
+msgid "Download Failed"
+msgstr "Lataus epäonnistui"
+
+#: ../../platform/osx/frontend/GrowlNotifier.py:38
+#, python-format
+msgid "Download of video '%s' has failed."
+msgstr "Videon '%s' lataaminen epäonnistui."
+
+#: ../../platform/osx/frontend/MainFrame.py:261
+msgid "Subscribe to Channel"
+msgstr "Hanki kanava"
+
+#: ../../platform/osx/frontend/MainFrame.py:262
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr "Anna haluamasi kanavan osoite."
+
+#: ../../platform/osx/frontend/QuicktimeRenderer.py:218
+msgid "Audio"
+msgstr "Audio"
+
+#: ../../platform/osx/frontend/Preferences.py:38
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
+msgid "General"
+msgstr "Yleiset"
+
+#: ../../platform/osx/frontend/Preferences.py:40
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
+msgid "Downloads"
+msgstr "Lataukset"
+
+#: ../../platform/osx/frontend/Preferences.py:41
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
+msgid "Folders"
+msgstr "Kansiot"
+
+#: ../../platform/osx/frontend/Preferences.py:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+msgid "Disk Space"
+msgstr "Levytila"
+
+#: ../../platform/osx/frontend/Preferences.py:170
+msgid "Movies Directory"
+msgstr "Elokuvakansio"
+
+#: ../../platform/osx/frontend/Preferences.py:171
+#, python-format
+msgid "Select a Directory to store %s downloads in."
+msgstr "Valitse kansio, johon %s lataukset tallennetaan."
+
+#: ../../platform/osx/frontend/Preferences.py:172
+#: ../../platform/osx/frontend/Preferences.py:236
+msgid "Select"
+msgstr "Valitse"
+
+#: ../../platform/osx/frontend/Preferences.py:181
+#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
+msgid "Migrate existing movies?"
+msgstr "Siirretäänkö olemassa olevat videot?"
+
+#: ../../platform/osx/frontend/Preferences.py:182
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %s migrate your "
+"existing downloads there?  (Currently dowloading movies will not be moved "
+"until they finish)."
+msgstr ""
+"Olet valinnut uuden kansion ladattaville elokuville. Haluatko, että %s "
+"siirtää vanhatkin latauksen sinne? (Kesken olevat lataukset siirretään vasta "
+"latausten valmistuttua)."
+
+#: ../../platform/osx/frontend/Preferences.py:234
+msgid "View this Directory in the Library"
+msgstr "Näytä tämä kansio Kirjastossa"
+
+#: ../../platform/osx/frontend/Preferences.py:235
+msgid "Select a Directory to view in the Library."
+msgstr "Valitse Kirjastossa näytettävä kansio."
+
+#: ../../platform/osx/frontend/StartupPanel.py:114
+msgid "Search!"
+msgstr "Etsi!"
+
+#: ../../platform/osx/frontend/Application.py:228
 msgid "Pause Video"
 msgstr "Keskeytä video"
 
-#: ../..//platform/osx/frontend/Application.py:237
+#: ../../platform/osx/frontend/Application.py:237
 #, fuzzy
 msgid "Unsupported version of Quicktime"
 msgstr "Ei-tuettu versio Quicktimesta"
 
-#: ../..//platform/osx/frontend/Application.py:238
+#: ../../platform/osx/frontend/Application.py:238
 #, fuzzy
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
@@ -662,710 +793,303 @@ msgstr ""
 "Ajaaksesi %s tarvitset uusimman version Quicktimesta. Päivittäminen on "
 "ilmaista."
 
-#: ../..//platform/osx/frontend/GrowlNotifier.py:27
-#, fuzzy
-msgid "Download Completed"
-msgstr "Lataus valmis"
-
-#: ../..//platform/osx/frontend/GrowlNotifier.py:28
-#, fuzzy
-msgid "Download of video '%s' is finished."
-msgstr "Videon '%s' lataus on valmis."
-
-#: ../..//platform/osx/frontend/GrowlNotifier.py:37
-#, fuzzy
-msgid "Download Failed"
-msgstr "Lataus epäonnistui"
-
-#: ../..//platform/osx/frontend/GrowlNotifier.py:38
-#, python-format
-msgid "Download of video '%s' has failed."
-msgstr ""
-
-#: ../..//platform/osx/frontend/MainFrame.py:261
-msgid "Subscribe to Channel"
-msgstr ""
-
-#: ../..//platform/osx/frontend/MainFrame.py:262
-msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr ""
-
-#: ../..//platform/osx/frontend/Preferences.py:38
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
-msgid "General"
-msgstr ""
-
-#: ../..//platform/osx/frontend/Preferences.py:40
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
-msgid "Downloads"
-msgstr ""
-
-#: ../..//platform/osx/frontend/Preferences.py:41
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
-msgid "Folders"
-msgstr ""
-
-#: ../..//platform/osx/frontend/Preferences.py:42
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
-msgid "Disk Space"
-msgstr ""
-
-#: ../..//platform/osx/frontend/Preferences.py:164
-msgid "Movies Directory"
-msgstr ""
-
-#: ../..//platform/osx/frontend/Preferences.py:165
-#, python-format
-msgid "Select a Directory to store %s downloads in."
-msgstr ""
-
-#: ../..//platform/osx/frontend/Preferences.py:166
-#: ../..//platform/osx/frontend/Preferences.py:230
-msgid "Select"
-msgstr ""
-
-#: ../..//platform/osx/frontend/Preferences.py:175
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
-msgid "Migrate existing movies?"
-msgstr "Siirretäänkö olemassa olevat videot?"
-
-#: ../..//platform/osx/frontend/Preferences.py:176
-#, python-format
-msgid ""
-"You've selected a new folder to download movies to.  Should %s migrate your "
-"existing downloads there?  (Currently dowloading movies will not be moved "
-"until they finish)."
-msgstr ""
-
-#: ../..//platform/osx/frontend/Preferences.py:228
-msgid "View this Directory in the Library"
-msgstr ""
-
-#: ../..//platform/osx/frontend/Preferences.py:229
-msgid "Select a Directory to view in the Library."
-msgstr ""
-
-#: ../..//platform/osx/frontend/QuicktimeRenderer.py:218
-msgid "Audio"
-msgstr ""
-
-#: ../..//platform/osx/frontend/StartupPanel.py:114
-msgid "Search!"
-msgstr ""
-
-#: ../..//platform/osx/frontend/UIStrings.py:5
+#: ../../platform/osx/frontend/UIStrings.py:5
 msgid "_Remove..."
 msgstr "_Poista..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:6
+#: ../../platform/osx/frontend/UIStrings.py:6
 msgid "_Remove Playlist..."
 msgstr "Poist_a soittolista..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:7
+#: ../../platform/osx/frontend/UIStrings.py:7
 msgid "_Remove Playlists..."
 msgstr "Poist_a soittolistat..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:8
+#: ../../platform/osx/frontend/UIStrings.py:8
 msgid "_Remove Playlist Folder..."
 msgstr "Poist_a soittolistakansio..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:9
+#: ../../platform/osx/frontend/UIStrings.py:9
 msgid "_Remove Playlist Folders..."
 msgstr "Poist_a soittolistakansiot..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:10 ../..//portable/menubar.py:179
+#: ../../platform/osx/frontend/UIStrings.py:10 ../../portable/menubar.py:179
 msgid "_Remove Channel..."
 msgstr "Po_ista kanava..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:11 ../..//portable/menubar.py:180
+#: ../../platform/osx/frontend/UIStrings.py:11 ../../portable/menubar.py:180
 msgid "_Remove Channels..."
 msgstr "Po_ista kanavat..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:12 ../..//portable/menubar.py:182
+#: ../../platform/osx/frontend/UIStrings.py:12 ../../portable/menubar.py:182
 msgid "_Remove Channel Folder..."
 msgstr "Poista _kanavakansion..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:13 ../..//portable/menubar.py:181
+#: ../../platform/osx/frontend/UIStrings.py:13 ../../portable/menubar.py:181
 msgid "_Remove Channel Folders..."
 msgstr "Poista _kanavakansiot..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:14
+#: ../../platform/osx/frontend/UIStrings.py:14
 msgid "_Remove Miro Guide..."
-msgstr ""
+msgstr "_Poista Miro-opas..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:15
+#: ../../platform/osx/frontend/UIStrings.py:15
 msgid "_Remove Miro Guides..."
-msgstr ""
+msgstr "_Poista Miro-oppaat..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:16
+#: ../../platform/osx/frontend/UIStrings.py:16
 msgid "_Remove Video..."
 msgstr "_Poista video..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:17
+#: ../../platform/osx/frontend/UIStrings.py:17
 msgid "_Remove Videos..."
 msgstr "_Poista videot..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:18
+#: ../../platform/osx/frontend/UIStrings.py:18
 msgid "Re_name..."
 msgstr "_Nimeä uudelleen..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:19
+#: ../../platform/osx/frontend/UIStrings.py:19
 msgid "Re_name Playlist..."
 msgstr "_Nimeä soittolista uudelleen..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:20
+#: ../../platform/osx/frontend/UIStrings.py:20
 msgid "Re_name Playlist Folder..."
 msgstr "_Nimeä soittolistakansio uudelleen..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:21 ../..//portable/menubar.py:178
+#: ../../platform/osx/frontend/UIStrings.py:21 ../../portable/menubar.py:178
 msgid "Re_name Channel..."
 msgstr "_Nimeä kanava uudelleen..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:22
+#: ../../platform/osx/frontend/UIStrings.py:22
 msgid "Re_name Channel Folder..."
 msgstr "_Nimeä kanavakansio uudelleen..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:23
+#: ../../platform/osx/frontend/UIStrings.py:23
 msgid "Re_name Miro Guide..."
-msgstr ""
+msgstr "Ni_meä Miro-oppaat uudelleen..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:24 ../..//portable/menubar.py:184
+#: ../../platform/osx/frontend/UIStrings.py:24 ../../portable/menubar.py:184
 msgid "_Update Channel..."
 msgstr "_Päivitä kanava..."
 
-#: ../..//platform/osx/frontend/UIStrings.py:25 ../..//portable/menubar.py:185
+#: ../../platform/osx/frontend/UIStrings.py:25 ../../portable/menubar.py:185
 msgid "_Update Channels..."
 msgstr "Päivitä kanavat..."
 
-#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:367
-#: ../..//portable/dl_daemon/download.py:367
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42
+msgid "Settings"
+msgstr "Asetukset"
+
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45
+msgid "Hide"
+msgstr "Piilota"
+
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47
+msgid "Show"
+msgstr "Näytä"
+
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48
+#: ../../portable/dialogs.py:80 ../../portable/menubar.py:257
+msgid "Quit"
+msgstr "Lopeta"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:322
+msgid "New Channel _Guide..."
+msgstr "Uusi kanavaopas..."
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:562
+msgid "Folder Location"
+msgstr "Hakemiston sijainti"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
+msgid "Username:"
+msgstr "Käyttäjätunnus:"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
+msgid "Password:"
+msgstr "Salasana:"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:413
+msgid "Unknown Runtime Error"
+msgstr "Tuntematon ajonaikainen virhe"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:414
+#, python-format
+msgid "An unknown error has occurred %s."
+msgstr "Tuntematon virhe tapahtui %s."
+
+#: ../../portable/dl_daemon/download.py:367
 msgid "Error"
 msgstr "Virhe"
 
-#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:440
-#: ../..//portable/dl_daemon/download.py:440
+#: ../../portable/dl_daemon/download.py:440
 #, python-format
 msgid "Could not write to %s"
 msgstr "Ei voinut kirjoittaa kohteeseen %s"
 
-#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:459
-#: ../..//portable/dl_daemon/download.py:459
+#: ../../portable/dl_daemon/download.py:459
 msgid "Not enough disk space"
 msgstr "Levytilaa ei ole riittävästi"
 
-#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:460
-#: ../..//portable/dl_daemon/download.py:460
+#: ../../portable/dl_daemon/download.py:460
 #, python-format
 msgid "%s MB required to store this video"
 msgstr "Videon tallentaminen vaatii %s Mt vapaata levytilaa"
 
-#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:793
-#: ../..//portable/dl_daemon/download.py:803
+#: ../../portable/dl_daemon/download.py:679
+msgid "BitTorrent failure"
+msgstr "BitTorrent-virhe"
+
+#: ../../portable/dl_daemon/download.py:680
+msgid "BitTorrent failed to startup"
+msgstr "BitTorrentin käynnistys epäonnistui"
+
+#: ../../portable/dl_daemon/download.py:803
 msgid "Corrupt Torrent"
 msgstr "Torrent-tiedosto on vaurioitunut"
 
-#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:794
-#: ../..//portable/dl_daemon/download.py:804
+#: ../../portable/dl_daemon/download.py:804
 #, python-format
 msgid "The torrent file at %s was not valid"
 msgstr "Torrent-tiedosto osoitteessa %s ei ole kelvollinen"
 
-#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:820
-#: ../..//portable/dl_daemon/download.py:830
+#: ../../portable/dl_daemon/download.py:830
 msgid "Torrent file deleted"
 msgstr "Torrent-tiedosto poistettiin"
 
-#: ../..//platform/osx/img/Miro.app/Contents/Resources/lib/python2.4/dl_daemon/download.py:821
-#: ../..//portable/dl_daemon/download.py:831
+#: ../../portable/dl_daemon/download.py:831
 msgid "The torrent file for this item was deleted "
 msgstr "Tämän kohteen torrent-tiedosto on poistettu "
 
-#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57
-msgid "Update Available"
-msgstr ""
-
-#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:58
-#, python-format
-msgid "A new version of %s is available for download."
-msgstr ""
-
-#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214
-msgid "Error Bombing Item"
-msgstr "Virhe suositeltaessa kohdetta Bomb-palveluun"
-
-#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:216
-msgid "Error Recommending Item"
-msgstr "Virhe suositeltaessa kohdetta"
-
-#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218
-msgid "Error Opening Website"
-msgstr "Virhe avattaessa sivustoa"
-
-#: ../..//platform/windows-xul/frontend_implementation/UIBackendDelegate.py:222
-#, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr ""
-"Tapahtui virhe avattaessa kohdetta %s. Yritä uudelleen muutaman sekunnin "
-"kuluttua."
-
-#: ../..//platform/windows-xul/xul/components/pybridge.py:45
-#, python-format
-msgid ""
-"Error importing modules:\n"
-"%s"
-msgstr ""
-
-#: ../..//platform/windows-xul/xul/components/pybridge.py:49
-msgid "Starting up"
-msgstr "Käynnistyy"
-
-#: ../..//platform/windows-xul/xul/components/pybridge.py:256
-msgid "Loading window"
-msgstr "Ladataan ikkunaa"
-
-#: ../..//platform/windows-xul/xul/components/pybridge.py:257
-msgid "onStartup called twice"
-msgstr "onStartup kutsuttu kahdesti."
-
-#: ../..//platform/windows-xul/xul/components/pybridge.py:672
-msgid "Spacebar"
-msgstr ""
-
-#: ../..//platform/windows-xul/xul/components/pybridge.py:819
-msgid "Close to tray?"
-msgstr ""
-
-#: ../..//platform/windows-xul/xul/components/pybridge.py:820
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-
-#: ../..//portable/app.py:683
-msgid "Database too new"
-msgstr "Tietokanta on liian uusi"
-
-#: ../..//portable/app.py:684
-msgid ""
-"You have a database that was saved with a newer version of $shortAppName. "
-"You must download the latest version of $shortAppName and run that."
-msgstr ""
-
-#: ../..//portable/app.py:698
-msgid "Video Directory Missing"
-msgstr ""
-
-#: ../..//portable/app.py:699
-msgid ""
-"\n"
-"Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected.\n"
-"\n"
-"If you continue, the video directory will be reset to a location on this "
-"drive (this will cause you to lose some details about the videos on the "
-"external drive).  You can also quit, connect the drive, and relaunch Miro."
-msgstr ""
-
-#: ../..//portable/app.py:1018 ../..//portable/app.py:1032
-#: ../..//portable/app.py:1076 ../..//portable/app.py:1102
-#: ../..//portable/app.py:1122
-#, python-format
-msgid "Remove %s"
-msgstr "Poista %s"
-
-#: ../..//portable/app.py:1019
-#, python-format
-msgid "Are you sure you want to remove the guide %s?"
-msgstr "Haluatko varmasti poistaa oppaan %s?"
-
-#: ../..//portable/app.py:1033
-#, python-format
-msgid "Are you sure you want to remove %s"
-msgstr "Poistetaanko %s"
-
-#: ../..//portable/app.py:1036 ../..//portable/app.py:1081
-#: ../..//portable/app.py:1107 ../..//portable/app.py:1126
-#, python-format
-msgid "Remove %s channels"
-msgstr "Poista %s kanavaa"
-
-#: ../..//portable/app.py:1038
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr "Poistetaanko nämä %s soittolistaa"
-
-#: ../..//portable/app.py:1077
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr "Mitä tehdään tältä kanavalta ladatuille videoille?"
-
-#: ../..//portable/app.py:1082
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr "Mitä tehdään näiltä kanavilta ladatuille videoille?"
-
-#: ../..//portable/app.py:1103
-#, python-format
-msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
-msgstr "Poistetaanko %s? Kaikki kesken jääneet lataukset peruutetaan."
-
-#: ../..//portable/app.py:1108
-#, python-format
-msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
-msgstr ""
-"Poistetaanko nämä %s kanavaa? Kaikki kesken jääneet lataukset peruutetaan."
-
-#: ../..//portable/app.py:1123
-#, python-format
-msgid "Are you sure you want to remove %s?"
-msgstr ""
-
-#: ../..//portable/app.py:1127
-#, python-format
-msgid "Are you sure you want to remove these %s channels?"
-msgstr ""
-
-#: ../..//portable/app.py:1140
-#, python-format
-msgid "Stop watching %s"
-msgstr ""
-
-#: ../..//portable/app.py:1141
-#, python-format
-msgid "Are you sure you want to stop watching %s?"
-msgstr ""
-
-#: ../..//portable/app.py:1144
-#, python-format
-msgid "Stop watching %s directories"
-msgstr ""
-
-#: ../..//portable/app.py:1145
-#, python-format
-msgid "Are you sure you want to stop watching these %s directories?"
-msgstr ""
-
-#: ../..//portable/app.py:1176
-msgid "Are you sure you want to quit?"
-msgstr "Lopetaanko varmasti?"
-
-#: ../..//portable/app.py:1178
-msgid ""
-"Miro is still uploading your crash report. If you quit now the upload will "
-"be canceled.  Quit Anyway?"
-msgstr ""
-
-#: ../..//portable/app.py:1183
-#, python-format
-msgid "You have %d download still in progress.  Quit Anyway?"
-msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../..//portable/app.py:1186
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
-
-#: ../..//portable/app.py:1679
-msgid "Invalid Value"
-msgstr "Virheellinen arvo"
-
-#: ../..//portable/app.py:1680
-#, python-format
-msgid "%s is invalid.  You must enter a non-negative number."
-msgstr "%s on virheellinen arvo. Kirjoita ei-negatiivinen luku."
-
-#: ../..//portable/app.py:1971
-msgid " - Invalid URL"
-msgstr " - virheellinen osoite"
-
-#: ../..//portable/app.py:1972
-msgid ""
-"The address you entered is not a valid URL.\n"
-"Please double check and try again.\n"
-"\n"
-msgstr ""
-"Annettu osoite ei ole oikean muotoinen.\n"
-"Tarkista osoite ja yritä uudelleen.\n"
-"\n"
-
-#: ../..//portable/app.py:1996
-msgid "$shortAppName - Add Channel"
-msgstr ""
-
-#: ../..//portable/app.py:1996
-msgid "Enter the URL of the channel to add"
-msgstr "Kirjoita lisättävän kanavan osoite"
-
-#: ../..//portable/app.py:2017
-msgid "$shortAppName - Add Miro Guide"
-msgstr ""
-
-#: ../..//portable/app.py:2017
-msgid "Enter the URL of the Miro Guide to add"
-msgstr ""
-
-#: ../..//portable/app.py:2023
-msgid "$shortAppName - Download Video"
-msgstr ""
-
-#: ../..//portable/app.py:2023
-msgid "Enter the URL of the video to download"
-msgstr ""
-
-#: ../..//portable/app.py:2317
-msgid "News and Tech"
-msgstr ""
-
-#: ../..//portable/app.py:2324
-msgid "Entertainment"
-msgstr ""
-
-#: ../..//portable/app.py:2330
-msgid "High-Def"
-msgstr ""
-
-#: ../..//portable/app.py:2338
-msgid "Mac"
-msgstr ""
-
-#: ../..//portable/app.py:2353
-msgid "Example Playlist"
-msgstr "Esimerkki soittolista"
-
-#: ../..//portable/app.py:2372
-msgid "Custom Channels"
-msgstr "Valinnaiset kanavat"
-
-#: ../..//portable/app.py:2372
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr ""
-
-#: ../..//portable/app.py:2387
-msgid "Error Changing Movies Directory"
-msgstr ""
-
-#: ../..//portable/app.py:2388
-msgid ""
-"You don't have permission to write to the directory you selected.  Miro will "
-"continue to use the old videos directory."
-msgstr ""
-
-#: ../..//portable/autoupdate.py:121
-#, python-format
-msgid "%s Version Alert"
-msgstr ""
-
-#: ../..//portable/autoupdate.py:122
-#, python-format
-msgid "A new version of %s is available. Would you like to download it now?"
-msgstr ""
-
-#: ../..//portable/autoupdate.py:128
-#, python-format
-msgid "%s Version Check"
-msgstr ""
-
-#: ../..//portable/autoupdate.py:129
-#, python-format
-msgid "%s is up to date."
-msgstr ""
-
-#: ../..//portable/dialogs.py:76
-msgid "Ok"
-msgstr "OK"
-
-#: ../..//portable/dialogs.py:81
-msgid "Ignore"
-msgstr ""
-
-#: ../..//portable/dialogs.py:82
-msgid "Submit Crash Repport"
-msgstr ""
-
-#: ../..//portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
-msgid "Migrate"
-msgstr "Siirrä tiedot"
-
-#: ../..//portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
-msgid "Don't Migrate"
-msgstr "Älä siirrä tietoja"
-
-#: ../..//portable/dialogs.py:85 ../..//portable/item.py:1470
-#: ../..//portable/menu.py:111
-msgid "Download"
-msgstr "Lataa"
-
-#: ../..//portable/dialogs.py:86
-msgid "Remove Entry"
-msgstr "Poista kokoelmasta"
-
-#: ../..//portable/dialogs.py:87
-msgid "Delete File"
-msgstr "Poista tiedosto"
-
-#: ../..//portable/dialogs.py:88
-msgid "Delete Files"
-msgstr "Poista tiedostot"
-
-#: ../..//portable/dialogs.py:89
-msgid "Keep Videos"
-msgstr "Säilytä videot"
-
-#: ../..//portable/dialogs.py:90
-msgid "Delete Videos"
-msgstr "Poista videot"
-
-#: ../..//portable/dialogs.py:92
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
-msgid "Create Channel"
-msgstr "Luo kanava"
-
-#: ../..//portable/dialogs.py:93
-msgid "Add"
-msgstr "Lisää"
-
-#: ../..//portable/dialogs.py:94
-msgid "Add Into New Folder"
-msgstr "Lisää uuteen kansioon"
-
-#: ../..//portable/dialogs.py:95
-msgid "Keep"
-msgstr "Säilytä"
-
-#: ../..//portable/dialogs.py:97
-msgid "Not Now"
-msgstr ""
-
-#: ../..//portable/dialogs.py:98
-msgid "Close to Tray"
-msgstr ""
-
-#: ../..//portable/dialogs.py:99
-msgid "Launch Miro"
-msgstr ""
-
-#: ../..//portable/dialogs.py:100
-msgid "Download Anyway"
-msgstr ""
-
-#: ../..//portable/dialogs.py:215 ../../platform/gtk-x11/glade/miro.glade.h:45
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
-msgid "New Search Channel"
-msgstr "Uusi hakukanava"
-
-#: ../..//portable/dialogs.py:215 ../../platform/gtk-x11/glade/miro.glade.h:25
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
-msgid "A search channel contains items that match a search term."
-msgstr "Hakukanavalla on kohteita, jotka vastaavat hakutermiä."
-
-#: ../..//portable/dl_daemon/download.py:679
-msgid "BitTorrent failure"
-msgstr ""
-
-#: ../..//portable/dl_daemon/download.py:680
-msgid "BitTorrent failed to startup"
-msgstr ""
-
-#: ../..//portable/downloader.py:214
-msgid "activity"
-msgstr ""
-
-#: ../..//portable/downloader.py:250 ../..//portable/httpclient.py:112
-msgid "File not found"
-msgstr "Tiedostoa ei löytynyt"
-
-#: ../..//portable/downloader.py:251
-msgid "Flash URL Scraping Error"
-msgstr "Flash URL Scraping -virhe"
-
-#: ../..//portable/downloader.py:430
-msgid "starting up"
-msgstr "käynnistetään"
-
-#: ../..//portable/extrastrings.py:5 ../..//portable/feed.py:2025
-#: ../..//portable/feed.py:2117
+#: ../../portable/dl_daemon/download.py:832
+msgid "outside of democracy."
+msgstr "democracyn ulkopuolella."
+
+#: ../../portable/tabs.py:43
+msgid "Library"
+msgstr "Kirjasto"
+
+#: ../../portable/tabs.py:44
+msgid "New"
+msgstr "Uusi"
+
+#: ../../portable/tabs.py:46
+msgid "Downloading"
+msgstr "Ladataan"
+
+#: ../../portable/guide.py:83 ../../portable/feed.py:782
+msgid "Copy URL to clipboard"
+msgstr "Kopioi URL leikepöydälle"
+
+#: ../../portable/guide.py:118
+msgid "Miro Guide"
+msgstr "Miro-opas"
+
+#: ../../portable/extrastrings.py:5 ../../portable/feed.py:2012
+#: ../../portable/feed.py:2104
 msgid "Search"
 msgstr "Etsi"
 
-#: ../..//portable/feed.py:386
-msgid "never"
+#: ../../portable/downloader.py:214
+msgid "activity"
 msgstr ""
 
-#: ../..//portable/feed.py:388 ../..//portable/item.py:535
+#: ../../portable/downloader.py:250 ../../portable/httpclient.py:112
+msgid "File not found"
+msgstr "Tiedostoa ei löytynyt"
+
+#: ../../portable/downloader.py:251
+msgid "Flash URL Scraping Error"
+msgstr "Flash URL Scraping -virhe"
+
+#: ../../portable/downloader.py:430
+msgid "starting up"
+msgstr "käynnistetään"
+
+#: ../../portable/playlist.py:196 ../../portable/playlist.py:201
+msgid "Rename Playlist"
+msgstr "Nimeä soittolista uudelleen"
+
+#: ../../portable/playlist.py:202
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr "Kirjoita soittolistan %s uusi nimi"
+
+#: ../../portable/playlist.py:224
+msgid "Create Playlist"
+msgstr "Luo soittolista"
+
+#: ../../portable/playlist.py:225
+msgid "Enter a name for the new playlist"
+msgstr "Kirjoita uuden soittolistan nimi"
+
+#: ../../portable/feed.py:381
+msgid "never"
+msgstr "ei koskaan"
+
+#: ../../portable/feed.py:383 ../../portable/item.py:535
 #, python-format
 msgid "%d hours"
 msgstr "%d tunnissa"
 
-#: ../..//portable/feed.py:390
+#: ../../portable/feed.py:385
 #, python-format
 msgid "%d day"
-msgstr ""
+msgstr "%d päivä"
 
-#: ../..//portable/feed.py:392 ../..//portable/item.py:533
+#: ../../portable/feed.py:387 ../../portable/item.py:533
 #, python-format
 msgid "%d days"
 msgstr "%d päivässä"
 
-#: ../..//portable/feed.py:394
+#: ../../portable/feed.py:389
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d kuukausi"
 
-#: ../..//portable/feed.py:785
+#: ../../portable/feed.py:780
 msgid "Update Channel Now"
 msgstr "Päivitä kanava nyt"
 
-#: ../..//portable/feed.py:787 ../..//portable/guide.py:83
-msgid "Copy URL to clipboard"
-msgstr "Kopioi URL leikepöydälle"
-
-#: ../..//portable/feed.py:788 ../..//portable/feed.py:797
+#: ../../portable/feed.py:783 ../../portable/feed.py:792
 msgid "Rename Channel"
 msgstr "Nimeä kanava uudelleen"
 
-#: ../..//portable/feed.py:792
+#: ../../portable/feed.py:787
 msgid "Revert Title to Default"
 msgstr "Palauta otsikko oletukseksi"
 
-#: ../..//portable/feed.py:798
+#: ../../portable/feed.py:793
 #, python-format
 msgid "Enter a new name for the channel %s"
 msgstr "Kirjoita kanavan %s uusi nimi"
 
-#: ../..//portable/feed.py:885
+#: ../../portable/feed.py:880
 msgid "Error loading feed"
 msgstr "Virhe ladattaessa syötettä"
 
-#: ../..//portable/feed.py:886
+#: ../../portable/feed.py:881
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
 msgstr "Ei voitu ladata syötettä osoitteesta %s (%s)."
 
-#: ../..//portable/feed.py:889
+#: ../../portable/feed.py:884
 msgid "Would you like to keep the feed?"
 msgstr "Haluaisitko säilyttää syötteen?"
 
-#: ../..//portable/feed.py:1002
+#: ../../portable/feed.py:997
 msgid "Bad content-type"
 msgstr "Väärä sisältötyyppi"
 
-#: ../..//portable/feed.py:1015
+#: ../../portable/feed.py:1010
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
-msgstr ""
+msgstr "Kanava ei ole $shortAppName-yhteensopiva!"
 
-#: ../..//portable/feed.py:1016
+#: ../../portable/feed.py:1011
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny.  Please contact the publishers of "
@@ -1374,749 +1098,204 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Yritämme kuitenkin parhaamme tiedostojen nappaamisessa. Videoiden "
+"listaaminen voi kestää tavallista kauemmin ja kuvaukset saattavat näyttää "
+"oudoilta. Ota yhteyttä osoitteen $url julkaisijaan ja kysy, jos he voivat "
+"tarjota syötteen, joka on yhteensopiva ohjelman $shortAppName kanssa."
 
-#: ../..//portable/feed.py:2131
+#: ../../portable/feed.py:2118
 msgid "Local Files"
-msgstr ""
+msgstr "Paikalliset tiedostot"
 
-#: ../..//portable/feed.py:2145
+#: ../../portable/feed.py:2132
 msgid "Playing File"
-msgstr ""
+msgstr "Videon toisto"
 
-#: ../..//portable/folder.py:132 ../..//portable/folder.py:155
-msgid "Rename Channel Folder"
-msgstr "Nimeä kanavakansio uudelleen"
-
-#: ../..//portable/folder.py:134
-#, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "Kirjoita kanavakansion %s uusi nimi"
-
-#: ../..//portable/folder.py:210 ../..//portable/folder.py:215
-msgid "Rename Playlist Folder"
-msgstr "Nimeä soittolistakansio uudelleen"
-
-#: ../..//portable/folder.py:217
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "Kirjoita soittolistakansion %s uusi nimi"
-
-#: ../..//portable/folder.py:225
-msgid "Create Channel Folder"
-msgstr "Luo kanavakansio"
-
-#: ../..//portable/folder.py:226 ../..//portable/singleclick.py:234
-msgid "Enter a name for the new channel folder"
-msgstr "Kirjoita uuden kanavakansion nimi"
-
-#: ../..//portable/folder.py:239
-msgid "Create Playlist Folder"
-msgstr "Luo soittolistakansio"
-
-#: ../..//portable/folder.py:240
-msgid "Enter a name for the new playlist folder"
-msgstr "Kirjoita uuden soittolistakansion nimi"
-
-#: ../..//portable/guide.py:118
-msgid "Miro Guide"
-msgstr ""
-
-#: ../..//portable/httpclient.py:67
-#, python-format
-msgid "Error: %s"
-msgstr "Virhe: %s"
-
-#: ../..//portable/httpclient.py:82 ../..//portable/httpclient.py:87
-msgid "Can't connect"
-msgstr "Yhteydenmuodostus epäonnistui"
-
-#: ../..//portable/httpclient.py:83
-#, python-format
-msgid "Connection Error: %s"
-msgstr "Yhteysvirhe: %s"
-
-#: ../..//portable/httpclient.py:88
-msgid "SSL connection error"
-msgstr "SSL-yhteysvirhe"
-
-#: ../..//portable/httpclient.py:92
-msgid "HTTP error"
-msgstr "HTTP-virhe"
-
-#: ../..//portable/httpclient.py:95
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr "Epäkelpo Status-rivi: %s"
-
-#: ../..//portable/httpclient.py:98
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr "Virheellinen otsakerivi: %s"
-
-#: ../..//portable/httpclient.py:101
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "Virheellinen lohkokoko: %s"
-
-#: ../..//portable/httpclient.py:104
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr "Odotettiin CRLF, vastaanotettiin: %r"
-
-#: ../..//portable/httpclient.py:107
-#, python-format
-msgid "%s closed connection"
-msgstr "%s sulki yhteyden"
-
-#: ../..//portable/httpclient.py:113
-msgid "Got 404 status code"
-msgstr "Vastaanotettiin 404-virheilmoitus"
-
-#: ../..//portable/httpclient.py:115
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "Virheellinen tilakoodi: %s"
-
-#: ../..//portable/httpclient.py:119
-msgid "Authorization failed"
-msgstr "Varmennus epäonnistui"
-
-#: ../..//portable/httpclient.py:124 ../..//portable/util.py:257
-msgid "Internal Error"
-msgstr "Sisäinen virhe"
-
-#: ../..//portable/httpclient.py:125
-msgid "Pipeline request never started"
-msgstr "Pipeline-pyyntö ei ikinä toteutunut"
-
-#: ../..//portable/httpclient.py:129
-msgid "Timeout"
-msgstr "Aikakatkaisu tapahtui"
-
-#: ../..//portable/httpclient.py:130
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "Yhteys %s aikakatkaistiin"
-
-#: ../..//portable/httpclient.py:134
-msgid "Invalid URL"
-msgstr "Virheellinen URL"
-
-#: ../..//portable/httpclient.py:135
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr ""
-
-#: ../..//portable/httpclient.py:324
-msgid "Unknown Error code"
-msgstr ""
-
-#: ../..//portable/httpclient.py:356
-msgid "Connection closed"
-msgstr "Yhteys suljettu"
-
-#: ../..//portable/httpclient.py:781
-msgid "Unknown"
-msgstr "Tuntematon"
-
-#: ../..//portable/httpclient.py:782
-msgid "Internal Error: Not ready to send"
-msgstr "Sisäinen virhe: Ei valmis lähettämään"
-
-#: ../..//portable/item.py:478
-#, python-format
-msgid "Removing %s"
-msgstr "Poistetaan %s"
-
-#: ../..//portable/item.py:481
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
-
-#: ../..//portable/item.py:487
-msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
-msgstr ""
-
-#: ../..//portable/item.py:507
-#, fuzzy
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
-"Tämä kohde on kansio. Kun poistat kansion, kyseisen kansion sisältö "
-"poistetaan samalla."
-
-#: ../..//portable/item.py:537
-#, python-format
-msgid "%d minutes"
-msgstr "%d minuutissa"
-
-#: ../..//portable/item.py:547
-#, python-format
-msgid "Expires in %s"
-msgstr "Vanhentuu %s"
-
-#: ../..//portable/item.py:559
-#, python-format
-msgid "Will retry in %s"
-msgstr ""
-
-#: ../..//portable/item.py:561
-msgid "Paused"
-msgstr ""
-
-#: ../..//portable/item.py:941
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../..//portable/item.py:943
-msgid "WEB PAGE"
-msgstr "WWW-SIVU"
-
-#: ../..//portable/item.py:953
-msgid "Total Down:"
-msgstr ""
-
-#: ../..//portable/item.py:956
-msgid "Error:"
-msgstr ""
-
-#: ../..//portable/item.py:964
-msgid "Down Rate:"
-msgstr ""
-
-#: ../..//portable/item.py:965
-msgid "Down Total:"
-msgstr ""
-
-#: ../..//portable/item.py:967
-msgid "Up Rate:"
-msgstr ""
-
-#: ../..//portable/item.py:968
-msgid "Up Total:"
-msgstr ""
-
-#: ../..//portable/item.py:973
-msgid "Web page:"
-msgstr ""
-
-#: ../..//portable/item.py:973
-msgid "permalink"
-msgstr ""
-
-#: ../..//portable/item.py:974
-msgid "File link:"
-msgstr ""
-
-#: ../..//portable/item.py:974
-msgid "direct link to file"
-msgstr ""
-
-#: ../..//portable/item.py:976
-msgid "File type:"
-msgstr ""
-
-#: ../..//portable/item.py:983
-msgid "REVEAL LOCAL FOLDER"
-msgstr ""
-
-#: ../..//portable/item.py:985
-msgid "REVEAL LOCAL FILE"
-msgstr ""
-
-#: ../..//portable/item.py:987
-msgid "Filename:"
-msgstr ""
-
-#: ../..//portable/item.py:994
-msgid "Down Total"
-msgstr ""
-
-#: ../..//portable/item.py:996
-msgid "Up Total"
-msgstr ""
-
-#: ../..//portable/item.py:1014
-msgid "Item Details"
-msgstr ""
-
-#: ../..//portable/item.py:1021
-msgid "Torrent Details"
-msgstr ""
-
-#: ../..//portable/item.py:1023
-msgid "Torrent Details <i>stopped</i>"
-msgstr ""
-
-#: ../..//portable/item.py:1027
-msgid "Download Details"
-msgstr ""
-
-#: ../..//portable/item.py:1241
-msgid "downloading..."
-msgstr "ladataan..."
-
-#: ../..//portable/item.py:1248 ../..//portable/item.py:1251
-#, python-format
-msgid "%s remaining"
-msgstr "%s jäljellä"
-
-#: ../..//portable/item.py:1260
-msgid "starting up..."
-msgstr "käynnistetään..."
-
-#: ../..//portable/item.py:1453 ../..//portable/menu.py:97
-msgid "Remove From Playlist"
-msgstr "Poista soittolistalta"
-
-#: ../..//portable/item.py:1455 ../..//portable/menu.py:99
-msgid "Remove From the Library"
-msgstr ""
-
-#: ../..//portable/item.py:1457 ../..//portable/menu.py:94
-msgid "Play"
-msgstr "Toista"
-
-#: ../..//portable/item.py:1459
-msgid "Play Just This Video"
-msgstr "Toista vain tämä video"
-
-#: ../..//portable/item.py:1460 ../..//portable/menu.py:95
-msgid "Add to new playlist"
-msgstr "Lisää uuteen soittolistaan"
-
-#: ../..//portable/item.py:1464 ../..//portable/menu.py:105
-msgid "Mark as Unwatched"
-msgstr "Merkitse katsomattomaksi"
-
-#: ../..//portable/item.py:1466 ../..//portable/menu.py:123
-msgid "Restart Upload"
-msgstr ""
-
-#: ../..//portable/item.py:1468 ../..//portable/menu.py:118
-msgid "Cancel Download"
-msgstr "Peruuta lataaminen"
-
-#: ../..//portable/item.py:1468 ../..//portable/menu.py:120
-msgid "Pause Download"
-msgstr ""
-
-#: ../..//portable/item.py:1807
-#, python-format
-msgid "Removing %s items"
-msgstr "Poistetaan %s kohdetta"
-
-#: ../..//portable/item.py:1809
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
-
-#: ../..//portable/item.py:1817
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
-msgstr ""
-"Yksi tai useampi näistä on hakemisto. Kun poistat hakemiston, poistuvat "
-"samalla myös kaikki kansion sisällä olevat tiedostot."
-
-#: ../..//portable/menu.py:69
+#: ../../portable/menu.py:69
 msgid "Update Channels Now"
 msgstr "Päivitä kanavat nyt"
 
-#: ../..//portable/menu.py:92
+#: ../../portable/menu.py:92
 #, python-format
 msgid "%d Downloaded Items"
 msgstr "%d ladattua tiedostoa"
 
-#: ../..//portable/menu.py:110
-#, fuzzy
+#: ../../portable/menu.py:94 ../../portable/item.py:1457
+msgid "Play"
+msgstr "Toista"
+
+#: ../../portable/menu.py:95 ../../portable/item.py:1460
+msgid "Add to new playlist"
+msgstr "Lisää uuteen soittolistaan"
+
+#: ../../portable/menu.py:97 ../../portable/item.py:1453
+msgid "Remove From Playlist"
+msgstr "Poista soittolistalta"
+
+#: ../../portable/menu.py:99 ../../portable/item.py:1455
+msgid "Remove From the Library"
+msgstr "Poista Kirjastosta"
+
+#: ../../portable/menu.py:105 ../../portable/item.py:1464
+msgid "Mark as Unwatched"
+msgstr "Merkitse katsomattomaksi"
+
+#: ../../portable/menu.py:110
+#, python-format
 msgid "%d Available Items"
 msgstr "%d tiedostoa saatavilla"
 
-#: ../..//portable/menu.py:116
-#, fuzzy
+#: ../../portable/menu.py:111 ../../portable/dialogs.py:85
+#: ../../portable/item.py:1470
+msgid "Download"
+msgstr "Lataa"
+
+#: ../../portable/menu.py:116
+#, python-format
 msgid "%d Downloading Items"
-msgstr "%d ladataan tiedostoja"
+msgstr "%d latautuvaa tiedostoa"
 
-#: ../..//portable/menubar.py:144
-msgid "_Open"
-msgstr ""
+#: ../../portable/menu.py:118 ../../portable/item.py:1468
+msgid "Cancel Download"
+msgstr "Peruuta lataaminen"
 
-#: ../..//portable/menubar.py:145
-msgid "_Download Video"
-msgstr ""
+#: ../../portable/menu.py:120 ../../portable/item.py:1468
+msgid "Pause Download"
+msgstr "Keskeytä lataus"
 
-#: ../..//portable/menubar.py:147
-msgid "Check _Version"
-msgstr ""
+#: ../../portable/menu.py:123 ../../portable/item.py:1466
+msgid "Restart Upload"
+msgstr "Aloita lataus uudestaan"
 
-#: ../..//portable/menubar.py:149
-msgid "_Remove Video"
-msgstr "_Poista video"
-
-#: ../..//portable/menubar.py:150
-msgid "_Remove Videos"
-msgstr ""
-
-#: ../..//portable/menubar.py:151
-msgid "Re_name Video"
-msgstr ""
-
-#: ../..//portable/menubar.py:152
-msgid "Save Video _As..."
-msgstr "Tallenna _video nimellä..."
-
-#: ../..//portable/menubar.py:153
-msgid "Save Videos _As..."
-msgstr ""
-
-#: ../..//portable/menubar.py:154
-msgid "Copy Video _URL"
-msgstr ""
-
-#: ../..//portable/menubar.py:156
-msgid "_Options..."
-msgstr ""
-
-#: ../..//portable/menubar.py:157
-msgid "_Quit"
-msgstr "_Lopeta"
-
-#: ../..//portable/menubar.py:165
-msgid "Cu_t"
-msgstr ""
-
-#: ../..//portable/menubar.py:166
-msgid "_Copy"
-msgstr ""
-
-#: ../..//portable/menubar.py:167
-msgid "_Paste"
-msgstr ""
-
-#: ../..//portable/menubar.py:168
-msgid "Select _All"
-msgstr ""
-
-#: ../..//portable/menubar.py:169
-msgid "_Delete"
-msgstr ""
-
-#: ../..//portable/menubar.py:173
-msgid "Add _Channel"
-msgstr ""
-
-#: ../..//portable/menubar.py:174
-msgid "New Searc_h Channel..."
-msgstr "Uusi etsintäkanava..."
-
-#: ../..//portable/menubar.py:175
-msgid "New _Folder..."
-msgstr ""
-
-#: ../..//portable/menubar.py:176
-msgid "Add Channel _Guide..."
-msgstr ""
-
-#: ../..//portable/menubar.py:186
-msgid "Update _All Channels"
-msgstr ""
-
-#: ../..//portable/menubar.py:188
-msgid "_Import Channels (OPML)..."
-msgstr ""
-
-#: ../..//portable/menubar.py:189
-msgid "E_xport Channels (OPML)..."
-msgstr ""
-
-#: ../..//portable/menubar.py:191
-msgid "_Send this channel to a friend"
-msgstr "_Lähetä kanava kaverille"
-
-#: ../..//portable/menubar.py:192
-msgid "Copy Channel _Link"
-msgstr "Kopioi kanavan _osoite"
-
-#: ../..//portable/menubar.py:195
-msgid "New _Playlist"
-msgstr ""
-
-#: ../..//portable/menubar.py:196
-msgid "New Playlist Fol_der"
-msgstr ""
-
-#: ../..//portable/menubar.py:198
-msgid "Re_name Playlist"
-msgstr "Ni_meä soittolista uudelleen"
-
-#: ../..//portable/menubar.py:199
-msgid "_Remove Playlist"
-msgstr "P_oista soittolista"
-
-#: ../..//portable/menubar.py:200
-msgid "_Remove Playlists"
-msgstr ""
-
-#: ../..//portable/menubar.py:201
-msgid "_Remove Playlist Folders"
-msgstr ""
-
-#: ../..//portable/menubar.py:202
-msgid "_Remove Playlist Folder"
-msgstr ""
-
-#: ../..//portable/menubar.py:212
-msgid "_Play"
-msgstr ""
-
-#: ../..//portable/menubar.py:213
-msgid "_Stop"
-msgstr ""
-
-#: ../..//portable/menubar.py:215
-msgid "_Next Video"
-msgstr "_Seuraava video"
-
-#: ../..//portable/menubar.py:216
-msgid "_Previous Video"
-msgstr "_Edellinen video"
-
-#: ../..//portable/menubar.py:218
-msgid "Skip _Forward"
-msgstr ""
-
-#: ../..//portable/menubar.py:219
-msgid "Skip _Back"
-msgstr ""
-
-#: ../..//portable/menubar.py:221
-msgid "Volume _Up"
-msgstr ""
-
-#: ../..//portable/menubar.py:222
-msgid "Volume _Down"
-msgstr ""
-
-#: ../..//portable/menubar.py:224
-msgid "_Fullscreen"
-msgstr "_Kokoruutu"
-
-#: ../..//portable/menubar.py:228
-msgid "_About"
-msgstr ""
-
-#: ../..//portable/menubar.py:229
-msgid "_Donate"
-msgstr "Lahjoita"
-
-#: ../..//portable/menubar.py:230 ../..//portable/menubar.py:245
-msgid "_Help"
-msgstr "_Ohje"
-
-#: ../..//portable/menubar.py:232
-msgid "Report a _Bug"
-msgstr ""
-
-#: ../..//portable/menubar.py:236
-msgid "_Video"
-msgstr "_Video"
-
-#: ../..//portable/menubar.py:238
-msgid "_File"
-msgstr ""
-
-#: ../..//portable/menubar.py:242
-msgid "_Channels"
-msgstr "_Kanavat"
-
-#: ../..//portable/menubar.py:243
-msgid "_Playlists"
-msgstr "Soi_ttolistat"
-
-#: ../..//portable/menubar.py:244
-msgid "P_layback"
-msgstr "Toisto"
-
-#: ../..//portable/menubar.py:249
-msgid "Play Unwatched ($numUnwatched)"
-msgstr ""
-
-#: ../..//portable/menubar.py:250
-msgid "Pause All Downloads ($numDownloading)"
-msgstr ""
-
-#: ../..//portable/menubar.py:251
-msgid "Resume All Downloads ($numPaused)"
-msgstr ""
-
-#: ../..//portable/menubar.py:253
-msgid "Options..."
-msgstr ""
-
-#: ../..//portable/menubar.py:255
-msgid "Hide Window"
-msgstr ""
-
-#: ../..//portable/menubar.py:256
-msgid "Show Window"
-msgstr ""
-
-#: ../..//portable/opml.py:32
+#: ../../portable/opml.py:32
 msgid "Export OPML File"
-msgstr ""
+msgstr "Vie OPML-tiedosto"
 
-#: ../..//portable/opml.py:96
+#: ../../portable/opml.py:106
 msgid "Import OPML File"
-msgstr ""
+msgstr "Tuo OPML-tiedosto"
 
-#: ../..//portable/opml.py:98
+#: ../../portable/opml.py:108
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML-tiedostot"
 
-#: ../..//portable/opml.py:117
+#: ../../portable/opml.py:127
 msgid "OPML Import failed"
-msgstr ""
+msgstr "OPML-tuonti epäonnistui"
 
-#: ../..//portable/opml.py:118
+#: ../../portable/opml.py:128
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
 msgstr ""
+"Valittu OPML-tiedosto näyttäisi olevan virheellinen. Tuonti keskeytetty."
 
-#: ../..//portable/opml.py:123
+#: ../../portable/opml.py:133
 msgid "OPML Import summary"
-msgstr ""
+msgstr "OPML-tuonnin yhteenveto"
 
-#: ../..//portable/opml.py:124
+#: ../../portable/opml.py:134
 #, python-format
 msgid "Successfully imported %d feed."
 msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tuotu %d syöte onnistuneesti."
+msgstr[1] "Tuotu %d syötettä onnistuneesti."
 
-#: ../..//portable/opml.py:127
+#: ../../portable/opml.py:137
 #, python-format
 msgid "Skipped %d feed already present."
 msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ohitettu %d jo olemassa oleva syöte."
+msgstr[1] "Ohitettu %d jo olemassa olevaa syötettä."
 
-#: ../..//portable/playlist.py:196 ../..//portable/playlist.py:201
-msgid "Rename Playlist"
-msgstr "Nimeä soittolista uudelleen"
-
-#: ../..//portable/playlist.py:202
+#: ../../portable/autoupdate.py:121
 #, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Kirjoita soittolistan %s uusi nimi"
+msgid "%s Version Alert"
+msgstr "%s - Versio-ilmoitus"
 
-#: ../..//portable/playlist.py:224
-msgid "Create Playlist"
-msgstr "Luo soittolista"
-
-#: ../..//portable/playlist.py:225
-msgid "Enter a name for the new playlist"
-msgstr "Kirjoita uuden soittolistan nimi"
-
-#: ../..//portable/singleclick.py:86
-msgid "Download already exists"
-msgstr ""
-
-#: ../..//portable/singleclick.py:87
-msgid "That URL is already an external download."
-msgstr ""
-
-#: ../..//portable/singleclick.py:90
-msgid "Miro will begin downloading it now."
-msgstr ""
-
-#: ../..//portable/singleclick.py:92
-msgid "It has already been downloaded"
-msgstr ""
-
-#: ../..//portable/singleclick.py:119
-msgid "Download Error"
-msgstr ""
-
-#: ../..//portable/singleclick.py:120
+#: ../../portable/autoupdate.py:122
 #, python-format
+msgid "A new version of %s is available. Would you like to download it now?"
+msgstr "Ohjelmasta %s on saatavilla uusi versio. Haluatko ladata sen nyt?"
+
+#: ../../portable/autoupdate.py:128
+#, python-format
+msgid "%s Version Check"
+msgstr "%s - Version tarkastus"
+
+#: ../../portable/autoupdate.py:129
+#, python-format
+msgid "%s is up to date."
+msgstr "%s on ajan tasalla."
+
+#: ../../portable/util.py:257 ../../portable/httpclient.py:124
+msgid "Internal Error"
+msgstr "Sisäinen virhe"
+
+#: ../../portable/util.py:257
 msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %s"
+"Miro has encountered an internal error. You can help us track down this "
+"problem and fix it by submitting an error report."
 msgstr ""
+"Miro törmäsi sisäiseen virheeseen. Voit auttaa meitä virheenkorjauksessa "
+"lähettämällä virheraportin."
 
-#: ../..//portable/singleclick.py:128
-msgid "File Download"
-msgstr ""
-
-#: ../..//portable/singleclick.py:129
-#, python-format
-msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
-
-#: ../..//portable/singleclick.py:219
-msgid "Subscribing to multiple channels"
-msgstr "Tilataan useita kanavia"
-
-#: ../..//portable/singleclick.py:220
-#, python-format
-msgid "Create %d channels?"
-msgstr "Luodaanko %d kanavaa?"
-
-#: ../..//portable/singleclick.py:233
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "Lisätään %d kanavaa uuteen kansioon"
-
-#: ../..//portable/singleclick.py:237
-#, python-format
+#: ../../portable/util.py:257
 msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
+"Include entire program database including all video and channel metadata "
+"with crash report"
 msgstr ""
-"HUOMIO: Olet jo tilannut %d näistä kanavista. Nämä kanavat pysyvät "
-"nykyisessä sijainnissaan."
+"Sisällytä koko ohjelman tietokanta, mukaan lukien kaikkien videoiden "
+"ohjelmatiedot, virheraportissa"
 
-#: ../..//portable/singleclick.py:248
-msgid "Subscription error"
-msgstr "Tilausvirhe"
+#: ../../portable/util.py:257
+msgid "Describe what you were doing that caused this error"
+msgstr "Kuvaile, mitä olit tekemässä, kun virhe ilmeni"
 
-#: ../..//portable/singleclick.py:258
-msgid ""
-"This $shortAppName channel file has an invalid format: $url. Please notify "
-"the publisher of this file."
-msgstr ""
-
-#: ../..//portable/singleclick.py:266
-msgid ""
-"This $shortAppName channel file has the wrong content type: $url. Please "
-"notify the publisher of this file."
-msgstr ""
-
-#: ../..//portable/singleclick.py:270
-msgid "Could not download the $shortAppName channel file: $url."
-msgstr ""
-
-#: ../..//portable/singleclick.py:308
-msgid "Invalid Torrent"
-msgstr "Virheellinen torrent-tiedosto"
-
-#: ../..//portable/singleclick.py:309
+#: ../../portable/util.py:460
 #, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr ""
-"Torrent-tiedosto %s on ilmeisesti vahingoittunut, eikä sitä voida avata. [OK]"
+msgid "%1.1fGB"
+msgstr "%1.1fGt"
 
-#: ../..//portable/storedatabase.py:832 ../..//portable/storedatabase.py:1231
+#: ../../portable/util.py:462
+#, python-format
+msgid "%dGB"
+msgstr "%dGB"
+
+#: ../../portable/util.py:466
+#, python-format
+msgid "%1.1fMB"
+msgstr "%1.1fMt"
+
+#: ../../portable/util.py:468
+#, python-format
+msgid "%dMB"
+msgstr "%dMB"
+
+#: ../../portable/util.py:472
+#, python-format
+msgid "%1.1fKB"
+msgstr "%1.1fkt"
+
+#: ../../portable/util.py:474
+#, python-format
+msgid "%dKB"
+msgstr "%dKB"
+
+#: ../../portable/util.py:478
+#, python-format
+msgid "%1.1fB"
+msgstr "%1.1fB"
+
+#: ../../portable/util.py:480
+#, python-format
+msgid "%dB"
+msgstr "%dB"
+
+#: ../../portable/storedatabase.py:832 ../../portable/storedatabase.py:1231
 #, python-format
 msgid "%s database save succeeded"
 msgstr "%s tietokannan tallennus onnistui"
 
-#: ../..//portable/storedatabase.py:833 ../..//portable/storedatabase.py:1232
+#: ../../portable/storedatabase.py:833 ../../portable/storedatabase.py:1232
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -2124,12 +1303,12 @@ msgstr ""
 "Tietokanta on tallennettu onnistuneesti. Ohjelman voi nyt sammuttaa "
 "turvallisesti."
 
-#: ../..//portable/storedatabase.py:840 ../..//portable/storedatabase.py:1240
+#: ../../portable/storedatabase.py:840 ../../portable/storedatabase.py:1240
 #, python-format
 msgid "%s database save failed"
 msgstr "%s tietokannan tallennus epäonnistui"
 
-#: ../..//portable/storedatabase.py:841 ../..//portable/storedatabase.py:1241
+#: ../../portable/storedatabase.py:841 ../../portable/storedatabase.py:1241
 #, python-format
 msgid ""
 "%s was unable to save its database: Disk Full.\n"
@@ -2144,72 +1323,956 @@ msgstr ""
 "\n"
 "Viimeaikaiset muutokset on saatettu menettää."
 
-#: ../..//portable/tabs.py:43
-msgid "Library"
-msgstr ""
+#: ../../portable/dialogs.py:76
+msgid "Ok"
+msgstr "OK"
 
-#: ../..//portable/tabs.py:44
-msgid "New"
-msgstr ""
+#: ../../portable/dialogs.py:81
+msgid "Ignore"
+msgstr "Älä huomioi"
 
-#: ../..//portable/tabs.py:46
-msgid "Downloading"
-msgstr "Ladataan"
+#: ../../portable/dialogs.py:82
+msgid "Submit Crash Report"
+msgstr "Lähetä virheraportti"
 
-#: ../..//portable/util.py:257
+#: ../../portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
+msgid "Migrate"
+msgstr "Siirrä tiedot"
+
+#: ../../portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
+msgid "Don't Migrate"
+msgstr "Älä siirrä tietoja"
+
+#: ../../portable/dialogs.py:86
+msgid "Remove Entry"
+msgstr "Poista kokoelmasta"
+
+#: ../../portable/dialogs.py:87
+msgid "Delete File"
+msgstr "Poista tiedosto"
+
+#: ../../portable/dialogs.py:88
+msgid "Delete Files"
+msgstr "Poista tiedostot"
+
+#: ../../portable/dialogs.py:89
+msgid "Keep Videos"
+msgstr "Säilytä videot"
+
+#: ../../portable/dialogs.py:90
+msgid "Delete Videos"
+msgstr "Poista videot"
+
+#: ../../portable/dialogs.py:92
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
+msgid "Create Channel"
+msgstr "Luo kanava"
+
+#: ../../portable/dialogs.py:93
+msgid "Add"
+msgstr "Lisää"
+
+#: ../../portable/dialogs.py:94
+msgid "Add Into New Folder"
+msgstr "Lisää uuteen kansioon"
+
+#: ../../portable/dialogs.py:95
+msgid "Keep"
+msgstr "Säilytä"
+
+#: ../../portable/dialogs.py:97
+msgid "Not Now"
+msgstr "Ei nyt"
+
+#: ../../portable/dialogs.py:98
+msgid "Close to Tray"
+msgstr "Sulje järjestelmäpalkkiin"
+
+#: ../../portable/dialogs.py:99
+msgid "Launch Miro"
+msgstr "Käynnistä Miro"
+
+#: ../../portable/dialogs.py:100
+msgid "Download Anyway"
+msgstr "Lataa silti"
+
+#: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
+msgid "New Search Channel"
+msgstr "Uusi hakukanava"
+
+#: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:25
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
+msgid "A search channel contains items that match a search term."
+msgstr "Hakukanavalla on kohteita, jotka vastaavat hakutermiä."
+
+#: ../../portable/singleclick.py:86
+msgid "Download already exists"
+msgstr "Lataus on jo olemassa"
+
+#: ../../portable/singleclick.py:87
+#, fuzzy
+msgid "That URL is already an external download."
+msgstr "Kohde on jo ulkoisena latauksena."
+
+#: ../../portable/singleclick.py:93
+msgid "Miro will begin downloading it now."
+msgstr "Miro aloittaa nyt latauksen."
+
+#: ../../portable/singleclick.py:95
+#, fuzzy
+msgid "It is downloading now."
+msgstr "Lataus on jo käynnissä."
+
+#: ../../portable/singleclick.py:97
+msgid "It has already been downloaded."
+msgstr "Kohde on jo ladattu."
+
+#: ../../portable/singleclick.py:124
+msgid "Download Error"
+msgstr "Latausvirhe"
+
+#: ../../portable/singleclick.py:125
+#, python-format
 msgid ""
-"Miro has encountered an internal error. You can help us track down this "
-"problem and fix it by submitting an error report."
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %s"
 msgstr ""
+"Miro ei pysty lataamaan tiedostoa osoitteessa:\n"
+"\n"
+"%s"
 
-#: ../..//portable/util.py:257
+#: ../../portable/singleclick.py:133
+msgid "File Download"
+msgstr "Tiedoston lataus"
+
+#: ../../portable/singleclick.py:134
+#, python-format
+msgid "This file at %s does not appear to be audio, video, or an RSS feed."
+msgstr ""
+"Tiedosto osoitteessa %s ei näytä olevan ääni- tai videotiedosto, eikä RSS-"
+"syöte."
+
+#: ../../portable/singleclick.py:224
+msgid "Subscribing to multiple channels"
+msgstr "Tilataan useita kanavia"
+
+#: ../../portable/singleclick.py:225
+#, python-format
+msgid "Create %d channels?"
+msgstr "Luodaanko %d kanavaa?"
+
+#: ../../portable/singleclick.py:238
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr "Lisätään %d kanavaa uuteen kansioon"
+
+#: ../../portable/singleclick.py:239 ../../portable/folder.py:226
+msgid "Enter a name for the new channel folder"
+msgstr "Kirjoita uuden kanavakansion nimi"
+
+#: ../../portable/singleclick.py:242
+#, python-format
 msgid ""
-"Include entire program database including all video and channel metadata "
-"with crash report"
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
+msgstr ""
+"HUOMIO: Olet jo tilannut %d näistä kanavista. Nämä kanavat pysyvät "
+"nykyisessä sijainnissaan."
+
+#: ../../portable/singleclick.py:253
+msgid "Subscription error"
+msgstr "Tilausvirhe"
+
+#: ../../portable/singleclick.py:263
+msgid ""
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
+msgstr ""
+"Tämä $shortAppName-kanavatiedosto on väärässä muodossa: $url. Ilmoita "
+"asiasta tiedoston julkaisijalle."
+
+#: ../../portable/singleclick.py:271
+msgid ""
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
+msgstr ""
+"Tämä $shortAppName-kanavatiedosto on väärää sisältötyyppiä: $url. Ilmoita "
+"asiasta tiedoston julkaisijalle."
+
+#: ../../portable/singleclick.py:275
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr "$shortAppName-kanavatiedoston lataus epäonnistui: $url."
+
+#: ../../portable/singleclick.py:313
+msgid "Invalid Torrent"
+msgstr "Virheellinen torrent-tiedosto"
+
+#: ../../portable/singleclick.py:314
+#, python-format
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr ""
+"Torrent-tiedosto %s on ilmeisesti vahingoittunut, eikä sitä voida avata. [OK]"
+
+#: ../../portable/menubar.py:144
+msgid "_Open"
+msgstr "_Avaa"
+
+#: ../../portable/menubar.py:145
+msgid "_Download Video"
+msgstr "_Lataa video"
+
+#: ../../portable/menubar.py:147
+msgid "Check _Version"
+msgstr "Tarkista _versio"
+
+#: ../../portable/menubar.py:149
+msgid "_Remove Video"
+msgstr "_Poista video"
+
+#: ../../portable/menubar.py:150
+msgid "_Remove Videos"
+msgstr "_Poista videot"
+
+#: ../../portable/menubar.py:151
+msgid "Re_name Video"
+msgstr "Ni_meä video uudelleen"
+
+#: ../../portable/menubar.py:152
+msgid "Save Video _As..."
+msgstr "Tallenna _video nimellä..."
+
+#: ../../portable/menubar.py:153
+msgid "Save Videos _As..."
+msgstr "Tallenna video _nimellä..."
+
+#: ../../portable/menubar.py:154
+msgid "Copy Video _URL"
 msgstr ""
 
-#: ../..//portable/util.py:257
-msgid "Describe what you were doing that caused this error"
+#: ../../portable/menubar.py:156
+msgid "_Options..."
 msgstr ""
 
-#: ../..//portable/util.py:460
-#, python-format
-msgid "%1.1fGB"
-msgstr "%1.1fGt"
+#: ../../portable/menubar.py:157
+msgid "_Quit"
+msgstr "_Lopeta"
 
-#: ../..//portable/util.py:462
-#, python-format
-msgid "%dGB"
+#: ../../portable/menubar.py:165
+msgid "Cu_t"
+msgstr "L_eikkaa"
+
+#: ../../portable/menubar.py:166
+msgid "_Copy"
+msgstr "_Kopioi"
+
+#: ../../portable/menubar.py:167
+msgid "_Paste"
+msgstr "_Liitä"
+
+#: ../../portable/menubar.py:168
+msgid "Select _All"
+msgstr "Valitse _kaikki"
+
+#: ../../portable/menubar.py:169
+msgid "_Delete"
+msgstr "_Poista"
+
+#: ../../portable/menubar.py:173
+msgid "Add _Channel"
+msgstr "Lisää _kanava"
+
+#: ../../portable/menubar.py:174
+msgid "New Searc_h Channel..."
+msgstr "Uusi etsintäkanava..."
+
+#: ../../portable/menubar.py:175
+msgid "New _Folder..."
+msgstr "Uusi _kansio..."
+
+#: ../../portable/menubar.py:176
+msgid "Add Channel _Guide..."
 msgstr ""
 
-#: ../..//portable/util.py:466
-#, python-format
-msgid "%1.1fMB"
-msgstr "%1.1fMt"
+#: ../../portable/menubar.py:186
+msgid "Update _All Channels"
+msgstr "Päivitä _kaikki kanavat"
 
-#: ../..//portable/util.py:468
-#, python-format
-msgid "%dMB"
+#: ../../portable/menubar.py:188
+msgid "_Import Channels (OPML)..."
+msgstr "_Tuo kanavia (OPML)..."
+
+#: ../../portable/menubar.py:189
+msgid "E_xport Channels (OPML)..."
+msgstr "V_ie kanavia (OPML)..."
+
+#: ../../portable/menubar.py:191
+msgid "_Send this channel to a friend"
+msgstr "_Lähetä kanava kaverille"
+
+#: ../../portable/menubar.py:192
+msgid "Copy Channel _Link"
+msgstr "Kopioi kanavan _osoite"
+
+#: ../../portable/menubar.py:195
+msgid "New _Playlist"
+msgstr "Uusi _soittolista"
+
+#: ../../portable/menubar.py:196
+msgid "New Playlist Fol_der"
 msgstr ""
 
-#: ../..//portable/util.py:472
-#, python-format
-msgid "%1.1fKB"
-msgstr "%1.1fkt"
+#: ../../portable/menubar.py:198
+msgid "Re_name Playlist"
+msgstr "Ni_meä soittolista uudelleen"
 
-#: ../..//portable/util.py:474
-#, python-format
-msgid "%dKB"
+#: ../../portable/menubar.py:199
+msgid "_Remove Playlist"
+msgstr "P_oista soittolista"
+
+#: ../../portable/menubar.py:200
+msgid "_Remove Playlists"
 msgstr ""
 
-#: ../..//portable/util.py:478
-#, python-format
-msgid "%1.1fB"
+#: ../../portable/menubar.py:201
+msgid "_Remove Playlist Folders"
 msgstr ""
 
-#: ../..//portable/util.py:480
+#: ../../portable/menubar.py:202
+msgid "_Remove Playlist Folder"
+msgstr ""
+
+#: ../../portable/menubar.py:212
+msgid "_Play"
+msgstr "_Toista"
+
+#: ../../portable/menubar.py:213
+msgid "_Stop"
+msgstr "_Pysäytä"
+
+#: ../../portable/menubar.py:215
+msgid "_Next Video"
+msgstr "_Seuraava video"
+
+#: ../../portable/menubar.py:216
+msgid "_Previous Video"
+msgstr "_Edellinen video"
+
+#: ../../portable/menubar.py:218
+msgid "Skip _Forward"
+msgstr ""
+
+#: ../../portable/menubar.py:219
+msgid "Skip _Back"
+msgstr ""
+
+#: ../../portable/menubar.py:221
+msgid "Volume _Up"
+msgstr "_Kovemmalle"
+
+#: ../../portable/menubar.py:222
+msgid "Volume _Down"
+msgstr "_Hiljemmalle"
+
+#: ../../portable/menubar.py:224
+msgid "_Fullscreen"
+msgstr "_Kokoruutu"
+
+#: ../../portable/menubar.py:228
+msgid "_About"
+msgstr "_Tietoja"
+
+#: ../../portable/menubar.py:229
+msgid "_Donate"
+msgstr "Lahjoita"
+
+#: ../../portable/menubar.py:230 ../../portable/menubar.py:245
+msgid "_Help"
+msgstr "_Ohje"
+
+#: ../../portable/menubar.py:232
+msgid "Report a _Bug"
+msgstr "Ilmoita _bugi"
+
+#: ../../portable/menubar.py:236
+msgid "_Video"
+msgstr "_Video"
+
+#: ../../portable/menubar.py:238
+msgid "_File"
+msgstr "_Tiedosto"
+
+#: ../../portable/menubar.py:242
+msgid "_Channels"
+msgstr "_Kanavat"
+
+#: ../../portable/menubar.py:243
+msgid "_Playlists"
+msgstr "Soi_ttolistat"
+
+#: ../../portable/menubar.py:244
+msgid "P_layback"
+msgstr "Toisto"
+
+#: ../../portable/menubar.py:249
+msgid "Play Unwatched ($numUnwatched)"
+msgstr "Toista katsomattomat ($numUnwatched)"
+
+#: ../../portable/menubar.py:250
+msgid "Pause All Downloads ($numDownloading)"
+msgstr "Pysäytä kaikki lataukset ($numDownloading)"
+
+#: ../../portable/menubar.py:251
+msgid "Resume All Downloads ($numPaused)"
+msgstr "Jatka kaikkien lataamista ($numPaused)"
+
+#: ../../portable/menubar.py:253
+msgid "Options..."
+msgstr "Asetukset..."
+
+#: ../../portable/menubar.py:255
+msgid "Hide Window"
+msgstr "Piilota ikkuna"
+
+#: ../../portable/menubar.py:256
+msgid "Show Window"
+msgstr "Näytä ikkuna"
+
+#: ../../portable/item.py:478
 #, python-format
-msgid "%dB"
+msgid "Removing %s"
+msgstr "Poistetaan %s"
+
+#: ../../portable/item.py:481
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr ""
+"Halutko poistaa tämän kansion videoineen koneeltasi vai poistaa sen vain "
+"Kirjasto-näkymästä?"
+
+#: ../../portable/item.py:487
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
+msgstr ""
+"Haluatko poistaa tämän tiedoston koneeltasi vai poistaa sen vain Kirjasto-"
+"näkymästä?"
+
+#: ../../portable/item.py:507
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+"Tämä kohde on kansio. Kun poistat kansion, kyseisen kansion sisältö "
+"poistetaan samalla."
+
+#: ../../portable/item.py:537
+#, python-format
+msgid "%d minutes"
+msgstr "%d minuutissa"
+
+#: ../../portable/item.py:547
+#, python-format
+msgid "Expires in %s"
+msgstr "Vanhentuu %s"
+
+#: ../../portable/item.py:559
+#, python-format
+msgid "Will retry in %s"
+msgstr "Yritetään uudelleen %s kuluttua"
+
+#: ../../portable/item.py:561
+msgid "Paused"
+msgstr "Pysäytetty"
+
+#: ../../portable/item.py:941
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../../portable/item.py:943
+msgid "WEB PAGE"
+msgstr "WWW-SIVU"
+
+#: ../../portable/item.py:953
+msgid "Total Down:"
+msgstr "Lataukset yhteensä:"
+
+#: ../../portable/item.py:956
+msgid "Error:"
+msgstr "Virhe:"
+
+#: ../../portable/item.py:964
+msgid "Down Rate:"
+msgstr "Latausnopeus:"
+
+#: ../../portable/item.py:965
+msgid "Down Total:"
+msgstr "Lataukset yhteensä:"
+
+#: ../../portable/item.py:967
+msgid "Up Rate:"
+msgstr "Lähetysnopeus:"
+
+#: ../../portable/item.py:968
+msgid "Up Total:"
+msgstr "Lähetykset yhteensä:"
+
+#: ../../portable/item.py:973
+msgid "Web page:"
+msgstr "Nettisivu:"
+
+#: ../../portable/item.py:973
+msgid "permalink"
+msgstr "permalink"
+
+#: ../../portable/item.py:974
+msgid "File link:"
+msgstr ""
+
+#: ../../portable/item.py:974
+msgid "direct link to file"
+msgstr ""
+
+#: ../../portable/item.py:976
+msgid "File type:"
+msgstr ""
+
+#: ../../portable/item.py:983
+msgid "REVEAL LOCAL FOLDER"
+msgstr ""
+
+#: ../../portable/item.py:985
+msgid "REVEAL LOCAL FILE"
+msgstr ""
+
+#: ../../portable/item.py:987
+msgid "Filename:"
+msgstr ""
+
+#: ../../portable/item.py:994
+msgid "Down Total"
+msgstr ""
+
+#: ../../portable/item.py:996
+msgid "Up Total"
+msgstr ""
+
+#: ../../portable/item.py:1014
+msgid "Item Details"
+msgstr "Kohteen tiedot"
+
+#: ../../portable/item.py:1021
+msgid "Torrent Details"
+msgstr "Torrentin tiedot"
+
+#: ../../portable/item.py:1023
+msgid "Torrent Details <i>stopped</i>"
+msgstr "Torrentin tiedot <i>pysäytetty</i>"
+
+#: ../../portable/item.py:1027
+msgid "Download Details"
+msgstr "Lataustiedot"
+
+#: ../../portable/item.py:1241
+msgid "downloading..."
+msgstr "ladataan..."
+
+#: ../../portable/item.py:1248 ../../portable/item.py:1251
+#, python-format
+msgid "%s remaining"
+msgstr "%s jäljellä"
+
+#: ../../portable/item.py:1260
+msgid "starting up..."
+msgstr "käynnistetään..."
+
+#: ../../portable/item.py:1459
+msgid "Play Just This Video"
+msgstr "Toista vain tämä video"
+
+#: ../../portable/item.py:1807
+#, python-format
+msgid "Removing %s items"
+msgstr "Poistetaan %s kohdetta"
+
+#: ../../portable/item.py:1809
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+"Yhtä tai useampaa videoista ei ladattu kanavalta. Haluatko poistaa ne "
+"koneeltasi vai poistaa ne vain Kirjasto-näkymästä?"
+
+#: ../../portable/item.py:1817
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"Yksi tai useampi näistä on hakemisto. Kun poistat hakemiston, poistuvat "
+"samalla myös kaikki kansion sisällä olevat tiedostot."
+
+#: ../../portable/folder.py:132 ../../portable/folder.py:155
+msgid "Rename Channel Folder"
+msgstr "Nimeä kanavakansio uudelleen"
+
+#: ../../portable/folder.py:134
+#, python-format
+msgid "Enter a new name for the channel folder %s"
+msgstr "Kirjoita kanavakansion %s uusi nimi"
+
+#: ../../portable/folder.py:210 ../../portable/folder.py:215
+msgid "Rename Playlist Folder"
+msgstr "Nimeä soittolistakansio uudelleen"
+
+#: ../../portable/folder.py:217
+#, python-format
+msgid "Enter a new name for the playlist folder %s"
+msgstr "Kirjoita soittolistakansion %s uusi nimi"
+
+#: ../../portable/folder.py:225
+msgid "Create Channel Folder"
+msgstr "Luo kanavakansio"
+
+#: ../../portable/folder.py:239
+msgid "Create Playlist Folder"
+msgstr "Luo soittolistakansio"
+
+#: ../../portable/folder.py:240
+msgid "Enter a name for the new playlist folder"
+msgstr "Kirjoita uuden soittolistakansion nimi"
+
+#: ../../portable/httpclient.py:67
+#, python-format
+msgid "Error: %s"
+msgstr "Virhe: %s"
+
+#: ../../portable/httpclient.py:82 ../../portable/httpclient.py:87
+msgid "Can't connect"
+msgstr "Yhteydenmuodostus epäonnistui"
+
+#: ../../portable/httpclient.py:83
+#, python-format
+msgid "Connection Error: %s"
+msgstr "Yhteysvirhe: %s"
+
+#: ../../portable/httpclient.py:88
+msgid "SSL connection error"
+msgstr "SSL-yhteysvirhe"
+
+#: ../../portable/httpclient.py:92
+msgid "HTTP error"
+msgstr "HTTP-virhe"
+
+#: ../../portable/httpclient.py:95
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "Epäkelpo Status-rivi: %s"
+
+#: ../../portable/httpclient.py:98
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "Virheellinen otsakerivi: %s"
+
+#: ../../portable/httpclient.py:101
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr "Virheellinen lohkokoko: %s"
+
+#: ../../portable/httpclient.py:104
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr "Odotettiin CRLF, vastaanotettiin: %r"
+
+#: ../../portable/httpclient.py:107
+#, python-format
+msgid "%s closed connection"
+msgstr "%s sulki yhteyden"
+
+#: ../../portable/httpclient.py:113
+msgid "Got 404 status code"
+msgstr "Vastaanotettiin 404-virheilmoitus"
+
+#: ../../portable/httpclient.py:115
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "Virheellinen tilakoodi: %s"
+
+#: ../../portable/httpclient.py:119
+msgid "Authorization failed"
+msgstr "Varmennus epäonnistui"
+
+#: ../../portable/httpclient.py:125
+msgid "Pipeline request never started"
+msgstr "Pipeline-pyyntö ei ikinä toteutunut"
+
+#: ../../portable/httpclient.py:129
+msgid "Timeout"
+msgstr "Aikakatkaisu tapahtui"
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "Yhteys %s aikakatkaistiin"
+
+#: ../../portable/httpclient.py:134
+msgid "Invalid URL"
+msgstr "Virheellinen URL"
+
+#: ../../portable/httpclient.py:135
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr "\"%s\" on virheellinen osoite"
+
+#: ../../portable/httpclient.py:324
+msgid "Unknown Error code"
+msgstr "Tuntematon virhe"
+
+#: ../../portable/httpclient.py:356
+msgid "Connection closed"
+msgstr "Yhteys suljettu"
+
+#: ../../portable/httpclient.py:781
+msgid "Unknown"
+msgstr "Tuntematon"
+
+#: ../../portable/httpclient.py:782
+msgid "Internal Error: Not ready to send"
+msgstr "Sisäinen virhe: Ei valmis lähettämään"
+
+#: ../../portable/app.py:684
+msgid "Database too new"
+msgstr "Tietokanta on liian uusi"
+
+#: ../../portable/app.py:685
+msgid ""
+"You have a database that was saved with a newer version of $shortAppName. "
+"You must download the latest version of $shortAppName and run that."
+msgstr ""
+"Tietokantasi on luotu uudemmalla versiolla ohjelmasta $shortAppName. Sinun "
+"täytyy ladata ohjelman $shortAppName uusin versio."
+
+#: ../../portable/app.py:699
+msgid "Video Directory Missing"
+msgstr "Videokansio puuttuu"
+
+#: ../../portable/app.py:700
+msgid ""
+"\n"
+"Miro can't find your primary video directory.  This may be because it's "
+"located on an external drive that is currently disconnected.\n"
+"\n"
+"If you continue, the video directory will be reset to a location on this "
+"drive (this will cause you to lose some details about the videos on the "
+"external drive).  You can also quit, connect the drive, and relaunch Miro."
+msgstr ""
+"\n"
+"Miro ei löydä oletukseksi asetettua videokansiotasi.  Se saattaa olla "
+"ulkoisella levyllä, joka ei ole nyt yhteydessä koneeseesi.\n"
+"\n"
+"Jos jatkat, oletuskansioksi asetetaan kohde käytössä olevalta levyltä (tämä "
+"johtaa joidenkin ulkoisen levyn videoiden tietojen katoamiseen). Voit myös "
+"lopettaa, kiinnittää ulkoisen levyn ja käynnistää Miron uudelleen."
+
+#: ../../portable/app.py:1019 ../../portable/app.py:1033
+#: ../../portable/app.py:1077 ../../portable/app.py:1103
+#: ../../portable/app.py:1123
+#, python-format
+msgid "Remove %s"
+msgstr "Poista %s"
+
+#: ../../portable/app.py:1020
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr "Haluatko varmasti poistaa oppaan %s?"
+
+#: ../../portable/app.py:1034
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr "Poistetaanko %s"
+
+#: ../../portable/app.py:1037 ../../portable/app.py:1082
+#: ../../portable/app.py:1108 ../../portable/app.py:1127
+#, python-format
+msgid "Remove %s channels"
+msgstr "Poista %s kanavaa"
+
+#: ../../portable/app.py:1039
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr "Poistetaanko nämä %s soittolistaa"
+
+#: ../../portable/app.py:1078
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr "Mitä tehdään tältä kanavalta ladatuille videoille?"
+
+#: ../../portable/app.py:1083
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr "Mitä tehdään näiltä kanavilta ladatuille videoille?"
+
+#: ../../portable/app.py:1104
+#, python-format
+msgid ""
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
+msgstr "Poistetaanko %s? Kaikki kesken jääneet lataukset peruutetaan."
+
+#: ../../portable/app.py:1109
+#, python-format
+msgid ""
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
+msgstr ""
+"Poistetaanko nämä %s kanavaa? Kaikki kesken jääneet lataukset peruutetaan."
+
+#: ../../portable/app.py:1124
+#, python-format
+msgid "Are you sure you want to remove %s?"
+msgstr ""
+
+#: ../../portable/app.py:1128
+#, python-format
+msgid "Are you sure you want to remove these %s channels?"
+msgstr ""
+
+#: ../../portable/app.py:1141
+#, python-format
+msgid "Stop watching %s"
+msgstr ""
+
+#: ../../portable/app.py:1142
+#, python-format
+msgid "Are you sure you want to stop watching %s?"
+msgstr ""
+
+#: ../../portable/app.py:1145
+#, python-format
+msgid "Stop watching %s directories"
+msgstr ""
+
+#: ../../portable/app.py:1146
+#, python-format
+msgid "Are you sure you want to stop watching these %s directories?"
+msgstr ""
+
+#: ../../portable/app.py:1177
+msgid "Are you sure you want to quit?"
+msgstr "Lopetaanko varmasti?"
+
+#: ../../portable/app.py:1179
+msgid ""
+"Miro is still uploading your crash report. If you quit now the upload will "
+"be canceled.  Quit Anyway?"
+msgstr ""
+
+#: ../../portable/app.py:1184
+#, python-format
+msgid "You have %d download still in progress.  Quit Anyway?"
+msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
+msgstr[0] "Sinulla on %d lataus kesken. Suljetaanko silti?"
+msgstr[1] "Sinulla on %d latausta kesken. Suljetaanko silti?"
+
+#: ../../portable/app.py:1680
+msgid "Invalid Value"
+msgstr "Virheellinen arvo"
+
+#: ../../portable/app.py:1681
+#, python-format
+msgid "%s is invalid.  You must enter a non-negative number."
+msgstr "%s on virheellinen arvo. Kirjoita ei-negatiivinen luku."
+
+#: ../../portable/app.py:1972
+msgid " - Invalid URL"
+msgstr " - virheellinen osoite"
+
+#: ../../portable/app.py:1973
+msgid ""
+"The address you entered is not a valid URL.\n"
+"Please double check and try again.\n"
+"\n"
+msgstr ""
+"Annettu osoite ei ole oikean muotoinen.\n"
+"Tarkista osoite ja yritä uudelleen.\n"
+"\n"
+
+#: ../../portable/app.py:1997
+msgid "$shortAppName - Add Channel"
+msgstr "$shortAppName - Lisää kanava"
+
+#: ../../portable/app.py:1997
+msgid "Enter the URL of the channel to add"
+msgstr "Kirjoita lisättävän kanavan osoite"
+
+#: ../../portable/app.py:2018
+msgid "$shortAppName - Add Miro Guide"
+msgstr "$shortAppName - Lisää Miro-opas"
+
+#: ../../portable/app.py:2018
+msgid "Enter the URL of the Miro Guide to add"
+msgstr "Anna lisättävän Miro-oppaan osoite"
+
+#: ../../portable/app.py:2024
+msgid "$shortAppName - Download Video"
+msgstr "$shortAppName - Lataa video"
+
+#: ../../portable/app.py:2024
+msgid "Enter the URL of the video to download"
+msgstr ""
+
+#: ../../portable/app.py:2318
+msgid "News and Tech"
+msgstr ""
+
+#: ../../portable/app.py:2324
+msgid "Entertainment"
+msgstr ""
+
+#: ../../portable/app.py:2330
+msgid "High-Def"
+msgstr ""
+
+#: ../../portable/app.py:2337
+msgid "Mac"
+msgstr ""
+
+#: ../../portable/app.py:2352
+msgid "Example Playlist"
+msgstr "Esimerkki soittolista"
+
+#: ../../portable/app.py:2371
+msgid "Custom Channels"
+msgstr "Valinnaiset kanavat"
+
+#: ../../portable/app.py:2371
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr ""
+
+#: ../../portable/app.py:2386
+msgid "Error Changing Movies Directory"
+msgstr ""
+
+#: ../../portable/app.py:2387
+msgid ""
+"You don't have permission to write to the directory you selected.  Miro will "
+"continue to use the old videos directory."
+msgstr ""
+
+#: ../../portable/app.py:2422
+msgid "Error Saving Video"
+msgstr ""
+
+#: ../../portable/app.py:2424
+#, python-format
+msgid ""
+"An error occured while trying to save %s.  Please check that the file has "
+"not been deleted and try again."
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
@@ -2234,7 +2297,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:8
 msgid "<b>BitTorrent</b>"
-msgstr ""
+msgstr "<b>BitTorrent</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
 msgid "<b>Searching for Videos</b>"
@@ -2284,7 +2347,7 @@ msgstr "_Kanava:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 msgid "C_hannels"
-msgstr ""
+msgstr "K_anavat"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "C_reate Channel"
@@ -2296,7 +2359,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "Disk _Space"
-msgstr ""
+msgstr "_Levytila"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "Don't start a download _if it leaves less than"
@@ -2304,7 +2367,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Download at _most"
-msgstr ""
+msgstr "Lataa _enimmillään"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid ""
@@ -2638,9 +2701,13 @@ msgid "Store downloaded videos in this folder:"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
-msgid "To avoid slowdowns, limit upstream to"
+msgid ""
+"To avoid slowdowns, limit upstream bandwith when my computer is active."
 msgstr ""
-"Välttääksesi verkkoyhteyden ruuhkautumista, rajoita tiedonsiirtonopeus"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
+msgid "Upstream limit (KB/s)"
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
@@ -2752,7 +2819,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
 msgid ""
-"The $shortAppName Channel Guide has hundreds of internet TV channels, all of "
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
 
