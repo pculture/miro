@@ -1,4 +1,4 @@
-/* NSTextField ((parsed %d files - found %d videos)) : <title:(parsed %d files - found %d videos)> (oid:58) */
+/* NSTextField ((parsed %d files - found %d videos)) : <title:(parsed %d files - found %d videos)> (oid:94) */
 "(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)";
 
 /* NSButton (Back) : <title:Back> (oid:19) */
@@ -10,7 +10,7 @@
 /* NSButton (Browse) : <title:Browse> (oid:78) */
 "Browse" = "Browse";
 
-/* NSButton (Cancel) : <title:Cancel> (oid:59) */
+/* NSButton (Cancel) : <title:Cancel> (oid:95) */
 "Cancel" = "Cancel";
 
 /* NSButton (Next) : <title:Next> (oid:18) */
@@ -28,7 +28,7 @@
 /* NSButtonCell (Search this folder:) : <title:Search this folder:> (oid:75) */
 "Search this folder:" = "Search this folder:";
 
-/* NSTextField (Searching for Videos) : <title:Searching for Videos> (oid:57) */
+/* NSTextField (Searching for Videos) : <title:Searching for Videos> (oid:93) */
 "Searching for Videos" = "Searching for Videos";
 
 /* NSTextField (The Miro Player can find all the videos on your computer to help you organize your collection.   Would you like Miro to look for video files on your computer?) : <title:The Miro Player can find all the videos on your computer to help you organize your collection.

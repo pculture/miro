@@ -40,6 +40,8 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
     
     def init(self):
         self = super(StartupPanelController, self).initWithWindowNibName_(u"StartupPanel")
+        self.shouldFinish = False
+        self.parsed = 0
         self.gathered = None
         self.panels = {
             'run-at-startup':
@@ -72,6 +74,10 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
         switch = self.performPanelTask()
         if switch:
             self.doGoNext()
+
+    def setShouldFinish(self, shouldFinish):
+        self.shouldFinish = shouldFinish
+        self.validateButton.setTitle_(_(u'Finish'))
 
     def doGoNext(self):
         self.tabView.selectNextTabViewItem_(nil)
@@ -110,10 +116,18 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
     # -------------------------------------------------------------------------
 
     def prepareFindVideosPanel(self):
+        self.parsed = 0
         self.gathered = None
+        self.initFindVideosPanelState()
+        
+    def initFindVideosPanelState(self):
         self.backButton.setEnabled_(YES)
         self.validateButton.setEnabled_(YES)
         self.findVideosMatrix.setEnabled_(YES)
+        self.findLabel.setHidden_(YES)
+        self.findProgressIndicator.setHidden_(YES)
+        self.findProgressLabel.setHidden_(YES)
+        self.findCancelButton.setHidden_(YES)
         self.setFind_(self.findVideosMatrix)
         self.setFindRestriction_(self.findRestrictionsMatrix)
         
@@ -121,9 +135,11 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
         find = (sender.selectedCell().tag() == 1)
         self.findRestrictionsMatrix.setEnabled_(find)
         if find:
+            self.setShouldFinish(False)
             self.validateButton.setTitle_(_(u'Search!'))
         else:
-            self.validateButton.setTitle_(_(u'Finish'))
+            self.findProgressLabel.setHidden_(YES)
+            self.setShouldFinish(True)
 
     def setFindRestriction_(self, sender):
         tag = sender.selectedCell().tag()
@@ -146,7 +162,7 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
 
     def performFindVideoTask(self):
         find = (self.findVideosMatrix.selectedCell().tag() == 1)
-        if find:
+        if find and not self.shouldFinish:
             if self.findRestrictionsMatrix.selectedCell().tag() == 2 and not os.path.exists(self.customLocationField.stringValue()):
                 NSBeep()
             else:
@@ -156,7 +172,10 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
                 self.findRestrictionsMatrix.setEnabled_(NO)
                 self.browseButton.setEnabled_(NO)
                 self.customLocationField.setEnabled_(NO)
-                self.findProgressView.setHidden_(NO)
+                self.findLabel.setHidden_(NO)
+                self.findProgressIndicator.setHidden_(NO)
+                self.findProgressLabel.setHidden_(NO)
+                self.findCancelButton.setHidden_(NO)
                 self.findProgressIndicator.startAnimation_(nil)
                 self.findProgressLabel.setStringValue_("")
                 NSThread.detachNewThreadSelector_toTarget_withObject_('performFind', self, nil)
@@ -182,6 +201,7 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
             del pool
     
     def onProgressFindingVideos(self, parsed, found):
+        self.parsed = parsed
         progress = self.findProgressLabelFormat % (parsed, found)
         platformutils.callOnMainThread(self.findProgressLabel.setStringValue_, progress)
         return self.keepFinding
@@ -189,12 +209,13 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
     def cancelFind_(self, sender):
         self.keepFinding = False
     
+    @platformutils.onMainThread
     def finishFindVideoTask(self, goNext=False):
-        self.findProgressIndicator.stopAnimation_(nil)
-        self.findProgressView.setHidden_(YES)
+        self.initFindVideosPanelState()
+        finalState = self.findProgressLabelFormat % (self.parsed, len(self.gathered))
+        self.findProgressLabel.setStringValue_(finalState)
+        self.findProgressLabel.setHidden_(NO)
         if goNext:
-            self.terminate()
-        else:
-            self.prepareFindVideosPanel()
+            self.setShouldFinish(True)
 
 ###############################################################################

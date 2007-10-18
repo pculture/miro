@@ -16,9 +16,10 @@
                 backButton = id; 
                 browseButton = id; 
                 customLocationField = id; 
+                findCancelButton = id; 
+                findLabel = id; 
                 findProgressIndicator = id; 
                 findProgressLabel = id; 
-                findProgressView = id; 
                 findRestrictionsMatrix = id; 
                 findVideosMatrix = id; 
                 progressIndicator = id; 
