@@ -1378,10 +1378,6 @@
 			<array>
 				<dict>
 					<key>CF$UID</key>
-					<integer>2</integer>
-				</dict>
-				<dict>
-					<key>CF$UID</key>
 					<integer>74</integer>
 				</dict>
 				<dict>
@@ -1411,6 +1407,10 @@
 				<dict>
 					<key>CF$UID</key>
 					<integer>78</integer>
+				</dict>
+				<dict>
+					<key>CF$UID</key>
+					<integer>2</integer>
 				</dict>
 			</array>
 		</dict>
@@ -1460,7 +1460,6 @@
 				</dict>
 			</array>
 		</dict>
-		<string>File's Owner</string>
 		<string>NSTextField21</string>
 		<string>NSButton1</string>
 		<string>NSTextField</string>
@@ -1469,6 +1468,7 @@
 		<string>NSTextField2</string>
 		<string>Window</string>
 		<string>NSTextField22</string>
+		<string>File's Owner</string>
 		<dict>
 			<key>$class</key>
 			<dict>
@@ -1555,11 +1555,11 @@
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>67</integer>
+					<integer>60</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
-					<integer>60</integer>
+					<integer>67</integer>
 				</dict>
 				<dict>
 					<key>CF$UID</key>
@@ -1657,8 +1657,8 @@
 		<integer>5</integer>
 		<integer>17</integer>
 		<integer>12</integer>
-		<integer>19</integer>
 		<integer>18</integer>
+		<integer>19</integer>
 		<integer>11</integer>
 		<integer>14</integer>
 		<dict>
