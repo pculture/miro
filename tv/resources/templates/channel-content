@@ -49,7 +49,7 @@
       <div class="triangle" t:hideIf="showNewItems"/>
       <div class="triangle down" t:hideIf="not showNewItems"/>
 
-      <div t:showIf="feed.inlineSearchTerm is None">
+      <div t:showIf="not isFolder and feed.inlineSearchTerm is None">
         <div t:hideIf="isFolder" i18n:translate="">
               <span i18n:name="len" t:replace="notDeleted.len()" /> 
               Items in this Channel
@@ -59,7 +59,7 @@
               Items in this Channel Folder
         </div>
       </div>
-      <div t:showIf="feed.inlineSearchTerm is not None">
+      <div t:showIf="not isFolder and feed.inlineSearchTerm is not None">
         <div t:showIf="notDeleted.len() == matchingItems.len()" i18n:translate="">
                 All <span i18n:name="len" t:replace="matchingItems.len()" /> 
                 Match This Search
