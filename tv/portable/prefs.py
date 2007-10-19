@@ -118,6 +118,8 @@ NON_VIDEO_DIRECTORY = \
     Pref(key='NonVideoDirectory',  default=None, platformSpecific=True)
 SUPPORT_DIRECTORY = \
     Pref(key='SupportDirectory', default=None, platformSpecific=True)
+THEME_DIRECTORY = \
+    Pref(key='ThemeDirectory', default=None, platformSpecific=True)
 ICON_CACHE_DIRECTORY = \
     Pref(key='IconCacheDirectory', default=None, platformSpecific=True)
 DB_PATHNAME = \

@@ -390,10 +390,21 @@ class PyBridge:
     def setWarnIfDownloadingOnQuit(self, value):
         return config.set(prefs.WARN_IF_DOWNLOADING_ON_QUIT, value)
 
-    @asUrgent
     def handleCommandLine(self, commandLine):
+        # Here's a massive hack to get command line parameters into config
+        args = getArgumentList(commandLine)
+        for x in range(len(args)-1):
+            if args[x] == '--theme':
+                config.__currentThemeHack = args[x+1]
+                config.load(theme = args[x+1])
+                break
+
         # Doesn't matter if this executes before the call to
         # parseCommandLineArgs in app.py. -clahey
+        self._handleCommandLine(commandLine)
+
+    @asUrgent
+    def _handleCommandLine(self, commandLine):
         singleclick.handleCommandLineArgs(getArgumentList(commandLine))
 
     def pageLoadFinished(self, area, url):

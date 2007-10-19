@@ -28,6 +28,7 @@ import urllib
 import logging
 
 __appConfig = None
+__themeConfig = dict()
 __data = None
 __lock = RLock()
 __callbacks = set()
@@ -38,12 +39,15 @@ def addChangeCallback(callback):
 def removeChangeCallback(callback):
     __callbacks.discard(callback)
 
-def load():
+# The theme parameter is a horrible hack to load the theme before we
+# can import other modules. pybridge makes the extra, early call
+def load(theme = None):
     global __appConfig
+    global __themeConfig
     global __data
-    if __appConfig is None and __data is None:
-        __lock.acquire()
-        try:
+    __lock.acquire()
+    try:
+        if __appConfig is None and __data is None:
             # There's some sleight-of-hand here. The Windows port needs to
             # look up config.LONG_APP_NAME and config.PUBLISHER to compute
             # the path to the data file that is read when load() is
@@ -64,9 +68,17 @@ def load():
             # This is a bit of a hack to automagically get the serial
             # number for this platform
             prefs.APP_SERIAL.key = ('appSerial-%s' % get(prefs.APP_PLATFORM))
-
-        finally:
-            __lock.release()
+        if theme is not None:
+            try:
+                __themeConfig = util.readSimpleConfigFile(os.path.join(
+                    get(prefs.THEME_DIRECTORY),
+                    theme,
+                    'app.config'))
+            except:
+                logging.warn("Failed to load theme %s" % theme)
+                
+    finally:
+        __lock.release()
 
 def save():
     __lock.acquire()
@@ -85,6 +97,8 @@ def get(descriptor):
             return __data[descriptor.key]
         elif descriptor.platformSpecific:
             return platformcfg.get(descriptor)
+        elif descriptor.key in __themeConfig:
+            return __themeConfig[descriptor.key]
         elif descriptor.key in __appConfig:
             return __appConfig[descriptor.key]
         else:

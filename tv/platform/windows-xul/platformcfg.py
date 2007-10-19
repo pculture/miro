@@ -37,6 +37,7 @@ _specialFolderCSIDLs = {
     "My Videos": 0x000e,
     "My Documents": 0x0005,
     "Desktop": 0x0000,
+    "Common AppData": 0x0023,
 }
 
 def getSpecialFolder(name):
@@ -62,6 +63,7 @@ def getSpecialFolder(name):
         return None
 
 _appDataDirectory = getSpecialFolder('AppData')
+_commonAppDataDirectory = getSpecialFolder("Common AppData")
 _baseMoviesDirectory = getSpecialFolder('My Videos')
 _nonVideoDirectory = getSpecialFolder('Desktop')
 
@@ -91,6 +93,19 @@ def _getSupportDirectory():
         pass
     return path
 
+def _getThemeDirectory():
+    # We don't get the publisher and long app name from the config so
+    # changing the app name doesn't change the support directory
+    path = os.path.join(_commonAppDataDirectory,
+                        u'Participatory Culture Foundation',
+                        u'Miro',
+                        u'Themes')
+    try:
+        os.makedirs(path)
+    except:
+        pass
+    return path
+
 def _getConfigFile():
     return os.path.join(_getSupportDirectory(), "preferences.bin")
 
@@ -114,6 +129,9 @@ def save(data):
 def get(descriptor):
     if descriptor == prefs.MOVIES_DIRECTORY:
         return _getMoviesDirectory()
+
+    elif descriptor == prefs.THEME_DIRECTORY:
+        return _getThemeDirectory()
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
         return _nonVideoDirectory
