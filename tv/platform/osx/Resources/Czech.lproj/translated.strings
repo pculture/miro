@@ -4,7 +4,13 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-08-22 16:47-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-10-19 11:52-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+
+/* File: ../../portable/dialogs.py:77 */
+/* Flag: python-format */
+"Cancel" = "Storno";
+
+"OK" = "Ok";
 
 "$log" = "$log";
 
@@ -15,8 +21,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* Flag: untranslated */
 "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." /* = "Jaká smůla! $longAppName se stala obětí jakéhosi zmatku či pomatení smyslů $when. Omlouváme se a navrhujeme ji ukončit a znovu spustit. To ji umravní - a krom toho sníží možnost že by se poškodilo nastavení nebo seznam kanálů." */;
-
-"OK" = "Ok";
 
 "The fall of $shortAppName??" = "Pád $shortAppName??";
 
@@ -54,13 +58,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Donate" = "Přispěj";
 
-/* Flag: untranslated */
-"Download Video..." = "Download Video...";
+"Download Video..." = "Stáhni video...";
 
 "Edit" = "Editovat";
 
-/* Flag: untranslated */
-"Export Channels (OPML)..." = "Export Channels (OPML)...";
+"Export Channels (OPML)..." = "Exportuj kanály (OPML)...";
 
 "File" = "Soubor";
 
@@ -73,8 +75,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Hide Others" = "Skrýt ostatní";
 
-/* Flag: untranslated */
-"Import Channels (OPML)..." = "Import Channels (OPML)...";
+"Import Channels (OPML)..." = "Importuj kanály (OPML)...";
 
 "Main Window" = "Hlavní okno";
 
@@ -167,9 +168,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "VideoWindow" = "Okno videa";
 
-/* File: ../../portable/dialogs.py:77 */
-"Cancel" = "Storno";
-
 "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
 
 "Password:\n" = "Heslo:\n";
@@ -233,7 +231,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
 "GB free." = "GB volných.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
 "KB/s when my computer is active." = "KB/s ve chvílích, kdy svůj počítač využívám.";
 
 "Maximum:" = "Maximum:";
@@ -265,12 +262,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Save downloaded videos in this folder:" = "Ukládat stažená videa do této složky:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:572 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:571 */
 "Show as Channel" = "Zobrazit jako kanál";
 
 "Stop after each video." = "Zastav přehrávání po každém videu.";
 
 "To avoid internet slowdowns:" = "Aby se předšlo zpomalení internetu:";
+
+/* File: ../../portable/app.py:1187 */
+/* Flag: untranslated */
+"Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
 
 /* Flag: untranslated */
 "Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:" /* = "Nová videa v těchto adresářích přidávat do videotéky:" */;
@@ -360,24 +361,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: python-format */
 "A new version of %s is available for download." = "Nová verze %s je dostupná ke stažení.";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:155 */
-/* Flag: untranslated */
-"Select a File" = "Select a File";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:160 */
-/* Flag: untranslated */
-"Save File to" = "Save File to";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:210 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214 */
 "Error Bombing Item" = "Chyba při zasílání 'bomby'";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:212 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:216 */
 "Error Recommending Item" = "Chyba při doporučování položky";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218 */
 "Error Opening Website" = "Chyba při otevírání stránky";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:222 */
 /* Flag: python-format */
 "There was an error opening %s.  Please try again in a few seconds" = "Nastala chyba s otevíráním %s. Zkuste to znovu za několik vteřin";
 
@@ -394,15 +387,15 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:257 */
 "onStartup called twice" = "onStartup bylo voláno dvakrát";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:672 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:671 */
 /* Flag: untranslated */
 "Spacebar" = "Spacebar" /* = "Mezerník" */;
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:819 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:818 */
 /* Flag: untranslated */
 "Close to tray?" = "Close to tray?" /* = "Minimalizovat?" */;
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:820 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:819 */
 /* Flag: untranslated */
 "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." /* = "Když klepnete na červené zavírací tlačítko, budete chtít, aby byl Miro minimalizován na lištu nebo aby byl ukončen? Toto nastavení můžete později změnit v nabídce možnosti." */;
 
@@ -445,31 +438,31 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
 "Disk Space" = "Místo na disku";
 
-/* File: ../../platform/osx/frontend/Preferences.py:164 */
+/* File: ../../platform/osx/frontend/Preferences.py:170 */
 "Movies Directory" = "Složka filmů";
 
-/* File: ../../platform/osx/frontend/Preferences.py:165 */
+/* File: ../../platform/osx/frontend/Preferences.py:171 */
 /* Flag: untranslated */
 "Select a Directory to store %s downloads in." = "Select a Directory to store %s downloads in." /* = "Vyberte adresář pro uložení %s stažení." */;
 
-/* File: ../../platform/osx/frontend/Preferences.py:166 */
-/* File: ../../platform/osx/frontend/Preferences.py:230 */
+/* File: ../../platform/osx/frontend/Preferences.py:172 */
+/* File: ../../platform/osx/frontend/Preferences.py:236 */
 "Select" = "Vyber";
 
-/* File: ../../platform/osx/frontend/Preferences.py:175 */
+/* File: ../../platform/osx/frontend/Preferences.py:181 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
 "Migrate existing movies?" = "Přesunout existující filmy?";
 
-/* File: ../../platform/osx/frontend/Preferences.py:176 */
+/* File: ../../platform/osx/frontend/Preferences.py:182 */
 /* Flag: untranslated */
 "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." /* = "Vybrali jste novou složku pro stahované filmy. Mají se %s sem přenést již ukončená stažení? (Právě stahované filmy se nepřenesou, dokud neskončí jejich stahování)" */;
 
-/* File: ../../platform/osx/frontend/Preferences.py:228 */
+/* File: ../../platform/osx/frontend/Preferences.py:234 */
 /* Flag: untranslated */
 "View this Directory in the Library" = "View this Directory in the Library" /* = "Zobrait tento adresář ve videotéce" */;
 
-/* File: ../../platform/osx/frontend/Preferences.py:229 */
+/* File: ../../platform/osx/frontend/Preferences.py:235 */
 "Select a Directory to view in the Library." = "Vyberte adresář pro zobraení ve videotéce.";
 
 /* File: ../../platform/osx/frontend/StartupPanel.py:114 */
@@ -575,7 +568,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:322 */
 "New Channel _Guide..." = "Nový _Průvodce kanálem...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:563 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:562 */
 "Folder Location" = "Adresa složky";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
@@ -650,6 +643,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Miro Guide" = "Miro Guide" /* = "Průvodce" */;
 
+/* File: ../../portable/extrastrings.py:5 */
+/* File: ../../portable/feed.py:2012 */
+/* File: ../../portable/feed.py:2104 */
+"Search" = "Hledat";
+
 /* File: ../../portable/downloader.py:214 */
 "activity" = "aktivita";
 
@@ -722,28 +720,21 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/feed.py:884 */
 "Would you like to keep the feed?" = "Chcete ponechat tento proud?";
 
-/* File: ../../portable/feed.py:1001 */
+/* File: ../../portable/feed.py:997 */
 "Bad content-type" = "Špatný typ obsahu";
 
-/* File: ../../portable/feed.py:1014 */
+/* File: ../../portable/feed.py:1010 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
 "Channel is not compatible with $shortAppName!" = "Kanál není kompagibiln";
 
-/* File: ../../portable/feed.py:1015 */
+/* File: ../../portable/feed.py:1011 */
 "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Budeme se snažit stáhnout tyto soubory co nejlépe. Může to ale zabrat nějaký čas navíc projít videa a popisky mohou vypadat směšně. Prosíme, kontaktujte vydavatele $url a požádajte ho, zda může poskytovat proud ve formátu, který bude fungovat v $shortAppName.\n\nChcete přesto tento kanál stáhnout?";
 
-/* File: ../../portable/feed.py:2010 */
 /* File: ../../portable/feed.py:2118 */
-/* File: ../../portable/extrastrings.py:5 */
-"Search" = "Hledat";
+"Local Files" = "Místní soubory";
 
 /* File: ../../portable/feed.py:2132 */
-/* Flag: untranslated */
-"Local Files" = "Local Files";
-
-/* File: ../../portable/feed.py:2146 */
-/* Flag: untranslated */
-"Playing File" = "Playing File";
+"Playing File" = "Přehrávám soubor";
 
 /* File: ../../portable/menu.py:69 */
 "Update Channels Now" = "Aktualizovat kanály";
@@ -753,24 +744,24 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Downloaded Items" = "Staženo položek: %d";
 
 /* File: ../../portable/menu.py:94 */
-/* File: ../../portable/item.py:1454 */
+/* File: ../../portable/item.py:1457 */
 "Play" = "Přehrávat";
 
 /* File: ../../portable/menu.py:95 */
-/* File: ../../portable/item.py:1457 */
+/* File: ../../portable/item.py:1460 */
 "Add to new playlist" = "Přidat do nového seznamu skladeb";
 
 /* File: ../../portable/menu.py:97 */
-/* File: ../../portable/item.py:1450 */
+/* File: ../../portable/item.py:1453 */
 "Remove From Playlist" = "Odstranit ze seznamu skladeb";
 
 /* File: ../../portable/menu.py:99 */
-/* File: ../../portable/item.py:1452 */
+/* File: ../../portable/item.py:1455 */
 /* Flag: untranslated */
 "Remove From the Library" = "Remove From the Library" /* = "Odstranit z videotéky" */;
 
 /* File: ../../portable/menu.py:105 */
-/* File: ../../portable/item.py:1461 */
+/* File: ../../portable/item.py:1464 */
 "Mark as Unwatched" = "Označit jako neshlédnuté";
 
 /* File: ../../portable/menu.py:110 */
@@ -779,7 +770,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/menu.py:111 */
 /* File: ../../portable/dialogs.py:85 */
-/* File: ../../portable/item.py:1467 */
+/* File: ../../portable/item.py:1470 */
 "Download" = "Stáhnout";
 
 /* File: ../../portable/menu.py:116 */
@@ -787,16 +778,39 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Downloading Items" = "Stahováno položek: %d";
 
 /* File: ../../portable/menu.py:118 */
-/* File: ../../portable/item.py:1465 */
+/* File: ../../portable/item.py:1468 */
 "Cancel Download" = "Stornovat stahování";
 
 /* File: ../../portable/menu.py:120 */
-/* File: ../../portable/item.py:1465 */
+/* File: ../../portable/item.py:1468 */
 "Pause Download" = "Pozastavit stahování";
 
 /* File: ../../portable/menu.py:123 */
-/* File: ../../portable/item.py:1463 */
+/* File: ../../portable/item.py:1466 */
 "Restart Upload" = "Restartovat odesílání";
+
+/* File: ../../portable/opml.py:32 */
+"Export OPML File" = "Export OPML souboru";
+
+/* File: ../../portable/opml.py:106 */
+/* Flag: untranslated */
+"Import OPML File" = "Import OPML File";
+
+/* File: ../../portable/opml.py:108 */
+/* Flag: untranslated */
+"OPML Files" = "OPML Files";
+
+/* File: ../../portable/opml.py:127 */
+/* Flag: untranslated */
+"OPML Import failed" = "OPML Import failed";
+
+/* File: ../../portable/opml.py:128 */
+/* Flag: untranslated */
+"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
+
+/* File: ../../portable/opml.py:133 */
+/* Flag: untranslated */
+"OPML Import summary" = "OPML Import summary";
 
 /* File: ../../portable/autoupdate.py:121 */
 /* Flag: python-format */
@@ -819,65 +833,63 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Internal Error" = "Vnitřní chyba";
 
 /* File: ../../portable/util.py:257 */
-/* Flag: untranslated */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report.";
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro zaznamenal vnitřní chybu. Můžete nám pomoci rozpoznat a opravit chybu tím, že odešlete zprávu o chybě.";
 
 /* File: ../../portable/util.py:257 */
 /* Flag: untranslated */
 "Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
 
 /* File: ../../portable/util.py:257 */
-/* Flag: untranslated */
-"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
+"Describe what you were doing that caused this error" = "Popište co jste dělali, když problém vznikl";
 
-/* File: ../../portable/util.py:441 */
+/* File: ../../portable/util.py:460 */
 /* Flag: python-format */
 "%1.1fGB" = "%1.1fGB";
 
-/* File: ../../portable/util.py:443 */
+/* File: ../../portable/util.py:462 */
 /* Flag: python-format */
 "%dGB" = "%dGB";
 
-/* File: ../../portable/util.py:447 */
+/* File: ../../portable/util.py:466 */
 /* Flag: python-format */
 "%1.1fMB" = "%1.1fMB";
 
-/* File: ../../portable/util.py:449 */
+/* File: ../../portable/util.py:468 */
 /* Flag: python-format */
 "%dMB" = "%dMB";
 
-/* File: ../../portable/util.py:453 */
+/* File: ../../portable/util.py:472 */
 /* Flag: python-format */
 "%1.1fKB" = "%1.1fKB";
 
-/* File: ../../portable/util.py:455 */
+/* File: ../../portable/util.py:474 */
 /* Flag: python-format */
 "%dKB" = "%dKB";
 
-/* File: ../../portable/util.py:459 */
+/* File: ../../portable/util.py:478 */
 /* Flag: python-format */
 "%1.1fB" = "%1.1fB";
 
-/* File: ../../portable/util.py:461 */
+/* File: ../../portable/util.py:480 */
 /* Flag: python-format */
 "%dB" = "%dB";
 
-/* File: ../../portable/storedatabase.py:828 */
-/* File: ../../portable/storedatabase.py:1189 */
+/* File: ../../portable/storedatabase.py:832 */
+/* File: ../../portable/storedatabase.py:1231 */
 /* Flag: python-format */
 "%s database save succeeded" = "Uspěšné uložení databáze %s";
 
-/* File: ../../portable/storedatabase.py:829 */
-/* File: ../../portable/storedatabase.py:1190 */
+/* File: ../../portable/storedatabase.py:833 */
+/* File: ../../portable/storedatabase.py:1232 */
 "The database has been successfully saved. It is now safe to quit without losing any data." = "Databáze byla úspěšně uložena. Nyní je možno bezpečně odejít z programu.";
 
-/* File: ../../portable/storedatabase.py:836 */
-/* File: ../../portable/storedatabase.py:1198 */
+/* File: ../../portable/storedatabase.py:840 */
+/* File: ../../portable/storedatabase.py:1240 */
 /* Flag: python-format */
 "%s database save failed" = "Uložení databáze %s selhalo";
 
-/* File: ../../portable/storedatabase.py:837 */
-/* File: ../../portable/storedatabase.py:1199 */
+/* File: ../../portable/storedatabase.py:841 */
+/* File: ../../portable/storedatabase.py:1241 */
 /* Flag: python-format */
 "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s nemohl uložit svoji databázi: Disk je plný.\nDoporučujeme smazat soubory ze zaplněného disku nebo jednoduše smazat některé filmy z vaší sbírky.\nPoslední změny mohou být ztraceny.";
 
@@ -885,12 +897,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Ok" = "Budiž";
 
 /* File: ../../portable/dialogs.py:81 */
-/* Flag: untranslated */
-"Ignore" = "Ignore";
+"Ignore" = "Ignoruj";
 
 /* File: ../../portable/dialogs.py:82 */
-/* Flag: untranslated */
-"Submit Crash Repport" = "Submit Crash Repport";
+"Submit Crash Report" = "Odešli zprávu o chybě";
 
 /* File: ../../portable/dialogs.py:83 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
@@ -938,54 +948,94 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Close to Tray" = "Close to Tray" /* = "Minimalizovat" */;
 
 /* File: ../../portable/dialogs.py:99 */
-/* Flag: untranslated */
-"Launch Miro" = "Launch Miro";
+"Launch Miro" = "Spusť Miro";
 
-/* File: ../../portable/dialogs.py:214 */
+/* File: ../../portable/dialogs.py:100 */
+"Download Anyway" = "Přesto stáhnout";
+
+/* File: ../../portable/dialogs.py:221 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
 "New Search Channel" = "Nový vyhledávací kanál";
 
-/* File: ../../portable/dialogs.py:214 */
+/* File: ../../portable/dialogs.py:221 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:25 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
 "A search channel contains items that match a search term." = "Vyhledávací kanál obsahuje položky podle klíčového slova.";
 
-/* File: ../../portable/singleclick.py:161 */
+/* File: ../../portable/singleclick.py:86 */
+/* Flag: untranslated */
+"Download already exists" = "Download already exists";
+
+/* File: ../../portable/singleclick.py:87 */
+/* Flag: untranslated */
+"That URL is already an external download." = "That URL is already an external download.";
+
+/* File: ../../portable/singleclick.py:93 */
+/* Flag: untranslated */
+"Miro will begin downloading it now." = "Miro will begin downloading it now.";
+
+/* File: ../../portable/singleclick.py:95 */
+/* Flag: untranslated */
+"It is downloading now." = "It is downloading now.";
+
+/* File: ../../portable/singleclick.py:97 */
+/* Flag: untranslated */
+"It has already been downloaded." = "It has already been downloaded.";
+
+/* File: ../../portable/singleclick.py:124 */
+/* Flag: untranslated */
+"Download Error" = "Download Error";
+
+/* File: ../../portable/singleclick.py:125 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro is not able to download a file at this URL:\n\nURL: %s";
+
+/* File: ../../portable/singleclick.py:133 */
+/* Flag: untranslated */
+"File Download" = "File Download";
+
+/* File: ../../portable/singleclick.py:134 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "This file at %s does not appear to be audio, video, or an RSS feed.";
+
+/* File: ../../portable/singleclick.py:224 */
 "Subscribing to multiple channels" = "Odebírat více kanálů";
 
-/* File: ../../portable/singleclick.py:162 */
+/* File: ../../portable/singleclick.py:225 */
 /* Flag: python-format */
 "Create %d channels?" = "Vytvořit %d kanálů?";
 
-/* File: ../../portable/singleclick.py:175 */
+/* File: ../../portable/singleclick.py:238 */
 /* Flag: python-format */
 "Adding %d channels to a new folder" = "Do nové složky přidávám kanálů: %d";
 
-/* File: ../../portable/singleclick.py:176 */
+/* File: ../../portable/singleclick.py:239 */
 /* File: ../../portable/folder.py:226 */
 "Enter a name for the new channel folder" = "Vložte jméno pro novou složku kanálů";
 
-/* File: ../../portable/singleclick.py:179 */
+/* File: ../../portable/singleclick.py:242 */
 /* Flag: python-format */
 "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "Upozornění: Některé z těchto kanálů (%d) už sledujete, takže je nechám tam kde už jsou.";
 
-/* File: ../../portable/singleclick.py:190 */
+/* File: ../../portable/singleclick.py:253 */
 "Subscription error" = "Chyba při odebírání";
 
-/* File: ../../portable/singleclick.py:200 */
+/* File: ../../portable/singleclick.py:263 */
 "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Tento $shortAppName soubor kanálu nemá platný formát: $url. Prosíme, informujte vydavatele tohoto souboru.";
 
-/* File: ../../portable/singleclick.py:208 */
+/* File: ../../portable/singleclick.py:271 */
 "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Tento $shortAppName soubor kanálu má špatný typ obsahu: $url. Prosíme, informujte vydavatele tohoto souboru.";
 
-/* File: ../../portable/singleclick.py:212 */
+/* File: ../../portable/singleclick.py:275 */
 "Could not download the $shortAppName channel file: $url." = "Nemohu stáhnout soubor $shortAppName kanálu: $url";
 
-/* File: ../../portable/singleclick.py:251 */
+/* File: ../../portable/singleclick.py:313 */
 "Invalid Torrent" = "Chybný Torrent";
 
-/* File: ../../portable/singleclick.py:252 */
+/* File: ../../portable/singleclick.py:314 */
 /* Flag: python-format */
 "The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Soubor Torrentu %s vypadá, že je porušený a nemůže být proto otevřen. [OK]";
 
@@ -993,8 +1043,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Open" = "_Otevřít";
 
 /* File: ../../portable/menubar.py:145 */
-/* Flag: untranslated */
-"_Download Video" = "_Download Video";
+"_Download Video" = "_Stáhni video";
 
 /* File: ../../portable/menubar.py:147 */
 "Check _Version" = "Zkontrolovat _verzi";
@@ -1018,8 +1067,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Copy Video _URL" = "Zkopíruj adresu filmu";
 
 /* File: ../../portable/menubar.py:156 */
-/* Flag: untranslated */
-"_Options..." = "_Options...";
+"_Options..." = "_Možnosti...";
 
 /* File: ../../portable/menubar.py:157 */
 "_Quit" = "_Zavřít";
@@ -1056,12 +1104,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Update _All Channels" = "_Aktualizovat všechny kanály";
 
 /* File: ../../portable/menubar.py:188 */
-/* Flag: untranslated */
-"_Import Channels (OPML)..." = "_Import Channels (OPML)...";
+"_Import Channels (OPML)..." = "_Importuj kanály (OPML)";
 
 /* File: ../../portable/menubar.py:189 */
-/* Flag: untranslated */
-"E_xport Channels (OPML)..." = "E_xport Channels (OPML)...";
+"E_xport Channels (OPML)..." = "E_xportuj kanály (OPML)";
 
 /* File: ../../portable/menubar.py:191 */
 "_Send this channel to a friend" = "_Zaslat odkaz na kanál příteli";
@@ -1159,16 +1205,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Resume All Downloads ($numPaused)" = "Resume All Downloads ($numPaused)" /* = "Obnovit všechna stahování ($numPaused)" */;
 
 /* File: ../../portable/menubar.py:253 */
-/* Flag: untranslated */
-"Options..." = "Options...";
+"Options..." = "Možnosti...";
 
 /* File: ../../portable/menubar.py:255 */
-/* Flag: untranslated */
-"Hide Window" = "Hide Window";
+"Hide Window" = "Skryj okno";
 
 /* File: ../../portable/menubar.py:256 */
-/* Flag: untranslated */
-"Show Window" = "Show Window";
+"Show Window" = "Zobraz okno";
 
 /* File: ../../portable/item.py:478 */
 /* Flag: python-format */
@@ -1179,8 +1222,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Would you like to delete this folder and all of its videos or just remove its entry from the Library?" /* = "Chcete smazat tuto složku a veškerá videa v ní obsažená, nebo jen odstranit její záznam z videotéky?" */;
 
 /* File: ../../portable/item.py:487 */
-/* Flag: untranslated */
-"Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
+"Would you like to delete this file or just remove its entry from the Library?" = "Chcete tento soubor smazat nebo jen odstranit záznam z Knihovny?";
 
 /* File: ../../portable/item.py:507 */
 "This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Tato položka je složka. Pokud odstraníte složku, veškeré položky uvnitř této složky budou smazány.";
@@ -1209,84 +1251,87 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/item.py:953 */
 "Total Down:" = "Celkem stahováno:";
 
-/* File: ../../portable/item.py:962 */
+/* File: ../../portable/item.py:956 */
+"Error:" = "Chyba:";
+
+/* File: ../../portable/item.py:964 */
 "Down Rate:" = "Hodnocení (stahování):";
 
-/* File: ../../portable/item.py:963 */
+/* File: ../../portable/item.py:965 */
 "Down Total:" = "Celkem stahováno:";
 
-/* File: ../../portable/item.py:965 */
+/* File: ../../portable/item.py:967 */
 "Up Rate:" = "Hodnocení (odesílání):";
 
-/* File: ../../portable/item.py:966 */
+/* File: ../../portable/item.py:968 */
 "Up Total:" = "Celkem odesíláno:";
 
-/* File: ../../portable/item.py:971 */
+/* File: ../../portable/item.py:973 */
 "Web page:" = "Webové stránky:";
 
-/* File: ../../portable/item.py:971 */
+/* File: ../../portable/item.py:973 */
 "permalink" = "stálý odkaz";
 
-/* File: ../../portable/item.py:972 */
+/* File: ../../portable/item.py:974 */
 "File link:" = "Odkaz na soubor:";
 
-/* File: ../../portable/item.py:972 */
+/* File: ../../portable/item.py:974 */
 "direct link to file" = "přímý odkaz na soubor";
 
-/* File: ../../portable/item.py:974 */
+/* File: ../../portable/item.py:976 */
 "File type:" = "Typ souboru:";
 
-/* File: ../../portable/item.py:981 */
+/* File: ../../portable/item.py:983 */
 "REVEAL LOCAL FOLDER" = "ZOBRAZ MÍSTNÍ SLOŽKU";
 
-/* File: ../../portable/item.py:983 */
+/* File: ../../portable/item.py:985 */
 "REVEAL LOCAL FILE" = "ZOBRAZ MÍSTNÍ SOUBOR";
 
-/* File: ../../portable/item.py:985 */
+/* File: ../../portable/item.py:987 */
 "Filename:" = "Název souboru:";
 
-/* File: ../../portable/item.py:992 */
+/* File: ../../portable/item.py:994 */
 "Down Total" = "Celkem staženo";
 
-/* File: ../../portable/item.py:994 */
+/* File: ../../portable/item.py:996 */
 "Up Total" = "Celkem odesláno";
 
-/* File: ../../portable/item.py:1012 */
+/* File: ../../portable/item.py:1014 */
 "Item Details" = "Detaily";
 
-/* File: ../../portable/item.py:1019 */
+/* File: ../../portable/item.py:1021 */
 "Torrent Details" = "Detaily Torrentu";
 
-/* File: ../../portable/item.py:1021 */
+/* File: ../../portable/item.py:1023 */
 /* Flag: untranslated */
 "Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
 
-/* File: ../../portable/item.py:1024 */
+/* File: ../../portable/item.py:1027 */
 "Download Details" = "Detaily stahování";
 
-/* File: ../../portable/item.py:1238 */
+/* File: ../../portable/item.py:1241 */
 "downloading..." = "stahuji...";
 
-/* File: ../../portable/item.py:1245 */
 /* File: ../../portable/item.py:1248 */
+/* File: ../../portable/item.py:1251 */
 /* Flag: python-format */
 "%s remaining" = "zbývá %s";
 
-/* File: ../../portable/item.py:1257 */
+/* File: ../../portable/item.py:1260 */
 "starting up..." = "začínám...";
 
-/* File: ../../portable/item.py:1456 */
+/* File: ../../portable/item.py:1459 */
 "Play Just This Video" = "Přehrát pouze toto video";
 
-/* File: ../../portable/item.py:1800 */
+/* File: ../../portable/item.py:1807 */
 /* Flag: python-format */
 "Removing %s items" = "Odstraňuji položek: %s";
 
-/* File: ../../portable/item.py:1802 */
+/* File: ../../portable/item.py:1809 */
 /* Flag: untranslated */
 "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" /* = "Jedno či více videí nebyly staženy z kanálu. Přejte si smazat tyto položky nebo pouze odstranit jejich záznamy z videotéky?" */;
 
-/* File: ../../portable/item.py:1810 */
+/* File: ../../portable/item.py:1817 */
 "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Jedna nebo více těchto položek jsou složky. Pokud odstraníte nebo smažete složku, všechny položky uvnitř ní budou také odstraněny či smazány.";
 
 /* File: ../../portable/folder.py:132 */
@@ -1376,182 +1421,179 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Invalid URL" = "Neplatné URL";
 
 /* File: ../../portable/httpclient.py:135 */
+/* Flag: untranslated */
 /* Flag: python-format */
-"%s is not a valid URL" = "URL %s není platné";
+"\"%s\" is not a valid URL" = "\"%s\" is not a valid URL";
 
-/* File: ../../portable/httpclient.py:323 */
+/* File: ../../portable/httpclient.py:324 */
 /* Flag: untranslated */
 "Unknown Error code" = "Unknown Error code";
 
-/* File: ../../portable/httpclient.py:355 */
+/* File: ../../portable/httpclient.py:356 */
 "Connection closed" = "Spojení ukončeno";
 
-/* File: ../../portable/httpclient.py:780 */
+/* File: ../../portable/httpclient.py:781 */
 "Unknown" = "Neznámý";
 
-/* File: ../../portable/httpclient.py:781 */
+/* File: ../../portable/httpclient.py:782 */
 "Internal Error: Not ready to send" = "Vnitřní chyba: nepřipraven k odesílání";
 
-/* File: ../../portable/app.py:682 */
+/* File: ../../portable/app.py:684 */
 "Database too new" = "Futurizmus";
 
-/* File: ../../portable/app.py:683 */
+/* File: ../../portable/app.py:685 */
 "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Vaše databáze byla uložena s novější verzí $shortAppName. Musíte stáhnout poslední verzi $shortAppName a tu spustit.";
 
-/* File: ../../portable/app.py:697 */
+/* File: ../../portable/app.py:699 */
 /* Flag: untranslated */
 "Video Directory Missing" = "Video Directory Missing";
 
-/* File: ../../portable/app.py:698 */
+/* File: ../../portable/app.py:700 */
 /* Flag: untranslated */
 "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro.";
 
-/* File: ../../portable/app.py:1017 */
-/* File: ../../portable/app.py:1031 */
-/* File: ../../portable/app.py:1075 */
-/* File: ../../portable/app.py:1101 */
-/* File: ../../portable/app.py:1121 */
+/* File: ../../portable/app.py:1019 */
+/* File: ../../portable/app.py:1033 */
+/* File: ../../portable/app.py:1077 */
+/* File: ../../portable/app.py:1103 */
+/* File: ../../portable/app.py:1123 */
 /* Flag: python-format */
 "Remove %s" = "Odstranit %s";
 
-/* File: ../../portable/app.py:1018 */
+/* File: ../../portable/app.py:1020 */
 /* Flag: python-format */
 "Are you sure you want to remove the guide %s?" = "Skutečně chcete odstranit průvodce %s?";
 
-/* File: ../../portable/app.py:1032 */
+/* File: ../../portable/app.py:1034 */
 /* Flag: python-format */
 "Are you sure you want to remove %s" = "Chcete opravdu odstranit %s";
 
-/* File: ../../portable/app.py:1035 */
-/* File: ../../portable/app.py:1080 */
-/* File: ../../portable/app.py:1106 */
-/* File: ../../portable/app.py:1125 */
+/* File: ../../portable/app.py:1037 */
+/* File: ../../portable/app.py:1082 */
+/* File: ../../portable/app.py:1108 */
+/* File: ../../portable/app.py:1127 */
 /* Flag: python-format */
 "Remove %s channels" = "Odstranit kanálů: %s";
 
-/* File: ../../portable/app.py:1037 */
+/* File: ../../portable/app.py:1039 */
 /* Flag: python-format */
 "Are you sure you want to remove these %s playlists" = "Skutečně chcete odstranit tyto %s eznamy skladeb";
 
-/* File: ../../portable/app.py:1076 */
+/* File: ../../portable/app.py:1078 */
 "What would you like to do with the videos in this channel that you've downloaded?" = "Co chcete udělat s videi v tomto kanálu, které jste právě stáhli?";
 
-/* File: ../../portable/app.py:1081 */
+/* File: ../../portable/app.py:1083 */
 "What would you like to do with the videos in these channels that you've downloaded?" = "Co chcete udělat s videi v tomto kanálu, které jste právě stáhli?";
 
-/* File: ../../portable/app.py:1102 */
+/* File: ../../portable/app.py:1104 */
 /* Flag: python-format */
 "Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Chcete opravdu odstranit %s? Případné stahování bude stornováno.";
 
-/* File: ../../portable/app.py:1107 */
+/* File: ../../portable/app.py:1109 */
 /* Flag: python-format */
 "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Chcete opravdu odstranit tyto kanály (%s)? Případné stahování bude stornováno.";
 
-/* File: ../../portable/app.py:1122 */
+/* File: ../../portable/app.py:1124 */
 /* Flag: python-format */
 "Are you sure you want to remove %s?" = "Skutečně chcete odstranit %s?";
 
-/* File: ../../portable/app.py:1126 */
+/* File: ../../portable/app.py:1128 */
 /* Flag: python-format */
 "Are you sure you want to remove these %s channels?" = "Skutečně chcete odstranit tyto %s kanály?";
 
-/* File: ../../portable/app.py:1139 */
+/* File: ../../portable/app.py:1141 */
 /* Flag: python-format */
 "Stop watching %s" = "Přeruš sledování %s";
 
-/* File: ../../portable/app.py:1140 */
+/* File: ../../portable/app.py:1142 */
 /* Flag: python-format */
 "Are you sure you want to stop watching %s?" = "Skutečně chcete přerušit sledování %s?";
 
-/* File: ../../portable/app.py:1143 */
+/* File: ../../portable/app.py:1145 */
 /* Flag: python-format */
 "Stop watching %s directories" = "Přeruš sledování složek %s";
 
-/* File: ../../portable/app.py:1144 */
+/* File: ../../portable/app.py:1146 */
 /* Flag: python-format */
 "Are you sure you want to stop watching these %s directories?" = "Skutečně chcete přerušit sledování těchto %s složek?";
 
-/* File: ../../portable/app.py:1174 */
+/* File: ../../portable/app.py:1177 */
 "Are you sure you want to quit?" = "Skutečně to chcete zavřít aplikaci?";
 
-/* File: ../../portable/app.py:1178 */
+/* File: ../../portable/app.py:1179 */
 /* Flag: untranslated */
-"Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?";
 
-/* File: ../../portable/app.py:1668 */
+/* File: ../../portable/app.py:1680 */
 "Invalid Value" = "Neplatná hodnota";
 
-/* File: ../../portable/app.py:1669 */
+/* File: ../../portable/app.py:1681 */
 /* Flag: python-format */
 "%s is invalid.  You must enter a non-negative number." = "Hodnota %s je neplatná. Číslo nesmí být negativní.";
 
-/* File: ../../portable/app.py:1960 */
+/* File: ../../portable/app.py:1972 */
 " - Invalid URL" = " - neplatné URL";
 
-/* File: ../../portable/app.py:1961 */
+/* File: ../../portable/app.py:1973 */
 "The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Vložená adresa není platnyým URL\nProsím zkontrolujte a vložte znovu\n\n";
 
-/* File: ../../portable/app.py:1985 */
+/* File: ../../portable/app.py:1997 */
 "$shortAppName - Add Channel" = "$shortAppName - přidej kanál";
 
-/* File: ../../portable/app.py:1985 */
+/* File: ../../portable/app.py:1997 */
 "Enter the URL of the channel to add" = "Vložte URL přidávaného kanálu";
 
-/* File: ../../portable/app.py:2006 */
+/* File: ../../portable/app.py:2018 */
 "$shortAppName - Add Miro Guide" = "$shortAppName - Přidat přůvodce";
 
-/* File: ../../portable/app.py:2006 */
+/* File: ../../portable/app.py:2018 */
 /* Flag: untranslated */
 "Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add" /* = "Zadejte adresu nového průvodce" */;
 
-/* File: ../../portable/app.py:2012 */
+/* File: ../../portable/app.py:2024 */
 /* Flag: untranslated */
 "$shortAppName - Download Video" = "$shortAppName - Download Video";
 
-/* File: ../../portable/app.py:2012 */
+/* File: ../../portable/app.py:2024 */
 /* Flag: untranslated */
 "Enter the URL of the video to download" = "Enter the URL of the video to download";
 
-/* File: ../../portable/app.py:2306 */
+/* File: ../../portable/app.py:2318 */
 "News and Tech" = "Novinky";
 
-/* File: ../../portable/app.py:2313 */
+/* File: ../../portable/app.py:2324 */
 "Entertainment" = "Zábava";
 
-/* File: ../../portable/app.py:2319 */
+/* File: ../../portable/app.py:2330 */
 "High-Def" = "Vysoké rozlišení";
 
-/* File: ../../portable/app.py:2327 */
+/* File: ../../portable/app.py:2337 */
 "Mac" = "Macintosh";
 
-/* File: ../../portable/app.py:2342 */
+/* File: ../../portable/app.py:2352 */
 "Example Playlist" = "Ukázkový seznam skladeb";
 
-/* File: ../../portable/app.py:2361 */
+/* File: ../../portable/app.py:2371 */
 "Custom Channels" = "Vybrané kanály";
 
-/* File: ../../portable/app.py:2361 */
+/* File: ../../portable/app.py:2371 */
 "You are running a version of $longAppName with a custom set of channels." = "Máte spuštěnu novější verzi $shortAppName s vybranou sadou kanálů.";
 
-/* File: ../../portable/app.py:2376 */
+/* File: ../../portable/app.py:2386 */
 /* Flag: untranslated */
 "Error Changing Movies Directory" = "Error Changing Movies Directory";
 
-/* File: ../../portable/app.py:2377 */
+/* File: ../../portable/app.py:2387 */
 /* Flag: untranslated */
 "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory.";
 
-/* File: ../../portable/opml.py:113 */
-/* Flag: untranslated */
-"OPML Import failed" = "OPML Import failed";
+/* File: ../../portable/app.py:2422 */
+"Error Saving Video" = "Chyba při ukládání videa";
 
-/* File: ../../portable/opml.py:114 */
+/* File: ../../portable/app.py:2424 */
 /* Flag: untranslated */
-"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
-
-/* File: ../../portable/opml.py:119 */
-/* Flag: untranslated */
-"OPML Import summary" = "OPML Import summary";
+/* Flag: python-format */
+"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "An error occured while trying to save %s.  Please check that the file has not been deleted and try again.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
 /* Flag: untranslated */
@@ -1586,8 +1628,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "C_hannel:" = "Ka_nál:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
-/* Flag: untranslated */
-"C_hannels" = "C_hannels";
+"C_hannels" = "Ka_nály";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
 "C_reate Channel" = "Vyt_vořit kanál";
@@ -1597,12 +1638,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Check Channels for _new content" = "Check Channels for _new content";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
-/* Flag: untranslated */
-"Disk _Space" = "Disk _Space";
+"Disk _Space" = "Mí_sto na disku";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-/* Flag: untranslated */
-"Don't start a download _if it leaves less than" = "Don't start a download _if it leaves less than";
+"Don't start a download _if it leaves less than" = "N_ezačínat stahování pokud je na méně než";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
 /* Flag: untranslated */
@@ -1855,7 +1894,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Store downloaded videos in this folder:" = "Uládat stažená videa do této složky:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
-"To avoid slowdowns, limit upstream to" = "Aby nedocházelo ke zpomalení připojení, omezit odchozí tok na";
+/* Flag: untranslated */
+"To avoid slowdowns, limit upstream bandwith when my computer is active." = "To avoid slowdowns, limit upstream bandwith when my computer is active.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
+/* Flag: untranslated */
+"Upstream limit (KB/s)" = "Upstream limit (KB/s)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
 /* Flag: untranslated */
@@ -1934,7 +1978,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Search custom folder:" = "Prohledej složku:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
-"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "Průvodce kanálem $shortAppName obsahuje stovky kanálů internetových televizí a všechny jsou zdarma. Prostě pokud chcete nějaký kanál sledovat, klikněte na 'PŘIDEJ'.";
+/* Flag: untranslated */
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49 */
 "The button to the right of the play button shows videos fullscreen." = "Tlačítko napravo od přehrávání přepne do režimu celoobrazovkového zobrazení.";

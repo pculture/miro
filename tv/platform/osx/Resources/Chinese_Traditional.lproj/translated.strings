@@ -4,33 +4,31 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-08-22 16:47-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-10-19 11:53-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
-"$log" = "$log";
-
+/* File: ../../portable/dialogs.py:77 */
 /* Flag: untranslated */
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" /* = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>只要告訴我們發生問題時你正在做什麼，轉貼跳出視窗內的訊息並回答一些問題，我們將會盡快處理。</font>" */;
-
-/* Flag: untranslated */
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" /* = "事實上，假如只要一點點時間，你是否願意傳送一份當機報告給我們的臭蟲追縱系統？我們希望這份報告至少包含有關當機時你做過些什麼動作－－描述得越準確越好－－加上一些巧妙措辭的癈話在下面那個框框：" */;
-
-/* Flag: untranslated */
-"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions.";
+"Cancel" = "Cancel" /* = "取消" */;
 
 "OK" = "確定";
 
-/* Flag: untranslated */
-"The fall of $shortAppName??" = "The fall of $shortAppName??";
+"$log" = "$log";
 
-/* Flag: untranslated */
-"About Miro" = "About Miro";
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>只要告訴我們發生問題時你正在做什麼，轉貼跳出視窗內的訊息並回答一些問題，我們將會盡快處理。</font>";
 
-"Add Channel..." = "增加頻道";
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "如果只花一點時間，你是否願意傳送一份當機報告給我們的程式錯誤追縱系統？在下面的輸入欄位中，我們希望你至少填寫程式當掉前做了些什麼動作，越詳細準確越好：";
 
-/* Flag: untranslated */
-"Add Guide..." = "Add Guide...";
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "糟！$longAppName 在 $when 因某種內部內部錯誤掛點了。我們感到抱歉，並建議你關閉後重新開啟 $shortAppName。這樣應該能教好它，你失去設定值及訂閱之頻道的機會也會小些。";
 
-"Bring All to Front" = "把所有東西帶到最前";
+"The fall of $shortAppName??" = "$shortAppName 掛了??";
+
+"About Miro" = "關於 Miro";
+
+"Add Channel..." = "新增頻道...";
+
+"Add Guide..." = "新增導覽...";
+
+"Bring All to Front" = "將所有視窗移至最上層";
 
 /* File: ../../platform/osx/frontend/Preferences.py:39 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
@@ -42,26 +40,24 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Close Window" = "關閉視窗";
 
-"Copy" = "複製";
+"Copy" = "復制";
 
 "Copy Channel URL" = "複製頻道網址";
 
-"Copy Video URL" = "複製視訊網址";
+"Copy Video URL" = "複製影片網址";
 
 "Cut" = "剪下";
 
 /* File: ../../portable/dialogs.py:96 */
 "Delete" = "刪除";
 
-"Donate" = "捐贈";
+"Donate" = "捐款";
 
-/* Flag: untranslated */
-"Download Video..." = "Download Video...";
+"Download Video..." = "下載影片...";
 
 "Edit" = "編輯";
 
-/* Flag: untranslated */
-"Export Channels (OPML)..." = "Export Channels (OPML)...";
+"Export Channels (OPML)..." = "匯出 OPML 頻道列表...";
 
 "File" = "檔案";
 
@@ -69,13 +65,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Help" = "說明";
 
-/* Flag: untranslated */
-"Hide Miro" = "Hide Miro";
+"Hide Miro" = "隱藏 Miro";
 
 "Hide Others" = "隱藏其他";
 
-/* Flag: untranslated */
-"Import Channels (OPML)..." = "Import Channels (OPML)...";
+"Import Channels (OPML)..." = "匯入 OPML 頻道列表...";
 
 "Main Window" = "主視窗";
 
@@ -84,28 +78,24 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Minimize" = "最小化";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
-/* Flag: untranslated */
 "Miro" = "Miro";
 
-/* Flag: untranslated */
-"Miro Help" = "Miro Help";
+"Miro Help" = "Miro 說明";
 
-"New Channel Folder..." = "新增頻道檔案夾";
+"New Channel Folder..." = "新增頻道資料夾";
 
-"New Playlist Folder..." = "新增播放列表檔案夾";
+"New Playlist Folder..." = "新增播放清單資料夾";
 
-"New Playlist..." = "新增播放列表";
+"New Playlist..." = "新增播放清單";
 
-/* Flag: untranslated */
-"New Search Channel..." = "New Search Channel..." /* = "新增搜尋頻道" */;
+"New Search Channel..." = "新增搜尋頻道";
 
-/* Flag: untranslated */
-"Next Video" = "Next Video" /* = "下一段影片" */;
+"Next Video" = "下一段影片";
 
 /* Flag: untranslated */
-"Open Recent" = "Open Recent" /* = "開啟最近使用過的檔案" */;
+"Open Recent" = "Open Recent" /* = "開啟最近看過的影片" */;
 
-"Open..." = "開啟";
+"Open..." = "開啟舊檔...";
 
 "Paste" = "貼上";
 
@@ -114,39 +104,34 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/osx/frontend/Preferences.py:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-/* Flag: untranslated */
-"Playback" = "Playback" /* = "播放" */;
+"Playback" = "播放";
 
 /* Flag: untranslated */
-"Playlists" = "Playlists" /* = "播放列表" */;
+"Playlists" = "Playlists" /* = "播放清單" */;
 
 "Preferencesâ¦" = "偏好設定";
 
-"Previous Video" = "前一個影片";
+"Previous Video" = "上一段影片";
 
-/* Flag: untranslated */
-"Quit Miro" = "Quit Miro";
+"Quit Miro" = "離開 Miro";
 
-"Remove..." = "移除";
+"Remove..." = "移除...";
 
-/* Flag: untranslated */
-"Rename..." = "Rename..." /* = "重新命名" */;
+"Rename..." = "重新命名...";
 
-/* Flag: untranslated */
-"Report a bug" = "Report a bug";
+"Report a bug" = "回報程式錯誤";
 
-/* Flag: untranslated */
-"Save Video As..." = "Save Video As..." /* = "另存新檔" */;
+"Save Video As..." = "另存影片...";
 
-"Select All" = "選擇全部";
+"Select All" = "全部選取";
 
 "Send This Channel to a Friend" = "將此頻道寄給朋友";
 
 "Services" = "服務";
 
-"Show All" = "顯示全部";
+"Show All" = "全部顯示";
 
-"Stop Video" = "停止影片";
+"Stop Video" = "停止播放";
 
 "Update All Channels" = "更新所有頻道";
 
@@ -156,53 +141,42 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Zoom" = "縮放";
 
-/* Flag: untranslated */
 "%channel feed%" = "%channel feed%";
 
-/* Flag: untranslated */
 "%channel title%" = "%channel title%";
 
-/* Flag: untranslated */
 "%donation label%" = "%donation label%";
 
-/* Flag: untranslated */
 "-00:00:00" = "-00:00:00";
 
 "00:00:00" = "00:00:00";
 
-"Box" = "盒子";
+"Box" = "方塊";
 
 "FullScreen Controls" = "全螢幕控制";
 
 /* File: ../../portable/tabs.py:45 */
-/* Flag: untranslated */
-"Video Search" = "Video Search";
+"Video Search" = "搜尋影片";
 
 /* Flag: untranslated */
 "VideoWindow" = "VideoWindow" /* = "影片視窗" */;
-
-/* File: ../../portable/dialogs.py:77 */
-"Cancel" = "取消";
 
 /* Flag: untranslated */
 "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
 
 "Password:\n" = "密碼\n";
 
-"Username and password required" = "需要輸入用戶名稱與密碼";
+"Username and password required" = "需要輸入帳號名稱與密碼";
 
-"Username:\n\n" = "用戶名稱\n\n";
+"Username:\n\n" = "帳號名稱\n\n";
 
-" limit upstream to" = " 限制upstream";
+" limit upstream to" = " 限制上傳速率為";
 
-/* Flag: untranslated */
-"(You must restart Miro for this change to take effect)" = "(You must restart Miro for this change to take effect)";
+"(You must restart Miro for this change to take effect)" = "(變更此設定後，需要重新啟動 Miro 才會生效)";
 
-/* Flag: untranslated */
-"(You must restart Miro for this change to take effect)\n" = "(You must restart Miro for this change to take effect)\n";
+"(You must restart Miro for this change to take effect)\n" = "(變更此設定後，需要重新啟動 Miro 才會生效)\n";
 
-/* Flag: untranslated */
-"(movies directory path goes here)" = "(movies directory path goes here)";
+"(movies directory path goes here)" = "(此為影片目錄)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
 "1 day" = "1 天";
@@ -227,43 +201,36 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "99999" = "99999";
 
-/* Flag: untranslated */
-"Add..." = "Add...";
+"Add..." = "新增...";
 
-"BitTorrent ports:" = "BitTorrent傳輸埠";
+"BitTorrent ports:" = "BitTorrent 傳輸埠:";
 
 "By default, videos expire after:" = "預設影片保存期限:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
-"Change..." = "變更";
+"Change..." = "變更(&H)...";
 
-"Check channels for new content:" = "檢查各頻道是否有新內容";
+"Check channels for new content:" = "檢查各頻道是否有新內容:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-/* Flag: untranslated */
-"Don't start a download if it leaves less than" = "Don't start a download if it leaves less than" /* = "不要開始下載若硬碟剩餘容量少於" */;
+"Don't start a download if it leaves less than" = "若硬碟空間過小則不再下載檔案，硬碟空間下限：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-/* Flag: untranslated */
-"Download at most" = "Download at most" /* = "最多下載" */;
+"Download at most" = "每次最多下載";
 
-/* Flag: untranslated */
-"Folder location" = "Folder location";
+"Folder location" = "資料夾位置";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-/* Flag: untranslated */
-"GB free." = "GB free." /* = "GB" */;
+"GB free." = "GB";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
 "KB/s when my computer is active." = "KB/S 當我的電腦正在使用中";
 
-"Maximum:" = "最高";
+"Maximum:" = "最高:";
 
-"Minimum:" = "最低";
+"Minimum:" = "最低:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
-/* Flag: untranslated */
-"Never" = "Never" /* = "從不" */;
+"Never" = "永不過期";
 
 /* Flag: untranslated */
 "OtherViews" = "OtherViews" /* = "其他觀看" */;
@@ -271,8 +238,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
 "Play videos one after another." = "連續播放影片";
 
-/* Flag: untranslated */
-"Remember video position." = "Remember video position.";
+"Remember video position." = "記憶播放進度。";
 
 /* File: ../../portable/guide.py:86 */
 /* File: ../../portable/playlist.py:197 */
@@ -282,60 +248,51 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/folder.py:156 */
 /* File: ../../portable/folder.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
-/* Flag: untranslated */
-"Remove" = "Remove";
+"Remove" = "移除";
 
-/* Flag: untranslated */
-"Run Miro at startup" = "Run Miro at startup";
+"Run Miro at startup" = "系統啟動時執行 Miro";
 
-"Save downloaded videos in this folder:" = "儲存下載的影片在此資料夾";
+"Save downloaded videos in this folder:" = "儲存下載的影片在此資料夾:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:572 */
-/* Flag: untranslated */
-"Show as Channel" = "Show as Channel";
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:571 */
+"Show as Channel" = "顯示為頻道";
 
-/* Flag: untranslated */
-"Stop after each video." = "Stop after each video." /* = "不連續播放影片" */;
+"Stop after each video." = "不連續播放影片。";
 
 /* Flag: untranslated */
 "To avoid internet slowdowns:" = "To avoid internet slowdowns:" /* = "為避免網路雍塞" */;
 
-/* Flag: untranslated */
-"Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:";
+/* File: ../../portable/app.py:1187 */
+"Warn me when I attempt to quit with downloads in progress" = "若關閉時仍有檔案下載中，提醒我";
 
-"every 30 minutes" = "每30分鐘";
+"Watch for new videos in these folders and include them in the Library:" = "將此資料夾中的新影片自動放到媒體庫中:";
+
+"every 30 minutes" = "每 30 分鐘";
 
 "every hour" = "每小時";
 
-/* Flag: untranslated */
-"manually" = "manually" /* = "手動地" */;
+"manually" = "手動檢查";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
-/* Flag: untranslated */
-"videos at once." = "videos at once.";
+"videos at once." = "段影片檔。";
 
-/* Flag: untranslated */
 "$label$" = "$label$";
 
-/* Flag: untranslated */
-"$title$" = "$title$";
+"$title$" = "Copy text   \t\r\n$title$";
 
 "Channel" = "頻道";
 
 /* File: ../../portable/dialogs.py:91 */
-/* Flag: untranslated */
-"Create" = "Create";
+"Create" = "建立";
 
-/* Flag: untranslated */
-"In this:" = "In this:";
+"In this:" = "在此：";
 
-/* Flag: untranslated */
-"Item1" = "Item1";
+"Item1" = "項目1";
 
 "Search Engine" = "搜尋引擎";
 
 /* Flag: untranslated */
-"Search for:" = "Search for:" /* = "搜尋：" */;
+"Search for:" = "Search for:" /* = "搜尋:" */;
 
 "URL" = "網址";
 
@@ -351,86 +308,63 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/osx/frontend/StartupPanel.py:90 */
 /* File: ../../platform/osx/frontend/StartupPanel.py:116 */
-/* Flag: untranslated */
-"Next" = "Next";
+"Next" = "下一頁";
 
 /* File: ../../portable/dialogs.py:79 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
-/* Flag: untranslated */
-"No" = "No";
+"No" = "否";
 
 "Only search my Movies folder." = "只搜尋我的影片資料夾";
 
-/* Flag: untranslated */
-"Search my entire Home folder." = "Search my entire Home folder.";
+"Search my entire Home folder." = "搜尋個人資料夾。";
 
-/* Flag: untranslated */
-"Search this folder:" = "Search this folder:";
+"Search this folder:" = "搜尋此資料夾:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37 */
-/* Flag: untranslated */
-"Searching for Videos" = "Searching for Videos" /* = "搜尋影片" */;
+"Searching for Videos" = "搜尋影片";
 
-/* Flag: untranslated */
-"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?";
+"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "Miro 可以搜尋你電腦上所有的影片，協助你管理這些收藏。\n\n\n你想讓 Miro 搜尋電腦中的影片嗎？";
 
-/* Flag: untranslated */
-"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question.";
+"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "接下來幾個畫面會幫你依照需求設定 Miro，首先是第一個問題。";
 
-/* Flag: untranslated */
-"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?";
+"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "我們建議你在電腦啟動時一併啟動 Miro，這樣一來還沒下載完的影片會繼續下載、頻道中的新影片也能自動下載方便觀看。\n\n\n你想讓 Miro 隨系統一併啟動嗎？";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
 /* Flag: untranslated */
-"Welcome to Internet TV!" = "Welcome to Internet TV!" /* = "歡迎收看網路電視！" */;
+"Welcome to Internet TV!" = "Welcome to Internet TV!" /* = "歡迎收看網際電視！" */;
 
-/* Flag: untranslated */
-"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
+"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "歡迎收看網際電視，有了 Miro 播放軟體，可以從喜歡的頻道自動下載節目、連續播放新的影片、下載 BT 種子檔、將影片推薦給朋友，還可以做許多事情！\n\n";
 
 /* File: ../../portable/dialogs.py:78 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
-/* Flag: untranslated */
-"Yes" = "Yes";
+"Yes" = "是";
 
-/* Flag: untranslated */
-"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Miro is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Miro regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Miro Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Miro is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Miro regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Miro Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n";
+"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Miro is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Miro regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Miro Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "完成!\n\n設定完畢，現在可以開始找些頻道來看了。\n\n別再等：Miro 跟一般網頁上觀看影片的方法不同，影片作者可以提供尺寸大、品質高的影片。所以別等了，快下載一些影片來瞧瞧。\n\n放著就好：Miro 會定期檢查頻道中是否有新影片並自動下載，所以開著 Miro 能讓你有空時就有新影片可以看\n\n別擔心硬碟空間：Miro 像 TiVo 一樣都提供「期限」的功能，清除舊的影片、留下空間給新影片。你也可以按下「保留」以便永久保留某些影片，或者設定某頻道的影片自動保留。\n\n大視野：播放鍵旁的鈕可以全螢幕播放影片。\n\n找影片：Miro 導覽有上百上千個網際電視頻道，全部免費。只要按下「ADD」就可以觀看該頻道。\n";
 
-/* Flag: untranslated */
 "%message%\n%message%" = "%message%\n%message%";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57 */
-/* Flag: untranslated */
-"Update Available" = "Update Available";
+"Update Available" = "已有更新版";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:58 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"A new version of %s is available for download." = "A new version of %s is available for download.";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:155 */
-/* Flag: untranslated */
-"Select a File" = "Select a File";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:160 */
-/* Flag: untranslated */
-"Save File to" = "Save File to";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:210 */
-/* Flag: untranslated */
-"Error Bombing Item" = "Error Bombing Item";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:212 */
-/* Flag: untranslated */
-"Error Recommending Item" = "Error Recommending Item";
+"A new version of %s is available for download." = "已有新版 %s 可供下載。";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214 */
 /* Flag: untranslated */
-"Error Opening Website" = "Error Opening Website";
+"Error Bombing Item" = "Error Bombing Item";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:216 */
+/* Flag: untranslated */
+"Error Recommending Item" = "Error Recommending Item";
 
 /* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218 */
 /* Flag: untranslated */
+"Error Opening Website" = "Error Opening Website";
+
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:222 */
 /* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "There was an error opening %s.  Please try again in a few seconds";
+"There was an error opening %s.  Please try again in a few seconds" = "開啟 %s 時發生錯誤，請稍候再試。";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:45 */
 /* Flag: untranslated */
@@ -449,321 +383,255 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "onStartup called twice" = "onStartup called twice";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:672 */
-/* Flag: untranslated */
-"Spacebar" = "Spacebar";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:671 */
+"Spacebar" = "空白鍵";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:818 */
+"Close to tray?" = "縮小至系統欄？";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:819 */
-/* Flag: untranslated */
-"Close to tray?" = "Close to tray?";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:820 */
-/* Flag: untranslated */
-"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options.";
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "當按下視窗的關閉鈕時，要讓 Miro 縮小至系統欄還是關閉？你稍後可以在「選項」內修改這個設定。";
 
 /* File: ../../platform/osx/frontend/GrowlNotifier.py:27 */
-/* Flag: untranslated */
-"Download Completed" = "Download Completed";
+"Download Completed" = "下載完畢";
 
 /* File: ../../platform/osx/frontend/GrowlNotifier.py:28 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Download of video '%s' is finished." = "Download of video '%s' is finished.";
+"Download of video '%s' is finished." = "影片檔「%s」下載完畢。";
 
 /* File: ../../platform/osx/frontend/GrowlNotifier.py:37 */
-/* Flag: untranslated */
-"Download Failed" = "Download Failed";
+"Download Failed" = "下載失敗";
 
 /* File: ../../platform/osx/frontend/GrowlNotifier.py:38 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Download of video '%s' has failed." = "Download of video '%s' has failed.";
+"Download of video '%s' has failed." = "影片檔「%s」下載失敗。";
 
 /* File: ../../platform/osx/frontend/MainFrame.py:261 */
-/* Flag: untranslated */
-"Subscribe to Channel" = "Subscribe to Channel";
+"Subscribe to Channel" = "訂閱頻道";
 
 /* File: ../../platform/osx/frontend/MainFrame.py:262 */
-/* Flag: untranslated */
-"Enter the URL of the channel you would like to subscribe to." = "Enter the URL of the channel you would like to subscribe to.";
+"Enter the URL of the channel you would like to subscribe to." = "請輸入你想訂閱的頻道網址。";
 
 /* File: ../../platform/osx/frontend/QuicktimeRenderer.py:218 */
-/* Flag: untranslated */
-"Audio" = "Audio";
+"Audio" = "音效";
 
 /* File: ../../platform/osx/frontend/Preferences.py:38 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
-/* Flag: untranslated */
-"General" = "General";
+"General" = "一般";
 
 /* File: ../../platform/osx/frontend/Preferences.py:40 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
-/* Flag: untranslated */
-"Downloads" = "Downloads";
+"Downloads" = "下載";
 
 /* File: ../../platform/osx/frontend/Preferences.py:41 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
-/* Flag: untranslated */
-"Folders" = "Folders";
+"Folders" = "資料夾";
 
 /* File: ../../platform/osx/frontend/Preferences.py:42 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
-/* Flag: untranslated */
-"Disk Space" = "Disk Space";
+"Disk Space" = "磁諜空間";
 
-/* File: ../../platform/osx/frontend/Preferences.py:164 */
-/* Flag: untranslated */
-"Movies Directory" = "Movies Directory";
+/* File: ../../platform/osx/frontend/Preferences.py:170 */
+"Movies Directory" = "影片目錄";
 
-/* File: ../../platform/osx/frontend/Preferences.py:165 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/frontend/Preferences.py:171 */
 /* Flag: python-format */
-"Select a Directory to store %s downloads in." = "Select a Directory to store %s downloads in.";
+"Select a Directory to store %s downloads in." = "選擇目錄以儲存 %s 段影片。";
 
-/* File: ../../platform/osx/frontend/Preferences.py:166 */
-/* File: ../../platform/osx/frontend/Preferences.py:230 */
-/* Flag: untranslated */
-"Select" = "Select";
+/* File: ../../platform/osx/frontend/Preferences.py:172 */
+/* File: ../../platform/osx/frontend/Preferences.py:236 */
+"Select" = "選取";
 
-/* File: ../../platform/osx/frontend/Preferences.py:175 */
+/* File: ../../platform/osx/frontend/Preferences.py:181 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
-/* Flag: untranslated */
-"Migrate existing movies?" = "Migrate existing movies?";
+"Migrate existing movies?" = "合併既存影片？";
 
-/* File: ../../platform/osx/frontend/Preferences.py:176 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/frontend/Preferences.py:182 */
 /* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).";
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "你已選擇另一個資料夾來存放下載的影片，是否要讓 %s 將過去下載的影片移過去？（下載中的影片會在下載完畢後才移過去。）";
 
-/* File: ../../platform/osx/frontend/Preferences.py:228 */
-/* Flag: untranslated */
-"View this Directory in the Library" = "View this Directory in the Library";
+/* File: ../../platform/osx/frontend/Preferences.py:234 */
+"View this Directory in the Library" = "在影片收藏中檢視此目錄";
 
-/* File: ../../platform/osx/frontend/Preferences.py:229 */
-/* Flag: untranslated */
-"Select a Directory to view in the Library." = "Select a Directory to view in the Library.";
+/* File: ../../platform/osx/frontend/Preferences.py:235 */
+"Select a Directory to view in the Library." = "選取要在影片收藏中檢視的目錄。";
 
 /* File: ../../platform/osx/frontend/StartupPanel.py:114 */
-/* Flag: untranslated */
-"Search!" = "Search!";
+"Search!" = "搜尋!";
 
 /* File: ../../platform/osx/frontend/Application.py:228 */
-/* Flag: untranslated */
-"Pause Video" = "Pause Video";
+"Pause Video" = "暫停影片";
 
 /* File: ../../platform/osx/frontend/Application.py:237 */
-/* Flag: untranslated */
-"Unsupported version of Quicktime" = "Unsupported version of Quicktime";
+"Unsupported version of Quicktime" = "未支援的 QuickTime 版本";
 
 /* File: ../../platform/osx/frontend/Application.py:238 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "To run %s you need the most recent version of Quicktime, which is a free update.";
+"To run %s you need the most recent version of Quicktime, which is a free update." = "要執行 %s，請安裝免費的最新版 QuickTime。";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:5 */
-/* Flag: untranslated */
-"_Remove..." = "_Remove...";
+"_Remove..." = "刪除 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:6 */
-/* Flag: untranslated */
-"_Remove Playlist..." = "_Remove Playlist...";
+"_Remove Playlist..." = "刪除播放清單 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:7 */
-/* Flag: untranslated */
-"_Remove Playlists..." = "_Remove Playlists...";
+"_Remove Playlists..." = "刪除播放清單 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:8 */
-/* Flag: untranslated */
-"_Remove Playlist Folder..." = "_Remove Playlist Folder...";
+"_Remove Playlist Folder..." = "刪除播放清單資料夾 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:9 */
-/* Flag: untranslated */
-"_Remove Playlist Folders..." = "_Remove Playlist Folders...";
+"_Remove Playlist Folders..." = "刪除播放清單資料夾 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:10 */
 /* File: ../../portable/menubar.py:179 */
-/* Flag: untranslated */
-"_Remove Channel..." = "_Remove Channel...";
+"_Remove Channel..." = "刪除頻道 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:11 */
 /* File: ../../portable/menubar.py:180 */
-/* Flag: untranslated */
-"_Remove Channels..." = "_Remove Channels...";
+"_Remove Channels..." = "刪除頻道 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:12 */
 /* File: ../../portable/menubar.py:182 */
-/* Flag: untranslated */
-"_Remove Channel Folder..." = "_Remove Channel Folder...";
+"_Remove Channel Folder..." = "刪除頻道資料夾 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:13 */
 /* File: ../../portable/menubar.py:181 */
-/* Flag: untranslated */
-"_Remove Channel Folders..." = "_Remove Channel Folders...";
+"_Remove Channel Folders..." = "刪除頻道資料夾 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:14 */
-/* Flag: untranslated */
-"_Remove Miro Guide..." = "_Remove Miro Guide...";
+"_Remove Miro Guide..." = "刪除 Miro 導覽 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:15 */
-/* Flag: untranslated */
-"_Remove Miro Guides..." = "_Remove Miro Guides...";
+"_Remove Miro Guides..." = "刪除 Miro 導覽 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:16 */
-/* Flag: untranslated */
-"_Remove Video..." = "_Remove Video...";
+"_Remove Video..." = "刪除影片 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:17 */
-/* Flag: untranslated */
-"_Remove Videos..." = "_Remove Videos...";
+"_Remove Videos..." = "刪除影片 (_R)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:18 */
-/* Flag: untranslated */
-"Re_name..." = "Re_name...";
+"Re_name..." = "更名 (_N)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:19 */
-/* Flag: untranslated */
-"Re_name Playlist..." = "Re_name Playlist...";
+"Re_name Playlist..." = "播放清單更名 (_N)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:20 */
-/* Flag: untranslated */
-"Re_name Playlist Folder..." = "Re_name Playlist Folder...";
+"Re_name Playlist Folder..." = "播放清單資料夾更名 (_N)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:21 */
 /* File: ../../portable/menubar.py:178 */
-/* Flag: untranslated */
-"Re_name Channel..." = "Re_name Channel...";
+"Re_name Channel..." = "頻道更名 (_N)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:22 */
-/* Flag: untranslated */
-"Re_name Channel Folder..." = "Re_name Channel Folder...";
+"Re_name Channel Folder..." = "頻道資料夾更名 (_N)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:23 */
-/* Flag: untranslated */
-"Re_name Miro Guide..." = "Re_name Miro Guide...";
+"Re_name Miro Guide..." = "Miro 導覽更名 (_N)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:24 */
 /* File: ../../portable/menubar.py:184 */
-/* Flag: untranslated */
-"_Update Channel..." = "_Update Channel...";
+"_Update Channel..." = "更新頻道 (_U)...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:25 */
 /* File: ../../portable/menubar.py:185 */
-/* Flag: untranslated */
-"_Update Channels..." = "_Update Channels...";
+"_Update Channels..." = "更新頻道 (_U)...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42 */
-/* Flag: untranslated */
-"Settings" = "Settings";
+"Settings" = "設定";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45 */
-/* Flag: untranslated */
-"Hide" = "Hide";
+"Hide" = "隱藏";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47 */
-/* Flag: untranslated */
-"Show" = "Show";
+"Show" = "顯示";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48 */
 /* File: ../../portable/dialogs.py:80 */
 /* File: ../../portable/menubar.py:257 */
-/* Flag: untranslated */
-"Quit" = "Quit";
+"Quit" = "關閉";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:322 */
-/* Flag: untranslated */
-"New Channel _Guide..." = "New Channel _Guide...";
+"New Channel _Guide..." = "新增頻道導覽 (_G)...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:563 */
-/* Flag: untranslated */
-"Folder Location" = "Folder Location";
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:562 */
+"Folder Location" = "資料夾位置";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
-/* Flag: untranslated */
-"Username:" = "Username:";
+"Username:" = "帳號:";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
-/* Flag: untranslated */
-"Password:" = "Password:";
+"Password:" = "密碼:";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:413 */
-/* Flag: untranslated */
-"Unknown Runtime Error" = "Unknown Runtime Error";
+"Unknown Runtime Error" = "不明的執行錯誤";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:414 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"An unknown error has occurred %s." = "An unknown error has occurred %s.";
+"An unknown error has occurred %s." = "發生不明錯誤 %s。";
 
 /* File: ../../portable/dl_daemon/download.py:367 */
-/* Flag: untranslated */
-"Error" = "Error";
+"Error" = "錯誤";
 
 /* File: ../../portable/dl_daemon/download.py:440 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Could not write to %s" = "Could not write to %s";
+"Could not write to %s" = "無法寫入至 %s";
 
 /* File: ../../portable/dl_daemon/download.py:459 */
-/* Flag: untranslated */
-"Not enough disk space" = "Not enough disk space";
+"Not enough disk space" = "磁碟空間不足";
 
 /* File: ../../portable/dl_daemon/download.py:460 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s MB required to store this video" = "%s MB required to store this video";
+"%s MB required to store this video" = "需有 %s MB 的空間來存放此影片";
 
 /* File: ../../portable/dl_daemon/download.py:679 */
-/* Flag: untranslated */
-"BitTorrent failure" = "BitTorrent failure";
+"BitTorrent failure" = "BitTorrent 錯誤";
 
 /* File: ../../portable/dl_daemon/download.py:680 */
-/* Flag: untranslated */
-"BitTorrent failed to startup" = "BitTorrent failed to startup";
+"BitTorrent failed to startup" = "啟動 BitTorrent 時發生錯誤";
 
 /* File: ../../portable/dl_daemon/download.py:803 */
-/* Flag: untranslated */
-"Corrupt Torrent" = "Corrupt Torrent";
+"Corrupt Torrent" = "錯誤的 Torrent 種子";
 
 /* File: ../../portable/dl_daemon/download.py:804 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"The torrent file at %s was not valid" = "The torrent file at %s was not valid";
+"The torrent file at %s was not valid" = "\"%s 的 Torrent 種子檔無效";
 
 /* File: ../../portable/dl_daemon/download.py:830 */
-/* Flag: untranslated */
-"Torrent file deleted" = "Torrent file deleted";
+"Torrent file deleted" = "已刪除 Torrent 種子檔";
 
 /* File: ../../portable/dl_daemon/download.py:831 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted " = "The torrent file for this item was deleted ";
+"The torrent file for this item was deleted " = "此項目的 Torrent 檔已刪除 ";
 
 /* File: ../../portable/dl_daemon/download.py:832 */
 /* Flag: untranslated */
 "outside of democracy." = "outside of democracy.";
 
 /* File: ../../portable/tabs.py:43 */
-/* Flag: untranslated */
-"Library" = "Library";
+"Library" = "影片收藏";
 
 /* File: ../../portable/tabs.py:44 */
-/* Flag: untranslated */
-"New" = "New";
+"New" = "新影片";
 
 /* File: ../../portable/tabs.py:46 */
-/* Flag: untranslated */
-"Downloading" = "Downloading";
+"Downloading" = "下載中";
 
 /* File: ../../portable/guide.py:83 */
 /* File: ../../portable/feed.py:782 */
-/* Flag: untranslated */
-"Copy URL to clipboard" = "Copy URL to clipboard";
+"Copy URL to clipboard" = "複製網址";
 
 /* File: ../../portable/guide.py:118 */
-/* Flag: untranslated */
-"Miro Guide" = "Miro Guide";
+"Miro Guide" = "Miro 導覽";
+
+/* File: ../../portable/extrastrings.py:5 */
+/* File: ../../portable/feed.py:2012 */
+/* File: ../../portable/feed.py:2104 */
+"Search" = "搜尋";
 
 /* File: ../../portable/downloader.py:214 */
 /* Flag: untranslated */
@@ -771,151 +639,117 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/downloader.py:250 */
 /* File: ../../portable/httpclient.py:112 */
-/* Flag: untranslated */
-"File not found" = "File not found";
+"File not found" = "找不到檔案";
 
 /* File: ../../portable/downloader.py:251 */
-/* Flag: untranslated */
-"Flash URL Scraping Error" = "Flash URL Scraping Error";
+"Flash URL Scraping Error" = "擷取 Flash 網址錯誤";
 
 /* File: ../../portable/downloader.py:430 */
-/* Flag: untranslated */
-"starting up" = "starting up";
+"starting up" = "啟動中";
 
 /* File: ../../portable/playlist.py:196 */
 /* File: ../../portable/playlist.py:201 */
-/* Flag: untranslated */
-"Rename Playlist" = "Rename Playlist";
+"Rename Playlist" = "播放清單更名";
 
 /* File: ../../portable/playlist.py:202 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s";
+"Enter a new name for the playlist %s" = "輸入播放清單「%s」的新名稱";
 
 /* File: ../../portable/playlist.py:224 */
-/* Flag: untranslated */
-"Create Playlist" = "Create Playlist";
+"Create Playlist" = "建立播放清單";
 
 /* File: ../../portable/playlist.py:225 */
-/* Flag: untranslated */
-"Enter a name for the new playlist" = "Enter a name for the new playlist";
+"Enter a name for the new playlist" = "輸入新播放清單的名稱";
 
 /* File: ../../portable/feed.py:381 */
-/* Flag: untranslated */
-"never" = "never";
+"never" = "永不過期";
 
 /* File: ../../portable/feed.py:383 */
 /* File: ../../portable/item.py:535 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d hours" = "%d hours";
+"%d hours" = "%d 小時";
 
 /* File: ../../portable/feed.py:385 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d day" = "%d day";
+"%d day" = "%d 天";
 
 /* File: ../../portable/feed.py:387 */
 /* File: ../../portable/item.py:533 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d days" = "%d days";
+"%d days" = "%d 天";
 
 /* File: ../../portable/feed.py:389 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d months" = "%d months";
+"%d months" = "%d 個月";
 
 /* File: ../../portable/feed.py:780 */
-/* Flag: untranslated */
-"Update Channel Now" = "Update Channel Now";
+"Update Channel Now" = "立刻更新頻道";
 
 /* File: ../../portable/feed.py:783 */
 /* File: ../../portable/feed.py:792 */
-/* Flag: untranslated */
-"Rename Channel" = "Rename Channel";
+"Rename Channel" = "頻道更名";
 
 /* File: ../../portable/feed.py:787 */
-/* Flag: untranslated */
-"Revert Title to Default" = "Revert Title to Default";
+"Revert Title to Default" = "恢復原名";
 
 /* File: ../../portable/feed.py:793 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the channel %s" = "Enter a new name for the channel %s";
+"Enter a new name for the channel %s" = "輸入頻道「%s」的新名稱";
 
 /* File: ../../portable/feed.py:880 */
-/* Flag: untranslated */
-"Error loading feed" = "Error loading feed";
+"Error loading feed" = "資料來源讀取錯誤";
 
 /* File: ../../portable/feed.py:881 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s).";
+"Couldn't load the feed at %s (%s)." = "無法讀取 %s 的資料來源 (%s)";
 
 /* File: ../../portable/feed.py:884 */
-/* Flag: untranslated */
-"Would you like to keep the feed?" = "Would you like to keep the feed?";
+"Would you like to keep the feed?" = "你想保留此資料來源嗎?";
 
-/* File: ../../portable/feed.py:1001 */
-/* Flag: untranslated */
-"Bad content-type" = "Bad content-type";
+/* File: ../../portable/feed.py:997 */
+"Bad content-type" = "Content-type 錯誤";
 
-/* File: ../../portable/feed.py:1014 */
+/* File: ../../portable/feed.py:1010 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-/* Flag: untranslated */
-"Channel is not compatible with $shortAppName!" = "Channel is not compatible with $shortAppName!";
+"Channel is not compatible with $shortAppName!" = "$shortAppName 無法支援此頻道!";
 
-/* File: ../../portable/feed.py:1015 */
+/* File: ../../portable/feed.py:1011 */
 /* Flag: untranslated */
 "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
 
-/* File: ../../portable/feed.py:2010 */
 /* File: ../../portable/feed.py:2118 */
-/* File: ../../portable/extrastrings.py:5 */
-"Search" = "搜尋";
+"Local Files" = "本機檔案";
 
 /* File: ../../portable/feed.py:2132 */
-/* Flag: untranslated */
-"Local Files" = "Local Files";
-
-/* File: ../../portable/feed.py:2146 */
 /* Flag: untranslated */
 "Playing File" = "Playing File";
 
 /* File: ../../portable/menu.py:69 */
-/* Flag: untranslated */
-"Update Channels Now" = "Update Channels Now";
+"Update Channels Now" = "立即更新頻道";
 
 /* File: ../../portable/menu.py:92 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d Downloaded Items" = "%d Downloaded Items";
+"%d Downloaded Items" = "%d 個下載項目";
 
 /* File: ../../portable/menu.py:94 */
-/* File: ../../portable/item.py:1454 */
-/* Flag: untranslated */
-"Play" = "Play";
+/* File: ../../portable/item.py:1457 */
+"Play" = "播放";
 
 /* File: ../../portable/menu.py:95 */
-/* File: ../../portable/item.py:1457 */
-/* Flag: untranslated */
-"Add to new playlist" = "Add to new playlist";
+/* File: ../../portable/item.py:1460 */
+"Add to new playlist" = "加到新播放清單中";
 
 /* File: ../../portable/menu.py:97 */
-/* File: ../../portable/item.py:1450 */
-/* Flag: untranslated */
-"Remove From Playlist" = "Remove From Playlist";
+/* File: ../../portable/item.py:1453 */
+"Remove From Playlist" = "自播放清單中移除";
 
 /* File: ../../portable/menu.py:99 */
-/* File: ../../portable/item.py:1452 */
-/* Flag: untranslated */
-"Remove From the Library" = "Remove From the Library";
+/* File: ../../portable/item.py:1455 */
+"Remove From the Library" = "自影片收藏中移除";
 
 /* File: ../../portable/menu.py:105 */
-/* File: ../../portable/item.py:1461 */
-/* Flag: untranslated */
-"Mark as Unwatched" = "Mark as Unwatched";
+/* File: ../../portable/item.py:1464 */
+"Mark as Unwatched" = "標示為尚未觀賞";
 
 /* File: ../../portable/menu.py:110 */
 /* Flag: untranslated */
@@ -924,9 +758,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/menu.py:111 */
 /* File: ../../portable/dialogs.py:85 */
-/* File: ../../portable/item.py:1467 */
-/* Flag: untranslated */
-"Download" = "Download";
+/* File: ../../portable/item.py:1470 */
+"Download" = "下載";
 
 /* File: ../../portable/menu.py:116 */
 /* Flag: untranslated */
@@ -934,44 +767,55 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Downloading Items" = "%d Downloading Items";
 
 /* File: ../../portable/menu.py:118 */
-/* File: ../../portable/item.py:1465 */
-/* Flag: untranslated */
-"Cancel Download" = "Cancel Download";
+/* File: ../../portable/item.py:1468 */
+"Cancel Download" = "取消下載";
 
 /* File: ../../portable/menu.py:120 */
-/* File: ../../portable/item.py:1465 */
-/* Flag: untranslated */
-"Pause Download" = "Pause Download";
+/* File: ../../portable/item.py:1468 */
+"Pause Download" = "暫停下載";
 
 /* File: ../../portable/menu.py:123 */
-/* File: ../../portable/item.py:1463 */
+/* File: ../../portable/item.py:1466 */
 /* Flag: untranslated */
 "Restart Upload" = "Restart Upload";
 
+/* File: ../../portable/opml.py:32 */
+"Export OPML File" = "匯出 OPML 檔";
+
+/* File: ../../portable/opml.py:106 */
+"Import OPML File" = "匯入 OPML 檔";
+
+/* File: ../../portable/opml.py:108 */
+"OPML Files" = "OPML 檔";
+
+/* File: ../../portable/opml.py:127 */
+"OPML Import failed" = "OPML 匯入失敗";
+
+/* File: ../../portable/opml.py:128 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "這個 OPML 檔無效，匯入中止。";
+
+/* File: ../../portable/opml.py:133 */
+"OPML Import summary" = "OPML 匯入概要";
+
 /* File: ../../portable/autoupdate.py:121 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s Version Alert" = "%s Version Alert";
+"%s Version Alert" = "%s 版本通知";
 
 /* File: ../../portable/autoupdate.py:122 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"A new version of %s is available. Would you like to download it now?" = "A new version of %s is available. Would you like to download it now?";
+"A new version of %s is available. Would you like to download it now?" = "已經有新版的 %s 了，你想現在下載嗎?";
 
 /* File: ../../portable/autoupdate.py:128 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s Version Check" = "%s Version Check";
+"%s Version Check" = "%s 版本檢查";
 
 /* File: ../../portable/autoupdate.py:129 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s is up to date." = "%s is up to date.";
+"%s is up to date." = "%s 是最新版。";
 
 /* File: ../../portable/util.py:257 */
 /* File: ../../portable/httpclient.py:124 */
-/* Flag: untranslated */
-"Internal Error" = "Internal Error";
+"Internal Error" = "內部錯誤";
 
 /* File: ../../portable/util.py:257 */
 /* Flag: untranslated */
@@ -982,636 +826,543 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
 
 /* File: ../../portable/util.py:257 */
-/* Flag: untranslated */
-"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
+"Describe what you were doing that caused this error" = "描述在錯誤發生前你在做什麼";
 
-/* File: ../../portable/util.py:441 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:460 */
 /* Flag: python-format */
 "%1.1fGB" = "%1.1fGB";
 
-/* File: ../../portable/util.py:443 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:462 */
 /* Flag: python-format */
 "%dGB" = "%dGB";
 
-/* File: ../../portable/util.py:447 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:466 */
 /* Flag: python-format */
 "%1.1fMB" = "%1.1fMB";
 
-/* File: ../../portable/util.py:449 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:468 */
 /* Flag: python-format */
 "%dMB" = "%dMB";
 
-/* File: ../../portable/util.py:453 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:472 */
 /* Flag: python-format */
 "%1.1fKB" = "%1.1fKB";
 
-/* File: ../../portable/util.py:455 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:474 */
 /* Flag: python-format */
 "%dKB" = "%dKB";
 
-/* File: ../../portable/util.py:459 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:478 */
 /* Flag: python-format */
 "%1.1fB" = "%1.1fB";
 
-/* File: ../../portable/util.py:461 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:480 */
 /* Flag: python-format */
 "%dB" = "%dB";
 
-/* File: ../../portable/storedatabase.py:828 */
-/* File: ../../portable/storedatabase.py:1189 */
-/* Flag: untranslated */
+/* File: ../../portable/storedatabase.py:832 */
+/* File: ../../portable/storedatabase.py:1231 */
 /* Flag: python-format */
-"%s database save succeeded" = "%s database save succeeded";
+"%s database save succeeded" = "%s 資料庫儲存成功";
 
-/* File: ../../portable/storedatabase.py:829 */
-/* File: ../../portable/storedatabase.py:1190 */
-/* Flag: untranslated */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "The database has been successfully saved. It is now safe to quit without losing any data.";
+/* File: ../../portable/storedatabase.py:833 */
+/* File: ../../portable/storedatabase.py:1232 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "資料庫已經成功儲存，現在離開不會流失任何資料。";
 
-/* File: ../../portable/storedatabase.py:836 */
-/* File: ../../portable/storedatabase.py:1198 */
-/* Flag: untranslated */
+/* File: ../../portable/storedatabase.py:840 */
+/* File: ../../portable/storedatabase.py:1240 */
 /* Flag: python-format */
-"%s database save failed" = "%s database save failed";
+"%s database save failed" = "%s 資料庫儲存失敗";
 
-/* File: ../../portable/storedatabase.py:837 */
-/* File: ../../portable/storedatabase.py:1199 */
-/* Flag: untranslated */
+/* File: ../../portable/storedatabase.py:841 */
+/* File: ../../portable/storedatabase.py:1241 */
 /* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.";
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s 無法儲存資料庫：磁碟已滿。\n我們建議你清理該磁碟的空間，或者就直接刪除一些收藏的影片即可。\n方才更動的設定可能無效。";
 
 /* File: ../../portable/dialogs.py:76 */
-/* Flag: untranslated */
-"Ok" = "Ok";
+"Ok" = "確定";
 
 /* File: ../../portable/dialogs.py:81 */
-/* Flag: untranslated */
-"Ignore" = "Ignore";
+"Ignore" = "忽略";
 
 /* File: ../../portable/dialogs.py:82 */
-/* Flag: untranslated */
-"Submit Crash Repport" = "Submit Crash Repport";
+"Submit Crash Report" = "回報當機問題";
 
 /* File: ../../portable/dialogs.py:83 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-/* Flag: untranslated */
-"Migrate" = "Migrate";
+"Migrate" = "搬移";
 
 /* File: ../../portable/dialogs.py:84 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-/* Flag: untranslated */
-"Don't Migrate" = "Don't Migrate";
+"Don't Migrate" = "不要搬移";
 
 /* File: ../../portable/dialogs.py:86 */
-/* Flag: untranslated */
-"Remove Entry" = "Remove Entry";
+"Remove Entry" = "移除項目...";
 
 /* File: ../../portable/dialogs.py:87 */
-/* Flag: untranslated */
-"Delete File" = "Delete File";
+"Delete File" = "刪除檔案";
 
 /* File: ../../portable/dialogs.py:88 */
-/* Flag: untranslated */
-"Delete Files" = "Delete Files";
+"Delete Files" = "刪除檔案";
 
 /* File: ../../portable/dialogs.py:89 */
-/* Flag: untranslated */
-"Keep Videos" = "Keep Videos";
+"Keep Videos" = "保留影片";
 
 /* File: ../../portable/dialogs.py:90 */
-/* Flag: untranslated */
-"Delete Videos" = "Delete Videos";
+"Delete Videos" = "刪除影片";
 
 /* File: ../../portable/dialogs.py:92 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-/* Flag: untranslated */
-"Create Channel" = "Create Channel";
+"Create Channel" = "建立頻道";
 
 /* File: ../../portable/dialogs.py:93 */
-/* Flag: untranslated */
-"Add" = "Add";
+"Add" = "新增";
 
 /* File: ../../portable/dialogs.py:94 */
-/* Flag: untranslated */
-"Add Into New Folder" = "Add Into New Folder";
+"Add Into New Folder" = "新增到新資料夾中";
 
 /* File: ../../portable/dialogs.py:95 */
-/* Flag: untranslated */
-"Keep" = "Keep";
+"Keep" = "保留";
 
 /* File: ../../portable/dialogs.py:97 */
-/* Flag: untranslated */
-"Not Now" = "Not Now";
+"Not Now" = "現在不要";
 
 /* File: ../../portable/dialogs.py:98 */
-/* Flag: untranslated */
-"Close to Tray" = "Close to Tray";
+"Close to Tray" = "縮小到系統欄中";
 
 /* File: ../../portable/dialogs.py:99 */
-/* Flag: untranslated */
-"Launch Miro" = "Launch Miro";
+"Launch Miro" = "啟動 Miro";
 
-/* File: ../../portable/dialogs.py:214 */
+/* File: ../../portable/dialogs.py:100 */
+"Download Anyway" = "還是要下載";
+
+/* File: ../../portable/dialogs.py:221 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-/* Flag: untranslated */
-"New Search Channel" = "New Search Channel";
+"New Search Channel" = "新增搜尋頻道";
 
-/* File: ../../portable/dialogs.py:214 */
+/* File: ../../portable/dialogs.py:221 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:25 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
-/* Flag: untranslated */
-"A search channel contains items that match a search term." = "A search channel contains items that match a search term.";
+"A search channel contains items that match a search term." = "內含符合搜尋字串之影片的頻道";
 
-/* File: ../../portable/singleclick.py:161 */
+/* File: ../../portable/singleclick.py:86 */
+"Download already exists" = "已經在下載了";
+
+/* File: ../../portable/singleclick.py:87 */
+/* Flag: untranslated */
+"That URL is already an external download." = "That URL is already an external download.";
+
+/* File: ../../portable/singleclick.py:93 */
+"Miro will begin downloading it now." = "Miro 會立刻開始下載";
+
+/* File: ../../portable/singleclick.py:95 */
+/* Flag: untranslated */
+"It is downloading now." = "It is downloading now.";
+
+/* File: ../../portable/singleclick.py:97 */
+/* Flag: untranslated */
+"It has already been downloaded." = "It has already been downloaded.";
+
+/* File: ../../portable/singleclick.py:124 */
+"Download Error" = "下載錯誤";
+
+/* File: ../../portable/singleclick.py:125 */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro 無法下載此網址的檔案:\n\n網址: %s";
+
+/* File: ../../portable/singleclick.py:133 */
+"File Download" = "檔案下載";
+
+/* File: ../../portable/singleclick.py:134 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "This file at %s does not appear to be audio, video, or an RSS feed.";
+
+/* File: ../../portable/singleclick.py:224 */
 /* Flag: untranslated */
 "Subscribing to multiple channels" = "Subscribing to multiple channels";
 
-/* File: ../../portable/singleclick.py:162 */
+/* File: ../../portable/singleclick.py:225 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Create %d channels?" = "Create %d channels?";
 
-/* File: ../../portable/singleclick.py:175 */
+/* File: ../../portable/singleclick.py:238 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Adding %d channels to a new folder" = "Adding %d channels to a new folder";
 
-/* File: ../../portable/singleclick.py:176 */
+/* File: ../../portable/singleclick.py:239 */
 /* File: ../../portable/folder.py:226 */
-/* Flag: untranslated */
-"Enter a name for the new channel folder" = "Enter a name for the new channel folder";
+"Enter a name for the new channel folder" = "輸入新頻道資料夾的名稱";
 
-/* File: ../../portable/singleclick.py:179 */
+/* File: ../../portable/singleclick.py:242 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
 
-/* File: ../../portable/singleclick.py:190 */
-/* Flag: untranslated */
-"Subscription error" = "Subscription error";
+/* File: ../../portable/singleclick.py:253 */
+"Subscription error" = "訂閱錯誤";
 
-/* File: ../../portable/singleclick.py:200 */
+/* File: ../../portable/singleclick.py:263 */
 /* Flag: untranslated */
 "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.";
 
-/* File: ../../portable/singleclick.py:208 */
-/* Flag: untranslated */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.";
+/* File: ../../portable/singleclick.py:271 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "這個 $shortAppName 頻道檔案的內容型態有誤：$url。請通知頻道發佈人這個問題。";
 
-/* File: ../../portable/singleclick.py:212 */
-/* Flag: untranslated */
-"Could not download the $shortAppName channel file: $url." = "Could not download the $shortAppName channel file: $url.";
+/* File: ../../portable/singleclick.py:275 */
+"Could not download the $shortAppName channel file: $url." = "無法下載 $shortAppName 頻道檔： $url";
 
-/* File: ../../portable/singleclick.py:251 */
-/* Flag: untranslated */
-"Invalid Torrent" = "Invalid Torrent";
+/* File: ../../portable/singleclick.py:313 */
+"Invalid Torrent" = "無效的 Torrent 種子";
 
-/* File: ../../portable/singleclick.py:252 */
+/* File: ../../portable/singleclick.py:314 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]";
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]" /* = "Torrent 種子檔「%s」有誤，無法開啟。 [OK]" */;
 
 /* File: ../../portable/menubar.py:144 */
-/* Flag: untranslated */
-"_Open" = "_Open";
+"_Open" = "開啟舊檔 (_O)";
 
 /* File: ../../portable/menubar.py:145 */
-/* Flag: untranslated */
-"_Download Video" = "_Download Video";
+"_Download Video" = "下載影片 (_D)";
 
 /* File: ../../portable/menubar.py:147 */
-/* Flag: untranslated */
-"Check _Version" = "Check _Version";
+"Check _Version" = "檢查版本 (_V)";
 
 /* File: ../../portable/menubar.py:149 */
-/* Flag: untranslated */
-"_Remove Video" = "_Remove Video";
+"_Remove Video" = "刪除影片 (_R)";
 
 /* File: ../../portable/menubar.py:150 */
-/* Flag: untranslated */
-"_Remove Videos" = "_Remove Videos";
+"_Remove Videos" = "刪除影片 (_R)";
 
 /* File: ../../portable/menubar.py:151 */
-/* Flag: untranslated */
-"Re_name Video" = "Re_name Video";
+"Re_name Video" = "影片更名 (_N)";
 
 /* File: ../../portable/menubar.py:152 */
-/* Flag: untranslated */
-"Save Video _As..." = "Save Video _As...";
+"Save Video _As..." = "另存影片 (_A)...";
 
 /* File: ../../portable/menubar.py:153 */
-/* Flag: untranslated */
-"Save Videos _As..." = "Save Videos _As...";
+"Save Videos _As..." = "另存影片 (_A)...";
 
 /* File: ../../portable/menubar.py:154 */
-/* Flag: untranslated */
-"Copy Video _URL" = "Copy Video _URL";
+"Copy Video _URL" = "複製影片網址L (_U)";
 
 /* File: ../../portable/menubar.py:156 */
-/* Flag: untranslated */
-"_Options..." = "_Options...";
+"_Options..." = "選項 (_O)...";
 
 /* File: ../../portable/menubar.py:157 */
-/* Flag: untranslated */
-"_Quit" = "_Quit";
+"_Quit" = "關閉 (_Q)";
 
 /* File: ../../portable/menubar.py:165 */
-/* Flag: untranslated */
-"Cu_t" = "Cu_t";
+"Cu_t" = "剪下(_T)";
 
 /* File: ../../portable/menubar.py:166 */
-/* Flag: untranslated */
-"_Copy" = "_Copy";
+"_Copy" = "複製(_C)";
 
 /* File: ../../portable/menubar.py:167 */
-/* Flag: untranslated */
-"_Paste" = "_Paste";
+"_Paste" = "貼上(_P)";
 
 /* File: ../../portable/menubar.py:168 */
-/* Flag: untranslated */
-"Select _All" = "Select _All";
+"Select _All" = "全部選取 (_A)";
 
 /* File: ../../portable/menubar.py:169 */
-/* Flag: untranslated */
-"_Delete" = "_Delete";
+"_Delete" = "刪除(_D)";
 
 /* File: ../../portable/menubar.py:173 */
-/* Flag: untranslated */
-"Add _Channel" = "Add _Channel";
+"Add _Channel" = "新增頻道 (_C)";
 
 /* File: ../../portable/menubar.py:174 */
-/* Flag: untranslated */
-"New Searc_h Channel..." = "New Searc_h Channel...";
+"New Searc_h Channel..." = "新增搜尋頻道 (_H)...";
 
 /* File: ../../portable/menubar.py:175 */
-/* Flag: untranslated */
-"New _Folder..." = "New _Folder...";
+"New _Folder..." = "新增資料夾 (_F)...";
 
 /* File: ../../portable/menubar.py:176 */
-/* Flag: untranslated */
-"Add Channel _Guide..." = "Add Channel _Guide...";
+"Add Channel _Guide..." = "新增頻道導覽 (_G)...";
 
 /* File: ../../portable/menubar.py:186 */
-/* Flag: untranslated */
-"Update _All Channels" = "Update _All Channels";
+"Update _All Channels" = "更新所有頻道 (_A)";
 
 /* File: ../../portable/menubar.py:188 */
-/* Flag: untranslated */
-"_Import Channels (OPML)..." = "_Import Channels (OPML)...";
+"_Import Channels (OPML)..." = "匯入 OPML 頻道清單 (_I)...";
 
 /* File: ../../portable/menubar.py:189 */
-/* Flag: untranslated */
-"E_xport Channels (OPML)..." = "E_xport Channels (OPML)...";
+"E_xport Channels (OPML)..." = "匯出 OPML 頻道清單 (_X)...";
 
 /* File: ../../portable/menubar.py:191 */
-/* Flag: untranslated */
-"_Send this channel to a friend" = "_Send this channel to a friend";
+"_Send this channel to a friend" = "將此頻道寄給朋友 (_S)";
 
 /* File: ../../portable/menubar.py:192 */
-/* Flag: untranslated */
-"Copy Channel _Link" = "Copy Channel _Link";
+"Copy Channel _Link" = "複製頻道連結位置 (_L)";
 
 /* File: ../../portable/menubar.py:195 */
-/* Flag: untranslated */
-"New _Playlist" = "New _Playlist";
+"New _Playlist" = "新增播放清單 (_P)";
 
 /* File: ../../portable/menubar.py:196 */
-/* Flag: untranslated */
-"New Playlist Fol_der" = "New Playlist Fol_der";
+"New Playlist Fol_der" = "新增播放清單資料夾 (_D)";
 
 /* File: ../../portable/menubar.py:198 */
-/* Flag: untranslated */
-"Re_name Playlist" = "Re_name Playlist";
+"Re_name Playlist" = "播放清單更名 (_N)";
 
 /* File: ../../portable/menubar.py:199 */
-/* Flag: untranslated */
-"_Remove Playlist" = "_Remove Playlist";
+"_Remove Playlist" = "移除播放清單 (_R)";
 
 /* File: ../../portable/menubar.py:200 */
-/* Flag: untranslated */
-"_Remove Playlists" = "_Remove Playlists";
+"_Remove Playlists" = "移除播放清單 (_R)";
 
 /* File: ../../portable/menubar.py:201 */
-/* Flag: untranslated */
-"_Remove Playlist Folders" = "_Remove Playlist Folders";
+"_Remove Playlist Folders" = "移除播放清單資料夾 (_R)";
 
 /* File: ../../portable/menubar.py:202 */
-/* Flag: untranslated */
-"_Remove Playlist Folder" = "_Remove Playlist Folder";
+"_Remove Playlist Folder" = "移除播放清單資料夾 (_R)";
 
 /* File: ../../portable/menubar.py:212 */
-/* Flag: untranslated */
-"_Play" = "_Play";
+"_Play" = "播放(_P)";
 
 /* File: ../../portable/menubar.py:213 */
-/* Flag: untranslated */
-"_Stop" = "_Stop";
+"_Stop" = "停止(_S)";
 
 /* File: ../../portable/menubar.py:215 */
-/* Flag: untranslated */
-"_Next Video" = "_Next Video";
+"_Next Video" = "下一段影片 (_N)";
 
 /* File: ../../portable/menubar.py:216 */
-/* Flag: untranslated */
-"_Previous Video" = "_Previous Video";
+"_Previous Video" = "上一段影片 (_P)";
 
 /* File: ../../portable/menubar.py:218 */
-/* Flag: untranslated */
-"Skip _Forward" = "Skip _Forward";
+"Skip _Forward" = "快轉 (_F)";
 
 /* File: ../../portable/menubar.py:219 */
-/* Flag: untranslated */
-"Skip _Back" = "Skip _Back";
+"Skip _Back" = "倒轉 (_B)";
 
 /* File: ../../portable/menubar.py:221 */
-/* Flag: untranslated */
-"Volume _Up" = "Volume _Up";
+"Volume _Up" = "音量升高 (_U)";
 
 /* File: ../../portable/menubar.py:222 */
-/* Flag: untranslated */
-"Volume _Down" = "Volume _Down";
+"Volume _Down" = "音量降低 (_D)";
 
 /* File: ../../portable/menubar.py:224 */
-/* Flag: untranslated */
-"_Fullscreen" = "_Fullscreen";
+"_Fullscreen" = "全螢幕模式(_F)";
 
 /* File: ../../portable/menubar.py:228 */
-/* Flag: untranslated */
-"_About" = "_About";
+"_About" = "關於(_A)";
 
 /* File: ../../portable/menubar.py:229 */
-/* Flag: untranslated */
-"_Donate" = "_Donate";
+"_Donate" = "捐款 (_D)";
 
 /* File: ../../portable/menubar.py:230 */
 /* File: ../../portable/menubar.py:245 */
-/* Flag: untranslated */
-"_Help" = "_Help";
+"_Help" = "說明 (_H)";
 
 /* File: ../../portable/menubar.py:232 */
-/* Flag: untranslated */
-"Report a _Bug" = "Report a _Bug";
+"Report a _Bug" = "回報程式錯誤 (_B)";
 
 /* File: ../../portable/menubar.py:236 */
-/* Flag: untranslated */
-"_Video" = "_Video";
+"_Video" = "影片 (_V)";
 
 /* File: ../../portable/menubar.py:238 */
-/* Flag: untranslated */
-"_File" = "_File";
+"_File" = "檔案 (_F)";
 
 /* File: ../../portable/menubar.py:242 */
-/* Flag: untranslated */
-"_Channels" = "_Channels";
+"_Channels" = "頻道 (_C)";
 
 /* File: ../../portable/menubar.py:243 */
-/* Flag: untranslated */
-"_Playlists" = "_Playlists";
+"_Playlists" = "播放清單 (_P)";
 
 /* File: ../../portable/menubar.py:244 */
-/* Flag: untranslated */
-"P_layback" = "P_layback";
+"P_layback" = "播放控制 (_L)";
 
 /* File: ../../portable/menubar.py:249 */
-/* Flag: untranslated */
-"Play Unwatched ($numUnwatched)" = "Play Unwatched ($numUnwatched)";
+"Play Unwatched ($numUnwatched)" = "播放尚未觀賞的影片 ($numUnwatched)";
 
 /* File: ../../portable/menubar.py:250 */
-/* Flag: untranslated */
-"Pause All Downloads ($numDownloading)" = "Pause All Downloads ($numDownloading)";
+"Pause All Downloads ($numDownloading)" = "暫停所有下載 ($numDownloading)";
 
 /* File: ../../portable/menubar.py:251 */
-/* Flag: untranslated */
-"Resume All Downloads ($numPaused)" = "Resume All Downloads ($numPaused)";
+"Resume All Downloads ($numPaused)" = "續傳所有下載 ($numPaused)";
 
 /* File: ../../portable/menubar.py:253 */
-/* Flag: untranslated */
-"Options..." = "Options...";
+"Options..." = "選項...";
 
 /* File: ../../portable/menubar.py:255 */
-/* Flag: untranslated */
-"Hide Window" = "Hide Window";
+"Hide Window" = "隱藏視窗";
 
 /* File: ../../portable/menubar.py:256 */
-/* Flag: untranslated */
-"Show Window" = "Show Window";
+"Show Window" = "顯示視窗";
 
 /* File: ../../portable/item.py:478 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Removing %s" = "Removing %s";
+"Removing %s" = "%s 刪除中";
 
 /* File: ../../portable/item.py:481 */
-/* Flag: untranslated */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Would you like to delete this folder and all of its videos or just remove its entry from the Library?";
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "你想刪除此資料夾及其中的所有影片檔，還是只想從影片收藏中移除相關項目?";
 
 /* File: ../../portable/item.py:487 */
-/* Flag: untranslated */
-"Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
+"Would you like to delete this file or just remove its entry from the Library?" = "你想刪除此影片檔，還是只想從影片收藏中移除相關項目?";
 
 /* File: ../../portable/item.py:507 */
-/* Flag: untranslated */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted.";
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "此為資料夾，刪除時、其中所有檔案都會一併刪除。";
 
 /* File: ../../portable/item.py:537 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d minutes" = "%d minutes";
+"%d minutes" = "%d 分鐘";
 
 /* File: ../../portable/item.py:547 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Expires in %s" = "Expires in %s";
+"Expires in %s" = "%s後過期";
 
 /* File: ../../portable/item.py:559 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Will retry in %s" = "Will retry in %s";
+"Will retry in %s" = "%s後重試";
 
 /* File: ../../portable/item.py:561 */
-/* Flag: untranslated */
-"Paused" = "Paused";
+"Paused" = "暫停";
 
 /* File: ../../portable/item.py:941 */
-/* Flag: untranslated */
 "TORRENT" = "TORRENT";
 
 /* File: ../../portable/item.py:943 */
-/* Flag: untranslated */
-"WEB PAGE" = "WEB PAGE";
+"WEB PAGE" = "網頁";
 
 /* File: ../../portable/item.py:953 */
-/* Flag: untranslated */
-"Total Down:" = "Total Down:";
+"Total Down:" = "共已下載:";
 
-/* File: ../../portable/item.py:962 */
-/* Flag: untranslated */
-"Down Rate:" = "Down Rate:";
+/* File: ../../portable/item.py:956 */
+"Error:" = "錯誤:";
 
-/* File: ../../portable/item.py:963 */
-/* Flag: untranslated */
-"Down Total:" = "Down Total:";
+/* File: ../../portable/item.py:964 */
+"Down Rate:" = "下載速率:";
 
 /* File: ../../portable/item.py:965 */
-/* Flag: untranslated */
-"Up Rate:" = "Up Rate:";
+"Down Total:" = "總計下載了:";
 
-/* File: ../../portable/item.py:966 */
-/* Flag: untranslated */
-"Up Total:" = "Up Total:";
+/* File: ../../portable/item.py:967 */
+"Up Rate:" = "上傳速率:";
 
-/* File: ../../portable/item.py:971 */
-/* Flag: untranslated */
-"Web page:" = "Web page:";
+/* File: ../../portable/item.py:968 */
+"Up Total:" = "總計上傳了:";
 
-/* File: ../../portable/item.py:971 */
-/* Flag: untranslated */
-"permalink" = "permalink";
+/* File: ../../portable/item.py:973 */
+"Web page:" = "網頁:";
 
-/* File: ../../portable/item.py:972 */
-/* Flag: untranslated */
-"File link:" = "File link:";
+/* File: ../../portable/item.py:973 */
+"permalink" = "固定網址";
 
-/* File: ../../portable/item.py:972 */
-/* Flag: untranslated */
-"direct link to file" = "direct link to file";
+/* File: ../../portable/item.py:974 */
+"File link:" = "檔案網址:";
 
 /* File: ../../portable/item.py:974 */
 /* Flag: untranslated */
-"File type:" = "File type:";
+"direct link to file" = "direct link to file";
 
-/* File: ../../portable/item.py:981 */
+/* File: ../../portable/item.py:976 */
 /* Flag: untranslated */
-"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
+"File type:" = "File type:";
 
 /* File: ../../portable/item.py:983 */
 /* Flag: untranslated */
-"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
+"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
 
 /* File: ../../portable/item.py:985 */
 /* Flag: untranslated */
-"Filename:" = "Filename:";
+"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
 
-/* File: ../../portable/item.py:992 */
-/* Flag: untranslated */
-"Down Total" = "Down Total";
+/* File: ../../portable/item.py:987 */
+"Filename:" = "檔案名稱:";
 
 /* File: ../../portable/item.py:994 */
 /* Flag: untranslated */
+"Down Total" = "Down Total";
+
+/* File: ../../portable/item.py:996 */
+/* Flag: untranslated */
 "Up Total" = "Up Total";
 
-/* File: ../../portable/item.py:1012 */
+/* File: ../../portable/item.py:1014 */
 /* Flag: untranslated */
 "Item Details" = "Item Details";
 
-/* File: ../../portable/item.py:1019 */
+/* File: ../../portable/item.py:1021 */
 /* Flag: untranslated */
 "Torrent Details" = "Torrent Details";
 
-/* File: ../../portable/item.py:1021 */
+/* File: ../../portable/item.py:1023 */
 /* Flag: untranslated */
 "Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
 
-/* File: ../../portable/item.py:1024 */
+/* File: ../../portable/item.py:1027 */
 /* Flag: untranslated */
 "Download Details" = "Download Details";
 
-/* File: ../../portable/item.py:1238 */
-/* Flag: untranslated */
-"downloading..." = "downloading...";
+/* File: ../../portable/item.py:1241 */
+"downloading..." = "下載中...";
 
-/* File: ../../portable/item.py:1245 */
 /* File: ../../portable/item.py:1248 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:1251 */
 /* Flag: python-format */
-"%s remaining" = "%s remaining";
+"%s remaining" = "剩下 %s";
 
-/* File: ../../portable/item.py:1257 */
-/* Flag: untranslated */
-"starting up..." = "starting up...";
+/* File: ../../portable/item.py:1260 */
+"starting up..." = "準備開始...";
 
-/* File: ../../portable/item.py:1456 */
-/* Flag: untranslated */
-"Play Just This Video" = "Play Just This Video";
+/* File: ../../portable/item.py:1459 */
+"Play Just This Video" = "只播放這個檔案";
 
-/* File: ../../portable/item.py:1800 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:1807 */
 /* Flag: python-format */
-"Removing %s items" = "Removing %s items";
+"Removing %s items" = "刪除 %s 個項目";
 
-/* File: ../../portable/item.py:1802 */
-/* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?";
+/* File: ../../portable/item.py:1809 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "有一個（以上）的影片檔尚未從頻道下載完畢，要直接刪除這些檔案、或是僅移除影片收藏中的項目?";
 
-/* File: ../../portable/item.py:1810 */
-/* Flag: untranslated */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
+/* File: ../../portable/item.py:1817 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "所選的項目裡，有一個（以上）是資料夾；刪除資料夾的時候，裡頭所有的檔案也會一併被刪除。";
 
 /* File: ../../portable/folder.py:132 */
 /* File: ../../portable/folder.py:155 */
-/* Flag: untranslated */
-"Rename Channel Folder" = "Rename Channel Folder";
+"Rename Channel Folder" = "頻道資料夾更名";
 
 /* File: ../../portable/folder.py:134 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Enter a new name for the channel folder %s";
+"Enter a new name for the channel folder %s" = "請輸入頻道資料夾「%s」的新名稱";
 
 /* File: ../../portable/folder.py:210 */
 /* File: ../../portable/folder.py:215 */
-/* Flag: untranslated */
-"Rename Playlist Folder" = "Rename Playlist Folder";
+"Rename Playlist Folder" = "播放清單更名";
 
 /* File: ../../portable/folder.py:217 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Enter a new name for the playlist folder %s";
+"Enter a new name for the playlist folder %s" = "請輸入播放清單「%s」的新名稱";
 
 /* File: ../../portable/folder.py:225 */
-/* Flag: untranslated */
-"Create Channel Folder" = "Create Channel Folder";
+"Create Channel Folder" = "建立頻道資料夾";
 
 /* File: ../../portable/folder.py:239 */
-/* Flag: untranslated */
-"Create Playlist Folder" = "Create Playlist Folder";
+"Create Playlist Folder" = "建立播放清單資料夾";
 
 /* File: ../../portable/folder.py:240 */
-/* Flag: untranslated */
-"Enter a name for the new playlist folder" = "Enter a name for the new playlist folder";
+"Enter a name for the new playlist folder" = "請輸入此播放清單資料夾的名稱";
 
 /* File: ../../portable/httpclient.py:67 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Error: %s" = "Error: %s";
+"Error: %s" = "錯誤: %s";
 
 /* File: ../../portable/httpclient.py:82 */
 /* File: ../../portable/httpclient.py:87 */
-/* Flag: untranslated */
-"Can't connect" = "Can't connect";
+"Can't connect" = "無法連線";
 
 /* File: ../../portable/httpclient.py:83 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Connection Error: %s" = "Connection Error: %s";
+"Connection Error: %s" = "連線錯誤: %s";
 
 /* File: ../../portable/httpclient.py:88 */
-/* Flag: untranslated */
-"SSL connection error" = "SSL connection error";
+"SSL connection error" = "SSL 連線錯誤";
 
 /* File: ../../portable/httpclient.py:92 */
-/* Flag: untranslated */
-"HTTP error" = "HTTP error";
+"HTTP error" = "HTTP 錯誤";
 
 /* File: ../../portable/httpclient.py:95 */
 /* Flag: untranslated */
@@ -1634,9 +1385,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Expected CRLF got: %r" = "Expected CRLF got: %r";
 
 /* File: ../../portable/httpclient.py:107 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s closed connection" = "%s closed connection";
+"%s closed connection" = "%s 關閉連線";
 
 /* File: ../../portable/httpclient.py:113 */
 /* Flag: untranslated */
@@ -1648,239 +1398,221 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Bad Status Code: %s" = "Bad Status Code: %s";
 
 /* File: ../../portable/httpclient.py:119 */
-/* Flag: untranslated */
-"Authorization failed" = "Authorization failed";
+"Authorization failed" = "授權失敗";
 
 /* File: ../../portable/httpclient.py:125 */
 /* Flag: untranslated */
 "Pipeline request never started" = "Pipeline request never started";
 
 /* File: ../../portable/httpclient.py:129 */
-/* Flag: untranslated */
-"Timeout" = "Timeout";
+"Timeout" = "逾時";
 
 /* File: ../../portable/httpclient.py:130 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Connection to %s timed out" = "Connection to %s timed out";
+"Connection to %s timed out" = "連線到 %s 時逾時";
 
 /* File: ../../portable/httpclient.py:134 */
-/* Flag: untranslated */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "不正確的網址";
 
 /* File: ../../portable/httpclient.py:135 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s is not a valid URL" = "%s is not a valid URL";
+"\"%s\" is not a valid URL" = "「%s」不是正確的網址";
 
-/* File: ../../portable/httpclient.py:323 */
+/* File: ../../portable/httpclient.py:324 */
 /* Flag: untranslated */
 "Unknown Error code" = "Unknown Error code";
 
-/* File: ../../portable/httpclient.py:355 */
-/* Flag: untranslated */
-"Connection closed" = "Connection closed";
-
-/* File: ../../portable/httpclient.py:780 */
-/* Flag: untranslated */
-"Unknown" = "Unknown";
+/* File: ../../portable/httpclient.py:356 */
+"Connection closed" = "連線終止";
 
 /* File: ../../portable/httpclient.py:781 */
 /* Flag: untranslated */
+"Unknown" = "Unknown";
+
+/* File: ../../portable/httpclient.py:782 */
+/* Flag: untranslated */
 "Internal Error: Not ready to send" = "Internal Error: Not ready to send";
 
-/* File: ../../portable/app.py:682 */
+/* File: ../../portable/app.py:684 */
 /* Flag: untranslated */
 "Database too new" = "Database too new";
 
-/* File: ../../portable/app.py:683 */
+/* File: ../../portable/app.py:685 */
 /* Flag: untranslated */
 "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that.";
 
-/* File: ../../portable/app.py:697 */
+/* File: ../../portable/app.py:699 */
 /* Flag: untranslated */
 "Video Directory Missing" = "Video Directory Missing";
 
-/* File: ../../portable/app.py:698 */
+/* File: ../../portable/app.py:700 */
 /* Flag: untranslated */
 "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro.";
 
-/* File: ../../portable/app.py:1017 */
-/* File: ../../portable/app.py:1031 */
-/* File: ../../portable/app.py:1075 */
-/* File: ../../portable/app.py:1101 */
-/* File: ../../portable/app.py:1121 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1019 */
+/* File: ../../portable/app.py:1033 */
+/* File: ../../portable/app.py:1077 */
+/* File: ../../portable/app.py:1103 */
+/* File: ../../portable/app.py:1123 */
 /* Flag: python-format */
-"Remove %s" = "Remove %s";
+"Remove %s" = "刪除 %s";
 
-/* File: ../../portable/app.py:1018 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1020 */
 /* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Are you sure you want to remove the guide %s?";
+"Are you sure you want to remove the guide %s?" = "你確定真的要移除「%s」這個導覽嗎?";
 
-/* File: ../../portable/app.py:1032 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1034 */
 /* Flag: python-format */
-"Are you sure you want to remove %s" = "Are you sure you want to remove %s";
-
-/* File: ../../portable/app.py:1035 */
-/* File: ../../portable/app.py:1080 */
-/* File: ../../portable/app.py:1106 */
-/* File: ../../portable/app.py:1125 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Remove %s channels" = "Remove %s channels";
+"Are you sure you want to remove %s" = "你確定真的要移除「%s」嗎?";
 
 /* File: ../../portable/app.py:1037 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1082 */
+/* File: ../../portable/app.py:1108 */
+/* File: ../../portable/app.py:1127 */
 /* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
+"Remove %s channels" = "移除 %s 個頻道";
 
-/* File: ../../portable/app.py:1076 */
+/* File: ../../portable/app.py:1039 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "你確定真的要移除「%s」這些播放清單嗎?";
+
+/* File: ../../portable/app.py:1078 */
 /* Flag: untranslated */
 "What would you like to do with the videos in this channel that you've downloaded?" = "What would you like to do with the videos in this channel that you've downloaded?";
 
-/* File: ../../portable/app.py:1081 */
+/* File: ../../portable/app.py:1083 */
 /* Flag: untranslated */
 "What would you like to do with the videos in these channels that you've downloaded?" = "What would you like to do with the videos in these channels that you've downloaded?";
 
-/* File: ../../portable/app.py:1102 */
+/* File: ../../portable/app.py:1104 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Are you sure you want to remove %s?  Any downloads in progress will be canceled.";
 
-/* File: ../../portable/app.py:1107 */
+/* File: ../../portable/app.py:1109 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
 
-/* File: ../../portable/app.py:1122 */
+/* File: ../../portable/app.py:1124 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove %s?" = "Are you sure you want to remove %s?";
 
-/* File: ../../portable/app.py:1126 */
+/* File: ../../portable/app.py:1128 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to remove these %s channels?" = "Are you sure you want to remove these %s channels?";
 
-/* File: ../../portable/app.py:1139 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1141 */
 /* Flag: python-format */
-"Stop watching %s" = "Stop watching %s";
+"Stop watching %s" = "停止觀賞 %s";
 
-/* File: ../../portable/app.py:1140 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1142 */
 /* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "Are you sure you want to stop watching %s?";
+"Are you sure you want to stop watching %s?" = "確定要停止觀賞 %s 嗎?";
 
-/* File: ../../portable/app.py:1143 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1145 */
 /* Flag: python-format */
-"Stop watching %s directories" = "Stop watching %s directories";
+"Stop watching %s directories" = "停止觀賞 %s 目錄的節目";
 
-/* File: ../../portable/app.py:1144 */
+/* File: ../../portable/app.py:1146 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "Are you sure you want to stop watching these %s directories?" = "Are you sure you want to stop watching these %s directories?";
 
-/* File: ../../portable/app.py:1174 */
+/* File: ../../portable/app.py:1177 */
 /* Flag: untranslated */
 "Are you sure you want to quit?" = "Are you sure you want to quit?";
 
-/* File: ../../portable/app.py:1178 */
+/* File: ../../portable/app.py:1179 */
 /* Flag: untranslated */
-"Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?";
 
-/* File: ../../portable/app.py:1668 */
-/* Flag: untranslated */
-"Invalid Value" = "Invalid Value";
+/* File: ../../portable/app.py:1680 */
+"Invalid Value" = "無效值";
 
-/* File: ../../portable/app.py:1669 */
+/* File: ../../portable/app.py:1681 */
 /* Flag: untranslated */
 /* Flag: python-format */
 "%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number.";
 
-/* File: ../../portable/app.py:1960 */
+/* File: ../../portable/app.py:1972 */
 /* Flag: untranslated */
 " - Invalid URL" = " - Invalid URL";
 
-/* File: ../../portable/app.py:1961 */
+/* File: ../../portable/app.py:1973 */
 /* Flag: untranslated */
 "The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "The address you entered is not a valid URL.\nPlease double check and try again.\n\n";
 
-/* File: ../../portable/app.py:1985 */
+/* File: ../../portable/app.py:1997 */
 /* Flag: untranslated */
 "$shortAppName - Add Channel" = "$shortAppName - Add Channel";
 
-/* File: ../../portable/app.py:1985 */
+/* File: ../../portable/app.py:1997 */
 /* Flag: untranslated */
 "Enter the URL of the channel to add" = "Enter the URL of the channel to add";
 
-/* File: ../../portable/app.py:2006 */
+/* File: ../../portable/app.py:2018 */
 /* Flag: untranslated */
 "$shortAppName - Add Miro Guide" = "$shortAppName - Add Miro Guide";
 
-/* File: ../../portable/app.py:2006 */
+/* File: ../../portable/app.py:2018 */
 /* Flag: untranslated */
 "Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add";
 
-/* File: ../../portable/app.py:2012 */
+/* File: ../../portable/app.py:2024 */
 /* Flag: untranslated */
 "$shortAppName - Download Video" = "$shortAppName - Download Video";
 
-/* File: ../../portable/app.py:2012 */
+/* File: ../../portable/app.py:2024 */
 /* Flag: untranslated */
 "Enter the URL of the video to download" = "Enter the URL of the video to download";
 
-/* File: ../../portable/app.py:2306 */
+/* File: ../../portable/app.py:2318 */
 /* Flag: untranslated */
 "News and Tech" = "News and Tech";
 
-/* File: ../../portable/app.py:2313 */
+/* File: ../../portable/app.py:2324 */
 /* Flag: untranslated */
 "Entertainment" = "Entertainment";
 
-/* File: ../../portable/app.py:2319 */
+/* File: ../../portable/app.py:2330 */
 /* Flag: untranslated */
 "High-Def" = "High-Def";
 
-/* File: ../../portable/app.py:2327 */
+/* File: ../../portable/app.py:2337 */
 /* Flag: untranslated */
 "Mac" = "Mac";
 
-/* File: ../../portable/app.py:2342 */
+/* File: ../../portable/app.py:2352 */
 /* Flag: untranslated */
 "Example Playlist" = "Example Playlist";
 
-/* File: ../../portable/app.py:2361 */
+/* File: ../../portable/app.py:2371 */
 /* Flag: untranslated */
 "Custom Channels" = "Custom Channels";
 
-/* File: ../../portable/app.py:2361 */
+/* File: ../../portable/app.py:2371 */
 /* Flag: untranslated */
 "You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels.";
 
-/* File: ../../portable/app.py:2376 */
+/* File: ../../portable/app.py:2386 */
 /* Flag: untranslated */
 "Error Changing Movies Directory" = "Error Changing Movies Directory";
 
-/* File: ../../portable/app.py:2377 */
+/* File: ../../portable/app.py:2387 */
 /* Flag: untranslated */
 "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory.";
 
-/* File: ../../portable/opml.py:113 */
+/* File: ../../portable/app.py:2422 */
 /* Flag: untranslated */
-"OPML Import failed" = "OPML Import failed";
+"Error Saving Video" = "Error Saving Video";
 
-/* File: ../../portable/opml.py:114 */
+/* File: ../../portable/app.py:2424 */
 /* Flag: untranslated */
-"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
-
-/* File: ../../portable/opml.py:119 */
-/* Flag: untranslated */
-"OPML Import summary" = "OPML Import summary";
+/* Flag: python-format */
+"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "An error occured while trying to save %s.  Please check that the file has not been deleted and try again.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
 /* Flag: untranslated */
@@ -2229,7 +1961,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 /* Flag: untranslated */
-"To avoid slowdowns, limit upstream to" = "To avoid slowdowns, limit upstream to";
+"To avoid slowdowns, limit upstream bandwith when my computer is active." = "To avoid slowdowns, limit upstream bandwith when my computer is active.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
+/* Flag: untranslated */
+"Upstream limit (KB/s)" = "Upstream limit (KB/s)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
 /* Flag: untranslated */
@@ -2328,7 +2064,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
 /* Flag: untranslated */
-"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49 */
 /* Flag: untranslated */

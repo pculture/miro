@@ -4,17 +4,20 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-08-22 16:47-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-10-19 11:53-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+
+/* File: ../../portable/dialogs.py:77 */
+"Cancel" = "İptal";
+
+"OK" = "TAMAM";
 
 "$log" = "$log";
 
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Hata takip sistemimize <a href=\"$bugTrackerURL\">$bugTrackerURL</a> adresinden erişebilirsiniz. Sadece bize ne yaptığınızı söyleyip, yukarıdaki kutudan log mesajını yapıştırıp, birkaç soruya da cevap verdikten sonra, biz hemen işe koyulacağız.</font>";
 
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Hata takip sistemimize hata raporu iletmek ister miydiniz? En azından hata oluştuğu sırada yapmakta olduğunuz şeyleri bizlere bildirebilirsiniz. Ancak unutmayınız ki detaylı ve anlaşılabilir açıklamalarınız bizlere daha faydalı olacaktır. Hata iletisini aşağıdaki kutuya yazabilirsiniz:";
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Aslında biraz zaman ayırıp hata tâkip sistemimize hata raporu bildirmek ister misiniz? En azından sizden istediğimiz, o sırada ne yaptığınızı -- mümkün olduğu kadar eksiksiz olarak-- ve kendi üslûbunuzla-kısaca alttaki boş kutuya belirtmenizdir:";
 
-"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Talihsizlik! $longAppName programının kafası karıştı, dünyası şaştı (işte şu zamanda: $when). Sizden özür dileyerek $shortAppName programından çıkıp yeniden başlatmanızı tavsiye ederiz. Bu ona bir ders olur, ve sizin ayarlarınızı ve kanal kayıtlarınızı kaybetme ihtimalinizi düşürecektir.";
-
-"OK" = "TAMAM";
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Talihsizlik! $longAppName programının kafası karıştı, dünyası şaştı ($when zamanında). Sizden özür dileyerek $shortAppName programından çıkıp yeniden başlatmanızı öneriyoruz. Bu ona bir ders olur, ve sizin ayarlarınızı ve kanal kayıtlarınızı kaybetme ihtimalinizi düşürecektir.";
 
 "The fall of $shortAppName??" = "$shortAppName düşüşü??";
 
@@ -30,7 +33,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
 "Channels" = "Kanallar";
 
-"Check for New Version" = "Yeni Sürüm Kontrolü";
+"Check for New Version" = "Yeni Sürümünü Kontrol Et.";
 
 "Clear Menu" = "Menüyü Temizle";
 
@@ -49,13 +52,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Donate" = "Bağış yap";
 
-/* Flag: untranslated */
-"Download Video..." = "Download Video...";
+"Download Video..." = "Video İndir...";
 
 "Edit" = "Düzenle";
 
-/* Flag: untranslated */
-"Export Channels (OPML)..." = "Export Channels (OPML)...";
+"Export Channels (OPML)..." = "Kanalları Dşa Aktar (OPML)...";
 
 "File" = "Dosya";
 
@@ -67,8 +68,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Hide Others" = "Diğerlerini Gizle";
 
-/* Flag: untranslated */
-"Import Channels (OPML)..." = "Import Channels (OPML)...";
+"Import Channels (OPML)..." = "Kanalları İçe Aktar (OPML)...";
 
 "Main Window" = "Ana Pencere";
 
@@ -81,17 +81,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Miro Help" = "Miro Yardımı";
 
-"New Channel Folder..." = "Yeni Kanal Dizini";
+"New Channel Folder..." = "Yeni Kanal Dizini...";
 
-"New Playlist Folder..." = "Yeni Çalma Listesi Dizini";
+"New Playlist Folder..." = "Yeni Çalma Listesi Dizini...";
 
-"New Playlist..." = "Yeni Çalma Listesi";
+"New Playlist..." = "Yeni Çalma Listesi...";
 
-"New Search Channel..." = "Yeni Arama Kanalı...";
+"New Search Channel..." = "Yeni Kanal Arama...";
 
 "Next Video" = "Sonraki Video";
 
-"Open Recent" = "Sonuncuyu Aç";
+"Open Recent" = "Önceki Açtıklarından Aç";
 
 "Open..." = "Aç";
 
@@ -102,11 +102,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/osx/frontend/Preferences.py:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-"Playback" = "Çalma";
+"Playback" = "Oynat";
 
-"Playlists" = "Parça Listeleri";
+"Playlists" = "Oynatma Listeleri";
 
-"Preferencesâ¦" = "Seçenekler";
+"Preferencesâ¦" = "Tercihler";
 
 "Previous Video" = "Önceki Video";
 
@@ -156,9 +156,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Video Search" = "Video Arama";
 
 "VideoWindow" = "Görüntü Penceresi";
-
-/* File: ../../portable/dialogs.py:77 */
-"Cancel" = "İptal";
 
 "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
 
@@ -221,7 +218,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
 "GB free." = "GB boş.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
 "KB/s when my computer is active." = "Bilgisayarım aktifken KB/s";
 
 "Maximum:" = "Maksimum:";
@@ -252,12 +248,15 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Save downloaded videos in this folder:" = "İndirilen videoları bu klasöre kaydet:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:572 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:571 */
 "Show as Channel" = "Kanal olarak göster";
 
 "Stop after each video." = "Her videodan sonra dur.";
 
 "To avoid internet slowdowns:" = "İnternet yavaşlamalarından kaçınmak için:";
+
+/* File: ../../portable/app.py:1187 */
+"Warn me when I attempt to quit with downloads in progress" = "İndirme sırasında programdan çıkmak istersem beni uyar.";
 
 "Watch for new videos in these folders and include them in the Library:" = "Bu dizinlerdeki videoları takip et ve Kütüphaneye ekle";
 
@@ -341,24 +340,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: python-format */
 "A new version of %s is available for download." = "%s'nun indirebileceğiniz yeni bir sürümü var.";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:155 */
-/* Flag: untranslated */
-"Select a File" = "Select a File";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:160 */
-/* Flag: untranslated */
-"Save File to" = "Save File to";
-
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:210 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214 */
 "Error Bombing Item" = "Ögeyi Bombalama Hatası";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:212 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:216 */
 "Error Recommending Item" = "Ögeyi Önerme Hatası";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218 */
 "Error Opening Website" = "İnternet Sayfası Açma Hatası";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:222 */
 /* Flag: python-format */
 "There was an error opening %s.  Please try again in a few seconds" = "%s açarken hata oluştu. Lütfen birkaç saniye sonra tekrar deneyin";
 
@@ -375,13 +366,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:257 */
 "onStartup called twice" = "başlangıçta iki kez çağrıldı";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:672 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:671 */
 "Spacebar" = "Boşluk Çubuğu";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:819 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:818 */
 "Close to tray?" = "Görev çubuğu çekmecesine kapat?";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:820 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:819 */
 "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Kırmızı kapatma düğmesinde tıkladığınızda Miro'nun gerçekten kapanmasını mı yoksa kapanır gibi yapıp aslında görev çubuğu çekmecesinde sessizce işini yapmaya devam etmesini mi tercih edersiniz? Bu ayarı sonradan Seçenekler bölümünden değiştirebilirsiniz.";
 
 /* File: ../../platform/osx/frontend/GrowlNotifier.py:27 */
@@ -423,30 +414,30 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
 "Disk Space" = "Sabit Disk Alanı";
 
-/* File: ../../platform/osx/frontend/Preferences.py:164 */
+/* File: ../../platform/osx/frontend/Preferences.py:170 */
 "Movies Directory" = "Filmler Dizini";
 
-/* File: ../../platform/osx/frontend/Preferences.py:165 */
+/* File: ../../platform/osx/frontend/Preferences.py:171 */
 /* Flag: python-format */
 "Select a Directory to store %s downloads in." = "İndirdiğiniz %s dosyalarını saklamak için bir dizin seçin.";
 
-/* File: ../../platform/osx/frontend/Preferences.py:166 */
-/* File: ../../platform/osx/frontend/Preferences.py:230 */
+/* File: ../../platform/osx/frontend/Preferences.py:172 */
+/* File: ../../platform/osx/frontend/Preferences.py:236 */
 "Select" = "Seç";
 
-/* File: ../../platform/osx/frontend/Preferences.py:175 */
+/* File: ../../platform/osx/frontend/Preferences.py:181 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
 "Migrate existing movies?" = "Varolan filmler taşınsın mi?";
 
-/* File: ../../platform/osx/frontend/Preferences.py:176 */
+/* File: ../../platform/osx/frontend/Preferences.py:182 */
 /* Flag: python-format */
 "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "İndirdiğiniz filmleri saklamak için yeni bir dizin seçtiniz. %s mevcut filmlerinizi de bu dizine taşısın mı? (İndirmekte olduğunuz filmler bitene kadar yeni dizine taşınmayacaklar).";
 
-/* File: ../../platform/osx/frontend/Preferences.py:228 */
+/* File: ../../platform/osx/frontend/Preferences.py:234 */
 "View this Directory in the Library" = "Bu dizini Kütüphanede inceleyin";
 
-/* File: ../../platform/osx/frontend/Preferences.py:229 */
+/* File: ../../platform/osx/frontend/Preferences.py:235 */
 "Select a Directory to view in the Library." = "Kütüphanede izlemek için bir dizin seçin.";
 
 /* File: ../../platform/osx/frontend/StartupPanel.py:114 */
@@ -549,7 +540,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:322 */
 "New Channel _Guide..." = "Yeni Kanal _Rehberi";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:563 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:562 */
 "Folder Location" = "Dizin Yeri";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
@@ -582,12 +573,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%s MB required to store this video" = "Bu videoyu kaydetmek için %s MB gerekli";
 
 /* File: ../../portable/dl_daemon/download.py:679 */
-/* Flag: untranslated */
-"BitTorrent failure" = "BitTorrent failure";
+"BitTorrent failure" = "BitTorrent hatası";
 
 /* File: ../../portable/dl_daemon/download.py:680 */
-/* Flag: untranslated */
-"BitTorrent failed to startup" = "BitTorrent failed to startup";
+"BitTorrent failed to startup" = "BitTorrent başlarken hata verdi";
 
 /* File: ../../portable/dl_daemon/download.py:803 */
 "Corrupt Torrent" = "Bozuk Torrent";
@@ -620,6 +609,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/guide.py:118 */
 "Miro Guide" = "Miro Rehberi";
+
+/* File: ../../portable/extrastrings.py:5 */
+/* File: ../../portable/feed.py:2012 */
+/* File: ../../portable/feed.py:2104 */
+"Search" = "Arama";
 
 /* File: ../../portable/downloader.py:214 */
 "activity" = "hareketler";
@@ -693,25 +687,20 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/feed.py:884 */
 "Would you like to keep the feed?" = "Beslemeyi saklamak ister misiniz?";
 
-/* File: ../../portable/feed.py:1001 */
+/* File: ../../portable/feed.py:997 */
 "Bad content-type" = "Geçersiz içerik-tür";
 
-/* File: ../../portable/feed.py:1014 */
+/* File: ../../portable/feed.py:1010 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
 "Channel is not compatible with $shortAppName!" = "Bu kanal $shortAppName! ile uyumlu değil!";
 
-/* File: ../../portable/feed.py:1015 */
+/* File: ../../portable/feed.py:1011 */
 "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Biz dosyaları almak için elimizden geleni yapacağız. Ama videoları listelemek normalden daha uzun sürebilir ve tanıtım yazıları biraz garip görünebilir. Lütfen $url adresinin yaıncılarıyla temasa geçip $shortAppName ile daha uyumlu çalışacak bir feed oluştutup oluşturamayacaklarını sorun.\n\nHerşeye rağmen bu kanalı görüntülemek istediğine emin misin?";
 
-/* File: ../../portable/feed.py:2010 */
 /* File: ../../portable/feed.py:2118 */
-/* File: ../../portable/extrastrings.py:5 */
-"Search" = "Arama";
-
-/* File: ../../portable/feed.py:2132 */
 "Local Files" = "Yerel Dosyalar";
 
-/* File: ../../portable/feed.py:2146 */
+/* File: ../../portable/feed.py:2132 */
 "Playing File" = "Dosya çalınıyor";
 
 /* File: ../../portable/menu.py:69 */
@@ -722,23 +711,23 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Downloaded Items" = "%d İndirilmiş Ögeler";
 
 /* File: ../../portable/menu.py:94 */
-/* File: ../../portable/item.py:1454 */
+/* File: ../../portable/item.py:1457 */
 "Play" = "Yürüt";
 
 /* File: ../../portable/menu.py:95 */
-/* File: ../../portable/item.py:1457 */
+/* File: ../../portable/item.py:1460 */
 "Add to new playlist" = "Yeni çalma listesine ekle";
 
 /* File: ../../portable/menu.py:97 */
-/* File: ../../portable/item.py:1450 */
+/* File: ../../portable/item.py:1453 */
 "Remove From Playlist" = "Çalma Listesinden Kaldır";
 
 /* File: ../../portable/menu.py:99 */
-/* File: ../../portable/item.py:1452 */
+/* File: ../../portable/item.py:1455 */
 "Remove From the Library" = "Kütüphaneden Çıkart";
 
 /* File: ../../portable/menu.py:105 */
-/* File: ../../portable/item.py:1461 */
+/* File: ../../portable/item.py:1464 */
 "Mark as Unwatched" = "İzlenmedi Olarak İşaretle";
 
 /* File: ../../portable/menu.py:110 */
@@ -747,7 +736,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/menu.py:111 */
 /* File: ../../portable/dialogs.py:85 */
-/* File: ../../portable/item.py:1467 */
+/* File: ../../portable/item.py:1470 */
 "Download" = "İndir";
 
 /* File: ../../portable/menu.py:116 */
@@ -755,16 +744,34 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Downloading Items" = "%d İndirilen Öge";
 
 /* File: ../../portable/menu.py:118 */
-/* File: ../../portable/item.py:1465 */
+/* File: ../../portable/item.py:1468 */
 "Cancel Download" = "İndirmeyi İptal Et";
 
 /* File: ../../portable/menu.py:120 */
-/* File: ../../portable/item.py:1465 */
+/* File: ../../portable/item.py:1468 */
 "Pause Download" = "İndirmeyi Duraklat";
 
 /* File: ../../portable/menu.py:123 */
-/* File: ../../portable/item.py:1463 */
+/* File: ../../portable/item.py:1466 */
 "Restart Upload" = "Yüklemeyi Tekrar Başlat";
+
+/* File: ../../portable/opml.py:32 */
+"Export OPML File" = "Dışa OPML Dosyası Aktar";
+
+/* File: ../../portable/opml.py:106 */
+"Import OPML File" = "İçe OPML Dosyası Aktar";
+
+/* File: ../../portable/opml.py:108 */
+"OPML Files" = "OPML Dosyaları";
+
+/* File: ../../portable/opml.py:127 */
+"OPML Import failed" = "OPML İçe Aktarılamadı";
+
+/* File: ../../portable/opml.py:128 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "Seçili OPML dosyası bozuk görünüyor. İçe Aktarma bitirilemedi";
+
+/* File: ../../portable/opml.py:133 */
+"OPML Import summary" = "OPML İçe Aktarım özeti";
 
 /* File: ../../portable/autoupdate.py:121 */
 /* Flag: python-format */
@@ -787,65 +794,63 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Internal Error" = "İç hata";
 
 /* File: ../../portable/util.py:257 */
-/* Flag: untranslated */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report.";
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro dahili bi hata ile karşılaştı. Bu sorunu hata raporu bildirerek incelememize ve çözmemize yardım edebilirsiniz.";
 
 /* File: ../../portable/util.py:257 */
 /* Flag: untranslated */
 "Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
 
 /* File: ../../portable/util.py:257 */
-/* Flag: untranslated */
-"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
+"Describe what you were doing that caused this error" = "Bu hata oluştuğu sırada ne yaptığını tarif et";
 
-/* File: ../../portable/util.py:441 */
+/* File: ../../portable/util.py:460 */
 /* Flag: python-format */
 "%1.1fGB" = "%1.1fGB";
 
-/* File: ../../portable/util.py:443 */
+/* File: ../../portable/util.py:462 */
 /* Flag: python-format */
 "%dGB" = "%dGB";
 
-/* File: ../../portable/util.py:447 */
+/* File: ../../portable/util.py:466 */
 /* Flag: python-format */
 "%1.1fMB" = "%1.1fMB";
 
-/* File: ../../portable/util.py:449 */
+/* File: ../../portable/util.py:468 */
 /* Flag: python-format */
 "%dMB" = "%dMB";
 
-/* File: ../../portable/util.py:453 */
+/* File: ../../portable/util.py:472 */
 /* Flag: python-format */
 "%1.1fKB" = "%1.1fKB";
 
-/* File: ../../portable/util.py:455 */
+/* File: ../../portable/util.py:474 */
 /* Flag: python-format */
 "%dKB" = "%dKB";
 
-/* File: ../../portable/util.py:459 */
+/* File: ../../portable/util.py:478 */
 /* Flag: python-format */
 "%1.1fB" = "%1.1fB";
 
-/* File: ../../portable/util.py:461 */
+/* File: ../../portable/util.py:480 */
 /* Flag: python-format */
 "%dB" = "%dB";
 
-/* File: ../../portable/storedatabase.py:828 */
-/* File: ../../portable/storedatabase.py:1189 */
+/* File: ../../portable/storedatabase.py:832 */
+/* File: ../../portable/storedatabase.py:1231 */
 /* Flag: python-format */
 "%s database save succeeded" = "%s veritabanı kaydı başarılı";
 
-/* File: ../../portable/storedatabase.py:829 */
-/* File: ../../portable/storedatabase.py:1190 */
+/* File: ../../portable/storedatabase.py:833 */
+/* File: ../../portable/storedatabase.py:1232 */
 "The database has been successfully saved. It is now safe to quit without losing any data." = "Veritabanı kaydı başarılı oldu. Güvenli bir şekilde veri kaybetmeden kaydedip çıkabilirsiniz.";
 
-/* File: ../../portable/storedatabase.py:836 */
-/* File: ../../portable/storedatabase.py:1198 */
+/* File: ../../portable/storedatabase.py:840 */
+/* File: ../../portable/storedatabase.py:1240 */
 /* Flag: python-format */
 "%s database save failed" = "%s veritabanı kaydı başarısız";
 
-/* File: ../../portable/storedatabase.py:837 */
-/* File: ../../portable/storedatabase.py:1199 */
+/* File: ../../portable/storedatabase.py:841 */
+/* File: ../../portable/storedatabase.py:1241 */
 /* Flag: python-format */
 "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s kendi veritabanını kaydetmeyi başaramadı: Disk Dolu.\nDolu diskten dosya silmenizi veya koleksiyonunuzdan birkaç tane video silmenizi tavsiye ederiz.\nÖnceki değişiklikler kaybolabilir.";
 
@@ -853,12 +858,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Ok" = "Tamam";
 
 /* File: ../../portable/dialogs.py:81 */
-/* Flag: untranslated */
-"Ignore" = "Ignore";
+"Ignore" = "Önemseme";
 
 /* File: ../../portable/dialogs.py:82 */
-/* Flag: untranslated */
-"Submit Crash Repport" = "Submit Crash Repport";
+"Submit Crash Report" = "Hata Raporu Bildir";
 
 /* File: ../../portable/dialogs.py:83 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
@@ -905,54 +908,85 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Close to Tray" = "Görev çubuğu çekmecesine kapat";
 
 /* File: ../../portable/dialogs.py:99 */
-/* Flag: untranslated */
-"Launch Miro" = "Launch Miro";
+"Launch Miro" = "Miro'yu Çalıştır";
 
-/* File: ../../portable/dialogs.py:214 */
+/* File: ../../portable/dialogs.py:100 */
+"Download Anyway" = "Her Hâlükârda İndir";
+
+/* File: ../../portable/dialogs.py:221 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
 "New Search Channel" = "Yeni Arama Kanalı";
 
-/* File: ../../portable/dialogs.py:214 */
+/* File: ../../portable/dialogs.py:221 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:25 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
 "A search channel contains items that match a search term." = "Bir arama kanalı arama şartına uyan ögeler içerir.";
 
-/* File: ../../portable/singleclick.py:161 */
+/* File: ../../portable/singleclick.py:86 */
+"Download already exists" = "Mevcut olsa dahi indir";
+
+/* File: ../../portable/singleclick.py:87 */
+"That URL is already an external download." = "Bu zaten harici indirme adresi.";
+
+/* File: ../../portable/singleclick.py:93 */
+"Miro will begin downloading it now." = "Miro onu indirmeye şimdi başlayacak.";
+
+/* File: ../../portable/singleclick.py:95 */
+"It is downloading now." = "İndiriliyor.";
+
+/* File: ../../portable/singleclick.py:97 */
+"It has already been downloaded." = "O zaten indirilmiş.";
+
+/* File: ../../portable/singleclick.py:124 */
+"Download Error" = "Yükleme Hatası";
+
+/* File: ../../portable/singleclick.py:125 */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro bu adresteki dosyayı indiremez:\n\nAdres: %s";
+
+/* File: ../../portable/singleclick.py:133 */
+"File Download" = "Dosya İndirme";
+
+/* File: ../../portable/singleclick.py:134 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "%s daki dosya ses, video veya  RSS feed gibi gözükmüyor.";
+
+/* File: ../../portable/singleclick.py:224 */
 "Subscribing to multiple channels" = "Çoklu kanala abone olunuyor";
 
-/* File: ../../portable/singleclick.py:162 */
+/* File: ../../portable/singleclick.py:225 */
 /* Flag: python-format */
 "Create %d channels?" = "%d kanal oluşturulsun mu?";
 
-/* File: ../../portable/singleclick.py:175 */
+/* File: ../../portable/singleclick.py:238 */
 /* Flag: python-format */
 "Adding %d channels to a new folder" = "%d kanal yeni bir dizine ekleniyor";
 
-/* File: ../../portable/singleclick.py:176 */
+/* File: ../../portable/singleclick.py:239 */
 /* File: ../../portable/folder.py:226 */
 "Enter a name for the new channel folder" = "Yeni kanal dizini için bir isim girin";
 
-/* File: ../../portable/singleclick.py:179 */
+/* File: ../../portable/singleclick.py:242 */
 /* Flag: python-format */
 "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOT: siz zaten bu kanallardan %d tanesine abonesiniz. Bu kanallar oldukları yerde kalacaklar.";
 
-/* File: ../../portable/singleclick.py:190 */
+/* File: ../../portable/singleclick.py:253 */
 "Subscription error" = "Abonelik hatası";
 
-/* File: ../../portable/singleclick.py:200 */
+/* File: ../../portable/singleclick.py:263 */
 "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Bu $shortAppName kanal dosyasının yapısı yanlış: $url. Lütfen yayıncısına haber verin.";
 
-/* File: ../../portable/singleclick.py:208 */
+/* File: ../../portable/singleclick.py:271 */
 "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Bu $shortAppName Kanal dosyası yanlış formatta: $url. Lütfen yayıncısını haberdar edin.";
 
-/* File: ../../portable/singleclick.py:212 */
+/* File: ../../portable/singleclick.py:275 */
 "Could not download the $shortAppName channel file: $url." = "$url adersindeki $shortAppName Kanal dosyası indirilemiyor.";
 
-/* File: ../../portable/singleclick.py:251 */
+/* File: ../../portable/singleclick.py:313 */
 "Invalid Torrent" = "Geçersiz Torrent";
 
-/* File: ../../portable/singleclick.py:252 */
+/* File: ../../portable/singleclick.py:314 */
 /* Flag: python-format */
 "The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Torrent dosyası %s bozuk gibi görünüyor ve açılamadı. [TAMAM]";
 
@@ -1168,83 +1202,87 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/item.py:953 */
 "Total Down:" = "Toplam İndirilen:";
 
-/* File: ../../portable/item.py:962 */
+/* File: ../../portable/item.py:956 */
+/* Flag: untranslated */
+"Error:" = "Error:";
+
+/* File: ../../portable/item.py:964 */
 "Down Rate:" = "İndirme Hızı:";
 
-/* File: ../../portable/item.py:963 */
+/* File: ../../portable/item.py:965 */
 "Down Total:" = "Toplam İndirme:";
 
-/* File: ../../portable/item.py:965 */
+/* File: ../../portable/item.py:967 */
 "Up Rate:" = "Yükleme Hızı:";
 
-/* File: ../../portable/item.py:966 */
+/* File: ../../portable/item.py:968 */
 "Up Total:" = "Toplam Yükleme:";
 
-/* File: ../../portable/item.py:971 */
+/* File: ../../portable/item.py:973 */
 "Web page:" = "Web sayfası:";
 
-/* File: ../../portable/item.py:971 */
+/* File: ../../portable/item.py:973 */
 "permalink" = "Kalıcı bağlantı";
 
-/* File: ../../portable/item.py:972 */
+/* File: ../../portable/item.py:974 */
 "File link:" = "Dosya bağlantısı:";
 
-/* File: ../../portable/item.py:972 */
+/* File: ../../portable/item.py:974 */
 "direct link to file" = "Dosyaya doğrudan bağlantı";
 
-/* File: ../../portable/item.py:974 */
+/* File: ../../portable/item.py:976 */
 "File type:" = "Dosya türü:";
 
-/* File: ../../portable/item.py:981 */
+/* File: ../../portable/item.py:983 */
 "REVEAL LOCAL FOLDER" = "YEREL DİZİNİ GÖSTER";
 
-/* File: ../../portable/item.py:983 */
+/* File: ../../portable/item.py:985 */
 "REVEAL LOCAL FILE" = "YEREL DOSYAYI GÖSTER";
 
-/* File: ../../portable/item.py:985 */
+/* File: ../../portable/item.py:987 */
 "Filename:" = "Dosya Adı:";
 
-/* File: ../../portable/item.py:992 */
+/* File: ../../portable/item.py:994 */
 "Down Total" = "Toplam İndirilen";
 
-/* File: ../../portable/item.py:994 */
+/* File: ../../portable/item.py:996 */
 "Up Total" = "Toplam Yüklenen:";
 
-/* File: ../../portable/item.py:1012 */
+/* File: ../../portable/item.py:1014 */
 "Item Details" = "Öğe Detayları";
 
-/* File: ../../portable/item.py:1019 */
+/* File: ../../portable/item.py:1021 */
 "Torrent Details" = "Torrent Detayları";
 
-/* File: ../../portable/item.py:1021 */
+/* File: ../../portable/item.py:1023 */
 /* Flag: untranslated */
 "Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
 
-/* File: ../../portable/item.py:1024 */
+/* File: ../../portable/item.py:1027 */
 "Download Details" = "İndirme Detayları";
 
-/* File: ../../portable/item.py:1238 */
+/* File: ../../portable/item.py:1241 */
 "downloading..." = "indiriyor...";
 
-/* File: ../../portable/item.py:1245 */
 /* File: ../../portable/item.py:1248 */
+/* File: ../../portable/item.py:1251 */
 /* Flag: python-format */
 "%s remaining" = "%s kalan";
 
-/* File: ../../portable/item.py:1257 */
+/* File: ../../portable/item.py:1260 */
 "starting up..." = "başlatılıyor...";
 
-/* File: ../../portable/item.py:1456 */
+/* File: ../../portable/item.py:1459 */
 "Play Just This Video" = "Sadece Bu Video'yu Yürüt";
 
-/* File: ../../portable/item.py:1800 */
+/* File: ../../portable/item.py:1807 */
 /* Flag: python-format */
 "Removing %s items" = "%s öge kaldırılıyor";
 
-/* File: ../../portable/item.py:1802 */
+/* File: ../../portable/item.py:1809 */
 "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Bu videolarda bir ya da birkaçı bir kanaldan indirilmedi. Bu videoları tamamen silmek mi yoksa sadece Kütüphanedeki kayıtlarını temizlemek mi istiyorsunuz?";
 
-/* File: ../../portable/item.py:1810 */
+/* File: ../../portable/item.py:1817 */
 "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Bu ögelerden biri veya daha fazlası bir dizindir. Bir dizini sildiğiniz veya kaldırdığınız zaman, o dizinin içerisindeki ögeleri de kaldırmış veya silmiş olacaksınız.";
 
 /* File: ../../portable/folder.py:132 */
@@ -1334,181 +1372,170 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Invalid URL" = "Geçersiz Adres";
 
 /* File: ../../portable/httpclient.py:135 */
-/* Flag: python-format */
-"%s is not a valid URL" = "%s geçerli bir adres değil";
-
-/* File: ../../portable/httpclient.py:323 */
 /* Flag: untranslated */
-"Unknown Error code" = "Unknown Error code";
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "\"%s\" is not a valid URL";
 
-/* File: ../../portable/httpclient.py:355 */
+/* File: ../../portable/httpclient.py:324 */
+"Unknown Error code" = "Bilinmeyen Hata Kodu";
+
+/* File: ../../portable/httpclient.py:356 */
 "Connection closed" = "Bağlantı kapatıldı";
 
-/* File: ../../portable/httpclient.py:780 */
+/* File: ../../portable/httpclient.py:781 */
 "Unknown" = "Bilinmeyen";
 
-/* File: ../../portable/httpclient.py:781 */
+/* File: ../../portable/httpclient.py:782 */
 "Internal Error: Not ready to send" = "İç Hata: Göndermeye hazır değil";
 
-/* File: ../../portable/app.py:682 */
+/* File: ../../portable/app.py:684 */
 "Database too new" = "Veritabanı çok yeni";
 
-/* File: ../../portable/app.py:683 */
+/* File: ../../portable/app.py:685 */
 "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "$shortAppName'nun daha yeni bir sürümüyle oluşturulmuş bir veritabanınız var. Bu veritabanını kullanmak için $shortAppName'nun en son sürümünü indirip çalıştırmanız gerekiyor.";
 
-/* File: ../../portable/app.py:697 */
-/* Flag: untranslated */
-"Video Directory Missing" = "Video Directory Missing";
+/* File: ../../portable/app.py:699 */
+"Video Directory Missing" = "Video Klasörü Yerinde Değil";
 
-/* File: ../../portable/app.py:698 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro.";
+/* File: ../../portable/app.py:700 */
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro ana video klasörünü bulamıyor. Bu belkide klasörün şu anda bağlı olmayan harici sürücüde olmasındandır.\n\nEğer devam ederseniz, video klasörü bu sürücüye giden yolu kaldırıp yenileyecek (Bu işlem harici sürücüdeki video bilgilerinin bazı detaylarını kaybetmenize sebep olacaktır.) İsterseniz çıkabilir, sürücüyü bağlayıp Miro'yu yeniden başlatabilirsiniz";
 
-/* File: ../../portable/app.py:1017 */
-/* File: ../../portable/app.py:1031 */
-/* File: ../../portable/app.py:1075 */
-/* File: ../../portable/app.py:1101 */
-/* File: ../../portable/app.py:1121 */
+/* File: ../../portable/app.py:1019 */
+/* File: ../../portable/app.py:1033 */
+/* File: ../../portable/app.py:1077 */
+/* File: ../../portable/app.py:1103 */
+/* File: ../../portable/app.py:1123 */
 /* Flag: python-format */
 "Remove %s" = "Kaldır %s";
 
-/* File: ../../portable/app.py:1018 */
+/* File: ../../portable/app.py:1020 */
 /* Flag: python-format */
 "Are you sure you want to remove the guide %s?" = "%s rehberini kaldırmak istediğinizden emin misiniz?";
 
-/* File: ../../portable/app.py:1032 */
+/* File: ../../portable/app.py:1034 */
 /* Flag: python-format */
 "Are you sure you want to remove %s" = "%s kaldırmak istediğinizden emin misiniz?";
 
-/* File: ../../portable/app.py:1035 */
-/* File: ../../portable/app.py:1080 */
-/* File: ../../portable/app.py:1106 */
-/* File: ../../portable/app.py:1125 */
+/* File: ../../portable/app.py:1037 */
+/* File: ../../portable/app.py:1082 */
+/* File: ../../portable/app.py:1108 */
+/* File: ../../portable/app.py:1127 */
 /* Flag: python-format */
 "Remove %s channels" = "%s Kanalı Kaldır";
 
-/* File: ../../portable/app.py:1037 */
+/* File: ../../portable/app.py:1039 */
 /* Flag: python-format */
 "Are you sure you want to remove these %s playlists" = "Bu %s çalma listesini kaldırmak istediğinizden emin misiniz?";
 
-/* File: ../../portable/app.py:1076 */
+/* File: ../../portable/app.py:1078 */
 "What would you like to do with the videos in this channel that you've downloaded?" = "Bu kanaldan indirdiğiniz videoları ne yapmak istersiniz?";
 
-/* File: ../../portable/app.py:1081 */
+/* File: ../../portable/app.py:1083 */
 "What would you like to do with the videos in these channels that you've downloaded?" = "Bu kanallardan indirdiğiniz videoları ne yapmak istersiniz?";
 
-/* File: ../../portable/app.py:1102 */
+/* File: ../../portable/app.py:1104 */
 /* Flag: python-format */
 "Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "%s kaldırmak istediğinizden emin misiniz? Devam eden indirmeler iptal edilecek.";
 
-/* File: ../../portable/app.py:1107 */
+/* File: ../../portable/app.py:1109 */
 /* Flag: python-format */
 "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Bu %s kanallarını kaldırmak istediğinizden emin misiniz? Devam eden indirmeler iptal edilecek.";
 
-/* File: ../../portable/app.py:1122 */
+/* File: ../../portable/app.py:1124 */
 /* Flag: python-format */
 "Are you sure you want to remove %s?" = "%s'yu bilgisayarınızdan kaldırmak istediğiniz emin misiniz?";
 
-/* File: ../../portable/app.py:1126 */
+/* File: ../../portable/app.py:1128 */
 /* Flag: python-format */
 "Are you sure you want to remove these %s channels?" = "Bu %s kanallarını silmek istediğinize emin misiniz?";
 
-/* File: ../../portable/app.py:1139 */
+/* File: ../../portable/app.py:1141 */
 /* Flag: python-format */
 "Stop watching %s" = "%s dizinini artık takip etme.";
 
-/* File: ../../portable/app.py:1140 */
+/* File: ../../portable/app.py:1142 */
 /* Flag: python-format */
 "Are you sure you want to stop watching %s?" = "%s dizinini takip etmekten vazgeçmek istediğine emin misin?";
 
-/* File: ../../portable/app.py:1143 */
+/* File: ../../portable/app.py:1145 */
 /* Flag: python-format */
 "Stop watching %s directories" = "Bu %s dizini artık takip etme.";
 
-/* File: ../../portable/app.py:1144 */
+/* File: ../../portable/app.py:1146 */
 /* Flag: python-format */
 "Are you sure you want to stop watching these %s directories?" = "Bu %s dizini artık takip etmek istemediğine emin min?";
 
-/* File: ../../portable/app.py:1174 */
+/* File: ../../portable/app.py:1177 */
 "Are you sure you want to quit?" = "Çıkmak istediğinizden emin misiniz?";
 
-/* File: ../../portable/app.py:1178 */
-/* Flag: untranslated */
-"Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
+/* File: ../../portable/app.py:1179 */
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro halen hata raporunuzu yollamakta. Şimdi çıkarsanız yollama işlemi iptal olacak. Gene de çıkmak istiyormusunuz?";
 
-/* File: ../../portable/app.py:1668 */
+/* File: ../../portable/app.py:1680 */
 "Invalid Value" = "Geçersiz Değer";
 
-/* File: ../../portable/app.py:1669 */
+/* File: ../../portable/app.py:1681 */
 /* Flag: python-format */
 "%s is invalid.  You must enter a non-negative number." = "%s geçersiz. Negatif olmayan bir rakam girmelisiniz.";
 
-/* File: ../../portable/app.py:1960 */
+/* File: ../../portable/app.py:1972 */
 " - Invalid URL" = " - Geçersiz Adres";
 
-/* File: ../../portable/app.py:1961 */
+/* File: ../../portable/app.py:1973 */
 "The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Girdiğiniz adres geçerli bir adres değil.\nLütfen tekrar kontrol edip tekrar deneyin.\n\n";
 
-/* File: ../../portable/app.py:1985 */
+/* File: ../../portable/app.py:1997 */
 "$shortAppName - Add Channel" = "$shortAppName - Kanal Ekle";
 
-/* File: ../../portable/app.py:1985 */
+/* File: ../../portable/app.py:1997 */
 "Enter the URL of the channel to add" = "Eklemek istediğiniz kanalın adresini girin";
 
-/* File: ../../portable/app.py:2006 */
+/* File: ../../portable/app.py:2018 */
 "$shortAppName - Add Miro Guide" = "$shortAppName - Miro Rehberi Ekle";
 
-/* File: ../../portable/app.py:2006 */
+/* File: ../../portable/app.py:2018 */
 "Enter the URL of the Miro Guide to add" = "Eklenecek Miro Rehberinin adresini girin.";
 
-/* File: ../../portable/app.py:2012 */
-/* Flag: untranslated */
-"$shortAppName - Download Video" = "$shortAppName - Download Video";
+/* File: ../../portable/app.py:2024 */
+"$shortAppName - Download Video" = "$shortAppName - Video İndir";
 
-/* File: ../../portable/app.py:2012 */
-/* Flag: untranslated */
-"Enter the URL of the video to download" = "Enter the URL of the video to download";
+/* File: ../../portable/app.py:2024 */
+"Enter the URL of the video to download" = "İndirilecek videonun adresini girin";
 
-/* File: ../../portable/app.py:2306 */
+/* File: ../../portable/app.py:2318 */
 "News and Tech" = "Haberler ve Teknoloji";
 
-/* File: ../../portable/app.py:2313 */
+/* File: ../../portable/app.py:2324 */
 "Entertainment" = "Eğlence";
 
-/* File: ../../portable/app.py:2319 */
+/* File: ../../portable/app.py:2330 */
 "High-Def" = "Yüksek Çözünürlük";
 
-/* File: ../../portable/app.py:2327 */
+/* File: ../../portable/app.py:2337 */
 "Mac" = "Mac";
 
-/* File: ../../portable/app.py:2342 */
+/* File: ../../portable/app.py:2352 */
 "Example Playlist" = "Örnek Çalma Listesi";
 
-/* File: ../../portable/app.py:2361 */
+/* File: ../../portable/app.py:2371 */
 "Custom Channels" = "Kişisel Kanallar";
 
-/* File: ../../portable/app.py:2361 */
+/* File: ../../portable/app.py:2371 */
 "You are running a version of $longAppName with a custom set of channels." = "$longAppName'yu kişiselleştirilmiş bir kanal listesiyle kullanıyorsunuz.";
 
-/* File: ../../portable/app.py:2376 */
-/* Flag: untranslated */
-"Error Changing Movies Directory" = "Error Changing Movies Directory";
+/* File: ../../portable/app.py:2386 */
+"Error Changing Movies Directory" = "Hata Film klasörü değiştiriliyor";
 
-/* File: ../../portable/app.py:2377 */
-/* Flag: untranslated */
-"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory.";
+/* File: ../../portable/app.py:2387 */
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "Seçtiğiniz klasöre yazma izniniz yok. Miro eski video klasörünü kullanmaya devam edecek.";
 
-/* File: ../../portable/opml.py:113 */
-/* Flag: untranslated */
-"OPML Import failed" = "OPML Import failed";
+/* File: ../../portable/app.py:2422 */
+"Error Saving Video" = "Hata Video Kaydediliyor";
 
-/* File: ../../portable/opml.py:114 */
+/* File: ../../portable/app.py:2424 */
 /* Flag: untranslated */
-"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
-
-/* File: ../../portable/opml.py:119 */
-/* Flag: untranslated */
-"OPML Import summary" = "OPML Import summary";
+/* Flag: python-format */
+"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "An error occured while trying to save %s.  Please check that the file has not been deleted and try again.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
 "(Changes won't go into effect until you restart Miro)" = "(Ayar değişiklikleri Miro'yu yeniden başlatmadan tam olarak etkin hale gelmeyecek)";
@@ -1802,7 +1829,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Store downloaded videos in this folder:" = "İndirilmiş videoları bu dizinde sakla:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
-"To avoid slowdowns, limit upstream to" = "Yavaşlamalardan sakınmak için, yayımlayı limitle";
+/* Flag: untranslated */
+"To avoid slowdowns, limit upstream bandwith when my computer is active." = "To avoid slowdowns, limit upstream bandwith when my computer is active.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
+/* Flag: untranslated */
+"Upstream limit (KB/s)" = "Upstream limit (KB/s)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
 /* Flag: untranslated */
@@ -1880,7 +1912,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Search custom folder:" = "Kişisel dizinde arama:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
-"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "$shortAppName Kanal Rehberinde yüzlerce internet televizyon kanalı var, üstelik hepsi de bedava. Bir kanal eklemek için \"EKLE\"ye tıklamanız yeterli.";
+/* Flag: untranslated */
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49 */
 "The button to the right of the play button shows videos fullscreen." = "Oynat düğmesinin sağ yanındaki düğme videoyu tam ekran olarak izlemenize olanak sağlar.";
