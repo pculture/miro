@@ -222,22 +222,23 @@ class UIBackendDelegate:
         # wait here indefinitely. We therefore manually poll for a specific 
         # amount of time beyond which we force quit the daemon.
         global dlTask
-        if dlTask is not None and dlTask.isRunning():
-            logging.info('Waiting for the downloader daemon to terminate...')
-            timeout = 5.0
-            sleepTime = 0.2
-            loopCount = int(timeout / sleepTime)
-            for i in range(loopCount):
-                if dlTask.isRunning():
-                    time.sleep(sleepTime)
+        if dlTask is not None:
+            if dlTask.isRunning():
+                logging.info('Waiting for the downloader daemon to terminate...')
+                timeout = 5.0
+                sleepTime = 0.2
+                loopCount = int(timeout / sleepTime)
+                for i in range(loopCount):
+                    if dlTask.isRunning():
+                        time.sleep(sleepTime)
+                    else:
+                        break
                 else:
-                    break
-            else:
-                # If the daemon is still alive at this point, it's likely to be
-                # in a bad state, so nuke it.
-                logging.info("Timeout expired - Killing downloader daemon!")
-                dlTask.terminate()
-        dlTask.waitUntilExit()
+                    # If the daemon is still alive at this point, it's likely to be
+                    # in a bad state, so nuke it.
+                    logging.info("Timeout expired - Killing downloader daemon!")
+                    dlTask.terminate()
+            dlTask.waitUntilExit()
         dlTask = None
 
     def waitUntilDownloadDaemonExit(self):

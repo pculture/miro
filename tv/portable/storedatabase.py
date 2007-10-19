@@ -180,7 +180,7 @@ class ConverterBase(object):
         rv = []
         for i in xrange(len(list)):
             child = list[i]
-            newPath = path + "\n[%d] -> %s" % (i, child)
+            newPath = path + "\n[%d] -> %s" % (i, util.stringify(child))
             rv.append(self.convertData(child, childSchema, newPath))
         return rv
 
@@ -193,7 +193,7 @@ class ConverterBase(object):
             newPath = path + "\nkey: %s" % key
             newKey = self.convertData(key, keySchema, newPath)
             # convert the value
-            newPath = path + "\n{%s} -> %s" % (key, value)
+            newPath = path + "\n{%s} -> %s" % (util.stringify(key), util.stringify(value))
             newValue = self.convertData(value, valueSchema, newPath)
             # put it together
             rv[newKey] = newValue
@@ -239,7 +239,7 @@ class ConverterBase(object):
             except Exception, e:
                 # this will happen when data is invalid unicode
                 dataStr = "<couldn't convert (%s)>" % e
-            newPath = path + "\n%s -> %s" % (name, dataStr)
+            newPath = path + "\n%s -> %s" % (util.stringify(name), util.stringify(dataStr))
             convertedData = self.convertData(data, schema, newPath)
             self.setTargetAttr(convertedObject, name, convertedData)
         return convertedObject
