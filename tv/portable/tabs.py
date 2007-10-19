@@ -290,7 +290,7 @@ class TabOrder(database.DDBObject):
         self.trackedTabs.view.moveCursorToID(obj.objID())
         for i in range(3):
             last = self.trackedTabs.view.getPrev()
-            if list is None:
+            if last is None:
                 break
             tabToShow = last
         if hasattr(tabDisplay, 'navigateToFragment'):
