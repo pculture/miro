@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {acceptEntry = id; cancelEntry = id; }; 
+            CLASS = TextEntryController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {entryField = id; mainButton = id; messageField = id; secondaryButton = id; }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}
