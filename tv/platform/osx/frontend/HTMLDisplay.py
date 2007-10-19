@@ -388,7 +388,7 @@ class ManagedWebView (NSObject):
         self.view.stringByEvaluatingJavaScriptFromString_(js)
 
     def navigateToFragment(self, fragment):
-        command = "var tab = document.getElementById(\"%s\"); window.scrollTo(tab.offsetLeft, tab.offsetTop);" % fragment
+        command = "var tab = document.getElementById(\"%s\"); tab.scrollIntoView(true);" % fragment
         self.execJS(command)
 
     ## DOM mutators called, ultimately, by dynamic template system ##
