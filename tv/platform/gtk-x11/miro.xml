@@ -22,10 +22,12 @@
 <!-- New style subscription files. -->
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
    <mime-type type="application/x-miro">
+     <sub-class-of type="application/xml"/>
      <comment>Miro Subscription File</comment>
      <glob pattern="*.miro"/>
    </mime-type>
    <mime-type type="application/x-democracy">
+     <sub-class-of type="application/xml"/>
      <comment>Democracy Subscription File</comment>
      <glob pattern="*.democracy"/>
    </mime-type>
