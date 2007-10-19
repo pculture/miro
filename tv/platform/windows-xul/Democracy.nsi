@@ -374,23 +374,23 @@ unzipok:
 
 !else
 
-;  File  "${CONFIG_EXECUTABLE}"
-;  File  "${CONFIG_ICON}"
-;  File  "${CONFIG_DL_EXECUTABLE}"
-;  File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
-;  File  application.ini
-;  File  msvcp71.dll  
-;  File  msvcr71.dll  
-;  File  python25.dll
-;  File  boost_python-vc71-mt-1_33_1.dll
+  File  "${CONFIG_EXECUTABLE}"
+  File  "${CONFIG_ICON}"
+  File  "${CONFIG_DL_EXECUTABLE}"
+  File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
+  File  application.ini
+  File  msvcp71.dll  
+  File  msvcr71.dll  
+  File  python25.dll
+  File  boost_python-vc71-mt-1_33_1.dll
 
-;  File  /r chrome
-;  File  /r components
-;  File  /r defaults
-;  File  /r resources
-;  File  /r vlc-plugins
-;  File  /r xulrunner
-;  File  /r imagemagick
+  File  /r chrome
+  File  /r components
+  File  /r defaults
+  File  /r resources
+  File  /r vlc-plugins
+  File  /r xulrunner
+  File  /r imagemagick
 
 !endif
 
