@@ -36,6 +36,11 @@ CRCCheck on
 Icon "${CONFIG_ICON}"
 
 Var STARTMENU_FOLDER
+Var THEME_NAME
+Var APP_NAME ; Used in text within the program
+Var ONLY_INSTALL_THEME
+Var THEME_TEMP_DIR
+Var INITIAL_FEEDS
 
 ; Runs in tv/platform/windows-xul/dist, so 4 ..s.
 !addplugindir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
@@ -48,6 +53,16 @@ Var STARTMENU_FOLDER
 !include "Sections.nsh"
 !include zipdll.nsh
 !include nsProcess.nsh
+!include "TextFunc.nsh"
+!include "WordFunc.nsh"
+!include "FileFunc.nsh"
+
+!insertmacro TrimNewLines
+!insertmacro WordFind
+!insertmacro un.TrimNewLines
+!insertmacro un.WordFind
+!insertmacro un.GetParameters
+!insertmacro un.GetOptions
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
@@ -119,6 +134,85 @@ Var STARTMENU_FOLDER
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Macros
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+!macro checkExtensionHandled ext sectionName
+  Push $0
+  ReadRegStr $0 HKCR "${ext}" ""
+  StrCmp $0 "" +6
+  StrCmp $0 "DemocracyPlayer" +5
+  StrCmp $0 "${CONFIG_PROG_ID}" +4
+    SectionGetFlags ${sectionName} $0
+    IntOp $0 $0 & 0xFFFFFFFE
+    SectionSetFlags ${sectionName} $0
+  Pop $0
+!macroend
+
+!macro uninstall directory
+  ; Remove the program
+  Delete   "${directory}\${CONFIG_EXECUTABLE}"
+  Delete   "${directory}\${CONFIG_ICON}"
+  Delete   "${directory}\${CONFIG_DL_EXECUTABLE}"
+  Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
+  Delete   "${directory}\application.ini"
+  Delete   "${directory}\msvcp71.dll"
+  Delete   "${directory}\msvcr71.dll"
+  Delete   "${directory}\python25.dll"
+  Delete   "${directory}\boost_python-vc71-mt-1_33_1.dll"
+  Delete   "${directory}\uninstall.exe"
+
+  RMDir /r "${directory}\chrome"
+  RMDir /r "${directory}\components"
+  RMDir /r "${directory}\defaults"
+  RMDir /r "${directory}\resources"
+  RMDir /r "${directory}\vlc-plugins"
+  RMDir /r "${directory}\xulrunner"
+  RMDir /r "${directory}\imagemagick"
+
+  RMDIR ${directory} 
+!macroend
+
+!macro GetConfigOptionsMacro trim find
+ClearErrors
+Push $R0
+Push $R1
+Push $R2
+Push $R3
+
+  FileOpen $R2 "$R1" r
+config_loop:
+  FileRead $R2 $R1
+  IfErrors error_in_config
+  ${trim} "$R1" $R1
+  StrLen $R3 $R0
+  StrCpy $R4 $R1 $R3
+  StrCmp $R4 $R0 done_config_loop
+  Goto config_loop
+done_config_loop:
+  FileClose $R2
+
+  ${find} "$R1" "=" "+1}" $R0
+
+trim_spaces_loop:
+  StrCpy $R2 $R0 1
+  StrCmp $R2 " " 0 done_config
+  StrCpy $R0 "$R0" "" 1
+  Goto trim_spaces_loop
+
+error_in_config:
+  StrCpy $R0 ""
+  FileClose $R2
+  ClearErrors
+
+done_config:
+Pop $R3
+Pop $R2
+Pop $R1
+Exch $R0
+!macroend
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Functions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -169,46 +263,68 @@ Pop $R1
 Exch $R0
 FunctionEnd
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Macros
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Set $R0 to the config option and $R1 to the config file name
+; puts the value of the config option on the stack
+Function GetConfigOption
+  !insertmacro GetConfigOptionsMacro "${TrimNewLines}" "${WordFind}"
+FunctionEnd
+Function un.GetConfigOption
+  !insertmacro GetConfigOptionsMacro "${un.TrimNewLines}" "${un.WordFind}"
+FunctionEnd
 
-!macro checkExtensionHandled ext sectionName
-  Push $0
-  ReadRegStr $0 HKCR "${ext}" ""
-  StrCmp $0 "" +6
-  StrCmp $0 "DemocracyPlayer" +5
-  StrCmp $0 "${CONFIG_PROG_ID}" +4
-    SectionGetFlags ${sectionName} $0
-    IntOp $0 $0 & 0xFFFFFFFE
-    SectionSetFlags ${sectionName} $0
-  Pop $0
-!macroend
+; Set $R0 to the theme directory
+; Returns the theme version string
+Function GetThemeVersion
+  Push $R0
+  Push $R1
+  Push $R2
 
-!macro uninstall directory
-  ; Remove the program
-  Delete   "${directory}\${CONFIG_EXECUTABLE}"
-  Delete   "${directory}\${CONFIG_ICON}"
-  Delete   "${directory}\${CONFIG_DL_EXECUTABLE}"
-  Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
-  Delete   "${directory}\application.ini"
-  Delete   "${directory}\msvcp71.dll"
-  Delete   "${directory}\msvcr71.dll"
-  Delete   "${directory}\python25.dll"
-  Delete   "${directory}\boost_python-vc71-mt-1_33_1.dll"
-  Delete   "${directory}\uninstall.exe"
+  FileOpen $R1 "$R0\version.txt" r
+  IfErrors errors_in_version
+  FileRead $R1 $R0
+  FileClose $R1
+  ${TrimNewLines} "$R0" $R0
+  Goto done_version
 
-  RMDir /r "${directory}\chrome"
-  RMDir /r "${directory}\components"
-  RMDir /r "${directory}\defaults"
-  RMDir /r "${directory}\resources"
-  RMDir /r "${directory}\vlc-plugins"
-  RMDir /r "${directory}\xulrunner"
-  RMDir /r "${directory}\imagemagick"
+errors_in_version:
+  StrCpy $R0 ""
+done_version:
+  Push $R2
+  Push $R1
+  Exch $R0
+FunctionEnd
 
-  RMDIR ${directory} 
-!macroend
+; Sets $R0 to icon, $R1 to parameters, $R2 to the shortcut name, 
+; $R3 uninstall shortcut name
+Function GetShortcutInfo
+  StrCpy $R0 "$INSTDIR\${CONFIG_ICON}"
+  StrCpy $R1 ""
+  StrCpy $R2 "${RUN_SHORTCUT}"
+  StrCpy $R3 "${UNINSTALL_SHORTCUT}"
 
+  StrCmp $THEME_NAME "" done
+  ; theme specific icons
+  StrCpy $R0 "longAppName"
+  StrCpy $R1 "$THEME_TEMP_DIR\app.config"
+  Call GetConfigOption
+  Pop $R0
+  StrCpy $R2 "$R0.lnk"
+  StrCpy $R3 "Uninstall $R0.lnk"
+
+  StrCpy $R1 "--theme $\"$THEME_NAME$\""
+
+  Push $R1
+  StrCpy $R0 "windowsIcon"
+  StrCpy $R1 "$THEME_TEMP_DIR\app.config"
+  Call GetConfigOption
+  Pop $R0
+  Pop $R1
+  StrCmp $R0 "" done
+  StrCpy $R0 "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME\$R0"
+
+done:
+
+FunctionEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sections                                                                  ;;
@@ -223,7 +339,7 @@ Section "-${CONFIG_LONG_APP_NAME}"
     "SOFTWARE\Microsoft\Windows NT\CurrentVersion" CurrentVersion
   IfErrors 0 lbl_winnt
   MessageBox MB_ICONEXCLAMATION \
-     "WARNING: ${CONFIG_LONG_APP_NAME} is not officially supported on this version of Windows$\r$\n$\r$\nVideo playback is known to be broken, and there may be other problems"
+     "WARNING: $APP_NAME is not officially supported on this version of Windows$\r$\n$\r$\nVideo playback is known to be broken, and there may be other problems"
 lbl_winnt:
 
   Pop $R0
@@ -231,24 +347,25 @@ lbl_winnt:
   Call IsUserAdmin
   Pop $R0
   StrCmp $R0 "true" is_admin
-  MessageBox MB_OK|MB_ICONEXCLAMATION "You must have administrator privileges to install ${CONFIG_SHORT_APP_NAME}.  Please log in using an administrator account and try again."
+  MessageBox MB_OK|MB_ICONEXCLAMATION "You must have administrator privileges to install $APP_NAME.  Please log in using an administrator account and try again."
   Quit
   
 is_admin:
   SetShellVarContext all
-
   SetOutPath "$INSTDIR"
+
+StrCmp $ONLY_INSTALL_THEME "1" install_theme
 
 !if ${CONFIG_TWOSTAGE} = "Yes"
 
-  InetLoad::load http://ftp.osuosl.org/pub/pculture.org/democracy/win/${CONFIG_SHORT_APP_NAME}-Contents-${CONFIG_VERSION}.zip "${INSTDIR}\${CONFIG_SHORT_APP_NAME}-Contents.zip"
+  InetLoad::load http://ftp.osuosl.org/pub/pculture.org/democracy/win/${CONFIG_SHORT_APP_NAME}-Contents-${CONFIG_VERSION}.zip "$INSTDIR\${CONFIG_SHORT_APP_NAME}-Contents.zip"
   Pop $0
   StrCmp $0 "OK" dlok
   MessageBox MB_OK|MB_ICONEXCLAMATION "Download Error, click OK to abort installation: $0" /SD IDOK
   Abort
 dlok:
-  !insertmacro ZIPDLL_EXTRACT "${INSTDIR}\${CONFIG_SHORT_APP_NAME}-Contents.zip" $INSTDIR <ALL>
-  Delete "${INSTDIR}\${CONFIG_SHORT_APP_NAME}-Contents.zip"
+  !insertmacro ZIPDLL_EXTRACT "$INSTDIR\${CONFIG_SHORT_APP_NAME}-Contents.zip" $INSTDIR <ALL>
+  Delete "$INSTDIR\${CONFIG_SHORT_APP_NAME}-Contents.zip"
   Pop $0
   StrCmp $0 "success" unzipok
   MessageBox MB_OK|MB_ICONEXCLAMATION "Unzip error, click OK to abort installation: $0" /SD IDOK
@@ -257,34 +374,50 @@ unzipok:
 
 !else
 
-  File  "${CONFIG_EXECUTABLE}"
-  File  "${CONFIG_ICON}"
-  File  "${CONFIG_DL_EXECUTABLE}"
-  File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
-  File  application.ini
-  File  msvcp71.dll  
-  File  msvcr71.dll  
-  File  python25.dll
-  File  boost_python-vc71-mt-1_33_1.dll
+;  File  "${CONFIG_EXECUTABLE}"
+;  File  "${CONFIG_ICON}"
+;  File  "${CONFIG_DL_EXECUTABLE}"
+;  File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
+;  File  application.ini
+;  File  msvcp71.dll  
+;  File  msvcr71.dll  
+;  File  python25.dll
+;  File  boost_python-vc71-mt-1_33_1.dll
 
-  File  /r chrome
-  File  /r components
-  File  /r defaults
-  File  /r resources
-  File  /r vlc-plugins
-  File  /r xulrunner
-  File  /r imagemagick
+;  File  /r chrome
+;  File  /r components
+;  File  /r defaults
+;  File  /r resources
+;  File  /r vlc-plugins
+;  File  /r xulrunner
+;  File  /r imagemagick
 
 !endif
 
-  SetOutPath "$INSTDIR\resources"
-  TackOn::writeToFile initial-feeds.democracy
+install_theme:
+  StrCmp $THEME_NAME "" done_installing_theme
+  SetShellVarContext all ; use the global $APPDATA
+
+  StrCpy $R0 "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME"
+  RMDir /r "$R0"
+  ClearErrors
+  CreateDirectory "$R0"
+  CopyFiles "$THEME_TEMP_DIR\*.*" "$R0"
+done_installing_theme:
+
+  StrCmp $INITIAL_FEEDS "" done_installing_initial_feeds
+
+  CreateDirectory "$INSTDIR\resources\"
+  CopyFiles "$INITIAL_FEEDS" "$INSTDIR\resources\initial-feeds.democracy"
+
+done_installing_initial_feeds:
+
   IfErrors 0 files_ok
   
   MessageBox MB_OK|MB_ICONEXCLAMATION "Installation failed.  An error occured writing to the ${CONFIG_SHORT_APP_NAME} Folder."
   Quit
-
 files_ok:
+
 
   ; Old versions used HKEY_LOCAL_MACHINE for the RunAtStartup value, we use
   ; HKEY_CURRENT_USER now
@@ -311,23 +444,28 @@ files_ok:
   ; Democracy complains if this isn't present and it can't create it
   CreateDirectory "$INSTDIR\xulrunner\extensions"
 
+  Call GetShortcutInfo
+
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\${RUN_SHORTCUT}" \
-    "$INSTDIR\${CONFIG_EXECUTABLE}" "" "$INSTDIR\${CONFIG_ICON}"
-  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\${UNINSTALL_SHORTCUT}" \
-    "$INSTDIR\uninstall.exe"
+  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\$R2" \
+    "$INSTDIR\${CONFIG_EXECUTABLE}" "$R1" "$R0"
+  CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\$R3" \
+    "$INSTDIR\uninstall.exe" "$R1"
   !insertmacro MUI_STARTMENU_WRITE_END
+
 SectionEnd
 
 Section "Desktop icon" SecDesktop
-  CreateShortcut "$DESKTOP\${RUN_SHORTCUT}" "$INSTDIR\${CONFIG_EXECUTABLE}" \
-    "" "$INSTDIR\${CONFIG_ICON}"
+  Call GetShortcutInfo
+  CreateShortcut "$DESKTOP\$R2" "$INSTDIR\${CONFIG_EXECUTABLE}" \
+    "$R1" "$R0"
 SectionEnd
 
 Section /o "Quick launch icon" SecQuickLaunch
-  CreateShortcut "$QUICKLAUNCH\${RUN_SHORTCUT}" "$INSTDIR\${CONFIG_EXECUTABLE}" \
-    "" "$INSTDIR\${CONFIG_ICON}"
+  Call GetShortcutInfo
+  CreateShortcut "$QUICKLAUNCH\$R2" "$INSTDIR\${CONFIG_EXECUTABLE}" \
+    "$R1" "$R0"
 SectionEnd
 
 Section "Handle Miro files" SecRegisterMiro
@@ -424,12 +562,71 @@ Section -NotifyShellExentionChange
 SectionEnd
 
 Function .onInit
+  ; Process the tacked on file
+  StrCpy $THEME_NAME ""
+  StrCpy $INITIAL_FEEDS ""
+  StrCpy $ONLY_INSTALL_THEME ""
+  StrCpy $THEME_TEMP_DIR ""
+  StrCpy $APP_NAME "${CONFIG_LONG_APP_NAME}"
+
+
+  !tempfile TACKED_ON_FILE
+  Delete "${TACKED_ON_FILE}"  ; The above macro creates the file
+  TackOn::writeToFile "${TACKED_ON_FILE}"
+  FileOpen $0 "${TACKED_ON_FILE}" r
+  IfErrors no_tackon
+
+  ; If file starts with 0x50 0x4b 0x03 0x04, it's a zip file
+  FileReadByte $0 $1
+  IntCmpU $1 0x50 0 non_zip_tackon non_zip_tackon
+  FileReadByte $0 $1
+  IntCmpU $1 0x4b 0 non_zip_tackon non_zip_tackon
+  FileReadByte $0 $1
+  IntCmpU $1 0x03 0 non_zip_tackon non_zip_tackon
+  FileReadByte $0 $1
+  IntCmpU $1 0x04 0 non_zip_tackon non_zip_tackon
+
+  ; We have a zip tacked on file
+
+  FileClose $0
+
+  !tempfile THEME_TEMP_DIR
+  StrCpy $THEME_TEMP_DIR ${THEME_TEMP_DIR}
+  Delete "$THEME_TEMP_DIR"  ; The above macro creates the file
+  !insertmacro ZIPDLL_EXTRACT "${TACKED_ON_FILE}" "$THEME_TEMP_DIR" <ALL>
+
+  StrCpy $R0 "$THEME_TEMP_DIR"
+  Call GetThemeVersion
+  Pop $0
+  StrCmp $0 "0" 0 error_in_theme
+
+  StrCpy $R0 "themeName"
+  StrCpy $R1 "$THEME_TEMP_DIR\app.config"
+  Call GetConfigOption
+  Pop $THEME_NAME
+  StrCmp "$THEME_NAME" "" error_in_theme
+  StrCpy $APP_NAME "$THEME_NAME"
+  Goto no_tackon
+
+error_in_theme:
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Error in theme"
+  Goto no_tackon
+
+non_zip_tackon:  ; non-zip tacked on file
+
+  FileClose $0
+  StrCpy $INITIAL_FEEDS "${TACKED_ON_FILE}"
+
+no_tackon:
+  ClearErrors
+  !undef TACKED_ON_FILE
+
   ; Is the app running?  Stop it if so.
 TestRunning:
   ${nsProcess::FindProcess} "miro.exe" $R0
   StrCmp $R0 0 0 NotRunning
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-  "It looks like you're already running ${CONFIG_LONG_APP_NAME}.$\n\
+  "It looks like you're already running $APP_NAME.$\n\
 Please shut it down before continuing." \
        IDOK TestRunning
   Quit
@@ -460,9 +657,19 @@ NotOldDownloaderRunning:
   ReadRegStr $R0 HKLM "${INST_KEY}" "InstallDir"
   StrCmp $R0 "" NotCurrentInstalled
  
+; If we're installing a theme for the same version, don't ask about
+; uninstalling
+  StrCmp "$THEME_NAME" "" prompt_for_uninstall
+  ReadRegStr $R0 HKLM "${INST_KEY}" "Version"
+  StrCmp $R0 "${CONFIG_VERSION}" 0 prompt_for_uninstall
+
+  StrCpy $ONLY_INSTALL_THEME "1"
+  Goto NotOldInstalled
+
+prompt_for_uninstall:
   ; Should we uninstall the old one?
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-  "It looks like you already have a copy of ${CONFIG_LONG_APP_NAME} $\n\
+  "It looks like you already have a copy of $APP_NAME $\n\
 installed.  Do you want to continue and overwrite it?" \
        IDOK UninstallCurrent
   Quit
@@ -577,6 +784,35 @@ SectionEnd
 Section "Uninstall" SEC91
   SetShellVarContext all
 
+  ${un.GetParameters} $R0
+  ${un.GetOptions} "$R0" "--theme" $THEME_NAME
+  IfErrors complete_uninstall
+
+  StrCpy $R0 "longAppName"
+  StrCpy $R1 "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME\app.config"
+  Call un.GetConfigOption
+  Pop $R0
+  Delete "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME\*.*"
+  RMDir "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME"
+
+  StrCmp $R0 "" 0 continue
+  MessageBox MB_YESNO|MB_ICONEXCLAMATION "Miro theme $THEME_NAME appears to already be uninstalled$\r$\nDo you wish to uninstall Miro completely?" IDYES complete_uninstall
+  Quit
+
+continue:
+  !insertmacro MUI_STARTMENU_GETFOLDER Application $R1
+  Delete "$SMPROGRAMS\$R1\$R0.lnk"
+  Delete "$SMPROGRAMS\$R1\Uninstall $R0.lnk"
+
+  Delete "$DESKTOP\$R0.lnk"
+  Delete "$QUICKLAUNCH\$R0.lnk"
+
+  RMDir "$SMPROGRAMS\$R1"
+  IfFileExists "$SMPROGRAMS\$R1" done
+
+  MessageBox MB_YESNO|MB_ICONEXCLAMATION "It looks like $THEME_NAME was the last Miro theme you had installed$\r$\nDo you wish to uninstall Miro completely?" IDNO done
+
+complete_uninstall:
   !insertmacro uninstall $INSTDIR
   RMDIR "$PROGRAMFILES\${CONFIG_PUBLISHER}"
 
@@ -596,5 +832,6 @@ Section "Uninstall" SEC91
   DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "${CONFIG_LONG_APP_NAME}"
   DeleteRegKey HKCR "${CONFIG_PROG_ID}"
 
+done:
   SetAutoClose true
 SectionEnd
