@@ -2,7 +2,7 @@ Source: miro
 Section: net
 Priority: optional
 Maintainer: Uwe Hermann <uwe@debian.org>
-Build-Depends: cdbs, debhelper, python, python-glade2, python-pyrex, libboost-python-dev, python-gtk2-dev, python-gnome2-extras-dev (>= 2.14.0-2), python2.5-dbus, firefox-dev, libxine-dev, gettext, libxine-ffmpeg, libxmu-dev, python-pysqlite2, libxv-dev, libx11-dev
+Build-Depends: cdbs, debhelper, python, python-glade2, python-pyrex, libboost-python-dev, python-gtk2-dev, python-gnome2-extras-dev (>= 2.14.0-2), python2.5-dbus, firefox-dev, libxine-dev, gettext, libxine1-ffmpeg, libxmu-dev, python-pysqlite2, libxv-dev, libx11-dev
 Standards-Version: 3.7.2.2
 
 Package: miro
