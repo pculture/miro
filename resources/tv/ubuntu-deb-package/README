@@ -4,8 +4,8 @@ Debian packages.  Here's how to use it:
 0) Run apt-get upgrade, we should only be building for systems with the latest
    updates.
 
-1) Install the debhelper and cdbs packages:
-   $ sudo apt-get install debhelper cdbs
+1) Install the debhelper, fakeroot and cdbs packages:
+   $ sudo apt-get install debhelper fakeroot cdbs
 
 2) Add a new entry to debian-[distro-name]/changelog, use the previous entries 
    as your template.
