@@ -1,8 +1,8 @@
-miro (0.9.9.9-1ubuntupcf) gutsy; urgency=low
+miro (0.9.9.9-rc0-1ubuntupcf) gutsy; urgency=low
 
   * New Upstream release.
 
- -- Will Guaraldi <will.guaraldi@pculture.org>  Mon, 22 Oct 2007 00:47:50 -0400 
+ -- Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>  Mon, 22 Oct 2007 12:32:14 -0400
 
 miro (0.9.9.1-1ubuntupcf) feisty; urgency=low
 

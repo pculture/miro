@@ -1,7 +1,7 @@
 Index: platform/gtk-x11/platformcfg.py
 ===================================================================
---- platform/gtk-x11/platformcfg.py     (revision 5511)
-+++ platform/gtk-x11/platformcfg.py     (working copy)
+--- platform/gtk-x11/platformcfg.py	(revision 4934)
++++ platform/gtk-x11/platformcfg.py	(working copy)
 @@ -92,14 +92,14 @@
      value = descriptor.default
  
@@ -21,8 +21,8 @@ Index: platform/gtk-x11/platformcfg.py
          value = resources.path("../../locale")
 Index: platform/gtk-x11/upgrade.py
 ===================================================================
---- platform/gtk-x11/upgrade.py (revision 5511)
-+++ platform/gtk-x11/upgrade.py (working copy)
+--- platform/gtk-x11/upgrade.py	(revision 4934)
++++ platform/gtk-x11/upgrade.py	(working copy)
 @@ -21,6 +21,27 @@
  import gconf
  
@@ -51,7 +51,7 @@ Index: platform/gtk-x11/upgrade.py
      # dot directory
      src = os.path.expanduser('~/.democracy')
      dst = os.path.expanduser('~/.miro')
-@@ -28,6 +49,26 @@
+@@ -28,6 +49,27 @@
          shutil.move(src, dst)
          shutil.rmtree(os.path.join(dst, "icon-cache"), True)
  
@@ -74,11 +74,12 @@ Index: platform/gtk-x11/upgrade.py
 +                shutil.move(newdir, olddir)
 +            except:
 +                pass
++        
 +
      # autostart file
      config_home = os.environ.get ('XDG_CONFIG_HOME',
                                    '~/.config')
-@@ -49,26 +90,3 @@
+@@ -49,26 +91,3 @@
                  os.remove (old_file)
              except:
                  pass
