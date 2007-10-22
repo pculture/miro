@@ -1,0 +1,2 @@
+?package(miro):needs="X11" section="Apps/Net" \
+  title="Miro" command="/usr/bin/miro"
