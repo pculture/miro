@@ -66,7 +66,8 @@ def removeResizedFiles(resized_filenames):
 
     for filename in resized_filenames.values():
         try:
-            os.remove (filename)
+            if (os.path.exists(filename)):
+                os.remove (filename)
         except:
             logging.warn("Error deleted resized image: %s\n%s", filename,
                     traceback.format_exc())

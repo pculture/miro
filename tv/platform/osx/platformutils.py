@@ -297,9 +297,11 @@ def filenameTypeToOSFilename(filename):
 # letterboxing if source and destination ratio are different) and save it to
 # dest_path
 def resizeImage(source_path, dest_path, width, height):
+    source_path = filenameTypeToOSFilename(source_path)
     source = NSImage.alloc().initWithContentsOfFile_(source_path)
     jpegData = getResizedJPEGData(source, width, height)
     if jpegData is not None:
+        dest_path = filenameTypeToOSFilename(dest_path)
         destinationFile = open(dest_path, "w")
         try:
             destinationFile.write(jpegData)
