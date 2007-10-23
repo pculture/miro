@@ -108,8 +108,7 @@ democracyplayer (0.9.1-1ubuntupcf) unstable; urgency=low
 
   * Changed dependancies to work with Ubuntu Dapper Drake
 
- -- Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>  Tue, 24 Oct 2006 14:42:26
- -0400
+ -- Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>  Tue, 24 Oct 2006 14:42:26 -0400
 
 democracyplayer (0.9.1-1) unstable; urgency=low
 
