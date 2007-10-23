@@ -59,3 +59,12 @@ class UtilTest(DemocracyTestCase):
                 self.assertEquals(util.stringify(i), o)
             else:
                 self.assertEquals(util.stringify(i, h), o)
+
+    def testRandomString(self):
+        ret = util.random_string(0)
+        self.assertEquals(len(ret), 0)
+
+        for length in (1, 5, 10):
+            ret = util.random_string(length)
+            self.assertEquals(len(ret), length)
+            self.assertEquals(ret.isalpha(), True)
