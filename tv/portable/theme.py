@@ -19,8 +19,10 @@ import config
 import prefs
 import app
 import views
+import os
 from eventloop import asUrgent
 from database import DDBObject
+import opml
 import iconcache
 
 class ThemeHistory(DDBObject):
@@ -60,3 +62,15 @@ class ThemeHistory(DDBObject):
         # Clear out the channel guide icon
         if config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']:
             app.delegate.maximizeWindow()
+        # FIXME -- this needs to be here and in app.py. We should
+        #          unify the code --NN
+        if ((config.get(prefs.DEFAULT_CHANNELS_FILE) is not None) and
+            (config.get(prefs.THEME_NAME) is not None) and 
+            (config.get(prefs.THEME_DIRECTORY) is not None)):
+            importer = opml.Importer()
+            filepath = os.path.join(
+                config.get(prefs.THEME_DIRECTORY),
+                config.get(prefs.THEME_NAME),
+                config.get(prefs.DEFAULT_CHANNELS_FILE))
+            importer.importSubscriptionsFrom(filepath,
+                                             showSummary = False)

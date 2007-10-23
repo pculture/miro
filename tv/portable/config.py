@@ -69,6 +69,7 @@ def load(theme = None):
             # number for this platform
             prefs.APP_SERIAL.key = ('appSerial-%s' % get(prefs.APP_PLATFORM))
         if theme is not None:
+            logging.info("Using theme %s" % theme)
             try:
                 __themeConfig = util.readSimpleConfigFile(os.path.join(
                     get(prefs.THEME_DIRECTORY),
