@@ -29,6 +29,10 @@ class DemocracyCLH:
         pass
 
     def handle(self, commandLine):
+        args = [commandLine.getArgument(i) for i in range(commandLine.length)]
+        if "--register-xul-only" in args:
+            return
+
         chromeURL = "chrome://dtv/content/main.xul"
         windowName = "DemocracyPlayer"
         wwatch = components.classes["@mozilla.org/embedcomp/window-watcher;1"]\
