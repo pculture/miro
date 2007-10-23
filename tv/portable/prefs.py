@@ -184,3 +184,5 @@ MAXIMIZE_ON_FIRST_RUN = \
     Pref(key='maximizeOnFirstRun',default=None, platformSpecific=False)
 DEFAULT_CHANNELS_FILE = \
     Pref(key='defaultChannelsFile',default=None, platformSpecific=False)
+THEME_NAME = \
+    Pref(key='themeName',default=None, platformSpecific=False)

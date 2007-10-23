@@ -167,8 +167,9 @@ class VLCRenderer (app.VideoRenderer):
         return frontend.vlcRenderer.setRate(rate)
 
     def movieDataProgramInfo(self, videoPath, thumbnailPath):
-        appname = config.get(prefs.SHORT_APP_NAME)
-        moviedata_util_filename = "%s_MovieData.exe" % appname
+        # We don't use the app name here, so custom
+        # named versions can use the same code --NN
+        moviedata_util_filename = "Miro_MovieData.exe"
         cmdLine = [moviedata_util_filename, videoPath, thumbnailPath]
         return cmdLine, None
 

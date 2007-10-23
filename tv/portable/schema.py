@@ -253,6 +253,7 @@ from item import Item, FileItem
 from iconcache import IconCache
 from playlist import SavedPlaylist
 from tabs import TabOrder
+from theme import ThemeHistory
 
 class DDBObjectSchema(ObjectSchema):
     klass = DDBObject
@@ -472,7 +473,15 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('firstTime', SchemaBool()),
     ]
 
-VERSION = 56
+class ThemeHistorySchema(DDBObjectSchema):
+    klass = ThemeHistory
+    classString = 'theme-history'
+    fields = DDBObjectSchema.fields + [
+        ('lastTheme', SchemaString(noneOk=True)),
+        ('pastThemes', SchemaList(SchemaString(noneOk=False), noneOk=False)),
+    ]
+
+VERSION = 57
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
@@ -480,5 +489,5 @@ objectSchemas = [
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
     HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema, SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
-    TabOrderSchema
+    TabOrderSchema, ThemeHistorySchema
 ]

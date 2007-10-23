@@ -861,6 +861,11 @@ def upgrade56(objectList):
             changed.add(o)
     return changed
         
+def upgrade57(objectList):
+    """Added ThemeHistory"""
+    changed = set()
+    return changed
+        
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

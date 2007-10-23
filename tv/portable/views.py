@@ -24,6 +24,7 @@ import item
 import tabs
 import playlist
 import searchengines
+import theme
 
 import indexes
 import filters
@@ -44,6 +45,8 @@ def initialize():
     global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
     global downloadingItems, pausedItems, manualDownloads, autoDownloads
     global playlists, playlistFolders, channelFolders, searchEngines
+    global themeHistories
+
     db.createIndex(indexes.objectsByClass)
 
     allTabs = db.filter(filters.mappableToTab).map(maps.mapToTab)
@@ -125,3 +128,5 @@ def initialize():
     searchEngines = db.filterWithIndex(indexes.objectsByClass,
                                        searchengines.SearchEngine)
     searchEngines = searchEngines.sort(sorts.searchEngines)
+
+    themeHistories = db.filterWithIndex(indexes.objectsByClass,theme.ThemeHistory)

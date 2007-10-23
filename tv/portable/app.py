@@ -65,6 +65,7 @@ import iconcache
 import moviedata
 import platformutils
 import logging
+import theme
 
 # These are Python templates for string substitution, not at all
 # related to our HTML based templates
@@ -745,6 +746,9 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
 
         # FIXME - channelGuide never gets used.
         (newGuide, channelGuide) = _getInitialChannelGuide()
+
+        # This needs to happen after the first channel guide has been created
+        _getThemeHistory()
 
         if newGuide:
             if config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']:
@@ -2394,6 +2398,12 @@ def _defaultFeeds():
         else: # feed
             d_feed = feed.Feed(default, initiallyAutoDownloadable=False)
     playlist.SavedPlaylist(_(u"Example Playlist"))
+
+def _getThemeHistory():
+    if len(views.themeHistories) > 0:
+        return views.themeHistories[0]
+    else:
+        return theme.ThemeHistory()
 
 def _getInitialChannelGuide():
     default_guide = None

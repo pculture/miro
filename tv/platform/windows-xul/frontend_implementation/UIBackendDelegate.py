@@ -320,8 +320,11 @@ class UIBackendDelegate:
         # console.  One slightly awkward thing is that the current process
         # might not have a valid stdin/stdout/stderr, so we create a pipe to
         # it that we never actually use.
+
+        # Note that we use "Miro" instead of the app name here, so custom
+        # versions will work
         downloaderPath = os.path.join(resources.resourceRoot(), "..",
-                ("%s_Downloader.exe" % config.get(prefs.SHORT_APP_NAME)))
+                                      "Miro_Downloader.exe")
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
