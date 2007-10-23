@@ -607,6 +607,10 @@ class Feed(DDBObject):
     isBlinking, setBlinking = makeSimpleGetSet('blinking',
             changeNeedsSave=False)
 
+    def setInlineSearchTerm(self, term):
+        self.inlineSearchTerm = term
+        self.signalChange(needsSave=False)
+
     def blink(self):
         self.setBlinking(True)
         def timeout():

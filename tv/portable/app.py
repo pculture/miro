@@ -1971,8 +1971,9 @@ class GUIActionHandler:
         else:
             self.addFeed(dialog.getURL())
 
-    def addChannelSearchFeed(self, term, id):
-        self.addSearchFeed(term, dialogs.SearchChannelDialog.CHANNEL, int(id))
+    def addChannelSearchFeed(self, id):
+        feed = db.getObjectByID(int(id))
+        self.addSearchFeed(feed.inlineSearchTerm, dialogs.SearchChannelDialog.CHANNEL, int(id))
 
     def addEngineSearchFeed(self, term, name):
         self.addSearchFeed(term, dialogs.SearchChannelDialog.ENGINE, name)
