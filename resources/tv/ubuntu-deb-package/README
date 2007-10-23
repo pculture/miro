@@ -18,7 +18,9 @@ Debian packages.  Here's how to use it:
 
 3) Run build.py [version number] [distro name] [URL to source tarball]
 
-   For example: build.py 0.9.5 feisty http://example.com/Democracy-0.9.5.tar.gz
+   For example:
+      build.py 0.9.5 feisty http://example.com/Democracy-0.9.5.tar.gz
+      build.py 0.9.9.9-rc0 gutsy http://example.com/Miro-0.9.9.9-rc0.tar.gz
 
 4) If everything goes well, you should have your packages in a directory named
    feisty (or whatever distro name you used).  This includes binary packages,
@@ -37,8 +39,9 @@ Debian packages.  Here's how to use it:
      $ lintian -i -I *.changes
      $ linda -i *.changes
      (Not all warnings are critical, though)
-   - $ sudo dpkg -i democracy*deb
-     $ democracyplayer
+
+   - $ sudo dpkg -i miro*deb
+     $ miro
 
 7) Once the build and the package itself works, clean up the debian/ directory:
    $ fakeroot debian/rules clean
