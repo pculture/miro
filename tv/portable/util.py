@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 import os
+import random
 import re
 import sys
 import sha
@@ -769,3 +770,6 @@ def directoryWritable(directory):
     else:
         f.close()
         return True
+
+def random_string(length):
+    return ''.join(random.choice(string.letters) for i in xrange(length))

@@ -64,8 +64,12 @@ class MovieDataInfo:
     def __init__(self, item):
         self.item = item
         self.videoPath = item.getVideoFilename()
-        thumbnailFilename = os.path.basename(self.videoPath) + ".png"
-        self.thumbnailPath = os.path.join(thumbnailDirectory(), 
+        # add a random string to the filename to ensure it's unique.  Two
+        # videos can have the same basename if they're in different
+        # directories.
+        thumbnailFilename = '%s.%s.png' % (os.path.basename(self.videoPath),
+                util.random_string(5))
+        self.thumbnailPath = os.path.join(thumbnailDirectory(),
                 thumbnailFilename)
         self.programInfo = []
         if hasattr(app, 'controller') and hasattr(app.controller, 'videoDisplay'):
