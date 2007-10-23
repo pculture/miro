@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# FIXME - at some point this should remove the .svn stuff from the 
+# debian-x directory.  perhaps we should be doing a checkout and use
+# the stuff there?  wbg 10-23-2007
+
 import os, sys, urllib
 from glob import glob
 import shutil
