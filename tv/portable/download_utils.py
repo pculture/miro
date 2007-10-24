@@ -27,6 +27,10 @@ from util import checkF, checkU, returnsFilename
 from platformutils import unicodeToFilename, unmakeURLSafe
 
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
+# filename limits this is mostly for windows where we have a 255 character
+# limit on entire pathname
+MAX_FILENAME_LENGTH = 100 
+MAX_FILENAME_EXTENSION_LENGTH = 50
 
 def fixFileURLS(url):
     """Fix file URLS that start with file:// instead of file:///.  Note: this
@@ -166,6 +170,11 @@ def cleanFilename(filename):
         filename = filename.replace(char,'')
     if len(filename) == 0:
         return unicodeToFilename(u'_')
+    if len(filename) > MAX_FILENAME_LENGTH:
+        base, ext = os.path.splitext(filename)
+        ext = ext[:MAX_FILENAME_EXTENSION_LENGTH]
+        base = base[:MAX_FILENAME_LENGTH-len(ext)]
+        filename = base + ext
     if type(filename) == str:
         return unicodeToFilename(filename.decode('ascii', 'replace'))
     else:
