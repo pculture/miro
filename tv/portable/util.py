@@ -772,4 +772,4 @@ def directoryWritable(directory):
         return True
 
 def random_string(length):
-    return ''.join(random.choice(string.letters) for i in xrange(length))
+    return ''.join(random.choice(string.ascii_letters) for i in xrange(length))
