@@ -133,7 +133,7 @@ def nextFreeFilename(name):
 ##
 # Returns a reasonable filename for saving the given url
 @returnsFilename
-def filenameFromURL(url):
+def filenameFromURL(url, clean=False):
     checkU(url)
     try:
         match = URIPattern.match(url)
@@ -147,10 +147,14 @@ def filenameFromURL(url):
         elif not query:
             ret = filename
         else:
-            ret = u"%s-%s" % (filename, query)
+            root, ext = os.path.splitext(filename)
+            ret = u"%s-%s%s" % (root, query, ext)
         if ret is None:
             ret = u'unknown'
-        return unicodeToFilename(ret)
+        if clean:
+            return cleanFilename(ret)
+        else:
+            return unicodeToFilename(ret)
     except:
         return unicodeToFilename(u'unknown')
 

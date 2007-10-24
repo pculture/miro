@@ -40,7 +40,7 @@ from clock import clock
 import httpauth
 import config
 import prefs
-from download_utils import URIPattern, cleanFilename, parseURL, defaultPort, getFileURLPath
+from download_utils import URIPattern, cleanFilename, parseURL, defaultPort, getFileURLPath, filenameFromURL
 from xhtmltools import URLEncodeDict, multipartEncode
 import eventloop
 import util
@@ -1754,21 +1754,7 @@ class HTTPClient(object):
             filename = self.findValueFromHeader(disposition, 'filename')
             if filename is not None:
                 return cleanFilename(filename)
-        match = URIPattern.match(response['path'])
-        if match is None:
-            # This code path will never be executed.
-            return cleanFilename(response['path'])
-        filename = match.group(2)
-        query = match.group(4)
-        if not filename:
-            ret = query
-        elif not query:
-            ret = filename
-        else:
-            ret = u"%s-%s" % (filename, query)
-        if ret is None:
-            ret = u'unknown'
-        return cleanFilename(ret)
+        return filenameFromURL(util.unicodify(response['redirected-url']), clean=True)
 
     def getCharsetFromResponse(self, response):
         try:
