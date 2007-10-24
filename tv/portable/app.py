@@ -2105,41 +2105,76 @@ class TemplateActionHandler:
         logging.warning ("setViewSort deprecated")
 
     def setSearchString(self, searchString):
-        self.templateHandle.getTemplateVariable('updateSearchString')(unicode(searchString))
+        try:
+            self.templateHandle.getTemplateVariable('updateSearchString')(unicode(searchString))
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable ('updateSearchString')")
 
     def toggleDownloadsView(self):
-        self.templateHandle.getTemplateVariable('toggleDownloadsView')(self.templateHandle)
+        try:
+            self.templateHandle.getTemplateVariable('toggleDownloadsView')(self.templateHandle)
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable ('toggleDownloadsView')")
 
     def toggleWatchableView(self):
-        self.templateHandle.getTemplateVariable('toggleWatchableView')(self.templateHandle)
+        try:
+            self.templateHandle.getTemplateVariable('toggleWatchableView')(self.templateHandle)
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable ('toggleWatchableView')")
 
     def toggleNewItemsView(self):
-        self.templateHandle.getTemplateVariable('toggleNewItemsView')(self.templateHandle)
+        try:
+            self.templateHandle.getTemplateVariable('toggleNewItemsView')(self.templateHandle)
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable ('toggleNewItemsView')")            
 
     def toggleAllItemsMode(self):
-        self.templateHandle.getTemplateVariable('toggleAllItemsMode')(self.templateHandle)
+        try:
+            self.templateHandle.getTemplateVariable('toggleAllItemsMode')(self.templateHandle)
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable ('toggleAllItemsMode')")
 
     def pauseDownloads(self):
-        view = self.templateHandle.getTemplateVariable('allDownloadingItems')
+        try:
+            view = self.templateHandle.getTemplateVariable('allDownloadingItems')
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable ('allDownloadingItems') during pauseDownloads()")
+            return
         for item in view:
             item.pause()
 
     def resumeDownloads(self):
-        view = self.templateHandle.getTemplateVariable('allDownloadingItems')
+        try:
+            view = self.templateHandle.getTemplateVariable('allDownloadingItems')
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable ('allDownloadingItems') during resumeDownloads()")
+            return
         for item in view:
             item.resume()
 
     def cancelDownloads(self):
-        view = self.templateHandle.getTemplateVariable('allDownloadingItems')
+        try:
+            view = self.templateHandle.getTemplateVariable('allDownloadingItems')
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable ('allDownloadingItems') during cancelDownloads()")
+            return
         for item in view:
             item.expire()
 
     def playViewNamed(self, viewName, firstItemId):
-        view = self.templateHandle.getTemplateVariable(viewName)
+        try:
+            view = self.templateHandle.getTemplateVariable(viewName)
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable (%s) during playViewNamed()" % (viewName,))
+            return
         controller.playView(view, firstItemId)
 
     def playOneItem(self, viewName, itemID):
-        view = self.templateHandle.getTemplateVariable(viewName)
+        try:
+            view = self.templateHandle.getTemplateVariable(viewName)
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable (%s) during playOneItem()" % (viewName,))
+            return
         controller.playView(view, itemID, justPlayOne=True)
 
     def playNewVideos(self, id):
@@ -2206,12 +2241,16 @@ class TemplateActionHandler:
             searchFeed.reset()
 
     def sortBy(self, by, section):
-        self.templateHandle.getTemplateVariable('setSortBy')(by, section, self.templateHandle)
+        try:
+            self.templateHandle.getTemplateVariable('setSortBy')(by, section, self.templateHandle)
+        except KeyError, e:
+            logging.warning ("KeyError in getTemplateVariable ('setSortBy')")
 
     def handleSelect(self, area, viewName, id, shiftDown, ctrlDown):
         try:
             view = self.templateHandle.getTemplateVariable(viewName)
-        except KeyError: # user switched templates before we got this
+        except KeyError, e: # user switched templates before we got this
+            logging.warning ("KeyError in getTemplateVariable (%s) during handleSelect()" % (viewName,))
             return
         shift = (shiftDown == '1')
         ctrl = (ctrlDown == '1')
@@ -2223,7 +2262,11 @@ class TemplateActionHandler:
         except:
             traceback.print_exc()
         else:
-            view = self.templateHandle.getTemplateVariable(viewName)
+            try:
+                view = self.templateHandle.getTemplateVariable(viewName)
+            except KeyError, e: # user switched templates before we got this
+                logging.warning ("KeyError in getTemplateVariable (%s) during handleContextMenuSelect()" % (viewName,))
+                return
             if not controller.selection.isSelected(area, view, int(id)):
                 self.handleSelect(area, viewName, id, False, False)
             popup = menu.makeContextMenu(self.currentName, view,
