@@ -1591,7 +1591,7 @@ class TemplateDisplay(frontend.HTMLDisplay):
 
             # Let channel guide URLs pass through
             if (controller.guideURL is not None and
-                    guide.isPartOfGuide(url, controller.guideURL)):
+                    guide.isPartOfGuide(url, controller.guideURL, [config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)])):
                 controller.setLastVisitedGuideURL(url)
                 return True
             if url.startswith(u'file://'):

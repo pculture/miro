@@ -68,6 +68,7 @@ class ChannelGuide(DDBObject):
             self.allowedURLs = allowedURLs
         if url is None and allowedURLs is None:
             self.allowedURLs = config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS).split()
+        self.allowedURLs.append(config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL))
         self.url = url
         self.updated_url = url
         self.title = None
@@ -88,6 +89,7 @@ class ChannelGuide(DDBObject):
             self.iconCache.requestUpdate(True)
         if self.getDefault():
             self.allowedURLs = config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS).split()
+            self.allowedURLs.append(config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL))
         else:
             self.allowedURLs = []
         self.downloadGuide()
@@ -129,12 +131,15 @@ class ChannelGuide(DDBObject):
 
     def getLastVisitedURL(self):
         if self.lastVisitedURL is not None:
+            logging.info("First URL is %s"%self.lastVisitedURL)
             return self.lastVisitedURL
         else:
             if self.firstTime:
                 self.firstTime = False
+                logging.info("First URL is %s"%self.getFirstURL())
                 return self.getFirstURL()
             else:
+                logging.info("First URL is %s"%self.getURL())
                 return self.getURL()
 
     def getDefault(self):
