@@ -4,6 +4,7 @@ import os
 import tempfile
 
 from test.framework import DemocracyTestCase
+import download_utils
 import util
 import xhtmltools
 
@@ -86,3 +87,22 @@ class XHTMLToolsTest(DemocracyTestCase):
         }
 
         boundary, data = xhtmltools.multipartEncode(vars, files)
+
+class DownloadUtilsTest(DemocracyTestCase):
+    def checkCleanFilename(self, filename, test_against):
+        self.assertEquals(download_utils.cleanFilename(filename),
+                test_against)
+
+    def testCleanFilename(self):
+        self.checkCleanFilename('normalname', 'normalname')
+        self.checkCleanFilename('a:b?c>d<e|f*/g\\h"\'', 'abcdefgh')
+        self.checkCleanFilename('', '_')
+        longFilename = 'booya' * 100
+        longExtension = '.' + 'foo' * 20
+        self.checkCleanFilename(longFilename, longFilename[:100])
+        # total file length isn't over the limit, so the extension stays the
+        # same
+        self.checkCleanFilename('abc' + longExtension, 
+            'abc' + longExtension)
+        self.checkCleanFilename(longFilename + longExtension,
+            longFilename[:50] + longExtension[:50])
