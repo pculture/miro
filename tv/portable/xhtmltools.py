@@ -158,11 +158,13 @@ def multipartEncode(postVars, files):
     boundary = 'dp%s'% (hex(random.getrandbits(64))[2:-1])
     output = []
     if postVars is not None:
-        for key in postVars.keys():
+        for key, value in postVars.items():
             output.append('--%s\r\n' % boundary)
             output.append('Content-Disposition: form-data; name="%s"\r\n\r\n' %
                           quote_plus(key))
-            output.append(postVars[key])
+            if isinstance(value, unicode):
+                value = value.encode('utf8', 'xmlcharrefreplace')
+            output.append(value)
             output.append('\r\n')
     if files is not None:
         for key in files.keys():
