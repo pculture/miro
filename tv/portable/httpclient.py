@@ -304,7 +304,11 @@ class AsyncSocket(object):
             self.disableReadTimeout = disableReadTimeout
         self.name = "Outgoing %s:%s" % (host, port)
 
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        except socket.error, e:
+            trapCall(self, errback, ConnectionError(e[1]))
+            return
         self.socket.setblocking(0)
         self.connectionErrback = errback
         def handleGetHostByNameException(e):
