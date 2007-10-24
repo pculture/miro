@@ -1,8 +1,11 @@
+from StringIO import StringIO
+
 import os
 import tempfile
 
 from test.framework import DemocracyTestCase
 import util
+import xhtmltools
 
 class FakeStream:
     """Fake streams are used for the AutoflushingStream test.  They don't
@@ -68,3 +71,18 @@ class UtilTest(DemocracyTestCase):
             ret = util.random_string(length)
             self.assertEquals(len(ret), length)
             self.assertEquals(ret.isalpha(), True)
+
+class XHTMLToolsTest(DemocracyTestCase):
+    def testMultipartEncode(self):
+        vars = {
+                'foo': u'123',  # unicode string
+        }
+
+        files = {
+            'baz': {"filename":"binarydata.zip",
+                 "mimetype":"application/octet-stream",
+                 "handle": StringIO('\xf8'), 
+             } # baz has invalid unicode data
+        }
+
+        boundary, data = xhtmltools.multipartEncode(vars, files)
