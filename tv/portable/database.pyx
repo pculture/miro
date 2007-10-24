@@ -1372,11 +1372,11 @@ class DDBObject:
     # Call this after you change the object
     def signalChange(self, needsSave=True):
         self.dd.confirmDBThread()
-        self.checkConstraints()
         if not self.dd.idExists(self.id):
             msg = "signalChange() called on non-existant object (id is %s)" \
                     % self.id
             raise DatabaseConstraintError, msg
+        self.checkConstraints()
         self.dd.saveCursor()
         try:
             self.dd.resetCursor()
