@@ -27,6 +27,7 @@ reference (http://www.w3.org/Protocols/rfc2616/rfc2616.html).
 """
 
 import errno
+import logging
 import re
 import socket
 import traceback
@@ -1225,14 +1226,25 @@ class HTTPConnectionPool(object):
         elif conn in conns['free']:
             conns['free'].remove(conn)
             self.freeConnectionCount -= 1
+        else:
+            logging.warn("_onConnectionClosed called with connection not "
+                    "in either queue")
         self.runPendingRequests()
 
     def _onConnectionReady(self, conn):
         conns = self._getServerConnections(conn.scheme, conn.host, conn.port)
-        conns['active'].remove(conn)
-        self.activeConnectionCount -= 1
-        conns['free'].add(conn)
-        self.freeConnectionCount += 1
+        if conn in conns['active']:
+            conns['active'].remove(conn)
+            self.activeConnectionCount -= 1
+        else:
+            logging.warn("_onConnectionReady called with connection not "
+                    "in the active queue")
+        if conn not in conns['free']:
+            conns['free'].add(conn)
+            self.freeConnectionCount += 1
+        else:
+            logging.warn("_onConnectionReady called with connection already "
+                    "in the free queue")
         self.runPendingRequests()
 
     def addRequest(self, callback, errback, requestStartCallback,
