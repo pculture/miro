@@ -115,8 +115,8 @@
 /* NSMenu : <title:Playlists> (oid:305) */
 "Playlists" = "Playlists";
 
-/* NSMenuItem : <title:Preferences…> (oid:129) */
-"Preferences…" = "Preferences…";
+/* NSMenuItem : <title:Preferences...> (oid:129) */
+"Preferences..." = "Preferences...";
 
 /* NSMenuItem : <title:Previous Video> (oid:323) */
 "Previous Video" = "Previous Video";
