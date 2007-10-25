@@ -175,6 +175,9 @@ class Importer (object):
         f = feed.getFeedByURL(url)
         if f is None:
             f = feed.Feed(url, False)
+            title = entry.getAttribute("text")
+            if title is not None and title != '':
+                f.setTitle(title)
             if self.currentFolder is not None:
                 f.setFolder(self.currentFolder)
                 f.blink()
