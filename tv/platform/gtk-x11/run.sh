@@ -22,6 +22,12 @@ PYTHON_VERSION=`python -c 'import sys; info=sys.version_info; print "%s.%s" % (i
 PREFIX=/usr
 export MIRO_SHARE_ROOT=dist/$PREFIX/share/
 export MIRO_RESOURCE_ROOT=dist/$PREFIX/share/miro/resources/
+
+# NOTE: The first part of this LD_LIBRARY_PATH _must_ match what setup.py
+# picks out and puts in dist/usr/bin/miro .  If you're having problems
+# running miro with ./run.sh, then make sure you've got the LD_LIBRARY_PATH
+# portion matching.
+# FIXME - this is a less than ideal solution
 export LD_LIBRARY_PATH=/usr/lib/firefox${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}
 
 $PYTHON setup.py install --root=./dist --prefix=$PREFIX && PATH=dist/$PREFIX/bin:$PATH PYTHONPATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/ dist/$PREFIX/bin/miro "$@"
