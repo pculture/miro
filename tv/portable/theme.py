@@ -77,5 +77,5 @@ class ThemeHistory(DDBObject):
             importer.importSubscriptionsFrom(filepath,
                                              showSummary = False)
         for temp_guide in unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split():
-            if views.feeds.getItemWithIndex(indexes.guidesByURL, temp_guide) is None:
+            if views.guides.getItemWithIndex(indexes.guidesByURL, temp_guide) is None:
                 guide.ChannelGuide(temp_guide)
