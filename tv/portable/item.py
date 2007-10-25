@@ -71,10 +71,9 @@ class Item(DDBObject):
     associated with it.
     """
 
-    ICON_CACHE_SIZES = [
-        (108, 81),
-        (226, 170),
-    ]
+    SMALL_ICON_SIZE = (108, 81)
+    BIG_ICON_SIZE = (226, 170)
+    ICON_CACHE_SIZES = [SMALL_ICON_SIZE, BIG_ICON_SIZE]
 
     def __init__(self, entry, linkNumber = 0, feed_id=None, parent_id=None):
         self.feed_id = feed_id
@@ -834,9 +833,9 @@ folder will be deleted.""")
     def getThumbnail (self):
         self.confirmDBThread()
         if self.showMoreInfo:
-            width, height = 226, 170
+            width, height = Item.BIG_ICON_SIZE
         else:
-            width, height = 108, 81
+            width, height = Item.SMALL_ICON_SIZE
         if self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(width, height)
             return resources.absoluteUrl(path)
@@ -846,7 +845,10 @@ folder will be deleted.""")
         elif self.isContainerItem:
             return resources.url(u"images/container-icon.png")
         else:
-            if self.showMoreInfo:
+            feedThumbnail = self.getFeed().getItemThumbnail(width, height)
+            if feedThumbnail is not None:
+                return feedThumbnail
+            elif self.showMoreInfo:
                 return resources.url(u"images/thumb-more-info.png")
             else: 
                 return resources.url(u"images/thumb.png")

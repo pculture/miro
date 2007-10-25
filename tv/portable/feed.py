@@ -564,7 +564,7 @@ class Feed(DDBObject):
     ICON_CACHE_SIZES = [
         (20, 20),
         (76, 76),
-    ]
+    ] + Item.ICON_CACHE_SIZES
 
     def __init__(self,url, initiallyAutoDownloadable=True):
         DDBObject.__init__(self, add=False)
@@ -1082,11 +1082,20 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
     @returnsUnicode
     def getTablistThumbnail(self):
         self.confirmDBThread()
-        if self.iconCache.isValid():
+        if self.iconCache and self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(20, 20)
             return resources.absoluteUrl(path)
         else:
             return defaultFeedIconURLTablist()
+
+    @returnsUnicode
+    def getItemThumbnail(self, width, height):
+        self.confirmDBThread()
+        if self.iconCache and self.iconCache.isValid():
+            path = self.iconCache.getResizedFilename(width, height)
+            return resources.absoluteUrl(path)
+        else:
+            return None
 
     def hasDownloadedItems(self):
         self.confirmDBThread()
