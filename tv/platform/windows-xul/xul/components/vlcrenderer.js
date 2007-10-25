@@ -120,14 +120,18 @@ VLCRenderer.prototype = {
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-pause";
     var playMenuItem = this.document.getElementById('menuitem-playpausevideo');
-    playMenuItem.label = playMenuItem.getAttribute("pause-label");
+    var label = new Object();
+    pybridge.getLabel("PlayPauseVideo", "pause",0 ,0 ,0,label);
+    playMenuItem.label = label.value;
   },
 
   showPlayButton: function() {
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-play";
     var playMenuItem = this.document.getElementById('menuitem-playpausevideo');
-    playMenuItem.label = playMenuItem.getAttribute("play-label");
+    var label = new Object();
+    pybridge.getLabel("PlayPauseVideo", "play",0 ,0 ,0,label);
+    playMenuItem.label = label.value;
   },
 
   reset: function() {
