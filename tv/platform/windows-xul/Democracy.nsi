@@ -730,7 +730,21 @@ NotOldInstalled:
   !insertmacro MUI_LANGDLL_DISPLAY
 
   ; Make check boxes for unhandled file extensions.
+
+
   !insertmacro checkExtensionHandled ".torrent" ${SecRegisterTorrent}
+
+  StrCpy $R0 "alwaysRegisterTorrents"
+  StrCpy $R1 "$THEME_TEMP_DIR\app.config"
+  Call GetConfigOption
+  Pop $R0
+  StrCmp $R0 "" DoneTorrentRegistration
+  SectionGetFlags ${SecRegisterTorrent} $0
+  IntOp $0 $0 | 17  ; Set register .torrents to selected and read only
+  SectionSetFlags ${SecRegisterTorrent} $0
+
+DoneTorrentRegistration:
+
   !insertmacro checkExtensionHandled ".miro" ${SecRegisterMiro}
   !insertmacro checkExtensionHandled ".democracy" ${SecRegisterDemocracy}
   !insertmacro checkExtensionHandled ".avi" ${SecRegisterAvi}
