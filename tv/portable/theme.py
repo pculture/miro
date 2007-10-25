@@ -19,11 +19,13 @@ import config
 import prefs
 import app
 import views
+import indexes
 import os
 from eventloop import asUrgent
 from database import DDBObject
 import opml
 import iconcache
+import guide
 
 class ThemeHistory(DDBObject):
     def __init__(self):
@@ -74,3 +76,6 @@ class ThemeHistory(DDBObject):
                 config.get(prefs.DEFAULT_CHANNELS_FILE))
             importer.importSubscriptionsFrom(filepath,
                                              showSummary = False)
+        for temp_guide in unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split():
+            if views.feeds.getItemWithIndex(indexes.guidesByURL, temp_guide) is None:
+                guide.ChannelGuide(temp_guide)
