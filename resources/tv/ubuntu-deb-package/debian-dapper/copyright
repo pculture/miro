@@ -3,7 +3,7 @@ Mon, 12 Jun 2006 13:34:47 +0200
 
 The current Debian maintainer is Uwe Hermann <uwe@debian.org>.
 
-It was downloaded from: http://www.getdemocracy.com
+It was downloaded from: http://www.getmiro.com/
 
 Upstream Authors: Nick Nassar <nassar@downhillbattle.org>
                   Geoff Schmidt <gschmidt@gschmidt.org>
@@ -12,13 +12,15 @@ Upstream Authors: Nick Nassar <nassar@downhillbattle.org>
                   Nick Reville <npr@pculture.org>
                   Matt Bret <mb@pculture.org>
                   Chris Lahey <clahey@clahey.net>
+                  Paul Swartz <pswartz@pculture.org>
+                  Will Guaraldi <will.guaraldi@pculture.org>
 
-Copyright: 2005-2006 Participatory Culture Foundation
+Copyright: 2005-2007 Participatory Culture Foundation
 
 License:
 
-   Democracy Player - an RSS based video player application
-   Copyright (C) 2005-2006 Participatory Culture Foundation
+   Miro - an RSS based video player application
+   Copyright (C) 2005-2007 Participatory Culture Foundation
   
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -69,6 +71,7 @@ License:
 ------------------------------------------------------------------------------
 
 portable/BitTorrent/*:
+portable/dl_daemon/* (except Democracy_Downloader.py):
 
 Copyright: 2001-2002 Bram Cohen
 
