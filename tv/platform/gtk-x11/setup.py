@@ -19,7 +19,8 @@
 
 # This needs to be above Paths and configuration :(
 #
-# It currently looks for Debian 4.0 Etch and Ubuntu 7.04 Feisty
+# This isn't being used right now, as it doesn't detect all the cases
+# in which we need the xine hack
 def use_xine_hack_default():
     try:
         # Non-debian based system will throw an exception here
@@ -46,7 +47,7 @@ def use_xine_hack_default():
 
 BOOST_LIB = 'boost_python'
 
-USE_XINE_HACK = use_xine_hack_default()
+USE_XINE_HACK = True #use_xine_hack_default()
 
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
