@@ -25,6 +25,7 @@ import string
 import subprocess
 import zipfile as zip
 from glob import glob
+from xml.sax.saxutils import escape
 
 ###############################################################################
 ## Paths and configuration                                                   ##
@@ -195,9 +196,15 @@ ext_modules = [
 
 import template_compiler
 
-def fillTemplate(templatepath, outpath, **vars):
+def fillTemplate(templatepath, outpath, xml=False, **vars):
     s = open(templatepath, 'rt').read()
-    s = string.Template(s).safe_substitute(**vars)
+    if xml:
+        xmlvars = {}
+        for var in vars:
+            xmlvars[var] = escape(vars[var],{"'":"&apos;","\"":"&quot;"})
+        s = string.Template(s).safe_substitute(**xmlvars)
+    else:
+        s = string.Template(s).safe_substitute(**vars)
     f = open(outpath, "wt")
     f.write(s)
     f.close()
@@ -214,7 +221,6 @@ def dtdQuoteHack(path):
     f = open(path, 'w')
     f.write(content.replace("'", "&apos;"))
     f.close()
-
 
 ###############################################################################
 
@@ -721,10 +727,10 @@ class bdist_xul_dumb(Command):
     # plus anything set with setTemplateVariable.
     # NEEDS: same deal as makeAppConfig: sloppy; shouldn't drop files in
     # the source tree.
-    def fillTemplate(self, filename):
+    def fillTemplate(self, filename, xml = False):
         assert self.templateVars, \
             "Must call makeAppConfig before fillTemplate"
-        fillTemplate("%s.template" % filename, filename, **self.templateVars)
+        fillTemplate("%s.template" % filename, filename, xml = xml, **self.templateVars)
 
     def fillTemplates(self):
         self.fillTemplate(os.path.join(root,'portable','dl_daemon','daemon.py'))
@@ -739,7 +745,7 @@ class bdist_xul_dumb(Command):
                 continue
             for fname in glob (os.path.join (lang, '*.template')):
                 dtd_fname = fname[:-len('.template')]
-                self.fillTemplate(dtd_fname)
+                self.fillTemplate(dtd_fname, xml=True)
                 dtdQuoteHack(dtd_fname)
         import validate_dtds
         validate_dtds.check_dtds(os.path.join (xulBase, 'chrome', 'locale'))
