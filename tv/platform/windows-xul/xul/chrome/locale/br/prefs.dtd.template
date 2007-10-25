@@ -22,7 +22,7 @@
 
 <!ENTITY prefs.folder.movies "Folders">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Kemmañ...">
+<!ENTITY prefs.folder.change "Change...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
 <!ENTITY prefs.folder.others.location "Folder">
@@ -41,15 +41,15 @@
 
 <!ENTITY prefs.videos.expire "By default, videos expire after">
 <!ENTITY prefs.videos.expire.one "1 deiz">
-<!ENTITY prefs.videos.expire.three "3 deiz">
-<!ENTITY prefs.videos.expire.six "6 deiz">
-<!ENTITY prefs.videos.expire.ten "10 deiz">
+<!ENTITY prefs.videos.expire.three "3 days">
+<!ENTITY prefs.videos.expire.six "6 days">
+<!ENTITY prefs.videos.expire.ten "10 days">
 <!ENTITY prefs.videos.expire.thirty "1 miz">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire.never "morse">
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "and">

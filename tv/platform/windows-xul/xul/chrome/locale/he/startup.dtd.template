@@ -23,7 +23,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"לך לגדול:">
 <!ENTITY startup.done5.text		"הכפתור שלימין כפתור ההפעלה מציג וידיאו במסך מלא">
 <!ENTITY startup.done6.heading		"חיפוש קטעי וידאו:">
-<!ENTITY startup.done6.text		"מדריך הערוצים של $shortAppName כולל מאות ערוצי טלוויזיית אינטרנט, כולם בחינם. רק לחצו על הוספה כדי לצפות בערוץ.">
+<!ENTITY startup.done6.text		"למדריך ערוצי $shortAppName יש מאות ערוצי טלויזית אינטרנט, כולם חופשיים לשימוש. פשוט לחץ 'הוסף' כדי לצפות בערוץ.">
 <!ENTITY startup.answer.yes		"כן">
 <!ENTITY startup.answer.no		"לא">
 <!ENTITY startup.title			"$shortAppName התקנה ראשונה">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"לך לגדול:">
 <!ENTITY startup.done5.text		"הכפתור שלימין כפתור ההפעלה מציג וידיאו במסך מלא">
 <!ENTITY startup.done6.heading		"חיפוש קטעי וידאו:">
-<!ENTITY startup.done6.text		"מדריך הערוצים של $shortAppName כולל מאות ערוצי טלוויזיית אינטרנט, כולם בחינם. רק לחצו על הוספה כדי לצפות בערוץ.">
+<!ENTITY startup.done6.text		"למדריך ערוצי $shortAppName יש מאות ערוצי טלויזית אינטרנט, כולם חופשיים לשימוש. פשוט לחץ 'הוסף' כדי לצפות בערוץ.">
 <!ENTITY startup.answer.yes		"כן">
 <!ENTITY startup.answer.no		"לא">

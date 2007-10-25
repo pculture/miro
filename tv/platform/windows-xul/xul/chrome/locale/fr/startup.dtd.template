@@ -3,10 +3,10 @@
 
 <!ENTITY startup.title			"Configuration pour le premier lancemement de $shortAppName">
 <!ENTITY startup.description		"Les quelques fenêtres qui vont suivre vous aideront à paramétrer $longAppName de façon à ce qu'il fonctionne au mieux pour vous.">
-<!ENTITY startup.autostart.description	"Nous vous recommandons de d'avoir $longAppName lancé quand votre ordinateur démarre. Les vidéos non terminées pourront finir leur téléchargement et des nouvelles vidéos pourront être téléchargées, prêtes, pour si vous voulez les regarder.">
-<!ENTITY startup.autostart.question	"Voulez-vous lancer $shortAppName au démarrage de l'ordinateur ?">
+<!ENTITY startup.autostart.description	"Nous vous recommandons d'avoir $longAppName lancé au démarrage de votre ordinateur. Les vidéos incomplètes pourront poursuivre leur téléchargement et de nouvelles vidéos pourront être téléchargées en tâche de fond, prêtes à être visionnées quand vous le souhaiterez.">
+<!ENTITY startup.autostart.question	"Souhaitez-vous lancer $shortAppName au démarrage de l'ordinateur ?">
 <!ENTITY startup.search.description	"$longAppName peut trouver toutes les vidéos présentes dans votre ordinateur pour vous aider à organiser votre collection.">
-<!ENTITY startup.search.question        "Voulez vous que $longAppName recherche des fichiers videos sur votre ordinateur ?">
+<!ENTITY startup.search.question        "Souhaitez-vous que $longAppName recherche des fichiers vidéo sur votre ordinateur ?">
 <!ENTITY startup.search.restrict	"Restreindre à mes Fichiers Personnels">
 <!ENTITY startup.search.custom          "Rechercher le fichier personnalisé :">
 <!ENTITY startup.search.searching	"Recherche de vidéos">
@@ -23,15 +23,15 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Aller à Big:">
 <!ENTITY startup.done5.text		"Le bouton situé à droite du bouton &quot;Play&quot; fait basculer en vidéo plein écran.">
 <!ENTITY startup.done6.heading		"Trouver des vidéos:">
-<!ENTITY startup.done6.text		"Le Guide des Chaînes de $shortAppName liste des centaines de chaînes de télévisions sur Internet, qui sont toutes gratuites. Cliquez sur 'AJOUTER' pour regarder une chaîne.">
+<!ENTITY startup.done6.text		"Le guide $shortAppName propose des centaines de chaînes gratuites. Cliquer sur &quot;ADD&quot; pour visionner une chaîne.">
 <!ENTITY startup.answer.yes		"Oui">
 <!ENTITY startup.answer.no		"Non">
 <!ENTITY startup.title			"Configuration pour le premier lancemement de $shortAppName">
 <!ENTITY startup.description		"Les quelques fenêtres qui vont suivre vous aideront à paramétrer $longAppName de façon à ce qu'il fonctionne au mieux pour vous.">
-<!ENTITY startup.autostart.description	"Nous vous recommandons de d'avoir $longAppName lancé quand votre ordinateur démarre. Les vidéos non terminées pourront finir leur téléchargement et des nouvelles vidéos pourront être téléchargées, prêtes, pour si vous voulez les regarder.">
-<!ENTITY startup.autostart.question	"Voulez-vous lancer $shortAppName au démarrage de l'ordinateur ?">
+<!ENTITY startup.autostart.description	"Nous vous recommandons d'avoir $longAppName lancé au démarrage de votre ordinateur. Les vidéos incomplètes pourront poursuivre leur téléchargement et de nouvelles vidéos pourront être téléchargées en tâche de fond, prêtes à être visionnées quand vous le souhaiterez.">
+<!ENTITY startup.autostart.question	"Souhaitez-vous lancer $shortAppName au démarrage de l'ordinateur ?">
 <!ENTITY startup.search.description	"$longAppName peut trouver toutes les vidéos présentes dans votre ordinateur pour vous aider à organiser votre collection.">
-<!ENTITY startup.search.question        "Voulez vous que $longAppName recherche des fichiers videos sur votre ordinateur ?">
+<!ENTITY startup.search.question        "Souhaitez-vous que $longAppName recherche des fichiers vidéo sur votre ordinateur ?">
 <!ENTITY startup.search.restrict	"Restreindre à mes Fichiers Personnels">
 <!ENTITY startup.search.custom          "Rechercher le fichier personnalisé :">
 <!ENTITY startup.search.searching	"Recherche de vidéos">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Aller à Big:">
 <!ENTITY startup.done5.text		"Le bouton situé à droite du bouton &quot;Play&quot; fait basculer en vidéo plein écran.">
 <!ENTITY startup.done6.heading		"Trouver des vidéos:">
-<!ENTITY startup.done6.text		"Le Guide des Chaînes de $shortAppName liste des centaines de chaînes de télévisions sur Internet, qui sont toutes gratuites. Cliquez sur 'AJOUTER' pour regarder une chaîne.">
+<!ENTITY startup.done6.text		"Le guide $shortAppName propose des centaines de chaînes gratuites. Cliquer sur &quot;ADD&quot; pour visionner une chaîne.">
 <!ENTITY startup.answer.yes		"Oui">
 <!ENTITY startup.answer.no		"Non">

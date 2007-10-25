@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2007-08-30 11:50-0400\n"
+"POT-Creation-Date: 2007-10-25 09:42-0400\n"
 "PO-Revision-Date: 2007-10-12 15:58+0000\n"
 "Last-Translator: Matej Urbančič <matej.urban@gmail.com>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -15,11 +15,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2007-10-18 14:23+0000\n"
+"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#~ msgid "Preferencesâ¦"
+#~ msgstr "Lastnosti:"
+
+#~ msgid ""
+#~ "You're done!\n"
+#~ "\n"
+#~ "Setup is complete -- now you can find some channels and start watching.\n"
+#~ "\n"
+#~ "Don't Wait: Miro is different than watching webpage videos -- publishers can "
+#~ "offer big, high quality videos. So don't sit around waiting for videos: "
+#~ "start some downloads and check back later. \n"
+#~ "\n"
+#~ "Leave it On: Miro regularly checks channels for new videos and downloads in "
+#~ "the background. Leaving it running means you'll have new videos when you're "
+#~ "ready to watch.\n"
+#~ "\n"
+#~ "Don't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' "
+#~ "system that helps clean out older videos to make room for new videos. You "
+#~ "can always keep a video permanently by clicking 'save' and you can set a "
+#~ "channel's settings to save videos automatically.\n"
+#~ "\n"
+#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
+#~ "\n"
+#~ "Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
+#~ "them are free. Just click 'ADD' to watch a channel.\n"
+#~ msgstr ""
+#~ "Končali ste!\n"
+#~ "\n"
+#~ "Nastavitev je končana -- sedaj lahko poiščete kanale in začnete z ogledi.\n"
+#~ "\n"
+#~ "Ne čakajte: pregledovanje s predvajalnik Miro se razlikuje od pregledovanja "
+#~ "spletnih posnetkov -- ponudniki omogočajo velike visoko kakovostne posnetke. "
+#~ "Ne čakajte na posnetke: pričnite s prenosi. \n"
+#~ "\n"
+#~ "Pustite predvajalnik dejaven: predvajalnik redno preveri kanale za nove "
+#~ "posnetke in jih prenaša v ozadju. Če program pustite delovati, boste imeli "
+#~ "vedno nove posnetke pripravljene za ogled.\n"
+#~ "\n"
+#~ "Ne skrbite za prostor na disku: Kot TiVo tudi Miro ponuja možnost 'preteka' "
+#~ "posnetkov, ki omogoči enostavno čiščenje starejših posnetkov. Posnetek pa "
+#~ "lahko tudi ohranite, če ga enostavno shranite ali pa shranjujete kar vse "
+#~ "posnetke, ki prihajajo iz določenega kanala.\n"
+#~ "\n"
+#~ "Povečaj: Gumb na desni strani od gumba predvajanja, prikaže posnetek v "
+#~ "celozaslonskem načinu.\n"
+#~ "\n"
+#~ "Poišči posnetke: Vodnik programov Miro vsebuje na stotine spletnih TV "
+#~ "kanalov in vsi so brezplačni. Kliknite 'Dodaj' in si kanal oglejte.\n"
+
+#~ msgid "outside of democracy."
+#~ msgstr "izven demokracije."
+
+#~ msgid "News and Tech"
+#~ msgstr "Novice in tehnika"
+
+#~ msgid "Entertainment"
+#~ msgstr "Zabava"
+
+#~ msgid "High-Def"
+#~ msgstr "Visoka ločljivost"
+
+#~ msgid "Mac"
+#~ msgstr "Mac"
 
 #~ msgid "About Democracy"
 #~ msgstr "O Democracy"
@@ -436,6 +500,10 @@ msgstr "Prekliči"
 msgid "OK"
 msgstr "V redu"
 
+#: ../../portable/dialogs.py:76
+msgid "Ok"
+msgstr "V redu"
+
 msgid "$log"
 msgstr "$log"
 
@@ -487,7 +555,7 @@ msgstr "Dodaj vodnik ..."
 msgid "Bring All to Front"
 msgstr "Vse na vrh"
 
-#: ../../platform/osx/frontend/Preferences.py:39
+#: ../../platform/osx/frontend/Preferences.py:65
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
 msgid "Channels"
 msgstr "Kanali"
@@ -587,11 +655,11 @@ msgstr "Odpri ..."
 msgid "Paste"
 msgstr "Prilepi"
 
-#: ../../platform/osx/frontend/Application.py:231
+#: ../../platform/osx/frontend/Application.py:249
 msgid "Play Video"
 msgstr "Predvajaj posnetek"
 
-#: ../../platform/osx/frontend/Preferences.py:43
+#: ../../platform/osx/frontend/Preferences.py:69
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "Playback"
 msgstr "Predvajanje"
@@ -599,8 +667,8 @@ msgstr "Predvajanje"
 msgid "Playlists"
 msgstr "Seznami predvajanja"
 
-msgid "Preferencesâ¦"
-msgstr "Lastnosti:"
+msgid "Preferences..."
+msgstr ""
 
 msgid "Previous Video"
 msgstr "Predhodni posnetek"
@@ -668,7 +736,7 @@ msgstr "Predal"
 msgid "FullScreen Controls"
 msgstr "Nadzor celozaslonskega načina"
 
-#: ../../portable/tabs.py:45
+#: ../../portable/tabs.py:46
 msgid "Video Search"
 msgstr "Iskanje posnetkov"
 
@@ -793,8 +861,8 @@ msgstr "Predvajaj posnetke enega za drugim."
 msgid "Remember video position."
 msgstr "Zapomni si lego okna posnetka."
 
-#: ../../portable/guide.py:86 ../../portable/playlist.py:197
-#: ../../portable/feed.py:788 ../../portable/menu.py:65
+#: ../../portable/guide.py:107 ../../portable/playlist.py:197
+#: ../../portable/feed.py:795 ../../portable/menu.py:65
 #: ../../portable/menu.py:70 ../../portable/folder.py:156
 #: ../../portable/folder.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
@@ -807,7 +875,7 @@ msgstr "Zagon programa ob prijavi"
 msgid "Save downloaded videos in this folder:"
 msgstr "Shrani sprejete posnetke v mapo:"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:571
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573
 msgid "Show as Channel"
 msgstr "Prikaži kot kanal"
 
@@ -817,7 +885,7 @@ msgstr "Zaustavi po koncu vsakega posnetka."
 msgid "To avoid internet slowdowns:"
 msgstr "V izogib upočasnitvam interneta:"
 
-#: ../../portable/app.py:1187
+#: ../../portable/app.py:1206
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Izpiši opozorilo ob izhodu iz programa, kadar prenos še poteka"
 
@@ -866,7 +934,7 @@ msgstr "Poišči:"
 msgid "URL"
 msgstr "URL"
 
-#: ../../platform/windows-xul/frontend_implementation/startup.py:25
+#: ../../platform/windows-xul/frontend_implementation/startup.py:42
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:48
 #, python-format
 msgid "(parsed %d files - found %d videos)"
@@ -878,8 +946,7 @@ msgstr "Nazaj"
 msgid "Browse"
 msgstr "Brskanje"
 
-#: ../../platform/osx/frontend/StartupPanel.py:90
-#: ../../platform/osx/frontend/StartupPanel.py:116
+#: ../../platform/osx/frontend/StartupPanel.py:106
 msgid "Next"
 msgstr "Naprej"
 
@@ -960,85 +1027,39 @@ msgid "Yes"
 msgstr "Da"
 
 msgid ""
-"You're done!\n"
-"\n"
-"Setup is complete -- now you can find some channels and start watching.\n"
-"\n"
-"Don't Wait: Miro is different than watching webpage videos -- publishers can "
-"offer big, high quality videos. So don't sit around waiting for videos: "
-"start some downloads and check back later. \n"
-"\n"
-"Leave it On: Miro regularly checks channels for new videos and downloads in "
-"the background. Leaving it running means you'll have new videos when you're "
-"ready to watch.\n"
-"\n"
-"Don't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' "
-"system that helps clean out older videos to make room for new videos. You "
-"can always keep a video permanently by clicking 'save' and you can set a "
-"channel's settings to save videos automatically.\n"
-"\n"
-"Go Big: The button to the right of the play button shows videos fullscreen.\n"
-"\n"
-"Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
-"them are free. Just click 'ADD' to watch a channel.\n"
-msgstr ""
-"Končali ste!\n"
-"\n"
-"Nastavitev je končana -- sedaj lahko poiščete kanale in začnete z ogledi.\n"
-"\n"
-"Ne čakajte: pregledovanje s predvajalnik Miro se razlikuje od pregledovanja "
-"spletnih posnetkov -- ponudniki omogočajo velike visoko kakovostne posnetke. "
-"Ne čakajte na posnetke: pričnite s prenosi. \n"
-"\n"
-"Pustite predvajalnik dejaven: predvajalnik redno preveri kanale za nove "
-"posnetke in jih prenaša v ozadju. Če program pustite delovati, boste imeli "
-"vedno nove posnetke pripravljene za ogled.\n"
-"\n"
-"Ne skrbite za prostor na disku: Kot TiVo tudi Miro ponuja možnost 'preteka' "
-"posnetkov, ki omogoči enostavno čiščenje starejših posnetkov. Posnetek pa "
-"lahko tudi ohranite, če ga enostavno shranite ali pa shranjujete kar vse "
-"posnetke, ki prihajajo iz določenega kanala.\n"
-"\n"
-"Povečaj: Gumb na desni strani od gumba predvajanja, prikaže posnetek v "
-"celozaslonskem načinu.\n"
-"\n"
-"Poišči posnetke: Vodnik programov Miro vsebuje na stotine spletnih TV "
-"kanalov in vsi so brezplačni. Kliknite 'Dodaj' in si kanal oglejte.\n"
-
-msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
 "%sporočilo%\n"
 "%sporočilo%"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78
 msgid "Update Available"
 msgstr "Na voljo je posodobitev"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:58
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
 #, python-format
 msgid "A new version of %s is available for download."
 msgstr "Za prenos je na voljo nova različica %s."
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240
 msgid "Error Bombing Item"
 msgstr "Napaka pri bombardiranju predmeta"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:216
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242
 msgid "Error Recommending Item"
 msgstr "Napaka pri priporočanju predmeta"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244
 msgid "Error Opening Website"
 msgstr "Napaka pri odpiranju spletne strani"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:222
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr "Napaka pri odpiranju %s. Poizkusite ponovno čez nekaj sekund"
 
-#: ../../platform/windows-xul/frontend_implementation/startup.py:33
+#: ../../platform/windows-xul/frontend_implementation/startup.py:50
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:76
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:174
 #, python-format
@@ -1049,7 +1070,7 @@ msgstr[1] "%d najden posnetek"
 msgstr[2] "%d najdena posnetka"
 msgstr[3] "%d najdeni posnetki"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:45
+#: ../../platform/windows-xul/xul/components/pybridge.py:62
 #, python-format
 msgid ""
 "Error importing modules:\n"
@@ -1058,27 +1079,27 @@ msgstr ""
 "Napaka med uvozom enot:\n"
 "%s"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:49
+#: ../../platform/windows-xul/xul/components/pybridge.py:66
 msgid "Starting up"
 msgstr "Zaganjanje"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:256
+#: ../../platform/windows-xul/xul/components/pybridge.py:273
 msgid "Loading window"
 msgstr "Nalagam okno"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:257
+#: ../../platform/windows-xul/xul/components/pybridge.py:274
 msgid "onStartup called twice"
 msgstr "onStartup poklican ponovno"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:671
+#: ../../platform/windows-xul/xul/components/pybridge.py:702
 msgid "Spacebar"
 msgstr "Preslednica"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:818
+#: ../../platform/windows-xul/xul/components/pybridge.py:851
 msgid "Close to tray?"
 msgstr "Pomanjšam v sistemski pladenj?"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:819
+#: ../../platform/windows-xul/xul/components/pybridge.py:852
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
@@ -1087,77 +1108,77 @@ msgstr ""
 "opravilno vrstico ali izklopi? Nastavitev lahko spremenite med možnostmi "
 "programa."
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:27
+#: ../../platform/osx/frontend/GrowlNotifier.py:44
 msgid "Download Completed"
 msgstr "Prenos končan"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:28
+#: ../../platform/osx/frontend/GrowlNotifier.py:45
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "Prenos posnetka '%s' je končan."
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:37
+#: ../../platform/osx/frontend/GrowlNotifier.py:54
 msgid "Download Failed"
 msgstr "Neuspešen prenos"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:38
+#: ../../platform/osx/frontend/GrowlNotifier.py:55
 #, python-format
 msgid "Download of video '%s' has failed."
 msgstr "Neuspešen prenos posnetka '%s'."
 
-#: ../../platform/osx/frontend/MainFrame.py:261
+#: ../../platform/osx/frontend/MainFrame.py:278
 msgid "Subscribe to Channel"
 msgstr "Naročilo na kanal"
 
-#: ../../platform/osx/frontend/MainFrame.py:262
+#: ../../platform/osx/frontend/MainFrame.py:279
 msgid "Enter the URL of the channel you would like to subscribe to."
 msgstr "Vnesite naslov URL za kanal na katerega se želite naročiti."
 
-#: ../../platform/osx/frontend/QuicktimeRenderer.py:218
+#: ../../platform/osx/frontend/QuicktimeRenderer.py:248
 msgid "Audio"
 msgstr "Zvok"
 
-#: ../../platform/osx/frontend/Preferences.py:38
+#: ../../platform/osx/frontend/Preferences.py:64
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "General"
 msgstr "Splošno"
 
-#: ../../platform/osx/frontend/Preferences.py:40
+#: ../../platform/osx/frontend/Preferences.py:66
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Downloads"
 msgstr "Prenosi"
 
-#: ../../platform/osx/frontend/Preferences.py:41
+#: ../../platform/osx/frontend/Preferences.py:67
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
 msgid "Folders"
 msgstr "Mape"
 
-#: ../../platform/osx/frontend/Preferences.py:42
+#: ../../platform/osx/frontend/Preferences.py:68
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Disk Space"
 msgstr "Prostor na disku"
 
-#: ../../platform/osx/frontend/Preferences.py:170
+#: ../../platform/osx/frontend/Preferences.py:196
 msgid "Movies Directory"
 msgstr "Mapa s filmi"
 
-#: ../../platform/osx/frontend/Preferences.py:171
+#: ../../platform/osx/frontend/Preferences.py:197
 #, python-format
 msgid "Select a Directory to store %s downloads in."
 msgstr "Izberite mapo za shranjevanje prenosov %s."
 
-#: ../../platform/osx/frontend/Preferences.py:172
-#: ../../platform/osx/frontend/Preferences.py:236
+#: ../../platform/osx/frontend/Preferences.py:198
+#: ../../platform/osx/frontend/Preferences.py:262
 msgid "Select"
 msgstr "Izberi"
 
-#: ../../platform/osx/frontend/Preferences.py:181
+#: ../../platform/osx/frontend/Preferences.py:207
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
 msgstr "Preselim obstoječe posnetke?"
 
-#: ../../platform/osx/frontend/Preferences.py:182
+#: ../../platform/osx/frontend/Preferences.py:208
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
@@ -1168,27 +1189,31 @@ msgstr ""
 "posnetke v to mapo?  (Trenutno dejavni prenosi ne bodo prestavljeni dokler "
 "se prenos ne konča)."
 
-#: ../../platform/osx/frontend/Preferences.py:234
+#: ../../platform/osx/frontend/Preferences.py:260
 msgid "View this Directory in the Library"
 msgstr "Prikaži mapo v zbirki"
 
-#: ../../platform/osx/frontend/Preferences.py:235
+#: ../../platform/osx/frontend/Preferences.py:261
 msgid "Select a Directory to view in the Library."
 msgstr "Izbor mape za prikaz v zbirki"
 
-#: ../../platform/osx/frontend/StartupPanel.py:114
+#: ../../platform/osx/frontend/StartupPanel.py:80
+msgid "Finish"
+msgstr ""
+
+#: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
 msgstr "Iskanje!"
 
-#: ../../platform/osx/frontend/Application.py:228
+#: ../../platform/osx/frontend/Application.py:246
 msgid "Pause Video"
 msgstr "Zaustavi predvajanje"
 
-#: ../../platform/osx/frontend/Application.py:237
+#: ../../platform/osx/frontend/Application.py:255
 msgid "Unsupported version of Quicktime"
 msgstr "Nepodprta različica Quicktime"
 
-#: ../../platform/osx/frontend/Application.py:238
+#: ../../platform/osx/frontend/Application.py:256
 #, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
@@ -1197,87 +1222,87 @@ msgstr ""
 "Za predvajanje %s potrebujete najnovejšo različico Quicktime gonilnikov, ki "
 "jih lahko posodobite brezplačno."
 
-#: ../../platform/osx/frontend/UIStrings.py:5
+#: ../../platform/osx/frontend/UIStrings.py:22
 msgid "_Remove..."
 msgstr "Od_strani ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:6
+#: ../../platform/osx/frontend/UIStrings.py:23
 msgid "_Remove Playlist..."
 msgstr "_Odstrani seznam predvajanja ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:7
+#: ../../platform/osx/frontend/UIStrings.py:24
 msgid "_Remove Playlists..."
 msgstr "_Odstrani sezname predvajanja ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:8
+#: ../../platform/osx/frontend/UIStrings.py:25
 msgid "_Remove Playlist Folder..."
 msgstr "_Odstrani mapo seznamov predvajanja ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:9
+#: ../../platform/osx/frontend/UIStrings.py:26
 msgid "_Remove Playlist Folders..."
 msgstr "_Odstrani mapo seznamov predvajanja ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:10 ../../portable/menubar.py:179
+#: ../../platform/osx/frontend/UIStrings.py:27 ../../portable/menubar.py:179
 msgid "_Remove Channel..."
 msgstr "_Odstrani kanal ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:11 ../../portable/menubar.py:180
+#: ../../platform/osx/frontend/UIStrings.py:28 ../../portable/menubar.py:180
 msgid "_Remove Channels..."
 msgstr "_Odstrani kanale ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:12 ../../portable/menubar.py:182
+#: ../../platform/osx/frontend/UIStrings.py:29 ../../portable/menubar.py:182
 msgid "_Remove Channel Folder..."
 msgstr "_Odstrani mapo kanalov ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:13 ../../portable/menubar.py:181
+#: ../../platform/osx/frontend/UIStrings.py:30 ../../portable/menubar.py:181
 msgid "_Remove Channel Folders..."
 msgstr "_Odstrani mapo kanalov ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:14
+#: ../../platform/osx/frontend/UIStrings.py:31
 msgid "_Remove Miro Guide..."
 msgstr "_Odstrani vodnika Miro ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:15
+#: ../../platform/osx/frontend/UIStrings.py:32
 msgid "_Remove Miro Guides..."
 msgstr "_Odstrani vodnike Miro ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:16
+#: ../../platform/osx/frontend/UIStrings.py:33
 msgid "_Remove Video..."
 msgstr "_Odstrani posnetek ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:17
+#: ../../platform/osx/frontend/UIStrings.py:34
 msgid "_Remove Videos..."
 msgstr "_Odstrani posnetke ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:18
+#: ../../platform/osx/frontend/UIStrings.py:35
 msgid "Re_name..."
 msgstr "Preime_nuj ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:19
+#: ../../platform/osx/frontend/UIStrings.py:36
 msgid "Re_name Playlist..."
 msgstr "_Preimenuj seznam predvajanja ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:20
+#: ../../platform/osx/frontend/UIStrings.py:37
 msgid "Re_name Playlist Folder..."
 msgstr "_Preimenuj mapo seznama predvajanja ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:21 ../../portable/menubar.py:178
+#: ../../platform/osx/frontend/UIStrings.py:38 ../../portable/menubar.py:178
 msgid "Re_name Channel..."
 msgstr "_Preimenuj kanal ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:22
+#: ../../platform/osx/frontend/UIStrings.py:39
 msgid "Re_name Channel Folder..."
 msgstr "_Preimenuj mapo kanalov ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:23
+#: ../../platform/osx/frontend/UIStrings.py:40
 msgid "Re_name Miro Guide..."
 msgstr "_Preimenuj vodnike Miro ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:24 ../../portable/menubar.py:184
+#: ../../platform/osx/frontend/UIStrings.py:41 ../../portable/menubar.py:184
 msgid "_Update Channel..."
 msgstr "_Posodobi kanal ..."
 
-#: ../../platform/osx/frontend/UIStrings.py:25 ../../portable/menubar.py:185
+#: ../../platform/osx/frontend/UIStrings.py:42 ../../portable/menubar.py:185
 msgid "_Update Channels..."
 msgstr "Posodobi kanale ..."
 
@@ -1298,11 +1323,11 @@ msgstr "Prikaži"
 msgid "Quit"
 msgstr "Izhod"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:322
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324
 msgid "New Channel _Guide..."
 msgstr "Nov _vodnik kanala ..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:562
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564
 msgid "Folder Location"
 msgstr "Pot do mape"
 
@@ -1316,100 +1341,101 @@ msgstr "Uporabniško ime:"
 msgid "Password:"
 msgstr "Geslo:"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:413
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416
 msgid "Unknown Runtime Error"
 msgstr "Neznana napaka izvajanja"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:414
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417
 #, python-format
 msgid "An unknown error has occurred %s."
 msgstr "Prišlo je do neznane napake %s."
 
-#: ../../portable/dl_daemon/download.py:367
+#: ../../portable/dl_daemon/download.py:359
 msgid "Error"
 msgstr "Napaka"
 
-#: ../../portable/dl_daemon/download.py:440
+#: ../../portable/dl_daemon/download.py:432
 #, python-format
 msgid "Could not write to %s"
 msgstr "Ni mogoče pisati v %s"
 
-#: ../../portable/dl_daemon/download.py:459
+#: ../../portable/dl_daemon/download.py:452
 msgid "Not enough disk space"
 msgstr "Ni dovolj prostora na disku"
 
-#: ../../portable/dl_daemon/download.py:460
+#: ../../portable/dl_daemon/download.py:453
 #, python-format
 msgid "%s MB required to store this video"
 msgstr "%s MB prostora potrebuje posnetek"
 
-#: ../../portable/dl_daemon/download.py:679
+#: ../../portable/dl_daemon/download.py:672
 msgid "BitTorrent failure"
 msgstr "BitTorrent napaka"
 
-#: ../../portable/dl_daemon/download.py:680
+#: ../../portable/dl_daemon/download.py:673
 msgid "BitTorrent failed to startup"
 msgstr "Napaka programa BitTorrent ob zagonu"
 
-#: ../../portable/dl_daemon/download.py:803
+#: ../../portable/dl_daemon/download.py:796
 msgid "Corrupt Torrent"
 msgstr "Pokvarjena torrent datoteka"
 
-#: ../../portable/dl_daemon/download.py:804
+#: ../../portable/dl_daemon/download.py:797
 #, python-format
 msgid "The torrent file at %s was not valid"
 msgstr "Torrent datoteka na %s ni veljavna"
 
-#: ../../portable/dl_daemon/download.py:830
+#: ../../portable/dl_daemon/download.py:822
 msgid "Torrent file deleted"
 msgstr "Datoteka torrent je izbrisana"
 
-#: ../../portable/dl_daemon/download.py:831
+#: ../../portable/dl_daemon/download.py:823
 msgid "The torrent file for this item was deleted "
 msgstr "Datoteka torrent za ta predmet je bila izbrisana "
 
-#: ../../portable/dl_daemon/download.py:832
-msgid "outside of democracy."
-msgstr "izven demokracije."
+#: ../../portable/dl_daemon/download.py:824
+msgid "outside of Miro."
+msgstr ""
 
-#: ../../portable/tabs.py:43
+#: ../../portable/tabs.py:44
 msgid "Library"
 msgstr "Zbirka"
 
-#: ../../portable/tabs.py:44
+#: ../../portable/tabs.py:45
 msgid "New"
 msgstr "New"
 
-#: ../../portable/tabs.py:46
+#: ../../portable/tabs.py:47
 msgid "Downloading"
 msgstr "Sprejemanje"
 
-#: ../../portable/guide.py:83 ../../portable/feed.py:782
+#: ../../portable/guide.py:104 ../../portable/feed.py:789
 msgid "Copy URL to clipboard"
 msgstr "_Kopiraj URL v odložišče"
 
-#: ../../portable/guide.py:118
+#: ../../portable/guide.py:154
 msgid "Miro Guide"
 msgstr "Vodnik Miro"
 
-#: ../../portable/extrastrings.py:5 ../../portable/feed.py:2012
-#: ../../portable/feed.py:2104
+#: ../../portable/extrastrings.py:22 ../../portable/feed.py:2028
+#: ../../portable/feed.py:2120
 msgid "Search"
 msgstr "Iskanje"
 
-#: ../../portable/downloader.py:214
+#: ../../portable/downloader.py:215
 msgid "activity"
 msgstr "dejavnost"
 
-#: ../../portable/downloader.py:250 ../../portable/httpclient.py:112
+#: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
+#: ../../portable/httpclient.py:142
 msgid "File not found"
 msgstr "Datoteke ni mogoče najti"
 
-#: ../../portable/downloader.py:251
+#: ../../portable/downloader.py:252
 msgid "Flash URL Scraping Error"
 msgstr "Napaka Flash URL praskanja"
 
-#: ../../portable/downloader.py:430
+#: ../../portable/downloader.py:427
 msgid "starting up"
 msgstr "zaganjanje"
 
@@ -1430,70 +1456,70 @@ msgstr "Ustvari seznam predvajanja"
 msgid "Enter a name for the new playlist"
 msgstr "Vnesite ime za nov seznam predvajanja"
 
-#: ../../portable/feed.py:381
+#: ../../portable/feed.py:383
 msgid "never"
 msgstr "nikoli"
 
-#: ../../portable/feed.py:383 ../../portable/item.py:535
+#: ../../portable/feed.py:385 ../../portable/item.py:542
 #, python-format
 msgid "%d hours"
 msgstr "%d ur"
 
-#: ../../portable/feed.py:385
+#: ../../portable/feed.py:387
 #, python-format
 msgid "%d day"
 msgstr "%d dni"
 
-#: ../../portable/feed.py:387 ../../portable/item.py:533
+#: ../../portable/feed.py:389 ../../portable/item.py:540
 #, python-format
 msgid "%d days"
 msgstr "%d dni"
 
-#: ../../portable/feed.py:389
+#: ../../portable/feed.py:391
 #, python-format
 msgid "%d months"
 msgstr "%d mesecev"
 
-#: ../../portable/feed.py:780
+#: ../../portable/feed.py:787
 msgid "Update Channel Now"
 msgstr "Posodobi kanal"
 
-#: ../../portable/feed.py:783 ../../portable/feed.py:792
+#: ../../portable/feed.py:790 ../../portable/feed.py:799
 msgid "Rename Channel"
 msgstr "Preimenuj kanal"
 
-#: ../../portable/feed.py:787
+#: ../../portable/feed.py:794
 msgid "Revert Title to Default"
 msgstr "Povrni naslov na privzeto vrednost"
 
-#: ../../portable/feed.py:793
+#: ../../portable/feed.py:800
 #, python-format
 msgid "Enter a new name for the channel %s"
 msgstr "Vnesite ime za kanal %s"
 
-#: ../../portable/feed.py:880
+#: ../../portable/feed.py:887
 msgid "Error loading feed"
 msgstr "Napaka ob nalaganju vira"
 
-#: ../../portable/feed.py:881
+#: ../../portable/feed.py:888
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
 msgstr "Ni mogoče naložiti vira iz %s (%s)."
 
-#: ../../portable/feed.py:884
+#: ../../portable/feed.py:891
 msgid "Would you like to keep the feed?"
 msgstr "Želite ohraniti vir?"
 
-#: ../../portable/feed.py:997
+#: ../../portable/feed.py:1004
 msgid "Bad content-type"
 msgstr "Napačna vrsta vsebine"
 
-#: ../../portable/feed.py:1010
+#: ../../portable/feed.py:1017
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
 msgstr "Kanal ni združljiv z $shortAppName!"
 
-#: ../../portable/feed.py:1011
+#: ../../portable/feed.py:1018
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny.  Please contact the publishers of "
@@ -1509,11 +1535,11 @@ msgstr ""
 "\n"
 "Ali želite kljub vsemu naložiti kanal?"
 
-#: ../../portable/feed.py:2118
+#: ../../portable/feed.py:2134
 msgid "Local Files"
 msgstr "Krajevne datoteke"
 
-#: ../../portable/feed.py:2132
+#: ../../portable/feed.py:2148
 msgid "Playing File"
 msgstr "Predvajanje datoteke"
 
@@ -1521,83 +1547,87 @@ msgstr "Predvajanje datoteke"
 msgid "Update Channels Now"
 msgstr "Posodobi kanale"
 
-#: ../../portable/menu.py:92
+#: ../../portable/menu.py:94
 #, python-format
 msgid "%d Downloaded Items"
 msgstr "%d sprejetih predmetov"
 
-#: ../../portable/menu.py:94 ../../portable/item.py:1457
+#: ../../portable/menu.py:96 ../../portable/item.py:1475
 msgid "Play"
 msgstr "Predvajanje"
 
-#: ../../portable/menu.py:95 ../../portable/item.py:1460
+#: ../../portable/menu.py:97 ../../portable/item.py:1478
 msgid "Add to new playlist"
 msgstr "Dodajanje v nov seznam predvajanja"
 
-#: ../../portable/menu.py:97 ../../portable/item.py:1453
+#: ../../portable/menu.py:99 ../../portable/item.py:1471
 msgid "Remove From Playlist"
 msgstr "Odstrani s _seznama"
 
-#: ../../portable/menu.py:99 ../../portable/item.py:1455
+#: ../../portable/menu.py:101 ../../portable/item.py:1473
 msgid "Remove From the Library"
 msgstr "Odstrani iz zbirke"
 
-#: ../../portable/menu.py:105 ../../portable/item.py:1464
+#: ../../portable/menu.py:107 ../../portable/item.py:1482
 msgid "Mark as Unwatched"
 msgstr "Označi kot novo"
 
-#: ../../portable/menu.py:110
+#: ../../portable/menu.py:112 ../../portable/item.py:1484
+msgid "Mark as Watched"
+msgstr ""
+
+#: ../../portable/menu.py:117
 #, python-format
 msgid "%d Available Items"
 msgstr "%d predmetov na voljo"
 
-#: ../../portable/menu.py:111 ../../portable/dialogs.py:85
-#: ../../portable/item.py:1470
+#: ../../portable/menu.py:118 ../../portable/dialogs.py:85
+#: ../../portable/item.py:1491
 msgid "Download"
 msgstr "Sprejemanje"
 
-#: ../../portable/menu.py:116
+#: ../../portable/menu.py:123
 #, python-format
 msgid "%d Downloading Items"
 msgstr "%d sprejemanih predmetov"
 
-#: ../../portable/menu.py:118 ../../portable/item.py:1468
+#: ../../portable/menu.py:125 ../../portable/item.py:1489
 msgid "Cancel Download"
 msgstr "Preklic prenosa"
 
-#: ../../portable/menu.py:120 ../../portable/item.py:1468
+#: ../../portable/menu.py:127 ../../portable/item.py:1489
 msgid "Pause Download"
 msgstr "Zaustavitev prenosa:"
 
-#: ../../portable/menu.py:123 ../../portable/item.py:1466
+#: ../../portable/menu.py:130 ../../portable/item.py:1487
 msgid "Restart Upload"
 msgstr "Ponovni zagon prenosa"
 
-#: ../../portable/opml.py:32
+#: ../../portable/opml.py:49
 msgid "Export OPML File"
 msgstr "Izvoz OPML datoteko"
 
-#: ../../portable/opml.py:106
+#: ../../portable/opml.py:123
 msgid "Import OPML File"
 msgstr "Uvoz OPML datoteke"
 
-#: ../../portable/opml.py:108
+#: ../../portable/opml.py:125
 msgid "OPML Files"
 msgstr "OPML datoteke"
 
-#: ../../portable/opml.py:127
+#: ../../portable/opml.py:145
 msgid "OPML Import failed"
 msgstr "Uvoz OPML ni uspel"
 
-#: ../../portable/opml.py:128
+#: ../../portable/opml.py:146
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
 msgstr "Izbrana datoteka OPML je videti neveljavna. Uvoz je prekinjen."
 
-#: ../../portable/opml.py:133
+#: ../../portable/opml.py:151
 msgid "OPML Import summary"
 msgstr "Povzetek OPML uvoza"
 
-#: ../../portable/opml.py:134
+#: ../../portable/opml.py:152
 #, python-format
 msgid "Successfully imported %d feed."
 msgid_plural "Successfully imported %d feeds."
@@ -1606,7 +1636,7 @@ msgstr[1] "Uspešno uvožen %d vir."
 msgstr[2] "Uspešno uvožena %d vira."
 msgstr[3] "Uspešno uvoženi %d viri."
 
-#: ../../portable/opml.py:137
+#: ../../portable/opml.py:155
 #, python-format
 msgid "Skipped %d feed already present."
 msgid_plural "Skipped %d feeds already present."
@@ -1635,11 +1665,11 @@ msgstr "%s preverjanje različice"
 msgid "%s is up to date."
 msgstr "%s je posodobljen."
 
-#: ../../portable/util.py:257 ../../portable/httpclient.py:124
+#: ../../portable/util.py:252 ../../portable/httpclient.py:126
 msgid "Internal Error"
 msgstr "Notranja napaka"
 
-#: ../../portable/util.py:257
+#: ../../portable/util.py:252
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
@@ -1647,7 +1677,7 @@ msgstr ""
 "Prišlo je do notranje napake v programu Miro. Lahko pomagate slediti težavi "
 "in jo odpraviti s tem, da  pošljete poročilo o napaki."
 
-#: ../../portable/util.py:257
+#: ../../portable/util.py:252
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
@@ -1655,46 +1685,46 @@ msgstr ""
 "Vstavi celotno programsko podatkovno zbirko z vsemi posnetki in podatki "
 "kanalov skupaj s poročilom o napaki."
 
-#: ../../portable/util.py:257
+#: ../../portable/util.py:252
 msgid "Describe what you were doing that caused this error"
 msgstr "Opišite, kaj ste naredili, da je prišlo do napake."
 
-#: ../../portable/util.py:460
+#: ../../portable/util.py:455
 #, python-format
 msgid "%1.1fGB"
 msgstr "%1.1fGB"
 
-#: ../../portable/util.py:462
+#: ../../portable/util.py:457
 #, python-format
 msgid "%dGB"
 msgstr "%dGB"
 
-#: ../../portable/util.py:466
+#: ../../portable/util.py:461
 #, python-format
 msgid "%1.1fMB"
 msgstr "%1.1fMB"
 
-#: ../../portable/util.py:468
+#: ../../portable/util.py:463
 #, python-format
 msgid "%dMB"
 msgstr "%dMB"
 
-#: ../../portable/util.py:472
+#: ../../portable/util.py:467
 #, python-format
 msgid "%1.1fKB"
 msgstr "%1.1fKB"
 
-#: ../../portable/util.py:474
+#: ../../portable/util.py:469
 #, python-format
 msgid "%dKB"
 msgstr "%dKB"
 
-#: ../../portable/util.py:478
+#: ../../portable/util.py:473
 #, python-format
 msgid "%1.1fB"
 msgstr "%1.1fB"
 
-#: ../../portable/util.py:480
+#: ../../portable/util.py:475
 #, python-format
 msgid "%dB"
 msgstr "%dB"
@@ -1727,10 +1757,6 @@ msgstr ""
 "%s ne more shraniti podatkov: disk je poln.\n"
 "Zbrišite kakšno datoteko z diska ali pa kakšen film iz svoje zbirke.\n"
 "Zadnje spremembe se lahko izgubijo."
-
-#: ../../portable/dialogs.py:76
-msgid "Ok"
-msgstr "V redu"
 
 #: ../../portable/dialogs.py:81
 msgid "Ignore"
@@ -1813,31 +1839,31 @@ msgstr "Dodaj kanal iskanja"
 msgid "A search channel contains items that match a search term."
 msgstr "Iskalni kanali vsebujejo predmete, ki sovpadajo z iskanimi pojmi."
 
-#: ../../portable/singleclick.py:86
+#: ../../portable/singleclick.py:87
 msgid "Download already exists"
 msgstr "Prenos že obstaja."
 
-#: ../../portable/singleclick.py:87
+#: ../../portable/singleclick.py:88
 msgid "That URL is already an external download."
 msgstr "naslov URL je že dodan kot zunanji prenos."
 
-#: ../../portable/singleclick.py:93
+#: ../../portable/singleclick.py:94
 msgid "Miro will begin downloading it now."
 msgstr "Predvajalnik Miro bo začel s prenosi."
 
-#: ../../portable/singleclick.py:95
+#: ../../portable/singleclick.py:96
 msgid "It is downloading now."
 msgstr "Se prenaša."
 
-#: ../../portable/singleclick.py:97
+#: ../../portable/singleclick.py:98
 msgid "It has already been downloaded."
 msgstr "Je že preneseno."
 
-#: ../../portable/singleclick.py:124
+#: ../../portable/singleclick.py:125
 msgid "Download Error"
 msgstr "Napaka pri prenosu"
 
-#: ../../portable/singleclick.py:125
+#: ../../portable/singleclick.py:126
 #, python-format
 msgid ""
 "Miro is not able to download a file at this URL:\n"
@@ -1848,36 +1874,36 @@ msgstr ""
 "\n"
 "URL: %s"
 
-#: ../../portable/singleclick.py:133
+#: ../../portable/singleclick.py:134
 msgid "File Download"
 msgstr "Prenos datoteke"
 
-#: ../../portable/singleclick.py:134
+#: ../../portable/singleclick.py:135
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
 msgstr ""
 "Datoteka na %s ni videti kot zvočni ali slikovni posnetek oziroma kot RSS "
 "vir."
 
-#: ../../portable/singleclick.py:224
+#: ../../portable/singleclick.py:225
 msgid "Subscribing to multiple channels"
 msgstr "Naročanje na več kanalov"
 
-#: ../../portable/singleclick.py:225
+#: ../../portable/singleclick.py:226
 #, python-format
 msgid "Create %d channels?"
 msgstr "Ustvarim %d kanalov?"
 
-#: ../../portable/singleclick.py:238
+#: ../../portable/singleclick.py:239
 #, python-format
 msgid "Adding %d channels to a new folder"
 msgstr "Dodajanje %d kanalov v novo mapo"
 
-#: ../../portable/singleclick.py:239 ../../portable/folder.py:226
+#: ../../portable/singleclick.py:240 ../../portable/folder.py:226
 msgid "Enter a name for the new channel folder"
 msgstr "Vnesi novo ime za mapo kanala"
 
-#: ../../portable/singleclick.py:242
+#: ../../portable/singleclick.py:243
 #, python-format
 msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
@@ -1886,11 +1912,11 @@ msgstr ""
 "Opomba: Na %d kanalov ste že naročeni. Ti kanali bodo ostali tam, kjer "
 "trenutno so."
 
-#: ../../portable/singleclick.py:253
+#: ../../portable/singleclick.py:254
 msgid "Subscription error"
 msgstr "Napaka pri naročanju"
 
-#: ../../portable/singleclick.py:263
+#: ../../portable/singleclick.py:264
 msgid ""
 "This $shortAppName channel file has an invalid format: $url. Please notify "
 "the publisher of this file."
@@ -1898,7 +1924,7 @@ msgstr ""
 "Kanal programa $shortAppName je v neveljavni obliki: $url. Prosim, obvestite "
 "izdajatelja datoteke."
 
-#: ../../portable/singleclick.py:271
+#: ../../portable/singleclick.py:272
 msgid ""
 "This $shortAppName channel file has the wrong content type: $url. Please "
 "notify the publisher of this file."
@@ -1906,15 +1932,15 @@ msgstr ""
 "Kanal programa $shortAppName ima neveljavno vsebino: $url. Prosim, obvestite "
 "izdajatelja datoteke."
 
-#: ../../portable/singleclick.py:275
+#: ../../portable/singleclick.py:276
 msgid "Could not download the $shortAppName channel file: $url."
 msgstr "Ni mogoče prenesti datoteko kanala za program $shortAppName: $url."
 
-#: ../../portable/singleclick.py:313
+#: ../../portable/singleclick.py:316
 msgid "Invalid Torrent"
 msgstr "Neveljaven torrent"
 
-#: ../../portable/singleclick.py:314
+#: ../../portable/singleclick.py:317
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
 msgstr ""
@@ -2144,12 +2170,12 @@ msgstr "Skrij okno"
 msgid "Show Window"
 msgstr "Prikaži okno"
 
-#: ../../portable/item.py:478
+#: ../../portable/item.py:485
 #, python-format
 msgid "Removing %s"
 msgstr "Odstranjevanje %s"
 
-#: ../../portable/item.py:481
+#: ../../portable/item.py:488
 msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from the Library?"
@@ -2157,12 +2183,12 @@ msgstr ""
 "Ali želite izbrisati mapo in vse posnetke v njej ali samo odstraniti vnos iz "
 "zbirke?"
 
-#: ../../portable/item.py:487
+#: ../../portable/item.py:494
 msgid ""
 "Would you like to delete this file or just remove its entry from the Library?"
 msgstr "Ali želite izbrisati to datoteko ali jo samo odstraniti iz zbirke?"
 
-#: ../../portable/item.py:507
+#: ../../portable/item.py:514
 msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
@@ -2170,136 +2196,136 @@ msgstr ""
 "Predmet je mapa. Ko odstranite mapo, odstranite tudi vse predmete znotraj "
 "mape."
 
-#: ../../portable/item.py:537
+#: ../../portable/item.py:544
 #, python-format
 msgid "%d minutes"
 msgstr "%d minut"
 
-#: ../../portable/item.py:547
+#: ../../portable/item.py:554
 #, python-format
 msgid "Expires in %s"
 msgstr "Preteče v %s"
 
-#: ../../portable/item.py:559
+#: ../../portable/item.py:566
 #, python-format
 msgid "Will retry in %s"
 msgstr "Poskus znova čez %s"
 
-#: ../../portable/item.py:561
+#: ../../portable/item.py:568
 msgid "Paused"
 msgstr "Zaustavljen"
 
-#: ../../portable/item.py:941
+#: ../../portable/item.py:954
 msgid "TORRENT"
 msgstr "TORRENT"
 
-#: ../../portable/item.py:943
+#: ../../portable/item.py:956
 msgid "WEB PAGE"
 msgstr "Spletna stran"
 
-#: ../../portable/item.py:953
+#: ../../portable/item.py:966
 msgid "Total Down:"
 msgstr "Skupno sprejeto:"
 
-#: ../../portable/item.py:956
+#: ../../portable/item.py:969
 msgid "Error:"
 msgstr "Napaka:"
 
-#: ../../portable/item.py:964
+#: ../../portable/item.py:977
 msgid "Down Rate:"
 msgstr "Hitrost sprejemanja:"
 
-#: ../../portable/item.py:965
+#: ../../portable/item.py:978
 msgid "Down Total:"
 msgstr "Skupno sprejeto:"
 
-#: ../../portable/item.py:967
+#: ../../portable/item.py:980
 msgid "Up Rate:"
 msgstr "Hitrost pošiljanja:"
 
-#: ../../portable/item.py:968
+#: ../../portable/item.py:981
 msgid "Up Total:"
 msgstr "Poslano skupaj:"
 
-#: ../../portable/item.py:973
+#: ../../portable/item.py:989
 msgid "Web page:"
 msgstr "Spletna stran:"
 
-#: ../../portable/item.py:973
+#: ../../portable/item.py:989
 msgid "permalink"
 msgstr "trajna povezava"
 
-#: ../../portable/item.py:974
+#: ../../portable/item.py:993
 msgid "File link:"
 msgstr "Povezava datoteke:"
 
-#: ../../portable/item.py:974
+#: ../../portable/item.py:993
 msgid "direct link to file"
 msgstr "neposredna povezava z datoteko"
 
-#: ../../portable/item.py:976
+#: ../../portable/item.py:995
 msgid "File type:"
 msgstr "Vrsta datoteke:"
 
-#: ../../portable/item.py:983
+#: ../../portable/item.py:1002
 msgid "REVEAL LOCAL FOLDER"
 msgstr "PRIKAŽI LOKALNO MAPO"
 
-#: ../../portable/item.py:985
+#: ../../portable/item.py:1004
 msgid "REVEAL LOCAL FILE"
 msgstr "PRIKAŽI LOKALNO DATOTEKO"
 
-#: ../../portable/item.py:987
+#: ../../portable/item.py:1006
 msgid "Filename:"
 msgstr "Ime datoteke:"
 
-#: ../../portable/item.py:994
+#: ../../portable/item.py:1013
 msgid "Down Total"
 msgstr "Skupaj sprejeto"
 
-#: ../../portable/item.py:996
+#: ../../portable/item.py:1015
 msgid "Up Total"
 msgstr "Skupaj poslano"
 
-#: ../../portable/item.py:1014
+#: ../../portable/item.py:1033
 msgid "Item Details"
 msgstr "Podrobnosti predmeta"
 
-#: ../../portable/item.py:1021
+#: ../../portable/item.py:1040
 msgid "Torrent Details"
 msgstr "Podrobnosti torrent datoteke"
 
-#: ../../portable/item.py:1023
+#: ../../portable/item.py:1042
 msgid "Torrent Details <i>stopped</i>"
 msgstr "Podrobnosti Torrent povezave <i>zaustavljeno</i>"
 
-#: ../../portable/item.py:1027
+#: ../../portable/item.py:1046
 msgid "Download Details"
 msgstr "Podrobnosti prenosa"
 
-#: ../../portable/item.py:1241
+#: ../../portable/item.py:1263
 msgid "downloading..."
 msgstr "prenašanje ..."
 
-#: ../../portable/item.py:1248 ../../portable/item.py:1251
+#: ../../portable/item.py:1270 ../../portable/item.py:1273
 #, python-format
 msgid "%s remaining"
 msgstr "%s preostalo"
 
-#: ../../portable/item.py:1260
+#: ../../portable/item.py:1282
 msgid "starting up..."
 msgstr "zaganjanje ..."
 
-#: ../../portable/item.py:1459
+#: ../../portable/item.py:1477
 msgid "Play Just This Video"
 msgstr "Predvajaj le ta posnetek"
 
-#: ../../portable/item.py:1807
+#: ../../portable/item.py:1854
 #, python-format
 msgid "Removing %s items"
 msgstr "Odstranjevanje %s predmetov"
 
-#: ../../portable/item.py:1809
+#: ../../portable/item.py:1856
 msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from the Library?"
@@ -2307,7 +2333,7 @@ msgstr ""
 "Določenih posnetkov ni bilo mogoče prenesti preko kanala. Ali želite "
 "izbrisati nepopolne datoteke ali samo odstraniti iz zbirke?"
 
-#: ../../portable/item.py:1817
+#: ../../portable/item.py:1864
 msgid ""
 "One or more of these items is a folder.  When you remove or delete a folder, "
 "any items inside that folder will also be removed or deleted."
@@ -2345,109 +2371,123 @@ msgstr "Ustvari mapo s seznami predvajanja"
 msgid "Enter a name for the new playlist folder"
 msgstr "Vnesi novo ime za novo mapo s seznami predvajanja"
 
-#: ../../portable/httpclient.py:67
+#: ../../portable/httpclient.py:68
 #, python-format
 msgid "Error: %s"
 msgstr "Napaka: %s"
 
-#: ../../portable/httpclient.py:82 ../../portable/httpclient.py:87
+#: ../../portable/httpclient.py:83 ../../portable/httpclient.py:89
 msgid "Can't connect"
 msgstr "Ni se mogoče povezati"
 
-#: ../../portable/httpclient.py:83
+#: ../../portable/httpclient.py:84
 #, python-format
 msgid "Connection Error: %s"
 msgstr "Napaka povezave: %s"
 
-#: ../../portable/httpclient.py:88
+#: ../../portable/httpclient.py:90
 msgid "SSL connection error"
 msgstr "SSL napaka povezave"
 
-#: ../../portable/httpclient.py:92
+#: ../../portable/httpclient.py:94
 msgid "HTTP error"
 msgstr "Napaka HTTP"
 
-#: ../../portable/httpclient.py:95
+#: ../../portable/httpclient.py:97
 #, python-format
 msgid "Bad Status Line: %s"
 msgstr "Napačna vrstica stanja: %s"
 
-#: ../../portable/httpclient.py:98
+#: ../../portable/httpclient.py:100
 #, python-format
 msgid "Bad Header Line: %s"
 msgstr "Napačna vrstica glave: %s"
 
-#: ../../portable/httpclient.py:101
+#: ../../portable/httpclient.py:103
 #, python-format
 msgid "Bad Chunk size: %s"
 msgstr "Napačna velikost dela prenosa: %s"
 
-#: ../../portable/httpclient.py:104
+#: ../../portable/httpclient.py:106
 #, python-format
 msgid "Expected CRLF got: %r"
 msgstr "Pričakovano CRLF dobljeno: %r"
 
-#: ../../portable/httpclient.py:107
+#: ../../portable/httpclient.py:109
 #, python-format
 msgid "%s closed connection"
 msgstr "%s je zaprl povezavo"
 
-#: ../../portable/httpclient.py:113
+#: ../../portable/httpclient.py:115
 msgid "Got 404 status code"
 msgstr "Stanja kode 404"
 
-#: ../../portable/httpclient.py:115
+#: ../../portable/httpclient.py:117
 #, python-format
 msgid "Bad Status Code: %s"
 msgstr "Neveljavno stanje kode: %s"
 
-#: ../../portable/httpclient.py:119
+#: ../../portable/httpclient.py:121
 msgid "Authorization failed"
 msgstr "Napaka pri overitvi"
 
-#: ../../portable/httpclient.py:125
+#: ../../portable/httpclient.py:127
 msgid "Pipeline request never started"
 msgstr "Zahteva cevovoda ni bila nikoli začeta"
 
-#: ../../portable/httpclient.py:129
+#: ../../portable/httpclient.py:131
 msgid "Timeout"
 msgstr "Zakasnitev"
 
-#: ../../portable/httpclient.py:130
+#: ../../portable/httpclient.py:132
 #, python-format
 msgid "Connection to %s timed out"
 msgstr "Povezava z %s je časovno potekla"
 
-#: ../../portable/httpclient.py:134
+#: ../../portable/httpclient.py:136
 msgid "Invalid URL"
 msgstr "Neveljaven URL"
 
-#: ../../portable/httpclient.py:135
+#: ../../portable/httpclient.py:137
 #, python-format
 msgid "\"%s\" is not a valid URL"
 msgstr "\"%s\" ni veljaven naslov URL"
 
-#: ../../portable/httpclient.py:324
+#: ../../portable/httpclient.py:143
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr ""
+
+#: ../../portable/httpclient.py:147
+msgid "Read error"
+msgstr ""
+
+#: ../../portable/httpclient.py:148
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr ""
+
+#: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
 msgstr "Neznana napaka kode."
 
-#: ../../portable/httpclient.py:356
+#: ../../portable/httpclient.py:373
 msgid "Connection closed"
 msgstr "Povezava zaprta"
 
-#: ../../portable/httpclient.py:781
+#: ../../portable/httpclient.py:798
 msgid "Unknown"
 msgstr "Neznano"
 
-#: ../../portable/httpclient.py:782
+#: ../../portable/httpclient.py:799
 msgid "Internal Error: Not ready to send"
 msgstr "Napaka: ni pripravljeno za pošiljanje"
 
-#: ../../portable/app.py:684
+#: ../../portable/app.py:685
 msgid "Database too new"
 msgstr "Podatkovna zbirka je preveč nova"
 
-#: ../../portable/app.py:685
+#: ../../portable/app.py:686
 msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
@@ -2456,11 +2496,11 @@ msgstr ""
 "programa $shortAppName. Naložiti morate novejšo različico za pregledovanje "
 "vsebine zbirke."
 
-#: ../../portable/app.py:699
+#: ../../portable/app.py:700
 msgid "Video Directory Missing"
 msgstr "Manjkajoča mapa posnetkov"
 
-#: ../../portable/app.py:700
+#: ../../portable/app.py:701
 msgid ""
 "\n"
 "Miro can't find your primary video directory.  This may be because it's "
@@ -2479,54 +2519,54 @@ msgstr ""
 "tudi zapustite program, povežete zunanji pogon in ponovno zaženete program "
 "Miro."
 
-#: ../../portable/app.py:1019 ../../portable/app.py:1033
-#: ../../portable/app.py:1077 ../../portable/app.py:1103
-#: ../../portable/app.py:1123
+#: ../../portable/app.py:1038 ../../portable/app.py:1052
+#: ../../portable/app.py:1096 ../../portable/app.py:1122
+#: ../../portable/app.py:1142
 #, python-format
 msgid "Remove %s"
 msgstr "Odstrani %s"
 
-#: ../../portable/app.py:1020
+#: ../../portable/app.py:1039
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
 msgstr "Ste prepričani, da želite odstraniti vodnik %s?"
 
-#: ../../portable/app.py:1034
+#: ../../portable/app.py:1053
 #, python-format
 msgid "Are you sure you want to remove %s"
 msgstr "Res želite odstraniti %s"
 
-#: ../../portable/app.py:1037 ../../portable/app.py:1082
-#: ../../portable/app.py:1108 ../../portable/app.py:1127
+#: ../../portable/app.py:1056 ../../portable/app.py:1101
+#: ../../portable/app.py:1127 ../../portable/app.py:1146
 #, python-format
 msgid "Remove %s channels"
 msgstr "Odstrani %s kanalov"
 
-#: ../../portable/app.py:1039
+#: ../../portable/app.py:1058
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
 msgstr "Ali zares želite odstraniti %s seznamov predvajanja"
 
-#: ../../portable/app.py:1078
+#: ../../portable/app.py:1097
 msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
 msgstr "Kaj želite storiti s posnetki, znotraj kanala, ki ste jih prenesli?"
 
-#: ../../portable/app.py:1083
+#: ../../portable/app.py:1102
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
 msgstr "Kaj želite storiti s posnetki, znotraj kanalov, ki ste jih prenesli?"
 
-#: ../../portable/app.py:1104
+#: ../../portable/app.py:1123
 #, python-format
 msgid ""
 "Are you sure you want to remove %s?  Any downloads in progress will be "
 "canceled."
 msgstr "Ali zares želite odstraniti %s? Dejavni prenosi bodo preklicani."
 
-#: ../../portable/app.py:1109
+#: ../../portable/app.py:1128
 #, python-format
 msgid ""
 "Are you sure you want to remove these %s channels?  Any downloads in "
@@ -2534,41 +2574,41 @@ msgid ""
 msgstr ""
 "Ali zares želite odstraniti teh %s kanalov? Dejavni prenosi bodo preklicani."
 
-#: ../../portable/app.py:1124
+#: ../../portable/app.py:1143
 #, python-format
 msgid "Are you sure you want to remove %s?"
 msgstr "Res želite odstraniti %s?"
 
-#: ../../portable/app.py:1128
+#: ../../portable/app.py:1147
 #, python-format
 msgid "Are you sure you want to remove these %s channels?"
 msgstr "Ali zares želite odstraniti %s kanalov?"
 
-#: ../../portable/app.py:1141
+#: ../../portable/app.py:1160
 #, python-format
 msgid "Stop watching %s"
 msgstr "Prenehaj opazovati %s"
 
-#: ../../portable/app.py:1142
+#: ../../portable/app.py:1161
 #, python-format
 msgid "Are you sure you want to stop watching %s?"
 msgstr "Ali zares želite prenehati z ogledom %s?"
 
-#: ../../portable/app.py:1145
+#: ../../portable/app.py:1164
 #, python-format
 msgid "Stop watching %s directories"
 msgstr "Prekini z ogledom %s map"
 
-#: ../../portable/app.py:1146
+#: ../../portable/app.py:1165
 #, python-format
 msgid "Are you sure you want to stop watching these %s directories?"
 msgstr "Ali zares želite prenehati z ogledi %s map?"
 
-#: ../../portable/app.py:1177
+#: ../../portable/app.py:1196
 msgid "Are you sure you want to quit?"
 msgstr "Ali ste prepričani, da želite zapustiti program?"
 
-#: ../../portable/app.py:1179
+#: ../../portable/app.py:1198
 msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
@@ -2576,7 +2616,7 @@ msgstr ""
 "Še vedno poteka postopek pošiljanja poročila o napaki. Če zapustite program, "
 "poročilo ne bo poslano. Naj se program zapre?"
 
-#: ../../portable/app.py:1184
+#: ../../portable/app.py:1203
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
@@ -2585,20 +2625,29 @@ msgstr[1] "Dejaven je še %d prenos. Ali vseeno zapustim program?"
 msgstr[2] "Dejavna sta še %d prenosa. Ali vseeno zapustim program?"
 msgstr[3] "Dejavni so še %d prenosi. Ali vseeno zapustim program?"
 
-#: ../../portable/app.py:1680
+#: ../../portable/app.py:1712
 msgid "Invalid Value"
 msgstr "Neveljavna vrednost"
 
-#: ../../portable/app.py:1681
+#: ../../portable/app.py:1713
 #, python-format
 msgid "%s is invalid.  You must enter a non-negative number."
 msgstr "%s ni veljaven. Vnesti morate pozitivno število."
 
-#: ../../portable/app.py:1972
+#: ../../portable/app.py:1839
+msgid "Error Revealing File"
+msgstr ""
+
+#: ../../portable/app.py:1840
+#, python-format
+msgid "The file \"%s\" was deleted from outside Miro."
+msgstr ""
+
+#: ../../portable/app.py:2011
 msgid " - Invalid URL"
 msgstr " - Neveljaven URL"
 
-#: ../../portable/app.py:1973
+#: ../../portable/app.py:2012
 msgid ""
 "The address you entered is not a valid URL.\n"
 "Please double check and try again.\n"
@@ -2608,65 +2657,53 @@ msgstr ""
 "Prosim, še enkrat preverite naslov in poskusite znova.\n"
 "\n"
 
-#: ../../portable/app.py:1997
+#: ../../portable/app.py:2036
 msgid "$shortAppName - Add Channel"
 msgstr "$shortAppName - Dodaj kanal"
 
-#: ../../portable/app.py:1997
+#: ../../portable/app.py:2036
 msgid "Enter the URL of the channel to add"
 msgstr "Vnesite naslov URL novega kanala"
 
-#: ../../portable/app.py:2018
+#: ../../portable/app.py:2057
 msgid "$shortAppName - Add Miro Guide"
 msgstr "$shortAppName - Dodaj  vodnik Miro"
 
-#: ../../portable/app.py:2018
+#: ../../portable/app.py:2057
 msgid "Enter the URL of the Miro Guide to add"
 msgstr "Vnesite naslov URL vodnika Miro, ki ga želite dodati"
 
-#: ../../portable/app.py:2024
+#: ../../portable/app.py:2063
 msgid "$shortAppName - Download Video"
 msgstr "$shortAppName - Prenos posnetka"
 
-#: ../../portable/app.py:2024
+#: ../../portable/app.py:2063
 msgid "Enter the URL of the video to download"
 msgstr "Vnesite naslov URL za prenos videa"
 
-#: ../../portable/app.py:2318
-msgid "News and Tech"
-msgstr "Novice in tehnika"
+#: ../../portable/app.py:2420
+msgid "Starter Channels"
+msgstr ""
 
-#: ../../portable/app.py:2324
-msgid "Entertainment"
-msgstr "Zabava"
-
-#: ../../portable/app.py:2330
-msgid "High-Def"
-msgstr "Visoka ločljivost"
-
-#: ../../portable/app.py:2337
-msgid "Mac"
-msgstr "Mac"
-
-#: ../../portable/app.py:2352
+#: ../../portable/app.py:2437
 msgid "Example Playlist"
 msgstr "Primer seznama predvajanja"
 
-#: ../../portable/app.py:2371
+#: ../../portable/app.py:2463
 msgid "Custom Channels"
 msgstr "Kanali po meri"
 
-#: ../../portable/app.py:2371
+#: ../../portable/app.py:2463
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
 msgstr ""
 "Uporabljate različico programa $longAppName s prirejeno zbirko kanalov."
 
-#: ../../portable/app.py:2386
+#: ../../portable/app.py:2478
 msgid "Error Changing Movies Directory"
 msgstr "Napaka med menjanjem mape filmov"
 
-#: ../../portable/app.py:2387
+#: ../../portable/app.py:2479
 msgid ""
 "You don't have permission to write to the directory you selected.  Miro will "
 "continue to use the old videos directory."
@@ -2674,11 +2711,11 @@ msgstr ""
 "Nimate dovoljenj za pisanje v mapo, ki ste jo izbrali. Program Miro bo še "
 "naprej uporabljal staro mapo filmov."
 
-#: ../../portable/app.py:2422
+#: ../../portable/app.py:2508
 msgid "Error Saving Video"
 msgstr "Napaka pri shranjevanju posnetka"
 
-#: ../../portable/app.py:2424
+#: ../../portable/app.py:2510
 #, python-format
 msgid ""
 "An error occured while trying to save %s.  Please check that the file has "

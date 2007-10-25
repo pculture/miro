@@ -23,7 +23,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"És gran:">
 <!ENTITY startup.done5.text		"El botó situat a la dreta del botó de reproducció mostra els vídeos a pantalla completa.">
 <!ENTITY startup.done6.heading		"Troba Videos:">
-<!ENTITY startup.done6.text		"$longAppName disposa d'una guia de centenars de canals de TV mitjançant Internet, tots ells gratuïts. Només premeu &quot;Afegir&quot; per accedir a un canal.">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Sí">
 <!ENTITY startup.answer.no		"No">
 <!ENTITY startup.title			"$shortAppName First Time Setup">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"És gran:">
 <!ENTITY startup.done5.text		"El botó situat a la dreta del botó de reproducció mostra els vídeos a pantalla completa.">
 <!ENTITY startup.done6.heading		"Troba Videos:">
-<!ENTITY startup.done6.text		"$longAppName disposa d'una guia de centenars de canals de TV mitjançant Internet, tots ells gratuïts. Només premeu &quot;Afegir&quot; per accedir a un canal.">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Sí">
 <!ENTITY startup.answer.no		"No">

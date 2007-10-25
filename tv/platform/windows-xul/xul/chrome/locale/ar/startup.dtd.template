@@ -1,53 +1,53 @@
 <!ENTITY nbsp				" ">
 <!ENTITY rsaquo				"'">
 
-<!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
-<!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"البحث عن فيديو">
-<!ENTITY startup.change	                "غيٌر">
-<!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.title			"تثبيت $shortAppName لأول مرة">
+<!ENTITY startup.description		"الشاشات التالية سوف تساعدك في إعداد $longAppName كي يعمل جيداً لك.">
+<!ENTITY startup.autostart.description	"نقترح أن تجعل $longAppName يقلع حين يبدأ حاسوبك. بهذه الطريقة، المرئيات التي يجري تنزيلها سوف تنتهي ومرئيات جديدة سوف تبدأ بالتنزيل في الخلفية، كي تكون جاهزة للمشاهدة حين تريد ذلك.">
+<!ENTITY startup.autostart.question	"هل تريد تشغيل $shortAppName حين يبدأ الحاسوب؟">
+<!ENTITY startup.search.description	"بإمكان $longAppName أن يجد كل المرئيات على حاسوبك ليساعدك في تنظيمهم.">
+<!ENTITY startup.search.question        "هل تريد $longAppName أن يبحث في حاسوبك عن ملفات مرئية؟">
+<!ENTITY startup.search.restrict	"حدد لكل ملفاتي الخاصة.">
+<!ENTITY startup.search.custom          "بحث في المجلّد المفصّل:">
+<!ENTITY startup.search.searching	"جاري البحث عن مرئيات">
+<!ENTITY startup.change	                "تغيير">
+<!ENTITY startup.cancel	                "إلغاء البحث">
+<!ENTITY startup.undo	                "إعادة تعيين البحث">
+<!ENTITY startup.done1			"لقد إنتهيت!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done3.heading		"أتركه ليعمل:">
+<!ENTITY startup.done3.text		"$longAppName يتأكّد دائماً من القنوات لمرئيات جديدة وينزلهم في الخلفية. بتركه ليعمل يعني أن سوف يكون لك مرئيات جديدة حين تريد مشاهدتهم.">
+<!ENTITY startup.done4.heading		"لا تنزعج بسبب حجم القرص:">
+<!ENTITY startup.done4.text		"مثل التيفو، $longAppName له نظام &quot;الإنتهاء&quot; الذي يساعد في حذف مرئيات قديمة ليكون هناك مساحة كافية لمرئيات جديدة. بإمكانك حفظ المرئيات بنقر &quot;حفظ&quot; أو بإعداد القناة لتحفظ المرئيات آلياً.">
+<!ENTITY startup.done5.heading		"تكبير:">
+<!ENTITY startup.done5.text		"الزر بقرب زر التشغيل يجعلك تشاهد المرئيات في الشاشة الكاملة.">
+<!ENTITY startup.done6.heading		"أوجد مرئيات:">
+<!ENTITY startup.done6.text		"لدليل قنوات $shortAppName مئات من قنوات تلفاز الإنترنت؛ كلهم مجّانية. أنقر &quot;إضافة&quot; فقط لمشاهدة القناة.">
 <!ENTITY startup.answer.yes		"نعم">
 <!ENTITY startup.answer.no		"ﻻ">
-<!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
-<!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"البحث عن فيديو">
-<!ENTITY startup.change	                "غيٌر">
-<!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.title			"تثبيت $shortAppName لأول مرة">
+<!ENTITY startup.description		"الشاشات التالية سوف تساعدك في إعداد $longAppName كي يعمل جيداً لك.">
+<!ENTITY startup.autostart.description	"نقترح أن تجعل $longAppName يقلع حين يبدأ حاسوبك. بهذه الطريقة، المرئيات التي يجري تنزيلها سوف تنتهي ومرئيات جديدة سوف تبدأ بالتنزيل في الخلفية، كي تكون جاهزة للمشاهدة حين تريد ذلك.">
+<!ENTITY startup.autostart.question	"هل تريد تشغيل $shortAppName حين يبدأ الحاسوب؟">
+<!ENTITY startup.search.description	"بإمكان $longAppName أن يجد كل المرئيات على حاسوبك ليساعدك في تنظيمهم.">
+<!ENTITY startup.search.question        "هل تريد $longAppName أن يبحث في حاسوبك عن ملفات مرئية؟">
+<!ENTITY startup.search.restrict	"حدد لكل ملفاتي الخاصة.">
+<!ENTITY startup.search.custom          "بحث في المجلّد المفصّل:">
+<!ENTITY startup.search.searching	"جاري البحث عن مرئيات">
+<!ENTITY startup.change	                "تغيير">
+<!ENTITY startup.cancel	                "إلغاء البحث">
+<!ENTITY startup.undo	                "إعادة تعيين البحث">
+<!ENTITY startup.done1			"لقد إنتهيت!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done3.heading		"أتركه ليعمل:">
+<!ENTITY startup.done3.text		"$longAppName يتأكّد دائماً من القنوات لمرئيات جديدة وينزلهم في الخلفية. بتركه ليعمل يعني أن سوف يكون لك مرئيات جديدة حين تريد مشاهدتهم.">
+<!ENTITY startup.done4.heading		"لا تنزعج بسبب حجم القرص:">
+<!ENTITY startup.done4.text		"مثل التيفو، $longAppName له نظام &quot;الإنتهاء&quot; الذي يساعد في حذف مرئيات قديمة ليكون هناك مساحة كافية لمرئيات جديدة. بإمكانك حفظ المرئيات بنقر &quot;حفظ&quot; أو بإعداد القناة لتحفظ المرئيات آلياً.">
+<!ENTITY startup.done5.heading		"تكبير:">
+<!ENTITY startup.done5.text		"الزر بقرب زر التشغيل يجعلك تشاهد المرئيات في الشاشة الكاملة.">
+<!ENTITY startup.done6.heading		"أوجد مرئيات:">
+<!ENTITY startup.done6.text		"لدليل قنوات $shortAppName مئات من قنوات تلفاز الإنترنت؛ كلهم مجّانية. أنقر &quot;إضافة&quot; فقط لمشاهدة القناة.">
 <!ENTITY startup.answer.yes		"نعم">
 <!ENTITY startup.answer.no		"ﻻ">

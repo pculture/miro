@@ -23,7 +23,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Go Big:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
 <!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Kyllä">
 <!ENTITY startup.answer.no		"Ei">
 <!ENTITY startup.title			"$shortAppName First Time Setup">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Go Big:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
 <!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Kyllä">
 <!ENTITY startup.answer.no		"Ei">

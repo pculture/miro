@@ -23,7 +23,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Go Big:">
 <!ENTITY startup.done5.text		"ปุ่มทางขวาของปุ่มเล่นจะแสดงวิดิโอเต็มจอ">
 <!ENTITY startup.done6.heading		"ค้นหาวิดีโอ:">
-<!ENTITY startup.done6.text		"$shortAppName แชนแนลไกด์มีวิดิโอทางอินเทอร์เน็ทกว่าร้อยรายการ และทั้งหมดนั้นฟรี เพียงกดปุ่ม 'เพิ่ม' เพื่อเลือกชมแชนแนล">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"ใช่">
 <!ENTITY startup.answer.no		"ไม่ใช่">
 <!ENTITY startup.title			"ปรับแต่ง $shortAppName การทำงานครั้งแรก">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Go Big:">
 <!ENTITY startup.done5.text		"ปุ่มทางขวาของปุ่มเล่นจะแสดงวิดิโอเต็มจอ">
 <!ENTITY startup.done6.heading		"ค้นหาวิดีโอ:">
-<!ENTITY startup.done6.text		"$shortAppName แชนแนลไกด์มีวิดิโอทางอินเทอร์เน็ทกว่าร้อยรายการ และทั้งหมดนั้นฟรี เพียงกดปุ่ม 'เพิ่ม' เพื่อเลือกชมแชนแนล">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"ใช่">
 <!ENTITY startup.answer.no		"ไม่ใช่">

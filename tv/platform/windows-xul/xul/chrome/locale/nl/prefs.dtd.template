@@ -1,45 +1,45 @@
 <!ENTITY prefs.title "Voorkeuren">
 <!ENTITY prefs.restart "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
+<!ENTITY prefs.run.on.startup "Open $longAppName automatisch na het inloggen.">
 <!ENTITY prefs.close_to_tray_start "Wanneer ik het Miro venster sluit:">
 <!ENTITY prefs.close_to_tray "Minimaliseer naar systeemvak en blijf downloaden.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.no_close_to_tray "Stop Miro volledig.">
 
 <!ENTITY prefs.general "Algemeen">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general.warn_on_quit "Waarschuw mij indien ik Miro stop terwijl er downloads actief zijn.">
 
 <!ENTITY prefs.channels "Kanalen">
-<!ENTITY prefs.channels.check "Check channels for new content">
+<!ENTITY prefs.channels.check "Werk kanalen bij">
 <!ENTITY prefs.channels.check.thirty "Elke 30 minuten">
 <!ENTITY prefs.channels.check.sixty "Elk uur">
 <!ENTITY prefs.channels.check.manually "Handmatig">
 
-<!ENTITY prefs.playback "Afspelen">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
-<!ENTITY prefs.playback.auto.next.video "Video's na elkaar afspelen.">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback "Weergave">
+<!ENTITY prefs.playback.remember.pos "Onthoud afspeelpositie video's.">
+<!ENTITY prefs.playback.auto.next.video "Speel video's achtereen af.">
+<!ENTITY prefs.playback.stop.after.each "Stop na elke video.">
 
 <!ENTITY prefs.folder.movies "Mappen">
 <!ENTITY prefs.folder.downloads "Locatie gedownloade video's:">
-<!ENTITY prefs.folder.change "Wijzigen...">
+<!ENTITY prefs.folder.change "Wijzig...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
+<!ENTITY prefs.folder.others.caption "Monitor locaties voor nieuwe video's en voeg toe aan Bibliotheek.">
+<!ENTITY prefs.folder.others.location "Map">
+<!ENTITY prefs.folder.others.shown "Toon als kanaal">
 <!ENTITY prefs.folder.others.add "Voeg Map Toe...">
 <!ENTITY prefs.folder.others.remove "Verwijder">
 
 <!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Download hooguit">
-<!ENTITY prefs.downloads.max.part2 "video's tegelijkertijd.">
+<!ENTITY prefs.downloads.max.part1 "Beperk downloads tot">
+<!ENTITY prefs.downloads.max.part2 "video's.">
 
 <!ENTITY prefs.disk.space "Vrije Ruimte">
-<!ENTITY prefs.disk.space.min.part1 "Stop downloads en houd minstens vrij">
+<!ENTITY prefs.disk.space.min.part1 "Stop downloads en behoud ten minste">
 <!ENTITY prefs.disk.space.min.part2 "GB vrij.">
 <!ENTITY prefs.disk.space.warning.restart "NB: De wijzigingen in $longAppName gaan in wanneer u deze opnieuw opent.">
 
-<!ENTITY prefs.videos.expire "Video's vervallen standaard na">
+<!ENTITY prefs.videos.expire "Standaard vervallen video's na">
 <!ENTITY prefs.videos.expire.one "1 dag">
 <!ENTITY prefs.videos.expire.three "3 dagen">
 <!ENTITY prefs.videos.expire.six "6 dagen">
@@ -49,7 +49,7 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Voorkom vertragingen, en beperk uploads tot">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s wanneer mijn computer actief is.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Voorkom internetvertragingen, beperk uploads indien mijn computer actief is.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Beperk uploads (KB/s)">
+<!ENTITY prefs.torrent.uses.ports.part1 "Gebruik BitTorrentpoorten tussen">
 <!ENTITY prefs.torrent.uses.ports.part2 "en">

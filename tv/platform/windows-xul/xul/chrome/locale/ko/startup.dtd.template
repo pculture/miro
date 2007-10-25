@@ -23,7 +23,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"크게 보기:">
 <!ENTITY startup.done5.text		"오른쪽 버튼을 누르면 동영상을 전체 화면으로 재생합니다.">
 <!ENTITY startup.done6.heading		"동영상 찾기:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"예">
 <!ENTITY startup.answer.no		"아니오">
 <!ENTITY startup.title			"$shortAppName First Time Setup">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"크게 보기:">
 <!ENTITY startup.done5.text		"오른쪽 버튼을 누르면 동영상을 전체 화면으로 재생합니다.">
 <!ENTITY startup.done6.heading		"동영상 찾기:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"예">
 <!ENTITY startup.answer.no		"아니오">

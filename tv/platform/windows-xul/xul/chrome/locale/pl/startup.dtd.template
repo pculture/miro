@@ -1,14 +1,14 @@
 <!ENTITY nbsp				" ">
 <!ENTITY rsaquo				"&quot;">
 
-<!ENTITY startup.title			"$shortAppName First Time Setup">
+<!ENTITY startup.title			"Pierwsze uruchomienie $shortAppName">
 <!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
+<!ENTITY startup.autostart.question	"Czy chcesz uruchamiać $shortAppName przy starcie systemu?">
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
+<!ENTITY startup.search.question        "Czy chcesz by $longAppName przeszukał twój komputer w poszukiwaniu plików wideo?">
 <!ENTITY startup.search.restrict	"Ogranicz do moich osobistych plików.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.search.custom          "Przeszukaj inny katalog:">
 <!ENTITY startup.search.searching	"Szukanie filmów">
 <!ENTITY startup.change	                "Zmień">
 <!ENTITY startup.cancel	                "Cancel Search">
@@ -23,17 +23,17 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Idź na całość:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
 <!ENTITY startup.done6.heading		"Znajdź filmy:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Tak">
 <!ENTITY startup.answer.no		"Nie">
-<!ENTITY startup.title			"$shortAppName First Time Setup">
+<!ENTITY startup.title			"Pierwsze uruchomienie $shortAppName">
 <!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
+<!ENTITY startup.autostart.question	"Czy chcesz uruchamiać $shortAppName przy starcie systemu?">
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
+<!ENTITY startup.search.question        "Czy chcesz by $longAppName przeszukał twój komputer w poszukiwaniu plików wideo?">
 <!ENTITY startup.search.restrict	"Ogranicz do moich osobistych plików.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.search.custom          "Przeszukaj inny katalog:">
 <!ENTITY startup.search.searching	"Szukanie filmów">
 <!ENTITY startup.change	                "Zmień">
 <!ENTITY startup.cancel	                "Cancel Search">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Idź na całość:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
 <!ENTITY startup.done6.heading		"Znajdź filmy:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Tak">
 <!ENTITY startup.answer.no		"Nie">

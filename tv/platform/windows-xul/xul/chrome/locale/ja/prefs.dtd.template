@@ -20,7 +20,7 @@
 <!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Folders">
+<!ENTITY prefs.folder.movies "フォルダ">
 <!ENTITY prefs.folder.downloads "ダウンロードしたビデオをフォルダに保存:">
 <!ENTITY prefs.folder.change "変更">
 
@@ -34,7 +34,7 @@
 <!ENTITY prefs.downloads.max.part1 "Download at most">
 <!ENTITY prefs.downloads.max.part2 "本以下のビデオ">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "ディスク領域">
 <!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
 <!ENTITY prefs.disk.space.min.part2 "GB free.">
 <!ENTITY prefs.disk.space.warning.restart "注意: $longAppName を再起動すると設定が有効になります。">
@@ -49,7 +49,7 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "と">

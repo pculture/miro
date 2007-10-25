@@ -15,7 +15,7 @@
 <!ENTITY prefs.channels.check.sixty "Her saatte">
 <!ENTITY prefs.channels.check.manually "Siz istediğinizde">
 
-<!ENTITY prefs.playback "Çalma">
+<!ENTITY prefs.playback "Oynat">
 <!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
 <!ENTITY prefs.playback.auto.next.video "Videoları arka arkaya oynat.">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
@@ -49,7 +49,7 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(DİKKAT: Değişiklikler $longAppName programını tekrar başlatana kadar etkin hale gelmeyecek.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Yavaşlamalardan sakınmak için, yayımlayı limitle">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Bilgisayarım aktifken KB/s">
+<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "ve">

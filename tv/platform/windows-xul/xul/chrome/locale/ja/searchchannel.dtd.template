@@ -1,6 +1,6 @@
-<!ENTITY searchchannel.description	"A search channel contains items that match a search term.">
+<!ENTITY searchchannel.description	"検索チャンネルには検索対象と合致したアイテムが入っています">
 <!ENTITY searchchannel.termlabel 	"これを検索:">
-<!ENTITY searchchannel.title            "New Search Channel">
+<!ENTITY searchchannel.title            "新しい検索チャンネル">
 <!ENTITY searchchannel.inthis "In This:">
 <!ENTITY searchchannel.channel "チャンネル:">
 <!ENTITY searchchannel.searchengine "検索エンジン:">

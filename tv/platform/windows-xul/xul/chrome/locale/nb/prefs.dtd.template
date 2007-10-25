@@ -1,32 +1,32 @@
 <!ENTITY prefs.title "Alternativer">
 <!ENTITY prefs.restart "(ADVARSEL: Endringer tas ikke i bruk før $longAppName startes på nytt.)">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
+<!ENTITY prefs.run.on.startup "Kjør $longAppName automatisk ved innlogging.">
 <!ENTITY prefs.close_to_tray_start "Når jeg trykker lukk-knappen">
 <!ENTITY prefs.close_to_tray "Lukk til systemkurv slik at nedlastinger kan fortsette.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.no_close_to_tray "Avslutt Miro fullstendig">
 
 <!ENTITY prefs.general "Genrelt">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general.warn_on_quit "Advar meg når jeg prøver å avslutte mens nedlastinger pågår.">
 
 <!ENTITY prefs.channels "Kanaler">
-<!ENTITY prefs.channels.check "Check channels for new content">
+<!ENTITY prefs.channels.check "Sjekk kanaler for nytt innhold">
 <!ENTITY prefs.channels.check.thirty "Hvert 30. minutt">
 <!ENTITY prefs.channels.check.sixty "Hver time">
 <!ENTITY prefs.channels.check.manually "Manuelt">
 
 <!ENTITY prefs.playback "Avspilling">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
+<!ENTITY prefs.playback.remember.pos "Husk hvor jeg sluttet å se en video og fortsett avspilling fra det stedet.">
 <!ENTITY prefs.playback.auto.next.video "Spill av filmer én etter én">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback.stop.after.each "Spill av én film og stopp.">
 
 <!ENTITY prefs.folder.movies "Mapper">
 <!ENTITY prefs.folder.downloads "Lagre nedlastede filmer i denne mappen:">
 <!ENTITY prefs.folder.change "Endre …">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
+<!ENTITY prefs.folder.others.location "Mappe">
+<!ENTITY prefs.folder.others.shown "Vis som kanal">
 <!ENTITY prefs.folder.others.add "Legg til mappe …">
 <!ENTITY prefs.folder.others.remove "Fjern">
 
@@ -49,7 +49,7 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ADVARSEL: Endringer tas ikke i bruk før $longAppName startes på nytt.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "For å unngå overbelastning, begrens opplasting til">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s når datamaskinen er i bruk.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
+<!ENTITY prefs.torrent.limit.upstream.part1 "For å forhindre nedsatt ytelse, begrens utgående båndbredde når min datamaskin er aktiv.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Utgående båndbreddegrense (KB/s)">
+<!ENTITY prefs.torrent.uses.ports.part1 "Bruk BitTorrent-porter mellom">
 <!ENTITY prefs.torrent.uses.ports.part2 "og">

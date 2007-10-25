@@ -1,32 +1,32 @@
 <!ENTITY prefs.title "Opções">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.restart "(AVISO: As modificações não serão efectivas enquanto não reiniciar o $shortAppName.)">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
+<!ENTITY prefs.run.on.startup "Iniciar o $shortAppName automaticamente quando eu entrar.">
+<!ENTITY prefs.close_to_tray_start "Quando eu clico no botão de fechar vermelho:">
 <!ENTITY prefs.close_to_tray "Feche para a barra de tarefas para que os descarregamentos possam continuar.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.no_close_to_tray "Sair do Miro completamente.">
 
-<!ENTITY prefs.general "General">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general "Geral">
+<!ENTITY prefs.general.warn_on_quit "Avisar quando tentar sair com transferências em curso.">
 
 <!ENTITY prefs.channels "Canais">
-<!ENTITY prefs.channels.check "Check channels for new content">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
+<!ENTITY prefs.channels.check "Verificar canais em busca de novos conteúdos">
+<!ENTITY prefs.channels.check.thirty "A cada 30 minutos">
+<!ENTITY prefs.channels.check.sixty "A cada hora">
 <!ENTITY prefs.channels.check.manually "Manualmente">
 
 <!ENTITY prefs.playback "Reproduzir">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
+<!ENTITY prefs.playback.remember.pos "Memorizar o ponto em que parei de ver um vídeo e continuar a partir desse ponto.">
 <!ENTITY prefs.playback.auto.next.video "Reproduzir videos continuamente.">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback.stop.after.each "Reproduzir um vídeo e parar.">
 
 <!ENTITY prefs.folder.movies "Pastas">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.downloads "Armazenar os vídeos descarregados nesta pasta:">
 <!ENTITY prefs.folder.change "Modificar...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
+<!ENTITY prefs.folder.others.caption "Detectar novos vídeos nestas pastas e incluí-los na minha Biblioteca.">
+<!ENTITY prefs.folder.others.location "Pasta">
+<!ENTITY prefs.folder.others.shown "Mostrar como um Canal">
 <!ENTITY prefs.folder.others.add "Adicionar Pasta...">
 <!ENTITY prefs.folder.others.remove "Remover">
 
@@ -37,7 +37,7 @@
 <!ENTITY prefs.disk.space "Espaço ocupado em disco">
 <!ENTITY prefs.disk.space.min.part1 "Não começar uma transferência se deixar menos de">
 <!ENTITY prefs.disk.space.min.part2 "GB livres.">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "AVISO: Esta configuração não ficará efectiva enquanto não reiniciar $longAppName.">
 
 <!ENTITY prefs.videos.expire "Por defeito, os vídeos expiram depois de">
 <!ENTITY prefs.videos.expire.one "1 dia">
@@ -48,8 +48,8 @@
 <!ENTITY prefs.videos.expire.never "Nunca">
 
 <!ENTITY prefs.torrent "BitTorrent">
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Para evitar lentidão na recepção, limitar a velocidade de envio para">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s quando o meu computador estiver activo.">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
+<!ENTITY prefs.torrent.restart.warning "(AVISO: As modificações não serão efectivas enquanto não reiniciar o $shortAppName.)">
+<!ENTITY prefs.torrent.limit.upstream.part1 "Para evitar lentidão, limitar taxa de transferência quando o meu computador está activo.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Limite de taxa de transferência (KB/s)">
+<!ENTITY prefs.torrent.uses.ports.part1 "Usar portas BitTorrent entre">
 <!ENTITY prefs.torrent.uses.ports.part2 "e">

@@ -1,4 +1,4 @@
-<!ENTITY prefs.title "Options">
+<!ENTITY prefs.title "Opcions">
 <!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
@@ -25,7 +25,7 @@
 <!ENTITY prefs.folder.change "Canviar...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
+<!ENTITY prefs.folder.others.location "Directori">
 <!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "Eliminar">
@@ -49,7 +49,7 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Per evitar retards, limita la pujada a">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s quan l'ordinador està actiu">
+<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "i">

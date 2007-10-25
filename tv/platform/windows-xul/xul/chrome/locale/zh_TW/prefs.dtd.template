@@ -6,7 +6,7 @@
 <!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
 <!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
-<!ENTITY prefs.general "General">
+<!ENTITY prefs.general "一般">
 <!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "頻道">
@@ -15,28 +15,28 @@
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
-<!ENTITY prefs.playback "Playback">
+<!ENTITY prefs.playback "播放">
 <!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
 <!ENTITY prefs.playback.auto.next.video "連續播放影片">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Folders">
+<!ENTITY prefs.folder.movies "資料夾">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "變更">
+<!ENTITY prefs.folder.change "變更(&H)...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
 <!ENTITY prefs.folder.others.location "Folder">
 <!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Add Folder...">
-<!ENTITY prefs.folder.others.remove "Remove">
+<!ENTITY prefs.folder.others.remove "移除">
 
-<!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Download at most">
-<!ENTITY prefs.downloads.max.part2 "videos at once.">
+<!ENTITY prefs.downloads.max "下載">
+<!ENTITY prefs.downloads.max.part1 "每次最多下載">
+<!ENTITY prefs.downloads.max.part2 "段影片檔。">
 
-<!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
-<!ENTITY prefs.disk.space.min.part2 "GB free.">
+<!ENTITY prefs.disk.space "磁諜空間">
+<!ENTITY prefs.disk.space.min.part1 "若硬碟空間過小則不再下載檔案，硬碟空間下限：">
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "By default, videos expire after">
@@ -45,11 +45,11 @@
 <!ENTITY prefs.videos.expire.six "6 天">
 <!ENTITY prefs.videos.expire.ten "10 天">
 <!ENTITY prefs.videos.expire.thirty "1 個月">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire.never "永不過期">
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/S 當我的電腦正在使用中">
+<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "and">

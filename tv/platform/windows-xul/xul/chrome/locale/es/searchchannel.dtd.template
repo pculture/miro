@@ -1,5 +1,5 @@
-<!ENTITY searchchannel.description	"Un canal de búsqueda contiene ítems que corresponden a un término de búsqueda.">
-<!ENTITY searchchannel.termlabel 	"Busca:">
+<!ENTITY searchchannel.description	"Un canal de búsqueda contiene elementos que corresponden a un término buscado.">
+<!ENTITY searchchannel.termlabel 	"Buscar:">
 <!ENTITY searchchannel.title            "Nuevo canal de búsqueda">
 <!ENTITY searchchannel.inthis "En este:">
 <!ENTITY searchchannel.channel "Canal:">

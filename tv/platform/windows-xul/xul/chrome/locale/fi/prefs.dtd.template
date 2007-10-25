@@ -6,7 +6,7 @@
 <!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
 <!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
-<!ENTITY prefs.general "General">
+<!ENTITY prefs.general "Yleiset">
 <!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Kanavat">
@@ -20,7 +20,7 @@
 <!ENTITY prefs.playback.auto.next.video "Soita videot sarjassa.">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Folders">
+<!ENTITY prefs.folder.movies "Kansiot">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Muuta...">
 
@@ -30,11 +30,11 @@
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "Poista">
 
-<!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Download at most">
-<!ENTITY prefs.downloads.max.part2 "videos at once.">
+<!ENTITY prefs.downloads.max "Lataukset">
+<!ENTITY prefs.downloads.max.part1 "Lataa enimmillään">
+<!ENTITY prefs.downloads.max.part2 "videota kerrallaan.">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "Levytila">
 <!ENTITY prefs.disk.space.min.part1 "Älä aloita latausta, jos sen jälkeen jää vähemmän vapaata tilaa, kuin:">
 <!ENTITY prefs.disk.space.min.part2 "Gt.">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
@@ -49,7 +49,7 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Välttääksesi verkkoyhteyden ruuhkautumista, rajoita tiedonsiirtonopeus">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Kt/s kun tietokoneeni on käytössä.">
+<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "ja">

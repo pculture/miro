@@ -1,8 +1,8 @@
-<!ENTITY searchchannel.description	"A pesquisa do canal contém intens que coincidem com o termo pesquisado.">
+<!ENTITY searchchannel.description	"Um canal de pesquisa contém itens que coincidem com um termo de pesquisa.">
 <!ENTITY searchchannel.termlabel 	"Pesquisar:">
-<!ENTITY searchchannel.title            "Nova pesquisa do canal">
+<!ENTITY searchchannel.title            "Novo Canal de Pesquisa">
 <!ENTITY searchchannel.inthis "Nisto:">
 <!ENTITY searchchannel.channel "Canal:">
 <!ENTITY searchchannel.searchengine "Motor de busca:">
 <!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Criar canal">
+<!ENTITY searchchannel.createchannel "Criar Canal">

@@ -6,7 +6,7 @@
 <!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
 <!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
-<!ENTITY prefs.general "General">
+<!ENTITY prefs.general "Orokorra">
 <!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Kanalak">
@@ -20,7 +20,7 @@
 <!ENTITY prefs.playback.auto.next.video "Bideoak bata bestearen atzetik jo">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Folders">
+<!ENTITY prefs.folder.movies "Karpetak">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Aldatu...">
 
@@ -49,7 +49,7 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Abiadura galera sahiesteko, jarioa mugatu">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s nire ordenagailua aktibo dagoenean.">
+<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "and">

@@ -1,55 +1,55 @@
-<!ENTITY prefs.title "Options">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.title "الخيارات">
+<!ENTITY prefs.restart "(تخذير: التغييرات لن تكون مفعّلة حتى تعيد تشغيل $longAppName.)">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.run.on.startup "تشغيل $longAppName آلياً حين أدخل.">
+<!ENTITY prefs.close_to_tray_start "حين أنقر زر الإغلاق الأحمر:">
+<!ENTITY prefs.close_to_tray "إغلاق إلى الشريط ليستمر بالتنزيل.">
+<!ENTITY prefs.no_close_to_tray "مغادرة ميرو كلياً.">
 
-<!ENTITY prefs.general "عـام">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general "عام">
+<!ENTITY prefs.general.warn_on_quit "حذّرني حين أحاول المغادرة وهناك تنزيلات جارية.">
 
 <!ENTITY prefs.channels "قنوات">
-<!ENTITY prefs.channels.check "Check channels for new content">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check "تأكد من القنوات لمحتويات جديدة">
+<!ENTITY prefs.channels.check.thirty "كل 30 دقيقة">
+<!ENTITY prefs.channels.check.sixty "كل ساعة">
+<!ENTITY prefs.channels.check.manually "يدوياً">
 
-<!ENTITY prefs.playback "العزف">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
-<!ENTITY prefs.playback.auto.next.video "شغل الفيديو  واحد تلو الاخر">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback "إعادة التشغيل">
+<!ENTITY prefs.playback.remember.pos "تذكّر أين وقفت من مشاهدة المرئية والإستمرار من تلك النقطة.">
+<!ENTITY prefs.playback.auto.next.video "تشغيل المرئيات واحدة تلو الأخرى.">
+<!ENTITY prefs.playback.stop.after.each "تشغيل مرئية واحدة ثم إيقاف.">
 
-<!ENTITY prefs.folder.movies "المجلدات:">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.movies "المجلّدات">
+<!ENTITY prefs.folder.downloads "حفظ المرئيات في هذا المجلّد:">
 <!ENTITY prefs.folder.change "تغيير...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.caption "تابع للمرئيات الجديدة في هذه المجلّدات وضمنهم في مكتبتي.">
+<!ENTITY prefs.folder.others.location "مجلّد">
+<!ENTITY prefs.folder.others.shown "إظهار كقناة">
+<!ENTITY prefs.folder.others.add "إضافة ملف...">
 <!ENTITY prefs.folder.others.remove "إزالة">
 
 <!ENTITY prefs.downloads.max "تنزيلات">
 <!ENTITY prefs.downloads.max.part1 "تنزيل على الأغلب">
-<!ENTITY prefs.downloads.max.part2 "videos at once.">
+<!ENTITY prefs.downloads.max.part2 "مرئية في كل مره.">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "مساحة القرص">
 <!ENTITY prefs.disk.space.min.part1 "لا تبدأ التحميل إذا بقي أقل من">
-<!ENTITY prefs.disk.space.min.part2 "جيجبايت خاليه">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.min.part2 "غيغابايت خاليه">
+<!ENTITY prefs.disk.space.warning.restart "تحذير: هذا الإعداد لن يكون مفعّل حتى تعيد تشغيل $longAppName.">
 
-<!ENTITY prefs.videos.expire "By default, videos expire after">
+<!ENTITY prefs.videos.expire "تنتهي المرئيات إفتراضياً بعد">
 <!ENTITY prefs.videos.expire.one "يوم واحد">
 <!ENTITY prefs.videos.expire.three "3 أيام">
-<!ENTITY prefs.videos.expire.six "6">
+<!ENTITY prefs.videos.expire.six "6 أيام">
 <!ENTITY prefs.videos.expire.ten "10 أيام">
 <!ENTITY prefs.videos.expire.thirty "شهر واحد">
-<!ENTITY prefs.videos.expire.never "ابدا/ ولا مرة">
+<!ENTITY prefs.videos.expire.never "أبداً/ ولا مرة">
 
-<!ENTITY prefs.torrent "BitTorrent">
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "كيلوبايت عندما يكون جهازي شغٌالا">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "and">
+<!ENTITY prefs.torrent "بت-تورنت">
+<!ENTITY prefs.torrent.restart.warning "(تخذير: التغييرات لن تكون مفعّلة حتى تعيد تشغيل $longAppName.)">
+<!ENTITY prefs.torrent.limit.upstream.part1 "لمنع البطء، حدد حيز نطاق تيار الرفع حين يكون حاسوبي مشغول.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "حدّ تيار الرفع (كيلوبايت بالثانية)">
+<!ENTITY prefs.torrent.uses.ports.part1 "يستخدم بيت-تورنت منافذ بين">
+<!ENTITY prefs.torrent.uses.ports.part2 "و">

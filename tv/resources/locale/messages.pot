@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-25 09:42-0400\n"
+"POT-Creation-Date: 2007-10-25 14:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -509,7 +509,7 @@ msgid "Remember video position."
 msgstr "Remember video position."
 
 # NSButton (Remove) : <title:Remove> (oid:150)
-#: ../../portable/guide.py:107 ../../portable/playlist.py:197
+#: ../../portable/guide.py:109 ../../portable/playlist.py:197
 #: ../../portable/feed.py:795 ../../portable/menu.py:65
 #: ../../portable/menu.py:70 ../../portable/folder.py:156
 #: ../../portable/folder.py:211
@@ -539,7 +539,7 @@ msgid "To avoid internet slowdowns:"
 msgstr "To avoid internet slowdowns:"
 
 # NSButton (Warn me when I attempt to quit with downloads in progress) : <title:Warn me when I attempt to quit with downloads in progress> (oid:160)
-#: ../../portable/app.py:1206
+#: ../../portable/app.py:1207
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Warn me when I attempt to quit with downloads in progress"
 
@@ -998,7 +998,7 @@ msgid "Show"
 msgstr ""
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48
-#: ../../portable/dialogs.py:80 ../../portable/menubar.py:257
+#: ../../portable/dialogs.py:80 ../../portable/menubar.py:259
 msgid "Quit"
 msgstr ""
 
@@ -1088,11 +1088,11 @@ msgstr ""
 msgid "Downloading"
 msgstr ""
 
-#: ../../portable/guide.py:104 ../../portable/feed.py:789
+#: ../../portable/guide.py:106 ../../portable/feed.py:789
 msgid "Copy URL to clipboard"
 msgstr ""
 
-#: ../../portable/guide.py:154
+#: ../../portable/guide.py:156
 msgid "Miro Guide"
 msgstr ""
 
@@ -1723,99 +1723,103 @@ msgstr ""
 msgid "_Remove Playlist Folder"
 msgstr ""
 
-#: ../../portable/menubar.py:212
+#: ../../portable/menubar.py:212 ../../portable/menubar.py:213
 msgid "_Play"
 msgstr ""
 
-#: ../../portable/menubar.py:213
-msgid "_Stop"
+#: ../../portable/menubar.py:214
+msgid "_Pause"
 msgstr ""
 
 #: ../../portable/menubar.py:215
+msgid "_Stop"
+msgstr ""
+
+#: ../../portable/menubar.py:217
 msgid "_Next Video"
 msgstr ""
 
-#: ../../portable/menubar.py:216
+#: ../../portable/menubar.py:218
 msgid "_Previous Video"
 msgstr ""
 
-#: ../../portable/menubar.py:218
+#: ../../portable/menubar.py:220
 msgid "Skip _Forward"
 msgstr ""
 
-#: ../../portable/menubar.py:219
+#: ../../portable/menubar.py:221
 msgid "Skip _Back"
 msgstr ""
 
-#: ../../portable/menubar.py:221
+#: ../../portable/menubar.py:223
 msgid "Volume _Up"
 msgstr ""
 
-#: ../../portable/menubar.py:222
+#: ../../portable/menubar.py:224
 msgid "Volume _Down"
 msgstr ""
 
-#: ../../portable/menubar.py:224
+#: ../../portable/menubar.py:226
 msgid "_Fullscreen"
 msgstr ""
 
-#: ../../portable/menubar.py:228
+#: ../../portable/menubar.py:230
 msgid "_About"
 msgstr ""
 
-#: ../../portable/menubar.py:229
+#: ../../portable/menubar.py:231
 msgid "_Donate"
 msgstr ""
 
-#: ../../portable/menubar.py:230 ../../portable/menubar.py:245
+#: ../../portable/menubar.py:232 ../../portable/menubar.py:247
 msgid "_Help"
 msgstr ""
 
-#: ../../portable/menubar.py:232
+#: ../../portable/menubar.py:234
 msgid "Report a _Bug"
 msgstr ""
 
-#: ../../portable/menubar.py:236
+#: ../../portable/menubar.py:238
 msgid "_Video"
 msgstr ""
 
-#: ../../portable/menubar.py:238
+#: ../../portable/menubar.py:240
 msgid "_File"
 msgstr ""
 
-#: ../../portable/menubar.py:242
+#: ../../portable/menubar.py:244
 msgid "_Channels"
 msgstr ""
 
-#: ../../portable/menubar.py:243
+#: ../../portable/menubar.py:245
 msgid "_Playlists"
 msgstr ""
 
-#: ../../portable/menubar.py:244
+#: ../../portable/menubar.py:246
 msgid "P_layback"
 msgstr ""
 
-#: ../../portable/menubar.py:249
+#: ../../portable/menubar.py:251
 msgid "Play Unwatched ($numUnwatched)"
 msgstr ""
 
-#: ../../portable/menubar.py:250
+#: ../../portable/menubar.py:252
 msgid "Pause All Downloads ($numDownloading)"
 msgstr ""
 
-#: ../../portable/menubar.py:251
+#: ../../portable/menubar.py:253
 msgid "Resume All Downloads ($numPaused)"
 msgstr ""
 
-#: ../../portable/menubar.py:253
+#: ../../portable/menubar.py:255
 msgid "Options..."
 msgstr ""
 
-#: ../../portable/menubar.py:255
+#: ../../portable/menubar.py:257
 msgid "Hide Window"
 msgstr ""
 
-#: ../../portable/menubar.py:256
+#: ../../portable/menubar.py:258
 msgid "Show Window"
 msgstr ""
 
@@ -2124,21 +2128,21 @@ msgstr ""
 msgid "Internal Error: Not ready to send"
 msgstr ""
 
-#: ../../portable/app.py:685
+#: ../../portable/app.py:686
 msgid "Database too new"
 msgstr ""
 
-#: ../../portable/app.py:686
+#: ../../portable/app.py:687
 msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
 
-#: ../../portable/app.py:700
+#: ../../portable/app.py:701
 msgid "Video Directory Missing"
 msgstr ""
 
-#: ../../portable/app.py:701
+#: ../../portable/app.py:702
 msgid ""
 "\n"
 "Miro can't find your primary video directory.  This may be because it's "
@@ -2149,192 +2153,192 @@ msgid ""
 "external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
 
-#: ../../portable/app.py:1038 ../../portable/app.py:1052
-#: ../../portable/app.py:1096 ../../portable/app.py:1122
-#: ../../portable/app.py:1142
+#: ../../portable/app.py:1039 ../../portable/app.py:1053
+#: ../../portable/app.py:1097 ../../portable/app.py:1123
+#: ../../portable/app.py:1143
 #, python-format
 msgid "Remove %s"
 msgstr ""
 
-#: ../../portable/app.py:1039
+#: ../../portable/app.py:1040
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
 msgstr ""
 
-#: ../../portable/app.py:1053
+#: ../../portable/app.py:1054
 #, python-format
 msgid "Are you sure you want to remove %s"
 msgstr ""
 
-#: ../../portable/app.py:1056 ../../portable/app.py:1101
-#: ../../portable/app.py:1127 ../../portable/app.py:1146
+#: ../../portable/app.py:1057 ../../portable/app.py:1102
+#: ../../portable/app.py:1128 ../../portable/app.py:1147
 #, python-format
 msgid "Remove %s channels"
 msgstr ""
 
-#: ../../portable/app.py:1058
+#: ../../portable/app.py:1059
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
 msgstr ""
 
-#: ../../portable/app.py:1097
+#: ../../portable/app.py:1098
 msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
 msgstr ""
 
-#: ../../portable/app.py:1102
+#: ../../portable/app.py:1103
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
 msgstr ""
 
-#: ../../portable/app.py:1123
+#: ../../portable/app.py:1124
 #, python-format
 msgid ""
 "Are you sure you want to remove %s?  Any downloads in progress will be "
 "canceled."
 msgstr ""
 
-#: ../../portable/app.py:1128
+#: ../../portable/app.py:1129
 #, python-format
 msgid ""
 "Are you sure you want to remove these %s channels?  Any downloads in "
 "progress will be canceled."
 msgstr ""
 
-#: ../../portable/app.py:1143
+#: ../../portable/app.py:1144
 #, python-format
 msgid "Are you sure you want to remove %s?"
 msgstr ""
 
-#: ../../portable/app.py:1147
+#: ../../portable/app.py:1148
 #, python-format
 msgid "Are you sure you want to remove these %s channels?"
 msgstr ""
 
-#: ../../portable/app.py:1160
+#: ../../portable/app.py:1161
 #, python-format
 msgid "Stop watching %s"
 msgstr ""
 
-#: ../../portable/app.py:1161
+#: ../../portable/app.py:1162
 #, python-format
 msgid "Are you sure you want to stop watching %s?"
 msgstr ""
 
-#: ../../portable/app.py:1164
+#: ../../portable/app.py:1165
 #, python-format
 msgid "Stop watching %s directories"
 msgstr ""
 
-#: ../../portable/app.py:1165
+#: ../../portable/app.py:1166
 #, python-format
 msgid "Are you sure you want to stop watching these %s directories?"
 msgstr ""
 
-#: ../../portable/app.py:1196
+#: ../../portable/app.py:1197
 msgid "Are you sure you want to quit?"
 msgstr ""
 
-#: ../../portable/app.py:1198
+#: ../../portable/app.py:1199
 msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
 
-#: ../../portable/app.py:1203
+#: ../../portable/app.py:1204
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/app.py:1712
+#: ../../portable/app.py:1718
 msgid "Invalid Value"
 msgstr ""
 
-#: ../../portable/app.py:1713
+#: ../../portable/app.py:1719
 #, python-format
 msgid "%s is invalid.  You must enter a non-negative number."
 msgstr ""
 
-#: ../../portable/app.py:1839
+#: ../../portable/app.py:1845
 msgid "Error Revealing File"
 msgstr ""
 
-#: ../../portable/app.py:1840
+#: ../../portable/app.py:1846
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
 msgstr ""
 
-#: ../../portable/app.py:2011
+#: ../../portable/app.py:2017
 msgid " - Invalid URL"
 msgstr ""
 
-#: ../../portable/app.py:2012
+#: ../../portable/app.py:2018
 msgid ""
 "The address you entered is not a valid URL.\n"
 "Please double check and try again.\n"
 "\n"
 msgstr ""
 
-#: ../../portable/app.py:2036
+#: ../../portable/app.py:2042
 msgid "$shortAppName - Add Channel"
 msgstr ""
 
-#: ../../portable/app.py:2036
+#: ../../portable/app.py:2042
 msgid "Enter the URL of the channel to add"
 msgstr ""
 
-#: ../../portable/app.py:2057
+#: ../../portable/app.py:2063
 msgid "$shortAppName - Add Miro Guide"
 msgstr ""
 
-#: ../../portable/app.py:2057
+#: ../../portable/app.py:2063
 msgid "Enter the URL of the Miro Guide to add"
 msgstr ""
 
-#: ../../portable/app.py:2063
+#: ../../portable/app.py:2069
 msgid "$shortAppName - Download Video"
 msgstr ""
 
-#: ../../portable/app.py:2063
+#: ../../portable/app.py:2069
 msgid "Enter the URL of the video to download"
 msgstr ""
 
-#: ../../portable/app.py:2420
+#: ../../portable/app.py:2426
 msgid "Starter Channels"
 msgstr ""
 
-#: ../../portable/app.py:2437
+#: ../../portable/app.py:2443
 msgid "Example Playlist"
 msgstr ""
 
-#: ../../portable/app.py:2463
+#: ../../portable/app.py:2469
 msgid "Custom Channels"
 msgstr ""
 
-#: ../../portable/app.py:2463
+#: ../../portable/app.py:2469
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
 msgstr ""
 
-#: ../../portable/app.py:2478
+#: ../../portable/app.py:2484
 msgid "Error Changing Movies Directory"
 msgstr ""
 
-#: ../../portable/app.py:2479
+#: ../../portable/app.py:2485
 msgid ""
 "You don't have permission to write to the directory you selected.  Miro will "
 "continue to use the old videos directory."
 msgstr ""
 
-#: ../../portable/app.py:2508
+#: ../../portable/app.py:2514
 msgid "Error Saving Video"
 msgstr ""
 
-#: ../../portable/app.py:2510
+#: ../../portable/app.py:2516
 #, python-format
 msgid ""
 "An error occured while trying to save %s.  Please check that the file has "

@@ -23,7 +23,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Vergrössern:">
 <!ENTITY startup.done5.text		"Der Knopf rechts neben dem Abspielknopf zeigt Videos im Vollbildmodus.">
 <!ENTITY startup.done6.heading		"Finden Sie Videos:">
-<!ENTITY startup.done6.text		"Das $shortAppName Verzeichnis hat hunderte von Internet Video Kanälen und alle sind kostenlos.  Klicken Sie nur auf  'Hinzufügen' um einen Kanal anzuschauen.">
+<!ENTITY startup.done6.text		"$shortAppName Kanal Guide umfasst hunderte von Gratis-Internet TV Kanälen. Klicke einfach auf 'ADD' um einen Kanal auszuwählen">
 <!ENTITY startup.answer.yes		"Ja">
 <!ENTITY startup.answer.no		"Nein">
 <!ENTITY startup.title			"$shortAppName Einrichtungs-Assistent">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Vergrössern:">
 <!ENTITY startup.done5.text		"Der Knopf rechts neben dem Abspielknopf zeigt Videos im Vollbildmodus.">
 <!ENTITY startup.done6.heading		"Finden Sie Videos:">
-<!ENTITY startup.done6.text		"Das $shortAppName Verzeichnis hat hunderte von Internet Video Kanälen und alle sind kostenlos.  Klicken Sie nur auf  'Hinzufügen' um einen Kanal anzuschauen.">
+<!ENTITY startup.done6.text		"$shortAppName Kanal Guide umfasst hunderte von Gratis-Internet TV Kanälen. Klicke einfach auf 'ADD' um einen Kanal auszuwählen">
 <!ENTITY startup.answer.yes		"Ja">
 <!ENTITY startup.answer.no		"Nein">

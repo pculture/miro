@@ -23,7 +23,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Zvětši:">
 <!ENTITY startup.done5.text		"Tlačítko napravo od přehrávání přepne do režimu celoobrazovkového zobrazení.">
 <!ENTITY startup.done6.heading		"Najdi videa:">
-<!ENTITY startup.done6.text		"Průvodce kanálem $shortAppName obsahuje stovky kanálů internetových televizí a všechny jsou zdarma. Prostě pokud chcete nějaký kanál sledovat, klikněte na 'PŘIDEJ'.">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Ano">
 <!ENTITY startup.answer.no		"Ne">
 <!ENTITY startup.title			"Počáteční nastavení $shortAppName">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Zvětši:">
 <!ENTITY startup.done5.text		"Tlačítko napravo od přehrávání přepne do režimu celoobrazovkového zobrazení.">
 <!ENTITY startup.done6.heading		"Najdi videa:">
-<!ENTITY startup.done6.text		"Průvodce kanálem $shortAppName obsahuje stovky kanálů internetových televizí a všechny jsou zdarma. Prostě pokud chcete nějaký kanál sledovat, klikněte na 'PŘIDEJ'.">
+<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Ano">
 <!ENTITY startup.answer.no		"Ne">

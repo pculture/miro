@@ -1,41 +1,41 @@
 <!ENTITY prefs.title "אפשרויות">
 <!ENTITY prefs.restart "(אזהרה: השינויים לא יכנסו לתוקף עד שלא תפעילו מחדש את $longAppName.)">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
+<!ENTITY prefs.run.on.startup "הפעל אוטומטית את $longAppName כשאני מתחבר למערכת.">
 <!ENTITY prefs.close_to_tray_start "כשאני מקליד על כפתור הסגירה האדום:">
 <!ENTITY prefs.close_to_tray "סגירה למגש מערכת כך שההורדות יוכלו להמשיך.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.no_close_to_tray "צא ממירו לחלוטין.">
 
 <!ENTITY prefs.general "כללי">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general.warn_on_quit "הזהר אותי כאשר אני מנסה לצאת וישנן הורדות פעילות ברקע.">
 
 <!ENTITY prefs.channels "ערוצים">
-<!ENTITY prefs.channels.check "Check channels for new content">
+<!ENTITY prefs.channels.check "בדוק תוכן חדש בערוצים">
 <!ENTITY prefs.channels.check.thirty "כל 30 דקות">
 <!ENTITY prefs.channels.check.sixty "כל שעה">
 <!ENTITY prefs.channels.check.manually "ידנית">
 
 <!ENTITY prefs.playback "השמעה">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
-<!ENTITY prefs.playback.auto.next.video "נגן וידאו אחד אחרי השני">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback.remember.pos "זכור היכן הפסקתי לצפות בוידאו והמשך מנקודה זו.">
+<!ENTITY prefs.playback.auto.next.video "נגן קבצי וידאו אחד אחרי השני.">
+<!ENTITY prefs.playback.stop.after.each "נגן וידאו אחד, ואז עצור.">
 
 <!ENTITY prefs.folder.movies "תיקיות">
 <!ENTITY prefs.folder.downloads "אחסון קטעי וידאו שירדו בתוך התיקייה:">
 <!ENTITY prefs.folder.change "שנה ...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
+<!ENTITY prefs.folder.others.caption "חפש קבצי וידאו חדשים בתיקיות האלה והוסף אותם לספרייה שלי.">
+<!ENTITY prefs.folder.others.location "תיקייה">
+<!ENTITY prefs.folder.others.shown "הראה כערוץ">
 <!ENTITY prefs.folder.others.add "הוסף תיקייה...">
 <!ENTITY prefs.folder.others.remove "הסר">
 
 <!ENTITY prefs.downloads.max "הורדות">
-<!ENTITY prefs.downloads.max.part1 "Download at most">
-<!ENTITY prefs.downloads.max.part2 "סרטים בו זמנית.">
+<!ENTITY prefs.downloads.max.part1 "הורד לכל היותר">
+<!ENTITY prefs.downloads.max.part2 "קבצי וידאו בו-זמנית.">
 
 <!ENTITY prefs.disk.space "מקום בכונן">
-<!ENTITY prefs.disk.space.min.part1 "אל תתחיל להוריד עם משאיר פחות מ">
+<!ENTITY prefs.disk.space.min.part1 "אל תתחיל להוריד אם זה משאיר פחות מ-">
 <!ENTITY prefs.disk.space.min.part2 "GB פנוי">
 <!ENTITY prefs.disk.space.warning.restart "אזהרה: השינויים לא יכנסו לתוקף עד שלא תפעילו מחדש את $longAppName.">
 
@@ -47,9 +47,9 @@
 <!ENTITY prefs.videos.expire.thirty "חודש אחד">
 <!ENTITY prefs.videos.expire.never "לעולם לא">
 
-<!ENTITY prefs.torrent "BitTorrent">
+<!ENTITY prefs.torrent "ביטורנט">
 <!ENTITY prefs.torrent.restart.warning "(אזהרה: השינויים לא יכנסו לתוקף עד שלא תפעילו מחדש את $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "על מנת להימנע מהאטה, הגבל העלה ל">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s מתי שהמחשב שלי הוא פעיל">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
+<!ENTITY prefs.torrent.limit.upstream.part1 "כדי להימנע מהאטות, הגבל את קצב ההעלאה כאשר המחשב שלי פעיל.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "גבול קצב העלאה (קילובייט\שניה)">
+<!ENTITY prefs.torrent.uses.ports.part1 "השתמש בפורטי ביטורנט בין">
 <!ENTITY prefs.torrent.uses.ports.part2 "וגם">

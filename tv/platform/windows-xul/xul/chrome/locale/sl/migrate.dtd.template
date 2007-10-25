@@ -1,4 +1,4 @@
-<!ENTITY migrate.title "Migriram obstoječe videje?">
-<!ENTITY migrate.accept "Migriraj">
-<!ENTITY migrate.cancel "Ne migriraj">
-<!ENTITY migrate.description "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)">
+<!ENTITY migrate.title "Preselim obstoječe posnetke?">
+<!ENTITY migrate.accept "Preselitev">
+<!ENTITY migrate.cancel "Brez preselitve">
+<!ENTITY migrate.description "Izbrali ste novo mapo za prenos posnetkov. Ali naj$shortAppName prestavi obstoječe datoteke na to mesto? (Trenutno dejavni prenosi bodo preneseni, ko se prenos zaključi)">

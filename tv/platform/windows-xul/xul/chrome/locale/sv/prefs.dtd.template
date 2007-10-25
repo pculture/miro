@@ -49,7 +49,7 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(VARNING: Ändringar ger ingen effekt innan du startar om $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "För att undvika långsam anslutning, begränsa sändning till">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s när min dator är aktiv.">
+<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "och">

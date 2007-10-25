@@ -1,5 +1,5 @@
 <!ENTITY prefs.title "ఎంపికలు">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.restart "(హెచ్చరిక: $longAppName ని పునఃప్రారంభించేత వరకు మార్పులు ప్రభావం చూపవు.)">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "When I click the red close button:">
@@ -7,7 +7,7 @@
 <!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
 <!ENTITY prefs.general "సాధారణ">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general.warn_on_quit "దిగుమతి కొనసాగుతున్నప్పుడు నేను త్యజించడానికి ప్రయత్నిస్తే, నన్ను హెచ్చరించు.">
 
 <!ENTITY prefs.channels "వాహినులు">
 <!ENTITY prefs.channels.check "Check channels for new content">
@@ -17,11 +17,11 @@
 
 <!ENTITY prefs.playback "Playback">
 <!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
+<!ENTITY prefs.playback.auto.next.video "ఒకదాని తర్వాత మరో వీడియోను ఆడించు">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
 <!ENTITY prefs.folder.movies "Folders">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.downloads "దిగుమతించిన వీడియోలను ఈ సంచిలో దాచు:">
 <!ENTITY prefs.folder.change "మార్చు...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
@@ -45,11 +45,11 @@
 <!ENTITY prefs.videos.expire.six "6 రోజులు">
 <!ENTITY prefs.videos.expire.ten "10 రోజులు">
 <!ENTITY prefs.videos.expire.thirty "1 నెల">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire.never "ఎప్పుడూకాదు">
 
 <!ENTITY prefs.torrent "BitTorrent">
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream to">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s when my computer is active.">
+<!ENTITY prefs.torrent.restart.warning "(హెచ్చరిక: $longAppName ని పునఃప్రారంభించేత వరకు మార్పులు ప్రభావం చూపవు.)">
+<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "మరియు">

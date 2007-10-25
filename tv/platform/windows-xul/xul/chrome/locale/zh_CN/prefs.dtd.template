@@ -7,7 +7,7 @@
 <!ENTITY prefs.no_close_to_tray "完全退出Miro">
 
 <!ENTITY prefs.general "主选项">
-<!ENTITY prefs.general.warn_on_quit "当下载任务进行时，如果要退出请提醒我">
+<!ENTITY prefs.general.warn_on_quit "当退出时有下载任务运行请提醒我">
 
 <!ENTITY prefs.channels "频道">
 <!ENTITY prefs.channels.check "查找频道的新内容">
@@ -24,7 +24,7 @@
 <!ENTITY prefs.folder.downloads "在这个文件夹保存下载的节目：">
 <!ENTITY prefs.folder.change "更改…">
 
-<!ENTITY prefs.folder.others.caption "观看这些文件夹内的新节目并且把它们加入我的节目库中">
+<!ENTITY prefs.folder.others.caption "监视这些文件夹内的新节目并且把它们加入我的节目库中">
 <!ENTITY prefs.folder.others.location "文件夹">
 <!ENTITY prefs.folder.others.shown "作为一个频道显示">
 <!ENTITY prefs.folder.others.add "添加文件夹...">
@@ -49,7 +49,7 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(警告：更改直到您重启 $longAppName 后才会生效。)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "为了防止速度过慢，上传上限设置为">
-<!ENTITY prefs.torrent.limit.upstream.part2 "千字节/每秒(当我的电脑处于活跃状态时)">
+<!ENTITY prefs.torrent.limit.upstream.part1 "当电脑活动时,为了避免降低下载速度,限制上传带宽.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "限制上传速度 (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "使用一下BT端口">
 <!ENTITY prefs.torrent.uses.ports.part2 "和">

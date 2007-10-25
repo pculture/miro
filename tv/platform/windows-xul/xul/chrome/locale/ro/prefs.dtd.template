@@ -40,16 +40,16 @@
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "În mod standard secvenţele video expiră după">
-<!ENTITY prefs.videos.expire.one "1 day">
+<!ENTITY prefs.videos.expire.one "1 zi">
 <!ENTITY prefs.videos.expire.three "3 zile">
 <!ENTITY prefs.videos.expire.six "6 zile">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
+<!ENTITY prefs.videos.expire.ten "10 zile">
+<!ENTITY prefs.videos.expire.thirty "1 lună">
 <!ENTITY prefs.videos.expire.never "Niciodată">
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Pentru a evita descărcările lente, mareşte stream-ul la">
-<!ENTITY prefs.torrent.limit.upstream.part2 "KB/s cînd calculatorul meu este activ.">
+<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
+<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
 <!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "şi">

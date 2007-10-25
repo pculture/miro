@@ -1,4 +1,4 @@
-<!ENTITY migrate.title "هجّر الأفلام الموجودة ؟">
-<!ENTITY migrate.accept "Migrate">
-<!ENTITY migrate.cancel "Don't Migrate">
-<!ENTITY migrate.description "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)">
+<!ENTITY migrate.title "هجّر الأفلام الموجودة؟">
+<!ENTITY migrate.accept "تهجير">
+<!ENTITY migrate.cancel "لا تهجّر">
+<!ENTITY migrate.description "لقد إخترت مجلّد جديد لتنزيل الأفلام فيه. هل تريد $shortAppName أن يهجّر الملفات المنزلة إلى هناك؟ (كل الأفلام الجارية تنزيلها لن تهجّر حتى تنتهي من التنزيل)">
