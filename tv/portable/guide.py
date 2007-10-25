@@ -45,7 +45,9 @@ def isPartOfGuide(url, guideURL, allowedURLs = None):
     """Return if url is part of a channel guide where guideURL is the base URL
     for that guide.
     """
-    if allowedURLs is None:
+    if guideURL == "*":
+        return True
+    elif allowedURLs is None:
         guideHost = urlparse(guideURL)[1]
         urlHost = urlparse(url)[1]
         return urlHost.endswith(guideHost)

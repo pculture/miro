@@ -626,6 +626,7 @@ class Controller (frontend.Application):
         self.frame = None
         self.inQuit = False
         self.guideURL = None
+        self.guide = None
         self.initial_feeds = False # True if this is the first run and there's an initial-feeds.democracy file.
         self.finishedStartup = False
         self.idlingNotifier = None
@@ -1224,16 +1225,21 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         logging.info ("Shutting down Downloader...")
         downloader.shutdownDownloader(self.downloaderShutdown)
 
+    @eventloop.asUrgent
     def setGuideURL(self, guideURL):
         """Change the URL of the current channel guide being displayed.  If no
         guide is being display, pass in None.
 
         This method must be called from the onSelectedTabChange in the
-        platform code.  URLs that begin with guideURL will be allow through in
-        onURLLoad().
+        platform code.  URLs are legal within guideURL will be allow
+        through in onURLLoad().
         """
+        self.guide = None
         if guideURL is not None:
             self.guideURL = guideURL
+            for guideObj in views.guides:
+                if guideObj.getURL() == controller.guideURL:
+                    self.guide = guideObj
         else:
             self.guideURL = None
 
@@ -1590,8 +1596,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return False
 
             # Let channel guide URLs pass through
-            if (controller.guideURL is not None and
-                    guide.isPartOfGuide(url, controller.guideURL, [config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)])):
+            if controller.guide is not None and \
+                   controller.guide.isPartOfGuide(url):
                 controller.setLastVisitedGuideURL(url)
                 return True
             if url.startswith(u'file://'):
