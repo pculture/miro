@@ -2412,34 +2412,17 @@ def _defaultFeeds():
         return
     logging.info("Adding default feeds")
     if platform.system() == 'Darwin':
-        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/mac/mac.rss.php']
+        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/mac/mac.feed.rss']
     elif platform.system() == 'Windows':
-        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.rss.php']
+        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
     else:
-        defaultFeedURLs = []
-    defaultFeedURLs.extend([ (_('News and Tech'),
-                         [u'http://jetset.blip.tv/?skin=rss',
-                          u'http://revision3.com/diggnation/feed/quicktime-large',
-                          u'http://www.democracynow.org/podcast-video.xml',
-                          u'http://podcast.msnbc.com/audio/podcast/MSNBC-NN-NETCAST-M4V.xml',
-                          u'http://feeds.feedburner.com/TEDTalks_video']),
-                        (_('Entertainment'),
-                         [u'http://feeds.feedburner.com/Terravideos',
-                          u'http://feeds.feedburner.com/AskANinja',
-                          u'http://feeds.feedburner.com/Theburg/',
-                          u'http://feeds.theonion.com/OnionNewsNetwork']),
-
-                        (_('High-Def'),
-                         [u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml',
-                          u'http://www.telemusicvision.com/videos/rss.php',
-                          u'http://www.spacetelescope.org/rss/vodcast.xml'])
-                        ])
-    if platform.system() == "Darwin":
-        defaultFeedURLs.append(
-            (_('Mac'),
-             [u'http://feeds.feedburner.com/MacProPodcast',
-              u'http://libsyn.com/podcasts/donmc/_static/scoipod.xml',
-              u'http://feeds.macworld.com/macworld/video']))
+        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
+    defaultFeedURLs.extend([ (_('Starter Channels'),
+                              [u'http://richie-b.blip.tv/posts/?skin=rss',
+                               u'http://feeds.pbs.org/pbs/kcet/wiredscience-video',
+                               u'http://www.jpl.nasa.gov/multimedia/rss/podfeed-hd.xml',
+                               u'http://www.linktv.org/rss/hq/mosaic.xml']),
+                           ])
 
     for default in defaultFeedURLs:
         print repr(default)
