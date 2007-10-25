@@ -284,8 +284,13 @@ class UIBackendDelegate:
             else:
                 raise
         if (value):
-            filename = os.path.join(resources.resourceRoot(),"..",("%s.exe" % config.get(prefs.SHORT_APP_NAME)))
+            # We don't use the app name for the .exe, so branded
+            # versions work
+            filename = os.path.join(resources.resourceRoot(),"..","Miro.exe")
             filename = os.path.normpath(filename)
+            themeName = config.get(prefs.THEME_NAME)
+            if themeName is not None:
+                filename = "%s --theme \"%s\"" % (filename, themeName.replace("\\","\\\\").replace('"','\\"'))
             _winreg.SetValueEx(folder, config.get(prefs.LONG_APP_NAME), 0,_winreg.REG_SZ, filename)
         else:
             try:
