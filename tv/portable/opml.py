@@ -174,7 +174,7 @@ class Importer (object):
         url = entry.getAttribute("xmlUrl")
         f = feed.getFeedByURL(url)
         if f is None:
-            f = feed.Feed(url)
+            f = feed.Feed(url, False)
             if self.currentFolder is not None:
                 f.setFolder(self.currentFolder)
                 f.blink()
