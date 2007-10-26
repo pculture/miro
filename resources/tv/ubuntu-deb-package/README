@@ -16,11 +16,12 @@ Debian packages.  Here's how to use it:
    
    Make sure your date string is in RFC-2822 format.  Use "date -R".
 
-3) Run build.py [version number] [distro name] [URL to source tarball]
+3) Run build.py [version number] [distro name] [source tarball url/path]
 
    For example:
       build.py 0.9.5 feisty http://example.com/Democracy-0.9.5.tar.gz
       build.py 0.9.9.9-rc0 gutsy http://example.com/Miro-0.9.9.9-rc0.tar.gz
+      build.py 0.9.9.9-rc0 gutsy ./Miro-0.9.9.9-rc0.tar.gz
 
 4) If everything goes well, you should have your packages in a directory named
    feisty (or whatever distro name you used).  This includes binary packages,
@@ -29,7 +30,12 @@ Debian packages.  Here's how to use it:
    README.
 
 5) To create an apt repository, combine all the .deb packages for one distro
-   into a single dir.  Then run:
+   into a single dir.
+
+   For Ubuntu, this includes packages for i386 and amd64 as well as packages 
+   for the previous version.  
+
+   Then run:
 
    apt-ftparchive packages <directory> | gzip > <directory>/Packages.gz
    apt-ftparchive sources <directory> | gzip > <directory>/Sources.gz
@@ -44,5 +50,7 @@ Debian packages.  Here's how to use it:
      $ miro
 
 7) Once the build and the package itself works, clean up the debian/ directory:
+
    $ fakeroot debian/rules clean
+
    Then check in the updated debian/ directory to svn.
