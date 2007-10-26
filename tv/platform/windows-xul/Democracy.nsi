@@ -41,6 +41,7 @@ Var APP_NAME ; Used in text within the program
 Var ONLY_INSTALL_THEME
 Var THEME_TEMP_DIR
 Var INITIAL_FEEDS
+Var TACKED_ON_FILE
 
 ; Runs in tv/platform/windows-xul/dist, so 4 ..s.
 !addplugindir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
@@ -570,10 +571,10 @@ Function .onInit
   StrCpy $APP_NAME "${CONFIG_LONG_APP_NAME}"
 
 
-  !tempfile TACKED_ON_FILE
-  Delete "${TACKED_ON_FILE}"  ; The above macro creates the file
-  TackOn::writeToFile "${TACKED_ON_FILE}"
-  FileOpen $0 "${TACKED_ON_FILE}" r
+  GetTempFileName $TACKED_ON_FILE
+  Delete "$TACKED_ON_FILE"  ; The above macro creates the file
+  TackOn::writeToFile "$TACKED_ON_FILE"
+  FileOpen $0 "$TACKED_ON_FILE" r
   IfErrors no_tackon
 
   ; If file starts with 0x50 0x4b 0x03 0x04, it's a zip file
@@ -593,7 +594,7 @@ Function .onInit
   !tempfile THEME_TEMP_DIR
   StrCpy $THEME_TEMP_DIR ${THEME_TEMP_DIR}
   Delete "$THEME_TEMP_DIR"  ; The above macro creates the file
-  !insertmacro ZIPDLL_EXTRACT "${TACKED_ON_FILE}" "$THEME_TEMP_DIR" <ALL>
+  !insertmacro ZIPDLL_EXTRACT "$TACKED_ON_FILE" "$THEME_TEMP_DIR" <ALL>
 
   StrCpy $R0 "$THEME_TEMP_DIR"
   Call GetThemeVersion
@@ -615,11 +616,10 @@ error_in_theme:
 non_zip_tackon:  ; non-zip tacked on file
 
   FileClose $0
-  StrCpy $INITIAL_FEEDS "${TACKED_ON_FILE}"
+  StrCpy $INITIAL_FEEDS "$TACKED_ON_FILE"
 
 no_tackon:
   ClearErrors
-  !undef TACKED_ON_FILE
 
   ; Is the app running?  Stop it if so.
 TestRunning:
