@@ -100,18 +100,11 @@ elif options.profile:
 else:
     try:
         import dbus
-        try:
-            import dbus_bindings
-        except ImportError, main_error:
-            try:
-                dbus_bindings = dbus.dbus_bindings
-            except:
-                raise main_error
         import onetime
         try:
             onetime.OneTime()
             startapp()
-        except onetime.NameExistsException:
+        except dbus.NameExistsException:
             bus = dbus.SessionBus()
             proxy_obj = bus.get_object('org.participatoryculture.dtv.onetime', '/org/participatoryculture/dtv/OneTime')
             iface = dbus.Interface(proxy_obj, 'org.participatoryculture.dtv.OneTimeIface')
@@ -120,7 +113,7 @@ else:
             dbusargs = dbus.Array(args, signature="s")
     
             iface.HandleArgs(dbusargs)
-        except dbus_bindings.DBusException:
+        except dbus.DBusException:
             startapp()
     except ImportError:
         startapp()
