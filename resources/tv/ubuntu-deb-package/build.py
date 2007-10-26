@@ -18,10 +18,14 @@ def call(cmd):
 
 def usage():
     sys.stderr.write("""\
-Usage: build.py [version] [distribution-name] [source tarball url]
+Usage: build.py [version] [distribution-name] [source tarball path/url]
 
-For example:
+Examples:
+
     build.py 0.9.5 feisty http://example.com/Miro-0.9.5.tar.gz
+    build.py 0.9.9.9-rc0 gutsy http://example.com/Miro-0.9.9.9-rc0.tar.gz
+
+    build.py 0.9.5 feisty ./Miro-0.9.5.tar.gz
 """)
     sys.exit(1)
 
@@ -42,7 +46,7 @@ print """\
 Version: %s
 Distribution: %s
 Debian directory: %s
-Tarball URL: %s
+Tarball Path/URL: %s
 
 Press enter to continue, Ctrl-C to cancel.
 """ % (version, distro, debian_dir, tarball_url)
@@ -52,10 +56,18 @@ debian_dir = os.path.abspath(debian_dir)
 if os.path.exists('build-tmp'):
     shutil.rmtree('build-tmp')
 os.mkdir('build-tmp')
-os.chdir('build-tmp')
 
-print "downloading tarball"
-call('wget %s' % tarball_url)
+if tarball_url.startswith("http"):
+    # change directories, then wget the tarball
+    print "downloading tarball"
+    os.chdir('build-tmp')
+    call('wget %s' % tarball_url)
+else:
+    # copy the tarball, then switch directories
+    print "copying tarball"
+    call('cp %s build-tmp/' % tarball_url)
+    os.chdir('build-tmp')
+
 print "extracting files"
 call('tar zxvf %s' %  tarball_name)
 os.rename('Miro-%s' % version, 'miro-%s' % version)
