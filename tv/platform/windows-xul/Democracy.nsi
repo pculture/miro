@@ -24,7 +24,7 @@
 !define OLD_UNINSTALL_SHORTCUT1 "Uninstall Democracy Player.lnk"
 !define OLD_UNINSTALL_SHORTCUT2 "Uninstall Democracy.lnk"
 
-Name "${CONFIG_LONG_APP_NAME} ${CONFIG_VERSION}"
+Name "$APP_NAME"
 OutFile "${CONFIG_OUTPUT_FILE}"
 InstallDir "$PROGRAMFILES\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
 InstallDirRegKey HKLM "${INST_KEY}" "Install_Dir"
@@ -92,7 +92,9 @@ Var TACKED_ON_FILE
 !insertmacro MUI_PAGE_INSTFILES
 
 ; Finish page
-!define MUI_FINISHPAGE_RUN "$INSTDIR\${CONFIG_EXECUTABLE}"
+!define MUI_FINISHPAGE_RUN
+!define MUI_FINISHPAGE_RUN_TEXT "Run $APP_NAME"
+!define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
 !define MUI_FINISHPAGE_LINK \
   "${CONFIG_PUBLISHER} homepage."
 !define MUI_FINISHPAGE_LINK_LOCATION "${CONFIG_PROJECT_URL}"
@@ -325,6 +327,12 @@ Function GetShortcutInfo
 
 done:
 
+FunctionEnd
+
+Function LaunchLink
+  SetShellVarContext all
+  Call GetShortcutInfo
+  ExecShell "" "$SMPROGRAMS\$STARTMENU_FOLDER\$R2"
 FunctionEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -609,7 +617,10 @@ Function .onInit
   Call GetConfigOption
   Pop $THEME_NAME
   StrCmp "$THEME_NAME" "" error_in_theme
-  StrCpy $APP_NAME "$THEME_NAME"
+  StrCpy $R0 "longAppName"
+  StrCpy $R1 "$THEME_TEMP_DIR\app.config"
+  Call GetConfigOption
+  Pop $APP_NAME
   Goto no_tackon
 
 error_in_theme:
