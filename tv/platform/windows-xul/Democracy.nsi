@@ -427,17 +427,20 @@ files_ok:
     DeleteRegValue HKLM  "Software\Microsoft\Windows\CurrentVersion\Run" "${CONFIG_LONG_APP_NAME}"
     WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "${CONFIG_LONG_APP_NAME}" $R0
 
+  StrCpy $R3 '$INSTDIR\${CONFIG_EXECUTABLE} "%1"'
+  StrCmp $THEME_NAME "" install_reg_keys
+  StrCpy $R3 '$INSTDIR\${CONFIG_EXECUTABLE} --theme "$THEME_NAME" "%1"'
+
+install_reg_keys:
   ; Create a ProgID for Democracy
   WriteRegStr HKCR "${CONFIG_PROG_ID}" "" "${CONFIG_LONG_APP_NAME}"
   WriteRegDword HKCR "${CONFIG_PROG_ID}" "EditFlags" 0x00010000
   ; FTA_OpenIsSafe flag
   WriteRegStr HKCR "${CONFIG_PROG_ID}\shell" "" "open"
   WriteRegStr HKCR "${CONFIG_PROG_ID}\DefaultIcon" "" "$INSTDIR\${CONFIG_EXECUTABLE},0"
-  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\open\command" "" \
-    '$INSTDIR\${CONFIG_EXECUTABLE} "%1"'
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\open\command" "" "$R3"
   WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\edit" "" "Edit Options File"
-  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\edit\command" "" \
-    '$INSTDIR\${CONFIG_EXECUTABLE} "%1"'
+  WriteRegStr HKCR "${CONFIG_PROG_ID}\shell\edit\command" "" "$R3"
 
   ; Delete our old, poorly formatted ProgID
   DeleteRegKey HKCR "DemocracyPlayer"
