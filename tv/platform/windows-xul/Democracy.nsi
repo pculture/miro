@@ -403,13 +403,13 @@ install_theme:
   RMDir /r "$R0"
   ClearErrors
   CreateDirectory "$R0"
-  CopyFiles "$THEME_TEMP_DIR\*.*" "$R0"
+  CopyFiles /SILENT "$THEME_TEMP_DIR\*.*" "$R0"
 done_installing_theme:
 
   StrCmp $INITIAL_FEEDS "" done_installing_initial_feeds
 
   CreateDirectory "$INSTDIR\resources\"
-  CopyFiles "$INITIAL_FEEDS" "$INSTDIR\resources\initial-feeds.democracy"
+  CopyFiles /SILENT "$INITIAL_FEEDS" "$INSTDIR\resources\initial-feeds.democracy"
 
 done_installing_initial_feeds:
 
