@@ -68,7 +68,7 @@ class Application:
     def checkOtherAppInstances(self):
         ourBundleIdentifier = NSBundle.mainBundle().bundleIdentifier()
         applications = NSWorkspace.sharedWorkspace().launchedApplications()
-        democracies = [appl for appl in applications if appl['NSApplicationBundleIdentifier'] == ourBundleIdentifier]
+        democracies = [appl for appl in applications if appl.get('NSApplicationBundleIdentifier') == ourBundleIdentifier]
         alone = len(democracies) == 1
 
         if not alone:
