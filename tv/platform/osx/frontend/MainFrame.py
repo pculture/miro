@@ -243,7 +243,10 @@ class MainController (NibClassBuilder.AutoBaseClass):
         contentBox.setFrameOrigin_((tabSize.width + dividerWidth, 0))
 
     def splitView_canCollapseSubview_(self, sender, subview):
-        return self.channelsHostView.isDescendantOf_(subview) and app.controller.videoDisplay.isSelected()
+        if hasattr(app.controller, 'videoDisplay'):
+            return self.channelsHostView.isDescendantOf_(subview) and app.controller.videoDisplay.isSelected()
+        else:
+            return NO
 
     ### Events ###
 
