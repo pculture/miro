@@ -1253,7 +1253,8 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             logging.warn("setLastVisitedGuideURL called, but a channelguide "
                     "isn't selected.  Selection: %s" % selectedObjects)
             return
-        if selectedObjects[0].isPartOfGuide(url):
+        if selectedObjects[0].isPartOfGuide(url) and (
+            url.startswith(u"http://") or url.startswith(u"https://")):
             selectedObjects[0].lastVisitedURL = url
         else:
             logging.warn("setLastVisitedGuideURL called, but the guide is no "
