@@ -21,6 +21,69 @@ import dbus.service
 if getattr(dbus, 'version', (0,0,0)) >= (0,41,0):
     import dbus.glib
 
+import inspect
+def has_argument(fun, arg):
+    return arg in inspect.getargspec(fun)[0]
+
+if has_argument(dbus.service.BusName.__new__, "do_not_queue"):
+    BusName = dbus.service.BusName
+else:
+    import dbus.dbus_bindings
+
+    dbus_bindings_consts = {
+        'REQUEST_NAME_REPLY_PRIMARY_OWNER' : 1,
+        'REQUEST_NAME_REPLY_IN_QUEUE': 2,
+        'REQUEST_NAME_REPLY_EXISTS': 3,
+        'REQUEST_NAME_REPLY_ALREADY_OWNER': 4,
+        'NAME_FLAG_DO_NOT_QUEUE' : 4
+    }
+    for key, value in dbus_bindings_consts.items():
+        try:
+            getattr(dbus.dbus_bindings, key)
+        except AttributeError:
+            setattr(dbus.dbus_bindings, key, value)
+
+    class BusNameWithQueue(dbus.service.BusName):
+        def __new__(cls, name, bus=None, flags=0, do_not_queue=False):
+            # get default bus
+            if bus == None:
+                bus = dbus.Bus()
+    
+            # otherwise register the name
+            conn = bus.get_connection()
+            retval = dbus.dbus_bindings.bus_request_name(conn, name, flags)
+    
+            # TODO: more intelligent tracking of bus name states?
+            if retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_PRIMARY_OWNER:
+                pass
+            elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_IN_QUEUE:
+                # queueing can happen by default, maybe we should
+                # track this better or let the user know if they're
+                # queued or not?
+                pass
+            elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_EXISTS:
+                raise NameExistsException(name)
+            elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_ALREADY_OWNER:
+                # if this is a shared bus which is being used by someone
+                # else in this process, this can happen legitimately
+                pass
+            else:
+                raise RuntimeError('requesting bus name %s returned unexpected value %s' % (name, retval))
+    
+            # and create the object
+            bus_name = object.__new__(cls)
+            bus_name._bus = bus
+            bus_name._name = name
+            bus_name._conn = conn
+    
+            return bus_name
+
+        def __repr__(self):
+            return dbus.service.BusName.__repr__ + " [Miro]"
+
+    BusName = BusNameWithQueue    
+
+
 class OneTime (dbus.service.Object):
     """This makes sure we've only got one instance of Miro running at any given time.
     """
