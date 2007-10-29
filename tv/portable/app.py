@@ -1626,14 +1626,17 @@ class TemplateDisplay(frontend.HTMLDisplay):
         handleCandidateExternalURL does extra checks that onURLLoad can't do
         because it's happens in the gui thread and can't access the DB.
         """
-        # check if the url that came from a guide, but the user switched tabs
-        # before it went through.
-        for guideObj in views.guides:
-            if guideObj.isPartOfGuide(url):
-                return
 
         # check for subscribe.getdemocracy.com links
         type, subscribeURLs = subscription.findSubscribeLinks(url)
+
+        # check if the url that came from a guide, but the user switched tabs
+        # before it went through.
+        if len(subscribeURLs) == 0:
+            for guideObj in views.guides:
+                if guideObj.isPartOfGuide(url):
+                    return
+
         normalizedURLs = []
         for url in subscribeURLs:
             normalized = feed.normalizeFeedURL(url)
