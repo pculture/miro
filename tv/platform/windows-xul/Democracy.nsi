@@ -657,15 +657,6 @@ NotOldDownloaderRunning:
   ReadRegStr $R0 HKLM "${INST_KEY}" "InstallDir"
   StrCmp $R0 "" NotCurrentInstalled
  
-; If we're installing a theme for the same version, don't ask about
-; uninstalling
-  StrCmp "$THEME_NAME" "" prompt_for_uninstall
-  ReadRegStr $R0 HKLM "${INST_KEY}" "Version"
-  StrCmp $R0 "${CONFIG_VERSION}" 0 prompt_for_uninstall
-
-  StrCpy $ONLY_INSTALL_THEME "1"
-  Goto NotOldInstalled
-
 prompt_for_uninstall:
   ; Should we uninstall the old one?
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
@@ -800,7 +791,9 @@ Section "Uninstall" SEC91
 
   ${un.GetParameters} $R0
   ${un.GetOptions} "$R0" "--theme" $THEME_NAME
-  IfErrors complete_uninstall
+  IfErrors continue
+
+  StrCmp "$THEME_NAME" "" continue
 
   StrCpy $R0 "longAppName"
   StrCpy $R1 "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME\app.config"
@@ -809,11 +802,6 @@ Section "Uninstall" SEC91
   Delete "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME\*.*"
   RMDir "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME"
 
-  StrCmp $R0 "" 0 continue
-  MessageBox MB_YESNO|MB_ICONEXCLAMATION "Miro theme $THEME_NAME appears to already be uninstalled$\r$\nDo you wish to uninstall Miro completely?" IDYES complete_uninstall
-  Quit
-
-continue:
   !insertmacro MUI_STARTMENU_GETFOLDER Application $R1
   Delete "$SMPROGRAMS\$R1\$R0.lnk"
   Delete "$SMPROGRAMS\$R1\Uninstall $R0.lnk"
@@ -822,11 +810,9 @@ continue:
   Delete "$QUICKLAUNCH\$R0.lnk"
 
   RMDir "$SMPROGRAMS\$R1"
-  IfFileExists "$SMPROGRAMS\$R1" done
 
-  MessageBox MB_YESNO|MB_ICONEXCLAMATION "It looks like $THEME_NAME was the last Miro theme you had installed$\r$\nDo you wish to uninstall Miro completely?" IDNO done
-
-complete_uninstall:
+continue:
+  ClearErrors
   !insertmacro uninstall $INSTDIR
   RMDIR "$PROGRAMFILES\${CONFIG_PUBLISHER}"
 
