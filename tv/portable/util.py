@@ -15,6 +15,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
+"""util.py -- Utility functions.
+
+This module contains self-contained utility functions.  It shouldn't import
+any other Miro modules.
+"""
+
 import os
 import random
 import re
@@ -31,17 +37,11 @@ import threading
 import traceback
 import subprocess
 
-from clock import clock
 from types import UnicodeType, StringType
 from BitTorrent.bencode import bdecode, bencode
 
 # Should we print out warning messages.  Turn off in the unit tests.
 chatter = True
-
-inDownloader = False
-# this gets set to True when we're in the download process.
-
-ignoreErrors = False
 
 # Perform escapes needed for Javascript string contents.
 def quoteJS(x):
@@ -61,14 +61,14 @@ def getNiceStack():
         (isinstance(stack[0][3], str) and 
             stack[0][3].startswith('unittest.main'))):
         stack = stack[1:]
-    # remove after the call to util.failed
+    # remove after the call to signals.system.failed
     for i in xrange(len(stack)):
-        if (os.path.basename(stack[i][0]) == 'util.py' and 
-                stack[i][2] in ('failed', 'failedExn')):
+        if (os.path.basename(stack[i][0]) == 'signals.py' and 
+                stack[i][2] in ('system.failed', 'system.failedExn')):
             stack = stack[:i+1]
             break
     # remove trapCall calls
-    stack = [i for i in stack if i[2] != 'trapCall']
+    stack = [i for i in stack if 'trapCall' in i]
     return stack
 
 # Parse a configuration file in a very simple format. Each line is
@@ -154,157 +154,10 @@ def failedExn(when, **kwargs):
 # to. If 'detail' is true, it will be included in the report and the
 # the console/log, but not presented in the dialog box flavor text.
 def failed(when, withExn = False, details = None):
-    logging.info ("failed() called; generating crash report.")
-
-    header = ""
-    try:
-        import config # probably works at runtime only
-        import prefs
-        header += "App:        %s\n" % config.get(prefs.LONG_APP_NAME)
-        header += "Publisher:  %s\n" % config.get(prefs.PUBLISHER)
-        header += "Platform:   %s\n" % config.get(prefs.APP_PLATFORM)
-        header += "Python:     %s\n" % sys.version.replace("\r\n"," ").replace("\n"," ").replace("\r"," ")
-        header += "Py Path:    %s\n" % repr(sys.path)
-        header += "Version:    %s\n" % config.get(prefs.APP_VERSION)
-        header += "Serial:     %s\n" % config.get(prefs.APP_SERIAL)
-        header += "Revision:   %s\n" % config.get(prefs.APP_REVISION)
-        header += "Builder:    %s\n" % config.get(prefs.BUILD_MACHINE)
-        header += "Build Time: %s\n" % config.get(prefs.BUILD_TIME)
-    except KeyboardInterrupt:
-        raise
-    except:
-        pass
-    header += "Time:       %s\n" % time.asctime()
-    header += "When:       %s\n" % when
-    header += "\n"
-
-    if withExn:
-        header += "Exception\n---------\n"
-        header += ''.join(traceback.format_exception(*sys.exc_info()))
-        header += "\n"
-    if details:
-        header += "Details: %s\n" % (details, )
-    header += "Call stack\n----------\n"
-    try:
-        stack = getNiceStack()
-    except KeyboardInterrupt:
-        raise
-    except:
-        stack = traceback.extract_stack()
-    header += ''.join(traceback.format_list(stack))
-    header += "\n"
-
-    header += "Threads\n-------\n"
-    header += "Current: %s\n" % threading.currentThread().getName()
-    header += "Active:\n"
-    for t in threading.enumerate():
-        header += " - %s%s\n" % \
-            (t.getName(),
-             t.isDaemon() and ' [Daemon]' or '')
-
-    # Combine the header with the logfile contents, if available, to
-    # make the dialog box crash message. {{{ and }}} are Trac
-    # Wiki-formatting markers that force a fixed-width font when the
-    # report is pasted into a ticket.
-    report = "{{{\n%s}}}\n" % header
-
-    def readLog(logFile, logName="Log"):
-        try:
-            f = open(logFile, "rt")
-            logContents = "%s\n---\n" % logName
-            logContents += f.read()
-            f.close()
-        except KeyboardInterrupt:
-            raise
-        except:
-            logContents = ''
-        return logContents
-
-    logFile = config.get(prefs.LOG_PATHNAME)
-    downloaderLogFile = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
-    if logFile is None:
-        logContents = "No logfile available on this platform.\n"
-    else:
-        logContents = readLog(logFile)
-    if downloaderLogFile is not None:
-        if logContents is not None:
-            logContents += "\n" + readLog(downloaderLogFile, "Downloader Log")
-        else:
-            logContents = readLog(downloaderLogFile)
-
-    if logContents is not None:
-        report += "{{{\n%s}}}\n" % stringify(logContents)
-
-    # Dump the header for the report we just generated to the log, in
-    # case there are multiple failures or the user sends in the log
-    # instead of the report from the dialog box. (Note that we don't
-    # do this until we've already read the log into the dialog
-    # message.)
-    logging.info ("----- CRASH REPORT (DANGER CAN HAPPEN) -----")
-    logging.info (header)
-    logging.info ("----- END OF CRASH REPORT -----")
-
-    if not inDownloader:
-        try:
-            import dialogs
-            from gtcache import gettext as _
-            if not ignoreErrors:
-                chkboxdialog = dialogs.CheckboxTextboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, _("Describe what you were doing that caused this error"), dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
-                chkboxdialog.run(lambda x: _sendReport(report, x))
-        except Exception, e:
-            logging.exception ("Execption when reporting errror..")
-    else:
-        from dl_daemon import command, daemon
-        c = command.DownloaderErrorCommand(daemon.lastDaemon, report)
-        c.send()
-
-def _sendReport(report, dialog):
-    def callback(result):
-        app.controller.sendingCrashReport -= 1
-        if result['status'] != 200 or result['body'] != 'OK':
-            logging.warning(u"Failed to submit crash report. Server returned %r" % result)
-        else:
-            logging.info(u"Crash report submitted successfully")
-    def errback(error):
-        app.controller.sendingCrashReport -= 1
-        logging.warning(u"Failed to submit crash report %r" % error)
-
-    import dialogs
-    import httpclient
-    import config
-    import prefs
-    import app
-
-    global ignoreErrors
-    if dialog.choice == dialogs.BUTTON_IGNORE:
-        ignoreErrors = True
-        return
-
-    backupfile = None
-    if hasattr(dialog,"checkbox_value") and dialog.checkbox_value:
-        try:
-            logging.info("Sending entire database")
-            import database
-            backupfile = database.defaultDatabase.liveStorage.backupDatabase()
-        except:
-            traceback.print_exc()
-            logging.warning(u"Failed to backup database")
-
-
-    description = u"Description text not implemented"
-    if hasattr(dialog,"textbox_value"):
-        description = dialog.textbox_value
-
-    description = description.encode("utf-8")
-    postVars = {"description":description,
-                "app_name": config.get(prefs.LONG_APP_NAME),
-                "log": report}
-    if backupfile:
-        postFiles = {"databasebackup": {"filename":"databasebackup.zip", "mimetype":"application/octet-stream", "handle":open(backupfile, "rb")}}
-    else:
-        postFiles = None
-    app.controller.sendingCrashReport += 1
-    httpclient.grabURL("http://participatoryculture.org/bogondeflector/index.php", callback, errback, method="POST", postVariables = postVars, postFiles = postFiles)
+    logging.warn("util.failed is deprecated.  Use system.signals.failed\n"
+            "stack:\n%s" % ''.join(traceback.format_stack()))
+    import signals
+    signals.system.failed(when, withExn, details)
 
 class AutoflushingStream:
     """Converts a stream to an auto-flushing one.  It behaves in exactly the
@@ -337,57 +190,6 @@ def makeDummySocketPair():
     second, address = dummy_server.accept()
     dummy_server.close()
     return first, second
-
-def trapCall(when, function, *args, **kwargs):
-    """Make a call to a function, but trap any exceptions and do a failedExn
-    call for them.  Return True if the function successfully completed, False
-    if it threw an exception
-    """
-
-    try:
-        function(*args, **kwargs)
-        return True
-    except KeyboardInterrupt:
-        raise
-    except:
-        failedExn(when)
-        return False
-
-# Turn the next flag on to track the cumulative time for each when argument to
-# timeTrapCall().  Don't do this for production builds though!  Since we never
-# clean up the entries in the cumulative dict, turning this on amounts to a
-# memory leak.
-TRACK_CUMULATIVE = False 
-cumulative = {}
-cancel = False
-
-def timeTrapCall(when, function, *args, **kwargs):
-    global cancel
-    cancel = False
-    start = clock()
-    retval = trapCall (when, function, *args, **kwargs)
-    end = clock()
-    if cancel:
-        return retval
-    if end-start > 1.0:
-        logging.timing ("WARNING: %s too slow (%.3f secs)",
-            when, end-start)
-    if TRACK_CUMULATIVE:
-        try:
-            total = cumulative[when]
-        except KeyboardInterrupt:
-            raise
-        except:
-            total = 0
-        total += end - start
-        cumulative[when] = total
-        return retval
-        if total > 5.0:
-            logging.timing ("%s cumulative is too slow (%.3f secs)",
-                when, total)
-            cumulative[when] = 0
-    cancel = True
-    return retval
 
 def getTorrentInfoHash(path):
     f = open(path, 'rb')

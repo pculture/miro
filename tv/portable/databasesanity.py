@@ -27,7 +27,7 @@ used to do sanity checks on old databases.
 
 import item
 import feed
-import util
+import signals
 import guide
 
 class DatabaseInsaneError(Exception):
@@ -187,7 +187,8 @@ def checkSanity(objectList, fixIfPossible=True, quiet=False, reallyQuiet=False):
         errorMsg += "\n".join(errors)
         if fixIfPossible:
             if not quiet:
-                util.failed(when="While checking database", details=errorMsg)
+                signals.system.failed(when="While checking database", 
+                        details=errorMsg)
             elif not reallyQuiet:
                 print "WARNING: Database sanity error"
                 print errorMsg

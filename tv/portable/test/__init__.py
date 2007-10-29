@@ -38,4 +38,5 @@ from test.utiltest import *
 from test.playlisttest import *
 from test.unicodetest import *
 from test.databaseupgradetest import *
+from test.signalstest import *
 import test.bmachinetest

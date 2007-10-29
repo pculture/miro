@@ -15,7 +15,6 @@ from test.framework import EventLoopTest
 class TestConvert(EventLoopTest):
     def setUp(self):
         storedatabase.skipOnRestore = True
-        self.utilDotFailedOkay = True
         self.tmpPath = tempfile.mktemp()
         EventLoopTest.setUp(self)
 

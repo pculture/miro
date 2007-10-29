@@ -8,6 +8,7 @@ import downloader
 import views
 import util
 import databaseupgrade
+import signals
 import storedatabase
 import subscription
 import selection
@@ -67,25 +68,17 @@ class DemocracyTestCase(unittest.TestCase):
         views.initialize()
         # reset the event loop
         util.chatter = False
-        self.oldUtilDotFailed = util.failed
-        self.failedCalled = False
-        self.utilDotFailedOkay = False
-        def newUtilDotFailed(*args, **kwargs):
-            if self.utilDotFailedOkay:
-                self.failedCalled = True
-            else:
-                print "util.failed called!"
-                print "args: %s kwargs: %s"  % (args, kwargs)
-                import traceback
-                if kwargs.get('withExn'):
-                    traceback.print_exc()
-                else:
-                    traceback.print_stack()
-                raise Exception("util.failed called")
-        util.failed = newUtilDotFailed
+        self.sawError = False
+        self.errorSignalOkay = False
+        signals.system.connect('error', self.handle_error)
         app.controller = DummyController()
 
     def tearDown(self):
+        try:
+            signals.system.disconnect('error', self.handle_error)
+        except KeyError:
+            raise AssertionError("Exception disconnecting the error callback."
+                    "  Did you forget to call DemocracyTestCase.setUp()?")
         util.chatter = True
 
         # Remove any leftover database
@@ -93,6 +86,12 @@ class DemocracyTestCase(unittest.TestCase):
 
         # Remove anything that may have been accidentally queued up
         eventloop._eventLoop = eventloop.EventLoop()
+
+    def handle_error(self, obj, report):
+        if self.errorSignalOkay:
+            self.sawError = True
+        else:
+            raise Exception("error signal")
 
 class EventLoopTest(DemocracyTestCase):
     def setUp(self):

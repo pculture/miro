@@ -52,6 +52,7 @@ import idlenotifier
 import eventloop
 import searchengines
 import download_utils
+import signals
 
 import os
 import re
@@ -110,7 +111,7 @@ def startupFunction(func):
         try:
             func(*args, **kwargs)
         except:
-            util.failedExn("while finishing starting up")
+            signals.system.failedExn("while finishing starting up")
             frontend.exit(1)
     return wrapped
 
@@ -206,7 +207,7 @@ class PlaybackControllerBase:
                         videoDisplay.stop()
                     self.scheduleExternalPlayback(anItem)
         except:
-            util.failedExn('when trying to play a video')
+            signals.system.failedExn('when trying to play a video')
             self.stop()
 
     def playItemInternally(self, anItem, videoDisplay, videoRenderer):
@@ -612,6 +613,7 @@ import frontend
 ###############################################################################
 #### The main application controller object, binding model to view         ####
 ###############################################################################
+from frontends.html.main import HTMLApplication
 
 class Controller (frontend.Application):
 
@@ -637,7 +639,17 @@ class Controller (frontend.Application):
 
     ### Startup and shutdown ###
 
+    def frontendRefactoringBootstrap(self):
+        # this is just a hack for now until the frontend refactoring is done.
+        try:
+            HTMLApplication().startup()
+        except:
+            import traceback
+            print 'ERROR IN HTMLApplication.startup()'
+            traceback.print_exc()
+
     def onStartup(self, gatheredVideos=None):
+        self.frontendRefactoringBootstrap()
         logging.info ("Starting up %s", config.get(prefs.LONG_APP_NAME))
         logging.info ("Version:    %s", config.get(prefs.APP_VERSION))
         logging.info ("Revision:   %s", config.get(prefs.APP_REVISION))
@@ -878,7 +890,7 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
                 allFeeds = [f for f in feedView]
                 for extra in allFeeds[1:]:
                     extra.remove()
-                util.failed("Too many db objects for %s" % url)
+                signals.system.failed("Too many db objects for %s" % url)
         finally:
             feedView.unlink()
 
@@ -1289,7 +1301,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
                 logging.info ("%s", thread)
 
         except:
-            util.failedExn("while shutting down")
+            signals.system.failedExn("while shutting down")
             frontend.exit(1)
 
     ### Handling config/prefs changes
@@ -1615,8 +1627,8 @@ class TemplateDisplay(frontend.HTMLDisplay):
                 return False
 
         except:
-            details = "Handling action URL '%s'" % (url, )
-            util.failedExn("while handling a request", details = details)
+            signals.system.failedExn("while handling a request", 
+                    details="Handling action URL '%s'" % (url, ))
 
         return True
 
@@ -2521,3 +2533,4 @@ def saveVideo(currentPath, savePath):
         text = _('An error occured while trying to save %s.  Please check that the file has not been deleted and try again.') % util.clampText(name, 50)
         dialogs.MessageBoxDialog(title, text).run()
         logging.warn("Error saving video: %s" % traceback.format_exc())
+

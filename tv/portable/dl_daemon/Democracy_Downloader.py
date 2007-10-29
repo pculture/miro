@@ -25,7 +25,6 @@ def launch():
     import os
     import util
     import logging
-    util.inDownloader = True
     logPath = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
     if logPath is not None:
         if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') == '1':

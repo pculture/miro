@@ -33,6 +33,7 @@ import Queue
 import util
 import database
 import logging
+import trapcall
 
 from clock import clock
 
@@ -63,7 +64,7 @@ class DelayedCall(object):
         if not self.canceled:
             when = "While handling %s" % self.name
             start = clock()
-            util.trapCall(when, self.function, *self.args, **self.kwargs)
+            trapcall.trapCall(when, self.function, *self.args, **self.kwargs)
             end = clock()
             if end-start > 0.5:
                 logging.timing ("%s too slow (%.3f secs)",
@@ -313,7 +314,7 @@ class EventLoop(object):
                     continue
                 when = "While talking to the network"
                 def callbackEvent():
-                    if not util.trapCall(when, function):
+                    if not trapcall.trapCall(when, function):
                         del map[fd] 
                 yield callbackEvent
 

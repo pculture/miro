@@ -8,6 +8,7 @@ class Dummy:
 
 class LinkedListTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.list = fasttypes.LinkedList()
     def test(self):
         temp = Dummy()
@@ -117,6 +118,7 @@ class LinkedListTestCase(DemocracyTestCase):
 
 class SortedListTestCase(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.list = fasttypes.SortedList(self.cmp)
     def cmp(self, obj1, obj2):
         return obj1 < obj2

@@ -24,8 +24,8 @@ backend event loop, while runCallback is called from the frontend event loop.
 """
 
 import config
-import util
 import prefs
+import signals
 from threading import Lock
 
 callbacks = {}
@@ -88,5 +88,5 @@ def runCallback(referrerURL, url):
         rv = callback(url)
         return rv
     except:
-        util.failedExn(when="When running URL callback")
+        signals.system.failedExn(when="When running URL callback")
         return True

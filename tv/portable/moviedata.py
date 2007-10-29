@@ -30,6 +30,7 @@ import eventloop
 import logging
 import config
 import prefs
+import signals
 import util
 
 MOVIE_DATA_UTIL_TIMEOUT = 60
@@ -124,7 +125,7 @@ class MovieDataUpdater:
             except:
                 if self.inShutdown:
                     break
-                util.failedExn("When running external movie data program")
+                signals.system.failedExn("When running external movie data program")
                 self.updateFinished(movieDataInfo.item, -1, None)
 
     def runMovieDataProgram(self, commandLine, env):

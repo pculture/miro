@@ -56,6 +56,7 @@ import eventloop
 import app
 import bsddb.db
 import dialogs
+import system
 import logging
 from zipfile import ZipFile
 import tempfile
@@ -518,7 +519,7 @@ def getObjects(pathname, convertOnFail):
         databasesanity.checkSanity(objects, quiet=True, 
                 reallyQuiet=(not util.chatter))
     except databasesanity.DatabaseInsaneError, e:
-        util.failedExn("When restoring database", e)
+        signals.system.failedExn("When restoring database", e)
         # if the database fails the sanity check, try to restore it anyway.
         # It's better than notheing
     skipOnRestore = oldSkipOnRestore

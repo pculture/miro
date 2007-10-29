@@ -54,19 +54,14 @@ try:
     import moviedata
     import migrateappname
     import keyboard
+    import signals
     moviedata.RUNNING_MAX = 1
 except:
     errorOnImport = True
-    # get a fallback error message in case we can't import util either
     import traceback
     importErrorMessage = (_("Error importing modules:\n%s") %
         traceback.format_exc())
-    try:
-        import util
-        importErrorMessage = util.failed(_("Starting up"),
-                withExn=True)
-    except:
-        raise
+
     # we need to make a fake asUrgent since we probably couldn't import
     # eventloop.
     def asUrgent(func):
@@ -270,7 +265,7 @@ class PyBridge:
 
     def onStartup(self, window):
         if self.started:
-            util.failed(_("Loading window"), 
+            signals.system.failed(_("Loading window"), 
                 details=_("onStartup called twice"))
             return
         else:

@@ -59,6 +59,7 @@ class ChangeDelayedDOMTracker(DOMTracker):
 
 class SimpleTest(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         handle = file(resources.path("templates/unittest/simple"),"r")
         self.text = handle.read()
         handle.close()
@@ -77,6 +78,7 @@ class SimpleTest(DemocracyTestCase):
 
 class TranslationTest(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         handle = file(resources.path("testdata/translation-result"),"r")
         self.text = handle.read()
         handle.close()
@@ -95,6 +97,7 @@ class TranslationTest(DemocracyTestCase):
 
 class ReplaceTest(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         handle = file(resources.path("testdata/replace-result"),"r")
         self.text = handle.read()
         handle.close()
@@ -365,6 +368,7 @@ class TemplatePerformance(DemocracyTestCase):
 
 class OptimizedAttributeChangeTest(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.changer = templateoptimize.HTMLChangeOptimizer()
 
     def checkChange(self, id, newXML, attributesDiff, htmlChanged):
@@ -414,6 +418,7 @@ class OptimizedAttributeChangeTest(DemocracyTestCase):
 
 class HotspotOptimizedTest(DemocracyTestCase):
     def setUp(self):
+        DemocracyTestCase.setUp(self)
         self.changer = templateoptimize.HTMLChangeOptimizer()
 
     def makeHotspotArea(self, outertext, innertext):

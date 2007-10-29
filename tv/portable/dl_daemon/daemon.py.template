@@ -11,6 +11,7 @@ import prefs
 import eventloop
 import util
 import logging
+import signals
 from httpclient import ConnectionHandler
 
 SIZE_OF_INT = calcsize("I")
@@ -157,6 +158,10 @@ class DownloaderDaemon(Daemon):
         # connect to the controller and start our listen loop
         Daemon.__init__(self)
         self.openConnection('127.0.0.1', port, self.onConnection, self.onError)
+        signals.system.connect('error', self.handleError)
+
+    def handleError(self, obj, report):
+        command.DownloaderErrorCommand(self, report).send()
 
     def handleClose(self, type):
         if self.shutdown:

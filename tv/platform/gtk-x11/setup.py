@@ -90,6 +90,8 @@ while True:
         raise RuntimeError("Couldn't find Miro root directory")
     root_try = os.path.abspath(os.path.join(root_try, '..'))
 portable_dir = os.path.join(root_dir, 'portable')
+portable_frontend_dir = os.path.join(portable_dir, 'frontends')
+portable_html_frontend_dir = os.path.join(portable_frontend_dir, 'html')
 bittorrent_dir = os.path.join(portable_dir, 'BitTorrent')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
@@ -546,8 +548,12 @@ setup(name='miro',
         'miro.compiled_templates',
         'miro.compiled_templates.unittest',
         'miro.dl_daemon.private',
+        'miro.frontends',
+        'miro.frontends.html',
     ],
     package_dir = {
+        'miro.frontends': portable_frontend_dir,
+        'miro.frontends.html': portable_html_frontend_dir,
         'miro.frontend_implementation' : frontend_implementation_dir,
         'miro.BitTorrent' : bittorrent_dir,
         'miro.dl_daemon' : dl_daemon_dir,

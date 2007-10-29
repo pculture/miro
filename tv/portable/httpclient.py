@@ -48,6 +48,8 @@ import util
 import sys
 import time
 import urllib
+import signals
+import trapcall
 
 PIPELINING_ENABLED = True
 SOCKET_READ_TIMEOUT = 60
@@ -148,10 +150,10 @@ class FileURLReadError(NetworkError):
             _('Error while reading from "%s"') % path)
 
 def trapCall(object, function, *args, **kwargs):
-    """Convenience function do a util.trapCall, where when = 'While talking to
-    the network'
+    """Convenience function do a trapcall.trapCall, where when is
+    'While talking to the network'
     """
-    return util.timeTrapCall("Calling %s on %s" % (function, object), function, *args, **kwargs)
+    return trapcall.timeTrapCall("Calling %s on %s" % (function, object), function, *args, **kwargs)
 
 
 DATEINFUTURE = time.mktime( (2030, 7, 12, 12, 0, 0, 4, 193, -1) )
@@ -530,7 +532,7 @@ class AsyncSSLStream(AsyncSocket):
             if self.interruptedOperation is None:
                 self.interruptedOperation = operation
             elif self.interruptedOperation != operation:
-                util.failed("When talking to the network", 
+                signals.system.failed("When talking to the network", 
                 details="socket error for the wrong SSL operation")
                 self.closeConnection()
                 return

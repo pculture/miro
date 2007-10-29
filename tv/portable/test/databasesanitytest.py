@@ -19,15 +19,12 @@ class SanityCheckingTest(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)
         self.savePath = tempfile.mktemp()
-        # reroute util.failed
-        self.utilDotFailedOkay = True
 
     def tearDown(self):
         try:
             os.unlink(self.savePath)
         except OSError:
             pass
-        util.failed = self.oldUtilDotFailed
         DemocracyTestCase.tearDown(self)
 
     def checkObjectListFailsTest(self, objectList):
@@ -35,11 +32,11 @@ class SanityCheckingTest(DemocracyTestCase):
                 databasesanity.checkSanity, objectList, False)
 
     def checkFixIfPossible(self, startList, fixedList):
-        self.failedCalled = False
+        self.errorSignalOkay = True
         rv = databasesanity.checkSanity(startList)
         self.assertEquals(startList, fixedList)
         self.assertEquals(rv, False)
-        self.assertEquals(self.failedCalled, True)
+        self.assertEquals(self.sawError, True)
 
     def checkObjectListPassesTest(self, objectList):
         databasesanity.checkSanity(objectList)
@@ -59,8 +56,8 @@ class SanityCheckingTest(DemocracyTestCase):
         f3 = feed.Feed(u"dtv:manualFeed")
         self.checkObjectListPassesTest([f])
         self.checkObjectListFailsTest([f, f2])
-        self.failedCalled = False
+        self.errorSignalOkay = True
         testList = [f, f2, f3]
         databasesanity.checkSanity(testList)
         self.assertEquals(len(testList), 1)
-        self.assertEquals(self.failedCalled, True)
+        self.assertEquals(self.sawError, True)

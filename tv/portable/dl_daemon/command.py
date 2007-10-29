@@ -89,8 +89,8 @@ class BatchUpdateDownloadStatus(Command):
 
 class DownloaderErrorCommand(Command):
     def action(self):
-        import util
-        util.failed("In Downloader process", details=self.args[0])
+        import signals
+        signals.system.failed("In Downloader process", details=self.args[0])
 
 class ShutDownResponseCommand(Command):
     def action(self):

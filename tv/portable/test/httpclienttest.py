@@ -331,6 +331,7 @@ class AsyncSocketTest(EventLoopTest):
 class NetworkBufferTest(DemocracyTestCase):
     def setUp(self):
         self.buffer = httpclient.NetworkBuffer()
+        DemocracyTestCase.setUp(self)
 
 #    def testMemory(self):
 #        i = 0
@@ -589,18 +590,11 @@ HELLO: WORLD\r\n"""
             'text/plain; charset=ISO-8859-1')
 
     def testCallbackError(self):
+        self.errorSignalOkay = True
         self.fakeCallbackError = True
-        self.failedCalled = False
-        def fakeFailed(*args, **kwargs):
-            self.failedCalled = True
-        oldFailed = util.failed
-        util.failed = fakeFailed
-        try:
-            self.testRequest.handleData(self.fakeResponse)
-            self.testRequest.handleClose(socket.SHUT_RD)
-        finally:
-            util.failed = oldFailed
-        self.assert_(self.failedCalled)
+        self.testRequest.handleData(self.fakeResponse)
+        self.testRequest.handleClose(socket.SHUT_RD)
+        self.assert_(self.sawError)
 
     def testHeaderContinuation(self):
         self.testRequest.handleData("HTTP/1.0 200 OK\r\n")
@@ -930,16 +924,11 @@ class HTTPClientTest(HTTPClientTestBase):
         url = 'http://participatoryculture.org/democracytest/normalpage.txt'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
                 headerCallback=headerCallback, clientClass=TestHTTPClient)
-        self.failedCalled = False
-        def fakeFailed(*args, **kwargs):
-            self.failedCalled = True
-        oldFailed = util.failed
-        util.failed = fakeFailed
+        self.errorSignalOkay = True
         self.runEventLoop()
-        util.failed = oldFailed
         self.assert_(not self.callbackCalled)
         self.assert_(not self.errbackCalled)
-        self.assert_(not self.failedCalled)
+        self.assert_(not self.sawError)
 
     def testBodyDataCallbackCancel(self):
         def bodyDataCallback(response):
@@ -948,16 +937,11 @@ class HTTPClientTest(HTTPClientTestBase):
         url = 'http://participatoryculture.org/democracytest/normalpage.txt'
         reqId = httpclient.grabURL(url, self.callback, self.errback,
                 bodyDataCallback=bodyDataCallback, clientClass=TestHTTPClient)
-        self.failedCalled = False
-        def fakeFailed(*args, **kwargs):
-            self.failedCalled = True
-        oldFailed = util.failed
-        util.failed = fakeFailed
+        self.errorSignalOkay = True
         self.runEventLoop()
-        util.failed = oldFailed
         self.assert_(not self.callbackCalled)
         self.assert_(not self.errbackCalled)
-        self.assert_(not self.failedCalled)
+        self.assert_(not self.sawError)
 
     def testBodyDataCallback(self):
         self.lastSeen = None
@@ -1182,7 +1166,10 @@ class HTTPClientTest(HTTPClientTestBase):
         client = TestHTTPClient('http://www.foo.com', self.callback, self.errback)
 
         def getIt(path, cd=None):
-            response = {'path': path}
+            response = {
+                    'path': path, 
+                    'redirected-url': 'http://example.com' + path
+            }
             if cd:
                 response['content-disposition'] = cd
             return client.getFilenameFromResponse(response)
