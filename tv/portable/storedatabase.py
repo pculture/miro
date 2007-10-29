@@ -56,7 +56,6 @@ import eventloop
 import app
 import bsddb.db
 import dialogs
-import system
 import logging
 from zipfile import ZipFile
 import tempfile
