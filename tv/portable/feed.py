@@ -2050,6 +2050,14 @@ class SearchFeedImpl (RSSFeedImpl):
                 item.remove()
             self.url = url
             self.searching = searchState
+            self.thumbURL = defaultFeedIconURL()
+            self.ufeed.iconCache.remove()
+            self.ufeed.iconCache = IconCache(self.ufeed, is_vital = True)
+            self.ufeed.iconCache.requestUpdate(True)
+            self.initialHTML = None
+            self.etag = None
+            self.modified = None
+            self.parsed = None
         finally:
             self.ufeed.signalChange()
     
