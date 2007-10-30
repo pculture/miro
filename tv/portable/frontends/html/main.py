@@ -20,13 +20,20 @@ error reporting, etc.
 """
 
 from gtcache import gettext as _
+from gtcache import ngettext
+import app
+import config
 import dialogs
+import eventloop
 import frontendutil
+import prefs
 import signals
+import views
 
 class HTMLApplication:
     def __init__(self):
         self.ignoreErrors = False
+        self.inQuit = False
 
     def startup(self):
         signals.system.connect('error', self.handleError)
@@ -50,3 +57,37 @@ class HTMLApplication:
             frontendutil.sendBugReport(report, description, send_dabatase)
         chkboxdialog = dialogs.CheckboxTextboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, _("Describe what you were doing that caused this error"), dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
         chkboxdialog.run(callback)
+
+    @eventloop.asUrgent
+    def quit(self):
+        if self.inQuit:
+            return
+        downloadsCount = views.downloadingItems.len()
+            
+        if (downloadsCount > 0 and config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT)) or (frontendutil.sendingCrashReport > 0):
+            title = _("Are you sure you want to quit?")
+            if frontendutil.sendingCrashReport > 0:
+                message = _("Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?")
+                dialog = dialogs.ChoiceDialog(title, message,
+                                              dialogs.BUTTON_QUIT,
+                                              dialogs.BUTTON_CANCEL)
+            else:
+                message = ngettext ("You have %d download still in progress.  Quit Anyway?", 
+                                    "You have %d downloads still in progress.  Quit Anyway?", 
+                                    downloadsCount) % (downloadsCount,)
+                warning = _ ("Warn me when I attempt to quit with downloads in progress")
+                dialog = dialogs.CheckboxDialog(title, message, warning, True,
+                        dialogs.BUTTON_QUIT, dialogs.BUTTON_CANCEL)
+
+            def callback(dialog):
+                if dialog.choice == dialogs.BUTTON_QUIT:
+                    if isinstance(dialog, dialogs.CheckboxDialog):
+                        config.set(prefs.WARN_IF_DOWNLOADING_ON_QUIT,
+                                   dialog.checkbox_value)
+                    app.controller.shutdown()
+                else:
+                    self.inQuit = False
+            dialog.run(callback)
+            self.inQuit = True
+        else:
+            app.controller.shutdown()

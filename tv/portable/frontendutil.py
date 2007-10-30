@@ -29,15 +29,18 @@ import config
 import httpclient
 import prefs
 
+sendingCrashReport = 0
+
 def sendBugReport(report, description, send_database):
+    global sendingCrashReport
     def callback(result):
-        app.controller.sendingCrashReport -= 1
+        sendingCrashReport -= 1
         if result['status'] != 200 or result['body'] != 'OK':
             logging.warning(u"Failed to submit crash report. Server returned %r" % result)
         else:
             logging.info(u"Crash report submitted successfully")
     def errback(error):
-        app.controller.sendingCrashReport -= 1
+        sendingCrashReport -= 1
         logging.warning(u"Failed to submit crash report %r" % error)
 
     backupfile = None

@@ -613,8 +613,6 @@ import frontend
 ###############################################################################
 #### The main application controller object, binding model to view         ####
 ###############################################################################
-from frontends.html.main import HTMLApplication
-
 class Controller (frontend.Application):
 
     def __init__(self):
@@ -633,7 +631,6 @@ class Controller (frontend.Application):
         self.finishedStartup = False
         self.idlingNotifier = None
         self.gatheredVideos = None
-        self.sendingCrashReport = 0
         self.librarySearchTerm = None
         self.newVideosSearchTerm = None
 
@@ -641,12 +638,9 @@ class Controller (frontend.Application):
 
     def frontendRefactoringBootstrap(self):
         # this is just a hack for now until the frontend refactoring is done.
-        try:
-            HTMLApplication().startup()
-        except:
-            import traceback
-            print 'ERROR IN HTMLApplication.startup()'
-            traceback.print_exc()
+        from frontends.html.main import HTMLApplication
+        self.htmlapp = HTMLApplication()
+        self.htmlapp.startup()
 
     def onStartup(self, gatheredVideos=None):
         self.frontendRefactoringBootstrap()
@@ -1191,6 +1185,13 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         self.playbackController.configure(view, firstItemId, justPlayOne)
         self.playbackController.enterPlayback()
 
+    def quit(self):
+        self.htmlapp.quit()
+
+    def shutdown(self):
+        logging.info ("Shutting down Downloader...")
+        downloader.shutdownDownloader(self.downloaderShutdown)
+
     def downloaderShutdown(self):
         logging.info ("Closing Database...")
         database.defaultDatabase.liveStorage.close()
@@ -1198,45 +1199,6 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         eventloop.quit()
         logging.info ("Shutting down frontend")
         frontend.quit()
-
-    @eventloop.asUrgent
-    def quit(self):
-        global delegate
-        if self.inQuit:
-            return
-        downloadsCount = views.downloadingItems.len()
-            
-        if (downloadsCount > 0 and config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT)) or (self.sendingCrashReport > 0):
-            title = _("Are you sure you want to quit?")
-            if self.sendingCrashReport > 0:
-                message = _("Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?")
-                dialog = dialogs.ChoiceDialog(title, message,
-                                              dialogs.BUTTON_QUIT,
-                                              dialogs.BUTTON_CANCEL)
-            else:
-                message = ngettext ("You have %d download still in progress.  Quit Anyway?", 
-                                    "You have %d downloads still in progress.  Quit Anyway?", 
-                                    downloadsCount) % (downloadsCount,)
-                warning = _ ("Warn me when I attempt to quit with downloads in progress")
-                dialog = dialogs.CheckboxDialog(title, message, warning, True,
-                        dialogs.BUTTON_QUIT, dialogs.BUTTON_CANCEL)
-
-            def callback(dialog):
-                if dialog.choice == dialogs.BUTTON_QUIT:
-                    if isinstance(dialog, dialogs.CheckboxDialog):
-                        config.set(prefs.WARN_IF_DOWNLOADING_ON_QUIT,
-                                   dialog.checkbox_value)
-                    self.quitStage2()
-                else:
-                    self.inQuit = False
-            dialog.run(callback)
-            self.inQuit = True
-        else:
-            self.quitStage2()
-
-    def quitStage2(self):
-        logging.info ("Shutting down Downloader...")
-        downloader.shutdownDownloader(self.downloaderShutdown)
 
     @eventloop.asUrgent
     def setGuideURL(self, guideURL):
