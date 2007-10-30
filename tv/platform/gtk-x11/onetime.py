@@ -27,11 +27,9 @@ if getattr(dbus, 'version', (0,0,0)) >= (0,41,0):
 # This section was re-written so that it doesn't trigger the dbus-python
 # deprecation warning and is localized so we can just delete it and
 # move on with our lives when the time comes. - willguaraldi 10-29-2007
-import inspect
-def has_argument(fun, arg):
-    return arg in inspect.getargspec(fun)[0]
 
-if has_argument(dbus.service.BusName.__new__, "do_not_queue"):
+# (0,80,0) is the first version that has do_not_queue
+if getattr(dbus, 'version', (0,0,0)) >= (0,80,0):
     BusName = dbus.service.BusName
 
     NameExistsException = dbus.NameExistsException
@@ -42,25 +40,19 @@ else:
     class NameExistsException(dbus.DBusException):
         pass
 
-    dbus_bindings_consts = {
-        'REQUEST_NAME_REPLY_PRIMARY_OWNER' : 1,
-        'REQUEST_NAME_REPLY_IN_QUEUE': 2,
-        'REQUEST_NAME_REPLY_EXISTS': 3,
-        'REQUEST_NAME_REPLY_ALREADY_OWNER': 4,
-        'NAME_FLAG_DO_NOT_QUEUE' : 4
-    }
-    for key, value in dbus_bindings_consts.items():
-        try:
-            getattr(dbus.dbus_bindings, key)
-        except AttributeError:
-            setattr(dbus.dbus_bindings, key, value)
-
+    # these are in the dbus spec, so they're not going to change.
+    REQUEST_NAME_REPLY_PRIMARY_OWNER = 1
+    REQUEST_NAME_REPLY_IN_QUEUE = 2
+    REQUEST_NAME_REPLY_EXISTS = 3
+    REQUEST_NAME_REPLY_ALREADY_OWNER = 4
+    NAME_FLAG_DO_NOT_QUEUE = 4
+    
     class BusNameFlags(object):
         """A base class for exporting your own Named Services across the Bus
         """
         def __new__(cls, name, bus=None, flags=0, do_not_queue=False):
             if do_not_queue:
-                flags = flags | dbus.dbus_bindings.NAME_FLAG_DO_NOT_QUEUE
+                flags = flags | NAME_FLAG_DO_NOT_QUEUE
 
             # get default bus
             if bus == None:
@@ -71,16 +63,16 @@ else:
             retval = dbus.dbus_bindings.bus_request_name(conn, name, flags)
     
             # TODO: more intelligent tracking of bus name states?
-            if retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_PRIMARY_OWNER:
+            if retval == REQUEST_NAME_REPLY_PRIMARY_OWNER:
                 pass
-            elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_IN_QUEUE:
+            elif retval == REQUEST_NAME_REPLY_IN_QUEUE:
                 # queueing can happen by default, maybe we should
                 # track this better or let the user know if they're
                 # queued or not?
                 pass
-            elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_EXISTS:
+            elif retval == REQUEST_NAME_REPLY_EXISTS:
                 raise NameExistsException(name)
-            elif retval == dbus.dbus_bindings.REQUEST_NAME_REPLY_ALREADY_OWNER:
+            elif retval == REQUEST_NAME_REPLY_ALREADY_OWNER:
                 # if this is a shared bus which is being used by someone
                 # else in this process, this can happen legitimately
                 pass
