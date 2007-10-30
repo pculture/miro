@@ -860,7 +860,12 @@ class Feed(DDBObject):
             url = self.origURL[len(u"dtv:searchTerm:"):]
             (url, search) = url.rsplit("?", 1)
             url = urldecode(url)
-            search = urldecode(search)
+            # search terms encoded as utf-8, but our URL attribute is then
+            # converted to unicode.  So we need to:
+            #  - convert the unicode to a raw string
+            #  - urldecode that string
+            #  - utf-8 decode the result.
+            search = urldecode(search.encode('ascii')).decode('utf-8')
             self.searchTerm = search
             self.download = grabURL(url,
                     lambda info:self._generateFeedCallback(info, removeOnError),
