@@ -60,7 +60,7 @@ except:
     errorOnImport = True
     import traceback
     importErrorMessage = (_("Error importing modules:\n%s") %
-        traceback.format_exc())
+            ''.join(traceback.format_exc()))
 
     # we need to make a fake asUrgent since we probably couldn't import
     # eventloop.
@@ -70,31 +70,30 @@ except:
         return func
 else:
     errorOnImport = False
-
-# See http://www.xulplanet.com/tutorials/xultu/keyshort.html
-XUL_MOD_STRINGS = {menubar.CTRL : 'control',
-                   menubar.ALT:   'alt',
-                   menubar.SHIFT: 'shift'}
-XUL_KEY_STRINGS ={ menubar.RIGHT_ARROW: 'VK_RIGHT',
-                   menubar.LEFT_ARROW:  'VK_LEFT',
-                   menubar.UP_ARROW:    'VK_UP',
-                   menubar.DOWN_ARROW:  'VK_DOWN',
-                   menubar.SPACE : 'VK_SPACE',
-                   menubar.ENTER: 'VK_ENTER',
-                   menubar.DELETE: 'VK_DELETE',
-                   menubar.BKSPACE: 'VK_BACK',
-                   menubar.F1: 'VK_F1',
-                   menubar.F2: 'VK_F2',
-                   menubar.F3: 'VK_F3',
-                   menubar.F4: 'VK_F4',
-                   menubar.F5: 'VK_F5',
-                   menubar.F6: 'VK_F6',
-                   menubar.F7: 'VK_F7',
-                   menubar.F8: 'VK_F8',
-                   menubar.F9: 'VK_F9',
-                   menubar.F10: 'VK_F10',
-                   menubar.F11: 'VK_F11',
-                   menubar.F12: 'VK_F12'}
+    # See http://www.xulplanet.com/tutorials/xultu/keyshort.html
+    XUL_MOD_STRINGS = {menubar.CTRL : 'control',
+                       menubar.ALT:   'alt',
+                       menubar.SHIFT: 'shift'}
+    XUL_KEY_STRINGS ={ menubar.RIGHT_ARROW: 'VK_RIGHT',
+                       menubar.LEFT_ARROW:  'VK_LEFT',
+                       menubar.UP_ARROW:    'VK_UP',
+                       menubar.DOWN_ARROW:  'VK_DOWN',
+                       menubar.SPACE : 'VK_SPACE',
+                       menubar.ENTER: 'VK_ENTER',
+                       menubar.DELETE: 'VK_DELETE',
+                       menubar.BKSPACE: 'VK_BACK',
+                       menubar.F1: 'VK_F1',
+                       menubar.F2: 'VK_F2',
+                       menubar.F3: 'VK_F3',
+                       menubar.F4: 'VK_F4',
+                       menubar.F5: 'VK_F5',
+                       menubar.F6: 'VK_F6',
+                       menubar.F7: 'VK_F7',
+                       menubar.F8: 'VK_F8',
+                       menubar.F9: 'VK_F9',
+                       menubar.F10: 'VK_F10',
+                       menubar.F11: 'VK_F11',
+                       menubar.F12: 'VK_F12'}
 
 # Extent the ShortCut class to include a XULString() function
 def XULKey(shortcut):
@@ -251,10 +250,10 @@ class PyBridge:
     _reg_desc_ = "Bridge into DTV Python core"
 
     def __init__(self):
-        migrateappname.migrateSupport('Democracy Player', 'Miro')
         self.started = False
         self.cursorDisplayCount = 0
         if not errorOnImport:
+            migrateappname.migrateSupport('Democracy Player', 'Miro')
             self.delegate = UIBackendDelegate()
 
     def getStartupError(self):

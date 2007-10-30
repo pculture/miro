@@ -12,6 +12,7 @@ import eventloop
 import util
 import logging
 import signals
+import trapcall
 from httpclient import ConnectionHandler
 
 SIZE_OF_INT = calcsize("I")
@@ -138,7 +139,7 @@ class Daemon(ConnectionHandler):
             self.changeState('ready')
 
     def processCommand(self, comm):
-        util.timeTrapCall("Running: %s" % (comm,), self.runCommand, comm)
+        trapcall.timeTrapCall("Running: %s" % (comm,), self.runCommand, comm)
 
     def runCommand(self, comm):
         comm.setDaemon(self)
