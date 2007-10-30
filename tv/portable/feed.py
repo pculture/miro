@@ -44,7 +44,6 @@ import config
 import dialogs
 import eventloop
 import folder
-import menu
 import prefs
 import resources
 import downloader
@@ -85,11 +84,6 @@ def defaultFeedIconURLTablist():
 # Universal Feed Parser http://feedparser.org/
 # Licensed under Python license
 import feedparser
-
-# Pass in a connection to the frontend
-def setDelegate(newDelegate):
-    global delegate
-    delegate = newDelegate
 
 # Pass in a feed sorting function 
 def setSortFunc(newFunc):
@@ -781,19 +775,6 @@ class Feed(DDBObject):
         if self.maxNew >= oldMaxNew or self.maxNew < 0:
             import autodler
             autodler.autoDownloader.startDownloads()
-
-    def makeContextMenu(self, templateName, view):
-        items = [
-            (self.update, _('Update Channel Now')),
-            (lambda: app.delegate.copyTextToClipboard(self.getURL()),
-                _('Copy URL to clipboard')),
-            (self.rename, _('Rename Channel')),
-        ]
-
-        if self.userTitle:
-            items.append((self.unsetTitle, _('Revert Title to Default')))
-        items.append((lambda: app.controller.removeFeed(self), _('Remove')))
-        return menu.makeMenu(items)
 
     def rename(self):
         title = _("Rename Channel")

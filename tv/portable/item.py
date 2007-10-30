@@ -47,7 +47,6 @@ import dialogs
 import eventloop
 import feed
 import filters
-import menu
 import prefs
 import resources
 import views
@@ -1463,33 +1462,6 @@ folder will be deleted.""")
         # behavior when it parses dtv:paymentlink elements, or simply unescape
         # here...
         return u'<span>' + unescape(ret) + u'</span>'
-
-    def makeContextMenu(self, templateName, view):
-        c = app.controller # easier/shorter to type
-        if self.isDownloaded():
-            if templateName in ('playlist', 'playlist-folder'):
-                label = _('Remove From Playlist')
-            else:
-                label = _('Remove From the Library')
-            items = [
-                (lambda: c.playView(view, self.getID()), _('Play')),
-                (lambda: c.playView(view, self.getID(), True), 
-                    _('Play Just This Video')),
-                (c.addToNewPlaylist, _('Add to new playlist')),
-                (c.removeCurrentItems, label),
-            ]
-            if self.getSeen():
-                items.append((self.markItemUnseen, _('Mark as Unwatched')))
-            else:
-                items.append((self.markItemSeen, _('Mark as Watched')))
-				
-            if self.downloader and self.downloader.getState() == 'finished' and self.downloader.getType() == 'bittorrent':
-                items.append((self.startUpload, _('Restart Upload')))
-        elif self.getState() == 'downloading':
-            items = [(self.expire, _('Cancel Download')), (self.pause, _('Pause Download'))]
-        else:
-            items = [(self.download, _('Download'))]
-        return menu.makeMenu(items)
 
     ##
     # Updates an item with new data

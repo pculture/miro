@@ -27,7 +27,6 @@ import re
 import app
 import config
 import indexes
-import menu
 import prefs
 import threading
 import urllib
@@ -99,16 +98,6 @@ class ChannelGuide(DDBObject):
 
     def __str__(self):
         return "Miro Guide <%s>" % (self.url,)
-
-    def makeContextMenu(self, templateName, view):
-        menuItems = [
-            (lambda: app.delegate.copyTextToClipboard(self.getURL()),
-                _('Copy URL to clipboard')),
-        ]
-        if not self.getDefault():
-            i = (lambda: app.controller.removeGuide(self), _('Remove'))
-            menuItems.append(i)
-        return menu.makeMenu(menuItems)
 
     def remove(self):
         if self.iconCache is not None:

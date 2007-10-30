@@ -27,7 +27,6 @@ import sorts
 # import filters
 import maps
 
-import menu
 import util
 import feed
 import item
@@ -658,7 +657,6 @@ class Controller (frontend.Application):
         config.addChangeCallback(self.configDidChange)
         
         global delegate
-        feed.setDelegate(delegate)
         feed.setSortFunc(sorts.item)
         autoupdate.setDelegate(delegate)
         database.setDelegate(delegate)
@@ -2242,6 +2240,7 @@ class TemplateActionHandler:
         controller.selection.selectItem(area, view, int(id), shift, ctrl)
 
     def handleContextMenuSelect(self, id, area, viewName):
+        from frontends.html import contextmenu
         try:
             obj = db.getObjectByID(int(id))
         except:
@@ -2254,7 +2253,7 @@ class TemplateActionHandler:
                 return
             if not controller.selection.isSelected(area, view, int(id)):
                 self.handleSelect(area, viewName, id, False, False)
-            popup = menu.makeContextMenu(self.currentName, view,
+            popup = contextmenu.makeContextMenu(self.currentName, view,
                     controller.selection.getSelectionForArea(area), int(id))
             if popup:
                 delegate.showContextMenu(popup)

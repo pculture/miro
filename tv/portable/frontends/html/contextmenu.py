@@ -16,9 +16,15 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 from gettext import gettext as _
+import logging
 
 import app
 import eventloop
+import feed
+import folder
+import guide
+import item
+import playlist
 import tabs
 
 def makeMenu(items):
@@ -48,12 +54,29 @@ class MenuItem:
 
         eventloop.addUrgentCall(self.callback, "context menu callback")
 
+def makeObjectContextMenu(obj, templateName, view):
+    menuFunctions = {
+        feed.Feed: makeFeedContextMenu,
+        folder.ChannelFolder: makeChannelFolderContextMenu,
+        playlist.SavedPlaylist: makePlaylistContextMenu,
+        folder.PlaylistFolder: makePlaylistFolderContextMenu,
+        guide.ChannelGuide: makeGuideContextMenu,
+        item.Item: makeItemContextMenu,
+    }
+    try:
+        menuFunction = menuFunctions[obj.__class__]
+    except KeyError:
+        logging.warn("Don't know how to make a menu item for %s (class: %s)",
+                obj, obj.__class__)
+    else:
+        return menuFunction(obj, templateName, view)
+
 def makeContextMenu(templateName, view, selection, clickedID):
     if len(selection.currentSelection) == 1:
         obj = selection.getObjects()[0]
         if isinstance(obj, tabs.Tab):
             obj = obj.obj
-        return obj.makeContextMenu(templateName, view)
+        return makeObjectContextMenu(obj, templateName, view)
     else:
         type = selection.getType()
         objects = selection.getObjects()
@@ -130,3 +153,72 @@ def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
         items.append((c.startUploads, _('Restart Upload')))
 
     return makeMenu(items)
+
+def makeFeedContextMenu(feedObj, templateName, view):
+    items = [
+        (feedObj.update, _('Update Channel Now')),
+        (lambda: app.delegate.copyTextToClipboard(feedObj.getURL()),
+            _('Copy URL to clipboard')),
+        (feedObj.rename, _('Rename Channel')),
+    ]
+
+    if feedObj.userTitle:
+        items.append((feedObj.unsetTitle, _('Revert Title to Default')))
+    items.append((lambda: app.controller.removeFeed(feedObj), _('Remove')))
+    return makeMenu(items)
+
+def makeChannelFolderContextMenu(folderObj, templateName, view):
+    return makeMenu([
+        (folderObj.rename, _('Rename Channel Folder')),
+        (lambda: app.controller.removeFeed(folderObj), _('Remove')),
+    ])
+
+def makePlaylistFolderContextMenu(folderObj, templateName, view):
+    return makeMenu([
+        (folderObj.rename, _('Rename Playlist Folder')),
+        (lambda: app.controller.removePlaylist(folderObj), _('Remove')),
+    ])
+
+def makeGuideContextMenu(guideObj, templateName, view):
+    menuItems = [
+        (lambda: app.delegate.copyTextToClipboard(guideObj.getURL()),
+            _('Copy URL to clipboard')),
+    ]
+    if not guideObj.getDefault():
+        i = (lambda: app.controller.removeGuide(guideObj), _('Remove'))
+        menuItems.append(i)
+    return makeMenu(menuItems)
+
+def makeItemContextMenu(itemObj, templateName, view):
+    c = app.controller # easier/shorter to type
+    if itemObj.isDownloaded():
+        if templateName in ('playlist', 'playlist-folder'):
+            label = _('Remove From Playlist')
+        else:
+            label = _('Remove From the Library')
+        items = [
+            (lambda: c.playView(view, itemObj.getID()), _('Play')),
+            (lambda: c.playView(view, itemObj.getID(), True), 
+                _('Play Just This Video')),
+            (c.addToNewPlaylist, _('Add to new playlist')),
+            (c.removeCurrentItems, label),
+        ]
+        if itemObj.getSeen():
+            items.append((itemObj.markItemUnseen, _('Mark as Unwatched')))
+        else:
+            items.append((itemObj.markItemSeen, _('Mark as Watched')))
+                            
+        if itemObj.downloader and itemObj.downloader.getState() == 'finished' and itemObj.downloader.getType() == 'bittorrent':
+            items.append((itemObj.startUpload, _('Restart Upload')))
+    elif itemObj.getState() == 'downloading':
+        items = [(itemObj.expire, _('Cancel Download')), (itemObj.pause, _('Pause Download'))]
+    else:
+        items = [(itemObj.download, _('Download'))]
+    return makeMenu(items)
+
+def makePlaylistContextMenu(playlistObj, templateName, view):
+    return makeMenu([
+        (playlistObj.rename, _('Rename Playlist')),
+        (lambda: app.controller.removePlaylist(playlistObj), _('Remove')),
+    ])
+
