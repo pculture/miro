@@ -7,8 +7,8 @@ Summary
 
 This is the GTK/X11 port of Miro.
 
-If you want to test it, execute ./run.sh. If you have the required
-dependencies it should build everything and run it.
+If you want to test it, execute ``./run.sh``. If you have the required
+dependencies it should build Miro and run it.
 
 See https://develop.participatoryculture.org/projects/dtv/wiki/GTKX11BuildDocs
 for more information on building and executing the GTK-X11 platform code.
@@ -19,77 +19,8 @@ The information at this url is considered the authoritative source.
 Build and run instructions
 ==========================
 
-There are several major installation theories to respect here in the Linux
-world: a) Debian b) Fedora (Red Hat). We will need to get someone from the
-Gentoo or Ubuntu spheres to contribute here. Other GTK/X11 ports should 
-follow one of these or bring their own conventions.
-
-In addition to the major distribution theoretics, there is also the issue of
-the desktop, for which there seems to be two major choices: GNOME and KDE.
-This is the GTK/X11 port of Miro, so the focus here is exclusively
-on GNOME.
-
-Miro requires at least Python 2.4; Pyrex is used for Python to C and
-C++ code.
-
-Updated instructions are at 
+Instructions and build requirements are documented at
 https://develop.participatoryculture.org/trac/democracy/wiki/GTKX11BuildDocs
-
-
-Debian
-------
-
-To run::
-
-   miro
-
-To install::
-
-   apt-get install miro
-
-
-Fedora (Red Hat)
-----------------
-
-To run::
-
-   rpm --install Pyrex-0.9.3.1-1.noarch.rpm
-   rpm --install libfame-0.9.1-1.fc4.i386.rpm
-   rpm --install xine-0.99.4-1.2.fc4.i686.rpm xine-lib-1.1.1-1.2.fc4.i686.rpm
-   rpm --install boost-1.32.0-6.i386.rpm
-   rpm --install gnome-python2-gtkmozembed-2.10.0-2.1.i386.rpm
-   rpm --upgrade mozilla-1.7.12-1.5.1.i386.rpm mozilla-nss-1.7.12-1.5.1.i386.rpm mozilla-nspr-1.7.12-1.5.1.i386.rpm devhelp-0.10-1.4.2.i386.rpm
-
-TODO what else?  verify this on a greenfield machine
-
-To build::
-
-   rpm --install xine-lib-devel-1.1.1-1.2.fc4.i686.rpm
-   rpm --install boost-devel-1.32.0-6.i386.rpm
-   rpm --upgrade mozilla-devel-1.7.12-1.5.1.i386.rpm mozilla-nss-devel-1.7.12-1.5.1.i386.rpm mozilla-nspr-devel-1.7.12-1.5.1.i386.rpm
-
-TODO what else?  verify this on a greenfield machine
-
-
-Gentoo
-------
-
-To run::
-
-   TODO emerge/ebuild something
-
-To build::
-
-   TODO emerge/ebuild something
-
-
-Ubuntu
-------
-
-To build and run::
-
-  sudo apt-get install python-pyrex libboost-python-dev python-gtk2-dev python-gnome2-extras-dev mozilla-dev libxine-dev
-  ./run.sh
 
 
 Unittest instructions
