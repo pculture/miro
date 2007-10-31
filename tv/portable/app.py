@@ -47,7 +47,6 @@ import downloader
 import autoupdate
 import xhtmltools
 import guide
-import idlenotifier 
 import eventloop
 import searchengines
 import download_utils
@@ -654,7 +653,6 @@ class Controller (frontend.Application):
         logging.info ("Loading preferences...")
 
         config.load()
-        config.addChangeCallback(self.configDidChange)
         
         global delegate
         feed.setSortFunc(sorts.item)
@@ -780,12 +778,6 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
         # Start the automatic downloader daemon
         logging.info ("Spawning auto downloader...")
         autodler.startDownloader()
-
-        # Start the idle notifier daemon
-        if config.get(prefs.LIMIT_UPSTREAM) is True:
-            logging.info ("Spawning idle notifier")
-            self.idlingNotifier = idlenotifier.IdleNotifier(self)
-            self.idlingNotifier.start()
 
         # Set up the playback controller
         self.playbackController = frontend.PlaybackController()
@@ -1260,30 +1252,6 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             signals.system.failedExn("while shutting down")
             frontend.exit(1)
 
-    ### Handling config/prefs changes
-    
-    def configDidChange(self, key, value):
-        if key is prefs.LIMIT_UPSTREAM.key:
-            if value is False:
-                # The Windows version can get here without creating an
-                # idlingNotifier
-                try:
-                    self.idlingNotifier.join()
-                except:
-                    pass
-                self.idlingNotifier = None
-            elif self.idlingNotifier is None:
-                self.idlingNotifier = idlenotifier.IdleNotifier(self)
-                self.idlingNotifier.start()
-
-    ### Handling system idle events
-    
-    def systemHasBeenIdlingSince(self, seconds):
-        self.setUpstreamLimit(False)
-
-    def systemIsActiveAgain(self):
-        self.setUpstreamLimit(True)
-
     ### Handling events received from the OS (via our base class) ###
 
     # Called by Frontend via Application base class in response to OS request.
@@ -1341,14 +1309,6 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         self.selection.selectTabByTemplateBase('searchtab')
 
     ### ----
-
-    def setUpstreamLimit(self, setLimit):
-        if setLimit:
-            limit = config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
-            # upstream limit should be set here
-        else:
-            # upstream limit should be unset here
-            pass
 
     def handleURIDrop(self, data, **kwargs):
         """Handle an external drag that contains a text/uri-list mime-type.
