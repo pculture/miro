@@ -825,7 +825,6 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
 
         util.print_mem_usage("Post-item reconnect memory check")
 
-        eventloop.addTimeout (3, autoupdate.checkForUpdates, "Check for updates")
         feed.expireItems()
 
         self.tabDisplay = TemplateDisplay('tablist', 'default',

@@ -32,13 +32,18 @@ import signals
 import views
 
 class HTMLApplication:
+    AUTOUPDATE_SUPPORTED = True
+
     def __init__(self):
         self.ignoreErrors = False
         self.inQuit = False
 
     def startup(self):
         signals.system.connect('error', self.handleError)
-        signals.system.connect('update-available', self.handleNewUpdate)
+        if self.AUTOUPDATE_SUPPORTED:
+            eventloop.addTimeout (3, autoupdate.checkForUpdates, 
+                    "Check for updates")
+            signals.system.connect('update-available', self.handleNewUpdate)
 
     def handleError(self, obj, report):
         if self.ignoreErrors:
