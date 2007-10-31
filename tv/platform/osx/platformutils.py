@@ -358,3 +358,9 @@ def killProcess(self, pid=None):
             os.kill(pid, signal.SIGKILL)
         except:
             pass
+
+def launchDownloadDaemon(oldpid, env):
+    # this is just a hack until I get an OS X box, or Luc refactors
+    # launchDownloadDaemon
+    import app
+    app.delegate.launchDownloadDaemon(oldpid, env)

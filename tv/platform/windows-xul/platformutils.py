@@ -27,6 +27,7 @@ import prefs
 import os
 import logging
 import resources
+import subprocess
 import sys
 import urllib
 from util import (returnsUnicode, returnsBinary, checkU, checkB, call_command,
@@ -239,3 +240,25 @@ def killProcess(pid):
         handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE, False, pid)
         ctypes.windll.kernel32.TerminateProcess(handle, -1)
         ctypes.windll.kernel32.CloseHandle(handle)
+
+def launchDownloadDaemon(oldpid, env):
+    killProcess(oldpid)
+    for key, value in env.items():
+        os.environ[key] = value
+    os.environ['DEMOCRACY_DOWNLOADER_LOG'] = \
+            config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    # Start the downloader.  We use the subprocess module to turn off the
+    # console.  One slightly awkward thing is that the current process
+    # might not have a valid stdin/stdout/stderr, so we create a pipe to
+    # it that we never actually use.
+
+    # Note that we use "Miro" instead of the app name here, so custom
+    # versions will work
+    downloaderPath = os.path.join(resources.resourceRoot(), "..",
+                                  "Miro_Downloader.exe")
+    startupinfo = subprocess.STARTUPINFO()
+    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE, 
+            stdin=subprocess.PIPE,
+            startupinfo=startupinfo)

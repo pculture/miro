@@ -11,6 +11,7 @@ import prefs
 import eventloop
 import util
 import logging
+import platformutils
 import signals
 import trapcall
 from httpclient import ConnectionHandler
@@ -31,9 +32,7 @@ def launchDownloadDaemon(oldpid, port):
         'DEMOCRACY_DOWNLOADER_PORT' : str(port),
         'DEMOCRACY_DOWNLOADER_FIRST_LAUNCH' : firstDaemonLaunch,
     }
-    import app
-    delegate = app.delegate
-    delegate.launchDownloadDaemon(oldpid, daemonEnv)
+    platformutils.launchDownloadDaemon(oldpid, daemonEnv)
     firstDaemonLaunch = '0'
 
 def getDataFile():
@@ -226,7 +225,6 @@ class ControllerDaemon(Daemon):
 
     def shutdown_timeout_cb(self):
         logging.warning ("killing download daemon")
-        import platformutils
         platformutils.killProcess(readPid())
         self.shutdownResponse()
 

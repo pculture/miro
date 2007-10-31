@@ -244,3 +244,25 @@ def killProcess(pid):
             os.kill(pid, signal.SIGKILL)
         except:
             logging.exception ("error killing download daemon")
+
+def launchDownloadDaemon(oldpid, env):
+    # Use UNIX style kill
+    if oldpid is not None and pidIsRunning(oldpid):
+        killProcess(oldpid)
+
+    environ = os.environ.copy()
+    import miro
+    miroPath = os.path.dirname(miro.__file__)
+    dlDaemonPath = os.path.join(miroPath, 'dl_daemon')
+    privatePath = os.path.join(dlDaemonPath, 'private')
+
+    pythonPath = environ.get('PYTHONPATH', '').split(':')
+    pythonPath[0:0] = [privatePath, miroPath]
+    environ['PYTHONPATH'] = ':'.join(pythonPath)
+
+    environ.update(env)
+
+    # run the Miro_Downloader script
+    script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
+
+    os.spawnlpe(os.P_NOWAIT, "python", "python", script, environ)

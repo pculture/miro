@@ -580,25 +580,3 @@ class UIBackendDelegate:
         init_clipboard()
         clipboard.set_text(text)
         primary.set_text(text)
-
-    def launchDownloadDaemon(self, oldpid, env):
-        # Use UNIX style kill
-        if oldpid is not None and platformutils.pidIsRunning(oldpid):
-            platformutils.killProcess(oldpid)
-
-        environ = os.environ.copy()
-        import miro
-        miroPath = os.path.dirname(miro.__file__)
-        dlDaemonPath = os.path.join(miroPath, 'dl_daemon')
-        privatePath = os.path.join(dlDaemonPath, 'private')
-
-        pythonPath = environ.get('PYTHONPATH', '').split(':')
-        pythonPath[0:0] = [privatePath, miroPath]
-        environ['PYTHONPATH'] = ':'.join(pythonPath)
-
-        environ.update(env)
-
-        # run the Miro_Downloader script
-        script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
-
-        os.spawnlpe(os.P_NOWAIT, "python", "python", script, environ)
