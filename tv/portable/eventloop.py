@@ -34,6 +34,7 @@ import util
 import database
 import logging
 import trapcall
+import signals
 
 from clock import clock
 
@@ -201,8 +202,9 @@ class ThreadPool(object):
             except:
                 pass
             
-class EventLoop(object):
+class EventLoop(signals.SignalEmitter):
     def __init__(self):
+        signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop')
         self.scheduler = Scheduler()
         self.idleQueue = CallQueue()
         self.urgentQueue = CallQueue()
@@ -212,7 +214,6 @@ class EventLoop(object):
         self.wakeSender, self.wakeReceiver = util.makeDummySocketPair()
         self.addReadCallback(self.wakeReceiver, self._slurpWakerData)
         self.quitFlag = False
-        self.delegate = None
         self.clearRemovedCallbacks()
 
     def clearRemovedCallbacks(self):
@@ -221,9 +222,6 @@ class EventLoop(object):
 
     def _slurpWakerData(self):
         self.wakeReceiver.recv(1024)
-
-    def setDelegate(self, delegate):
-        self.delegate = delegate
 
     def addReadCallback(self, socket, callback):
         self.readCallbacks[socket.fileno()] = callback
@@ -245,20 +243,12 @@ class EventLoop(object):
     def callInThread(self, callback, errback, function, name, *args, **kwargs):
         self.threadPool.queueCall(callback, errback, function, name, *args, **kwargs)
 
-    def _beginLoop(self):
-        if self.delegate is not None and hasattr(self.delegate, "beginLoop"):
-            self.delegate.beginLoop(self)
-
-    def _endLoop(self):
-        if self.delegate is not None and hasattr(self.delegate, "endLoop"):
-            self.delegate.endLoop(self)
-
     def loop(self):
         global loop_ready
         database.set_thread()
         loop_ready.set()
         while not self.quitFlag:
-            self._beginLoop()
+            self.emit('begin-loop')
             self.clearRemovedCallbacks()
             timeout = self.scheduler.nextTimeout()
             readfds = self.readCallbacks.keys()
@@ -281,7 +271,7 @@ class EventLoop(object):
                 self.urgentQueue.processIdles()
                 if self.quitFlag:
                     break
-            self._endLoop()
+            self.emit('end-loop')
 
     def generateEvents(self, readables, writeables):
         """Generator that creates the list of events that should be dealt with
@@ -319,9 +309,6 @@ class EventLoop(object):
                 yield callbackEvent
 
 _eventLoop = EventLoop()
-
-def setDelegate(delegate):
-    _eventLoop.setDelegate(delegate)
 
 def addReadCallback(socket, callback):
     """Add a read callback.  When socket is ready for reading, callback will
@@ -429,6 +416,12 @@ def quit():
     threadPoolQuit()
     _eventLoop.quitFlag = True
     _eventLoop.wakeup()
+
+def connect(signal, callback):
+    _eventLoop.connect(signal, callback)
+
+def disconnect(signal, callback):
+    _eventLoop.disconnect(signal, callback)
 
 def resetEventLoop():
     _eventLoop = EventLoop()

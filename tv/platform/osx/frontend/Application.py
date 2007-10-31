@@ -61,7 +61,8 @@ class Application:
 
     def Run(self):
         if self.checkOtherAppInstances():
-            eventloop.setDelegate(self)
+            eventloop.connect('begin-loop', self.beginLoop)
+            eventloop.connect('end-loop', self.endLoop)
             AppHelper.runEventLoop()
         else:
             logging.warning('Another instance of %s is already running! Quitting now.' % config.get(prefs.SHORT_APP_NAME))
