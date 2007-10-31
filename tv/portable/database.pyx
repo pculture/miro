@@ -92,10 +92,6 @@ def confirmDBThread():
             errorString = "Database called from %s" % threading.currentThread()
         raise DatabaseThreadError, errorString
 
-def setDelegate(newDelegate):
-    global delegate
-    delegate = newDelegate
-
 def findUnpicklableParts(obj, seen = {}, depth=0):
     thisId = id(obj)
     out = ""
