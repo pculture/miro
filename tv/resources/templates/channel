@@ -208,8 +208,8 @@ if feed.idExists():
 	    </div>
         </div>
 
-        <div t:updateForView="thisFeedView">
         <div class="main-titlebar-left">
+            <div t:updateForView="thisFeedView">
             <h1 id="main-title" t:replace="feed.getTitle()" />
             <div id="auto-download">
                 <div t:hideIf="feed.getURL().startswith('dtv:directoryfeed')">
@@ -240,6 +240,8 @@ if feed.idExists():
                     <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***feed.inlineSearchTerm***" searching="1"/>
                 </div>
             </div>
+            </div>
+            <div t:updateForView="matchingItems">
             <div t:hideIf="feed.inlineSearchTerm is None or feed.getURL().startswith('dtv:directoryfeed')">
                 <div class="white-button-left save-search-channel">
                 <div class="white-button-right">
@@ -249,7 +251,7 @@ if feed.idExists():
                 </div>
                 </div>
             </div>
-        </div>
+            </div>
         </div>
 </div>
 <!-- / TITLE BAR -->

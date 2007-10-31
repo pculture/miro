@@ -609,7 +609,6 @@ class Feed(DDBObject):
 
     def setInlineSearchTerm(self, term):
         self.inlineSearchTerm = term
-        self.signalChange(needsSave=False)
 
     def blink(self):
         self.setBlinking(True)
