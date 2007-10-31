@@ -21,26 +21,21 @@ import dialogs
 import logging
 import eventloop
 import feedparser
+import signals
 
 from httpclient import grabURL
 from gtcache import gettext as _
 
-delegate = None
 checkInProgress = False
 
-# Pass in a connection to the frontend
-def setDelegate(newDelegate):
-    global delegate
-    delegate = newDelegate
-
 # Trigger the version checking process
-def checkForUpdates(notifyIfUpToDate=False):
+def checkForUpdates(upToDateCallback=None):
     global checkInProgress
     if not checkInProgress:
         checkInProgress = True
         logging.info("Checking for updates...")
         url = config.get(prefs.AUTOUPDATE_URL)
-        updateHandler = lambda data: _handleAppCast(data, notifyIfUpToDate)
+        updateHandler = lambda data: _handleAppCast(data, upToDateCallback)
         errorHandler = _handleError
         grabURL(url, updateHandler, errorHandler)
 
@@ -52,7 +47,7 @@ def _handleError(error):
     eventloop.addTimeout (86400, checkForUpdates, "Check for updates")
 
 # Handle appcast data when it's correctly fetched
-def _handleAppCast(data, notifyIfUpToDate):
+def _handleAppCast(data, upToDateCallback):
     try:
         try:
             appcast = feedparser.parse(data['body'])
@@ -67,13 +62,10 @@ def _handleAppCast(data, notifyIfUpToDate):
         
             if not upToDate:
                 logging.info('New update available.')
-                if hasattr(delegate, 'handleNewUpdate'):
-                    delegate.handleNewUpdate(latest)
-                else:
-                    _handleNewUpdate(latest)
-            elif notifyIfUpToDate:
+                signals.system.update_available(latest)
+            elif upToDateCallback:
                 logging.info('Up to date. Notifying')
-                _handleUpToDate()
+                upToDateCallback()
             else:
                 logging.info('Up to date.')
         except:
@@ -111,20 +103,3 @@ def _getItemForLatest(appcast):
 def _getItemSerial(item):
     return int(item['enclosures'][0]['dtv:serial'])
 
-# A new update is available, deal with it.
-def _handleNewUpdate(item):
-    url = item['enclosures'][0]['href']
-    def callback(dialog):
-        global delegate
-        if dialog.choice == dialogs.BUTTON_DOWNLOAD:
-            delegate.openExternalURL(url)
-    summary = _("%s Version Alert") % (config.get(prefs.SHORT_APP_NAME), )
-    message = _("A new version of %s is available. Would you like to download it now?") % (config.get(prefs.LONG_APP_NAME), )
-    dlog = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_DOWNLOAD, dialogs.BUTTON_CANCEL)
-    dlog.run(callback)
-
-# We are up to date, notify user.
-def _handleUpToDate():
-    title = _('%s Version Check') % (config.get(prefs.SHORT_APP_NAME), )
-    message = _('%s is up to date.') % (config.get(prefs.LONG_APP_NAME), )
-    dialogs.MessageBoxDialog(title, message).run()

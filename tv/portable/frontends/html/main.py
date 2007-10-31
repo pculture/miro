@@ -22,6 +22,7 @@ error reporting, etc.
 from gtcache import gettext as _
 from gtcache import ngettext
 import app
+import autoupdate
 import config
 import dialogs
 import eventloop
@@ -37,6 +38,7 @@ class HTMLApplication:
 
     def startup(self):
         signals.system.connect('error', self.handleError)
+        signals.system.connect('update-available', self.handleNewUpdate)
 
     def handleError(self, obj, report):
         if self.ignoreErrors:
@@ -57,6 +59,37 @@ class HTMLApplication:
             frontendutil.sendBugReport(report, description, send_dabatase)
         chkboxdialog = dialogs.CheckboxTextboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, _("Describe what you were doing that caused this error"), dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
         chkboxdialog.run(callback)
+
+
+    def handleNewUpdate(self, obj, item):
+        """Handle new updates.  The default version opens the download page in
+        a user's browser.
+        """
+        if hasattr(app.delegate, 'handleNewUpdate'):
+            app.delegate.handleNewUpdate(latest)
+            return
+
+        url = item['enclosures'][0]['href']
+        def callback(dialog):
+            if dialog.choice == dialogs.BUTTON_DOWNLOAD:
+                app.delegate.openExternalURL(url)
+        summary = _("%s Version Alert") % (config.get(prefs.SHORT_APP_NAME), )
+        message = _("A new version of %s is available. Would you like to download it now?") % (config.get(prefs.LONG_APP_NAME), )
+        dlog = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_DOWNLOAD, dialogs.BUTTON_CANCEL)
+        dlog.run(callback)
+
+    def handleUpToDate(self):
+        title = _('%s Version Check') % (config.get(prefs.SHORT_APP_NAME), )
+        message = _('%s is up to date.') % (config.get(prefs.LONG_APP_NAME), )
+        dialogs.MessageBoxDialog(title, message).run()
+
+    # methods to handle user interaction
+
+    @eventloop.asUrgent
+    def checkForUpdates(self):
+        """Call when the user manually asks for updates."""
+        autoupdate.checkForUpdates(self.handleUpToDate)
+
 
     @eventloop.asUrgent
     def quit(self):

@@ -70,28 +70,37 @@ class SystemSignals(SignalEmitter):
         - report -- string that can be submitted to the bug tracker
         - exception -- Exception object (can be None)
 
-    "startup-success" - Emmitted when the startup process is complete.  The
-        frontend should wait for this signal to show the UI to the user.
+    "startup-success" - The startup process is complete.  The frontend should
+        wait for this signal to show the UI to the user.
         
         No arguments.
 
-    "startup-failure" - Emmitted if the startup process fails.  The frontend
-        should inform the user that this happened and quit.  At this point the
-        backend thread will not be running.
+    "startup-failure" - The startup process fails.  The frontend should inform
+        the user that this happened and quit.  At this point the backend
+        thread will not be running.
         
         Arguments:
         - message -- User-friendly explanation of the problem.
 
+    "update-available" - A new version of Miro is available.
+     
+        Arguments:
+        - rssItem -- The RSS item for the latest version (in sparkle
+          appcast format).
+ 
     """
     def __init__(self):
         SignalEmitter.__init__(self, 'error', 'startup-success',
-                'startup-failure')
+                'startup-failure', 'update-available')
 
     def startupSuccess(self):
         self.emit('startup-success')
 
     def startupFailure(self, message):
         self.emit('startup-failure', message)
+
+    def update_available(self, latest):
+        self.emit('update-available', latest)
 
     def failedExn(self, when, details=None):
         self.failed(when, withExn=True, details=details)

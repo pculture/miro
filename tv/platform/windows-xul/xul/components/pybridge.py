@@ -31,7 +31,6 @@ try:
     import gtcache
     gtcache.init()
     import app
-    import autoupdate
     import eventloop
     import config
     import dialogs
@@ -584,10 +583,8 @@ class PyBridge:
     def removeCurrentSelection(self):
         app.controller.removeCurrentSelection()
 
-    
-    @asUrgent
     def checkForUpdates(self):
-        autoupdate.checkForUpdates()
+        app.controller.htmlapp.checkForUpdates()
 
     @asUrgent
     def removeCurrentItems(self):

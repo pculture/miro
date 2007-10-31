@@ -300,7 +300,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         NSWorkspace.sharedWorkspace().openURL_(donateURL)
 
     def checkForUpdates_(self, sender):
-        eventloop.addUrgentCall(lambda:autoupdate.checkForUpdates(True), "Checking for new version")
+        app.controller.htmlapp.checkForUpdates()
 
     def showMainWindow_(self, sender):
         if app.controller is not None and app.controller.frame is not None:

@@ -658,7 +658,6 @@ class Controller (frontend.Application):
         
         global delegate
         feed.setSortFunc(sorts.item)
-        autoupdate.setDelegate(delegate)
         database.setDelegate(delegate)
         dialogs.setDelegate(delegate)
         
