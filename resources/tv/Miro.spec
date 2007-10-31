@@ -73,6 +73,7 @@ update-desktop-database %{_datadir}/applications
 %files
 %defattr(-,root,root,-)
 /usr/bin/*
+/usr/libexec/*
 %{_datadir}/miro
 %{_datadir}/pixmaps/*
 %{_datadir}/applications/*.desktop
