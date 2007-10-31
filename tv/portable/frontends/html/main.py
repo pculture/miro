@@ -22,11 +22,13 @@ error reporting, etc.
 from gtcache import gettext as _
 from gtcache import ngettext
 from frontends.html import dialogs
+import frontends.html
 import app
 import autoupdate
 import config
 import eventloop
 import frontendutil
+import opml
 import prefs
 import signals
 import views
@@ -38,6 +40,7 @@ class HTMLApplication:
         self.ignoreErrors = False
         self.inQuit = False
         self.delegate = app.delegate
+        frontends.html.app = self
 
     def startup(self):
         signals.system.connect('error', self.handleError)
@@ -134,3 +137,17 @@ class HTMLApplication:
             self.inQuit = True
         else:
             app.controller.shutdown()
+
+
+    @eventloop.asUrgent
+    def importChannels(self):
+        callback = lambda p: opml.Importer().importSubscriptionsFrom(p)
+        title = _("Import OPML File")
+        self.delegate.askForOpenPathname(title, callback, None, 
+                _("OPML Files"), ['opml'])
+
+    @eventloop.asUrgent
+    def exportChannels(self):
+        callback = lambda p: opml.Exporter().exportSubscriptionsTo(p)
+        title = _("Export OPML File")
+        app.delegate.askForSavePathname(title, callback, None, u"miro_subscriptions.opml")

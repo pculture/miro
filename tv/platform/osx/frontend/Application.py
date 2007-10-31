@@ -34,6 +34,7 @@ import app
 import views
 import prefs
 import config
+import frontends.html
 from frontends.html import dialogs
 import filetypes
 import eventloop
@@ -300,7 +301,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         NSWorkspace.sharedWorkspace().openURL_(donateURL)
 
     def checkForUpdates_(self, sender):
-        app.controller.htmlapp.checkForUpdates()
+        frontends.html.app.checkForUpdates()
 
     def showMainWindow_(self, sender):
         if app.controller is not None and app.controller.frame is not None:
@@ -322,10 +323,10 @@ class AppController (NibClassBuilder.AutoBaseClass):
         app.controller.newDownload()
     
     def importChannels_(self, sender):
-        app.controller.importChannels()
+        frontends.html.importChannels()
     
     def exportChannels_(self, sender):
-        app.controller.exportChannels()
+        frontends.html.exportChannels()
     
     def shutdown_(self, sender):
         self.internalShutdown = True

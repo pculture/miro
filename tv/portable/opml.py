@@ -23,7 +23,6 @@ from xml.parsers import expat
 from datetime import datetime
 from StringIO import StringIO
 
-import app
 import util
 import feed
 import views
@@ -43,11 +42,6 @@ class Exporter (object):
     def __init__(self):
         self.io = StringIO()
         self.currentFolder = None
-
-    def exportSubscriptions(self):
-        callback = lambda p: self.exportSubscriptionsTo(p)
-        title = _("Export OPML File")
-        app.delegate.askForSavePathname(title, callback, None, u"miro_subscriptions.opml")
 
     @eventloop.asIdle
     def exportSubscriptionsTo(self, pathname):
@@ -117,12 +111,6 @@ class Importer (object):
         self.currentFolder = None
         self.ignoredFeeds = 0
         self.importedFeeds = 0
-
-    def importSubscriptions(self):
-        callback = lambda p: self.importSubscriptionsFrom(p)
-        title = _("Import OPML File")
-        app.delegate.askForOpenPathname(title, callback, None, 
-                _("OPML Files"), ['opml'])
 
     @eventloop.asIdle
     def importSubscriptionsFrom(self, pathname, showSummary = True):

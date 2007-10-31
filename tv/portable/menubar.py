@@ -22,6 +22,7 @@ import config
 import prefs
 from string import Template
 import app
+import frontends.html
 
 CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12 = range(24)
 _ = lambda x : x
@@ -185,8 +186,8 @@ ChannelItems = [
              plural=_("_Update Channels...")),
     MenuItem(_("Update _All Channels"), "UpdateAllChannels", (Key("r",MOD,SHIFT),)),
     Separator(),
-    MenuItem(_("_Import Channels (OPML)..."), "ImportChannels", (), impl=lambda:app.controller.importChannels()),
-    MenuItem(_("E_xport Channels (OPML)..."), "ExportChannels", (), impl=lambda:app.controller.exportChannels()),
+    MenuItem(_("_Import Channels (OPML)..."), "ImportChannels", (), impl=lambda:frontends.html.app.importChannels()),
+    MenuItem(_("E_xport Channels (OPML)..."), "ExportChannels", (), impl=lambda:frontends.html.app.exportChannels()),
     Separator(),
     MenuItem(_("_Send this channel to a friend"), "MailChannel", (), enabled=False),
     MenuItem(_("Copy Channel _Link"), "CopyChannelURL", (), enabled=False),

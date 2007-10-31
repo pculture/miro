@@ -1439,14 +1439,6 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
     def newDownload(self, url = None):
         return GUIActionHandler().addDownload(url)
         
-    def importChannels(self):
-        importer = opml.Importer()
-        importer.importSubscriptions()
-    
-    def exportChannels(self):
-        exporter = opml.Exporter()
-        exporter.exportSubscriptions()
-
 ###############################################################################
 #### TemplateDisplay: a HTML-template-driven right-hand display panel      ####
 ###############################################################################

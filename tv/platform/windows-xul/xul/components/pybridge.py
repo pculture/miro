@@ -33,6 +33,7 @@ try:
     import app
     import eventloop
     import config
+    import frontends.html
     from frontends.html import dialogs
     import folder
     import playlist
@@ -584,7 +585,7 @@ class PyBridge:
         app.controller.removeCurrentSelection()
 
     def checkForUpdates(self):
-        app.controller.htmlapp.checkForUpdates()
+        frontends.html.app.checkForUpdates()
 
     @asUrgent
     def removeCurrentItems(self):
@@ -610,13 +611,11 @@ class PyBridge:
     def createNewDownload(self):
         app.controller.newDownload()
 
-    @asUrgent
     def importChannels(self):
-        app.controller.importChannels()
+        frontends.html.importChannels()
 
-    @asUrgent
     def exportChannels(self):
-        app.controller.exportChannels()
+        frontends.html.exportChannels()
 
     @asUrgent
     def addChannel(self):
