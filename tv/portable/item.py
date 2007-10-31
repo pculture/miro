@@ -62,6 +62,7 @@ import filetypes
 import searchengines
 import migrate
 import imageresize
+import signals
 
 _charset = locale.getpreferredencoding()
 
@@ -1493,7 +1494,7 @@ folder will be deleted.""")
                 self.downloader.addItem(other)
                 other.signalChange(needsSave=False)
         
-        app.delegate.notifyDownloadCompleted(self)
+        signals.system.download_complete(self)
 
     def getResizedScreenshot(self, width, height):
         try:

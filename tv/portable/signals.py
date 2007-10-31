@@ -87,11 +87,15 @@ class SystemSignals(SignalEmitter):
         Arguments:
         - rssItem -- The RSS item for the latest version (in sparkle
           appcast format).
- 
+
+    "download-complete" - An item has finished downloading.
+    
+        Arguments:
+        - item -- The object that finished downloading.
     """
     def __init__(self):
         SignalEmitter.__init__(self, 'error', 'startup-success',
-                'startup-failure', 'update-available')
+                'startup-failure', 'update-available', 'download-complete')
 
     def startupSuccess(self):
         self.emit('startup-success')
@@ -101,6 +105,9 @@ class SystemSignals(SignalEmitter):
 
     def update_available(self, latest):
         self.emit('update-available', latest)
+
+    def download_complete(self, item):
+        self.emit('download-complete', item)
 
     def failedExn(self, when, details=None):
         self.failed(when, withExn=True, details=details)

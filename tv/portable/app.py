@@ -658,7 +658,6 @@ class Controller (frontend.Application):
         
         global delegate
         feed.setSortFunc(sorts.item)
-        dialogs.setDelegate(delegate)
         
         if not config.get(prefs.STARTUP_TASKS_DONE):
             logging.info ("Showing startup dialog...")

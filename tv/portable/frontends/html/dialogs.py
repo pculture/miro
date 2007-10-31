@@ -59,11 +59,7 @@ Frontend requirements:
 
 import eventloop
 from gtcache import gettext as _
-
-# Pass in a connection to the frontend
-def setDelegate(newDelegate):
-    global delegate
-    delegate = newDelegate
+import app
 
 class DialogButton(object):
     def __init__(self, text):
@@ -110,7 +106,7 @@ class Dialog(object):
     def run(self, callback):
         self.callback = callback
         self.choice = None
-        delegate.runDialog(self)
+        app.controller.htmlapp.delegate.runDialog(self)
 
     def runCallback(self, choice):
         """Run the callback for this dialog.  Choice should be the button that

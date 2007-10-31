@@ -37,14 +37,19 @@ class HTMLApplication:
     def __init__(self):
         self.ignoreErrors = False
         self.inQuit = False
+        self.delegate = app.delegate
 
     def startup(self):
         signals.system.connect('error', self.handleError)
-        dialogs.setDelegate(app.delegate)
+        signals.system.connect('download-complete', self.handleDownloadComplete)
         if self.AUTOUPDATE_SUPPORTED:
             eventloop.addTimeout (3, autoupdate.checkForUpdates, 
                     "Check for updates")
             signals.system.connect('update-available', self.handleNewUpdate)
+
+    # signal handlers
+    def handleDownloadComplete(self, obj, item):
+        self.delegate.notifyDownloadCompleted(item)
 
     def handleError(self, obj, report):
         if self.ignoreErrors:
@@ -66,19 +71,18 @@ class HTMLApplication:
         chkboxdialog = dialogs.CheckboxTextboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, _("Describe what you were doing that caused this error"), dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
         chkboxdialog.run(callback)
 
-
     def handleNewUpdate(self, obj, item):
         """Handle new updates.  The default version opens the download page in
         a user's browser.
         """
-        if hasattr(app.delegate, 'handleNewUpdate'):
-            app.delegate.handleNewUpdate(latest)
+        if hasattr(self.delegate, 'handleNewUpdate'):
+            self.delegate.handleNewUpdate(latest)
             return
 
         url = item['enclosures'][0]['href']
         def callback(dialog):
             if dialog.choice == dialogs.BUTTON_DOWNLOAD:
-                app.delegate.openExternalURL(url)
+                self.delegate.openExternalURL(url)
         summary = _("%s Version Alert") % (config.get(prefs.SHORT_APP_NAME), )
         message = _("A new version of %s is available. Would you like to download it now?") % (config.get(prefs.LONG_APP_NAME), )
         dlog = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_DOWNLOAD, dialogs.BUTTON_CANCEL)
