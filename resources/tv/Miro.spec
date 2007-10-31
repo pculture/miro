@@ -12,8 +12,8 @@
 # 2. set RELEASE_CANDIDATE
 # 3. increase RELEASE if we do multiples
 
-%define VERSION 0.9.9.9
-#define RELEASE_CANDIDATE rc1
+%define VERSION 0.9.9
+%define RELEASE_CANDIDATE rc1
 #define NIGHTLY 2006-07-20
 #define RELEASE_CANDIDATE 2006_07_20
 %define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-%{RELEASE_CANDIDATE}}
@@ -73,7 +73,6 @@ update-desktop-database %{_datadir}/applications
 %files
 %defattr(-,root,root,-)
 /usr/bin/*
-/usr/libexec/*
 %{_datadir}/miro
 %{_datadir}/pixmaps/*
 %{_datadir}/applications/*.desktop

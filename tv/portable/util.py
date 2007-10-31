@@ -688,10 +688,13 @@ def no_console_startupinfo():
     else:
         return None
 
-def call_command(*args):
+def call_command(*args, **kwargs):
     """Call an external command.  If the command doesn't exit with status 0,
     or if it outputs to stderr, an exception will be raised.  Returns stdout.
     """
+    ignore_stderr = kwargs.pop('ignore_stderr', False)
+    if kwargs:
+        raise TypeError('extra keyword arguments: %s' % kwargs)
 
     pipe = subprocess.Popen(args, stdout=subprocess.PIPE,
             stdin=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -700,8 +703,9 @@ def call_command(*args):
     if pipe.returncode != 0:
         raise OSError("call_command with %s has return code %s\nstdout:%s\nstderr:%s" % 
                 (args, pipe.returncode, stdout, stderr))
-    elif stderr:
-        raise OSError("call_command outputed error text:\n%s" % stderr)
+    elif stderr and not ignore_stderr:
+        raise OSError("call_command with %s outputed error text:\n%s" % 
+                (args, stderr))
     else:
         return stdout
 

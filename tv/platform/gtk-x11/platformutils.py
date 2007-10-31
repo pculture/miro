@@ -211,10 +211,14 @@ def resizeImage(source_path, dest_path, width, height):
     # From the "Pad Out Image" recipe at
     # http://www.imagemagick.org/Usage/thumbnails/
     border_width = max(width, height) / 2
+    # sometimes convert complains because our output filename doesn't match a
+    # known image filetype.  It still converts the image though, so don't
+    # worry about it.
     call_command(convert_path,  source_path, 
             "-strip",
             "-resize", "%dx%d>" % (width, height), 
             "-gravity", "center", "-bordercolor", "black",
             "-border", "%s" % border_width,
             "-crop", "%dx%d+0+0" % (width, height),
-            "+repage", dest_path)
+            "+repage", dest_path,
+            ignore_stderr=True)
