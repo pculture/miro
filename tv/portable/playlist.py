@@ -20,7 +20,7 @@
 from gtcache import gettext as _
 
 import app
-import dialogs
+from frontends.html import dialogs
 import database
 import filters
 import item

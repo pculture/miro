@@ -60,7 +60,7 @@ import cgi
 import traceback
 import threading
 import platform
-import dialogs
+from frontends.html import dialogs
 import iconcache
 import moviedata
 import platformutils

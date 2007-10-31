@@ -30,7 +30,7 @@ import views
 import prefs
 import config
 import folder
-import dialogs
+from frontends.html import dialogs
 import eventloop
 
 from gtcache import gettext as _

@@ -21,10 +21,10 @@ error reporting, etc.
 
 from gtcache import gettext as _
 from gtcache import ngettext
+from frontends.html import dialogs
 import app
 import autoupdate
 import config
-import dialogs
 import eventloop
 import frontendutil
 import prefs
@@ -40,6 +40,7 @@ class HTMLApplication:
 
     def startup(self):
         signals.system.connect('error', self.handleError)
+        dialogs.setDelegate(app.delegate)
         if self.AUTOUPDATE_SUPPORTED:
             eventloop.addTimeout (3, autoupdate.checkForUpdates, 
                     "Check for updates")

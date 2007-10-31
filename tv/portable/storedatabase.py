@@ -55,7 +55,7 @@ import schema as schema_mod
 import eventloop
 import app
 import bsddb.db
-import dialogs
+from frontends.html import dialogs
 import logging
 from zipfile import ZipFile
 import tempfile

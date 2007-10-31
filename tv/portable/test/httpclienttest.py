@@ -12,7 +12,7 @@ import os
 from download_utils import cleanFilename
 import download_utils
 import database
-import dialogs
+from frontends.html import dialogs
 import httpclient
 import util
 from framework import EventLoopTest, DemocracyTestCase, HadToStopEventLoop

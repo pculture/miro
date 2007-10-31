@@ -4,7 +4,7 @@ from time import sleep
 
 import config
 import prefs
-import dialogs
+from frontends.html import dialogs
 import database
 from feed import validateFeedURL, normalizeFeedURL, Feed
 

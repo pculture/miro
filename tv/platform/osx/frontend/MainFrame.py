@@ -29,7 +29,7 @@ import prefs
 import views
 import config
 import folder
-import dialogs
+from frontends.html import dialogs
 import playlist
 import keyboard
 import resources

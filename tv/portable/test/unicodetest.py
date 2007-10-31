@@ -9,7 +9,7 @@ import item
 import database
 import feedparser
 import app
-import dialogs
+from frontends.html import dialogs
 import framework
 import os
 import gtcache

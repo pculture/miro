@@ -25,7 +25,7 @@ import gtk
 import threading
 import traceback
 import app
-import dialogs
+from frontends.html import dialogs
 from gtcache import gettext as _
 from gtcache import ngettext
 import re

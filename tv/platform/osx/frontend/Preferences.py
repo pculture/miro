@@ -25,7 +25,7 @@ import feed
 import prefs
 import views
 import config
-import dialogs
+from frontends.html import dialogs
 import eventloop
 import platformutils
 

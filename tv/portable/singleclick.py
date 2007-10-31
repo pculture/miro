@@ -34,7 +34,7 @@ import urllib
 
 from util import getTorrentInfoHash
 import app
-import dialogs
+from frontends.html import dialogs
 import download_utils
 import item
 import feed

@@ -18,7 +18,7 @@
 from gtcache import gettext as _
 
 import app
-import dialogs
+from frontends.html import dialogs
 import indexes
 import playlist
 import sorts

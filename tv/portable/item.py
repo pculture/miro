@@ -43,7 +43,7 @@ import app
 import template
 import downloader
 import config
-import dialogs
+from frontends.html import dialogs
 import eventloop
 import feed
 import filters

@@ -17,7 +17,7 @@
 
 import prefs
 import config
-import dialogs
+from frontends.html import dialogs
 import logging
 import eventloop
 import feedparser

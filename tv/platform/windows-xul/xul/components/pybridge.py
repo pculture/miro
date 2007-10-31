@@ -33,7 +33,7 @@ try:
     import app
     import eventloop
     import config
-    import dialogs
+    from frontends.html import dialogs
     import folder
     import playlist
     import prefs

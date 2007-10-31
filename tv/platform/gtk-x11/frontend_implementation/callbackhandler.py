@@ -32,7 +32,6 @@ import MainFrame
 import singleclick
 import eventloop
 import math
-import dialogs
 import folder
 import playlist
 import platformutils

@@ -41,7 +41,7 @@ from templatehelper import quoteattr, escape, toUni
 from string import Template
 import app
 import config
-import dialogs
+from frontends.html import dialogs
 import eventloop
 import folder
 import prefs

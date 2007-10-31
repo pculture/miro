@@ -28,7 +28,7 @@ from urlparse import urlparse
 
 import prefs
 import config
-import dialogs
+from frontends.html import dialogs
 import feed
 import frontend
 import clipboard

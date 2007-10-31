@@ -31,7 +31,7 @@ import app
 import feed
 import prefs
 import config
-import dialogs
+from frontends.html import dialogs
 import eventloop
 import platformcfg
 import platformutils

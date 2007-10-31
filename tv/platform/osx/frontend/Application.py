@@ -34,7 +34,7 @@ import app
 import views
 import prefs
 import config
-import dialogs
+from frontends.html import dialogs
 import filetypes
 import eventloop
 import autoupdate
