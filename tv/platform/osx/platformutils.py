@@ -21,6 +21,7 @@ import urllib
 import statvfs
 import logging
 import sys
+import time
 
 from objc import NO, YES
 from Foundation import *
@@ -348,3 +349,12 @@ def getMajorOSVersion():
     versionInfo = os.uname()
     versionInfo = versionInfo[2].split('.')
     return int(versionInfo[0])
+
+def killProcess(self, pid=None):
+    if pid is not None:
+        try:
+            os.kill(pid, signal.SIGTERM)
+            time.sleep(1)
+            os.kill(pid, signal.SIGKILL)
+        except:
+            pass

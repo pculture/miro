@@ -16,7 +16,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 from eventloop import asIdle
-from platformutils import FilenameType
 import os.path
 import re
 import subprocess
@@ -29,6 +28,7 @@ import app
 import eventloop
 import logging
 import config
+import platformutils
 import prefs
 import signals
 import util
@@ -120,7 +120,7 @@ class MovieDataUpdater:
                     # All the programs failed, maybe it's an audio file?
                     # Setting it to "" instead of None, means that we won't
                     # try to take the screenshot again.
-                    screenshot = FilenameType("")
+                    screenshot = platformutils.FilenameType("")
                 self.updateFinished(movieDataInfo.item, duration, screenshot)
             except:
                 if self.inShutdown:
@@ -149,7 +149,7 @@ class MovieDataUpdater:
 
     def killProcess(self, pid):
         try:
-            app.delegate.killProcess(pid)
+            platformutils.killProcess(pid)
         except:
             logging.warn("Error trying to kill the movie data process:\n%s", traceback.format_exc())
         else:

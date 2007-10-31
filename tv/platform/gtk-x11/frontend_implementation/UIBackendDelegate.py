@@ -15,11 +15,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import errno
 import os
 import signal
 import sys
-import time
 import gobject
 import gtk
 import threading
@@ -41,6 +39,7 @@ import config
 import prefs
 from frontend import *
 from frontend_implementation.gtk_queue import gtkAsyncMethod
+import platformutils
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
@@ -354,14 +353,6 @@ def ShowCheckboxTextboxDialogAsync(title, description, checkbox_text, buttons, d
     gtkDialog.connect("response", callback)
     gtkDialog.show()
 
-def pidIsRunning(pid):
-    if pid is None:
-        return False
-    try:
-        os.kill(pid, 0)
-        return True
-    except OSError, err:
-        return err.errno == errno.EPERM
 
 clipboard = None
 primary = None
@@ -590,24 +581,10 @@ class UIBackendDelegate:
         clipboard.set_text(text)
         primary.set_text(text)
 
-    def killProcess(self, pid):
-        if pid is None:
-            return
-        if pidIsRunning(pid):
-            try:
-                os.kill(pid, signal.SIGTERM)
-                for i in xrange(100):
-                    time.sleep(.01)
-                    if not pidIsRunning(pid):
-                        return
-                os.kill(pid, signal.SIGKILL)
-            except:
-                logging.exception ("error killing download daemon")
-
     def launchDownloadDaemon(self, oldpid, env):
         # Use UNIX style kill
-        if oldpid is not None and pidIsRunning(oldpid):
-            self.killProcess(oldpid)
+        if oldpid is not None and platformutils.pidIsRunning(oldpid):
+            platformutils.killProcess(oldpid)
 
         environ = os.environ.copy()
         import miro

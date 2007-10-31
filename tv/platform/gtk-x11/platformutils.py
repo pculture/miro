@@ -15,6 +15,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
+import errno
+import signal
 import os
 import statvfs
 import threading
@@ -24,6 +26,7 @@ import logging
 import locale
 import urllib
 import sys
+import time
 from util import returnsUnicode, returnsBinary, checkU, checkB, call_command
 
 FilenameType = str
@@ -218,3 +221,26 @@ def resizeImage(source_path, dest_path, width, height):
             "-border", "%s" % border_width,
             "-crop", "%dx%d+0+0" % (width, height),
             "+repage", dest_path)
+
+def pidIsRunning(pid):
+    if pid is None:
+        return False
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError, err:
+        return err.errno == errno.EPERM
+
+def killProcess(pid):
+    if pid is None:
+        return
+    if pidIsRunning(pid):
+        try:
+            os.kill(pid, signal.SIGTERM)
+            for i in xrange(100):
+                time.sleep(.01)
+                if not pidIsRunning(pid):
+                    return
+            os.kill(pid, signal.SIGKILL)
+        except:
+            logging.exception ("error killing download daemon")

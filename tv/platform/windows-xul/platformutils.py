@@ -227,3 +227,15 @@ def resizeImage(source_path, dest_path, width, height):
             "-border", "%s" % border_width,
             "-crop", "%dx%d+0+0" % (width, height),
             "+repage", dest_path)
+
+def killProcess(pid):
+    # Kill the old process, if it exists
+    if pid is not None:
+        # This isn't guaranteed to kill the process, but it's likely the
+        # best we can do
+        # See http://support.microsoft.com/kb/q178893/
+        # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/347462
+        PROCESS_TERMINATE = 1
+        handle = ctypes.windll.kernel32.OpenProcess(PROCESS_TERMINATE, False, pid)
+        ctypes.windll.kernel32.TerminateProcess(handle, -1)
+        ctypes.windll.kernel32.CloseHandle(handle)

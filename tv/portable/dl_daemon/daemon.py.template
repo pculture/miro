@@ -226,9 +226,8 @@ class ControllerDaemon(Daemon):
 
     def shutdown_timeout_cb(self):
         logging.warning ("killing download daemon")
-        import app
-        delegate = app.delegate
-        delegate.killProcess(readPid())
+        import platformutils
+        platformutils.killProcess(readPid())
         self.shutdownResponse()
 
     def shutdownResponse(self):
