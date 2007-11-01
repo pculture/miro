@@ -37,7 +37,4 @@ Miro development and promotes the platform, has a site at::
 
    http://participatoryculture.org/
 
-To build for...              See...
-  Mac OS X (Cocoa widgets)   platform/osx/README
-  X Windows (GTK widgets)    platform/gtk-x11/README
-  MS Windows (Mozilla XUL)   platform/windows-xul/README
+See https://develop.participatoryculture.org/trac/democracy/wiki/DevelopmentDocs for the latest build instructions
