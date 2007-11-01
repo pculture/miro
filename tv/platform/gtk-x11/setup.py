@@ -108,6 +108,7 @@ debian_package_dir = os.path.join(platform_dir, 'debian_package')
 sys.path[0:0] = ['%s/platform/%s' % (root_dir, 'gtk-x11'), '%s/platform' % root_dir, '%s/portable' % root_dir]
 
 import template_compiler
+import setup_portable
 template_compiler.compileAllTemplates(root_dir)
 
 # little hack get the version from the current app.config.template
@@ -212,6 +213,36 @@ fasttypes_ext = \
         sources = [os.path.join(portable_dir, 'fasttypes.cpp')],
         libraries = [BOOST_LIB],
     )
+
+##### The libtorrent extension ####
+#def fetchCpp():
+#    for root,dirs,files in os.walk(os.path.join(portable_dir, 'libtorrent')):
+#        if '.svn' in dirs:
+#            dirs.remove('.svn')
+#        for file in files:
+#            if file.endswith('.cpp'):
+#                yield os.path.join(root,file)
+#
+#torrent_sources=list(fetchCpp())
+#torrent_include_dirs = [os.path.join(portable_dir, x) for x in
+#               ['libtorrent/include', 'libtorrent/include/libtorrent']]
+#torrent_sources.remove(os.path.join(portable_dir, 'libtorrent/src/file_win.cpp'))
+#
+#torrent_compile_args = ["-Wno-missing-braces", 
+#                           "-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1", 
+#                           "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1", 
+#                           "-DHAVE_INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1", 
+#                           "-DHAVE_PTHREAD=1", "-DTORRENT_USE_OPENSSL=1", "-DHAVE_SSL=1", 
+#                           "-DNDEBUG=1", "-O2"]
+#\
+#    Extension("miro.libtorrent", 
+#              sources = torrent_sources,
+#              libraries = [BOOST_LIB, 'boost_filesystem', 'boost_date_time',
+#                           'boost_thread', 'z', 'pthread', 'ssl'],
+#              include_dirs = torrent_include_dirs,
+#              extra_compile_args = torrent_compile_args
+#    )
+libtorrent_ext = setup_portable.libtorrent_extension(portable_dir)
 
 #### MozillaBrowser Extension ####
 try:
@@ -532,7 +563,7 @@ setup(name='miro',
     ],
     data_files=data_files,
     ext_modules = [
-        fasttypes_ext, mozilla_browser_ext, xine_ext, xlib_ext,
+        fasttypes_ext, mozilla_browser_ext, xine_ext, xlib_ext, libtorrent_ext,
         Extension("miro.database", 
                 [os.path.join(portable_dir, 'database.pyx')]),
         Extension("miro.sorts", 

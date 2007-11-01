@@ -1259,7 +1259,7 @@ folder will be deleted.""")
     def downloadETA(self):
         if self.downloader is not None:
             totalSecs = self.downloader.getETA()
-            if totalSecs == -1:
+            if totalSecs <= 0:
                 return _('downloading...')
         else:
             totalSecs = 0

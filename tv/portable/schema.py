@@ -481,7 +481,7 @@ class ThemeHistorySchema(DDBObjectSchema):
         ('pastThemes', SchemaList(SchemaString(noneOk=False), noneOk=False)),
     ]
 
-VERSION = 57
+VERSION = 58
 objectSchemas = [ 
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,

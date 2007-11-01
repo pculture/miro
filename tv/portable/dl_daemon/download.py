@@ -10,7 +10,7 @@ from threading import RLock, Event, Thread
 import traceback
 from copy import copy
 
-from BitTorrent.bencode import bdecode
+import libtorrent as lt
 from clock import clock
 from download_utils import cleanFilename, nextFreeFilename, checkFilenameExtension, filterDirectoryName
 from download_utils import filenameFromURL, getFileURLPath
@@ -24,7 +24,7 @@ import config
 import prefs
 from sha import sha
 
-from dl_daemon import command, daemon, bittorrentdtv
+from dl_daemon import command, daemon
 from datetime import timedelta
 from util import checkF, checkU, stringify
 
@@ -37,6 +37,9 @@ chatter = True
 _downloads = {}
 
 _lock = RLock()
+
+def configReceived ():
+    torrentSession.startup()
 
 def createDownloader(url, contentType, dlid):
     checkU(url)
@@ -123,6 +126,7 @@ def shutDown():
     logging.info ("Shutting down downloaders...")
     for dlid in _downloads:
         _downloads[dlid].shutdown()
+    torrentSession.shutdown()
 
 def restoreDownloader(downloader):
     downloader = copy(downloader)
@@ -138,6 +142,37 @@ def restoreDownloader(downloader):
         return
 
     _downloads[downloader['dlid']] = dl
+
+class TorrentSession:
+    """Contains the bittorrent session and handles updating all running bittorrents"""
+
+    def __init__(self):
+        self.torrents = set()
+        self.session = None
+
+    def startup(self):
+        fingerprint = lt.fingerprint("MR", 0, 9, 9, 9)
+        self.session = lt.session(fingerprint)
+        self.session.listen_on(config.get(prefs.BT_MIN_PORT), config.get(prefs.BT_MAX_PORT))
+
+    def shutdown(self):
+        del self.session
+
+    def addTorrent(self, torrent):
+        self.torrents.add(torrent)
+
+    def removeTorrent(self, torrent):
+        try:
+            self.torrents.remove(torrent)
+        except:
+            pass
+
+    def updateTorrents(self):
+        for torrent in self.torrents:
+            torrent.updateStatus()
+        
+
+torrentSession = TorrentSession()
 
 class DownloadStatusUpdater:
     """Handles updating status for all in progress downloaders.
@@ -168,6 +203,7 @@ class DownloadStatusUpdater:
 
     def doUpdate(self):
         try:
+            torrentSession.updateTorrents()
             statuses = []
             for downloader in self.toUpdate:
                 statuses.append(downloader.getStatus())
@@ -657,26 +693,50 @@ class BTDownloader(BGDownloader):
             BGDownloader.__init__(self,url,item)
             self.runDownloader()
 
+    def _startTorrent(self):
+#        try:
+            torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
+            if self.fastResumeData:
+                resume = lt.bdecode(self.fastResumeData)
+                self.torrent = torrentSession.session.add_torrent(torrent_info, self.filename, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
+            else:
+                self.torrent = torrentSession.session.add_torrent(torrent_info, self.filename, None, lt.storage_mode_t.storage_mode_allocate)
+#        except:
+#            self.handleError(_('BitTorrent failure'), 
+#                    _('BitTorrent failed to startup'))
+#        else:
+            torrentSession.addTorrent (self)
+
     def _shutdownTorrent(self):
         try:
+            torrentSession.removeTorrent (self)
             if self.torrent is not None:
-                self.fastResumeData = self.torrent.shutdown()
+                self.torrent.pause()
+                self.fastResumeData = lt.bencode(self.torrent.write_resume_data())
+                torrentSession.session.remove_torrent(self.torrent, 0)
+                self.torrent = None
         except:
             logging.exception ("DTV: Warning: Error shutting down torrent")
 
-    def _startTorrent(self):
+    def _pauseTorrent(self):
         try:
-            self.torrent = bittorrentdtv.TorrentDownload(self.metainfo,
-                    self.filename, self.fastResumeData)
+            torrentSession.removeTorrent (self)
+            if self.torrent is not None:
+                self.torrent.pause()
         except:
-            self.handleError(_('BitTorrent failure'), 
-                    _('BitTorrent failed to startup'))
-        else:
-            self.torrent.set_status_callback(self.updateStatus)
-            self.torrent.start()
+            logging.exception ("DTV: Warning: Error pausing torrent")
 
-    @eventloop.asIdle
-    def updateStatus(self, newStatus):
+    def _resumeTorrent(self):
+        if self.torrent is not None:
+            try:
+                self.torrent.resume()
+                torrentSession.addTorrent (self)
+            except:
+                logging.exception ("DTV: Warning: Error resuming torrent")
+        else:
+            self._startTorrent()
+
+    def updateStatus(self):
         """
         activity -- string specifying what's currently happening or None for
                 normal operations.  
@@ -689,14 +749,27 @@ class BTDownloader(BGDownloader):
         totalSize -- total size of the torrent in bytes
         """
 
-        self.totalSize = newStatus['totalSize']
-        self.rate = newStatus['downRate']
-        self.upRate = newStatus['upRate']
-        self.uploaded = newStatus['upTotal'] + self.uploadedStart
-        self.eta = newStatus['timeEst']
-        self.activity = newStatus['activity']
-        self.currentSize = int(self.totalSize * newStatus['fractionDone'])
-        if self.state == "downloading" and newStatus['fractionDone'] == 1.0:
+        status = self.torrent.status()
+        self.totalSize = status.total_wanted
+        self.rate = status.download_payload_rate
+        self.upRate = status.upload_payload_rate
+        self.uploaded = status.total_payload_upload + self.uploadedStart
+        try:
+            self.eta = (status.total_wanted - status.total_wanted_done) / float (status.download_payload_rate)
+        except ZeroDivisionError:
+            self.eta = 0
+        if status.state == lt.torrent_status.states.queued_for_checking:
+            self.activity = "waiting to check existing files"
+        elif status.state == lt.torrent_status.states.checking_files:
+            self.activity = "checking existing files"
+        elif status.state == lt.torrent_status.states.connecting_to_tracker:
+            self.activity = "connecting to peers"
+        elif status.state == lt.torrent_status.states.allocating:
+            self.activity = "allocating disk space"
+        else:
+            self.activity = None
+        self.currentSize = status.total_wanted_done
+        if self.state == "downloading" and status.state == lt.torrent_status.states.seeding:
             self.moveToMoviesDirectory()
             self.state = "uploading"
             self.endTime = clock()
@@ -716,7 +789,7 @@ class BTDownloader(BGDownloader):
         if self.state in ('uploading', 'downloading'):
             self._shutdownTorrent()
             BGDownloader.moveToDirectory(self, directory)
-            self._startTorrent()
+            self._resumeTorrent()
         else:
             BGDownloader.moveToDirectory(self, directory)
 
@@ -748,7 +821,7 @@ class BTDownloader(BGDownloader):
         
     def pause(self):
         self.state = "paused"
-        self._shutdownTorrent()
+        self._pauseTorrent()
         self.updateClient()
 
     def stop(self, delete):
@@ -790,9 +863,9 @@ class BTDownloader(BGDownloader):
         #        because it only affects the incomplete filename
         if not self.restarting:
             try:
-                metainfo = bdecode(self.metainfo)
+                metainfo = lt.bdecode(self.metainfo)
                 name = metainfo['info']['name']
-            except (ValueError, KeyError):
+            except (RuntimeError):
                 self.handleError(_("Corrupt Torrent"),
                         _("The torrent file at %s was not valid") % stringify(self.url))
                 return
@@ -800,7 +873,7 @@ class BTDownloader(BGDownloader):
             self.shortFilename = cleanFilename(name)
             self.pickInitialFilename()
         self.updateClient()
-        self._startTorrent()
+        self._resumeTorrent()
 
     def handleMetainfo(self, metainfo):
         self.metainfo = metainfo

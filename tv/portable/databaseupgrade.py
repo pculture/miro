@@ -860,10 +860,23 @@ def upgrade56(objectList):
             o.savedData['firstTime'] = False
             changed.add(o)
     return changed
-        
+
 def upgrade57(objectList):
     """Added ThemeHistory"""
     changed = set()
+    return changed
+
+
+def upgrade58(objectList):
+    """clear fastResumeData for libtorrent"""
+    changed = set()
+    for o in objectList:
+        if o.classString == 'remote-downloader':
+            try:
+                o.savedData['status']['fastResumeData'] = None
+                changed.add(o)
+            except:
+                pass
     return changed
         
 #def upgradeX (objectList):
