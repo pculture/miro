@@ -14,3 +14,8 @@ pref("general.useragent.vendorComment", "$projectURL");
 pref("browser.dom.window.dump.enabled", true);
 pref("javascript.options.showInConsole", true);
 pref("javascript.options.strict", true);
+
+/* Turn off the extension auto update stuff */
+pref("extensions.update.enabled", false);
+pref("extensions.update.autoUpdateEnabled", false);
+pref("extensions.update.notifyUser", false);
