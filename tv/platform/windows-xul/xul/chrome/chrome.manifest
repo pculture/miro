@@ -64,3 +64,4 @@ locale dtv zh_TW file:locale/zh_TW/
 locale branding en-US file:locale/branding/en-US/
 
 override chrome://mozapps/content/downloads/unknownContentType.xul chrome://dtv/content/fakeyfakefakefake.xul
+override chrome://mozapps/content/extensions/update.xul chrome://dtv/content/fakeyfakefakefake.xul
