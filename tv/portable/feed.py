@@ -85,11 +85,6 @@ def defaultFeedIconURLTablist():
 # Licensed under Python license
 import feedparser
 
-# Pass in a feed sorting function 
-def setSortFunc(newFunc):
-    global sortFunc
-    sortFunc = newFunc
-
 #
 # Adds a new feed using USM
 def addFeedFromFile(file):
