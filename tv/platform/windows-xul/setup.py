@@ -695,6 +695,8 @@ class bdist_xul_dumb(Command):
          # FIXME - should this be < 4 or <= 4 ?
          while len(versionComponents) < 4:
              versionComponents.append('0')
+         if len(versionComponents) > 4:
+             versionComponents = versionComponents[0:4]
          versionWithCommas = ','.join(versionComponents)
          stubDir = os.path.join(root, '..', 'dtv-binary-kit', 'stub')
          template = os.path.join(stubDir, 'Democracy.rc.template')
