@@ -40,8 +40,8 @@ import filetypes
 import eventloop
 import autoupdate
 import singleclick
+import platformutils
 
-from platformutils import osFilenamesToFilenameTypes
 from gtcache import gettext as _
 
 import Preferences
@@ -175,7 +175,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         
         if not self.emergencyShutdown:
             # Ensure that the download daemon is not running anymore at this point
-            app.delegate.waitUntilDownloadDaemonExit()    
+            platformutils.ensureDownloadDaemonIsTerminated()    
             # Call shutdown on backend
             app.controller.onShutdown()
 
@@ -194,7 +194,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         logging.info("Downloader daemon has been terminated (status: %d)" % status)
 
     def application_openFiles_(self, nsapp, filenames):
-        filenames = osFilenamesToFilenameTypes(filenames)
+        filenames = platformutils.osFilenamesToFilenameTypes(filenames)
         eventloop.addUrgentCall(lambda:singleclick.handleCommandLineArgs(filenames), "Open local file(s)")
         nsapp.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
 
@@ -317,7 +317,7 @@ class AppController (NibClassBuilder.AutoBaseClass):
         openPanel.setCanChooseDirectories_(NO)
         result = openPanel.runModalForDirectory_file_types_(NSHomeDirectory(), nil, nil)
         if result == NSOKButton:
-            filenames = osFilenamesToFilenameTypes(openPanel.filenames())
+            filenames = platformutils.osFilenamesToFilenameTypes(openPanel.filenames())
             eventloop.addUrgentCall(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
     
     def downloadVideo_(self, sender):

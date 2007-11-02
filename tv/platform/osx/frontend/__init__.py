@@ -37,7 +37,7 @@ def quit(emergencyExit=False):
     if emergencyExit:
         NSApplication.sharedApplication().delegate().internalShutdown = True
     else:
-        app.delegate.ensureDownloadDaemonIsTerminated()
+        platformutils.ensureDownloadDaemonIsTerminated()
     NSApplication.sharedApplication().terminate_(nil)
 
 ###############################################################################
