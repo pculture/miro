@@ -1913,9 +1913,6 @@ class DirectoryFeedImpl(FeedImpl):
                 item.findNewChildren()
 
         knownFiles.add(os.path.normcase(os.path.join(moviesDir, "Incomplete Downloads")))
-        # thumbs.db is a windows file that speeds up thumbnails.  We know it's
-        # not a movie file.
-        knownFiles.add(os.path.normcase(os.path.join(moviesDir, "thumbs.db")))
 
         # Remove items that are in feeds, but we have in our list
         for item in self.items:
