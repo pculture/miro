@@ -754,11 +754,9 @@ def miro_listdir(directory):
         return [], []
     for name in listing:
         if name[0] == '.' or name.lower() == 'thumbs.db':
-            logging.info("throwing away: %s", name)
             # thumbs.db is a windows file that speeds up thumbnails.  We know
             # it's not a movie file.
             continue
-        logging.info("not throwing away: %s", name)
         path = os.path.join(directory, os.path.normcase(name))
         try:
             if os.path.isdir(path):
