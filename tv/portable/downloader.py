@@ -291,7 +291,7 @@ class RemoteDownloader(DDBObject):
                 shutil.rmtree (filename)
         except:
             logging.warn("Error deleting downloaded file: %s\n%s" % 
-                    (templatehelper.toUni(filename), traceback.format_exc()))
+                    (templatehelper.toUni(util.stringify(filename)), traceback.format_exc()))
 
         parent = os.path.join(filename, os.path.pardir)
         parent = os.path.normpath(parent)
