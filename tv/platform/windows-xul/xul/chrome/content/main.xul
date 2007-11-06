@@ -16,7 +16,7 @@
         orient="vertical"
         sizemode="normal"
         onkeydown="return onKeyDown(event);"
-        width="1000" height="680"
+        width="1020" height="680"
         persist="screenX screenY width height">
         <script src="chrome://dtv/content/dnd.js"/>
         <script src="chrome://dtv/content/main.js"/>
@@ -63,7 +63,7 @@ add more menu elements later -NN -->
 
 <!-- CHANNEL BAR -->
   <browser id="channelsDisplay" src="" type="content"
-                 flex="0" width="200" minwidth="50" maxwidth="400"
+                 flex="0" width="180" minwidth="50" maxwidth="400"
                  ondraggesture="return onDragGesture(event, 'channelsDisplay');"
                  ondragover="return onDragOver(event, 'channelsDisplay');"
                  ondragexit="return onDragExit(event, 'channelsDisplay');"
