@@ -262,9 +262,7 @@ class UIBackendDelegate:
         env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
         env.update(os.environ)
                 
-        bundle = NSBundle.mainBundle()
-        bundleExe = bundle.executablePath()
-        exe = "%s/Downloader" % os.path.dirname(bundleExe)
+        exe = NSBundle.mainBundle().executablePath()
         
         global dlTask
         dlTask = NSTask.alloc().init()
