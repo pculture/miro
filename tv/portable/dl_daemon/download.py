@@ -687,6 +687,8 @@ class BTDownloader(BGDownloader):
         self.channelName = None
         self.uploadedStart = 0
         self.restarting = False
+        self.seeders = -1
+        self.leechers = -1
         if restore is not None:
             self.restoreState(restore)
         else:
@@ -754,6 +756,8 @@ class BTDownloader(BGDownloader):
         self.rate = status.download_payload_rate
         self.upRate = status.upload_payload_rate
         self.uploaded = status.total_payload_upload + self.uploadedStart
+        self.seeders = status.num_complete
+        self.leechers = status.num_incomplete
         try:
             self.eta = (status.total_wanted - status.total_wanted_done) / float (status.download_payload_rate)
         except ZeroDivisionError:
@@ -811,6 +815,8 @@ class BTDownloader(BGDownloader):
         data['fastResumeData'] = self.fastResumeData
         data['activity'] = self.activity
         data['dlerType'] = 'BitTorrent'
+        data['seeders'] = self.seeders
+        data['leechers'] = self.leechers
         return data
 
     def getRate(self):
