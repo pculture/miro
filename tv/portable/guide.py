@@ -205,7 +205,7 @@ class GuideHTMLParser(HTMLParser):
             'icon' in attrdict['rel'].split(' ') and
             attrdict['type'].startswith("image/")):
 
-            self.favicon = urljoin(self.baseurl,attrdict['href'])
+            self.favicon = urljoin(self.baseurl,attrdict['href']).decode('ascii', 'ignore')
 
     def handle_data(self, data):
         if self.in_title:
