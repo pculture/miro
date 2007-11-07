@@ -168,7 +168,8 @@ class TorrentSession:
             pass
 
     def updateTorrents(self):
-        for torrent in self.torrents:
+        # Copy this set into a list in case any of the torrents gets removed during the iteration.
+        for torrent in [x for x in self.torrents]:
             torrent.updateStatus()
         
 
@@ -394,6 +395,19 @@ class BGDownloader:
     def handleGenericError(self, longDescription):
         self.handleError(_("Error"), longDescription)
 
+    ##
+    # Checks the download file size to see if we can accept it based on the 
+    # user disk space preservation preference
+    def acceptDownloadSize(self, size):
+        accept = True
+        if config.get(prefs.PRESERVE_DISK_SPACE):
+            if size < 0:
+                size = 0
+            preserved = config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024
+            available = platformutils.getAvailableBytesForMovies() - preserved
+            accept = (size <= available)
+        return accept
+
 
 class HTTPDownloader(BGDownloader):
     UPDATE_CLIENT_WINDOW = 12
@@ -615,19 +629,6 @@ class HTTPDownloader(BGDownloader):
         self.blockTimes = self.blockTimes[i:]
 
     ##
-    # Checks the download file size to see if we can accept it based on the 
-    # user disk space preservation preference
-    def acceptDownloadSize(self, size):
-        accept = True
-        if config.get(prefs.PRESERVE_DISK_SPACE):
-            if size < 0:
-                size = 0
-            preserved = config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024
-            available = platformutils.getAvailableBytesForMovies() - preserved
-            accept = (size <= available)
-        return accept
-
-    ##
     # Pauses the download.
     def pause(self):
         if self.state != "stopped":
@@ -690,14 +691,24 @@ class BTDownloader(BGDownloader):
         self.seeders = -1
         self.leechers = -1
         if restore is not None:
+            self.firstTime = False
             self.restoreState(restore)
         else:
+            self.firstTime = True
             BGDownloader.__init__(self,url,item)
             self.runDownloader()
 
     def _startTorrent(self):
 #        try:
             torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
+            self.totalSize = torrent_info.total_size()
+
+            if self.firstTime and not self.acceptDownloadSize(self.totalSize):
+                self.handleError(_("Not enough disk space"),
+                                 _("%s MB required to store this video") % 
+                                 (self.totalSize / (2 ** 20)))
+                return
+
             if self.fastResumeData:
                 resume = lt.bdecode(self.fastResumeData)
                 self.torrent = torrentSession.session.add_torrent(torrent_info, self.filename, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
