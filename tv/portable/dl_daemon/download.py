@@ -149,14 +149,42 @@ class TorrentSession:
     def __init__(self):
         self.torrents = set()
         self.session = None
+        self.pnp_on = None
 
     def startup(self):
         fingerprint = lt.fingerprint("MR", 0, 9, 9, 9)
         self.session = lt.session(fingerprint)
+        self.listen()
+        self.setUpnp()
+        config.addChangeCallback(self.configChanged)
+
+    def listen(self):
         self.session.listen_on(config.get(prefs.BT_MIN_PORT), config.get(prefs.BT_MAX_PORT))
 
+    def setUpnp(self):
+        useUpnp = config.get(prefs.USE_UPNP)
+        if useUpnp != self.pnp_on:
+            self.pnp_on = useUpnp
+            if useUpnp:
+                print "Starting upnp"
+                self.session.start_upnp()
+            else:
+                print "Stopping upnp"
+                self.session.stop_upnp()
+
     def shutdown(self):
+        config.removeChangeCallback(self.configChanged)
         del self.session
+
+    def configChanged(self, key, value):
+        if key == prefs.BT_MIN_PORT.key:
+            if value > self.session.listen_port():
+                self.listen()
+        if key == prefs.BT_MAX_PORT.key:
+            if value < self.session.listen_port():
+                self.listen()
+        if key == prefs.USE_UPNP.key:
+            self.setUpnp()
 
     def addTorrent(self, torrent):
         self.torrents.add(torrent)

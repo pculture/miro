@@ -551,6 +551,7 @@ class CallbackHandler(object):
         AttachBooleanRadio (dialog, widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         AttachBoolean (dialog, widgetTree['checkbutton-resumemode'], prefs.RESUME_VIDEOS_MODE)
         AttachBoolean (dialog, widgetTree['checkbutton-warnonquit'], prefs.WARN_IF_DOWNLOADING_ON_QUIT)
+        AttachBoolean (dialog, widgetTree['checkbutton-bt-autoforward'], prefs.USE_UPNP)
 
         treeview = widgetTree['treeview-collection-dirs']
         listmodel = gtk.TreeStore(gobject.TYPE_INT, gobject.TYPE_STRING, gobject.TYPE_BOOLEAN)
