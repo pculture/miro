@@ -156,6 +156,7 @@ class TorrentSession:
         self.session = lt.session(fingerprint)
         self.listen()
         self.setUpnp()
+        self.setUploadLimit()
         config.addChangeCallback(self.configChanged)
 
     def listen(self):
@@ -172,6 +173,13 @@ class TorrentSession:
                 print "Stopping upnp"
                 self.session.stop_upnp()
 
+    def setUploadLimit(self):
+        limit = -1
+        if config.get(prefs.LIMIT_UPSTREAM):
+            limit = config.get(prefs.UPSTREAM_LIMIT_IN_KBS) * (2 ** 10)
+        print "Setitng upload limit to %s" % (limit,)
+        self.session.set_upload_rate_limit(limit)
+
     def shutdown(self):
         config.removeChangeCallback(self.configChanged)
         del self.session
@@ -185,6 +193,8 @@ class TorrentSession:
                 self.listen()
         if key == prefs.USE_UPNP.key:
             self.setUpnp()
+        if key in (prefs.LIMIT_UPSTREAM.key, prefs.UPSTREAM_LIMIT_IN_KBS.key):
+            self.setUploadLimit()
 
     def addTorrent(self, torrent):
         self.torrents.add(torrent)
