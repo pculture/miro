@@ -187,7 +187,14 @@ class HTMLChangeOptimizer:
 
     def calcChanges(self, id, html):
         """Calculate a list of arguments to pass to HTMLArea.changeItems()."""
-        old = self.elements[id]
+        try:
+            old = self.elements[id]
+        except KeyError:
+            # this case shouldn't happen in the wild, but it was reported in
+            # #8689.  Don't try to optimize anything.
+            logging.warn("KeyError for element %s in "
+                    "HTMLChangeOptimizer.calcChanges()", id)
+            return [ (id, html, None) ]
         new = OptimizedElement(id, html)
         self.elements[id] = new
         return new.calcChanges(old)
