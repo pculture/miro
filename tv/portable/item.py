@@ -978,7 +978,7 @@ folder will be deleted.""")
             (_('Down Total:'), formatSizeForDetails(
                 status.get('currentSize', 0))),
             (_('Up Rate:'), formatRateForDetails(status.get('upRate', 0))),
-            (_('Up Total:'), formatSizeForDetails(status.get('uploaded', 0) * 1024 * 1024)),
+            (_('Up Total:'), formatSizeForDetails(status.get('uploaded', 0))),
         ]
 
     def getItemDetails(self):
@@ -1012,7 +1012,7 @@ folder will be deleted.""")
         return [
             (_('Down Total'), formatSizeForDetails(
                 status.get('currentSize', 0))),
-            (_('Up Total'), formatSizeForDetails(status.get('uploaded', 0) * 1024 * 1024)),
+            (_('Up Total'), formatSizeForDetails(status.get('uploaded', 0))),
         ]
 
     def makeMoreInfoTable(self, title, moreInfoData):
