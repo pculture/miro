@@ -18,7 +18,7 @@ import eventloop
 import httpclient
 import datetime
 import logging
-import migrate
+import fileutil
 
 import config
 import prefs
@@ -355,7 +355,7 @@ class BGDownloader:
         def callback():
             self.filename = newfilename
             self.updateClient()
-        migrate.migrate_file(self.filename, newfilename, callback)
+        fileutil.migrate_file(self.filename, newfilename, callback)
 
     ##
     # Returns a float with the estimated number of seconds left

@@ -60,7 +60,7 @@ import logging
 import platformutils
 import filetypes
 import searchengines
-import migrate
+import fileutil
 import imageresize
 import signals
 
@@ -1797,7 +1797,7 @@ filename was %s""", stringify(self.filename))
             def callback():
                 self.filename = newFilename
                 self.signalChange()
-            migrate.migrate_file(self.filename, newFilename, callback)
+            fileutil.migrate_file(self.filename, newFilename, callback)
         elif os.path.exists(newFilename):
             self.filename = newFilename
             self.signalChange()
