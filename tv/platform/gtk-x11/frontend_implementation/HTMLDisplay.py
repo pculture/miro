@@ -185,7 +185,9 @@ class HTMLDisplayImpl:
     @deferUntilAfterLoad
     def navigateToFragment(self, fragment):
         url = '%s#%s' % (self.urlToLoad, fragment)
-        self.widget.load_url(url)
+	# For some reason, this generates an extra load finished event
+	# which can cause problems when switching templates. See #9170
+        #self.widget.load_url(url)
 
     def loadFinished(self, widget):
         platformutils.confirmMainThread()
