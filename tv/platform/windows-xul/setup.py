@@ -184,9 +184,14 @@ fasttypes_ext = \
 
 os.environ['PATH'] = r'%s;%s' % (os.environ['PATH'], BOOST_LIB_PATH)
 
+##### The libtorrent extension ####
+import setup_portable
+libtorrent_ext = setup_portable.libtorrent_extension(portable_dir)
+
 # Private extension modules to build.
 ext_modules = [
     fasttypes_ext,
+    libtorrent_ext,
 
     # Pyrex sources.
     #Extension("vlc", [os.path.join(root, 'platform',platform, 'vlc.pyx')],libraries=["simplevlc"]),
