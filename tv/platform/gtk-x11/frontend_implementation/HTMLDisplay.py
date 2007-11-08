@@ -195,14 +195,14 @@ class HTMLDisplayImpl:
         if self.in_load_html:
             return
         if (not self.initialLoadFinished):
-            try: 
-                # Execute any function calls we queued because the page load 
-                # hadn't completed 
-                for func in self.execQueue: 
-                    func() 
-                self.execQueue = [] 
-            finally: 
-                self.initialLoadFinished = True 
+            try:
+                # Execute any function calls we queued because the page load
+                # hadn't completed
+                for func in self.execQueue:
+                    func()
+                self.execQueue = []
+            finally:
+                self.initialLoadFinished = True
             if self.removeFile:
                 try:
                     os.remove (self.location)
