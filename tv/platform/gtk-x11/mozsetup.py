@@ -47,6 +47,7 @@ user_pref("security.warn_entering_weak.show_once", false);
 user_pref("security.warn_viewing_mixed.show_once", false);
 user_pref("security.warn_leaving_secure.show_once", false);
 user_pref("security.warn_submit_insecure.show_once", false);
+user_pref("security.enable_java", false);
 user_pref("browser.xul.error_pages.enabled", false);
 user_pref("general.useragent.vendor", %s);
 user_pref("general.useragent.vendorSub", %s);
