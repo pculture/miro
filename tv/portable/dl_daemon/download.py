@@ -150,6 +150,8 @@ class TorrentSession:
         self.torrents = set()
         self.session = None
         self.pnp_on = None
+        self.pe_set = None
+        self.enc_req = None
 
     def startup(self):
         fingerprint = lt.fingerprint("MR", 0, 9, 9, 9)
@@ -157,6 +159,7 @@ class TorrentSession:
         self.listen()
         self.setUpnp()
         self.setUploadLimit()
+        self.setEncryption()
         config.addChangeCallback(self.configChanged)
 
     def listen(self):
@@ -167,18 +170,29 @@ class TorrentSession:
         if useUpnp != self.pnp_on:
             self.pnp_on = useUpnp
             if useUpnp:
-                print "Starting upnp"
                 self.session.start_upnp()
             else:
-                print "Stopping upnp"
                 self.session.stop_upnp()
 
     def setUploadLimit(self):
         limit = -1
         if config.get(prefs.LIMIT_UPSTREAM):
             limit = config.get(prefs.UPSTREAM_LIMIT_IN_KBS) * (2 ** 10)
-        print "Setitng upload limit to %s" % (limit,)
         self.session.set_upload_rate_limit(limit)
+
+    def setEncryption(self):
+        if self.pe_set is None:
+            self.pe_set = lt.pe_settings()
+        enc_req = config.get(prefs.BT_ENC_REQ)
+        if enc_req != self.enc_req:
+            self.enc_req = enc_req
+            if enc_req:
+                self.pe_set.in_enc_policy = lt.enc_policy.forced
+                self.pe_set.out_enc_policy = lt.enc_policy.forced
+            else:
+                self.pe_set.in_enc_policy = lt.enc_policy.enabled
+                self.pe_set.out_enc_policy = lt.enc_policy.enabled
+            self.session.set_pe_settings(self.pe_set)
 
     def shutdown(self):
         config.removeChangeCallback(self.configChanged)
@@ -195,6 +209,8 @@ class TorrentSession:
             self.setUpnp()
         if key in (prefs.LIMIT_UPSTREAM.key, prefs.UPSTREAM_LIMIT_IN_KBS.key):
             self.setUploadLimit()
+        if key == prefs.BT_ENC_REQ.key:
+            self.setEncryption()
 
     def addTorrent(self, torrent):
         self.torrents.add(torrent)
