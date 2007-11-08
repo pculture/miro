@@ -47,7 +47,8 @@ import folder
 import prefs
 import resources
 import downloader
-from util import returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL, miro_listdir
+from util import returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL
+from fileutil import miro_listdir
 from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
 import filetypes
 import views
