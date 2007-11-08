@@ -49,7 +49,7 @@ class MainFrame:
         # Do this in two steps so that self.controller is set when self.controler.init
         # is called. That way, init can turn around and call selectDisplay.
         self.controller = MainController.alloc()
-        self.controller.init(self, appl)
+        self.controller.initWithFrame_application_(self, appl)
 
     def selectDisplay(self, display, area=None):
         """Install the provided 'display' in the requested area"""
@@ -78,7 +78,7 @@ class MainController (NSWindowController):
     videoDisplayController  = IBOutlet('videoDisplayController')
     videoInfoHostView       = IBOutlet('videoInfoHostView')
 
-    def init(self, frame, appl):
+    def initWithFrame_application_(self, frame, appl):
         super(MainController, self).init()
         self.frame = frame
         self.appl = appl

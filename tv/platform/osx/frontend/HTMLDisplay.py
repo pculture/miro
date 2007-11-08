@@ -76,7 +76,8 @@ class HTMLDisplay (app.Display):
         try:
             return self._web
         except AttributeError:
-            self._web = ManagedWebView.alloc().init(self.html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(unicode(x)), self.displaySizeHint, self.baseURL)
+            self._web = ManagedWebView.alloc().initWithInitialHTML_existinView_loadFinished_loadURL_sizeHint_baseURL_(
+                            self.html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(unicode(x)), self.displaySizeHint, self.baseURL)
             return self._web
     web = property(get_web)
 
@@ -197,7 +198,8 @@ class ManagedWebView (NSObject):
 
     WebView.registerViewClass_representationClass_forMIMEType_(ManagedWebHTMLView, WebHTMLRepresentation, u'text/html')
 
-    def init(self, initialHTML, existingView=nil, onInitialLoadFinished=None, onLoadURL=None, sizeHint=None, baseURL=None):
+    def initWithInitialHTML_existinView_loadFinished_loadURL_sizeHint_baseURL_(
+        self, initialHTML, existingView=nil, onInitialLoadFinished=None, onLoadURL=None, sizeHint=None, baseURL=None):
         self.onInitialLoadFinished = onInitialLoadFinished
         self.onLoadURL = onLoadURL
         self.initialLoadFinished = False
