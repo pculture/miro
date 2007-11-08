@@ -64,6 +64,9 @@ class PlaylistMixin:
         def searchFilter(obj):
             return filters.matchingItems(obj, searchTerms)
         self.trackedItems.setFilter(searchFilter)
+    
+    def getFolder(self):
+        return None
 
     def addID(self, id):
         """Add a new item to end of the playlist.  """
@@ -72,6 +75,11 @@ class PlaylistMixin:
         item.save()
         if id not in self.trackedItems:
             self.trackedItems.appendID(id)
+
+        folder = self.getFolder()
+        if (folder is not None):
+            folder.addID(id)
+
         self.signalChange()
 
     def removeID(self, id):
@@ -79,6 +87,11 @@ class PlaylistMixin:
 
         self.confirmDBThread()
         self.trackedItems.removeID(id)
+
+        folder = self.getFolder()
+        if (folder is not None):
+            folder.addID(id)
+
         self.signalChange()
 
     def moveID(self, id, newPosition):
