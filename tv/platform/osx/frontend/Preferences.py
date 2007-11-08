@@ -15,10 +15,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-from objc import YES, NO, nil
+from objc import YES, NO, nil, IBOutlet
 from AppKit import *
 from Foundation import *
-from PyObjCTools import NibClassBuilder
 
 import app
 import feed
@@ -30,8 +29,6 @@ import eventloop
 import platformutils
 
 from gtcache import gettext as _
-
-NibClassBuilder.extractClasses(u"PreferencesWindow")
 
 ###############################################################################
 
@@ -51,7 +48,14 @@ def showWindow():
 
 ###############################################################################
 
-class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
+class PreferencesWindowController (NSWindowController):
+
+    generalView     = IBOutlet('generalView')
+    channelsView    = IBOutlet('channelsView')
+    downloadsView   = IBOutlet('downloadsView')
+    foldersView     = IBOutlet('foldersView')
+    diskSpaceView   = IBOutlet('diskSpaceView')
+    playbackView    = IBOutlet('playbackView')
 
     def init(self):
         super(PreferencesWindowController, self).initWithWindowNibName_("PreferencesWindow")
@@ -130,7 +134,10 @@ class PreferencesWindowController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class GeneralPrefsController (NibClassBuilder.AutoBaseClass):
+class GeneralPrefsController (NSObject):
+    
+    runAtStartupCheckBox        = IBOutlet('runAtStartupCheckBox')
+    warnIfDownloadingCheckBox   = IBOutlet('warnIfDownloadingCheckBox')
     
     def awakeFromNib(self):
         run = config.get(prefs.RUN_DTV_AT_STARTUP)
@@ -149,7 +156,9 @@ class GeneralPrefsController (NibClassBuilder.AutoBaseClass):
                     
 ###############################################################################
 
-class ChannelsPrefsController (NibClassBuilder.AutoBaseClass):
+class ChannelsPrefsController (NSObject):
+
+    periodicityPopup = IBOutlet('periodicityPopup')
 
     def awakeFromNib(self):
         minutes = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
@@ -162,7 +171,14 @@ class ChannelsPrefsController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
+class DownloadsPrefsController (NSObject):
+    
+    btMinPortField          = IBOutlet('btMinPortField')
+    btMaxPortField          = IBOutlet('btMaxPortField')
+    limitUpstreamCheckBox   = IBOutlet('limitUpstreamCheckBox')
+    limitValueField         = IBOutlet('limitValueField')
+    maxDownloadsField       = IBOutlet('maxDownloadsField')
+    moviesDirectoryField    = IBOutlet('moviesDirectoryField')
     
     def awakeFromNib(self):
         moviesDirPath = config.get(prefs.MOVIES_DIRECTORY)
@@ -233,7 +249,10 @@ class DownloadsPrefsController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class FoldersPrefsController (NibClassBuilder.AutoBaseClass):
+class FoldersPrefsController (NSObject):
+    
+    deleteButton = IBOutlet('deleteButton')
+    foldersTable = IBOutlet('foldersTable')
     
     def init(self):
         self.folders = list()
@@ -318,7 +337,11 @@ class FoldersPrefsController (NibClassBuilder.AutoBaseClass):
             
 ###############################################################################
 
-class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
+class DiskSpacePrefsController (NSObject):
+    
+    preserveSpaceCheckBox       = IBOutlet('preserveSpaceCheckBox')
+    minimumSpaceField           = IBOutlet('minimumSpaceField')
+    expirationDelayPopupButton  = IBOutlet('expirationDelayPopupButton')
     
     def awakeFromNib(self):
         preserve = config.get(prefs.PRESERVE_DISK_SPACE)
@@ -345,7 +368,10 @@ class DiskSpacePrefsController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class PlaybackPrefsController (NibClassBuilder.AutoBaseClass):
+class PlaybackPrefsController (NSObject):
+
+    modesMatrix         = IBOutlet('modesMatrix')
+    rememberCheckBox    = IBOutlet('rememberCheckBox')
 
     def awakeFromNib(self):
         remember = config.get(prefs.RESUME_VIDEOS_MODE)

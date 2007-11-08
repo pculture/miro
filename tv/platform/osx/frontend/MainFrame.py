@@ -18,10 +18,9 @@
 import math
 import logging
 
-from objc import YES, NO, nil
+from objc import YES, NO, nil, IBOutlet
 from AppKit import *
 from Foundation import *
-from PyObjCTools import NibClassBuilder
 
 import app
 import feed
@@ -38,8 +37,6 @@ import searchengines
 import platformutils
 
 from gtcache import gettext as _
-
-NibClassBuilder.extractClasses(u"MainWindow")
 
 ###############################################################################
 
@@ -73,7 +70,13 @@ class MainFrame:
 
 ###############################################################################
 
-class MainController (NibClassBuilder.AutoBaseClass):
+class MainController (NSWindowController):
+
+    channelsHostView        = IBOutlet('channelsHostView')
+    mainHostView            = IBOutlet('mainHostView')
+    splitView               = IBOutlet('splitView')
+    videoDisplayController  = IBOutlet('videoDisplayController')
+    videoInfoHostView       = IBOutlet('videoInfoHostView')
 
     def init(self, frame, appl):
         super(MainController, self).init()
@@ -94,7 +97,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
     def awakeFromNib(self):
         from VideoDisplay import VideoDisplayController
-        self.videoDisplayController = VideoDisplayController.getInstance()
+        self.videoDisplayController = VideoDisplayController.getInstance() # FIXME!!
         self.frame.channelsDisplay = self.channelsHostView
         self.frame.mainDisplay = self.mainHostView
         self.frame.videoInfoDisplay = self.videoInfoHostView
@@ -428,7 +431,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class DisplayHostView (NibClassBuilder.AutoBaseClass):
+class DisplayHostView (NSView):
     
     def initWithFrame_(self, frame):
         self = super(DisplayHostView, self).initWithFrame_(frame)
@@ -504,7 +507,7 @@ class NullDisplay (app.Display):
 
 ###############################################################################
 
-class DTVSplitView (NibClassBuilder.AutoBaseClass):
+class DTVSplitView (NSSplitView):
     
     def awakeFromNib(self):
         self.background = NSImage.imageNamed_(u'splitview_divider_background')
@@ -524,7 +527,11 @@ class DTVSplitView (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
+class ProgressDisplayView (NSView):
+
+    progressSlider          = IBOutlet('progressSlider')
+    timeIndicator           = IBOutlet('timeIndicator')
+    remainingTimeIndicator  = IBOutlet('remainingTimeIndicator')
 
     def awakeFromNib(self):
         self.progressSlider.sliderWasClicked = self.progressSliderWasClicked
@@ -620,7 +627,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class Slider (NibClassBuilder.AutoBaseClass):
+class Slider (NSView):
 
     def initWithFrame_(self, frame):
         self = super(Slider, self).initWithFrame_(frame)
@@ -690,7 +697,7 @@ class Slider (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class ProgressSlider (NibClassBuilder.AutoBaseClass):
+class ProgressSlider (Slider):
     
     def initWithFrame_(self, frame):
         self = super(ProgressSlider, self).initWithFrame_(frame)
@@ -721,7 +728,7 @@ class ProgressSlider (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class MetalSlider (NibClassBuilder.AutoBaseClass):
+class MetalSlider (NSSlider):
 
     def awakeFromNib(self):
         oldCell = self.cell()
@@ -760,7 +767,7 @@ class MetalSliderCell (NSSliderCell):
 
 ###############################################################################
 
-class VideoSearchField (NibClassBuilder.AutoBaseClass):
+class VideoSearchField (NSSearchField):
 
     def awakeFromNib(self):
         self.setCell_(VideoSearchFieldCell.alloc().initWithCell_(self.cell()))
