@@ -771,7 +771,7 @@ class VideoSearchField (NibClassBuilder.AutoBaseClass):
     def search_(self, sender):
         engine = self.selectedEngine()
         query = unicode(self.stringValue())
-        if query is not '':
+        if query != '':
             eventloop.addIdle(lambda:app.controller.performSearch(engine, query), 'Performing chrome search')
 
     def initFromLastEngine(self):
