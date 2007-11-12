@@ -21,12 +21,12 @@
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
 <!ENTITY prefs.folder.movies "پوشه‌ها">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.downloads "ویدئوهای دانلود شده را در این پوشه ذخیره کن:">
 <!ENTITY prefs.folder.change "تغییر دادن...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
 <!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
+<!ENTITY prefs.folder.others.shown "نمایش به عنوان یک کانال">
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "حذف">
 

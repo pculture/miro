@@ -1,16 +1,16 @@
 <!ENTITY prefs.title "Seçenekler:">
 <!ENTITY prefs.restart "(DİKKAT: Değişiklikler $longAppName programını tekrar başlatana kadar etkin hale gelmeyecek.)">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
+<!ENTITY prefs.run.on.startup "Oturum açtığımda $longAppName'i çalıştır">
 <!ENTITY prefs.close_to_tray_start "Kırmızı kapat düğmesine tıkladığımda:">
 <!ENTITY prefs.close_to_tray "İndirmelerin devam edebilmesi için görev çubuğu çekmecesine kapatın.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.no_close_to_tray "Mirodan tamamen çık">
 
 <!ENTITY prefs.general "Genel">
 <!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Kanallar">
-<!ENTITY prefs.channels.check "Check channels for new content">
+<!ENTITY prefs.channels.check "Kanalları güncel içerik için yokla">
 <!ENTITY prefs.channels.check.thirty "Her 30 dakikada">
 <!ENTITY prefs.channels.check.sixty "Her saatte">
 <!ENTITY prefs.channels.check.manually "Siz istediğinizde">
@@ -18,15 +18,15 @@
 <!ENTITY prefs.playback "Oynat">
 <!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
 <!ENTITY prefs.playback.auto.next.video "Videoları arka arkaya oynat.">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback.stop.after.each "Bir video oynat ve dur">
 
 <!ENTITY prefs.folder.movies "Dizinler">
 <!ENTITY prefs.folder.downloads "İndirilmiş videoları bu dizinde sakla:">
 <!ENTITY prefs.folder.change "Değişim...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
+<!ENTITY prefs.folder.others.location "Klasör">
+<!ENTITY prefs.folder.others.shown "Kanal olarak göster">
 <!ENTITY prefs.folder.others.add "Dizin Ekle...">
 <!ENTITY prefs.folder.others.remove "Kaldır">
 

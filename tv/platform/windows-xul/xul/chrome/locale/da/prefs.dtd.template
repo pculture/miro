@@ -16,7 +16,7 @@
 <!ENTITY prefs.channels.check.manually "Manuelt">
 
 <!ENTITY prefs.playback "Afspil">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
+<!ENTITY prefs.playback.remember.pos "Husk hvor jeg stoppede visningen og fortsæt derfra.">
 <!ENTITY prefs.playback.auto.next.video "Afspil videoer efter hinanden.">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
@@ -24,9 +24,9 @@
 <!ENTITY prefs.folder.downloads "Gem hentede videoer idenne mappe:">
 <!ENTITY prefs.folder.change "Ændr...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
+<!ENTITY prefs.folder.others.caption "Kontroller for nye videoer i disse mapper og inkluder dem i mit bibliotek">
 <!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
+<!ENTITY prefs.folder.others.shown "Vis som kanal">
 <!ENTITY prefs.folder.others.add "Tilføj Mappe...">
 <!ENTITY prefs.folder.others.remove "Fjern">
 
@@ -51,5 +51,5 @@
 <!ENTITY prefs.torrent.restart.warning "ADVARSEL: Ændringer effektueres først når du har genstartet $longAppName).">
 <!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
 <!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
+<!ENTITY prefs.torrent.uses.ports.part1 "Brug BitTorrent porte mellem">
 <!ENTITY prefs.torrent.uses.ports.part2 "og">

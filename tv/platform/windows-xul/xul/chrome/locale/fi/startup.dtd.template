@@ -1,53 +1,53 @@
 <!ENTITY nbsp				" ">
 <!ENTITY rsaquo				"'">
 
-<!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
-<!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.title			"$shortAppName ensimmäisen käynnistyksen asetukset">
+<!ENTITY startup.description		"Parin seuraavan ruudun avulla voit säätä $longAppName :n asetukset niin, että ohjelma toimii haluamallasi tavalla.">
+<!ENTITY startup.autostart.description	"Suosittelemme, että asetat $longAppName :n käynnistymään automaattisesti tietokoneen käynnistyessä. Näin keskeneräiset videot saadaan ladattua loppuun taustalla ja voit katsoa ne milloin haluat.">
+<!ENTITY startup.autostart.question	"Haluaisitko käynnistää $shortAppName :n aina tietokoneen käynnistyessä?">
+<!ENTITY startup.search.description	"$longAppName voi etsiä kaikki tietokoneellasi olevat videot ja auttaa sinua järjestämään kokoelmasi.">
+<!ENTITY startup.search.question        "Haluaisitko $longAppName :n etsivän videotiedostoja tietokoneeltasi?">
+<!ENTITY startup.search.restrict	"Rajoita kaikkiin henkilökohtaisiin tiedostoihini.">
+<!ENTITY startup.search.custom          "Etsi valinnaisesta kansiosta:">
 <!ENTITY startup.search.searching	"Etsitään videoita">
 <!ENTITY startup.change	                "Muuta">
-<!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.cancel	                "Peruuta haku">
+<!ENTITY startup.undo	                "Tyhjennä hakukenttä">
+<!ENTITY startup.done1			"Valmis!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done3.heading		"Jätä se päälle:">
+<!ENTITY startup.done3.text		"$longAppName tarkistaa säännöllisin väliajoin kanavat uusien videoiden varalta ja lataa ne taustalla. Jättämälle sen päälle näet uudet videot heti, kun haluat katsoa niitä.">
+<!ENTITY startup.done4.heading		"Älä välitä kovalevytilasta:">
+<!ENTITY startup.done4.text		"Edistyneen kiintolevytallentimen tavoin $longAppName :ssa on &quot;vanhenemisjärjestelmä&quot;, joka auttaa poistamaan vanhat videot, jotta uusille olisi tilaa. Voit tallentaa videot pysyvästi klikkaamalla &quot;tallenna&quot; ja voit myös valita kanavan asetuksista, että video tallennetaan pysyvästi.">
+<!ENTITY startup.done5.heading		"Ajattele isosti:">
+<!ENTITY startup.done5.text		"Käynnistyspainikkeen oikealla puolella oleva painike näyttää videon koko näytön kokoisena.">
+<!ENTITY startup.done6.heading		"Etsi videoita:">
+<!ENTITY startup.done6.text		"$shortAppName :n kanavaoppaassa on satoja Internet-televisiokanavia ja kaikki niistä ovat ilmaisia. Klikkaa vain &quot;Lisää&quot; aloittaaksesi kanavan katsominen.">
 <!ENTITY startup.answer.yes		"Kyllä">
 <!ENTITY startup.answer.no		"Ei">
-<!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
-<!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.title			"$shortAppName ensimmäisen käynnistyksen asetukset">
+<!ENTITY startup.description		"Parin seuraavan ruudun avulla voit säätä $longAppName :n asetukset niin, että ohjelma toimii haluamallasi tavalla.">
+<!ENTITY startup.autostart.description	"Suosittelemme, että asetat $longAppName :n käynnistymään automaattisesti tietokoneen käynnistyessä. Näin keskeneräiset videot saadaan ladattua loppuun taustalla ja voit katsoa ne milloin haluat.">
+<!ENTITY startup.autostart.question	"Haluaisitko käynnistää $shortAppName :n aina tietokoneen käynnistyessä?">
+<!ENTITY startup.search.description	"$longAppName voi etsiä kaikki tietokoneellasi olevat videot ja auttaa sinua järjestämään kokoelmasi.">
+<!ENTITY startup.search.question        "Haluaisitko $longAppName :n etsivän videotiedostoja tietokoneeltasi?">
+<!ENTITY startup.search.restrict	"Rajoita kaikkiin henkilökohtaisiin tiedostoihini.">
+<!ENTITY startup.search.custom          "Etsi valinnaisesta kansiosta:">
 <!ENTITY startup.search.searching	"Etsitään videoita">
 <!ENTITY startup.change	                "Muuta">
-<!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.cancel	                "Peruuta haku">
+<!ENTITY startup.undo	                "Tyhjennä hakukenttä">
+<!ENTITY startup.done1			"Valmis!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done3.heading		"Jätä se päälle:">
+<!ENTITY startup.done3.text		"$longAppName tarkistaa säännöllisin väliajoin kanavat uusien videoiden varalta ja lataa ne taustalla. Jättämälle sen päälle näet uudet videot heti, kun haluat katsoa niitä.">
+<!ENTITY startup.done4.heading		"Älä välitä kovalevytilasta:">
+<!ENTITY startup.done4.text		"Edistyneen kiintolevytallentimen tavoin $longAppName :ssa on &quot;vanhenemisjärjestelmä&quot;, joka auttaa poistamaan vanhat videot, jotta uusille olisi tilaa. Voit tallentaa videot pysyvästi klikkaamalla &quot;tallenna&quot; ja voit myös valita kanavan asetuksista, että video tallennetaan pysyvästi.">
+<!ENTITY startup.done5.heading		"Ajattele isosti:">
+<!ENTITY startup.done5.text		"Käynnistyspainikkeen oikealla puolella oleva painike näyttää videon koko näytön kokoisena.">
+<!ENTITY startup.done6.heading		"Etsi videoita:">
+<!ENTITY startup.done6.text		"$shortAppName :n kanavaoppaassa on satoja Internet-televisiokanavia ja kaikki niistä ovat ilmaisia. Klikkaa vain &quot;Lisää&quot; aloittaaksesi kanavan katsominen.">
 <!ENTITY startup.answer.yes		"Kyllä">
 <!ENTITY startup.answer.no		"Ei">

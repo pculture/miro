@@ -2,7 +2,7 @@
 <!ENTITY rsaquo				"'">
 
 <!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
+<!ENTITY startup.description		"Следующие несколько экранов погут вам настроить $longAppName, чтобы программа лучше работала для вас.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
 <!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
@@ -27,7 +27,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.answer.yes		"Да">
 <!ENTITY startup.answer.no		"Нет">
 <!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
+<!ENTITY startup.description		"Следующие несколько экранов погут вам настроить $longAppName, чтобы программа лучше работала для вас.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
 <!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
