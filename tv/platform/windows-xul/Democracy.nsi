@@ -158,6 +158,7 @@ Var TACKED_ON_FILE
   Delete   "${directory}\${CONFIG_ICON}"
   Delete   "${directory}\${CONFIG_DL_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
+  Delete   "${directory}\moviedata_util.py"
   Delete   "${directory}\application.ini"
   Delete   "${directory}\msvcp71.dll"
   Delete   "${directory}\msvcr71.dll"
@@ -387,6 +388,7 @@ unzipok:
   File  "${CONFIG_ICON}"
   File  "${CONFIG_DL_EXECUTABLE}"
   File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
+  File  "moviedata_util.py"
   File  application.ini
   File  msvcp71.dll  
   File  msvcr71.dll  
