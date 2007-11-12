@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2006 Participatory Culture Foundation
+# Copyright (C) 2005-2007 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,14 @@ PREFIX=/usr
 export MIRO_SHARE_ROOT=dist/$PREFIX/share/
 export MIRO_RESOURCE_ROOT=dist/$PREFIX/share/miro/resources/
 
+PYTHON_PATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/
+
+if [ -d dist/$PREFIX/lib64/ ]
+then
+  # adding on to the existing path with lib64 trumping lib
+  PYTHON_PATH=dist/$PREFIX/lib64/python$PYTHON_VERSION/site-packages/:$PYTHON_PATH
+fi
+
 # NOTE: The first part of this LD_LIBRARY_PATH _must_ match what setup.py
 # picks out and puts in dist/usr/bin/miro .  If you're having problems
 # running miro with ./run.sh, then make sure you've got the LD_LIBRARY_PATH
@@ -31,4 +39,4 @@ export MIRO_RESOURCE_ROOT=dist/$PREFIX/share/miro/resources/
 # the LD_LIBRARY_PATH correctly anyhow.
 # export LD_LIBRARY_PATH=/usr/lib/firefox${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}
 
-$PYTHON setup.py install --root=./dist --prefix=$PREFIX && PATH=dist/$PREFIX/bin:$PATH PYTHONPATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/ dist/$PREFIX/bin/miro "$@"
+$PYTHON setup.py install --root=./dist --prefix=$PREFIX && PATH=dist/$PREFIX/bin:$PATH PYTHONPATH=$PYTHON_PATH dist/$PREFIX/bin/miro "$@"
