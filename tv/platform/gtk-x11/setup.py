@@ -235,7 +235,7 @@ try:
     # pluck off the last \n
     fflib = fflib[:-1]
     f = open(os.path.join(platform_dir, "miro"), "w")
-    f.write("#!/bin/sh\nLD_LIBRARY_PATH=%s miro.real $@" % fflib)
+    f.write("#!/bin/sh\necho %s\nLD_LIBRARY_PATH=%s ADDON_PATH=/tmp/empty miro.real $@" % (fflib, fflib))
     f.close()
 except RuntimeError, error:
     sys.exit("Package config error:\n%s" % (error,))
