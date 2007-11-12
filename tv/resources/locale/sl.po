@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-12 15:58+0000\n"
+"PO-Revision-Date: 2007-11-05 09:49+0000\n"
 "Last-Translator: Matej Urbančič <matej.urban@gmail.com>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2007-11-12 13:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
@@ -668,7 +668,7 @@ msgid "Playlists"
 msgstr "Seznami predvajanja"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Lastnosti ..."
 
 msgid "Previous Video"
 msgstr "Predhodni posnetek"
@@ -1199,7 +1199,7 @@ msgstr "Izbor mape za prikaz v zbirki"
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Končaj"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1395,7 +1395,7 @@ msgstr "Datoteka torrent za ta predmet je bila izbrisana "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "izven programa Miro"
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -1574,7 +1574,7 @@ msgstr "Označi kot novo"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "označi kot Ogledano"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -2456,16 +2456,16 @@ msgstr "\"%s\" ni veljaven naslov URL"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Datoteka: \"%s\" ne obstaja"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Napaka med branjem"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Napaka med branjem iz \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -2636,12 +2636,12 @@ msgstr "%s ni veljaven. Vnesti morate pozitivno število."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Napaka med odkrivanjem datoteke"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Datoteka \"%s\" je bila izbrisana izven programa Miro."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -2683,7 +2683,7 @@ msgstr "Vnesite naslov URL za prenos videa"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Začetni kanali"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"

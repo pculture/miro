@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-06-15 20:11+0000\n"
+"PO-Revision-Date: 2007-10-27 21:58+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malayalam <ml@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2007-11-12 13:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -26,8 +26,9 @@ msgid "OK"
 msgstr "ശരി"
 
 #: ../../portable/dialogs.py:76
+#, fuzzy
 msgid "Ok"
-msgstr ""
+msgstr "െറഡി"
 
 msgid "$log"
 msgstr ""
@@ -39,12 +40,17 @@ msgid ""
 "questions, and we'll get right to work.</font>"
 msgstr ""
 
+#, fuzzy
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
 "report to our bug-tracking system? At a minimum, what we'd need is "
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
+"നിങ്ങള്ക്ക് ഒരു മിനിട്ട് സമയം ഉപേയാഗിച്ചു് ഒരു 'തകരാറ്' ഞങ്ങളുെട 'ബഗ് "
+"ട്റാക്കിംഗ് സിസ്റ്റത്തിേലക്കകു് അയക്കാേമാ ? പറ്റുെമങ്കില് നിങ്ങളേപ്പാഴ് "
+"െചയ്തുെകാണ്ടിരുന്നതിെന്റ വിവരണം -ആകുന്നത്റ കൃത്യതേയാെട-'ചാരുതേയാെട "
+"െകാത്തിവച്ച വിഡ്ഢിത്തം ! ' സഹിതം താെഴ കാണുന്ന േബാക്സിലു് എഴുതി അറിയിക്കുക."
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -56,8 +62,9 @@ msgstr ""
 msgid "The fall of $shortAppName??"
 msgstr ""
 
+#, fuzzy
 msgid "About Miro"
-msgstr ""
+msgstr "'മിേറാെയ' ക്കുറിച്ചു്."
 
 msgid "Add Channel..."
 msgstr ""
@@ -65,8 +72,9 @@ msgstr ""
 msgid "Add Guide..."
 msgstr ""
 
+#, fuzzy
 msgid "Bring All to Front"
-msgstr ""
+msgstr "എല്ലാം മുേന്നാട്ടു് െകാണ്ടുവരിക."
 
 #: ../../platform/osx/frontend/Preferences.py:65
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
@@ -102,7 +110,7 @@ msgid "Donate"
 msgstr "സംഭാവന"
 
 msgid "Download Video..."
-msgstr ""
+msgstr "വീഡിേയാ 'ഡൗണ്േലാട്' െചയ്യുക..."
 
 msgid "Edit"
 msgstr "തിരുത്തിയെഴുതുക (Edit)"
@@ -120,10 +128,10 @@ msgid "Help"
 msgstr "സഹായം"
 
 msgid "Hide Miro"
-msgstr ""
+msgstr "'മിേറാെയ' മറചചു്വക്കുക."
 
 msgid "Hide Others"
-msgstr ""
+msgstr "മെറ്റല്ലാം മറചചു്വക്കുക."
 
 msgid "Import Channels (OPML)..."
 msgstr ""
@@ -139,7 +147,7 @@ msgstr "ചുരുക്കുക"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Miro"
-msgstr ""
+msgstr "മിേറാ"
 
 msgid "Miro Help"
 msgstr ""
@@ -169,8 +177,9 @@ msgid "Paste"
 msgstr "ഒട്ടിയ്ക്കുക"
 
 #: ../../platform/osx/frontend/Application.py:249
+#, fuzzy
 msgid "Play Video"
-msgstr ""
+msgstr "വീഡിേയാ പാടിക്കുക"
 
 #: ../../platform/osx/frontend/Preferences.py:69
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
@@ -187,7 +196,7 @@ msgid "Previous Video"
 msgstr ""
 
 msgid "Quit Miro"
-msgstr ""
+msgstr "'മിേറാെയ' നശിപ്പിക്കുക"
 
 msgid "Remove..."
 msgstr ""

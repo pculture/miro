@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-07 00:05+0000\n"
+"PO-Revision-Date: 2007-11-11 00:15+0000\n"
 "Last-Translator: amargem <amargem@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2007-11-12 13:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "About Democracy"
@@ -1200,7 +1200,7 @@ msgid "Playlists"
 msgstr "Playlists"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Preferências..."
 
 msgid "Previous Video"
 msgstr "Video anterior"
@@ -1728,7 +1728,7 @@ msgstr "Selecione uma Pasta para ver na Biblioteca."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Terminar"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1924,7 +1924,7 @@ msgstr "O ficheiro torrent para este item foi apagado "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "Exterior ao Miro"
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -2103,7 +2103,7 @@ msgstr "Marcar como Não Visto"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Marcado como Visionado"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -2987,16 +2987,16 @@ msgstr "\"%s\" não é um URL válido"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "O ficheiro: \"%s\" não existe"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Erro durante a leitura"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Erro durante a leitura de \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -3171,12 +3171,12 @@ msgstr "%s é inválido. Deve introduzir um número não negativo."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Erro Revelando o Ficheiro"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "O ficheiro \"%s\" foi apagado exteriormente ao Miro"
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -3218,7 +3218,7 @@ msgstr "Introduza o URL do vídeo a descarregar"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Canais de Início"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"

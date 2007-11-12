@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-06 19:22+0000\n"
+"PO-Revision-Date: 2007-11-02 13:15+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2007-11-12 13:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -196,7 +196,7 @@ msgid "Rename..."
 msgstr "Izena aldatu..."
 
 msgid "Report a bug"
-msgstr ""
+msgstr "Bug-a bidali"
 
 msgid "Save Video As..."
 msgstr "Honela Gorde Bideoa..."
@@ -607,7 +607,7 @@ msgstr "Deskarga Osaturik"
 #: ../../platform/osx/frontend/GrowlNotifier.py:45
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "'%s' bideoaren deskarga amaituta."
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:54
 #, fuzzy
@@ -664,7 +664,7 @@ msgstr "Filmen Direktorioa"
 #: ../../platform/osx/frontend/Preferences.py:197
 #, python-format
 msgid "Select a Directory to store %s downloads in."
-msgstr ""
+msgstr "Jeitsitako bideoak karpeta honetan gorde: %s"
 
 #: ../../platform/osx/frontend/Preferences.py:198
 #: ../../platform/osx/frontend/Preferences.py:262
@@ -695,11 +695,11 @@ msgstr ""
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Amaituta"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
-msgstr ""
+msgstr "Bilatu!"
 
 #: ../../platform/osx/frontend/Application.py:246
 msgid "Pause Video"
@@ -707,7 +707,7 @@ msgstr "Pausatu bideoa"
 
 #: ../../platform/osx/frontend/Application.py:255
 msgid "Unsupported version of Quicktime"
-msgstr ""
+msgstr "Ezin da suportatu Quicktime bertsioa"
 
 #: ../../platform/osx/frontend/Application.py:256
 #, python-format
@@ -726,15 +726,15 @@ msgstr "_Zerrenda Ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:24
 msgid "_Remove Playlists..."
-msgstr ""
+msgstr "_Erreprodukzio zerrenda ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:25
 msgid "_Remove Playlist Folder..."
-msgstr ""
+msgstr "_Erreprodukzio zerrendaren karpeta ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:26
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "_Erreprodukzio zerrendaren karpetak ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:27 ../../portable/menubar.py:179
 msgid "_Remove Channel..."
@@ -746,7 +746,7 @@ msgstr "_Kanalak Ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:29 ../../portable/menubar.py:182
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "_Kanalen karpeta ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:30 ../../portable/menubar.py:181
 msgid "_Remove Channel Folders..."
@@ -899,7 +899,7 @@ msgstr "Biltegia"
 
 #: ../../portable/tabs.py:45
 msgid "New"
-msgstr ""
+msgstr "Berria"
 
 #: ../../portable/tabs.py:47
 msgid "Downloading"
@@ -943,15 +943,15 @@ msgstr "Zerrendaren izena aldatu"
 #: ../../portable/playlist.py:202
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Erreprodukzio zerrendarako izen berria sartu %s"
 
 #: ../../portable/playlist.py:224
 msgid "Create Playlist"
-msgstr ""
+msgstr "Erreprodukzio zerrenda sortu"
 
 #: ../../portable/playlist.py:225
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Erreprodukzio zerrendarako izen berria sartu"
 
 #: ../../portable/feed.py:383
 msgid "never"
@@ -965,7 +965,7 @@ msgstr "%d ordu"
 #: ../../portable/feed.py:387
 #, python-format
 msgid "%d day"
-msgstr ""
+msgstr "%d egun"
 
 #: ../../portable/feed.py:389 ../../portable/item.py:540
 #, python-format
@@ -975,7 +975,7 @@ msgstr "%d egun"
 #: ../../portable/feed.py:391
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d hilabete"
 
 #: ../../portable/feed.py:787
 msgid "Update Channel Now"
@@ -1032,7 +1032,7 @@ msgstr ""
 
 #: ../../portable/feed.py:2148
 msgid "Playing File"
-msgstr ""
+msgstr "Fitxategia erreproduzitzen"
 
 #: ../../portable/menu.py:69
 msgid "Update Channels Now"
@@ -1049,7 +1049,7 @@ msgstr "Jo"
 
 #: ../../portable/menu.py:97 ../../portable/item.py:1478
 msgid "Add to new playlist"
-msgstr ""
+msgstr "Erreprodukzio zerrenda berrira sartu"
 
 #: ../../portable/menu.py:99 ../../portable/item.py:1471
 msgid "Remove From Playlist"
@@ -1057,7 +1057,7 @@ msgstr "Zerrendatik Ezabatu"
 
 #: ../../portable/menu.py:101 ../../portable/item.py:1473
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Liburutegitik ezabatu"
 
 #: ../../portable/menu.py:107 ../../portable/item.py:1482
 msgid "Mark as Unwatched"
@@ -1065,7 +1065,7 @@ msgstr "Ez-ikusia bezala markatu"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Ikusita moduan markatu"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -1088,23 +1088,23 @@ msgstr "Deskarga Utzi"
 
 #: ../../portable/menu.py:127 ../../portable/item.py:1489
 msgid "Pause Download"
-msgstr ""
+msgstr "Deskarga Gelditu"
 
 #: ../../portable/menu.py:130 ../../portable/item.py:1487
 msgid "Restart Upload"
-msgstr ""
+msgstr "Igoera Berrabiarazi"
 
 #: ../../portable/opml.py:49
 msgid "Export OPML File"
-msgstr ""
+msgstr "OPML Fitxategia Exportatu"
 
 #: ../../portable/opml.py:123
 msgid "Import OPML File"
-msgstr ""
+msgstr "OPML Fitxategia Inportatu"
 
 #: ../../portable/opml.py:125
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML Fitxategia"
 
 #: ../../portable/opml.py:145
 msgid "OPML Import failed"
@@ -1154,7 +1154,7 @@ msgstr ""
 
 #: ../../portable/util.py:252 ../../portable/httpclient.py:126
 msgid "Internal Error"
-msgstr ""
+msgstr "Barneko errorea"
 
 #: ../../portable/util.py:252
 msgid ""
@@ -1169,8 +1169,9 @@ msgid ""
 msgstr ""
 
 #: ../../portable/util.py:252
+#, fuzzy
 msgid "Describe what you were doing that caused this error"
-msgstr ""
+msgstr "Errorea gauzatu denean egiten hari zinena deskribatu"
 
 #: ../../portable/util.py:455
 #, python-format
@@ -1180,7 +1181,7 @@ msgstr "%1.1fGB"
 #: ../../portable/util.py:457
 #, python-format
 msgid "%dGB"
-msgstr ""
+msgstr "%dGB"
 
 #: ../../portable/util.py:461
 #, python-format
@@ -1190,7 +1191,7 @@ msgstr "%1.1fMB"
 #: ../../portable/util.py:463
 #, python-format
 msgid "%dMB"
-msgstr ""
+msgstr "%dMB"
 
 #: ../../portable/util.py:467
 #, python-format
@@ -1200,17 +1201,19 @@ msgstr "%1.1fKB"
 #: ../../portable/util.py:469
 #, python-format
 msgid "%dKB"
-msgstr ""
+msgstr "%dKB"
 
 #: ../../portable/util.py:473
 #, python-format
 msgid "%1.1fB"
-msgstr ""
+msgstr "%1.1fB"
 
 #: ../../portable/util.py:475
 #, python-format
 msgid "%dB"
 msgstr ""
+"Copy text   \t\n"
+"%dB"
 
 #: ../../portable/storedatabase.py:832 ../../portable/storedatabase.py:1231
 #, python-format
@@ -1325,7 +1328,7 @@ msgstr ""
 
 #: ../../portable/singleclick.py:87
 msgid "Download already exists"
-msgstr ""
+msgstr "Deskarga jadanik existitzen da"
 
 #: ../../portable/singleclick.py:88
 msgid "That URL is already an external download."
@@ -1357,7 +1360,7 @@ msgstr ""
 
 #: ../../portable/singleclick.py:134
 msgid "File Download"
-msgstr ""
+msgstr "Fitxategia Deskargatu"
 
 #: ../../portable/singleclick.py:135
 #, python-format
@@ -1420,11 +1423,11 @@ msgstr ""
 
 #: ../../portable/menubar.py:144
 msgid "_Open"
-msgstr ""
+msgstr "_Ireki"
 
 #: ../../portable/menubar.py:145
 msgid "_Download Video"
-msgstr ""
+msgstr "_Bideoa Deskargatu"
 
 #: ../../portable/menubar.py:147
 msgid "Check _Version"
@@ -1436,11 +1439,11 @@ msgstr "_Ezabatu bideoa"
 
 #: ../../portable/menubar.py:150
 msgid "_Remove Videos"
-msgstr ""
+msgstr "_Bideoak ezabatu"
 
 #: ../../portable/menubar.py:151
 msgid "Re_name Video"
-msgstr ""
+msgstr "Bideoaren izena aldatu"
 
 #: ../../portable/menubar.py:152
 msgid "Save Video _As..."
@@ -1448,15 +1451,15 @@ msgstr "Gorde bideoa _honela..."
 
 #: ../../portable/menubar.py:153
 msgid "Save Videos _As..."
-msgstr ""
+msgstr "Gorde Bideoa _honela..."
 
 #: ../../portable/menubar.py:154
 msgid "Copy Video _URL"
-msgstr ""
+msgstr "Bideoa Kopiatu _URL"
 
 #: ../../portable/menubar.py:156
 msgid "_Options..."
-msgstr ""
+msgstr "_Hobespenak..."
 
 #: ../../portable/menubar.py:157
 msgid "_Quit"
@@ -1496,19 +1499,19 @@ msgstr ""
 
 #: ../../portable/menubar.py:176
 msgid "Add Channel _Guide..."
-msgstr ""
+msgstr "Kanal Gida Sartu..."
 
 #: ../../portable/menubar.py:186
 msgid "Update _All Channels"
-msgstr ""
+msgstr "Kanal Guztiak Berritu"
 
 #: ../../portable/menubar.py:188
 msgid "_Import Channels (OPML)..."
-msgstr ""
+msgstr "(OPML) Kanalak Importatu..."
 
 #: ../../portable/menubar.py:189
 msgid "E_xport Channels (OPML)..."
-msgstr ""
+msgstr "(OPML) Kanalak Exportatu"
 
 #: ../../portable/menubar.py:191
 msgid "_Send this channel to a friend"
@@ -1520,11 +1523,11 @@ msgstr "Kanala Kopiatu _Esteka"
 
 #: ../../portable/menubar.py:195
 msgid "New _Playlist"
-msgstr ""
+msgstr "Erreprodukzio Zerrenda Berria"
 
 #: ../../portable/menubar.py:196
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "Erreprodukzio Zerrenda Karpeta Beria"
 
 #: ../../portable/menubar.py:198
 msgid "Re_name Playlist"
@@ -1536,19 +1539,19 @@ msgstr "_Zerrenda Ezabatu"
 
 #: ../../portable/menubar.py:200
 msgid "_Remove Playlists"
-msgstr ""
+msgstr "Erreprodukzio zerrenda Ezabatu"
 
 #: ../../portable/menubar.py:201
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "Erreprodukzio Zerrenda Karpetak Ezabatu"
 
 #: ../../portable/menubar.py:202
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "Erreprodukzio Zerrenda Karpeta Ezabatu"
 
 #: ../../portable/menubar.py:212
 msgid "_Play"
-msgstr ""
+msgstr "_Erreproduzitu"
 
 #: ../../portable/menubar.py:213
 msgid "_Stop"

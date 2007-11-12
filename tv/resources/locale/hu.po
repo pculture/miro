@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2007-11-12 13:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "About Democracy"
@@ -211,7 +211,7 @@ msgstr ""
 
 #, python-format
 #~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d download still in progress."
+#~ msgid_plural "You have %d downloads still in progress."
 #~ msgstr[0] "Önnek %d darab letöltése van folyamatban."
 
 #~ msgid ""

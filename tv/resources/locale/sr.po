@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2007-11-12 13:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "About Democracy"
@@ -599,7 +599,7 @@ msgstr ""
 
 #, python-format
 #~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d download still in progress."
+#~ msgid_plural "You have %d downloads still in progress."
 #~ msgstr[0] "Имате %d скидање још увек у току."
 #~ msgstr[1] "Имате %d скидања још увек у току."
 

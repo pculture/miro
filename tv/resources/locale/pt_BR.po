@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-08 11:18+0000\n"
+"PO-Revision-Date: 2007-11-02 21:19+0000\n"
 "Last-Translator: amargem <amargem@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2007-11-12 13:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "About Democracy"
@@ -1312,7 +1312,7 @@ msgid "Playlists"
 msgstr "Listas de Reprodução"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Preferências..."
 
 msgid "Previous Video"
 msgstr "Vídeo Anterior"
@@ -1398,7 +1398,6 @@ msgstr ""
 msgid "Password:\n"
 msgstr "Senha:\n"
 
-#, fuzzy
 msgid "Username and password required"
 msgstr "Nome de usuário e senha requeridos"
 
@@ -1760,21 +1759,20 @@ msgid "Download Completed"
 msgstr "Recebimento de arquivo completado"
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:45
-#, fuzzy
+#, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Recebimento do vídeo %s' está terminando."
+msgstr "Recebimento do vídeo '%s' está terminando."
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:54
 msgid "Download Failed"
 msgstr "Recebimento Falhou"
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:55
-#, fuzzy
+#, python-format
 msgid "Download of video '%s' has failed."
-msgstr "Recebimento do vídeo %s' falhou."
+msgstr "Recebimento do vídeo '%s' falhou."
 
 #: ../../platform/osx/frontend/MainFrame.py:278
-#, fuzzy
 msgid "Subscribe to Channel"
 msgstr "Assinar o Canal"
 
@@ -1827,7 +1825,7 @@ msgid "Migrate existing movies?"
 msgstr "Migrar filmes existentes?"
 
 #: ../../platform/osx/frontend/Preferences.py:208
-#, fuzzy
+#, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
 "existing downloads there?  (Currently dowloading movies will not be moved "
@@ -1847,7 +1845,7 @@ msgstr "Selecione um diretório para ver na Biblioteca"
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Finalizar"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1871,7 +1869,6 @@ msgstr ""
 "atualização é gratuita."
 
 #: ../../platform/osx/frontend/UIStrings.py:22
-#, fuzzy
 msgid "_Remove..."
 msgstr "_Remover..."
 
@@ -2045,7 +2042,7 @@ msgstr "O arquivo torrent para este item foi apagado "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "fora do Miro."
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -2224,7 +2221,7 @@ msgstr "Marcar como não visto"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Marcar como Assistido"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -2674,12 +2671,10 @@ msgid "New _Folder..."
 msgstr "Nova _Pasta..."
 
 #: ../../portable/menubar.py:176
-#, fuzzy
 msgid "Add Channel _Guide..."
 msgstr "Adicionar _Guia de Canal"
 
 #: ../../portable/menubar.py:186
-#, fuzzy
 msgid "Update _All Channels"
 msgstr "_Atualizar Todos os Canais"
 
@@ -3114,16 +3109,16 @@ msgstr "\"%s\" não é uma URL válida"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "O arquivo \"%s\" não existe"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Erro de leitura"
 
 #: ../../portable/httpclient.py:148
-#, python-format
+#, fuzzy
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Erro de leitura em \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -3295,13 +3290,14 @@ msgid "%s is invalid.  You must enter a non-negative number."
 msgstr "%s é inválido. Você deve digitar um número não negativo."
 
 #: ../../portable/app.py:1839
+#, fuzzy
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Erro ao revelar o arquivo"
 
 #: ../../portable/app.py:1840
-#, python-format
+#, fuzzy
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "O arquivo \"%s\" foi deletedo fora do Miro."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -3343,7 +3339,7 @@ msgstr "Entre com a URL do vídeo para baixar"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Canais iniciais"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -3486,7 +3482,6 @@ msgid "C_hannel:"
 msgstr "Canal:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
-#, fuzzy
 msgid "C_hannels"
 msgstr "C_anais"
 
@@ -3503,7 +3498,6 @@ msgid "Disk _Space"
 msgstr "Espaço em Disco"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
-#, fuzzy
 msgid "Don't start a download _if it leaves less than"
 msgstr "Não _iniciar um download se estiver menos de"
 

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2007-11-01 15:59+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Macedonian <mk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2007-11-12 13:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -27,7 +27,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:76
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 msgid "$log"
 msgstr ""
@@ -38,6 +38,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
+"href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
+"doing, paste in the log message from the box above, and answer a few "
+"questions, and we'll get right to work.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -57,10 +61,10 @@ msgid "The fall of $shortAppName??"
 msgstr ""
 
 msgid "About Miro"
-msgstr ""
+msgstr "За Miro"
 
 msgid "Add Channel..."
-msgstr ""
+msgstr "Додади канал"
 
 msgid "Add Guide..."
 msgstr ""
@@ -74,22 +78,22 @@ msgid "Channels"
 msgstr ""
 
 msgid "Check for New Version"
-msgstr ""
+msgstr "Провери за нова верзија"
 
 msgid "Clear Menu"
 msgstr ""
 
 msgid "Close Window"
-msgstr ""
+msgstr "Затвори го прозорецот"
 
 msgid "Copy"
 msgstr ""
 
 msgid "Copy Channel URL"
-msgstr ""
+msgstr "Копирај ја адресата на каналот"
 
 msgid "Copy Video URL"
-msgstr ""
+msgstr "Копирај ја адресата на видеото"
 
 msgid "Cut"
 msgstr ""
@@ -99,16 +103,16 @@ msgid "Delete"
 msgstr ""
 
 msgid "Donate"
-msgstr ""
+msgstr "Донирај"
 
 msgid "Download Video..."
-msgstr ""
+msgstr "Превземи видео"
 
 msgid "Edit"
 msgstr ""
 
 msgid "Export Channels (OPML)..."
-msgstr ""
+msgstr "Експортирај ги каналите (OPML)"
 
 msgid "File"
 msgstr ""
@@ -120,32 +124,32 @@ msgid "Help"
 msgstr ""
 
 msgid "Hide Miro"
-msgstr ""
+msgstr "Сокриј го Miro"
 
 msgid "Hide Others"
-msgstr ""
+msgstr "Сокриј ги другите"
 
 msgid "Import Channels (OPML)..."
-msgstr ""
+msgstr "Импортирај канали (OPML)..."
 
 msgid "Main Window"
-msgstr ""
+msgstr "Главен прозорец"
 
 msgid "MainMenu"
-msgstr ""
+msgstr "Главно мени"
 
 msgid "Minimize"
-msgstr ""
+msgstr "Минимизирај"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Miro"
-msgstr ""
+msgstr "Миро"
 
 msgid "Miro Help"
 msgstr ""
 
 msgid "New Channel Folder..."
-msgstr ""
+msgstr "Нова папка за канали ..."
 
 msgid "New Playlist Folder..."
 msgstr ""
@@ -157,7 +161,7 @@ msgid "New Search Channel..."
 msgstr ""
 
 msgid "Next Video"
-msgstr ""
+msgstr "Следно видео"
 
 msgid "Open Recent"
 msgstr ""
@@ -184,37 +188,37 @@ msgid "Preferences..."
 msgstr ""
 
 msgid "Previous Video"
-msgstr ""
+msgstr "Претходно видео"
 
 msgid "Quit Miro"
-msgstr ""
+msgstr "Излез"
 
 msgid "Remove..."
-msgstr ""
+msgstr "Тргни..."
 
 msgid "Rename..."
-msgstr ""
+msgstr "Преименувај..."
 
 msgid "Report a bug"
-msgstr ""
+msgstr "Пријави бубачка"
 
 msgid "Save Video As..."
-msgstr ""
+msgstr "Сними го видеото како..."
 
 msgid "Select All"
-msgstr ""
+msgstr "Избери сѐ"
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Испрати го овој канал на пријател"
 
 msgid "Services"
-msgstr ""
+msgstr "Услуги"
 
 msgid "Show All"
-msgstr ""
+msgstr "Прикажи ги сите"
 
 msgid "Stop Video"
-msgstr ""
+msgstr "Запри го видеото"
 
 msgid "Update All Channels"
 msgstr ""
@@ -251,7 +255,7 @@ msgstr ""
 
 #: ../../portable/tabs.py:46
 msgid "Video Search"
-msgstr ""
+msgstr "Пребарувај видеа"
 
 msgid "VideoWindow"
 msgstr ""
@@ -262,75 +266,77 @@ msgid ""
 msgstr ""
 
 msgid "Password:\n"
-msgstr ""
+msgstr "Лозинка:\n"
 
 msgid "Username and password required"
-msgstr ""
+msgstr "Корисничкото име и лозинката се задолжителни"
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
+"Корисничко име\n"
+"\n"
 
 msgid " limit upstream to"
-msgstr ""
+msgstr " ограничи го уплоадот на"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(Miro мора да се рестартира за да промените бидат прифатени)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
-msgstr ""
+msgstr "(Miro мора да се рестартира за да промените бидат прифатени)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(патеката до филмовите овде)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "1 day"
-msgstr ""
+msgstr "1 ден"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 month"
-msgstr ""
+msgstr "1 месец"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid "10 days"
-msgstr ""
+msgstr "10 дена"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid "3 days"
-msgstr ""
+msgstr "3 дена"
 
 msgid "3 hours"
-msgstr ""
+msgstr "3 часа"
 
 msgid "4"
-msgstr ""
+msgstr "4"
 
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
 msgid "6 days"
-msgstr ""
+msgstr "6 дена"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "Add..."
-msgstr ""
+msgstr "Додади..."
 
 msgid "BitTorrent ports:"
-msgstr ""
+msgstr "Порти на BitTorrent:"
 
 msgid "By default, videos expire after:"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid "Change..."
-msgstr ""
+msgstr "Измени..."
 
 msgid "Check channels for new content:"
-msgstr ""
+msgstr "Провери ги каналите за нови содржини:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
 msgid "Don't start a download if it leaves less than"
@@ -341,34 +347,34 @@ msgid "Download at most"
 msgstr ""
 
 msgid "Folder location"
-msgstr ""
+msgstr "Локација на папката"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "GB free."
-msgstr ""
+msgstr "GB слободни."
 
 msgid "KB/s when my computer is active."
-msgstr ""
+msgstr "KB/s кога компјутерот е активен."
 
 msgid "Maximum:"
-msgstr ""
+msgstr "Максимум:"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Минимум:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "Never"
-msgstr ""
+msgstr "Никогаш"
 
 msgid "OtherViews"
-msgstr ""
+msgstr "Други прегледи"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "Play videos one after another."
 msgstr ""
 
 msgid "Remember video position."
-msgstr ""
+msgstr "Запомни ја позицијата на видеото"
 
 #: ../../portable/guide.py:107 ../../portable/playlist.py:197
 #: ../../portable/feed.py:795 ../../portable/menu.py:65
@@ -376,20 +382,20 @@ msgstr ""
 #: ../../portable/folder.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Remove"
-msgstr ""
+msgstr "Отстрани"
 
 msgid "Run Miro at startup"
-msgstr ""
+msgstr "Вчитај го Miro на стартување"
 
 msgid "Save downloaded videos in this folder:"
-msgstr ""
+msgstr "Сними ги превземените видеа во оваа папка:"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573
 msgid "Show as Channel"
-msgstr ""
+msgstr "Прикажи како канал"
 
 msgid "Stop after each video."
-msgstr ""
+msgstr "Запри после секое видео"
 
 msgid "To avoid internet slowdowns:"
 msgstr ""
@@ -403,13 +409,13 @@ msgid ""
 msgstr ""
 
 msgid "every 30 minutes"
-msgstr ""
+msgstr "секои 30 минути"
 
 msgid "every hour"
-msgstr ""
+msgstr "секој час"
 
 msgid "manually"
-msgstr ""
+msgstr "рачно"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "videos at once."
@@ -422,7 +428,7 @@ msgid "$title$"
 msgstr ""
 
 msgid "Channel"
-msgstr ""
+msgstr "Канал"
 
 #: ../../portable/dialogs.py:91
 msgid "Create"
