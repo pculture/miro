@@ -409,7 +409,7 @@ class MainController (NSWindowController):
             self.updateMenuItem(item, 'playlist_remove')
             return self.actionGroups['PlaylistLikeSelected'] or self.actionGroups['PlaylistLikesSelected']
         elif action == 'playPause:':
-            return display is app.controller.videoDisplay
+            return display is app.controller.videoDisplay or self.actionGroups['VideoPlayable']
         elif action == 'stopVideo:':
             return display is app.controller.videoDisplay
         elif action == 'nextVideo:':
