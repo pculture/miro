@@ -1,9 +1,3 @@
-miro (1.0-2) feisty; urgency=low
-
-  * Fixed dependency on miro-data package.
-
- -- Will Guaraldi <will.guaraldi@pculture.org>  Wed, 14 Nov 2007 10:29:45 -0500
-
 miro (1.0-1ubuntupcf) feisty; urgency=low
 
   * New Upstream release.

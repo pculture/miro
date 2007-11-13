@@ -12,14 +12,14 @@
 # 2. set RELEASE_CANDIDATE
 # 3. increase RELEASE if we do multiples
 
-%define VERSION 1.0
+%define VERSION 0.9.9.9
 #define RELEASE_CANDIDATE rc1
 #define NIGHTLY 2006-07-20
 #define RELEASE_CANDIDATE 2006_07_20
 %define FULL_VERSION %{VERSION}%{?RELEASE_CANDIDATE:-%{RELEASE_CANDIDATE}}
 #define FULL_VERSION %{NIGHTLY}
 %define RELEASE 1
-%define mozversion 2.0.0.9
+%define mozversion 2.0.0.5
 
 Name:           Miro
 Version:        %{VERSION}

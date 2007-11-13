@@ -1,13 +1,13 @@
 Source: miro
 Section: net
 Priority: optional
-Maintainer: Will Guaraldi <will.guaraldi@pculture.org>
+Maintainer: Uwe Hermann <uwe@debian.org>
 Build-Depends: cdbs, debhelper (>= 5), python2.5, python-pyrex, libboost-python-dev, python-gtk2-dev, python-gnome2-extras-dev (>= 2.14.0-2), python2.5-dbus, firefox-dev, libxine-dev, python-dev, python-support
 Standards-Version: 3.7.2
 
 Package: miro
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2, python-gnome2, python-gnome2-extras (>= 2.14.0-2), python-glade2, miro-data (>= 1.0), imagemagick, libxine1-plugins
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2, python-gnome2, python-gnome2-extras (>= 2.14.0-2), python-glade2, miro-data (>= 0.9.8), imagemagick, libxine1-plugins
 Suggests: ttf-bitstream-vera
 Conflicts: democracyplayer (<< 0.9.8)
 Replaces: democracyplayer

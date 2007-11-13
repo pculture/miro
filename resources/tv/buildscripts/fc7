@@ -7,7 +7,7 @@
 #Make directory structure for easy upload
 mkdir $2$3
 mkdir $2$3/src
-mkdir $2$3/fc7
+mkdir $2$3/fc6
 
 #Make tarball and copy it into directory
 svn co https://svn.participatoryculture.org/svn/dtv/trunk/resources/
@@ -15,7 +15,7 @@ resources/tv/maketarball $2$3
 cp Miro-$2$3.tar.gz $2$3/src/
 
 #Get the spec
-svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/Miro-FC7.spec > Miro.spec
+svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/Miro.spec > Miro.spec
 sudo cp Miro-$2$3.tar.gz /usr/src/redhat/SOURCES 
 sudo cp Miro.spec /usr/src/redhat/SPECS 
 
