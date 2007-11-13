@@ -25,7 +25,7 @@ import shutil
 from database import DDBObject, defaultDatabase
 from dl_daemon import daemon, command
 from download_utils import nextFreeFilename, getFileURLPath, filterDirectoryName
-from util import getTorrentInfoHash, returnsUnicode, checkU, returnsFilename, unicodify, checkF
+from util import getTorrentInfoHash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, stringify
 from platformutils import FilenameType
 import app
 import config
@@ -39,7 +39,7 @@ import flashscraper
 import logging
 import traceback
 import templatehelper
-import migrate
+import fileutil
 
 # a hash of download ids that the server knows about.
 _downloads = {}
@@ -285,10 +285,7 @@ class RemoteDownloader(DDBObject):
         except KeyError:
             return
         try:
-            if os.path.isfile(filename):
-                os.remove (filename)
-            elif os.path.isdir(filename):
-                shutil.rmtree (filename)
+            fileutil.delete(filename)
         except:
             logging.warn("Error deleting downloaded file: %s\n%s" % 
                     (templatehelper.toUni(filename), traceback.format_exc()))
@@ -365,7 +362,7 @@ URL was %s""" % self.url
                 def callback():
                     self.status['filename'] = newfilename
                     self.signalChange()
-                migrate.migrate_file(filename, newfilename, callback)
+                fileutil.migrate_file(filename, newfilename, callback)
         for i in self.itemList:
             i.migrateChildren(directory)
 
@@ -498,7 +495,7 @@ URL was %s""" % self.url
         size = self.getCurrentSize()
         if size == 0:
             return 0
-        return self.status.get('uploaded', 0) * 1024 * 1024 / size
+        return self.status.get('uploaded', 0) / size
     
     def restartIfNeeded(self):
         if self.getState() in (u'downloading',u'offline'):

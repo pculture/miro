@@ -250,21 +250,6 @@ class mypy2app(py2app):
                     os.remove(fmwk) 
                     os.symlink(os.path.dirname(dest), fmwk)
 
-        # Create a hard link to the main executable with a different
-        # name for the downloader. This is to avoid having 'Miro'
-        # shown twice in the Activity Monitor since the downloader is
-        # basically Miro itself, relaunched with a specific
-        # command line parameter.
-
-        print "Creating Downloader hard link."
-
-        srcPath = os.path.join(execRoot, conf['shortAppName'])
-        linkPath = os.path.join(execRoot, 'Downloader')
-
-        if os.path.exists(linkPath):
-            os.remove(linkPath)
-        os.link(srcPath, linkPath)
-
         # Embed the Quicktime components
         
         print 'Copying Quicktime components to application bundle'

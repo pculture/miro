@@ -227,7 +227,7 @@ class HTMLApplication:
         a user's browser.
         """
         if hasattr(self.delegate, 'handleNewUpdate'):
-            self.delegate.handleNewUpdate(latest)
+            self.delegate.handleNewUpdate(item)
             return
 
         url = item['enclosures'][0]['href']

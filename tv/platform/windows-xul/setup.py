@@ -26,6 +26,7 @@ import subprocess
 import zipfile as zip
 from glob import glob
 from xml.sax.saxutils import escape
+from distutils import sysconfig 
 
 ###############################################################################
 ## Paths and configuration                                                   ##
@@ -183,9 +184,14 @@ fasttypes_ext = \
 
 os.environ['PATH'] = r'%s;%s' % (os.environ['PATH'], BOOST_LIB_PATH)
 
+##### The libtorrent extension ####
+import setup_portable
+libtorrent_ext = setup_portable.libtorrent_extension(portable_dir)
+
 # Private extension modules to build.
 ext_modules = [
     fasttypes_ext,
+    libtorrent_ext,
 
     # Pyrex sources.
     #Extension("vlc", [os.path.join(root, 'platform',platform, 'vlc.pyx')],libraries=["simplevlc"]),
@@ -290,6 +296,7 @@ class bdist_xul_dumb(Command):
                                            'xul')
 
     def run(self):
+        self.buildMovieDataUtil()
         self.makeAppConfig()
         self.makeStubEXE()
         self.setTemplateVariable("pyxpcomIsEmbedded", "true")
@@ -482,6 +489,7 @@ class bdist_xul_dumb(Command):
         copyTreeExceptSvn(self.appResources,
                           os.path.join(self.dist_dir, 'resources'),
                           filterOut=['unittest', 'testdata'])
+        self.copyMovieDataUtil()
         shutil.copy2("Democracy.nsi", self.dist_dir)
         shutil.copy2("Miro.ico", os.path.join(self.dist_dir, "%s.ico" % (self.getTemplateVariable('shortAppName'))))
 
@@ -508,7 +516,6 @@ class bdist_xul_dumb(Command):
 
         # Finally, build the download daemon
         self.buildDownloadDaemon(self.dist_dir)
-        self.buildMovieDataUtil(self.dist_dir)
         
     def computePythonManifest(self, path=None, scripts=[], packages=[],
                               includes=[], excludes=[]):
@@ -595,10 +602,31 @@ class bdist_xul_dumb(Command):
         os.system("%s setup_daemon.py py2exe --dist-dir daemon --bundle-files 1" % PYTHON_BINARY)
         shutil.copy2(os.path.join("daemon","%s_Downloader.exe" % (self.getTemplateVariable('shortAppName'))), baseDir)
 
-    def buildMovieDataUtil(self, baseDir):
+    def buildMovieDataUtil(self):
         print "building movie data utility"
-        os.system("%s setup_moviedata.py py2exe --dist-dir moviedata_util --bundle-files 1" % PYTHON_BINARY)
-        shutil.copy2(os.path.join("moviedata_util","%s_MovieData.exe" % (self.getTemplateVariable('shortAppName'))), baseDir)
+        from distutils.ccompiler import new_compiler
+
+        platform_dir = os.path.join(root, 'platform', platform)
+        sources = [ os.path.join(platform_dir, 'moviedata_util.c') ]
+        python_base = sysconfig.get_config_var('prefix')
+        include_dirs = [ sysconfig.get_python_inc() ]
+        library_dirs = [ os.path.join(python_base, 'libs')]
+
+
+        compiler = new_compiler( verbose=self.verbose, dry_run=self.dry_run,
+                force=self.force)
+        sysconfig.customize_compiler(compiler)
+        objects = compiler.compile(sources, output_dir=self.bdist_base,
+                include_dirs=include_dirs)
+
+        compiler.link_executable(objects, 'Miro_MovieData',
+                library_dirs=library_dirs, output_dir=self.bdist_base)
+
+    def copyMovieDataUtil(self):
+        print "building movie data utility to dist"
+        built_exe = os.path.join(self.bdist_base, 'Miro_MovieData.exe')
+        shutil.copy2(built_exe, self.dist_dir)
+        shutil.copy2("moviedata_util.py", self.dist_dir)
 
     # NEEDS: if you look at the usage of this function, we're dropping
     # the plugin into the xulrunner plugin directory, rather than the

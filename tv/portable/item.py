@@ -60,7 +60,7 @@ import logging
 import platformutils
 import filetypes
 import searchengines
-import migrate
+import fileutil
 import imageresize
 import signals
 
@@ -971,15 +971,22 @@ folder will be deleted.""")
 
     def getTorrentDetails(self):
         status = self.downloader.status
-        return [
-#            (_('Seeders:'), status.get('seeders', 0)),
-#            (_('Leechers:'), status.get('leechers', 0)),
+        retval = []
+        seeders = status.get('seeders', -1)
+        leechers = status.get('leechers', -1)
+        if seeders != -1:
+            retval.append((_('Seeders:'), seeders))
+        if leechers != -1:
+            retval.append((_('Leechers:'), leechers))
+        retval.extend ([
             (_('Down Rate:'), formatRateForDetails(status.get('rate', 0))),
             (_('Down Total:'), formatSizeForDetails(
                 status.get('currentSize', 0))),
             (_('Up Rate:'), formatRateForDetails(status.get('upRate', 0))),
-            (_('Up Total:'), formatSizeForDetails(status.get('uploaded', 0) * 1024 * 1024)),
-        ]
+            (_('Up Total:'), formatSizeForDetails(status.get('uploaded', 0))),
+        ])
+
+        return retval
 
     def getItemDetails(self):
         rv = []
@@ -1012,7 +1019,7 @@ folder will be deleted.""")
         return [
             (_('Down Total'), formatSizeForDetails(
                 status.get('currentSize', 0))),
-            (_('Up Total'), formatSizeForDetails(status.get('uploaded', 0) * 1024 * 1024)),
+            (_('Up Total'), formatSizeForDetails(status.get('uploaded', 0))),
         ]
 
     def makeMoreInfoTable(self, title, moreInfoData):
@@ -1790,7 +1797,7 @@ filename was %s""", stringify(self.filename))
             def callback():
                 self.filename = newFilename
                 self.signalChange()
-            migrate.migrate_file(self.filename, newFilename, callback)
+            fileutil.migrate_file(self.filename, newFilename, callback)
         elif os.path.exists(newFilename):
             self.filename = newFilename
             self.signalChange()

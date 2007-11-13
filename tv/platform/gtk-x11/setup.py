@@ -214,33 +214,6 @@ fasttypes_ext = \
     )
 
 ##### The libtorrent extension ####
-#def fetchCpp():
-#    for root,dirs,files in os.walk(os.path.join(portable_dir, 'libtorrent')):
-#        if '.svn' in dirs:
-#            dirs.remove('.svn')
-#        for file in files:
-#            if file.endswith('.cpp'):
-#                yield os.path.join(root,file)
-#
-#torrent_sources=list(fetchCpp())
-#torrent_include_dirs = [os.path.join(portable_dir, x) for x in
-#               ['libtorrent/include', 'libtorrent/include/libtorrent']]
-#torrent_sources.remove(os.path.join(portable_dir, 'libtorrent/src/file_win.cpp'))
-#
-#torrent_compile_args = ["-Wno-missing-braces", 
-#                           "-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1", 
-#                           "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1", 
-#                           "-DHAVE_INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1", 
-#                           "-DHAVE_PTHREAD=1", "-DTORRENT_USE_OPENSSL=1", "-DHAVE_SSL=1", 
-#                           "-DNDEBUG=1", "-O2"]
-#\
-#    Extension("miro.libtorrent", 
-#              sources = torrent_sources,
-#              libraries = [BOOST_LIB, 'boost_filesystem', 'boost_date_time',
-#                           'boost_thread', 'z', 'pthread', 'ssl'],
-#              include_dirs = torrent_include_dirs,
-#              extra_compile_args = torrent_compile_args
-#    )
 libtorrent_ext = setup_portable.libtorrent_extension(portable_dir)
 
 #### MozillaBrowser Extension ####

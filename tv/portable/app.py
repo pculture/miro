@@ -643,7 +643,8 @@ class Controller(frontend.Application):
         if len(tabs) == 1 and tabs[0].isFeed():
             # See also dynamic.js if changing this URL
             feed = tabs[0].obj
-            delegate.openExternalURL('http://www.videobomb.com/democracy_channel/email_friend?url=%s&title=%s' % (feed.getURL(), feed.getTitle()))
+            query = urllib.urlencode({'url': feed.getURL(), 'title': feed.getTitle()})
+            delegate.openExternalURL('http://www.videobomb.com/democracy_channel/email_friend?%s' % (query, ))
 
     def copyCurrentItemURL(self):
         tabs = self.selection.getSelectedItems()
