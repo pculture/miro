@@ -35,14 +35,10 @@ class _Search:
         self.path = path
 
     def run(self):
-        thread = Thread(target=self.runSearch)
-        thread.setDaemon(True)
-        thread.start()
+        self.found = util.gatherVideos(self.path, self.progressCallback)
 
-        gtk.main()
-
-    @gtk_queue.gtkSyncMethod
     def progressCallback(self, files, videos):
+        gtk.main_iteration(block=True)
         if self.cancelled:
             return False
         label = _("(parsed %d files - found %d videos)") % (files, videos)
@@ -50,16 +46,7 @@ class _Search:
         self.widgetTree['progressbar-startup-search'].pulse()
         return True
 
-    @gtk_queue.gtkSyncMethod
-    def finished(self, found):
-        self.found = found
-        gtk.main_quit()
-
-    # Alternate thread.
-    def runSearch (self):
-        found = util.gatherVideos(self.path, self.progressCallback)
-        self.finished(found)
-
+@gtk_queue.gtkAsyncMethod
 def performStartupTasks(terminationCallback):
     widgetTree = MainFrame.WidgetTree(resources.path('miro.glade'), 'dialog-startup', 'miro')
     dialog = widgetTree['dialog-startup']
@@ -178,9 +165,9 @@ def performStartupTasks(terminationCallback):
             # Handle step
         else:
             status['files'] = None
-            gtk_queue.queue.call_nowait(lambda : terminationCallback(None))
+            terminationCallback(None)
             return
-    gtk_queue.queue.call_nowait(lambda : terminationCallback(status['files']))
+    terminationCallback(status['files'])
     config.set(prefs.RUN_DTV_AT_STARTUP, widgetTree['radiobutton-startup-autostart-yes'].get_active())
     updateAutostart()
     try:

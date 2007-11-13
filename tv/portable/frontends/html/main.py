@@ -100,6 +100,7 @@ class HTMLApplication:
                 self.cancelStartup()
         dialog.run(callback)
 
+    @eventloop.asUrgent
     def finishStartup(self, gatheredVideos=None):
         # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
         self.newTab = None
