@@ -19,6 +19,8 @@ import gtk
 
 import threading
 from frontend_implementation.gtk_queue import queue
+from frontends.html.main import HTMLApplication
+import app
 import gtcache
 import config
 import prefs
@@ -29,11 +31,7 @@ import platformutils
 #### Application object                                                    ####
 ###############################################################################
 
-class Application:
-
-    def __init__(self):
-        #print "Application init"
-        pass
+class Application(HTMLApplication):
     def Run(self):
         gtk.glade.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
         gtk.glade.textdomain("miro")
@@ -41,24 +39,9 @@ class Application:
         queue.main_thread = threading.currentThread()
         platformutils.setMainThread()
         gtk.gdk.threads_init()
-        self.onStartup()
+        self.startup()
         gtk.main()
-        self.onShutdown()
-
-    def onStartup(self):
-        # For overriding
-        pass
-
-    def finishStartupSequence(self):
-        pass
-
-    def onShutdown(self):
-        # For overriding
-        pass
-
-    def addAndSelectFeed(self, url):
-        # For overriding
-        pass
+        app.controller.onShutdown()
 
 ###############################################################################
 ###############################################################################

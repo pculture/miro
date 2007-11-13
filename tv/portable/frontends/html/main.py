@@ -19,9 +19,12 @@
 error reporting, etc.
 """
 
+import logging
+
 from gtcache import gettext as _
 from gtcache import ngettext
 from frontends.html import dialogs
+import frontend
 import frontends.html
 import app
 import autoupdate
@@ -30,7 +33,12 @@ import eventloop
 import frontendutil
 import opml
 import prefs
+import selection
+import startup
+import singleclick
 import signals
+import tabs
+import util
 import views
 
 class HTMLApplication:
@@ -39,18 +47,158 @@ class HTMLApplication:
     def __init__(self):
         self.ignoreErrors = False
         self.inQuit = False
-        self.delegate = app.delegate
+        self.delegate = frontend.UIBackendDelegate()
+        self.loadedCustomChannels = False
         frontends.html.app = self
 
     def startup(self):
         signals.system.connect('error', self.handleError)
         signals.system.connect('download-complete', self.handleDownloadComplete)
+        signals.system.connect('startup-success', self.handleStartupSuccess)
+        signals.system.connect('startup-failure', self.handleStartupFailure)
+        signals.system.connect('loaded-custom-channels',
+                self.handleCustomChannelLoad)
+        startup.initialize()
+
+    def handleStartupFailure(self, obj, summary, description):
+        dialog = dialogs.MessageBoxDialog(summary, description)
+        dialog.run(lambda d: self.cancelStartup())
+
+    def cancelStartup(self):
+        frontend.quit()
+        app.controller.shutdown()
+
+    def handleStartupSuccess(self, obj):
         if self.AUTOUPDATE_SUPPORTED:
             eventloop.addTimeout (3, autoupdate.checkForUpdates, 
                     "Check for updates")
             signals.system.connect('update-available', self.handleNewUpdate)
 
-    # signal handlers
+        if not config.get(prefs.STARTUP_TASKS_DONE):
+            logging.info ("Showing startup dialog...")
+            self.delegate.performStartupTasks(self.finishStartup)
+            config.set(prefs.STARTUP_TASKS_DONE, True)
+            config.save()
+        else:
+            self.finishStartup()
+
+    def handleMoviesGone():
+        title = _("Video Directory Missing")
+        description = _("""
+    Miro can't find your primary video directory.  This may be because it's \
+    located on an external drive that is currently disconnected.
+
+    If you continue, the video directory will be reset to a location on this \
+    drive (this will cause you to lose some details about the videos on the \
+    external drive).  You can also quit, connect the drive, and relaunch Miro.""")
+        dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_QUIT,
+                dialogs.BUTTON_LAUNCH_MIRO)
+        def callback(dialog):
+            if dialog.choice == dialogs.BUTTON_LAUNCH_MIRO:
+                startup.finalizeStartup()
+            else:
+                self.cancelStartup()
+        dialog.run(callback)
+
+    def finishStartup(self, gatheredVideos=None):
+        # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
+        self.newTab = None
+        self.downloadTab = None
+        for tab in views.allTabs:
+            if tab.tabTemplateBase == 'newtab':
+                self.newTab = tab
+            elif tab.tabTemplateBase == 'downloadtab':
+                self.downloadTab = tab
+
+        views.unwatchedItems.addAddCallback(self.onUnwatchedItemsCountChange)
+        views.unwatchedItems.addRemoveCallback(self.onUnwatchedItemsCountChange)
+        views.downloadingItems.addAddCallback(self.onDownloadingItemsCountChange)
+        views.downloadingItems.addRemoveCallback(self.onDownloadingItemsCountChange)
+        self.onUnwatchedItemsCountChange(None, None)
+        self.onDownloadingItemsCountChange(None, None)
+
+        # Set up the playback controller
+        self.playbackController = frontend.PlaybackController()
+
+        # HACK
+        app.controller.playbackController = self.playbackController
+
+        util.print_mem_usage("Pre-UI memory check")
+
+        # Put up the main frame
+        logging.info ("Displaying main frame...")
+        self.frame = frontend.MainFrame(self)
+        # HACK
+        app.controller.frame = self.frame
+
+        logging.info ("Creating video display...")
+        # Set up the video display
+        self.videoDisplay = frontend.VideoDisplay()
+        self.videoDisplay.initRenderers()
+        self.videoDisplay.playbackController = self.playbackController
+        self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
+        util.print_mem_usage("Post-UI memory check")
+
+        # HACK
+        app.controller.videoDisplay = self.videoDisplay
+
+        # create our selection handler
+        
+        self.selection = selection.SelectionHandler()
+
+        # HACK
+        app.controller.selection = self.selection
+
+        self.selection.selectFirstGuide()
+
+        if self.loadedCustomChannels:
+            dialog = dialogs.MessageBoxDialog(_("Custom Channels"), Template(_("You are running a version of $longAppName with a custom set of channels.")).substitute(longAppName=config.get(prefs.LONG_APP_NAME)))
+            dialog.run()
+            views.feedTabs.resetCursor()
+            tab = views.feedTabs.getNext()
+            if tab is not None:
+                self.selection.selectTabByObject(tab.obj)
+
+        util.print_mem_usage("Post-selection memory check")
+
+        channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
+        playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
+        self.tabDisplay = app.TemplateDisplay('tablist', 'default',
+                playlistTabOrder=playlistTabOrder,
+                channelTabOrder=channelTabOrder)
+        # HACK
+        app.controller.tabDisplay = self.tabDisplay
+        self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
+
+        # If we have newly available items, provide feedback
+        self.updateAvailableItemsCountFeedback()
+
+        # Now adding the video files we possibly gathered from the startup
+        # dialog
+        if gatheredVideos is not None and len(gatheredVideos) > 0:
+            singleclick.resetCommandLineView()
+            for v in gatheredVideos:
+                try:
+                    singleclick.addVideo(v)
+                except Exception, e:
+                    logging.info ("error while adding file %s", v)
+                    logging.info (e)
+
+        util.print_mem_usage("Pre single-click memory check")
+
+        # Use an idle for parseCommandLineArgs because the frontend may
+        # have put in idle calls to do set up video playback or similar
+        # things.
+        eventloop.addIdle(singleclick.parseCommandLineArgs, 
+                'parse command line')
+
+        util.print_mem_usage("Post single-click memory check")
+
+        logging.info ("Finished startup sequence")
+
+    def handleCustomChannelLoad(self, obj):
+        self.loadedCustomChannels = True
+
     def handleDownloadComplete(self, obj, item):
         self.delegate.notifyDownloadCompleted(item)
 
@@ -151,3 +299,17 @@ class HTMLApplication:
         callback = lambda p: opml.Exporter().exportSubscriptionsTo(p)
         title = _("Export OPML File")
         app.delegate.askForSavePathname(title, callback, None, u"miro_subscriptions.opml")
+
+    ### Keep track of currently available+downloading items and refresh the
+    ### corresponding tabs accordingly.
+
+    def onUnwatchedItemsCountChange(self, obj, id):
+        self.newTab.redraw()
+        self.updateAvailableItemsCountFeedback()
+
+    def onDownloadingItemsCountChange(self, obj, id):
+        self.downloadTab.redraw()
+
+    def updateAvailableItemsCountFeedback(self):
+        count = views.unwatchedItems.len()
+        self.delegate.updateAvailableItemsCountFeedback(count)

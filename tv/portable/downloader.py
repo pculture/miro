@@ -610,6 +610,8 @@ def startupDownloader():
 def shutdownDownloader(callback = None):
     if hasattr(RemoteDownloader, 'dldaemon') and RemoteDownloader.dldaemon is not None:
         RemoteDownloader.dldaemon.shutdownDownloaderDaemon(callback=callback)
+    else:
+        callback()
 
 def lookupDownloader(url):
     return views.remoteDownloads.getItemWithIndex(indexes.downloadsByURL, url)
