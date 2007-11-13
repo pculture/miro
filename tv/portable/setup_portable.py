@@ -129,7 +129,6 @@ def libtorrent_extension(portable_dir):
     else:
         boosttype = 'mt'
         EXTRA_COMPILE_ARGS = [  '-DBOOST_WINDOWS',
-                                '-Wno-missing-braces',
                                 '-DWIN32_LEAN_AND_MEAN',
                                 '-D_WIN32_WINNT=0x0500',
                                 '-D__USE_W32_SOCKETS',
@@ -139,11 +138,10 @@ def libtorrent_extension(portable_dir):
                                 '-D_FILE_OFFSET_BITS=64',
                                 '-DBOOST_THREAD_USE_LIB',
                                 '-DTORRENT_USE_OPENSSL=1',
-                                '-DNDEBUG=1']
+                                '-DNDEBUG=1',
+                                '/EHa', '/GR',
+                                ]
                                  
-        EXTRA_LINK_ARGS = ['-L' + os.path.join(portable_dir, '/win32/lib').replace('/', '\\')]
-        include_dirs.append(os.path.join(portable_dir, 'win32/include'))
-    
     # NOTE: The Rasterbar Libtorrent source code is in the libtorrent/ directory
     # inside of Deluge's source tarball.  On several occasions, it has been 
     # pointed out to us that we should build against the system's installed 
@@ -165,7 +163,8 @@ def libtorrent_extension(portable_dir):
             print 'Libraries mt'
     else:
             librariestype = ['boost_python', 'boost_filesystem-mt', 'boost_date_time-mt',
-                'boost_thread-mt', 'z', 'ssl' ,'wsock32' ,'crypto' ,'gdi32' ,'ws2_32']
+                'boost_thread-mt', 'z', 'ssl' ,'wsock32' ,'crypto' ,'gdi32'
+                ,'ws2_32' 'zlib']
             print 'Libraries mt'
     
     #### The libtorrent extension ####
@@ -191,5 +190,4 @@ def libtorrent_extension(portable_dir):
                          include_dirs = include_dirs,
                          libraries = librariestype,
                          extra_compile_args = EXTRA_COMPILE_ARGS,
-                         extra_link_args = EXTRA_LINK_ARGS,
                          sources = sources)
