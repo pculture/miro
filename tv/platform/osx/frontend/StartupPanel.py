@@ -124,6 +124,8 @@ class StartupPanelController (NSWindowController):
     findProgressLabel       = IBOutlet('findProgressLabel')
     findProgressIndicator   = IBOutlet('findProgressIndicator')
     findCancelButton        = IBOutlet('findCancelButton')
+    browseButton            = IBOutlet('browseButton')
+    customLocationField     = IBOutlet('customLocationField')
 
     def prepareFindVideosPanel(self):
         self.parsed = 0
