@@ -12,7 +12,7 @@
 # 2. set RELEASE_CANDIDATE
 # 3. increase RELEASE if we do multiples
 
-%define VERSION 0.9.9.9
+%define VERSION 1.0
 #define RELEASE_CANDIDATE rc1
 #define NIGHTLY 2006-07-20
 #define RELEASE_CANDIDATE 2006_07_20
