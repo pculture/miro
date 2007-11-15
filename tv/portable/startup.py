@@ -109,6 +109,8 @@ def initialize():
     util.print_mem_usage("Pre everything memory check")
     logging.info ("Loading preferences...")
     config.load()
+    eventloop.connect('thread-started', 
+            lambda obj, thread: database.set_thread(thread))
     logging.info ("Starting event loop thread")
     eventloop.startup()
     eventloop.addIdle(finishStartup, "finish startup")

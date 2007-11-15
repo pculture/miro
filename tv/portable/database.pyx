@@ -78,10 +78,10 @@ class NoValue:
 # purposes.
 
 event_thread = None
-def set_thread ():
+def set_thread (thread):
     global event_thread
     if event_thread is None:
-        event_thread = threading.currentThread()
+        event_thread = thread
     
 def confirmDBThread():
     global event_thread
