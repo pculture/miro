@@ -204,7 +204,7 @@ class ThreadPool(object):
             
 class EventLoop(signals.SignalEmitter):
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'begin-loop', 'end-loop')
+        signals.SignalEmitter.__init__(self, 'thread-started', 'begin-loop', 'end-loop')
         self.scheduler = Scheduler()
         self.idleQueue = CallQueue()
         self.urgentQueue = CallQueue()
@@ -215,6 +215,7 @@ class EventLoop(signals.SignalEmitter):
         self.addReadCallback(self.wakeReceiver, self._slurpWakerData)
         self.quitFlag = False
         self.clearRemovedCallbacks()
+        self.loop_ready = threading.Event()
 
     def clearRemovedCallbacks(self):
         self.removedReadCallbacks = set()
@@ -244,9 +245,8 @@ class EventLoop(signals.SignalEmitter):
         self.threadPool.queueCall(callback, errback, function, name, *args, **kwargs)
 
     def loop(self):
-        global loop_ready
-        database.set_thread()
-        loop_ready.set()
+        self.emit('thread-started', threading.currentThread())
+        self.loop_ready.set()
         while not self.quitFlag:
             self.emit('begin-loop')
             self.clearRemovedCallbacks()
@@ -385,7 +385,6 @@ lt = None
 
 profile_file = None
 
-loop_ready = threading.Event()
 
 def startup():
     threadPoolInit()
@@ -397,15 +396,13 @@ def startup():
         profile.runctx ('_eventLoop.loop()', globals(), locals(), profile_file + ".event_loop")
 
     global lt
-    global loop_ready
     if profile_file:
         lt = threading.Thread(target=profile_startup, name="Event Loop")
     else:
         lt = threading.Thread(target=_eventLoop.loop, name="Event Loop")
     lt.setDaemon(False)
     lt.start()
-    loop_ready.wait()
-        
+    _eventLoop.loop_ready.wait()
 
 def join():
     global lt

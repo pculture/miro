@@ -664,6 +664,8 @@ class Controller (frontend.Application):
         else:
             self.finishStartup(gatheredVideos)
         logging.info ("Starting event loop thread")
+        eventloop.connect('thread-started',
+                lambda obj, thread: database.set_thread(thread))
         eventloop.startup()
 
     def finishStartup(self, gatheredVideos=None):
