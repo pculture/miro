@@ -160,10 +160,9 @@ Var TACKED_ON_FILE
   Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
   Delete   "${directory}\moviedata_util.py"
   Delete   "${directory}\application.ini"
-  Delete   "${directory}\msvcp71.dll"
-  Delete   "${directory}\msvcr71.dll"
-  Delete   "${directory}\python25.dll"
-  Delete   "${directory}\boost_python-vc71-mt-1_33_1.dll"
+  Delete   "${directory}\*.dll"
+  Delete   "${directory}\*.pyd"
+  Delete   "${directory}\w9xpopen.exe"
   Delete   "${directory}\uninstall.exe"
 
   RMDir /r "${directory}\chrome"
@@ -390,11 +389,9 @@ unzipok:
   File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
   File  "moviedata_util.py"
   File  application.ini
-  File  msvcp71.dll  
-  File  msvcr71.dll  
-  File  python25.dll
-  File  boost_python-vc71-mt-1_33_1.dll
-
+  File  *.dll
+  File  *.pyd
+  File  w9xpopen.exe
   File  /r chrome
   File  /r components
   File  /r defaults

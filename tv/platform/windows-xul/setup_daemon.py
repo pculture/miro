@@ -40,17 +40,8 @@ root = os.path.normpath(root)
 
 import util
 
-BOOST_LIB = core_setup.BOOST_LIB
-BOOST_INCLUDE_PATH = core_setup.BOOST_INCLUDE_PATH
-BOOST_RUNTIMES = core_setup.BOOST_RUNTIMES
-
 ext_modules=[
-    Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
-    Extension("fasttypes", 
-        sources = [os.path.join(root, 'portable', 'fasttypes.cpp')],
-        extra_objects = [BOOST_LIB],
-        include_dirs = [BOOST_INCLUDE_PATH]
-    )
+        core_setup.libtorrent_ext,
 ]
 
 templateVars = util.readSimpleConfigFile(os.path.join(root, 'resources', 'app.config'))
@@ -61,5 +52,5 @@ setup(
     zipfile=None,
     cmdclass = {
 	'build_ext': build_ext,
-    }
+    },
 )
