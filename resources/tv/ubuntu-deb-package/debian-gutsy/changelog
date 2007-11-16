@@ -1,9 +1,14 @@
+miro (1.0-2) gutsy; urgency=low
+
+  * Fixed packaging problems with miro-data.
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Wed, 14 Nov 2007 10:08:08 -0500
+
 miro (1.0-1ubuntupcf) gutsy; urgency=low
-
-  * New Upstream release.
-
- -- Will Guaraldi <will.guaraldi@pculture.org>  Tue, 13 Nov 2007 11:38:29 -0500
-
+ 	 
+  * New Upstream release. 
+ 	 
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Tue, 13 Nov 2007 11:38:29 -0500 
 miro (0.9.9.9-1ubuntupcf) gutsy; urgency=low
 
   * New Upstream release.

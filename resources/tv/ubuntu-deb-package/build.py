@@ -70,11 +70,17 @@ else:
 
 print "extracting files"
 call('tar zxvf %s' %  tarball_name)
+call('cp %s %s' % (tarball_name, "miro_%s.orig.tar.gz" % version))
 os.rename('Miro-%s' % version, 'miro-%s' % version)
 shutil.copytree(debian_dir, 'miro-%s/debian' % version)
 os.chdir('miro-%s' % version)
+# remove the .svn directories
+call('rm -rf debian/.svn')
+call('rm -rf debian/patches/.svn')
+
 print "building debs"
 call('dpkg-buildpackage -us -uc -rfakeroot')
+
 os.chdir('../..')
 
 if os.path.exists(distro):

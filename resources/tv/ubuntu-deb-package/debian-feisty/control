@@ -1,15 +1,15 @@
 Source: miro
 Section: net
 Priority: optional
-Maintainer: Uwe Hermann <uwe@debian.org>
-Build-Depends: cdbs, debhelper, python2.5, python-pyrex, libboost-python-dev, python-gtk2-dev, python-gnome2-extras-dev (>= 2.14.0-2), python2.5-dbus, firefox-dev, libxine-dev, libsigc++-dev, libboost-thread-dev, libboost-filesystem-dev, libboost-date-time-dev, libboost-serialization-dev, libssl-dev
+Maintainer: Will Guaraldi <will.guaraldi@pculture.org>
+Build-Depends: cdbs, debhelper, python2.5, python-pyrex, libboost-python-dev, python-gtk2-dev, python-gnome2-extras-dev (>= 2.14.0-2), python2.5-dbus, firefox-dev, libxine-dev
 Standards-Version: 3.7.2
 
 Package: miro
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2, python-gnome2, python-gnome2-extras (>= 2.14.0-2), python-glade2, miro-data (>= 0.9.8), imagemagick, libxine1-plugins
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2, python-gnome2, python-gnome2-extras (>= 2.14.0-2), python-glade2, miro-data (>= 1.0), imagemagick, libxine1-plugins
 Suggests: ttf-bitstream-vera
-Conflicts: sun-java6-plugin, j2re1.4, democracyplayer (<< 0.9.8)
+Conflicts: democracyplayer (<< 0.9.8)
 Replaces: democracyplayer
 Description: GTK+ based RSS video aggregator
  Miro is a platform for Internet television and video.

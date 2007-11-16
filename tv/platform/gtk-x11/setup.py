@@ -233,17 +233,18 @@ elif re.search("^firefox-xpcom", packages, re.MULTILINE):
 else:
     sys.exit("Can't find xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
 
-# build a miro script that wraps the miro.real script with an LD_LIBRARY_PATH
-# environment variable to pick up the xpcom we decided to use.
-try:
-    fflib = getCommandOutput("pkg-config --variable=libdir %s" % xpcom)
-    # pluck off the last \n
-    fflib = fflib[:-1]
-    f = open(os.path.join(platform_dir, "miro"), "w")
-    f.write("#!/bin/sh\nLD_LIBRARY_PATH=%s miro.real $@" % fflib)
-    f.close()
-except RuntimeError, error:
-    sys.exit("Package config error:\n%s" % (error,))
+if not "clean" in sys.argv:
+    # build a miro script that wraps the miro.real script with an LD_LIBRARY_PATH
+    # environment variable to pick up the xpcom we decided to use.
+    try:
+        fflib = getCommandOutput("pkg-config --variable=libdir %s" % xpcom)
+        # pluck off the last \n
+        fflib = fflib[:-1]
+        f = open(os.path.join(platform_dir, "miro"), "w")
+        f.write("#!/bin/sh\nLD_LIBRARY_PATH=%s miro.real $@" % fflib)
+        f.close()
+    except RuntimeError, error:
+        sys.exit("Package config error:\n%s" % (error,))
 
 mozilla_browser_options = parsePkgConfig("pkg-config" , 
         "gtk+-2.0 glib-2.0 pygtk-2.0 %s %s" % (gtkmozembed, xpcom))
@@ -339,10 +340,11 @@ for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','
     data_files.append((dest_dir, listfiles(source_dir)))
 # add the desktop file, icons, mime data, and man page.
 
-rv = os.system ("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" % (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
+if not "clean" in sys.argv:
+    rv = os.system ("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" % (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
 
-if rv != 0:
-    raise RuntimeError("xine_extractor compilation failed.  Possibly missing libxine, gdk-pixbuf-2.0, or glib-2.0.")
+    if rv != 0:
+        raise RuntimeError("xine_extractor compilation failed.  Possibly missing libxine, gdk-pixbuf-2.0, or glib-2.0.")
 
 data_files += [
     ('/usr/share/pixmaps', 

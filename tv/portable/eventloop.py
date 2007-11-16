@@ -31,7 +31,6 @@ import select
 import heapq
 import Queue
 import util
-import database
 import logging
 import trapcall
 import signals

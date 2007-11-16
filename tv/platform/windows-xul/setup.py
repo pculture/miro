@@ -45,30 +45,25 @@ NSIS_PATH = 'C:\\Program Files\\NSIS\\makensis.exe'
 # below.
 defaultBinaryKitRoot = os.path.join(os.path.dirname(sys.argv[0]), \
                                     '..', '..', '..', 'dtv-binary-kit')
-BINARY_KIT_ROOT = defaultBinaryKitRoot
+BINARY_KIT_ROOT = os.path.abspath(defaultBinaryKitRoot)
 
-# Set BOOST_LIB, BOOST_INCLUDE_PATH, and BOOST_RUNTIMES as appropriate
-# for the location of Boost, the version you built, and the compiler
-# you used. If you are unsure, search your hard drive for a file named
-# "boost_python*". If there is more than one, you probably already
-# know what you're doing.
-# NEEDS: better accomodate non-vc71 compilers in binary kit?
 BOOST_ROOT = os.path.join(BINARY_KIT_ROOT, 'boost', 'win32')
 BOOST_LIB_PATH = os.path.join(BOOST_ROOT, 'lib')
+BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include')
+BOOST_LIBRARIES = [os.path.splitext(os.path.basename(f))[0] for f in
+        glob(os.path.join(BOOST_LIB_PATH, '*.lib'))]
+BOOST_RUNTIMES = glob(os.path.join(BOOST_LIB_PATH, '*.dll'))
 
-# Hack so we don't break things for people who haven't updated their binary kit
-if os.path.exists(os.path.join(BOOST_ROOT, 'include', 'boost-1_33_1')):
-    BOOST_LIB = os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33_1.lib')
-    BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include', 'boost-1_33_1')
-    BOOST_RUNTIMES = [
-        os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33_1.dll'),
-        ]
-else:
-    BOOST_LIB = os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.lib')
-    BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include', 'boost-1_33')
-    BOOST_RUNTIMES = [
-        os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33.dll'),
-        ]
+ZLIB_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'include')
+ZLIB_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'lib')
+ZLIB_RUNTIME_LIBRARY_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib')
+ZLIB_RUNTIMES = [os.path.join(ZLIB_RUNTIME_LIBRARY_PATH, 'zlib1.dll')]
+
+OPENSSL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'include')
+OPENSSL_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'openssl', 'lib')
+OPENSSL_LIBRARIES = [ 'ssleay32', 'libeay32']
+
+
 
 # The 'Democracy.exe' launcher stub, currently provided only in the
 # binary kit.
@@ -166,36 +161,80 @@ platform = 'windows-xul'
 
 # Find the top of the source tree and set search path
 root = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), '..', '..')
+platform_dir = os.path.join(root, 'platform', 'windows-xul')
+portable_dir = os.path.join(root, 'portable')
 sys.path[0:0] = [
-    os.path.join(root, 'platform', platform),
-    os.path.join(root, 'platform'),
-    os.path.join(root, 'portable'),
+    platform_dir,
+    portable_dir,
 ]
 root = os.path.normpath(root)
+
+#### The database extension ####
+database_ext = Extension("database", 
+        sources=[os.path.join(root, 'portable', 'database.pyx')])
 
 #### The fasttypes extension ####
 
 fasttypes_ext = \
     Extension("fasttypes", 
         sources = [os.path.join(root, 'portable', 'fasttypes.cpp')],
-        extra_objects = [BOOST_LIB],
+        library_dirs = [BOOST_LIB_PATH],
         include_dirs = [BOOST_INCLUDE_PATH]
     )
 
-os.environ['PATH'] = r'%s;%s' % (os.environ['PATH'], BOOST_LIB_PATH)
+# Setting the path here allows py2exe to find the DLLS
+os.environ['PATH'] = r'%s;%s;%s' % (os.environ['PATH'], BOOST_LIB_PATH,
+        ZLIB_RUNTIME_LIBRARY_PATH)
 
 ##### The libtorrent extension ####
-import setup_portable
-libtorrent_ext = setup_portable.libtorrent_extension(portable_dir)
+
+def fetchCpp():
+    for root,dirs,files in os.walk(os.path.join(portable_dir, 'libtorrent')):
+        if '.svn' in dirs:
+            dirs.remove('.svn')
+        for file in files:
+            if file.endswith('.cpp'):
+                yield os.path.join(root,file)
+
+libtorrent_sources=list(fetchCpp())
+libtorrent_sources.remove(os.path.join(portable_dir, 'libtorrent\\src\\file.cpp'))
+
+libtorrent_ext = Extension(
+        "libtorrent", 
+        include_dirs = [
+            os.path.join(portable_dir, 'libtorrent', 'include'),
+            os.path.join(portable_dir, 'libtorrent', 'include', 'libtorrent'),
+            BOOST_INCLUDE_PATH, 
+            ZLIB_INCLUDE_PATH, 
+            OPENSSL_INCLUDE_PATH,
+        ],
+        library_dirs = [ BOOST_LIB_PATH, OPENSSL_LIB_PATH, ZLIB_LIB_PATH],
+        libraries = BOOST_LIBRARIES + OPENSSL_LIBRARIES + [
+            'wsock32', 'gdi32', 'ws2_32', 'zdll'
+            ],
+        extra_compile_args = [  '-DBOOST_WINDOWS',
+            '-DWIN32_LEAN_AND_MEAN',
+            '-D_WIN32_WINNT=0x0500',
+            '-D__USE_W32_SOCKETS',
+            '-D_WIN32',
+            '-DWIN32',
+            '-DBOOST_ALL_NO_LIB',
+            '-D_FILE_OFFSET_BITS=64',
+            '-DBOOST_THREAD_USE_LIB',
+            '-DTORRENT_USE_OPENSSL=1',
+            '-DNDEBUG=1',
+            '/EHa', '/GR',
+            ],
+        sources = libtorrent_sources)
 
 # Private extension modules to build.
 ext_modules = [
     fasttypes_ext,
     libtorrent_ext,
+    database_ext,
 
     # Pyrex sources.
     #Extension("vlc", [os.path.join(root, 'platform',platform, 'vlc.pyx')],libraries=["simplevlc"]),
-    Extension("database", [os.path.join(root, 'portable', 'database.pyx')]),
     Extension("sorts", [os.path.join(root, 'portable', 'sorts.pyx')]),
     #Extension("template", [os.path.join(root, 'portable', 'template.pyx')]),
 ]
@@ -480,7 +519,8 @@ class bdist_xul_dumb(Command):
         # current directory set appropriately.]
 #        dllDistDir = self.xulrunnerOut
         dllDistDir = self.dist_dir
-        allRuntimes = PYTHON_RUNTIMES + BOOST_RUNTIMES + COMPILER_RUNTIMES
+        allRuntimes = (PYTHON_RUNTIMES + BOOST_RUNTIMES + COMPILER_RUNTIMES +
+                ZLIB_RUNTIMES)
         for runtime in allRuntimes:
             shutil.copy2(runtime, dllDistDir)
 
@@ -599,8 +639,8 @@ class bdist_xul_dumb(Command):
 
     def buildDownloadDaemon(self, baseDir):
         print "building download daemon"
-        os.system("%s setup_daemon.py py2exe --dist-dir daemon --bundle-files 1" % PYTHON_BINARY)
-        shutil.copy2(os.path.join("daemon","%s_Downloader.exe" % (self.getTemplateVariable('shortAppName'))), baseDir)
+        os.system("%s setup_daemon.py py2exe --dist-dir %s" % 
+                (PYTHON_BINARY, self.dist_dir))
 
     def buildMovieDataUtil(self):
         print "building movie data utility"
@@ -888,8 +928,6 @@ class bdist_xul (bdist_xul_dumb):
             self.addFile ("python24.dll")
         else: # We must be using Python 2.5
             self.addFile ("python25.dll")
-        for boostFile in BOOST_RUNTIMES:
-            self.addFile (os.path.basename(boostFile))
 
         self.addDirectory ("chrome")
         self.addDirectory ("components")
