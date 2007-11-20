@@ -185,6 +185,8 @@ class ControllerDaemon(Daemon):
         data = {}
         remoteConfigItems = [prefs.LIMIT_UPSTREAM,
                    prefs.UPSTREAM_LIMIT_IN_KBS,
+		   prefs.LIMIT_DOWNSTREAM_BT,
+		   prefs.DOWNSTREAM_BT_LIMIT_IN_KBS,
                    prefs.BT_MIN_PORT,
                    prefs.BT_MAX_PORT,
                    prefs.USE_UPNP,
