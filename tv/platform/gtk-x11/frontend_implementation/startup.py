@@ -38,7 +38,8 @@ class _Search:
         self.found = util.gatherVideos(self.path, self.progressCallback)
 
     def progressCallback(self, files, videos):
-        gtk.main_iteration(block=True)
+        while gtk.events_pending():
+            gtk.main_iteration()
         if self.cancelled:
             return False
         label = _("(parsed %d files - found %d videos)") % (files, videos)
