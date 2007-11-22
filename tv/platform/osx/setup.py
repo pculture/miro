@@ -130,6 +130,7 @@ for searchDir in (SANDBOX_DIR, '/usr/local', '/opt/local', '/sw'):
         BOOST_INCLUDE_DIR = incItems[0]
         match = re.search(r'libboost_python-(.*)\.dylib', libItems[0])
         BOOST_VERSION = match.groups()[0]
+        break
 
 if BOOST_LIB_DIR is None or BOOST_INCLUDE_DIR is None:
     print 'Boost library could not be found, interrupting build.'
