@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 import os
+import re
 import sys
 import time
 import string
@@ -33,51 +34,80 @@ from py2app.build_app import py2app
 
 import tarfile
 
+# =============================================================================
 # Get command line parameters
+# =============================================================================
 
 forceUpdate = False
 if '--force-update' in sys.argv:
     sys.argv.remove('--force-update')
     forceUpdate = True
 
+# =============================================================================
 # Find the top of the source tree and set search path
 # GCC3.3 on OS X 10.3.9 doesn't like ".."'s in the path so we normalize it
+# =============================================================================
 
 root = os.path.dirname(os.path.abspath(sys.argv[0]))
 root = os.path.join(root, '../..')
 root = os.path.normpath(root)
-sys.path[0:0]=[os.path.join(root, 'portable')]
 
+sandbox_root_dir = os.path.normpath(os.path.normpath(os.path.join(root, '..', '..')))
+sandbox_dir = os.path.join(sandbox_root_dir, 'sandbox')
+
+portable_dir = os.path.join(root, 'portable')
+sys.path[0:0]=[portable_dir]
+
+# =============================================================================
+# Make sure that we have a local sandbox setup
+# =============================================================================
+
+if not os.path.exists(sandbox_dir):
+    print "Sandbox not found, let's set it up..."
+    result = os.system("bash setup_sandbox.sh -r %s" % sandbox_root_dir )
+    if not result == 0:
+        print "Sandbox setup failed..."
+        sys.exit(1)
+        
+# =============================================================================
 # Only now may we import things from our own tree
+# =============================================================================
 
 import template_compiler
 
+# =============================================================================
 # Look for the Boost library in various common places.
 # - we assume that both the library and the include files are installed in the
 #   same directory sub-hierarchy.
 # - we look for library and include directory in:
+#   - our local sandbox
 #   - the standard '/usr/local' tree
 #   - Darwinports' standard '/opt/local' tree
 #   - Fink's standard '/sw' tree
+# =============================================================================
 
-boostLib = None
-boostIncludeDir = None
-boostSearchDirs = ('/usr/local', '/opt/local', '/sw')
+BOOST_LIB_DIR = None
+BOOST_INCLUDE_DIR = None
+BOOST_VERSION = None
 
-for rootDir in boostSearchDirs:
-    libItems = glob(os.path.join(rootDir, 'lib/libboost_python-1_3*.a'))
+for rootDir in (sandbox_dir, '/usr/local', '/opt/local', '/sw'):
+    libItems = glob(os.path.join(rootDir, 'lib/libboost_python-1_3*.dylib'))
     incItems = glob(os.path.join(rootDir, 'include/boost-1_3*/'))
     if len(libItems) == 1 and len(incItems) == 1:
-        boostLib = libItems[0]
-        boostIncludeDir = incItems[0]
+        BOOST_LIB_DIR = os.path.dirname(libItems[0])
+        BOOST_INCLUDE_DIR = incItems[0]
+        match = re.search(r'libboost_python-(.*)\.dylib', libItems[0])
+        BOOST_VERSION = match.groups()[0]
 
-if boostLib is None or boostIncludeDir is None:
+if BOOST_LIB_DIR is None or BOOST_INCLUDE_DIR is None:
     print 'Boost library could not be found, interrupting build.'
     sys.exit(1)
 else:
-    print 'Boost library found (%s)' % boostLib
+    print 'Boost library (version %s) found in %s' % (BOOST_VERSION, BOOST_LIB_DIR)
 
+# =============================================================================
 # Get subversion revision information.
+# =============================================================================
 
 import util
 revision = util.queryRevision(root)
@@ -89,7 +119,10 @@ else:
     revisionURL, revisionNum = revision
     revision = '%s - %s' % revision
 
+# =============================================================================
 # Inject the revision number into app.config.template to get app.config.
+# =============================================================================
+
 appConfigTemplatePath = os.path.join(root, 'resources/app.config.template')
 appConfigPath = os.path.join(root, 'resources/app.config')
 
@@ -110,8 +143,9 @@ fillTemplate(appConfigTemplatePath,
              APP_REVISION_NUM = revisionNum, 
              APP_PLATFORM = 'osx')
 
-
+# =============================================================================
 # Update the Info property list.
+# =============================================================================
 
 def updatePListEntry(plist, key, conf):
     entry = plist[key]
@@ -127,7 +161,10 @@ updatePListEntry(infoPlist, u'CFBundleShortVersionString', conf)
 updatePListEntry(infoPlist, u'CFBundleVersion', conf)
 updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
 
+# =============================================================================
 # Now that we have a config, we can process the image name
+# =============================================================================
+
 if "--make-dmg" in sys.argv:
     # Change this to change the name of the .dmg file we create
     imgName = "%s-%4d-%02d-%02d.dmg" % (
@@ -139,18 +176,25 @@ if "--make-dmg" in sys.argv:
 else:
     imgName = None
 
+# =============================================================================
 # Create daemon.py
+# =============================================================================
+
 fillTemplate(os.path.join(root, 'portable/dl_daemon/daemon.py.template'),
              os.path.join(root, 'portable/dl_daemon/daemon.py'),
              **conf)
 
+# =============================================================================
 # Get a list of additional resource files to include
+# =============================================================================
 
 excludedResources = ['.svn', '.DS_Store']
 resourceFiles = [os.path.join('Resources', x) for x in os.listdir('Resources') if x not in excludedResources]
 resourceFiles.append('qt_extractor.py')
 
+# =============================================================================
 # Prepare the frameworks we're going to use
+# =============================================================================
 
 def extract_binaries(source, target):
     if forceUpdate and os.path.exists(target):
@@ -179,7 +223,9 @@ frameworks_path = os.path.join(root, 'platform/osx/build/frameworks')
 extract_binaries('frameworks', frameworks_path)
 frameworks = glob(os.path.join(frameworks_path, '*.framework'))
 
-# And launch the setup process...
+# =============================================================================
+# Define the clean task
+# =============================================================================
 
 class clean(Command):
     user_options = []
@@ -217,6 +263,10 @@ class clean(Command):
                         os.remove(filename)
         except:
             pass
+
+# =============================================================================
+# Define our custom build task
+# =============================================================================
 
 class mypy2app(py2app):
         
@@ -395,6 +445,96 @@ class mypy2app(py2app):
             print "Completed"
             os.system("ls -la \"%s\"" % imgPath)
 
+# =============================================================================
+# Define the native extensions
+# =============================================================================
+
+# idletime
+
+idletime_src = glob(os.path.join(root, 'platform', 'osx', 'modules', 'idletime.c'))
+idletime_link_args = ['-framework', 'CoreFoundation']
+
+idletime_ext = Extension("idletime", sources=idletime_src, 
+                                     extra_link_args=idletime_link_args)
+
+# keychain
+
+keychain_src = glob(os.path.join(root, 'platform', 'osx', 'modules', 'keychain.c'))
+keychain_link_args = ['-framework', 'Security']
+
+keychain_ext = Extension("keychain", sources=keychain_src, 
+                                     extra_link_args=keychain_link_args)
+
+# qtcomp
+
+qtcomp_src = glob(os.path.join(root, 'platform', 'osx', 'modules', 'qtcomp.c'))
+qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'Quicktime']
+
+qtcomp_ext = Extension("qtcomp", sources=qtcomp_src,
+                                 extra_link_args=qtcomp_link_args)
+
+# database
+
+database_src = glob(os.path.join(root, 'portable', 'database.pyx'))
+database_ext = Extension("database", sources=database_src)
+
+# sorts
+
+sorts_src = glob(os.path.join(root, 'portable', 'sorts.pyx'))
+sorts_ext = Extension("sorts", sources=sorts_src)
+
+# fasttypes
+
+fasttypes_src = glob(os.path.join(root, 'portable', 'fasttypes.cpp'))
+fasttypes_inc_dirs = [BOOST_INCLUDE_DIR]
+fasttypes_lib_dirs = [BOOST_LIB_DIR]
+fasttypes_libs = ['boost_python-%s' % BOOST_VERSION]
+
+fasttypes_ext = Extension("fasttypes", sources=fasttypes_src, 
+                                       include_dirs=fasttypes_inc_dirs, 
+                                       library_dirs=fasttypes_lib_dirs, 
+                                       libraries=fasttypes_libs)
+
+# libtorrent
+
+def libtorrent_sources_iterator():
+    for root,dirs,files in os.walk(os.path.join(portable_dir, 'libtorrent')):
+        if '.svn' in dirs:
+            dirs.remove('.svn')
+        for file in files:
+            if file.endswith('.cpp'):
+                yield os.path.join(root,file)
+
+libtorrent_src = list(libtorrent_sources_iterator())
+libtorrent_src.remove(os.path.join(portable_dir, 'libtorrent/src/file_win.cpp'))
+libtorrent_inc_dirs = [BOOST_INCLUDE_DIR,
+                       os.path.join(portable_dir, 'libtorrent', 'include'),
+                       os.path.join(portable_dir, 'libtorrent', 'include', 'libtorrent')]
+libtorrent_lib_dirs = [BOOST_LIB_DIR]
+libtorrent_libs = ['boost_python-%s' % BOOST_VERSION, 
+                   'boost_filesystem-%s' % BOOST_VERSION, 
+                   'boost_date_time-%s' % BOOST_VERSION, 
+                   'boost_thread-%s' % BOOST_VERSION, 
+                   'z', 
+                   'pthread', 
+                   'ssl']
+libtorrent_compil_args = ["-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1", 
+                          "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1", 
+                          "-DHAVE_INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1", 
+                          "-DHAVE_PTHREAD=1", 
+                          "-DTORRENT_USE_OPENSSL=1", 
+                          "-DHAVE_SSL=1",
+                          "-DNDEBUG"]
+
+libtorrent_ext = Extension("libtorrent", sources=libtorrent_src, 
+                                         include_dirs=libtorrent_inc_dirs,
+                                         library_dirs=libtorrent_lib_dirs, 
+                                         libraries=libtorrent_libs, 
+                                         extra_compile_args=libtorrent_compil_args)
+
+# =============================================================================
+# Launch the setup process...
+# =============================================================================
 
 py2app_options = dict(
     plist = infoPlist,
@@ -407,16 +547,15 @@ py2app_options = dict(
 setup(
     app = ['%s.py'%conf['shortAppName']],
     options = dict(py2app = py2app_options),
-    ext_modules = [
-        Extension("idletime",  [os.path.join(root, 'platform/osx/modules/idletime.c')], extra_link_args=['-framework', 'CoreFoundation']),
-        Extension("keychain",  [os.path.join(root, 'platform/osx/modules/keychain.c')], extra_link_args=['-framework', 'Security']),
-        Extension("qtcomp",    [os.path.join(root, 'platform/osx/modules/qtcomp.c')], extra_link_args=['-framework', 'CoreFoundation', '-framework', 'Quicktime']),
-        Extension("database",  [os.path.join(root, 'portable/database.pyx')]),
-        Extension("sorts",     [os.path.join(root, 'portable/sorts.pyx')]),
-        Extension("fasttypes", [os.path.join(root, 'portable/fasttypes.cpp')], extra_objects=[boostLib], include_dirs=[boostIncludeDir])
-    ],
-    cmdclass = {'build_ext': build_ext,
-                'clean': clean,
-                'py2app': mypy2app }
+    ext_modules = [idletime_ext,
+                   keychain_ext,
+                   qtcomp_ext,
+                   database_ext,
+                   sorts_ext,
+                   fasttypes_ext,
+                   libtorrent_ext],
+    cmdclass = { 'build_ext':   build_ext, 
+                 'clean':       clean, 
+                 'py2app':      mypy2app }
 )
 
