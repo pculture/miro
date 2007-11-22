@@ -44,7 +44,7 @@ tar -xzf Pyrex-0.9.6.2.tar.gz
 cd $PKG_DIR/Pyrex-0.9.6.2
 
 echo ">> Installing..."
-python setup.py install --prefix=$SANDBOX_DIR
+python setup.py install --prefix=$SANDBOX_DIR &> $OUT
 
 # =============================================================================
 # Boost 1.33.1
