@@ -2,12 +2,21 @@
 
 # =============================================================================
 
+SANDBOX_VERSION=2
+
+# =============================================================================
+
 ROOT_DIR=$(cd ../../../../;pwd)
-while getopts ":r:" option
+while getopts ":r:v" option
     do
     case $option in
     r)
         ROOT_DIR=$OPTARG
+        ;;
+    v)
+        echo $SANDBOX_VERSION
+        exit
+        ;;
     esac
 done
 
@@ -19,6 +28,23 @@ OUT=$SANDBOX_DIR/setup.log
 
 echo "Setting up sandbox in $ROOT_DIR"
 mkdir -p $PKG_DIR
+
+# =============================================================================
+# Pyrex 0.9.6.2 (0.9.6.3 setup script is currently broken!!)
+# =============================================================================
+
+echo "Setting up Pyrex 0.9.6.2"
+
+echo ">> Downloading archive..."
+cd $PKG_DIR
+curl --location --silent --remote-name "http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/oldtar/Pyrex-0.9.6.2.tar.gz"
+
+echo ">> Unpacking archive..."
+tar -xzf Pyrex-0.9.6.2.tar.gz
+cd $PKG_DIR/Pyrex-0.9.6.2
+
+echo ">> Installing..."
+python setup.py install --prefix=$SANDBOX_DIR
 
 # =============================================================================
 # Boost 1.33.1
@@ -40,7 +66,7 @@ pushd tools/build/jam_src &> $OUT
 ./build.sh &> $OUT
 popd &> $OUT
 
-echo ">> Building & installing libraries..."
+echo ">> Building & installing..."
 PYTHON_ROOT=`python -c "import sys; print sys.prefix" 2>&1`
 
 ./tools/build/jam_src/bin.macosxppc/bjam --prefix=$SANDBOX_DIR \
@@ -63,3 +89,9 @@ for lib in $SANDBOX_DIR/lib/libboost*.dylib
     do
     install_name_tool -id $lib $lib
 done
+
+# =============================================================================
+
+echo $SANDBOX_VERSION > $SANDBOX_DIR/version.log
+
+# =============================================================================
