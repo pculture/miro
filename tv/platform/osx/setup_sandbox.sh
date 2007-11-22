@@ -38,7 +38,7 @@ echo "Setting up Pyrex 0.9.6.2"
 
 echo ">> Downloading archive..."
 cd $PKG_DIR
-curl --location --silent --remote-name "http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/oldtar/Pyrex-0.9.6.2w.tar.gz"
+curl --location --silent --remote-name "http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/oldtar/Pyrex-0.9.6.2.tar.gz"
 
 echo ">> Unpacking archive..."
 tar -xzf Pyrex-0.9.6.2.tar.gz 1>>$OUT 2>>$OUT
