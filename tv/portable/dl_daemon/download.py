@@ -1,6 +1,5 @@
 import os
 import sys
-import bsddb
 import shutil
 import types
 from gettext import gettext as _

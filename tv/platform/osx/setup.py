@@ -53,45 +53,11 @@ ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
 ROOT_DIR = os.path.join(ROOT_DIR, '../..')
 ROOT_DIR = os.path.normpath(ROOT_DIR)
 
-SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..', '..')))
-SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
-
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
 sys.path.insert(0, PORTABLE_DIR)
 
-# =============================================================================
-# Make sure that we have a local sandbox, otherwise set it up.
-# =============================================================================
-
-sandbox_setup_required = False
-
-if os.path.exists(SANDBOX_DIR):
-    print "Sandbox found, checking version..."
-    version_file_path = os.path.join(SANDBOX_DIR, "version.log")
-    if os.path.exists(version_file_path):
-        local_version = int(open(version_file_path).read())
-        setup_version = int(subprocess.Popen(["bash", "setup_sandbox.sh", "-v"], stdout=subprocess.PIPE).communicate()[0].strip())
-        if local_version != setup_version:
-            print "Sandbox needs to be updated (local version: %d - setup version: %d)" % (local_version, setup_version)
-            sandbox_setup_required = True
-        else:
-            print "Sandbox is up to date."
-    else:
-        print "Unversioned sandbox, setup required..."
-        sandbox_setup_required = True
-    if sandbox_setup_required:
-        print "Deleting existing sandbox..."
-        os.system("rm -rf %s" % SANDBOX_DIR)
-else:
-    print "Sandbox not found, setup required..."
-    sandbox_setup_required = True
-
-if sandbox_setup_required:
-    result = os.system("bash setup_sandbox.sh -r %s" % SANDBOX_ROOT_DIR )
-    if not result == 0:
-        print "Sandbox setup failed..."
-        sys.exit(1)
-
+SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..', '..')))
+SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
 sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
 
 # =============================================================================
