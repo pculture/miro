@@ -6,8 +6,19 @@ SANDBOX_VERSION=20071125001
 
 # =============================================================================
 
+if [ -d "../../../dtv-binary-kit-mac" ]; then
+    PKG_DIR=$(pushd ../../../dtv-binary-kit-mac/sandbox >/dev/null; pwd; popd  >/dev/null)
+else
+    root=$(pushd ../../../ >/dev/null; pwd; popd  >/dev/null)
+    echo "Could not find the required Mac binary kit which should be at $root/dtv-binary-kit-mac"
+    echo "Please check it out first from the Subversion repository."
+    exit
+fi
+
+# =============================================================================
+
 VERBOSE=no
-ROOT_DIR=$(cd ../../../../;pwd)
+ROOT_DIR=$(pushd ../../../../ >/dev/null; pwd; popd >/dev/null)
 
 while getopts ":r:v" option
     do
@@ -21,30 +32,35 @@ while getopts ":r:v" option
     esac
 done
 
+SANDBOX_DIR=$ROOT_DIR/sandbox
+WORK_DIR=$SANDBOX_DIR/pkg
+
 # =============================================================================
 
-SANDBOX_DIR=$ROOT_DIR/sandbox
-PKG_DIR=$SANDBOX_DIR/pkg
-
-VERSION_LOG=$SANDBOX_DIR/version.log
+SIGNATURE=$SANDBOX_VERSION
+for pkg in $PKG_DIR/*; do
+    SIGNATURE="$SIGNATURE $(basename $pkg) $(stat -f '%z' $pkg)"
+done
+SIGNATURE=$(echo $SIGNATURE | md5)
+SIGNATURE_FILE=$SANDBOX_DIR/signature.md5
 
 # =============================================================================
 
 setup_required=no
 
 if [ -d $SANDBOX_DIR ]; then
-    echo "Sandbox found, checking version..."
+    echo "Sandbox found, checking signature..."
 
-    if [ -f $VERSION_LOG ]; then
-        local_version=`cat -s $VERSION_LOG`
-        if [ $local_version == $SANDBOX_VERSION ]; then
+    if [ -f $SIGNATURE_FILE ]; then
+        local_signature=$(cat -s $SIGNATURE_FILE)
+        if [ $local_signature == $SIGNATURE ]; then
             echo "Local sandbox is up to date."
         else
-            echo  "Sandbox version mismatch (local version: $local_version - setup version: $SANDBOX_VERSION), setup required."
+            echo "Sandbox signature mismatch, setup required."
             setup_required=yes
         fi
     else
-        echo "Unversioned sandbox, setup required."
+        echo "Unsigned sandbox, setup required."
         setup_required=yes
     fi
     
@@ -64,63 +80,26 @@ fi
 # =============================================================================
 
 echo "Setting up new sandbox in $ROOT_DIR"
-mkdir -p $PKG_DIR
+mkdir -p $WORK_DIR
 
 if [ $VERBOSE == yes ]; then
     OUT=/dev/stdout
 else
     OUT=$SANDBOX_DIR/setup.log
     rm -f $OUT
-    echo "=== Sandbox setup log - `date`" >$OUT
+    echo "=== Sandbox setup log - $(date)" >$OUT
 fi
-
-# =============================================================================
-# First, download all packages to prevent the whole process to possibly fail
-# in the middle if one of them is temporarily unavailable.
-# =============================================================================
-
-function die
-{
-    echo "!! FAILURE"
-    exit
-}
-
-# -----------------------------------------------------------------------------
-
-echo "Downloading all packages..."
-cd $PKG_DIR
-
-echo ">> Python..."
-curl --location --progress-bar --remote-name "http://python.org/ftp/python/2.4.4/Python-2.4.4.tgz" || die
-echo ">> setuptools installer..."
-curl --location --progress-bar --remote-name "http://peak.telecommunity.com/dist/ez_setup.py" || die
-echo ">> Berkeley DB..."
-curl --location --progress-bar --remote-name "http://download.oracle.com/berkeley-db/db-4.6.21.NC.tar.gz" || die
-echo ">> pybsddb..."
-curl --location --progress-bar --remote-name "http://downloads.sourceforge.net/pybsddb/bsddb3-4.5.0.tar.gz" || die
-echo ">> sqlite..."
-curl --location --progress-bar --remote-name "http://www.sqlite.org/sqlite-3.5.2.tar.gz" || die
-echo ">> pysqlite..."
-curl --location --progress-bar --remote-name "http://initd.org/pub/software/pysqlite/releases/2.4/2.4.0/pysqlite-2.4.0.tar.gz" || die
-echo ">> py2app..."
-curl --location --progress-bar --remote-name "http://pypi.python.org/packages/source/p/py2app/py2app-0.3.6.tar.gz" || die
-echo ">> PyObjC..."
-curl --location --progress-bar --remote-name "http://pyobjc.sourceforge.net/software/pyobjc-1.4.tar.gz" || die
-echo ">> Pyrex..."
-curl --location --progress-bar --remote-name "http://www.cosc.canterbury.ac.nz/greg.ewing/python/Pyrex/oldtar/Pyrex-0.9.6.2.tar.gz" || die
-echo ">> Boost..."
-curl --location --progress-bar --remote-name "http://downloads.sourceforge.net/boost/boost_1_33_1.tar.gz" || die
 
 # =============================================================================
 # Python 2.4.4
 # =============================================================================
 
 echo "Setting up Python 2.4.4"
-cd $PKG_DIR
+cd $WORK_DIR
 
 echo ">> Unpacking archive..."
-tar -xzf Python-2.4.4.tgz 1>>$OUT 2>>$OUT
-cd $PKG_DIR/Python-2.4.4
+tar -xzf $PKG_DIR/Python-2.4.4.tgz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/Python-2.4.4
 
 echo ">> Configuring..."
 ./configure --prefix=$SANDBOX_DIR \
@@ -157,7 +136,7 @@ PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
 # =============================================================================
 
 echo "Setting up setuptools..."
-cd $PKG_DIR
+cd $WORK_DIR
 
 echo ">> Installing..."
 $PYTHON ez_setup.py --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
@@ -167,11 +146,11 @@ $PYTHON ez_setup.py --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # =============================================================================
 
 echo "Setting up Berkeley DB 4.6.21"
-cd $PKG_DIR
+cd $WORK_DIR
 
 echo ">> Unpacking archive..."
-tar -xzf db-4.6.21.NC.tar.gz 1>>$OUT 2>>$OUT
-cd $PKG_DIR/db-4.6.21.NC/build_unix
+tar -xzf $PKG_DIR/db-4.6.21.NC.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/db-4.6.21.NC/build_unix
 
 echo ">> Configuring..."
 ../dist/configure --prefix=$SANDBOX_DIR 1>>$OUT 2>>$OUT
@@ -187,11 +166,11 @@ make install 1>>$OUT 2>>$OUT
 # =============================================================================
 
 echo "Setting up pybsddb 4.5"
-cd $PKG_DIR
+cd $WORK_DIR
 
 echo ">> Unpacking archive..."
-tar -xzf bsddb3-4.5.0.tar.gz 1>>$OUT 2>>$OUT
-cd $PKG_DIR/bsddb3-4.5.0
+tar -xzf $PKG_DIR/bsddb3-4.5.0.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/bsddb3-4.5.0
 
 echo ">> Building..."
 $PYTHON setup.py --berkeley-db=$SANDBOX_DIR build 1>>$OUT 2>>$OUT
@@ -204,11 +183,11 @@ $PYTHON setup.py --berkeley-db=$SANDBOX_DIR install 1>>$OUT 2>>$OUT
 # =============================================================================
 
 echo "Setting up SQlite 3.5.2"
-cd $PKG_DIR
+cd $WORK_DIR
 
 echo ">> Unpacking archive..."
-tar -xzf sqlite-3.5.2.tar.gz 1>>$OUT 2>>$OUT
-cd $PKG_DIR/sqlite-3.5.2
+tar -xzf $PKG_DIR/sqlite-3.5.2.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/sqlite-3.5.2
 
 echo ">> Configuring..."
 ./configure --prefix=$SANDBOX_DIR \
@@ -228,11 +207,11 @@ make install 1>>$OUT 2>>$OUT
 # =============================================================================
 
 echo "Setting up pysqlite 2.4.0"
-cd $PKG_DIR
+cd $WORK_DIR
 
 echo ">> Unpacking archive..."
-tar -xzf pysqlite-2.4.0.tar.gz 1>>$OUT 2>>$OUT
-cd $PKG_DIR/pysqlite-2.4.0
+tar -xzf $PKG_DIR/pysqlite-2.4.0.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/pysqlite-2.4.0
 
 echo ">> Writing custom setup.cfg..."
 cat > setup.cfg <<CONFIG
@@ -254,11 +233,11 @@ $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # =============================================================================
 
 echo "Setting up py2app 0.3.6"
-cd $PKG_DIR
+cd $WORK_DIR
 
 echo ">> Unpacking archive..."
-tar -xzf py2app-0.3.6.tar.gz 1>>$OUT 2>>$OUT
-cd $PKG_DIR/py2app-0.3.6
+tar -xzf $PKG_DIR/py2app-0.3.6.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/py2app-0.3.6
 
 echo ">> Building & installing..."
 export PYTHONPATH="$PYTHON_ROOT:$PYTHONPATH"
@@ -269,11 +248,11 @@ $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # =============================================================================
 
 echo "Setting up PyObjC 1.4"
-cd $PKG_DIR
+cd $WORK_DIR
 
 echo ">> Unpacking archive..."
-tar -xzf pyobjc-1.4.tar.gz 1>>$OUT 2>>$OUT
-cd $PKG_DIR/pyobjc-1.4
+tar -xzf $PKG_DIR/pyobjc-1.4.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/pyobjc-1.4
 
 echo ">> Building & installing..."
 $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
@@ -283,11 +262,11 @@ $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # =============================================================================
 
 echo "Setting up Pyrex 0.9.6.2"
-cd $PKG_DIR
+cd $WORK_DIR
 
 echo ">> Unpacking archive..."
-tar -xzf Pyrex-0.9.6.2.tar.gz 1>>$OUT 2>>$OUT
-cd $PKG_DIR/Pyrex-0.9.6.2
+tar -xzf $PKG_DIR/Pyrex-0.9.6.2.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/Pyrex-0.9.6.2
 
 echo ">> Installing..."
 $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
@@ -298,11 +277,11 @@ $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # =============================================================================
 
 echo "Setting up Boost 1.33.1"
-cd $PKG_DIR
+cd $WORK_DIR
 
 echo ">> Unpacking archive..."
-tar -xzf boost_1_33_1.tar.gz 1>>$OUT 2>>$OUT
-cd $PKG_DIR/boost_1_33_1
+tar -xzf $PKG_DIR/boost_1_33_1.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/boost_1_33_1
 
 echo ">> Building the bjam tool..."
 cd tools/build/jam_src
@@ -310,7 +289,7 @@ cd tools/build/jam_src
 
 echo ">> Building & installing..."
 
-cd $PKG_DIR/boost_1_33_1
+cd $WORK_DIR/boost_1_33_1
 ./tools/build/jam_src/bin.macosxppc/bjam --prefix=$SANDBOX_DIR \
                                          --with-python \
                                          --with-date_time \
@@ -335,6 +314,7 @@ done
 
 # =============================================================================
 
-echo -n $SANDBOX_VERSION > $VERSION_LOG
+echo "Sandbox setup complete, logging signature."
+echo -n $SIGNATURE > $SIGNATURE_FILE
 
 # =============================================================================
