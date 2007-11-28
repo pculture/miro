@@ -2,7 +2,7 @@
 
 # =============================================================================
 
-SANDBOX_VERSION=20071125001
+SANDBOX_VERSION=20071128001
 
 # =============================================================================
 
@@ -100,6 +100,12 @@ cd $WORK_DIR
 echo ">> Unpacking archive..."
 tar -xzf $PKG_DIR/Python-2.4.4.tgz 1>>$OUT 2>>$OUT
 cd $WORK_DIR/Python-2.4.4
+
+echo ">> Patching configure script..."
+sed "s/-arch_only ppc/-arch_only \`arch\`/g" configure > configure.patched
+chmod +x configure.patched
+mv configure configure.unpatched
+mv configure.patched configure
 
 echo ">> Configuring..."
 ./configure --prefix=$SANDBOX_DIR \
