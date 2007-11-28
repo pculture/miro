@@ -195,6 +195,8 @@ class HTMLApplication:
 
         util.print_mem_usage("Post single-click memory check")
 
+        app.controller.finishedStartup = True
+
         logging.info ("Finished startup sequence")
 
     def handleCustomChannelLoad(self, obj):

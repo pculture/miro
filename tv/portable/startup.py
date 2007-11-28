@@ -27,6 +27,7 @@ In general, frontends should do the following to handle startup.
 from gtcache import gettext as _
 from string import Template
 import logging
+import platform
 import os
 import traceback
 
@@ -41,11 +42,15 @@ import iconcache
 import indexes
 import item
 import feed
+import folder
+import guide
 import moviedata
 import playlist
 import prefs
+import resources
 import signals
 import tabs
+import theme
 import util
 import searchengines
 import storedatabase

@@ -272,8 +272,8 @@ class PyBridge:
 
         initializeProxyObjects(window)
         registerHttpObserver()
-        app.main()
         initializeHTTPProxy()
+        app.main()
 
     @asUrgent
     def initializeViews(self):
