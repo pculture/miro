@@ -54,13 +54,18 @@ import util
 import schema as schema_mod
 import eventloop
 import app
-import bsddb.db
 from frontends.html import dialogs
 import logging
 from zipfile import ZipFile
 import tempfile
 from random import randrange, seed
 import os.path
+
+try:
+    import bsddb.db
+except ImportError:
+    import bsddb3.db
+
 try:
     from pysqlite2 import dbapi2 as sql
 except ImportError:

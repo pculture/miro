@@ -847,7 +847,7 @@ Manually</property>
 				<widget class="GtkCheckButton" id="checkbutton-limit">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
-				  <property name="label" translatable="yes">To a_void slowdowns, limit upstream to</property>
+				  <property name="label" translatable="yes">To a_void internet slowdowns, limit upstream to</property>
 				  <property name="use_underline">True</property>
 				  <property name="relief">GTK_RELIEF_NORMAL</property>
 				  <property name="focus_on_click">True</property>
@@ -884,7 +884,7 @@ Manually</property>
 			      <child>
 				<widget class="GtkLabel" id="label8">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">_KB/s when my computer is active</property>
+				  <property name="label" translatable="yes">_KB/s.</property>
 				  <property name="use_underline">True</property>
 				  <property name="use_markup">False</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -915,6 +915,82 @@ Manually</property>
 			  </child>
 
 			  <child>
+			    <widget class="GtkHBox" id="hbox21">
+			      <property name="visible">True</property>
+			      <property name="homogeneous">False</property>
+			      <property name="spacing">0</property>
+
+			      <child>
+				<widget class="GtkCheckButton" id="checkbutton-down-limit">
+				  <property name="visible">True</property>
+				  <property name="can_focus">True</property>
+				  <property name="label" translatable="yes">Limit torrent downstream to</property>
+				  <property name="use_underline">True</property>
+				  <property name="relief">GTK_RELIEF_NORMAL</property>
+				  <property name="focus_on_click">True</property>
+				  <property name="active">False</property>
+				  <property name="inconsistent">False</property>
+				  <property name="draw_indicator">True</property>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">False</property>
+				  <property name="fill">False</property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkSpinButton" id="spinbutton-down-limit">
+				  <property name="visible">True</property>
+				  <property name="can_focus">True</property>
+				  <property name="climb_rate">1</property>
+				  <property name="digits">0</property>
+				  <property name="numeric">False</property>
+				  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+				  <property name="snap_to_ticks">False</property>
+				  <property name="wrap">False</property>
+				  <property name="adjustment">1 0 1000000 1 10 10</property>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">False</property>
+				  <property name="fill">False</property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkLabel" id="label54">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">KB/s.</property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">False</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				  <property name="width_chars">-1</property>
+				  <property name="single_line_mode">False</property>
+				  <property name="angle">0</property>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">False</property>
+				  <property name="fill">False</property>
+				</packing>
+			      </child>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">True</property>
+			      <property name="fill">True</property>
+			    </packing>
+			  </child>
+
+			  <child>
 			    <widget class="GtkHBox" id="hbox15">
 			      <property name="visible">True</property>
 			      <property name="homogeneous">False</property>
@@ -923,7 +999,7 @@ Manually</property>
 			      <child>
 				<widget class="GtkLabel" id="label31">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">_Bit Torrent uses ports between</property>
+				  <property name="label" translatable="yes">Use ports between</property>
 				  <property name="use_underline">True</property>
 				  <property name="use_markup">False</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1009,6 +1085,31 @@ Manually</property>
 				  <property name="fill">True</property>
 				</packing>
 			      </child>
+
+			      <child>
+				<widget class="GtkLabel" id="label55">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">for torrent traffic.</property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">False</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				  <property name="width_chars">-1</property>
+				  <property name="single_line_mode">False</property>
+				  <property name="angle">0</property>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">False</property>
+				  <property name="fill">False</property>
+				</packing>
+			      </child>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -1021,7 +1122,7 @@ Manually</property>
 			    <widget class="GtkCheckButton" id="checkbutton-bt-autoforward">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Automatically for_ward ports</property>
+			      <property name="label" translatable="yes">Automatically for_ward ports.</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1040,7 +1141,7 @@ Manually</property>
 			    <widget class="GtkCheckButton" id="checkbutton-bt-enc-req">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Ignore Un_encrypted Connections</property>
+			      <property name="label" translatable="yes">Ignore Un_encrypted Connections.</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>

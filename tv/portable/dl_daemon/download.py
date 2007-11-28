@@ -1,6 +1,5 @@
 import os
 import sys
-import bsddb
 import shutil
 import types
 from gettext import gettext as _
@@ -159,6 +158,7 @@ class TorrentSession:
         self.listen()
         self.setUpnp()
         self.setUploadLimit()
+        self.setDownloadLimit()
         self.setEncryption()
         config.addChangeCallback(self.configChanged)
 
@@ -179,6 +179,12 @@ class TorrentSession:
         if config.get(prefs.LIMIT_UPSTREAM):
             limit = config.get(prefs.UPSTREAM_LIMIT_IN_KBS) * (2 ** 10)
         self.session.set_upload_rate_limit(limit)
+
+    def setDownloadLimit(self):
+        limit = -1
+        if config.get(prefs.LIMIT_DOWNSTREAM_BT):
+            limit = config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS) * (2 ** 10)
+        self.session.set_download_rate_limit(limit)
 
     def setEncryption(self):
         if self.pe_set is None:
@@ -209,6 +215,8 @@ class TorrentSession:
             self.setUpnp()
         if key in (prefs.LIMIT_UPSTREAM.key, prefs.UPSTREAM_LIMIT_IN_KBS.key):
             self.setUploadLimit()
+        if key in (prefs.LIMIT_DOWNSTREAM_BT.key, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS.key):
+            self.setDownloadLimit()
         if key == prefs.BT_ENC_REQ.key:
             self.setEncryption()
 
