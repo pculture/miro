@@ -94,6 +94,7 @@ fi
 # Python 2.4.4
 # =============================================================================
 
+echo "=== PYTHON 2.4.4 ==============================================================" >$OUT
 echo "Setting up Python 2.4.4"
 cd $WORK_DIR
 
@@ -141,6 +142,7 @@ PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
 # setuptools (latest)
 # =============================================================================
 
+echo "=== SETUPTOOLS ================================================================" >$OUT
 echo "Setting up setuptools..."
 cd $WORK_DIR
 
@@ -151,6 +153,7 @@ $PYTHON ez_setup.py --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # BerkeleyDB 4.6.21
 # =============================================================================
 
+echo "=== BERKELEY DB 4.6.21 ========================================================" >$OUT
 echo "Setting up Berkeley DB 4.6.21"
 cd $WORK_DIR
 
@@ -171,6 +174,7 @@ make install 1>>$OUT 2>>$OUT
 # pybsddb 4.5
 # =============================================================================
 
+echo "=== PYBSDDB 4.5.0 =============================================================" >$OUT
 echo "Setting up pybsddb 4.5"
 cd $WORK_DIR
 
@@ -188,6 +192,7 @@ $PYTHON setup.py --berkeley-db=$SANDBOX_DIR install 1>>$OUT 2>>$OUT
 # SQLite 3.5.2
 # =============================================================================
 
+echo "=== SQLITE 3.5.2 ==============================================================" >$OUT
 echo "Setting up SQlite 3.5.2"
 cd $WORK_DIR
 
@@ -212,6 +217,7 @@ make install 1>>$OUT 2>>$OUT
 # pysqlite 2.4.0
 # =============================================================================
 
+echo "=== PYSQLITE 2.4.0 ============================================================" >$OUT
 echo "Setting up pysqlite 2.4.0"
 cd $WORK_DIR
 
@@ -238,6 +244,7 @@ $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # py2app 0.3.6
 # =============================================================================
 
+echo "=== PY2APP 0.3.6 ==============================================================" >$OUT
 echo "Setting up py2app 0.3.6"
 cd $WORK_DIR
 
@@ -253,6 +260,7 @@ $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # PyObjC 1.4
 # =============================================================================
 
+echo "=== PYOBJC 1.4.0 ==============================================================" >$OUT
 echo "Setting up PyObjC 1.4"
 cd $WORK_DIR
 
@@ -267,6 +275,7 @@ $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # Pyrex 0.9.6.2 (0.9.6.3 setup script is currently broken!!)
 # =============================================================================
 
+echo "=== PYREX 0.9.6.2 =============================================================" >$OUT
 echo "Setting up Pyrex 0.9.6.2"
 cd $WORK_DIR
 
@@ -282,6 +291,7 @@ $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # (because boost 1.34.x causes the libtorrent python extension to fail)
 # =============================================================================
 
+echo "=== BOOST 1.33.1 ==============================================================" >$OUT
 echo "Setting up Boost 1.33.1"
 cd $WORK_DIR
 
@@ -320,6 +330,7 @@ done
 
 # =============================================================================
 
+echo "=== FINISHED ==================================================================" >$OUT
 echo "Sandbox setup complete, logging signature."
 echo -n $SIGNATURE > $SIGNATURE_FILE
 
