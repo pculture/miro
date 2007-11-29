@@ -144,7 +144,7 @@ PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
 
 echo "=== SETUPTOOLS ================================================================" >>$OUT
 echo "Setting up setuptools..."
-cd $WORK_DIR
+cd $PKG_DIR
 
 echo ">> Installing..."
 $PYTHON ez_setup.py --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
@@ -306,18 +306,18 @@ cd tools/build/jam_src
 echo ">> Building & installing..."
 
 cd $WORK_DIR/boost_1_33_1
-./tools/build/jam_src/bin.macosxppc/bjam --prefix=$SANDBOX_DIR \
-                                         --with-python \
-                                         --with-date_time \
-                                         --with-filesystem \
-                                         --with-thread \
-                                         --without-icu \
-                                         -sCFLAGS="-foo" \
-                                         -sPYTHON_ROOT=$PYTHON_ROOT \
-                                         -sPYTHON_VERSION=$PYTHON_VERSION \
-                                         -sBUILD="release" \
-                                         -sTOOLS="darwin" \
-                                         install 1>>$OUT 2>>$OUT
+./tools/build/jam_src/bin.macosx*/bjam --prefix=$SANDBOX_DIR \
+                                       --with-python \
+                                       --with-date_time \
+                                       --with-filesystem \
+                                       --with-thread \
+                                       --without-icu \
+                                       -sCFLAGS="-foo" \
+                                       -sPYTHON_ROOT=$PYTHON_ROOT \
+                                       -sPYTHON_VERSION=$PYTHON_VERSION \
+                                       -sBUILD="release" \
+                                       -sTOOLS="darwin" \
+                                       install 1>>$OUT 2>>$OUT
 
 echo ">> Removing static libraries..."
 rm $SANDBOX_DIR/lib/libboost*.a
