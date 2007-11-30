@@ -1,11 +1,14 @@
 /* NSWindow () : <title:> (oid:5) */
 "" = "";
 
+/* NSButton ( limit downstream to) : <title: limit downstream to> (oid:166) */
+" limit downstream to" = " limit downstream to";
+
 /* NSButton ( limit upstream to) : <title: limit upstream to> (oid:30) */
 " limit upstream to" = " limit upstream to";
 
-/* NSTextField ((You must restart Miro for this change to take effect)) : <title:(You must restart Miro for this change to take effect)> (oid:127) */
-"(You must restart Miro for this change to take effect)" = "(You must restart Miro for this change to take effect)";
+/* NSTextField ((You must restart Miro for some of these changes to take effect)) : <title:(You must restart Miro for some of these changes to take effect)> (oid:127) */
+"(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)";
 
 /* NSTextField ((You must restart Miro for this change to take effect) ) : <title:(You must restart Miro for this change to take effect)
 > (oid:100) */
@@ -29,7 +32,7 @@
 /* NSMenuItem : <title:3 hours> (oid:82) */
 "3 hours" = "3 hours";
 
-/* NSTextField (4) : <title:4> (oid:130) */
+/* NSTextField (200) : <title:4> (oid:168) */
 "4" = "4";
 
 /* NSTextField (1) : <title:5> (oid:48) */
@@ -44,10 +47,13 @@
 /* NSButton (Add...) : <title:Add...> (oid:149) */
 "Add..." = "Add...";
 
-/* NSTextField (BitTorrent ports:) : <title:BitTorrent ports:> (oid:111) */
-"BitTorrent ports:" = "BitTorrent ports:";
+/* NSButton (Automatically forward ports) : <title:Automatically forward ports> (oid:177) */
+"Automatically forward ports" = "Automatically forward ports";
 
-/* NSBox (Box) : <title:Box> (oid:109) */
+/* NSTextField (BitTorrent) : <title:BitTorrent> (oid:181) */
+"BitTorrent" = "BitTorrent";
+
+/* NSBox (Box) : <title:Box> (oid:179) */
 "Box" = "Box";
 
 /* NSTextField (By default, videos expire after:) : <title:By default, videos expire after:> (oid:78) */
@@ -71,14 +77,14 @@
 /* NSTextField (GB free.) : <title:GB free.> (oid:45) */
 "GB free." = "GB free.";
 
+/* NSButton (Ignore non encrypted connections) : <title:Ignore non encrypted connections> (oid:178) */
+"Ignore non encrypted connections" = "Ignore non encrypted connections";
+
 /* NSTextField (KB/s when my computer is active.) : <title:KB/s when my computer is active.> (oid:38) */
 "KB/s when my computer is active." = "KB/s when my computer is active.";
 
-/* NSTextField (Maximum:) : <title:Maximum:> (oid:114) */
-"Maximum:" = "Maximum:";
-
-/* NSTextField (Minimum:) : <title:Minimum:> (oid:112) */
-"Minimum:" = "Minimum:";
+/* NSTextField (KB/s.) : <title:KB/s.> (oid:167) */
+"KB/s." = "KB/s.";
 
 /* NSMenuItem : <title:Never> (oid:86) */
 "Never" = "Never";
@@ -110,11 +116,17 @@
 /* NSTextField (To avoid internet slowdowns:) : <title:To avoid internet slowdowns:> (oid:128) */
 "To avoid internet slowdowns:" = "To avoid internet slowdowns:";
 
+/* NSTextField (Use ports between) : <title:Use ports between> (oid:111) */
+"Use ports between" = "Use ports between";
+
 /* NSButton (Warn me when I attempt to quit with downloads in progress) : <title:Warn me when I attempt to quit with downloads in progress> (oid:160) */
 "Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
 
 /* NSTextField (Watch for new videos in these folders and include them in the Library:) : <title:Watch for new videos in these folders and include them in the Library:> (oid:144) */
 "Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:";
+
+/* NSTextField (and) : <title:and> (oid:114) */
+"and" = "and";
 
 /* NSMenuItem : <title:every 30 minutes> (oid:27) */
 "every 30 minutes" = "every 30 minutes";
