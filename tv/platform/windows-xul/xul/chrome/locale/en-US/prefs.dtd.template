@@ -30,13 +30,12 @@
 <!ENTITY prefs.folder.others.add "Add Folder...">
 <!ENTITY prefs.folder.others.remove "Remove">
 
-<!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Download at most">
-<!ENTITY prefs.downloads.max.part2 "videos at once.">
+<!ENTITY prefs.downloads "Downloads" >
+<!ENTITY prefs.downloads.max "Don't download more than this many videos at once:">
 
 <!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Don't start a download if it leaves less than">
-<!ENTITY prefs.disk.space.min.part2 "GB free.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "By default, videos expire after">
@@ -51,7 +50,6 @@
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith.">
 <!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "and">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
 <!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
 <!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">

@@ -29,7 +29,7 @@
     <tabs>
             <tab orient="vertical" label=" &prefs.general;" image="chrome://dtv/content/images/pref-tabs/general.png" />
             <tab orient="vertical" label="&prefs.channels;" image="chrome://dtv/content/images/pref-tabs/channels.png" />
-            <tab orient="vertical" label="&prefs.downloads.max;" image="chrome://dtv/content/images/pref-tabs/downloads.png" />
+            <tab orient="vertical" label="&prefs.downloads;" image="chrome://dtv/content/images/pref-tabs/downloads.png" />
             <tab orient="vertical" label="&prefs.folder.movies;" image="chrome://dtv/content/images/pref-tabs/folders.png" />
             <tab orient="vertical" label="&prefs.disk.space;" image="chrome://dtv/content/images/pref-tabs/disk-space.png" />
             <tab orient="vertical" label="&prefs.playback;" image="chrome://dtv/content/images/pref-tabs/playback.png" />
@@ -72,9 +72,8 @@
                     oncommand="selectMoviesDirectory();" />
             </groupbox>
             <groupbox orient="horizontal" align="center">
-                <description>&prefs.downloads.max.part1;</description>
+                <description>&prefs.downloads.max;</description>
                 <textbox id="maxmanual" flex="0" size="3" value="300" onchange="maxManualChange()"/>
-                <description>&prefs.downloads.max.part2;</description>
             </groupbox>
             <groupbox>
                 <caption label="&prefs.torrent;" />
@@ -84,10 +83,10 @@
                     <textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
                 </hbox>
                 <hbox align="center">
-                    <description>&prefs.torrent.uses.ports.part1;</description>
+                    <description>&prefs.torrent.use_ports;</description>
                     <textbox id="btminport" flex="0" value="300" 
                         size="5" onchange="btMinPortChange()" />
-                    <description>&prefs.torrent.uses.ports.part2;</description>
+                    <description>-</description>
                     <textbox id="btmaxport" flex="0" value="300" 
                         size="5" onchange="btMaxPortChange()" />
                 </hbox>
