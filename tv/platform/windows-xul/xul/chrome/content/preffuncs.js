@@ -43,6 +43,10 @@ function onload() {
   setSinglePlayMode(pybridge.getSinglePlayMode());
   setBTMinPort(pybridge.getBTMinPort());
   setBTMaxPort(pybridge.getBTMaxPort());
+  document.getElementById("bittorrent-use-upnp").checked =
+          pybridge.getUseUpnp();
+  document.getElementById("bittorrent-encryption-required").checked =
+          pybridge.getBitTorrentEncReq();
 }
 
 function ondialogaccept() {
@@ -304,4 +308,14 @@ function checkBTPorts() {
   if(pybridge.getBTMaxPort() < pybridge.getBTMinPort()) {
     pybridge.setBTMaxPort(pybridge.getBTMinPort());
   }
+}
+
+function btUseUpnpChange() {
+  var checkbox = document.getElementById('bittorrent-use-upnp');
+  pybridge.setUseUpnp(checkbox.checked);
+}
+
+function btEncryptionRequiredChange() {
+  var checkbox = document.getElementById('bittorrent-encryption-required');
+  pybridge.setBitTorrentEncReq(checkbox.checked);
 }

@@ -383,6 +383,14 @@ class PyBridge:
         return config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT)
     def setWarnIfDownloadingOnQuit(self, value):
         return config.set(prefs.WARN_IF_DOWNLOADING_ON_QUIT, value)
+    def getUseUpnp(self):
+        return config.get(prefs.USE_UPNP)
+    def setUseUpnp(self, value):
+        config.set(prefs.USE_UPNP, value)
+    def getBitTorrentEncReq(self):
+        return config.get(prefs.BT_ENC_REQ)
+    def setBitTorrentEncReq(self, value):
+        config.set(prefs.BT_ENC_REQ, value)
 
     def handleCommandLine(self, commandLine):
         # Here's a massive hack to get command line parameters into config

@@ -108,6 +108,10 @@ interface pcfIDTVPyBridge : nsISupports
   void setResumeVideosMode(in boolean value);
   boolean getWarnIfDownloadingOnQuit();
   void setWarnIfDownloadingOnQuit(in boolean value);
+  boolean getUseUpnp();
+  void setUseUpnp(in boolean value);
+  boolean getBitTorrentEncReq();
+  void setBitTorrentEncReq(in boolean value);
   void showCursor(in boolean display);
   void createNewPlaylist();
   void createNewPlaylistFolder();
