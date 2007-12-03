@@ -51,7 +51,7 @@
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith.">
 <!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "BitTorrent uses ports between">
+<!ENTITY prefs.torrent.uses.ports.part1 "Use ports between">
 <!ENTITY prefs.torrent.uses.ports.part2 "and">
 <!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
 <!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
