@@ -93,7 +93,6 @@
                     <textbox id="btmaxport" flex="0" value="300" 
                         size="5" onchange="btMaxPortChange()" />
                 </hbox>
-                <description>&prefs.torrent.restart.warning;</description>
                 <checkbox id="bittorrent-use-upnp" label="&prefs.torrent.use_upnp;" oncommand="btUseUpnpChange();" />
                 <checkbox id="bittorrent-encryption-required" label="&prefs.torrent.require_encryption;" oncommand="btEncryptionRequiredChange();" />
             </groupbox>
