@@ -339,6 +339,14 @@ class PyBridge:
         return config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
     def setLimitUpstreamAmount(self, value):
         return config.set(prefs.UPSTREAM_LIMIT_IN_KBS, value)
+    def getLimitDownstream(self):
+        return config.get(prefs.LIMIT_DOWNSTREAM_BT)
+    def setLimitDownstream(self, value):
+        config.set(prefs.LIMIT_DOWNSTREAM_BT, value)
+    def getLimitDownstreamAmount(self):
+        return config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS)
+    def setLimitDownstreamAmount(self, value):
+        return config.set(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, value)
     def getMaxManual(self):
         return config.get(prefs.MAX_MANUAL_DOWNLOADS)
     def setMaxManual(self, value):

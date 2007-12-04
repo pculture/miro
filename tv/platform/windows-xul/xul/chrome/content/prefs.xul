@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin" type="text/css"?>
 <?xml-stylesheet href="main.css" type="text/css"?>
-
 <!DOCTYPE window SYSTEM "chrome://dtv/locale/prefs.dtd">
-
 <!-- add hidechrome="true" to eliminate title bar -->
 <dialog id="democracy-preferences" title="&prefs.title;"
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
@@ -77,10 +75,15 @@
             </groupbox>
             <groupbox>
                 <caption label="&prefs.torrent;" />
-                <checkbox id="limitupstream" checked="true" label="&prefs.torrent.limit.upstream.part1;" value="1" oncommand="limitUpstreamChange()"/>
-                <hbox class="suboption" align="center">
-                    <description id="maxupstream-description">&prefs.torrent.limit.upstream.part2;</description>
-                    <textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" onchange="maxUpstreamChange()"/>
+                <hbox align="center">
+                    <checkbox id="limitupstream" checked="true" label="&prefs.torrent.limit.upstream;" value="1" />
+                    <textbox id="maxupstream" flex="0" value="300" style="max-width: 30px;" />
+                    <description id="maxupstream-description">&prefs.torrent.limit.kbps;</description>
+                </hbox>
+                <hbox align="center">
+                <checkbox id="limitdownstream" checked="true" label="&prefs.torrent.limit.downstream;" value="1" />
+                    <textbox id="maxdownstream" flex="0" value="300" style="max-width: 30px;" />
+                    <description id="maxdownstream-description">&prefs.torrent.limit.kbps;</description>
                 </hbox>
                 <hbox align="center">
                     <description>&prefs.torrent.use_ports;</description>
