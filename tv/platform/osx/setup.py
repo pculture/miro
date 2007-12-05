@@ -56,7 +56,7 @@ ROOT_DIR = os.path.normpath(ROOT_DIR)
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
 sys.path.insert(0, PORTABLE_DIR)
 
-SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..', '..')))
+SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
 SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
 sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
 
@@ -443,6 +443,16 @@ class mypy2app (py2app):
 
             print "Completed"
             os.system("ls -la \"%s\"" % imgPath)
+
+# =============================================================================
+# Fix flags for universal binary extensions
+# =============================================================================
+
+from distutils import sysconfig
+for syscnf in ["LDFLAGS", "LDSHARED", "BLDSHARED"]:
+	val = sysconfig.get_config_vars()[syscnf]
+	val = val.replace("-isysroot /Developer/SDKs/MacOSX10.4u.sdk", "")
+	sysconfig.get_config_vars()[syscnf] = ' '.join(val.split())
 
 # =============================================================================
 # Define the native extensions

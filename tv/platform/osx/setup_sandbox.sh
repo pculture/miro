@@ -2,7 +2,7 @@
 
 # =============================================================================
 
-SANDBOX_VERSION=20071205001
+SANDBOX_VERSION=20071205002
 
 # =============================================================================
 
@@ -371,6 +371,7 @@ cd `find . -type d -maxdepth 1 | grep bin.`
 cp bjam $SANDBOX_DIR/bin
 
 echo ">> Building & installing..."
+cd $WORK_DIR/boost_1_33_1
 $SANDBOX_DIR/bin/bjam --prefix=$SANDBOX_DIR \
                       --with-python \
                       --with-date_time \
@@ -381,8 +382,8 @@ $SANDBOX_DIR/bin/bjam --prefix=$SANDBOX_DIR \
                       -sPYTHON_VERSION=$PYTHON_VERSION \
                       -sBUILD="release" \
                       -sTOOLS="darwin" \
-                      -sGXX="g++ -O3 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386" \
-                      -sGCC="gcc -O3 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386" \
+                      -sGXX="g++ -O3 $CFLAGS" \
+                      -sGCC="gcc -O3 $CFLAGS" \
                       install 1>>$OUT 2>>$OUT
 
 echo ">> Removing static libraries..."
