@@ -348,6 +348,13 @@ echo ">> Unpacking archive..."
 tar -xzf $PKG_DIR/Pyrex-0.9.6.4.tar.gz 1>>$OUT 2>>$OUT
 cd $WORK_DIR/Pyrex-0.9.6.4
 
+echo ">> Patching..."
+cat > extension.py.patch <<PATCH
+18d17
+<     _Extension.Extension.__doc__ + \\
+PATCH
+patch Pyrex/Distutils/extension.py < extension.py.patch
+
 echo ">> Installing..."
 $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 
