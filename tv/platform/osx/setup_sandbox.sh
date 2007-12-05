@@ -68,7 +68,7 @@ if [ -d $SANDBOX_DIR ]; then
         rm -rf $SANDBOX_DIR
     fi
 else
-    old_sandbox=$(pushd ../../../../sandbox >/dev/null; pwd; popd >/dev/null)
+    old_sandbox="../../../../sandbox"
     if [ -d $old_sandbox ]; then
         echo "Sandbox found at deprecated location, setup required."
         rm -rf $old_sandbox
