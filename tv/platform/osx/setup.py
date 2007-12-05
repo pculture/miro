@@ -398,7 +398,7 @@ class mypy2app (py2app):
             for item in wipeList:
                 print "    %s" % item
                 if os.path.isdir(item):
-                    shutil.rmtree(folder)
+                    shutil.rmtree(item)
                 else:
                     os.remove(item)
 
