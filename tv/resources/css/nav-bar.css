@@ -77,7 +77,7 @@
 
 #load-indicator {
     position: fixed;
-    display: none;
+    display: block;
     top: 4px;
     right: 10px;
     z-index: 1;

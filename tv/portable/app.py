@@ -1218,6 +1218,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         if selectedObjects[0].isPartOfGuide(url) and (
             url.startswith(u"http://") or url.startswith(u"https://")):
             selectedObjects[0].lastVisitedURL = url
+            selectedObjects[0].extendHistory(url)
         else:
             logging.warn("setLastVisitedGuideURL called, but the guide is no "
                     "longer selected")
@@ -1423,10 +1424,12 @@ class TemplateDisplay(frontend.HTMLDisplay):
                                                            *args, **kargs)
         self.args = args
         self.kargs = kargs
+        self.haveLoaded = False
         html = tch.read()
 
         self.actionHandlers = [
             ModelActionHandler(delegate),
+            HistoryActionHandler(self),
             GUIActionHandler(),
             TemplateActionHandler(self, self.templateHandle),
             ]
@@ -1502,8 +1505,27 @@ class TemplateDisplay(frontend.HTMLDisplay):
             raise ValueError("Badly formed eventURL: %s" % url)
 
 
-    # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
+        if self.checkURL(url):
+            if not controller.guide: # not on a channel guide:
+                return True
+            # The first time the guide is loaded in the template, several
+            # pages are loaded, so this shouldn't be called during that
+            # first load.  After that, this shows the spinning circle to
+            # indicate loading
+            if not self.haveLoaded and (url ==
+                    controller.guide.getLastVisitedURL()):
+                self.haveLoaded = True
+            elif self.haveLoaded:
+                script = 'top.miro_navigation_frame.guideUnloaded()'
+                if not url.endswith(script):
+                    self.execJS('top.miro_navigation_frame.guideUnloaded()')
+            return True
+        else:
+            return False
+
+    # Returns true if the browser should handle the URL.
+    def checkURL(self, url):
         util.checkU(url)
         logging.info ("got %s", url)
         try:
@@ -1883,6 +1905,44 @@ class printResultThread(threading.Thread):
 
     def run(self):
         print (self.format % (self.func(), ))
+
+# Functions that change the history of a guide
+class HistoryActionHandler:
+
+    def __init__(self, display):
+        self.display = display
+
+    def gotoURL(self, newURL):
+        print 'history moving to', newURL
+        self.display.execJS('top.miro_guide_frame.location="%s"' % newURL)
+
+    def getGuide(self):
+        guides = [t.obj for t in controller.selection.getSelectedTabs()]
+        if len(guides) != 1:
+            return
+        if not isinstance(guides[0], guide.ChannelGuide):
+            return
+        return guides[0]
+
+    def back(self):
+        guide = self.getGuide()
+        if guide is not None:
+            newURL = guide.getHistoryURL(-1)
+            if newURL is not None:
+                self.gotoURL(newURL)
+
+    def forward(self):
+        guide = self.getGuide()
+        if guide is not None:
+            newURL = guide.getHistoryURL(1)
+            if newURL is not None:
+                self.gotoURL(newURL)
+
+    def home(self):
+        guide = self.getGuide()
+        if guide is not None:
+            newURL = guide.getHistoryURL(None)
+            self.gotoURL(newURL)
 
 # Functions that are safe to call from action: URLs that can change
 # the GUI presentation (and may or may not manipulate the database.)
@@ -2328,7 +2388,7 @@ def _defaultFeeds():
     if config.get(prefs.DEFAULT_CHANNELS_FILE) is not None:
         importer = opml.Importer()
         try:
-            if ((config.get(prefs.THEME_NAME) is not None) and 
+            if ((config.get(prefs.THEME_NAME) is not None) and
                 (config.get(prefs.THEME_DIRECTORY) is not None)):
                 filepath = os.path.join(
                     config.get(prefs.THEME_DIRECTORY),
