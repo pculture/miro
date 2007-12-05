@@ -384,17 +384,23 @@ class mypy2app (py2app):
         # Check that we haven't left some turds in the application bundle.
         
         wipeList = list()
-        for root, dirs, files in os.walk(os.path.join(self.dist_dir, '%s.app'%conf['shortAppName'])):
+        for root, dirs, files in os.walk(os.path.join(self.dist_dir, '%s.app' % conf['shortAppName'])):
             for excluded in ('.svn', 'unittest'):
                 if excluded in dirs:
                     dirs.remove(excluded)
                     wipeList.append(os.path.join(root, excluded))
+            for excluded in ('.DS_Store', 'info.nib', 'classes.nib'):
+                if excluded in files:
+                    wipeList.append(os.path.join(root, excluded))
         
         if len(wipeList) > 0:
             print "Wiping out unwanted data from the application bundle."
-            for folder in wipeList:
-                print "    %s" % folder
-                shutil.rmtree(folder)
+            for item in wipeList:
+                print "    %s" % item
+                if os.path.isdir(item):
+                    shutil.rmtree(folder)
+                else:
+                    os.remove(item)
 
         if imgName is not None:
             print "Building image..."
