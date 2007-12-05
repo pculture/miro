@@ -339,6 +339,14 @@ class PyBridge:
         return config.get(prefs.UPSTREAM_LIMIT_IN_KBS)
     def setLimitUpstreamAmount(self, value):
         return config.set(prefs.UPSTREAM_LIMIT_IN_KBS, value)
+    def getLimitDownstream(self):
+        return config.get(prefs.LIMIT_DOWNSTREAM_BT)
+    def setLimitDownstream(self, value):
+        config.set(prefs.LIMIT_DOWNSTREAM_BT, value)
+    def getLimitDownstreamAmount(self):
+        return config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS)
+    def setLimitDownstreamAmount(self, value):
+        return config.set(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, value)
     def getMaxManual(self):
         return config.get(prefs.MAX_MANUAL_DOWNLOADS)
     def setMaxManual(self, value):
@@ -383,6 +391,14 @@ class PyBridge:
         return config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT)
     def setWarnIfDownloadingOnQuit(self, value):
         return config.set(prefs.WARN_IF_DOWNLOADING_ON_QUIT, value)
+    def getUseUpnp(self):
+        return config.get(prefs.USE_UPNP)
+    def setUseUpnp(self, value):
+        config.set(prefs.USE_UPNP, value)
+    def getBitTorrentEncReq(self):
+        return config.get(prefs.BT_ENC_REQ)
+    def setBitTorrentEncReq(self, value):
+        config.set(prefs.BT_ENC_REQ, value)
 
     def handleCommandLine(self, commandLine):
         # Here's a massive hack to get command line parameters into config

@@ -173,36 +173,44 @@ class ChannelsPrefsController (NSObject):
 
 class DownloadsPrefsController (NSObject):
     
+    moviesDirectoryField    = IBOutlet('moviesDirectoryField')
+    maxDownloadsField       = IBOutlet('maxDownloadsField')
     btMinPortField          = IBOutlet('btMinPortField')
     btMaxPortField          = IBOutlet('btMaxPortField')
+    autoForwardButton       = IBOutlet('autoForwardButton')
+    nonEncryptedCnxButton   = IBOutlet('nonEncryptedCnxButton')
     limitUpstreamCheckBox   = IBOutlet('limitUpstreamCheckBox')
-    limitValueField         = IBOutlet('limitValueField')
-    maxDownloadsField       = IBOutlet('maxDownloadsField')
-    moviesDirectoryField    = IBOutlet('moviesDirectoryField')
+    limitUpstreamField      = IBOutlet('limitUpstreamField')
+    limitDownstreamCheckBox = IBOutlet('limitDownstreamCheckBox')
+    limitDownstreamField    = IBOutlet('limitDownstreamField')
     
     def awakeFromNib(self):
         moviesDirPath = config.get(prefs.MOVIES_DIRECTORY)
         self.moviesDirectoryField.setStringValue_(unicode(moviesDirPath))
-        limit = config.get(prefs.LIMIT_UPSTREAM)
-        self.limitUpstreamCheckBox.setState_(limit and NSOnState or NSOffState)
-        self.limitValueField.setEnabled_(limit)
-        self.limitValueField.setIntValue_(config.get(prefs.UPSTREAM_LIMIT_IN_KBS))
+
         self.maxDownloadsField.setIntValue_(config.get(prefs.MAX_MANUAL_DOWNLOADS))
+
         btMinPort = config.get(prefs.BT_MIN_PORT)
         self.btMinPortField.setIntValue_(btMinPort)
         btMaxPort = config.get(prefs.BT_MAX_PORT)
         self.btMaxPortField.setIntValue_(btMaxPort)
-    
-    def limitUpstream_(self, sender):
-        limit = (sender.state() == NSOnState)
-        self.limitValueField.setEnabled_(limit)
-        config.set(prefs.LIMIT_UPSTREAM, limit)
-        self.setUpstreamLimit_(self.limitValueField)
-    
-    def setUpstreamLimit_(self, sender):
-        limit = sender.intValue()
-        config.set(prefs.UPSTREAM_LIMIT_IN_KBS, limit)
         
+        autoForward = config.get(prefs.USE_UPNP)
+        self.autoForwardButton.setState_(autoForward and NSOnState or NSOffState)
+        
+        ignoreNonEncCnx = config.get(prefs.BT_ENC_REQ)
+        self.nonEncryptedCnxButton.setState_(ignoreNonEncCnx and NSOnState or NSOffState)
+        
+        limitUp = config.get(prefs.LIMIT_UPSTREAM)
+        self.limitUpstreamCheckBox.setState_(limitUp and NSOnState or NSOffState)
+        self.limitUpstreamField.setEnabled_(limitUp)
+        self.limitUpstreamField.setIntValue_(config.get(prefs.UPSTREAM_LIMIT_IN_KBS))
+        
+        limitDown = config.get(prefs.LIMIT_DOWNSTREAM_BT)
+        self.limitDownstreamCheckBox.setState_(limitDown and NSOnState or NSOffState)
+        self.limitDownstreamField.setEnabled_(limitDown)
+        self.limitDownstreamField.setIntValue_(config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS))
+
     def changeMoviesDirectory_(self):
         panel = NSOpenPanel.openPanel()
         panel.setCanChooseFiles_(NO)
@@ -246,6 +254,34 @@ class DownloadsPrefsController (NSObject):
             self.btMaxPortField.setIntValue_(btMaxPort)
         config.set(prefs.BT_MIN_PORT, btMinPort)
         config.set(prefs.BT_MAX_PORT, btMaxPort)
+
+    def autoForwardPort_(self, sender):
+        autoForward = (sender.state() == NSOnState)
+        config.set(prefs.USE_UPNP, autoForward)
+
+    def ignoreNonEncryptedCnx_(self, sender):
+        ignore = (sender.state() == NSOnState)
+        config.set(prefs.BT_ENC_REQ, ignore)
+
+    def limitUpstream_(self, sender):
+        limit = (sender.state() == NSOnState)
+        self.limitUpstreamField.setEnabled_(limit)
+        config.set(prefs.LIMIT_UPSTREAM, limit)
+        self.setUpstreamLimit_(self.limitUpstreamField)
+    
+    def setUpstreamLimit_(self, sender):
+        limit = sender.intValue()
+        config.set(prefs.UPSTREAM_LIMIT_IN_KBS, limit)
+        
+    def limitDownstream_(self, sender):
+        limit = (sender.state() == NSOnState)
+        self.limitDownstreamField.setEnabled_(limit)
+        config.set(prefs.LIMIT_DOWNSTREAM_BT, limit)
+        self.setUpstreamLimit_(self.limitUpstreamField)
+    
+    def setDownstreamLimit_(self, sender):
+        limit = sender.intValue()
+        config.set(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, limit)
 
 ###############################################################################
 

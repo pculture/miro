@@ -2,23 +2,12 @@
 
 # =============================================================================
 
-SANDBOX_VERSION=20071125001
+SANDBOX_VERSION=20071205002
 
 # =============================================================================
 
-if [ -d "../../../dtv-binary-kit-mac" ]; then
-    PKG_DIR=$(pushd ../../../dtv-binary-kit-mac/sandbox >/dev/null; pwd; popd  >/dev/null)
-else
-    root=$(pushd ../../../ >/dev/null; pwd; popd  >/dev/null)
-    echo "Could not find the required Mac binary kit which should be at $root/dtv-binary-kit-mac"
-    echo "Please check it out first from the Subversion repository."
-    exit
-fi
-
-# =============================================================================
-
+ROOT_DIR=$(pushd ../../../ >/dev/null; pwd; popd >/dev/null)
 VERBOSE=no
-ROOT_DIR=$(pushd ../../../../ >/dev/null; pwd; popd >/dev/null)
 
 while getopts ":r:v" option
     do
@@ -31,6 +20,16 @@ while getopts ":r:v" option
         ;;
     esac
 done
+
+# -----------------------------------------------------------------------------
+
+if [ -d "../../../dtv-binary-kit-mac" ]; then
+    PKG_DIR=$(pushd ../../../dtv-binary-kit-mac/sandbox >/dev/null; pwd; popd  >/dev/null)
+else
+    echo "Could not find the required Mac binary kit which should be at $ROOT_DIR/dtv-binary-kit-mac"
+    echo "Please check it out first from the Subversion repository."
+    exit
+fi
 
 SANDBOX_DIR=$ROOT_DIR/sandbox
 WORK_DIR=$SANDBOX_DIR/pkg
@@ -69,7 +68,13 @@ if [ -d $SANDBOX_DIR ]; then
         rm -rf $SANDBOX_DIR
     fi
 else
-    echo "Sandbox not found, setup required."
+    old_sandbox="../../../../sandbox"
+    if [ -d $old_sandbox ]; then
+        echo "Sandbox found at deprecated location, setup required."
+        rm -rf $old_sandbox
+    else
+        echo "Sandbox not found, setup required."
+    fi
     setup_required=yes
 fi
 
@@ -77,10 +82,10 @@ if [ $setup_required == no ]; then
     exit
 fi
 
-# =============================================================================
-
 echo "Setting up new sandbox in $ROOT_DIR"
 mkdir -p $WORK_DIR
+
+# =============================================================================
 
 if [ $VERBOSE == yes ]; then
     OUT=/dev/stdout
@@ -94,6 +99,7 @@ fi
 # Python 2.4.4
 # =============================================================================
 
+echo "=== PYTHON 2.4.4 ==============================================================" >>$OUT
 echo "Setting up Python 2.4.4"
 cd $WORK_DIR
 
@@ -103,6 +109,7 @@ cd $WORK_DIR/Python-2.4.4
 
 echo ">> Configuring..."
 ./configure --prefix=$SANDBOX_DIR \
+            --enable-universalsdk \
             --enable-framework=$SANDBOX_DIR/Library/Frameworks \
             --enable-shared \
             --with-suffix="" \
@@ -131,12 +138,19 @@ PYTHON_VERSION=2.4
 PYTHON_ROOT=$SANDBOX_DIR/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION
 PYTHON=$PYTHON_ROOT/bin/python$PYTHON_VERSION
 
+# -----------------------------------------------------------------------------
+
+export CFLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386"
+export LDFLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386"
+export PYTHONPATH="$PYTHON_ROOT:$PYTHONPATH"
+
 # =============================================================================
 # setuptools (latest)
 # =============================================================================
 
+echo "=== SETUPTOOLS ================================================================" >>$OUT
 echo "Setting up setuptools..."
-cd $WORK_DIR
+cd $PKG_DIR
 
 echo ">> Installing..."
 $PYTHON ez_setup.py --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
@@ -145,6 +159,7 @@ $PYTHON ez_setup.py --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # BerkeleyDB 4.6.21
 # =============================================================================
 
+echo "=== BERKELEY DB 4.6.21 ========================================================" >>$OUT
 echo "Setting up Berkeley DB 4.6.21"
 cd $WORK_DIR
 
@@ -165,6 +180,7 @@ make install 1>>$OUT 2>>$OUT
 # pybsddb 4.5
 # =============================================================================
 
+echo "=== PYBSDDB 4.5.0 =============================================================" >>$OUT
 echo "Setting up pybsddb 4.5"
 cd $WORK_DIR
 
@@ -182,6 +198,7 @@ $PYTHON setup.py --berkeley-db=$SANDBOX_DIR install 1>>$OUT 2>>$OUT
 # SQLite 3.5.2
 # =============================================================================
 
+echo "=== SQLITE 3.5.2 ==============================================================" >>$OUT
 echo "Setting up SQlite 3.5.2"
 cd $WORK_DIR
 
@@ -206,6 +223,7 @@ make install 1>>$OUT 2>>$OUT
 # pysqlite 2.4.0
 # =============================================================================
 
+echo "=== PYSQLITE 2.4.0 ============================================================" >>$OUT
 echo "Setting up pysqlite 2.4.0"
 cd $WORK_DIR
 
@@ -229,9 +247,70 @@ echo ">> Installing..."
 $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 
 # =============================================================================
+# altgraph 0.6.7
+# =============================================================================
+
+echo "=== ALTGRAPH 0.6.7 ============================================================" >>$OUT
+echo "Setting up altgraph 0.6.7"
+cd $WORK_DIR
+
+echo ">> Unpacking archive..."
+tar -xzf $PKG_DIR/altgraph-0.6.7.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/altgraph-0.6.7
+
+echo ">> Building & installing..."
+$PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
+
+# =============================================================================
+# modulegraph 0.7
+# =============================================================================
+
+echo "=== MODULEGRAPH 0.7 ===========================================================" >>$OUT
+echo "Setting up modulegraph 0.7"
+cd $WORK_DIR
+
+echo ">> Unpacking archive..."
+tar -xzf $PKG_DIR/modulegraph-0.7.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/modulegraph-0.7
+
+echo ">> Building & installing..."
+$PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
+
+# =============================================================================
+# macholib 1.1
+# =============================================================================
+
+echo "=== MACHOLIB 1.1 ==============================================================" >>$OUT
+echo "Setting up macholib 1.1"
+cd $WORK_DIR
+
+echo ">> Unpacking archive..."
+tar -xzf $PKG_DIR/macholib-1.1.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/macholib-1.1
+
+echo ">> Building & installing..."
+$PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
+
+# =============================================================================
+# bdist_mpkg 0.4.3
+# =============================================================================
+
+echo "=== BDIST_MPKG 0.4.3 ==========================================================" >>$OUT
+echo "Setting up bdist_mpkg 0.4.3"
+cd $WORK_DIR
+
+echo ">> Unpacking archive..."
+tar -xzf $PKG_DIR/bdist_mpkg-0.4.3.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/bdist_mpkg-0.4.3
+
+echo ">> Building & installing..."
+$PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
+
+# =============================================================================
 # py2app 0.3.6
 # =============================================================================
 
+echo "=== PY2APP 0.3.6 ==============================================================" >>$OUT
 echo "Setting up py2app 0.3.6"
 cd $WORK_DIR
 
@@ -240,13 +319,13 @@ tar -xzf $PKG_DIR/py2app-0.3.6.tar.gz 1>>$OUT 2>>$OUT
 cd $WORK_DIR/py2app-0.3.6
 
 echo ">> Building & installing..."
-export PYTHONPATH="$PYTHON_ROOT:$PYTHONPATH"
 $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 
 # =============================================================================
 # PyObjC 1.4
 # =============================================================================
 
+echo "=== PYOBJC 1.4.0 ==============================================================" >>$OUT
 echo "Setting up PyObjC 1.4"
 cd $WORK_DIR
 
@@ -258,15 +337,23 @@ echo ">> Building & installing..."
 $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 
 # =============================================================================
-# Pyrex 0.9.6.2 (0.9.6.3 setup script is currently broken!!)
+# Pyrex 0.9.6.4
 # =============================================================================
 
-echo "Setting up Pyrex 0.9.6.2"
+echo "=== PYREX 0.9.6.4 =============================================================" >>$OUT
+echo "Setting up Pyrex 0.9.6.4"
 cd $WORK_DIR
 
 echo ">> Unpacking archive..."
-tar -xzf $PKG_DIR/Pyrex-0.9.6.2.tar.gz 1>>$OUT 2>>$OUT
-cd $WORK_DIR/Pyrex-0.9.6.2
+tar -xzf $PKG_DIR/Pyrex-0.9.6.4.tar.gz 1>>$OUT 2>>$OUT
+cd $WORK_DIR/Pyrex-0.9.6.4
+
+echo ">> Patching..."
+cat > extension.py.patch <<PATCH
+18d17
+<     _Extension.Extension.__doc__ + \\
+PATCH
+patch Pyrex/Distutils/extension.py < extension.py.patch 1>>$OUT 2>>$OUT
 
 echo ">> Installing..."
 $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
@@ -276,6 +363,7 @@ $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 # (because boost 1.34.x causes the libtorrent python extension to fail)
 # =============================================================================
 
+echo "=== BOOST 1.33.1 ==============================================================" >>$OUT
 echo "Setting up Boost 1.33.1"
 cd $WORK_DIR
 
@@ -286,22 +374,24 @@ cd $WORK_DIR/boost_1_33_1
 echo ">> Building the bjam tool..."
 cd tools/build/jam_src
 ./build.sh 1>>$OUT 2>>$OUT
+cd `find . -type d -maxdepth 1 | grep bin.`
+cp bjam $SANDBOX_DIR/bin
 
 echo ">> Building & installing..."
-
 cd $WORK_DIR/boost_1_33_1
-./tools/build/jam_src/bin.macosxppc/bjam --prefix=$SANDBOX_DIR \
-                                         --with-python \
-                                         --with-date_time \
-                                         --with-filesystem \
-                                         --with-thread \
-                                         --without-icu \
-                                         -sCFLAGS="-foo" \
-                                         -sPYTHON_ROOT=$PYTHON_ROOT \
-                                         -sPYTHON_VERSION=$PYTHON_VERSION \
-                                         -sBUILD="release" \
-                                         -sTOOLS="darwin" \
-                                         install 1>>$OUT 2>>$OUT
+$SANDBOX_DIR/bin/bjam --prefix=$SANDBOX_DIR \
+                      --with-python \
+                      --with-date_time \
+                      --with-filesystem \
+                      --with-thread \
+                      --without-icu \
+                      -sPYTHON_ROOT=$PYTHON_ROOT \
+                      -sPYTHON_VERSION=$PYTHON_VERSION \
+                      -sBUILD="release" \
+                      -sTOOLS="darwin" \
+                      -sGXX="g++ -O3 $CFLAGS" \
+                      -sGCC="gcc -O3 $CFLAGS" \
+                      install 1>>$OUT 2>>$OUT
 
 echo ">> Removing static libraries..."
 rm $SANDBOX_DIR/lib/libboost*.a
@@ -314,6 +404,7 @@ done
 
 # =============================================================================
 
+echo "=== FINISHED ==================================================================" >>$OUT
 echo "Sandbox setup complete, logging signature."
 echo -n $SIGNATURE > $SIGNATURE_FILE
 

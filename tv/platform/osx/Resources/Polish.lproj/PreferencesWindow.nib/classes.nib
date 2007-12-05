@@ -20,22 +20,30 @@
         }, 
         {
             ACTIONS = {
+                autoForwardPort = id; 
                 changeMoviesDirectory = id; 
+                ignoreNonEncryptedCnx = id; 
+                limitDownstream = id; 
                 limitUpstream = id; 
                 setBTMaxPort = id; 
                 setBTMinPort = id; 
+                setDownstreamLimit = id; 
                 setMaxDownloads = id; 
                 setUpstreamLimit = id; 
             }; 
             CLASS = DownloadsPrefsController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                autoForwardButton = id; 
                 btMaxPortField = id; 
                 btMinPortField = id; 
+                limitDownstreamCheckBox = id; 
+                limitDownstreamField = id; 
                 limitUpstreamCheckBox = id; 
-                limitValueField = id; 
+                limitUpstreamField = id; 
                 maxDownloadsField = id; 
                 moviesDirectoryField = id; 
+                nonEncryptedCnxButton = id; 
             }; 
             SUPERCLASS = NSObject; 
         }, 

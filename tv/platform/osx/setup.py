@@ -56,7 +56,7 @@ ROOT_DIR = os.path.normpath(ROOT_DIR)
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
 sys.path.insert(0, PORTABLE_DIR)
 
-SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..', '..')))
+SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
 SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
 sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
 
@@ -315,7 +315,7 @@ class mypy2app (py2app):
             print "    (all skipped, already bundled)"
         else:
             os.mkdir(prsrcRoot)
-            for resource in ('css', 'images', 'searchengines', 'dtvapi.js', 'statictabs.xml'):
+            for resource in ('css', 'images', 'html', 'searchengines', 'dtvapi.js', 'statictabs.xml'):
                 src = os.path.join(ROOT_DIR, 'resources', resource)
                 rsrcName = os.path.basename(src)
                 if os.path.isdir(src):
@@ -384,17 +384,23 @@ class mypy2app (py2app):
         # Check that we haven't left some turds in the application bundle.
         
         wipeList = list()
-        for root, dirs, files in os.walk(os.path.join(self.dist_dir, '%s.app'%conf['shortAppName'])):
+        for root, dirs, files in os.walk(os.path.join(self.dist_dir, '%s.app' % conf['shortAppName'])):
             for excluded in ('.svn', 'unittest'):
                 if excluded in dirs:
                     dirs.remove(excluded)
                     wipeList.append(os.path.join(root, excluded))
+            for excluded in ('.DS_Store', 'info.nib', 'classes.nib'):
+                if excluded in files:
+                    wipeList.append(os.path.join(root, excluded))
         
         if len(wipeList) > 0:
             print "Wiping out unwanted data from the application bundle."
-            for folder in wipeList:
-                print "    %s" % folder
-                shutil.rmtree(folder)
+            for item in wipeList:
+                print "    %s" % item
+                if os.path.isdir(item):
+                    shutil.rmtree(item)
+                else:
+                    os.remove(item)
 
         if imgName is not None:
             print "Building image..."
@@ -443,6 +449,16 @@ class mypy2app (py2app):
 
             print "Completed"
             os.system("ls -la \"%s\"" % imgPath)
+
+# =============================================================================
+# Fix flags for universal binary extensions
+# =============================================================================
+
+from distutils import sysconfig
+for syscnf in ["LDFLAGS", "LDSHARED", "BLDSHARED"]:
+	val = sysconfig.get_config_vars()[syscnf]
+	val = val.replace("-isysroot /Developer/SDKs/MacOSX10.4u.sdk", "")
+	sysconfig.get_config_vars()[syscnf] = ' '.join(val.split())
 
 # =============================================================================
 # Define the native extensions

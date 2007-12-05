@@ -33,8 +33,6 @@ function onload() {
   setCheckEvery(pybridge.getCheckEvery());
   setMoviesDir(pybridge.getMoviesDirectory());
   originalMoviesDir = pybridge.getMoviesDirectory();
-  setLimitUpstream(pybridge.getLimitUpstream());
-  setMaxUpstream(pybridge.getLimitUpstreamAmount());
   setMaxManual(pybridge.getMaxManual());
   setHasMinDiskSpace(pybridge.getPreserveDiskSpace());
   setMinDiskSpace(pybridge.getPreserveDiskSpaceAmount());
@@ -43,6 +41,22 @@ function onload() {
   setSinglePlayMode(pybridge.getSinglePlayMode());
   setBTMinPort(pybridge.getBTMinPort());
   setBTMaxPort(pybridge.getBTMaxPort());
+  document.getElementById("bittorrent-use-upnp").checked =
+          pybridge.getUseUpnp();
+  document.getElementById("bittorrent-encryption-required").checked =
+          pybridge.getBitTorrentEncReq();
+
+
+  setupBandwidthLimiter('upstream',
+          function() { return pybridge.getLimitUpstream(); },
+          function(value) { pybridge.setLimitUpstream(value); },
+          function() { return pybridge.getLimitUpstreamAmount(); },
+          function(value) { pybridge.setLimitUpstreamAmount(value); })
+  setupBandwidthLimiter('downstream',
+          function() { return pybridge.getLimitDownstream(); },
+          function(value) { pybridge.setLimitDownstream(value); },
+          function() { return pybridge.getLimitDownstreamAmount(); },
+          function(value) { pybridge.setLimitDownstreamAmount(value); })
 }
 
 function ondialogaccept() {
@@ -166,38 +180,43 @@ function checkMoviesDirChanged() {
     }
 }
 
-function setMaxUpstream(max) {
-    document.getElementById("maxupstream").value = max;
-}
+function setupBandwidthLimiter(domIDBase, 
+        pybridgeGetEnabled, pybridgeSetEnabled,
+        pybridgeGetAmount, pybridgeSetAmount)
+{
+    var checkbox = document.getElementById("limit" + domIDBase);
+    var textbox = document.getElementById("max" + domIDBase);
+    var description = document.getElementById("max" + domIDBase + "-description");
 
-function setLimitUpstream(limit) {
-    document.getElementById("limitupstream").checked = limit;
-    setMaxUpstreamDisabled(!limit);
-}
-
-function setMaxUpstreamDisabled(disabled) {
-    var textbox = document.getElementById("maxupstream");
-    var description = document.getElementById("maxupstream-description");
-    if(disabled) {
-        textbox.setAttribute('disabled', true);
-        description.setAttribute('disabled', true);
-    } else {
-        textbox.removeAttribute('disabled');
-        description.removeAttribute('disabled');
+    function setWidgetDisabled(disabled) {
+        if(disabled) {
+            textbox.setAttribute('disabled', true);
+            description.setAttribute('disabled', true);
+        } else {
+            textbox.removeAttribute('disabled');
+            description.removeAttribute('disabled');
+        }
     }
-}
 
-function limitUpstreamChange() {
-  var ret = (document.getElementById("limitupstream").checked);
-  setMaxUpstreamDisabled(!ret);
-  pybridge.setLimitUpstream(ret);
-}
-function maxUpstreamChange() {
-  var textbox = document.getElementById("maxupstream");
-  var value = parseInt(textbox.value);
-  if ((value == 0) || (isNaN(value))) value = 1;
-  textbox.value=value;
-  pybridge.setLimitUpstreamAmount(value);
+    var enabled = pybridgeGetEnabled();
+    checkbox.checked = enabled;
+    setWidgetDisabled(!enabled);
+
+    textbox.value = pybridgeGetAmount();
+
+    function onCheckboxChanged() {
+        setWidgetDisabled(!checkbox.checked);
+        pybridgeSetEnabled(checkbox.checked);
+    }
+    checkbox.addEventListener('command', onCheckboxChanged, true);
+
+    function onTextboxChanged() {
+        var value = parseInt(textbox.value);
+        if ((value == 0) || (isNaN(value))) value = 1;
+        textbox.value = value;
+        pybridgeSetAmount(value);
+    }
+    textbox.addEventListener('change', onTextboxChanged, true);
 }
 
 function setMaxManual(max) {
@@ -304,4 +323,14 @@ function checkBTPorts() {
   if(pybridge.getBTMaxPort() < pybridge.getBTMinPort()) {
     pybridge.setBTMaxPort(pybridge.getBTMinPort());
   }
+}
+
+function btUseUpnpChange() {
+  var checkbox = document.getElementById('bittorrent-use-upnp');
+  pybridge.setUseUpnp(checkbox.checked);
+}
+
+function btEncryptionRequiredChange() {
+  var checkbox = document.getElementById('bittorrent-encryption-required');
+  pybridge.setBitTorrentEncReq(checkbox.checked);
 }
