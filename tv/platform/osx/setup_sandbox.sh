@@ -353,7 +353,7 @@ cat > extension.py.patch <<PATCH
 18d17
 <     _Extension.Extension.__doc__ + \\
 PATCH
-patch Pyrex/Distutils/extension.py < extension.py.patch
+patch Pyrex/Distutils/extension.py < extension.py.patch 1>>$OUT 2>>$OUT
 
 echo ">> Installing..."
 $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
