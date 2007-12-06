@@ -63,15 +63,12 @@ class ChannelGuide(DDBObject):
     ICON_CACHE_SIZES = [
 #        (20, 20),
     ]
-    def __init__(self, url=None, allowedURLs = None):
+    def __init__(self, url, allowedURLs = None):
         checkU(url)
         if allowedURLs is None:
             self.allowedURLs = []
         else:
             self.allowedURLs = allowedURLs
-        if url is None and allowedURLs is None:
-            self.allowedURLs = config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS).split()
-        self.allowedURLs.append(config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL))
         self.url = url
         self.updated_url = url
         self.title = None
@@ -119,16 +116,13 @@ class ChannelGuide(DDBObject):
         return isPartOfGuide(url, self.getURL(), self.allowedURLs)
 
     def getURL(self):
-        if self.url is not None:
-            return self.url
-        else:
-            return config.get(prefs.CHANNEL_GUIDE_URL)
+        return self.url
 
     def getFirstURL(self):
-        if self.url is not None:
-            return self.url
-        else:
+        if self.getDefault():
             return config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)
+        else:
+            return self.url
 
     def getLastVisitedURL(self):
         if self.lastVisitedURL is not None:
@@ -144,15 +138,13 @@ class ChannelGuide(DDBObject):
                 return self.getURL()
 
     def getDefault(self):
-        return self.url is None
+        return self.url == config.get(prefs.CHANNEL_GUIDE_URL)
 
     # For the tabs
     @returnsUnicode
     def getTitle(self):
         if self.title:
             return self.title
-        elif self.getDefault():
-            return _('Miro Guide')
         else:
             return self.getURL()
 

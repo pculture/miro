@@ -478,11 +478,11 @@ class ThemeHistorySchema(DDBObjectSchema):
     classString = 'theme-history'
     fields = DDBObjectSchema.fields + [
         ('lastTheme', SchemaString(noneOk=True)),
-        ('pastThemes', SchemaList(SchemaString(noneOk=False), noneOk=False)),
+        ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
     ]
 
-VERSION = 58
-objectSchemas = [ 
+VERSION = 59
+objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
