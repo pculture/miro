@@ -18,6 +18,13 @@
 import os
 import sys
 import logging
+
+# Import the pysqlite module before the Foundation or AppKit modules to avoid
+# (very) weird errors ("library routine called out of sequence") and even 
+# crashes on Leopard, probably due to a conflict between the standard OS X 
+# sqlite lib and our own most recent one.
+from pysqlite2 import dbapi2
+
 import Foundation
 
 # =============================================================================
@@ -41,11 +48,6 @@ def activatePsyco():
 # =============================================================================
 
 def launchApplication():
-    # Import the pysqlite module as soon as possible to avoid (very) weird
-    # errors ("library routine called out of sequence") probably due to a
-    # conflict between the standard OS X sqlite lib and our own most recent one.
-    from pysqlite2 import dbapi2
-
     import migrateappname
     migrateappname.migrateSupport('Democracy', 'Miro')
 
