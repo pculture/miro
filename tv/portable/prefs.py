@@ -186,3 +186,7 @@ DEFAULT_CHANNELS_FILE = \
     Pref(key='defaultChannelsFile',default=None, platformSpecific=False)
 THEME_NAME = \
     Pref(key='themeName',default=None, platformSpecific=False)
+OPEN_FOLDER_ON_STARTUP = \
+    Pref(key='openFolderOnStartup',default=None, platformSpecific=False)
+OPEN_CHANNEL_ON_STARTUP = \
+    Pref(key='openChannelOnStartup',default=None, platformSpecific=False)
