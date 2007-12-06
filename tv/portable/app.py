@@ -801,7 +801,7 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
         
         self.selection = selection.SelectionHandler()
 
-        self.selection.selectFirstGuide()
+        self.selection.selectFirstTab()
 
         if self.initial_feeds:
             views.feedTabs.resetCursor()
