@@ -63,6 +63,7 @@ import filetypes
 import searchengines
 import fileutil
 import imageresize
+import license
 
 _charset = locale.getpreferredencoding()
 
@@ -994,6 +995,13 @@ folder will be deleted.""")
                                               url)))
         rv.append((_('File type:'), self.getFormat()))
 
+        if self.getLicence():
+            rv.append((_('License:'), util.makeAnchor(license.license_name(
+                            self.getLicence()),
+                                                      self.getLicence())))
+        else:
+            rv.append((_('License:'), _('see permalink')))
+
         if self.isDownloaded():
             basename = os.path.basename(self.getFilename())
             basename = util.clampText(basename, 40)
@@ -1399,6 +1407,7 @@ folder will be deleted.""")
     # return the license associated with the video
     @returnsUnicode
     def getLicence(self):
+
         self.confirmDBThread()
         try:
             return self.entry.license
