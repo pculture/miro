@@ -39,10 +39,9 @@ def license_name(license_uri):
     be determined, the URI is returned unchanged."""
 
     # retrieve the license document and parse it for RDFa
-    sink = rdfa.parseURI(license_uri, sink=DictSink())
-
-    # look for the license title
     try:
+        sink = rdfa.parseURI(license_uri, sink=DictSink())
+
         # look for explicit assertions about the license URI first, 
         # then fall back to looking for assertions about the document
         license_name = sink.data.get(license_uri,
@@ -52,5 +51,6 @@ def license_name(license_uri):
         # may invalidate this extraction 
         return license_name[1:license_name.find('"',1)]
 
-    except KeyError, e:
+    except (IOError, KeyError), e:
+        
         return _('license page')
