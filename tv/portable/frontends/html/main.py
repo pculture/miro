@@ -150,7 +150,7 @@ class HTMLApplication:
         # HACK
         app.controller.selection = self.selection
 
-        self.selection.selectFirstGuide()
+        self.selection.selectFirstTab()
 
         if self.loadedCustomChannels:
             dialog = dialogs.MessageBoxDialog(_("Custom Channels"), Template(_("You are running a version of $longAppName with a custom set of channels.")).substitute(longAppName=config.get(prefs.LONG_APP_NAME)))

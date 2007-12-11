@@ -39,6 +39,11 @@ class Application(HTMLApplication):
         queue.main_thread = threading.currentThread()
         platformutils.setMainThread()
         gtk.gdk.threads_init()
+        # We import frontend here to avoid a recursive import, since frontend
+        # imports this file
+        import frontend
+        if frontend.themeName is not None:
+            config.load(frontend.themeName)
         self.startup()
         gtk.main()
         app.controller.onShutdown()

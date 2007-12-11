@@ -150,7 +150,8 @@ def finalizeStartup():
     setupGlobalFeeds()
     setupTabs()
     searchengines.createEngines()
-    setupGuides()
+    # This will create the ChannelGuide object, if necessary
+    _getThemeHistory()
 
     # Start the automatic downloader daemon
     logging.info ("Spawning auto downloader...")
@@ -227,92 +228,10 @@ def installMoviesGoneHandler(callback):
     global moviesGoneHandler
     moviesGoneHandler = callback
 
-def setupGuides():
-    (newGuide, channelGuide) = _getInitialChannelGuide()
-
-    # This needs to happen after the first channel guide has been created
-    _getThemeHistory()
-
-    if newGuide:
-        if config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']:
-            delegate.maximizeWindow()
-        for temp_guide in unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split():
-            if views.guides.getItemWithIndex(indexes.guidesByURL, temp_guide) is None:
-                guide.ChannelGuide(temp_guide)
-
-
-def _getInitialChannelGuide():
-    default_guide = None
-    newGuide = False
-    for guideObj in views.guides:
-        if default_guide is None:
-            if guideObj.getDefault():
-                default_guide = guideObj
-
-    if default_guide is None:
-        newGuide = True
-        logging.info ("Spawning Miro Guide...")
-        default_guide = guide.ChannelGuide()
-        initialFeeds = resources.path("initial-feeds.democracy")
-        if os.path.exists(initialFeeds):
-            urls = subscription.parseFile(initialFeeds)
-            if urls is not None:
-                for url in urls:
-                    feed.Feed(url, initiallyAutoDownloadable=False)
-            signals.system.loadedCustomChannels()
-        else:
-            _defaultFeeds()
-    return (newGuide, default_guide)
-
 def _getThemeHistory():
     if len(views.themeHistories) > 0:
-        return views.themeHistories[0]
+        th = views.themeHistories[0]
+        th.checkNewTheme()
+        return th
     else:
         return theme.ThemeHistory()
-
-def _defaultFeeds():
-    if config.get(prefs.DEFAULT_CHANNELS_FILE) is not None:
-        importer = opml.Importer()
-        try:
-            if ((config.get(prefs.THEME_NAME) is not None) and 
-                (config.get(prefs.THEME_DIRECTORY) is not None)):
-                filepath = os.path.join(
-                    config.get(prefs.THEME_DIRECTORY),
-                    config.get(prefs.THEME_NAME),
-                    config.get(prefs.DEFAULT_CHANNELS_FILE))
-            else:
-                filepath = os.path.join(
-                    config.get(prefs.SUPPORT_DIRECTORY),
-                    config.get(prefs.DEFAULT_CHANNELS_FILE))
-            importer.importSubscriptionsFrom(filepath,
-                                             showSummary = False)
-            logging.info("Imported %s" % filepath)
-        except:
-            logging.warn("Could not import %s" % filepath)
-        return
-    logging.info("Adding default feeds")
-    if platform.system() == 'Darwin':
-        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/mac/mac.feed.rss']
-    elif platform.system() == 'Windows':
-        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
-    else:
-        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
-    defaultFeedURLs.extend([ (_('Starter Channels'),
-                              [u'http://richie-b.blip.tv/posts/?skin=rss',
-                               u'http://feeds.pbs.org/pbs/kcet/wiredscience-video',
-                               u'http://www.jpl.nasa.gov/multimedia/rss/podfeed-hd.xml',
-                               u'http://www.linktv.org/rss/hq/mosaic.xml']),
-                           ])
-
-    for default in defaultFeedURLs:
-        print repr(default)
-        if isinstance(default, tuple): # folder
-            defaultFolder = default
-            c_folder = folder.ChannelFolder(defaultFolder[0])
-            for url in defaultFolder[1]:
-                d_feed = feed.Feed(url, initiallyAutoDownloadable=False)
-                d_feed.setFolder(c_folder)
-        else: # feed
-            d_feed = feed.Feed(default, initiallyAutoDownloadable=False)
-    playlist.SavedPlaylist(_(u"Example Playlist"))
-

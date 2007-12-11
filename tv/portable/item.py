@@ -27,6 +27,7 @@ import locale
 import os
 import os.path
 import urllib
+import urlparse
 import shutil
 import traceback
 
@@ -63,6 +64,7 @@ import searchengines
 import fileutil
 import imageresize
 import signals
+import license
 
 _charset = locale.getpreferredencoding()
 
@@ -1001,6 +1003,18 @@ folder will be deleted.""")
                                               url)))
         rv.append((_('File type:'), self.getFormat()))
 
+        if self.getLicence():
+            # check the license to see if it's a url by seeing if it has a 
+            # protocol
+            if urlparse.urlparse(self.getLicence())[0]:
+                ln = license.license_name(self.getLicence())
+                rv.append((_('License:'), util.makeAnchor(ln,
+                                                          self.getLicence())))
+            else:
+                rv.append((_('License:'), _('see permalink')))
+        else:
+            rv.append((_('License:'), _('see permalink')))
+ 
         if self.isDownloaded():
             basename = os.path.basename(self.getFilename())
             basename = util.clampText(basename, 40)

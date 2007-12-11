@@ -23,12 +23,15 @@ import app
 import database
 import eventloop
 import folder
+import config
+import prefs
 import guide
 import item
 import tabs
 import playlist
 import feed
 import views
+import indexes
 import template
 import util
 from gtcache import gettext as _
@@ -341,12 +344,33 @@ class TabSelectionArea(SelectionArea):
                 prevTab = self.currentView.getNext()
             if prevTab is None:
                 # That was the last tab in the list, select the guide
-                self.selectFirstGuide()
+                self.selectFirstTab()
             else:
                 self.selectItem(self.currentView, prevTab.objID())
             self.handler.displayCurrentTabContent()
 
-    def selectFirstGuide(self):
+    def selectFirstTab(self):
+        if config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None:
+            view = views.feeds.filterWithIndex(indexes.feedsByURL,
+                          unicode(config.get(prefs.OPEN_CHANNEL_ON_STARTUP)))
+            if len(view) > 0:
+                self.selectItem(views.allTabs, view[0].getID())
+                self.handler.displayCurrentTabContent()
+                view.unlink()
+                return
+            else:
+                view.unlink()
+        if config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
+            view = views.channelFolders.filterWithIndex(indexes.foldersByTitle,
+                          unicode(config.get(prefs.OPEN_FOLDER_ON_STARTUP)))
+            if len(view) > 0:
+                self.selectItem(views.allTabs, view[0].getID())
+                self.handler.displayCurrentTabContent()
+                view.unlink()
+                return
+            else:
+                view.unlink()
+
         views.guideTabs.resetCursor()
         guide = views.guideTabs.getNext()
         self.selectItem(views.guideTabs, guide.objID())
@@ -434,8 +458,8 @@ class SelectionHandler(object):
         else:
             return set([sourceID])
 
-    def selectFirstGuide(self):
-        self.tabListSelection.selectFirstGuide()
+    def selectFirstTab(self):
+        self.tabListSelection.selectFirstTab()
 
     def selectTabByTemplateBase(self, tabTemplateBase, displayTabContent=True):
         tabViews = [ 

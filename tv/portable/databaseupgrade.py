@@ -878,7 +878,25 @@ def upgrade58(objectList):
             except:
                 pass
     return changed
-        
+
+def upgrade59(objectList):
+    """
+    We changed ThemeHistory to allow None in the pastTheme list.  Since we're
+    upgrading, we can assume that the default channels have been added, so
+    we'll add None to that list manually.  We also require a URL for channel
+    guides.  If it's None, eplace it with https://www.miroguide.com/.
+    """
+    changed = set()
+    for o in objectList:
+        if o.classString == 'channel-guide' and o.savedData['url'] is None:
+            o.savedData['url'] = u'https://www.miroguide.com/'
+            changed.add(o)
+        elif o.classString == 'theme-history':
+            if None not in o.savedData['pastThemes']:
+                o.savedData['pastThemes'].append(None)
+                changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

@@ -10,29 +10,16 @@
     function guideUnloaded() {
         document.getElementById('load-indicator').style.display = 'block';
     }
-
-    /* We can't just watch the other frame for unload, because somehow that's a cross-domain
-       violation.  So we do the hack-y thing, and watch for a change in the number of history
-       items.  It doesn't work all the time, but it's pretty good.
-    */
-    function checkMiroLoading(lastHistory) {
-
-        if (history.length != lastHistory) {
-            guideUnloaded();
-        }
-        setTimeout("checkMiroLoading(" + history.length + ")", 100);
-    }
-    setTimeout("checkMiroLoading(0)",100);
 </script>
 </head>
 <body>
     <div id="nav-bar">
         <ul>
-            <li class="previous"><a href="#" onclick="history.back(); return false;" ><span class="hidden">Previous</span></a></li>
-           <li class="next"><a href="#" onclick="history.forward(); return false;" ><span class="hidden">Next</span></a></li>
+            <li class="previous"><a href="action:back" ><span class="hidden">Previous</span></a></li>
+           <li class="next"><a href="action:forward" ><span class="hidden">Next</span></a></li>
 
             <li class="home">
-            <a href="#" onclick="for (i=-1;i>-history.length;i--){history.go(i)}; return false;" class="home-button-left"><span class="home-button-right"><span class="home-button-content">HOME</span></span></a>
+            <a href="action:home" class="home-button-left"><span class="home-button-right"><span class="home-button-content">HOME</span></span></a>
             </li>
         </ul>
         <img id="load-indicator" alt="loading" src="../images/load-indicator.gif">
