@@ -34,7 +34,7 @@ try:
     import eventloop
     import config
     import frontends.html
-    from frontends.html import dialogs
+    from frontends.html import dialogs, keyboard
     import folder
     import playlist
     import prefs
@@ -53,7 +53,6 @@ try:
     import views
     import moviedata
     import migrateappname
-    import keyboard
     import signals
     moviedata.RUNNING_MAX = 1
 except:

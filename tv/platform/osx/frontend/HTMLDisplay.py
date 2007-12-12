@@ -26,10 +26,10 @@ from WebKit import *
 from Foundation import *
 from PyObjCTools import AppHelper
 
+from frontends.html import keyboard
 import app
 import prefs
 import config
-import keyboard
 import resources
 import platformutils
 import templatehelper

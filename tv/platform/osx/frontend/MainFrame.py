@@ -28,9 +28,8 @@ import prefs
 import views
 import config
 import folder
-from frontends.html import dialogs
+from frontends.html import dialogs, keyboard
 import playlist
-import keyboard
 import resources
 import eventloop
 import searchengines
