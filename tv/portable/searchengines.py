@@ -118,6 +118,7 @@ def createEngines():
     searchEngines.update (searchForSearchEngines(os.path.join (config.get(prefs.SUPPORT_DIRECTORY), "searchengines")))
     for file in searchEngines.itervalues():
         loadSearchEngine (file)
+    SearchEngine(u"all", u"Search All", u"", -1)
 
 @returnsUnicode
 def getRequestURL(engineName, query, filterAdultContents=True, limit=50):
@@ -127,6 +128,9 @@ def getRequestURL(engineName, query, filterAdultContents=True, limit=50):
         import database
         database.defaultDatabase.liveStorage.dumpDatabase (database.defaultDatabase)
         return u""
+    if engineName == u'all':
+        all_urls = [urlencode(engine.getRequestURL(query, filterAdultContents, limit)) for engine in views.searchEngines if engine.name != u'all']
+        return "dtv:multi:" + ','.join(all_urls)
     for engine in views.searchEngines:
         if engine.name == engineName:
             return engine.getRequestURL(query, filterAdultContents, limit)

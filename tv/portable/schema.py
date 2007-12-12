@@ -244,7 +244,7 @@ class ObjectSchema(object):
 
 from database import DDBObject
 from downloader import RemoteDownloader, HTTPAuthPassword
-from feed import Feed, FeedImpl, RSSFeedImpl, ScraperFeedImpl
+from feed import Feed, FeedImpl, RSSFeedImpl, RSSMultiFeedImpl, ScraperFeedImpl
 from feed import SearchFeedImpl, DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
 from feed import ManualFeedImpl, SingleFeedImpl
 from folder import ChannelFolder, PlaylistFolder
@@ -356,6 +356,14 @@ class RSSFeedImplSchema(FeedImplSchema):
         ('modified', SchemaString(noneOk=True)),
     ]
 
+class RSSMultiFeedImplSchema(FeedImplSchema):
+    klass = RSSMultiFeedImpl
+    classString = 'rss-multi-feed-impl'
+    fields = FeedImplSchema.fields + [
+        ('etag', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
+        ('modified', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
+    ]
+
 class ScraperFeedImplSchema(FeedImplSchema):
     klass = ScraperFeedImpl
     classString = 'scraper-feed-impl'
@@ -365,10 +373,10 @@ class ScraperFeedImplSchema(FeedImplSchema):
         ('linkHistory', SchemaSimpleContainer()),
     ]
 
-class SearchFeedImplSchema(FeedImplSchema):
+class SearchFeedImplSchema(RSSMultiFeedImplSchema):
     klass = SearchFeedImpl
     classString = 'search-feed-impl'
-    fields = FeedImplSchema.fields + [
+    fields = RSSMultiFeedImplSchema.fields + [
         ('searching', SchemaBool()),
         ('lastEngine', SchemaString()),
         ('lastQuery', SchemaString()),
@@ -481,10 +489,10 @@ class ThemeHistorySchema(DDBObjectSchema):
         ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
     ]
 
-VERSION = 59
+VERSION = 60
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
-    FeedImplSchema, RSSFeedImplSchema, ScraperFeedImplSchema,
+    FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
     HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema, SingleFeedImplSchema,
