@@ -1171,6 +1171,7 @@ a.small-button-left:hover {
 .more-info-details {
     font-size: 10px;
     margin-bottom: 4px;
+    padding-right: 4px; 
 }
 
 .more-info-details h3 {
