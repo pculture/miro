@@ -4,9 +4,6 @@
 /* NSButton ( limit downstream to) : <title: limit downstream to> (oid:166) */
 " limit downstream to" = " limit downstream to";
 
-/* NSButton ( limit upstream to) : <title: limit upstream to> (oid:30) */
-" limit upstream to" = " limit upstream to";
-
 /* NSTextField ((You must restart Miro for some of these changes to take effect)) : <title:(You must restart Miro for some of these changes to take effect)> (oid:127) */
 "(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)";
 
@@ -16,6 +13,9 @@
 
 /* NSTextField ((movies directory path goes here)) : <title:(movies directory path goes here)> (oid:94) */
 "(movies directory path goes here)" = "(movies directory path goes here)";
+
+/* NSTextField (-) : <title:-> (oid:114) */
+"-" = "-";
 
 /* NSMenuItem : <title:1 day> (oid:83) */
 "1 day" = "1 day";
@@ -65,26 +65,24 @@
 /* NSTextField (Check channels for new content:) : <title:Check channels for new content:> (oid:24) */
 "Check channels for new content:" = "Check channels for new content:";
 
-/* NSButton (Don't start a download if it leaves less than) : <title:Don't start a download if it leaves less than> (oid:74) */
-"Don't start a download if it leaves less than" = "Don't start a download if it leaves less than";
-
-/* NSTextField (Download at most) : <title:Download at most> (oid:129) */
-"Download at most" = "Download at most";
+/* NSTextField (Don't download more than this many videos at once:) : <title:Don't download more than this many videos at once:> (oid:129) */
+"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:";
 
 /* NSTableColumn : <title:Folder location> (oid:148) */
 "Folder location" = "Folder location";
 
-/* NSTextField (GB free.) : <title:GB free.> (oid:45) */
-"GB free." = "GB free.";
+/* NSTextField (GB ) : <title:GB
+> (oid:45) */
+"GB\n" = "GB\n";
 
-/* NSButton (Ignore non encrypted connections) : <title:Ignore non encrypted connections> (oid:178) */
-"Ignore non encrypted connections" = "Ignore non encrypted connections";
-
-/* NSTextField (KB/s when my computer is active.) : <title:KB/s when my computer is active.> (oid:38) */
-"KB/s when my computer is active." = "KB/s when my computer is active.";
+/* NSButton (Ignore unencrypted connections) : <title:Ignore unencrypted connections> (oid:178) */
+"Ignore unencrypted connections" = "Ignore unencrypted connections";
 
 /* NSTextField (KB/s.) : <title:KB/s.> (oid:167) */
 "KB/s." = "KB/s.";
+
+/* NSButton (Keep at least this much free space on my drive:) : <title:Keep at least this much free space on my drive:> (oid:74) */
+"Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:";
 
 /* NSMenuItem : <title:Never> (oid:86) */
 "Never" = "Never";
@@ -104,29 +102,26 @@
 /* NSButton (Run Miro at startup) : <title:Run Miro at startup> (oid:47) */
 "Run Miro at startup" = "Run Miro at startup";
 
-/* NSTextField (Save downloaded videos in this folder:) : <title:Save downloaded videos in this folder:> (oid:92) */
-"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
-
 /* NSTableColumn : <title:Show as Channel> (oid:147) */
 "Show as Channel" = "Show as Channel";
 
 /* NSButtonCell (Stop after each video.) : <title:Stop after each video.> (oid:104) */
 "Stop after each video." = "Stop after each video.";
 
-/* NSTextField (To avoid internet slowdowns:) : <title:To avoid internet slowdowns:> (oid:128) */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
+/* NSTextField (Store downloads in this folder:) : <title:Store downloads in this folder:> (oid:92) */
+"Store downloads in this folder:" = "Store downloads in this folder:";
 
-/* NSTextField (Use ports between) : <title:Use ports between> (oid:111) */
-"Use ports between" = "Use ports between";
+/* NSButton (To avoid internet slowdowns, limit upstream to) : <title:To avoid internet slowdowns, limit upstream to> (oid:30) */
+"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to";
+
+/* NSTextField (Use these ports:) : <title:Use these ports:> (oid:111) */
+"Use these ports:" = "Use these ports:";
 
 /* NSButton (Warn me when I attempt to quit with downloads in progress) : <title:Warn me when I attempt to quit with downloads in progress> (oid:160) */
 "Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
 
 /* NSTextField (Watch for new videos in these folders and include them in the Library:) : <title:Watch for new videos in these folders and include them in the Library:> (oid:144) */
 "Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:";
-
-/* NSTextField (and) : <title:and> (oid:114) */
-"and" = "and";
 
 /* NSMenuItem : <title:every 30 minutes> (oid:27) */
 "every 30 minutes" = "every 30 minutes";
@@ -136,7 +131,4 @@
 
 /* NSMenuItem : <title:manually> (oid:28) */
 "manually" = "manually";
-
-/* NSTextField (videos at once.) : <title:videos at once.> (oid:132) */
-"videos at once." = "videos at once.";
 
