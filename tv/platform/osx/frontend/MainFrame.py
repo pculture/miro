@@ -15,6 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
+import os
 import math
 import logging
 
@@ -96,8 +97,6 @@ class MainController (NSWindowController):
         return self
 
     def awakeFromNib(self):
-        from VideoDisplay import VideoDisplayController
-        self.videoDisplayController = VideoDisplayController.getInstance() # FIXME!!
         self.frame.channelsDisplay = self.channelsHostView
         self.frame.mainDisplay = self.mainHostView
         self.frame.videoInfoDisplay = self.videoInfoHostView
@@ -639,6 +638,7 @@ class Slider (NSView):
         self.sliderWasReleased = None
         return self
 
+    @platformutils.onMainThread
     def setFloatValue_(self, value):
         self.value = value
         self.setNeedsDisplay_(YES)
@@ -786,8 +786,9 @@ class VideoSearchField (NSSearchField):
         lastEngine = searchengines.getLastEngine()
         for engine in views.searchEngines:
             if engine.name == lastEngine:
-                index = self.searchMenuTemplate().indexOfItemWithRepresentedObject_(engine)
-                self.searchMenuTemplate().performActionForItemAtIndex_(index)
+                menu = self.searchMenuTemplate()
+                index = menu.indexOfItemWithRepresentedObject_(engine)
+                menu.performActionForItemAtIndex_(index)
                 return
 
     def selectedEngine(self):
@@ -845,6 +846,8 @@ class VideoSearchFieldCell (NSSearchFieldCell):
 
 def _getEngineIcon(engine):
     engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)
+    if not os.path.exists(engineIconPath):
+        return nil
     return NSImage.alloc().initByReferencingFile_(engineIconPath)
 
 searchIcons = dict()
@@ -858,6 +861,8 @@ def _makeSearchIcon(engine):
     popupRectangleSize = popupRectangle.size()
 
     engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)
+    if not os.path.exists(engineIconPath):
+        return nil
     engineIcon = NSImage.alloc().initByReferencingFile_(engineIconPath)
     engineIconSize = engineIcon.size()
 
