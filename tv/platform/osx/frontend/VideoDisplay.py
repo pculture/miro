@@ -376,6 +376,7 @@ class VideoAreaView (NSView):
             self.window().deminiaturize_(nil)
         self.window().orderFront_(nil)
         self.videoWindow.orderFront_(nil)
+        self.window().makeFirstResponder_(self.window().delegate())
         if self.videoWindow.parentWindow() is nil:
             self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
     
