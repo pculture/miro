@@ -56,9 +56,10 @@ ROOT_DIR = os.path.normpath(ROOT_DIR)
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
 sys.path.insert(0, PORTABLE_DIR)
 
-SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
-SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
-sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
+#SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
+#SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
+SANDBOX_DIR = "/usr/local"
+#sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
 
 # =============================================================================
 # Only now may we import things from the local sandbox and our own tree
@@ -458,21 +459,22 @@ class mypy2app (py2app):
 #   isysroot flag.
 # =============================================================================
 
-PYTHON_LIB = os.path.join(SANDBOX_DIR, "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
-BOOST_PYTHON_LIB = os.path.join(SANDBOX_DIR, "lib", "libboost_python-%s.dylib" % BOOST_VERSION)
-BOOST_FILESYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_filesystem-%s.dylib' % BOOST_VERSION)
-BOOST_DATETIME_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_date_time-%s.dylib' % BOOST_VERSION)
-BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread-%s.dylib' % BOOST_VERSION)
+#PYTHON_LIB = os.path.join(SANDBOX_DIR, "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+BOOST_PYTHON_LIB = os.path.join(SANDBOX_DIR, "lib", "libboost_python-%s.a" % BOOST_VERSION)
+BOOST_FILESYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_filesystem-%s.a' % BOOST_VERSION)
+BOOST_DATETIME_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_date_time-%s.a' % BOOST_VERSION)
+BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread-%s.a' % BOOST_VERSION)
 
 # =============================================================================
 # Define the native extensions
 # =============================================================================
 
-idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
-idletime_link_args = ['-framework', 'CoreFoundation']
-
-idletime_ext = Extension("idletime", sources=idletime_src, 
-                                     extra_link_args=idletime_link_args)
+#idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
+#idletime_link_args = ['-framework', 'CoreFoundation']
+#
+#idletime_ext = Extension("idletime", sources=idletime_src, 
+#                                     extra_link_args=idletime_link_args)
 
 # -----------------------------------------------------------------------------
 
@@ -564,7 +566,7 @@ setup(
     app =           [ '%s.py' % conf['shortAppName'] ],
     options =       { 'py2app': py2app_options },
 
-    ext_modules =   [ idletime_ext,
+    ext_modules =   [ #idletime_ext,
                       keychain_ext,
                       qtcomp_ext,
                       database_ext,
