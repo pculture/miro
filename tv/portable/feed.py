@@ -1327,7 +1327,7 @@ class RSSFeedImpl(FeedImpl):
             self.modified = None
         self.call_feedparser (html)
 
-    def _handleNewEntryForItem(self, item, entry):
+    def _handleNewEntryForItem(self, item, entry, channelTitle):
         """Handle when we get a different entry for an item.
 
         This happens when the feed sets the RSS GUID attribute, then changes
@@ -1343,15 +1343,16 @@ class RSSFeedImpl(FeedImpl):
             entryURL = None
         if item.isDownloaded() and item.getURL() != entryURL:
             item.removeRSSID()
-            self._handleNewEntry(entry)
+            self._handleNewEntry(entry, channelTitle)
         else:
             item.update(entry)
 
-    def _handleNewEntry(self, entry):
+    def _handleNewEntry(self, entry, channelTitle):
         """Handle getting a new entry from a feed."""
         item = Item(entry, feed_id=self.ufeed.id)
         if not filters.matchingItems(item, self.ufeed.searchTerm):
             item.remove()
+        item.setChannelTitle(channelTitle)
 
     def updateUsingParsed(self, parsed):
         """Update the feed using parsed XML passed in"""
@@ -1371,13 +1372,16 @@ class RSSFeedImpl(FeedImpl):
                 else:
                     logging.info('unknown url type %s, not generating enclosure' % url)
 
+        channelTitle = None
         try:
-            self.title = self.parsed["feed"]["title"]
+            channelTitle = self.parsed["feed"]["title"]
         except KeyError:
             try:
-                self.title = self.parsed["channel"]["title"]
+                channelTitle = self.parsed["channel"]["title"]
             except KeyError:
                 pass
+        if channelTitle != None:
+            self.title = channelTitle
         if (self.parsed.feed.has_key('image') and 
             self.parsed.feed.image.has_key('url')):
             self.thumbURL = self.parsed.feed.image.url
@@ -1409,7 +1413,7 @@ class RSSFeedImpl(FeedImpl):
                 if items_byid.has_key (id):
                     item = items_byid[id]
                     if not _entry_equal(entry, item.getRSSEntry()):
-                        self._handleNewEntryForItem(item, entry)
+                        self._handleNewEntryForItem(item, entry, channelTitle)
                     new = False
                     old_items.discard(item)
             if new:
@@ -1423,7 +1427,7 @@ class RSSFeedImpl(FeedImpl):
                     if items_byURLTitle.has_key ((entryURL, title)):
                         item = items_byURLTitle[(entryURL, title)]
                         if not _entry_equal(entry, item.getRSSEntry()):
-                            self._handleNewEntryForItem(item, entry)
+                            self._handleNewEntryForItem(item, entry, channelTitle)
                         new = False
                         old_items.discard(item)
             if new:
@@ -1433,14 +1437,14 @@ class RSSFeedImpl(FeedImpl):
                     else:
                         try:
                             if _entry_equal (entry["enclosures"], item.getRSSEntry()["enclosures"]):
-                                self._handleNewEntryForItem(item, entry)
+                                self._handleNewEntryForItem(item, entry, channelTitle)
                                 new = False
                                 old_items.discard(item)
                         except:
                             pass
             if (new and entry.has_key('enclosures') and
                     getFirstVideoEnclosure(entry) != None):
-                self._handleNewEntry(entry)
+                self._handleNewEntry(entry, channelTitle)
         try:
             updateFreq = self.parsed["feed"]["ttl"]
         except KeyError:
@@ -1686,7 +1690,7 @@ class RSSMultiFeedImpl(FeedImpl):
             self.modified[url] = None
         self.call_feedparser (html, url)
 
-    def _handleNewEntryForItem(self, item, entry):
+    def _handleNewEntryForItem(self, item, entry, channelTitle):
         """Handle when we get a different entry for an item.
 
         This happens when the feed sets the RSS GUID attribute, then changes
@@ -1702,15 +1706,16 @@ class RSSMultiFeedImpl(FeedImpl):
             entryURL = None
         if item.isDownloaded() and item.getURL() != entryURL:
             item.removeRSSID()
-            self._handleNewEntry(entry)
+            self._handleNewEntry(entry, channelTitle)
         else:
             item.update(entry)
 
-    def _handleNewEntry(self, entry):
+    def _handleNewEntry(self, entry, channelTitle):
         """Handle getting a new entry from a feed."""
         item = Item(entry, feed_id=self.ufeed.id)
         if not filters.matchingItems(item, self.ufeed.searchTerm):
             item.remove()
+        item.setChannelTitle(channelTitle)
 
     def updateUsingParsed(self, parsed):
         """Update the feed using parsed XML passed in"""
@@ -1729,14 +1734,17 @@ class RSSMultiFeedImpl(FeedImpl):
                 else:
                     logging.info('unknown url type %s, not generating enclosure' % url)
 
-        if not self.url.startswith("dtv:multi:"):
+        channelTitle = None
+        try:
+            channelTitle = parsed["feed"]["title"]
+        except KeyError:
             try:
-                self.title = parsed["feed"]["title"]
+                channelTitle = parsed["channel"]["title"]
             except KeyError:
-                try:
-                    self.title = parsed["channel"]["title"]
-                except KeyError:
-                    pass
+                pass
+        if not self.url.startswith("dtv:multi:"):
+            if channelTitle != None:
+                self.title = channelTitle
             if (parsed.feed.has_key('image') and 
                 parsed.feed.image.has_key('url')):
                 self.thumbURL = parsed.feed.image.url
@@ -1769,7 +1777,7 @@ class RSSMultiFeedImpl(FeedImpl):
                 if items_byid.has_key (id):
                     item = items_byid[id]
                     if not _entry_equal(entry, item.getRSSEntry()):
-                        self._handleNewEntryForItem(item, entry)
+                        self._handleNewEntryForItem(item, entry, channelTitle)
                     new = False
                     old_items.discard(item)
             if new:
@@ -1783,7 +1791,7 @@ class RSSMultiFeedImpl(FeedImpl):
                     if items_byURLTitle.has_key ((entryURL, title)):
                         item = items_byURLTitle[(entryURL, title)]
                         if not _entry_equal(entry, item.getRSSEntry()):
-                            self._handleNewEntryForItem(item, entry)
+                            self._handleNewEntryForItem(item, entry, channelTitle)
                         new = False
                         old_items.discard(item)
             if new:
@@ -1793,14 +1801,14 @@ class RSSMultiFeedImpl(FeedImpl):
                     else:
                         try:
                             if _entry_equal (entry["enclosures"], item.getRSSEntry()["enclosures"]):
-                                self._handleNewEntryForItem(item, entry)
+                                self._handleNewEntryForItem(item, entry, channelTitle)
                                 new = False
                                 old_items.discard(item)
                         except:
                             pass
             if (new and entry.has_key('enclosures') and
                     getFirstVideoEnclosure(entry) != None):
-                self._handleNewEntry(entry)
+                self._handleNewEntry(entry, channelTitle)
 #        try:
 #            updateFreq = parsed["feed"]["ttl"]
 #        except KeyError:
@@ -2431,7 +2439,7 @@ class SearchFeedImpl (RSSMultiFeedImpl):
         self.update()
         self.ufeed.signalChange()
 
-    def _handleNewEntry(self, entry):
+    def _handleNewEntry(self, entry, channelTitle):
         """Handle getting a new entry from a feed."""
         videoEnc = getFirstVideoEnclosure(entry)
         if videoEnc is not None:
@@ -2445,7 +2453,7 @@ class SearchFeedImpl (RSSMultiFeedImpl):
                                 if entry["id"] == item.getRSSID():
                                     item.setFeed(self.ufeed.id)
                                     if not _entry_equal(entry, item.getRSSEntry()):
-                                        self._handleNewEntryForItem(item, entry)
+                                        self._handleNewEntryForItem(item, entry, channelTitle)
                                     return
                             except KeyError:
                                 pass
@@ -2454,9 +2462,9 @@ class SearchFeedImpl (RSSMultiFeedImpl):
                             if title == oldtitle:
                                 item.setFeed(self.ufeed.id)
                                 if not _entry_equal(entry, item.getRSSEntry()):
-                                    self._handleNewEntryForItem(item, entry)
+                                    self._handleNewEntryForItem(item, entry, channelTitle)
                                 return
-        RSSMultiFeedImpl._handleNewEntry(self, entry)
+        RSSMultiFeedImpl._handleNewEntry(self, entry, channelTitle)
 
     def updateFinished(self):
         self.searching = False

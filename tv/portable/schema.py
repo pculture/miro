@@ -300,6 +300,7 @@ class ItemSchema(DDBObjectSchema):
         ('screenshot', SchemaFilename(noneOk=True)),
         ('resized_screenshots', SchemaDict(SchemaString(), SchemaFilename())),
         ('resumeTime', SchemaInt()),
+        ('channelTitle', SchemaString(noneOk=True)),
     ]
 
 class FileItemSchema(ItemSchema):
@@ -489,7 +490,7 @@ class ThemeHistorySchema(DDBObjectSchema):
         ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
     ]
 
-VERSION = 60
+VERSION = 61
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
