@@ -56,9 +56,10 @@ ROOT_DIR = os.path.normpath(ROOT_DIR)
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
 sys.path.insert(0, PORTABLE_DIR)
 
-SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
-SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
-sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
+#SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
+#SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
+SANDBOX_DIR = "/usr/local"
+#sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
 
 # =============================================================================
 # Only now may we import things from the local sandbox and our own tree
@@ -451,24 +452,29 @@ class mypy2app (py2app):
             os.system("ls -la \"%s\"" % imgPath)
 
 # =============================================================================
-# Fix flags for universal binary extensions
+# We're going to explicitely pass these when linking our extensions to:
+# - avoid a linker error if we would specify the libraries using -L and -l
+#   flags since we also specify a isysroot.
+# - avoid the linker warnings which would occur if we would remove the 
+#   isysroot flag.
 # =============================================================================
 
-from distutils import sysconfig
-for syscnf in ["LDFLAGS", "LDSHARED", "BLDSHARED"]:
-	val = sysconfig.get_config_vars()[syscnf]
-	val = val.replace("-isysroot /Developer/SDKs/MacOSX10.4u.sdk", "")
-	sysconfig.get_config_vars()[syscnf] = ' '.join(val.split())
+#PYTHON_LIB = os.path.join(SANDBOX_DIR, "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+BOOST_PYTHON_LIB = os.path.join(SANDBOX_DIR, "lib", "libboost_python-%s.a" % BOOST_VERSION)
+BOOST_FILESYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_filesystem-%s.a' % BOOST_VERSION)
+BOOST_DATETIME_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_date_time-%s.a' % BOOST_VERSION)
+BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread-%s.a' % BOOST_VERSION)
 
 # =============================================================================
 # Define the native extensions
 # =============================================================================
 
-idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
-idletime_link_args = ['-framework', 'CoreFoundation']
-
-idletime_ext = Extension("idletime", sources=idletime_src, 
-                                     extra_link_args=idletime_link_args)
+#idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
+#idletime_link_args = ['-framework', 'CoreFoundation']
+#
+#idletime_ext = Extension("idletime", sources=idletime_src, 
+#                                     extra_link_args=idletime_link_args)
 
 # -----------------------------------------------------------------------------
 
@@ -500,13 +506,11 @@ sorts_ext = Extension("sorts", sources=sorts_src)
 
 fasttypes_src = glob(os.path.join(ROOT_DIR, 'portable', 'fasttypes.cpp'))
 fasttypes_inc_dirs = [BOOST_INCLUDE_DIR]
-fasttypes_lib_dirs = [BOOST_LIB_DIR]
-fasttypes_libs = ['boost_python-%s' % BOOST_VERSION]
+fasttypes_extras = [PYTHON_LIB, BOOST_PYTHON_LIB]
 
 fasttypes_ext = Extension("fasttypes", sources=fasttypes_src, 
                                        include_dirs=fasttypes_inc_dirs, 
-                                       library_dirs=fasttypes_lib_dirs, 
-                                       libraries=fasttypes_libs)
+                                       extra_objects=fasttypes_extras)
 
 # -----------------------------------------------------------------------------
 
@@ -524,13 +528,14 @@ libtorrent_inc_dirs = [BOOST_INCLUDE_DIR,
                        os.path.join(PORTABLE_DIR, 'libtorrent', 'include'),
                        os.path.join(PORTABLE_DIR, 'libtorrent', 'include', 'libtorrent')]
 libtorrent_lib_dirs = [BOOST_LIB_DIR]
-libtorrent_libs = ['boost_python-%s' % BOOST_VERSION, 
-                   'boost_filesystem-%s' % BOOST_VERSION, 
-                   'boost_date_time-%s' % BOOST_VERSION, 
-                   'boost_thread-%s' % BOOST_VERSION, 
-                   'z', 
+libtorrent_libs = ['z', 
                    'pthread', 
                    'ssl']
+libtorrent_extras = [PYTHON_LIB,
+                     BOOST_PYTHON_LIB,
+                     BOOST_FILESYSTEM_LIB,
+                     BOOST_DATETIME_LIB,
+                     BOOST_THREAD_LIB]
 libtorrent_compil_args = ["-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1", 
                           "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1", 
                           "-DHAVE_INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1", 
@@ -541,8 +546,8 @@ libtorrent_compil_args = ["-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1",
 
 libtorrent_ext = Extension("libtorrent", sources=libtorrent_src, 
                                          include_dirs=libtorrent_inc_dirs,
-                                         library_dirs=libtorrent_lib_dirs, 
                                          libraries=libtorrent_libs, 
+                                         extra_objects=libtorrent_extras,
                                          extra_compile_args=libtorrent_compil_args)
 
 # =============================================================================
@@ -561,7 +566,7 @@ setup(
     app =           [ '%s.py' % conf['shortAppName'] ],
     options =       { 'py2app': py2app_options },
 
-    ext_modules =   [ idletime_ext,
+    ext_modules =   [ #idletime_ext,
                       keychain_ext,
                       qtcomp_ext,
                       database_ext,

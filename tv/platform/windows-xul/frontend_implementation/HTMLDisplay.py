@@ -139,6 +139,12 @@ class HTMLDisplay (Display):
         self.area = None
 
     @deferUntilLoad
+    def execJS(self, javascript):
+        print "EXEC JS: ", javascript
+        fullUrl = "javascript:%s" % javascript
+        frontend.jsBridge.xulNavigateDisplay(self.area, fullUrl)
+
+    @deferUntilLoad
     def navigateToFragment(self, fragment):
         fullUrl = "%s#%s" % (self.url, fragment)
         frontend.jsBridge.xulNavigateDisplay(self.area, fullUrl)

@@ -22,6 +22,8 @@ import statvfs
 import logging
 import sys
 import time
+import errno
+import signal
 
 from objc import NO, YES
 from Foundation import *
@@ -352,14 +354,28 @@ def getMajorOSVersion():
     versionInfo = versionInfo[2].split('.')
     return int(versionInfo[0])
 
-def killProcess(self, pid=None):
-    if pid is not None:
+def pidIsRunning(pid):
+    if pid is None:
+        return False
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError, err:
+        return err.errno == errno.EPERM
+
+def killProcess(pid):
+    if pid is None:
+        return
+    if pidIsRunning(pid):
         try:
             os.kill(pid, signal.SIGTERM)
-            time.sleep(1)
+            for i in xrange(100):
+                time.sleep(.01)
+                if not pidIsRunning(pid):
+                    return
             os.kill(pid, signal.SIGKILL)
         except:
-            pass
+            logging.exception ("error killing process")
 
 def launchDownloadDaemon(oldpid, env):
     killProcess(oldpid)

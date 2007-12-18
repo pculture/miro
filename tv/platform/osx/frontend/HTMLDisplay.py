@@ -319,6 +319,12 @@ class ManagedWebView (NSObject):
         else:
             listener.use()
 
+    # Intercept external links requests
+    def webView_decidePolicyForNewWindowAction_request_newFrameName_decisionListener_(self, webView, info, request, name, listener):
+        url = info["WebActionOriginalURLKey"]
+        NSWorkspace.sharedWorkspace().openURL_(url)
+        listener.ignore()
+
     # Redirect resource: links to files in resource bundle
     def webView_resource_willSendRequest_redirectResponse_fromDataSource_(self, webview, resourceCookie, request, redirectResponse, dataSource):
         platformutils.warnIfNotOnMainThread('ManagedWebView.webView_resource_willSendRequest_redirectResponse_fromDataSource_')
