@@ -22,10 +22,10 @@ import signal
 import logging
 import threading
 
-from objc import YES, NO, nil, signature
+from objc import YES, NO, nil, signature, IBOutlet
 from AppKit import *
 from Foundation import *
-from PyObjCTools import NibClassBuilder, Conversion, AppHelper
+from PyObjCTools import Conversion, AppHelper
 
 import app
 import feed
@@ -41,13 +41,6 @@ import GrowlNotifier
 import SparkleUpdater
 
 ###############################################################################
-
-NibClassBuilder.extractClasses(u"PasswordWindow")
-NibClassBuilder.extractClasses(u"TextEntryWindow")
-NibClassBuilder.extractClasses(u"CheckboxDialogWindow")
-NibClassBuilder.extractClasses(u"CheckboxTextboxDialogWindow")
-NibClassBuilder.extractClasses(u'SearchChannelWindow')
-NibClassBuilder.extractClasses(u"ExceptionReporterPanel")
 
 dlTask = None
 
@@ -394,7 +387,11 @@ class SavePanelHandler (NSObject):
 
 ###############################################################################
 
-class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
+class ExceptionReporterController (NSWindowController):
+    
+    logView     = IBOutlet('logView')
+    msg1Field   = IBOutlet('msg1Field')
+    msg3View    = IBOutlet('msg3View')
     
     def initWithMoment_log_(self, when, log):
         self = super(ExceptionReporterController, self).initWithWindowNibName_owner_(u"ExceptionReporterPanel", self)
@@ -429,7 +426,12 @@ class ExceptionReporterController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class PasswordController (NibClassBuilder.AutoBaseClass):
+class PasswordController (NSObject):
+
+    passwordField   = IBOutlet('passwordField')
+    textArea        = IBOutlet('textArea')
+    usernameField   = IBOutlet('usernameField')
+    window          = IBOutlet('window')
 
     def initWithDialog_(self, dialog):
         NSBundle.loadNibNamed_owner_(u"PasswordWindow", self)
@@ -463,7 +465,12 @@ class PasswordController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class TextEntryController (NibClassBuilder.AutoBaseClass):
+class TextEntryController (NSWindowController):
+    
+    entryField      = IBOutlet('entryField')
+    messageField    = IBOutlet('messageField')
+    mainButton      = IBOutlet('mainButton')
+    secondaryButton = IBOutlet('secondaryButton')
     
     def initWithDialog_(self, dialog):
         self = super(TextEntryController, self).initWithWindowNibName_owner_(u"TextEntryWindow", self)
@@ -499,7 +506,12 @@ class TextEntryController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class CheckboxDialogController (NibClassBuilder.AutoBaseClass):
+class CheckboxDialogController (NSWindowController):
+    
+    checkbox        = IBOutlet('checkbox')
+    mainButton      = IBOutlet('mainButton')
+    messageField    = IBOutlet('messageField')
+    secondaryButton = IBOutlet('secondaryButton')
     
     def initWithDialog_(self, dialog):
         self = super(CheckboxDialogController, self).initWithWindowNibName_owner_(u"CheckboxDialogWindow", self)
@@ -536,7 +548,14 @@ class CheckboxDialogController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class CheckboxTextboxDialogController (NibClassBuilder.AutoBaseClass):
+class CheckboxTextboxDialogController (NSWindowController):
+
+    checkbox        = IBOutlet('checkbox')
+    checkboxLabel   = IBOutlet('checkboxLabel')
+    entryField      = IBOutlet('entryField')
+    mainButton      = IBOutlet('mainButton')
+    messageField    = IBOutlet('messageField')
+    secondaryButton = IBOutlet('secondaryButton')
     
     def initWithDialog_(self, dialog):
         self = super(CheckboxTextboxDialogController, self).initWithWindowNibName_owner_(u"CheckboxTextboxDialogWindow", self)
@@ -577,7 +596,15 @@ class CheckboxTextboxDialogController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class SearchChannelController (NibClassBuilder.AutoBaseClass):
+class SearchChannelController (NSWindowController):
+    
+    channelPopup    = IBOutlet('channelPopup')
+    createButton    = IBOutlet('createButton')
+    enginePopup     = IBOutlet('enginePopup')
+    labelField      = IBOutlet('labelField')
+    searchTermField = IBOutlet('searchTermField')
+    targetMatrix    = IBOutlet('targetMatrix')
+    urlField        = IBOutlet('urlField')
     
     def initWithDialog_(self, dialog):
         self = super(SearchChannelController, self).initWithWindowNibName_owner_(u'SearchChannelWindow', self)

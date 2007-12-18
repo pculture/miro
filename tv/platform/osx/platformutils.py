@@ -21,6 +21,8 @@ import urllib
 import statvfs
 import logging
 import sys
+import errno
+import signal
 
 from objc import NO, YES
 from Foundation import *
@@ -348,3 +350,72 @@ def getMajorOSVersion():
     versionInfo = os.uname()
     versionInfo = versionInfo[2].split('.')
     return int(versionInfo[0])
+
+def pidIsRunning(pid):
+    if pid is None:
+        return False
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError, err:
+        return err.errno == errno.EPERM
+
+def killProcess(pid):
+    if pid is None:
+        return
+    if pidIsRunning(pid):
+        try:
+            os.kill(pid, signal.SIGTERM)
+            for i in xrange(100):
+                time.sleep(.01)
+                if not pidIsRunning(pid):
+                    return
+            os.kill(pid, signal.SIGKILL)
+        except:
+            logging.exception ("error killing process")
+
+def launchDownloadDaemon(oldpid, env):
+    killProcess(oldpid)
+
+    env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    env.update(os.environ)
+            
+    exe = NSBundle.mainBundle().executablePath()
+    
+    global dlTask
+    dlTask = NSTask.alloc().init()
+    dlTask.setLaunchPath_(exe)
+    dlTask.setArguments_([u'download_daemon'])
+    dlTask.setEnvironment_(env)
+    
+    controller = NSApplication.sharedApplication().delegate()
+    nc = NSNotificationCenter.defaultCenter()
+    nc.addObserver_selector_name_object_(controller, 'downloaderDaemonDidTerminate:', NSTaskDidTerminateNotification, dlTask)
+
+    logging.info('Launching Download Daemon')
+    dlTask.launch()
+    
+def ensureDownloadDaemonIsTerminated():
+    # Calling dlTask.waitUntilExit() here could cause problems since we 
+    # cannot specify a timeout, so if the daemon fails to shutdown we could
+    # wait here indefinitely. We therefore manually poll for a specific 
+    # amount of time beyond which we force quit the daemon.
+    global dlTask
+    if dlTask is not None:
+        if dlTask.isRunning():
+            logging.info('Waiting for the downloader daemon to terminate...')
+            timeout = 5.0
+            sleepTime = 0.2
+            loopCount = int(timeout / sleepTime)
+            for i in range(loopCount):
+                if dlTask.isRunning():
+                    time.sleep(sleepTime)
+                else:
+                    break
+            else:
+                # If the daemon is still alive at this point, it's likely to be
+                # in a bad state, so nuke it.
+                logging.info("Timeout expired - Killing downloader daemon!")
+                dlTask.terminate()
+        dlTask.waitUntilExit()
+    dlTask = None

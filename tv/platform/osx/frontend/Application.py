@@ -22,10 +22,10 @@ import struct
 import logging
 import urlparse
 
-from objc import YES, NO, nil, signature
+from objc import YES, NO, nil, signature, IBOutlet
 from AppKit import *
 from Foundation import *
-from PyObjCTools import NibClassBuilder, AppHelper
+from PyObjCTools import AppHelper
 from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMask
 
 from gestalt import gestalt
@@ -46,8 +46,6 @@ from gtcache import gettext as _
 import Preferences
 import GrowlNotifier
 import SparkleUpdater
-
-NibClassBuilder.extractClasses(u"MainMenu")
 
 ###############################################################################
 
@@ -104,7 +102,9 @@ class Application:
 
 ###############################################################################
 
-class AppController (NibClassBuilder.AutoBaseClass):
+class AppController (NSObject):
+
+    playPauseMenuItem = IBOutlet('playPauseMenuItem')
 
     def applicationWillFinishLaunching_(self, notification):
         NSExceptionHandler.defaultExceptionHandler().setExceptionHandlingMask_(NSLogAndHandleEveryExceptionMask)

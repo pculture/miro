@@ -17,8 +17,7 @@
 
 import os
 
-from objc import YES, NO, nil, signature
-from PyObjCTools import NibClassBuilder
+from objc import YES, NO, nil, signature, IBOutlet
 
 from AppKit import *
 from Foundation import *
@@ -32,11 +31,13 @@ import platformutils
 
 from gtcache import gettext as _
 
-NibClassBuilder.extractClasses(u"StartupPanel")
-
 ###############################################################################
 
-class StartupPanelController (NibClassBuilder.AutoBaseClass):
+class StartupPanelController (NSWindowController):
+    
+    backButton      = IBOutlet('backButton')
+    validateButton  = IBOutlet('validateButton')
+    tabView         = IBOutlet('tabView')
     
     def init(self):
         self = super(StartupPanelController, self).initWithWindowNibName_(u"StartupPanel")
@@ -100,6 +101,8 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
 
     # -------------------------------------------------------------------------
 
+    runAtStartupMatrix = IBOutlet('runAtStartupMatrix')
+
     def prepareRunAtStartupPanel(self):
         self.backButton.setEnabled_(NO)
         self.validateButton.setEnabled_(YES)
@@ -114,6 +117,15 @@ class StartupPanelController (NibClassBuilder.AutoBaseClass):
         return True
 
     # -------------------------------------------------------------------------
+
+    findVideosMatrix        = IBOutlet('findVideosMatrix')
+    findRestrictionsMatrix  = IBOutlet('findRestrictionsMatrix')
+    findLabel               = IBOutlet('findLabel')
+    findProgressLabel       = IBOutlet('findProgressLabel')
+    findProgressIndicator   = IBOutlet('findProgressIndicator')
+    findCancelButton        = IBOutlet('findCancelButton')
+    browseButton            = IBOutlet('browseButton')
+    customLocationField     = IBOutlet('customLocationField')
 
     def prepareFindVideosPanel(self):
         self.parsed = 0

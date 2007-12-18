@@ -18,17 +18,16 @@
 import time
 import logging
 
-from objc import YES, NO, nil
+from objc import YES, NO, nil, IBOutlet
 from AppKit import *
 from Foundation import *
-from PyObjCTools import NibClassBuilder
 
 import app
 import eventloop
 import platformcfg
 import platformutils
 
-from MainFrame import handleKey
+from MainFrame import Slider, handleKey
 from QuicktimeRenderer import QuicktimeRenderer
 from QTKit import QTMovieDidEndNotification
 
@@ -144,7 +143,18 @@ class VideoDisplay (app.VideoDisplayBase):
 
 ###############################################################################
 
-class VideoDisplayController (NibClassBuilder.AutoBaseClass):
+class VideoDisplayController (NSObject):
+
+    backwardButton      = IBOutlet('backwardButton')
+    forwardButton       = IBOutlet('forwardButton')
+    fullscreenButton    = IBOutlet('fullscreenButton')
+    muteButton          = IBOutlet('muteButton')
+    playPauseButton     = IBOutlet('playPauseButton')
+    stopButton          = IBOutlet('stopButton')
+    progressDisplayer   = IBOutlet('progressDisplayer')
+    rootView            = IBOutlet('rootView')
+    volumeSlider        = IBOutlet('volumeSlider')
+    videoAreaView       = IBOutlet('videoAreaView')
 
     _instance = nil
 
@@ -327,7 +337,9 @@ class VideoDisplayController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class VideoAreaView (NibClassBuilder.AutoBaseClass):
+class VideoAreaView (NSView):
+    
+    videoWindow = IBOutlet('videoWindow')
     
     def setup(self, item, renderer):
         if not self.videoWindow.isFullScreen:
@@ -364,6 +376,7 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
             self.window().deminiaturize_(nil)
         self.window().orderFront_(nil)
         self.videoWindow.orderFront_(nil)
+        self.window().makeFirstResponder_(self.window().delegate())
         if self.videoWindow.parentWindow() is nil:
             self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
     
@@ -416,7 +429,9 @@ class VideoAreaView (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class VideoWindow (NibClassBuilder.AutoBaseClass):
+class VideoWindow (NSWindow):
+    
+    palette = IBOutlet('palette')
     
     def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
         self = super(VideoWindow, self).initWithContentRect_styleMask_backing_defer_(
@@ -571,7 +586,17 @@ class SkipSeekButtonCell (NSButtonCell):
 
 ###############################################################################
 
-class FullScreenPalette (NibClassBuilder.AutoBaseClass):
+class FullScreenPalette (NSWindow):
+    
+    donationLabel       = IBOutlet('donationLabel')
+    feedLabel           = IBOutlet('feedLabel')
+    playPauseButton     = IBOutlet('playPauseButton')
+    progressSlider      = IBOutlet('progressSlider')
+    seekBackwardButton  = IBOutlet('seekBackwardButton')
+    seekForwardButton   = IBOutlet('seekForwardButton')
+    timeIndicator       = IBOutlet('timeIndicator')
+    titleLabel          = IBOutlet('titleLabel')
+    volumeSlider        = IBOutlet('volumeSlider')
     
     HOLD_TIME = 2
     
@@ -714,7 +739,7 @@ class FullScreenPalette (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class FullScreenPaletteView (NibClassBuilder.AutoBaseClass):
+class FullScreenPaletteView (NSView):
 
     def awakeFromNib(self):
         self.background = NSImage.imageNamed_(u'fs-background')
@@ -733,7 +758,7 @@ class FullScreenPaletteView (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class FullScreenControlsView (NibClassBuilder.AutoBaseClass):
+class FullScreenControlsView (NSView):
     
     def awakeFromNib(self):
         self.background = NSImage.imageNamed_(u'fs-controls-background')
@@ -754,7 +779,7 @@ class FullScreenControlsView (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class FullScreenSlider (NibClassBuilder.AutoBaseClass):
+class FullScreenSlider (Slider):
 
     def drawTrack(self):
         self.track.compositeToPoint_operation_((0, 2), NSCompositeSourceOver)

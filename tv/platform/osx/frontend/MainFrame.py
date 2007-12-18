@@ -15,13 +15,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
+import os
 import math
 import logging
 
-from objc import YES, NO, nil
+from objc import YES, NO, nil, IBOutlet
 from AppKit import *
 from Foundation import *
-from PyObjCTools import NibClassBuilder
 
 import app
 import feed
@@ -39,8 +39,6 @@ import platformutils
 
 from gtcache import gettext as _
 
-NibClassBuilder.extractClasses(u"MainWindow")
-
 ###############################################################################
 
 class MainFrame:
@@ -52,7 +50,7 @@ class MainFrame:
         # Do this in two steps so that self.controller is set when self.controler.init
         # is called. That way, init can turn around and call selectDisplay.
         self.controller = MainController.alloc()
-        self.controller.init(self, appl)
+        self.controller.initWithFrame_application_(self, appl)
 
     def selectDisplay(self, display, area=None):
         """Install the provided 'display' in the requested area"""
@@ -73,9 +71,15 @@ class MainFrame:
 
 ###############################################################################
 
-class MainController (NibClassBuilder.AutoBaseClass):
+class MainController (NSWindowController):
 
-    def init(self, frame, appl):
+    channelsHostView        = IBOutlet('channelsHostView')
+    mainHostView            = IBOutlet('mainHostView')
+    splitView               = IBOutlet('splitView')
+    videoDisplayController  = IBOutlet('videoDisplayController')
+    videoInfoHostView       = IBOutlet('videoInfoHostView')
+
+    def initWithFrame_application_(self, frame, appl):
         super(MainController, self).init()
         self.frame = frame
         self.appl = appl
@@ -93,8 +97,6 @@ class MainController (NibClassBuilder.AutoBaseClass):
         return self
 
     def awakeFromNib(self):
-        from VideoDisplay import VideoDisplayController
-        self.videoDisplayController = VideoDisplayController.getInstance()
         self.frame.channelsDisplay = self.channelsHostView
         self.frame.mainDisplay = self.mainHostView
         self.frame.videoInfoDisplay = self.videoInfoHostView
@@ -428,7 +430,7 @@ class MainController (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class DisplayHostView (NibClassBuilder.AutoBaseClass):
+class DisplayHostView (NSView):
     
     def initWithFrame_(self, frame):
         self = super(DisplayHostView, self).initWithFrame_(frame)
@@ -504,7 +506,7 @@ class NullDisplay (app.Display):
 
 ###############################################################################
 
-class DTVSplitView (NibClassBuilder.AutoBaseClass):
+class DTVSplitView (NSSplitView):
     
     def awakeFromNib(self):
         self.background = NSImage.imageNamed_(u'splitview_divider_background')
@@ -524,7 +526,11 @@ class DTVSplitView (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
+class ProgressDisplayView (NSView):
+
+    progressSlider          = IBOutlet('progressSlider')
+    timeIndicator           = IBOutlet('timeIndicator')
+    remainingTimeIndicator  = IBOutlet('remainingTimeIndicator')
 
     def awakeFromNib(self):
         self.progressSlider.sliderWasClicked = self.progressSliderWasClicked
@@ -620,7 +626,7 @@ class ProgressDisplayView (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class Slider (NibClassBuilder.AutoBaseClass):
+class Slider (NSView):
 
     def initWithFrame_(self, frame):
         self = super(Slider, self).initWithFrame_(frame)
@@ -632,6 +638,7 @@ class Slider (NibClassBuilder.AutoBaseClass):
         self.sliderWasReleased = None
         return self
 
+    @platformutils.onMainThread
     def setFloatValue_(self, value):
         self.value = value
         self.setNeedsDisplay_(YES)
@@ -690,7 +697,7 @@ class Slider (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class ProgressSlider (NibClassBuilder.AutoBaseClass):
+class ProgressSlider (Slider):
     
     def initWithFrame_(self, frame):
         self = super(ProgressSlider, self).initWithFrame_(frame)
@@ -721,7 +728,7 @@ class ProgressSlider (NibClassBuilder.AutoBaseClass):
 
 ###############################################################################
 
-class MetalSlider (NibClassBuilder.AutoBaseClass):
+class MetalSlider (NSSlider):
 
     def awakeFromNib(self):
         oldCell = self.cell()
@@ -760,7 +767,7 @@ class MetalSliderCell (NSSliderCell):
 
 ###############################################################################
 
-class VideoSearchField (NibClassBuilder.AutoBaseClass):
+class VideoSearchField (NSSearchField):
 
     def awakeFromNib(self):
         self.setCell_(VideoSearchFieldCell.alloc().initWithCell_(self.cell()))
@@ -779,8 +786,9 @@ class VideoSearchField (NibClassBuilder.AutoBaseClass):
         lastEngine = searchengines.getLastEngine()
         for engine in views.searchEngines:
             if engine.name == lastEngine:
-                index = self.searchMenuTemplate().indexOfItemWithRepresentedObject_(engine)
-                self.searchMenuTemplate().performActionForItemAtIndex_(index)
+                menu = self.searchMenuTemplate()
+                index = menu.indexOfItemWithRepresentedObject_(engine)
+                menu.performActionForItemAtIndex_(index)
                 return
 
     def selectedEngine(self):
@@ -838,6 +846,8 @@ class VideoSearchFieldCell (NSSearchFieldCell):
 
 def _getEngineIcon(engine):
     engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)
+    if not os.path.exists(engineIconPath):
+        return nil
     return NSImage.alloc().initByReferencingFile_(engineIconPath)
 
 searchIcons = dict()
@@ -851,6 +861,8 @@ def _makeSearchIcon(engine):
     popupRectangleSize = popupRectangle.size()
 
     engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)
+    if not os.path.exists(engineIconPath):
+        return nil
     engineIcon = NSImage.alloc().initByReferencingFile_(engineIconPath)
     engineIconSize = engineIcon.size()
 
