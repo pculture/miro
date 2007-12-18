@@ -198,15 +198,6 @@ class AppController (NSObject):
         eventloop.addUrgentCall(lambda:singleclick.handleCommandLineArgs(filenames), "Open local file(s)")
         nsapp.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
 
-    def addTorrent(self, path):
-        try:
-            infoHash = singleclick.getTorrentInfoHash(path)
-        except:
-            print "WARNING: %s doesn't seem to be a torrent file" % path
-        else:
-            singleclick.addTorrent(path, infoHash)
-            app.controller.selection.selectTabByTemplateBase('downloadtab')
-        
     def exceptionHandler_shouldLogException_mask_(self, handler, exception, mask):
         logging.warn("Unhandled exception: %s", exception.name())
         import traceback
