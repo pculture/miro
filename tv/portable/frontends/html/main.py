@@ -198,6 +198,13 @@ class HTMLApplication:
         app.controller.finishedStartup = True
 
         logging.info ("Finished startup sequence")
+        self.finishStartupSequence()
+
+    def finishStartupSequence(self):
+        """Called after startup is completed.  Platforms can override this
+        method if they need take action at this point.
+        """
+        pass
 
     def handleCustomChannelLoad(self, obj):
         self.loadedCustomChannels = True

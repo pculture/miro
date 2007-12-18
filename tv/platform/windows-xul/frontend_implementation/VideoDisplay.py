@@ -23,6 +23,7 @@ import config
 import prefs
 from download_utils import nextFreeFilename
 from frontends.html.base import PlaybackControllerBase, VideoDisplayBase
+from videorenderer import VideoRenderer
 
 from xpcom import components
 from threading import Lock
@@ -122,7 +123,7 @@ def lockAndPlay(func):
             selectItemLock.release()
     return locked
 
-class VLCRenderer (app.VideoRenderer):
+class VLCRenderer (VideoRenderer):
     """The VLC renderer is very thin wrapper around the xine-renderer xpcom
     component. 
     """

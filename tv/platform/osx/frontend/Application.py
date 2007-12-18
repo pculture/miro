@@ -36,6 +36,7 @@ import prefs
 import config
 import frontends.html
 from frontends.html import dialogs
+from frontends.html.main import HTMLApplication
 import filetypes
 import eventloop
 import autoupdate
@@ -50,12 +51,13 @@ import SparkleUpdater
 
 ###############################################################################
 
-class Application:
+class Application(HTMLApplication):
 
     def __init__(self):
         appl = NSApplication.sharedApplication()
         NSBundle.loadNibNamed_owner_(u"MainMenu", appl)
         controller = appl.delegate()
+        HTMLApplication.__init__(self)
 
     def Run(self):
         if self.checkOtherAppInstances():
@@ -79,20 +81,8 @@ class Application:
 
         return alone
 
-    def onStartup(self):
-        # For overriding
-        pass
-
     def finishStartupSequence(self):
         NSApplication.sharedApplication().delegate().finishStartupSequence()
-
-    def onShutdown(self):
-        # For overriding
-        pass
-
-    def addAndSelectFeed(self, url):
-        # For overriding
-        pass
 
     ### eventloop (our own one, not the Cocoa one) delegate methods
 
@@ -138,7 +128,7 @@ class AppController (NSObject):
         
     def applicationDidFinishLaunching_(self, notification):
         # Startup
-        app.controller.onStartup()
+        app.controller.startup()
 
         # The database should be ready at this point, check Miro migration.
         import migrateappname
