@@ -24,7 +24,6 @@ import re
 
 from clock import clock
 from frontends.html import actionhandlers
-from frontends.html.displaybase import Display
 import download_utils
 import eventloop
 import frontend
