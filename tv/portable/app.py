@@ -750,18 +750,8 @@ external drive).  You can also quit, connect the drive, and relaunch Miro.""")
         # Set up search engines
         searchengines.createEngines()
 
-        # FIXME - channelGuide never gets used.
-        (newGuide, channelGuide) = _getInitialChannelGuide()
-
-        # This needs to happen after the first channel guide has been created
+        # This will create the ChannelGuide object, if necessary
         _getThemeHistory()
-
-        if newGuide:
-            if config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']:
-                delegate.maximizeWindow()
-            for temp_guide in unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split():
-                if views.guides.getItemWithIndex(indexes.guidesByURL, temp_guide) is None:
-                    guide.ChannelGuide(temp_guide)
 
         # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
         self.newTab = None
@@ -1262,6 +1252,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         if selectedObjects[0].isPartOfGuide(url) and (
             url.startswith(u"http://") or url.startswith(u"https://")):
             selectedObjects[0].lastVisitedURL = url
+            selectedObjects[0].extendHistory(url)
         else:
             logging.warn("setLastVisitedGuideURL called, but the guide is no "
                     "longer selected")
@@ -1507,10 +1498,12 @@ class TemplateDisplay(frontend.HTMLDisplay):
                                                            *args, **kargs)
         self.args = args
         self.kargs = kargs
+        self.haveLoaded = False
         html = tch.read()
 
         self.actionHandlers = [
             ModelActionHandler(delegate),
+            HistoryActionHandler(self),
             GUIActionHandler(),
             TemplateActionHandler(self, self.templateHandle),
             ]
@@ -1586,8 +1579,27 @@ class TemplateDisplay(frontend.HTMLDisplay):
             raise ValueError("Badly formed eventURL: %s" % url)
 
 
-    # Returns true if the browser should handle the URL.
     def onURLLoad(self, url):
+        if self.checkURL(url):
+            if not controller.guide: # not on a channel guide:
+                return True
+            # The first time the guide is loaded in the template, several
+            # pages are loaded, so this shouldn't be called during that
+            # first load.  After that, this shows the spinning circle to
+            # indicate loading
+            if not self.haveLoaded and (url ==
+                    controller.guide.getLastVisitedURL()):
+                self.haveLoaded = True
+            elif self.haveLoaded:
+                script = 'top.miro_navigation_frame.guideUnloaded()'
+                if not url.endswith(script):
+                    self.execJS('top.miro_navigation_frame.guideUnloaded()')
+            return True
+        else:
+            return False
+
+    # Returns true if the browser should handle the URL.
+    def checkURL(self, url):
         util.checkU(url)
         logging.info ("got %s", url)
         try:
@@ -1967,6 +1979,43 @@ class printResultThread(threading.Thread):
 
     def run(self):
         print (self.format % (self.func(), ))
+
+# Functions that change the history of a guide
+class HistoryActionHandler:
+
+    def __init__(self, display):
+        self.display = display
+
+    def gotoURL(self, newURL):
+        self.display.execJS('top.miro_guide_frame.location="%s"' % newURL)
+
+    def getGuide(self):
+        guides = [t.obj for t in controller.selection.getSelectedTabs()]
+        if len(guides) != 1:
+            return
+        if not isinstance(guides[0], guide.ChannelGuide):
+            return
+        return guides[0]
+
+    def back(self):
+        guide = self.getGuide()
+        if guide is not None:
+            newURL = guide.getHistoryURL(-1)
+            if newURL is not None:
+                self.gotoURL(newURL)
+
+    def forward(self):
+        guide = self.getGuide()
+        if guide is not None:
+            newURL = guide.getHistoryURL(1)
+            if newURL is not None:
+                self.gotoURL(newURL)
+
+    def home(self):
+        guide = self.getGuide()
+        if guide is not None:
+            newURL = guide.getHistoryURL(None)
+            self.gotoURL(newURL)
 
 # Functions that are safe to call from action: URLs that can change
 # the GUI presentation (and may or may not manipulate the database.)
@@ -2407,55 +2456,11 @@ def mappableToPlaylistItem(obj):
 def mapToPlaylistItem(obj):
     return PlaylistItemFromItem(obj)
 
-def _defaultFeeds():
-    if config.get(prefs.DEFAULT_CHANNELS_FILE) is not None:
-        importer = opml.Importer()
-        try:
-            if ((config.get(prefs.THEME_NAME) is not None) and 
-                (config.get(prefs.THEME_DIRECTORY) is not None)):
-                filepath = os.path.join(
-                    config.get(prefs.THEME_DIRECTORY),
-                    config.get(prefs.THEME_NAME),
-                    config.get(prefs.DEFAULT_CHANNELS_FILE))
-            else:
-                filepath = os.path.join(
-                    config.get(prefs.SUPPORT_DIRECTORY),
-                    config.get(prefs.DEFAULT_CHANNELS_FILE))
-            importer.importSubscriptionsFrom(filepath,
-                                             showSummary = False)
-            logging.info("Imported %s" % filepath)
-        except:
-            logging.warn("Could not import %s" % filepath)
-        return
-    logging.info("Adding default feeds")
-    if platform.system() == 'Darwin':
-        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/mac/mac.feed.rss']
-    elif platform.system() == 'Windows':
-        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
-    else:
-        defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
-    defaultFeedURLs.extend([ (_('Starter Channels'),
-                              [u'http://richie-b.blip.tv/posts/?skin=rss',
-                               u'http://feeds.pbs.org/pbs/kcet/wiredscience-video',
-                               u'http://www.jpl.nasa.gov/multimedia/rss/podfeed-hd.xml',
-                               u'http://www.linktv.org/rss/hq/mosaic.xml']),
-                           ])
-
-    for default in defaultFeedURLs:
-        print repr(default)
-        if isinstance(default, tuple): # folder
-            defaultFolder = default
-            c_folder = folder.ChannelFolder(defaultFolder[0])
-            for url in defaultFolder[1]:
-                d_feed = feed.Feed(url, initiallyAutoDownloadable=False)
-                d_feed.setFolder(c_folder)
-        else: # feed
-            d_feed = feed.Feed(default, initiallyAutoDownloadable=False)
-    playlist.SavedPlaylist(_(u"Example Playlist"))
-
 def _getThemeHistory():
     if len(views.themeHistories) > 0:
-        return views.themeHistories[0]
+        th = views.themeHistories[0]
+        th.checkNewTheme()
+        return th
     else:
         return theme.ThemeHistory()
 
@@ -2463,14 +2468,15 @@ def _getInitialChannelGuide():
     default_guide = None
     newGuide = False
     for guideObj in views.guides:
-        if default_guide is None:
-            if guideObj.getDefault():
-                default_guide = guideObj
+        if guideObj.getDefault():
+            default_guide = guideObj
+            break
 
     if default_guide is None:
         newGuide = True
         logging.info ("Spawning Miro Guide...")
-        default_guide = guide.ChannelGuide()
+        default_guide = guide.ChannelGuide(config.get(prefs.CHANNEL_GUIDE_URL),
+            config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS).split())
         initialFeeds = resources.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
             urls = subscription.parseFile(initialFeeds)
@@ -2480,8 +2486,7 @@ def _getInitialChannelGuide():
             dialog = dialogs.MessageBoxDialog(_("Custom Channels"), Template(_("You are running a version of $longAppName with a custom set of channels.")).substitute(longAppName=config.get(prefs.LONG_APP_NAME)))
             dialog.run()
             controller.initial_feeds = True
-        else:
-            _defaultFeeds()
+
     return (newGuide, default_guide)
 
 # Race conditions:

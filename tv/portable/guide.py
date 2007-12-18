@@ -47,6 +47,8 @@ def isPartOfGuide(url, guideURL, allowedURLs = None):
     """
     if guideURL == "*":
         return True
+    elif guideURL.startswith('file://'):
+        return False
     elif allowedURLs is None:
         guideHost = urlparse(guideURL)[1]
         urlHost = urlparse(url)[1]
@@ -62,15 +64,12 @@ class ChannelGuide(DDBObject):
     ICON_CACHE_SIZES = [
 #        (20, 20),
     ]
-    def __init__(self, url=None, allowedURLs = None):
+    def __init__(self, url, allowedURLs = None):
         checkU(url)
         if allowedURLs is None:
             self.allowedURLs = []
         else:
             self.allowedURLs = allowedURLs
-        if url is None and allowedURLs is None:
-            self.allowedURLs = config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS).split()
-        self.allowedURLs.append(config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL))
         self.url = url
         self.updated_url = url
         self.title = None
@@ -78,12 +77,20 @@ class ChannelGuide(DDBObject):
         self.iconCache = iconcache.IconCache(self, is_vital = True)
         self.favicon = None
         self.firstTime = True
+        if url:
+            self.historyLocation = 0
+            self.history = [self.url]
+        else:
+            self.historyLocation = None
+            self.history = []
 
         DDBObject.__init__(self)
         self.downloadGuide()
 
     def onRestore(self):
         self.lastVisitedURL = None
+        self.historyLocation = None
+        self.history = []
         if (self.iconCache == None):
             self.iconCache = iconcache.IconCache (self, is_vital = True)
         else:
@@ -120,16 +127,13 @@ class ChannelGuide(DDBObject):
         return isPartOfGuide(url, self.getURL(), self.allowedURLs)
 
     def getURL(self):
-        if self.url is not None:
-            return self.url
-        else:
-            return config.get(prefs.CHANNEL_GUIDE_URL)
+        return self.url
 
     def getFirstURL(self):
-        if self.url is not None:
-            return self.url
-        else:
+        if self.getDefault():
             return config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)
+        else:
+            return self.url
 
     def getLastVisitedURL(self):
         if self.lastVisitedURL is not None:
@@ -145,15 +149,13 @@ class ChannelGuide(DDBObject):
                 return self.getURL()
 
     def getDefault(self):
-        return self.url is None
+        return self.url == config.get(prefs.CHANNEL_GUIDE_URL)
 
     # For the tabs
     @returnsUnicode
     def getTitle(self):
         if self.title:
             return self.title
-        elif self.getDefault():
-            return _('Miro Guide')
         else:
             return self.getURL()
 
@@ -168,6 +170,7 @@ class ChannelGuide(DDBObject):
         else:
             self.title = unicode(parser.title)
             self.favicon = unicode(parser.favicon)
+            self.extendHistory(self.updated_url)
             self.iconCache.requestUpdate()
             self.signalChange()
 
@@ -194,6 +197,31 @@ class ChannelGuide(DDBObject):
             else:
                 parsed = urlparse(self.getURL())
             return parsed[0] + u"://" + parsed[1] + u"/favicon.ico"
+
+    def extendHistory(self, url):
+        if self.historyLocation is None:
+            self.historyLocation = 0
+            self.history = [url]
+        else:
+            if self.history[self.historyLocation] == url: # moved backwards
+                return
+            if self.historyLocation != len(self.history) - 1:
+                self.history = self.history[:self.historyLocation+1]
+            self.history.append(url)
+            self.historyLocation += 1
+
+
+    def getHistoryURL(self, direction):
+        if direction is not None:
+            location = self.historyLocation + direction
+            if location < 0:
+                return
+            elif location >= len(self.history):
+                return
+        else:
+            location = 0 # go home
+        self.historyLocation = location
+        return self.history[self.historyLocation]
 
 # Grabs the feed link from the given webpage
 class GuideHTMLParser(HTMLParser):

@@ -21,15 +21,26 @@ import gtkmozembed
 import logging
 
 cdef extern from "MozillaBrowserIncludes.h":
+    ctypedef struct GtkWidget
     ctypedef struct GtkMozEmbed
-    ctypedef struct GObject 
+    ctypedef struct GObject
     ctypedef struct PyGObject:
         GObject * obj
     ctypedef int gint
     ctypedef unsigned long gulong
+    ctypedef unsigned int guint
     ctypedef char gchar
     ctypedef void * gpointer
     ctypedef void * GCallback
+    cdef enum GtkWindowType:
+        GTK_WINDOW_TOPLEVEL
+    cdef GtkMozEmbed * gtk_moz_embed_new()
+    cdef GtkWidget* gtk_window_new(GtkWindowType type)
+    cdef void gtk_container_add(GtkWidget *, GtkWidget *)
+    cdef void gtk_widget_destroy(GtkWidget* widget)
+    cdef void gtk_widget_realize(GtkWidget* widget)
+    cdef void gtk_widget_unrealize(GtkWidget* widget)
+    cdef GtkWidget * gtk_widget_get_parent(GtkWidget* widget)
     cdef gulong g_signal_connect( gpointer *object, gchar *name, GCallback func, gpointer func_data )
 
 cdef extern from "Python.h":
@@ -102,6 +113,8 @@ cdef class MozillaBrowser:
                 <void *>open_uri_cb, <gpointer>self)
         g_signal_connect(<gpointer *>self.cWidget, "dom_mouse_down", 
                 <void *>on_dom_mouse_down, <gpointer>self)
+        g_signal_connect(<gpointer *>self.cWidget, "new_window",
+                <void *>new_window_cb, <gpointer>self);
         self.widget.connect("realize", self.onRealize)
 
     def onRealize(self, widget):
@@ -250,6 +263,46 @@ cdef gint on_dom_mouse_down (GtkMozEmbed *embed, gpointer domEvent,
         Py_DECREF(self)
         PyGILState_Release(gil)
     return 0
+
+cdef gint new_window_cb (GtkMozEmbed *embed, GtkMozEmbed **retval, guint mask,
+        PyObject * self):
+    cdef PyGILState_STATE gil
+    cdef GtkWidget *w
+    cdef GtkMozEmbed *newmoz
+    gil = PyGILState_Ensure()
+    Py_INCREF(self)
+    w = gtk_window_new(GTK_WINDOW_TOPLEVEL)
+    newmoz = gtk_moz_embed_new()
+    gtk_container_add(w, <GtkWidget*>newmoz)
+    g_signal_connect(<gpointer *>newmoz, "open_uri",
+            <void *>new_window_open_uri_cb, <gpointer>self)
+    gtk_widget_realize(w)
+    gtk_widget_realize(<GtkWidget*>newmoz)
+    retval[0] = newmoz
+    Py_DECREF(self)
+    PyGILState_Release(gil)
+    return 0
+
+cdef gint new_window_open_uri_cb (GtkMozEmbed *embed, char *uri, PyObject * self):
+    cdef PyGILState_STATE gil
+    cdef GtkWidget *w
+    cdef PyObject* callbackResult
+    gil = PyGILState_Ensure()
+    Py_INCREF(self)
+    callbackResult = PyObject_CallMethod(self, "openUriCallback", "s", uri,
+            NULL)
+    if(callbackResult == NULL):
+        PyErr_Print()
+    else:
+        Py_DECREF(callbackResult)
+    Py_DECREF(self)
+    PyGILState_Release(gil)
+    w = gtk_widget_get_parent(<GtkWidget*>embed)
+    gtk_widget_unrealize(<GtkWidget*>embed)
+    gtk_widget_unrealize(w)
+    gtk_widget_destroy(<GtkWidget*>embed)
+    gtk_widget_destroy(w)
+    return 1
 
 _xpcomComponentsInitialized = False
 def initializeXPCOMComponents():

@@ -49,17 +49,13 @@ parser.add_option("--xine-driver", metavar="<driver>",
                   action="store", type="string", dest="xine_driver", help="Xine driver (xv, xshm, opengl, sdl, dxr3, aadxr3, aa, caca, or xxmc)")
 parser.add_option('--enable-xine-hack', dest="use_xv_hack", action="store_true", help='Enable the Xine XV Hack (default)')
 parser.add_option('--disable-xine-hack', dest="use_xv_hack", action="store_false", help='Disable the Xine XV Hack')
+parser.add_option('--theme', dest='theme', metavar='<theme>', help='Theme to use')
 (options, args) = parser.parse_args()
 
 def startapp():
     import platformutils
     platformutils.initializeLocale()
 
-    import singleclick
-    for i in xrange(len(args)):
-        if args[i].startswith('file://'):
-            args[i] = args[i][len('file://'):]
-    singleclick.setCommandLineArgs(args)
     import app
     import frontend
     import prefs
@@ -77,6 +73,14 @@ def startapp():
     if frontend.defaultXineDriver is None:
         frontend.defaultXineDriver = config.get(prefs.DEFAULT_XINE_DRIVER)
     #print "Xine driver is %s" % frontend.defaultXineDriver
+    if options.theme: frontend.themeName = options.theme
+
+    import singleclick
+    for i in xrange(len(args)):
+        if args[i].startswith('file://'):
+            args[i] = args[i][len('file://'):]
+    singleclick.setCommandLineArgs(args)
+
     app.main()
 if options.version:
     print "Miro"

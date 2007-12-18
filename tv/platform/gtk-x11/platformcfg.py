@@ -97,6 +97,8 @@ def get(descriptor):
             os.makedirs (value)
         except:
             pass
+    elif descriptor == prefs.THEME_DIRECTORY:
+        value = '/usr/share/miro/themes'
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
         value = os.path.expanduser('~/Desktop')
@@ -109,7 +111,7 @@ def get(descriptor):
 
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
         value = os.path.expanduser('~/.miro/icon-cache')
-    
+
     elif descriptor == prefs.DB_PATHNAME:
         value = get(prefs.SUPPORT_DIRECTORY)
         value = os.path.join(value, 'tvdump')

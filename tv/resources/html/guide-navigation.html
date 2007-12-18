@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="Stylesheet" type="text/css" href="../css/style.css">
+    <link rel="Stylesheet" type="text/css" href="../css/nav-bar.css">
+<script type="text/javascript">
+    function guideLoaded() {
+        document.getElementById('load-indicator').style.display = 'none';
+    }
+
+    function guideUnloaded() {
+        document.getElementById('load-indicator').style.display = 'block';
+    }
+</script>
+</head>
+<body>
+    <div id="nav-bar">
+        <ul>
+            <li class="previous"><a href="action:back" ><span class="hidden">Previous</span></a></li>
+           <li class="next"><a href="action:forward" ><span class="hidden">Next</span></a></li>
+
+            <li class="home">
+            <a href="action:home" class="home-button-left"><span class="home-button-right"><span class="home-button-content">HOME</span></span></a>
+            </li>
+        </ul>
+        <img id="load-indicator" alt="loading" src="../images/load-indicator.gif">
+    </div><!-- /nav-bar --> 
+</body>
+</html>

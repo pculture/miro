@@ -316,7 +316,7 @@ class mypy2app (py2app):
             print "    (all skipped, already bundled)"
         else:
             os.mkdir(prsrcRoot)
-            for resource in ('css', 'images', 'searchengines', 'dtvapi.js', 'statictabs.xml'):
+            for resource in ('css', 'images', 'html', 'searchengines', 'dtvapi.js', 'statictabs.xml'):
                 src = os.path.join(ROOT_DIR, 'resources', resource)
                 rsrcName = os.path.basename(src)
                 if os.path.isdir(src):

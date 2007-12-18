@@ -15,6 +15,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
+from gtcache import gettext as _
+import logging
 import config
 import prefs
 import app
@@ -25,57 +27,116 @@ from eventloop import asUrgent
 from database import DDBObject
 import opml
 import iconcache
+import resources
+import platform
 import guide
+import feed
+import folder
+import playlist
 
 class ThemeHistory(DDBObject):
     def __init__(self):
         DDBObject.__init__(self)
         self.lastTheme = None
         self.pastThemes = []
-        self.theme = unicode(config.get(prefs.THEME_NAME))
+        self.theme = config.get(prefs.THEME_NAME)
         if self.theme is not None:
-            self.pastThemes.append(self.theme)
-            self.onFirstRun()
+            self.theme = unicode(self.theme)
+        # if we don't have a theme, self.theme will be None
+        self.pastThemes.append(self.theme)
+        self.onFirstRun()
 
-    def onRestore(self):
-        self.theme = unicode(config.get(prefs.THEME_NAME))
-        if not (self.theme is None or self.theme in self.pastThemes):
+    # We used to do this on restore, but we need to make sure that the
+    # whole database is loaded because we're checking to see if objects
+    # are present.  So, we call it when we access the object in app.py
+    def checkNewTheme(self):
+        self.theme = config.get(prefs.THEME_NAME)
+        if self.theme is not None:
+            self.theme = unicode(self.theme)
+        if self.theme not in self.pastThemes:
             self.pastThemes.append(self.theme)
             self.onFirstRun()
         if self.lastTheme != self.theme:
-            self.onThemeChange()
             self.lastTheme = self.theme
+            self.onThemeChange()
 
     @asUrgent
     def onThemeChange(self):
-        if len(views.default_guide) > 0:
-            views.default_guide[0].title = None
-            views.default_guide[0].favicon = None
-            views.default_guide[0].updated_url = None
-            views.default_guide[0].iconCache.remove()
-            views.default_guide[0].iconCache= iconcache.IconCache (views.default_guide[0], is_vital = True)
-            views.default_guide[0].signalChange()
         self.signalChange()
-        
 
-    # This should be run once for each theme
-    @asUrgent
     def onFirstRun(self):
-        # Clear out the channel guide icon
+        logging.info("Spawning Miro Guide...")
+        guideURL = unicode(config.get(prefs.CHANNEL_GUIDE_URL))
+        if guide.getGuideByURL(guideURL) is None:
+            guide.ChannelGuide(guideURL,
+            unicode(config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split())
+
         if config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']:
             app.delegate.maximizeWindow()
-        # FIXME -- this needs to be here and in app.py. We should
-        #          unify the code --NN
-        if ((config.get(prefs.DEFAULT_CHANNELS_FILE) is not None) and
-            (config.get(prefs.THEME_NAME) is not None) and 
-            (config.get(prefs.THEME_DIRECTORY) is not None)):
-            importer = opml.Importer()
-            filepath = os.path.join(
-                config.get(prefs.THEME_DIRECTORY),
-                config.get(prefs.THEME_NAME),
-                config.get(prefs.DEFAULT_CHANNELS_FILE))
-            importer.importSubscriptionsFrom(filepath,
-                                             showSummary = False)
-        for temp_guide in unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split():
-            if views.guides.getItemWithIndex(indexes.guidesByURL, temp_guide) is None:
-                guide.ChannelGuide(temp_guide)
+        if self.theme is not None: # we have a theme
+            new_guides = unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split()
+            for temp_guide in new_guides:
+                if guide.getGuideByURL(temp_guide) is None:
+                    guide.ChannelGuide(temp_guide)
+            if ((config.get(prefs.DEFAULT_CHANNELS_FILE) is not None) and
+                (config.get(prefs.THEME_NAME) is not None) and 
+                (config.get(prefs.THEME_DIRECTORY) is not None)):
+                importer = opml.Importer()
+                filepath = os.path.join(
+                    config.get(prefs.THEME_DIRECTORY),
+                    config.get(prefs.THEME_NAME),
+                    config.get(prefs.DEFAULT_CHANNELS_FILE))
+                importer.importSubscriptionsFrom(filepath,
+                                                 showSummary = False)
+            elif None not in self.pastThemes:
+                # We pretend to have run the default theme, and then
+                # install the default channels.  XXX: If Miro Guide isn't
+                # installed by the theme and it doesn't provide a default
+                # set of channels, we'll never install the Miro Guide.
+
+                # This code would install the Miro Guide if it isn't
+                # already installed
+                # if guide.getGuideByURL(prefs.CHANNEL_GUIDE_URL.default) is None:
+                #     guide.ChannelGuide(prefs.CHANNEL_GUIDE_URL.default)
+                self.pastThemes.append(None)
+                self._installDefaultFeeds()
+        else: # no theme
+            self._installDefaultFeeds()
+
+    @asUrgent
+    def _installDefaultFeeds(self):
+        initialFeeds = resources.path("initial-feeds.democracy")
+        if os.path.exists(initialFeeds):
+            urls = subscription.parseFile(initialFeeds)
+            if urls is not None:
+                for url in urls:
+                    feed.Feed(url, initiallyAutoDownloadable=False)
+            dialog = dialogs.MessageBoxDialog(_("Custom Channels"), Template(_("You are running a version of $longAppName with a custom set of channels.")).substitute(longAppName=config.get(prefs.LONG_APP_NAME)))
+            dialog.run()
+            app.controller.initial_feeds = True
+        else:
+            logging.info("Adding default feeds")
+            if platform.system() == 'Darwin':
+                defaultFeedURLs = [u'http://www.getmiro.com/screencasts/mac/mac.feed.rss']
+            elif platform.system() == 'Windows':
+                defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
+            else:
+                defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
+            defaultFeedURLs.extend([ (_('Starter Channels'),
+                                      [u'http://richie-b.blip.tv/posts/?skin=rss',
+                                       u'http://feeds.pbs.org/pbs/kcet/wiredscience-video',
+                                       u'http://www.jpl.nasa.gov/multimedia/rss/podfeed-hd.xml',
+                                       u'http://www.linktv.org/rss/hq/mosaic.xml']),
+                                   ])
+
+            for default in defaultFeedURLs:
+                print repr(default)
+                if isinstance(default, tuple): # folder
+                    defaultFolder = default
+                    c_folder = folder.ChannelFolder(defaultFolder[0])
+                    for url in defaultFolder[1]:
+                        d_feed = feed.Feed(url, initiallyAutoDownloadable=False)
+                        d_feed.setFolder(c_folder)
+                else: # feed
+                    d_feed = feed.Feed(default, initiallyAutoDownloadable=False)
+            playlist.SavedPlaylist(_(u"Example Playlist"))

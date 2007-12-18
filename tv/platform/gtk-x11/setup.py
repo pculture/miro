@@ -240,7 +240,7 @@ if not "clean" in sys.argv:
         # pluck off the last \n
         fflib = fflib[:-1]
         f = open(os.path.join(platform_dir, "miro"), "w")
-        f.write("#!/bin/sh\necho %s\nLD_LIBRARY_PATH=%s ADDON_PATH=/tmp/empty miro.real $@\n" % (fflib, fflib))
+        f.write('#!/bin/sh\necho %s\nLD_LIBRARY_PATH=%s ADDON_PATH=/tmp/empty miro.real "$@"\n' % (fflib, fflib))
         f.close()
     except RuntimeError, error:
         sys.exit("Package config error:\n%s" % (error,))
@@ -333,7 +333,7 @@ files.extend(listfiles(os.path.join(glade_dir, 'pixmaps')))
 files.append(os.path.join(glade_dir, 'miro.glade'))
 data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
-for dir in ('templates', 'css', 'images', 'testdata', os.path.join('templates','unittest'), 'searchengines'):
+for dir in ('templates', 'css', 'images', 'html', 'testdata', os.path.join('templates','unittest'), 'searchengines'):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
