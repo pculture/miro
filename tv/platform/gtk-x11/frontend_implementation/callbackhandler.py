@@ -543,6 +543,8 @@ class CallbackHandler(object):
         AttachBoolean (dialog, widgetTree['checkbutton-padding'], prefs.PRESERVE_DISK_SPACE, widgetTree['spinbutton-padding'])
         AttachBoolean (dialog, widgetTree['checkbutton-autorun'], prefs.RUN_DTV_AT_STARTUP)
         AttachInteger (dialog, widgetTree['spinbutton-limit'], prefs.UPSTREAM_LIMIT_IN_KBS)
+        AttachBoolean (dialog, widgetTree['checkbutton-down-limit'], prefs.LIMIT_DOWNSTREAM_BT, widgetTree['spinbutton-down-limit'])
+        AttachInteger (dialog, widgetTree['spinbutton-down-limit'], prefs.DOWNSTREAM_BT_LIMIT_IN_KBS)
         AttachInteger (dialog, widgetTree['spinbutton-bt-min-port'], prefs.BT_MIN_PORT)
         AttachInteger (dialog, widgetTree['spinbutton-bt-max-port'], prefs.BT_MAX_PORT)
         AttachInteger (dialog, widgetTree['spinbutton-max-manual'], prefs.MAX_MANUAL_DOWNLOADS)

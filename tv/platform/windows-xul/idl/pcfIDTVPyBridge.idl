@@ -86,6 +86,10 @@ interface pcfIDTVPyBridge : nsISupports
   void setLimitUpstream(in boolean value);
   short getLimitUpstreamAmount();
   void setLimitUpstreamAmount(in short value);
+  boolean getLimitDownstream();
+  void setLimitDownstream(in boolean value);
+  short getLimitDownstreamAmount();
+  void setLimitDownstreamAmount(in short value);
   short getMaxManual();
   void setMaxManual(in short value);
   void startPrefs();
@@ -108,6 +112,10 @@ interface pcfIDTVPyBridge : nsISupports
   void setResumeVideosMode(in boolean value);
   boolean getWarnIfDownloadingOnQuit();
   void setWarnIfDownloadingOnQuit(in boolean value);
+  boolean getUseUpnp();
+  void setUseUpnp(in boolean value);
+  boolean getBitTorrentEncReq();
+  void setBitTorrentEncReq(in boolean value);
   void showCursor(in boolean display);
   void createNewPlaylist();
   void createNewPlaylistFolder();
