@@ -40,3 +40,4 @@ fi
 # export LD_LIBRARY_PATH=/usr/lib/firefox${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}
 
 $PYTHON setup.py install --root=./dist --prefix=$PREFIX && PATH=dist/$PREFIX/bin:$PATH PYTHONPATH=$PYTHON_PATH dist/$PREFIX/bin/miro "$@"
+# $PYTHON setup.py install --root=./dist --prefix=$PREFIX

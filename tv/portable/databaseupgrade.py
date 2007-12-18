@@ -879,6 +879,18 @@ def upgrade58(objectList):
                 pass
     return changed
         
+def upgrade60(objectList):
+    """search feed impl is now a subclass of rss multi, so add the needed fields"""
+    changed = set()
+    for o in objectList:
+        if o.classString == 'feed':
+            feedImpl = o.savedData['actualFeed']
+            if feedImpl.classString == 'search-feed-impl':
+                feedImpl.savedData['etag'] = {}
+                feedImpl.savedData['modified'] = {}
+                changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
