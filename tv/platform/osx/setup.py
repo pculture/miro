@@ -316,7 +316,7 @@ class mypy2app (py2app):
             print "    (all skipped, already bundled)"
         else:
             os.mkdir(prsrcRoot)
-            for resource in ('css', 'images', 'html', 'searchengines', 'dtvapi.js', 'statictabs.xml'):
+            for resource in ('css', 'images', 'searchengines', 'dtvapi.js', 'statictabs.xml'):
                 src = os.path.join(ROOT_DIR, 'resources', resource)
                 rsrcName = os.path.basename(src)
                 if os.path.isdir(src):
@@ -470,11 +470,11 @@ BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread-%s.a' % BOO
 # Define the native extensions
 # =============================================================================
 
-#idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
-#idletime_link_args = ['-framework', 'CoreFoundation']
-#
-#idletime_ext = Extension("idletime", sources=idletime_src, 
-#                                     extra_link_args=idletime_link_args)
+idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
+idletime_link_args = ['-framework', 'CoreFoundation']
+
+idletime_ext = Extension("idletime", sources=idletime_src, 
+                                     extra_link_args=idletime_link_args)
 
 # -----------------------------------------------------------------------------
 
@@ -566,7 +566,7 @@ setup(
     app =           [ '%s.py' % conf['shortAppName'] ],
     options =       { 'py2app': py2app_options },
 
-    ext_modules =   [ #idletime_ext,
+    ext_modules =   [ idletime_ext,
                       keychain_ext,
                       qtcomp_ext,
                       database_ext,
