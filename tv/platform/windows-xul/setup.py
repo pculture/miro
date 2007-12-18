@@ -56,6 +56,12 @@ BINARY_KIT_ROOT = defaultBinaryKitRoot
 BOOST_ROOT = os.path.join(BINARY_KIT_ROOT, 'boost', 'win32')
 BOOST_LIB_PATH = os.path.join(BOOST_ROOT, 'lib')
 
+ZLIB_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'include')
+ZLIB_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'lib')
+
+OPENSSL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'OpenSSL', 'include')
+OPENSSL_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'OpenSSL', 'lib')
+
 # Hack so we don't break things for people who haven't updated their binary kit
 if os.path.exists(os.path.join(BOOST_ROOT, 'include', 'boost-1_33_1')):
     BOOST_LIB = os.path.join(BOOST_LIB_PATH, 'boost_python-vc71-mt-1_33_1.lib')
@@ -166,10 +172,11 @@ platform = 'windows-xul'
 
 # Find the top of the source tree and set search path
 root = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), '..', '..')
+platform_dir = os.path.join(root, 'platform', 'windows-xul')
+portable_dir = os.path.join(root, 'portable')
 sys.path[0:0] = [
-    os.path.join(root, 'platform', platform),
-    os.path.join(root, 'platform'),
-    os.path.join(root, 'portable'),
+    platform_dir,
+    portable_dir,
 ]
 root = os.path.normpath(root)
 
@@ -186,7 +193,12 @@ os.environ['PATH'] = r'%s;%s' % (os.environ['PATH'], BOOST_LIB_PATH)
 
 ##### The libtorrent extension ####
 import setup_portable
-libtorrent_ext = setup_portable.libtorrent_extension(portable_dir)
+libtorrent_ext = setup_portable.libtorrent_extension(portable_dir,
+        )
+libtorrent_ext.include_dirs.extend(
+        [ BOOST_INCLUDE_PATH, ZLIB_INCLUDE_PATH, OPENSSL_INCLUDE_PATH])
+libtorrent_ext.library_dirs.extend(
+        [ BOOST_LIB_PATH, ZLIB_LIB_PATH, OPENSSL_LIB_PATH])
 
 # Private extension modules to build.
 ext_modules = [
