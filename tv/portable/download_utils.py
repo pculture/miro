@@ -55,7 +55,7 @@ def defaultPort(scheme):
             print "WARNING: Assuming port 80 for scheme: %s" % scheme
         return 80
 
-def parseURL(url):
+def parseURL(url, split_path=False):
     url = fixFileURLS(url)
     (scheme, host, path, params, query, fragment) = util.unicodify(list(urlparse(url)))
     # Filter invalid URLs with duplicated ports (http://foo.bar:123:123/baz)
@@ -88,11 +88,14 @@ def parseURL(url):
         # Fix "/C:/foo" paths
         path = path[1:]
     fullPath = path
-    if params:
-        fullPath += ';%s' % params
-    if query:
-        fullPath += '?%s' % query
-    return scheme, host, port, fullPath
+    if split_path:
+        return scheme, host, port, fullPath, params, query
+    else:
+        if params:
+            fullPath += ';%s' % params
+        if query:
+            fullPath += '?%s' % query
+        return scheme, host, port, fullPath
 
 def getFileURLPath(url):
     scheme, host, port, path = parseURL(url)
