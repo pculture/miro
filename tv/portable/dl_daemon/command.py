@@ -102,7 +102,9 @@ class ShutDownResponseCommand(Command):
 class InitialConfigCommand(Command):
     def action(self):
         import config
+        from dl_daemon import download
         config.setDictionary(*self.args, **self.kws)
+        download.configReceived()
 
 class UpdateConfigCommand(Command):
     def action(self):

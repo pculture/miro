@@ -90,7 +90,6 @@ while True:
         raise RuntimeError("Couldn't find Miro root directory")
     root_try = os.path.abspath(os.path.join(root_try, '..'))
 portable_dir = os.path.join(root_dir, 'portable')
-bittorrent_dir = os.path.join(portable_dir, 'BitTorrent')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
 compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
@@ -106,6 +105,7 @@ debian_package_dir = os.path.join(platform_dir, 'debian_package')
 sys.path[0:0] = ['%s/platform/%s' % (root_dir, 'gtk-x11'), '%s/platform' % root_dir, '%s/portable' % root_dir]
 
 import template_compiler
+import setup_portable
 template_compiler.compileAllTemplates(root_dir)
 
 # little hack get the version from the current app.config.template
@@ -210,6 +210,9 @@ fasttypes_ext = \
         sources = [os.path.join(portable_dir, 'fasttypes.cpp')],
         libraries = [BOOST_LIB],
     )
+
+##### The libtorrent extension ####
+libtorrent_ext = setup_portable.libtorrent_extension(portable_dir)
 
 #### MozillaBrowser Extension ####
 try:
@@ -534,7 +537,7 @@ setup(name='miro',
     ],
     data_files=data_files,
     ext_modules = [
-        fasttypes_ext, mozilla_browser_ext, xine_ext, xlib_ext,
+        fasttypes_ext, mozilla_browser_ext, xine_ext, xlib_ext, libtorrent_ext,
         Extension("miro.database", 
                 [os.path.join(portable_dir, 'database.pyx')]),
         Extension("miro.sorts", 
@@ -544,7 +547,6 @@ setup(name='miro',
     ],
     packages = [
         'miro.frontend_implementation',
-        'miro.BitTorrent',
         'miro.dl_daemon',
         'miro.test',
         'miro.compiled_templates',
@@ -553,7 +555,6 @@ setup(name='miro',
     ],
     package_dir = {
         'miro.frontend_implementation' : frontend_implementation_dir,
-        'miro.BitTorrent' : bittorrent_dir,
         'miro.dl_daemon' : dl_daemon_dir,
         'miro.test' : test_dir,
         'miro.compiled_templates' : compiled_templates_dir,

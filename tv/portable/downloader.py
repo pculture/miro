@@ -495,7 +495,7 @@ URL was %s""" % self.url
         size = self.getCurrentSize()
         if size == 0:
             return 0
-        return self.status.get('uploaded', 0) * 1024 * 1024 / size
+        return self.status.get('uploaded', 0) / size
     
     def restartIfNeeded(self):
         if self.getState() in (u'downloading',u'offline'):

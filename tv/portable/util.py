@@ -33,7 +33,6 @@ import subprocess
 
 from clock import clock
 from types import UnicodeType, StringType
-from BitTorrent.bencode import bdecode, bencode
 
 # Should we print out warning messages.  Turn off in the unit tests.
 chatter = True
@@ -390,11 +389,12 @@ def timeTrapCall(when, function, *args, **kwargs):
     return retval
 
 def getTorrentInfoHash(path):
+    import libtorrent as lt
     f = open(path, 'rb')
     try:
         data = f.read()
-        metainfo = bdecode(data)
-        infohash = sha.sha(bencode(metainfo['info'])).digest()
+        metainfo = lt.bdecode(data)
+        infohash = sha.sha(lt.bencode(metainfo['info'])).digest()
         return infohash
     finally:
         f.close()

@@ -182,6 +182,8 @@ class ControllerDaemon(Daemon):
                    prefs.UPSTREAM_LIMIT_IN_KBS,
                    prefs.BT_MIN_PORT,
                    prefs.BT_MAX_PORT,
+                   prefs.USE_UPNP,
+                   prefs.BT_ENC_REQ,
                    prefs.MOVIES_DIRECTORY,
                    prefs.PRESERVE_DISK_SPACE,
                    prefs.PRESERVE_X_GB_FREE,
