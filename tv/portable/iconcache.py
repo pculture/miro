@@ -121,10 +121,30 @@ class IconCache:
 
         self.requestUpdate (is_vital=is_vital)
 
+    def iconChanged (self, needsSave=True):
+        try:
+            self.dbItem.iconChanged(needsSave=needsSave)
+        except:
+            self.dbItem.signalChange(needsSave=needsSave)
+
     def remove (self):
         self.removed = True
         self._removeFile(self.filename)
         imageresize.removeResizedFiles(self.resized_filenames)
+
+    def reset (self):
+        self._removeFile(self.filename)
+        imageresize.removeResizedFiles(self.resized_filenames)
+        self.filename = None
+        self.resized_filenamed = {}
+        self.url = None
+        self.etag = None
+        self.modified = None
+        self.removed = False
+        self.updated = False
+        self.updating = False
+        self.needsUpdate = False
+        self.iconChanged()
 
     def _removeFile(self, filename):
         try:
@@ -144,7 +164,7 @@ class IconCache:
             self.url = url
             self.etag = None
             self.modified = None
-            self.dbItem.signalChange()
+            self.iconChanged()
         self.updating = False
         if self.needsUpdate:
             self.needsUpdate = False
@@ -252,7 +272,7 @@ class IconCache:
             self.updated = True
         finally:
             if needsChange:
-                self.dbItem.signalChange(needsSave=needsSave)
+                self.iconChanged(needsSave=needsSave)
             self.updating = False
             if self.needsUpdate:
                 self.needsUpdate = False
@@ -308,7 +328,7 @@ class IconCache:
 
     def isValid(self):
         self.dbItem.confirmDBThread()
-        return self.filename is not None and os.path.exists(self.filename)
+        return self.filename and os.path.exists(self.filename)
 
     def getFilename(self):
         self.dbItem.confirmDBThread()

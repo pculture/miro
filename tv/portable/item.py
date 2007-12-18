@@ -831,6 +831,7 @@ folder will be deleted.""")
         except:
             return None
 
+    # When changing this function, change feed.iconChanged to signal the right set of items
     @returnsUnicode
     def getThumbnail (self):
         self.confirmDBThread()

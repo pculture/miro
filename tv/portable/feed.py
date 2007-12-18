@@ -518,6 +518,15 @@ class FeedImpl:
     def getThumbnailURL(self):
         return self.thumbURL
 
+    # See item.getThumbnail to figure out which items to send signals for.
+    def iconChanged(self, needsSave=True):
+        self.ufeed.signalChange(needsSave=needsSave)
+        for item in self.items:
+            if not (item.iconCache.isValid() or
+                    item.screenshot or
+                    item.isContainerItem):
+                item.signalChange(needsSave=False)
+
     ##
     # Returns URL of license assocaited with the feed
     @returnsUnicode
@@ -2376,6 +2385,7 @@ class SearchFeedImpl (RSSMultiFeedImpl):
             self.etag = {}
             self.modified = {}
             self.title = self.url
+            self.ufeed.iconCache.reset()
             self.thumbURL = defaultFeedIconURL()
             self.ufeed.iconCache.requestUpdate(is_vital=True)
         finally:
