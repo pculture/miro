@@ -97,6 +97,7 @@ class Item(DDBObject):
         self.screenshot = None
         self.resized_screenshots = {}
         self.resumeTime = 0
+        self.channelTitle = None
 
         self.iconCache = IconCache(self)
         
@@ -875,6 +876,10 @@ folder will be deleted.""")
     def getQuotedTitle(self):
         return urllib.quote_plus(self.getTitle().encode('utf8')).decode('ascii', 'replace')
 
+    def setChannelTitle(self, title):
+        checkU(title)
+        self.channelTitle = title
+
     @returnsUnicode
     def getChannelTitle(self, allowSearchFeedTitle=False):
         implClass = self.getFeed().actualFeed.__class__
@@ -882,6 +887,8 @@ folder will be deleted.""")
             return self.getFeed().getTitle()
         elif implClass == feed.SearchFeedImpl and allowSearchFeedTitle:
             return searchengines.getLastEngineTitle()
+        elif self.channelTitle:
+            return self.channelTitle
         else:
             return u''
 
