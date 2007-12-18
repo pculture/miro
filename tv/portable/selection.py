@@ -19,6 +19,7 @@
 
 from copy import copy
 
+from frontends.html.display import TemplateDisplay
 import app
 import database
 import eventloop
@@ -502,7 +503,7 @@ class SelectionHandler(object):
         elif len(tls.currentSelection) == 1:
             for id in tls.currentSelection:
                 tab = tls.currentView.getObjectByID(id)
-                return app.TemplateDisplay(tab.contentsTemplate,
+                return TemplateDisplay(tab.contentsTemplate,
                                            tab.templateState,
                         frameHint=frame, areaHint=frame.mainDisplay, 
                         id=tab.obj.getID())
@@ -526,7 +527,7 @@ class SelectionHandler(object):
                             selectedChildren -= 1
                 else:
                     selectedChildren += 1
-            return app.TemplateDisplay(templateName,'default', frameHint=frame,
+            return TemplateDisplay(templateName,'default', frameHint=frame,
                     areaHint=frame.mainDisplay,
                     selectedFolders=selectedFolders,
                     selectedChildren=selectedChildren,

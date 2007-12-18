@@ -22,6 +22,7 @@ import util
 import config
 import prefs
 from download_utils import nextFreeFilename
+from frontends.html.base import PlaybackControllerBase, VideoDisplayBase
 
 from xpcom import components
 from threading import Lock
@@ -34,10 +35,10 @@ selectItemLock = Lock()
 #### The Playback Controller                                               ####
 ###############################################################################
 
-class PlaybackController (app.PlaybackControllerBase):
+class PlaybackController (PlaybackControllerBase):
     
     def playItemExternally(self, itemID):
-        item = app.PlaybackControllerBase.playItemExternally(self, itemID)
+        item = PlaybackControllerBase.playItemExternally(self, itemID)
         # now play this item externally
         moviePath = ""
         try:
@@ -50,7 +51,7 @@ class PlaybackController (app.PlaybackControllerBase):
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
-class VideoDisplay (app.VideoDisplayBase):
+class VideoDisplay (VideoDisplayBase):
     "Video player shown in a MainFrame's right-hand pane."
 
     def initRenderers(self):
@@ -70,7 +71,7 @@ class VideoDisplay (app.VideoDisplayBase):
         return frontend.vlcRenderer.exitFullScreen(url)
 
     def setVolume(self, volume, moveSlider=True): 
-        app.VideoDisplayBase.setVolume(self, volume)
+        VideoDisplayBase.setVolume(self, volume)
         frontend.vlcRenderer.setVolume(self.volume)
         if moveSlider:
             frontend.jsBridge.positionVolumeSlider(self.volume)

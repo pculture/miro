@@ -29,6 +29,7 @@ import views
 import config
 import folder
 from frontends.html import dialogs, keyboard
+from frontends.html.base import Display
 import playlist
 import resources
 import eventloop
@@ -494,11 +495,11 @@ class DisplayHostView (NSView):
 
 ###############################################################################
 
-class NullDisplay (app.Display):
+class NullDisplay (Display):
     "Represents an empty right-hand area."
 
     def __init__(self):
-        app.Display.__init__(self)
+        Display.__init__(self)
         self.view = NSView.alloc().init().retain()
 
     def getView(self):
