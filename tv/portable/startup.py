@@ -141,7 +141,6 @@ You must download the latest version of $shortAppName and run that.""")).substit
     else:
         eventloop.addUrgentCall(finalizeStartup, "finalizing startup")
 
-@eventloop.asUrgent
 @startupFunction
 def finalizeStartup():
     downloader.startupDownloader()
