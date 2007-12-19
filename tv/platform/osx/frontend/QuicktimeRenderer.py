@@ -25,7 +25,7 @@ from QTKit import *
 from AppKit import *
 from Foundation import *
 
-import app
+from videorenderer import VideoRenderer
 import prefs
 import config
 import qtcomp
@@ -43,10 +43,10 @@ ALL_SUPPORTED_MEDIA_TYPES   = SUPPORTED_VIDEO_MEDIA_TYPES + SUPPORTED_AUDIO_MEDI
 
 ###############################################################################
 
-class QuicktimeRenderer (app.VideoRenderer):
+class QuicktimeRenderer (VideoRenderer):
 
     def __init__(self, delegate):
-        app.VideoRenderer.__init__(self)
+        VideoRenderer.__init__(self)
         self.view = nil
         self.movie = nil
         self.delegate = delegate

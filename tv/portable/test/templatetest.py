@@ -412,10 +412,6 @@ class OptimizedAttributeChangeTest(DemocracyTestCase):
         self.checkChange('abc123', third, {}, True)
         self.checkChange('abc123', fourth, {'class': 'item'}, False)
 
-    def testChangeWithoutInitalHTML(self):
-        first = '<div class="item" id="abc123">foo</div>'
-        self.assertRaises(KeyError, self.changer.calcChanges, 'abc123', first)
-
 class HotspotOptimizedTest(DemocracyTestCase):
     def setUp(self):
         DemocracyTestCase.setUp(self)

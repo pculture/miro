@@ -25,6 +25,7 @@ import os
 import searchengines
 import views
 from platformutils import _getLocale as getLocale
+from frontends.html.main import HTMLApplication
 
 from frontend_implementation import HTMLDisplay
 import migrateappname
@@ -32,11 +33,7 @@ import migrateappname
 ###############################################################################
 #### Application object                                                    ####
 ###############################################################################
-class Application:
-
-    def __init__(self):
-        print "Application init"
-
+class Application(HTMLApplication):
     def Run(self):
         HTMLDisplay.initTempDir()
 
@@ -57,16 +54,9 @@ class Application:
         #psyco.log('\\dtv.psyco')
         psyco.profile(.03)
 
-        # Start the core.
-        if frontend.startup.search:
-            self.onStartup(frontend.startup.search.getFiles())
-        else:
-            self.onStartup()
         frontend.jsBridge.positionVolumeSlider(config.get(prefs.VOLUME_LEVEL))
 
-    def onStartup(self):
-        # For overriding
-        pass
+        self.startup()
 
     def finishStartupSequence(self):
         from xpcom import components

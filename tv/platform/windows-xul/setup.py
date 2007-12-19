@@ -397,7 +397,7 @@ class bdist_xul_dumb(Command):
                            "xpcom.server.enumerator",
                            # slips through because it's only included by
                            # platform code
-                           "keyboard", 
+                           "frontends.html.keyboard", 
                            ]
 
         # Add other stuff that is necessary to get a functional Python

@@ -88,7 +88,8 @@ class UIBackendDelegate:
     currentMenuItems = None
 
     def performStartupTasks(self, terminationCallback):
-        terminationCallback(None)
+        foundFiles = frontend.startup.search.getFiles()
+        terminationCallback(foundFiles)
 
     def showContextMenu(self, menuItems):
         UIBackendDelegate.currentMenuItems = menuItems

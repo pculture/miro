@@ -40,8 +40,8 @@ import logging
 import feed
 import views
 import database
-import keyboard
 from menubar import menubar
+from frontends.html import keyboard
 
 from gtk_queue import gtkAsyncMethod
 from gtcache import gettext as _

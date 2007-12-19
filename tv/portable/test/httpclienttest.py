@@ -10,6 +10,7 @@ from clock import clock
 import os
 
 from download_utils import cleanFilename
+import app
 import download_utils
 import database
 from frontends.html import dialogs
@@ -509,11 +510,7 @@ class DumbHTTPClientTest(AsyncSocketTest):
         self.testRequest.sendRequest(self.callback, self.errback, "", 80,
                 method='GET', path='/bar/baz;123?a=b') 
         self.authDelegate = TestingAuthDelegate()
-        dialogs.setDelegate(self.authDelegate)
-
-    def tearDown(self):
-        # clear out any HTTPAuth objects in there
-        AsyncSocketTest.tearDown(self)
+        app.delegate = self.authDelegate
 
     def testScheme(self):
         conn = httpclient.HTTPConnection()
@@ -803,14 +800,9 @@ class HTTPClientTestBase(AsyncSocketTest):
         self.testRequest.openConnection('foo.com', 80, lambda x: None, lambda x: None)
         self.testRequest.sendRequest(self.callback, self.errback, "", 80, method='GET', path='/bar/baz;123?a=b') 
         self.authDelegate = TestingAuthDelegate()
-        dialogs.setDelegate(self.authDelegate)
+        app.delegate = self.authDelegate
         TestHTTPClient.connectionPool = TestingHTTPConnectionPool()
         TestingHeaderGrabber.connectionPool = TestingHTTPConnectionPool()
-
-    def tearDown(self):
-        # clear out any HTTPAuth objects in there
-        AsyncSocketTest.tearDown(self)
-
 
 class HTTPClientTest(HTTPClientTestBase):
     def testRealRequest(self):

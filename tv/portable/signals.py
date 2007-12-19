@@ -76,11 +76,14 @@ class SystemSignals(SignalEmitter):
         No arguments.
 
     "startup-failure" - The startup process fails.  The frontend should inform
-        the user that this happened and quit.  At this point the backend
-        thread will not be running.
+        the user that this happened and quit.
         
         Arguments:
-        - message -- User-friendly explanation of the problem.
+        - summary -- Short, user-friendly, summary of the problem
+        - description -- Longer explanation of the problem
+
+    "loaded-custom-channels" - We loaded the initial channels from an OPML
+        file.
 
     "update-available" - A new version of Miro is available.
      
@@ -95,13 +98,17 @@ class SystemSignals(SignalEmitter):
     """
     def __init__(self):
         SignalEmitter.__init__(self, 'error', 'startup-success',
-                'startup-failure', 'update-available', 'download-complete')
+                'startup-failure', 'loaded-custom-channels',
+                'update-available', 'download-complete')
 
     def startupSuccess(self):
         self.emit('startup-success')
 
-    def startupFailure(self, message):
-        self.emit('startup-failure', message)
+    def startupFailure(self, summary, description):
+        self.emit('startup-failure', summary, description)
+
+    def loadedCustomChannels():
+        self.emit('loaded-custom-channels')
 
     def update_available(self, latest):
         self.emit('update-available', latest)
