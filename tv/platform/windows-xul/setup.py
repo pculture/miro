@@ -183,8 +183,8 @@ fasttypes_ext = \
     )
 
 # Setting the path here allows py2exe to find the DLLS
-os.environ['PATH'] = r'%s;%s;%s' % (os.environ['PATH'], BOOST_LIB_PATH,
-        ZLIB_RUNTIME_LIBRARY_PATH)
+os.environ['PATH'] = r'%s;%s;%s;%s' % (os.environ['PATH'], BOOST_LIB_PATH,
+        ZLIB_RUNTIME_LIBRARY_PATH, OPENSSL_LIB_PATH)
 
 ##### The libtorrent extension ####
 
