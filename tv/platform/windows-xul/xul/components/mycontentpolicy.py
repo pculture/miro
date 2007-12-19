@@ -36,14 +36,9 @@ class MyContentPolicy:
 
     def shouldLoad(self, contentType, contentLocation, requestOrigin, context, mimeTypeGuess,  extra):
         rv = nsIContentPolicy.ACCEPT
-        print "Got request for %s" % contentLocation.spec
-        print "Request origin is %s" % requestOrigin.spec
-        print "Content type is %s" % contentType
-        print "context is %s" % context
         if (requestOrigin is not None and 
                 contentType in (nsIContentPolicy.TYPE_DOCUMENT,
                     nsIContentPolicy.TYPE_SUBDOCUMENT)):
-            print "Not running callback"
             url = contentLocation.spec
             referrer = requestOrigin.spec
             if not urlcallbacks.runCallback(referrer, url):
