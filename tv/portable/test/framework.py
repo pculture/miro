@@ -1,4 +1,5 @@
 import unittest
+import threading
 
 import database
 import eventloop
@@ -64,7 +65,7 @@ class DummyController:
 
 class DemocracyTestCase(unittest.TestCase):
     def setUp(self):
-        database.set_thread()
+        database.set_thread(threading.currentThread())
         views.initialize()
         # reset the event loop
         util.chatter = False

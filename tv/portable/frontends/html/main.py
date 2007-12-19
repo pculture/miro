@@ -47,7 +47,6 @@ class HTMLApplication:
     def __init__(self):
         self.ignoreErrors = False
         self.inQuit = False
-        self.delegate = frontend.UIBackendDelegate()
         self.loadedCustomChannels = False
         frontends.html.app = self
 
@@ -76,7 +75,7 @@ class HTMLApplication:
 
         if not config.get(prefs.STARTUP_TASKS_DONE):
             logging.info ("Showing startup dialog...")
-            self.delegate.performStartupTasks(self.finishStartup)
+            app.delegate.performStartupTasks(self.finishStartup)
             config.set(prefs.STARTUP_TASKS_DONE, True)
             config.save()
         else:
@@ -210,7 +209,7 @@ class HTMLApplication:
         self.loadedCustomChannels = True
 
     def handleDownloadComplete(self, obj, item):
-        self.delegate.notifyDownloadCompleted(item)
+        app.delegate.notifyDownloadCompleted(item)
 
     def handleError(self, obj, report):
         if self.ignoreErrors:
@@ -236,14 +235,14 @@ class HTMLApplication:
         """Handle new updates.  The default version opens the download page in
         a user's browser.
         """
-        if hasattr(self.delegate, 'handleNewUpdate'):
-            self.delegate.handleNewUpdate(item)
+        if hasattr(app.delegate, 'handleNewUpdate'):
+            app.delegate.handleNewUpdate(item)
             return
 
         url = item['enclosures'][0]['href']
         def callback(dialog):
             if dialog.choice == dialogs.BUTTON_DOWNLOAD:
-                self.delegate.openExternalURL(url)
+                app.delegate.openExternalURL(url)
         summary = _("%s Version Alert") % (config.get(prefs.SHORT_APP_NAME), )
         message = _("A new version of %s is available. Would you like to download it now?") % (config.get(prefs.LONG_APP_NAME), )
         dlog = dialogs.ChoiceDialog(summary, message, dialogs.BUTTON_DOWNLOAD, dialogs.BUTTON_CANCEL)
@@ -301,7 +300,7 @@ class HTMLApplication:
     def importChannels(self):
         callback = lambda p: opml.Importer().importSubscriptionsFrom(p)
         title = _("Import OPML File")
-        self.delegate.askForOpenPathname(title, callback, None, 
+        app.delegate.askForOpenPathname(title, callback, None, 
                 _("OPML Files"), ['opml'])
 
     @eventloop.asUrgent
@@ -322,4 +321,4 @@ class HTMLApplication:
 
     def updateAvailableItemsCountFeedback(self):
         count = views.unwatchedItems.len()
-        self.delegate.updateAvailableItemsCountFeedback(count)
+        app.delegate.updateAvailableItemsCountFeedback(count)

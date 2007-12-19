@@ -57,6 +57,7 @@ Frontend requirements:
     them.  
     """
 
+import app
 import eventloop
 from gtcache import gettext as _
 import frontends.html
@@ -106,7 +107,7 @@ class Dialog(object):
     def run(self, callback):
         self.callback = callback
         self.choice = None
-        frontends.html.app.delegate.runDialog(self)
+        app.delegate.runDialog(self)
 
     def runCallback(self, choice):
         """Run the callback for this dialog.  Choice should be the button that
