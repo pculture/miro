@@ -24,7 +24,6 @@ import gnomevfs
 import gconf
 import sys
 import logging
-from frontends.html.base import PlaybackControllerBase, VideoDisplayBase
 from gtk_queue import gtkAsyncMethod, gtkSyncMethod
 from platformcfg import gconf_lock
 
@@ -34,21 +33,21 @@ from threading import Event
 #### The Playback Controller                                               ####
 ###############################################################################
 
-class PlaybackController (PlaybackControllerBase):
+class PlaybackController (app.PlaybackControllerBase):
     
     def playItemExternally(self, itemID):
-        item = PlaybackControllerBase.playItemExternally(self, itemID)
+        item = app.PlaybackControllerBase.playItemExternally(self, itemID)
         # now play this item externally
 
 ###############################################################################
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
-class VideoDisplay (VideoDisplayBase):
+class VideoDisplay (app.VideoDisplayBase):
     "Video player that can be shown in a MainFrame's right-hand pane."
 
     def __init__(self):
-        VideoDisplayBase.__init__(self)
+        app.VideoDisplayBase.__init__(self)
         self.videoUpdateTimeout = None
         self._gtkInit()
         self.renderersReady = Event()
@@ -99,7 +98,7 @@ class VideoDisplay (VideoDisplayBase):
 
     def getRendererForItem(self, anItem):
         self.renderersReady.wait()
-        return VideoDisplayBase.getRendererForItem(self, anItem)
+        return app.VideoDisplayBase.getRendererForItem(self, anItem)
 
     @gtkAsyncMethod
     def _gtkInit(self):
@@ -125,7 +124,7 @@ class VideoDisplay (VideoDisplayBase):
             self.widget.add (widget)
             
     def setActiveRenderer (self, renderer):
-        VideoDisplayBase.setActiveRenderer(self, renderer)
+        app.VideoDisplayBase.setActiveRenderer(self, renderer)
         self.setChildWidget (renderer.widget)
 
     @gtkAsyncMethod
@@ -155,14 +154,14 @@ class VideoDisplay (VideoDisplayBase):
     @gtkAsyncMethod
     def pause(self):
         self.stopVideoTimeUpdate()
-        VideoDisplayBase.pause(self)
+        app.VideoDisplayBase.pause(self)
         app.controller.frame.windowChanger.updatePlayPauseButton()
 
     def getWidget(self, area = None):
         return self.widget
 
     def setVolume(self, volume):
-        VideoDisplayBase.setVolume(self, volume)
+        app.VideoDisplayBase.setVolume(self, volume)
         self.moveVolumeSlider(volume)
 
     @gtkAsyncMethod

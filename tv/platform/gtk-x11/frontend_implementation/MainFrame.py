@@ -36,7 +36,6 @@ from frontend_implementation.HTMLDisplay import HTMLDisplay
 from frontend_implementation.callbackhandler import CallbackHandler
 from frontend_implementation.mainwindowchanger import MainWindowChanger
 from frontend_implementation import trayicon
-from frontends.html.base import Display
 from platformcfg import gconf_lock
 import config
 import prefs
@@ -451,12 +450,12 @@ class MainFrame:
 #### The no-op display (here's as good a place as any)                     ####
 ###############################################################################
 
-class NullDisplay (Display):
+class NullDisplay (app.Display):
     "A blank placeholder Display."
 
     @gtkSyncMethod
     def __init__(self):
-        Display.__init__(self)
+        app.Display.__init__(self)
 
         view = gtk.TextView()
         buffer = view.get_buffer()

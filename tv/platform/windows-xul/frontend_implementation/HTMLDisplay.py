@@ -31,7 +31,6 @@ import os
 import platformutils
 import prefs
 import frontend
-from frontends.html.base import Display
 from frontend_implementation import urlcallbacks
 
 tempdir = os.path.join(tempfile.gettempdir(), config.get(prefs.SHORT_APP_NAME))
@@ -81,7 +80,7 @@ def compareFileUrls(url1, url2):
         return os.path.normpath(platformutils.getLongPathName(path))
     return normalize(url1) == normalize(url2)
 
-class HTMLDisplay (Display):
+class HTMLDisplay (app.Display):
     "Selectable Display that shows a HTML document."
 
     def __init__(self, html, existingView=None, frameHint=None, areaHint=None,

@@ -519,11 +519,11 @@ class Controller(frontend.Application):
     def __init__(self):
         global controller
         global delegate
+        frontend.Application.__init__(self)
         assert controller is None
         assert delegate is None
         controller = self
         delegate = frontend.UIBackendDelegate()
-        frontend.Application.__init__(self)
         self.frame = None
         self.inQuit = False
         self.guideURL = None

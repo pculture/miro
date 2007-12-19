@@ -26,7 +26,6 @@ import app
 import eventloop
 import platformcfg
 import platformutils
-from frontends.html.base import PlaybackControllerBase, VideoDisplayBase
 
 from MainFrame import Slider, handleKey
 from QuicktimeRenderer import QuicktimeRenderer
@@ -54,10 +53,10 @@ objc.loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity
 
 ###############################################################################
 
-class PlaybackController (PlaybackControllerBase):
+class PlaybackController (app.PlaybackControllerBase):
     
     def playItemExternally(self, itemID):
-        item = PlaybackControllerBase.playItemExternally(self, itemID)
+        item = app.PlaybackControllerBase.playItemExternally(self, itemID)
         moviePath = item.getVideoFilename()
         moviePath = platformutils.filenameTypeToOSFilename(moviePath)
 
@@ -75,11 +74,11 @@ class PlaybackController (PlaybackControllerBase):
 
 ###############################################################################
 
-class VideoDisplay (VideoDisplayBase):
+class VideoDisplay (app.VideoDisplayBase):
     "Video player shown in a MainFrame's right-hand pane."
 
     def __init__(self):
-        VideoDisplayBase.__init__(self)
+        app.VideoDisplayBase.__init__(self)
         self.controller = VideoDisplayController.getInstance()
         self.controller.videoDisplay = self
 
@@ -87,56 +86,56 @@ class VideoDisplay (VideoDisplayBase):
         self.renderers.append(QuicktimeRenderer(self.controller))
 
     def setExternal(self, external):
-        VideoDisplayBase.setExternal(self, external)
+        app.VideoDisplayBase.setExternal(self, external)
         if external:
             self.controller.enableExternalPlaybackControls()
 
     def selectItem(self, item, renderer):
-        VideoDisplayBase.selectItem(self, item, renderer)
+        app.VideoDisplayBase.selectItem(self, item, renderer)
         self.controller.selectItem(item, renderer)
  
     def play(self):
-        VideoDisplayBase.play(self)
+        app.VideoDisplayBase.play(self)
         self.controller.play()
 
     def playFromTime(self, startTime):
-        VideoDisplayBase.playFromTime(self, startTime)
+        app.VideoDisplayBase.playFromTime(self, startTime)
         self.controller.play()
 
     def pause(self):
-        VideoDisplayBase.pause(self)
+        app.VideoDisplayBase.pause(self)
         self.controller.pause()
 
     def stop(self):
-        VideoDisplayBase.stop(self)
+        app.VideoDisplayBase.stop(self)
         self.controller.stop()
     
     def goFullScreen(self):
-        VideoDisplayBase.goFullScreen(self)
+        app.VideoDisplayBase.goFullScreen(self)
         self.controller.goFullScreen()
 
     def exitFullScreen(self):
-        VideoDisplayBase.exitFullScreen(self)
+        app.VideoDisplayBase.exitFullScreen(self)
         self.controller.exitFullScreen()
 
     def setVolume(self, level):
-        VideoDisplayBase.setVolume(self, level)
+        app.VideoDisplayBase.setVolume(self, level)
         self.controller.setVolume(level)
 
     def muteVolume(self):
-        VideoDisplayBase.muteVolume(self)
+        app.VideoDisplayBase.muteVolume(self)
         self.controller.volumeSlider.setEnabled_(NO)
 
     def restoreVolume(self):
-        VideoDisplayBase.restoreVolume(self)
+        app.VideoDisplayBase.restoreVolume(self)
         self.controller.volumeSlider.setEnabled_(YES)
 
     def onSelected(self, frame):
-        VideoDisplayBase.onSelected(self, frame)
+        app.VideoDisplayBase.onSelected(self, frame)
         self.controller.onSelected()
 
     def onDeselected(self, frame):
-        VideoDisplayBase.onDeselected(self, frame)
+        app.VideoDisplayBase.onDeselected(self, frame)
         self.controller.onDeselected()
 
     def getView(self):

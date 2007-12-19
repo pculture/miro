@@ -27,7 +27,6 @@ from Foundation import *
 from PyObjCTools import AppHelper
 
 from frontends.html import keyboard
-from frontends.html.base import Display
 import app
 import prefs
 import config
@@ -51,7 +50,7 @@ def getDTVAPIURL():
 
 ###############################################################################
 
-class HTMLDisplay (Display):
+class HTMLDisplay (app.Display):
     "HTML browser that can be shown in a MainFrame's right-hand pane."
 
     # We don't need to override onSelected, onDeselected
@@ -69,7 +68,7 @@ class HTMLDisplay (Display):
             self.displaySizeHint = frameHint.getDisplaySizeHint(areaHint)
         else:
             self.displaySizeHint = None
-        Display.__init__(self)
+        app.Display.__init__(self)
  
     # make web a lazily loaded property.  This is useful for the channel
     # guides because it makes the load happen after setGuideURL

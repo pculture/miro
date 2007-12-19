@@ -25,7 +25,6 @@ import prefs
 import tempfile
 from xml.sax.saxutils import escape
 from MozillaBrowser import MozillaBrowser
-from frontends.html.base import Display
 from frontend_implementation.gtk_queue import gtkAsyncMethod
 from util import quoteJS
 import platformutils
@@ -60,10 +59,10 @@ def getImpl (area):
     return _impls[area]
 
 count = 0
-class HTMLDisplay(Display):
+class HTMLDisplay(app.Display):
     def __init__(self, html, frameHint=None, areaHint=None, baseURL=None):
         global count
-        Display.__init__(self)
+        app.Display.__init__(self)
         checkU(html)
         self.html = html
         self.count = count
@@ -102,7 +101,7 @@ class HTMLDisplay(Display):
 
     def onSelected_private(self, frame):
         platformutils.confirmMainThread()
-        Display.onSelected_private (self, frame)
+        app.Display.onSelected_private (self, frame)
         self.impl.load_html (self)
         for deferment in self.deferred:
             (attr, args, kwargs) = deferment
