@@ -85,7 +85,6 @@ Var TACKED_ON_FILE
 !insertmacro MUI_PAGE_DIRECTORY
 
 ; Start menu folder name selection page
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER "${CONFIG_LONG_APP_NAME}"
 !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
 
 ; Installation page
