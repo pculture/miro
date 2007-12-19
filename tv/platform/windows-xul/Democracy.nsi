@@ -85,7 +85,6 @@ Var TACKED_ON_FILE
 !insertmacro MUI_PAGE_DIRECTORY
 
 ; Start menu folder name selection page
-!define MUI_STARTMENUPAGE_DEFAULTFOLDER "${CONFIG_LONG_APP_NAME}"
 !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
 
 ; Installation page
@@ -620,7 +619,6 @@ Function .onInit
   StrCpy $R1 "$THEME_TEMP_DIR\app.config"
   Call GetConfigOption
   Pop $APP_NAME
-  !define MUI_STARTMENUPAGE_DEFAULTFOLDER "${APP_NAME}"
   Goto no_tackon
 
 error_in_theme:
