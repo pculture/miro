@@ -104,7 +104,7 @@ def _hasVideoType(enclosure):
 def _hasVideoExtension(enclosure, key):
     import download_utils
     if key in enclosure:
-        elems = download_utils.parseURL(enclosure[key])
+        elems = download_utils.parseURL(enclosure[key], split_path=True)
         return isAllowedFilename(elems[3])
     return False
 

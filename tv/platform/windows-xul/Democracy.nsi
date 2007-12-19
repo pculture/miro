@@ -620,6 +620,7 @@ Function .onInit
   StrCpy $R1 "$THEME_TEMP_DIR\app.config"
   Call GetConfigOption
   Pop $APP_NAME
+  !define MUI_STARTMENUPAGE_DEFAULTFOLDER "${APP_NAME}"
   Goto no_tackon
 
 error_in_theme:

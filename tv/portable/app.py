@@ -360,6 +360,7 @@ class VideoDisplayBase (Display):
         self.volume = 1.0
         self.previousVolume = 1.0
         self.isPlaying = False
+        self.isPaused = False
         self.isFullScreen = False
         self.isExternal = False
         self.stopOnDeselect = True
@@ -411,6 +412,7 @@ class VideoDisplayBase (Display):
 
     def reset(self):
         self.isPlaying = False
+        self.isPaused = False
         self.stopOnDeselect = True
         if self.activeRenderer is not None:
             self.activeRenderer.reset()
@@ -430,16 +432,19 @@ class VideoDisplayBase (Display):
         if self.activeRenderer is not None:
             self.activeRenderer.playFromTime(startTime)
         self.isPlaying = True
+        self.isPaused = False
 
     def play(self):
         if self.activeRenderer is not None:
             self.activeRenderer.play()
         self.isPlaying = True
+        self.isPaused = False
 
     def pause(self):
         if self.activeRenderer is not None:
             self.activeRenderer.pause()
         self.isPlaying = False
+        self.isPaused = True
 
     def stop(self):
         if self.isFullScreen:
@@ -500,7 +505,7 @@ class VideoDisplayBase (Display):
         self.setVolume(self.previousVolume)
 
     def onDeselected(self, frame):
-        if self.isPlaying and self.stopOnDeselect:
+        if self.stopOnDeselect and (self.isPlaying or self.isPaused):
             controller.playbackController.stop(False)
         
 # We can now safely import the frontend module
