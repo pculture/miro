@@ -251,7 +251,8 @@ def _getInitialChannelGuide():
     if default_guide is None:
         newGuide = True
         logging.info ("Spawning Miro Guide...")
-        default_guide = guide.ChannelGuide()
+        default_guide = guide.ChannelGuide(config.get(prefs.CHANNEL_GUIDE_URL),
+                 config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS).split())
         initialFeeds = resources.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
             urls = subscription.parseFile(initialFeeds)
