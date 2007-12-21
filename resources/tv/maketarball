@@ -1,15 +1,44 @@
+#!/bin/bash
+
+# usage: maketarball
+#        maketarball <version>
+#        maketarball --dir <dir> <version>
+#
+# With no arguments, this creates a source tarball from the trunk with a
+# filename based on the date.
+#
+# If you pass in the svn-dir argument, then this will create a tarball
+# of that svn directory.
+#
+# To create a tarball of version 1.0, do:
+#
+#    ./maketarball 1.0
+#
+# To create a tarball of a specific directory in svn, do:
+#
+#    ./maketarball --dir tags/Democracy-Player-1.0 1.0
+#
+# or:
+#
+#    ./maketarball --dir branches/Democracy-Player-1.0 1.0
+
 mkdir temp-miro
 cd temp-miro
 if [ "x-$1" == "x-" ]; then
     svn co https://svn.participatoryculture.org/svn/dtv/trunk/tv
     tag=`date +%Y-%m-%d`
 else
-    svn co https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$1/tv
-    tag=$1
+    if [ "$1" == "--dir" ]; then
+        svn co https://svn.participatoryculture.org/svn/dtv/$2/tv
+        tag=$3
+    else
+        # FIXME - this needs to be switched when we switch tag methods
+        svn co https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$1/tv
+        tag=$1
+    fi
 fi
 mv tv Miro-$tag
 tar zcvf Miro-$tag.tar.gz --exclude=.svn Miro-$tag
 mv Miro-$tag.tar.gz ..
 cd ..
 rm -Rf temp-miro
-
