@@ -41,8 +41,12 @@ root = os.path.normpath(root)
 import util
 
 ext_modules=[
-        core_setup.libtorrent_ext,
+    core_setup.database_ext,
+    core_setup.fasttypes_ext,
+    core_setup.libtorrent_ext
 ]
+
+print "libtorrent_ext: %s" % repr(core_setup.libtorrent_ext)
 
 templateVars = util.readSimpleConfigFile(os.path.join(root, 'resources', 'app.config'))
 
