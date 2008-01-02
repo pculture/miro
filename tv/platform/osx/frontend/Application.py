@@ -305,10 +305,10 @@ class AppController (NSObject):
         app.controller.newDownload()
     
     def importChannels_(self, sender):
-        frontends.html.importChannels()
+        app.controller.importChannels()
     
     def exportChannels_(self, sender):
-        frontends.html.exportChannels()
+        app.controller.exportChannels()
     
     def shutdown_(self, sender):
         self.internalShutdown = True
