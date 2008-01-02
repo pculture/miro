@@ -86,7 +86,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="main-video-details-delicious" onclick="return eventURL('http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=@@@this.getQuotedURL()@@@&amp;title=@@@this.getQuotedTitle()@@@');" >
+                    <a href="#" class="main-video-details-delicious" onclick="return eventURL('http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=@@@this.getURL()@@@&amp;title=@@@this.getTitle()@@@');" >
                         <img src="resource:images/delicious.gif" alt="delicious icon" />
                         <span i18n:translate=""> Post to del.icio.us</span>
                     </a>
