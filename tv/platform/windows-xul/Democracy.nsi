@@ -5,7 +5,6 @@
 ;  CONFIG_LONG_APP_NAME  eg, "Democracy Player"
 ;  CONFIG_PUBLISHER      eg, "Participatory Culture Foundation"
 ;  CONFIG_EXECUTABLE     eg, "Democracy.exe
-;  CONFIG_DL_EXECUTABLE  eg, "Democracy_Downloader.exe"
 ;  CONFIG_MOVIE_DATA_EXECUTABLE     eg, "Democracy_MovieData.exe
 ;  CONFIG_ICON           eg, "Democracy.ico"
 ;  CONFIG_OUTPUT_FILE    eg, "Democracy-0.8.0.exe"
@@ -155,13 +154,9 @@ Var TACKED_ON_FILE
   ; Remove the program
   Delete   "${directory}\${CONFIG_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_ICON}"
-  Delete   "${directory}\${CONFIG_DL_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
   Delete   "${directory}\moviedata_util.py"
   Delete   "${directory}\application.ini"
-  Delete   "${directory}\*.dll"
-  Delete   "${directory}\*.pyd"
-  Delete   "${directory}\w9xpopen.exe"
   Delete   "${directory}\uninstall.exe"
 
   RMDir /r "${directory}\chrome"
@@ -384,13 +379,9 @@ unzipok:
 
   File  "${CONFIG_EXECUTABLE}"
   File  "${CONFIG_ICON}"
-  File  "${CONFIG_DL_EXECUTABLE}"
   File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
   File  "moviedata_util.py"
   File  application.ini
-  File  *.dll
-  File  *.pyd
-  File  w9xpopen.exe
   File  /r chrome
   File  /r components
   File  /r defaults

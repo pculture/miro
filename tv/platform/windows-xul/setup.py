@@ -481,49 +481,6 @@ class bdist_xul_dumb(Command):
                 dirsCreated.add(destDir)
             shutil.copy2(source, dest)
 
-        # Copy required DLLs.
-        # NEEDS: shared library dependency scan, starting with pyloader
-        # and any python extensions, instead of this static list
-        log.info("copying DLL dependencies")
-        # NEEDS: Some Microsoft documentation says that the DLL search
-        # order is (1) the directory containing the "executable module
-        # for the current process", (2) the current directory, (3)
-        # GetSystemDirectory(), (4) GetWindowsDirectory(), and finally
-        # (5) PATH. That would suggest that we could put the DLLs in
-        # the same directory as xulrunner.exe and everything would be
-        # grand. In fact, everything is grand only if the DLLs are on
-        # PATH or in the current directory.
-        #
-        # Elsewhere, I read that the search order changed recently
-        # (SP1?): "No longer is the current directory searched first
-        # when loading DLLs! ... The default behavior now is to look
-        # in all the system locations first, then the current
-        # directory, and finally any user-defined paths. This will
-        # have an impact on your code if you install a DLL in the
-        # application's directory because Windows Server 2003 no
-        # longer loads the 'local' DLL if a DLL of the same name is in
-        # the system directory." (Google for "Development Impacts of
-        # Security Changes in Windows Server 2003.) The purpose of the
-        # change was to eliminate an opportunity for an attacker to
-        # put trojaned versions of the system DLLs into an application
-        # directory. The article is mum on this concept of searching
-        # the "executable module for the current directory."
-        #
-        # For now, let's dump the DLLs in the same directory as
-        # xulrunner-stub.exe (aka dtv.exe) and require that the
-        # current directory be the directory that contains the binary
-        # when it is run. This can easily be accomplished with a
-        # Windows shortcut, which is the way end-users will be
-        # starting the program. [And in fact the new Democracy.exe
-        # launcher now ensures that xulrunner is already run with the
-        # current directory set appropriately.]
-#        dllDistDir = self.xulrunnerOut
-        dllDistDir = self.dist_dir
-        allRuntimes = (PYTHON_RUNTIMES + BOOST_RUNTIMES + COMPILER_RUNTIMES +
-                ZLIB_RUNTIMES)
-        for runtime in allRuntimes:
-            shutil.copy2(runtime, dllDistDir)
-
         # Copy in our application's resources.
         log.info("copying application resources")
         copyTreeExceptSvn(self.appResources,
@@ -639,8 +596,9 @@ class bdist_xul_dumb(Command):
 
     def buildDownloadDaemon(self, baseDir):
         print "building download daemon"
+        dist_dir = os.path.join(self.dist_dir, 'xulrunner', 'python')
         os.system("%s setup_daemon.py py2exe --dist-dir %s" % 
-                (PYTHON_BINARY, self.dist_dir))
+                (PYTHON_BINARY, dist_dir))
 
     def buildMovieDataUtil(self):
         print "building movie data utility"
@@ -881,7 +839,6 @@ class bdist_xul (bdist_xul_dumb):
 
         nsisVars['CONFIG_EXECUTABLE'] = "%s.exe" % (self.getTemplateVariable('shortAppName'))
         nsisVars['CONFIG_MOVIE_DATA_EXECUTABLE'] = "%s_MovieData.exe" % (self.getTemplateVariable('shortAppName'))
-        nsisVars['CONFIG_DL_EXECUTABLE'] = "%s_Downloader.exe" % (self.getTemplateVariable('shortAppName'))
         nsisVars['CONFIG_ICON'] = "%s.ico" % (self.getTemplateVariable('shortAppName'))
         nsisVars['CONFIG_PROG_ID'] = self.getTemplateVariable('longAppName').replace(" ",".")+".1"
 
@@ -920,14 +877,7 @@ class bdist_xul (bdist_xul_dumb):
         self.zipfile = zip.ZipFile(os.path.join (self.dist_dir, "%s-Contents-%s.zip" % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('appVersion'),)), 'w', zip.ZIP_DEFLATED)
         self.addFile (nsisVars['CONFIG_EXECUTABLE'])
         self.addFile (nsisVars['CONFIG_ICON'])
-        self.addFile (nsisVars['CONFIG_DL_EXECUTABLE'])
         self.addFile ("application.ini")
-        self.addFile ("msvcp71.dll")
-        self.addFile ("msvcr71.dll")
-        if sys.version.startswith("2.4"):
-            self.addFile ("python24.dll")
-        else: # We must be using Python 2.5
-            self.addFile ("python25.dll")
 
         self.addDirectory ("chrome")
         self.addDirectory ("components")

@@ -255,7 +255,7 @@ def launchDownloadDaemon(oldpid, env):
     # Note that we use "Miro" instead of the app name here, so custom
     # versions will work
     downloaderPath = os.path.join(resources.resourceRoot(), "..",
-                                  "Miro_Downloader.exe")
+            'xulrunner', 'python', "Miro_Downloader.exe")
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
