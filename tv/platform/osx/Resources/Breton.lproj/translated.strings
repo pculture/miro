@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-11-12 10:40-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-01-02 08:13-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:77 */
 "Cancel" = "Nullañ";
@@ -830,19 +830,23 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/feed.py:385 */
 /* File: ../../portable/item.py:542 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%d hours" = "%d hours" /* = "%d eurvezh" */;
 
 /* File: ../../portable/feed.py:387 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%d day" = "%d day" /* = "%d devezh" */;
 
 /* File: ../../portable/feed.py:389 */
 /* File: ../../portable/item.py:540 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%d days" = "%d days" /* = "%d devezh" */;
 
 /* File: ../../portable/feed.py:391 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%d months" = "%d months" /* = "%d mizvezh" */;
 
 /* File: ../../portable/feed.py:787 */
@@ -1030,34 +1034,42 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/util.py:455 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%1.1fGB" = "%1.1fGB" /* = "%1.1fGB" */;
 
 /* File: ../../portable/util.py:457 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%dGB" = "%dGB" /* = "%dGB" */;
 
 /* File: ../../portable/util.py:461 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%1.1fMB" = "%1.1fMB" /* = "%1.1fMB" */;
 
 /* File: ../../portable/util.py:463 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%dMB" = "%dMB" /* = "%dMB" */;
 
 /* File: ../../portable/util.py:467 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%1.1fKB" = "%1.1fKB" /* = "%1.1fKB" */;
 
 /* File: ../../portable/util.py:469 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%dKB" = "%dKB" /* = "%dKB" */;
 
 /* File: ../../portable/util.py:473 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%1.1fB" = "%1.1fB" /* = "%1.1fB" */;
 
 /* File: ../../portable/util.py:475 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%dB" = "%dB" /* = "%dB" */;
 
 /* File: ../../portable/storedatabase.py:832 */
@@ -1498,6 +1510,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/item.py:544 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%d minutes" = "%d minutes" /* = "%d munutenn" */;
 
 /* File: ../../portable/item.py:554 */
@@ -1609,6 +1622,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/item.py:1270 */
 /* File: ../../portable/item.py:1273 */
 /* Flag: untranslated */
+/* Flag: python-format */
 "%s remaining" = "%s remaining" /* = "%s a chom" */;
 
 /* File: ../../portable/item.py:1282 */

@@ -1,5 +1,4 @@
 <!ENTITY prefs.title "Seçenekler:">
-<!ENTITY prefs.restart "(DİKKAT: Değişiklikler $longAppName programını tekrar başlatana kadar etkin hale gelmeyecek.)">
 
 <!ENTITY prefs.run.on.startup "Oturum açtığımda $longAppName'i çalıştır">
 <!ENTITY prefs.close_to_tray_start "Kırmızı kapat düğmesine tıkladığımda:">
@@ -30,13 +29,12 @@
 <!ENTITY prefs.folder.others.add "Dizin Ekle...">
 <!ENTITY prefs.folder.others.remove "Kaldır">
 
-<!ENTITY prefs.downloads.max "İndirmeler">
-<!ENTITY prefs.downloads.max.part1 "İndirme en çok">
-<!ENTITY prefs.downloads.max.part2 "şimdi videolar.">
+<!ENTITY prefs.downloads "İndirmeler" >
+<!ENTITY prefs.downloads.max "Don't download more than this many videos at once:">
 
 <!ENTITY prefs.disk.space "Sabit Disk Alanı">
-<!ENTITY prefs.disk.space.min.part1 "İndirmeyi başlatma eğer şu değerden az bırakırsa">
-<!ENTITY prefs.disk.space.min.part2 "GB boş.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "DİKKAT: Bu ayar $longAppName programını tekrar başlatman etkin hale geçmeyecek.">
 
 <!ENTITY prefs.videos.expire "Varsayılan olarak, videoların süresi dolar">
@@ -49,7 +47,9 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(DİKKAT: Değişiklikler $longAppName programını tekrar başlatana kadar etkin hale gelmeyecek.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "ve">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">

@@ -1,21 +1,23 @@
+# translation of _democracyplayer-lv.po to Latvian
 # Latvian translation for democracy
 # Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
 #
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
+# Raivis Dejus <orvils@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: democracy\n"
+"Project-Id-Version: _democracyplayer-lv\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-11-08 16:07+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Latvian <lv@li.org>\n"
+"PO-Revision-Date: 2007-11-30 18:45+0000\n"
+"Last-Translator: Raivis Dejus <orvils@gmail.com>\n"
+"Language-Team: Latvian <locale@laka.lv>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2007-11-12 13:24+0000\n"
+"X-Launchpad-Export-Date: 2007-12-31 02:05+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -77,7 +79,7 @@ msgid "Add Channel..."
 msgstr "Pievienot Kanālu..."
 
 msgid "Add Guide..."
-msgstr "Pievienot programmu"
+msgstr "Pievienot programmu..."
 
 msgid "Bring All to Front"
 msgstr "Pārcelt visu uz priekšplānu"
@@ -400,7 +402,7 @@ msgid "Run Miro at startup"
 msgstr "Palaist Miro ieslēdzot datoru"
 
 msgid "Save downloaded videos in this folder:"
-msgstr "Saglabāt lejupielādētos video šajā mapē"
+msgstr "Saglabāt lejupielādētos video šajā mapē:"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573
 msgid "Show as Channel"
@@ -419,7 +421,7 @@ msgstr ""
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
-msgstr "Sekot līdzi jauniem video šajās mapēs un rādīt tos bibliotekā"
+msgstr "Sekot līdzi jauniem video šajās mapēs un rādīt tos bibliotekā:"
 
 msgid "every 30 minutes"
 msgstr "katras 30 minūtes"
@@ -487,7 +489,7 @@ msgid "Only search my Movies folder."
 msgstr "Meklēt tikai manā video mapē."
 
 msgid "Search my entire Home folder."
-msgstr "Meklēt visā manā mājas mapē"
+msgstr "Meklēt visā manā mājas mapē."
 
 msgid "Search this folder:"
 msgstr "Meklēt šajā mapē:"
@@ -532,7 +534,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Welcome to Internet TV!"
-msgstr "Laipni lūgti Interneta TV"
+msgstr "Laipni lūgti Interneta TV!"
 
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: "
@@ -566,7 +568,7 @@ msgstr "Peejams atjauninājums"
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr "Lejupielādei ir pieejama jauna %s versija"
+msgstr "Lejupielādei ir pieejama jauna %s versija."
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240
 msgid "Error Bombing Item"
@@ -584,7 +586,7 @@ msgstr "Kļ ūda atverot mājas lapu"
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
-"Notikusi kļūda atverot %s. Lūdzu mēģiniet vēlreiz pēc pāris sekundēm."
+"Notikusi kļūda atverot %s.  Lūdzu mēģiniet vēlreiz pēc pāris sekundēm"
 
 #: ../../platform/windows-xul/frontend_implementation/startup.py:50
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:76
@@ -630,6 +632,9 @@ msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Kad jūs uzklikšķināt uz sarkanās aizvēršanas pogas, vai vēlaties lai Miro "
+"aizveras vai paslēpjas sistēmas paletē?  Šo iestatījumu jūs vēlāk varēsiet "
+"mainīt iestatījumos."
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:44
 msgid "Download Completed"
@@ -655,7 +660,7 @@ msgstr "Pierakstīties uz kanālu"
 
 #: ../../platform/osx/frontend/MainFrame.py:279
 msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "Ievadiet kanāla URL uz kuru vēlaties pierakstīties"
+msgstr "Ievadiet kanāla URL uz kuru vēlaties pierakstīties."
 
 #: ../../platform/osx/frontend/QuicktimeRenderer.py:248
 msgid "Audio"
@@ -708,6 +713,9 @@ msgid ""
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"Jūs esat izvēlējies jaunu mapi uz kuu lejupielādēt video.  Vai %s vajadzētu "
+"pārmigrēt esošos video uz turieni?  (Pašreizējās lejupielādes tiks pāŗceltas "
+"uz turieni, kad to lejupielāde tiks pabeigta)."
 
 #: ../../platform/osx/frontend/Preferences.py:260
 msgid "View this Directory in the Library"
@@ -715,7 +723,7 @@ msgstr "Aplūkot šo direktoriju bibliotēkā"
 
 #: ../../platform/osx/frontend/Preferences.py:261
 msgid "Select a Directory to view in the Library."
-msgstr "Izvēlieties direktoriju, ko rādīt bibliotēkā"
+msgstr "Izvēlieties direktoriju, ko rādīt bibliotēkā."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
@@ -974,11 +982,11 @@ msgstr "Izveidot repertuāru"
 
 #: ../../portable/playlist.py:225
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Ievadiet jaunā repertuāra nosaukumu"
 
 #: ../../portable/feed.py:383
 msgid "never"
-msgstr ""
+msgstr "nekad"
 
 #: ../../portable/feed.py:385 ../../portable/item.py:542
 #, python-format
@@ -1048,6 +1056,12 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Mēs mēģināsim darīt visu, kas ir mūsu spēkos, lai iegūtu šos failus. Šo "
+"video apkopošanai varētu vajadzēt papildus laiku un šo video apraksti var "
+"izskatīties jocīgi.  Lūdzu sazinieties ar $url autoriem un lūdziet, lai viņi "
+"nodrošina barotni tādā formātā, kas ir savietojams ar $shortAppName.\n"
+"\n"
+"Vai vēlaties tāpat ielādēt šo kanālu?"
 
 #: ../../portable/feed.py:2134
 msgid "Local Files"
@@ -1153,8 +1167,9 @@ msgstr[2] "Veiksmīgi importētas %d barotnes."
 #, python-format
 msgid "Skipped %d feed already present."
 msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Izlaista %d barotne jau ir pieejama."
+msgstr[1] "Izlaistas %d barotnes jau ir pieejamas."
+msgstr[2] "Izlaistas %d barotnes jau ir pieejamas."
 
 #: ../../portable/autoupdate.py:121
 #, python-format
@@ -1164,37 +1179,40 @@ msgstr "%s versijas brīdinājums"
 #: ../../portable/autoupdate.py:122
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
-msgstr ""
+msgstr "Jauna %s versija ir pieejama. Vai vēlaties to tagad lejupielādēt?"
 
 #: ../../portable/autoupdate.py:128
 #, python-format
 msgid "%s Version Check"
-msgstr ""
+msgstr "%s Versiju pārbaude"
 
 #: ../../portable/autoupdate.py:129
 #, python-format
 msgid "%s is up to date."
-msgstr ""
+msgstr "%s ir jaunākā versija."
 
 #: ../../portable/util.py:252 ../../portable/httpclient.py:126
 msgid "Internal Error"
-msgstr ""
+msgstr "Iekšēja Kļūda"
 
 #: ../../portable/util.py:252
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
 msgstr ""
+"Miro ir saskaries ar iekšēju kļūdu. Jūš varat palīdzēt mums salabot šo "
+"problēmu nosūtot kļūdu ziņojumu."
 
 #: ../../portable/util.py:252
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
 msgstr ""
+"Iekļaut visu programmas datubāzi ar visu kanālu sarakstu avrijas ziņojumā"
 
 #: ../../portable/util.py:252
 msgid "Describe what you were doing that caused this error"
-msgstr ""
+msgstr "Aprakstit ko jūs darījāt kad notika kļūda"
 
 #: ../../portable/util.py:455
 #, python-format
@@ -1273,17 +1291,17 @@ msgstr "Ignorēt"
 
 #: ../../portable/dialogs.py:82
 msgid "Submit Crash Report"
-msgstr ""
+msgstr "Nosūtīt kļūdas ziņojumu"
 
 #: ../../portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
-msgstr ""
+msgstr "Migrēt"
 
 #: ../../portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
-msgstr ""
+msgstr "Nemigrēt"
 
 #: ../../portable/dialogs.py:86
 msgid "Remove Entry"
@@ -1291,19 +1309,19 @@ msgstr "Aizvākt Ierakstu"
 
 #: ../../portable/dialogs.py:87
 msgid "Delete File"
-msgstr ""
+msgstr "Dzēst failu"
 
 #: ../../portable/dialogs.py:88
 msgid "Delete Files"
-msgstr ""
+msgstr "Dzēst failus"
 
 #: ../../portable/dialogs.py:89
 msgid "Keep Videos"
-msgstr ""
+msgstr "Saglabāt video"
 
 #: ../../portable/dialogs.py:90
 msgid "Delete Videos"
-msgstr ""
+msgstr "Dzēst video"
 
 #: ../../portable/dialogs.py:92
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
@@ -1346,7 +1364,8 @@ msgstr "Jauns meklēšanas kanāls"
 #: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:25
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
-msgstr "Meklēšanas kanāls satur tos elementus, kas atbilst meklētajai frāzei"
+msgstr ""
+"Meklēšanas kanāls satur tos elementus, kas atbilst meklētajai frāzei."
 
 #: ../../portable/singleclick.py:87
 msgid "Download already exists"
@@ -1354,19 +1373,19 @@ msgstr "Lejupielāde jau eksistē"
 
 #: ../../portable/singleclick.py:88
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "URL jau ir kā ārējā lejupielāde."
 
 #: ../../portable/singleclick.py:94
 msgid "Miro will begin downloading it now."
-msgstr ""
+msgstr "Miro sāks to lejupielādēt."
 
 #: ../../portable/singleclick.py:96
 msgid "It is downloading now."
-msgstr "Tas šobrīd lejupielādējas"
+msgstr "Tas šobrīd lejupielādējas."
 
 #: ../../portable/singleclick.py:98
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "Tā jau ir lejupielādēta."
 
 #: ../../portable/singleclick.py:125
 msgid "Download Error"
@@ -1379,6 +1398,9 @@ msgid ""
 "\n"
 "URL: %s"
 msgstr ""
+"Miro nevar lejupielādēt šo failu šajā URL:\n"
+"\n"
+"URL: %s"
 
 #: ../../portable/singleclick.py:134
 msgid "File Download"
@@ -1387,16 +1409,16 @@ msgstr "Faila lejupielāde"
 #: ../../portable/singleclick.py:135
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
+msgstr "Fails no %s neizskatās pēc audio, video vai RSS barotnes."
 
 #: ../../portable/singleclick.py:225
 msgid "Subscribing to multiple channels"
-msgstr ""
+msgstr "Pierakstos uz vairākeim kanāliem"
 
 #: ../../portable/singleclick.py:226
 #, python-format
 msgid "Create %d channels?"
-msgstr ""
+msgstr "Izveidot %d kanālus?"
 
 #: ../../portable/singleclick.py:239
 #, python-format
@@ -1425,16 +1447,20 @@ msgid ""
 "This $shortAppName channel file has an invalid format: $url. Please notify "
 "the publisher of this file."
 msgstr ""
+"Šim $shortAppName kanālam ir nederīgs formāts: $url. Lūdzu ziņojiet tā "
+"autoriem par šo failu."
 
 #: ../../portable/singleclick.py:272
 msgid ""
 "This $shortAppName channel file has the wrong content type: $url. Please "
 "notify the publisher of this file."
 msgstr ""
+"Šim $shortAppName kanālam ir nederīgs formāta tips: $url. Lūdzu ziņojiet tā "
+"autoriem par šo failu."
 
 #: ../../portable/singleclick.py:276
 msgid "Could not download the $shortAppName channel file: $url."
-msgstr ""
+msgstr "Nevarēja lejupielādēt $shortAppName kanāla failu: $url."
 
 #: ../../portable/singleclick.py:316
 msgid "Invalid Torrent"
@@ -1443,7 +1469,7 @@ msgstr "Nederīgs torrents"
 #: ../../portable/singleclick.py:317
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr ""
+msgstr "Torrent fails %s izskats bojats un to nevar atvērt. [OK]"
 
 #: ../../portable/menubar.py:144
 msgid "_Open"
@@ -1451,542 +1477,551 @@ msgstr "_Atvērt"
 
 #: ../../portable/menubar.py:145
 msgid "_Download Video"
-msgstr ""
+msgstr "_Lejupielādēt video"
 
 #: ../../portable/menubar.py:147
 msgid "Check _Version"
-msgstr ""
+msgstr "Pārbaudīt _versiju"
 
 #: ../../portable/menubar.py:149
 msgid "_Remove Video"
-msgstr ""
+msgstr "_Noņemt video"
 
 #: ../../portable/menubar.py:150
 msgid "_Remove Videos"
-msgstr ""
+msgstr "_Noņemt video"
 
 #: ../../portable/menubar.py:151
 msgid "Re_name Video"
-msgstr ""
+msgstr "Pā_rsaukt video"
 
 #: ../../portable/menubar.py:152
 msgid "Save Video _As..."
-msgstr ""
+msgstr "S_aglabāt video kā..."
 
 #: ../../portable/menubar.py:153
 msgid "Save Videos _As..."
-msgstr ""
+msgstr "S_aglabāt video kā..."
 
 #: ../../portable/menubar.py:154
 msgid "Copy Video _URL"
-msgstr ""
+msgstr "Kopēt video _URL"
 
 #: ../../portable/menubar.py:156
 msgid "_Options..."
-msgstr ""
+msgstr "_Iestatījumi..."
 
 #: ../../portable/menubar.py:157
 msgid "_Quit"
-msgstr ""
+msgstr "_Iziet"
 
 #: ../../portable/menubar.py:165
 msgid "Cu_t"
-msgstr ""
+msgstr "Izgriez_t"
 
 #: ../../portable/menubar.py:166
 msgid "_Copy"
-msgstr ""
+msgstr "_Kopēt"
 
 #: ../../portable/menubar.py:167
 msgid "_Paste"
-msgstr ""
+msgstr "I_evietot"
 
 #: ../../portable/menubar.py:168
 msgid "Select _All"
-msgstr ""
+msgstr "Izvēlēties _visu"
 
 #: ../../portable/menubar.py:169
 msgid "_Delete"
-msgstr ""
+msgstr "Iz_dzēst"
 
 #: ../../portable/menubar.py:173
 msgid "Add _Channel"
-msgstr ""
+msgstr "Pievienot _kanālu"
 
 #: ../../portable/menubar.py:174
 msgid "New Searc_h Channel..."
-msgstr ""
+msgstr "Jauns meklēša_nas kanāls..."
 
 #: ../../portable/menubar.py:175
 msgid "New _Folder..."
-msgstr ""
+msgstr "Jauna _mape..."
 
 #: ../../portable/menubar.py:176
 msgid "Add Channel _Guide..."
-msgstr ""
+msgstr "Pievienot kanālu _sarakstu..."
 
 #: ../../portable/menubar.py:186
 msgid "Update _All Channels"
-msgstr ""
+msgstr "_Atjaunināt visus kanālus"
 
 #: ../../portable/menubar.py:188
 msgid "_Import Channels (OPML)..."
-msgstr ""
+msgstr "_Importēt kanālus (OPML)..."
 
 #: ../../portable/menubar.py:189
 msgid "E_xport Channels (OPML)..."
-msgstr ""
+msgstr "_Exportēt kanālus (OPML)..."
 
 #: ../../portable/menubar.py:191
 msgid "_Send this channel to a friend"
-msgstr ""
+msgstr "No_sūtīt šo kanālu draugam"
 
 #: ../../portable/menubar.py:192
 msgid "Copy Channel _Link"
-msgstr ""
+msgstr "Kopēt kanā_la saiti"
 
 #: ../../portable/menubar.py:195
 msgid "New _Playlist"
-msgstr ""
+msgstr "Jauns re_pertuārs"
 
 #: ../../portable/menubar.py:196
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "Jauna repertuāru ma_pe"
 
 #: ../../portable/menubar.py:198
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "Pā_rsaukt repertuāru"
 
 #: ../../portable/menubar.py:199
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "_Noņemt repertuāru"
 
 #: ../../portable/menubar.py:200
 msgid "_Remove Playlists"
-msgstr ""
+msgstr "_Noņemt repertuārus"
 
 #: ../../portable/menubar.py:201
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "_Noņemt repertuāru mapes"
 
 #: ../../portable/menubar.py:202
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "_Noņemt repertuāru mapi"
 
 #: ../../portable/menubar.py:212
 msgid "_Play"
-msgstr ""
+msgstr "_Atskaņot"
 
 #: ../../portable/menubar.py:213
 msgid "_Stop"
-msgstr ""
+msgstr "A_pturēt"
 
 #: ../../portable/menubar.py:215
 msgid "_Next Video"
-msgstr ""
+msgstr "_Nākamais video"
 
 #: ../../portable/menubar.py:216
 msgid "_Previous Video"
-msgstr ""
+msgstr "_Iepriekšējais video"
 
 #: ../../portable/menubar.py:218
 msgid "Skip _Forward"
-msgstr ""
+msgstr "Uz _priekšu"
 
 #: ../../portable/menubar.py:219
 msgid "Skip _Back"
-msgstr ""
+msgstr "_Atpakaļ"
 
 #: ../../portable/menubar.py:221
 msgid "Volume _Up"
-msgstr ""
+msgstr "_Skaļāk"
 
 #: ../../portable/menubar.py:222
 msgid "Volume _Down"
-msgstr ""
+msgstr "_Klusāk"
 
 #: ../../portable/menubar.py:224
 msgid "_Fullscreen"
-msgstr ""
+msgstr "_Pa visu ekrānu"
 
 #: ../../portable/menubar.py:228
 msgid "_About"
-msgstr ""
+msgstr "P_ar"
 
 #: ../../portable/menubar.py:229
 msgid "_Donate"
-msgstr ""
+msgstr "_Ziedot"
 
 #: ../../portable/menubar.py:230 ../../portable/menubar.py:245
 msgid "_Help"
-msgstr ""
+msgstr "_Palīdzība"
 
 #: ../../portable/menubar.py:232
 msgid "Report a _Bug"
-msgstr ""
+msgstr "Ziņot par _kļūdu"
 
 #: ../../portable/menubar.py:236
 msgid "_Video"
-msgstr ""
+msgstr "_Video"
 
 #: ../../portable/menubar.py:238
 msgid "_File"
-msgstr ""
+msgstr "_Fails"
 
 #: ../../portable/menubar.py:242
 msgid "_Channels"
-msgstr ""
+msgstr "_Kanāli"
 
 #: ../../portable/menubar.py:243
 msgid "_Playlists"
-msgstr ""
+msgstr "_Repertuāri"
 
 #: ../../portable/menubar.py:244
 msgid "P_layback"
-msgstr ""
+msgstr "A_tskaņošana"
 
 #: ../../portable/menubar.py:249
 msgid "Play Unwatched ($numUnwatched)"
-msgstr ""
+msgstr "Atskaņot nenoskatītos ($numUnwatched)"
 
 #: ../../portable/menubar.py:250
 msgid "Pause All Downloads ($numDownloading)"
-msgstr ""
+msgstr "Apturēt visas lejupielādes ($numDownloading)"
 
 #: ../../portable/menubar.py:251
 msgid "Resume All Downloads ($numPaused)"
-msgstr ""
+msgstr "Atsākt visas lejupielādes ($numPaused)"
 
 #: ../../portable/menubar.py:253
 msgid "Options..."
-msgstr ""
+msgstr "Iestatījumi..."
 
 #: ../../portable/menubar.py:255
 msgid "Hide Window"
-msgstr ""
+msgstr "Paslēpt logu"
 
 #: ../../portable/menubar.py:256
 msgid "Show Window"
-msgstr ""
+msgstr "Parādīt logu"
 
 #: ../../portable/item.py:485
 #, python-format
 msgid "Removing %s"
-msgstr ""
+msgstr "Noņem %s"
 
 #: ../../portable/item.py:488
 msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from the Library?"
 msgstr ""
+"Vai vēlaties dzēst šo mapi un visu video, kas ir tajā vai vienkārši vēlaties "
+"aizvākt to no savas bibliotēkas?"
 
 #: ../../portable/item.py:494
 msgid ""
 "Would you like to delete this file or just remove its entry from the Library?"
-msgstr ""
+msgstr "Vai vēlaties dzēst šo mapi vai vienkārši aizvākt to no bibliotēkas?"
 
 #: ../../portable/item.py:514
 msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
 msgstr ""
+"Šī ir mape.  Dzēšot mapi viss, kas atrodas tajā iekšā arī tiek dzēsts."
 
 #: ../../portable/item.py:544
 #, python-format
 msgid "%d minutes"
-msgstr ""
+msgstr "%d minūtes"
 
 #: ../../portable/item.py:554
 #, python-format
 msgid "Expires in %s"
-msgstr ""
+msgstr "Tiks izdzēsts pēc %s"
 
 #: ../../portable/item.py:566
 #, python-format
 msgid "Will retry in %s"
-msgstr ""
+msgstr "Mēģinās vēlreis pēc %s"
 
 #: ../../portable/item.py:568
 msgid "Paused"
-msgstr ""
+msgstr "Apturēts"
 
 #: ../../portable/item.py:954
 msgid "TORRENT"
-msgstr ""
+msgstr "TORRENT"
 
 #: ../../portable/item.py:956
 msgid "WEB PAGE"
-msgstr ""
+msgstr "WEB PAGE"
 
 #: ../../portable/item.py:966
 msgid "Total Down:"
-msgstr ""
+msgstr "Kopā lejupielādēts:"
 
 #: ../../portable/item.py:969
 msgid "Error:"
-msgstr ""
+msgstr "Kļūda:"
 
 #: ../../portable/item.py:977
 msgid "Down Rate:"
-msgstr ""
+msgstr "Lejupielādes ātrums:"
 
 #: ../../portable/item.py:978
 msgid "Down Total:"
-msgstr ""
+msgstr "Kopā lejupielādēts:"
 
 #: ../../portable/item.py:980
 msgid "Up Rate:"
-msgstr ""
+msgstr "Augšupielādes ātrums:"
 
 #: ../../portable/item.py:981
 msgid "Up Total:"
-msgstr ""
+msgstr "Kopā augšupielādēts:"
 
 #: ../../portable/item.py:989
 msgid "Web page:"
-msgstr ""
+msgstr "Mājas lapa:"
 
 #: ../../portable/item.py:989
 msgid "permalink"
-msgstr ""
+msgstr "pastāvīgā saite"
 
 #: ../../portable/item.py:993
 msgid "File link:"
-msgstr ""
+msgstr "Faila saite:"
 
 #: ../../portable/item.py:993
 msgid "direct link to file"
-msgstr ""
+msgstr "tiešā saite uz failu"
 
 #: ../../portable/item.py:995
 msgid "File type:"
-msgstr ""
+msgstr "Faila tips:"
 
 #: ../../portable/item.py:1002
 msgid "REVEAL LOCAL FOLDER"
-msgstr ""
+msgstr "REVEAL LOCAL FOLDER"
 
 #: ../../portable/item.py:1004
 msgid "REVEAL LOCAL FILE"
-msgstr ""
+msgstr "REVEAL LOCAL FILE"
 
 #: ../../portable/item.py:1006
 msgid "Filename:"
-msgstr ""
+msgstr "Faila nosaukums:"
 
 #: ../../portable/item.py:1013
 msgid "Down Total"
-msgstr ""
+msgstr "Kopā lejupielādēts"
 
 #: ../../portable/item.py:1015
 msgid "Up Total"
-msgstr ""
+msgstr "Kopā augšupielādēts"
 
 #: ../../portable/item.py:1033
 msgid "Item Details"
-msgstr ""
+msgstr "Papildus informācija"
 
 #: ../../portable/item.py:1040
 msgid "Torrent Details"
-msgstr ""
+msgstr "Torrenta papildus informācija"
 
 #: ../../portable/item.py:1042
 msgid "Torrent Details <i>stopped</i>"
-msgstr ""
+msgstr "Torrenta papildus informācija <i>apturēts</i>"
 
 #: ../../portable/item.py:1046
 msgid "Download Details"
-msgstr ""
+msgstr "Lejupielādes papildus informācija"
 
 #: ../../portable/item.py:1263
 msgid "downloading..."
-msgstr ""
+msgstr "lejupielādē..."
 
 #: ../../portable/item.py:1270 ../../portable/item.py:1273
 #, python-format
 msgid "%s remaining"
-msgstr ""
+msgstr "%s atlicis"
 
 #: ../../portable/item.py:1282
 msgid "starting up..."
-msgstr ""
+msgstr "sāknē..."
 
 #: ../../portable/item.py:1477
 msgid "Play Just This Video"
-msgstr ""
+msgstr "Atskaņot tikai šo video"
 
 #: ../../portable/item.py:1854
 #, python-format
 msgid "Removing %s items"
-msgstr ""
+msgstr "Dzēš %s vienības"
 
 #: ../../portable/item.py:1856
 msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from the Library?"
 msgstr ""
+"Viens vai vairāki no šiem video netika lejupielādēti no kanāla.  Vai "
+"vēlaties dzēst šos video vai arī vienkārši aizvākt tos no bibliotēkas?"
 
 #: ../../portable/item.py:1864
 msgid ""
 "One or more of these items is a folder.  When you remove or delete a folder, "
 "any items inside that folder will also be removed or deleted."
 msgstr ""
+"Viens vai vairāki no šīm vienībām ir mapes.  Dzešot vai aizvācot mapi, tiks "
+"dzēsti vai aizvākti arī visi tajā esošie video."
 
 #: ../../portable/folder.py:132 ../../portable/folder.py:155
 msgid "Rename Channel Folder"
-msgstr ""
+msgstr "Pārsaukt kanālu mapi"
 
 #: ../../portable/folder.py:134
 #, python-format
 msgid "Enter a new name for the channel folder %s"
-msgstr ""
+msgstr "Ievadiet jaunu kanālu mapes %s nosaukumu"
 
 #: ../../portable/folder.py:210 ../../portable/folder.py:215
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Pārsaukt repertuāru mapi"
 
 #: ../../portable/folder.py:217
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
-msgstr ""
+msgstr "Ievadiet jaunu lejupielāžu mapes %s nosaukmu"
 
 #: ../../portable/folder.py:225
 msgid "Create Channel Folder"
-msgstr ""
+msgstr "Izveidot kanālu mapi"
 
 #: ../../portable/folder.py:239
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Izveidot repartuāru mapi"
 
 #: ../../portable/folder.py:240
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Ievadiet jaunu repertuāru mapes nosaukumu"
 
 #: ../../portable/httpclient.py:68
 #, python-format
 msgid "Error: %s"
-msgstr ""
+msgstr "Kļūda: %s"
 
 #: ../../portable/httpclient.py:83 ../../portable/httpclient.py:89
 msgid "Can't connect"
-msgstr ""
+msgstr "Nevar pieslēgties"
 
 #: ../../portable/httpclient.py:84
 #, python-format
 msgid "Connection Error: %s"
-msgstr ""
+msgstr "Pieslēgšanās kļūda: %s"
 
 #: ../../portable/httpclient.py:90
 msgid "SSL connection error"
-msgstr ""
+msgstr "SSL pieslēgšanāš kļūda"
 
 #: ../../portable/httpclient.py:94
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP kļūda"
 
 #: ../../portable/httpclient.py:97
 #, python-format
 msgid "Bad Status Line: %s"
-msgstr ""
+msgstr "Slikta statusa rindiņa: %s"
 
 #: ../../portable/httpclient.py:100
 #, python-format
 msgid "Bad Header Line: %s"
-msgstr ""
+msgstr "Slikta galvenes rindiņa: %s"
 
 #: ../../portable/httpclient.py:103
 #, python-format
 msgid "Bad Chunk size: %s"
-msgstr ""
+msgstr "Slikts bloka izmērs: %s"
 
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Expected CRLF got: %r"
-msgstr ""
+msgstr "Tiak gaidīts CRLF saņemts: %r"
 
 #: ../../portable/httpclient.py:109
 #, python-format
 msgid "%s closed connection"
-msgstr ""
+msgstr "%s aizvēŗa savienojumu"
 
 #: ../../portable/httpclient.py:115
 msgid "Got 404 status code"
-msgstr ""
+msgstr "Saņemts 404 statusa kods"
 
 #: ../../portable/httpclient.py:117
 #, python-format
 msgid "Bad Status Code: %s"
-msgstr ""
+msgstr "Slikts statusa kods: %s"
 
 #: ../../portable/httpclient.py:121
 msgid "Authorization failed"
-msgstr ""
+msgstr "Autorisācija nav izdevusies"
 
 #: ../../portable/httpclient.py:127
 msgid "Pipeline request never started"
-msgstr ""
+msgstr "Cauruļvada pieprasījums nekad nav sākts"
 
 #: ../../portable/httpclient.py:131
 msgid "Timeout"
-msgstr ""
+msgstr "Noildze"
 
 #: ../../portable/httpclient.py:132
 #, python-format
 msgid "Connection to %s timed out"
-msgstr ""
+msgstr "Savienojus ar %s ir noildzis"
 
 #: ../../portable/httpclient.py:136
 msgid "Invalid URL"
-msgstr ""
+msgstr "Nepareizs URL"
 
 #: ../../portable/httpclient.py:137
 #, python-format
 msgid "\"%s\" is not a valid URL"
-msgstr ""
+msgstr "\"%s\" nav derīgs URL"
 
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Fails: \"%s\" neeksistē"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Lasīšanas kļūda"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Kļūda lasot failu \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Nezināms kļūdas kods"
 
 #: ../../portable/httpclient.py:373
 msgid "Connection closed"
-msgstr ""
+msgstr "Savienojums aizvērts"
 
 #: ../../portable/httpclient.py:798
 msgid "Unknown"
-msgstr ""
+msgstr "Nezināms"
 
 #: ../../portable/httpclient.py:799
 msgid "Internal Error: Not ready to send"
-msgstr ""
+msgstr "Iekšējā kļūda: Nav gatavs sūtīt"
 
 #: ../../portable/app.py:685
 msgid "Database too new"
-msgstr ""
+msgstr "Datubāze ir pārāk jauna"
 
 #: ../../portable/app.py:686
 msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
+"Jūsu datubāze ir saglabāta ar jaunāku $shortAppName versiju. Jums "
+"jālejupielādē jaunākā $shortAppName versija un jāizmanto tā."
 
 #: ../../portable/app.py:700
 msgid "Video Directory Missing"
-msgstr ""
+msgstr "Video direktorija nav atrodama"
 
 #: ../../portable/app.py:701
 msgid ""
@@ -1998,46 +2033,54 @@ msgid ""
 "drive (this will cause you to lose some details about the videos on the "
 "external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
+"\n"
+"Miro nevar atrast jūsu primāro video direktoriju.  Viens no šīs kļūdas "
+"iemesliem varētu būt tāds, k tā jums atrodas uz ārējā cietā diska, kas "
+"šobrīd ir atvienots.\n"
+"\n"
+"Ja tagad turpināsiet tiks izveidota jauna video direktorija uz šī diska (tas "
+"radīs dažu datu zudumu no vecās video direktorijas).  Jūs varat aizvērt "
+"Miro, pievienot ārējo cieto disku un atkārtoti palaist Miro."
 
 #: ../../portable/app.py:1038 ../../portable/app.py:1052
 #: ../../portable/app.py:1096 ../../portable/app.py:1122
 #: ../../portable/app.py:1142
 #, python-format
 msgid "Remove %s"
-msgstr ""
+msgstr "Aizvākt %s"
 
 #: ../../portable/app.py:1039
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
-msgstr ""
+msgstr "Vai tiešām vēlaties aizvākt programmu %s?"
 
 #: ../../portable/app.py:1053
 #, python-format
 msgid "Are you sure you want to remove %s"
-msgstr ""
+msgstr "Vai tiešām vēlaties aizvākt %s"
 
 #: ../../portable/app.py:1056 ../../portable/app.py:1101
 #: ../../portable/app.py:1127 ../../portable/app.py:1146
 #, python-format
 msgid "Remove %s channels"
-msgstr ""
+msgstr "Aizvākt %s kanālus"
 
 #: ../../portable/app.py:1058
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
+msgstr "Vai tiešām vēlaties aizvākt šos %s repertuārus"
 
 #: ../../portable/app.py:1097
 msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
-msgstr ""
+msgstr "Ko jūs vēlaties darīt ar šī kanāla lejupielādētajiem video?"
 
 #: ../../portable/app.py:1102
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
-msgstr ""
+msgstr "Ko jūs vēlaties darīt ar šo kanālu lejupielādētajiem video?"
 
 #: ../../portable/app.py:1123
 #, python-format
@@ -2045,6 +2088,7 @@ msgid ""
 "Are you sure you want to remove %s?  Any downloads in progress will be "
 "canceled."
 msgstr ""
+"Vai tiešām vēlaties aizvākt %s?  Nepabeigtās lejupielādes tiks pārtrauktas."
 
 #: ../../portable/app.py:1128
 #, python-format
@@ -2052,75 +2096,80 @@ msgid ""
 "Are you sure you want to remove these %s channels?  Any downloads in "
 "progress will be canceled."
 msgstr ""
+"Vai tiešām vēlaties aizvākt šos %s kanālus?  Nepabeigtās lejupielādes tiks "
+"pārtrauktas."
 
 #: ../../portable/app.py:1143
 #, python-format
 msgid "Are you sure you want to remove %s?"
-msgstr ""
+msgstr "Vai tiešām vēlaties aizvākt %s?"
 
 #: ../../portable/app.py:1147
 #, python-format
 msgid "Are you sure you want to remove these %s channels?"
-msgstr ""
+msgstr "Vai tiešām vēlaties aizvākt šos %s kanālus?"
 
 #: ../../portable/app.py:1160
 #, python-format
 msgid "Stop watching %s"
-msgstr ""
+msgstr "Pārtraukt skatīties %s"
 
 #: ../../portable/app.py:1161
 #, python-format
 msgid "Are you sure you want to stop watching %s?"
-msgstr ""
+msgstr "Vai tiešām vēlaties pārtraukt skatīties %s?"
 
 #: ../../portable/app.py:1164
 #, python-format
 msgid "Stop watching %s directories"
-msgstr ""
+msgstr "Pārtraukt skatīties %s direktorijas"
 
 #: ../../portable/app.py:1165
 #, python-format
 msgid "Are you sure you want to stop watching these %s directories?"
-msgstr ""
+msgstr "Vai tiešām vēlaties pārtraukt skatīties šīs %s direktorijas?"
 
 #: ../../portable/app.py:1196
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "Vai jūs tiešām vēlaties iziet?"
 
 #: ../../portable/app.py:1198
 msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
+"Miro joprojām aukšupielādē jūsu avārijas ziņojumu. Ja jūs tagad aizvērsiet "
+"to šis ziņojums netiks aukšupiekādēts.  Vai vēlaties aizvērt?"
 
 #: ../../portable/app.py:1203
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Jums ir %d nepabeigta lejupielāde.  Vai vēlaties aizvērt?"
+msgstr[1] "Jums ir %d nepabeigtas lejupielādes.  Vai vēlaties aizvērt?"
+msgstr[2] "Jums ir %d nepabeigtas lejupielādes.  Vai vēlaties aizvērt?"
 
 #: ../../portable/app.py:1712
 msgid "Invalid Value"
-msgstr ""
+msgstr "Nederīga vērtība"
 
 #: ../../portable/app.py:1713
 #, python-format
 msgid "%s is invalid.  You must enter a non-negative number."
-msgstr ""
+msgstr "%s ir nederīga vērītba.  Ievadiet ne-negatīvu skaitli."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Kļūda saņemot failu"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Fails \"%s\" ir ticis izdzēsts neizmantojot Miro."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
-msgstr ""
+msgstr " - Nederīgs URL"
 
 #: ../../portable/app.py:2012
 msgid ""
@@ -2128,61 +2177,66 @@ msgid ""
 "Please double check and try again.\n"
 "\n"
 msgstr ""
+"Jūsu ievadītā adrese nav derīgs URL.\n"
+"Lūdzu pārbaudiet to un mēģiniet vēlreiz.\n"
+"\n"
 
 #: ../../portable/app.py:2036
 msgid "$shortAppName - Add Channel"
-msgstr ""
+msgstr "$shortAppName - Pievienot kanālu"
 
 #: ../../portable/app.py:2036
 msgid "Enter the URL of the channel to add"
-msgstr ""
+msgstr "Ievadiet pievienojamā kanāla URL"
 
 #: ../../portable/app.py:2057
 msgid "$shortAppName - Add Miro Guide"
-msgstr ""
+msgstr "$shortAppName - Pievienot Miro programmu"
 
 #: ../../portable/app.py:2057
 msgid "Enter the URL of the Miro Guide to add"
-msgstr ""
+msgstr "Ievadiet pievienojamās Miro programmas URL"
 
 #: ../../portable/app.py:2063
 msgid "$shortAppName - Download Video"
-msgstr ""
+msgstr "$shortAppName - Lejupielādēt video"
 
 #: ../../portable/app.py:2063
 msgid "Enter the URL of the video to download"
-msgstr ""
+msgstr "Ievadiet lejupielādējamā video URL"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Sākuma kanāli"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
-msgstr ""
+msgstr "Paraug repertuārs"
 
 #: ../../portable/app.py:2463
 msgid "Custom Channels"
-msgstr ""
+msgstr "Pašizvēlēti kanāli"
 
 #: ../../portable/app.py:2463
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
-msgstr ""
+msgstr "Jūs izmantojat $longAppName versiju ar pašizvēlētiem kanāliem."
 
 #: ../../portable/app.py:2478
 msgid "Error Changing Movies Directory"
-msgstr ""
+msgstr "Kļūda mainot video mapes"
 
 #: ../../portable/app.py:2479
 msgid ""
 "You don't have permission to write to the directory you selected.  Miro will "
 "continue to use the old videos directory."
 msgstr ""
+"Jums nav tiesību rakstīt izvēlētajā direktorijā.  Miro turpinās izmantot "
+"veco video direktoriju."
 
 #: ../../portable/app.py:2508
 msgid "Error Saving Video"
-msgstr ""
+msgstr "Kļūda saglabājot video"
 
 #: ../../portable/app.py:2510
 #, python-format
@@ -2190,10 +2244,12 @@ msgid ""
 "An error occured while trying to save %s.  Please check that the file has "
 "not been deleted and try again."
 msgstr ""
+"Notikusi kļūda mēģinot saglabāt %s.  Lūdzu pārliecinieties, ka fails nav "
+"izdzēsts un mēģiniet vēlreiz."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "(Changes won't go into effect until you restart Miro)"
-msgstr ""
+msgstr "(Izmaiņas nestāsies spēkā līdz jūs nepārstartēsiet Miro)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -2204,22 +2260,29 @@ msgid ""
 "1 month\n"
 "Never"
 msgstr ""
+"1 diena\n"
+"3 dienas\n"
+"6 dienas\n"
+"10 dienas\n"
+"1 mēnesis\n"
+"Nekad"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:8
 msgid "<b>BitTorrent</b>"
-msgstr ""
+msgstr "<b>BitTorrent</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
 msgid "<b>Searching for Videos</b>"
-msgstr ""
+msgstr "<b>Meklē video</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:10
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
-msgstr ""
+msgstr "<b>Vai vēlaties, lai Miro meklē video failus jūsu datorā?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
 msgstr ""
+"<b>Vai vēlaties, lai Miro tiktu palaists katru reizi ieslēdzot datoru?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12
 msgid ""
@@ -2246,38 +2309,63 @@ msgid ""
 "<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
 "of them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"<b>Viss gatavs!</b>\n"
+"\n"
+"Uzstādīšana ir pabeigta -- tagad jūs varat atrast kādu kanālu un sākt "
+"skatīties.\n"
+"\n"
+"<b>Negaidiet:</b> Miro atšķiras no video skatīšanās mājas lapās -- pieejamie "
+"video var būt lieli un labā kvalitātē, tāpēc mājas lapāš jums var nākties "
+"ilgi gaidīt, kamēr tie ielādējas. Miro jūs izvēlaties video un tie "
+"automātiski lejupielādējas.\n"
+"\n"
+"<b>Atstājiet to ieslēgtu:</b> Miro regulāri pārbauda kanālus, vai tajos nav "
+"jaunu video un ja ir tad, lejupielādē tos fonā.  Atstājot to ieslēgtu jaunie "
+"video jums būš pieejami, kad vēlēsieties tos skatīties.\n"
+"\n"
+"<b>Neuztraucieties par diska vietu:</b> Līdzīgi kā TiVo, arī Miro ir "
+"'noilguma' funkcijas, kas palīdz attīrīt vecos video, lai atbrīvotu vietu "
+"jaunajiem.  Turklāt jūs vienmēr varat saglabāt atsevišķus video vai arī "
+"iestatīt kanālu tā, lai tas automātiski saglabātu visus video.\n"
+"\n"
+"<b>Domājiet plaši:</b> Poga pa labi no atskaņošanas pogas parāda video pa "
+"visu ekranu.\n"
+"\n"
+"<b>Meklējiet video:</b> Miro programmā ir simtiem bezmaksas interneta "
+"kanālu, kurus jūš varat skatīties. Vienkārši nospiediet 'Pievienot' un "
+"sāciet skatīties."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
 msgid "By default, videos _expire after"
-msgstr ""
+msgstr "Pēc noklusējuma, video ti_ek dzēsti pēc"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
-msgstr ""
+msgstr "K_anāls:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 msgid "C_hannels"
-msgstr ""
+msgstr "K_anāli"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "C_reate Channel"
-msgstr ""
+msgstr "I_zveidot kanālu"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Check Channels for _new content"
-msgstr ""
+msgstr "Pātvaudīt kanālus vai tajos _nav jaunu video"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "Disk _Space"
-msgstr ""
+msgstr "Disk _vieta"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "Don't start a download _if it leaves less than"
-msgstr ""
+msgstr "Nesākt lejupielādi, ja tā atstātu mazāk kā"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Download at _most"
-msgstr ""
+msgstr "Lejupielādēt ne vairāk kā"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid ""
@@ -2285,75 +2373,82 @@ msgid ""
 "Every hour\n"
 "Manually"
 msgstr ""
+"Katras 30 minūtes\n"
+"Katru stundu\n"
+"Pašrocīgi"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid "G_B free"
-msgstr ""
+msgstr "G_B brīvi"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 msgid "Go"
-msgstr ""
+msgstr "Pāriet"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
-msgstr ""
+msgstr "Šajā:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
+"Miro var sameklēt visus video jūsu datorā, lai palīdzētu jums organizēt savu "
+"kolekciju."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Play _videos one after another"
-msgstr ""
+msgstr "Atskaņot _video vienu pēc otra"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Preferences"
-msgstr ""
+msgstr "Iestatījumi"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:48
 msgid "Restrict to my full _home folder"
-msgstr ""
+msgstr "Ierobežot līdz manai _mājas mapei"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "S_top after each video"
-msgstr ""
+msgstr "Ap_turēt pēc katra video"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "S_tore downloaded videos in this folder:"
-msgstr ""
+msgstr "Saglabā_t lejupielādētos video šajā mapē:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
-msgstr ""
+msgstr "Meklētājs:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:52
 msgid "Search _custom folder:"
-msgstr ""
+msgstr "Meklēt _citā mapē:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid "Select Movies Directory"
-msgstr ""
+msgstr "Izvēlieties filmu mapi"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:54
 msgid "Select custom search directory"
-msgstr ""
+msgstr "Izvēlietis citu meklēšanas mapi"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:55
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr ""
+"Nākamie pāris logi palīdzēs jums noskaņot Miro tā, lai tas atbilstu jūsu "
+"vēlmēm. Atbildiet lūdzu uz dažiem jautājumiem."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "To a_void slowdowns, limit upstream to"
-msgstr ""
+msgstr "Lai izvairītos no bremzēšanas, ierobežot augšupielādi līdz"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Volume:"
-msgstr ""
+msgstr "Skaļums:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:58
 msgid ""
@@ -2361,6 +2456,9 @@ msgid ""
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr ""
+"Mēs iesakām, lai jūs ļautu Miro palaisties līdz ar datora ielādi.  Šādā "
+"veidā nepabeigtās video lejupielādes tiks pabeigtas un jaunie video jūsu "
+"kanālos tiks lejupielādēti un būš pieejami, kad vēlēsieties tos skatīties."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid ""
@@ -2368,6 +2466,10 @@ msgid ""
 "download videos from your favorite channels, watch new videos one after the "
 "other, download torrents, recommend videos to friends, and lots more."
 msgstr ""
+"Esiet sveicināti Interneta TV.  Ir daudzas lietas, ko jūs varat darīt ar "
+"Miro: automātiski lejupielādēt video no jūsu iemīļotākajiem kanāliem, "
+"skatīties jaunos video vienu pēc otra, lejupielādēt torrentus, ieteikt video "
+"draugiem un daudz ko citu."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid ""
@@ -2375,71 +2477,74 @@ msgid ""
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
+"Jūs esat izvēlējies jaunu mapi, kurā lejupielādēt video.  Vai Miro pārcelt "
+"esošos video uz šo mapi? (Pašreizējās lejupielādes netiks pārvietotas līdz "
+"tās nebūs lejupielādējušās.)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "_Add Folder"
-msgstr ""
+msgstr "_Pievienot mapi"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "_Automatically run Miro when I log in"
-msgstr ""
+msgstr "_Automātiski palaist Miro, kad es ieslēdzu datoru"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "_Bit Torrent uses ports between"
-msgstr ""
+msgstr "_Bit Torrent izmanto portus starp"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "_Downloads"
-msgstr ""
+msgstr "_Lejupielādes"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid "_Folders"
-msgstr ""
+msgstr "_Mapes"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "_General"
-msgstr ""
+msgstr "_Vispārīgi"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "_KB/s when my computer is active"
-msgstr ""
+msgstr "_KB/s kad mans dators ir aktīvs"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "_Playback"
-msgstr ""
+msgstr "_Atskaņošana"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "_Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgstr "_Atsākt video atskaņošanu tajā punktā, kurā tā tika pārtraukta"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
-msgstr ""
+msgstr "_Meklēt"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "_Search For:"
-msgstr ""
+msgstr "_Meklēt:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid "_URL"
-msgstr ""
+msgstr "_URL"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "_Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "_Brīdināt mani, ja mēģinu aizvērt Miro ar nepabeigtām lejupielādēm"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
-msgstr ""
+msgstr "_Sekot līdz jauniem video šajās mapēs un pievienot tos bibliotēkai"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "_and"
-msgstr ""
+msgstr "_un"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "videos at once"
-msgstr ""
+msgstr "video vienlaicīgi"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
@@ -2447,26 +2552,28 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName version $appVersion ($appRevision); autortiesības (c) 2005-2007 "
+"$publisher.  $longAppName un $longAppName logo ir $publisher preču zīmes."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
-msgstr ""
+msgstr "Par $longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
 msgid "Add Channel"
-msgstr ""
+msgstr "Pievienot kanālu"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
 msgid "Please enter the URL of the channel you'd like to add."
-msgstr ""
+msgstr "Lūdzu ievadiet derīgu pievienojamā kanāla URL."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
 msgid "Copy log to clipboard"
-msgstr ""
+msgstr "Kopēt žurnalēšanas informāciju uz starpliktuvi"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
 msgid "Open up the bug tracker"
-msgstr ""
+msgstr "Atvērt kļūdu apkopošanas rīku"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
 msgid ""
@@ -2474,6 +2581,9 @@ msgid ""
 "information into our bug tracker and tell us what you were doing when the\n"
 "problem occurred."
 msgstr ""
+"Lūdzu palīdziet mums to salabot. Iekopējiet visu\n"
+"informāciju kļūdu apkopošanas rīkā un pastāstiet mums, ko jūs darījāt pirms\n"
+"notika avārija."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
 msgid ""
@@ -2481,40 +2591,48 @@ msgid ""
 "Sorry for the inconvenience. $longAppName is still in beta, but with your "
 "help we're fixing problems fast!"
 msgstr ""
+"Pēc tam pārstartējiet $longAppName (pretējā gadījumā jūs varat turpināt "
+"saskarties ar kļūdām). Atvainojamies par sagādātajām neērtībām. $longAppName "
+"joprojām ir Beta izstrādes stadijā, jūsu palīdzība var noderēt ātrākai kļūdu "
+"novēršanai!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
 msgid "You found a bug in $longAppName!"
-msgstr ""
+msgstr "Jūs esat atradis kļūdu $longAppName!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
 msgid " "
-msgstr ""
+msgstr " "
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
 msgid "'"
-msgstr ""
+msgstr "'"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
 msgstr ""
+"Taču mēs mēģināsim iegūt arī šos video. Tas var prasīt papildus laiku, lai "
+"apkopotu visus video un to apraksti var izskatīties jocīgi."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
 msgid "Please contact the publishers of"
-msgstr ""
+msgstr "Lūdzu sazinieties ar"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
 msgid ""
 "and ask if they can supply a feed in a format that will work with "
 "$shortAppName."
 msgstr ""
+"autoriem un pajautājiet vai viņi varētu nodrošināt savu barotni tādā "
+"formātā, kas darbotos ar $shortAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
 msgid "$longAppName"
-msgstr ""
+msgstr "$longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4
 msgid ""
@@ -2522,143 +2640,154 @@ msgid ""
 "migrate your existing downloads there?(Currently dowloading movies will not "
 "be moved until they finish)"
 msgstr ""
+"Jūs esat izvēlējies jaunu mapi uz kuru lejupielādēt video.  Vai "
+"$shortAppName vajadzētu pārcelt esošos video uz turieni? (Pašreizējās "
+"lejupielādes netiks paŗvietotas līdz nebūš lejupielādējušās)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
-msgstr ""
+msgstr "Kanālam ir nepieciešama autorizācija"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2
 msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
-msgstr ""
+msgstr "Lūdzu ievadiet nepieciešamo lietotājvārdu un paroli."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
 msgstr ""
+"(UZMANĪBU: Izmaiņas nestāsies spēkā līdz jūs nepārstartēsiet $longAppName.)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Add Folder..."
-msgstr ""
+msgstr "Pievienot mapi..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Automatically run $longAppName when I login."
-msgstr ""
+msgstr "Automātiski palaist $longAppName ieslēdzot datoru."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "By default, videos expire after"
-msgstr ""
+msgstr "Pēc noklusējuma video tiek dzēsti pēc"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Check channels for new content"
-msgstr ""
+msgstr "Pārbaudīt jaunus video kanālos"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgstr "Aizvērt uz palodzi, lai lejupielādes var turpināties."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "Katras 30 minūtes"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Every hour"
-msgstr ""
+msgstr "Katru stundu"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Folder"
-msgstr ""
+msgstr "Mape"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
-msgstr ""
+msgstr "Manuāli"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
-msgstr ""
+msgstr "Iestatījumi"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "Atskaņot vienu video, tad apstāties."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Pilnībā aizver Miro."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
 msgstr ""
+"Atcerēties kurā vietā es pārtraucu skatīties video un vēlāk turpināt no šīs "
+"vietas."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Show as a Channel"
-msgstr ""
+msgstr "Rādīt kā kanālu"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Store downloaded videos in this folder:"
-msgstr ""
+msgstr "Saglabāt lejupielādētos video šajā mapē:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid ""
 "To avoid slowdowns, limit upstream bandwith when my computer is active."
 msgstr ""
+"Lai izvairītos no datora bremzēšanās, ierobežojet maksimālo tīkla noslodzi, "
+"kamēr dators ir aktīvs."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "Upstream limit (KB/s)"
-msgstr ""
+msgstr "Aukšupielādes limits (KB/s)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
-msgstr ""
+msgstr "Izmanot BitTorrent portus starp"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr ""
+"UZMANĪBU: Šī izmaiņa nestāsies spēkā līdz jūš nepārstartēsiet $longAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
 msgid "Warn me when I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "Brīdināt mani, kad mēģinu aizvērt kamēr notiek kāda lejupielāde."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
-msgstr ""
+msgstr "Sekot līdz jauniem video šajās mapēs un iekļaut tos manā bibliotēkā."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "When I click the red close button:"
-msgstr ""
+msgstr "Kad es nospiežu sarkano aizvēršanas pogu:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
 msgid "and"
-msgstr ""
+msgstr "un"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
-msgstr ""
+msgstr "Kanāls:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
 msgid "Search Engine:"
-msgstr ""
+msgstr "Meklētājs:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
 msgid "Search For:"
-msgstr ""
+msgstr "Meklēt:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
 msgid ""
 "$longAppName can find all the videos on your computer to help you organize "
 "your collection."
 msgstr ""
+"$longAppName var atrast visus video jūsu datorā, lai palīdzētu organizēt "
+"jūsu kolekciju."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
 msgid ""
@@ -2666,34 +2795,37 @@ msgid ""
 "background.  Leaving it running means you'll have new videos when you're "
 "ready to watch."
 msgstr ""
+"$longAppName regulāri pārbauda kanālus vai tajos nav jaunu video un fonā "
+"lejupielādē tos.  Atstājot to darboties jaunie video būs lejupielādēti, kad "
+"gribēsiet tos skatīties."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
 msgid "$shortAppName First Time Setup"
-msgstr ""
+msgstr "$shortAppName pirmā iestatījšana"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
-msgstr ""
+msgstr "Atcelt meklēšanu"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
 msgid "Change"
-msgstr ""
+msgstr "Mainīt"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46
 msgid "Don't Worry About Disk Space:"
-msgstr ""
+msgstr "Neuztraukties par diska vietu:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50
 msgid "Find Videos:"
-msgstr ""
+msgstr "Meklēt video:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
 msgid "Go Big:"
-msgstr ""
+msgstr "Domā plaši:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
 msgid "Leave it On:"
-msgstr ""
+msgstr "Atstāj ieslēgtu:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
 msgid ""
@@ -2702,40 +2834,51 @@ msgid ""
 "permanently by clicking 'save' and you can set a channel's settings to save "
 "videos automatically."
 msgstr ""
+"Līdzīgi kā TiVo $longAppName ir noilguma sistēma, kas palīdz atbrīvoties no "
+"vecajiem video, lai jums būtu vieta jauniem. Jūs vienmēr varat saglabāt "
+"video izvēloties 'saglabāt' un jūs varat uzstādīt kanāla iestatījumus tā, "
+"lai video tiktu automātiski saglabāti."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
 msgid ""
 "Now you can explore the Channel Guide\n"
 "and start watching.  A few tips to get started:"
 msgstr ""
+"Tagad jūš varat pārlūkot kanālu programmu\n"
+"un sākt skatīties.  Vēl tikai pāris padomi:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
 msgid "Reset Search"
-msgstr ""
+msgstr "Meklēt vēlreiz"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Ierobežot uz visiem maniem personiskajiem failiem."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
 msgid "Search custom folder:"
-msgstr ""
+msgstr "Meklēt citā mapē:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
 msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"$shortAppName kanālu programmā ir simtiem interneta TV kanālu; tie visi ir "
+"bez maksas pieejami.  Vienkārši klikšķiniet uz 'Pievienot' pogas, lai "
+"skatītos kanālu."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."
-msgstr ""
+msgstr "Poga pa labi no atskaņosanas pogas parāda video pa visu ekrānu."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30
 msgid ""
 "The next few screens will help you set up $longAppName so that it works best "
 "for you."
 msgstr ""
+"Nākamie pāris logi palīdzēs jums noskaņot $longAppName, lai tas strādātu "
+"atbilstoši jūsu vajadzībām."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
 msgid ""
@@ -2743,10 +2886,13 @@ msgid ""
 " This way, videos in progress can finish downloading and new videos can be "
 "downloaded in the background, ready when you want to watch."
 msgstr ""
+"Mēs iesakām, lai jūs uzstādat $longAppName palaišanos līdz ar datora ielādi. "
+"Šādi nepabeigtie video tiks pabeigti un fonā tiks lejupielādēti arī jaunie "
+"video. Kad gribēsiet tos skatīties tie jau būš pieejami."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
 msgid "Would you like $longAppName to look for video files on your computer?"
-msgstr ""
+msgstr "Vai vēlaties lai $longAppName meklē video jūsu datorā?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
 msgid "Would you like to run $shortAppName on startup?"

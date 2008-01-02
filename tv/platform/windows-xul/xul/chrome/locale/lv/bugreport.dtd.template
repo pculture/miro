@@ -1,0 +1,7 @@
+<!ENTITY bugreport.title     "Jūs esat atradis kļūdu $longAppName!">
+<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
+information into our bug tracker and tell us what you were doing when the
+problem occurred.">
+<!ENTITY bugreport.openbugtracker "Atvērt kļūdu apkopošanas rīku">
+<!ENTITY bugreport.copytoclipboard "Kopēt žurnalēšanas informāciju uz starpliktuvi">
+<!ENTITY bugreport.pleaserestart "Pēc tam pārstartējiet $longAppName (pretējā gadījumā jūs varat turpināt saskarties ar kļūdām). Atvainojamies par sagādātajām neērtībām. $longAppName joprojām ir Beta izstrādes stadijā, jūsu palīdzība var noderēt ātrākai kļūdu novēršanai!">

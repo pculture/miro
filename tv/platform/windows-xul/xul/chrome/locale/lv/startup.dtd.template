@@ -1,0 +1,53 @@
+<!ENTITY nbsp				" ">
+<!ENTITY rsaquo				"'">
+
+<!ENTITY startup.title			"$shortAppName pirmā iestatījšana">
+<!ENTITY startup.description		"Nākamie pāris logi palīdzēs jums noskaņot $longAppName, lai tas strādātu atbilstoši jūsu vajadzībām.">
+<!ENTITY startup.autostart.description	"Mēs iesakām, lai jūs uzstādat $longAppName palaišanos līdz ar datora ielādi. Šādi nepabeigtie video tiks pabeigti un fonā tiks lejupielādēti arī jaunie video. Kad gribēsiet tos skatīties tie jau būš pieejami.">
+<!ENTITY startup.autostart.question	"Vai vēlaties palaist $shortAppName ieslēdzot datoru?">
+<!ENTITY startup.search.description	"$longAppName var atrast visus video jūsu datorā, lai palīdzētu organizēt jūsu kolekciju.">
+<!ENTITY startup.search.question        "Vai vēlaties lai $longAppName meklē video jūsu datorā?">
+<!ENTITY startup.search.restrict	"Ierobežot uz visiem maniem personiskajiem failiem.">
+<!ENTITY startup.search.custom          "Meklēt citā mapē:">
+<!ENTITY startup.search.searching	"Meklēt video">
+<!ENTITY startup.change	                "Mainīt">
+<!ENTITY startup.cancel	                "Atcelt meklēšanu">
+<!ENTITY startup.undo	                "Meklēt vēlreiz">
+<!ENTITY startup.done1			"Viss darīts!">
+<!ENTITY startup.done2			"Now you can explore the Channel Guide
+and start watching.  A few tips to get started:">
+<!ENTITY startup.done3.heading		"Atstāj ieslēgtu:">
+<!ENTITY startup.done3.text		"$longAppName regulāri pārbauda kanālus vai tajos nav jaunu video un fonā lejupielādē tos.  Atstājot to darboties jaunie video būs lejupielādēti, kad gribēsiet tos skatīties.">
+<!ENTITY startup.done4.heading		"Neuztraukties par diska vietu:">
+<!ENTITY startup.done4.text		"Līdzīgi kā TiVo $longAppName ir noilguma sistēma, kas palīdz atbrīvoties no vecajiem video, lai jums būtu vieta jauniem. Jūs vienmēr varat saglabāt video izvēloties 'saglabāt' un jūs varat uzstādīt kanāla iestatījumus tā, lai video tiktu automātiski saglabāti.">
+<!ENTITY startup.done5.heading		"Domā plaši:">
+<!ENTITY startup.done5.text		"Poga pa labi no atskaņosanas pogas parāda video pa visu ekrānu.">
+<!ENTITY startup.done6.heading		"Meklēt video:">
+<!ENTITY startup.done6.text		"$shortAppName kanālu programmā ir simtiem interneta TV kanālu; tie visi ir bez maksas pieejami.  Vienkārši klikšķiniet uz 'Pievienot' pogas, lai skatītos kanālu.">
+<!ENTITY startup.answer.yes		"Jā">
+<!ENTITY startup.answer.no		"Nē">
+<!ENTITY startup.title			"$shortAppName pirmā iestatījšana">
+<!ENTITY startup.description		"Nākamie pāris logi palīdzēs jums noskaņot $longAppName, lai tas strādātu atbilstoši jūsu vajadzībām.">
+<!ENTITY startup.autostart.description	"Mēs iesakām, lai jūs uzstādat $longAppName palaišanos līdz ar datora ielādi. Šādi nepabeigtie video tiks pabeigti un fonā tiks lejupielādēti arī jaunie video. Kad gribēsiet tos skatīties tie jau būš pieejami.">
+<!ENTITY startup.autostart.question	"Vai vēlaties palaist $shortAppName ieslēdzot datoru?">
+<!ENTITY startup.search.description	"$longAppName var atrast visus video jūsu datorā, lai palīdzētu organizēt jūsu kolekciju.">
+<!ENTITY startup.search.question        "Vai vēlaties lai $longAppName meklē video jūsu datorā?">
+<!ENTITY startup.search.restrict	"Ierobežot uz visiem maniem personiskajiem failiem.">
+<!ENTITY startup.search.custom          "Meklēt citā mapē:">
+<!ENTITY startup.search.searching	"Meklēt video">
+<!ENTITY startup.change	                "Mainīt">
+<!ENTITY startup.cancel	                "Atcelt meklēšanu">
+<!ENTITY startup.undo	                "Meklēt vēlreiz">
+<!ENTITY startup.done1			"Viss darīts!">
+<!ENTITY startup.done2			"Now you can explore the Channel Guide
+and start watching.  A few tips to get started:">
+<!ENTITY startup.done3.heading		"Atstāj ieslēgtu:">
+<!ENTITY startup.done3.text		"$longAppName regulāri pārbauda kanālus vai tajos nav jaunu video un fonā lejupielādē tos.  Atstājot to darboties jaunie video būs lejupielādēti, kad gribēsiet tos skatīties.">
+<!ENTITY startup.done4.heading		"Neuztraukties par diska vietu:">
+<!ENTITY startup.done4.text		"Līdzīgi kā TiVo $longAppName ir noilguma sistēma, kas palīdz atbrīvoties no vecajiem video, lai jums būtu vieta jauniem. Jūs vienmēr varat saglabāt video izvēloties 'saglabāt' un jūs varat uzstādīt kanāla iestatījumus tā, lai video tiktu automātiski saglabāti.">
+<!ENTITY startup.done5.heading		"Domā plaši:">
+<!ENTITY startup.done5.text		"Poga pa labi no atskaņosanas pogas parāda video pa visu ekrānu.">
+<!ENTITY startup.done6.heading		"Meklēt video:">
+<!ENTITY startup.done6.text		"$shortAppName kanālu programmā ir simtiem interneta TV kanālu; tie visi ir bez maksas pieejami.  Vienkārši klikšķiniet uz 'Pievienot' pogas, lai skatītos kanālu.">
+<!ENTITY startup.answer.yes		"Jā">
+<!ENTITY startup.answer.no		"Nē">

@@ -1,0 +1,3326 @@
+# Ukranian translation for democracy
+# Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
+# This file is distributed under the same license as the democracy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: democracy\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2007-10-25 09:42-0400\n"
+"PO-Revision-Date: 2007-11-29 18:01+0000\n"
+"Last-Translator: serg74 <serg74@hotmail.com>\n"
+"Language-Team: Ukranian <serg74@hotmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2007-12-31 02:05+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: ../../portable/dialogs.py:77
+msgid "Cancel"
+msgstr "Закрити"
+
+msgid "OK"
+msgstr "ТАК"
+
+#: ../../portable/dialogs.py:76
+msgid "Ok"
+msgstr "Так"
+
+msgid "$log"
+msgstr "$log"
+
+msgid ""
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
+"href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
+"doing, paste in the log message from the box above, and answer a few "
+"questions, and we'll get right to work.</font>"
+msgstr ""
+"<font face=\"Lucida Grande\" size=\"-1\">Наші трекери помилок <a "
+"href=\"$bugTrackerURL\">$bugTrackerURL</a>. Скажіть нам що ви робили, "
+"вклейте в лог повідомлення з вікна внизу та дай відповіді на декілька "
+"запитань, ми одразу почнемо роботу над помилками.</font>"
+
+msgid ""
+"Actually, if you have a minute, would you be willing to submit a crash "
+"report to our bug-tracking system? At a minimum, what we'd need is "
+"description of what you were doing at the time -- as precise as possible -- "
+"plus the artfully-phrased nonsense in the box below:"
+msgstr ""
+"Якщо ви маєте хвилинку, будь ласка надішліть рапорт до нашого трекера "
+"помилок. Скажіть нам що ви робили як мога точніше, плюс повідомлення з вікна "
+"внизу:"
+
+msgid ""
+"Misfortune! $longAppName fell prey to some sort of internal confusion or "
+"wrong-headedness $when. We apologize and suggest that you exit and restart "
+"$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
+"your preferences or channel subscriptions."
+msgstr ""
+"Невдача! $longAppName впала жертвою внутрішньої колізії або помилкового "
+"напрямку $when. Ми вибачаємось та рекомендуємо закрити і перезапустити "
+"$shortAppName. Це зменьшує шанс згубити настройки та підписку на канали."
+
+msgid "The fall of $shortAppName??"
+msgstr "Падіння $shortAppName??"
+
+msgid "About Miro"
+msgstr "Про Miro"
+
+msgid "Add Channel..."
+msgstr "Додати канал"
+
+msgid "Add Guide..."
+msgstr "Додати програму"
+
+msgid "Bring All to Front"
+msgstr "Все наперед"
+
+#: ../../platform/osx/frontend/Preferences.py:65
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
+msgid "Channels"
+msgstr "Канали"
+
+msgid "Check for New Version"
+msgstr "Перевірити на нову версію"
+
+msgid "Clear Menu"
+msgstr "Почистити Меню"
+
+msgid "Close Window"
+msgstr "Закрити вікно"
+
+msgid "Copy"
+msgstr "Скопіювати"
+
+msgid "Copy Channel URL"
+msgstr "Копіювати URL каналу"
+
+msgid "Copy Video URL"
+msgstr "Скопіювати Відео URL"
+
+msgid "Cut"
+msgstr "Вирізати"
+
+#: ../../portable/dialogs.py:96
+msgid "Delete"
+msgstr "Видалити"
+
+msgid "Donate"
+msgstr "Пожертвування"
+
+msgid "Download Video..."
+msgstr "Закачати Відео"
+
+msgid "Edit"
+msgstr "Редагувати"
+
+msgid "Export Channels (OPML)..."
+msgstr "Експортувати Канали (OPML)..."
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Full Screen"
+msgstr "Повний екран"
+
+msgid "Help"
+msgstr "Довідка"
+
+msgid "Hide Miro"
+msgstr "Сховати Miro"
+
+msgid "Hide Others"
+msgstr "Сховати решту"
+
+msgid "Import Channels (OPML)..."
+msgstr "Імпортувати Канали (OPML)... (OPML)..."
+
+msgid "Main Window"
+msgstr "Головне вікно"
+
+msgid "MainMenu"
+msgstr "ГоловнеМеню"
+
+msgid "Minimize"
+msgstr "Мінімізувати"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:43
+msgid "Miro"
+msgstr "Miro"
+
+msgid "Miro Help"
+msgstr "Допомога Miro"
+
+msgid "New Channel Folder..."
+msgstr "Папка нових каналів..."
+
+msgid "New Playlist Folder..."
+msgstr "Папка нового списку програвання..."
+
+msgid "New Playlist..."
+msgstr "Новий список програвання..."
+
+msgid "New Search Channel..."
+msgstr "Новий Пошук Каналу..."
+
+msgid "Next Video"
+msgstr "Наступне Відео"
+
+msgid "Open Recent"
+msgstr "Відкрити текучий"
+
+msgid "Open..."
+msgstr "Відкрити..."
+
+msgid "Paste"
+msgstr "Вставити"
+
+#: ../../platform/osx/frontend/Application.py:249
+msgid "Play Video"
+msgstr "Програвати Відео"
+
+#: ../../platform/osx/frontend/Preferences.py:69
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+msgid "Playback"
+msgstr "Програвання"
+
+msgid "Playlists"
+msgstr "Списки програвання"
+
+msgid "Preferences..."
+msgstr "Параметри..."
+
+msgid "Previous Video"
+msgstr "Попереднє Відео"
+
+msgid "Quit Miro"
+msgstr "Вийти з Miro"
+
+msgid "Remove..."
+msgstr "Видалити..."
+
+msgid "Rename..."
+msgstr "Перейменувати..."
+
+msgid "Report a bug"
+msgstr "Повідомити про помилку"
+
+msgid "Save Video As..."
+msgstr "Зберігти Відео Як..."
+
+msgid "Select All"
+msgstr "Виділити все"
+
+msgid "Send This Channel to a Friend"
+msgstr "Надіслати Цей Канал до Товариша"
+
+msgid "Services"
+msgstr "Служби"
+
+msgid "Show All"
+msgstr "Показати все"
+
+msgid "Stop Video"
+msgstr "Зупинити Відео"
+
+msgid "Update All Channels"
+msgstr "Поновити Всі Канали"
+
+msgid "Update Channel"
+msgstr "Поновити Канал"
+
+msgid "Window"
+msgstr "Вікно"
+
+msgid "Zoom"
+msgstr "Масштабувати"
+
+msgid "%channel feed%"
+msgstr "%channel feed%"
+
+msgid "%channel title%"
+msgstr "%Назва каналу%"
+
+msgid "%donation label%"
+msgstr "%donation label%"
+
+msgid "-00:00:00"
+msgstr "-00:00:00"
+
+msgid "00:00:00"
+msgstr "00:00:00"
+
+msgid "Box"
+msgstr "Рамка"
+
+msgid "FullScreen Controls"
+msgstr "FullScreen Controls"
+
+#: ../../portable/tabs.py:46
+msgid "Video Search"
+msgstr "Пошук Відео"
+
+msgid "VideoWindow"
+msgstr "ВідеоВікно"
+
+msgid ""
+"Location http://foo.bar.com/baz requires a username and password for \"text "
+"supplied by server\". (Do not localize -- test data)\n"
+msgstr ""
+"Location http://foo.bar.com/baz requires a username and password for \"text "
+"supplied by server\". (Do not localize -- test data)\n"
+
+msgid "Password:\n"
+msgstr "Код :\n"
+
+msgid "Username and password required"
+msgstr "Необхідно Ім'я користувача та Код"
+
+msgid ""
+"Username:\n"
+"\n"
+msgstr ""
+"Ім'я користувача:\n"
+"\n"
+
+msgid " limit upstream to"
+msgstr " Лімітувати виходячий поток до"
+
+msgid "(You must restart Miro for this change to take effect)"
+msgstr "(Ви мусите перезапустити Miro щоб зміни набули чинності)"
+
+msgid "(You must restart Miro for this change to take effect)\n"
+msgstr "(Ви мусите перезапустити Miro щоб зміни набули чинності)\n"
+
+msgid "(movies directory path goes here)"
+msgstr "(Путь до відео папки іде сюди)"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
+msgid "1 day"
+msgstr "1 день"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
+msgid "1 month"
+msgstr "1 місяць"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
+msgid "10 days"
+msgstr "10 днів"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
+msgid "3 days"
+msgstr "3 дні"
+
+msgid "3 hours"
+msgstr "3 години"
+
+msgid "4"
+msgstr "4"
+
+msgid "5"
+msgstr "5"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
+msgid "6 days"
+msgstr "6 днів"
+
+msgid "99999"
+msgstr "99999"
+
+msgid "Add..."
+msgstr "Додати..."
+
+msgid "BitTorrent ports:"
+msgstr "Порти BitTorrent:"
+
+msgid "By default, videos expire after:"
+msgstr "Автоматично, відео недійсно після:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
+msgid "Change..."
+msgstr "Змінити..."
+
+msgid "Check channels for new content:"
+msgstr "Перевірити канали на поновлення:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
+msgid "Don't start a download if it leaves less than"
+msgstr "Не починай закачку якщо залишилось меньше ніж"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
+msgid "Download at most"
+msgstr "Кількість закачаного"
+
+msgid "Folder location"
+msgstr "Місце знаходження папки"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
+msgid "GB free."
+msgstr "GB вільно"
+
+msgid "KB/s when my computer is active."
+msgstr "KБ/с коли мій компьютер активний."
+
+msgid "Maximum:"
+msgstr "Максімум:"
+
+msgid "Minimum:"
+msgstr "Мінімум:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
+msgid "Never"
+msgstr "Ніколи"
+
+msgid "OtherViews"
+msgstr "ДругіВиди"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
+msgid "Play videos one after another."
+msgstr "Програвати відео одне після другого."
+
+msgid "Remember video position."
+msgstr "Запам'ятати позицію відео."
+
+#: ../../portable/guide.py:107 ../../portable/playlist.py:197
+#: ../../portable/feed.py:795 ../../portable/menu.py:65
+#: ../../portable/menu.py:70 ../../portable/folder.py:156
+#: ../../portable/folder.py:211
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
+msgid "Remove"
+msgstr "Видалити"
+
+msgid "Run Miro at startup"
+msgstr "Запустити Miro при старті"
+
+msgid "Save downloaded videos in this folder:"
+msgstr "Записати зкачане відео в цю папку:"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573
+msgid "Show as Channel"
+msgstr "Показати як Канал"
+
+msgid "Stop after each video."
+msgstr "Зупинити після кожного відео."
+
+msgid "To avoid internet slowdowns:"
+msgstr "Запобігати повільнення Інтернету:"
+
+#: ../../portable/app.py:1206
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr "Повідомляти коли Я намагаюсь закрити з незакінченною закачкою"
+
+msgid ""
+"Watch for new videos in these folders and include them in the Library:"
+msgstr "Пильнувати на нове відео в цій папці та включати їх до бібліотеки:"
+
+msgid "every 30 minutes"
+msgstr "кожні 30 хвилин"
+
+msgid "every hour"
+msgstr "кожну годину"
+
+msgid "manually"
+msgstr "Вручну"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
+msgid "videos at once."
+msgstr "відео загалом."
+
+msgid "$label$"
+msgstr "$label$"
+
+msgid "$title$"
+msgstr "$назва$"
+
+msgid "Channel"
+msgstr "Канал"
+
+#: ../../portable/dialogs.py:91
+msgid "Create"
+msgstr "Створити"
+
+msgid "In this:"
+msgstr "В цьому:"
+
+msgid "Item1"
+msgstr "Item1"
+
+msgid "Search Engine"
+msgstr "Пошуковий двигун"
+
+msgid "Search for:"
+msgstr "Шукати на:"
+
+msgid "URL"
+msgstr "URL"
+
+#: ../../platform/windows-xul/frontend_implementation/startup.py:42
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:48
+#, python-format
+msgid "(parsed %d files - found %d videos)"
+msgstr "(перевірено %d файлів - знайдено %d відео)"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Browse"
+msgstr "Навігація"
+
+#: ../../platform/osx/frontend/StartupPanel.py:106
+msgid "Next"
+msgstr "Наступне"
+
+#: ../../portable/dialogs.py:79
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
+msgid "No"
+msgstr "Ні"
+
+msgid "Only search my Movies folder."
+msgstr "Шукати в моїй Відео папці."
+
+msgid "Search my entire Home folder."
+msgstr "Шукати у всьому компьютері."
+
+msgid "Search this folder:"
+msgstr "Шукати в цій папці:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37
+msgid "Searching for Videos"
+msgstr "Шукаю на відео"
+
+msgid ""
+"The Miro Player can find all the videos on your computer to help you "
+"organize your collection.\n"
+"\n"
+"\n"
+"Would you like Miro to look for video files on your computer?"
+msgstr ""
+"Програвач Miro може знайти все відео на вашому компьютері та організувати в "
+"колекцію.\n"
+"\n"
+"\n"
+"Чи хочете щоб Miro знайшов відео файли в компьютері?"
+
+msgid ""
+"The next few screens will help you set up the Miro Player so that it works "
+"best for you. Here's the first question."
+msgstr ""
+"Наступні кроки допоможуть вам настроїти програвач Miro. Перше запитання."
+
+msgid ""
+"We recommend that you allow the Miro Player to launch when your computer "
+"starts up. This way, videos that haven't finished downloading can finish and "
+"new videos on your channels will be ready when you want to watch.\n"
+"\n"
+"\n"
+"Would you like to run Miro when your computer starts up?"
+msgstr ""
+"Ми рекомендуємо щоби Miro програвач запускався при старті компьютера. В "
+"цьому разі не скачане відео закінчить скачку та нове відео на ваших канал "
+"буде готово для перегляду.\n"
+"\n"
+"\n"
+"Чи бажаєте запускати Miro при старті компьютера?"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:59
+msgid "Welcome to Internet TV!"
+msgstr "Ласкаво просимо до Інтернет ТБ!"
+
+msgid ""
+"Welcome to Internet TV. There's a lot you can do with the Miro Player: "
+"automatically download videos from your favorite channels, watch new videos "
+"one after the other, download torrents, recommend videos to friends, and "
+"lots more.\n"
+"\n"
+msgstr ""
+"Ласкаво просимо до Інтернет ТБ! Ви можете використовувати Miro для: "
+"автоматичного скачування ваших улюблених каналів, дивитись одне за другим "
+"відео, скачувати торенти, рекомендувати відео друзям та багато іншого.\n"
+"\n"
+
+#: ../../portable/dialogs.py:78
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
+msgid "Yes"
+msgstr "Так"
+
+msgid ""
+"%message%\n"
+"%message%"
+msgstr ""
+"%повідомлення%\n"
+"%повідомлення%"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78
+msgid "Update Available"
+msgstr "Доступне поновлення"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
+#, python-format
+msgid "A new version of %s is available for download."
+msgstr "Нова версія %s доступна для скачування."
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240
+msgid "Error Bombing Item"
+msgstr "Error Bombing Item"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242
+msgid "Error Recommending Item"
+msgstr "Error Recommending Item"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244
+msgid "Error Opening Website"
+msgstr "Помилка при відкритті вебсайту"
+
+#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248
+#, python-format
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr "Помилка при відкритті %s. Будьласка спробуйте ще за кілки секунд"
+
+#: ../../platform/windows-xul/frontend_implementation/startup.py:50
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:76
+#: ../../platform/gtk-x11/frontend_implementation/startup.py:174
+#, python-format
+msgid "%d video found"
+msgid_plural "%d videos found"
+msgstr[0] ""
+"‚Äì√π‚Äì‚àû‚ÄìœÄ‚Äì¬ ‚Äì¬µ‚ÄìŒ© %d ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶-"
+"‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™."
+msgstr[1] "%d відео знайдено."
+msgstr[2] "%d відео знайдено."
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:62
+#, python-format
+msgid ""
+"Error importing modules:\n"
+"%s"
+msgstr ""
+"Помилка при імпорті модулів:\n"
+"%s"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:66
+msgid "Starting up"
+msgstr "Стартує"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:273
+msgid "Loading window"
+msgstr "Запуск вікна"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:274
+msgid "onStartup called twice"
+msgstr "Запит післано двічі onStartup"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:702
+msgid "Spacebar"
+msgstr "Пробіл"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:851
+msgid "Close to tray?"
+msgstr "Закрити до панелі?"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:852
+msgid ""
+"When you click the red close button, would you like Miro to close to the "
+"system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"Якщо ви натиснули червону кнопку, ви хочете закрити Miro чи звернути до "
+"панелі? Ви зможете змінити це пізніше."
+
+#: ../../platform/osx/frontend/GrowlNotifier.py:44
+msgid "Download Completed"
+msgstr "Скачування закінчено"
+
+#: ../../platform/osx/frontend/GrowlNotifier.py:45
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "Скачування відео '%s' закінчено."
+
+#: ../../platform/osx/frontend/GrowlNotifier.py:54
+msgid "Download Failed"
+msgstr "Скачування перервано"
+
+#: ../../platform/osx/frontend/GrowlNotifier.py:55
+#, python-format
+msgid "Download of video '%s' has failed."
+msgstr "Скачування відео '%s' перервано."
+
+#: ../../platform/osx/frontend/MainFrame.py:278
+msgid "Subscribe to Channel"
+msgstr "Підписатися на канал"
+
+#: ../../platform/osx/frontend/MainFrame.py:279
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr "Ввідіть URL каналу на який ви хочете підписатися."
+
+#: ../../platform/osx/frontend/QuicktimeRenderer.py:248
+msgid "Audio"
+msgstr "Аудіо"
+
+#: ../../platform/osx/frontend/Preferences.py:64
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
+msgid "General"
+msgstr "Загальні"
+
+#: ../../platform/osx/frontend/Preferences.py:66
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
+msgid "Downloads"
+msgstr "Скачування"
+
+#: ../../platform/osx/frontend/Preferences.py:67
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
+msgid "Folders"
+msgstr "Папки"
+
+#: ../../platform/osx/frontend/Preferences.py:68
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+msgid "Disk Space"
+msgstr "Дисковий простір"
+
+#: ../../platform/osx/frontend/Preferences.py:196
+msgid "Movies Directory"
+msgstr "Відео папка"
+
+#: ../../platform/osx/frontend/Preferences.py:197
+#, python-format
+msgid "Select a Directory to store %s downloads in."
+msgstr "Виберіть папку для зберігання %s фільмів."
+
+#: ../../platform/osx/frontend/Preferences.py:198
+#: ../../platform/osx/frontend/Preferences.py:262
+msgid "Select"
+msgstr "Вибрати"
+
+#: ../../platform/osx/frontend/Preferences.py:207
+#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
+msgid "Migrate existing movies?"
+msgstr "Перенести існуючі фільми?"
+
+#: ../../platform/osx/frontend/Preferences.py:208
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %s migrate your "
+"existing downloads there?  (Currently dowloading movies will not be moved "
+"until they finish)."
+msgstr ""
+"Ви вибрали нову папку для фільмів. Перенести %s існуючі фільми в цю папку? "
+"(Фільми що скачуються будуть перенесені після завершення скачки)."
+
+#: ../../platform/osx/frontend/Preferences.py:260
+msgid "View this Directory in the Library"
+msgstr "Переглянути цю папку в бібліотеці."
+
+#: ../../platform/osx/frontend/Preferences.py:261
+msgid "Select a Directory to view in the Library."
+msgstr "Вибрати папку для перегляду в бібліотеці."
+
+#: ../../platform/osx/frontend/StartupPanel.py:80
+msgid "Finish"
+msgstr "Завершити"
+
+#: ../../platform/osx/frontend/StartupPanel.py:139
+msgid "Search!"
+msgstr "Пошук!"
+
+#: ../../platform/osx/frontend/Application.py:246
+msgid "Pause Video"
+msgstr "Призупинити відео"
+
+#: ../../platform/osx/frontend/Application.py:255
+msgid "Unsupported version of Quicktime"
+msgstr "Версія QuickTime не підримується."
+
+#: ../../platform/osx/frontend/Application.py:256
+#, python-format
+msgid ""
+"To run %s you need the most recent version of Quicktime, which is a free "
+"update."
+msgstr ""
+"Для запуску %s вам потрібно свіжу версію Quicktime, яка є безкоштовною."
+
+#: ../../platform/osx/frontend/UIStrings.py:22
+msgid "_Remove..."
+msgstr "_Видалити"
+
+#: ../../platform/osx/frontend/UIStrings.py:23
+msgid "_Remove Playlist..."
+msgstr "_Видалити список відео..."
+
+#: ../../platform/osx/frontend/UIStrings.py:24
+msgid "_Remove Playlists..."
+msgstr "_Видалити список відео..."
+
+#: ../../platform/osx/frontend/UIStrings.py:25
+msgid "_Remove Playlist Folder..."
+msgstr "_Видалити папку списків відео..."
+
+#: ../../platform/osx/frontend/UIStrings.py:26
+msgid "_Remove Playlist Folders..."
+msgstr "_Видалити папку списків відео..."
+
+#: ../../platform/osx/frontend/UIStrings.py:27 ../../portable/menubar.py:179
+msgid "_Remove Channel..."
+msgstr "_Видалити Канал..."
+
+#: ../../platform/osx/frontend/UIStrings.py:28 ../../portable/menubar.py:180
+msgid "_Remove Channels..."
+msgstr "_Видалити Канали..."
+
+#: ../../platform/osx/frontend/UIStrings.py:29 ../../portable/menubar.py:182
+msgid "_Remove Channel Folder..."
+msgstr "_Видалити Папку Каналу..."
+
+#: ../../platform/osx/frontend/UIStrings.py:30 ../../portable/menubar.py:181
+msgid "_Remove Channel Folders..."
+msgstr "_Видалити Папку Каналів..."
+
+#: ../../platform/osx/frontend/UIStrings.py:31
+msgid "_Remove Miro Guide..."
+msgstr "_Видалити Miro Пояснення..."
+
+#: ../../platform/osx/frontend/UIStrings.py:32
+msgid "_Remove Miro Guides..."
+msgstr "_Видалити Miro Пояснення..."
+
+#: ../../platform/osx/frontend/UIStrings.py:33
+msgid "_Remove Video..."
+msgstr "_Видалити Відео..."
+
+#: ../../platform/osx/frontend/UIStrings.py:34
+msgid "_Remove Videos..."
+msgstr "_Видалити Відео..."
+
+#: ../../platform/osx/frontend/UIStrings.py:35
+msgid "Re_name..."
+msgstr "Переіменувати..."
+
+#: ../../platform/osx/frontend/UIStrings.py:36
+msgid "Re_name Playlist..."
+msgstr "Переіменувати список відео..."
+
+#: ../../platform/osx/frontend/UIStrings.py:37
+msgid "Re_name Playlist Folder..."
+msgstr "Переіменувати папку списку відео..."
+
+#: ../../platform/osx/frontend/UIStrings.py:38 ../../portable/menubar.py:178
+msgid "Re_name Channel..."
+msgstr "Переіменувати канал..."
+
+#: ../../platform/osx/frontend/UIStrings.py:39
+msgid "Re_name Channel Folder..."
+msgstr "Переіменувати папку каналів..."
+
+#: ../../platform/osx/frontend/UIStrings.py:40
+msgid "Re_name Miro Guide..."
+msgstr "Переіменувати Miro пояснення"
+
+#: ../../platform/osx/frontend/UIStrings.py:41 ../../portable/menubar.py:184
+msgid "_Update Channel..."
+msgstr "_Поновити канал..."
+
+#: ../../platform/osx/frontend/UIStrings.py:42 ../../portable/menubar.py:185
+msgid "_Update Channels..."
+msgstr "_Поновити канали..."
+
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42
+msgid "Settings"
+msgstr "Параметри"
+
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45
+msgid "Hide"
+msgstr "Прибрати"
+
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47
+msgid "Show"
+msgstr "Показати"
+
+#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48
+#: ../../portable/dialogs.py:80 ../../portable/menubar.py:257
+msgid "Quit"
+msgstr "Вийти"
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324
+msgid "New Channel _Guide..."
+msgstr "Нова програма каналів..."
+
+#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564
+msgid "Folder Location"
+msgstr "Місцезнаходження папки"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
+msgid "Username:"
+msgstr "Ім'я користувача:"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
+msgid "Password:"
+msgstr "Пароль:"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416
+msgid "Unknown Runtime Error"
+msgstr "Невідома помилка"
+
+#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417
+#, python-format
+msgid "An unknown error has occurred %s."
+msgstr "Невідома помилка сталася %s"
+
+#: ../../portable/dl_daemon/download.py:359
+msgid "Error"
+msgstr "Помилка"
+
+#: ../../portable/dl_daemon/download.py:432
+#, python-format
+msgid "Could not write to %s"
+msgstr "Неможливо записати до %s"
+
+#: ../../portable/dl_daemon/download.py:452
+msgid "Not enough disk space"
+msgstr "Недостатньо дискового простору"
+
+#: ../../portable/dl_daemon/download.py:453
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "%s Мб потрібно для запису цього відео"
+
+#: ../../portable/dl_daemon/download.py:672
+msgid "BitTorrent failure"
+msgstr "Помилка Бітторенту"
+
+#: ../../portable/dl_daemon/download.py:673
+msgid "BitTorrent failed to startup"
+msgstr "Бітторент не стартував"
+
+#: ../../portable/dl_daemon/download.py:796
+msgid "Corrupt Torrent"
+msgstr "Торент пошкоджений"
+
+#: ../../portable/dl_daemon/download.py:797
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "Торент файл на %s недійсний"
+
+#: ../../portable/dl_daemon/download.py:822
+msgid "Torrent file deleted"
+msgstr "Торент файл видалений"
+
+#: ../../portable/dl_daemon/download.py:823
+msgid "The torrent file for this item was deleted "
+msgstr "Торент файл для цього відер видалений "
+
+#: ../../portable/dl_daemon/download.py:824
+msgid "outside of Miro."
+msgstr "Зовні Miro"
+
+#: ../../portable/tabs.py:44
+msgid "Library"
+msgstr "Бібліотека"
+
+#: ../../portable/tabs.py:45
+msgid "New"
+msgstr "Створити"
+
+#: ../../portable/tabs.py:47
+msgid "Downloading"
+msgstr "Завантаження"
+
+#: ../../portable/guide.py:104 ../../portable/feed.py:789
+msgid "Copy URL to clipboard"
+msgstr "Скопіювати URL до буферу"
+
+#: ../../portable/guide.py:154
+msgid "Miro Guide"
+msgstr "Miro Програма"
+
+#: ../../portable/extrastrings.py:22 ../../portable/feed.py:2028
+#: ../../portable/feed.py:2120
+msgid "Search"
+msgstr "Пошук"
+
+#: ../../portable/downloader.py:215
+msgid "activity"
+msgstr "Дія"
+
+#: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
+#: ../../portable/httpclient.py:142
+msgid "File not found"
+msgstr "Файл не знайдено"
+
+#: ../../portable/downloader.py:252
+msgid "Flash URL Scraping Error"
+msgstr "Flash URL Scraping Error"
+
+#: ../../portable/downloader.py:427
+msgid "starting up"
+msgstr "Стартує"
+
+#: ../../portable/playlist.py:196 ../../portable/playlist.py:201
+msgid "Rename Playlist"
+msgstr ""
+"‚Äì√º‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á..."
+
+#: ../../portable/playlist.py:202
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr ""
+"‚Äì√º‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äî√â‚ÄìœÄ‚Äî√á‚Äì¬µ "
+"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á: %s"
+
+#: ../../portable/playlist.py:224
+msgid "Create Playlist"
+msgstr ""
+"‚Äì¬∞‚Äì√¶‚Äì‚àë‚Äì¬ ‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á"
+
+#: ../../portable/playlist.py:225
+msgid "Enter a name for the new playlist"
+msgstr ""
+"‚Äì√≠‚Äì‚â§‚Äì¬µ‚Äì¬ ‚Äì‚àè‚Äî√á‚Äì¬µ ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì√¶‚Äì¬µ "
+"‚Äì‚àè‚Äì¬∫‚Äî√® ‚Äì¬ ‚Äì¬™‚Äî√® "
+"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì‚àû:"
+
+#: ../../portable/feed.py:383
+msgid "never"
+msgstr "ніколи"
+
+#: ../../portable/feed.py:385 ../../portable/item.py:542
+#, python-format
+msgid "%d hours"
+msgstr "%d ‚Äî√°‚Äì‚àû‚Äî√Ö‚Äì√¶‚Äì‚â§"
+
+#: ../../portable/feed.py:387
+#, python-format
+msgid "%d day"
+msgstr "%d день"
+
+#: ../../portable/feed.py:389 ../../portable/item.py:540
+#, python-format
+msgid "%d days"
+msgstr "%d ‚Äì¬ ‚ÄìŒ©‚Äì¬µ‚ÄìœÄ"
+
+#: ../../portable/feed.py:391
+#, python-format
+msgid "%d months"
+msgstr "%d місяці"
+
+#: ../../portable/feed.py:787
+msgid "Update Channel Now"
+msgstr ""
+"‚Äì√ª‚Äì¬±‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™"
+
+#: ../../portable/feed.py:790 ../../portable/feed.py:799
+msgid "Rename Channel"
+msgstr ""
+"‚Äì√º‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû"
+
+#: ../../portable/feed.py:794
+msgid "Revert Title to Default"
+msgstr ""
+"‚Äì√≠‚Äì¬µ‚Äî√Ñ‚ÄìŒ©‚Äî√â‚Äî√á‚Äî√  ‚Äì‚àè‚Äì¬∫‚Äî√® ‚Äì√∏‚Äì√¶ "
+"‚Äî√â‚Äì¬∫‚Äì√¶‚Äì¬™‚Äî√°‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√©"
+
+#: ../../portable/feed.py:800
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr ""
+"‚Äì√≠‚Äì‚â§‚Äì¬µ‚Äì¬ ‚Äì‚àè‚Äî√á‚Äì¬µ ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì√¶‚Äì¬µ "
+"‚Äì‚àè‚Äì¬∫‚Äî√® ‚Äì¬ ‚Äì¬™‚Äî√® ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû %s"
+
+#: ../../portable/feed.py:887
+msgid "Error loading feed"
+msgstr ""
+"‚Äì√ª‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû "
+"‚Äì√∏‚Äì√¶‚Äì¬™‚Äî√â‚Äî√°‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√® rss-"
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû"
+
+#: ../../portable/feed.py:888
+#, python-format
+msgid "Couldn't load the feed at %s (%s)."
+msgstr ""
+"‚Äì√π‚Äì¬µ ‚Äì√∏‚Äì√¶‚Äì¬™‚Äî√â‚Äî√°‚Äì¬µ‚ÄìŒ© rss-"
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™ ‚Äì‚â§ %s (%s)."
+
+#: ../../portable/feed.py:891
+msgid "Would you like to keep the feed?"
+msgstr ""
+"‚Äì√ª‚Äî√Ö‚Äî√á‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  ‚Äî√ß‚Äî√á‚Äì√¶‚Äî√á rss-"
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™?"
+
+#: ../../portable/feed.py:1004
+msgid "Bad content-type"
+msgstr ""
+"‚Äì√ª‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû ‚Äì‚â§ ‚Äì√∏‚Äì√¶‚Äì¬™‚Äì¬µ content-type"
+
+#: ../../portable/feed.py:1017
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+msgid "Channel is not compatible with $shortAppName!"
+msgstr ""
+"‚Äì√∂‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™ ‚ÄìŒ©‚Äì¬µ "
+"‚Äî√Ö‚Äì√¶‚Äì‚â§‚Äì¬∫‚Äì¬µ‚Äî√Ö‚Äî√á‚Äì‚àè‚Äì¬∫ ‚Äî√Ö $shortAppName!"
+
+#: ../../portable/feed.py:1018
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"‚Äì√∫‚Äî√£ ‚Äì√∏‚Äì√¶‚Äî√Ö‚Äî√á‚Äì‚àû‚Äî√Ñ‚Äì‚àû‚Äì¬µ‚Äì¬∫‚Äî√Ö‚Äî√® "
+"‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äî√°‚Äì‚àè‚Äî√á‚Äì‚àû‚Äî√á‚Äî√  ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äî√£. "
+"‚Äì‚â†‚Äî√á‚Äì√¶ ‚Äì¬∫‚Äì√¶‚Äì‚àÇ‚Äì¬µ‚Äî√á ‚Äì‚àë‚Äì‚àû‚ÄìŒ©‚Äî√®‚Äî√á‚Äî√  "
+"‚Äì¬±‚Äì√¶‚Äì¬™‚Äî√ ‚Äî√†‚Äì¬µ ‚Äì‚â§‚Äî√Ñ‚Äì¬µ‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àè, ‚Äì‚àè "
+"‚Äì√¶‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äì¬µ ‚Äì¬∫‚Äì√¶‚Äì‚â ‚Äî√â‚Äî√á "
+"‚ÄìŒ©‚Äì¬µ‚Äì√∏‚Äî√Ñ‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äì¬™‚Äî√ ‚ÄìŒ©‚Äì√¶ "
+"‚Äì√¶‚Äî√á‚Äì¬±‚Äî√Ñ‚Äì‚àû‚Äì‚àÇ‚Äì‚àû‚Äî√á‚Äî√Ö‚Äî√®. "
+"‚Äì√º‚Äì√¶‚Äì‚àÇ‚Äì‚àû‚Äì¬™‚Äî√â‚ÄìœÄ‚Äî√Ö‚Äî√á‚Äì‚àû "
+"‚Äî√Ö‚Äì‚â§‚Äî√®‚Äì‚àÇ‚Äì‚àè‚Äî√á‚Äì¬µ‚Äî√Ö‚Äî√  ‚Äî√Ö "
+"‚Äì‚àû‚Äì‚â§‚Äî√á‚Äì√¶‚Äî√Ñ‚Äì√¶‚Äì¬∫ $url ‚Äì‚àè "
+"‚Äì√∏‚Äì√¶‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äî√Ö‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äì‚àè‚Äî√ñ ‚Äî√Ö‚Äì¬ "
+"‚Äì¬µ‚Äì¬™‚Äì‚àû‚Äî√á‚Äî√  ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äî√£‚ÄìœÄ "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™ ‚Äì‚â§ ‚Äî√ë‚Äì√¶‚Äî√Ñ‚Äì¬∫‚Äì‚àû‚Äî√á‚Äì¬µ "
+"‚Äî√Ö‚Äì√¶‚Äì‚â§‚Äì¬∫‚Äì¬µ‚Äî√Ö‚Äî√á‚Äì‚àè‚Äì¬∫‚Äî√£‚Äì¬∫ ‚Äî√Ö "
+"$shortAppName.\n"
+"\n"
+"‚Äì√≠‚Äî√Ö‚Äî√´ ‚Äî√Ñ‚Äì‚àû‚Äì‚â§‚ÄìŒ©‚Äì√¶ ‚Äì√∏‚Äì√¶‚Äì¬ "
+"‚Äì‚à´‚Äì¬™‚Äî√©‚Äî√°‚Äì‚àè‚Äî√á‚Äî√Ö‚Äî√® ‚Äì‚à´ "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äî√â?"
+
+#: ../../portable/feed.py:2134
+msgid "Local Files"
+msgstr ""
+"‚Äì√µ‚Äì√¶‚Äì‚à´‚Äì‚àû‚Äì¬™‚Äî√ ‚ÄìŒ©‚Äî√£‚Äì¬µ ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äî√£"
+
+#: ../../portable/feed.py:2148
+msgid "Playing File"
+msgstr "‚Äì¬¢‚Äì¬µ‚Äì‚à´‚Äî√â‚Äî√¢‚Äì‚àè‚ÄìœÄ ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™"
+
+#: ../../portable/menu.py:69
+msgid "Update Channels Now"
+msgstr ""
+"‚Äì√ª‚Äì¬±‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äî√£"
+
+#: ../../portable/menu.py:94
+#, python-format
+msgid "%d Downloaded Items"
+msgstr ""
+"%d ‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äî√ñ "
+"‚Äì√¶‚Äì¬±‚Äî√§‚Äì¬µ‚Äì‚à´‚Äî√á‚Äì√¶‚Äì‚â§"
+
+#: ../../portable/menu.py:96 ../../portable/item.py:1475
+msgid "Play"
+msgstr ""
+"‚Äì√≠‚Äì√¶‚Äî√Ö‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äî√Ö‚Äî√á‚Äì‚àè"
+
+#: ../../portable/menu.py:97 ../../portable/item.py:1478
+msgid "Add to new playlist"
+msgstr ""
+"‚Äì√Æ‚Äì√¶‚Äì¬±‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  "
+"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á"
+
+#: ../../portable/menu.py:99 ../../portable/item.py:1471
+msgid "Remove From Playlist"
+msgstr ""
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚àè‚Äì‚àë "
+"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì‚àû"
+
+#: ../../portable/menu.py:101 ../../portable/item.py:1473
+msgid "Remove From the Library"
+msgstr ""
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚àè‚Äì‚àë "
+"‚Äì¬±‚Äì‚àè‚Äì¬±‚Äì¬™‚Äì‚àè‚Äì√¶‚Äî√á‚Äì¬µ‚Äì‚à´‚Äì¬µ"
+
+#: ../../portable/menu.py:107 ../../portable/item.py:1482
+msgid "Mark as Unwatched"
+msgstr ""
+"‚Äì√ª‚Äî√á‚Äì¬∫‚Äì¬µ‚Äî√á‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚à´‚Äì‚àû‚Äì‚à´ "
+"‚ÄìŒ©‚Äì¬µ‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äî√Ö‚Äì¬∫‚Äì√¶‚Äî√á‚Äî√Ñ‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äì√¶‚Äì¬µ"
+
+#: ../../portable/menu.py:112 ../../portable/item.py:1484
+msgid "Mark as Watched"
+msgstr "Помітити як не переглянуті"
+
+#: ../../portable/menu.py:117
+#, python-format
+msgid "%d Available Items"
+msgstr ""
+"%d ‚Äì¬ ‚Äì√¶‚Äî√Ö‚Äî√á‚Äî√â‚Äì√∏‚ÄìŒ©‚Äî√£‚Äî√ñ "
+"‚Äì√¶‚Äì¬±‚Äî√§‚Äì¬µ‚Äì‚à´‚Äî√á‚Äì√¶‚Äì‚â§"
+
+#: ../../portable/menu.py:118 ../../portable/dialogs.py:85
+#: ../../portable/item.py:1491
+msgid "Download"
+msgstr "‚Äì¬∞‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚àû‚Äî√á‚Äî√"
+
+#: ../../portable/menu.py:123
+#, python-format
+msgid "%d Downloading Items"
+msgstr ""
+"%d ‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚àè‚Äì‚â§‚Äì‚àû‚Äî√©‚Äî√¢‚Äì‚àè‚Äî√ñ‚Äî√Ö‚Äî√® "
+"‚Äì√¶‚Äì¬±‚Äî√§‚Äì¬µ‚Äì‚à´‚Äî√á‚Äì√¶‚Äì‚â§"
+
+#: ../../portable/menu.py:125 ../../portable/item.py:1489
+msgid "Cancel Download"
+msgstr ""
+"‚Äì√ª‚Äî√á‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àû "
+"‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚àè‚Äì‚â§‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äì¬µ"
+
+#: ../../portable/menu.py:127 ../../portable/item.py:1489
+msgid "Pause Download"
+msgstr ""
+"‚Äì√º‚Äî√Ñ‚Äì‚àè‚Äì√¶‚Äî√Ö‚Äî√á‚Äì‚àû‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  "
+"‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚àè‚Äì‚â§‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äì¬µ"
+
+#: ../../portable/menu.py:130 ../../portable/item.py:1487
+msgid "Restart Upload"
+msgstr ""
+"‚Äì¬∞‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚àû‚Äî√á‚Äî√  ‚Äì‚àë‚Äì‚àû‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì√¶"
+
+#: ../../portable/opml.py:49
+msgid "Export OPML File"
+msgstr ""
+"‚Äì‚â†‚Äì‚à´‚Äî√Ö‚Äì√∏‚Äì√¶‚Äî√Ñ‚Äî√á‚Äì‚àè‚Äî√Ñ‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"OPML-‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™"
+
+#: ../../portable/opml.py:123
+msgid "Import OPML File"
+msgstr ""
+"‚Äì√≤‚Äì¬∫‚Äì√∏‚Äì√¶‚Äî√Ñ‚Äî√á‚Äì‚àè‚Äî√Ñ‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  OPML-"
+"‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™"
+
+#: ../../portable/opml.py:125
+msgid "OPML Files"
+msgstr "OPML-‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äî√£"
+
+#: ../../portable/opml.py:145
+msgid "OPML Import failed"
+msgstr "OPML імпортування невдалося"
+
+#: ../../portable/opml.py:146
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr ""
+"Даний OPML файл є нестандартним або пошкодженим. Імортування було припинено."
+
+#: ../../portable/opml.py:151
+msgid "OPML Import summary"
+msgstr "Підсумки OPML імпорту"
+
+#: ../../portable/opml.py:152
+#, python-format
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "Успішно імпортовано %d інформаційного потоку."
+msgstr[1] "Успішно імпортовано %d інформаційних потоків"
+msgstr[2] "Успішно імпортовано %d інформаційних потоків"
+
+#: ../../portable/opml.py:155
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] ""
+"Пропущено %d інформаційного потоку (feed), оскільки цей вміст вже наявний"
+msgstr[1] ""
+"Пропущено %d інформаційних потоків (feeds), оскілький цей вміст вже наявний."
+msgstr[2] ""
+"Пропущено %d інформаційних потоків (feeds), оскілький цей вміст вже наявний."
+
+#: ../../portable/autoupdate.py:121
+#, python-format
+msgid "%s Version Alert"
+msgstr "Увага! Можлива невідповідність версії %s"
+
+#: ../../portable/autoupdate.py:122
+#, python-format
+msgid "A new version of %s is available. Would you like to download it now?"
+msgstr "Наявна нова версія %s. Бажаєте завантажити?"
+
+#: ../../portable/autoupdate.py:128
+#, python-format
+msgid "%s Version Check"
+msgstr "%s Перевірка Версії"
+
+#: ../../portable/autoupdate.py:129
+#, python-format
+msgid "%s is up to date."
+msgstr "%s найновіша."
+
+#: ../../portable/util.py:252 ../../portable/httpclient.py:126
+msgid "Internal Error"
+msgstr ""
+"‚Äì√≠‚ÄìŒ©‚Äî√â‚Äî√á‚Äî√Ñ‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äî√®‚Äî√® "
+"‚Äì√¶‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû ‚Äî√Ö‚Äì¬µ‚Äî√Ñ‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚Äì‚àû"
+
+#: ../../portable/util.py:252
+msgid ""
+"Miro has encountered an internal error. You can help us track down this "
+"problem and fix it by submitting an error report."
+msgstr ""
+"Відбулася внутрішня помилка Miro. Ви можете допомогти нам надіслав нам "
+"рапорт помилки."
+
+#: ../../portable/util.py:252
+msgid ""
+"Include entire program database including all video and channel metadata "
+"with crash report"
+msgstr ""
+"‚Äì¬¢‚Äì‚àû‚Äì‚à´ ‚Äì‚àÇ‚Äì¬µ "
+"‚Äì√∏‚Äî√Ñ‚Äì‚àè‚Äì‚à´‚Äî√Ñ‚Äì¬µ‚Äì√∏‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äì¬±‚Äì‚àû‚Äì‚àë‚Äî√â "
+"‚Äì¬ ‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äî√ñ ‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚â "
+"‚Äî√Ñ‚Äì‚àû‚Äì¬∫‚Äì¬∫‚Äî√£, ‚Äî√Ö‚Äì√¶ ‚Äì‚â§‚Äî√Ö‚Äì¬µ‚ÄìœÄ "
+"‚Äì‚àè‚ÄìŒ©‚Äî√ë‚Äì√¶‚Äî√Ñ‚Äì¬∫‚Äì‚àû‚Äî√ú‚Äì‚àè‚Äì¬µ‚ÄìœÄ ‚Äì√¶ "
+"‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶ ‚Äì‚àè ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû‚Äî√ñ."
+
+#: ../../portable/util.py:252
+msgid "Describe what you were doing that caused this error"
+msgstr ""
+"‚Äì√ª‚Äì√∏‚Äì‚àè‚Äî√†‚Äì‚àè‚Äî√á‚Äì¬µ, ‚Äî√°‚Äî√á‚Äì√¶ ‚Äì‚â§‚Äî√£ ‚Äì¬ "
+"‚Äì¬µ‚Äì¬™‚Äì‚àû‚Äì¬™‚Äì‚àè, ‚Äì‚à´‚Äì√¶‚Äì‚â ‚Äì¬ ‚Äì‚àû "
+"‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì√¶‚Äî√†‚Äì¬™‚Äì‚àû "
+"‚Äì√¶‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû."
+
+#: ../../portable/util.py:455
+#, python-format
+msgid "%1.1fGB"
+msgstr "%1.1f‚Äì√¨‚Äì√´"
+
+#: ../../portable/util.py:457
+#, python-format
+msgid "%dGB"
+msgstr "%d‚Äì√¨‚Äì¬±"
+
+#: ../../portable/util.py:461
+#, python-format
+msgid "%1.1fMB"
+msgstr "%1.1f‚Äì√∫‚Äì¬±"
+
+#: ../../portable/util.py:463
+#, python-format
+msgid "%dMB"
+msgstr "%d‚Äì√∫‚Äì¬±"
+
+#: ../../portable/util.py:467
+#, python-format
+msgid "%1.1fKB"
+msgstr "%1.1f‚Äì√∂‚Äì¬±"
+
+#: ../../portable/util.py:469
+#, python-format
+msgid "%dKB"
+msgstr "%d‚Äì√∂‚Äì¬±"
+
+#: ../../portable/util.py:473
+#, python-format
+msgid "%1.1fB"
+msgstr "%1.1f‚Äì¬±"
+
+#: ../../portable/util.py:475
+#, python-format
+msgid "%dB"
+msgstr "%d‚Äì¬±"
+
+#: ../../portable/storedatabase.py:832 ../../portable/storedatabase.py:1231
+#, python-format
+msgid "%s database save succeeded"
+msgstr ""
+"%s ‚Äî√â‚Äî√Ö‚Äì√∏‚Äì¬µ‚Äî√†‚ÄìŒ©‚Äì√¶ "
+"‚Äî√Ö‚Äì√¶‚Äî√ñ‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àû ‚Äì¬±‚Äì‚àû‚Äì‚àë‚Äì‚àû ‚Äì¬ "
+"‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äî√ñ"
+
+#: ../../portable/storedatabase.py:833 ../../portable/storedatabase.py:1232
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr ""
+"‚Äì√´‚Äì‚àû‚Äì‚àë‚Äì‚àû ‚Äì¬ ‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äî√ñ "
+"‚Äî√â‚Äî√Ö‚Äì√∏‚Äì¬µ‚Äî√†‚ÄìŒ©‚Äì√¶ "
+"‚Äî√Ö‚Äì√¶‚Äî√ñ‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àû. "
+"‚Äì¬¢‚Äì¬µ‚Äì√∏‚Äì¬µ‚Äî√Ñ‚Äî√  ‚Äì¬∫‚Äì√¶‚Äì‚àÇ‚ÄìŒ©‚Äì√¶ "
+"‚Äì‚â§‚Äî√£‚ÄìœÄ‚Äî√á‚Äì‚àè ‚Äì‚àè‚Äì‚àë ‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚â "
+"‚Äî√Ñ‚Äì‚àû‚Äì¬∫‚Äì¬∫‚Äî√£ ‚ÄìŒ©‚Äì¬µ ‚Äì√∏‚Äì√¶‚Äî√á‚Äì¬µ‚Äî√Ñ‚Äî√®‚Äì‚â§ "
+"‚Äì¬ ‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äì¬µ."
+
+#: ../../portable/storedatabase.py:840 ../../portable/storedatabase.py:1240
+#, python-format
+msgid "%s database save failed"
+msgstr ""
+"‚Äì√ª‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû "
+"‚Äî√Ö‚Äì√¶‚Äî√ñ‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√® %s "
+"‚Äì¬±‚Äì‚àû‚Äì‚àë‚Äî√£ ‚Äì¬ ‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äî√ñ"
+
+#: ../../portable/storedatabase.py:841 ../../portable/storedatabase.py:1241
+#, python-format
+msgid ""
+"%s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"‚Äì√π‚Äì¬µ‚Äî√â‚Äî√Ö‚Äì√∏‚Äì¬µ‚Äî√†‚ÄìŒ©‚Äì√¶‚Äì¬µ "
+"‚Äî√Ö‚Äì√¶‚Äî√ñ‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì¬µ ‚Äì¬±‚Äì‚àû‚Äì‚àë‚Äî√£ "
+"%s: ‚Äì√π‚Äì¬µ‚Äî√á ‚Äî√Ö‚Äì‚â§‚Äì√¶‚Äì¬±‚Äì√¶‚Äì¬ ‚ÄìŒ©‚Äì√¶‚Äì‚â ‚Äì√¶ "
+"‚Äì¬∫‚Äì¬µ‚Äî√Ö‚Äî√á‚Äì‚àû ‚ÄìŒ©‚Äì‚àû ‚Äì¬ ‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì¬µ.\n"
+"‚Äì¬∞‚Äì√¶‚Äì‚â§‚Äì¬µ‚Äî√á‚Äî√â‚Äì¬µ‚Äì¬∫ ‚Äì‚â§‚Äì‚àû‚Äì¬∫ "
+"‚Äì√∏‚Äì√¶‚Äî√°‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì‚àè‚Äî√á‚Äî√  "
+"‚Äì‚àë‚Äì‚àû‚Äì√∏‚Äì√¶‚Äì¬™‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äî√£‚ÄìœÄ ‚Äì¬ "
+"‚Äì‚àè‚Äî√Ö‚Äì‚à´ ‚Äì‚àè‚Äì¬™‚Äì‚àè ‚Äî√â‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  "
+"‚ÄìŒ©‚Äì¬µ‚Äì‚à´‚Äì√¶‚Äî√á‚Äì√¶‚Äî√Ñ‚Äî√£‚Äì¬µ ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶-"
+"‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äî√£ ‚Äì‚àè‚Äì‚àë ‚Äì‚â§‚Äì‚àû‚Äî√†‚Äì¬µ‚ÄìœÄ "
+"‚Äì‚à´‚Äì√¶‚Äì¬™‚Äì¬™‚Äì¬µ‚Äì‚à´‚Äî√ú‚Äì‚àè‚Äì‚àè. \n"
+"‚Äì√≤‚Äì‚àë‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√® ‚Äì¬∫‚Äì√¶‚Äì‚â ‚Äî√â‚Äî√á "
+"‚Äì¬±‚Äî√£‚Äî√á‚Äî√  ‚Äì√∏‚Äì√¶‚Äî√á‚Äì¬µ‚Äî√Ñ‚Äî√®‚ÄìŒ©‚Äî√£."
+
+#: ../../portable/dialogs.py:81
+msgid "Ignore"
+msgstr "‚Äì√º‚Äî√Ñ‚Äì√¶‚Äì√∏‚Äî√â‚Äî√Ö‚Äî√á‚Äì‚àè‚Äî√á‚Äî√"
+
+#: ../../portable/dialogs.py:82
+msgid "Submit Crash Report"
+msgstr ""
+"‚Äì√ª‚Äî√á‚Äì√∏‚Äî√Ñ‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√¶‚Äî√á‚Äî√°‚Äì¬µ‚Äî√á"
+
+#: ../../portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
+msgid "Migrate"
+msgstr "‚Äì√º‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì¬∫‚Äì¬µ‚Äî√Ö‚Äî√á‚Äì‚àè‚Äî√á‚Äî√"
+
+#: ../../portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
+msgid "Don't Migrate"
+msgstr "‚Äì√π‚Äì¬µ ‚Äì√∏‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì¬∫‚Äì¬µ‚Äî√¢‚Äì‚àû‚Äî√á‚Äî√"
+
+#: ../../portable/dialogs.py:86
+msgid "Remove Entry"
+msgstr "‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√"
+
+#: ../../portable/dialogs.py:87
+msgid "Delete File"
+msgstr "‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™"
+
+#: ../../portable/dialogs.py:88
+msgid "Delete Files"
+msgstr "‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äî√£"
+
+#: ../../portable/dialogs.py:89
+msgid "Keep Videos"
+msgstr ""
+"‚Äì√ª‚Äî√Ö‚Äî√á‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶"
+
+#: ../../portable/dialogs.py:90
+msgid "Delete Videos"
+msgstr "‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶"
+
+#: ../../portable/dialogs.py:92
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
+msgid "Create Channel"
+msgstr "‚Äì¬∞‚Äì√¶‚Äì‚àë‚Äì¬ ‚Äì‚àû‚Äî√á‚Äî√  ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™"
+
+#: ../../portable/dialogs.py:93
+msgid "Add"
+msgstr "‚Äì√Æ‚Äì√¶‚Äì¬±‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√"
+
+#: ../../portable/dialogs.py:94
+msgid "Add Into New Folder"
+msgstr ""
+"‚Äì√Æ‚Äì√¶‚Äì¬±‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚â§ "
+"‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äî√â‚Äî√© ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äî√â"
+
+#: ../../portable/dialogs.py:95
+msgid "Keep"
+msgstr "‚Äì√ª‚Äî√Ö‚Äî√á‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√"
+
+#: ../../portable/dialogs.py:97
+msgid "Not Now"
+msgstr "‚Äì√º‚Äì√¶‚Äì‚àë‚Äì‚àÇ‚Äì¬µ"
+
+#: ../../portable/dialogs.py:98
+msgid "Close to Tray"
+msgstr "Згорнути до іконки"
+
+#: ../../portable/dialogs.py:99
+msgid "Launch Miro"
+msgstr "Запустити Miro"
+
+#: ../../portable/dialogs.py:100
+msgid "Download Anyway"
+msgstr "Скачати всерівно"
+
+#: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
+msgid "New Search Channel"
+msgstr ""
+"‚Äì√π‚Äì√¶‚Äì‚â§‚Äî√£‚ÄìœÄ ‚Äì√∏‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì‚â§‚Äì√¶‚ÄìœÄ "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™"
+
+#: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:25
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
+msgid "A search channel contains items that match a search term."
+msgstr ""
+"‚Äì√º‚Äì√¶ ‚Äì√∏‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì‚â§‚Äì√¶‚Äì¬∫‚Äî√â "
+"‚Äî√á‚Äì¬µ‚Äî√Ñ‚Äì¬∫‚Äì‚àè‚ÄìŒ©‚Äî√â ‚ÄìŒ©‚Äì‚àû‚ÄìœÄ‚Äì¬ ‚Äì¬µ‚ÄìŒ©‚Äî√£ "
+"‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶ ‚Äì‚â§ ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì¬µ."
+
+#: ../../portable/singleclick.py:87
+msgid "Download already exists"
+msgstr "Фільм вже існує"
+
+#: ../../portable/singleclick.py:88
+msgid "That URL is already an external download."
+msgstr "Цей URL вже як зовнішній"
+
+#: ../../portable/singleclick.py:94
+msgid "Miro will begin downloading it now."
+msgstr "Miro"
+
+#: ../../portable/singleclick.py:96
+msgid "It is downloading now."
+msgstr "Це зараз скачюється"
+
+#: ../../portable/singleclick.py:98
+msgid "It has already been downloaded."
+msgstr "Це вже скачане"
+
+#: ../../portable/singleclick.py:125
+msgid "Download Error"
+msgstr "Помилка скачки"
+
+#: ../../portable/singleclick.py:126
+#, python-format
+msgid ""
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %s"
+msgstr ""
+"Miro не може скачати файл з цього URL:\n"
+"URL: %s"
+
+#: ../../portable/singleclick.py:134
+msgid "File Download"
+msgstr "‚Äì¬∞‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚àû‚Äî√á‚Äî√  ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™"
+
+#: ../../portable/singleclick.py:135
+#, python-format
+msgid "This file at %s does not appear to be audio, video, or an RSS feed."
+msgstr ""
+"‚Äì¬ß‚Äì‚àû‚ÄìœÄ‚Äì¬™ ‚Äì√∏‚Äì√¶ ‚Äì‚àû‚Äì¬ ‚Äî√Ñ‚Äì¬µ‚Äî√Ö‚Äî√â %s "
+"‚ÄìŒ©‚Äì¬µ ‚Äî√®‚Äì‚â§‚Äì¬™‚Äî√®‚Äì¬µ‚Äî√á‚Äî√Ö‚Äî√® ‚Äì‚àû‚Äî√â‚Äì¬ "
+"‚Äì‚àè‚Äì√¶-, ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶-, ‚Äì‚àè‚Äì¬™‚Äì‚àè RSS-"
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì√¶‚Äì¬∫."
+
+#: ../../portable/singleclick.py:225
+msgid "Subscribing to multiple channels"
+msgstr ""
+"‚Äì√º‚Äì√¶‚Äì¬ ‚Äì‚à´‚Äì¬™‚Äî√©‚Äî√°‚Äì‚àû‚Äì¬µ‚Äì¬∫‚Äî√Ö‚Äî√® ‚Äì‚à´ "
+"‚ÄìŒ©‚Äì¬µ‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì¬™‚Äî√ ‚Äì‚à´‚Äì‚àè‚Äì¬∫ "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû‚Äì¬∫"
+
+#: ../../portable/singleclick.py:226
+#, python-format
+msgid "Create %d channels?"
+msgstr ""
+"‚Äì¬∞‚Äì√¶‚Äì‚àë‚Äì¬ ‚Äì‚àû‚Äî√á‚Äî√  %d "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì√¶‚Äì‚â§?"
+
+#: ../../portable/singleclick.py:239
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr ""
+"‚Äì√Æ‚Äì√¶‚Äì¬±‚Äì‚àû‚Äì‚â§‚Äì¬™‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì¬µ %d "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì√¶‚Äì‚â§ ‚Äì‚â§ ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äî√â‚Äî√© "
+"‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äî√â"
+
+#: ../../portable/singleclick.py:240 ../../portable/folder.py:226
+msgid "Enter a name for the new channel folder"
+msgstr ""
+"‚Äì√≠‚Äì‚â§‚Äì¬µ‚Äì¬ ‚Äì‚àè‚Äî√á‚Äì¬µ ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì√¶‚Äì¬µ "
+"‚Äì‚àè‚Äì¬∫‚Äî√® ‚Äì¬ ‚Äì¬™‚Äî√® ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àè "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû"
+
+#: ../../portable/singleclick.py:243
+#, python-format
+msgid ""
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
+msgstr ""
+"‚Äì√≠‚ÄìŒ©‚Äì‚àè‚Äì¬∫‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äì¬µ: ‚Äì√≠‚Äî√£ ‚Äì√∏‚Äì√¶‚Äì¬ "
+"‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì‚àû‚ÄìŒ©‚Äî√£ ‚ÄìŒ©‚Äì‚àû %d ‚Äì‚àè‚Äì‚àë "
+"‚Äî√ß‚Äî√á‚Äì‚àè‚Äî√ñ ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì√¶‚Äì‚â§. "
+"‚Äì‚â†‚Äî√á‚Äì‚àè ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äî√£ "
+"‚Äì√¶‚Äî√Ö‚Äî√á‚Äì‚àû‚ÄìŒ©‚Äî√â‚Äî√á‚Äî√Ö‚Äî√® "
+"‚ÄìŒ©‚Äì¬µ‚Äî√á‚Äî√Ñ‚Äì√¶‚ÄìŒ©‚Äî√â‚Äî√á‚Äî√£‚Äì¬∫‚Äì‚àè."
+
+#: ../../portable/singleclick.py:254
+msgid "Subscription error"
+msgstr ""
+"‚Äì√ª‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû ‚Äì√∏‚Äî√Ñ‚Äì‚àè ‚Äì√∏‚Äì√¶‚Äì¬ "
+"‚Äì‚à´‚Äì¬™‚Äî√©‚Äî√°‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì‚àè ‚Äì‚à´ "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äî√â"
+
+#: ../../portable/singleclick.py:264
+msgid ""
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
+msgstr ""
+"‚Äì√∂‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™ $shortAppName ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚Äì¬µ‚Äî√á "
+"‚ÄìŒ©‚Äì¬µ‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚ÄìŒ©‚Äî√£‚ÄìœÄ ‚Äî√ë‚Äì√¶‚Äî√Ñ‚Äì¬∫‚Äì‚àû‚Äî√á: "
+"$url. ‚Äì√º‚Äì√¶‚Äì‚àÇ‚Äì‚àû‚Äì¬™‚Äî√â‚ÄìœÄ‚Äî√Ö‚Äî√á‚Äì‚àû "
+"‚Äî√Ö‚Äì‚â§‚Äî√®‚Äì‚àÇ‚Äì‚àè‚Äî√á‚Äì¬µ‚Äî√Ö‚Äî√  ‚Äî√Ö "
+"‚Äì‚àû‚Äì‚â§‚Äî√á‚Äì√¶‚Äî√Ñ‚Äì√¶‚Äì¬∫ ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû."
+
+#: ../../portable/singleclick.py:272
+msgid ""
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
+msgstr ""
+"‚Äì√∂‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™ $shortAppName ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚Äì¬µ‚Äî√á "
+"‚ÄìŒ©‚Äì¬µ‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚ÄìŒ©‚Äî√£‚ÄìœÄ ‚Äî√á‚Äì‚àè‚Äì√∏ ‚Äî√Ö‚Äì√¶‚Äì¬ "
+"‚Äì¬µ‚Äî√Ñ‚Äì‚àÇ‚Äì‚àè‚Äì¬∫‚Äì√¶‚Äì‚â ‚Äì√¶ (content-type): $url. "
+"‚Äì√º‚Äì√¶‚Äì‚àÇ‚Äì‚àû‚Äì¬™‚Äî√â‚ÄìœÄ‚Äî√Ö‚Äî√á‚Äì‚àû "
+"‚Äî√Ö‚Äì‚â§‚Äî√®‚Äì‚àÇ‚Äì‚àè‚Äî√á‚Äì¬µ‚Äî√Ö‚Äî√  ‚Äî√Ö "
+"‚Äì‚àû‚Äì‚â§‚Äî√á‚Äì√¶‚Äî√Ñ‚Äì√¶‚Äì¬∫ ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû."
+
+#: ../../portable/singleclick.py:276
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr ""
+"‚Äì√∂‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™ $shortAppName ‚ÄìŒ©‚Äì¬µ ‚Äî√â‚Äì¬ "
+"‚Äì‚àû‚Äì¬™‚Äì√¶‚Äî√Ö‚Äî√á‚Äî√  ‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚àû‚Äî√á‚Äî√ : $url."
+
+#: ../../portable/singleclick.py:316
+msgid "Invalid Torrent"
+msgstr ""
+"‚Äì√π‚Äì¬µ‚Äì‚â§‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äì¬ ‚ÄìŒ©‚Äî√£‚ÄìœÄ "
+"‚Äî√á‚Äì√¶‚Äî√Ñ‚Äî√Ñ‚Äì¬µ‚ÄìŒ©‚Äî√á-‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™"
+
+#: ../../portable/singleclick.py:317
+#, python-format
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr ""
+"‚Äì¬¢‚Äì√¶‚Äî√Ñ‚Äî√Ñ‚Äì¬µ‚ÄìŒ©‚Äî√á-‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™ %s "
+"‚Äì¬™‚Äì‚àè‚Äì¬±‚Äì√¶ ‚Äì√∏‚Äì√¶‚Äì‚â§‚Äî√Ñ‚Äì¬µ‚Äì‚àÇ‚Äì¬ ‚Äî√´‚ÄìŒ©, "
+"‚Äì¬™‚Äì‚àè‚Äì¬±‚Äì√¶ ‚ÄìŒ©‚Äì¬µ ‚Äì¬∫‚Äì√¶‚Äì‚àÇ‚Äì¬µ‚Äî√á "
+"‚Äì¬±‚Äî√£‚Äî√á‚Äî√  ‚Äì√¶‚Äî√á‚Äì‚à´‚Äî√Ñ‚Äî√£‚Äî√á. [OK]"
+
+#: ../../portable/menubar.py:144
+msgid "_Open"
+msgstr "‚Äì√ª‚Äî√á‚Äì‚à´‚Äî√Ñ‚Äî√£‚Äî√á‚Äî√"
+
+#: ../../portable/menubar.py:145
+msgid "_Download Video"
+msgstr "_‚Äì¬∞‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚àû‚Äî√á‚Äî√  ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶"
+
+#: ../../portable/menubar.py:147
+msgid "Check _Version"
+msgstr ""
+"‚Äì√º‚Äî√Ñ‚Äì√¶‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚Äì‚àè‚Äî√á‚Äî√  "
+"_‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚Äî√Ö‚Äì‚àè‚Äî√©."
+
+#: ../../portable/menubar.py:149
+msgid "_Remove Video"
+msgstr "‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶"
+
+#: ../../portable/menubar.py:150
+msgid "_Remove Videos"
+msgstr "_‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶"
+
+#: ../../portable/menubar.py:151
+msgid "Re_name Video"
+msgstr ""
+"‚Äì√º‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶"
+
+#: ../../portable/menubar.py:152
+msgid "Save Video _As..."
+msgstr ""
+"‚Äì¬∞‚Äì√¶‚Äî√ñ‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶ "
+"‚Äì‚à´‚Äì‚àû‚Äì‚à´..."
+
+#: ../../portable/menubar.py:153
+msgid "Save Videos _As..."
+msgstr "Зберігти Відео _Як..."
+
+#: ../../portable/menubar.py:154
+msgid "Copy Video _URL"
+msgstr "Скопіювати Відео _URL"
+
+#: ../../portable/menubar.py:156
+msgid "_Options..."
+msgstr "_Опції..."
+
+#: ../../portable/menubar.py:157
+msgid "_Quit"
+msgstr "‚Äì√≠‚Äî√£‚Äî√ñ‚Äì√¶‚Äì¬"
+
+#: ../../portable/menubar.py:165
+msgid "Cu_t"
+msgstr "Ви_різати"
+
+#: ../../portable/menubar.py:166
+msgid "_Copy"
+msgstr "_Копіювати"
+
+#: ../../portable/menubar.py:167
+msgid "_Paste"
+msgstr "_Вставити"
+
+#: ../../portable/menubar.py:168
+msgid "Select _All"
+msgstr "Вибрати _все"
+
+#: ../../portable/menubar.py:169
+msgid "_Delete"
+msgstr "_Видалити"
+
+#: ../../portable/menubar.py:173
+msgid "Add _Channel"
+msgstr "Додати _Канал"
+
+#: ../../portable/menubar.py:174
+msgid "New Searc_h Channel..."
+msgstr ""
+"‚Äì√π‚Äì√¶‚Äì‚â§‚Äî√£‚ÄìœÄ ‚Äì√∏‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì‚â§‚Äì√¶‚ÄìœÄ "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™..."
+
+#: ../../portable/menubar.py:175
+msgid "New _Folder..."
+msgstr "Нова _тека..."
+
+#: ../../portable/menubar.py:176
+msgid "Add Channel _Guide..."
+msgstr ""
+"‚Äì√Æ‚Äì√¶‚Äì¬±‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚â ‚Äì‚àè‚Äì¬  ‚Äì√∏‚Äì√¶ "
+"‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶"
+
+#: ../../portable/menubar.py:186
+msgid "Update _All Channels"
+msgstr ""
+"‚Äì√ª‚Äì¬±‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚â§‚Äî√Ö‚Äì¬µ "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äî√£"
+
+#: ../../portable/menubar.py:188
+msgid "_Import Channels (OPML)..."
+msgstr ""
+"‚Äì√≤‚Äì¬∫‚Äì√∏‚Äì√¶‚Äî√Ñ‚Äî√á‚Äì‚àè‚Äî√Ñ‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äî√£ (OPML)"
+
+#: ../../portable/menubar.py:189
+msgid "E_xport Channels (OPML)..."
+msgstr ""
+"‚Äì‚â†‚Äì‚à´‚Äî√Ö‚Äì√∏‚Äì√¶‚Äî√Ñ‚Äî√á‚Äì‚àè‚Äî√Ñ‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äî√£ (OPML)"
+
+#: ../../portable/menubar.py:191
+msgid "_Send this channel to a friend"
+msgstr ""
+"‚Äì√ª‚Äî√á‚Äì√∏‚Äî√Ñ‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™ ‚Äì¬ ‚Äî√Ñ‚Äî√â‚Äì‚â ‚Äî√â"
+
+#: ../../portable/menubar.py:192
+msgid "Copy Channel _Link"
+msgstr ""
+"‚Äì¬∞‚Äì‚à´‚Äì√¶‚Äì√∏‚Äì‚àè‚Äî√Ñ‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äî√Ö‚Äî√Ö‚Äî√£‚Äì¬™‚Äì‚à´‚Äî√â ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû"
+
+#: ../../portable/menubar.py:195
+msgid "New _Playlist"
+msgstr ""
+"‚Äì√π‚Äì√¶‚Äì‚â§‚Äî√£‚ÄìœÄ ‚Äî√Ö‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì√¶‚Äì‚à´ "
+"‚Äì‚â§‚Äì√¶‚Äî√Ö‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äì¬ "
+"‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√®"
+
+#: ../../portable/menubar.py:196
+msgid "New Playlist Fol_der"
+msgstr ""
+"‚Äì¬∞‚Äì√¶‚Äì‚àë‚Äì¬ ‚Äì‚àû‚Äî√á‚Äî√  ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äî√â‚Äî√© "
+"‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äî√â ‚Äì¬ ‚Äì¬™‚Äî√® "
+"‚Äî√Ö‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì√¶‚Äì‚à´‚Äì‚àû "
+"‚Äì‚â§‚Äì√¶‚Äî√Ö‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äì¬ "
+"‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√®"
+
+#: ../../portable/menubar.py:198
+msgid "Re_name Playlist"
+msgstr ""
+"‚Äì√º‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äî√Ö‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì√¶‚Äì‚à´ "
+"‚Äì‚â§‚Äì√¶‚Äî√Ö‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äì¬ "
+"‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√®"
+
+#: ../../portable/menubar.py:199
+msgid "_Remove Playlist"
+msgstr ""
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äî√Ö‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì√¶‚Äì‚à´ "
+"‚Äì‚â§‚Äì√¶‚Äî√Ö‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äì¬ "
+"‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√®"
+
+#: ../../portable/menubar.py:200
+msgid "_Remove Playlists"
+msgstr "‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á ‚Äî√Ö‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì√¶‚Äì‚à´"
+
+#: ../../portable/menubar.py:201
+msgid "_Remove Playlist Folders"
+msgstr ""
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àè "
+"‚Äî√Ö‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì‚â§"
+
+#: ../../portable/menubar.py:202
+msgid "_Remove Playlist Folder"
+msgstr ""
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äî√â "
+"‚Äî√Ö‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì‚â§"
+
+#: ../../portable/menubar.py:212
+msgid "_Play"
+msgstr ""
+"‚Äì√≠‚Äì√¶‚Äî√Ö‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äî√Ö‚Äî√á‚Äì‚àè"
+
+#: ../../portable/menubar.py:213
+msgid "_Stop"
+msgstr "_Зупинити"
+
+#: ../../portable/menubar.py:215
+msgid "_Next Video"
+msgstr ""
+"‚Äì¬∞‚Äì¬™‚Äì¬µ‚Äì¬ ‚Äî√â‚Äî√©‚Äî√¢‚Äì¬µ‚Äì¬µ ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶"
+
+#: ../../portable/menubar.py:216
+msgid "_Previous Video"
+msgstr ""
+"‚Äì√º‚Äî√Ñ‚Äì¬µ‚Äì¬ ‚Äî√£‚Äì¬ ‚Äî√â‚Äî√¢‚Äì¬µ‚Äì¬µ ‚Äì‚â§‚Äì‚àè‚Äì¬ "
+"‚Äì¬µ‚Äì√¶"
+
+#: ../../portable/menubar.py:218
+msgid "Skip _Forward"
+msgstr "Перейти _вперед"
+
+#: ../../portable/menubar.py:219
+msgid "Skip _Back"
+msgstr "Минути _Назад"
+
+#: ../../portable/menubar.py:221
+msgid "Volume _Up"
+msgstr "_Гучніше"
+
+#: ../../portable/menubar.py:222
+msgid "Volume _Down"
+msgstr "_Тихше"
+
+#: ../../portable/menubar.py:224
+msgid "_Fullscreen"
+msgstr ""
+"‚Äì√º‚Äì√¶‚Äì¬™‚ÄìŒ©‚Äì√¶‚Äî√ß‚Äì‚à´‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚ÄìœÄ "
+"‚Äî√Ñ‚Äì¬µ‚Äì‚àÇ‚Äì‚àè‚Äì¬∫"
+
+#: ../../portable/menubar.py:228
+msgid "_About"
+msgstr "_Про програму"
+
+#: ../../portable/menubar.py:229
+msgid "_Donate"
+msgstr "‚Äì√º‚Äì√¶‚Äì‚àÇ‚Äì¬µ‚Äî√Ñ‚Äî√á‚Äì‚â§‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√"
+
+#: ../../portable/menubar.py:230 ../../portable/menubar.py:245
+msgid "_Help"
+msgstr "_‚Äì¬∞‚Äì√∏‚Äî√Ñ‚Äì‚àû‚Äì‚â§‚Äì‚à´‚Äì‚àû"
+
+#: ../../portable/menubar.py:232
+msgid "Report a _Bug"
+msgstr "Повідомити про _помилку"
+
+#: ../../portable/menubar.py:236
+msgid "_Video"
+msgstr "_‚Äì√≠‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶"
+
+#: ../../portable/menubar.py:238
+msgid "_File"
+msgstr "_Файл"
+
+#: ../../portable/menubar.py:242
+msgid "_Channels"
+msgstr "_‚Äì√∂‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äî√£"
+
+#: ../../portable/menubar.py:243
+msgid "_Playlists"
+msgstr ""
+"_‚Äì¬∞‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì‚àè "
+"‚Äì‚â§‚Äì√¶‚Äî√Ö‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äì¬ "
+"‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√®"
+
+#: ../../portable/menubar.py:244
+msgid "P_layback"
+msgstr ""
+"‚Äì√≠‚Äì√¶‚Äî√Ö‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äî√Ö‚Äî√á‚Äì‚àè"
+
+#: ../../portable/menubar.py:249
+msgid "Play Unwatched ($numUnwatched)"
+msgstr "Показати непереглянуті відео ($numUnwatched)"
+
+#: ../../portable/menubar.py:250
+msgid "Pause All Downloads ($numDownloading)"
+msgstr "Призупинити Всі Скачування ($numDownloading)"
+
+#: ../../portable/menubar.py:251
+msgid "Resume All Downloads ($numPaused)"
+msgstr ""
+"‚Äì√º‚Äî√Ñ‚Äì√¶‚Äì¬ ‚Äì√¶‚Äì¬™‚Äì‚àÇ‚Äì‚àè‚Äî√á‚Äî√  "
+"‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚àû‚Äî√á‚Äî√  ($numPaused)"
+
+#: ../../portable/menubar.py:253
+msgid "Options..."
+msgstr "‚Äì√ª‚Äì√∏‚Äî√ú‚Äì‚àè‚Äì‚àè..."
+
+#: ../../portable/menubar.py:255
+msgid "Hide Window"
+msgstr "‚Äì¬∞‚Äì‚à´‚Äî√Ñ‚Äî√£‚Äî√á‚Äî√  ‚Äì√¶‚Äì‚à´‚ÄìŒ©‚Äì√¶"
+
+#: ../../portable/menubar.py:256
+msgid "Show Window"
+msgstr "‚Äì√º‚Äì√¶‚Äì‚à´‚Äì‚àû‚Äì‚àë‚Äì‚àû‚Äî√á‚Äî√  ‚Äì√¶‚Äì‚à´‚ÄìŒ©‚Äì√¶"
+
+#: ../../portable/item.py:485
+#, python-format
+msgid "Removing %s"
+msgstr "‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äî√®‚Äì¬µ‚Äî√á‚Äî√Ö‚Äî√® %s"
+
+#: ../../portable/item.py:488
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr ""
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì¬™‚Äì‚àè ‚Äì‚â§‚Äî√Ö‚Äì¬µ "
+"‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äî√£ ‚Äì‚àè‚Äì‚àë "
+"‚Äî√ß‚Äî√á‚Äì√¶‚ÄìœÄ ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì¬µ, ‚Äì‚àè‚Äì¬™‚Äì‚àè "
+"‚Äî√á‚Äì√¶‚Äì¬™‚Äî√ ‚Äì‚à´‚Äì√¶ ‚Äî√Ö‚Äì‚à´‚Äî√Ñ‚Äî√£‚Äî√á‚Äî√  "
+"‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äî√â ‚Äì‚àè‚Äì‚àë "
+"‚Äì¬±‚Äì‚àè‚Äì¬±‚Äì¬™‚Äì‚àè‚Äì√¶‚Äî√á‚Äì¬µ‚Äì‚à´‚Äì‚àè?"
+
+#: ../../portable/item.py:494
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
+msgstr ""
+"‚Äì¬∞‚Äì‚à´‚Äî√Ñ‚Äî√£‚Äî√á‚Äî√  ‚Äì¬™‚Äì‚àè ‚Äî√ß‚Äî√á‚Äì√¶‚Äî√á "
+"‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™ ‚Äì‚àè‚Äì‚àë "
+"‚Äì¬±‚Äì‚àè‚Äì¬±‚Äì¬™‚Äì‚àè‚Äì√¶‚Äî√á‚Äì¬µ‚Äì‚à´‚Äì¬µ, ‚Äì‚àè‚Äì¬™‚Äì‚àè "
+"‚Äî√â‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™ "
+"‚Äì√¶‚Äì‚à´‚Äì√¶‚ÄìŒ©‚Äî√°‚Äì‚àû‚Äî√á‚Äì¬µ‚Äì¬™‚Äî√ ‚ÄìŒ©‚Äì√¶?"
+
+#: ../../portable/item.py:514
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+"‚Äì‚â†‚Äî√á‚Äì√¶ ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àû. ‚Äì√º‚Äî√Ñ‚Äì‚àè ‚Äî√â‚Äì¬ "
+"‚Äì‚àû‚Äì¬™‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì‚àè ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àè, "
+"‚Äì‚â§‚Äî√Ö‚Äì¬µ ‚Äì¬µ‚Äì¬µ ‚Äî√Ö‚Äì√¶‚Äì¬ "
+"‚Äì¬µ‚Äî√Ñ‚Äì‚àÇ‚Äì‚àè‚Äì¬∫‚Äì√¶‚Äì¬µ ‚Äî√á‚Äì‚àû‚Äì‚à´‚Äì‚àÇ‚Äì¬µ ‚Äî√â‚Äì¬ "
+"‚Äì‚àû‚Äì¬™‚Äî√®‚Äì¬µ‚Äî√á‚Äî√Ö‚Äî√®."
+
+#: ../../portable/item.py:544
+#, python-format
+msgid "%d minutes"
+msgstr "%d ‚Äì¬∫‚Äì‚àè‚ÄìŒ©‚Äî√â‚Äî√á"
+
+#: ../../portable/item.py:554
+#, python-format
+msgid "Expires in %s"
+msgstr ""
+"‚Äì¬£‚Äî√Ö‚Äî√á‚Äì‚àû‚Äî√Ñ‚Äì¬µ‚Äì¬µ‚Äî√á ‚Äî√°‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àë %s"
+
+#: ../../portable/item.py:566
+#, python-format
+msgid "Will retry in %s"
+msgstr ""
+"‚Äì√º‚Äì√¶‚Äì‚â§‚Äî√á‚Äì√¶‚Äî√Ñ‚ÄìŒ©‚Äì‚àû‚Äî√® "
+"‚Äì√∏‚Äì√¶‚Äì√∏‚Äî√£‚Äî√á‚Äì‚à´‚Äì‚àû ‚Äì¬±‚Äî√â‚Äì¬ ‚Äì¬µ‚Äî√á "
+"‚Äî√°‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àë %s"
+
+#: ../../portable/item.py:568
+msgid "Paused"
+msgstr ""
+"‚Äì√º‚Äî√Ñ‚Äì‚àè‚Äì√¶‚Äî√Ö‚Äî√á‚Äì‚àû‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì¬™‚Äì¬µ‚ÄìŒ©‚Äì√¶"
+
+#: ../../portable/item.py:954
+msgid "TORRENT"
+msgstr "TORRENT ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™"
+
+#: ../../portable/item.py:956
+msgid "WEB PAGE"
+msgstr "WEB ‚Äî√Ö‚Äî√á‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√ú‚Äì‚àû"
+
+#: ../../portable/item.py:966
+msgid "Total Down:"
+msgstr ""
+"‚Äì¬∞‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äì√¶ ‚Äì‚â§ ‚Äî√ú‚Äì¬µ‚Äì¬™‚Äì√¶‚Äì¬∫:"
+
+#: ../../portable/item.py:969
+msgid "Error:"
+msgstr "‚Äì√ª‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû:"
+
+#: ../../portable/item.py:977
+msgid "Down Rate:"
+msgstr "Вхідний Рейтінг"
+
+#: ../../portable/item.py:978
+msgid "Down Total:"
+msgstr "Вхідного загалом"
+
+#: ../../portable/item.py:980
+msgid "Up Rate:"
+msgstr "Вихідний Рейтинг"
+
+#: ../../portable/item.py:981
+msgid "Up Total:"
+msgstr "Вихідного загалом"
+
+#: ../../portable/item.py:989
+msgid "Web page:"
+msgstr "Веб-сторінка:"
+
+#: ../../portable/item.py:989
+msgid "permalink"
+msgstr "permalink"
+
+#: ../../portable/item.py:993
+msgid "File link:"
+msgstr "Путь до файлу"
+
+#: ../../portable/item.py:993
+msgid "direct link to file"
+msgstr "Прямий путь до файлу"
+
+#: ../../portable/item.py:995
+msgid "File type:"
+msgstr "Тип файлу:"
+
+#: ../../portable/item.py:1002
+msgid "REVEAL LOCAL FOLDER"
+msgstr "ВІДОБРАЗИТИ ТЕКУ НА ДАНОМУ КОМПЬЮТЕРІ"
+
+#: ../../portable/item.py:1004
+msgid "REVEAL LOCAL FILE"
+msgstr ""
+"‚Äì√º‚Äì√ª‚Äì√∂‚Äì√™‚Äì√≥‚Äì√™‚Äì¬¢‚Äì¬® "
+"‚Äì√µ‚Äì√ª‚Äì√∂‚Äì√™‚Äì¬®‚Äì√µ‚Äì√π‚Äì¬¥‚Äì√¥ ‚Äì¬ß‚Äì√™‚Äì√¥‚Äì√µ"
+
+#: ../../portable/item.py:1006
+msgid "Filename:"
+msgstr "‚Äì√≤‚Äì¬∫‚Äî√® ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äì‚àû:"
+
+#: ../../portable/item.py:1013
+msgid "Down Total"
+msgstr "‚Äì¬∞‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì¬µ‚ÄìŒ©‚Äì√¶"
+
+#: ../../portable/item.py:1015
+msgid "Up Total"
+msgstr "‚Äì√≥‚Äì‚àû‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì¬µ‚ÄìŒ©‚Äì√¶"
+
+#: ../../portable/item.py:1033
+msgid "Item Details"
+msgstr ""
+"‚Äì√º‚Äì√¶‚Äì¬ ‚Äî√Ñ‚Äì√¶‚Äì¬±‚ÄìŒ©‚Äì‚àû‚Äî√® "
+"‚Äì‚àè‚ÄìŒ©‚Äî√ë‚Äì√¶‚Äî√Ñ‚Äì¬∫‚Äì‚àû‚Äî√ú‚Äì‚àè‚Äî√®"
+
+#: ../../portable/item.py:1040
+msgid "Torrent Details"
+msgstr ""
+"‚Äì√≤‚ÄìŒ©‚Äî√ë‚Äì√¶‚Äî√Ñ‚Äì¬∫‚Äì‚àû‚Äî√ú‚Äì‚àè‚Äî√® ‚Äì√¶ "
+"‚Äî√á‚Äì√¶‚Äî√Ñ‚Äî√Ñ‚Äì¬µ‚ÄìŒ©‚Äî√á‚Äì¬µ"
+
+#: ../../portable/item.py:1042
+msgid "Torrent Details <i>stopped</i>"
+msgstr ""
+"‚Äì√≤‚ÄìŒ©‚Äî√ë‚Äì√¶‚Äî√Ñ‚Äì¬∫‚Äì‚àû‚Äî√ú‚Äì‚àè‚Äî√® ‚Äì√¶ "
+"‚Äî√á‚Äì√¶‚Äî√Ñ‚Äî√Ñ‚Äì¬µ‚ÄìŒ©‚Äî√á‚Äì¬µ "
+"<i>‚Äì√∏‚Äî√Ñ‚Äì‚àè‚Äì√¶‚Äî√Ö‚Äî√á‚Äì‚àû‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì¬™‚Äì¬µ‚ÄìŒ©‚Äì√¶<"
+"/i>"
+
+#: ../../portable/item.py:1046
+msgid "Download Details"
+msgstr ""
+"‚Äì√≤‚ÄìŒ©‚Äî√ë‚Äì√¶‚Äî√Ñ‚Äì¬∫‚Äì‚àû‚Äî√ú‚Äì‚àè‚Äî√® ‚Äì√¶ "
+"‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äì√¶‚Äì¬∫"
+
+#: ../../portable/item.py:1263
+msgid "downloading..."
+msgstr ""
+"‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äî√á ‚Äì‚àë‚Äì‚àû‚Äì‚â ‚Äî√Ñ‚Äî√â‚Äì‚àë‚Äì‚à´‚Äì‚àû..."
+
+#: ../../portable/item.py:1270 ../../portable/item.py:1273
+#, python-format
+msgid "%s remaining"
+msgstr "‚Äì√¶‚Äî√Ö‚Äî√á‚Äì‚àû‚Äì¬™‚Äì√¶‚Äî√Ö‚Äî√  %s"
+
+#: ../../portable/item.py:1282
+msgid "starting up..."
+msgstr "‚ÄìŒ©‚Äì‚àû‚Äî√°‚Äì‚àè‚ÄìŒ©‚Äì‚àû‚Äî√©..."
+
+#: ../../portable/item.py:1477
+msgid "Play Just This Video"
+msgstr ""
+"‚Äì√≠‚Äì√¶‚Äî√Ö‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äî√Ö‚Äî√á‚Äì‚àè "
+"‚Äî√á‚Äì√¶‚Äì¬™‚Äî√ ‚Äì‚à´‚Äì√¶ ‚Äî√ß‚Äî√á‚Äì√¶‚Äî√á ‚Äì‚â§‚Äì‚àè‚Äì¬ "
+"‚Äì¬µ‚Äì√¶-‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™"
+
+#: ../../portable/item.py:1854
+#, python-format
+msgid "Removing %s items"
+msgstr ""
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äî√®‚Äî√© %s ‚Äì√¶‚Äì¬±‚Äî√§‚Äì¬µ‚Äì‚à´‚Äî√á‚Äì√¶‚Äì‚â§"
+
+#: ../../portable/item.py:1856
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+"‚Äì√ª‚Äì¬ ‚Äì‚àè‚ÄìŒ© ‚Äì‚àè‚Äì¬™‚Äì‚àè ‚Äì¬±‚Äì√¶‚Äì¬™‚Äî√ ‚Äî√†‚Äì¬µ "
+"‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶ ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äì√¶‚Äì‚â§ ‚ÄìŒ©‚Äì¬µ "
+"‚Äî√â‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì√¶‚Äî√Ö‚Äî√  ‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äì‚àè‚Äì‚àë ‚Äî√ß‚Äî√á‚Äì√¶‚Äì‚â ‚Äì√¶ ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû. "
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì¬™‚Äì‚àè ‚Äî√ß‚Äî√á‚Äì‚àè "
+"‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äî√£, ‚Äì‚àè‚Äì¬™‚Äì‚àè ‚Äî√â‚Äì¬ "
+"‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚àè‚Äî√ñ ‚Äî√á‚Äì√¶‚Äì¬™‚Äî√ ‚Äì‚à´‚Äì√¶ "
+"‚Äì‚àè‚Äì‚àë ‚Äì¬±‚Äì‚àè‚Äì¬±‚Äì¬™‚Äì‚àè‚Äì√¶‚Äî√á‚Äì¬µ‚Äì‚à´‚Äì‚àè?"
+
+#: ../../portable/item.py:1864
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"‚Äì√≠ ‚Äì‚â§‚Äî√£‚Äì¬±‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äî√ñ "
+"‚Äì√¶‚Äì¬±‚Äî√§‚Äì¬µ‚Äì‚à´‚Äî√á‚Äì‚àû‚Äî√ñ ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àû. "
+"‚Äì√∂‚Äì√¶‚Äì‚â ‚Äì¬ ‚Äì‚àû ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àû ‚Äî√â‚Äì¬ "
+"‚Äì‚àû‚Äì¬™‚Äî√®‚Äì¬µ‚Äî√á‚Äî√Ö‚Äî√® ‚Äì‚àè‚Äì¬™‚Äì‚àè "
+"‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì¬™‚Äî√©‚Äî√°‚Äì‚àû‚Äì¬µ‚Äî√á‚Äî√Ö‚Äî√® ‚Äì‚àè‚Äì‚àë "
+"‚Äì‚à´‚Äì√¶‚Äì¬™‚Äì¬™‚Äì¬µ‚Äì‚à´‚Äî√ú‚Äì‚àè‚Äì‚àè, ‚Äì‚â§‚Äî√Ö‚Äì¬µ "
+"‚Äì¬µ‚Äî√´ ‚Äî√Ö‚Äì√¶‚Äì¬ ‚Äì¬µ‚Äî√Ñ‚Äì‚àÇ‚Äì‚àè‚Äì¬∫‚Äì√¶‚Äì¬µ "
+"‚Äî√á‚Äì‚àû‚Äì‚à´ ‚Äì‚àÇ‚Äì¬µ ‚Äî√â‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äî√®‚Äì¬µ‚Äî√á‚Äî√Ö‚Äî√® "
+"‚Äì‚àè‚Äì¬™‚Äì‚àè ‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì¬™‚Äî√©‚Äî√°‚Äì‚àû‚Äì¬µ‚Äî√á‚Äî√Ö‚Äî√®."
+
+#: ../../portable/folder.py:132 ../../portable/folder.py:155
+msgid "Rename Channel Folder"
+msgstr ""
+"‚Äì√º‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äî√â ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû"
+
+#: ../../portable/folder.py:134
+#, python-format
+msgid "Enter a new name for the channel folder %s"
+msgstr ""
+"‚Äì√≠‚Äì‚â§‚Äì¬µ‚Äì¬ ‚Äì‚àè‚Äî√á‚Äì¬µ ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì√¶‚Äì¬µ "
+"‚Äì‚àè‚Äì¬∫‚Äî√® ‚Äì¬ ‚Äì¬™‚Äî√® ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àè "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû %s"
+
+#: ../../portable/folder.py:210 ../../portable/folder.py:215
+msgid "Rename Playlist Folder"
+msgstr ""
+"‚Äì√º‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äî√â ‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì‚àû"
+
+#: ../../portable/folder.py:217
+#, python-format
+msgid "Enter a new name for the playlist folder %s"
+msgstr ""
+"‚Äì√≠‚Äì‚â§‚Äì¬µ‚Äì¬ ‚Äì‚àè‚Äî√á‚Äì¬µ ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì√¶‚Äì¬µ "
+"‚Äì‚àè‚Äì¬∫‚Äî√® ‚Äì¬ ‚Äì¬™‚Äî√® ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àè "
+"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì‚àû %s"
+
+#: ../../portable/folder.py:225
+msgid "Create Channel Folder"
+msgstr ""
+"‚Äì¬∞‚Äì√¶‚Äì‚àë‚Äì¬ ‚Äì‚àû‚Äî√á‚Äî√  ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äî√â "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû"
+
+#: ../../portable/folder.py:239
+msgid "Create Playlist Folder"
+msgstr ""
+"‚Äì¬∞‚Äì√¶‚Äì‚àë‚Äì¬ ‚Äì‚àû‚Äî√á‚Äî√  ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äî√â "
+"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì‚àû"
+
+#: ../../portable/folder.py:240
+msgid "Enter a name for the new playlist folder"
+msgstr ""
+"‚Äì√≠‚Äì‚â§‚Äì¬µ‚Äì¬ ‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äì‚àè‚Äì¬∫‚Äî√® ‚Äì¬ ‚Äì¬™‚Äî√® "
+"‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì√¶‚ÄìœÄ ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àè "
+"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì‚àû"
+
+#: ../../portable/httpclient.py:68
+#, python-format
+msgid "Error: %s"
+msgstr "‚Äì√ª‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû: %s"
+
+#: ../../portable/httpclient.py:83 ../../portable/httpclient.py:89
+msgid "Can't connect"
+msgstr ""
+"‚Äì√π‚Äì¬µ ‚Äì¬∫‚Äì√¶‚Äì‚â ‚Äî√â ‚Äî√Ö‚Äì√¶‚Äì¬µ‚Äì¬ "
+"‚Äì‚àè‚ÄìŒ©‚Äì‚àè‚Äî√á‚Äî√ ‚Äî√Ö‚Äî√®"
+
+#: ../../portable/httpclient.py:84
+#, python-format
+msgid "Connection Error: %s"
+msgstr ""
+"‚Äì√ª‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû ‚Äî√Ö‚Äì√¶‚Äì¬µ‚Äì¬ "
+"‚Äì‚àè‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√®: %s"
+
+#: ../../portable/httpclient.py:90
+msgid "SSL connection error"
+msgstr ""
+"‚Äì√ª‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû SSL-‚Äî√Ö‚Äì√¶‚Äì¬µ‚Äì¬ "
+"‚Äì‚àè‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√®"
+
+#: ../../portable/httpclient.py:94
+msgid "HTTP error"
+msgstr "‚Äì√ª‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû HTTP"
+
+#: ../../portable/httpclient.py:97
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr ""
+"‚Äì√π‚Äì¬µ‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚ÄìŒ©‚Äî√£‚ÄìœÄ ‚Äî√Ö‚Äî√á‚Äì‚àû‚Äî√á‚Äî√â‚Äî√Ö: %s"
+
+#: ../../portable/httpclient.py:100
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr ""
+"‚Äì√π‚Äì¬µ‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚ÄìŒ©‚Äî√£‚ÄìœÄ ‚Äì‚àë‚Äì‚àû‚Äì‚â "
+"‚Äì√¶‚Äì¬™‚Äì√¶‚Äì‚â§‚Äì√¶‚Äì‚à´: %s"
+
+#: ../../portable/httpclient.py:103
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr ""
+"‚Äì√π‚Äì¬µ‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚ÄìŒ©‚Äî√£‚ÄìœÄ ‚Äî√Ñ‚Äì‚àû‚Äì‚àë‚Äì¬∫‚Äì¬µ‚Äî√Ñ "
+"‚Äì‚à´‚Äî√â‚Äî√Ö‚Äì‚à´‚Äì‚àû ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äì‚àû: %s"
+
+#: ../../portable/httpclient.py:106
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr ""
+"‚Äì√ª‚Äì‚àÇ‚Äì‚àè‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äî√Ö‚Äî√® CRLF, "
+"‚Äì√∏‚Äì√¶‚Äì¬™‚Äî√â‚Äî√°‚Äì¬µ‚ÄìŒ©: %r"
+
+#: ../../portable/httpclient.py:109
+#, python-format
+msgid "%s closed connection"
+msgstr ""
+"%s ‚Äî√Ö‚Äì√¶‚Äì¬µ‚Äì¬ ‚Äì‚àè‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì¬µ "
+"‚Äì‚àë‚Äì‚àû‚Äì‚à´‚Äî√Ñ‚Äî√£‚Äî√á‚Äì√¶"
+
+#: ../../portable/httpclient.py:115
+msgid "Got 404 status code"
+msgstr "‚Äì√º‚Äì√¶‚Äì¬™‚Äî√â‚Äî√°‚Äì¬µ‚ÄìŒ© ‚Äì√¶‚Äî√á‚Äì‚â§‚Äì¬µ‚Äî√á 404"
+
+#: ../../portable/httpclient.py:117
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "‚Äì√∂‚Äì√¶‚Äì¬  ‚Äì√¶‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àè: %s"
+
+#: ../../portable/httpclient.py:121
+msgid "Authorization failed"
+msgstr ""
+"‚Äì√ª‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû ‚Äì√∏‚Äî√Ñ‚Äì‚àè "
+"‚Äì‚àû‚Äì‚â§‚Äî√á‚Äì√¶‚Äî√Ñ‚Äì‚àè‚Äì‚àë‚Äì‚àû‚Äî√ú‚Äì‚àè‚Äì‚àè"
+
+#: ../../portable/httpclient.py:127
+msgid "Pipeline request never started"
+msgstr ""
+"‚Äì√≥‚Äì‚àû‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äî√Ö ‚ÄìŒ©‚Äì‚àû ‚Äì√∏‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì¬ "
+"‚Äì‚àû‚Äî√°‚Äî√â ‚ÄìŒ©‚Äì¬µ ‚Äì√∏‚Äì√¶‚Äì¬™‚Äî√â‚Äî√°‚Äì¬µ‚ÄìŒ©"
+
+#: ../../portable/httpclient.py:131
+msgid "Timeout"
+msgstr ""
+"‚Äì√≠‚Äî√Ñ‚Äì¬µ‚Äì¬∫‚Äî√® ‚Äì√¶‚Äì‚àÇ‚Äì‚àè‚Äì¬ ‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√® "
+"‚Äì√¶‚Äî√á‚Äì‚â§‚Äì¬µ‚Äî√á‚Äì‚àû ‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì¬µ‚Äì‚à´‚Äì¬™‚Äì√¶"
+
+#: ../../portable/httpclient.py:132
+#, python-format
+msgid "Connection to %s timed out"
+msgstr ""
+"‚Äì√≠‚Äî√Ñ‚Äì¬µ‚Äì¬∫‚Äî√® ‚Äì√¶‚Äì‚àÇ‚Äì‚àè‚Äì¬ ‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√® "
+"‚Äî√Ö‚Äì√¶‚Äì¬µ‚Äì¬ ‚Äì‚àè‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√® ‚Äî√Ö %s "
+"‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì¬µ‚Äì‚à´‚Äì¬™‚Äì√¶"
+
+#: ../../portable/httpclient.py:136
+msgid "Invalid URL"
+msgstr "‚Äì√π‚Äì¬µ‚Äì√∏‚Äî√Ñ‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äì¬™‚Äî√ ‚ÄìŒ©‚Äî√£‚ÄìœÄ URL"
+
+#: ../../portable/httpclient.py:137
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr ""
+"\"%s\" ‚ÄìŒ©‚Äì¬µ ‚Äì‚â§‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äì¬ ‚ÄìŒ©‚Äî√£‚ÄìœÄ ‚Äì‚àû‚Äì¬ "
+"‚Äî√Ñ‚Äì¬µ‚Äî√Ö URL"
+
+#: ../../portable/httpclient.py:143
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr "Файл: \"%s\" - не існує"
+
+#: ../../portable/httpclient.py:147
+msgid "Read error"
+msgstr "Помилка читання"
+
+#: ../../portable/httpclient.py:148
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr "При читанні \"%s\" виникла помилка"
+
+#: ../../portable/httpclient.py:341
+msgid "Unknown Error code"
+msgstr "Помилка з невідомим кодом"
+
+#: ../../portable/httpclient.py:373
+msgid "Connection closed"
+msgstr ""
+"‚Äì¬∞‚Äì√¶‚Äì¬µ‚Äì¬ ‚Äì‚àè‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì¬µ "
+"‚Äì‚àë‚Äì‚àû‚Äì‚à´‚Äî√Ñ‚Äî√£‚Äî√á‚Äì√¶"
+
+#: ../../portable/httpclient.py:798
+msgid "Unknown"
+msgstr ""
+"‚Äì√π‚Äì¬µ‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äî√Ö‚Äî√á‚ÄìŒ©‚Äì‚àû‚Äî√® "
+"‚Äì√¶‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû"
+
+#: ../../portable/httpclient.py:799
+msgid "Internal Error: Not ready to send"
+msgstr ""
+"‚Äì√≠‚ÄìŒ©‚Äî√â‚Äî√á‚Äî√Ñ‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äî√®‚Äî√® "
+"‚Äì√¶‚Äî√†‚Äì‚àè‚Äì¬±‚Äì‚à´‚Äì‚àû: ‚ÄìŒ©‚Äì¬µ ‚Äì¬∫‚Äì√¶‚Äì‚â ‚Äî√â "
+"‚Äì√¶‚Äî√á‚Äì‚â§‚Äì¬µ‚Äî√á‚Äì‚àè‚Äî√á‚Äî√"
+
+#: ../../portable/app.py:685
+msgid "Database too new"
+msgstr ""
+"‚Äì¬∞‚Äì¬™‚Äì‚àè‚Äî√†‚Äì‚à´‚Äì√¶‚Äì¬∫ ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√® "
+"‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚Äî√Ö‚Äì‚àè‚Äî√® ‚Äì¬±‚Äì‚àû‚Äì‚àë‚Äî√£ ‚Äì¬ "
+"‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äî√ñ"
+
+#: ../../portable/app.py:686
+msgid ""
+"You have a database that was saved with a newer version of $shortAppName. "
+"You must download the latest version of $shortAppName and run that."
+msgstr ""
+"Ваша база даних (дані) була збережена новішою версією $shortAppName. "
+"Завантажте останню версію $shortAppName та скористайтесь нею."
+
+#: ../../portable/app.py:700
+msgid "Video Directory Missing"
+msgstr "Не вдалось знайти теку з відео"
+
+#: ../../portable/app.py:701
+msgid ""
+"\n"
+"Miro can't find your primary video directory.  This may be because it's "
+"located on an external drive that is currently disconnected.\n"
+"\n"
+"If you continue, the video directory will be reset to a location on this "
+"drive (this will cause you to lose some details about the videos on the "
+"external drive).  You can also quit, connect the drive, and relaunch Miro."
+msgstr ""
+"\n"
+"Miro не може знайти вашу основну теку з відео. Це може зумовлено тим, що "
+"вона розміщена на зовнішньому носієві даних, що наразі від'єднано.\n"
+"\n"
+"У разі продовження, розміщення теки з відео буде задано на носієві де "
+"розміщується Miro (це зумовить втрату інформації про сюжети на зовнішньому "
+"носієві).  Але також ви можете закрити програму, під'єднати носій даних та "
+"запустити Miro знову."
+
+#: ../../portable/app.py:1038 ../../portable/app.py:1052
+#: ../../portable/app.py:1096 ../../portable/app.py:1122
+#: ../../portable/app.py:1142
+#, python-format
+msgid "Remove %s"
+msgstr "‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  %s"
+
+#: ../../portable/app.py:1039
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr ""
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì¬™‚Äì‚àè "
+"‚Äì√∏‚Äî√â‚Äî√á‚Äì¬µ‚Äì‚â§‚Äì√¶‚Äì¬ ‚Äì‚àè‚Äî√á‚Äì¬µ‚Äì¬™‚Äî√  %s?"
+
+#: ../../portable/app.py:1053
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr ""
+"‚Äì√≠‚Äî√£ ‚Äî√ñ‚Äì√¶‚Äî√á‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äî√â‚Äì¬ "
+"‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  %s"
+
+#: ../../portable/app.py:1056 ../../portable/app.py:1101
+#: ../../portable/app.py:1127 ../../portable/app.py:1146
+#, python-format
+msgid "Remove %s channels"
+msgstr ""
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™ %s"
+
+#: ../../portable/app.py:1058
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr ""
+"‚Äì√≠‚Äî√£ ‚Äî√ñ‚Äì√¶‚Äî√á‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äî√â‚Äì¬ "
+"‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äî√ß‚Äî√á‚Äì‚àè "
+"‚Äî√Ö‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì‚àè ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äì√¶‚Äì‚â§ %s"
+
+#: ../../portable/app.py:1097
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr ""
+"‚Äì√ü‚Äî√á‚Äì√¶ ‚Äì¬ ‚Äì¬µ‚Äì¬™‚Äì‚àû‚Äî√á‚Äî√  ‚Äî√Ö‚Äì√¶ "
+"‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äì¬∫‚Äì‚àè ‚Äì‚â§‚Äì‚àè‚Äì¬ "
+"‚Äì¬µ‚Äì√¶-‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äì‚àû‚Äì¬∫‚Äì‚àè ‚Äì‚â§ "
+"‚Äî√ß‚Äî√á‚Äì√¶‚Äì¬∫ ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì¬µ?"
+
+#: ../../portable/app.py:1102
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr ""
+"‚Äì√ü‚Äî√á‚Äì√¶ ‚Äì¬ ‚Äì¬µ‚Äì¬™‚Äì‚àû‚Äî√á‚Äî√  ‚Äî√Ö‚Äì√¶ "
+"‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äì¬∫‚Äì‚àè ‚Äì‚â§‚Äì‚àè‚Äì¬ "
+"‚Äì¬µ‚Äì√¶-‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äì‚àû‚Äì¬∫‚Äì‚àè ‚Äì‚â§ "
+"‚Äì‚â§‚Äî√£‚Äì¬±‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äî√ñ "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû‚Äî√ñ?"
+
+#: ../../portable/app.py:1123
+#, python-format
+msgid ""
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
+msgstr ""
+"‚Äì¬£‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì¬™‚Äì‚àè %s? ‚Äì√≠‚Äî√Ö‚Äì¬µ "
+"‚Äì‚àë‚Äì‚àû‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚à´‚Äì‚àè ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äì√¶‚Äì‚â§ "
+"‚Äì¬±‚Äî√â‚Äì¬ ‚Äî√â‚Äî√á "
+"‚Äì√∏‚Äî√Ñ‚Äì¬µ‚Äì‚à´‚Äî√Ñ‚Äì‚àû‚Äî√¢‚Äì¬µ‚ÄìŒ©‚Äî√£."
+
+#: ../../portable/app.py:1128
+#, python-format
+msgid ""
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
+msgstr ""
+"‚Äì√≠‚Äî√£ ‚Äî√â‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚ÄìŒ©‚Äî√£, ‚Äî√°‚Äî√á‚Äì√¶ "
+"‚Äî√ñ‚Äì√¶‚Äî√á‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äî√â‚Äì¬ ‚Äì‚àû‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  %s "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì√¶‚Äì‚â§? ‚Äì√≠‚Äî√Ö‚Äì¬µ "
+"‚Äî√á‚Äì¬µ‚Äì‚à´‚Äî√â‚Äî√¢‚Äì‚àè‚Äì¬µ "
+"‚Äì‚àë‚Äì‚àû‚Äì‚à´‚Äì‚àû‚Äî√°‚Äì‚à´‚Äì‚àè ‚Äì¬±‚Äî√â‚Äì¬ ‚Äî√â‚Äî√á "
+"‚Äì√¶‚Äî√á‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äî√£."
+
+#: ../../portable/app.py:1143
+#, python-format
+msgid "Are you sure you want to remove %s?"
+msgstr "Ви впевненні, що хочете позбутись %s?"
+
+#: ../../portable/app.py:1147
+#, python-format
+msgid "Are you sure you want to remove these %s channels?"
+msgstr "Ви впевненні, що хочете позбутись цих %s каналів?"
+
+#: ../../portable/app.py:1160
+#, python-format
+msgid "Stop watching %s"
+msgstr "Зупинити перегляд %s"
+
+#: ../../portable/app.py:1161
+#, python-format
+msgid "Are you sure you want to stop watching %s?"
+msgstr "Ви впевнені що хочете зупинити перегляд %s?"
+
+#: ../../portable/app.py:1164
+#, python-format
+msgid "Stop watching %s directories"
+msgstr "Зупинити перегляд %s папки"
+
+#: ../../portable/app.py:1165
+#, python-format
+msgid "Are you sure you want to stop watching these %s directories?"
+msgstr "Ви впевнені що хочете зупинити перегляд %s папки?"
+
+#: ../../portable/app.py:1196
+msgid "Are you sure you want to quit?"
+msgstr ""
+"‚Äì√≠‚Äî√£ ‚Äî√â‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚ÄìŒ©‚Äî√£, ‚Äî√°‚Äî√á‚Äì√¶ "
+"‚Äî√ñ‚Äì√¶‚Äî√á‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äì‚â§‚Äî√£‚ÄìœÄ‚Äî√á‚Äì¬µ?"
+
+#: ../../portable/app.py:1198
+msgid ""
+"Miro is still uploading your crash report. If you quit now the upload will "
+"be canceled.  Quit Anyway?"
+msgstr ""
+"Miro ще відправляє рапорт помилок. Якщо ви вийдете зараз відправка "
+"перерветься. Хочете Вийти?"
+
+#: ../../portable/app.py:1203
+#, python-format
+msgid "You have %d download still in progress.  Quit Anyway?"
+msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
+msgstr[0] "До завантаження залишилось %d. Закрити програму всеодно?"
+msgstr[1] "Вам залишилось %d скачувань. Хочете Вийти?"
+msgstr[2] "До завантаження залишилось %d. Закрити програму всеодно?"
+
+#: ../../portable/app.py:1712
+msgid "Invalid Value"
+msgstr ""
+"‚Äì√π‚Äì¬µ‚Äì¬ ‚Äì√¶‚Äì√∏‚Äî√â‚Äî√Ö‚Äî√á‚Äì‚àè‚Äì¬∫‚Äì√¶‚Äì¬µ "
+"‚Äì‚àë‚ÄìŒ©‚Äì‚àû‚Äî√°‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì¬µ"
+
+#: ../../portable/app.py:1713
+#, python-format
+msgid "%s is invalid.  You must enter a non-negative number."
+msgstr ""
+"‚Äì√π‚Äì¬µ‚Äì¬ ‚Äì√¶‚Äì√∏‚Äî√â‚Äî√Ö‚Äî√á‚Äì‚àè‚Äì¬∫‚Äì√¶‚Äì¬µ "
+"‚Äì‚àë‚ÄìŒ©‚Äì‚àû‚Äî√°‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì¬µ %s. ‚Äì√≠‚Äì‚â§‚Äì¬µ‚Äì¬ "
+"‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äì√∏‚Äì√¶‚Äì¬™‚Äì√¶‚Äì‚àÇ‚Äì‚àè‚Äî√á‚Äì¬µ‚Äì¬™‚Äî√ "
+"‚ÄìŒ©‚Äì√¶‚Äì¬µ ‚Äî√°‚Äì‚àè‚Äî√Ö‚Äì¬™‚Äì√¶."
+
+#: ../../portable/app.py:1839
+msgid "Error Revealing File"
+msgstr "Помилка Показу Файла"
+
+#: ../../portable/app.py:1840
+#, python-format
+msgid "The file \"%s\" was deleted from outside Miro."
+msgstr "Файл \"%s\" був видалений не Miro."
+
+#: ../../portable/app.py:2011
+msgid " - Invalid URL"
+msgstr ""
+" - ‚ÄìŒ©‚Äì¬µ‚Äì√∏‚Äî√Ñ‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äì¬™‚Äî√ ‚ÄìŒ©‚Äî√£‚ÄìœÄ URL"
+
+#: ../../portable/app.py:2012
+msgid ""
+"The address you entered is not a valid URL.\n"
+"Please double check and try again.\n"
+"\n"
+msgstr ""
+"‚Äì√™‚Äì¬ ‚Äî√Ñ‚Äì¬µ‚Äî√Ö, ‚Äì‚à´‚Äì√¶‚Äî√á‚Äì√¶‚Äî√Ñ‚Äî√£‚ÄìœÄ ‚Äì‚â§‚Äî√£ "
+"‚Äì‚â§‚Äì‚â§‚Äì¬µ‚Äì¬™‚Äì‚àè, "
+"‚ÄìŒ©‚Äì¬µ‚Äì√∏‚Äî√Ñ‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äì¬™‚Äî√ ‚ÄìŒ©‚Äî√£‚ÄìœÄ.\n"
+"‚Äì√º‚Äî√Ñ‚Äì√¶‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚Äî√ ‚Äî√á‚Äì¬µ ‚Äì‚àè "
+"‚Äì√∏‚Äì√¶‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì¬±‚ÄìœÄ‚Äî√á‚Äì¬µ ‚Äì√¶‚Äì√∏‚Äî√®‚Äî√á‚Äî√ .\n"
+"\n"
+
+#: ../../portable/app.py:2036
+msgid "$shortAppName - Add Channel"
+msgstr "$shortAppName - Додати Канал"
+
+#: ../../portable/app.py:2036
+msgid "Enter the URL of the channel to add"
+msgstr ""
+"‚Äì√≠‚Äì‚â§‚Äì¬µ‚Äì¬ ‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äì‚àû‚Äì¬ ‚Äî√Ñ‚Äì¬µ‚Äî√Ö "
+"‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì√¶‚Äì‚â ‚Äì√¶ ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû"
+
+#: ../../portable/app.py:2057
+msgid "$shortAppName - Add Miro Guide"
+msgstr "$shortAppName - Додати Miro Програму"
+
+#: ../../portable/app.py:2057
+msgid "Enter the URL of the Miro Guide to add"
+msgstr "Зазначте адресу ресурсу (URL) для довання в перелік ресурсів Miro"
+
+#: ../../portable/app.py:2063
+msgid "$shortAppName - Download Video"
+msgstr "$shortAppName - Заватаження відео"
+
+#: ../../portable/app.py:2063
+msgid "Enter the URL of the video to download"
+msgstr "Зазначте адресу (URL) відео файлу для завантаження"
+
+#: ../../portable/app.py:2420
+msgid "Starter Channels"
+msgstr "Початкові Канали"
+
+#: ../../portable/app.py:2437
+msgid "Example Playlist"
+msgstr ""
+"‚Äì√º‚Äî√Ñ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚Äî√Ñ "
+"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì‚àû"
+
+#: ../../portable/app.py:2463
+msgid "Custom Channels"
+msgstr ""
+"‚Äì√º‚Äì√¶‚Äì¬™‚Äî√ ‚Äì‚àë‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äì¬µ‚Äì¬™‚Äî√ "
+"‚Äî√Ö‚Äì‚à´‚Äì‚àè‚ÄìœÄ ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™"
+
+#: ../../portable/app.py:2463
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr "Ви використовуєте версію $longAppName зі зміненим переліком каналів."
+
+#: ../../portable/app.py:2478
+msgid "Error Changing Movies Directory"
+msgstr "Помилка при зміні теки для фільмів"
+
+#: ../../portable/app.py:2479
+msgid ""
+"You don't have permission to write to the directory you selected.  Miro will "
+"continue to use the old videos directory."
+msgstr ""
+"Ви не маєте права на запис у вказаній теці. Miro й надалі використовуватиме "
+"поточну теку."
+
+#: ../../portable/app.py:2508
+msgid "Error Saving Video"
+msgstr "Помилка при збереженні відео"
+
+#: ../../portable/app.py:2510
+#, python-format
+msgid ""
+"An error occured while trying to save %s.  Please check that the file has "
+"not been deleted and try again."
+msgstr ""
+"Виникла помилка при спробі зберегти %s. Будь ласка перевірте що зазначений "
+"файл не був знищений та спробуйте ще."
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:1
+msgid "(Changes won't go into effect until you restart Miro)"
+msgstr "(Зміни набудуть сили після перезапуску Miro)"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:2
+msgid ""
+"1 day\n"
+"3 days\n"
+"6 days\n"
+"10 days\n"
+"1 month\n"
+"Never"
+msgstr ""
+"1 ‚Äì¬ ‚Äì¬µ‚ÄìŒ©‚Äî√ \n"
+"3 ‚Äì¬ ‚ÄìŒ©‚Äî√®\n"
+"6 ‚Äì¬ ‚ÄìŒ©‚Äì¬µ‚ÄìœÄ\n"
+"10 ‚Äì¬ ‚ÄìŒ©‚Äì¬µ‚ÄìœÄ\n"
+"1 ‚Äì¬∫‚Äì¬µ‚Äî√Ö‚Äî√®‚Äî√ú\n"
+"‚Äì√π‚Äì‚àè‚Äì‚à´‚Äì√¶‚Äì‚â ‚Äì¬ ‚Äì‚àû"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:8
+msgid "<b>BitTorrent</b>"
+msgstr "<b>BitTorrent</b>"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:9
+msgid "<b>Searching for Videos</b>"
+msgstr "<b>‚Äì√º‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´ ‚Äì√≠‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶</b>"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:10
+msgid "<b>Would you like Miro to look for video files on your computer?</b>"
+msgstr "<b>Бажаєте щоб Miro знайшов відео на вашому компьютері?</b>"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:11
+msgid "<b>Would you like to run Miro when your computer starts up?</b>"
+msgstr "<b>Бажаєте щоб Miro стартувала разом з компьютером?</b>"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:12
+msgid ""
+"<b>You're done!</b>\n"
+"\n"
+"Setup is complete -- now you can find some channels and start watching.\n"
+"\n"
+"<b>Don't Wait:</b> Miro is different than watching webpage videos -- "
+"publishers can offer big, high quality videos.  So don't sit around waiting "
+"for videos: start some downloads and check back later.\n"
+"\n"
+"<b>Leave it On:</b> Miro regularly checks channels for new videos and "
+"downloads in the background.  Leaving it running means you'll have new "
+"videos when you're ready to watch.\n"
+"\n"
+"<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an "
+"'expiration' system that helps clean out older videos to make room for new "
+"videos.  You can always keep a video permanently by clicking 'save' and you "
+"can set a channel's settings to save videos automatically.\n"
+"\n"
+"<b>Go Big:</b> The button to the right of the play button shows videos "
+"fullscreen.\n"
+"\n"
+"<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
+"of them are free.  Just click 'ADD' to watch a channel."
+msgstr ""
+"<b>Ви закінчили!</b>\n"
+"\n"
+"Установку закінчено -- тепер ви можете знайти та подивитись канали.\n"
+"\n"
+"<b>Не чекай:</b> Miro відрізняється від перегляду на веб-сторінках -- "
+"публікатори можуть пропонувати якісні відео. Так не чекай: починай прямо "
+"зараз.\n"
+"\n"
+"<b>Leave it On:</b> Miro regularly checks channels for new videos and "
+"downloads in the background. Leaving it running means you'll have new videos "
+"when you're ready to watch.\n"
+"\n"
+"<b>Не хвилюйся за дисковий простір:</b> Як TiVo, Miro піклується про старе "
+"записане автоматично та переписує на новий матеріал.\n"
+"\n"
+"<b>Зроби більше:</b> Кнопка після кнопки програвання надасть можливості "
+"дивитись на весь екран.\n"
+"\n"
+"<b>Знайди відео:</b> Програма Miro має сотні ТБ каналів та всі бескоштовно. "
+"Натисни 'Додати' для перегляду каналів."
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:26
+msgid "By default, videos _expire after"
+msgstr "По умовчанню відео _недійсне після"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:27
+msgid "C_hannel:"
+msgstr "‚Äì√∂‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:28
+msgid "C_hannels"
+msgstr "К_анали"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:29
+msgid "C_reate Channel"
+msgstr "‚Äì¬∞‚Äì√¶‚Äì‚àë‚Äì¬ ‚Äì‚àû‚Äî√á‚Äî√  ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:30
+msgid "Check Channels for _new content"
+msgstr "Перевірити Канали на по_новлення"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:31
+msgid "Disk _Space"
+msgstr "Дисковий _Простір"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:33
+msgid "Don't start a download _if it leaves less than"
+msgstr "Не починай скачування _якщо залишилось менше як"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:34
+msgid "Download at _most"
+msgstr "Скачати біль_шість"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:35
+msgid ""
+"Every 30 minutes\n"
+"Every hour\n"
+"Manually"
+msgstr ""
+"‚Äì√∂‚Äì‚àû‚Äì‚àÇ‚Äì¬ ‚Äî√£‚Äì¬µ 30 ‚Äì¬∫‚Äì‚àè‚ÄìŒ©‚Äî√â‚Äî√á\n"
+"‚Äì√∂‚Äì‚àû‚Äì‚àÇ‚Äì¬ ‚Äî√£‚ÄìœÄ ‚Äî√°‚Äì‚àû‚Äî√Ö\n"
+"‚Äì√≠‚Äî√Ñ‚Äî√â‚Äî√°‚ÄìŒ©‚Äî√â‚Äî√©"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:38
+msgid "G_B free"
+msgstr "Г_Б вільно"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:39
+msgid "Go"
+msgstr "Go"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
+msgid "In This:"
+msgstr "В Цьому:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
+msgid ""
+"Miro can find all the videos on your computer to help you organize your "
+"collection."
+msgstr ""
+"Miro може допомогти вам упорядкувати вашу колекцію відео здійснівши повний "
+"пошук на вашому компьютері."
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
+msgid "Play _videos one after another"
+msgstr "Перегляд _відео сюжетів один за одним"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
+msgid "Preferences"
+msgstr "‚Äì√º‚Äì‚àû‚Äî√Ñ‚Äì‚àû‚Äì¬∫‚Äì¬µ‚Äî√á‚Äî√Ñ‚Äî√£"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:48
+msgid "Restrict to my full _home folder"
+msgstr ""
+"‚Äì√ª‚Äì‚â ‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√°‚Äì‚àè‚Äî√á‚Äî√  ‚Äì¬∫‚Äì√¶‚Äì‚àè‚Äì¬∫ "
+"‚Äì¬ ‚Äì√¶‚Äì¬∫‚Äì‚àû‚Äî√†‚ÄìŒ©‚Äì‚àè‚Äì¬∫ "
+"‚Äì‚à´‚Äì‚àû‚Äî√á‚Äì‚àû‚Äì¬™‚Äì√¶‚Äì‚â ‚Äì√¶‚Äì¬∫"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:49
+msgid "S_top after each video"
+msgstr "_Перериватись після перегляду кожного сюжету"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
+msgid "S_tore downloaded videos in this folder:"
+msgstr "_Зберігати завантажені сюжети в цій теці"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
+msgid "Search _Engine:"
+msgstr "‚Äì√º‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì‚â§‚Äì‚àè‚Äì‚à´:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:52
+msgid "Search _custom folder:"
+msgstr ""
+"‚Äì√º‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´ ‚Äì√∏‚Äì√¶‚Äì¬™‚Äî√ "
+"‚Äì‚àë‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äì¬µ‚Äì¬™‚Äî√ ‚Äî√Ö‚Äì‚à´‚Äì√¶‚ÄìœÄ "
+"‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àè:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:53
+msgid "Select Movies Directory"
+msgstr ""
+"‚Äì√≠‚Äî√£‚Äì¬ ‚Äì¬µ‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äî√â "
+"‚Äî√ë‚Äì‚àè‚Äì¬™‚Äî√ ‚Äì¬∫‚Äì√¶‚Äì‚â§"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:54
+msgid "Select custom search directory"
+msgstr ""
+"‚Äì√≠‚Äî√£‚Äì¬ ‚Äì¬µ‚Äì¬™‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√∏‚Äì√¶‚Äì¬™‚Äî√ "
+"‚Äì‚àë‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äì¬µ‚Äì¬™‚Äî√ ‚Äî√Ö‚Äì‚à´‚Äì‚àè‚Äì¬µ "
+"‚Äì√∏‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì‚â§‚Äî√£‚Äì¬µ ‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì‚àè"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:55
+msgid ""
+"The next few screens will help you set up Miro so that it works best for "
+"you.  Here's the first question."
+msgstr ""
+"Декілька кроків допоможуть вам налаштувати роботу Miro зручнішою для вас. "
+"Ось перше питання."
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:56
+msgid "To a_void slowdowns, limit upstream to"
+msgstr ""
+"Для уникнення зниження швидкості завантаження, обмежети швидкість надсилання "
+"даних до"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:57
+msgid "Volume:"
+msgstr "‚Äì√¨‚Äî√Ñ‚Äì√¶‚Äì¬∫‚Äì‚à´‚Äì√¶‚Äî√Ö‚Äî√á‚Äî√ :"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:58
+msgid ""
+"We recommend that you allow Miro to launch when your computer starts up.  "
+"This way, videos that haven't finished downloading can finish and new videos "
+"on your channels will be ready when you want to watch."
+msgstr ""
+"Ми радимо надати можливість Miro запускатись разом з операційної системою. "
+"Це дозволить Miro буди повністю готовим, коли Ви захочете ним скористатись. "
+"Так, відео сюжети, які не були повністю завантажені минулого разу будуть "
+"довантаженні, а також, буде оновленена інформація з обраних вами каналів."
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
+msgid ""
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
+"download videos from your favorite channels, watch new videos one after the "
+"other, download torrents, recommend videos to friends, and lots more."
+msgstr ""
+"Ласкаво просимо до Інтернет телебачення. Miro дасть вам змогу зробити багато "
+"дій: автоматично завантажити сюжети з ваших улюблених каналів, переглянути "
+"нові сюжети один за одним, завантажити з торент-мереж, порадити сюжети "
+"друзям, да багато іншого."
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
+msgid ""
+"You've selected a new folder to download movies to.  Should Miro migrate "
+"your existing downloads there?  (Currently dowloading movies will not be "
+"moved until they finish.)"
+msgstr ""
+"Ви обрали нову теку для завантаження сюжетів. Чи має Miro перемістити вже "
+"завантажені вайти у цю теку? (Сюжети, що завантажуються зараз не будуть "
+"переміщуватись до заваршення завантаження.)"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
+msgid "_Add Folder"
+msgstr "_Додати папку"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
+msgid "_Automatically run Miro when I log in"
+msgstr "_Автоматично запустити Miro при вході"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
+msgid "_Bit Torrent uses ports between"
+msgstr "_Бітторент використовує порти між"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
+msgid "_Downloads"
+msgstr "_Скачки"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
+msgid "_Folders"
+msgstr "_Папки"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
+msgid "_General"
+msgstr "_Загальне"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
+msgid "_KB/s when my computer is active"
+msgstr "_КБ/с, коли мій компьютер використовується"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
+msgid "_Playback"
+msgstr "_Програввання"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
+msgid "_Resume playback of videos from the point where they were stopped"
+msgstr "Про_довжити програввання відео з місця зупинки"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:71
+msgid "_Search"
+msgstr "‚Äì√º‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
+msgid "_Search For:"
+msgstr "_‚Äì√≤‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√á‚Äî√ :"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
+msgid "_URL"
+msgstr "_‚Äì√™‚Äì¬ ‚Äî√Ñ‚Äì¬µ‚Äî√Ö"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
+msgid "_Warn me when I attempt to quit with downloads in progress"
+msgstr "П_опередити мене коли я намагаюсь вийти при скачуванні"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
+msgid ""
+"_Watch for new videos in these folders and include them in the Library"
+msgstr ""
+"_Відслідковувати вміст теки та додавати знайдені нові відео до Бібліотеки"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
+msgid "_and"
+msgstr "_та"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
+msgid "videos at once"
+msgstr "відео сюжети одразу"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
+msgid ""
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$publisher.  $longAppName and the $longAppName logo are trademarks of "
+"$publisher."
+msgstr ""
+"$longAppName версія $appVersion ($appRevision); права інтелектуальної "
+"власності (c) 2005-2007 $publisher.  $longAppName та $longAppName є "
+"зареєстрованими торговими марками $publisher."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
+msgid "About $longAppName"
+msgstr "‚Äì√ª $longAppName"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
+msgid "Add Channel"
+msgstr ""
+"‚Äì√Æ‚Äì√¶‚Äì¬±‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√  ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
+msgid "Please enter the URL of the channel you'd like to add."
+msgstr ""
+"‚Äì√≠‚Äì‚â§‚Äì¬µ‚Äì¬ ‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äì‚àû‚Äì¬ ‚Äî√Ñ‚Äì¬µ‚Äî√Ö "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû, ‚Äì‚à´‚Äì√¶‚Äî√á‚Äì√¶‚Äî√Ñ‚Äî√£‚ÄìœÄ "
+"‚Äì√≠‚Äî√£ ‚Äî√ñ‚Äì√¶‚Äî√á‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äì¬ "
+"‚Äì√¶‚Äì¬±‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√ ."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
+msgid "Copy log to clipboard"
+msgstr ""
+"‚Äì¬∞‚Äì‚à´‚Äì√¶‚Äì√∏‚Äì‚àè‚Äî√Ñ‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äî√Ö‚Äì√¶‚Äì√¶‚Äì¬±‚Äî√¢‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì¬µ ‚Äì‚â§ "
+"‚Äì¬±‚Äî√â‚Äî√ë‚Äì¬µ‚Äî√Ñ ‚Äì√¶‚Äì¬±‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àû"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
+msgid "Open up the bug tracker"
+msgstr ""
+"‚Äì√ª‚Äî√á‚Äì‚à´‚Äî√Ñ‚Äî√£‚Äî√á‚Äî√  ‚Äî√Ö‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì¬µ‚Äì¬∫‚Äî√â "
+"‚Äì√¶‚Äî√á‚Äî√Ö‚Äì¬™‚Äì¬µ‚Äì‚àÇ‚Äì‚àè‚Äì‚â§‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√® "
+"‚Äì¬±‚Äì‚àû‚Äì‚â ‚Äì√¶‚Äì‚â§"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
+msgid ""
+"Please help us fix it. Copy and paste all the\n"
+"information into our bug tracker and tell us what you were doing when the\n"
+"problem occurred."
+msgstr ""
+"Допоможіть нам виправити її. Скопіюйте всю цю\n"
+"інформацію до реєстратора помилок та розражіть нам, що ви робили, коли\n"
+"ця проблема виникла."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
+msgid ""
+"Then, please restart $longAppName (or you may keep getting related errors). "
+"Sorry for the inconvenience. $longAppName is still in beta, but with your "
+"help we're fixing problems fast!"
+msgstr ""
+"Після чого, будь ласка, перезапустіть $longAppName (інакше ми можете надалі "
+"стикатись с пов'язаними помилками). Вибачте за незручності. $longAppName "
+"наразі у тестовій версії, але завдяки вашій підтримці ми виправимо помилки "
+"швидко!"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
+msgid "You found a bug in $longAppName!"
+msgstr "Ви знайшли програмну помилку в $longAppName!"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
+msgid " "
+msgstr " "
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
+msgid "'"
+msgstr "'"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny."
+msgstr ""
+"‚Äì√π‚Äì√¶ ‚Äì¬∫‚Äî√£ "
+"‚Äì√∏‚Äì√¶‚Äî√Ö‚Äî√á‚Äì‚àû‚Äî√Ñ‚Äì‚àû‚Äì¬µ‚Äì¬∫‚Äî√Ö‚Äî√® "
+"‚ÄìŒ©‚Äì‚àû‚ÄìœÄ‚Äî√á‚Äì‚àè ‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äî√£. ‚Äì‚â†‚Äî√á‚Äì√¶ "
+"‚Äì¬∫‚Äì√¶‚Äì‚àÇ‚Äì¬µ‚Äî√á ‚Äì‚àë‚Äì‚àû‚ÄìŒ©‚Äî√®‚Äî√á‚Äî√  "
+"‚Äì¬±‚Äì√¶‚Äì¬™‚Äî√ ‚Äî√†‚Äì¬µ ‚Äì‚â§‚Äî√Ñ‚Äì¬µ‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àè, "
+"‚Äî√°‚Äì¬µ‚Äì¬∫ ‚Äì√¶‚Äì¬±‚Äî√£‚Äî√°‚ÄìŒ©‚Äì√¶, ‚Äì‚àè "
+"‚Äì√¶‚Äì√∏‚Äì‚àè‚Äî√Ö‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√® ‚Äì¬∫‚Äì√¶‚Äì‚â ‚Äî√â‚Äî√á "
+"‚Äì¬±‚Äî√£‚Äî√á‚Äî√  "
+"‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äî√£."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
+msgid "Please contact the publishers of"
+msgstr ""
+"‚Äì¬∞‚Äì‚â§‚Äî√®‚Äì‚àÇ‚Äì‚àè‚Äî√á‚Äì¬µ‚Äî√Ö‚Äî√  ‚Äî√Ö ‚Äì‚àè‚Äì‚àë‚Äì¬ "
+"‚Äì‚àû‚Äî√á‚Äì¬µ‚Äì¬™‚Äì¬µ‚Äì¬∫"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
+msgid ""
+"and ask if they can supply a feed in a format that will work with "
+"$shortAppName."
+msgstr ""
+"та спитайте, чи можуть вони надати інформаційний потік (feed) у форматі, що "
+"будет працювати з $shortAppName."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
+msgid "$longAppName"
+msgstr "$longAppName"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4
+msgid ""
+"You've selected a new folder to download movies to.  Should $shortAppName "
+"migrate your existing downloads there?(Currently dowloading movies will not "
+"be moved until they finish)"
+msgstr ""
+"Ви обрали нову теку для завантаження фільмів, сюжетів. Чи має $shortAppName "
+"перемістити вже завантаженні матеріали до зазначеної теки? (Сюжети-фільми, "
+"що зараз завантажуються не будуть переміщуватись до завершення завантаження)"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
+msgid "Channel requires authentication"
+msgstr ""
+"‚Äì√Æ‚Äì¬™‚Äî√® ‚Äì‚â§‚Äî√ñ‚Äì√¶‚Äì¬ ‚Äì‚àû ‚ÄìŒ©‚Äì‚àû "
+"‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™ ‚ÄìŒ©‚Äì¬µ‚Äì√¶‚Äì¬±‚Äî√ñ‚Äì√¶‚Äì¬ "
+"‚Äì‚àè‚Äì¬∫‚Äì√¶ "
+"‚Äì‚àû‚Äì‚â§‚Äî√á‚Äì√¶‚Äî√Ñ‚Äì‚àè‚Äì‚àë‚Äì‚àè‚Äî√Ñ‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√ "
+"‚Äî√Ö‚Äî√®"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2
+msgid ""
+"Please enter the username and password given to you by this channel's "
+"publisher."
+msgstr ""
+"‚Äì√≠‚Äì‚â§‚Äì¬µ‚Äì¬ ‚Äì‚àè‚Äî√á‚Äì¬µ ‚Äì‚àè‚Äì¬∫‚Äî√® ‚Äì‚àè "
+"‚Äì√∏‚Äì‚àû‚Äî√Ñ‚Äì√¶‚Äì¬™‚Äî√ , ‚Äì‚â§‚Äî√£‚Äì¬ ‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚ÄìœÄ "
+"‚Äì√∏‚Äì√¶‚Äî√Ö‚Äî√á‚Äì‚àû‚Äì‚â§‚Äî√¢‚Äì‚àè‚Äì‚à´‚Äì√¶‚Äì¬∫ "
+"‚Äî√ß‚Äî√á‚Äì√¶‚Äì‚â ‚Äì√¶ ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì‚àû."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
+msgid ""
+"(WARNING: Changes won't go into effect until you restart $longAppName.)"
+msgstr "(УВАГА: Зміни стануть чинними лише після перезапуску $longAppName.)"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
+msgid "Add Folder..."
+msgstr "Додати Папку..."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
+msgid "Automatically run $longAppName when I login."
+msgstr "Самостійно запускати $longAppName коли я входжу до системи."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
+msgid "BitTorrent"
+msgstr "BitTorrent"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
+msgid "By default, videos expire after"
+msgstr ""
+"‚Äì√º‚Äì√¶ ‚Äî√â‚Äì¬∫‚Äì√¶‚Äì¬™‚Äî√°‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√©, ‚Äì‚â§‚Äì‚àè‚Äì¬ "
+"‚Äì¬µ‚Äì√¶ ‚Äî√â‚Äî√Ö‚Äî√á‚Äì‚àû‚Äî√Ñ‚Äì¬µ‚Äì‚â§‚Äì‚àû‚Äì¬µ‚Äî√á "
+"‚Äî√°‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àë"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
+msgid "Check channels for new content"
+msgstr "Перевірити канали на наявність нових сюжетів"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
+msgid "Close to tray so that downloads can continue."
+msgstr "Згорнути до іконки, щоб завантаження продовжувались"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
+msgid "Every 30 minutes"
+msgstr "Що 30 хвилин"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+msgid "Every hour"
+msgstr "Щогодинни"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
+msgid "Folder"
+msgstr "Папка"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
+msgid "Manually"
+msgstr "Власноруч"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
+msgid "Options"
+msgstr "Налаштування"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
+msgid "Play one video, then stop."
+msgstr "Показати лише це відео"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
+msgid "Quit Miro completely."
+msgstr "Вийти з Miro повністю"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+msgid ""
+"Remember where I stopped watching a video and continue playing from that "
+"point."
+msgstr ""
+"Запам'ятовувати де я зупинив перегляд сюжету та поновлювати перегляд з цього "
+"місця"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
+msgid "Show as a Channel"
+msgstr "Відображувати як Канал"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
+msgid "Store downloaded videos in this folder:"
+msgstr "Зберігати завантажені відео в цій теці"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
+msgid ""
+"To avoid slowdowns, limit upstream bandwith when my computer is active."
+msgstr ""
+"Для уникнення сповільнення завантажень, обмежувати швидкість надсилання "
+"даних, коли мій компьютер використовується"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
+msgid "Upstream limit (KB/s)"
+msgstr "Обмеження швидкості надсилання даних (КБ/с)"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
+msgid "Use BitTorrent ports between"
+msgstr "Використовуйте порти BigTorrent між"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
+msgid ""
+"WARNING: This setting will not go into effect until you restart $longAppName."
+msgstr ""
+"УВАГА: Ці налаштування набудуть чинності лише після перезапуску $longAppName."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
+msgid "Warn me when I attempt to quit with downloads in progress."
+msgstr ""
+"Попереджуй про незавершенні завантаження, коли я збираюсь вийти з програми"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+msgid "Watch for new videos in these folders and include them in my Library."
+msgstr ""
+"Відслідковувати вміст зазначених тек та додавати нові сюжети до моєї "
+"Бібліотеки"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
+msgid "When I click the red close button:"
+msgstr "Коли я натискаю на червону кнопку закриття:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
+msgid "and"
+msgstr "‚Äì‚àè"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
+msgid "Channel:"
+msgstr "‚Äì√∂‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
+msgid "Search Engine:"
+msgstr ""
+"‚Äì√º‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√® "
+"‚Äì¬∫‚Äì‚àû‚Äî√†‚Äì‚àè‚ÄìŒ©‚Äì‚àû:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
+msgid "Search For:"
+msgstr "‚Äì√≤‚Äî√Ö‚Äì‚à´‚Äì‚àû‚Äî√á‚Äî√ :"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
+msgid "URL:"
+msgstr "‚Äì√™‚Äì¬ ‚Äî√Ñ‚Äì¬µ‚Äî√Ö:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
+msgid ""
+"$longAppName can find all the videos on your computer to help you organize "
+"your collection."
+msgstr ""
+"$longAppName може допомогти в упорядкуванні Вашої колекції відео матеріалів "
+"здійснивши їхній повний пошук на Вашому компьютері."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
+msgid ""
+"$longAppName regularly checks channels for new videos and downloads in the "
+"background.  Leaving it running means you'll have new videos when you're "
+"ready to watch."
+msgstr ""
+"$longAppName час від часу перевіряє канали на наявність нових сюжетів та "
+"завантажує їх у фоновому режимі. Отже, постійна робота програми дасть вам "
+"змогу одразу як у вас буде нагода переглянути нові сюжети."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
+msgid "$shortAppName First Time Setup"
+msgstr "$shortAppName Початкові налаштування"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
+msgid "Cancel Search"
+msgstr ""
+"‚Äì√ª‚Äî√á‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√∏‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
+msgid "Change"
+msgstr "‚Äì√≤‚Äì‚àë‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√á‚Äî√"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46
+msgid "Don't Worry About Disk Space:"
+msgstr ""
+"‚Äì√π‚Äì¬µ ‚Äì¬±‚Äì¬µ‚Äî√Ö‚Äì√∏‚Äì√¶‚Äì‚à´‚Äì√¶‚ÄìœÄ‚Äî√á‚Äì¬µ‚Äî√Ö‚Äî√  "
+"‚Äì√¶ "
+"‚Äì√∏‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àë‚Äì‚àû‚Äì√∏‚Äì√¶‚Äì¬™‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì‚àè "
+"‚Äì‚àÇ‚Äî√´‚Äî√Ö‚Äî√á‚Äì‚à´‚Äì√¶‚Äì‚â ‚Äì√¶ ‚Äì¬ ‚Äì‚àè‚Äî√Ö‚Äì‚à´‚Äì‚àû"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50
+msgid "Find Videos:"
+msgstr "‚Äì√π‚Äì‚àû‚ÄìœÄ‚Äî√á‚Äì‚àè ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
+msgid "Go Big:"
+msgstr ""
+"‚Äì¬∞‚Äì¬∫‚Äì√¶‚Äî√á‚Äì‚àè‚Äî√Ñ‚Äî√á‚Äì¬µ ‚Äì‚â§‚Äì√¶ ‚Äì‚â§‚Äì¬µ‚Äî√Ö‚Äî√  "
+"‚Äî√ß‚Äì‚à´‚Äî√Ñ‚Äì‚àû‚ÄìŒ©:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
+msgid "Leave it On:"
+msgstr ""
+"‚Äì√ª‚Äî√Ö‚Äî√á‚Äì‚àû‚Äì‚â§‚Äì¬™‚Äî√®‚ÄìœÄ‚Äî√á‚Äì¬µ Democracy "
+"‚Äì‚â§‚Äì‚à´‚Äì¬™‚Äî√©‚Äî√°‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äì¬∫:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
+msgid ""
+"Like a TiVo, $longAppName features an 'expiration' system that helps clean "
+"out older videos to make room for new videos.  You can always keep a video "
+"permanently by clicking 'save' and you can set a channel's settings to save "
+"videos automatically."
+msgstr ""
+"Як і TiVo, $longAppName містить систему відслідковування закінчення терміну "
+"дії, що допомагає позбуватись застарілих сюжетів та звільняти місце для "
+"нових. Разом з тим, ви завжди можете зберегти сюжет у себе на компьютері. "
+"Для цього натисніть на кнопку \"Зберегти\", або встановіть для каналу "
+"параметр автоматичного збереження сюжетів."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
+msgid ""
+"Now you can explore the Channel Guide\n"
+"and start watching.  A few tips to get started:"
+msgstr ""
+"‚Äì¬¢‚Äì¬µ‚Äì√∏‚Äì¬µ‚Äî√Ñ‚Äî√  ‚Äì¬∫‚Äì√¶‚Äì‚àÇ‚ÄìŒ©‚Äì√¶ "
+"‚ÄìŒ©‚Äì‚àû‚ÄìœÄ‚Äî√á‚Äì‚àè "
+"‚Äì‚àè‚ÄìŒ©‚Äî√á‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äî√Ö‚ÄìŒ©‚Äì√¶‚Äì¬µ ‚Äì‚â§‚Äì‚àè‚Äì¬ "
+"‚Äì¬µ‚Äì√¶ ‚Äì‚â§ ‚Äì√∏‚Äî√â‚Äî√á‚Äì¬µ‚Äì‚â§‚Äì√¶‚Äì¬ "
+"‚Äì‚àè‚Äî√á‚Äì¬µ‚Äì¬™‚Äì‚àè ‚Äì‚à´‚Äì‚àû‚ÄìŒ©‚Äì‚àû‚Äì¬™‚Äì√¶‚Äì‚â§\n"
+"‚Äì‚àè ‚ÄìŒ©‚Äì‚àû‚Äî√°‚Äì‚àû‚Äî√á‚Äî√  "
+"‚Äî√Ö‚Äì¬∫‚Äì√¶‚Äî√á‚Äî√Ñ‚Äì¬µ‚Äî√á‚Äî√  ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶. "
+"‚Äì√≠‚Äì√¶‚Äî√á ‚ÄìŒ©‚Äì¬µ‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì¬™‚Äî√ ‚Äì‚à´‚Äì√¶ "
+"‚Äî√Ö‚Äì√¶‚Äì‚â§‚Äì¬µ‚Äî√á‚Äì√¶‚Äì‚â§ ‚Äì‚à´‚Äì‚àû‚Äì‚à´ "
+"‚ÄìŒ©‚Äì‚àû‚Äî√°‚Äì‚àû‚Äî√á‚Äî√ :"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
+msgid "Reset Search"
+msgstr ""
+"‚Äì¬∞‚Äì¬±‚Äî√Ñ‚Äì√¶‚Äî√Ö‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√∏‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
+msgid "Restrict to all my personal files."
+msgstr ""
+"‚Äì√ª‚Äì‚â ‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√°‚Äì‚àè‚Äî√á‚Äî√  "
+"‚Äì‚à´‚Äì‚àû‚Äî√á‚Äì‚àû‚Äì¬™‚Äì√¶‚Äì‚â ‚Äì√¶‚Äì¬∫ ‚Äì¬∫‚Äì√¶‚Äì‚àè‚Äî√ñ "
+"‚Äî√ë‚Äì‚àû‚ÄìœÄ‚Äì¬™‚Äì√¶‚Äì‚â§."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
+msgid "Search custom folder:"
+msgstr ""
+"‚Äì√º‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´ ‚Äì‚â§ ‚Äì√∏‚Äì√¶‚Äì¬™‚Äî√ "
+"‚Äì‚àë‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äì¬µ‚Äì¬™‚Äî√ ‚Äî√Ö‚Äì‚à´‚Äì√¶‚ÄìœÄ "
+"‚Äì√∏‚Äì‚àû‚Äì√∏‚Äì‚à´‚Äì¬µ:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
+msgid ""
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
+"them are free.  Just click 'ADD' to watch a channel."
+msgstr ""
+"База каналів $shortAppName містить сотні інтернет відео каналів; усі вони "
+"безкоштовні. Лишень натисніть 'Додати' для перегляду уподобаного каналу."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
+msgid "The button to the right of the play button shows videos fullscreen."
+msgstr ""
+"‚Äì√∂‚ÄìŒ©‚Äì√¶‚Äì√∏‚Äì‚à´‚Äì‚àû ‚Äî√Ö ‚Äì√∏‚Äî√Ñ‚Äì‚àû‚Äì‚â§‚Äì‚àû "
+"‚Äì√¶‚Äî√á ‚Äì‚à´‚ÄìŒ©‚Äì√¶‚Äì√∏‚Äì‚à´‚Äì‚àè "
+"‚Äì‚â§‚Äì√¶‚Äî√Ö‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äì‚àë‚Äì‚â§‚Äì¬µ‚Äì¬ "
+"‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√® "
+"‚Äì√∏‚Äì√¶‚Äì‚à´‚Äì‚àû‚Äì‚àë‚Äî√£‚Äì‚â§‚Äì‚àû‚Äì¬µ‚Äî√á ‚Äì‚â§‚Äì‚àè‚Äì¬ "
+"‚Äì¬µ‚Äì√¶ ‚ÄìŒ©‚Äì‚àû ‚Äì‚â§‚Äì¬µ‚Äî√Ö‚Äî√  ‚Äî√ß‚Äì‚à´‚Äî√Ñ‚Äì‚àû‚ÄìŒ©."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30
+msgid ""
+"The next few screens will help you set up $longAppName so that it works best "
+"for you."
+msgstr ""
+"‚Äì¬∞‚Äì¬™‚Äì¬µ‚Äì¬ ‚Äî√â‚Äî√©‚Äî√¢‚Äì‚àè‚Äì¬µ "
+"‚ÄìŒ©‚Äì¬µ‚Äî√Ö‚Äì‚à´‚Äì√¶‚Äì¬™‚Äî√ ‚Äì‚à´‚Äì√¶ "
+"‚Äî√ß‚Äì‚à´‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚Äì√¶‚Äì‚â§ ‚Äì√∏‚Äì√¶‚Äì‚â ‚Äî√â‚Äî√á "
+"‚Äì‚â§‚Äì‚àû‚Äì¬∫ ‚ÄìŒ©‚Äì‚àû‚Äî√Ö‚Äî√á‚Äî√Ñ‚Äì√¶‚Äì‚àè‚Äî√á‚Äî√  "
+"$longAppName, ‚Äî√°‚Äî√á‚Äì√¶‚Äì¬±‚Äî√£ ‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚â "
+"‚Äî√Ñ‚Äì‚àû‚Äì¬∫‚Äì¬∫‚Äì‚àû ‚Äì¬™‚Äî√â‚Äî√°‚Äî√†‚Äì¬µ "
+"‚Äî√Ñ‚Äì‚àû‚Äì¬±‚Äì√¶‚Äî√á‚Äì‚àû‚Äì¬™‚Äì‚àû ‚Äì¬ ‚Äì¬™‚Äî√® "
+"‚Äì‚â§‚Äì‚àû‚Äî√Ö."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
+msgid ""
+"We recommend that you have $longAppName launch when your computer starts up. "
+" This way, videos in progress can finish downloading and new videos can be "
+"downloaded in the background, ready when you want to watch."
+msgstr ""
+"Ми рекомендуємо вам запускати $longAppName на початку роботи компьютера. Це "
+"дозволить довести до кінця незавершені завантаження відео, а нові відео "
+"можуть бути завантаженні у фоновому режимі. Отже, вони вже будуть наявні, "
+"коли ви захочете їх переглянути."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
+msgid "Would you like $longAppName to look for video files on your computer?"
+msgstr ""
+"Чи бажаєте, щоб $longAppName здійснив пошук відое файлів на вашому "
+"компьютері?"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
+msgid "Would you like to run $shortAppName on startup?"
+msgstr "Чи бажаєте запускати $shortAppName на початку роботи системи?"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
+msgid "You're done!"
+msgstr "‚Äì√∂‚Äì√¶‚ÄìŒ©‚Äì¬µ‚Äî√ú!"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
+msgid "Release Notes:"
+msgstr "Примітки до випуску:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
+msgid "Question"
+msgstr "‚Äì√≠‚Äì√¶‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äî√Ö"

@@ -4,16 +4,15 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-11-12 10:40-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-01-02 08:13-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:77 */
-"Cancel" = "Storno";
+"Cancel" = "Zrušiť";
 
 "OK" = "OK";
 
 /* File: ../../portable/dialogs.py:76 */
-/* Flag: untranslated */
-"Ok" = "Ok";
+"Ok" = "OK";
 
 /* Flag: untranslated */
 "$log" = "$log";
@@ -30,7 +29,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "The fall of $shortAppName??" = "The fall of $shortAppName??";
 
-"About Miro" = "O programe Miro";
+"About Miro" = "O aplikácii Miro";
 
 "Add Channel..." = "Pridať kanál...";
 
@@ -59,135 +58,93 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/dialogs.py:96 */
 "Delete" = "Zmazať";
 
-/* Flag: untranslated */
-"Donate" = "Donate";
+"Donate" = "Prispieť";
 
-/* Flag: untranslated */
-"Download Video..." = "Download Video...";
+"Download Video..." = "Stiehnuť video...";
 
-/* Flag: untranslated */
-"Edit" = "Edit";
+"Edit" = "Upraviť";
 
-/* Flag: untranslated */
-"Export Channels (OPML)..." = "Export Channels (OPML)...";
+"Export Channels (OPML)..." = "Exportovať kanály (OPML)...";
 
-/* Flag: untranslated */
-"File" = "File";
+"File" = "Súbor";
 
-/* Flag: untranslated */
-"Full Screen" = "Full Screen";
+"Full Screen" = "Celá obrazovka";
 
-/* Flag: untranslated */
-"Help" = "Help";
+"Help" = "Pomocník";
 
-/* Flag: untranslated */
-"Hide Miro" = "Hide Miro";
+"Hide Miro" = "Skryť Miro";
 
-/* Flag: untranslated */
-"Hide Others" = "Hide Others";
+"Hide Others" = "Skryť ostatné";
 
-/* Flag: untranslated */
-"Import Channels (OPML)..." = "Import Channels (OPML)...";
+"Import Channels (OPML)..." = "Importovať kanály (OPML)...";
 
-/* Flag: untranslated */
-"Main Window" = "Main Window";
+"Main Window" = "Hlavné okno";
 
-/* Flag: untranslated */
-"MainMenu" = "MainMenu";
+"MainMenu" = "HlavnáPonuka";
 
-/* Flag: untranslated */
-"Minimize" = "Minimize";
+"Minimize" = "Minimalizovať";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
-/* Flag: untranslated */
 "Miro" = "Miro";
 
-/* Flag: untranslated */
-"Miro Help" = "Miro Help";
+"Miro Help" = "Pomocník Miro";
 
-/* Flag: untranslated */
-"New Channel Folder..." = "New Channel Folder...";
+"New Channel Folder..." = "Priečinok Nové kanály...";
 
-/* Flag: untranslated */
-"New Playlist Folder..." = "New Playlist Folder...";
+"New Playlist Folder..." = "Priečinok Nový playlist...";
 
-/* Flag: untranslated */
-"New Playlist..." = "New Playlist...";
+"New Playlist..." = "Nový playlist...";
 
-/* Flag: untranslated */
-"New Search Channel..." = "New Search Channel...";
+"New Search Channel..." = "Nový vyhľadávací kanál...";
 
-/* Flag: untranslated */
-"Next Video" = "Next Video";
+"Next Video" = "Ďalšie video";
 
-/* Flag: untranslated */
-"Open Recent" = "Open Recent";
+"Open Recent" = "Otvoriť nedávne";
 
-/* Flag: untranslated */
-"Open..." = "Open...";
+"Open..." = "Otvoriť...";
 
-/* Flag: untranslated */
-"Paste" = "Paste";
+"Paste" = "Prilepiť";
 
 /* File: ../../platform/osx/frontend/Application.py:249 */
-/* Flag: untranslated */
-"Play Video" = "Play Video";
+"Play Video" = "Prehrať video";
 
 /* File: ../../platform/osx/frontend/Preferences.py:69 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-/* Flag: untranslated */
-"Playback" = "Playback";
+"Playback" = "Prehrávanie";
 
-/* Flag: untranslated */
-"Playlists" = "Playlists";
+"Playlists" = "Playlisty";
 
-/* Flag: untranslated */
-"Preferences..." = "Preferences...";
+"Preferences..." = "Nastavenia...";
 
-/* Flag: untranslated */
-"Previous Video" = "Previous Video";
+"Previous Video" = "Predošlé video";
 
-/* Flag: untranslated */
-"Quit Miro" = "Quit Miro";
+"Quit Miro" = "Ukončiť Miro";
 
-/* Flag: untranslated */
-"Remove..." = "Remove...";
+"Remove..." = "Odstrániť...";
 
-/* Flag: untranslated */
-"Rename..." = "Rename...";
+"Rename..." = "Premenovať...";
 
-/* Flag: untranslated */
-"Report a bug" = "Report a bug";
+"Report a bug" = "Ohlásiť chybu";
 
-/* Flag: untranslated */
-"Save Video As..." = "Save Video As...";
+"Save Video As..." = "Uložiť video ako...";
 
-/* Flag: untranslated */
-"Select All" = "Select All";
+"Select All" = "Vybrať všetko";
 
-/* Flag: untranslated */
-"Send This Channel to a Friend" = "Send This Channel to a Friend";
+"Send This Channel to a Friend" = "Poslať tento kanál priateľovi";
 
-/* Flag: untranslated */
-"Services" = "Services";
+"Services" = "Služby";
 
-/* Flag: untranslated */
-"Show All" = "Show All";
+"Show All" = "Zobraziť všetko";
 
-/* Flag: untranslated */
-"Stop Video" = "Stop Video";
+"Stop Video" = "Zastaviť video";
 
-/* Flag: untranslated */
-"Update All Channels" = "Update All Channels";
+"Update All Channels" = "Aktualizovať všetky kanály";
 
-/* Flag: untranslated */
-"Update Channel" = "Update Channel";
+"Update Channel" = "Aktualizovať kanál";
 
-/* Flag: untranslated */
-"Window" = "Window";
+"Window" = "Okno";
 
-/* Flag: untranslated */
-"Zoom" = "Zoom";
+"Zoom" = "Zväčšenie";
 
 /* Flag: untranslated */
 "%channel feed%" = "%channel feed%";
@@ -198,48 +155,36 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "%donation label%" = "%donation label%";
 
-/* Flag: untranslated */
 "-00:00:00" = "-00:00:00";
 
-/* Flag: untranslated */
 "00:00:00" = "00:00:00";
 
 /* Flag: untranslated */
 "Box" = "Box";
 
-/* Flag: untranslated */
-"FullScreen Controls" = "FullScreen Controls";
+"FullScreen Controls" = "Ovládacie prvky na celej obrazovke";
 
 /* File: ../../portable/tabs.py:46 */
-/* Flag: untranslated */
-"Video Search" = "Video Search";
+"Video Search" = "Hľadanie videa";
 
-/* Flag: untranslated */
-"VideoWindow" = "VideoWindow";
+"VideoWindow" = "OknoVidea";
 
 /* Flag: untranslated */
 "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
 
-/* Flag: untranslated */
-"Password:\n" = "Password:\n";
+"Password:\n" = "Heslo:\n";
 
-/* Flag: untranslated */
-"Username and password required" = "Username and password required";
+"Username and password required" = "Je potrebné vyplniť používateľské meno a heslo";
 
-/* Flag: untranslated */
-"Username:\n\n" = "Username:\n\n";
+"Username:\n\n" = "Používateľské meno:\n\n";
 
-/* Flag: untranslated */
-" limit upstream to" = " limit upstream to";
+" limit upstream to" = " obmedziť nahrávanie na";
 
-/* Flag: untranslated */
-"(You must restart Miro for this change to take effect)" = "(You must restart Miro for this change to take effect)";
+"(You must restart Miro for this change to take effect)" = "(Aby sa zmeny prejavili musíte reštartovať Miro)";
 
-/* Flag: untranslated */
-"(You must restart Miro for this change to take effect)\n" = "(You must restart Miro for this change to take effect)\n";
+"(You must restart Miro for this change to take effect)\n" = "(Aby sa zmeny prejavili musíte reštartovať Miro)\n";
 
-/* Flag: untranslated */
-"(movies directory path goes here)" = "(movies directory path goes here)";
+"(movies directory path goes here)" = "(cesta k adresáru filmov)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
 /* Flag: untranslated */

@@ -1,5 +1,4 @@
 <!ENTITY prefs.title "Einstellungen">
-<!ENTITY prefs.restart "(ACHTUNG: Änderungen werden erst nach einem Neustart von $longAppName wirksam.)">
 
 <!ENTITY prefs.run.on.startup "$longAppName automatisch starten, wenn ich mich anmelde">
 <!ENTITY prefs.close_to_tray_start "Wenn ich auf den roten Schließen-Knopf klicke:">
@@ -30,13 +29,12 @@
 <!ENTITY prefs.folder.others.add "Verzeichnis hinzufügen...">
 <!ENTITY prefs.folder.others.remove "Entfernen">
 
-<!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Lade höchstens">
-<!ENTITY prefs.downloads.max.part2 "Videos auf ein Mal.">
+<!ENTITY prefs.downloads "Downloads" >
+<!ENTITY prefs.downloads.max "Don't download more than this many videos at once:">
 
 <!ENTITY prefs.disk.space "Festplatten-Platz">
-<!ENTITY prefs.disk.space.min.part1 "Keine Downloads beginnen, wenn danach weniger Speicherplatz bleibt als">
-<!ENTITY prefs.disk.space.min.part2 "GB frei bleiben.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ACHTUNG: Diese Einstellung wird erst nach einen Neustart von $longAppName wirksam.">
 
 <!ENTITY prefs.videos.expire "Videos werden automatisch gelöscht nach">
@@ -49,7 +47,9 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ACHTUNG: Änderungen werden erst nach einem Neustart von $longAppName wirksam.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Um Geschwindikeitseinbrüche zu vermeiden, limitiere die Upload Bandbreite während mein Computer benutzt wird.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream Limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Benutze BitTorrent Ports zwischen">
-<!ENTITY prefs.torrent.uses.ports.part2 "und">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">

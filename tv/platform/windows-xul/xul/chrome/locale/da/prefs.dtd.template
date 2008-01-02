@@ -1,5 +1,4 @@
 <!ENTITY prefs.title "Valgmuligheder">
-<!ENTITY prefs.restart "ADVARSEL: Ændringer effektueres først når du har genstartet $longAppName).">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "Når jeg klikker på den røde Luk knap:">
@@ -30,13 +29,12 @@
 <!ENTITY prefs.folder.others.add "Tilføj Mappe...">
 <!ENTITY prefs.folder.others.remove "Fjern">
 
-<!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Download højest">
-<!ENTITY prefs.downloads.max.part2 "videoer ad gangen.">
+<!ENTITY prefs.downloads "Downloads" >
+<!ENTITY prefs.downloads.max "Don't download more than this many videos at once:">
 
 <!ENTITY prefs.disk.space "Diskplads">
-<!ENTITY prefs.disk.space.min.part1 "Start ikke download hvis det efterlader mindre end">
-<!ENTITY prefs.disk.space.min.part2 "GB ledig.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ADVARSEL: Denne ændring kræver at genstarter $longAppName.">
 
 <!ENTITY prefs.videos.expire "Som standard udløber videoer efter">
@@ -49,7 +47,9 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "ADVARSEL: Ændringer effektueres først når du har genstartet $longAppName).">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Brug BitTorrent porte mellem">
-<!ENTITY prefs.torrent.uses.ports.part2 "og">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">

@@ -1,0 +1,2 @@
+<!ENTITY about.title         "Par $longAppName">
+<!ENTITY about.body          "$longAppName version $appVersion ($appRevision); autortiesības (c) 2005-2007 $publisher.  $longAppName un $longAppName logo ir $publisher preču zīmes.">

@@ -1,5 +1,4 @@
 <!ENTITY prefs.title "الخيارات">
-<!ENTITY prefs.restart "(تخذير: التغييرات لن تكون مفعّلة حتى تعيد تشغيل $longAppName.)">
 
 <!ENTITY prefs.run.on.startup "تشغيل $longAppName آلياً حين أدخل.">
 <!ENTITY prefs.close_to_tray_start "حين أنقر زر الإغلاق الأحمر:">
@@ -30,13 +29,12 @@
 <!ENTITY prefs.folder.others.add "إضافة ملف...">
 <!ENTITY prefs.folder.others.remove "إزالة">
 
-<!ENTITY prefs.downloads.max "تنزيلات">
-<!ENTITY prefs.downloads.max.part1 "تنزيل على الأغلب">
-<!ENTITY prefs.downloads.max.part2 "مرئية في كل مره.">
+<!ENTITY prefs.downloads "تنزيلات" >
+<!ENTITY prefs.downloads.max "Don't download more than this many videos at once:">
 
 <!ENTITY prefs.disk.space "مساحة القرص">
-<!ENTITY prefs.disk.space.min.part1 "لا تبدأ التحميل إذا بقي أقل من">
-<!ENTITY prefs.disk.space.min.part2 "غيغابايت خاليه">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "تحذير: هذا الإعداد لن يكون مفعّل حتى تعيد تشغيل $longAppName.">
 
 <!ENTITY prefs.videos.expire "تنتهي المرئيات إفتراضياً بعد">
@@ -49,7 +47,9 @@
 
 <!ENTITY prefs.torrent "بت-تورنت">
 <!ENTITY prefs.torrent.restart.warning "(تخذير: التغييرات لن تكون مفعّلة حتى تعيد تشغيل $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "لمنع البطء، حدد حيز نطاق تيار الرفع حين يكون حاسوبي مشغول.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "حدّ تيار الرفع (كيلوبايت بالثانية)">
-<!ENTITY prefs.torrent.uses.ports.part1 "يستخدم بيت-تورنت منافذ بين">
-<!ENTITY prefs.torrent.uses.ports.part2 "و">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">

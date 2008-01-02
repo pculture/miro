@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2007-11-12 13:24+0000\n"
+"X-Launchpad-Export-Date: 2007-12-31 02:05+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -965,22 +965,22 @@ msgid "never"
 msgstr "morse"
 
 #: ../../portable/feed.py:385 ../../portable/item.py:542
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d hours"
 msgstr "%d eurvezh"
 
 #: ../../portable/feed.py:387
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d day"
 msgstr "%d devezh"
 
 #: ../../portable/feed.py:389 ../../portable/item.py:540
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d days"
 msgstr "%d devezh"
 
 #: ../../portable/feed.py:391
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d months"
 msgstr "%d mizvezh"
 
@@ -1181,42 +1181,42 @@ msgid "Describe what you were doing that caused this error"
 msgstr ""
 
 #: ../../portable/util.py:455
-#, fuzzy
+#, fuzzy, python-format
 msgid "%1.1fGB"
 msgstr "%1.1fGB"
 
 #: ../../portable/util.py:457
-#, fuzzy
+#, fuzzy, python-format
 msgid "%dGB"
 msgstr "%dGB"
 
 #: ../../portable/util.py:461
-#, fuzzy
+#, fuzzy, python-format
 msgid "%1.1fMB"
 msgstr "%1.1fMB"
 
 #: ../../portable/util.py:463
-#, fuzzy
+#, fuzzy, python-format
 msgid "%dMB"
 msgstr "%dMB"
 
 #: ../../portable/util.py:467
-#, fuzzy
+#, fuzzy, python-format
 msgid "%1.1fKB"
 msgstr "%1.1fKB"
 
 #: ../../portable/util.py:469
-#, fuzzy
+#, fuzzy, python-format
 msgid "%dKB"
 msgstr "%dKB"
 
 #: ../../portable/util.py:473
-#, fuzzy
+#, fuzzy, python-format
 msgid "%1.1fB"
 msgstr "%1.1fB"
 
 #: ../../portable/util.py:475
-#, fuzzy
+#, fuzzy, python-format
 msgid "%dB"
 msgstr "%dB"
 
@@ -1676,7 +1676,7 @@ msgid ""
 msgstr ""
 
 #: ../../portable/item.py:544
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d minutes"
 msgstr "%d munutenn"
 
@@ -1787,7 +1787,7 @@ msgid "downloading..."
 msgstr ""
 
 #: ../../portable/item.py:1270 ../../portable/item.py:1273
-#, fuzzy
+#, fuzzy, python-format
 msgid "%s remaining"
 msgstr "%s a chom"
 

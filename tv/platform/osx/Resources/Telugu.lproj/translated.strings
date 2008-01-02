@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-11-12 10:41-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-01-02 08:13-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:77 */
 "Cancel" = "వద్దు";
@@ -32,7 +32,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Add Channel..." = "వాహిని చేర్చు...";
 
-"Add Guide..." = "Guide add cheyyumu";
+"Add Guide..." = "గైడుని చేర్చు...";
 
 "Bring All to Front" = "అన్నింటినీ ముందుకి తీసుకురా";
 
@@ -63,8 +63,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Download Video..." = "Download Video...";
 
-/* Flag: untranslated */
-"Edit" = "Edit";
+"Edit" = "సరిదిద్దు";
 
 /* Flag: untranslated */
 "Export Channels (OPML)..." = "Export Channels (OPML)...";
@@ -86,8 +85,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "MainMenu" = "ప్రధాన మెనూ";
 
-/* Flag: untranslated */
-"Minimize" = "Minimize";
+"Minimize" = "చిన్నగించు";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 "Miro" = "మీరో";
@@ -125,13 +123,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Playlists" = "Playlists";
 
-/* Flag: untranslated */
-"Preferences..." = "Preferences...";
+"Preferences..." = "ప్రాధాన్యతలు...";
 
 "Previous Video" = "క్రితం వీడియో";
 
-/* Flag: untranslated */
-"Quit Miro" = "Quit Miro";
+"Quit Miro" = "మీరోని చాలించు";
 
 "Remove..." = "తొలగించు...";
 
@@ -159,8 +155,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Window" = "కిటికీ";
 
-/* Flag: untranslated */
-"Zoom" = "Zoom";
+"Zoom" = "జూమ్";
 
 "%channel feed%" = "%channel feed%";
 
@@ -251,8 +246,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Folder location" = "Folder location";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-/* Flag: untranslated */
-"GB free." = "GB free.";
+"GB free." = "జీబీ ఖాళీ.";
 
 /* Flag: untranslated */
 "KB/s when my computer is active." = "KB/s when my computer is active.";
@@ -311,8 +305,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "manually" = "manually";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
-/* Flag: untranslated */
-"videos at once." = "videos at once.";
+"videos at once." = "వీడియోలు ఒకేసారి.";
 
 "$label$" = "$label$";
 
@@ -413,8 +406,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Error importing modules:\n%s" = "Error importing modules:\n%s";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:66 */
-/* Flag: untranslated */
-"Starting up" = "Starting up";
+"Starting up" = "మొదలవుతూంది";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:273 */
 /* Flag: untranslated */
@@ -511,8 +503,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Select a Directory to view in the Library." = "Select a Directory to view in the Library.";
 
 /* File: ../../platform/osx/frontend/StartupPanel.py:80 */
-/* Flag: untranslated */
-"Finish" = "Finish";
+"Finish" = "ముగించు";
 
 /* File: ../../platform/osx/frontend/StartupPanel.py:139 */
 "Search!" = "వెతుకు!";
@@ -718,8 +709,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Copy URL to clipboard" = "Copy URL to clipboard";
 
 /* File: ../../portable/guide.py:154 */
-/* Flag: untranslated */
-"Miro Guide" = "Miro Guide";
+"Miro Guide" = "మీరో గైడ్";
 
 /* File: ../../portable/extrastrings.py:22 */
 /* File: ../../portable/feed.py:2028 */
@@ -762,8 +752,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Enter a name for the new playlist" = "Enter a name for the new playlist";
 
 /* File: ../../portable/feed.py:383 */
-/* Flag: untranslated */
-"never" = "never";
+"never" = "ఎప్పుడూకాదు";
 
 /* File: ../../portable/feed.py:385 */
 /* File: ../../portable/item.py:542 */
