@@ -1,0 +1,57 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                addGuide = id; 
+                checkForUpdates = id; 
+                donate = id; 
+                downloadVideo = id; 
+                exportChannels = id; 
+                importChannels = id; 
+                openFile = id; 
+                removeGuide = id; 
+                showMainWindow = id; 
+                showPreferencesWindow = id; 
+                shutdown = id; 
+            }; 
+            CLASS = AppController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {playPauseMenuItem = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                addChannel = id; 
+                addGuide = id; 
+                copyChannelURL = id; 
+                copyVideoURL = id; 
+                createChannelFolder = id; 
+                createPlaylist = id; 
+                createPlaylistFolder = id; 
+                createSearchChannel = id; 
+                deleteSelected = id; 
+                nextVideo = id; 
+                playPause = id; 
+                previousVideo = id; 
+                removeChannel = id; 
+                removeGuide = id; 
+                removePlaylist = id; 
+                removeVideos = id; 
+                renameChannelFolder = id; 
+                renamePlaylist = id; 
+                reportBug = id; 
+                saveVideoAs = id; 
+                sendPlaylistToFriend = id; 
+                stopVideo = id; 
+                tellAFriend = id; 
+                toggleFullScreen = id; 
+                updateAllChannels = id; 
+                updateChannel = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
