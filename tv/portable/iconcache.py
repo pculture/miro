@@ -15,7 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import item
 import os
 import threading
 import httpclient
@@ -27,13 +26,13 @@ from platformutils import unicodeToFilename
 import config
 import prefs
 import time
-import views
 import random
 import imageresize
 
 RUNNING_MAX = 3
     
 def clearOrphans():
+    import views
     knownIcons = set()
     for item in views.items:
         if item.iconCache and item.iconCache.filename:

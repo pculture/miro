@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-from app import db
+import app
 import feed
 import folder
 import downloader
@@ -47,9 +47,9 @@ def initialize():
     global playlists, playlistFolders, channelFolders, searchEngines
     global themeHistories
 
-    db.createIndex(indexes.objectsByClass)
+    app.db.createIndex(indexes.objectsByClass)
 
-    allTabs = db.filter(filters.mappableToTab).map(maps.mapToTab)
+    allTabs = app.db.filter(filters.mappableToTab).map(maps.mapToTab)
     allTabs.createIndex(indexes.tabType)
     guideTabs = allTabs.filterWithIndex(indexes.tabType, 'guide') \
                 .sort(sorts.guideTabs)
@@ -62,14 +62,14 @@ def initialize():
     playlistTabs = allTabs.filterWithIndex(indexes.tabType, 'playlist')
     selectedTabs = allTabs.filter(lambda x: x.selected)
 
-    tabOrders = db.filterWithIndex(indexes.objectsByClass, tabs.TabOrder)
+    tabOrders = app.db.filterWithIndex(indexes.objectsByClass, tabs.TabOrder)
     tabOrders.createIndex(indexes.tabOrderType)
     channelTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'channel')
     playlistTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'playlist')
 
     # items includes fileItems.
-    items = db.filterWithIndex(indexes.objectsByClass,item.Item)
-    fileItems = db.filter(lambda x: isinstance(x, item.FileItem))
+    items = app.db.filterWithIndex(indexes.objectsByClass,item.Item)
+    fileItems = app.db.filter(lambda x: isinstance(x, item.FileItem))
     toplevelItems = items.filter(lambda x: x.feed_id is not None)
     nonContainerItems = items.filter(lambda x: not x.isContainerItem)
     unwatchedItems = nonContainerItems.filter(filters.unwatchedItems)
@@ -79,10 +79,10 @@ def initialize():
 
     # NOTE: we can't use the objectsByClass index for fileItems, because it
     # agregates all Item subclasses into one group.
-    feeds = db.filterWithIndex(indexes.objectsByClass,feed.Feed)
-    remoteDownloads = db.filterWithIndex(indexes.objectsByClass, downloader.RemoteDownloader)
-    httpauths = db.filterWithIndex(indexes.objectsByClass,downloader.HTTPAuthPassword)
-    staticTabsObjects = db.filterWithIndex(indexes.objectsByClass,tabs.StaticTab)
+    feeds = app.db.filterWithIndex(indexes.objectsByClass,feed.Feed)
+    remoteDownloads = app.db.filterWithIndex(indexes.objectsByClass, downloader.RemoteDownloader)
+    httpauths = app.db.filterWithIndex(indexes.objectsByClass,downloader.HTTPAuthPassword)
+    staticTabsObjects = app.db.filterWithIndex(indexes.objectsByClass,tabs.StaticTab)
 
     remoteDownloads.createIndex(indexes.downloadsByDLID)
     remoteDownloads.createIndex(indexes.downloadsByURL)
@@ -95,7 +95,7 @@ def initialize():
     feeds.createIndex(indexes.byFolder)
 
     #FIXME: These should just be globals
-    guides = db.filterWithIndex(indexes.objectsByClass,guide.ChannelGuide)
+    guides = app.db.filterWithIndex(indexes.objectsByClass,guide.ChannelGuide)
     guides.createIndex(indexes.guidesByURL)
     default_guide = guides.filter(lambda x: x.getDefault())
     manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
@@ -113,20 +113,20 @@ def initialize():
     manualDownloads = items.filter(filters.manualDownloads)
     autoDownloads = items.filter(filters.autoDownloads)
 
-    playlists = db.filterWithIndex(indexes.objectsByClass,
+    playlists = app.db.filterWithIndex(indexes.objectsByClass,
                                    playlist.SavedPlaylist)
     playlists.createIndex(indexes.playlistsByItemID, multiValued=True)
     playlists.createIndex(indexes.playlistsByItemAndFolderID, multiValued=True)
     playlists.createIndex(indexes.byFolder)
-    playlistFolders = db.filterWithIndex(indexes.objectsByClass,
+    playlistFolders = app.db.filterWithIndex(indexes.objectsByClass,
                                          folder.PlaylistFolder)
     playlistFolders.createIndex(indexes.playlistsByItemID, multiValued=True)
 
-    channelFolders = db.filterWithIndex(indexes.objectsByClass,
+    channelFolders = app.db.filterWithIndex(indexes.objectsByClass,
                                         folder.ChannelFolder)
     channelFolders.createIndex(indexes.foldersByTitle)
-    searchEngines = db.filterWithIndex(indexes.objectsByClass,
+    searchEngines = app.db.filterWithIndex(indexes.objectsByClass,
                                        searchengines.SearchEngine)
     searchEngines = searchEngines.sort(sorts.searchEngines)
 
-    themeHistories = db.filterWithIndex(indexes.objectsByClass,theme.ThemeHistory)
+    themeHistories = app.db.filterWithIndex(indexes.objectsByClass,theme.ThemeHistory)

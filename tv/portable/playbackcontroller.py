@@ -1,0 +1,310 @@
+# Miro - an RSS based video player application
+# Copyright (C) 2005-2007 Participatory Culture Foundation
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+import os
+import logging
+
+from frontends.html.templatedisplay import TemplateDisplay
+import app
+import config
+import eventloop
+import item
+import prefs
+import signals
+
+class PlaybackControllerBase:
+    
+    def __init__(self):
+        self.currentPlaylist = None
+        self.justPlayOne = False
+        self.currentItem = None
+        self.updateVideoTimeDC = None
+
+    def configure(self, view, firstItemId=None, justPlayOne=False):
+        self.currentPlaylist = Playlist(view, firstItemId)
+        self.justPlayOne = justPlayOne
+    
+    def reset(self):
+        if self.currentPlaylist is not None:
+            eventloop.addIdle (self.currentPlaylist.reset, "Reset Playlist")
+            self.currentPlaylist = None
+
+    def configureWithSelection(self):
+        itemSelection = app.controller.selection.itemListSelection
+        view = itemSelection.currentView
+        if itemSelection.currentView is None:
+            return
+
+        for item in view:
+            itemid = item.getID()
+            if itemSelection.isSelected(view, itemid) and item.isDownloaded():
+                self.configure(view, itemid)
+                break
+    
+    def enterPlayback(self):
+        if self.currentPlaylist is None:
+            self.configureWithSelection()
+        if self.currentPlaylist is not None:
+            startItem = self.currentPlaylist.cur()
+            if startItem is not None:
+                self.playItem(startItem)
+        
+    def exitPlayback(self, switchDisplay=True):
+        self.reset()
+        if switchDisplay:
+            app.controller.selection.displayCurrentTabContent()
+    
+    def playPause(self):
+        videoDisplay = app.controller.videoDisplay
+        frame = app.controller.frame
+        if frame.getDisplay(frame.mainDisplay) == videoDisplay:
+            videoDisplay.playPause()
+        else:
+            self.enterPlayback()
+
+    def pause(self):
+        videoDisplay = app.controller.videoDisplay
+        frame = app.controller.frame
+        if frame.getDisplay(frame.mainDisplay) == videoDisplay:
+            videoDisplay.pause()
+
+    def removeItem(self, item):
+        if item.idExists():
+            item.executeExpire()
+
+    def playItem(self, anItem):
+        try:
+            if self.currentItem:
+                self.currentItem.onViewedCancel()
+            self.currentItem = None
+            while not os.path.exists(anItem.getVideoFilename()):
+                logging.info ("movie file '%s' is missing, skipping to next",
+                              anItem.getVideoFilename())
+                eventloop.addIdle(self.removeItem, "Remove deleted item", args=(anItem.item,))
+                anItem = self.currentPlaylist.getNext()
+                if anItem is None:
+                    self.stop()
+                    return
+
+            self.currentItem = anItem
+            if anItem is not None:
+                videoDisplay = app.controller.videoDisplay
+                videoRenderer = videoDisplay.getRendererForItem(anItem)
+                if videoRenderer is not None:
+                    self.playItemInternally(anItem, videoDisplay, videoRenderer)
+                else:
+                    frame = app.controller.frame
+                    if frame.getDisplay(frame.mainDisplay) is videoDisplay:
+                        if videoDisplay.isFullScreen:
+                            videoDisplay.exitFullScreen()
+                        videoDisplay.stop()
+                    self.scheduleExternalPlayback(anItem)
+        except:
+            signals.system.failedExn('when trying to play a video')
+            self.stop()
+
+    def playItemInternally(self, anItem, videoDisplay, videoRenderer):
+        logging.info("Playing item with renderer: %s" % videoRenderer)
+        app.controller.videoDisplay.setExternal(False)
+        frame = app.controller.frame
+        if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
+            frame.selectDisplay(videoDisplay, frame.mainDisplay)
+        videoDisplay.selectItem(anItem, videoRenderer)
+        if config.get(prefs.RESUME_VIDEOS_MODE) and anItem.resumeTime > 10:
+            videoDisplay.playFromTime(anItem.resumeTime)
+        else:
+            videoDisplay.play()
+        self.startUpdateVideoTime()
+
+    def playItemExternally(self, itemID):
+        anItem = mapToPlaylistItem(db.getObjectByID(int(itemID)))
+        app.controller.videoInfoItem = anItem
+        newDisplay = TemplateDisplay('external-playback-continue','default')
+        frame = app.controller.frame
+        frame.selectDisplay(newDisplay, frame.mainDisplay)
+        return anItem
+        
+    def scheduleExternalPlayback(self, anItem):
+        app.controller.videoDisplay.setExternal(True)
+        app.controller.videoDisplay.stopOnDeselect = False
+        app.controller.videoInfoItem = anItem
+        newDisplay = TemplateDisplay('external-playback','default')
+        frame = app.controller.frame
+        frame.selectDisplay(newDisplay, frame.mainDisplay)
+        anItem.markItemSeen()
+
+    def startUpdateVideoTime(self):
+        if not self.updateVideoTimeDC:
+            self.updateVideoTimeDC = eventloop.addTimeout(.5, self.updateVideoTime, "Update Video Time")
+
+    def stopUpdateVideoTime(self):
+        if self.updateVideoTimeDC:
+            self.updateVideoTimeDC.cancel()
+            self.updateVideoTimeDC = None
+
+    def updateVideoTime(self, repeat=True):
+        t = app.controller.videoDisplay.getCurrentTime()
+        if t != None and self.currentItem:
+            self.currentItem.setResumeTime(t)
+        if repeat:
+            self.updateVideoTimeDC = eventloop.addTimeout(.5, self.updateVideoTime, "Update Video Time")
+
+    def stop(self, switchDisplay=True, markAsViewed=False):
+        app.controller.videoDisplay.setExternal(False)
+        if self.updateVideoTimeDC:
+            self.updateVideoTime(repeat=False)
+            self.stopUpdateVideoTime()
+        if self.currentItem:
+            self.currentItem.onViewedCancel()
+        self.currentItem = None
+        frame = app.controller.frame
+        videoDisplay = app.controller.videoDisplay
+        if frame.getDisplay(frame.mainDisplay) == videoDisplay:
+            videoDisplay.stop()
+        self.exitPlayback(switchDisplay)
+
+    def skip(self, direction, allowMovieReset=True):
+        frame = app.controller.frame
+        currentDisplay = frame.getDisplay(frame.mainDisplay)
+        if self.currentPlaylist is None:
+            self.stop()
+        elif (allowMovieReset and direction == -1
+                and hasattr(currentDisplay, 'getCurrentTime') 
+                and currentDisplay.getCurrentTime() > 2.0):
+            currentDisplay.goToBeginningOfMovie()
+        elif config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE) or self.justPlayOne:
+            self.stop()
+        else:
+            if direction == 1:
+                nextItem = self.currentPlaylist.getNext()
+            else:
+                nextItem = self.currentPlaylist.getPrev()
+            if nextItem is None:
+                self.stop()
+            else:
+                if self.updateVideoTimeDC:
+                    self.updateVideoTime(repeat=False)
+                    self.stopUpdateVideoTime()
+                self.playItem(nextItem)
+
+    def onMovieFinished(self):
+        self.stopUpdateVideoTime()
+        setToStart = False
+        if self.currentItem:
+            self.currentItem.setResumeTime(0)
+            if self.currentItem.getFeedURL() == 'dtv:singleFeed':
+                setToStart = True
+        if setToStart:
+            frame = app.controller.frame
+            currentDisplay = frame.getDisplay(frame.mainDisplay)
+            currentDisplay.pause()
+            currentDisplay.goToBeginningOfMovie()
+            currentDisplay.pause()
+        else:
+            return self.skip(1, False)
+
+###############################################################################
+#### Playlist & Video clips                                                ####
+###############################################################################
+
+class Playlist:
+    
+    def __init__(self, view, firstItemId):
+        self.initialView = view
+        self.filteredView = self.initialView.filter(mappableToPlaylistItem)
+        self.view = self.filteredView.map(mapToPlaylistItem)
+
+        # Move the cursor to the requested item; if there's no
+        # such item in the view, move the cursor to the first
+        # item
+        self.view.confirmDBThread()
+        self.view.resetCursor()
+        while True:
+            cur = self.view.getNext()
+            if cur == None:
+                # Item not found in view. Put cursor at the first
+                # item, if any.
+                self.view.resetCursor()
+                self.view.getNext()
+                break
+            if firstItemId is None or cur.getID() == int(firstItemId):
+                # The cursor is now on the requested item.
+                break
+
+    def reset(self):
+        self.initialView.removeView(self.filteredView)
+        self.initialView = None
+        self.filteredView = None
+        self.view = None
+
+    def cur(self):
+        return self.itemMarkedAsViewed(self.view.cur())
+
+    def getNext(self):
+        return self.itemMarkedAsViewed(self.view.getNext())
+        
+    def getPrev(self):
+        return self.itemMarkedAsViewed(self.view.getPrev())
+
+    def itemMarkedAsViewed(self, anItem):
+        if anItem is not None:
+            eventloop.addIdle(anItem.onViewed, "Mark item viewed")
+        return anItem
+
+class PlaylistItemFromItem:
+
+    def __init__(self, anItem):
+        self.item = anItem
+        self.dcOnViewed = None
+
+    def getTitle(self):
+        return self.item.getTitle()
+
+    def getVideoFilename(self):
+        return self.item.getVideoFilename()
+
+    def getLength(self):
+        # NEEDS
+        return 42.42
+
+    def onViewedExecute(self):
+        if self.item.idExists():
+            self.item.markItemSeen()
+        self.dcOnViewed = None
+
+    def onViewed(self):
+        if self.dcOnViewed or self.item.getSeen():
+            return
+        self.dcOnViewed = eventloop.addTimeout(5, self.onViewedExecute, "Mark item viewed")
+
+    def onViewedCancel(self):
+        if self.dcOnViewed:
+            self.dcOnViewed.cancel()
+            self.dcOnViewed = None
+
+    # Return the ID that is used by a template to indicate this item 
+    def getID(self):
+        return self.item.getID()
+
+    def __getattr__(self, attr):
+        return getattr(self.item, attr)
+
+def mappableToPlaylistItem(obj):
+    return (isinstance(obj, item.Item) and obj.isDownloaded())
+
+def mapToPlaylistItem(obj):
+    return PlaylistItemFromItem(obj)

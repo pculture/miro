@@ -30,7 +30,7 @@ import prefs
 if '--unittest' in sys.argv:
     # handle this outside optparse, because unittest has its own option set
     sys.argv.remove('--unittest')
-    import app
+    import controller
     import unittest
     import test
     unittest.main(module=test)
@@ -56,7 +56,7 @@ def startapp():
     import platformutils
     platformutils.initializeLocale()
 
-    import app
+    import controller
     import frontend
     import prefs
     import config
@@ -81,7 +81,7 @@ def startapp():
             args[i] = args[i][len('file://'):]
     singleclick.setCommandLineArgs(args)
 
-    app.main()
+    controller.main()
 if options.version:
     print "Miro"
     print "Version: %s" % config.get(prefs.APP_VERSION)
@@ -95,8 +95,8 @@ elif options.profile:
     if options.sync:
         pass
     def main():
-        import app
-        app.main()
+        import controller
+        controller.main()
     if (options.bias):
         profile.Profile.bias = options.bias
     eventloop.profile_file = options.profile

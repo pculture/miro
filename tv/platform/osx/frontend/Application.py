@@ -34,7 +34,6 @@ import app
 import views
 import prefs
 import config
-import frontends.html
 from frontends.html import dialogs
 from frontends.html.main import HTMLApplication
 import filetypes
@@ -283,7 +282,7 @@ class AppController (NSObject):
         NSWorkspace.sharedWorkspace().openURL_(donateURL)
 
     def checkForUpdates_(self, sender):
-        frontends.html.app.checkForUpdates()
+        app.htmlapp.checkForUpdates()
 
     def showMainWindow_(self, sender):
         if app.controller is not None and app.controller.frame is not None:
@@ -305,10 +304,10 @@ class AppController (NSObject):
         app.controller.newDownload()
     
     def importChannels_(self, sender):
-        app.controller.importChannels()
+        app.htmlapp.importChannels()
     
     def exportChannels_(self, sender):
-        app.controller.exportChannels()
+        app.htmlapp.exportChannels()
     
     def shutdown_(self, sender):
         self.internalShutdown = True

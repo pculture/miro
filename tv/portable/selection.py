@@ -34,6 +34,7 @@ import views
 import indexes
 import template
 import util
+from frontends.html.templatedisplay import TemplateDisplay
 from gtcache import gettext as _
 
 def getID(obj):
@@ -502,10 +503,9 @@ class SelectionHandler(object):
         elif len(tls.currentSelection) == 1:
             for id in tls.currentSelection:
                 tab = tls.currentView.getObjectByID(id)
-                return app.TemplateDisplay(tab.contentsTemplate,
-                                           tab.templateState,
-                        frameHint=frame, areaHint=frame.mainDisplay, 
-                        id=tab.obj.getID())
+                return TemplateDisplay(tab.contentsTemplate,
+                        tab.templateState, frameHint=frame,
+                        areaHint=frame.mainDisplay, id=tab.obj.getID())
         else:
             foldersSelected = False
             type = tls.getType()
@@ -526,7 +526,7 @@ class SelectionHandler(object):
                             selectedChildren -= 1
                 else:
                     selectedChildren += 1
-            return app.TemplateDisplay(templateName,'default', frameHint=frame,
+            return TemplateDisplay(templateName,'default', frameHint=frame,
                     areaHint=frame.mainDisplay,
                     selectedFolders=selectedFolders,
                     selectedChildren=selectedChildren,

@@ -98,6 +98,7 @@ compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
 compiled_templates_unittest_dir = os.path.join(compiled_templates_dir,'unittest')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
+miroplatform_dir = os.path.join(platform_dir, 'miroplatform')
 glade_dir = os.path.join(platform_dir, 'glade')
 xine_dir = os.path.join(platform_dir, 'xine')
 frontend_implementation_dir = os.path.join(platform_dir,
@@ -554,6 +555,9 @@ setup(name='miro',
         'miro.dl_daemon.private',
         'miro.frontends',
         'miro.frontends.html',
+        'miro.miroplatform',
+        'miro.miroplatform.frontends',
+        'miro.miroplatform.frontends.html',
     ],
     package_dir = {
         'miro.frontends': portable_frontend_dir,
@@ -563,6 +567,7 @@ setup(name='miro',
         'miro.test' : test_dir,
         'miro.compiled_templates' : compiled_templates_dir,
         'miro.compiled_templates.unittest' : compiled_templates_unittest_dir,
+        'miro.miroplatform': miroplatform_dir,
     },
     cmdclass = {
         'build_ext': build_ext, 

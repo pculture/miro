@@ -31,6 +31,7 @@ try:
     import gtcache
     gtcache.init()
     import app
+    import controller
     import eventloop
     import config
     import frontends.html
@@ -45,7 +46,7 @@ try:
     import menubar
     import feed
     import database
-    from frontend_implementation import HTMLDisplay
+    from miroplatform.frontends.html import HTMLDisplay
     from frontend_implementation.UIBackendDelegate import UIBackendDelegate
     from eventloop import asUrgent, asIdle
     from platformutils import getLongPathName
@@ -272,7 +273,7 @@ class PyBridge:
         initializeProxyObjects(window)
         registerHttpObserver()
         initializeHTTPProxy()
-        app.main()
+        controller.main()
 
     @asUrgent
     def initializeViews(self):
@@ -329,7 +330,7 @@ class PyBridge:
     def getMoviesDirectory(self):
         return config.get(prefs.MOVIES_DIRECTORY)
     def changeMoviesDirectory(self, path, migrate):
-        app.changeMoviesDirectory(path, migrate)
+        app.controller.changeMoviesDirectory(path, migrate)
     def getLimitUpstream(self):
         return config.get(prefs.LIMIT_UPSTREAM)
     def setLimitUpstream(self, value):
@@ -600,7 +601,7 @@ class PyBridge:
         app.controller.removeCurrentSelection()
 
     def checkForUpdates(self):
-        frontends.html.app.checkForUpdates()
+        app.htmlapp.checkForUpdates()
 
     @asUrgent
     def removeCurrentItems(self):
@@ -662,7 +663,7 @@ class PyBridge:
     def saveVideoFile(self, path):
         if frontend.currentVideoPath is None:
             return
-        app.saveVideo(frontend.currentVideoPath, path)
+        app.controller.saveVideo(frontend.currentVideoPath, path)
 
     def startupDoSearch(self, path):
         if path.endswith(":"):

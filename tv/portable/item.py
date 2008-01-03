@@ -21,7 +21,7 @@ from gtcache import gettext as _
 from math import ceil
 from xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
-from util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify
+from util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure
 from platformutils import FilenameType
 import locale
 import os
@@ -1886,20 +1886,6 @@ any items inside that folder will also be removed or deleted.""")
                 if item.idExists():
                     item.executeExpire()
     d.run(callback)
-
-def getFirstVideoEnclosure(entry):
-    """Find the first video enclosure in a feedparser entry.  Returns the
-    enclosure, or None if no video enclosure is found.
-    """
-
-    try:
-        enclosures = entry.enclosures
-    except (KeyError, AttributeError):
-        return None
-    for enclosure in enclosures:
-        if filetypes.isVideoEnclosure(enclosure):
-            return enclosure
-    return None
 
 @returnsUnicode
 def formatRateForDetails(bytes):

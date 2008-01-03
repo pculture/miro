@@ -58,7 +58,7 @@ def launchApplication():
     import gtcache
     gtcache.init()
 
-    import app
+    import controller
     import prefs
     import config
 
@@ -81,7 +81,7 @@ def launchApplication():
         sys.stderr = AutoflushingTeeStream([h, sys.stderr])
 
     # Kick off the application
-    app.main()
+    controller.main()
 
 # =============================================================================
 

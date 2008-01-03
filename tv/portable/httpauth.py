@@ -18,7 +18,6 @@
 from download_utils import parseURL
 from frontends.html import dialogs
 import eventloop
-import views
 
 def formatAuthString(auth):
     return "%s %s" % (auth.getAuthScheme(), auth.getAuthToken())

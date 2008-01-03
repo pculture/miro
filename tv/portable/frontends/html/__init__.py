@@ -17,8 +17,5 @@
 
 """frontends.html -- HTML rendering frontend.
 
-This is the frontend that we used for Miro up to version 1.0.  To access the
-HTMLApplication object, you can use the frontends.html.app singleton variable.
+This is the frontend that we used for Miro up to version 1.0.
 """
-
-app = None # will be set in HTMLApplication.__init__

@@ -19,7 +19,6 @@
 # Note: these can't be in just any order; there is some subtlety in the
 # initialization order, so take care.
 
-from frontend_implementation.HTMLDisplay import HTMLDisplay, getDTVAPIURL, getDTVAPICookie
 from frontend_implementation.Application import Application
 from frontend_implementation.UIBackendDelegate import UIBackendDelegate
 from frontend_implementation.MainFrame import MainFrame

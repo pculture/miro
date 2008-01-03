@@ -456,7 +456,7 @@ class CallbackHandler(object):
                 return os.path.splitext(path)[1]
             if getExt(savePath) == '':
                 savePath += getExt(videoPath)
-            app.saveVideo(videoPath, savePath)
+            app.controller.saveVideo(videoPath, savePath)
         CallbackHandler.current_folder = chooser.get_current_folder()
         chooser.destroy()
 
@@ -608,7 +608,7 @@ class CallbackHandler(object):
             migrate_widgetTree = MainFrame.WidgetTree(resources.path('miro.glade'), 'dialog-migrate', 'miro')
             migrate_dialog = migrate_widgetTree['dialog-migrate']
             response = migrate_dialog.run()
-            app.changeMoviesDirectory(new_movie_dir, 
+            app.controller.changeMoviesDirectory(new_movie_dir, 
                     response == gtk.RESPONSE_YES)
 
             migrate_dialog.destroy()

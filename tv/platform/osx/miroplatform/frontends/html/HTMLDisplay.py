@@ -27,14 +27,14 @@ from Foundation import *
 from PyObjCTools import AppHelper
 
 from frontends.html import keyboard
-import app
+from frontends.html.displaybase import Display
 import prefs
 import config
 import resources
 import platformutils
 import templatehelper
 
-from MainFrame import mapKey, handleKey
+from frontend.MainFrame import mapKey, handleKey
 
 ###############################################################################
 # These are used by the channel guide. This platform uses the
@@ -50,7 +50,7 @@ def getDTVAPIURL():
 
 ###############################################################################
 
-class HTMLDisplay (app.Display):
+class HTMLDisplay (Display):
     "HTML browser that can be shown in a MainFrame's right-hand pane."
 
     # We don't need to override onSelected, onDeselected
@@ -68,7 +68,7 @@ class HTMLDisplay (app.Display):
             self.displaySizeHint = frameHint.getDisplaySizeHint(areaHint)
         else:
             self.displaySizeHint = None
-        app.Display.__init__(self)
+        Display.__init__(self)
  
     # make web a lazily loaded property.  This is useful for the channel
     # guides because it makes the load happen after setGuideURL

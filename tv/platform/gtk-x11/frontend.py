@@ -52,9 +52,8 @@ if hasGTK:
     # Almost everything is split out into files under
     # frontend-implementation.
     from frontend_implementation.Application import Application
-    from frontend_implementation.MainFrame import MainFrame, NullDisplay
+    from frontend_implementation.MainFrame import MainFrame
     from frontend_implementation.UIBackendDelegate import UIBackendDelegate
-    from frontend_implementation.HTMLDisplay import HTMLDisplay, getDTVAPICookie, getDTVAPIURL
     from frontend_implementation.VideoDisplay import VideoDisplay
     from frontend_implementation.VideoDisplay import PlaybackController
 else:

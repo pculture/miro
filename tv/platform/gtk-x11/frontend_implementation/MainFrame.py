@@ -32,10 +32,10 @@ from frontend import *
 from frontend_implementation import UIBackendDelegate
 from frontend_implementation.gtk_queue import gtkAsyncMethod, gtkSyncMethod
 from frontend_implementation.VideoDisplay import VideoDisplay
-from frontend_implementation.HTMLDisplay import HTMLDisplay
 from frontend_implementation.callbackhandler import CallbackHandler
 from frontend_implementation.mainwindowchanger import MainWindowChanger
 from frontend_implementation import trayicon
+from miroplatform.frontends.html.HTMLDisplay import HTMLDisplay
 from platformcfg import gconf_lock
 import config
 import prefs
@@ -144,8 +144,6 @@ class WidgetTree(gtk.glade.XML):
 #
 class MainFrame:
     def __init__(self, appl):
-        """The initially active display will be an instance of NullDisplay."""
-
         # Symbols by other parts of the program as as arguments
         # to selectDisplay
         self.mainDisplay = "mainDisplay"
@@ -443,44 +441,6 @@ class MainFrame:
     def unlink(self):
         pass
     
-    def __del__(self):
-        self.unlink()
-
-###############################################################################
-#### The no-op display (here's as good a place as any)                     ####
-###############################################################################
-
-class NullDisplay (app.Display):
-    "A blank placeholder Display."
-
-    @gtkSyncMethod
-    def __init__(self):
-        app.Display.__init__(self)
-
-        view = gtk.TextView()
-        buffer = view.get_buffer()
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        scrolled_window.add(view)
-        iter = buffer.get_iter_at_offset(0)
-        buffer.insert(iter,
-                      "From: pathfinder@nasa.gov\n"
-                      "To: mom@nasa.gov\n"
-                      "Subject: Made it!\n"
-                      "\n"
-                      "We just got in this morning. The weather has been\n"
-                      "great - clear but cold, and there are lots of fun sights.\n"
-                      "Sojourner says hi. See you soon.\n"
-                      " -Path\n")
-        scrolled_window.show_all()
-        self.widget = scrolled_window
-
-    def getWidget(self, *args):
-        return self.widget
-
-    def unlink(self):
-        pass
-
     def __del__(self):
         self.unlink()
 

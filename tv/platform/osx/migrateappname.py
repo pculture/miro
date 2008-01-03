@@ -64,5 +64,5 @@ def migrateVideos(oldAppName, newAppName):
         import prefs
         videoDir = config.get(prefs.MOVIES_DIRECTORY)
         if videoDir == newDefault:
-            from app import changeMoviesDirectory
-            changeMoviesDirectory(newDefault, True)
+            import app
+            app.controller.changeMoviesDirectory(newDefault, True)

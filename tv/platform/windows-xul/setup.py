@@ -417,7 +417,8 @@ class bdist_xul_dumb(Command):
         # NEEDS: should bootstrap dependency scan from *.py in component
         # directory..
         log.info("computing module dependencies")
-        wellConnectedFile = os.path.join(root, 'portable', 'app.py')
+        wellConnectedFile = os.path.join(self.xulTemplateDir, 'components',
+                'pybridge.py')
         scriptIncludes = [wellConnectedFile]
         manifest = self.computePythonManifest(scripts = scriptIncludes,
                                               includes = moduleIncludes,

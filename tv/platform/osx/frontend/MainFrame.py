@@ -493,18 +493,6 @@ class DisplayHostView (NSView):
 
 ###############################################################################
 
-class NullDisplay (app.Display):
-    "Represents an empty right-hand area."
-
-    def __init__(self):
-        app.Display.__init__(self)
-        self.view = NSView.alloc().init().retain()
-
-    def getView(self):
-        return self.view
-
-###############################################################################
-
 class DTVSplitView (NSSplitView):
     
     def awakeFromNib(self):

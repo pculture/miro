@@ -550,3 +550,18 @@ def directoryWritable(directory):
 
 def random_string(length):
     return ''.join(random.choice(string.ascii_letters) for i in xrange(length))
+
+def getFirstVideoEnclosure(entry):
+    """Find the first video enclosure in a feedparser entry.  Returns the
+    enclosure, or None if no video enclosure is found.
+    """
+
+    try:
+        enclosures = entry.enclosures
+    except (KeyError, AttributeError):
+        return None
+    for enclosure in enclosures:
+        if filetypes.isVideoEnclosure(enclosure):
+            return enclosure
+    return None
+

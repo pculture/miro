@@ -24,8 +24,8 @@ import logging
 from gtcache import gettext as _
 from gtcache import ngettext
 from frontends.html import dialogs
+from frontends.html.templatedisplay import TemplateDisplay
 import frontend
-import frontends.html
 import app
 import autoupdate
 import config
@@ -48,7 +48,7 @@ class HTMLApplication:
         self.ignoreErrors = False
         self.inQuit = False
         self.loadedCustomChannels = False
-        frontends.html.app = self
+        app.htmlapp = self
 
     def startup(self):
         signals.system.connect('error', self.handleError)
@@ -163,7 +163,7 @@ class HTMLApplication:
 
         channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
         playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
-        self.tabDisplay = app.TemplateDisplay('tablist', 'default',
+        self.tabDisplay = TemplateDisplay('tablist', 'default',
                 playlistTabOrder=playlistTabOrder,
                 channelTabOrder=channelTabOrder)
         # HACK
