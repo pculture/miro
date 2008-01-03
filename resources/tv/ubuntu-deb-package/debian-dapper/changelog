@@ -1,3 +1,9 @@
+miro (1.0-1) dapper; urgency=low
+
+  * New Upstream release.
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Thu, 15 Nov 2007 11:17:40 -0500
+
 miro (0.9.9.1-1ubuntupcf) dapper; urgency=low
 
   * New Upstream release.
