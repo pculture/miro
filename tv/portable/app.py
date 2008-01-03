@@ -1413,7 +1413,10 @@ class ModelActionHandler:
             self.backEndDelegate.revealFile(filename)
 
     def clearTorrents (self):
-        items = views.items.filter(lambda x: x.getFeed().url == u'dtv:manualFeed' and x.isNonVideoFile() and not x.getState() == u"downloading")
+        items = views.items.filter(lambda x: x.getFeed().url == u'dtv:manualFeed' \
+                                             and x.isNonVideoFile() \
+                                             and not x.getState() == u"paused" \
+                                             and not x.getState() == u"downloading")
         for i in items:
             if i.downloader is not None:
                 i.downloader.setDeleteFiles(False)
