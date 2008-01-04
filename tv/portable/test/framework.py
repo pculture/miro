@@ -65,6 +65,7 @@ class DummyController:
 
 class DemocracyTestCase(unittest.TestCase):
     def setUp(self):
+        app.db = database.defaultDatabase
         database.set_thread(threading.currentThread())
         views.initialize()
         # reset the event loop
@@ -154,12 +155,9 @@ class EventLoopTest(DemocracyTestCase):
 class DownloaderTestCase(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
-        # FIXME: This is kind of ugly
-        app.delegate = frontend.UIBackendDelegate()
         downloader.startupDownloader()
 
     def tearDown(self):
         downloader.shutdownDownloader(eventloop.quit)
         self.runEventLoop()
-        app.delegate = None
         EventLoopTest.tearDown(self)

@@ -12,7 +12,7 @@
     <t:include filename="dynamic.js" />
     <t:execOnLoad><![CDATA[
 
-playlist = views.db.getObjectByID(int(kargs['id']))
+playlist = app.db.getObjectByID(int(kargs['id']))
 playlistView = playlist.getView()
 thisPlaylistView = views.playlists.filter(lambda x: x is playlist)
 playlist.setSearch(None)

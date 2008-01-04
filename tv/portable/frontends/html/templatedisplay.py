@@ -78,7 +78,7 @@ class TemplateDisplay(HTMLDisplay):
         html = tch.read()
 
         self.actionHandlers = [
-            ModelActionHandler(app.delegate),
+            ModelActionHandler(),
             HistoryActionHandler(self),
             GUIActionHandler(),
             TemplateActionHandler(self, self.templateHandle),
@@ -298,9 +298,6 @@ class TemplateDisplay(HTMLDisplay):
 # but manipulate the database.
 class ModelActionHandler:
     
-    def __init__(self, backEndDelegate):
-        self.backEndDelegate = backEndDelegate
-    
     def setAutoDownloadMode(self, feed, mode):
         obj = app.db.getObjectByID(int(feed))
         obj.setAutoDownloadMode(mode)
@@ -392,7 +389,7 @@ class ModelActionHandler:
     def copyFeedURL(self, feed):
         obj = app.db.getObjectByID(int(feed))
         url = obj.getURL()
-        self.backEndDelegate.copyTextToClipboard(url)
+        app.delegate.copyTextToClipboard(url)
 
     def markFeedViewed(self, feed):
         try:
@@ -445,7 +442,7 @@ class ModelActionHandler:
             msg = _("The file \"%s\" was deleted from outside Miro.") % basename
             dialogs.MessageBoxDialog(title, msg).run()
         else:
-            self.backEndDelegate.revealFile(filename)
+            app.delegate.revealFile(filename)
 
     def clearTorrents (self):
         items = views.items.filter(lambda x: x.getFeed().url == u'dtv:manualFeed' and x.isNonVideoFile() and not x.getState() == u"downloading")
@@ -478,7 +475,7 @@ class ModelActionHandler:
 
     def setRunAtStartup(self, value):
         value = (value == "1")
-        self.backEndDelegate.setRunAtStartup(value)
+        app.delegate.setRunAtStartup(value)
 
     def setCheckEvery(self, value):
         value = int(value)
@@ -540,7 +537,7 @@ class ModelActionHandler:
             paramString = "%s%sdescription=%s" % (paramString, glue,
                     xhtmltools.urlencode(description))
         url = config.get(prefs.VIDEOBOMB_URL) + paramString
-        self.backEndDelegate.openExternalURL(url)
+        app.delegate.openExternalURL(url)
 
     # Race conditions:
     # We do the migration in the dl_daemon if the dl_daemon knows about it
