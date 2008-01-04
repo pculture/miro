@@ -2,7 +2,7 @@ Source: miro
 Section: net
 Priority: optional
 Maintainer: Will Guaraldi <will.guaraldi@pculture.org>
-Build-Depends: cdbs, debhelper (>= 5), python2.5, python-pyrex, libboost-python-dev, python-gtk2-dev, python-gnome2-extras-dev (>= 2.14.0-2), python2.5-dbus, firefox-dev, libxine-dev, python-dev, python-support, libsigc++-dev, libboost-thread-dev, libboost-filesystem-dev, libboost-date-time-dev, libboost-serialization-dev, libssl-dev
+Build-Depends: cdbs, debhelper (>= 5), python2.5, python-pyrex, libboost-python-dev, python-gtk2-dev, python-gnome2-extras-dev (>= 2.14.0-2), python2.5-dbus, firefox-dev, libxine-dev, python-dev, python-support, libxv-dev, libx11-dev, libssl-dev, libboost-date-time-dev, libboost-filesystem-dev, libboost-serialization-dev, libboost-thread-dev
 Standards-Version: 3.7.2
 
 Package: miro
