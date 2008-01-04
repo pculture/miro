@@ -8,6 +8,18 @@ import os, sys, urllib
 from glob import glob
 import shutil
 
+SYNTAX = """
+Usage: build.py [version] [distribution-name] [source tarball path/url]
+
+Examples:
+
+    build.py 0.9.5 feisty http://example.com/Miro-0.9.5.tar.gz
+    build.py 0.9.9.9-rc0 gutsy http://example.com/Miro-0.9.9.9-rc0.tar.gz
+
+    build.py 0.9.5 feisty ./Miro-0.9.5.tar.gz
+"""
+
+ 
 def call(cmd):
     """Call an external command.  If the command doesn't exit with status 0,
     or if it outputs to stderr, an exception will be raised.  Returns stdout.
@@ -17,19 +29,10 @@ def call(cmd):
         raise OSError("call with %s has return code %s" % (cmd, rv))
 
 def usage():
-    sys.stderr.write("""\
-Usage: build.py [version] [distribution-name] [source tarball path/url]
-
-Examples:
-
-    build.py 0.9.5 feisty http://example.com/Miro-0.9.5.tar.gz
-    build.py 0.9.9.9-rc0 gutsy http://example.com/Miro-0.9.9.9-rc0.tar.gz
-
-    build.py 0.9.5 feisty ./Miro-0.9.5.tar.gz
-""")
+    sys.stderr.write(SYNTAX)
     sys.exit(1)
 
-if len(sys.argv) != 4:
+if len(sys.argv) < 4:
     usage()
 
 version = sys.argv[1]
@@ -68,6 +71,7 @@ else:
     call('cp %s build-tmp/' % tarball_url)
     os.chdir('build-tmp')
 
+
 print "extracting files"
 call('tar zxvf %s' %  tarball_name)
 call('cp %s %s' % (tarball_name, "miro_%s.orig.tar.gz" % version))
@@ -78,14 +82,18 @@ os.chdir('miro-%s' % version)
 call('rm -rf debian/.svn')
 call('rm -rf debian/patches/.svn')
 
-print "building debs"
-call('dpkg-buildpackage -us -uc -rfakeroot')
+print "building source and .dsc file"
+call('dpkg-buildpackage -S -us -uc -rfakeroot')
 
 os.chdir('../..')
 
 if os.path.exists(distro):
     shutil.rmtree(distro)
 os.mkdir(distro)
-call('mv build-tmp/*.deb %s' % distro)
+
 call('mv build-tmp/miro_* %s' % distro)
+
+print "running pbuilder"
+call('pbuilder build --basetgz %s-base.tgz --buildresult ./%s %s/*.dsc' % (distro, distro, distro))
+
 print 'done'
