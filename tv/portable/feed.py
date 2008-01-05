@@ -1689,7 +1689,7 @@ class RSSMultiFeedImpl(FeedImpl):
 
     def _handleNewEntry(self, entry, channelTitle):
         """Handle getting a new entry from a feed."""
-        item = Item(entry, feed_id=self.ufeed.id)
+        item = itemmod.Item(entry, feed_id=self.ufeed.id)
         if not filters.matchingItems(item, self.ufeed.searchTerm):
             item.remove()
         item.setChannelTitle(channelTitle)
