@@ -539,7 +539,6 @@ URL was %s""" % self.url
                                           self.dlid)
             c.send()
             del _downloads[self.dlid]
-        self.status["state"] = u"finished"
         self.signalChange()
 
 def cleanupIncompleteDownloads():
