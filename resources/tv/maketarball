@@ -16,11 +16,11 @@
 #
 # To create a tarball of a specific directory in svn, do:
 #
-#    ./maketarball --dir tags/Democracy-Player-1.0 1.0
+#    ./maketarball --dir tags/Miro-1.1 1.1
 #
 # or:
 #
-#    ./maketarball --dir branches/Democracy-Player-1.0 1.0
+#    ./maketarball --dir branches/Miro-1.1 1.1
 
 mkdir temp-miro
 cd temp-miro
@@ -32,8 +32,7 @@ else
         svn co https://svn.participatoryculture.org/svn/dtv/$2/tv
         tag=$3
     else
-        # FIXME - this needs to be switched when we switch tag methods
-        svn co https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$1/tv
+        svn co https://svn.participatoryculture.org/svn/dtv/tags/Miro-$1/tv
         tag=$1
     fi
 fi
