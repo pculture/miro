@@ -88,9 +88,11 @@ Packaging steps
    http://doc.ubuntu.com/ubuntu/packagingguide/C/basic-scratch.html
 
    Good example:
+
    * 1.0-0
 
    Bad examples:
+
    * 1.0
    * 1.0-1ubuntupcf
    
@@ -132,30 +134,28 @@ After you've build the packages, you need to add them to the repository.
    For Ubuntu, this includes packages for i386 and amd64 as well as packages 
    for the previous version.  
 
-   Then run:
+   Then run::
 
-   apt-ftparchive packages <directory> | gzip > <directory>/Packages.gz
-   apt-ftparchive sources <directory> | gzip > <directory>/Sources.gz
+      apt-ftparchive packages <directory> | gzip > <directory>/Packages.gz
+      apt-ftparchive sources <directory> | gzip > <directory>/Sources.gz
 
-2. Now test the packages manually and via the tools lintian/linda:
-   - $ apt-get install lintian linda
-     $ lintian -i -I *.changes
-     $ linda -i *.changes
-     (Not all warnings are critical, though)
+2. Now test the packages manually and via the tools lintian/linda::
 
-   - $ sudo dpkg -i miro*deb
-     $ miro
+      $ apt-get install lintian linda
+      $ lintian -i -I *.changes
+      $ linda -i *.changes
+      (Not all warnings are critical, though)
 
-   - run pbuilder stuff below to test depends and build-depends on a 
-     clean environment
+      $ sudo dpkg -i miro*deb
+      $ miro
 
 
 Cleanup
 =======
 
-3. Once the build and the package itself works, clean up the debian/ directory:
+3. Once the build and the package itself works, clean up the debian/ directory::
 
-   $ fakeroot debian/rules clean
+      $ fakeroot debian/rules clean
 
    Then check in the updated debian/ directory to svn.
 
