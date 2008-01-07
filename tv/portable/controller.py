@@ -431,24 +431,30 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
 
     # Called by Frontend via Application base class in response to OS request.
     def addAndSelectFeed(self, url = None, showTemplate = None):
-        return GUIActionHandler().addFeed(url, showTemplate)
+        from frontends.html import templatedisplay
+        return templatedisplay.GUIActionHandler().addFeed(url, showTemplate)
 
     def addAndSelectGuide(self, url = None):
-        return GUIActionHandler().addGuide(url)
+        from frontends.html import templatedisplay
+        return templatedisplay.GUIActionHandler().addGuide(url)
 
     def addSearchFeed(self, term=None, style=dialogs.SearchChannelDialog.CHANNEL, location = None):
-        return GUIActionHandler().addSearchFeed(term, style, location)
+        from frontends.html import templatedisplay
+        return templatedisplay.GUIActionHandler().addSearchFeed(term, style, location)
 
     def testSearchFeedDialog(self):
-        return GUIActionHandler().testSearchFeedDialog()
+        from frontends.html import templatedisplay
+        return templatedisplay.GUIActionHandler().testSearchFeedDialog()
 
     ### Handling 'DTVAPI' events from the channel guide ###
 
     def addFeed(self, url = None):
-        return GUIActionHandler().addFeed(url, selected = None)
+        from frontends.html import templatedisplay
+        return templatedisplay.GUIActionHandler().addFeed(url, selected = None)
 
     def selectFeed(self, url):
-        return GUIActionHandler().selectFeed(url)
+        from frontends.html import templatedisplay
+        return templatedisplay.GUIActionHandler().selectFeed(url)
 
     ### Chrome search:
     ### Switch to the search tab and perform a search using the specified engine.
@@ -551,5 +557,6 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             i.startUpload()
 
     def newDownload(self, url = None):
-        return GUIActionHandler().addDownload(url)
+        from frontends.html import templatedisplay
+        return templatedisplay.GUIActionHandler().addDownload(url)
 
