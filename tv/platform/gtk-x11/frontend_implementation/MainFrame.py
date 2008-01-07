@@ -386,7 +386,9 @@ class MainFrame:
         if (self.aboutWidget is None):
             self.aboutWidget = gtk.AboutDialog()
             self.aboutWidget.set_name("Miro")
-            self.aboutWidget.set_version(config.get(prefs.APP_VERSION))
+            self.aboutWidget.set_version( "%s (r%s)" % \
+                                          (config.get(prefs.APP_VERSION), 
+                                           config.get(prefs.APP_REVISION_NUM)))
             self.aboutWidget.set_website("http://www.getmiro.com/")
             self.aboutWidget.set_copyright("Copyright (c) 2005-2007.  See LICENSE file for details.\nMiro and the Miro logo are trademarks of the Participatory Culture Foundation.")
             def delete_event_cb(widget, event):

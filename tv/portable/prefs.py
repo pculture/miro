@@ -174,6 +174,8 @@ APP_VERSION = \
     Pref(key='appVersion',        default=None, platformSpecific=False)
 APP_REVISION = \
     Pref(key='appRevision',       default=None, platformSpecific=False)
+APP_REVISION_NUM = \
+    Pref(key='appRevisionNum',    default=None, platformSpecific=False)
 APP_PLATFORM = \
     Pref(key='appPlatform',       default=None, platformSpecific=False)
 APP_SERIAL = \
