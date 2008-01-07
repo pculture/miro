@@ -186,6 +186,20 @@ class RemoteDownloader(DDBObject):
             return (0, self.status.get('upRate', 0))
         return (0, 0)
 
+    def beforeChangingStatus(self):
+        global totalDownRate
+        global totalUpRate
+        rates = self._getRates()
+        totalDownRate -= rates[0]
+        totalUpRate -= rates[1]
+
+    def afterChangingStatus(self):
+        global totalDownRate
+        global totalUpRate
+        rates = self._getRates()
+        totalDownRate += rates[0]
+        totalUpRate += rates[1]
+
     @classmethod
     def updateStatus(cls, data):
         for field in data:
@@ -203,11 +217,7 @@ class RemoteDownloader(DDBObject):
                 print "WARNING exception when comparing status: %s" % e
 
             wasFinished = self.isFinished()
-            global totalDownRate
-            global totalUpRate
-            rates = self._getRates()
-            totalDownRate -= rates[0]
-            totalUpRate -= rates[1]
+            self.beforeChangingStatus()
 
             # FIXME: how do we get all of the possible bit torrent
             # activity strings into gettext? --NN
@@ -218,9 +228,7 @@ class RemoteDownloader(DDBObject):
 
             # Store the time the download finished
             finished = self.isFinished() and not wasFinished
-            rates = self._getRates()
-            totalDownRate += rates[0]
-            totalUpRate += rates[1]
+            self.afterChangingStatus()
 
             if self.getState() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
                 self.stopUpload()
@@ -260,7 +268,9 @@ class RemoteDownloader(DDBObject):
                                              self.dlid)
             c.send()
         else:
+            self.beforeChangingStatus()
             self.status["state"] = u"paused"
+            self.afterChangingStatus()
             self.signalChange()
 
     ##
@@ -310,7 +320,9 @@ class RemoteDownloader(DDBObject):
                 del _downloads[self.dlid]
             self.dlid = generateDownloadID()
             views.remoteDownloads.recomputeIndex(indexes.downloadsByDLID)
+            self.beforeChangingStatus()
             self.status = {}
+            self.afterChangingStatus()
             if self.contentType == u"":
                 self.getContentType()
             else:
@@ -527,7 +539,9 @@ URL was %s""" % self.url
                                              self.dlid)
             c.send()
         else:
+            self.beforeChangingStatus()
             self.status['state'] = u'uploading'
+            self.afterChangingStatus()
             self.restart()
             self.signalChange()
 
@@ -539,6 +553,9 @@ URL was %s""" % self.url
                                           self.dlid)
             c.send()
             del _downloads[self.dlid]
+        self.beforeChangingStatus()
+        self.status["state"] = u"finished"
+        self.afterChangingStatus()
         self.signalChange()
 
 def cleanupIncompleteDownloads():
