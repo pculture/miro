@@ -392,13 +392,13 @@ unzipok:
   File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
   File  "moviedata_util.py"
   File  application.ini
-  File  /r chrome
-  File  /r components
-  File  /r defaults
-  File  /r resources
-  File  /r vlc-plugins
-  File  /r xulrunner
-  File  /r imagemagick
+  File  /r chrome\*.*
+  File  /r components\*.*
+  File  /r defaults\*.*
+  File  /r resources\*.*
+  File  /r vlc-plugins\*.*
+  File  /r xulrunner\*.*
+  File  /r imagemagick\*.*
 
 !endif
 
@@ -569,7 +569,7 @@ Section "Handle Xvid Video files" SecRegisterXvid
 SectionEnd
 
 Section /o "-I Heart Miro" SecIHeartMiro
-  File /r "${I_HEART_MIRO_DIRECTORY}"
+  File /r "${I_HEART_MIRO_DIRECTORY}\*.*"
   WriteRegStr HKLM "${FIREFOX_EXTENSION_KEY}" "${I_HEART_MIRO_ID}" "$INSTDIR\${I_HEART_MIRO_DIRECTORY}"
 SectionEnd
 
