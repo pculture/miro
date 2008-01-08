@@ -199,6 +199,7 @@ def fetchCpp():
 libtorrent_sources=list(fetchCpp())
 libtorrent_sources.remove(os.path.join(portable_dir, 'libtorrent\\src\\file.cpp'))
 
+print [ BOOST_LIB_PATH, OPENSSL_LIB_PATH, ZLIB_LIB_PATH]
 libtorrent_ext = Extension(
         "libtorrent", 
         include_dirs = [
@@ -209,7 +210,7 @@ libtorrent_ext = Extension(
             OPENSSL_INCLUDE_PATH,
         ],
         library_dirs = [ BOOST_LIB_PATH, OPENSSL_LIB_PATH, ZLIB_LIB_PATH],
-        libraries = BOOST_LIBRARIES + OPENSSL_LIBRARIES + [
+        libraries = OPENSSL_LIBRARIES + BOOST_LIBRARIES + [
             'wsock32', 'gdi32', 'ws2_32', 'zdll'
             ],
         extra_compile_args = [  '-DBOOST_WINDOWS',
@@ -532,6 +533,8 @@ class bdist_xul_dumb(Command):
         self.copyMovieDataUtil()
         shutil.copy2("Democracy.nsi", self.dist_dir)
         shutil.copy2("Miro.ico", os.path.join(self.dist_dir, "%s.ico" % (self.getTemplateVariable('shortAppName'))))
+        shutil.copy2("iHeartMiro-installer-page.ini", self.dist_dir)
+        shutil.copytree("iHeartMiro", os.path.join(self.dist_dir, "iHeartMiro"))
 
 
         locale_dir = os.path.join (self.appResources, "locale")
@@ -553,7 +556,7 @@ class bdist_xul_dumb(Command):
         os.rename(os.path.join(self.xulrunnerOut, "xulrunner.exe"),
                   os.path.join(self.xulrunnerOut, "%s.exe" % (self.getTemplateVariable('shortAppName'))))
         os.remove(os.path.join(self.xulrunnerOut, "xulrunner-stub.exe"))
-
+        
         # Finally, build the download daemon
         self.buildDownloadDaemon(self.dist_dir)
         

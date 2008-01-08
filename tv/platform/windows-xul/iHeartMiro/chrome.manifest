@@ -1,0 +1,2 @@
+content iheartmiro  chrome/content/
+overlay chrome://browser/content/browser.xul    chrome://iheartmiro/content/browser.xul
