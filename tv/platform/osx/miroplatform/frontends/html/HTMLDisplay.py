@@ -287,8 +287,10 @@ class ManagedWebView (NSObject):
             request = frame.provisionalDataSource().request()
             if request is nil:
                 request = frame.dataSource().request()
-            url = request.URL()
-            if url.absoluteString() == config.get(prefs.CHANNEL_GUIDE_URL):
+            url = request.URL()            
+            allowed = [config.get(prefs.CHANNEL_GUIDE_URL), 
+                       config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)]
+            if url.absoluteString() in allowed:
                 # The [NSURLRequest setAllowsAnyHTTPSCertificate:forHost:] selector is
                 # not documented anywhere, so I assume it is not public. It is however 
                 # a very clean and easy way to allow us to load our channel guide from
