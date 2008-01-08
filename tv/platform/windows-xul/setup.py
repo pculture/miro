@@ -192,6 +192,8 @@ def fetchCpp():
     for root,dirs,files in os.walk(os.path.join(portable_dir, 'libtorrent')):
         if '.svn' in dirs:
             dirs.remove('.svn')
+        if '_svn' in dirs:
+            dirs.remove('_svn')
         for file in files:
             if file.endswith('.cpp'):
                 yield os.path.join(root,file)
@@ -534,7 +536,7 @@ class bdist_xul_dumb(Command):
         shutil.copy2("Democracy.nsi", self.dist_dir)
         shutil.copy2("Miro.ico", os.path.join(self.dist_dir, "%s.ico" % (self.getTemplateVariable('shortAppName'))))
         shutil.copy2("iHeartMiro-installer-page.ini", self.dist_dir)
-        shutil.copytree("iHeartMiro", os.path.join(self.dist_dir, "iHeartMiro"))
+        copyTreeExceptSvn(os.path.join(platform_dir, "iHeartMiro"), os.path.join(self.dist_dir, "iHeartMiro"))
 
 
         locale_dir = os.path.join (self.appResources, "locale")
