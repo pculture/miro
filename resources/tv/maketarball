@@ -36,6 +36,29 @@ else
         tag=$1
     fi
 fi
+
+cd tv
+
+# go through app.config.template and expand the revision-related properties
+cd resources
+REVISION_NUM=`svn info | grep "^Revision:" | mawk '{ print($2) }'`
+REVISION_URL=`svn info | grep "^URL:" | mawk '{ print($2) }'`
+REVISION="$REVISION_URL - $REVISION_NUM"
+
+# this looks awful, but it just replaces / with \/
+REVISION_NUM_ESCAPED=`echo $REVISION_NUM | sed "s/\\\\//\\\\\\\\\\\\//g"`
+REVISION_URL_ESCAPED=`echo $REVISION_URL | sed "s/\\\\//\\\\\\\\\\\\//g"`
+REVISION_ESCAPED=`echo $REVISION         | sed "s/\\\\//\\\\\\\\\\\\//g"`
+
+# echo "$REVISION_NUM $REVISION_NUM_ESCAPED"
+# echo "$REVISION_URL $REVISION_URL_ESCAPED"
+# echo "$REVISION $REVISION_ESCAPED"
+
+cat < app.config.template | sed "s/^appRevisionNum .*$/appRevisionNum = $REVISION_NUM_ESCAPED/;s/^appRevisionURL .*$/appRevisionURL = $REVISION_URL_ESCAPED/;s/^appRevision .*$/appRevision = $REVISION_ESCAPED/" > app.config.template2
+mv app.config.template2 app.config.template
+cd ..
+cd ..
+
 mv tv Miro-$tag
 tar zcvf Miro-$tag.tar.gz --exclude=.svn Miro-$tag
 mv Miro-$tag.tar.gz ..
