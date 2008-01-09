@@ -597,7 +597,7 @@ Function .onInit
 
   FileClose $0
 
-  !tempfile THEME_TEMP_DIR
+  GetTempFileName $THEME_TEMP_DIR
   StrCpy $THEME_TEMP_DIR ${THEME_TEMP_DIR}
   Delete "$THEME_TEMP_DIR"  ; The above macro creates the file
   !insertmacro ZIPDLL_EXTRACT "$TACKED_ON_FILE" "$THEME_TEMP_DIR" <ALL>
