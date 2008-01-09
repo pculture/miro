@@ -23,10 +23,6 @@
 !define OLD_UNINSTALL_SHORTCUT1 "Uninstall Democracy Player.lnk"
 !define OLD_UNINSTALL_SHORTCUT2 "Uninstall Democracy.lnk"
 
-!define FIREFOX_EXTENSION_KEY "Software\Mozilla\Firefox\Extensions"
-!define I_HEART_MIRO_ID "{216ec66d-214a-43ea-92f0-5373f8405c88}"
-!define I_HEART_MIRO_DIRECTORY "iHeartMiro"
-
 Name "$APP_NAME"
 OutFile "${CONFIG_OUTPUT_FILE}"
 InstallDir "$PROGRAMFILES\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
@@ -175,7 +171,6 @@ Page custom iHeartMiroInstall iHeartMiroInstallLeave
   RMDir /r "${directory}\vlc-plugins"
   RMDir /r "${directory}\xulrunner"
   RMDir /r "${directory}\imagemagick"
-  RMDIR /r "${directory}\${I_HEART_MIRO_DIRECTORY}"
 
   RMDIR ${directory} 
 !macroend
@@ -568,11 +563,6 @@ Section "Handle Xvid Video files" SecRegisterXvid
   WriteRegStr HKCR ".3ivx" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section /o "-I Heart Miro" SecIHeartMiro
-  File /r "${I_HEART_MIRO_DIRECTORY}"
-  WriteRegStr HKLM "${FIREFOX_EXTENSION_KEY}" "${I_HEART_MIRO_ID}" "$INSTDIR\${I_HEART_MIRO_DIRECTORY}"
-SectionEnd
-
 Section -NotifyShellExentionChange
   System::Call 'Shell32::SHChangeNotify(i 0x8000000, i 0, i 0, i 0)'
 SectionEnd
@@ -735,7 +725,6 @@ UninstallOld:
   DeleteRegKey HKLM "${OLD_UNINST_KEY}"
   DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "Democracy Player"
   DeleteRegKey HKCR "Democracy.Player.1"
-  DeleteRegValue HKLM "${FIREFOX_EXTENSION_KEY}" "${I_HEART_MIRO_ID}"
 
 NotOldInstalled:
   !insertmacro MUI_LANGDLL_DISPLAY
@@ -790,22 +779,22 @@ DoneTorrentRegistration:
 FunctionEnd
 
 Function iHeartMiroInstall
-  !insertmacro MUI_HEADER_TEXT "Install I Heart Miro?" "Decide whether to install the iHeartMiro firefox extension."
+  !insertmacro MUI_HEADER_TEXT "Install I Heart Miro?" "Go to ihearmiro.org to install the iHeartMiro firefox extension."
   !insertmacro MUI_INSTALLOPTIONS_DISPLAY "iHeartMiro-installer-page.ini"
 FunctionEnd
 
 Function iHeartMiroInstallLeave
-  !insertmacro MUI_INSTALLOPTIONS_READ $R0 "iHeartMiro-installer-page.ini" "Settings" "State"
-  IntCmp $R0 1 InstallHeart
-    SectionGetFlags ${SecIHeartMiro} $0
-    IntOp $0 $0 & ~${SF_SELECTED}
-    SectionSetFlags ${SecIHeartMiro} $0
-    Return
-  InstallHeart:
-    SectionGetFlags ${SecIHeartMiro} $0
-    IntOp $0 $0 | ${SF_SELECTED}
-    SectionSetFlags ${SecIHeartMiro} $0
-    Return
+;  !insertmacro MUI_INSTALLOPTIONS_READ $R0 "iHeartMiro-installer-page.ini" "Settings" "State"
+;  IntCmp $R0 1 InstallHeart
+;    SectionGetFlags ${SecIHeartMiro} $0
+;    IntOp $0 $0 & ~${SF_SELECTED}
+;    SectionSetFlags ${SecIHeartMiro} $0
+;    Return
+;  InstallHeart:
+;    SectionGetFlags ${SecIHeartMiro} $0
+;    IntOp $0 $0 | ${SF_SELECTED}
+;    SectionSetFlags ${SecIHeartMiro} $0
+;    Return
 FunctionEnd
 
 Section -Post
@@ -870,7 +859,6 @@ continue:
   DeleteRegKey HKLM "${UNINST_KEY}"
   DeleteRegValue HKLM "Software\Microsoft\Windows\CurrentVersion\Run" "${CONFIG_LONG_APP_NAME}"
   DeleteRegKey HKCR "${CONFIG_PROG_ID}"
-  DeleteRegValue HKLM "${FIREFOX_EXTENSION_KEY}" "${I_HEART_MIRO_ID}"
 
 done:
   SetAutoClose true
