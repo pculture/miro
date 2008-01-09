@@ -56,6 +56,7 @@ USE_XINE_HACK = True #use_xine_hack_default()
 from distutils.cmd import Command
 from distutils.core import setup
 from distutils.extension import Extension
+from distutils.errors import DistutilsOptionError
 from distutils import dir_util
 from distutils import log
 from distutils.util import change_root
@@ -473,7 +474,7 @@ class bdist_deb (Command):
         self.dist_dir = self.get_finalized_command('bdist').dist_dir
 
     def run (self):
-        # build all python modules/extensions
+        # buzild all python modules/extensions
         self.run_command('build')
         # copy the built files
         install = self.reinitialize_command('install', reinit_subcommands=1)
@@ -522,6 +523,61 @@ class bdist_deb (Command):
         log.info("running %s" % dpkg_command)
         os.system(dpkg_command)
         dir_util.remove_tree(self.bdist_dir)
+
+#### install_theme installs a specifified theme .zip
+class install_theme(Command):
+
+    description = 'Install a provided theme to /usr/share/miro/themes'
+    user_options = [("theme=", None, 'ZIP file containing the theme')]
+
+    def initialize_options(self):
+        self.theme = None
+
+    def finalize_options(self):
+        if self.theme is None:
+            raise DistutilsOptionError, "must supply a theme ZIP file"
+        if not os.path.exists(self.theme):
+            raise DistutilsOptionError, "theme file does not exist"
+        import zipfile
+        if not zipfile.is_zipfile(self.theme):
+            raise DistutilsOptionError, "theme file is not a ZIP file"
+        zf = zipfile.ZipFile(self.theme)
+        appConfig = zf.read('app.config')
+        themeName = None
+        for line in appConfig.split('\n'):
+            if '=' in line:
+                name, value = line.split('=', 1)
+                name = name.strip()
+                value = value.lstrip()
+                if name == 'themeName':
+                    themeName = value
+        if themeName is None:
+            raise DistutilsOptionError, "invalid theme file"
+        self.zipfile = zf
+        self.theme_name = themeName
+        self.theme_dir = '/usr/share/miro/themes/%s' % themeName
+
+    def run(self):
+        if os.path.exists(self.theme_dir):
+            shutil.rmtree(self.theme_dir)
+        os.makedirs(self.theme_dir)
+        for name in self.zipfile.namelist():
+            if name.startswith('xul/'):
+                # ignore XUL stuff, we don't need it on linux
+                continue
+            print 'installing', os.path.join(self.theme_dir, name)
+            if name[-1] == '/':
+                os.makedirs(os.path.join(self.theme_dir, name))
+            else:
+                f = file(os.path.join(self.theme_dir, name), 'wb')
+                f.write(self.zipfile.read(name))
+                f.close()
+        print """%s theme installed.
+
+To use this theme, run:
+
+    miro --theme="%s"
+""" % (self.theme_name, self.theme_name)
 
 #print "IS_FILE: %s" % repr(os.path.isfile(os.path.join(platform_dir, "miro.real")))
 
@@ -574,5 +630,7 @@ setup(name='miro',
         'build_py': build_py,
         'bdist_deb': bdist_deb,
         'install_data': install_data,
+        'install_theme': install_theme,
     }
 )
+
