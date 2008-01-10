@@ -62,17 +62,17 @@ os.mkdir('build-tmp')
 
 if tarball_url.startswith("http"):
     # change directories, then wget the tarball
-    print "build.py: downloading tarball"
+    print "downloading tarball"
     os.chdir('build-tmp')
     call('wget %s' % tarball_url)
 else:
     # copy the tarball, then switch directories
-    print "build.py: copying tarball"
+    print "copying tarball"
     call('cp %s build-tmp/' % tarball_url)
     os.chdir('build-tmp')
 
 
-print "build.py: extracting files"
+print "extracting files"
 call('tar zxvf %s' %  tarball_name)
 call('cp %s %s' % (tarball_name, "miro_%s.orig.tar.gz" % version))
 os.rename('Miro-%s' % version, 'miro-%s' % version)
@@ -82,7 +82,7 @@ os.chdir('miro-%s' % version)
 call('rm -rf debian/.svn')
 call('rm -rf debian/patches/.svn')
 
-print "build.py: building source and .dsc file"
+print "building source and .dsc file"
 call('dpkg-buildpackage -S -us -uc -rfakeroot')
 
 os.chdir('../..')
@@ -93,7 +93,7 @@ os.mkdir(distro)
 
 call('mv build-tmp/miro_* %s' % distro)
 
-print "build.py: running pbuilder"
+print "running pbuilder"
 call('pbuilder build --basetgz %s-base.tgz --buildresult ./%s %s/*.dsc' % (distro, distro, distro))
 
-print 'build.py: done'
+print 'done'

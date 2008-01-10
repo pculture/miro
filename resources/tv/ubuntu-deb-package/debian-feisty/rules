@@ -39,6 +39,6 @@ clean::
 	rm -f platform/gtk-x11/frontend_implementation/MozillaBrowser.c
 	rm -f platform/gtk-x11/frontend_implementation/xlibhelper.c
 	rm -f platform/gtk-x11/miro.1.gz
-	rm -f portable/*.pyc
+	# rm -f portable/*.pyc
 	# rm -f resources/locale/*.mo
 
