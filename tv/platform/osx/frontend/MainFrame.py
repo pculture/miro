@@ -102,6 +102,7 @@ class MainController (NSWindowController):
         self.frame.videoInfoDisplay.backgroundColor = NSColor.blackColor()
         self.restoreLayout()
         self.updateWindowTexture()
+        self.window().setTitle_(config.get(prefs.LONG_APP_NAME))
         self.showWindow_(nil)
 
     def appWillTerminate_(self, notification):
