@@ -55,6 +55,7 @@ import util
 import searchengines
 import storedatabase
 import views
+import opml
 
 class StartupError(Exception):
     def __init__(self, summary, description):
