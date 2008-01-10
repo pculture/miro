@@ -153,7 +153,7 @@ class TorrentSession:
         self.enc_req = None
 
     def startup(self):
-        fingerprint = lt.fingerprint("MR", 0, 9, 9, 9)
+        fingerprint = lt.fingerprint("MR", 1, 1, 0, 0)
         self.session = lt.session(fingerprint)
         self.listen()
         self.setUpnp()
@@ -761,7 +761,7 @@ class BTDownloader(BGDownloader):
             self.runDownloader()
 
     def _startTorrent(self):
-#        try:
+        try:
             torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
             self.totalSize = torrent_info.total_size()
 
@@ -777,10 +777,10 @@ class BTDownloader(BGDownloader):
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
             else:
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, None, lt.storage_mode_t.storage_mode_allocate)
-#        except:
-#            self.handleError(_('BitTorrent failure'), 
-#                    _('BitTorrent failed to startup'))
-#        else:
+        except:
+            self.handleError(_('BitTorrent failure'), 
+                    _('BitTorrent failed to startup'))
+        else:
             torrentSession.addTorrent (self)
 
     def _shutdownTorrent(self):
