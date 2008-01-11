@@ -178,7 +178,9 @@ class Config (object):
     def get_icon_file(self):
         iconFile = None
         if self.themeConfig is not None:
-            iconFile = self.themeConfig.get('osxIconFile')
+            themeIconFile = self.themeConfig.get('iconFile-osx')
+            if themeIconFile is not None:
+                iconFile = os.path.join(self.themeDir, themeIconFile)
         if iconFile is None:
             iconFile = os.path.join(ROOT_DIR, 'platform', 'osx', '%s.icns' % self.config.get('shortAppName'))
         return iconFile
