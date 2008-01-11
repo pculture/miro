@@ -366,7 +366,6 @@ class MiroBuild (py2app):
         self.setup_templates()
         self.setup_dynamic_sources()
         self.setup_info_plist()
-        self.setup_frameworks()
 
         py2app.run(self)
         
@@ -393,12 +392,6 @@ class MiroBuild (py2app):
         data = self.config.get_data()
         self.fillTemplate(daemonTemplate, target, **data)
     
-    def setup_frameworks(self):
-        print 'Extracting frameworks to build directory...'
-        frameworks_path = os.path.join(ROOT_DIR, 'platform/osx/build/frameworks')
-        extract_binaries('frameworks', frameworks_path, self.force_update)
-        self.frameworks = glob(os.path.join(frameworks_path, '*.framework'))
-
     def setup_info_plist(self):
         def updatePListEntry(plist, key, conf, prioritizeTheme=True):
             entry = plist[key]
