@@ -76,7 +76,7 @@ def save(data):
 
 def get(descriptor):
     if descriptor == prefs.MOVIES_DIRECTORY:
-        path = os.path.join(MOVIES_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))
+        path = os.path.join(MOVIES_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME, False))
         try:
             os.makedirs(os.path.join(path,'Incomplete Downloads'))
         except:
@@ -90,7 +90,7 @@ def get(descriptor):
         return os.path.abspath(resources.path("../locale"))
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
-        path = os.path.join(SUPPORT_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME))
+        path = os.path.join(SUPPORT_DIRECTORY_PARENT, config.get(prefs.SHORT_APP_NAME, False))
         os.environ['APPDATA'] = path # This is for the Bittorent module
         try:
             os.makedirs(path)
@@ -133,6 +133,9 @@ def get(descriptor):
     
     elif descriptor == prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD:
         return _getProxyAuthInfo('password')
+    
+    elif descriptor == prefs.THEME_DIRECTORY:
+        return os.path.join(getBundlePath(), "Contents", "Theme")
     
     return descriptor.default
 

@@ -21,6 +21,7 @@ import sys
 import time
 import string
 import shutil
+import zipfile
 import tarfile
 import plistlib
 import datetime
@@ -36,17 +37,7 @@ from glob import glob
 PYTHON_VERSION = platform.python_version()[0:3]
 
 # =============================================================================
-# Get command line parameters
-# =============================================================================
-
-forceUpdate = False
-if '--force-update' in sys.argv:
-    sys.argv.remove('--force-update')
-    forceUpdate = True
-
-# =============================================================================
-# Find the top of the source tree and set search path
-# GCC3.3 on OS X 10.3.9 doesn't like ".."'s in the path so we normalize it
+# Find the top of the source tree and set the search path accordingly
 # =============================================================================
 
 ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
@@ -60,19 +51,6 @@ sys.path.insert(0, PORTABLE_DIR)
 #SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
 SANDBOX_DIR = "/usr/local"
 #sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
-
-# =============================================================================
-# Only now may we import things from the local sandbox and our own tree
-# =============================================================================
-
-import py2app
-from py2app.build_app import py2app
-from Pyrex.Distutils import build_ext
-from distutils.extension import Extension
-from distutils.core import setup
-from distutils.cmd import Command
-
-import template_compiler
 
 # =============================================================================
 # Look for the Boost library in various common places.
@@ -106,100 +84,41 @@ else:
     print 'Boost library (version %s) found in %s' % (BOOST_VERSION, BOOST_LIB_DIR)
 
 # =============================================================================
-# Get subversion revision information.
+# We're going to explicitely pass these when linking our extensions to:
+# - avoid a linker error if we would specify the libraries using -L and -l
+#   flags since we also specify a isysroot.
+# - avoid the linker warnings which would occur if we would remove the 
+#   isysroot flag.
 # =============================================================================
+
+#PYTHON_LIB = os.path.join(SANDBOX_DIR, "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+BOOST_PYTHON_LIB = os.path.join(SANDBOX_DIR, "lib", "libboost_python-%s.a" % BOOST_VERSION)
+BOOST_FILESYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_filesystem-%s.a' % BOOST_VERSION)
+BOOST_DATETIME_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_date_time-%s.a' % BOOST_VERSION)
+BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread-%s.a' % BOOST_VERSION)
+
+# =============================================================================
+# Only now may we import things from the local sandbox and our own tree
+# =============================================================================
+
+import py2app
+from py2app.build_app import py2app
+from distutils.extension import Extension
+from distutils.cmd import Command
+from distutils.errors import DistutilsFileError
 
 import util
-revision = util.queryRevision(ROOT_DIR)
-if revision is None:
-    revisionURL = 'unknown'
-    revisionNum = '0000'
-    revision = 'unknown'
-else:
-    revisionURL, revisionNum = revision
-    revision = '%s - %s' % revision
+import template_compiler
 
 # =============================================================================
-# Inject the revision number into app.config.template to get app.config.
+# Utility function used to extract stuff from the binary kit
 # =============================================================================
 
-appConfigTemplatePath = os.path.join(ROOT_DIR, 'resources/app.config.template')
-appConfigPath = os.path.join(ROOT_DIR, 'resources/app.config')
-
-def fillTemplate(templatepath, outpath, **vars):
-    s = open(templatepath, 'rt').read()
-    s = string.Template(s).safe_substitute(**vars)
-    f = open(outpath, "wt")
-    f.write(s)
-    f.close()
-
-fillTemplate(appConfigTemplatePath,
-             appConfigPath,
-             BUILD_MACHINE="%s@%s" % (os.getlogin(),
-                                      os.uname()[1]),
-             BUILD_TIME=str(time.time()),
-             APP_REVISION = revision, 
-             APP_REVISION_URL = revisionURL, 
-             APP_REVISION_NUM = revisionNum, 
-             APP_PLATFORM = 'osx')
-
-# =============================================================================
-# Update the Info property list.
-# =============================================================================
-
-def updatePListEntry(plist, key, conf):
-    entry = plist[key]
-    plist[key] = string.Template(entry).safe_substitute(conf)
-
-conf = util.readSimpleConfigFile(appConfigPath)
-infoPlist = plistlib.readPlist(u'Info.plist')
-
-updatePListEntry(infoPlist, u'CFBundleGetInfoString', conf)
-updatePListEntry(infoPlist, u'CFBundleIdentifier', conf)
-updatePListEntry(infoPlist, u'CFBundleName', conf)
-updatePListEntry(infoPlist, u'CFBundleShortVersionString', conf)
-updatePListEntry(infoPlist, u'CFBundleVersion', conf)
-updatePListEntry(infoPlist, u'NSHumanReadableCopyright', conf)
-
-# =============================================================================
-# Now that we have a config, we can process the image name
-# =============================================================================
-
-if "--make-dmg" in sys.argv:
-    # Change this to change the name of the .dmg file we create
-    imgName = "%s-%4d-%02d-%02d.dmg" % (
-        conf['shortAppName'],
-        datetime.date.today().year,
-        datetime.date.today().month,
-        datetime.date.today().day)
-    sys.argv.remove('--make-dmg')
-else:
-    imgName = None
-
-# =============================================================================
-# Create daemon.py
-# =============================================================================
-
-fillTemplate(os.path.join(ROOT_DIR, 'portable/dl_daemon/daemon.py.template'),
-             os.path.join(ROOT_DIR, 'portable/dl_daemon/daemon.py'),
-             **conf)
-
-# =============================================================================
-# Get a list of additional resource files to include
-# =============================================================================
-
-excludedResources = ['.svn', '.DS_Store']
-resourceFiles = [os.path.join('Resources', x) for x in os.listdir('Resources') if x not in excludedResources]
-resourceFiles.append('qt_extractor.py')
-
-# =============================================================================
-# Prepare the frameworks we're going to use
-# =============================================================================
-
-def extract_binaries(source, target):
-    if forceUpdate and os.path.exists(target):
+def extract_binaries(source, target, force=True):
+    if force and os.path.exists(target):
         shutil.rmtree(target, True)
-    
+
     if os.path.exists(target):
         print "    (all skipped, already there)"
     else:
@@ -218,81 +137,281 @@ def extract_binaries(source, target):
                 finally:
                     tar.close()
 
-print 'Extracting frameworks to build directory...'
-frameworks_path = os.path.join(ROOT_DIR, 'platform/osx/build/frameworks')
-extract_binaries('frameworks', frameworks_path)
-frameworks = glob(os.path.join(frameworks_path, '*.framework'))
-
 # =============================================================================
-# Define the clean task
+# A theme archive file
 # =============================================================================
 
-class clean (Command):
-    user_options = []
-
-    def initialize_options(self):
-        return None
-
-    def finalize_options(self):
-        return None
-
-    def run(self):
-        print "Removing old build directory..."
-        try:
-            shutil.rmtree('build')
-        except:
-            pass
-        print "Removing old dist directory..."
-        try:
-            shutil.rmtree('dist')
-        except:
-            pass
-        print "Removing old app..."
-        try:
-            shutil.rmtree('%s.app'%conf['shortAppName'])
-        except:
-            pass
-        print "Removing old compiled templates..."
-        try:
-            for filename in os.listdir(os.path.join("..","..","portable","compiled_templates")):
-                if not filename.startswith(".svn"):
-                    filename = os.path.join("..","..","portable","compiled_templates",filename)
-                    if os.path.isdir(filename):
-                        shutil.rmtree(filename)
-                    else:
-                        os.remove(filename)
-        except:
-            pass
+class Config (object):
+    
+    def __init__(self, path, themePath=None):
+        self.config = util.readSimpleConfigFile(path)
+        self.themeDir = os.path.join(ROOT_DIR, 'platform', 'osx', 'build', 'theme')
+        self.themeConfig = None
+        if themePath is not None:
+            self.extract_theme_content(themePath, self.themeDir)
+            themeConfigPath = os.path.join(self.themeDir, "app.config")
+            self.themeConfig = util.readSimpleConfigFile(themeConfigPath)
+        elif os.path.exists(self.themeDir):
+            shutil.rmtree(self.themeDir)
+        
+    def extract_theme_content(self, themePath, target):
+        if os.path.exists(target):
+            shutil.rmtree(target)
+        
+        os.makedirs(target)
+        excludeList = ["xul"]
+        themeArchive = zipfile.ZipFile(themePath, "r")
+        for entry in themeArchive.namelist():
+            extract = True
+            for excluded in excludeList:
+                if entry.startswith(excluded):
+                    extract = False
+                    break            
+            if extract:
+                data = themeArchive.read(entry)
+                path = os.path.join(target, entry)
+                f = open(path, "wt")
+                f.write(data)
+                f.close()
+        themeArchive.close()
+    
+    def get_icon_file(self):
+        iconFile = None
+        if self.themeConfig is not None:
+            themeIconFile = self.themeConfig.get('iconFile-osx')
+            if themeIconFile is not None:
+                iconFile = os.path.join(self.themeDir, themeIconFile)
+        if iconFile is None:
+            iconFile = os.path.join(ROOT_DIR, 'platform', 'osx', '%s.icns' % self.config.get('shortAppName'))
+        return iconFile
+        
+    def get_data(self, mergeThemeData=True):
+        if self.themeConfig is None or not mergeThemeData:
+            return self.config
+        else:
+            conf = self.config.copy()
+            conf.update(self.themeConfig)
+            return conf
+    
+    def get(self, key, prioritizeTheme=True):
+        if self.themeConfig is not None and key in self.themeConfig and prioritizeTheme:
+            return self.themeConfig[key]
+        else:
+            return self.config.get(key)
 
 # =============================================================================
 # Define our custom build task
 # =============================================================================
 
-class mypy2app (py2app):
-        
-    def run(self):
-        global ROOT_DIR, imgName, conf
-        print "------------------------------------------------"
-        
-        print "Building %s v%s (%s)" % (conf['longAppName'], conf['appVersion'], conf['appRevision'])
+class MiroBuild (py2app):
 
-        template_compiler.compileAllTemplates(ROOT_DIR)
+    description = "create the OS X Miro application"
+    
+    user_options = py2app.user_options + [
+        ("make-dmg",     "d", "produce a disk image"),
+        ("force-update", "f", "force resource update"),
+        ("theme=",       "t", "theme file to use")]
+
+    boolean_options = py2app.boolean_options + ["make-dmg", "force-update"]
+        
+    def initialize_options(self):
+        self.make_dmg = False
+        self.force_update = False
+        self.theme = None
+        py2app.initialize_options(self)
+        
+    def finalize_options(self):
+        py2app.finalize_options(self)
+        self.setup_config()
+        self.setup_distribution()
+        self.setup_options()
+                    
+    def setup_config(self):
+        # Get subversion revision information.
+        revision = util.queryRevision(ROOT_DIR)
+        if revision is None:
+            revisionURL = 'unknown'
+            revisionNum = '0000'
+            revision = 'unknown'
+        else:
+            revisionURL, revisionNum = revision
+            revision = '%s - %s' % revision
+
+        # Inject the revision number into app.config.template to get app.config.
+        appConfigTemplatePath = os.path.join(ROOT_DIR, 'resources/app.config.template')
+        self.appConfigPath = os.path.join(ROOT_DIR, 'resources/app.config')
+        
+        self.fillTemplate(appConfigTemplatePath,
+                          self.appConfigPath,
+                          BUILD_MACHINE="%s@%s" % (os.getlogin(),
+                                                   os.uname()[1]),
+                          BUILD_TIME=str(time.time()),
+                          APP_REVISION = revision, 
+                          APP_REVISION_URL = revisionURL, 
+                          APP_REVISION_NUM = revisionNum, 
+                          APP_PLATFORM = 'osx')
+
+        if self.theme is not None:
+            if not os.path.exists(self.theme):
+                raise DistutilsFileError, "theme file %s not found" % self.theme
+            else:
+                print "Using theme %s" % self.theme
+
+        self.config = Config(self.appConfigPath, self.theme)
+    
+    def setup_distribution(self):
+        self.distribution.app = ['Miro.py']
+        self.distribution.ext_modules = list()
+        self.distribution.ext_modules.append(self.get_idletime_ext())
+        self.distribution.ext_modules.append(self.get_keychain_ext())
+        self.distribution.ext_modules.append(self.get_qtcomp_ext())
+        self.distribution.ext_modules.append(self.get_database_ext())
+        self.distribution.ext_modules.append(self.get_sorts_ext())
+        self.distribution.ext_modules.append(self.get_fasttypes_ext())
+        self.distribution.ext_modules.append(self.get_libtorrent_ext())
+        
+        self.packages = ['dl_daemon']        
+        self.iconfile = self.config.get_icon_file()
+        
+        excludedResources = ['.svn', '.DS_Store']
+        resourceFiles = [os.path.join('Resources', x) for x in os.listdir('Resources') if x not in excludedResources]
+        resourceFiles.append('qt_extractor.py')
+        self.resources = resourceFiles
+    
+    def setup_options(self):
+        self.bundleRoot = os.path.join(self.dist_dir, '%s.app/Contents' % self.config.get('shortAppName'))
+        self.rsrcRoot = os.path.join(self.bundleRoot, 'Resources')
+        self.fmwkRoot = os.path.join(self.bundleRoot, 'Frameworks')
+        self.cmpntRoot = os.path.join(self.bundleRoot, 'Components')
+        self.prsrcRoot = os.path.join(self.rsrcRoot, 'resources')
+        
+    def get_idletime_ext(self):
+        idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
+        idletime_link_args = ['-framework', 'CoreFoundation']
+        return Extension("idletime", sources=idletime_src, extra_link_args=idletime_link_args)
+    
+    def get_keychain_ext(self):
+        keychain_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'keychain.c'))
+        keychain_link_args = ['-framework', 'Security']
+        return Extension("keychain", sources=keychain_src, extra_link_args=keychain_link_args)
+    
+    def get_qtcomp_ext(self):
+        qtcomp_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'qtcomp.c'))
+        qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'Quicktime']
+        return Extension("qtcomp", sources=qtcomp_src, extra_link_args=qtcomp_link_args)
+    
+    def get_database_ext(self):
+        database_src = glob(os.path.join(ROOT_DIR, 'portable', 'database.pyx'))
+        return Extension("database", sources=database_src)
+    
+    def get_sorts_ext(self):
+        sorts_src = glob(os.path.join(ROOT_DIR, 'portable', 'sorts.pyx'))
+        return Extension("sorts", sources=sorts_src)
+    
+    def get_fasttypes_ext(self):
+        fasttypes_src = glob(os.path.join(ROOT_DIR, 'portable', 'fasttypes.cpp'))
+        fasttypes_inc_dirs = [BOOST_INCLUDE_DIR]
+        fasttypes_extras = [PYTHON_LIB, BOOST_PYTHON_LIB]
+        return Extension("fasttypes", sources=fasttypes_src, 
+                                      include_dirs=fasttypes_inc_dirs, 
+                                      extra_objects=fasttypes_extras)
+    
+    def get_libtorrent_ext(self):
+        def libtorrent_sources_iterator():
+            for root,dirs,files in os.walk(os.path.join(PORTABLE_DIR, 'libtorrent')):
+                if '.svn' in dirs:
+                    dirs.remove('.svn')
+                for file in files:
+                    if file.endswith('.cpp'):
+                        yield os.path.join(root,file)
+
+        libtorrent_src = list(libtorrent_sources_iterator())
+        libtorrent_src.remove(os.path.join(PORTABLE_DIR, 'libtorrent/src/file_win.cpp'))
+        libtorrent_inc_dirs = [BOOST_INCLUDE_DIR,
+                               os.path.join(PORTABLE_DIR, 'libtorrent', 'include'),
+                               os.path.join(PORTABLE_DIR, 'libtorrent', 'include', 'libtorrent')]
+        libtorrent_lib_dirs = [BOOST_LIB_DIR]
+        libtorrent_libs = ['z', 
+                           'pthread', 
+                           'ssl']
+        libtorrent_extras = [PYTHON_LIB,
+                             BOOST_PYTHON_LIB,
+                             BOOST_FILESYSTEM_LIB,
+                             BOOST_DATETIME_LIB,
+                             BOOST_THREAD_LIB]
+        libtorrent_compil_args = ["-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1", 
+                                  "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1", 
+                                  "-DHAVE_INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1", 
+                                  "-DHAVE_PTHREAD=1", 
+                                  "-DTORRENT_USE_OPENSSL=1", 
+                                  "-DHAVE_SSL=1",
+                                  "-DNDEBUG"]
+
+        return Extension("libtorrent", sources=libtorrent_src, 
+                                       include_dirs=libtorrent_inc_dirs,
+                                       libraries=libtorrent_libs, 
+                                       extra_objects=libtorrent_extras,
+                                       extra_compile_args=libtorrent_compil_args)
+    
+    def fillTemplate(self, templatepath, outpath, **vars):
+        s = open(templatepath, 'rt').read()
+        s = string.Template(s).safe_substitute(**vars)
+        f = open(outpath, "wt")
+        f.write(s)
+        f.close()
+    
+    def run(self):
+        print "Building %s v%s (%s)" % (self.config.get('longAppName'), self.config.get('appVersion'), self.config.get('appRevision'))
+        
+        self.setup_templates()
+        self.setup_dynamic_sources()
+        self.setup_info_plist()
 
         py2app.run(self)
+        
+        self.fix_frameworks_alias()
+        self.copy_quicktime_components()
+        self.copy_portable_resources()
+        self.copy_config_file()
+        self.copy_localization_files()
+        if self.theme is not None:
+            self.copy_theme_files()
+        
+        self.clean_up_incomplete_lproj()
+        self.clean_up_unwanted_data()
 
-        # Setup some variables we'll need
+        if self.make_dmg:
+            self.make_disk_image()
+    
+    def setup_templates(self):
+        template_compiler.compileAllTemplates(ROOT_DIR)
+    
+    def setup_dynamic_sources(self):
+        daemonTemplate = os.path.join(ROOT_DIR, 'portable/dl_daemon/daemon.py.template')
+        target = os.path.join(ROOT_DIR, 'portable/dl_daemon/daemon.py')
+        data = self.config.get_data()
+        self.fillTemplate(daemonTemplate, target, **data)
+    
+    def setup_info_plist(self):
+        def updatePListEntry(plist, key, conf, prioritizeTheme=True):
+            entry = plist[key]
+            plist[key] = string.Template(entry).safe_substitute(conf.get_data(prioritizeTheme))
 
-        bundleRoot = os.path.join(self.dist_dir, '%s.app/Contents'%conf['shortAppName'])
-        execRoot = os.path.join(bundleRoot, 'MacOS')
-        rsrcRoot = os.path.join(bundleRoot, 'Resources')
-        fmwkRoot = os.path.join(bundleRoot, 'Frameworks')
-        cmpntRoot = os.path.join(bundleRoot, 'Components')
-        prsrcRoot = os.path.join(rsrcRoot, 'resources')
+        infoPlist = plistlib.readPlist(u'Info.plist')
+        updatePListEntry(infoPlist, u'CFBundleGetInfoString', self.config)
+        updatePListEntry(infoPlist, u'CFBundleIdentifier', self.config, False)
+        updatePListEntry(infoPlist, u'CFBundleExecutable', self.config, False)
+        updatePListEntry(infoPlist, u'CFBundleName', self.config)
+        updatePListEntry(infoPlist, u'CFBundleShortVersionString', self.config)
+        updatePListEntry(infoPlist, u'CFBundleVersion', self.config)
+        updatePListEntry(infoPlist, u'NSHumanReadableCopyright', self.config)
+        
+        self.plist = infoPlist
 
+    def fix_frameworks_alias(self):
         # Py2App seems to have a bug where alias builds would get 
         # incorrect symlinks to frameworks, so create them manually. 
-
-        for fmwk in glob(os.path.join(fmwkRoot, '*.framework')): 
+        for fmwk in glob(os.path.join(self.fmwkRoot, '*.framework')): 
             if os.path.islink(fmwk): 
                 dest = os.readlink(fmwk) 
                 if not os.path.exists(dest): 
@@ -300,56 +419,52 @@ class mypy2app (py2app):
                     os.remove(fmwk) 
                     os.symlink(os.path.dirname(dest), fmwk)
 
-        # Embed the Quicktime components
-        
+    def copy_quicktime_components(self):
         print 'Copying Quicktime components to application bundle'
-        extract_binaries('qtcomponents', cmpntRoot)
+        extract_binaries('qtcomponents', self.cmpntRoot, self.force_update)
 
-        # Copy our own portable resources
-
+    def copy_portable_resources(self):
         print "Copying portable resources to application bundle"
 
-        if forceUpdate and os.path.exists(prsrcRoot):
-            shutil.rmtree(prsrcRoot, True)
+        if self.force_update and os.path.exists(self.prsrcRoot):
+            shutil.rmtree(self.prsrcRoot, True)
 
-        if os.path.exists(prsrcRoot):
+        if os.path.exists(self.prsrcRoot):
             print "    (all skipped, already bundled)"
         else:
-            os.mkdir(prsrcRoot)
+            os.mkdir(self.prsrcRoot)
             for resource in ('css', 'images', 'html', 'searchengines', 'dtvapi.js', 'statictabs.xml'):
                 src = os.path.join(ROOT_DIR, 'resources', resource)
                 rsrcName = os.path.basename(src)
                 if os.path.isdir(src):
-                    dest = os.path.join(prsrcRoot, rsrcName)
+                    dest = os.path.join(self.prsrcRoot, rsrcName)
                     copy = shutil.copytree
                 else:
-                    dest = os.path.join(prsrcRoot, rsrcName)
+                    dest = os.path.join(self.prsrcRoot, rsrcName)
                     copy = shutil.copy
+                print "    %s" % dest
                 copy(src, dest)
-                print "    %s" % dest
-            os.mkdir(os.path.join(prsrcRoot, 'templates'))
+            os.mkdir(os.path.join(self.prsrcRoot, 'templates'))
             for js in glob(os.path.join(ROOT_DIR, 'resources', 'templates/*.js')):
-                dest = os.path.join(prsrcRoot, 'templates', os.path.basename(js))
-                copy(js, dest)
+                dest = os.path.join(self.prsrcRoot, 'templates', os.path.basename(js))
                 print "    %s" % dest
+                copy(js, dest)
                 
-
-        # Install the final app.config file
-
+    def copy_config_file(self):
         print "Copying config file to application bundle"
-        shutil.move(appConfigPath, os.path.join(prsrcRoot, 'app.config'))
+        shutil.move(self.appConfigPath, os.path.join(self.prsrcRoot, 'app.config'))
 
+    def copy_localization_files(self):
         # Copy the gettext MO files in a 'locale' folder inside the
         # application bundle resources folder. Doing this manually at
         # this stage instead of automatically through the py2app
         # options allows to avoid having an intermediate unversioned
         # 'locale' folder.
-
         print "Copying gettext MO files to application bundle"
 
         localeDir = os.path.join(ROOT_DIR, 'resources/locale')
-        lclDir = os.path.join(rsrcRoot, 'locale')
-        if forceUpdate and os.path.exists(lclDir):
+        lclDir = os.path.join(self.rsrcRoot, 'locale')
+        if self.force_update and os.path.exists(lclDir):
             shutil.rmtree(lclDir, True);
 
         if os.path.exists(lclDir):
@@ -361,13 +476,31 @@ class mypy2app (py2app):
                 os.makedirs(os.path.dirname(dest))
                 shutil.copy2(source, dest)
                 print "    %s" % dest
+    
+    def copy_theme_files(self):
+        # Copy theme files to the application bundle
+        print "Copying theme file"
         
-        # Wipe out incomplete lproj folders
-        
+        sourceDir = self.config.themeDir
+        targetDir = os.path.join(self.bundleRoot, "Theme", self.config.get("themeName"))
+
+        if self.force_update and os.path.exists(targetDir):
+            shutil.rmtree(targetDir, True);
+
+        if os.path.exists(targetDir):
+            print "    (all skipped, already bundled)"
+        else:
+            os.makedirs(targetDir)
+            for f in glob(os.path.join(sourceDir, "*")):
+                dest = os.path.join(targetDir, os.path.basename(f))
+                print "    %s" % dest
+                shutil.copy(f, dest)
+    
+    def clean_up_incomplete_lproj(self):
         print "Wiping out incomplete lproj folders"
         
         incompleteLprojs = list()
-        for lproj in glob(os.path.join(rsrcRoot, '*.lproj')):
+        for lproj in glob(os.path.join(self.rsrcRoot, '*.lproj')):
             if os.path.basename(lproj) != 'English.lproj':
                 nibs = glob(os.path.join(lproj, '*.nib'))
                 if len(nibs) == 0:
@@ -382,10 +515,13 @@ class mypy2app (py2app):
             else:
                 shutil.rmtree(lproj)
         
+    def clean_up_unwanted_data(self):
+        """docstring for clean_up_unwanted_data"""
+        pass
         # Check that we haven't left some turds in the application bundle.
         
         wipeList = list()
-        for root, dirs, files in os.walk(os.path.join(self.dist_dir, '%s.app' % conf['shortAppName'])):
+        for root, dirs, files in os.walk(os.path.join(self.dist_dir, '%s.app' % self.config.get('shortAppName'))):
             for excluded in ('.svn', 'unittest'):
                 if excluded in dirs:
                     dirs.remove(excluded)
@@ -403,179 +539,118 @@ class mypy2app (py2app):
                 else:
                     os.remove(item)
 
-        if imgName is not None:
-            print "Building image..."
+    def make_disk_image(self):
+        print "Building disk image..."
 
-            imgDirName = os.path.join(self.dist_dir, "img")
-            imgPath = os.path.join(self.dist_dir, imgName)
+        imgName = "%s-%4d-%02d-%02d.dmg" % (
+            self.config.get('shortAppName'),
+            datetime.date.today().year,
+            datetime.date.today().month,
+            datetime.date.today().day)
 
-            try:
-                shutil.rmtree(imgDirName)
-            except:
-                pass
-            try:
-                os.remove(imgPath)
-            except:
-                pass
+        imgDirName = os.path.join(self.dist_dir, "img")
+        imgPath = os.path.join(self.dist_dir, imgName)
 
-            os.mkdir(imgDirName)
-            os.mkdir(os.path.join(imgDirName,".background"))
+        try:
+            shutil.rmtree(imgDirName)
+        except:
+            pass
+        try:
+            os.remove(imgPath)
+        except:
+            pass
 
-            os.rename(os.path.join(self.dist_dir,"%s.app"%conf['shortAppName']),
-                      os.path.join(imgDirName, "%s.app"%conf['shortAppName']))
-            shutil.copyfile("Resources-DMG/dmg-ds-store",
-                            os.path.join(imgDirName,".DS_Store"))
-            shutil.copyfile("Resources-DMG/background.tiff",
-                            os.path.join(imgDirName,".background",
-                                         "background.tiff"))
+        os.mkdir(imgDirName)
+        os.mkdir(os.path.join(imgDirName,".background"))
 
-            os.system("/Developer/Tools/SetFile -a V \"%s\"" %
-                      os.path.join(imgDirName,".DS_Store"))
-            os.symlink("/Applications", os.path.join(imgDirName, "Applications"))
-            
-            # Create the DMG from the image folder
+        os.rename(os.path.join(self.dist_dir,"%s.app" % self.config.get('shortAppName')),
+                  os.path.join(imgDirName, "%s.app" % self.config.get('shortAppName')))
+        shutil.copyfile("Resources-DMG/dmg-ds-store",
+                        os.path.join(imgDirName,".DS_Store"))
+        shutil.copyfile("Resources-DMG/background.tiff",
+                        os.path.join(imgDirName,".background",
+                                     "background.tiff"))
 
-            print "Creating DMG file... "
+        os.system("/Developer/Tools/SetFile -a V \"%s\"" %
+                  os.path.join(imgDirName,".DS_Store"))
+        os.symlink("/Applications", os.path.join(imgDirName, "Applications"))
+        
+        # Create the DMG from the image folder
 
-            os.system("hdiutil create -srcfolder \"%s\" -volname %s -format UDZO \"%s\"" %
-                      (imgDirName,
-		       conf['shortAppName'],
-                       os.path.join(self.dist_dir, "%s.tmp.dmg"%conf['shortAppName'])))
+        print "Creating DMG file... "
 
-            os.system("hdiutil convert -format UDZO -imagekey zlib-level=9 -o \"%s\" \"%s\"" %
-                      (imgPath,
-                       os.path.join(self.dist_dir, "%s.tmp.dmg"%conf['shortAppName'])))
-                      
-            os.remove(os.path.join(self.dist_dir,"%s.tmp.dmg"%conf['shortAppName']))
+        os.system("hdiutil create -srcfolder \"%s\" -volname %s -format UDZO \"%s\"" %
+                  (imgDirName,
+	       self.config.get('shortAppName'),
+                   os.path.join(self.dist_dir, "%s.tmp.dmg" % self.config.get('shortAppName'))))
 
-            print "Completed"
-            os.system("ls -la \"%s\"" % imgPath)
+        os.system("hdiutil convert -format UDZO -imagekey zlib-level=9 -o \"%s\" \"%s\"" %
+                  (imgPath,
+                   os.path.join(self.dist_dir, "%s.tmp.dmg" % self.config.get('shortAppName'))))
+                  
+        os.remove(os.path.join(self.dist_dir,"%s.tmp.dmg" % self.config.get('shortAppName')))
 
-# =============================================================================
-# We're going to explicitely pass these when linking our extensions to:
-# - avoid a linker error if we would specify the libraries using -L and -l
-#   flags since we also specify a isysroot.
-# - avoid the linker warnings which would occur if we would remove the 
-#   isysroot flag.
-# =============================================================================
-
-#PYTHON_LIB = os.path.join(SANDBOX_DIR, "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
-PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
-BOOST_PYTHON_LIB = os.path.join(SANDBOX_DIR, "lib", "libboost_python-%s.a" % BOOST_VERSION)
-BOOST_FILESYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_filesystem-%s.a' % BOOST_VERSION)
-BOOST_DATETIME_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_date_time-%s.a' % BOOST_VERSION)
-BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread-%s.a' % BOOST_VERSION)
+        print "Completed"
+        os.system("ls -la \"%s\"" % imgPath)
 
 # =============================================================================
-# Define the native extensions
+# Define the clean task
 # =============================================================================
 
-idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
-idletime_link_args = ['-framework', 'CoreFoundation']
+class MiroClean (Command):
+    user_options = []
 
-idletime_ext = Extension("idletime", sources=idletime_src, 
-                                     extra_link_args=idletime_link_args)
+    def initialize_options(self):
+        pass
 
-# -----------------------------------------------------------------------------
+    def finalize_options(self):
+        pass
 
-keychain_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'keychain.c'))
-keychain_link_args = ['-framework', 'Security']
+    def run(self):
+        print "Removing old build directory..."
+        try:
+            shutil.rmtree('build')
+        except:
+            pass
+        print "Removing old dist directory..."
+        try:
+            shutil.rmtree('dist')
+        except:
+            pass
+        print "Removing old app..."
+        try:
+            for appl in glob("*.app"):
+                shutil.rmtree(appl)
+        except:
+            pass
+        print "Removing old compiled templates..."
+        try:
+            for filename in os.listdir(os.path.join("..","..","portable","compiled_templates")):
+                if not filename.startswith(".svn"):
+                    filename = os.path.join("..","..","portable","compiled_templates",filename)
+                    if os.path.isdir(filename):
+                        shutil.rmtree(filename)
+                    else:
+                        os.remove(filename)
+        except:
+            pass
 
-keychain_ext = Extension("keychain", sources=keychain_src, 
-                                     extra_link_args=keychain_link_args)
+# =============================================================================
+# This is weird, if we do this from the MiroBuild command we eventually get an
+# error in the macholib module... So let's just do it here.
+# =============================================================================
 
-# -----------------------------------------------------------------------------
-
-qtcomp_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'qtcomp.c'))
-qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'Quicktime']
-
-qtcomp_ext = Extension("qtcomp", sources=qtcomp_src,
-                                 extra_link_args=qtcomp_link_args)
-
-# -----------------------------------------------------------------------------
-
-database_src = glob(os.path.join(ROOT_DIR, 'portable', 'database.pyx'))
-database_ext = Extension("database", sources=database_src)
-
-# -----------------------------------------------------------------------------
-
-sorts_src = glob(os.path.join(ROOT_DIR, 'portable', 'sorts.pyx'))
-sorts_ext = Extension("sorts", sources=sorts_src)
-
-# -----------------------------------------------------------------------------
-
-fasttypes_src = glob(os.path.join(ROOT_DIR, 'portable', 'fasttypes.cpp'))
-fasttypes_inc_dirs = [BOOST_INCLUDE_DIR]
-fasttypes_extras = [PYTHON_LIB, BOOST_PYTHON_LIB]
-
-fasttypes_ext = Extension("fasttypes", sources=fasttypes_src, 
-                                       include_dirs=fasttypes_inc_dirs, 
-                                       extra_objects=fasttypes_extras)
-
-# -----------------------------------------------------------------------------
-
-def libtorrent_sources_iterator():
-    for root,dirs,files in os.walk(os.path.join(PORTABLE_DIR, 'libtorrent')):
-        if '.svn' in dirs:
-            dirs.remove('.svn')
-        for file in files:
-            if file.endswith('.cpp'):
-                yield os.path.join(root,file)
-
-libtorrent_src = list(libtorrent_sources_iterator())
-libtorrent_src.remove(os.path.join(PORTABLE_DIR, 'libtorrent/src/file_win.cpp'))
-libtorrent_inc_dirs = [BOOST_INCLUDE_DIR,
-                       os.path.join(PORTABLE_DIR, 'libtorrent', 'include'),
-                       os.path.join(PORTABLE_DIR, 'libtorrent', 'include', 'libtorrent')]
-libtorrent_lib_dirs = [BOOST_LIB_DIR]
-libtorrent_libs = ['z', 
-                   'pthread', 
-                   'ssl']
-libtorrent_extras = [PYTHON_LIB,
-                     BOOST_PYTHON_LIB,
-                     BOOST_FILESYSTEM_LIB,
-                     BOOST_DATETIME_LIB,
-                     BOOST_THREAD_LIB]
-libtorrent_compil_args = ["-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1", 
-                          "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1", 
-                          "-DHAVE_INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1", 
-                          "-DHAVE_PTHREAD=1", 
-                          "-DTORRENT_USE_OPENSSL=1", 
-                          "-DHAVE_SSL=1",
-                          "-DNDEBUG"]
-
-libtorrent_ext = Extension("libtorrent", sources=libtorrent_src, 
-                                         include_dirs=libtorrent_inc_dirs,
-                                         libraries=libtorrent_libs, 
-                                         extra_objects=libtorrent_extras,
-                                         extra_compile_args=libtorrent_compil_args)
+print 'Extracting frameworks to build directory...'
+frameworks_path = os.path.join(ROOT_DIR, 'platform/osx/build/frameworks')
+extract_binaries('frameworks', frameworks_path, True)
+frameworks = glob(os.path.join(frameworks_path, '*.framework'))
 
 # =============================================================================
 # Launch the setup process...
 # =============================================================================
 
-py2app_options = {
-    'plist':        infoPlist,
-    'iconfile':     os.path.join(ROOT_DIR, 'platform/osx/%s.icns'%conf['shortAppName']),
-    'resources':    resourceFiles,
-    'frameworks':   frameworks,
-    'packages':     ['dl_daemon']
-}
+from Pyrex.Distutils import build_ext
+from distutils.core import setup
 
-setup(
-    app =           [ '%s.py' % conf['shortAppName'] ],
-    options =       { 'py2app': py2app_options },
-
-    ext_modules =   [ idletime_ext,
-                      keychain_ext,
-                      qtcomp_ext,
-                      database_ext,
-                      sorts_ext,
-                      fasttypes_ext,
-                      libtorrent_ext ],
-
-    cmdclass =      { 'build_ext':   build_ext, 
-                      'clean':       clean, 
-                      'py2app':      mypy2app }
-)
-
+setup( cmdclass = {'build_ext': build_ext, 'clean': MiroClean, 'py2app': MiroBuild}, 
+       options  = {'py2app':{'frameworks': frameworks}} )

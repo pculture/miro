@@ -103,33 +103,37 @@ class MainController (NSWindowController):
         self.frame.videoInfoDisplay.backgroundColor = NSColor.blackColor()
         self.restoreLayout()
         self.updateWindowTexture()
+        self.window().setTitle_(config.get(prefs.LONG_APP_NAME))
         self.showWindow_(nil)
 
     def appWillTerminate_(self, notification):
         self.saveLayout()
 
     def restoreLayout(self):
-        windowFrame = config.get(prefs.MAIN_WINDOW_FRAME)
-        if windowFrame is None:
-            windowFrame = self.window().frame()
+        if app.delegate.maximizeMainFrameWhenAvailable:
+            app.delegate.doMaximizeWindow(self.window())
         else:
-            windowFrame = NSRectFromString(windowFrame)
-        screen = self.window().screen()
-        if screen is not None:
-            visibleFrame = screen.visibleFrame()
-            if not NSContainsRect(visibleFrame, windowFrame):
-                logging.debug("Fitting window to screen size")
-                windowFrame = visibleFrame
-        self.window().setFrame_display_(windowFrame, NO)
+            windowFrame = config.get(prefs.MAIN_WINDOW_FRAME)
+            if windowFrame is None:
+                windowFrame = self.window().frame()
+            else:
+                windowFrame = NSRectFromString(windowFrame)
+            screen = self.window().screen()
+            if screen is not None:
+                visibleFrame = screen.visibleFrame()
+                if not NSContainsRect(visibleFrame, windowFrame):
+                    logging.debug("Fitting window to screen size")
+                    windowFrame = visibleFrame
+            self.window().setFrame_display_(windowFrame, NO)
 
-        leftFrame = config.get(prefs.LEFT_VIEW_SIZE)
-        rightFrame = config.get(prefs.RIGHT_VIEW_SIZE)
-        if leftFrame is not None and rightFrame is not None:
-           leftFrame = NSRectFromString(leftFrame)
-           rightFrame = NSRectFromString(rightFrame)
-           self.splitView.subviews().objectAtIndex_(0).setFrame_(leftFrame)
-           self.splitView.subviews().objectAtIndex_(1).setFrame_(rightFrame)
-           self.splitView.adjustSubviews()
+            leftFrame = config.get(prefs.LEFT_VIEW_SIZE)
+            rightFrame = config.get(prefs.RIGHT_VIEW_SIZE)
+            if leftFrame is not None and rightFrame is not None:
+               leftFrame = NSRectFromString(leftFrame)
+               rightFrame = NSRectFromString(rightFrame)
+               self.splitView.subviews().objectAtIndex_(0).setFrame_(leftFrame)
+               self.splitView.subviews().objectAtIndex_(1).setFrame_(rightFrame)
+               self.splitView.adjustSubviews()
 
     def saveLayout(self):
         windowFrame = self.window().frame()

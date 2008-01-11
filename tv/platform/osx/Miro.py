@@ -49,16 +49,28 @@ def launchApplication():
     import migrateappname
     migrateappname.migrateSupport('Democracy', 'Miro')
 
-    # We can now import our stuff
     import platformutils
     platformutils.initializeLocale()
+    
+    from glob import glob
+    theme = None
+    bundle = Foundation.NSBundle.mainBundle()
+    bundlePath = bundle.bundlePath()
+    bundleThemeDirPath = os.path.join(bundlePath, "Contents", "Theme")
+    if os.path.exists(bundleThemeDirPath):
+        themeDirs = glob(os.path.join(bundleThemeDirPath, "*"))
+        themeDir = themeDirs[0]
+        if os.path.isdir(themeDir):
+            theme = os.path.basename(themeDir)
+
+    import config
+    config.load(theme)
 
     import gtcache
     gtcache.init()
 
     import app
     import prefs
-    import config
 
     # Tee output off to a log file
     class AutoflushingTeeStream:
@@ -138,7 +150,6 @@ if bundleInfo['PyOptions']['alias']:
 # http://mail.python.org/pipermail/pythonmac-sig/2006-June/017533.html
 
 #activatePsyco()
-
 
 # Launch player or downloader, depending on command line parameter
 if len(sys.argv) > 1 and sys.argv[1] == "download_daemon":

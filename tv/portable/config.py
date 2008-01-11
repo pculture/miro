@@ -89,7 +89,7 @@ def save():
     finally:
         __lock.release()
 
-def get(descriptor):
+def get(descriptor, useThemeData=True):
     __lock.acquire()
     try:
         __checkValidity()
@@ -98,7 +98,7 @@ def get(descriptor):
             return __data[descriptor.key]
         elif descriptor.platformSpecific:
             return platformcfg.get(descriptor)
-        elif descriptor.key in __themeConfig:
+        elif descriptor.key in __themeConfig and useThemeData:
             return __themeConfig[descriptor.key]
         elif descriptor.key in __appConfig:
             return __appConfig[descriptor.key]
