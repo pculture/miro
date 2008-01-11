@@ -2,160 +2,43 @@
 README
 ======
 
-This README holds directions for Ubuntu packaging of Miro.
+This is the source for Miro, the client-side component of
+the Democracy platform for Internet TV.  It is targeted at average,
+unsophisticated Internet users with broadband connections.  It can be
+built for Mac OS X, Microsoft Windows, or X Windows-based platforms
+such as Linux, with a native look and feel on each platform.  There
+is a clean separation between the portable backend and the
+platform-specific frontend in the event that new ports are desired in
+the future.  
 
-Contained in this directory is the debian/ directory that we use to build the
-Debian and Ubuntu packages.  
+It is written primarily in Python and is distributed under the terms 
+of the GNU General Public License; see license.txt.
 
+Prebuilt versions are available from::
 
-Documentation on packaging
-==========================
+   http://www.getmiro.com/downloads/
 
-Ubuntu packaging guide:
+Development information, instructions on how to submit bug reports, 
+source code, information on mailing lists, and other development-related
+links and information are located at::
 
-   http://doc.ubuntu.com/ubuntu/packagingguide/C/
+   https://develop.participatoryculture.org/
 
-Packaging tools:
+The latest source can be retrieved via Subversion from::
 
-   http://doc.ubuntu.com/ubuntu/packagingguide/C/gs-tools.html
+   https://svn.participatoryculture.org/svn/dtv/trunk/tv
 
-Special files:
+The public face of Miro is::
 
-   http://doc.ubuntu.com/ubuntu/packagingguide/C/basic-scratch.html
+   http://www.getmiro.com/
 
-pbuilder:
+Participatory Culture Foundation, the non-profit that sponsors
+Miro development and promotes the platform, has a site at::
 
-   http://doc.ubuntu.com/ubuntu/packagingguide/C/gs-pbuilder.html
-   
+   http://participatoryculture.org/
 
-Installing packaging requirements
-=================================
+See::
 
-Install required packages::
+    https://develop.participatoryculture.org/trac/democracy/wiki/DevelopmentDocs 
 
-   sudo apt-get install debhelper fakeroot cdbs pbuilder lintian linda
-
-Set up a pbuilder environment::
-
-   sudo pbuilder create --distribution <distro> \
-      --othermirror "deb http://archive.ubuntu.com/ubuntu <distro> universe multiverse" \
-      --basetgz ./<basetgz-file>
-
-replacing ``<distro>`` with the distribution (i.e. gutsy, feisty, edgy, dapper, 
-...) and replacing ``<basetgz-file>`` with the file to store the pbuilder files 
-in.
-
-For example::
-
-   sudo pbuilder create --distribution gutsy \
-      --othermirror "deb http://archive.ubuntu.com/ubuntu gutsy universe multiverse" \
-      --basetgz ./gutsy-base.tgz
-
-This allows you to set up multiple pbuilder environments on the same machine 
-targetting different distributions.
-
-.. Note::
-
-   This creates a pbuilder environment FOR YOUR ARCHITECTURE.  I don't
-   think you can create an AMD64 environment on an i686 machine.  
-   pbuilder environments are NOT virtual machines.
-
-
-Packaging steps
-===============
-
-1. Run::
-
-      apt-get upgrade
-
-   to update your environment.
-
-2. Run::
-
-      sudo pbuilder update --distribution <distro> --basetgz <basetgz-file>
-
-   to upgrade the pbuilder environment for that distribution.
-
-3. Add a new entry to ``debian-<distro>/changelog``.  Use the previous entries 
-   as your template.
-
-   Make sure you change the version number.  The version number is the version
-   number from above + "-0".  If you make another package based on the same
-   version, increase to "-1"....
-
-   Previously we did versions like ``1.0-1ubuntupcf``, but this doesn't meet the
-   Ubuntu packaging criteria.  See 
-   http://doc.ubuntu.com/ubuntu/packagingguide/C/basic-scratch.html
-
-   Good example:
-
-   * 1.0-0
-
-   Bad examples:
-
-   * 1.0
-   * 1.0-1ubuntupcf
-   
-   Make sure your date string is in RFC-2822 format.  Use ``date -R``.
-
-4. Run::
-
-      sudo build.py <version> <distro> <tarball>
-
-   where ``<version>`` is the version (i.e. ``0.9.5``, ``1.0-rc0``, ...),
-   ``<distro>`` is the distribution (i.e. ``gutsy``, ``feisty``, ...),
-   ``<tarball>`` is the url to the tarball or the path to the tarball.
-
-   Examples::
-
-      sudo build.py 0.9.5 feisty http://example.com/Democracy-0.9.5.tar.gz
-      sudo build.py 0.9.9.9-rc0 gutsy http://example.com/Miro-0.9.9.9-rc0.tar.gz
-      sudo build.py 0.9.9.9-rc0 gutsy ./Miro-0.9.9.9-rc0.tar.gz
-
-   This generates the ``.dsc`` file then runs pbuilder to build the ``.deb``
-   files.
-
-5. If everything goes well, you should have your packages in the ``<distro>``
-   directory.  This includes binary packages, source packages and changelog 
-   files.  
-
-   If things go wrong, you need to update the way packages get built, 
-   but that's outside the scope of this README.  See BDK or Will Guaraldi.
-
-
-Repository steps
-================
-
-After you've build the packages, you need to add them to the repository.
-
-1. To create an apt repository, combine all the .deb packages for one distro
-   into a single dir.
-
-   For Ubuntu, this includes packages for i386 and amd64 as well as packages 
-   for the previous version.  
-
-   Then run::
-
-      apt-ftparchive packages <directory> | gzip > <directory>/Packages.gz
-      apt-ftparchive sources <directory> | gzip > <directory>/Sources.gz
-
-2. Now test the packages manually and via the tools lintian/linda::
-
-      $ apt-get install lintian linda
-      $ lintian -i -I *.changes
-      $ linda -i *.changes
-      (Not all warnings are critical, though)
-
-      $ sudo dpkg -i miro*deb
-      $ miro
-
-
-Cleanup
-=======
-
-3. Once the build and the package itself works, clean up the debian/ directory::
-
-      $ fakeroot debian/rules clean
-
-   Then check in the updated debian/ directory to svn.
-
+for the latest build instructions.
