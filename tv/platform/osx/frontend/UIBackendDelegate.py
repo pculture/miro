@@ -83,9 +83,20 @@ class UIBackendDelegate:
         self.contextItemHandler = ContextItemHandler.alloc().init()
         self.openPanelHandler = OpenPanelHandler.alloc().init()
         self.savePanelHandler = SavePanelHandler.alloc().init()
+        self.maximizeMainFrameWhenAvailable = False
 
     def maximizeWindow(self):
-        logging.warn("UIBackendDelegate.maximizeWindow() not implemented")
+        window = NSApplication.sharedApplication().mainWindow()
+        if window is not None:
+            self.doMaximizeWindow(window)
+        else:
+            self.maximizeMainFrameWhenAvailable = True
+
+    def doMaximizeWindow(self, window):
+        screen = window.screen()
+        fullFrame = screen.visibleFrame()
+        window.setFrame_display_(fullFrame, YES)
+        self.maximizeMainFrameWhenAvailable = False
 
     def performStartupTasks(self, terminationCallback):
         NSApplication.sharedApplication().delegate().checkQuicktimeVersion(True)
