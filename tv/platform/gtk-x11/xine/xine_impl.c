@@ -263,19 +263,14 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d, const char *dr
     vis.user_data = xine;
   
     /* opening xine output ports */
-    /* Try to use char *driver for video, default to "auto" if NULL */
-    if (!driver) {
-      driver = "auto";
-    }
-
 #ifdef INCLUDE_XINE_DRIVER_HACK
     miro_using_xv_driver_hack = 0;    /* by default, don't use the hack */
-    xine->videoPort = xine_open_video_driver(xine->xine, driver,
+    xine->videoPort = xine_open_video_driver(xine->xine, "xv",
             XINE_VISUAL_TYPE_X11, (void *)&vis);
     if (!xine->videoPort) {
 #endif
 
-      xine->videoPort = xine_open_video_driver(xine->xine, driver,
+      xine->videoPort = xine_open_video_driver(xine->xine, "auto",
            XINE_VISUAL_TYPE_X11, (void *)&vis);
 
 
