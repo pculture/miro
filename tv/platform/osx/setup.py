@@ -579,7 +579,7 @@ class MiroBuild (py2app):
 
         print "Creating DMG file... "
 
-        os.system("hdiutil create -srcfolder \"%s\" -volname %s -format UDZO \"%s\"" %
+        os.system("hdiutil create -srcfolder \"%s\" -volname \"%s\" -format UDZO \"%s\"" %
                   (imgDirName,
 	       self.config.get('shortAppName'),
                    os.path.join(self.dist_dir, "%s.tmp.dmg" % self.config.get('shortAppName'))))
