@@ -70,7 +70,8 @@ class IconCacheUpdater:
     def requestUpdate (self, item, is_vital = False):
         if is_vital:
             item.dbItem.confirmDBThread()
-            if item.filename and os.access (item.filename, os.R_OK):
+            if item.filename and os.access (item.filename, os.R_OK) \
+                   and item.url == item.dbItem.getThumbnailURL():
                 is_vital = False
         if self.runningCount < RUNNING_MAX:
             addIdle (item.requestIcon, "Icon Request")
@@ -168,7 +169,7 @@ class IconCache:
         self.updating = False
         if self.needsUpdate:
             self.needsUpdate = False
-            self.requestUpdate()
+            self.requestUpdate(True)
         elif error is not None:
             addTimeout(3600,self.requestUpdate, "Thumbnail request for %s" % url)
         else:
@@ -220,26 +221,24 @@ class IconCache:
                 output.write(info["body"])
                 output.close()
             except IOError:
-                try:
-                    os.remove (tmp_filename)
-                except:
-                    pass
+                self._removeFile(tmp_filename)
                 return
 
-            if (self.filename == None):
-                # Add a random unique id
-                parts = unicodify(info["filename"]).split('.')
-                uid = u"%08d" % (random.randint(0,99999999),)
-                if len(parts) == 1:
-                    parts.append(uid)
-                else:
-                    parts[-1:-1] = [uid]
-                self.filename = u'.'.join(parts)
-                self.filename = unicodeToFilename(self.filename, cachedir)
-                self.filename = os.path.join(cachedir, self.filename)
-                self.filename = nextFreeFilename (self.filename)
-                needsSave = True
             self._removeFile(self.filename)
+
+            # Create a new filename always to avoid browser caching in case a file changes.
+            # Add a random unique id
+            parts = unicodify(info["filename"]).split('.')
+            uid = u"%08d" % (random.randint(0,99999999),)
+            if len(parts) == 1:
+                parts.append(uid)
+            else:
+                parts[-1:-1] = [uid]
+            self.filename = u'.'.join(parts)
+            self.filename = unicodeToFilename(self.filename, cachedir)
+            self.filename = os.path.join(cachedir, self.filename)
+            self.filename = nextFreeFilename (self.filename)
+            needsSave = True
 
             try:
                 os.rename (tmp_filename, self.filename)
@@ -276,7 +275,7 @@ class IconCache:
             self.updating = False
             if self.needsUpdate:
                 self.needsUpdate = False
-                self.requestUpdate()
+                self.requestUpdate(True)
             iconCacheUpdater.updateFinished ()
 
     def requestIcon (self):
