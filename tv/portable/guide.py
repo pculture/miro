@@ -160,7 +160,7 @@ class ChannelGuide(DDBObject):
             self.title = unicode(parser.title)
             self.favicon = unicode(parser.favicon)
             self.extendHistory(self.updated_url)
-            self.iconCache.requestUpdate()
+            self.iconCache.requestUpdate(True)
             self.signalChange()
 
     def guideError (self, error):
