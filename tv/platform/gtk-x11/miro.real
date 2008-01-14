@@ -73,7 +73,9 @@ def startapp():
     if frontend.defaultXineDriver is None:
         frontend.defaultXineDriver = config.get(prefs.DEFAULT_XINE_DRIVER)
     #print "Xine driver is %s" % frontend.defaultXineDriver
-    if options.theme: frontend.themeName = options.theme
+    if options.theme:
+        frontend.themeName = options.theme
+        print 'Theme is %s' % options.theme
 
     import singleclick
     for i in xrange(len(args)):

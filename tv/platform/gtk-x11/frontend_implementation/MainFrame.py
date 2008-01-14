@@ -184,6 +184,7 @@ class MainFrame:
         UIBackendDelegate.dialogParent = self.widgetTree['main-window']
 
         self.widgetTree['main-window'].set_icon_from_file (resources.sharePath('pixmaps/miro-128x128.png'))
+        self.widgetTree['main-window'].set_title(config.get(prefs.LONG_APP_NAME))
 
         # create the buttonsDown attribute to the video time scale.  It will
         # track which mouse buttons are currently pressed.  This is usefull
@@ -385,7 +386,7 @@ class MainFrame:
         platformutils.confirmMainThread()
         if (self.aboutWidget is None):
             self.aboutWidget = gtk.AboutDialog()
-            self.aboutWidget.set_name("Miro")
+            self.aboutWidget.set_name(config.get(prefs.SHORT_APP_NAME))
             self.aboutWidget.set_version( "%s (r%s)" % \
                                           (config.get(prefs.APP_VERSION), 
                                            config.get(prefs.APP_REVISION_NUM)))
