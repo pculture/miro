@@ -567,6 +567,10 @@ Section -NotifyShellExentionChange
   System::Call 'Shell32::SHChangeNotify(i 0x8000000, i 0, i 0, i 0)'
 SectionEnd
 
+Function un.onInit
+  StrCpy $APP_NAME "${CONFIG_LONG_APP_NAME}"
+FunctionEnd
+
 Function .onInit
   ; Process the tacked on file
   StrCpy $THEME_NAME ""
