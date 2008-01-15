@@ -16,7 +16,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 import app
-import frontend
 import os
 from xpcom import components
 from util import quoteJS
@@ -26,6 +25,8 @@ from frontend_implementation import urlcallbacks
 ###############################################################################
 #### Main window                                                           ####
 ###############################################################################
+
+currentVideoPath = None # gets changed in MainFrame.onSelectedTabChange()
 
 class MainFrame:
     def __init__(self, appl):
@@ -42,14 +43,15 @@ class MainFrame:
 
     def onSelectedTabChange(self, states, actionGroups, guideURL,
             videoFilename):
+        global currentVideoPath
         app.controller.setGuideURL(guideURL)
         if videoFilename is not None:
-            frontend.jsBridge.updateVideoFilename(os.path.basename(videoFilename))
+            app.jsBridge.updateVideoFilename(os.path.basename(videoFilename))
         else:
-            frontend.jsBridge.updateVideoFilename('')
-        frontend.currentVideoPath = videoFilename
+            app.jsBridge.updateVideoFilename('')
+        currentVideoPath = videoFilename
         for group, enabled in actionGroups.items():
-            frontend.jsBridge.setActionGroupEnabled(group, enabled)
+            app.jsBridge.setActionGroupEnabled(group, enabled)
 
         # Convert this into something JavaScript can see
         array_cls = components.classes["@mozilla.org/supports-array;1"]
@@ -75,7 +77,7 @@ class MainFrame:
             stateLists.AppendElement(newlist)
 
         stateLists.queryInterface(components.interfaces.nsISupportsArray)
-        frontend.jsBridge.updateMenus(stateLists)
+        app.jsBridge.updateMenus(stateLists)
         
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
@@ -97,10 +99,10 @@ class MainFrame:
             newDisplay.setArea(area)
         if area == self.mainDisplay:
             if isinstance(newDisplay, VideoDisplay):
-                frontend.jsBridge.showVideoDisplay()
+                app.jsBridge.showVideoDisplay()
             else:
-                frontend.jsBridge.hideVideoDisplay()
-                frontend.jsBridge.leaveFullscreen()
+                app.jsBridge.hideVideoDisplay()
+                app.jsBridge.leaveFullscreen()
 
     def mainDisplayCallback(self, url):
         try:

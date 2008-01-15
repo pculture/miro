@@ -42,6 +42,10 @@ import util
 import views
 
 class HTMLApplication:
+    """HTMLApplication handles the frontend when Miro is using the HTML-based
+    templates for the display (i.e. the Miro frontend for version 1.0)
+    """
+
     AUTOUPDATE_SUPPORTED = True
 
     def __init__(self):
@@ -57,14 +61,25 @@ class HTMLApplication:
         signals.system.connect('startup-failure', self.handleStartupFailure)
         signals.system.connect('loaded-custom-channels',
                 self.handleCustomChannelLoad)
+        signals.system.connect('shutdown', self.onBackendShutdown)
         startup.initialize()
 
     def handleStartupFailure(self, obj, summary, description):
         dialog = dialogs.MessageBoxDialog(summary, description)
         dialog.run(lambda d: self.cancelStartup())
 
+    def onBackendShutdown(self, obj):
+        logging.info ("Shutting down frontend")
+        self.quitUI()
+
+    def quitUI(self):
+        """Stop the UI event loop.
+        Platforms must implement this method.
+        """
+        raise NotImplementedError("HTMLApplication.quit() not implemented")
+
     def cancelStartup(self):
-        frontend.quit()
+        self.quitUI()
         app.controller.shutdown()
 
     def handleStartupSuccess(self, obj):

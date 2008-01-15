@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 import sys
-import frontend
+import app
 import time
 import resources
 import config
@@ -53,9 +53,12 @@ class Application(HTMLApplication):
         #psyco.log('\\dtv.psyco')
         psyco.profile(.03)
 
-        frontend.jsBridge.positionVolumeSlider(config.get(prefs.VOLUME_LEVEL))
+        app.jsBridge.positionVolumeSlider(config.get(prefs.VOLUME_LEVEL))
 
         self.startup()
+
+    def quitUI(self):
+        app.jsBridge.closeWindow()
 
     def finishStartupSequence(self):
         from xpcom import components
@@ -70,8 +73,8 @@ class Application(HTMLApplication):
         for engine in views.searchEngines:
             names.append(engine.name)
             titles.append(engine.title)
-        frontend.jsBridge.setSearchEngineInfo(names, titles)
-        frontend.jsBridge.setSearchEngine(searchengines.getLastEngine())
+        app.jsBridge.setSearchEngineInfo(names, titles)
+        app.jsBridge.setSearchEngine(searchengines.getLastEngine())
 
     def onShutdown(self):
         # For overriding

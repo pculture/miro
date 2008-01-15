@@ -58,6 +58,10 @@ class Application(HTMLApplication):
         controller = appl.delegate()
         HTMLApplication.__init__(self)
 
+    def quitUI(self):
+        platformutils.ensureDownloadDaemonIsTerminated()
+        NSApplication.sharedApplication().terminate_(nil)
+
     def Run(self):
         if self.checkOtherAppInstances():
             eventloop.connect('begin-loop', self.beginLoop)

@@ -82,6 +82,9 @@ class SystemSignals(SignalEmitter):
         - summary -- Short, user-friendly, summary of the problem
         - description -- Longer explanation of the problem
 
+    "shutdown" - The backend has shutdown.  The event loop is stopped at this
+    point.
+
     "loaded-custom-channels" - We loaded the initial channels from an OPML
         file.
 
@@ -98,7 +101,7 @@ class SystemSignals(SignalEmitter):
     """
     def __init__(self):
         SignalEmitter.__init__(self, 'error', 'startup-success',
-                'startup-failure', 'loaded-custom-channels',
+                'startup-failure', 'shutdown', 'loaded-custom-channels',
                 'update-available', 'download-complete')
 
     def startupSuccess(self):
@@ -106,6 +109,9 @@ class SystemSignals(SignalEmitter):
 
     def startupFailure(self, summary, description):
         self.emit('startup-failure', summary, description)
+
+    def shutdown(self):
+        self.emit('shutdown')
 
     def loadedCustomChannels():
         self.emit('loaded-custom-channels')

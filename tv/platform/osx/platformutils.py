@@ -25,7 +25,7 @@ import time
 import errno
 import signal
 
-from objc import NO, YES
+from objc import NO, YES, nil
 from Foundation import *
 from AppKit import *
 
@@ -422,3 +422,6 @@ def ensureDownloadDaemonIsTerminated():
                 dlTask.terminate()
         dlTask.waitUntilExit()
     dlTask = None
+
+def exit(returnCode):
+    NSApplication.sharedApplication().stop_(nil)

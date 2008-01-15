@@ -28,7 +28,7 @@ import prefs
 import config
 from frontends.html import dialogs
 import feed
-import frontend
+import app
 import clipboard
 import urlcallbacks
 import util
@@ -88,7 +88,7 @@ class UIBackendDelegate:
     currentMenuItems = None
 
     def performStartupTasks(self, terminationCallback):
-        foundFiles = frontend.startup.search.getFiles()
+        foundFiles = app.startup.search.getFiles()
         terminationCallback(foundFiles)
 
     def showContextMenu(self, menuItems):
@@ -100,43 +100,43 @@ class UIBackendDelegate:
                 # hack to tell xul code that this item is disabled
                 return "_" + menuItem.label 
         menuString = '\n'.join([getLabelString(m) for m in menuItems])
-        frontend.jsBridge.showContextMenu(menuString)
+        app.jsBridge.showContextMenu(menuString)
 
     def maximizeWindow(self):
-        frontend.jsBridge.maximizeWindow()
+        app.jsBridge.maximizeWindow()
 
     def runDialog(self, dialog):
         id = nextDialogId()
         self.openDialogs[id] = dialog
         if isinstance(dialog, dialogs.ChoiceDialog):
-            frontend.jsBridge.showChoiceDialog(id, dialog.title,
+            app.jsBridge.showChoiceDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text)
         elif isinstance(dialog, dialogs.CheckboxTextboxDialog):
-            frontend.jsBridge.showCheckboxTextboxDialog(id, dialog.title,
+            app.jsBridge.showCheckboxTextboxDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text, dialog.checkbox_text, 
                     dialog.checkbox_value, dialog.textbox_value)
         elif isinstance(dialog, dialogs.CheckboxDialog):
-            frontend.jsBridge.showCheckboxDialog(id, dialog.title,
+            app.jsBridge.showCheckboxDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text, dialog.checkbox_text, 
                     dialog.checkbox_value)
         elif isinstance(dialog, dialogs.ThreeChoiceDialog):
-            frontend.jsBridge.showThreeChoiceDialog(id, dialog.title,
+            app.jsBridge.showThreeChoiceDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text, dialog.buttons[2].text)
         elif isinstance(dialog, dialogs.MessageBoxDialog):
-            frontend.jsBridge.showMessageBoxDialog(id, dialog.title,
+            app.jsBridge.showMessageBoxDialog(id, dialog.title,
                     dialog.description)
         elif isinstance(dialog, dialogs.HTTPAuthDialog):
-            frontend.jsBridge.showHTTPAuthDialog(id, dialog.description)
+            app.jsBridge.showHTTPAuthDialog(id, dialog.description)
         elif isinstance(dialog, dialogs.TextEntryDialog):
-            frontend.jsBridge.showTextEntryDialog(id, dialog.title,
+            app.jsBridge.showTextEntryDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text, getPrefillText(dialog))
         elif isinstance(dialog, UpdateAvailableDialog):
-            frontend.jsBridge.showUpdateAvailableDialog(id, dialog.title,
+            app.jsBridge.showUpdateAvailableDialog(id, dialog.title,
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text, dialog.releaseNotes)
         elif isinstance(dialog, dialogs.SearchChannelDialog):
@@ -170,7 +170,7 @@ class UIBackendDelegate:
                 if dialog.engines[i][0] == defaultEngineName:
                     defaultEngine = i
                     break
-            frontend.jsBridge.showSearchChannelDialog(id, channels, engines, defaultTerm, dialog.style, defaultChannel, defaultEngine, defaultURL)
+            app.jsBridge.showSearchChannelDialog(id, channels, engines, defaultTerm, dialog.style, defaultChannel, defaultEngine, defaultURL)
         else:
             del self.openDialogs[id]
             dialog.runCallback(None)
@@ -179,14 +179,14 @@ class UIBackendDelegate:
             typeString=None, types=None):
         id = nextDialogId()
         self.openDialogs[id] = callback
-        frontend.jsBridge.showOpenDialog(id, title, defaultDirectory,
+        app.jsBridge.showOpenDialog(id, title, defaultDirectory,
                 typeString, types)
 
     def askForSavePathname(self, title, callback, defaultDirectory=None, 
             defaultFilename=None):
         id = nextDialogId()
         self.openDialogs[id] = callback
-        frontend.jsBridge.showSaveDialog(id, title, defaultDirectory,
+        app.jsBridge.showSaveDialog(id, title, defaultDirectory,
                 defaultFilename)
 
     def handleFileDialog(self, dialogID, pathname):
@@ -266,10 +266,10 @@ class UIBackendDelegate:
 
     def notifyUnkownErrorOccurence(self, when, log = ''):
         if config.get(prefs.SHOW_ERROR_DIALOG):
-            frontend.jsBridge.showBugReportDialog(when, log)
+            app.jsBridge.showBugReportDialog(when, log)
 
     def copyTextToClipboard(self, text):
-        frontend.jsBridge.copyTextToClipboard(text)
+        app.jsBridge.copyTextToClipboard(text)
 
     # This is windows specific right now. We don't need it on other platforms
     def setRunAtStartup(self, value):

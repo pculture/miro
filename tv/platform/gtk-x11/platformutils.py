@@ -270,3 +270,6 @@ def launchDownloadDaemon(oldpid, env):
     script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
 
     os.spawnlpe(os.P_NOWAIT, "python", "python", script, environ)
+
+def exit(returnCode):
+    sys.exit(returnCode)

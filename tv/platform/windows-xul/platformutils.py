@@ -262,3 +262,9 @@ def launchDownloadDaemon(oldpid, env):
             stderr=subprocess.PIPE, 
             stdin=subprocess.PIPE,
             startupinfo=startupinfo)
+
+# Python's sys.exit isn't sufficient in a Windows application. It's not
+# clear why.
+# NEEDS: this is probably *not* what we want to do under XUL.
+def exit(returnCode):
+    ctypes.windll.kernel32.ExitProcess(returnCode)

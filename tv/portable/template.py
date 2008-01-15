@@ -29,6 +29,8 @@ from itertools import chain
 import logging
 import util
 
+from miroplatform.frontends.html.threading import inMainThread
+
 # FIXME add support for onlyBody parameter for static templates so we
 #       don't need to strip the outer HTML
 import re
@@ -93,9 +95,8 @@ def queueDOMChange(func, name):
     that means we're doing some other kind of gui update.
     """
 
-    import frontend
     try:
-        frontend.inMainThread(lambda:eventloop.addUrgentCall(func, name))
+       inMainThread(lambda:eventloop.addUrgentCall(func, name))
     except:
         eventloop.addIdle(func, name)
 

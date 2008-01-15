@@ -48,6 +48,7 @@ try:
     import database
     from miroplatform.frontends.html import HTMLDisplay
     from frontend_implementation.UIBackendDelegate import UIBackendDelegate
+    from frontend_implementation import MainFrame
     from eventloop import asUrgent, asIdle
     from platformutils import getLongPathName
     import searchengines
@@ -155,20 +156,20 @@ def createProxyObjects():
 
     jsBridge = makeService("@participatoryculture.org/dtv/jsbridge;1",
             pcfIDTVJSBridge)
-    frontend.jsBridge = proxyManager.getProxyForObject(xulEventQueue,
+    app.jsBridge = proxyManager.getProxyForObject(xulEventQueue,
             pcfIDTVJSBridge, jsBridge, nsIProxyObjectManager.INVOKE_ASYNC |
             nsIProxyObjectManager.FORCE_PROXY_CREATION)
 
     vlcRenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",
             pcfIDTVVLCRenderer)
-    frontend.vlcRenderer = proxyManager.getProxyForObject(xulEventQueue,
+    app.vlcRenderer = proxyManager.getProxyForObject(xulEventQueue,
             pcfIDTVVLCRenderer, vlcRenderer, 
             nsIProxyObjectManager.INVOKE_SYNC |
             nsIProxyObjectManager.FORCE_PROXY_CREATION)
 
 def initializeProxyObjects(window):
-    frontend.vlcRenderer.init(window)
-    frontend.jsBridge.init(window)
+    app.vlcRenderer.init(window)
+    app.jsBridge.init(window)
 
 def initializeHTTPProxy():
     klass = components.classes["@mozilla.org/preferences-service;1"]
@@ -220,18 +221,18 @@ def XULAccelFromLabel(label):
 
 def prefsChangeCallback(mapped, id):
     if isinstance (mapped.actualFeed, feed.DirectoryWatchFeedImpl):
-        frontend.jsBridge.directoryWatchAdded (str(id), mapped.dir, mapped.visible);
+        app.jsBridge.directoryWatchAdded (str(id), mapped.dir, mapped.visible);
 
 def prefsRemoveCallback(mapped, id):
     if isinstance (mapped.actualFeed, feed.DirectoryWatchFeedImpl):
-        frontend.jsBridge.directoryWatchRemoved (str(id));
+        app.jsBridge.directoryWatchRemoved (str(id));
 
 
 @asIdle
 def startPrefs():
     for f in views.feeds:
         if isinstance (f.actualFeed, feed.DirectoryWatchFeedImpl):
-            frontend.jsBridge.directoryWatchAdded (str(f.getID()), f.dir, f.visible)
+            app.jsBridge.directoryWatchAdded (str(f.getID()), f.dir, f.visible)
     views.feeds.addChangeCallback(prefsChangeCallback)
     views.feeds.addAddCallback(prefsChangeCallback)
     views.feeds.addRemoveCallback(prefsRemoveCallback)
@@ -280,7 +281,7 @@ class PyBridge:
         views.initialize()
 
     def onShutdown(self):
-        frontend.vlcRenderer.stop()
+        app.vlcRenderer.stop()
         app.controller.onShutdown()
 
     def deleteVLCCache(self):
@@ -661,9 +662,9 @@ class PyBridge:
 
     @asUrgent
     def saveVideoFile(self, path):
-        if frontend.currentVideoPath is None:
+        if MainFrame.currentVideoPath is None:
             return
-        app.controller.saveVideo(frontend.currentVideoPath, path)
+        app.controller.saveVideo(MainFrame.currentVideoPath, path)
 
     def startupDoSearch(self, path):
         if path.endswith(":"):
@@ -766,7 +767,7 @@ class PyBridge:
             numPaused = len(views.pausedItems)
         else:
             numPaused = numDownloading = numUnwatched = 0
-        frontend.jsBridge.updateTrayMenus(numUnwatched, numDownloading, numPaused)
+        app.jsBridge.updateTrayMenus(numUnwatched, numDownloading, numPaused)
 
     # HACK ALERT - We should change this to take a dictionary instead
     # of all of the possible database variables. Since there's no

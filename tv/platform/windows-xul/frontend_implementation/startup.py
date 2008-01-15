@@ -17,7 +17,7 @@
 
 from threading import Thread, Event
 import util
-import frontend
+import app
 from gtcache import gettext as _
 from gtcache import ngettext
 
@@ -39,7 +39,7 @@ class _Search:
     def progressCallback(self, files, videos):
         if self.cancelled.isSet():
             return False
-        frontend.jsBridge.updateSearchProgress(_("(parsed %d files - found %d videos)") % (files, videos))
+        app.jsBridge.updateSearchProgress(_("(parsed %d files - found %d videos)") % (files, videos))
         return True
 
     # Alternate thread.
@@ -47,7 +47,7 @@ class _Search:
         self.files = util.gatherVideos(self.path, self.progressCallback)
         if not self.cancelled.isSet():
             count = len(self.files)
-            frontend.jsBridge.searchFinished(ngettext("%d video found", "%d videos found", count) % (count,))
+            app.jsBridge.searchFinished(ngettext("%d video found", "%d videos found", count) % (count,))
 
     def getFiles (self):
         if self.cancelled.isSet():
@@ -65,7 +65,7 @@ def doSearch(path):
 
 def cancelSearch():
     search.cancel()
-    frontend.jsBridge.searchCancelled("")
+    app.jsBridge.searchCancelled("")
 
 def finishStartup():
     if search:
@@ -94,4 +94,4 @@ def finishStartup():
 def performStartupTasks(terminationCallback):
     global callback
     callback = terminationCallback
-    frontend.jsBridge.performStartupTasks(os.path.expanduser("~"))
+    app.jsBridge.performStartupTasks(os.path.expanduser("~"))

@@ -60,6 +60,7 @@ from zipfile import ZipFile
 import tempfile
 from random import randrange, seed
 import os.path
+import platformutils
 
 try:
     import bsddb.db
@@ -595,7 +596,7 @@ class LiveStorageBDB:
             if end - start > 0.05 and util.chatter:
                 logging.timing ("Database load slow: %.3f", end - start)
         except bsddb.db.DBNoSpaceError:
-            frontend.exit(28)
+            platformutils.exit(28)
 
     def dumpDatabase(self, db):
         from download_utils import nextFreeFilename

@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import frontend
+import app
 import os
 import util
 import config
@@ -27,7 +27,6 @@ from videorenderer import VideoRenderer
 
 from xpcom import components
 from threading import Lock
-import frontend
 import time
 
 selectItemLock = Lock()
@@ -66,16 +65,16 @@ class VideoDisplay (VideoDisplayBase):
         pass
 
     def goFullScreen(self):
-        return frontend.vlcRenderer.goFullscreen(url)
+        return app.vlcRenderer.goFullscreen(url)
 
     def exitFullScreen(self):
-        return frontend.vlcRenderer.exitFullScreen(url)
+        return app.vlcRenderer.exitFullScreen(url)
 
     def setVolume(self, volume, moveSlider=True): 
         VideoDisplayBase.setVolume(self, volume)
-        frontend.vlcRenderer.setVolume(self.volume)
+        app.vlcRenderer.setVolume(self.volume)
         if moveSlider:
-            frontend.jsBridge.positionVolumeSlider(self.volume)
+            app.jsBridge.positionVolumeSlider(self.volume)
 
     def fillMovieData (self, filename, movie_data, callback):
         print "fillMovieData (%s)" % (filename,)
@@ -95,7 +94,7 @@ class VideoDisplay (VideoDisplayBase):
 #       Uncomment this to enable duration extraction
 
 #         print "Calling renderer"
-        frontend.vlcRenderer.extractMovieData (filename, movie_data["screenshot"]);
+        app.vlcRenderer.extractMovieData (filename, movie_data["screenshot"]);
 #         print "renderer returned"
 
     def extractFinish (self, duration, screenshot_success):
@@ -130,43 +129,43 @@ class VLCRenderer (VideoRenderer):
 
     def canPlayFile(self, filename):
         url = util.absolutePathToFileURL(filename)
-        return frontend.vlcRenderer.canPlayURL(url)
+        return app.vlcRenderer.canPlayURL(url)
 
     @lockAndPlay
     def selectFile(self, filename):
         url = util.absolutePathToFileURL(filename)
-        return frontend.vlcRenderer.selectURL(url)
+        return app.vlcRenderer.selectURL(url)
     def setVolume(self, volume): 
-        return frontend.vlcRenderer.setVolume(volume)
+        return app.vlcRenderer.setVolume(volume)
     @lockAndPlay
     def reset(self): 
-        return frontend.vlcRenderer.reset()
+        return app.vlcRenderer.reset()
     @lockAndPlay
     def play(self): 
-        return frontend.vlcRenderer.play()
+        return app.vlcRenderer.play()
     def pause(self): 
-        return frontend.vlcRenderer.pause()
+        return app.vlcRenderer.pause()
     @lockAndPlay
     def stop(self): 
-        return frontend.vlcRenderer.stop()
+        return app.vlcRenderer.stop()
     def goToBeginningOfMovie(self): 
-        return frontend.vlcRenderer.goToBeginningOfMovie()
+        return app.vlcRenderer.goToBeginningOfMovie()
     def getDuration(self): 
-        return frontend.vlcRenderer.getDuration()
+        return app.vlcRenderer.getDuration()
     def getCurrentTime(self): 
         try:
-            return frontend.vlcRenderer.getCurrentTime()
+            return app.vlcRenderer.getCurrentTime()
         except:
             return None
     def setCurrentTime(self, time): 
-        return frontend.vlcRenderer.setCurrentTime(time)
+        return app.vlcRenderer.setCurrentTime(time)
     @lockAndPlay
     def playFromTime(self, time): 
-        return frontend.vlcRenderer.playFromTime(time)
+        return app.vlcRenderer.playFromTime(time)
     def getRate(self): 
-        return frontend.vlcRenderer.getRate()
+        return app.vlcRenderer.getRate()
     def setRate(self, rate): 
-        return frontend.vlcRenderer.setRate(rate)
+        return app.vlcRenderer.setRate(rate)
 
     def movieDataProgramInfo(self, videoPath, thumbnailPath):
         # We don't use the app name here, so custom

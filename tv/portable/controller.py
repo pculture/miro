@@ -20,6 +20,8 @@ of Miro.
 """
 
 import logging
+import os
+import shutil
 import threading
 import urllib
 
@@ -365,8 +367,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             app.db.liveStorage.close()
         logging.info ("Shutting down event loop")
         eventloop.quit()
-        logging.info ("Shutting down frontend")
-        frontend.quit()
+        signals.system.shutdown()
 
     @eventloop.asUrgent
     def setGuideURL(self, guideURL):
@@ -425,7 +426,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
 
         except:
             signals.system.failedExn("while shutting down")
-            frontend.exit(1)
+            platformutils.exit(1)
 
     ### Handling events received from the OS (via our base class) ###
 
@@ -560,3 +561,14 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         from frontends.html import templatedisplay
         return templatedisplay.GUIActionHandler().addDownload(url)
 
+    @eventloop.asUrgent
+    def saveVideo(self, currentPath, savePath):
+        logging.info("saving video %s to %s" % (currentPath, savePath))
+        try:
+            shutil.copyfile(currentPath, savePath)
+        except:
+            title = _('Error Saving Video')
+            name = os.path.basename(currentPath)
+            text = _('An error occured while trying to save %s.  Please check that the file has not been deleted and try again.') % util.clampText(name, 50)
+            dialogs.MessageBoxDialog(title, text).run()
+            logging.warn("Error saving video: %s" % traceback.format_exc())

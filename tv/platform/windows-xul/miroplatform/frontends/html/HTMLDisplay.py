@@ -30,7 +30,6 @@ import tempfile
 import os
 import platformutils
 import prefs
-import frontend
 from frontends.html.displaybase import Display
 from frontend_implementation import urlcallbacks
 
@@ -109,7 +108,7 @@ class HTMLDisplay (Display):
         self.location = os.path.abspath(location)
         self.url = makeFileUrl(self.location)
         urlcallbacks.installCallback(self.url, self.onURLLoad)
-        frontend.jsBridge.xulNavigateDisplay(self.area, self.url)
+        app.jsBridge.xulNavigateDisplay(self.area, self.url)
 
     def pageFinishCallback(self, url):
         # make sure that the page that finished was our page, if we install
@@ -140,31 +139,30 @@ class HTMLDisplay (Display):
 
     @deferUntilLoad
     def execJS(self, javascript):
-        print "EXEC JS: ", javascript
         fullUrl = "javascript:%s" % javascript
-        frontend.jsBridge.xulNavigateDisplay(self.area, fullUrl)
+        app.jsBridge.xulNavigateDisplay(self.area, fullUrl)
 
     @deferUntilLoad
     def navigateToFragment(self, fragment):
         fullUrl = "%s#%s" % (self.url, fragment)
-        frontend.jsBridge.xulNavigateDisplay(self.area, fullUrl)
+        app.jsBridge.xulNavigateDisplay(self.area, fullUrl)
 
     @deferUntilLoad
     def addItemAtEnd(self, xml, id):
-        frontend.jsBridge.xulAddElementAtEnd(self.area, xml, id)
+        app.jsBridge.xulAddElementAtEnd(self.area, xml, id)
 
     @deferUntilLoad
     def addItemBefore(self, xml, id):
-        frontend.jsBridge.xulAddElementBefore(self.area, xml, id)
+        app.jsBridge.xulAddElementBefore(self.area, xml, id)
     
     @deferUntilLoad
     def removeItem(self, id):
-        frontend.jsBridge.xulRemoveElement(self.area, id)
+        app.jsBridge.xulRemoveElement(self.area, id)
     
     @deferUntilLoad
     def removeItems(self, ids):
         for id in ids:
-            frontend.jsBridge.xulRemoveElement(self.area, id)
+            app.jsBridge.xulRemoveElement(self.area, id)
     
     @deferUntilLoad
     def changeItem(self, *args):
@@ -177,22 +175,22 @@ class HTMLDisplay (Display):
 
     def _doChangeItem(self, id, xml, changeHint):
         if changeHint is None or changeHint.changedInnerHTML is not None:
-            frontend.jsBridge.xulChangeElement(self.area, id, xml)
+            app.jsBridge.xulChangeElement(self.area, id, xml)
         else:
             for name, value in changeHint.changedAttributes.items():
                 if value is not None:
-                    frontend.jsBridge.xulChangeAttribute(self.area, id, name,
+                    app.jsBridge.xulChangeAttribute(self.area, id, name,
                             value)
                 else:
-                    frontend.jsBridge.xulRemoveAttribute(self.area, id, name)
+                    app.jsBridge.xulRemoveAttribute(self.area, id, name)
 
     @deferUntilLoad
     def hideItem(self, id):
-        frontend.jsBridge.xulHideElement(self.area, id)
+        app.jsBridge.xulHideElement(self.area, id)
         
     @deferUntilLoad
     def showItem(self, id):
-        frontend.jsBridge.xulShowElement(self.area, id)
+        app.jsBridge.xulShowElement(self.area, id)
 
     def onDeselected(self, frame):
         pass

@@ -18,8 +18,9 @@
 import gtk
 
 import threading
-from frontend_implementation.gtk_queue import queue
+from frontend_implementation.gtk_queue import queue, gtkAsyncMethod
 from frontends.html.main import HTMLApplication
+from miroplatform import mozsetup, options
 import app
 import gtcache
 import config
@@ -33,20 +34,22 @@ import platformutils
 
 class Application(HTMLApplication):
     def Run(self):
+        mozsetup.setupMozillaEnvironment()
         gtk.glade.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
         gtk.glade.textdomain("miro")
 
         queue.main_thread = threading.currentThread()
         platformutils.setMainThread()
         gtk.gdk.threads_init()
-        # We import frontend here to avoid a recursive import, since frontend
-        # imports this file
-        import frontend
-        if frontend.themeName is not None:
-            config.load(frontend.themeName)
+        if options.themeName is not None:
+            config.load(options.themeName)
         self.startup()
         gtk.main()
         app.controller.onShutdown()
+
+    @gtkAsyncMethod
+    def quitUI(self):
+        gtk.main_quit()
 
 ###############################################################################
 ###############################################################################
