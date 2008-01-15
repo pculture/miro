@@ -32,6 +32,7 @@ import os
 import traceback
 
 from clock import clock
+import app
 import autodler
 import config
 import database
@@ -235,7 +236,7 @@ def setupGuides():
 
     if newGuide:
         if config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']:
-            delegate.maximizeWindow()
+            app.delegate.maximizeWindow()
         for temp_guide in unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split():
             if views.guides.getItemWithIndex(indexes.guidesByURL, temp_guide) is None:
                 guide.ChannelGuide(temp_guide)
