@@ -673,7 +673,7 @@ folder will be deleted.""")
 
     ##
     # Marks the item as seen
-    def markItemSeen(self):
+    def markItemSeen(self, markOtherItems=True):
         self.confirmDBThread()
         if self.seen == False:
             self.seen = True
@@ -681,6 +681,10 @@ folder will be deleted.""")
                 self.watchedTime = datetime.now()
             self.clearParentsChildrenSeen()
             self.signalChange()
+            if markOtherItems and self.downloader:
+                for item in self.downloader.itemList:
+                    if item != self:
+                        item.markItemSeen(False)
 
     def clearParentsChildrenSeen(self):
         if self.parent_id:
@@ -688,7 +692,7 @@ folder will be deleted.""")
             parent.childrenSeen = None
             parent.signalChange()
 
-    def markItemUnseen(self):
+    def markItemUnseen(self, markOtherItems=True):
         self.confirmDBThread()
         if self.isContainerItem:
             self.childrenSeen = False
@@ -703,6 +707,10 @@ folder will be deleted.""")
             self.watchedTime = None
             self.clearParentsChildrenSeen()
             self.signalChange()
+            if markOtherItems and self.downloader:
+                for item in self.downloader.itemList:
+                    if item != self:
+                        item.markItemUnseen(False)
 
     @returnsUnicode
     def getRSSID(self):
