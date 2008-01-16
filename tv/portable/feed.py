@@ -1861,7 +1861,7 @@ class Collection(FeedImpl):
     ##
     # Adds an item to the collection
     def addItem(self,item):
-        if isinstance(item,Item):
+        if isinstance(item, itemmod.Item):
             self.ufeed.confirmDBThread()
             self.removeItem(item)
             self.items.append(item)
