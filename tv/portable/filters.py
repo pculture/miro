@@ -111,3 +111,9 @@ def autoDownloads(item):
 
 def manualDownloads(item):
     return not item.getAutoDownloaded() and not item.isPendingManualDownload() and item.getState() == 'downloading'
+
+def uniqueItems(item):
+    try:
+        return item.downloader.itemList[0] == item
+    except:
+        return True

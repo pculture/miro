@@ -19,18 +19,18 @@ sorts.switchUnwatchedFirstChannel("library")
 def searchFilter(x):
     return filters.matchingItems(x, app.controller.librarySearchTerm)
 
-matchingItems = views.watchableItems.filter(lambda x:searchFilter(x) and x.getFeedURL() != "dtv:singleFeed",sortFunc=sorts.itemSortLibrary.sort,resort=True)
+matchingItems = views.uniqueWatchableItems.filter(lambda x:searchFilter(x) and x.getFeedURL() != "dtv:singleFeed",sortFunc=sorts.itemSortLibrary.sort,resort=True)
 
 def updateSearchString(newSearch):
     if len(newSearch) == 0:
         app.controller.librarySearchTerm = None
     else:
         app.controller.librarySearchTerm = newSearch
-    views.watchableItems.recomputeFilter(matchingItems)
+    views.uniqueWatchableItems.recomputeFilter(matchingItems)
 
 def setSortBy(by, section, handle):
     sorts.itemSortLibrary.setSortBy(by)
-    views.watchableItems.recomputeSort(matchingItems)
+    views.uniqueWatchableItems.recomputeSort(matchingItems)
     handle.forceUpdate()
 
 ]]>
