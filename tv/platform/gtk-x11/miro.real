@@ -26,6 +26,7 @@ gtcache.init()
 
 import config
 import controller
+import frontend
 import miroplatform.options
 import platformutils
 import prefs
