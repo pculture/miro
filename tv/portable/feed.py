@@ -2226,7 +2226,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
                 for subfile in subfiles:
                     all_files.append(subfile)
             for file in all_files:
-                if file not in knownFiles and filetypes.isVideoFilename(platformutils.filenameToUnicode(file)):
+                if file not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file)):
                     itemmod.FileItem(file, feed_id=self.ufeed.id)
 
         for item in self.items:
