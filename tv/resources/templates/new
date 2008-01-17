@@ -20,18 +20,18 @@ views.nonContainerItems.recomputeFilter(views.newWatchableItems)
 def searchFilter(x):
     return filters.matchingItems(x, app.controller.newVideosSearchTerm)
 
-matchingItems = views.newWatchableItems.filter(lambda x:searchFilter(x) and x.getFeedURL() != "dtv:singleFeed",sortFunc=sorts.itemSortNew.sort, resort=True)
+matchingItems = views.uniqueNewWatchableItems.filter(lambda x:searchFilter(x) and x.getFeedURL() != "dtv:singleFeed",sortFunc=sorts.itemSortNew.sort, resort=True)
 
 def updateSearchString(newSearch):
     if len(newSearch) == 0:
         app.controller.newVideosSearchTerm = None
     else:
         app.controller.newVideosSearchTerm = newSearch
-    views.newWatchableItems.recomputeFilter(matchingItems)
+    views.uniqueNewWatchableItems.recomputeFilter(matchingItems)
 
 def setSortBy(by, section, handle):
     sorts.itemSortNew.setSortBy(by)
-    views.newWatchableItems.recomputeSort(matchingItems)
+    views.uniqueNewWatchableItems.recomputeSort(matchingItems)
     handle.forceUpdate()
 
 ]]>
