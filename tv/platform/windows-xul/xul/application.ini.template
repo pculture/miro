@@ -8,7 +8,7 @@ ID={6334D996-EA3E-4a0e-AA8D-15BA56B37241}
 
 [Gecko]
 MinVersion=1.8
-MaxVersion=1.8
+MaxVersion=1.9
 
 [XRE]
 EnableExtensionManager=1
