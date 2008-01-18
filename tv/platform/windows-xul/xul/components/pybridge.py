@@ -141,23 +141,31 @@ def createProxyObjects():
 
     proxyManager = makeComp("@mozilla.org/xpcomproxy;1",
             components.interfaces.nsIProxyObjectManager)
-    eventQueueService = makeService("@mozilla.org/event-queue-service;1",
+    try:
+        # XULRunner 1.8 version
+        eventQueueService = makeService("@mozilla.org/event-queue-service;1",
             components.interfaces.nsIEventQueueService)
-    xulEventQueue = eventQueueService.getSpecialEventQueue(
+        xulEventQueue = eventQueueService.getSpecialEventQueue(
             components.interfaces.nsIEventQueueService.UI_THREAD_EVENT_QUEUE)
-
+    except:
+        # XULRunner 1.9 version
+        threadMan = makeService("@mozilla.org/thread-manager;1",
+                                components.interfaces.nsIThreadManager)
+        xulEventQueue = threadMan.mainThread
     jsBridge = makeService("@participatoryculture.org/dtv/jsbridge;1",
-            components.interfaces.pcfIDTVJSBridge)
+                               components.interfaces.pcfIDTVJSBridge)
     app.jsBridge = proxyManager.getProxyForObject(xulEventQueue,
-            components.interfaces.pcfIDTVJSBridge, jsBridge, components.interfaces.nsIProxyObjectManager.INVOKE_ASYNC |
-            components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION)
+          components.interfaces.pcfIDTVJSBridge, jsBridge,
+          components.interfaces.nsIProxyObjectManager.INVOKE_ASYNC |
+          components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION)
 
     vlcRenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",
-            components.interfaces.pcfIDTVVLCRenderer)
+                              components.interfaces.pcfIDTVVLCRenderer)
     app.vlcRenderer = proxyManager.getProxyForObject(xulEventQueue,
             components.interfaces.pcfIDTVVLCRenderer, vlcRenderer, 
             components.interfaces.nsIProxyObjectManager.INVOKE_SYNC |
             components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION)
+
 
 def initializeProxyObjects(window):
     app.vlcRenderer.init(window)
