@@ -215,6 +215,7 @@ function onLoad() {
     var qo = new quitObserver();
 
     // Initialize the minimizer class
+    minimizer.initialize();
     minimizer.registerMainWindowProc(window);
 
     // Bring up Python environment.

@@ -20,11 +20,6 @@
 const JSBRIDGE_CONTRACTID = "@participatoryculture.org/dtv/jsbridge;1";
 const JSBRIDGE_CLASSID    = Components.ID("{421AA951-F53D-4499-B362-E432CAE920F4}");
 
-var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
-        getService(Components.interfaces.pcfIDTVPyBridge);
-var minimizer = Components.classes["@participatoryculture.org/dtv/minimize;1"].
-        getService(Components.interfaces.pcfIDTVMinimize);
-
 function writelog(str) {
     Components.classes['@mozilla.org/consoleservice;1']
 	.getService(Components.interfaces.nsIConsoleService)	
@@ -107,6 +102,7 @@ LoadFinishedListener.prototype =
 
   onStateChange : function(aWebProgress, aRequest, aStateFlags, aStatus)
   {
+   var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     var allFlags = (Components.interfaces.nsIWebProgressListener.STATE_STOP |
         Components.interfaces.nsIWebProgressListener.STATE_IS_WINDOW);
     if((aStateFlags & allFlags) == allFlags) {
@@ -184,6 +180,7 @@ jsBridge.prototype = {
   },
 
   showContextMenu: function(menuItems) {
+   var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     var popup = this.document.getElementById('contextPopup');
     while (popup.firstChild) {
       popup.removeChild(popup.firstChild);
@@ -399,6 +396,7 @@ jsBridge.prototype = {
   },
 
   leaveTotallyFullscreen: function() {
+    var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     this.document.getElementById('bottom').collapsed = false;
     this.document.getElementById('videoInfoDisplay').collapsed = false;
     this.hideVideoControlsTimer.cancel();
@@ -421,6 +419,7 @@ jsBridge.prototype = {
         self.justResized = false;
     }};
     var callback = {notify: function() {
+        var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
         self.justResized = true;
         videoInfoDisplay.collapsed = bottom.collapsed = true;
         pybridge.showCursor(false);
@@ -534,6 +533,7 @@ jsBridge.prototype = {
   },
 
   saveVideo: function() {
+   var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     if(this.videoFilename == null) return;
     var saveMenuItem = this.document.getElementById('menuitem-savevideo');
     var picked = pickSavePath(this.window, saveMenuItem.getAttribute('label'),
@@ -590,7 +590,7 @@ jsBridge.prototype = {
     searchIcon.setAttribute("src",'images/search_icon_' + engine + '.png');
   },
   updateMenus: function (states) {
-
+     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
      // Strings with new labels
      var removeChannels = new Object();
      var updateChannels = new Object();
@@ -640,6 +640,8 @@ jsBridge.prototype = {
 
   },
   updateTrayMenus: function (unwatched, downloading, paused) {
+      var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
+      var minimizer = Components.classes["@participatoryculture.org/dtv/minimize;1"].getService(Components.interfaces.pcfIDTVMinimize);
       var playUnwatched = new Object();
       var pauseDownloads = new Object();
       var restoreDownloads = new Object();
@@ -721,7 +723,7 @@ jsBridge.prototype = {
       var self = this;
 
       function minimize_onshown(event, x, y, screenWidth, screenHeight, document) {
-
+          var minimizer = Components.classes["@participatoryculture.org/dtv/minimize;1"].getService(Components.interfaces.pcfIDTVMinimize);
           var popup = event.target;
           popup.removeEventListener("popupshown",
                                     popup._minimizetotray_onshown,
@@ -759,6 +761,7 @@ jsBridge.prototype = {
   },
 
   showOpenDialog: function (id, title, defaultDirectory, typeString, types) {
+      var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
       var nsIFilePicker = Components.interfaces.nsIFilePicker;
       var fp = Components.classes["@mozilla.org/filepicker;1"]
                       .createInstance(nsIFilePicker);
@@ -780,6 +783,7 @@ jsBridge.prototype = {
   },
 
   showSaveDialog: function (id, title, defaultDirectory, defaultFilename) {
+      var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
       var picked = pickSavePath(this.window, title, defaultDirectory, defaultFilename);
       if (picked) pybridge.handleFileDialog(id, picked);
   },

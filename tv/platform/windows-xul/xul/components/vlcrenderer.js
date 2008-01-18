@@ -21,11 +21,6 @@
 const VLCRENDERER_CONTRACTID = "@participatoryculture.org/dtv/vlc-renderer;1";
 const VLCRENDERER_CLASSID = Components.ID("{F9F01D99-9D3B-4A69-BD5F-285FFD360079}");
 
-var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
-        getService(Components.interfaces.pcfIDTVPyBridge);
-var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].
-        getService(Components.interfaces.pcfIDTVJSBridge);
-
 function writelog(str) {
     Components.classes['@mozilla.org/consoleservice;1']
 	.getService(Components.interfaces.nsIConsoleService)	
@@ -69,6 +64,8 @@ VLCRenderer.prototype = {
   },
 
   updateVideoControls: function() {
+    var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
+    var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(Components.interfaces.pcfIDTVJSBridge);
     try {
       var elapsed = 0;
       var len = 1;
@@ -111,12 +108,14 @@ VLCRenderer.prototype = {
   },
 
   resetVideoControls: function () {
+     var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(Components.interfaces.pcfIDTVJSBridge);
      jsbridge.setSliderText(0);
      jsbridge.setDuration(-1);
      jsbridge.moveSlider(0);
   },
 
   showPauseButton: function() {
+    var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-pause";
     var playMenuItem = this.document.getElementById('menuitem-playpausevideo');
@@ -126,6 +125,7 @@ VLCRenderer.prototype = {
   },
 
   showPlayButton: function() {
+    var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-play";
     var playMenuItem = this.document.getElementById('menuitem-playpausevideo');
@@ -181,6 +181,7 @@ VLCRenderer.prototype = {
     },
   
   play: function() {
+    var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
       if (this.vlc.playlist.items.count > 0) {
 	  if(!this.vlc.playlist.isPlaying) {
 	      if (this.item != null) {
@@ -270,6 +271,7 @@ VLCRenderer.prototype = {
   },
 
   extractMovieData: function (url, screenshot_filename) {
+    var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
       // Disabled until the external helper application works.
       pybridge.extractFinish (-1, false);
   },

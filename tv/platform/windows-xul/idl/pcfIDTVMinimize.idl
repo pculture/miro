@@ -25,6 +25,7 @@ interface nsIDOMWindow;
 [scriptable, uuid(645F3B3D-E5E2-45c5-BE61-6176888DE9A3)]
 interface pcfIDTVMinimize : nsISupports
 {
+  void initialize();
   void minimizeOrRestore();
   void delTrayIcon();
   void updateIcon();

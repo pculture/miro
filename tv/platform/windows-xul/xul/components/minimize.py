@@ -262,6 +262,9 @@ class Minimize:
     oldWindowProcs = {}
 
     def __init__(self):
+	pass
+
+    def initialize(self):
         self.iconinfo = None
         self.wclassName = ctypes.c_wchar_p(u"PCF:DTV:Minimize:MessageWindowClass")
         self.wname = ctypes.c_wchar_p(u"PCF:DTV:Minimize:MessageWindow")
@@ -301,6 +304,7 @@ class Minimize:
         self.hIcon = ctypes.windll.user32.LoadImageW(0, self.iconloc, IMAGE_ICON, 0, 0, LR_LOADFROMFILE)
 
         self.minimized = []
+
 
     def updateIcon(self):
         if config.get(prefs.MINIMIZE_TO_TRAY):

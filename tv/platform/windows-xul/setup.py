@@ -387,11 +387,12 @@ class bdist_xul_dumb(Command):
             packagePaths.extend([
                 os.path.join(XULRUNNER_DIR, "python"),
                 ])
+
         moduleIncludes = [# Public to Python code
                            "xpcom",
                            "xpcom.components",
                            "xpcom.file",
-                           "xpcom.register",
+                           #"xpcom.register",
                            # Used by C++ XPConnect bridge to Mozilla
                            "xpcom._xpcom",
                            "xpcom.client",

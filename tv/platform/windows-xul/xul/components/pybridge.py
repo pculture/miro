@@ -124,14 +124,6 @@ def XULDisplayedShortcut(item):
         return 1
     return len(item.shortcuts)
 
-nsIEventQueueService = components.interfaces.nsIEventQueueService
-nsIProperties = components.interfaces.nsIProperties
-nsIFile = components.interfaces.nsIFile
-nsIProxyObjectManager = components.interfaces.nsIProxyObjectManager
-pcfIDTVPyBridge = components.interfaces.pcfIDTVPyBridge
-pcfIDTVJSBridge = components.interfaces.pcfIDTVJSBridge
-pcfIDTVVLCRenderer = components.interfaces.pcfIDTVVLCRenderer
-
 def makeComp(clsid, iid):
     """Helper function to get an XPCOM component"""
     return components.classes[clsid].createInstance(iid)
@@ -148,24 +140,24 @@ def createProxyObjects():
     """
 
     proxyManager = makeComp("@mozilla.org/xpcomproxy;1",
-            nsIProxyObjectManager)
+            components.interfaces.nsIProxyObjectManager)
     eventQueueService = makeService("@mozilla.org/event-queue-service;1",
-            nsIEventQueueService)
+            components.interfaces.nsIEventQueueService)
     xulEventQueue = eventQueueService.getSpecialEventQueue(
-            nsIEventQueueService.UI_THREAD_EVENT_QUEUE)
+            components.interfaces.nsIEventQueueService.UI_THREAD_EVENT_QUEUE)
 
     jsBridge = makeService("@participatoryculture.org/dtv/jsbridge;1",
-            pcfIDTVJSBridge)
+            components.interfaces.pcfIDTVJSBridge)
     app.jsBridge = proxyManager.getProxyForObject(xulEventQueue,
-            pcfIDTVJSBridge, jsBridge, nsIProxyObjectManager.INVOKE_ASYNC |
-            nsIProxyObjectManager.FORCE_PROXY_CREATION)
+            components.interfaces.pcfIDTVJSBridge, jsBridge, components.interfaces.nsIProxyObjectManager.INVOKE_ASYNC |
+            components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION)
 
     vlcRenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",
-            pcfIDTVVLCRenderer)
+            components.interfaces.pcfIDTVVLCRenderer)
     app.vlcRenderer = proxyManager.getProxyForObject(xulEventQueue,
-            pcfIDTVVLCRenderer, vlcRenderer, 
-            nsIProxyObjectManager.INVOKE_SYNC |
-            nsIProxyObjectManager.FORCE_PROXY_CREATION)
+            components.interfaces.pcfIDTVVLCRenderer, vlcRenderer, 
+            components.interfaces.nsIProxyObjectManager.INVOKE_SYNC |
+            components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION)
 
 def initializeProxyObjects(window):
     app.vlcRenderer.init(window)
@@ -193,7 +185,7 @@ def registerHttpObserver():
     observer_service.addObserver(observer, "http-on-modify-request", False);
         
 def getArgumentList(commandLine):
-    """Convert a nsICommandLine component to a list of arguments to pass
+    """Convert a components.interfaces.nsICommandLine component to a list of arguments to pass
     to the singleclick module."""
 
     args = [commandLine.getArgument(i) for i in range(commandLine.length)]
@@ -201,14 +193,6 @@ def getArgumentList(commandLine):
     if len(args) > 0 and args[0].lower().endswith('application.ini'):
         args = args[1:]
     return [getLongPathName(path) for path in args]
-
-# Copied from resources.py; if you change this function here, change it
-# there too.
-def appRoot():
-    klass = components.classes["@mozilla.org/file/directory_service;1"]
-    service = klass.getService(nsIProperties)
-    file = service.get("XCurProcD", nsIFile)
-    return file.path
 
 # Functions to convert menu information into XUL form
 def XULifyLabel(label):
@@ -245,7 +229,7 @@ def endPrefs():
 
 
 class PyBridge:
-    _com_interfaces_ = [pcfIDTVPyBridge]
+    _com_interfaces_ = [components.interfaces.pcfIDTVPyBridge]
     _reg_clsid_ = "{F87D30FF-C117-401e-9194-DF3877C926D4}"
     _reg_contractid_ = "@participatoryculture.org/dtv/pybridge;1"
     _reg_desc_ = "Bridge into DTV Python core"
@@ -270,7 +254,6 @@ class PyBridge:
             return
         else:
             self.started = True
-
         initializeProxyObjects(window)
         registerHttpObserver()
         initializeHTTPProxy()
