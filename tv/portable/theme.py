@@ -56,6 +56,7 @@ class ThemeHistory(DDBObject):
         if self.theme not in self.pastThemes:
             self.pastThemes.append(self.theme)
             self.onFirstRun()
+            self.signalChange()
         if self.lastTheme != self.theme:
             self.lastTheme = self.theme
             self.onThemeChange()
