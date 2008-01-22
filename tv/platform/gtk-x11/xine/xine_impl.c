@@ -397,9 +397,16 @@ void xineSetPlaying(_Xine* xine, int isPlaying)
 
 void xineSetViz (_Xine* xine, const char *viz)
 {
-  viz = viz_available (xine, viz);
-  if (viz)
-    xine->viz_name = viz;
+  if (!strcmp(viz, "none") || viz[0] == 0) {
+    xine->viz_name = NULL;
+  } else {
+    viz = viz_available (xine, viz);
+    if (viz)
+      xine->viz_name = viz;
+    else
+      xine->viz_name = xine->viz_available [0];
+  }
+  printf ("viz_name = %s\n", xine->viz_name);
 }
 
 void xineSetVolume(_Xine* xine, int volume)
