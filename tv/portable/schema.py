@@ -318,6 +318,7 @@ class FeedSchema(DDBObjectSchema):
     classString = 'feed'
     fields = DDBObjectSchema.fields + [
         ('origURL', SchemaURL()),
+        ('baseTitle', SchemaString(noneOk=True)),
         ('errorState', SchemaBool()),
         ('loading', SchemaBool()),
         ('actualFeed', SchemaObject(FeedImpl)),
@@ -339,7 +340,7 @@ class FeedImplSchema(ObjectSchema):
     fields = [
         ('url', SchemaURL()),
         ('ufeed', SchemaObject(Feed)),
-        ('title', SchemaString()),
+        ('title', SchemaString(noneOk=True)),
         ('created', SchemaDateTime()),
         ('visible', SchemaBool()),
         ('lastViewed', SchemaDateTime()),
@@ -490,7 +491,7 @@ class ThemeHistorySchema(DDBObjectSchema):
         ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
     ]
 
-VERSION = 61
+VERSION = 62
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

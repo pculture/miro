@@ -209,10 +209,7 @@ class FeedImpl:
         self.url = url
         self.ufeed = ufeed
         self.calc_item_list()
-        if title == None:
-            self.title = url
-        else:
-            self.title = title
+        self.title = title
         self.created = datetime.now()
         self.visible = visible
         self.updating = False
@@ -478,8 +475,11 @@ class FeedImpl:
     def getTitle(self):
         try:
             title = self.title
-            if whitespacePattern.match(title):
-                title = self.url
+            if title is None or whitespacePattern.match(title):
+                if self.ufeed.baseTitle is not None:
+                    title = self.ufeed.baseTitle
+                else:
+                    title = self.url
             return title
         except:
             return u""
@@ -589,6 +589,7 @@ class Feed(DDBObject):
         self.expireTime = None
         self.fallBehind = -1
 
+        self.baseTitle = None
         self.origURL = url
         self.errorState = False
         self.loading = True
@@ -663,13 +664,13 @@ class Feed(DDBObject):
 
     @returnsUnicode
     def getTitle(self):
-        if self.userTitle is None:
+        if self.userTitle is not None:
+            return self.userTitle
+        else:
             title = self.actualFeed.getTitle()
             if self.searchTerm is not None:
                 title = u"'%s' on %s" % (self.searchTerm, title)
             return title
-        else:
-            return self.userTitle
 
     def setTitle(self, title):
         self.confirmDBThread()
@@ -678,6 +679,13 @@ class Feed(DDBObject):
 
     def unsetTitle(self):
         self.setTitle(None)
+
+    ##
+    # Set the baseTitle.
+    @returnsUnicode
+    def setBaseTitle(self, title):
+        self.baseTitle = title
+        self.signalChange()
 
     @returnsUnicode
     def getAutoDownloadMode(self):

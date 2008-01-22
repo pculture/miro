@@ -918,6 +918,15 @@ def upgrade61(objectList):
             changed.add(o)
     return changed
 
+def upgrade62(objectList):
+    """Adding baseTitle to feedimpl."""
+    changed = set()
+    for o in objectList:
+        if o.classString == 'feed':
+            o.savedData['baseTitle'] = None
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
