@@ -406,7 +406,6 @@ void xineSetViz (_Xine* xine, const char *viz)
     else
       xine->viz_name = xine->viz_available [0];
   }
-  printf ("viz_name = %s\n", xine->viz_name);
 }
 
 void xineSetVolume(_Xine* xine, int volume)
