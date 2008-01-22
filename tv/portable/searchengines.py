@@ -151,9 +151,11 @@ def getSearchEnginesHTML ():
     return enginesHTML
 
 def getLastEngineTitle():
-    last = getLastEngine()
+    return getEngineTitle(getLastEngine())
+
+def getEngineTitle(which):
     for engine in views.searchEngines:
-        if engine.name == last:
+        if engine.name == which:
             return engine.title
     return u''
 

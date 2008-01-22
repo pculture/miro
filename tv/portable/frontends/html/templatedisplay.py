@@ -628,14 +628,20 @@ class GUIActionHandler:
         singleclick.openFile(path)
 
     def addSearchFeed(self, term=None, style = dialogs.SearchChannelDialog.CHANNEL, location = None):
+        def baseTitle(dialog):
+            import searchengines
+            if dialog.style != dialogs.SearchChannelDialog.ENGINE:
+                return None
+            return "%s: %s" % (searchengines.getEngineTitle(dialog.location), dialog.term)
+
         def doAdd(dialog):
             if dialog.choice == dialogs.BUTTON_CREATE_CHANNEL:
-                self.addFeed(dialog.getURL())
+                self.addFeed(dialog.getURL(), baseTitle=baseTitle(dialog))
         dialog = dialogs.SearchChannelDialog(term, style, location)
         if location == None:
             dialog.run(doAdd)
         else:
-            self.addFeed(dialog.getURL())
+            self.addFeed(dialog.getURL(), baseTitle=baseTitle(dialog))
 
     def addChannelSearchFeed(self, id):
         feed = app.db.getObjectByID(int(id))
@@ -686,7 +692,7 @@ class GUIActionHandler:
         
     # NEEDS: name should change to addAndSelectFeed; then we should create
     # a non-GUI addFeed to match removeFeed. (requires template updates)
-    def addFeed(self, url = None, showTemplate = None, selected = '1'):
+    def addFeed(self, url = None, showTemplate = None, selected = '1', baseTitle = None):
         if url:
             util.checkU(url)
         def doAdd (url):
@@ -694,6 +700,8 @@ class GUIActionHandler:
             myFeed = feed.getFeedByURL (url)
             if myFeed is None:
                 myFeed = feed.Feed(url)
+                if baseTitle:
+                    myFeed.setBaseTitle(baseTitle)
     
             if selected == '1':
                 app.controller.selection.selectTabByObject(myFeed)
