@@ -38,11 +38,22 @@ VLCRenderer.prototype = {
       return this;
     throw Components.results.NS_ERROR_NO_INTERFACE;
   },
-
-  init: function(window) {
-    this.document = window.document;
+  hasVLC: function() {
+    if (this.vlc == null) {
+      writelog("VLC Missing!");
+      return false; 
+    } else {
+      return true;
+    }
+  },
+  init: function(win) {
+    this.document = win.document;
     var videoBrowser = this.document.getElementById("mainDisplayVideo");
-    this.vlc = videoBrowser.contentDocument.getElementById("video1");
+    try {
+      this.vlc = videoBrowser.contentDocument.getElementById("video1");
+    } catch(e) {
+      writelog("Error initializing VLC");
+    }
     this.timer = Components.classes["@mozilla.org/timer;1"].
           createInstance(Components.interfaces.nsITimer);
     this.timer2 = Components.classes["@mozilla.org/timer;1"].
@@ -66,6 +77,7 @@ VLCRenderer.prototype = {
   updateVideoControls: function() {
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(Components.interfaces.pcfIDTVJSBridge);
+    if (!this.hasVLC()) return;
     try {
       var elapsed = 0;
       var len = 1;
@@ -144,6 +156,7 @@ VLCRenderer.prototype = {
   },
 
   canPlayURL: function(url) {
+    if (!this.hasVLC()) return;
     try {
       if (this.vlc.playlist.items.count > 0) {
           this.stop();
@@ -157,6 +170,7 @@ VLCRenderer.prototype = {
   },
 
   selectURL: function(url) {
+    if (!this.hasVLC()) return;
       if (this.vlc.playlist.items.count > 0) {
           this.stop();
           this.vlc.playlist.items.clear();
@@ -165,6 +179,7 @@ VLCRenderer.prototype = {
   },
 
   setCurrentTime: function(time) {
+    if (!this.hasVLC()) return;
       try {
 	  this.vlc.input.time = time * 1000;
       } catch (e) {
@@ -182,6 +197,7 @@ VLCRenderer.prototype = {
   
   play: function() {
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
+    if (!this.hasVLC()) return;
       if (this.vlc.playlist.items.count > 0) {
 	  if(!this.vlc.playlist.isPlaying) {
 	      if (this.item != null) {
@@ -209,6 +225,7 @@ VLCRenderer.prototype = {
   },
 
   pause: function() {
+    if (!this.hasVLC()) return;
       this.scheduleUpdates = false;
       this.active = false;
       if (this.vlc.playlist.isPlaying) {
@@ -220,6 +237,7 @@ VLCRenderer.prototype = {
   },
 
   pauseForDrag: function() {
+    if (!this.hasVLC()) return;
       this.scheduleUpdates = false;
       this.active = false;
       if (this.vlc.playlist.isPlaying) {
@@ -230,6 +248,7 @@ VLCRenderer.prototype = {
   },
 
   stop: function() {
+    if (!this.hasVLC()) return;
       this.scheduleUpdates = false;
       this.active = false;
       if (this.vlc.playlist.items.count > 0) {
@@ -244,6 +263,7 @@ VLCRenderer.prototype = {
   },
 
   getDuration: function() {
+    if (!this.hasVLC()) return;
     try {
       rv = this.vlc.input.length;
     } catch (e) {
@@ -253,12 +273,14 @@ VLCRenderer.prototype = {
   },
 
   getCurrentTime: function() {
+    if (!this.hasVLC()) return;
       var rv;
       rv = this.vlc.input.time;
       return rv / 1000.0;
   },
 
   setVolume: function(level) {
+    if (!this.hasVLC()) return;
       this.volume = level * 200;
       if (!this.extractMode) {
 	  this.vlc.audio.mute = false;
@@ -267,6 +289,7 @@ VLCRenderer.prototype = {
   },
 
   goFullscreen: function() {
+    if (!this.hasVLC()) return;
     this.vlc.video.fullscreen = true;
   },
 
