@@ -90,11 +90,15 @@ class Application(HTMLApplication):
 
     def onUnwatchedItemsCountChange(self, obj, id):
         from xpcom import components
+
+        HTMLApplication.onDownloadingItemsCountChange(self, obj, id)
         pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
         pybridge.updateTrayMenus()
 
     def onDownloadingItemsCountChange(self, obj, id):
         from xpcom import components
+
+        HTMLApplication.onDownloadingItemsCountChange(self, obj, id)
         pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
         pybridge.updateTrayMenus()
 
