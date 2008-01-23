@@ -620,10 +620,10 @@ class PyBridge:
         app.controller.newDownload()
 
     def importChannels(self):
-        frontends.html.importChannels()
+        app.htmlapp.importChannels()
 
     def exportChannels(self):
-        frontends.html.exportChannels()
+        app.htmlapp.exportChannels()
 
     @asUrgent
     def addChannel(self):
