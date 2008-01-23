@@ -29,13 +29,7 @@ import prefs
 # installation. Use a fixed offset from this path.
 
 def appRoot():
-    # This reports the path to xulrunner.exe -- admittedly a little
-    # misleading. In general, this will be in a 'xulrunner'
-    # subdirectory underneath the actual application root directory.
-    klass = components.classes["@mozilla.org/file/directory_service;1"]
-    service = klass.getService(components.interfaces.nsIProperties)
-    file = service.get("resource:app", components.interfaces.nsIFile)
-    return file.path
+    return os.path.abspath(os.getcwd())
 
 def resourceRoot():
     return os.path.join(appRoot(), 'resources')

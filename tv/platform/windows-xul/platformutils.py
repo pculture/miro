@@ -216,7 +216,7 @@ def resizeImage(source_path, dest_path, width, height):
     specified, or because it had a different aspect ratio, pad out the image
     with black pixels.
     """
-    convert_path = os.path.join(resources.appRoot(), '..', 'imagemagick',
+    convert_path = os.path.join(resources.appRoot(), 'imagemagick',
             'convert.exe')
     # From the "Pad Out Image" recipe at
     # http://www.imagemagick.org/Usage/thumbnails/
