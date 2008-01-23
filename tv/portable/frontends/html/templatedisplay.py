@@ -549,25 +549,7 @@ class ModelActionHandler:
                     _("You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory."))
             dialog.run()
             return
-
-        oldDir = config.get(prefs.MOVIES_DIRECTORY)
-        config.set(prefs.MOVIES_DIRECTORY, newDir)
-        if migrate:
-            views.remoteDownloads.confirmDBThread()
-            for download in views.remoteDownloads:
-                if download.isFinished():
-                    logging.info ("migrating %s", download.getFilename())
-                    download.migrate(newDir)
-            # Pass in case they don't exist or are not empty:
-            try:
-                os.rmdir(os.path.join (oldDir, 'Incomplete Downloads'))
-            except:
-                pass
-            try:
-                os.rmdir(oldDir)
-            except:
-                pass
-        util.getSingletonDDBObject(views.directoryFeed).update()
+        app.controller.changeMoviesDirectory(newDir, migrate)
 
 # Test shim for test* functions on GUIActionHandler
 class printResultThread(threading.Thread):

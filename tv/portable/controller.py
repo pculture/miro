@@ -43,6 +43,7 @@ import item
 import moviedata
 import platformutils
 import playlist
+import prefs
 import selection
 import signals
 import singleclick
@@ -572,3 +573,24 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             text = _('An error occured while trying to save %s.  Please check that the file has not been deleted and try again.') % util.clampText(name, 50)
             dialogs.MessageBoxDialog(title, text).run()
             logging.warn("Error saving video: %s" % traceback.format_exc())
+
+    @eventloop.asUrgent
+    def changeMoviesDirectory(self, newDir, migrate):
+        oldDir = config.get(prefs.MOVIES_DIRECTORY)
+        config.set(prefs.MOVIES_DIRECTORY, newDir)
+        if migrate:
+            views.remoteDownloads.confirmDBThread()
+            for download in views.remoteDownloads:
+                if download.isFinished():
+                    logging.info ("migrating %s", download.getFilename())
+                    download.migrate(newDir)
+            # Pass in case they don't exist or are not empty:
+            try:
+                os.rmdir(os.path.join (oldDir, 'Incomplete Downloads'))
+            except:
+                pass
+            try:
+                os.rmdir(oldDir)
+            except:
+                pass
+        util.getSingletonDDBObject(views.directoryFeed).update()
