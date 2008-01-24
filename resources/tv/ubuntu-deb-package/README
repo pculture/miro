@@ -98,7 +98,10 @@ Packaging steps
    
    Make sure your date string is in RFC-2822 format.  Use ``date -R``.
 
-4. Run::
+4. Update the requirement for ``miro-data`` in the ``debian-<distro>/control``,
+   file.
+
+5. Run::
 
       sudo build.py <version> <distro> <tarball>
 
@@ -115,7 +118,7 @@ Packaging steps
    This generates the ``.dsc`` file then runs pbuilder to build the ``.deb``
    files.
 
-5. If everything goes well, you should have your packages in the ``<distro>``
+6. If everything goes well, you should have your packages in the ``<distro>``
    directory.  This includes binary packages, source packages and changelog 
    files.  
 

@@ -2,17 +2,19 @@
 
 apt-get install debhelper fakeroot cdbs pbuilder lintian linda
 
+mkdir ./pbuilder/
+
 function create_or_update {
-    if [ -f ./$1-base.tgz ]; then
+    if [ -f ./pbuilder/$1-base.tgz ]; then
         echo "";
         echo "updating $1";
-        sudo pbuilder update --distribution $1 --basetgz ./$1-base.tgz;
+        sudo pbuilder update --distribution $1 --basetgz ./pbuilder/$1-base.tgz;
     else
         echo "";
         echo "creating $1";
         sudo pbuilder create --distribution $1 \
            --othermirror "deb http://archive.ubuntu.com/ubuntu $1 universe multiverse" \
-           --basetgz ./$1-base.tgz;
+           --basetgz ./pbuilder/$1-base.tgz;
     fi
 }
 
