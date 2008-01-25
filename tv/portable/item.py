@@ -1674,7 +1674,11 @@ def getEntryForURL(url, contentType=None):
         contentType = u'video/x-unknown'
     else:
         contentType = unicode(contentType)
-    return FeedParserDict({'title' : url,
+        
+    _, _, urlpath, _, _, _ = urlparse.urlparse(url)
+    title = os.path.basename(urlpath)
+
+    return FeedParserDict({'title' : title,
             'enclosures':[{'url' : url, 'type' : contentType}]})
 
 ##
