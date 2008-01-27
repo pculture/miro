@@ -362,7 +362,7 @@ echo "Setting up PyObjC 1.4.1"
 cd $WORK_DIR
 
 echo ">> Checking out from subversion..."
-svn co http://svn.red-bean.com/pyobjc/trunk/pyobjc pyobjc-1.4.1 1>>$OUT 2>>$OUT
+svn co http://svn.red-bean.com/pyobjc/branches/pyobjc-1.4-branch pyobjc-1.4.1 1>>$OUT 2>>$OUT
 
 #echo ">> Unpacking archive..."
 #tar -xzf $PKG_DIR/pyobjc-1.4.tar.gz 1>>$OUT 2>>$OUT
