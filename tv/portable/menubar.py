@@ -142,7 +142,7 @@ class MenuBar:
 
 VideoItems = [
     MenuItem(_("_Open"), "Open", (Key("o", MOD),)),
-    MenuItem(_("_Download Video"), "NewDownload", (), impl=lambda:app.controller.newDownload()),
+    MenuItem(_("_Download Video"), "NewDownload", (), impl=lambda:app.htmlapp.newDownload()),
     #MenuItem(_("Op_en Recent"), "OpenRecent", ()),
     MenuItem(_("Check _Version"), "CheckVersion", ()),
     Separator(),

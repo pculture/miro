@@ -429,49 +429,6 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             signals.system.failedExn("while shutting down")
             platformutils.exit(1)
 
-    ### Handling events received from the OS (via our base class) ###
-
-    # Called by Frontend via Application base class in response to OS request.
-    def addAndSelectFeed(self, url = None, showTemplate = None):
-        from frontends.html import templatedisplay
-        return templatedisplay.GUIActionHandler().addFeed(url, showTemplate)
-
-    def addAndSelectGuide(self, url = None):
-        from frontends.html import templatedisplay
-        return templatedisplay.GUIActionHandler().addGuide(url)
-
-    def addSearchFeed(self, term=None, style=dialogs.SearchChannelDialog.CHANNEL, location = None):
-        from frontends.html import templatedisplay
-        return templatedisplay.GUIActionHandler().addSearchFeed(term, style, location)
-
-    def testSearchFeedDialog(self):
-        from frontends.html import templatedisplay
-        return templatedisplay.GUIActionHandler().testSearchFeedDialog()
-
-    ### Handling 'DTVAPI' events from the channel guide ###
-
-    def addFeed(self, url = None):
-        from frontends.html import templatedisplay
-        return templatedisplay.GUIActionHandler().addFeed(url, selected = None)
-
-    def selectFeed(self, url):
-        from frontends.html import templatedisplay
-        return templatedisplay.GUIActionHandler().selectFeed(url)
-
-    ### Chrome search:
-    ### Switch to the search tab and perform a search using the specified engine.
-
-    def performSearch(self, engine, query):
-        util.checkU(engine)
-        util.checkU(query)
-        handler = TemplateActionHandler(None, None)
-        handler.updateLastSearchEngine(engine)
-        handler.updateLastSearchQuery(query)
-        handler.performSearch(engine, query)
-        self.selection.selectTabByTemplateBase('searchtab')
-
-    ### ----
-
     def handleURIDrop(self, data, **kwargs):
         """Handle an external drag that contains a text/uri-list mime-type.
         data should be the text/uri-list data, in escaped form.
@@ -557,10 +514,6 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         selected = app.controller.selection.getSelectedItems()
         for i in selected:
             i.startUpload()
-
-    def newDownload(self, url = None):
-        from frontends.html import templatedisplay
-        return templatedisplay.GUIActionHandler().addDownload(url)
 
     @eventloop.asUrgent
     def saveVideo(self, currentPath, savePath):

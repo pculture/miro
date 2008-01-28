@@ -510,13 +510,13 @@ class CallbackHandler(object):
         eventloop.addIdle(lambda:app.controller.copyCurrentItemURL, "Copy Item URL")
 
     def on_add_channel_button_clicked(self, event = None):
-        eventloop.addIdle(lambda:app.controller.addAndSelectFeed(), "Add Channel")
+        eventloop.addIdle(lambda:app.htmlapp.addAndSelectFeed(), "Add Channel")
 
     def on_add_search_channel_button_clicked(self, event = None):
-        eventloop.addIdle(lambda:app.controller.addSearchFeed(), "Add SearchChannel")
+        eventloop.addIdle(lambda:app.htmlapp.addSearchFeed(), "Add SearchChannel")
 
     def on_add_guide_button_clicked(self, event = None):
-        eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
+        eventloop.addIdle(lambda:app.htmlapp.addAndSelectGuide(), "Add Guide")
 
     def on_new_playlist_activate(self, event=None):
         playlist.createNewPlaylist()
@@ -642,4 +642,4 @@ class CallbackHandler(object):
         term = widgetTree["entry-chrome-search-term"].get_text()
         iter = widgetTree["combobox-chrome-search-engine"].get_active_iter()
         (engine,) = widgetTree["combobox-chrome-search-engine"].get_model().get(iter, 0)
-        eventloop.addIdle (lambda:app.controller.performSearch (engine.decode('utf-8','replace'), term.decode('utf-8','replace')), "Search for %s on %s" % (term.decode('utf-8','replace'), engine.decode('utf-8','replace')))
+        eventloop.addIdle (lambda:app.htmlapp.performSearch (engine.decode('utf-8','replace'), term.decode('utf-8','replace')), "Search for %s on %s" % (term.decode('utf-8','replace'), engine.decode('utf-8','replace')))

@@ -268,9 +268,9 @@ class AppController (NSObject):
             components = urlparse.urlparse(url)
             path = components[2]
             if filetypes.isVideoFilename(path):
-                command = [lambda:app.controller.newDownload(url), "Open HTTP Movie"]
+                command = [lambda:app.htmlapp.newDownload(url), "Open HTTP Movie"]
             else:
-                command = [lambda:app.controller.addAndSelectFeed(url), "Open HTTP URL"]
+                command = [lambda:app.htmlapp.addAndSelectFeed(url), "Open HTTP URL"]
         elif url.startswith('miro:'):
             command = [lambda:singleclick.addSubscriptionURL('miro:', 'application/x-miro', url), "Open Miro URL"]
         elif url.startswith('democracy:'):
@@ -305,7 +305,7 @@ class AppController (NSObject):
             eventloop.addUrgentCall(lambda:singleclick.parseCommandLineArgs(filenames), "Open local file(s)")
     
     def downloadVideo_(self, sender):
-        app.controller.newDownload()
+        app.htmlapp.newDownload()
     
     def importChannels_(self, sender):
         app.htmlapp.importChannels()

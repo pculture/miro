@@ -490,7 +490,7 @@ class PyBridge:
 
     @asUrgent
     def addChannel(self, url):
-        app.controller.addAndSelectFeed(url)
+        app.htmlapp.addAndSelectFeed(url)
 
     @asUrgent
     def openURL(self, url):
@@ -532,7 +532,7 @@ class PyBridge:
 
     @asUrgent
     def performSearch(self, engine, query):
-        app.controller.performSearch(engine, query)
+        app.htmlapp.performSearch(engine, query)
 
     # Returns a list of search engine titles and names
     # Should we just keep a map of engines to names?
@@ -577,7 +577,7 @@ class PyBridge:
 
     @asUrgent
     def createNewSearchChannel(self):
-        app.controller.addSearchFeed()
+        app.htmlapp.addSearchFeed()
 
     @asUrgent
     def createNewChannelFolder(self):
@@ -613,11 +613,11 @@ class PyBridge:
 
     @asUrgent
     def createNewChannelGuide(self):
-        app.controller.addAndSelectGuide()
+        app.htmlapp.addAndSelectGuide()
 
     @asUrgent
     def createNewDownload(self):
-        app.controller.newDownload()
+        app.htmlapp.newDownload()
 
     def importChannels(self):
         app.htmlapp.importChannels()
@@ -627,7 +627,7 @@ class PyBridge:
 
     @asUrgent
     def addChannel(self):
-        app.controller.addAndSelectFeed()
+        app.htmlapp.addAndSelectFeed()
 
     @asUrgent
     def renameCurrentChannel(self):

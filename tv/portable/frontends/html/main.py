@@ -24,7 +24,7 @@ import logging
 from gtcache import gettext as _
 from gtcache import ngettext
 from frontends.html import dialogs
-from frontends.html.templatedisplay import TemplateDisplay
+from frontends.html import templatedisplay
 import frontend
 import app
 import autoupdate
@@ -178,8 +178,8 @@ class HTMLApplication:
 
         channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
         playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
-        self.tabDisplay = TemplateDisplay('tablist', 'default',
-                playlistTabOrder=playlistTabOrder,
+        self.tabDisplay = templatedisplay.TemplateDisplay('tablist',
+                'default', playlistTabOrder=playlistTabOrder,
                 channelTabOrder=channelTabOrder)
         # HACK
         app.controller.tabDisplay = self.tabDisplay
@@ -337,3 +337,38 @@ class HTMLApplication:
     def updateAvailableItemsCountFeedback(self):
         count = views.unwatchedItems.len()
         app.delegate.updateAvailableItemsCountFeedback(count)
+
+    ### Handling events received from the OS (via our base class) ###
+
+    # Called by Frontend via Application base class in response to OS request.
+    def addAndSelectFeed(self, url = None, showTemplate = None):
+        return templatedisplay.GUIActionHandler().addFeed(url, showTemplate)
+
+    def addAndSelectGuide(self, url = None):
+        return templatedisplay.GUIActionHandler().addGuide(url)
+
+    def addSearchFeed(self, term=None, style=dialogs.SearchChannelDialog.CHANNEL, location = None):
+        return templatedisplay.GUIActionHandler().addSearchFeed(term, style, location)
+
+    ### Handling 'DTVAPI' events from the channel guide ###
+
+    def addFeed(self, url = None):
+        return templatedisplay.GUIActionHandler().addFeed(url, selected = None)
+
+    def selectFeed(self, url):
+        return templatedisplay.GUIActionHandler().selectFeed(url)
+
+    def newDownload(self, url = None):
+        return templatedisplay.GUIActionHandler().addDownload(url)
+
+    ### Chrome search:
+    ### Switch to the search tab and perform a search using the specified engine.
+    def performSearch(self, engine, query):
+        util.checkU(engine)
+        util.checkU(query)
+        handler = templatedisplay.TemplateActionHandler(None, None)
+        handler.updateLastSearchEngine(engine)
+        handler.updateLastSearchQuery(query)
+        handler.performSearch(engine, query)
+        self.selection.selectTabByTemplateBase('searchtab')
+

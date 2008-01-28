@@ -632,18 +632,6 @@ class GUIActionHandler:
     def addEngineSearchFeed(self, term, name):
         self.addSearchFeed(term, dialogs.SearchChannelDialog.ENGINE, name)
         
-    def testSearchFeedDialog(self):
-        def finish(dialog):
-            pass
-        def thirdDialog(dialog):
-            dialog = dialogs.SearchChannelDialog("Should select URL http://testurl/", dialogs.SearchChannelDialog.URL, "http://testurl/")
-            dialog.run(finish)
-        def secondDialog(dialog):
-            dialog = dialogs.SearchChannelDialog("Should select YouTube engine", dialogs.SearchChannelDialog.ENGINE, "youtube")
-            dialog.run(thirdDialog)
-        dialog = dialogs.SearchChannelDialog("Should select third channel in list", dialogs.SearchChannelDialog.CHANNEL, -1)
-        dialog.run(secondDialog)
-        
     def addURL(self, title, message, callback, url = None):
         util.checkU(url)
         util.checkU(title)

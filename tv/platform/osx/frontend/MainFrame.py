@@ -282,7 +282,7 @@ class MainController (NSWindowController):
         def validationCallback(dialog):
             if dialog.choice == dialogs.BUTTON_OK:
                 url = dialog.value
-                eventloop.addUrgentCall(lambda:app.controller.addAndSelectFeed(url), "Add Feed")
+                eventloop.addUrgentCall(lambda:app.htmlapp.addAndSelectFeed(url), "Add Feed")
         title = _(u"Subscribe to Channel")
         description = _(u"Enter the URL of the channel you would like to subscribe to.")
         prefillCallback = app.delegate.getURLFromClipboard
@@ -290,13 +290,13 @@ class MainController (NSWindowController):
         dlog.run(validationCallback)
 
     def createSearchChannel_(self, sender):
-        eventloop.addIdle(lambda:app.controller.addSearchFeed(), "Add Search Feed")
+        eventloop.addIdle(lambda:app.htmlapp.addSearchFeed(), "Add Search Feed")
 
     def createChannelFolder_(self, sender):
         folder.createNewChannelFolder()
 
     def addGuide_(self, sender):
-        eventloop.addIdle(lambda:app.controller.addAndSelectGuide(), "Add Guide")
+        eventloop.addIdle(lambda:app.htmlapp.addAndSelectGuide(), "Add Guide")
 
     def renameChannelFolder_(self, sender):
         eventloop.addIdle(app.controller.renameCurrentTab, "Rename Channel Tab")
@@ -770,7 +770,7 @@ class VideoSearchField (NSSearchField):
         engine = self.selectedEngine()
         query = unicode(self.stringValue())
         if query != '':
-            eventloop.addIdle(lambda:app.controller.performSearch(engine, query), 'Performing chrome search')
+            eventloop.addIdle(lambda:app.htmlapp.performSearch(engine, query), 'Performing chrome search')
 
     def initFromLastEngine(self):
         self.setStringValue_("")
