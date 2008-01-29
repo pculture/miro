@@ -18,8 +18,8 @@
 */
 
 function openBugReportWindow() {
-  var py = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
-        getService(Components.interfaces.pcfIDTVPyBridge);
+  var py = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
+
   py.openBugTracker();
 }
 
@@ -30,8 +30,7 @@ function updateLabel() {
 }
 
 function updateLabelStartupError() {
-  var py = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
-        getService(Components.interfaces.pcfIDTVPyBridge);
+  var py = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
   var elt = document.getElementById("log");
   elt.setAttribute("value", py.getStartupError());
 }

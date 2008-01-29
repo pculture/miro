@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 from xpcom import components
+from xulhelper import makeService
 import ctypes
 import logging
 from ctypes.wintypes import DWORD, HWND, HANDLE, LPCWSTR, WPARAM, LPARAM, RECT, POINT
@@ -224,7 +225,7 @@ def PyMainWindProc(hWnd, uMsg, wParam, lParam):
         info = ctypes.cast(lParam, ctypes.POINTER(MINMAXINFO)).contents
         edge = getTaskbarEdge()
         height = getTaskbarHeight()
-        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",components.interfaces.pcfIDTVPyBridge)
         window = Minimize.minimizers[Minimize.minimizers.keys()[0]].window
         if edge == 3: # Taskbar is on the bottom
             info.ptMaxSize.x = window.screen.width
@@ -268,7 +269,7 @@ class Minimize:
         self.iconinfo = None
         self.wclassName = ctypes.c_wchar_p(u"PCF:DTV:Minimize:MessageWindowClass")
         self.wname = ctypes.c_wchar_p(u"PCF:DTV:Minimize:MessageWindow")
-        self._gethrefcomp = components.classes["@participatoryculture.org/dtv/gethref;1"].getService(components.interfaces.pcfIDTVGetHREF)
+        self._gethrefcomp = makeService("@participatoryculture.org/dtv/gethref;1",components.interfaces.pcfIDTVGetHREF)
         self.hInst = ctypes.windll.kernel32.GetModuleHandleW(0)
         self.wndClass = WNDCLASSEX(ctypes.sizeof(WNDCLASSEX),
                                    ctypes.c_uint(0x4200), # CS_NOCLOSE | CS_GLOBALCLASS
@@ -353,7 +354,7 @@ class Minimize:
 
     def minimizeAll(self):
         self.minimized = []
-        mediator = components.classes["@mozilla.org/appshell/window-mediator;1"].getService(components.interfaces.nsIWindowMediator)
+        mediator = makeService("@mozilla.org/appshell/window-mediator;1",components.interfaces.nsIWindowMediator)
         winList = mediator.getEnumerator(None)
         while (winList.hasMoreElements()):
             win = winList.getNext()
@@ -415,7 +416,7 @@ class Minimize:
         return None
     
     def showPopup(self, x, y):
-        jsbridge = components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(components.interfaces.pcfIDTVJSBridge)
+        jsbridge = makeService("@participatoryculture.org/dtv/jsbridge;1",components.interfaces.pcfIDTVJSBridge)
         jsbridge.showPopup(x, y)
 
     def minimize(self, href):
@@ -445,7 +446,7 @@ class Minimize:
 
 
     def minimizeOrRestore(self):
-        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",components.interfaces.pcfIDTVPyBridge)
         if len(self.minimized) > 0:
             for href in self.minimized:
                 self.restore(href)

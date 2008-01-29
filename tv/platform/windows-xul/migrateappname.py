@@ -23,7 +23,7 @@ import resources
 import config
 import prefs
 import _winreg
-from xpcom import components
+from xulhelper import makeService, pcfIDTVPyBridge
 
 def migrateSupport(oldAppName, newAppName):
     global migratedSupport
@@ -78,8 +78,7 @@ def migrateVideos(oldAppName, newAppName):
     global migratedSupport
     # we have to wait to import this
     pybridgeCID = "@participatoryculture.org/dtv/pybridge;1"
-    pybridge = components.classes[pybridgeCID]. \
-                 getService(components.interfaces.pcfIDTVPyBridge)
+    pybridge = makeService(pybridgeCID,pcfIDTVPyBridge)
     if migratedSupport:
         oldDefault = os.path.join(platformcfg._baseMoviesDirectory, oldAppName)
         newDefault = os.path.join(platformcfg._baseMoviesDirectory, newAppName)

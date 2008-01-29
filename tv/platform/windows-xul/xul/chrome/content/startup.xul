@@ -11,6 +11,7 @@
         onload="onload();"
         onwizardfinish="return onwizardfinish();"
         class="startup">
+    <script src="chrome://dtv/content/xulhelper.js" />
     <script src="chrome://dtv/content/main.js" />
     <script src="chrome://dtv/content/startup.js" />
     <wizardpage id="page-welcome" onpageshow="updateUI();">

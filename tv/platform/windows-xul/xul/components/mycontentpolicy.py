@@ -16,6 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 from xpcom import components
+from xulhelper import makeService
 import traceback
 import sys
 import config
@@ -48,6 +49,5 @@ class MyContentPolicy:
     def shouldProcess(self, contentType, contentLocation, requestOrigin, context, mimeType,  extra):
         return nsIContentPolicy.ACCEPT
 
-catman = components.classes["@mozilla.org/categorymanager;1"].getService()
-catman.queryInterface(components.interfaces.nsICategoryManager)
+catman = makeService("@mozilla.org/categorymanager;1",components.interfaces.nsICategoryManager)
 catman.addCategoryEntry("content-policy", "@participatoryculture.org/dtv/mycontentpolicy;1", "@participatoryculture.org/dtv/mycontentpolicy;1", True, True)

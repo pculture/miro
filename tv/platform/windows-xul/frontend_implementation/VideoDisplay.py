@@ -25,7 +25,6 @@ from frontends.html.displaybase import VideoDisplayBase
 from playbackcontroller import PlaybackControllerBase
 from videorenderer import VideoRenderer
 
-from xpcom import components
 from threading import Lock
 import time
 

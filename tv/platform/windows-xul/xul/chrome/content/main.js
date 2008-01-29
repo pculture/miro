@@ -21,15 +21,10 @@
  Watching for application exit
  *****************************************************************************/
 
-var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
-                getService(Components.interfaces.pcfIDTVPyBridge);
-var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].
-                getService(Components.interfaces.pcfIDTVJSBridge);
-var vlcrenderer = Components.classes["@participatoryculture.org/dtv/vlc-renderer;1"].
-                getService(Components.interfaces.pcfIDTVVLCRenderer);
-
-var minimizer = Components.classes["@participatoryculture.org/dtv/minimize;1"].
-                getService(Components.interfaces.pcfIDTVMinimize);
+var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
+var jsbridge = makeService("@participatoryculture.org/dtv/jsbridge;1",Components.interfaces.pcfIDTVJSBridge);
+var vlcrenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",Components.interfaces.pcfIDTVVLCRenderer);
+var minimizer = makeService("@participatoryculture.org/dtv/minimize;1",Components.interfaces.pcfIDTVMinimize);
 
 window.maximized = false;
 
@@ -219,7 +214,7 @@ function onLoad() {
     minimizer.registerMainWindowProc(window);
 
     // Bring up Python environment.
-    pybridge.onStartup(window, document);
+    pybridge.onStartup(window);
 
     // Get a reference te tho vlc plugin
     var videoBrowser = document.getElementById("mainDisplayVideo");

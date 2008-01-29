@@ -17,8 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 */
 
-var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
-                getService(Components.interfaces.pcfIDTVPyBridge);
+var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
 
 function onload() {
     var channels = window.arguments[0]['channels'].QueryInterface(Components.interfaces.nsICollection);

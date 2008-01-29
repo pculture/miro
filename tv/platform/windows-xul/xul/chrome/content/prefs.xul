@@ -13,6 +13,7 @@
     ondialogaccept="ondialogaccept();"
     buttons="accept"
     class="preferences">
+<script src="chrome://dtv/content/xulhelper.js" />
 <script src="chrome://dtv/content/main.js" />
 <script src="chrome://dtv/content/preffuncs.js" />
 <box id="blueprints" hidden="true">

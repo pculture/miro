@@ -127,6 +127,8 @@ VLCRenderer.prototype = {
   },
 
   showPauseButton: function() {
+      // I think this is ok not to wrap in a proxy since vlcrenderer
+      // is always in the Mozilla thread --NN
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-pause";
@@ -137,6 +139,9 @@ VLCRenderer.prototype = {
   },
 
   showPlayButton: function() {
+      // I think this is ok not to wrap in a proxy since vlcrenderer
+      // is always in the Mozilla thread --NN
+
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-play";
@@ -196,6 +201,8 @@ VLCRenderer.prototype = {
     },
   
   play: function() {
+      // I think this is ok not to wrap in a proxy since vlcrenderer
+      // is always in the Mozilla thread --NN
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     if (!this.hasVLC()) return;
       if (this.vlc.playlist.items.count > 0) {
@@ -294,6 +301,9 @@ VLCRenderer.prototype = {
   },
 
   extractMovieData: function (url, screenshot_filename) {
+      // I think this is ok not to wrap in a proxy since vlcrenderer
+      // is always in the Mozilla thread --NN
+
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
       // Disabled until the external helper application works.
       pybridge.extractFinish (-1, false);

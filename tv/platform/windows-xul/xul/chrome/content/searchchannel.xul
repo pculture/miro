@@ -15,6 +15,7 @@
         ondialogaccept="onaccept();"
         ondialogcancel="oncancel();"
         class="searchchannel">
+<script src="chrome://dtv/content/xulhelper.js" />
 <script src="chrome://dtv/content/main.js" />
 <script src="chrome://dtv/content/searchchannel.js" />
 <vbox>

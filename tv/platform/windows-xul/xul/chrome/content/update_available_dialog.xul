@@ -11,11 +11,10 @@
         ondialogaccept="onaccept();"
         ondialogcancel="oncancel();"
         onload="onload()">
+<script src="chrome://dtv/content/xulhelper.js" />
     <script type="text/javascript">
-var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
-                getService(Components.interfaces.pcfIDTVPyBridge);
-var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].
-                getService(Components.interfaces.pcfIDTVJSBridge);
+var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
+var jsbridge = makeService("@participatoryculture.org/dtv/jsbridge;1",Components.interfaces.pcfIDTVJSBridge);
 
 function onload() {
   var args = window.arguments[0];

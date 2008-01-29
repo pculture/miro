@@ -55,12 +55,10 @@ def getPrefillText(dialog):
     return ''
 
 def _makeSupportsArrayFromSecondElement(data):
-    from xpcom import components
-    arrayAbs = components.classes["@mozilla.org/supports-array;1"].createInstance();
-    array = arrayAbs.queryInterface(components.interfaces.nsISupportsArray)
+    from xulhelper import makeComp
+    arrayAbs = makeComp("@mozilla.org/supports-array;1",components.interfaces.nsISupportsArray)
     for datum in data:
-        supportsStringAbs = components.classes["@mozilla.org/supports-string;1"].createInstance();
-        supportsString = supportsStringAbs.queryInterface(components.interfaces.nsISupportsString)
+        supportsString = makeComp("@mozilla.org/supports-string;1",components.interfaces.nsISupportsString)
         supportsString.data = datum[1]
         array.AppendElement(supportsString)
     return array
@@ -140,6 +138,8 @@ class UIBackendDelegate:
                     dialog.description, dialog.buttons[0].text,
                     dialog.buttons[1].text, dialog.releaseNotes)
         elif isinstance(dialog, dialogs.SearchChannelDialog):
+            # FIXME: This needs to run in the Mozilla thread --NN
+            logging.warn("runDialog is attempting to create XPCOM objects in the wrong thread!")
             engines = _makeSupportsArrayFromSecondElement(dialog.engines)
             channels = _makeSupportsArrayFromSecondElement(dialog.channels)
             defaultTerm = ""

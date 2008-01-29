@@ -17,7 +17,8 @@
 
 import app
 import os
-from xpcom import components
+from xulhelper import makeComp
+import logging
 from util import quoteJS
 from frontend_implementation.VideoDisplay import VideoDisplay
 from frontend_implementation import urlcallbacks
@@ -53,23 +54,21 @@ class MainFrame:
         for group, enabled in actionGroups.items():
             app.jsBridge.setActionGroupEnabled(group, enabled)
 
-        # Convert this into something JavaScript can see
-        array_cls = components.classes["@mozilla.org/supports-array;1"]
-        variant_cls = components.classes["@mozilla.org/variant;1"]
-        stateLists = array_cls.createInstance()
-        stateLists = stateLists.queryInterface(components.interfaces.nsICollection)
+        logging.warn("onSelectedTabChange creating XPCOM objects in wrong thread!")
+        # FIXME: This needs to run in the Mozilla thread --NN
+        from xpcom import components
+        makeArray = lambda : makeComp("@mozilla.org/supports-array;1",components.interfaces.nsICollection)
+        makeVariant = lambda : makeComp("@mozilla.org/variant;1",components.interfaces.nsIWritableVariant)
+
+        stateLists = makeArray()
         for key, actions in states.items():
-            newactions = array_cls.createInstance()
-            newactions = newactions.queryInterface(components.interfaces.nsICollection)
+            newactions = makeArray()
             for action in actions:
-                newaction = variant_cls.createInstance()
-                newaction = newaction.queryInterface(components.interfaces.nsIWritableVariant)
+                newaction = makeVariant()
                 newaction.setAsAString(action)
                 newactions.AppendElement(newaction)
-            newlist = array_cls.createInstance()
-            newlist = newlist.queryInterface(components.interfaces.nsICollection)
-            newkey = variant_cls.createInstance()
-            newkey = newkey.queryInterface(components.interfaces.nsIWritableVariant)
+            newlist = makeArray()
+            newkey = makeVariant()
             newkey.setAsAString(key)
             newlist.AppendElement(newkey)
             newactions = newactions.queryInterface(components.interfaces.nsISupportsArray)

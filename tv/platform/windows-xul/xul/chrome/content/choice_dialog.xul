@@ -11,6 +11,7 @@
         ondialogaccept="onaccept();"
         ondialogcancel="oncancel();"
         onload="onload()">
+        <script src="chrome://dtv/content/xulhelper.js"/>
     <script type="text/javascript">
 function onload() {
   var args = window.arguments[0];
@@ -22,8 +23,7 @@ function onload() {
   dialog.getButton('cancel').label = args['otherLabel'];
 }
 
-var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
-                getService(Components.interfaces.pcfIDTVPyBridge);
+var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
 function onaccept() {
   pybridge.handleSimpleDialog(window.arguments[0]['id'], 0);
 }

@@ -30,7 +30,6 @@ interface pcfIDTVJSBridge : nsISupports
   void init(in nsIDOMWindow window);
   void maximizeWindow();
   void closeWindow();
-  nsIDOMNode createNode(in nsIDOMDocument document, in AString xml);
   void xulNavigateDisplay(in AString area, in AString uri);
   void xulAddElementAtEnd(in AString area, in AString xml, in AString id);
   void xulAddElementBefore(in AString area, in AString xml, in AString id);

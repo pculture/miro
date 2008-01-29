@@ -19,6 +19,7 @@
         width="1020" height="680"
         persist="screenX screenY width height">
         <script src="chrome://dtv/content/dnd.js"/>
+        <script src="chrome://dtv/content/xulhelper.js"/>
         <script src="chrome://dtv/content/main.js"/>
         <popupset><popup id="contextPopup"></popup></popupset>
 

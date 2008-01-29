@@ -9,6 +9,7 @@
         title="&bugreport.title;"
         onload="updateLabel()"
         buttons="accept">
+    <script src="chrome://dtv/content/xulhelper.js"/>
     <script src="chrome://dtv/content/bugreport.js"/>
 
     <description id="label1" class="header" width="250">

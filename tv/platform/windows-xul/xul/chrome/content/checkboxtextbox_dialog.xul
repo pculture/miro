@@ -11,6 +11,7 @@
         ondialogaccept="onaccept();"
         ondialogcancel="oncancel();"
         onload="onload()">
+        <script src="chrome://dtv/content/xulhelper.js"/>
     <script type="text/javascript">
 function onload() {
   var args = window.arguments[0];
@@ -27,8 +28,7 @@ function onload() {
   textbox.value = args['textboxValue'];
 }
 
-var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].
-                getService(Components.interfaces.pcfIDTVPyBridge);
+var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
 function onaccept() {
   var value = document.getElementById('checkbox').checked;
   var value2 = document.getElementById('textbox').value;

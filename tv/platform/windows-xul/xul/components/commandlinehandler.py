@@ -18,6 +18,7 @@
 """Democracy Command Line Handler."""
 
 from xpcom import components
+from xulhelper import makeComp, makeService, proxify
 
 class DemocracyCLH:
     _com_interfaces_ = [components.interfaces.nsICommandLineHandler]
@@ -29,17 +30,17 @@ class DemocracyCLH:
         pass
 
     def handle(self, commandLine):
+        commandLine = proxify(commandLine,components.interfaces.nsICommandLine)
         args = [commandLine.getArgument(i) for i in range(commandLine.length)]
         if "--register-xul-only" in args:
             return
 
         chromeURL = "chrome://dtv/content/main.xul"
         windowName = "DemocracyPlayer"
-        wwatch = components.classes["@mozilla.org/embedcomp/window-watcher;1"]\
-                .getService(components.interfaces.nsIWindowWatcher)
-        pybridgeCID = "@participatoryculture.org/dtv/pybridge;1"
-        pybridge = components.classes[pybridgeCID]. \
-                    getService(components.interfaces.pcfIDTVPyBridge)
+        wwatch = makeService("@mozilla.org/embedcomp/window-watcher;1",components.interfaces.nsIWindowWatcher)
+        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",
+                        components.interfaces.pcfIDTVPyBridge)
+
         startupError = pybridge.getStartupError()
         if startupError:
             startupErrorURL = "chrome://dtv/content/startuperror.xul"
@@ -60,18 +61,15 @@ class DemocracyCLH:
                 wwatch.openWindow(None, chromeURL, windowName,
                         "chrome,resizable,dialog=no,all", None)
             else:
-                jsbridgeCID = "@participatoryculture.org/dtv/jsbridge;1"
-                jsbridge = components.classes[jsbridgeCID]. \
-                        getService(components.interfaces.pcfIDTVJSBridge)
+                jsbridge = makeService("@participatoryculture.org/dtv/jsbridge;1",components.interfaces.pcfIDTVJSBridge)
                 jsbridge.performStartupTasks()
                 return
         else:
             # If Democracy is already running and minimize, make the
             # tray icon disappear
-            minimizer = components.classes["@participatoryculture.org/dtv/minimize;1"].getService(components.interfaces.pcfIDTVMinimize)
+            minimizer = makeService("@participatoryculture.org/dtv/minimize;1",components.interfaces.pcfIDTVMinimize)
             minimizer.restoreAll()
 
-catman = components.classes["@mozilla.org/categorymanager;1"].getService()
-catman.queryInterface(components.interfaces.nsICategoryManager)
+catman = makeService("@mozilla.org/categorymanager;1",components.interfaces.nsICategoryManager)
 catman.addCategoryEntry("command-line-handler", "z-default",
         "@participatoryculture.org/dtv/commandlinehandler;1", True, True)

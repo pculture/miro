@@ -27,7 +27,9 @@ import views
 from platformutils import _getLocale as getLocale
 from frontends.html.main import HTMLApplication
 from miroplatform.frontends.html import HTMLDisplay
+from xulhelper import makeService, pcfIDTVPyBridge
 import migrateappname
+import logging
 
 ###############################################################################
 #### Application object                                                    ####
@@ -43,9 +45,10 @@ class Application(HTMLApplication):
         else:
             lang = "en-US"
 
+        # FIXME: This should run in the Mozilla thread --NN
+        logging.warn("Application.Run() is creating XPCOM objects in the wrong thread!")
         from xpcom import components
-        ps_cls = components.classes["@mozilla.org/preferences-service;1"]
-        ps = ps_cls.getService(components.interfaces.nsIPrefService)
+        ps = makeService("@mozilla.org/preferences-service;1",components.interfaces.nsIPrefService)
         branch = ps.getBranch("general.useragent.")
         branch.setCharPref("locale", lang)
 
@@ -61,8 +64,7 @@ class Application(HTMLApplication):
         app.jsBridge.closeWindow()
 
     def finishStartupSequence(self):
-        from xpcom import components
-        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge)
         self.initializeSearchEngines()
         migrateappname.migrateVideos('Democracy', 'Miro')
         pybridge.updateTrayMenus()
@@ -89,17 +91,13 @@ class Application(HTMLApplication):
         pass
 
     def onUnwatchedItemsCountChange(self, obj, id):
-        from xpcom import components
-
         HTMLApplication.onDownloadingItemsCountChange(self, obj, id)
-        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge)
         pybridge.updateTrayMenus()
 
     def onDownloadingItemsCountChange(self, obj, id):
-        from xpcom import components
-
         HTMLApplication.onDownloadingItemsCountChange(self, obj, id)
-        pybridge = components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(components.interfaces.pcfIDTVPyBridge)
+        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge)
         pybridge.updateTrayMenus()
 
 ###############################################################################

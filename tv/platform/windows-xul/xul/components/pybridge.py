@@ -17,6 +17,7 @@
 
 from gettext import gettext as _
 from xpcom import components
+from xulhelper import makeService, makeComp, proxify
 import ctypes
 import os
 import shutil
@@ -124,56 +125,22 @@ def XULDisplayedShortcut(item):
         return 1
     return len(item.shortcuts)
 
-def makeComp(clsid, iid):
-    """Helper function to get an XPCOM component"""
-    return components.classes[clsid].createInstance(iid)
-
-def makeService(clsid, iid):
-    """Helper function to get an XPCOM service"""
-    return components.classes[clsid].getService(iid)
-
 def createProxyObjects():
     """Creates the jsbridge and vlcrenderer xpcom components, then wraps them in
     a proxy object, then stores them in the frontend module.  By making them
     proxy objects, we ensure that the calls to them get made in the xul event
     loop.
     """
-
-    proxyManager = makeComp("@mozilla.org/xpcomproxy;1",
-            components.interfaces.nsIProxyObjectManager)
-    try:
-        # XULRunner 1.8 version
-        eventQueueService = makeService("@mozilla.org/event-queue-service;1",
-            components.interfaces.nsIEventQueueService)
-        xulEventQueue = eventQueueService.getSpecialEventQueue(
-            components.interfaces.nsIEventQueueService.UI_THREAD_EVENT_QUEUE)
-    except:
-        # XULRunner 1.9 version
-        threadMan = makeService("@mozilla.org/thread-manager;1",
-                                components.interfaces.nsIThreadManager)
-        xulEventQueue = threadMan.mainThread
-    jsBridge = makeService("@participatoryculture.org/dtv/jsbridge;1",
-                               components.interfaces.pcfIDTVJSBridge)
-    app.jsBridge = proxyManager.getProxyForObject(xulEventQueue,
-          components.interfaces.pcfIDTVJSBridge, jsBridge,
-          components.interfaces.nsIProxyObjectManager.INVOKE_ASYNC |
-          components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION)
-
-    vlcRenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",
-                              components.interfaces.pcfIDTVVLCRenderer)
-    app.vlcRenderer = proxyManager.getProxyForObject(xulEventQueue,
-            components.interfaces.pcfIDTVVLCRenderer, vlcRenderer, 
-            components.interfaces.nsIProxyObjectManager.INVOKE_SYNC |
-            components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION)
-
+    app.jsBridge = makeService("@participatoryculture.org/dtv/jsbridge;1",
+        components.interfaces.pcfIDTVJSBridge)
+    app.vlcRenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",  components.interfaces.pcfIDTVVLCRenderer)
 
 def initializeProxyObjects(window):
     app.vlcRenderer.init(window)
     app.jsBridge.init(window)
 
 def initializeHTTPProxy():
-    klass = components.classes["@mozilla.org/preferences-service;1"]
-    xulprefs = klass.getService(components.interfaces.nsIPrefService)
+    xulprefs = makeService("@mozilla.org/preferences-service;1",components.interfaces.nsIPrefService)
     branch = xulprefs.getBranch("network.proxy.")
     if config.get(prefs.HTTP_PROXY_ACTIVE):                     
         branch.setIntPref("type",1)
