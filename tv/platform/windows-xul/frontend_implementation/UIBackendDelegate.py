@@ -31,7 +31,7 @@ import feed
 import app
 import clipboard
 import urlcallbacks
-import util
+from trapcall import trapCall
 import platformutils
 
 currentId = 1
@@ -194,7 +194,7 @@ class UIBackendDelegate:
             callback = self.openDialogs.pop(dialogID)
         except KeyError:
             return
-        util.trapCall('File dialog callback', callback, pathname)
+        trapCall('File dialog callback', callback, pathname)
 
     def handleContextMenu(self, index):
         self.currentMenuItems[index].activate()
