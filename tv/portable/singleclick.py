@@ -307,6 +307,14 @@ def parseCommandLineArgs(args=None):
             addSubscriptionURL('democracy:', 'application/x-democracy', arg)
         elif arg.startswith('http:') or arg.startswith('https:'):
             addDownload(platformutils.filenameToUnicode(arg))
+        elif arg.startswith('feed:'):
+            # hack so feed: acts as http:
+            arg = "http:" + arg[len("feed:"):]
+            addDownload(platformutils.filenameToUnicode(arg))
+        elif arg.startswith('feeds:'):
+            # hack so feeds: acts as https:
+            arg = "https:" + arg[len("feeds:"):]
+            addDownload(platformutils.filenameToUnicode(arg))
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):
