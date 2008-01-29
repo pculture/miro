@@ -211,6 +211,9 @@ class HTMLApplication:
 
         app.controller.finishedStartup = True
 
+        import iheartmiro
+        eventloop.addIdle(iheartmiro.checkIHeartMiroInstall, "Install iHeartMiro")
+
         logging.info ("Finished startup sequence")
         self.finishStartupSequence()
 
