@@ -344,7 +344,7 @@ echo "Setting up py2app 0.3.6"
 cd $WORK_DIR
 
 echo ">> Checking out from subversion..."
-svn co http://svn.pythonmac.org/py2app/py2app/trunk/ py2app-0.3.6 1>>$OUT 2>>$OUT
+svn co http://svn.pythonmac.org/py2app/py2app/tags/py2app-0.3.6 py2app-0.3.6 1>>$OUT 2>>$OUT
 
 #echo ">> Unpacking archive..."
 #tar -xzf $PKG_DIR/py2app-0.3.6.tar.gz 1>>$OUT 2>>$OUT
