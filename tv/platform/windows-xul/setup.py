@@ -112,6 +112,7 @@ IDL_TOOLS_PATH = os.path.join(BINARY_KIT_ROOT, "idltools")
 for idlloc in ["idlinclude19","idlinclude18","idlinclude"]:
     if os.path.exists(os.path.join(BINARY_KIT_ROOT, idlloc)):
         IDL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, idlloc)
+        break
 
 # Path to a separate build of PyXPCOM, the glue that binds Python to
 # Mozilla. This is now optional, since it's not too difficult to build
