@@ -95,7 +95,10 @@ else: # We must be using Python 2.5
 # the Binary Kit to save you a minute or two, but if you want to be
 # more up-to-date, nightlies are available from Mozilla at:
 #  http://ftp.mozilla.org/pub/mozilla.org/xulrunner/nightly/
-XULRUNNER_DIR = os.path.join(BINARY_KIT_ROOT, "xulrunner")
+for xulloc in ["xulrunner19","xulrunner18","xulrunner"]:
+    if os.path.exists(os.path.join(BINARY_KIT_ROOT, xulloc)):
+        XULRUNNER_DIR = os.path.join(BINARY_KIT_ROOT, xulloc)
+        break
 
 # Path to "xpidl" and "xpt_link", Mozilla tools to compile IDL
 # interface files to type libraries. Get by building Mozilla or
