@@ -470,7 +470,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
                     destObj = tab.obj
                     break
             else:
-                destObj = db.getObjectByID(int(destID))
+                destObj = app.db.getObjectByID(int(destID))
             sourceArea, sourceID = sourceData.split("-")
             sourceID = int(sourceID)
             draggedIDs = self.selection.calcSelection(sourceArea, sourceID)
@@ -485,7 +485,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
         elif ((destType == 'channelfolder' and type == 'channel') or
                 (destType == 'playlistfolder' and type == 'playlist')):
             # Dropping a channel/playlist onto a folder
-            obj = db.getObjectByID(int(destID))
+            obj = app.db.getObjectByID(int(destID))
             obj.handleDNDAppend(draggedIDs)
         elif (destType in ('playlist', 'playlistfolder') and 
                 type in ('playlist', 'playlistfolder')):
