@@ -109,7 +109,9 @@ IDL_TOOLS_PATH = os.path.join(BINARY_KIT_ROOT, "idltools")
 # Path to the IDL include directory, containing declarations of the
 # basic Mozilla interfaces. Get this out of the XUL SDK when it's
 # released, or the GRE SDK for now.
-IDL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, "idlinclude")
+for idlloc in ["idlinclude19","idlinclude18","idlinclude"]:
+    if os.path.exists(os.path.join(BINARY_KIT_ROOT, idlloc)):
+        IDL_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, idlloc)
 
 # Path to a separate build of PyXPCOM, the glue that binds Python to
 # Mozilla. This is now optional, since it's not too difficult to build
