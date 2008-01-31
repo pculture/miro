@@ -64,19 +64,19 @@ targetting different distributions.
 Packaging steps
 ===============
 
-1. Run::
+1. Update your environment.
 
-      apt-get upgrade
+   You can either run::
 
-   to update your environment.
+      % apt-get upgrade
+      % sudo pbuilder update --distribution <distro> \
+                             --basetgz ./pbuilder/<basetgz-file>
 
-2. Run::
+   to upgrade the pbuilder environment for that distribution or you can use
+   the ``buildenv`` script which will update the pbuilder environments if they
+   exist or create new ones.
 
-      sudo pbuilder update --distribution <distro> --basetgz <basetgz-file>
-
-   to upgrade the pbuilder environment for that distribution.
-
-3. Add a new entry to ``debian-<distro>/changelog``.  Use the previous entries 
+2. Add a new entry to ``debian-<distro>/changelog``.  Use the previous entries 
    as your template.
 
    Make sure you change the version number.  The version number is the version
@@ -98,10 +98,10 @@ Packaging steps
    
    Make sure your date string is in RFC-2822 format.  Use ``date -R``.
 
-4. Update the requirement for ``miro-data`` in the ``debian-<distro>/control``,
+3. Update the requirement for ``miro-data`` in the ``debian-<distro>/control``,
    file.
 
-5. Run::
+4. Run::
 
       sudo build.py <version> <distro> <tarball>
 
@@ -118,7 +118,7 @@ Packaging steps
    This generates the ``.dsc`` file then runs pbuilder to build the ``.deb``
    files.
 
-6. If everything goes well, you should have your packages in the ``<distro>``
+5. If everything goes well, you should have your packages in the ``<distro>``
    directory.  This includes binary packages, source packages and changelog 
    files.  
 
@@ -156,9 +156,10 @@ After you've build the packages, you need to add them to the repository.
 Cleanup
 =======
 
-3. Once the build and the package itself works, clean up the debian/ directory::
+1. Once the build and the package itself works, clean up the debian/ directory::
 
       $ fakeroot debian/rules clean
 
-   Then check in the updated debian/ directory to svn.
+   Then check in the updated ``debian-*/`` directories to svn.
+
 
