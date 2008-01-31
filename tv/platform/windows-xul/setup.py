@@ -648,7 +648,7 @@ class bdist_xul_dumb(Command):
         if not os.access(destDir, os.F_OK):
             os.mkdir(destDir)
 
-        pluginFiles = ['libvlc.dll', 'npvlc.dll', 'vlcintf.xpt']
+        pluginFiles = ['libvlc.dll', 'npvlc.dll']
         for f in pluginFiles:
             shutil.copy2(os.path.join(VLC_MOZ_PLUGIN_DIR, f), destDir)
 
