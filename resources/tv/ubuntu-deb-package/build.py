@@ -94,6 +94,6 @@ os.mkdir(distro)
 call('mv build-tmp/miro_* %s' % distro)
 
 print "build.py: running pbuilder"
-call('pbuilder build --basetgz %s-base.tgz --buildresult ./%s %s/*.dsc' % (distro, distro, distro))
+call('pbuilder build --basetgz ./pbuilder/%s-base.tgz --buildresult ./%s %s/*.dsc' % (distro, distro, distro))
 
 print 'build.py: done'
