@@ -8,7 +8,7 @@ from frontends.html import dialogs
 from gtcache import gettext as _
 
 def firefoxExecutable():
-    search_path = ["/usr/bin/firefox",]
+    search_path = ["/usr/bin/firefox", "C:\\Program Files\\Mozilla Firefox\\firefox.exe"]
     for poss in search_path:
         if os.path.isfile(poss):
             return poss
@@ -19,7 +19,8 @@ def isFirefoxInstalled():
 
 def isIHeartMiroInstalled():
     id = "{216ec66d-214a-43ea-92f0-5373f8405c88}"
-    locations = ["~/.mozilla/firefox/*/extensions/" + id,]
+    locations = ["~/.mozilla/firefox/*/extensions/" + id,
+	"~\\Application Data\\Mozilla\\Firefox\\Profiles\\*\\extensions\\" + id, ]
     for location in locations:
         if glob.glob (os.path.expanduser(location)):
             return True
@@ -52,18 +53,19 @@ def checkIHeartMiroInstall():
         return
 
     def callback(dialog):
+        count = request_count
         if dialog.choice == dialogs.BUTTON_INSTALL_IHEARTMIRO:
             installIHeartMiro()
 
         if isinstance(dialog, dialogs.CheckboxDialog):
             if not dialog.checkbox_value:
-                request_count = 2
+                count = 2
             if dialog.checkbox_value:
-                if request_count == 2:
-                    request_count = 0
+                if count == 2:
+                    count = 0
         else:
-            request_count = request_count + 1
-        config.set(prefs.IHEARTMIRO_REQUEST_COUNT, request_count)
+            count = count + 1
+        config.set(prefs.IHEARTMIRO_REQUEST_COUNT, count)
 
     message = \
 _("""An Effortless Way to Help Miro
