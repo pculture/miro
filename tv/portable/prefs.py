@@ -41,9 +41,6 @@ DOWNSTREAM_BT_LIMIT_IN_KBS  = Pref( key='downstreamBTLimitInKBS',default=200,   
 PRESERVE_DISK_SPACE         = Pref( key='preserveDiskSpace',     default=True,  platformSpecific=False )
 PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=0.2,   platformSpecific=False )
 EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False )
-DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=8,     platformSpecific=False )
-TORRENT_DOWNLOADS_TARGET    = Pref( key='TorrentDownloadsTarget',default=3,     platformSpecific=False )
-MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
 VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   platformSpecific=False )
 BT_MIN_PORT                 = Pref( key='BitTorrentMinPort',     default=8500,  platformSpecific=False )
 BT_MAX_PORT                 = Pref( key='BitTorrentMaxPort',     default=8600,  platformSpecific=False )
@@ -56,6 +53,9 @@ TRUNCATE_CHANNEL_AFTER_X_ITEMS = Pref( key='TruncateChannelAFterXItems',  defaul
 USE_UPNP                    = Pref( key='useUpnp',               default=True,  platformSpecific=False )
 BT_ENC_REQ                  = Pref( key='BitTorrentEncReq',      default=False, platformSpecific=False )
 IHEARTMIRO_REQUEST_COUNT    = Pref( key='iHeartMiroRequestCount',default=0,     platformSpecific=False )
+
+DOWNLOADS_TARGET            = Pref( key='DownloadsTarget',       default=8,     platformSpecific=False )
+MAX_MANUAL_DOWNLOADS        = Pref( key='MaxManualDownloads',    default=10,    platformSpecific=False )
 
 # This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.
 SHOW_ERROR_DIALOG           = Pref( key='showErrorDialog',       default=True,  platformSpecific=True )
