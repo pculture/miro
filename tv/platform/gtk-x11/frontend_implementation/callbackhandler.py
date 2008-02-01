@@ -547,6 +547,7 @@ class CallbackHandler(object):
         AttachInteger (dialog, widgetTree['spinbutton-bt-min-port'], prefs.BT_MIN_PORT)
         AttachInteger (dialog, widgetTree['spinbutton-bt-max-port'], prefs.BT_MAX_PORT)
         AttachInteger (dialog, widgetTree['spinbutton-max-manual'], prefs.MAX_MANUAL_DOWNLOADS)
+        AttachInteger (dialog, widgetTree['spinbutton-max-auto'], prefs.DOWNLOADS_TARGET)
         AttachFloat   (dialog, widgetTree['spinbutton-padding'], prefs.PRESERVE_X_GB_FREE)
         AttachCombo   (dialog, widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
         AttachCombo   (dialog, widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
