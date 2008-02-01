@@ -154,9 +154,9 @@ def initializeHTTPProxy():
 
 def registerHttpObserver():
     observer = makeComp("@participatoryculture.org/dtv/httprequestobserver;1",
-        components.interfaces.nsIObserver)
+        components.interfaces.nsIObserver, False)
     observer_service = makeService("@mozilla.org/observer-service;1",
-            components.interfaces.nsIObserverService)
+            components.interfaces.nsIObserverService, False)
     observer_service.addObserver(observer, "http-on-modify-request", False);
         
 def getArgumentList(commandLine):
