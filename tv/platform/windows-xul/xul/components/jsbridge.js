@@ -62,7 +62,7 @@ function makeService(clsid, iid, makeProxy, sync) {
 
 // We do this so often, we might as well make a function
 function getPyBridge() {
-    return makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
+    return makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge,false);
 }
 
 function writelog(str) {
