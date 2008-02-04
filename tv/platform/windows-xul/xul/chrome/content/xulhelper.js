@@ -36,18 +36,23 @@ try {
     var xulEventQueue = threadMan.mainThread;
 }
 
-function proxify(obj, iid) {
-    return proxyManager.getProxyForObject(xulEventQueue, iid, obj,Components.interfaces.nsIProxyObjectManager.INVOKE_SYNC | Components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION);
+function proxify(obj, iid, sync) {
+    if (sync === false) {
+        var flags = Components.interfaces.nsIProxyObjectManager.INVOKE_ASYNC | Components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION;
+    } else {
+        var flags = Components.interfaces.nsIProxyObjectManager.INVOKE_SYNC | Components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION;
+    }
+    return proxyManager.getProxyForObject(xulEventQueue, iid, obj, flags);
 }
 
-function makeComp(clsid, iid, makeProxy) {
+function makeComp(clsid, iid, makeProxy, sync) {
     var obj = Components.classes[clsid].createInstance(iid);
-    if (makeProxy == null || makeProxy == true) obj = proxify(obj, iid);
+    if (makeProxy === null || makeProxy == true) obj = proxify(obj, iid, sync);
     return obj;
 }
 
-function makeService(clsid, iid, makeProxy) {
+function makeService(clsid, iid, makeProxy, sync) {
     var obj = Components.classes[clsid].getService(iid);
-    if (makeProxy == null || makeProxy == true) obj = proxify(obj, iid);
+    if (makeProxy === null || makeProxy == true) obj = proxify(obj, iid, sync);
     return obj;
 }

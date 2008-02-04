@@ -39,29 +39,34 @@ try {
     var xulEventQueue = threadMan.mainThread;
 }
 
-function proxify(obj, iid) {
-    return proxyManager.getProxyForObject(xulEventQueue, iid, obj,Components.interfaces.nsIProxyObjectManager.INVOKE_SYNC | Components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION);
+function proxify(obj, iid, sync) {
+    if (sync === false) {
+        var flags = Components.interfaces.nsIProxyObjectManager.INVOKE_ASYNC | Components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION;
+    } else {
+        var flags = Components.interfaces.nsIProxyObjectManager.INVOKE_SYNC | Components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION;
+    }
+    return proxyManager.getProxyForObject(xulEventQueue, iid, obj, flags);
 }
 
-function makeComp(clsid, iid, makeProxy) {
+function makeComp(clsid, iid, makeProxy, sync) {
     var obj = Components.classes[clsid].createInstance(iid);
-    if (makeProxy == null || makeProxy == true) obj = proxify(obj, iid);
+    if (makeProxy === null || makeProxy == true) obj = proxify(obj, iid, sync);
     return obj;
 }
 
-function makeService(clsid, iid, makeProxy) {
+function makeService(clsid, iid, makeProxy, sync) {
     var obj = Components.classes[clsid].getService(iid);
-    if (makeProxy == null || makeProxy == true) obj = proxify(obj, iid);
+    if (makeProxy === null || makeProxy == true) obj = proxify(obj, iid, sync);
     return obj;
 }
 
 // We do this so often, we might as well make a function
 function getPyBridge() {
-    return makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge,false);
+    return makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge, false);
 }
 
 function writelog(str) {
-    makeService('@mozilla.org/consoleservice;1',Components.interfaces.nsIConsoleService).logStringMessage(str);
+    makeService('@mozilla.org/consoleservice;1',Components.interfaces.nsIConsoleService,false).logStringMessage(str);
 }
 
 function twoDigits(data) {
@@ -80,14 +85,14 @@ function formatTime(milliseconds) {
 }
 
 function makeLocalFile(path) {
-    var file = makeComp("@mozilla.org/file/local;1",Components.interfaces.nsILocalFile);
+    var file = makeComp("@mozilla.org/file/local;1",Components.interfaces.nsILocalFile, false);
     file.initWithPath(path);
     return file;
 }
 
 function pickSavePath(window, title, defaultDirectory, defaultFilename) {
     var nsIFilePicker = Components.interfaces.nsIFilePicker;
-    var fp = makeComp("@mozilla.org/filepicker;1",nsIFilePicker);
+    var fp = makeComp("@mozilla.org/filepicker;1",nsIFilePicker, false);
     fp.init(window, title, nsIFilePicker.modeSave);
     if(defaultDirectory) {
        fp.setDefaultDirectory(makeLocalFile(defaultDirectory));
@@ -173,7 +178,7 @@ jsBridge.prototype = {
     this.initBrowser("mainDisplay");
     this.initBrowser("videoInfoDisplay");
     this.initBrowser("channelsDisplay");
-    this.hideVideoControlsTimer = makeComp("@mozilla.org/timer;1",Components.interfaces.nsITimer);
+    this.hideVideoControlsTimer = makeComp("@mozilla.org/timer;1",Components.interfaces.nsITimer, false);
     this.videoFilename = null;
     this.searchEngineTitles = this.searchEngineNames = null;
 
@@ -205,13 +210,12 @@ jsBridge.prototype = {
   initBrowser: function(area) {
     var browser = this.document.getElementById(area);
     var listener = new LoadFinishedListener(area);
-    listener = proxify(listener,Components.interfaces.nsIWebProgressListener);
     browser.addProgressListener(listener);
     progressListeners[area] = listener;
   },
 
   copyTextToClipboard: function(text) {
-    var gClipboardHelper = makeService("@mozilla.org/widget/clipboardhelper;1", Components.interfaces.nsIClipboardHelper);
+    var gClipboardHelper = makeService("@mozilla.org/widget/clipboardhelper;1", Components.interfaces.nsIClipboardHelper,false);
     gClipboardHelper.copyString(text);
   },
 
@@ -578,7 +582,7 @@ jsBridge.prototype = {
   },
 
   performStartupTasks: function() {
-      var wwatch = makeService("@mozilla.org/embedcomp/window-watcher;1",Components.interfaces.nsIWindowWatcher);
+      var wwatch = makeService("@mozilla.org/embedcomp/window-watcher;1",Components.interfaces.nsIWindowWatcher,false);
     var startupTasksURL = "chrome://dtv/content/startup.xul";
     this.startup = wwatch.openWindow(null, startupTasksURL, 
             "DemocracyPlayerStartup", "chrome,dialog=yes,all", null);
@@ -676,7 +680,7 @@ jsBridge.prototype = {
   },
   updateTrayMenus: function (unwatched, downloading, paused) {
       var pybridge = getPyBridge();
-      var minimizer = makeService("@participatoryculture.org/dtv/minimize;1",Components.interfaces.pcfIDTVMinimize);
+      var minimizer = makeService("@participatoryculture.org/dtv/minimize;1",Components.interfaces.pcfIDTVMinimize, false);
       var playUnwatched = new Object();
       var pauseDownloads = new Object();
       var restoreDownloads = new Object();
@@ -758,7 +762,7 @@ jsBridge.prototype = {
       var self = this;
 
       function minimize_onshown(event, x, y, screenWidth, screenHeight, document) {
-          var minimizer = makeService("@participatoryculture.org/dtv/minimize;1",Components.interfaces.pcfIDTVMinimize);
+          var minimizer = makeService("@participatoryculture.org/dtv/minimize;1",Components.interfaces.pcfIDTVMinimize, false);
           var popup = event.target;
           popup.removeEventListener("popupshown",
                                     popup._minimizetotray_onshown,
