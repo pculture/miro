@@ -140,7 +140,7 @@ def initializeProxyObjects(window):
     app.jsBridge.init(window)
 
 def initializeHTTPProxy():
-    xulprefs = makeService("@mozilla.org/preferences-service;1",components.interfaces.nsIPrefService, True, True)
+    xulprefs = makeService("@mozilla.org/preferences-service;1",components.interfaces.nsIPrefService)
     branch = xulprefs.getBranch("network.proxy.")
     if config.get(prefs.HTTP_PROXY_ACTIVE):                     
         branch.setIntPref("type",1)

@@ -48,7 +48,7 @@ class Application(HTMLApplication):
         # FIXME: This should run in the Mozilla thread --NN
         logging.warn("Application.Run() is creating XPCOM objects in the wrong thread!")
         from xpcom import components
-        ps = makeService("@mozilla.org/preferences-service;1",components.interfaces.nsIPrefService,False)
+        ps = makeService("@mozilla.org/preferences-service;1",components.interfaces.nsIPrefService)
         branch = ps.getBranch("general.useragent.")
         branch.setCharPref("locale", lang)
 

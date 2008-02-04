@@ -39,24 +39,19 @@ try {
     var xulEventQueue = threadMan.mainThread;
 }
 
-function proxify(obj, iid, sync) {
-    if (sync == null || sync == false) {
-        var flags = Components.interfaces.nsIProxyObjectManager.INVOKE_ASYNC | Components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION;
-    } else {
-        var flags = Components.interfaces.nsIProxyObjectManager.INVOKE_SYNC | Components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION;
-    }
-    return proxyManager.getProxyForObject(xulEventQueue, iid, obj, flags);
+function proxify(obj, iid) {
+    return proxyManager.getProxyForObject(xulEventQueue, iid, obj,Components.interfaces.nsIProxyObjectManager.INVOKE_SYNC | Components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION);
 }
 
-function makeComp(clsid, iid, makeProxy, sync) {
+function makeComp(clsid, iid, makeProxy) {
     var obj = Components.classes[clsid].createInstance(iid);
-    if (makeProxy == null || makeProxy == true) obj = proxify(obj, iid, sync);
+    if (makeProxy == null || makeProxy == true) obj = proxify(obj, iid);
     return obj;
 }
 
-function makeService(clsid, iid, makeProxy, sync) {
+function makeService(clsid, iid, makeProxy) {
     var obj = Components.classes[clsid].getService(iid);
-    if (makeProxy == null || makeProxy == true) obj = proxify(obj, iid, sync);
+    if (makeProxy == null || makeProxy == true) obj = proxify(obj, iid);
     return obj;
 }
 
@@ -66,7 +61,7 @@ function getPyBridge() {
 }
 
 function writelog(str) {
-    makeService('@mozilla.org/consoleservice;1',Components.interfaces.nsIConsoleService,false).logStringMessage(str);
+    makeService('@mozilla.org/consoleservice;1',Components.interfaces.nsIConsoleService).logStringMessage(str);
 }
 
 function twoDigits(data) {
@@ -85,14 +80,14 @@ function formatTime(milliseconds) {
 }
 
 function makeLocalFile(path) {
-    var file = makeComp("@mozilla.org/file/local;1",Components.interfaces.nsILocalFile, false);
+    var file = makeComp("@mozilla.org/file/local;1",Components.interfaces.nsILocalFile);
     file.initWithPath(path);
     return file;
 }
 
 function pickSavePath(window, title, defaultDirectory, defaultFilename) {
     var nsIFilePicker = Components.interfaces.nsIFilePicker;
-    var fp = makeComp("@mozilla.org/filepicker;1",nsIFilePicker, false);
+    var fp = makeComp("@mozilla.org/filepicker;1",nsIFilePicker);
     fp.init(window, title, nsIFilePicker.modeSave);
     if(defaultDirectory) {
        fp.setDefaultDirectory(makeLocalFile(defaultDirectory));
@@ -178,7 +173,7 @@ jsBridge.prototype = {
     this.initBrowser("mainDisplay");
     this.initBrowser("videoInfoDisplay");
     this.initBrowser("channelsDisplay");
-    this.hideVideoControlsTimer = makeComp("@mozilla.org/timer;1",Components.interfaces.nsITimer, false);
+    this.hideVideoControlsTimer = makeComp("@mozilla.org/timer;1",Components.interfaces.nsITimer);
     this.videoFilename = null;
     this.searchEngineTitles = this.searchEngineNames = null;
 
@@ -210,12 +205,13 @@ jsBridge.prototype = {
   initBrowser: function(area) {
     var browser = this.document.getElementById(area);
     var listener = new LoadFinishedListener(area);
+    listener = proxify(listener,Components.interfaces.nsIWebProgressListener);
     browser.addProgressListener(listener);
     progressListeners[area] = listener;
   },
 
   copyTextToClipboard: function(text) {
-    var gClipboardHelper = makeService("@mozilla.org/widget/clipboardhelper;1", Components.interfaces.nsIClipboardHelper,false);
+    var gClipboardHelper = makeService("@mozilla.org/widget/clipboardhelper;1", Components.interfaces.nsIClipboardHelper);
     gClipboardHelper.copyString(text);
   },
 
@@ -582,7 +578,7 @@ jsBridge.prototype = {
   },
 
   performStartupTasks: function() {
-      var wwatch = makeService("@mozilla.org/embedcomp/window-watcher;1",Components.interfaces.nsIWindowWatcher,false);
+      var wwatch = makeService("@mozilla.org/embedcomp/window-watcher;1",Components.interfaces.nsIWindowWatcher);
     var startupTasksURL = "chrome://dtv/content/startup.xul";
     this.startup = wwatch.openWindow(null, startupTasksURL, 
             "DemocracyPlayerStartup", "chrome,dialog=yes,all", null);
