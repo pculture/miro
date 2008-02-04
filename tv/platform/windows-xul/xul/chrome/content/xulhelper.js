@@ -46,13 +46,19 @@ function proxify(obj, iid, sync) {
 }
 
 function makeComp(clsid, iid, makeProxy, sync) {
+    if (makeProxy === null) {
+      throw("makeComp() requires three arguments. Only two set");
+    }
     var obj = Components.classes[clsid].createInstance(iid);
-    if (makeProxy === null || makeProxy == true) obj = proxify(obj, iid, sync);
+    if (makeProxy) obj = proxify(obj, iid, sync);
     return obj;
 }
 
 function makeService(clsid, iid, makeProxy, sync) {
+    if (makeProxy === null) {
+      throw("makeService() requires three arguments. Only two set");
+    }
     var obj = Components.classes[clsid].getService(iid);
-    if (makeProxy === null || makeProxy == true) obj = proxify(obj, iid, sync);
+    if (makeProxy) obj = proxify(obj, iid, sync);
     return obj;
 }
