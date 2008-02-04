@@ -132,8 +132,8 @@ def createProxyObjects():
     loop.
     """
     app.jsBridge = makeService("@participatoryculture.org/dtv/jsbridge;1",
-        components.interfaces.pcfIDTVJSBridge)
-    app.vlcRenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",  components.interfaces.pcfIDTVVLCRenderer)
+        components.interfaces.pcfIDTVJSBridge, True, False)
+    app.vlcRenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",  components.interfaces.pcfIDTVVLCRenderer, True, False)
 
 def initializeProxyObjects(window):
     app.vlcRenderer.init(window)
