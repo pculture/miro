@@ -18,7 +18,7 @@
 """Democracy Command Line Handler."""
 
 from xpcom import components
-from xulhelper import makeComp, makeService, proxify
+from xulhelper import makeService, proxify
 
 class DemocracyCLH:
     _com_interfaces_ = [components.interfaces.nsICommandLineHandler]
@@ -37,9 +37,9 @@ class DemocracyCLH:
 
         chromeURL = "chrome://dtv/content/main.xul"
         windowName = "DemocracyPlayer"
-        wwatch = makeService("@mozilla.org/embedcomp/window-watcher;1",components.interfaces.nsIWindowWatcher)
+        wwatch = makeService("@mozilla.org/embedcomp/window-watcher;1",components.interfaces.nsIWindowWatcher, False)
         pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",
-                        components.interfaces.pcfIDTVPyBridge)
+                        components.interfaces.pcfIDTVPyBridge, False)
 
         startupError = pybridge.getStartupError()
         if startupError:
@@ -61,15 +61,15 @@ class DemocracyCLH:
                 wwatch.openWindow(None, chromeURL, windowName,
                         "chrome,resizable,dialog=no,all", None)
             else:
-                jsbridge = makeService("@participatoryculture.org/dtv/jsbridge;1",components.interfaces.pcfIDTVJSBridge)
+                jsbridge = makeService("@participatoryculture.org/dtv/jsbridge;1",components.interfaces.pcfIDTVJSBridge, False)
                 jsbridge.performStartupTasks()
                 return
         else:
             # If Democracy is already running and minimize, make the
             # tray icon disappear
-            minimizer = makeService("@participatoryculture.org/dtv/minimize;1",components.interfaces.pcfIDTVMinimize)
+            minimizer = makeService("@participatoryculture.org/dtv/minimize;1",components.interfaces.pcfIDTVMinimize, False)
             minimizer.restoreAll()
 
-catman = makeService("@mozilla.org/categorymanager;1",components.interfaces.nsICategoryManager)
+catman = makeService("@mozilla.org/categorymanager;1",components.interfaces.nsICategoryManager, False)
 catman.addCategoryEntry("command-line-handler", "z-default",
         "@participatoryculture.org/dtv/commandlinehandler;1", True, True)
