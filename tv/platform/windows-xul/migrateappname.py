@@ -78,7 +78,7 @@ def migrateVideos(oldAppName, newAppName):
     global migratedSupport
     # we have to wait to import this
     pybridgeCID = "@participatoryculture.org/dtv/pybridge;1"
-    pybridge = makeService(pybridgeCID,pcfIDTVPyBridge)
+    pybridge = makeService(pybridgeCID,pcfIDTVPyBridge, True, False)
     if migratedSupport:
         oldDefault = os.path.join(platformcfg._baseMoviesDirectory, oldAppName)
         newDefault = os.path.join(platformcfg._baseMoviesDirectory, newAppName)
