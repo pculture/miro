@@ -20,6 +20,7 @@ import os
 import util
 import config
 import prefs
+import logging
 from download_utils import nextFreeFilename
 from frontends.html.displaybase import VideoDisplayBase
 from playbackcontroller import PlaybackControllerBase
@@ -127,6 +128,8 @@ class VLCRenderer (VideoRenderer):
     """
 
     def canPlayFile(self, filename):
+        logging.warn("VLCRenderer.canPlayfile() always returns True")
+        return True
         url = util.absolutePathToFileURL(filename)
         return app.vlcRenderer.canPlayURL(url)
 
