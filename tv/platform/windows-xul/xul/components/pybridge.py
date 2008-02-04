@@ -140,7 +140,7 @@ def initializeProxyObjects(window):
     app.jsBridge.init(window)
 
 def initializeHTTPProxy():
-    xulprefs = makeService("@mozilla.org/preferences-service;1",components.interfaces.nsIPrefService)
+    xulprefs = makeService("@mozilla.org/preferences-service;1",components.interfaces.nsIPrefService, False)
     branch = xulprefs.getBranch("network.proxy.")
     if config.get(prefs.HTTP_PROXY_ACTIVE):                     
         branch.setIntPref("type",1)
@@ -765,11 +765,10 @@ class PyBridge:
         except:
             pass
 
-    @asUrgent
     def playUnwatched(self):
         minimizer = makeService(
             "@participatoryculture.org/dtv/minimize;1",
-            components.interfaces.pcfIDTVMinimize)
+            components.interfaces.pcfIDTVMinimize, False)
         if minimizer.isMinimized():
             minimizer.minimizeOrRestore()
         app.controller.frame.mainDisplayCallback(u'action:playUnwatched')
@@ -807,7 +806,7 @@ class PyBridge:
         elif config.get(prefs.MINIMIZE_TO_TRAY):
             minimizer = makeService(
                     "@participatoryculture.org/dtv/minimize;1",
-                    components.interfaces.pcfIDTVMinimize)
+                    components.interfaces.pcfIDTVMinimize, False)
             minimizer.minimizeOrRestore()
         else:
             self.quit()

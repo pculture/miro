@@ -49,5 +49,5 @@ class MyContentPolicy:
     def shouldProcess(self, contentType, contentLocation, requestOrigin, context, mimeType,  extra):
         return nsIContentPolicy.ACCEPT
 
-catman = makeService("@mozilla.org/categorymanager;1",components.interfaces.nsICategoryManager)
+catman = makeService("@mozilla.org/categorymanager;1",components.interfaces.nsICategoryManager, False)
 catman.addCategoryEntry("content-policy", "@participatoryculture.org/dtv/mycontentpolicy;1", "@participatoryculture.org/dtv/mycontentpolicy;1", True, True)

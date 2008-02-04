@@ -64,7 +64,7 @@ class Application(HTMLApplication):
         app.jsBridge.closeWindow()
 
     def finishStartupSequence(self):
-        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge)
+        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge,True, False)
         self.initializeSearchEngines()
         migrateappname.migrateVideos('Democracy', 'Miro')
         pybridge.updateTrayMenus()
@@ -84,12 +84,12 @@ class Application(HTMLApplication):
 
     def onUnwatchedItemsCountChange(self, obj, id):
         HTMLApplication.onDownloadingItemsCountChange(self, obj, id)
-        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge)
+        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge, True, False)
         pybridge.updateTrayMenus()
 
     def onDownloadingItemsCountChange(self, obj, id):
         HTMLApplication.onDownloadingItemsCountChange(self, obj, id)
-        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge)
+        pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge, True, False)
         pybridge.updateTrayMenus()
 
 ###############################################################################

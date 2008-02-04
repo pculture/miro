@@ -42,14 +42,14 @@ def proxify(obj, iid, sync=True):
             components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION
     return proxyManager.getProxyForObject(xulEventQueue, iid, obj, flags)
 
-def makeComp(clsid, iid, makeProxy=True, sync=True):
+def makeComp(clsid, iid, makeProxy, sync=True):
     """Helper function to get an XPCOM component"""
     obj = components.classes[clsid].createInstance(iid)
     if makeProxy:
         obj = proxify(obj, iid, sync)
     return obj
 
-def makeService(clsid, iid, makeProxy=True, sync=True):
+def makeService(clsid, iid, makeProxy, sync=True):
     """Helper function to get an XPCOM service"""
     obj = components.classes[clsid].getService(iid)
     if makeProxy:

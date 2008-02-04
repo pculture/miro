@@ -57,8 +57,8 @@ class MainFrame:
         logging.warn("onSelectedTabChange creating XPCOM objects in wrong thread!")
         # FIXME: This needs to run in the Mozilla thread --NN
         from xpcom import components
-        makeArray = lambda : makeComp("@mozilla.org/supports-array;1",components.interfaces.nsICollection)
-        makeVariant = lambda : makeComp("@mozilla.org/variant;1",components.interfaces.nsIWritableVariant)
+        makeArray = lambda : makeComp("@mozilla.org/supports-array;1",components.interfaces.nsICollection, True, True)
+        makeVariant = lambda : makeComp("@mozilla.org/variant;1",components.interfaces.nsIWritableVariant, True, True)
 
         stateLists = makeArray()
         for key, actions in states.items():
