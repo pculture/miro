@@ -33,21 +33,25 @@ except:
     threadMan = components.classes["@mozilla.org/thread-manager;1"].getService(components.interfaces.nsIThreadManager)
     xulEventQueue = threadMan.mainThread
 
-def proxify(obj, iid):
-    return proxyManager.getProxyForObject(xulEventQueue, iid, obj,
-          components.interfaces.nsIProxyObjectManager.INVOKE_SYNC |
-          components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION )
+def proxify(obj, iid, sync=True):
+    if sync:
+        flags = components.interfaces.nsIProxyObjectManager.INVOKE_SYNC | \
+            components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION
+    else:
+        flags = components.interfaces.nsIProxyObjectManager.INVOKE_ASYNC | \
+            components.interfaces.nsIProxyObjectManager.FORCE_PROXY_CREATION
+    return proxyManager.getProxyForObject(xulEventQueue, iid, obj, flags)
 
-def makeComp(clsid, iid, makeProxy=True):
+def makeComp(clsid, iid, makeProxy=True, sync=True):
     """Helper function to get an XPCOM component"""
     obj = components.classes[clsid].createInstance(iid)
     if makeProxy:
-        obj = proxify(obj, iid)
+        obj = proxify(obj, iid, sync)
     return obj
 
-def makeService(clsid, iid, makeProxy=True):
+def makeService(clsid, iid, makeProxy=True, sync=True):
     """Helper function to get an XPCOM service"""
     obj = components.classes[clsid].getService(iid)
     if makeProxy:
-        obj = proxify(obj, iid)
+        obj = proxify(obj, iid, sync)
     return obj
