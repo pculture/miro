@@ -403,18 +403,7 @@ class MainFrame:
 
     @gtkSyncMethod
     def updateVideoTime(self):
-        renderer = app.controller.videoDisplay.activeRenderer
-        videoTimeScale = self.widgetTree['video-time-scale']
-        if renderer and not videoTimeScale.buttonsDown:
-            try:
-                self.videoLength = renderer.getDuration()
-            except:
-                self.videoLength = 0
-            videoLength = self.videoLength
-            try:
-                currentTime = renderer.getCurrentTime()
-            except:
-                currentTime = 0
+        def CTCallback(videoTimeScale, videoLength, currentTime):
             # None is less than both 0 and 1, so these will handle None.
             if videoLength < 1:
                 videoLength = 1
@@ -424,7 +413,16 @@ class MainFrame:
                 currentTime = videoLength
             videoTimeScale.set_range(0, videoLength)
             videoTimeScale.set_value(currentTime)
-        return True
+
+        renderer = app.controller.videoDisplay.activeRenderer
+        videoTimeScale = self.widgetTree['video-time-scale']
+        if renderer and not videoTimeScale.buttonsDown:
+            try:
+                self.videoLength = renderer.getDuration()
+            except:
+                self.videoLength = 0
+            videoLength = self.videoLength
+            renderer.getCurrentTime(lambda x :CTCallback(videoTimeScale, videoLength, x))
 
     @gtkAsyncMethod
     def setFullscreen(self, fullscreen):

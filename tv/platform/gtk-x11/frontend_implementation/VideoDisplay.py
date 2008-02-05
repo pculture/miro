@@ -98,9 +98,15 @@ class VideoDisplay (VideoDisplayBase):
                 callback()
         next_renderer(-1, False)
 
-    def getRendererForItem(self, anItem, callback = None):
+    def setRendererAndCallback(self, anItem, internal, external):
         self.renderersReady.wait()
-        VideoDisplayBase.getRendererForItem(self, anItem, callback)
+        for renderer in self.renderers:
+            if renderer.canPlayFile(anItem.getFilename()):
+                self.setActiveRenderer(renderer)
+                renderer.selectFile(anItem.getFilename())
+                internal()
+                return
+        external()
 
     @gtkAsyncMethod
     def _gtkInit(self):
@@ -148,6 +154,7 @@ class VideoDisplay (VideoDisplayBase):
             self.play(-1)
 
     def playFromTime(self, startTime):
+        
         self.play (startTime)
 
     def goToBeginningOfMovie(self):

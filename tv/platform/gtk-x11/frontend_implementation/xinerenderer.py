@@ -146,13 +146,13 @@ class Renderer(VideoRenderer):
             pass
 
     @gtkSyncMethod
-    def getCurrentTime(self):
+    def getCurrentTime(self, callback):
         confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
-            return pos / 1000.0
+            callback(pos / 1000.0)
         except:
-            return None
+            callback(None)
 
     def setCurrentTime(self, seconds):
         confirmMainThread()
@@ -161,19 +161,20 @@ class Renderer(VideoRenderer):
     def playFromTime(self, seconds):
         confirmMainThread()
         self.seek (seconds)
+        
 
     @waitForAttach
     def seek(self, seconds):
         confirmMainThread()
         self.xine.seek(int(seconds * 1000))
 
-    def getDuration(self):
+    def getDuration(self, callback):
         confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
-            return length / 1000
+            callback(length / 1000)
         except:
-            return None
+            callback(None)
 
     # @waitForAttach  -- Not necessary because stop does this
     def reset(self):
