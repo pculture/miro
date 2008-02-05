@@ -28,7 +28,7 @@ function onload() {
   textbox.value = args['textboxValue'];
 }
 
-var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
+var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge, false);
 function onaccept() {
   var value = document.getElementById('checkbox').checked;
   var value2 = document.getElementById('textbox').value;

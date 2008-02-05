@@ -98,9 +98,9 @@ class VideoDisplay (VideoDisplayBase):
                 callback()
         next_renderer(-1, False)
 
-    def getRendererForItem(self, anItem):
+    def getRendererForItem(self, anItem, callback = None):
         self.renderersReady.wait()
-        return VideoDisplayBase.getRendererForItem(self, anItem)
+        VideoDisplayBase.getRendererForItem(self, anItem, callback)
 
     @gtkAsyncMethod
     def _gtkInit(self):

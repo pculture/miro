@@ -856,7 +856,7 @@ class TemplateActionHandler:
                     (obj, type(obj)))
 
     def playItemExternally(self, itemID):
-        app.controller.playbackController.playItemExternally(itemID)
+        app.controller.playbackController.playItemExternallyByID(itemID)
         
     def skipItem(self, itemID):
         app.controller.playbackController.skip(1)

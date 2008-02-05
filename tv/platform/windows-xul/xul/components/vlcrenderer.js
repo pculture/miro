@@ -160,20 +160,6 @@ VLCRenderer.prototype = {
       this.resetVideoControls();
   },
 
-  canPlayURL: function(url) {
-    if (!this.hasVLC()) return;
-    try {
-      if (this.vlc.playlist.items.count > 0) {
-          this.stop();
-          this.vlc.playlist.items.clear();
-      }
-      this.item = this.vlc.playlist.add(url);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  },
-
   selectURL: function(url) {
     if (!this.hasVLC()) return;
       if (this.vlc.playlist.items.count > 0) {
@@ -269,21 +255,21 @@ VLCRenderer.prototype = {
     this.setCurrentTime(0);
   },
 
-  getDuration: function() {
+  getDuration: function(pyCallback) {
     if (!this.hasVLC()) return;
     try {
       rv = this.vlc.input.length;
     } catch (e) {
       rv = -1;
     }
-    return rv;
+    pyCallback.makeCallbackFloat(rv);
   },
 
-  getCurrentTime: function() {
+  getCurrentTime: function(pyCallback) {
     if (!this.hasVLC()) return;
       var rv;
       rv = this.vlc.input.time;
-      return rv / 1000.0;
+      pyCallback.makeCallbackFloat(rv);
   },
 
   setVolume: function(level) {

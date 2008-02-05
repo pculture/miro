@@ -21,10 +21,10 @@
  Watching for application exit
  *****************************************************************************/
 
-var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
-var jsbridge = makeService("@participatoryculture.org/dtv/jsbridge;1",Components.interfaces.pcfIDTVJSBridge);
-var vlcrenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",Components.interfaces.pcfIDTVVLCRenderer);
-var minimizer = makeService("@participatoryculture.org/dtv/minimize;1",Components.interfaces.pcfIDTVMinimize);
+var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge, false);
+var jsbridge = makeService("@participatoryculture.org/dtv/jsbridge;1",Components.interfaces.pcfIDTVJSBridge, false);
+var vlcrenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",Components.interfaces.pcfIDTVVLCRenderer, false);
+var minimizer = makeService("@participatoryculture.org/dtv/minimize;1",Components.interfaces.pcfIDTVMinimize, false);
 
 window.maximized = false;
 

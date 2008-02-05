@@ -64,31 +64,48 @@ def handleKeyNoPlayback(key, shiftDown, controlDown):
                 shiftDown, controlDown)
 
 def handleKeyPlayback(key, shiftDown, controlDown):
-    if key == RIGHT:
-        if controlDown:
-            app.controller.playbackController.skip(1)
-        else:
-            time = app.controller.videoDisplay.getCurrentTime()
-            if time is not None:
-                time += 30.0
-                if time < app.controller.videoDisplay.getDuration():
-                    app.controller.videoDisplay.setCurrentTime(time)
-    elif key == LEFT:
-        if controlDown:
-            app.controller.playbackController.skip(-1)
-        else:
-            time = app.controller.videoDisplay.getCurrentTime()
-            if time is not None:
-                time -= 10.0
-                if time > 0.0:
-                    app.controller.videoDisplay.setCurrentTime(time)
-    elif key == UP:
-        volume = app.controller.videoDisplay.getVolume()
-        app.controller.videoDisplay.setVolume(volume + 0.05)
-    elif key == DOWN:
-        volume = app.controller.videoDisplay.getVolume()
-        app.controller.videoDisplay.setVolume(volume - 0.05)
-    elif key == SPACE:
-        app.controller.playbackController.playPause()
-    elif key == ESCAPE:
-        app.controller.videoDisplay.exitFullScreen()
+    # We need a value that's not a valid time, volume, or duration and not None
+    time = -33
+    duration = -33
+    volume = -33
+    def durationCallback(dur):
+        duration = dur
+        if volume != -33 and time != -33:
+            actualHandleKey()
+    def timeCallback(tim):
+        time = tim
+        if volume != -33 and duration != -33:
+            actualHandleKey()
+    def volumeCallback(vol):
+        volume = vol
+        if duration != -33 and time != -33:
+            actualHandleKey()
+    def actualHandleKey():
+        if key == RIGHT:
+            if controlDown:
+                app.controller.playbackController.skip(1)
+            else:
+                if time is not None:
+                    time += 30.0
+                    if time < duration:
+                        app.controller.videoDisplay.setCurrentTime(time)
+        elif key == LEFT:
+            if controlDown:
+                app.controller.playbackController.skip(-1)
+            else:
+                if time is not None:
+                    time -= 10.0
+                    if time > 0.0:
+                        app.controller.videoDisplay.setCurrentTime(time)
+        elif key == UP:
+            app.controller.videoDisplay.setVolume(volume + 0.05)
+        elif key == DOWN:
+            app.controller.videoDisplay.setVolume(volume - 0.05)
+        elif key == SPACE:
+            app.controller.playbackController.playPause()
+        elif key == ESCAPE:
+            app.controller.videoDisplay.exitFullScreen()
+    # When all of the values have been set, we actually handle the key
+    app.controller.videoDisplay.getCurrentTime(timeCallback)
+    app.controller.videoDisplay.getDuration(durationCallback)
+    app.controller.videoDisplay.getVolume(volumeCallback)

@@ -23,7 +23,7 @@ function onload() {
   dialog.getButton('cancel').label = args['otherLabel'];
 }
 
-var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
+var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge, false);
 function onaccept() {
   pybridge.handleSimpleDialog(window.arguments[0]['id'], 0);
 }

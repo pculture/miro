@@ -13,8 +13,8 @@
         onload="onload()">
 <script src="chrome://dtv/content/xulhelper.js" />
     <script type="text/javascript">
-var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
-var jsbridge = makeService("@participatoryculture.org/dtv/jsbridge;1",Components.interfaces.pcfIDTVJSBridge);
+var pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge, false);
+var jsbridge = makeService("@participatoryculture.org/dtv/jsbridge;1",Components.interfaces.pcfIDTVJSBridge, false);
 
 function onload() {
   var args = window.arguments[0];

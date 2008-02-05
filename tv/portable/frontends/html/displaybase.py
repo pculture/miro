@@ -18,6 +18,7 @@
 import app
 import config
 import prefs
+import logging
 
 """Base class for displays. """
 
@@ -96,20 +97,24 @@ class VideoDisplayBase (Display):
                 callback ()
                 return
         callback ()
+
+    # Override this to call external() if the file cannot be played or
+    # set the renderer to the appropriate one it it can be played,
+    # then call internal().
+    def setRendererAndCallback(self, anItem, internal, external):
+        self.setExternal(True)
+        external()
         
     def getRendererForItem(self, anItem):
-        for renderer in self.renderers:
-            if renderer.canPlayItem(anItem):
-                return renderer
+        logging.warn("Using deprecated VideoDisplay.getRendererForItem API. Please, update your code to use setRendererAndCallback().")
         return None
-
+            
     def canPlayItem(self, anItem):
-        return self.getRendererForItem(anItem) is not None
+        logging.warn("Using deprecated VideoDisplay.canPlayItem API. Please, update your code.")
+        return False
     
     def canPlayFile(self, filename):
-        for renderer in self.renderers:
-            if renderer.canPlayFile(filename):
-                return True
+        logging.warn("Using deprecated VideoDisplay.canPlayFile API. Please, update your code.")
         return False
     
     def selectItem(self, anItem, renderer):
@@ -122,7 +127,7 @@ class VideoDisplayBase (Display):
 
         self.setActiveRenderer(renderer)
         self.activeRenderer.selectItem(anItem)
-        self.activeRenderer.setVolume(self.getVolume())
+        self.getVolume(lambda vol:self.activeRenderer.setVolume(vol))
 
     def setActiveRenderer (self, renderer):
         self.activeRenderer = renderer
@@ -178,28 +183,31 @@ class VideoDisplayBase (Display):
     def exitFullScreen(self):
         self.isFullScreen = False
 
-    def getCurrentTime(self):
+    def getCurrentTime(self, callback):
         if self.activeRenderer is not None:
-            return self.activeRenderer.getCurrentTime()
-        return None
+            self.activeRenderer.getCurrentTime(callback)
+        else:
+            callback(None)
 
     def setCurrentTime(self, seconds):
         if self.activeRenderer is not None:
             self.activeRenderer.setCurrentTime(seconds)
 
-    def getProgress(self):
+    def getProgress(self, callback):
         if self.activeRenderer is not None:
-            return self.activeRenderer.getProgress()
-        return 0.0
+            self.activeRenderer.getProgress(callback)
+        else:
+            callback(0.0)
 
     def setProgress(self, progress):
         if self.activeRenderer is not None:
             return self.activeRenderer.setProgress(progress)
 
-    def getDuration(self):
+    def getDuration(self, callback):
         if self.activeRenderer is not None:
-            return self.activeRenderer.getDuration()
-        return None
+            self.activeRenderer.getDuration(callback)
+        else:
+            callback(None)
 
     def setVolume(self, level):
         if level > 1.0:
@@ -211,11 +219,11 @@ class VideoDisplayBase (Display):
         if self.activeRenderer is not None:
             self.activeRenderer.setVolume(level)
 
-    def getVolume(self):
-        return self.volume
+    def getVolume(self, callback):
+        callback(self.volume)
 
     def muteVolume(self):
-        self.previousVolume = self.getVolume()
+        self.previousVolume = self.volume
         self.setVolume(0.0)
 
     def restoreVolume(self):

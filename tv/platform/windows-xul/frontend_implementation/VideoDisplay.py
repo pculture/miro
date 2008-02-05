@@ -25,7 +25,7 @@ from download_utils import nextFreeFilename
 from frontends.html.displaybase import VideoDisplayBase
 from playbackcontroller import PlaybackControllerBase
 from videorenderer import VideoRenderer
-
+import pyxpcomcalls
 from threading import Lock
 import time
 
@@ -56,6 +56,12 @@ class VideoDisplay (VideoDisplayBase):
 
     def initRenderers(self):
         self.renderers.append(VLCRenderer())
+
+    def setRendererAndCallback(self, anItem, internal, external):
+        #Always use VLC
+        self.setExternal(False)
+        self.selectItem(anItem, self.renderers[0])
+        internal()
 
     def setArea(self, area):
         # we hardcode the videodisplay's area to be mainDisplayVideo
@@ -127,11 +133,9 @@ class VLCRenderer (VideoRenderer):
     component. 
     """
 
-    def canPlayFile(self, filename):
+    def canPlayFile(self, filename, callback):        
         logging.warn("VLCRenderer.canPlayfile() always returns True")
-        return True
-        url = util.absolutePathToFileURL(filename)
-        return app.vlcRenderer.canPlayURL(url)
+        callback(True)
 
     @lockAndPlay
     def selectFile(self, filename):
@@ -152,20 +156,19 @@ class VLCRenderer (VideoRenderer):
         return app.vlcRenderer.stop()
     def goToBeginningOfMovie(self): 
         return app.vlcRenderer.goToBeginningOfMovie()
-    def getDuration(self): 
-        return app.vlcRenderer.getDuration()
-    def getCurrentTime(self): 
-        try:
-            return app.vlcRenderer.getCurrentTime()
-        except:
-            return None
+    def getDuration(self, callback):
+        c = pyxpcomcalls.XPCOMifyCallback(callback)
+        app.vlcRenderer.getDuration(c)
+    def getCurrentTime(self, callback):
+        c = pyxpcomcalls.XPCOMifyCallback(callback)
+        app.vlcRenderer.getCurrentTime(c)
     def setCurrentTime(self, time): 
         return app.vlcRenderer.setCurrentTime(time)
     @lockAndPlay
-    def playFromTime(self, time): 
+    def playFromTime(self, time):
         return app.vlcRenderer.playFromTime(time)
-    def getRate(self): 
-        return app.vlcRenderer.getRate()
+    def getRate(self, callback): 
+        app.vlcRenderer.getRate(callback)
     def setRate(self, rate): 
         return app.vlcRenderer.setRate(rate)
 

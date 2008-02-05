@@ -18,6 +18,7 @@
 """videorenderer.py -- Base class for video renderers.  """
 
 import util
+import logging
 
 class VideoRenderer:
     """VideoRenderer renderer base class."""
@@ -25,39 +26,79 @@ class VideoRenderer:
     def __init__(self):
         self.interactivelySeeking = False
     
-    def canPlayItem(self, anItem):
-        return self.canPlayFile (anItem.getVideoFilename())
-    
-    def canPlayFile(self, filename):
-        return False
-
     def fillMovieData(self, filename, movie_data):
         return False
     
-    def getDisplayTime(self):
-        seconds = self.getCurrentTime()
-        return util.formatTimeForUser(seconds)
-        
-    def getDisplayDuration(self):
-        seconds = self.getDuration()
-        return util.formatTimeForUser(seconds)
+    def getDisplayTime(self, callback = None):
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getDisplayTime(). Please, update your code")
+            return ""
+        else:
+            self.getCurrentTime(lambda secs : callback(util.formatTimeForUser(secs)))
 
-    def getDisplayRemainingTime(self):
-        seconds = abs(self.getCurrentTime() - self.getDuration())
-        return util.formatTimeForUser(seconds, -1)
+    def getDisplayDuration(self, callback = None):
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getDisplayDuration(). Please, update your code")
+            return ""
+        else:
+            self.getDuration(lambda secs : callback(util.formatTimeForUser(secs)))
 
-    def getProgress(self):
-        duration = self.getDuration()
-        if duration == 0 or duration == None:
+    def getDisplayRemainingTime(self, callback = None):
+        calls = 0
+        currentTime = None
+        duration = None
+        def CTCallback(secs):
+            calls += 1
+            currentTime = secs
+            if calls == 2:
+                callback(util.formatTimeForUser(abs(currentTime-duration)))
+        def DurationCallback(secs):
+            calls += 1
+            duration = secs
+            if calls == 2:
+                callback(util.formatTimeForUser(abs(currentTime-duration),-1))
+
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getDisplayRemainingTime(). Please, update your code")
+            return ""
+        else:
+            self.getCurrentTime(CTCallback)
+            self.getDuration(DurationCallback)
+
+    def getProgress(self, callback = None):
+        calls = 0
+        currentTime = None
+        duration = None
+        def CTCallback(secs):
+            calls += 1
+            currentTime = secs
+            if calls == 2:
+                if duration == 0 or duration == None:
+                    callback(0.0)
+                else:
+                    callback(currentTime / duration)
+
+        def DurationCallback(secs):
+            calls += 1
+            duration = secs
+            if calls == 2:
+                if duration == 0 or duration == None:
+                    callback(0.0)
+                else:
+                    callback(currentTime / duration)
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getProgress(). Please, update your code")
             return 0.0
-        return self.getCurrentTime() / duration
+        else:
+            self.getCurrentTime(CTCallback)
+            self.getDuration(DurationCallback)
 
     def setProgress(self, progress):
         if progress > 1.0:
             progress = 1.0
         if progress < 0.0:
             progress = 0.0
-        self.setCurrentTime(self.getDuration() * progress)
+        self.getDuration(lambda x: self.setCurrentTime(x*progress))
 
     def selectItem(self, anItem):
         self.selectFile (anItem.getVideoFilename())
@@ -71,8 +112,12 @@ class VideoRenderer:
     def setCurrentTime(self, seconds):
         pass
 
-    def getDuration(self):
-        return 0.0
+    def getDuration(self, callback = None):
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getDuration(). Please, update your code")
+            return 0.0
+        else:
+            callback(0.0)
 
     def setVolume(self, level):
         pass
@@ -80,8 +125,12 @@ class VideoRenderer:
     def goToBeginningOfMovie(self):
         pass
 
-    def getCurrentTime(self):
-        return None
+    def getCurrentTime(self, callback):
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getCurrentTime(). Please, update your code")
+            return None
+        else:
+            callback(None)
         
     def playFromTime(self, position):
         self.play()
@@ -96,8 +145,12 @@ class VideoRenderer:
     def stop(self):
         pass
     
-    def getRate(self):
-        return 1.0
+    def getRate(self, callback):
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getRate(). Please, update your code")
+            return 1.0
+        else:
+            callback(1.0)
     
     def setRate(self, rate):
         pass

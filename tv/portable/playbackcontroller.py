@@ -99,39 +99,36 @@ class PlaybackControllerBase:
                 if anItem is None:
                     self.stop()
                     return
-
             self.currentItem = anItem
             if anItem is not None:
                 videoDisplay = app.controller.videoDisplay
-                videoRenderer = videoDisplay.getRendererForItem(anItem)
-                if videoRenderer is not None:
-                    self.playItemInternally(anItem, videoDisplay, videoRenderer)
-                else:
-                    frame = app.controller.frame
-                    if frame.getDisplay(frame.mainDisplay) is videoDisplay:
-                        if videoDisplay.isFullScreen:
-                            videoDisplay.exitFullScreen()
-                        videoDisplay.stop()
-                    self.scheduleExternalPlayback(anItem)
+                videoDisplay.setRendererAndCallback(anItem,lambda :self.playItemInternally(anItem),lambda :self.playItemExternally(anItem))
         except:
             signals.system.failedExn('when trying to play a video')
             self.stop()
 
-    def playItemInternally(self, anItem, videoDisplay, videoRenderer):
-        logging.info("Playing item with renderer: %s" % videoRenderer)
-        app.controller.videoDisplay.setExternal(False)
+    def playItemExternally(self, anItem):
+        frame = app.controller.frame
+        videoDisplay = app.controller.videoDisplay
+        if frame.getDisplay(frame.mainDisplay) is videoDisplay:
+            if videoDisplay.isFullScreen:
+                videoDisplay.exitFullScreen()
+            videoDisplay.stop()
+        self.scheduleExternalPlayback(anItem)
+
+    def playItemInternally(self, anItem):
+        videoDisplay = app.controller.videoDisplay
         frame = app.controller.frame
         if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
-        videoDisplay.selectItem(anItem, videoRenderer)
         if config.get(prefs.RESUME_VIDEOS_MODE) and anItem.resumeTime > 10:
             videoDisplay.playFromTime(anItem.resumeTime)
         else:
             videoDisplay.play()
         self.startUpdateVideoTime()
 
-    def playItemExternally(self, itemID):
-        anItem = mapToPlaylistItem(db.getObjectByID(int(itemID)))
+    def playItemExternallyByID(self, itemID):
+        anItem = mapToPlaylistItem(app.db.getObjectByID(int(itemID)))
         app.controller.videoInfoItem = anItem
         newDisplay = TemplateDisplay('external-playback-continue','default')
         frame = app.controller.frame
@@ -157,11 +154,12 @@ class PlaybackControllerBase:
             self.updateVideoTimeDC = None
 
     def updateVideoTime(self, repeat=True):
-        t = app.controller.videoDisplay.getCurrentTime()
-        if t != None and self.currentItem:
-            self.currentItem.setResumeTime(t)
-        if repeat:
-            self.updateVideoTimeDC = eventloop.addTimeout(.5, self.updateVideoTime, "Update Video Time")
+        def actualUpdateVT(t):
+            if t != None and self.currentItem:
+                self.currentItem.setResumeTime(t)
+            if repeat:
+                self.updateVideoTimeDC = eventloop.addTimeout(.5, self.updateVideoTime, "Update Video Time")
+        app.controller.videoDisplay.getCurrentTime(actualUpdateVT)
 
     def stop(self, switchDisplay=True, markAsViewed=False):
         app.controller.videoDisplay.setExternal(False)
@@ -180,12 +178,14 @@ class PlaybackControllerBase:
     def skip(self, direction, allowMovieReset=True):
         frame = app.controller.frame
         currentDisplay = frame.getDisplay(frame.mainDisplay)
+        def CTCallback(time):
+            if time>2.0:
+                currentDisplay.goToBeginningOfMovie()
         if self.currentPlaylist is None:
             self.stop()
         elif (allowMovieReset and direction == -1
-                and hasattr(currentDisplay, 'getCurrentTime') 
-                and currentDisplay.getCurrentTime() > 2.0):
-            currentDisplay.goToBeginningOfMovie()
+              and hasattr(currentDisplay, 'getCurrentTime')):
+            currentDisplay.getCurrentTime(CTCallback)
         elif config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE) or self.justPlayOne:
             self.stop()
         else:

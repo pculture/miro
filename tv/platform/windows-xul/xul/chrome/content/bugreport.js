@@ -30,7 +30,7 @@ function updateLabel() {
 }
 
 function updateLabelStartupError() {
-  var py = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
+  var py = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge, false);
   var elt = document.getElementById("log");
   elt.setAttribute("value", py.getStartupError());
 }

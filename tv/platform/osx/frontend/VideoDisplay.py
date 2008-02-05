@@ -57,8 +57,8 @@ objc.loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity
 
 class PlaybackController (PlaybackControllerBase):
     
-    def playItemExternally(self, itemID):
-        item = PlaybackControllerBase.playItemExternally(self, itemID)
+    def playItemExternallyByID(self, itemID):
+	item = PlaybackControllerBase.playItemExternallyByID(self, itemID)
         moviePath = item.getVideoFilename()
         moviePath = platformutils.filenameTypeToOSFilename(moviePath)
 

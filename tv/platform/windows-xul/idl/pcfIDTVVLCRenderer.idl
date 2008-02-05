@@ -19,6 +19,7 @@
 
 #include "nsISupports.idl"
 
+interface pcfIDTVPyCallback;
 interface nsIDOMWindow;
 
 [scriptable, uuid(506247A1-775B-4377-9687-ADD4FEED198A)]
@@ -26,7 +27,6 @@ interface pcfIDTVVLCRenderer : nsISupports
 {
     void init(in nsIDOMWindow window);
     void reset();
-    boolean canPlayURL(in AString url);
     void selectURL(in AString url);
     void play();
     void playFromTime(in float position);
@@ -34,8 +34,8 @@ interface pcfIDTVVLCRenderer : nsISupports
     void pauseForDrag();
     void stop();
     void goToBeginningOfMovie();
-    float getCurrentTime();
-    float getDuration();
+    void getCurrentTime(in pcfIDTVPyCallback pyCallback);
+    void getDuration(in pcfIDTVPyCallback pyCallback);
     void setCurrentTime(in float position);
     void setVolume(in float volume);
     void goFullscreen();
