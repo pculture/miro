@@ -26,7 +26,6 @@ import logging
 from download_utils import nextFreeFilename
 from platformutils import confirmMainThread
 from gtk_queue import gtkAsyncMethod, gtkSyncMethod
-from videorenderer import VideoRenderer
 
 from threading import Event
 
@@ -88,7 +87,7 @@ class Tester:
         del self.audiosink
         del self.videosink
 
-class Renderer(VideoRenderer):
+class Renderer:
     def __init__(self):
         confirmMainThread()
         self.playbin = gst.element_factory_make("playbin", "player")
