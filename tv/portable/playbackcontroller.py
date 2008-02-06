@@ -102,7 +102,7 @@ class PlaybackControllerBase:
             self.currentItem = anItem
             if anItem is not None:
                 videoDisplay = app.controller.videoDisplay
-                videoDisplay.setRendererAndCallback(anItem,lambda r:self.playItemInternally(anItem, r),lambda :self.playItemExternally(anItem))
+                videoDisplay.setRendererAndCallback(anItem,lambda :self.playItemInternally(anItem),lambda :self.playItemExternally(anItem))
         except:
             signals.system.failedExn('when trying to play a video')
             self.stop()
@@ -116,12 +116,11 @@ class PlaybackControllerBase:
             videoDisplay.stop()
         self.scheduleExternalPlayback(anItem)
 
-    def playItemInternally(self, anItem, renderer):
+    def playItemInternally(self, anItem):
         videoDisplay = app.controller.videoDisplay
         frame = app.controller.frame
         if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
-        videoDisplay.selectItem(anItem, renderer)
         if config.get(prefs.RESUME_VIDEOS_MODE) and anItem.resumeTime > 10:
             videoDisplay.playFromTime(anItem.resumeTime)
         else:

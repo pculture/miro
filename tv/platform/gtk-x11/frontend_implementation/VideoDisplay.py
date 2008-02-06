@@ -104,7 +104,7 @@ class VideoDisplay (VideoDisplayBase):
             if renderer.canPlayFile(anItem.getFilename()):
                 self.setActiveRenderer(renderer)
                 renderer.selectFile(anItem.getFilename())
-                internal(renderer)
+                internal()
                 return
         external()
 
