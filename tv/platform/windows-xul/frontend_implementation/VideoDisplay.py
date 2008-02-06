@@ -24,7 +24,6 @@ import logging
 from download_utils import nextFreeFilename
 from frontends.html.displaybase import VideoDisplayBase
 from playbackcontroller import PlaybackControllerBase
-from videorenderer import VideoRenderer
 import pyxpcomcalls
 from threading import Lock
 import time
@@ -62,7 +61,7 @@ class VideoDisplay (VideoDisplayBase):
         renderer = self.renderers[0]
         self.setExternal(False)
         self.selectItem(anItem, renderer)
-        internal(renderer)
+        internal()
 
     def setArea(self, area):
         # we hardcode the videodisplay's area to be mainDisplayVideo
@@ -129,7 +128,7 @@ def lockAndPlay(func):
             selectItemLock.release()
     return locked
 
-class VLCRenderer (VideoRenderer):
+class VLCRenderer:
     """The VLC renderer is very thin wrapper around the xine-renderer xpcom
     component. 
     """
@@ -137,6 +136,9 @@ class VLCRenderer (VideoRenderer):
     def canPlayFile(self, filename, callback):        
         logging.warn("VLCRenderer.canPlayfile() always returns True")
         callback(True)
+
+    def selectItem(self, anItem):
+        self.selectFile (anItem.getVideoFilename())
 
     @lockAndPlay
     def selectFile(self, filename):
