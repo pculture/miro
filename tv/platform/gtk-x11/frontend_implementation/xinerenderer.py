@@ -29,7 +29,6 @@ import resources
 from download_utils import nextFreeFilename
 from platformutils import confirmMainThread
 from gtk_queue import gtkSyncMethod, gtkAsyncMethod
-from videorenderer import VideoRenderer
 
 def waitForAttach(func):
     """Many xine calls can't be made until we attach the object to a X window.
@@ -42,7 +41,7 @@ def waitForAttach(func):
             self.attachQueue.append((func, args))
     return waitForAttachWrapper
 
-class Renderer(VideoRenderer):
+class Renderer:
     def __init__(self):
         self.xine = xine.Xine()
         self.xine.setEosCallback(self.onEos)
