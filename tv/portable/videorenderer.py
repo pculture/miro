@@ -44,54 +44,33 @@ class VideoRenderer:
             self.getDuration(lambda secs : callback(util.formatTimeForUser(secs)))
 
     def getDisplayRemainingTime(self, callback = None):
-        calls = 0
-        currentTime = None
-        duration = None
-        def CTCallback(secs):
-            calls += 1
-            currentTime = secs
-            if calls == 2:
-                callback(util.formatTimeForUser(abs(currentTime-duration)))
-        def DurationCallback(secs):
-            calls += 1
-            duration = secs
-            if calls == 2:
-                callback(util.formatTimeForUser(abs(currentTime-duration),-1))
-
+        def startCallbackChain():
+            self.getDuration(durationCallback)
+        def durationCallback(duration):
+            self.getCurrentTime(lambda ct: currentTimeCallback(ct, duration))
+        def currentTimeCallback(currentTime, duration):
+            callback(util.formatTimeForUser(abs(currentTime-duration), -1))
         if callback is None:
             logging.warn("using deprecated VideoRenderer.getDisplayRemainingTime(). Please, update your code")
             return ""
         else:
-            self.getCurrentTime(CTCallback)
-            self.getDuration(DurationCallback)
+            startCallbackChain()
 
     def getProgress(self, callback = None):
-        calls = 0
-        currentTime = None
-        duration = None
-        def CTCallback(secs):
-            calls += 1
-            currentTime = secs
-            if calls == 2:
-                if duration == 0 or duration == None:
-                    callback(0.0)
-                else:
-                    callback(currentTime / duration)
-
-        def DurationCallback(secs):
-            calls += 1
-            duration = secs
-            if calls == 2:
-                if duration == 0 or duration == None:
-                    callback(0.0)
-                else:
-                    callback(currentTime / duration)
+        def startCallbackChain():
+            self.getDuration(durationCallback)
+        def durationCallback(duration):
+            self.getCurrentTime(lambda ct: currentTimeCallback(ct, duration))
+        def currentTimeCallback(currentTime, duration):
+            if currentTime == 0 or duration == 0:
+                callback(0.0)
+            else:
+                callback(currentTime / duration)
         if callback is None:
             logging.warn("using deprecated VideoRenderer.getProgress(). Please, update your code")
             return 0.0
         else:
-            self.getCurrentTime(CTCallback)
-            self.getDuration(DurationCallback)
+            startCallbackChain()
 
     def setProgress(self, progress):
         if progress > 1.0:

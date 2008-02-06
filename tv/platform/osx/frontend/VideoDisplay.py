@@ -87,6 +87,13 @@ class VideoDisplay (VideoDisplayBase):
     def initRenderers(self):
         self.renderers.append(QuicktimeRenderer(self.controller))
 
+    def setRendererAndCallback(self, anItem, internal, external):
+        for renderer in self.renderers:
+            if renderer.canPlayFile(anItem.getFilename()):
+                internal(renderer)
+                return
+        external()
+
     def setExternal(self, external):
         VideoDisplayBase.setExternal(self, external)
         if external:
@@ -657,7 +664,7 @@ class FullScreenPalette (NSWindow):
         platformutils.warnIfNotOnMainThread('FullScreenPalette.reveal')
         if not self.isVisible():
             self.update_(nil)
-            self.volumeSlider.setFloatValue_(app.controller.videoDisplay.getVolume())
+            app.controller.videoDisplay.getVolume(lambda v: self.volumeSlider.setFloatValue_(v))
             screenOrigin = parent.screen().frame().origin
             screenSize = parent.screen().frame().size
             height = self.frame().size.height
@@ -703,8 +710,8 @@ class FullScreenPalette (NSWindow):
         pass
         
     def update_(self, timer):
-        self.timeIndicator.setStringValue_(unicode(self.renderer.getDisplayTime()))
-        self.progressSlider.setFloatValue_(self.renderer.getProgress())
+        self.renderer.getDisplayTime(lambda t: self.timeIndicator.setStringValue_(unicode(t)))
+        self.renderer.getProgress(lambda p: self.progressSlider.setFloatValue_(p))
             
     def progressSliderWasClicked(self, slider):
         if app.controller.videoDisplay.isPlaying:

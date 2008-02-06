@@ -59,9 +59,10 @@ class VideoDisplay (VideoDisplayBase):
 
     def setRendererAndCallback(self, anItem, internal, external):
         #Always use VLC
+        renderer = self.renderers[0]
         self.setExternal(False)
-        self.selectItem(anItem, self.renderers[0])
-        internal()
+        self.selectItem(anItem, renderer)
+        internal(renderer)
 
     def setArea(self, area):
         # we hardcode the videodisplay's area to be mainDisplayVideo

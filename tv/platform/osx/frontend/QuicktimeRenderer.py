@@ -176,14 +176,14 @@ class QuicktimeRenderer (VideoRenderer):
         if self.movie is not nil:
             self.movie.gotoBeginning()
 
-    def getDuration(self):
-        return movieDuration(self.movie)
+    def getDuration(self, callback):
+        callback(movieDuration(self.movie))
 
-    def getCurrentTime(self):
+    def getCurrentTime(self, callback):
         if self.movie is nil:
-            return 0
+            callback(0)
         qttime = self.movie.currentTime()
-        return _qttime2secs(qttime)
+        callback(_qttime2secs(qttime))
 
     @platformutils.onMainThread
     def setCurrentTime(self, time):
@@ -193,10 +193,10 @@ class QuicktimeRenderer (VideoRenderer):
             qttime.timeValue = time * float(qttime.timeScale)
             self.movie.setCurrentTime_(qttime)
 
-    def getRate(self):
+    def getRate(self, callback):
         if self.movie is nil:
-            return 0.0
-        return self.movie.rate()
+            callback(0.0)
+        callback(self.movie.rate())
 
     def setRate(self, rate):
         platformutils.warnIfNotOnMainThread('QuicktimeRenderer.setRate')
