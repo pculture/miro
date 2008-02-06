@@ -228,6 +228,10 @@ VLCRenderer.prototype = {
       }
       this.showPlayButton();
   },
+  // This should NEVER be called from Python code
+  isPlayingJSONLY: function () {
+    return this.vlc.playlist.isPlaying;
+  },
 
   pauseForDrag: function() {
     if (!this.hasVLC()) return;
@@ -265,11 +269,29 @@ VLCRenderer.prototype = {
     pyCallback.makeCallbackFloat(rv);
   },
 
+  // To avoid threading troubles, only call this from JavaScript
+  getDurationJSONLY: function(pyCallback) {
+    if (!this.hasVLC()) return;
+    try {
+      rv = this.vlc.input.length;
+    } catch (e) {
+      rv = -1;
+    }
+    return rv;
+  },
+
   getCurrentTime: function(pyCallback) {
     if (!this.hasVLC()) return;
       var rv;
       rv = this.vlc.input.time;
       pyCallback.makeCallbackFloat(rv);
+  },
+
+  getCurrentTimeJSONLY: function(pyCallback) {
+    if (!this.hasVLC()) return;
+      var rv;
+      rv = this.vlc.input.time;
+      return rv;
   },
 
   setVolume: function(level) {

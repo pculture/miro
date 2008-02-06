@@ -36,6 +36,9 @@ interface pcfIDTVVLCRenderer : nsISupports
     void goToBeginningOfMovie();
     void getCurrentTime(in pcfIDTVPyCallback pyCallback);
     void getDuration(in pcfIDTVPyCallback pyCallback);
+    PRbool isPlayingJSONLY();
+    float getDurationJSONLY();
+    float getCurrentTimeJSONLY();
     void setCurrentTime(in float position);
     void setVolume(in float volume);
     void goFullscreen();

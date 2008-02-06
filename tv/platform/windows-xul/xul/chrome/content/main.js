@@ -147,7 +147,7 @@ function videoProgressDown(event) {
   var slider = document.getElementById("progress-slider");
   slider.beingDragged = true;
   slider.left = translateToProgressX(event);
-  videoWasPlaying = vlc.playlist.isPlaying;
+  videoWasPlaying = vlcrenderer.isPlayingJSONLY();
   if(videoWasPlaying) vlcrenderer.pauseForDrag();
 }
 
@@ -155,9 +155,9 @@ function doSeek() {
   var slider = document.getElementById("progress-slider");
   var x = slider.left;
   var fractionDone = (x - PROGRESS_SLIDER_LEFT) / PROGRESS_SLIDER_WIDTH;
-  var totalTime = vlc.input.length;
-  var seekTime = Math.round(totalTime * fractionDone);
-  vlc.input.time = seekTime;
+  var totalTime = vlcrenderer.getDurationJSONLY();
+  var seekTime = totalTime * fractionDone;
+  vlcrenderer.setCurrentTime(seekTime/1000);
   if(videoWasPlaying) vlcrenderer.play();
   slider.beingDragged = false;
 }
@@ -176,7 +176,7 @@ function videoProgressMove(event) {
     var x = translateToProgressX(event);
     slider.left = x;
     var fractionDone = (x - PROGRESS_SLIDER_LEFT) / PROGRESS_SLIDER_WIDTH;
-    var totalTime = vlc.input.length;
+    var totalTime = vlcrenderer.getDurationJSONLY();
     var seekTime = Math.round(totalTime * fractionDone);
     jsbridge.setSliderText(seekTime);
   }
@@ -192,8 +192,6 @@ function videoProgressUp(event) {
 /*****************************************************************************
  Main functions
  *****************************************************************************/
-
-var vlc = null;
 
 function buttonIsActive(buttonId) {
     var elt = document.getElementById(buttonId);
@@ -215,10 +213,6 @@ function onLoad() {
 
     // Bring up Python environment.
     pybridge.onStartup(window);
-
-    // Get a reference te tho vlc plugin
-    var videoBrowser = document.getElementById("mainDisplayVideo");
-    vlc = videoBrowser.contentDocument.getElementById("video1");
 
     setupHandlers();
     jsdump("onload done");
@@ -243,7 +237,7 @@ function setupSeekButton(direction, buttonId) {
     // we want to seek at 3X speed in our current direction (-1 for back, 1
     // for forward).  We also need to take into account that we've played back
     // 0.5 seconds worth of video before the timeout.
-    vlc.input.time = vlc.input.time + seekAmount * 1000;
+    vlcrenderer.setCurrentTime(vlcrenderer.getCurrentTimeJSONLY()/1000+seekAmount);
     didSeek = true;
     timeoutId = setTimeout(handleTimeout, 500);
   }
@@ -310,9 +304,7 @@ function minimizeOrRestore()
 
 function onUnload() {
     pybridge.printOut("onUnload"); 
-    if (vlc.playlist.items.count > 0) { 
-        vlc.playlist.stop(); 
-    } 
+    vlcrenderer.stop()
     closeApp();
     minimizer.delTrayIcon();
 }
