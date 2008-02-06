@@ -178,13 +178,5 @@ class VideoDisplay (VideoDisplayBase):
         volumeScale = app.controller.frame.widgetTree['volume-scale']
         volumeScale.set_value(self.volume)
 
-    @gtkSyncMethod
-    def getLength(self):
-        """Get the length, in seconds, of the current video."""
-        if self.activeRenderer:
-            return self.activeRenderer.getLength()
-        else:
-            return 0
-
 ###############################################################################
 ###############################################################################
