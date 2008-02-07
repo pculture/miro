@@ -38,16 +38,29 @@ VLCRenderer.prototype = {
       return this;
     throw Components.results.NS_ERROR_NO_INTERFACE;
   },
-  hasVLC: function() {
+  hasVLC: function(func, param1, param2, param3) {
     if (this.vlc == null) {
       writelog("VLC Missing!");
       return false; 
     } else {
+        writelog(this.vlc);
+        //writelog(this.vlc.playlist);
       return true;
     }
   },
   init: function(win) {
     this.document = win.document;
+      var callback = {
+	  notify: function(timer) { this.vlcr.realinit(win); }
+      };
+    callback.vlcr = this;
+    var timer = Components.classes["@mozilla.org/timer;1"].
+                  createInstance(Components.interfaces.nsITimer);
+    timer.initWithCallback(callback, 5000,
+				  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+  },
+  realinit: function(win) {
+    writelog("initialized VLC");
     var videoBrowser = this.document.getElementById("mainDisplayVideo");
     try {
       this.vlc = videoBrowser.contentDocument.getElementById("video1");
