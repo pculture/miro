@@ -43,39 +43,35 @@ VLCRenderer.prototype = {
       writelog("VLC Missing!");
       return false; 
     } else {
-        writelog(this.vlc);
-        //writelog(this.vlc.playlist);
       return true;
     }
   },
   init: function(win) {
-    this.document = win.document;
-      var callback = {
-	  notify: function(timer) { this.vlcr.realinit(win); }
-      };
-    callback.vlcr = this;
-    var timer = Components.classes["@mozilla.org/timer;1"].
-                  createInstance(Components.interfaces.nsITimer);
-    timer.initWithCallback(callback, 5000,
-				  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-  },
-  realinit: function(win) {
-    writelog("initialized VLC");
-    var videoBrowser = this.document.getElementById("mainDisplayVideo");
     try {
+      this.document = win.document;
+      var videoBrowser = this.document.getElementById("mainDisplayVideo");
       this.vlc = videoBrowser.contentDocument.getElementById("video1");
+      this.timer = Components.classes["@mozilla.org/timer;1"].
+          createInstance(Components.interfaces.nsITimer);
+      this.timer2 = Components.classes["@mozilla.org/timer;1"].
+          createInstance(Components.interfaces.nsITimer);
+      this.active = false;
+      this.startedPlaying = false;
+      this.item = null;
+      this.playTime = 0;
+      this.volume = 0;
+      var x = this.vlc.playlist.isPlaying; // Check to see if it's REALLY initialized
     } catch(e) {
-      writelog("Error initializing VLC");
+      writelog("Error initializing VLC. Retrying...");
+      var callback = {
+	  notify: function(timer) { this.vlcr.init(win); }
+      };
+      callback.vlcr = this;
+      var timer = Components.classes["@mozilla.org/timer;1"].
+                  createInstance(Components.interfaces.nsITimer);
+      timer.initWithCallback(callback, 500,
+				  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
     }
-    this.timer = Components.classes["@mozilla.org/timer;1"].
-          createInstance(Components.interfaces.nsITimer);
-    this.timer2 = Components.classes["@mozilla.org/timer;1"].
-          createInstance(Components.interfaces.nsITimer);
-    this.active = false;
-    this.startedPlaying = false;
-    this.item = null;
-    this.playTime = 0;
-    this.volume = 0;
   },
 
   doScheduleUpdates: function() {
