@@ -35,11 +35,11 @@ class PyCallback:
     _reg_contractid_ = "@participatoryculture.org/dtv/pycallback;1"
     _reg_desc_ = "callback"
 
-    def setCallbackId(callbackID):
+    def setCallbackId(self, callbackID):
         self.callbackID = callbackID
-    def makeCallbackFloat(val):
+    def makeCallbackFloat(self, val):
         pyxpcomcalls.makeCallback(self.callbackID, val)
-    def makeCallbackInt(val):
+    def makeCallbackInt(self, val):
         pyxpcomcalls.makeCallback(self.callbackID, val)
-    def makeCallbackString(val):
+    def makeCallbackString(self, val):
         pyxpcomcalls.makeCallback(self.callbackID, val)
