@@ -27,7 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import app
-import xine
+from miro import xine
 import gtk
 import traceback
 import gobject
