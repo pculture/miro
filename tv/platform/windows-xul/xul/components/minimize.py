@@ -27,7 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from xpcom import components
-from xulhelper import makeService
+from miro.platform.xulhelper import makeService
 import ctypes
 import logging
 from ctypes.wintypes import DWORD, HWND, HANDLE, LPCWSTR, WPARAM, LPARAM, RECT, POINT
