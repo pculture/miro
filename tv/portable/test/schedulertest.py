@@ -2,7 +2,7 @@ import unittest
 from time import time, sleep
 import threading
 
-import eventloop
+from miro import eventloop
 from test.framework import EventLoopTest
 
 class SchedulerTest(EventLoopTest):

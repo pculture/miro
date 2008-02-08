@@ -15,21 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import app
-import feed
-import folder
-import downloader
-import guide
-import item
-import tabs
-import playlist
-import searchengines
-import theme
-
-import indexes
-import filters
-import maps
-import sorts
 
 from threading import Condition
 initialized = False
@@ -47,6 +32,22 @@ def initialize():
     global downloadingItems, pausedItems, manualDownloads, autoDownloads
     global playlists, playlistFolders, channelFolders, searchEngines
     global themeHistories
+
+    from miro import app
+    from miro import feed
+    from miro import folder
+    from miro import downloader
+    from miro import guide
+    from miro import item
+    from miro import tabs
+    from miro import playlist
+    from miro import searchengines
+    from miro import theme
+
+    from miro import indexes
+    from miro import filters
+    from miro import maps
+    from miro import sorts
 
     app.db.createIndex(indexes.objectsByClass)
 

@@ -25,10 +25,10 @@ used to do sanity checks on old databases.
 
 """
 
-import item
-import feed
-import signals
-import guide
+from miro import item
+from miro import feed
+from miro import signals
+from miro import guide
 
 class DatabaseInsaneError(Exception):
     pass

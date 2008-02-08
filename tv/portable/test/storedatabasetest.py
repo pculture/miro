@@ -3,18 +3,18 @@ import os
 import tempfile
 import unittest
 
-import database
-import databaseupgrade
-import item
-import feed
-import schema
+from miro import database
+from miro import databaseupgrade
+from miro import item
+from miro import feed
+from miro import schema
 import shutil
-import storedatabase
+from miro import storedatabase
 
 from test.framework import DemocracyTestCase
 # sooo much easier to type...
-from schema import SchemaString, SchemaInt, SchemaFloat, SchemaSimpleContainer
-from schema import SchemaList, SchemaDict, SchemaObject
+from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaSimpleContainer
+from miro.schema import SchemaList, SchemaDict, SchemaObject
 
 # create a dummy schemma
 class Human:

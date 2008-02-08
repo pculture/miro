@@ -1,4 +1,4 @@
-import signals
+from miro import signals
 
 from test.framework import DemocracyTestCase
 

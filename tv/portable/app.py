@@ -32,5 +32,5 @@ htmlapp -- HTMLApplication object
 """
 
 # NOTE: we could set controller, db, etc. to None here, but it seems better
-# not do.  This way if we call "from app import controller" before the
+# not do.  This way if we call "from miro.app import controller" before the
 # controller singleton is created, then we will immediately get an error.

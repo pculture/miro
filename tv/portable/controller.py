@@ -23,40 +23,41 @@ import logging
 import os
 import shutil
 import threading
+import traceback
 import urllib
 
-from frontends.html import dialogs
-from gtcache import gettext as _
-import app
-import config
-import database
-import downloader
-import download_utils
-import eventloop
-import feed
-import folder
-import frontend
-import guide
-import iconcache
-import indexes
-import item
-import moviedata
-import platformutils
-import playlist
-import prefs
-import selection
-import signals
-import singleclick
-import util
-import views
+from miro.frontends.html import dialogs
+from miro.gtcache import gettext as _
+from miro import app
+from miro import config
+from miro import database
+from miro import downloader
+from miro import download_utils
+from miro import eventloop
+from miro import feed
+from miro import folder
+from miro.platform import frontend
+from miro import guide
+from miro import iconcache
+from miro import indexes
+from miro import item
+from miro import moviedata
+from miro import playlist
+from miro import prefs
+from miro import selection
+from miro import signals
+from miro import singleclick
+from miro import util
+from miro import views
 # Something needs to import this outside of Pyrex. Might as well be controller
-import templatehelper
-import databasehelper
+from miro import templatehelper
+from miro import databasehelper
+from miro.platform.utils import setupLogging, exit, osFilenameToFilenameType
 
 # Run the application. Call this, not start(), on platforms where we
 # are responsible for the event loop.
 def main():
-    platformutils.setupLogging()
+    setupLogging()
     util.setupLogging()
     app.db = database.defaultDatabase
     app.delegate = frontend.UIBackendDelegate()
@@ -427,7 +428,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
 
         except:
             signals.system.failedExn("while shutting down")
-            platformutils.exit(1)
+            exit(1)
 
     def handleURIDrop(self, data, **kwargs):
         """Handle an external drag that contains a text/uri-list mime-type.
@@ -445,7 +446,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
                 continue
             if url.startswith(u"file://"):
                 filename = download_utils.getFileURLPath(url)
-                filename = platformutils.osFilenameToFilenameType(filename)
+                filename = osFilenameToFilenameType(filename)
                 eventloop.addIdle (singleclick.openFile,
                     "Open Dropped file", args=(filename,))
             elif url.startswith(u"http:") or url.startswith(u"https:"):

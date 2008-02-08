@@ -20,11 +20,11 @@ from urlparse import urlparse
 import os.path
 import re
 import urllib
-import filetypes
-import util
+from miro import filetypes
+from miro import util
 
-from util import checkF, checkU, returnsFilename
-from platformutils import unicodeToFilename, unmakeURLSafe
+from miro.util import checkF, checkU, returnsFilename
+from miro.platform.utils import unicodeToFilename, unmakeURLSafe
 
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
 # filename limits this is mostly for windows where we have a 255 character

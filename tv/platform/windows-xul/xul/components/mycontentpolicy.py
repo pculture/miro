@@ -16,13 +16,13 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 from xpcom import components
-from xulhelper import makeService
 import traceback
 import sys
-import config
-import prefs
 
-from frontend_implementation import urlcallbacks
+from miro import config
+from miro import prefs
+from miro.frontend_implementation import urlcallbacks
+from miro.platform.xulhelper import makeService
 
 nsIContentPolicy = components.interfaces.nsIContentPolicy
 

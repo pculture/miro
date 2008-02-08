@@ -4,11 +4,11 @@ import tempfile
 import time
 import unittest
 
-import schema
+from miro import schema
 # much easier to type this way..
-from schema import SchemaString, SchemaInt, SchemaFloat, SchemaBool
-from schema import SchemaDateTime, SchemaList, SchemaDict, SchemaObject
-from schema import SchemaSimpleContainer, ValidationError
+from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaBool
+from miro.schema import SchemaDateTime, SchemaList, SchemaDict, SchemaObject
+from miro.schema import SchemaSimpleContainer, ValidationError
 from test.framework import DemocracyTestCase
 
 class TestValidation(DemocracyTestCase):

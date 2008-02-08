@@ -21,25 +21,26 @@ error reporting, etc.
 
 import logging
 
-from gtcache import gettext as _
-from gtcache import ngettext
-from frontends.html import dialogs
-from frontends.html import templatedisplay
-import frontend
-import app
-import autoupdate
-import config
-import eventloop
-import frontendutil
-import opml
-import prefs
-import selection
-import startup
-import singleclick
-import signals
-import tabs
-import util
-import views
+from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
+from miro.frontends.html import dialogs
+from miro.frontends.html import templatedisplay
+import miro.platform.frontend # hack until we can remove the circular dependancies
+from miro import app
+from miro import autoupdate
+from miro import config
+from miro import eventloop
+from miro import iheartmiro
+from miro import frontendutil
+from miro import opml
+from miro import prefs
+from miro import selection
+from miro import startup
+from miro import singleclick
+from miro import signals
+from miro import tabs
+from miro import util
+from miro import views
 
 class HTMLApplication:
     """HTMLApplication handles the frontend when Miro is using the HTML-based
@@ -76,10 +77,9 @@ class HTMLApplication:
         """Stop the UI event loop.
         Platforms must implement this method.
         """
-        raise NotImplementedError("HTMLApplication.quit() not implemented")
+        raise NotImplementedError("HTMLApplication.quitUI() not implemented")
 
     def cancelStartup(self):
-        self.quitUI()
         app.controller.shutdown()
 
     def handleStartupSuccess(self, obj):
@@ -133,7 +133,7 @@ class HTMLApplication:
         self.onDownloadingItemsCountChange(None, None)
 
         # Set up the playback controller
-        self.playbackController = frontend.PlaybackController()
+        self.playbackController = miro.platform.frontend.PlaybackController()
 
         # HACK
         app.controller.playbackController = self.playbackController
@@ -142,13 +142,13 @@ class HTMLApplication:
 
         # Put up the main frame
         logging.info ("Displaying main frame...")
-        self.frame = frontend.MainFrame(self)
+        self.frame = miro.platform.frontend.MainFrame(self)
         # HACK
         app.controller.frame = self.frame
 
         logging.info ("Creating video display...")
         # Set up the video display
-        self.videoDisplay = frontend.VideoDisplay()
+        self.videoDisplay = miro.platform.frontend.VideoDisplay()
         self.videoDisplay.initRenderers()
         self.videoDisplay.playbackController = self.playbackController
         self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
@@ -211,7 +211,6 @@ class HTMLApplication:
 
         app.controller.finishedStartup = True
 
-        import iheartmiro
         eventloop.addIdle(iheartmiro.checkIHeartMiroInstall, "Install iHeartMiro")
 
         logging.info ("Finished startup sequence")

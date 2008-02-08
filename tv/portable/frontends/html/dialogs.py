@@ -57,10 +57,9 @@ Frontend requirements:
     them.  
     """
 
-import app
-import eventloop
-from gtcache import gettext as _
-import frontends.html
+from miro import app
+from miro import eventloop
+from miro.gtcache import gettext as _
 
 class DialogButton(object):
     def __init__(self, text):
@@ -187,10 +186,10 @@ class SearchChannelDialog(Dialog):
     ENGINE = 1
     URL = 2
     def __init__(self, term=None, style=CHANNEL, location=None):
-        import views
-        import indexes
-        import util
-        from feed import RSSFeedImpl, ScraperFeedImpl
+        from miro import views
+        from miro import indexes
+        from miro import util
+        from miro.feed import RSSFeedImpl, ScraperFeedImpl
         self.term = term
         self.style = style
         self.location = location
@@ -221,9 +220,9 @@ class SearchChannelDialog(Dialog):
                 (BUTTON_CREATE_CHANNEL, BUTTON_CANCEL))
 
     def getURL(self):
-        from xhtmltools import urlencode
-        import searchengines
-        from database import defaultDatabase
+        from miro.xhtmltools import urlencode
+        from miro import searchengines
+        from miro.database import defaultDatabase
 
         term = self.term
         location = self.location

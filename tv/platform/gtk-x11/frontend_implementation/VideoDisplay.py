@@ -15,8 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import app
-import frontend
+from miro import app
 import gobject
 import gtk
 import gtk.gdk
@@ -25,9 +24,9 @@ import gconf
 import sys
 import logging
 from gtk_queue import gtkAsyncMethod, gtkSyncMethod
-from frontends.html.displaybase import VideoDisplayBase
-from platformcfg import gconf_lock
-from playbackcontroller import PlaybackControllerBase
+from miro.frontends.html.displaybase import VideoDisplayBase
+from miro.platform.config import gconf_lock
+from miro.playbackcontroller import PlaybackControllerBase
 
 from threading import Event
 
@@ -56,8 +55,8 @@ class VideoDisplay (VideoDisplayBase):
 
     def add_renderer(self, modname):
         try:
-            pkg = __import__('frontend_implementation.' + modname)
-            module = getattr(pkg, modname)
+            pkg = __import__('miro.frontend_implementation.' + modname)
+            module = getattr(pkg.frontend_implementation, modname)
             renderer = module.Renderer()
             widget = gtk.DrawingArea()
             widget.set_double_buffered(False)

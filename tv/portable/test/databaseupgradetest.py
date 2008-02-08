@@ -3,12 +3,12 @@
 import tempfile
 
 from test.framework import DemocracyTestCase
-import databaseupgrade
-import feed
-import item
-import folder
-import playlist
-import storedatabase
+from miro import databaseupgrade
+from miro import feed
+from miro import item
+from miro import folder
+from miro import playlist
+from miro import storedatabase
 
 class DatabaseUpgradeTest(DemocracyTestCase):
     def makeSavables(self, *objects):

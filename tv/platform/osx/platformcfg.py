@@ -22,12 +22,12 @@ import os
 import objc
 import logging
 
-import util
-import prefs
-import config
+from miro import util
+from miro import prefs
+from miro import config
 import keychain
-import resources
-import platformutils
+from miro import resources
+from miro import platformutils
 
 sysconfPath = objc.pathForFramework('/System/Library/Frameworks/SystemConfiguration.framework')
 sysconfBundle = NSBundle.bundleWithPath_(sysconfPath)

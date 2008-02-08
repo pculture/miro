@@ -29,7 +29,7 @@ root = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), '..', '..')
 root = os.path.normpath(root)
 sys.path.insert(0, os.path.join(root, 'portable'))
 
-import util
+from miro import util
 
 templateVars = util.readSimpleConfigFile(os.path.join(root, 'resources', 'app.config'))
 

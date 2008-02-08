@@ -15,7 +15,7 @@
 
     <t:execOnLoad><![CDATA[
 #print templateState
-import searchengines
+from miro import searchengines
 searchFeed = views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search')
 feed = searchFeed[0]
 

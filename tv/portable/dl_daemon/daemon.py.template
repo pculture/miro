@@ -1,4 +1,4 @@
-from dl_daemon import command
+from miro.dl_daemon import command
 import os
 import cPickle
 import socket
@@ -6,15 +6,15 @@ import traceback
 from time import sleep
 from struct import pack, unpack, calcsize
 import tempfile
-import config
-import prefs
-import eventloop
-import util
+from miro import config
+from miro import prefs
+from miro import eventloop
+from miro import util
 import logging
-import platformutils
-import signals
-import trapcall
-from httpclient import ConnectionHandler
+from miro.platform.utils import launchDownloadDaemon, killProcess
+from miro import signals
+from miro import trapcall
+from miro.httpclient import ConnectionHandler
 
 SIZE_OF_INT = calcsize("I")
 
@@ -25,14 +25,14 @@ class DaemonError(Exception):
     pass
 
 firstDaemonLaunch = '1'
-def launchDownloadDaemon(oldpid, port):
+def startDownloadDaemon(oldpid, port):
     global firstDaemonLaunch
 
     daemonEnv = {
         'DEMOCRACY_DOWNLOADER_PORT' : str(port),
         'DEMOCRACY_DOWNLOADER_FIRST_LAUNCH' : firstDaemonLaunch,
     }
-    platformutils.launchDownloadDaemon(oldpid, daemonEnv)
+    launchDownloadDaemon(oldpid, daemonEnv)
     firstDaemonLaunch = '0'
 
 def getDataFile():
@@ -169,7 +169,7 @@ class DownloaderDaemon(Daemon):
         self.shutdown = True
         eventloop.quit()
         logging.warning ("downloader: connection closed -- quitting")
-        from dl_daemon import download
+        from miro.dl_daemon import download
         download.shutDown()
         import threading
         for thread in threading.enumerate():
@@ -181,7 +181,7 @@ class ControllerDaemon(Daemon):
         Daemon.__init__(self)
         self.stream.acceptConnection('127.0.0.1', 0, self.onConnection, self.onError)
         self.port = self.stream.port
-        launchDownloadDaemon(readPid(), self.port)
+        startDownloadDaemon(readPid(), self.port)
         data = {}
         remoteConfigItems = [prefs.LIMIT_UPSTREAM,
                    prefs.UPSTREAM_LIMIT_IN_KBS,
@@ -229,7 +229,7 @@ class ControllerDaemon(Daemon):
 
     def shutdown_timeout_cb(self):
         logging.warning ("killing download daemon")
-        platformutils.killProcess(readPid())
+        killProcess(readPid())
         self.shutdownResponse()
 
     def shutdownResponse(self):

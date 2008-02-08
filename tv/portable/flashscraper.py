@@ -16,12 +16,12 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 import re
-import httpclient
+from miro import httpclient
 import urlparse
 import cgi
 from xml.dom import minidom
 from urllib import unquote_plus
-from util import checkU, returnsUnicode
+from miro.util import checkU, returnsUnicode
 
 # =============================================================================
 

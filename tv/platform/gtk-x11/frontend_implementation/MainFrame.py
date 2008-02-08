@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import app
+from miro import app
 import pygtk
 pygtk.require('2.0')
 import gtk
@@ -23,22 +23,21 @@ import gobject
 import gtk.glade
 import sets
 import gconf
-import platformutils
-import menubar
-from gtcache import gettext as _
+from miro import menubar
+from miro.gtcache import gettext as _
 
-import resources
-from frontend import *
-from frontend_implementation import UIBackendDelegate
-from frontend_implementation.gtk_queue import gtkAsyncMethod, gtkSyncMethod
-from frontend_implementation.VideoDisplay import VideoDisplay
-from frontend_implementation.callbackhandler import CallbackHandler
-from frontend_implementation.mainwindowchanger import MainWindowChanger
-from frontend_implementation import trayicon
-from miroplatform.frontends.html.HTMLDisplay import HTMLDisplay
-from platformcfg import gconf_lock
-import config
-import prefs
+from miro.platform import resources
+from miro.platform.utils import confirmMainThread
+from miro.frontend_implementation import UIBackendDelegate
+from miro.frontend_implementation.gtk_queue import gtkAsyncMethod, gtkSyncMethod
+from miro.frontend_implementation.VideoDisplay import VideoDisplay
+from miro.frontend_implementation.callbackhandler import CallbackHandler
+from miro.frontend_implementation.mainwindowchanger import MainWindowChanger
+from miro.frontend_implementation import trayicon
+from miro.platform.frontends.html.HTMLDisplay import HTMLDisplay
+from miro.platform.config import gconf_lock
+from miro import config
+from miro import prefs
 import logging
 
 # Extent the ShortCut class to include a GTKString() function
@@ -159,7 +158,9 @@ class MainFrame:
         self.playable = False
         self.videoLoaded = False
 
-        import views, util, indexes
+        from miro import views
+        from miro import util
+        from miro import indexes
         engines = []
         for engine in views.searchEngines:
             engines.append((engine.name, engine.title))
@@ -171,7 +172,7 @@ class MainFrame:
     @gtkAsyncMethod
     def _gtkInit(self, engines, default_engine):
         # Create the widget tree, and remember important widgets
-        platformutils.confirmMainThread()
+        confirmMainThread()
         self.widgetTree = WidgetTree(resources.path('miro.glade'), 'main-window', 'miro')
         self.displayBoxes = {
             self.mainDisplay : self.widgetTree['main-box'],
@@ -283,7 +284,7 @@ class MainFrame:
         self.widgetTree['main-window'].show_all()
 
     def configureEvent(self, widget, event):
-        platformutils.confirmMainThread()
+        confirmMainThread()
         (x, y) = self.widgetTree['main-window'].get_position ()
         (width, height) = self.widgetTree['main-window'].get_size()
         setInt ("width", width)
@@ -293,7 +294,7 @@ class MainFrame:
         return False
 
     def stateEvent (self, widget, event):
-        platformutils.confirmMainThread()
+        confirmMainThread()
         maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
         setBool ("maximized", maximized)
 
@@ -341,7 +342,7 @@ class MainFrame:
     def selectDisplay(self, newDisplay, area):
         """Install the provided 'newDisplay' in the requested area"""
 
-        platformutils.confirmMainThread()
+        confirmMainThread()
         if area == self.collectionDisplay:
             print "TODO: Collection Display not implemented on gtk/x11"
             return
@@ -376,12 +377,12 @@ class MainFrame:
 
     @gtkSyncMethod
     def getDisplay(self, area):
-        platformutils.confirmMainThread()
+        confirmMainThread()
         return self.selectedDisplays.get(area)
 
     @gtkAsyncMethod
     def about(self):
-        platformutils.confirmMainThread()
+        confirmMainThread()
         if (self.aboutWidget is None):
             self.aboutWidget = gtk.AboutDialog()
             self.aboutWidget.set_name(config.get(prefs.SHORT_APP_NAME))

@@ -18,7 +18,8 @@
 """Democracy Command Line Handler."""
 
 from xpcom import components
-from xulhelper import makeService, proxify
+
+from miro.platform.xulhelper import makeService, proxify
 
 class DemocracyCLH:
     _com_interfaces_ = [components.interfaces.nsICommandLineHandler]

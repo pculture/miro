@@ -25,15 +25,15 @@ from QTKit import *
 from AppKit import *
 from Foundation import *
 
-from videorenderer import VideoRenderer
-import prefs
-import config
+from miro.platform.videorenderer import VideoRenderer
+from miro import prefs
+from miro import config
 import qtcomp
-import platformcfg
-import platformutils
-import download_utils
+from miro import platformcfg
+from miro import platformutils
+from miro import download_utils
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 
 ###############################################################################
 

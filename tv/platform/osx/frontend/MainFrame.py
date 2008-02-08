@@ -23,20 +23,20 @@ from objc import YES, NO, nil, IBOutlet
 from AppKit import *
 from Foundation import *
 
-import app
-import feed
-import prefs
-import views
-import config
-import folder
-from frontends.html import dialogs, keyboard
-import playlist
-import resources
-import eventloop
-import searchengines
-import platformutils
+from miro import app
+from miro import feed
+from miro import prefs
+from miro import views
+from miro import config
+from miro import folder
+from miro.frontends.html import dialogs, keyboard
+from miro import playlist
+from miro import resources
+from miro import eventloop
+from miro import searchengines
+from miro import platformutils
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 
 ###############################################################################
 

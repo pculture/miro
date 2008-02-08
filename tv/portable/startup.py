@@ -24,39 +24,39 @@ In general, frontends should do the following to handle startup.
     - Wait for either the 'startup-success', or 'startup-failure' signal
 """
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 from string import Template
 import logging
-import platform
 import os
 import traceback
 
-from clock import clock
-import app
-import autodler
-import config
-import database
-import databaseupgrade
-import downloader
-import eventloop
-import iconcache
-import indexes
-import item
-import feed
-import folder
-import guide
-import moviedata
-import playlist
-import prefs
-import resources
-import signals
-import tabs
-import theme
-import util
-import searchengines
-import storedatabase
-import views
-import opml
+from miro.clock import clock
+from miro import app
+from miro import autodler
+from miro import config
+from miro import database
+from miro import databaseupgrade
+from miro import downloader
+from miro import eventloop
+from miro import iconcache
+from miro import indexes
+from miro import item
+from miro import feed
+from miro import folder
+from miro import guide
+from miro import moviedata
+from miro import platform
+from miro import playlist
+from miro import prefs
+from miro.platform import resources
+from miro import signals
+from miro import tabs
+from miro import theme
+from miro import util
+from miro import searchengines
+from miro import storedatabase
+from miro import views
+from miro import opml
 
 class StartupError(Exception):
     def __init__(self, summary, description):
@@ -114,8 +114,6 @@ def initialize():
     logging.info ("Builder:    %s", config.get(prefs.BUILD_MACHINE))
     logging.info ("Build Time: %s", config.get(prefs.BUILD_TIME))
     util.print_mem_usage("Pre everything memory check")
-    logging.info ("Loading preferences...")
-    config.load()
     eventloop.connect('thread-started', 
             lambda obj, thread: database.set_thread(thread))
     logging.info ("Starting event loop thread")

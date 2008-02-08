@@ -24,7 +24,7 @@ import logging
 import os
 import shutil
 
-import eventloop
+from miro import eventloop
 
 def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
     """Try to migrate a file, if this works, callback is called.  If we fail

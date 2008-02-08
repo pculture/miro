@@ -4,8 +4,8 @@ import os.path
 import glob
 from copy import copy
 
-import httpclient
-import eventloop
+from miro import httpclient
+from miro import eventloop
 
 from test.framework import DownloaderTestCase
 

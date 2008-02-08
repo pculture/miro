@@ -23,17 +23,17 @@ from xml.parsers import expat
 from datetime import datetime
 from StringIO import StringIO
 
-import util
-import feed
-import views
-import prefs
-import config
-import folder
-from frontends.html import dialogs
-import eventloop
+from miro import util
+from miro import feed
+from miro import views
+from miro import prefs
+from miro import config
+from miro import folder
+from miro.frontends.html import dialogs
+from miro import eventloop
 
-from gtcache import gettext as _
-from gtcache import ngettext
+from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 
 # =============================================================================
 

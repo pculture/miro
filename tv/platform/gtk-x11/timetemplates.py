@@ -29,7 +29,7 @@ if rv != 0:
     print "FAILURE BUILDING MIRO"
     sys.exit()
 sys.path.insert(0, 'dist/%s/lib/python2.4/site-packages/miro' % PREFIX)
-import app
+from miro import app
 
 # OK miro environment is set up.
 import tempfile
@@ -37,21 +37,21 @@ from xml import sax
 from StringIO import StringIO
 from time import time
 
-import item
-import feed
-import database
-import storedatabase
-import template
-import template_compiler
-from template import Handle, fillAttr, quoteAndFillAttr
+from miro import item
+from miro import feed
+from miro import database
+from miro import storedatabase
+from miro import template
+from miro import template_compiler
+from miro.template import Handle, fillAttr, quoteAndFillAttr
 from IOBuffer import IOBuffer
-from xhtmltools import urlencode
-from templatehelper import quoteattr, escape, toUni
+from miro.xhtmltools import urlencode
+from miro.templatehelper import quoteattr, escape, toUni
 from string import Template
-import app
-import sorts
-import indexes
-import filters
+from miro import app
+from miro import sorts
+from miro import indexes
+from miro import filters
 
 resourcePath = 'dist/%s/share/miro/resources/' % PREFIX
 template_compiler.setResourcePath('file://' + os.path.abspath(resourcePath))

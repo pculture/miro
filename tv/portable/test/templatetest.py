@@ -1,19 +1,19 @@
 import unittest
-import resources
+from miro import resources
 import os
 import re
 import time
 import copy
-import feedparser
-import feed
-import item
-import app
-import maps
+from miro import feedparser
+from miro import feed
+from miro import item
+from miro import app
+from miro import maps
 
-from template import *
-import templateoptimize
+from miro.template import *
+from miro import templateoptimize
 from time import time
-import database
+from miro import database
 import gettext
 import compiled_templates
 

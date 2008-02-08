@@ -15,13 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import app
-import item
-import folder
-import feed
-import guide
-import tabs
-
 def itemsByFeed(x):
     # This specifically sorts subitems by their parent's feed.
     return x.getFeed().getID()
@@ -46,6 +39,8 @@ def downloadsByURL(x):
 
 # Returns the class of the object, aggregating all Item subtypes under Item
 def objectsByClass(x):
+    from miro import item
+
     if isinstance(x,item.Item):
         return item.Item
     else:

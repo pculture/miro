@@ -15,22 +15,21 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import database
-import app
-import template
-import views
-import eventloop
-import feed
-import folder
-import resources
-import guide
-import playlist
-import sorts
-from util import checkU, getSingletonDDBObject
-from databasehelper import TrackedIDList
+from miro import database
+from miro import app
+from miro import views
+from miro import eventloop
+from miro import feed
+from miro import folder
+from miro.platform import resources
+from miro import guide
+from miro import playlist
+from miro import sorts
+from miro.util import checkU, getSingletonDDBObject
+from miro.databasehelper import TrackedIDList
 
 from xml.dom.minidom import parse
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 import logging
 
 ###############################################################################

@@ -19,16 +19,16 @@ from objc import YES, NO, nil, IBOutlet
 from AppKit import *
 from Foundation import *
 
-import app
-import feed
-import prefs
-import views
-import config
-from frontends.html import dialogs
-import eventloop
-import platformutils
+from miro import app
+from miro import feed
+from miro import prefs
+from miro import views
+from miro import config
+from miro.frontends.html import dialogs
+from miro import eventloop
+from miro import platformutils
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 
 ###############################################################################
 

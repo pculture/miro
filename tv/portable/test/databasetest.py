@@ -1,16 +1,16 @@
 import unittest
-import database
+from miro import database
 from os import remove
 from os.path import expanduser
 import random
-import config
-import prefs
+from miro import config
+from miro import prefs
 import os
 import random
 import shutil
 import time
 import tempfile
-import storedatabase
+from miro import storedatabase
 from threading import Thread
 
 from test.framework import DemocracyTestCase

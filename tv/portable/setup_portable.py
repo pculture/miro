@@ -27,7 +27,8 @@
 #  this exception statement from your version. If you delete this exception
 #  statement from all source files in the program, then also delete it here.
 
-import os, platform
+import os
+from miro import platform
 print "Attempting to detect your system information"
 if platform.machine() == "i386" or platform.machine() == "i686":
     print "32bit x86 system detected"

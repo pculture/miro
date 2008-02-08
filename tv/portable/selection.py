@@ -19,23 +19,23 @@
 
 from copy import copy
 
-import app
-import database
-import eventloop
-import folder
-import config
-import prefs
-import guide
-import item
-import tabs
-import playlist
-import feed
-import views
-import indexes
-import template
-import util
-from frontends.html.templatedisplay import TemplateDisplay
-from gtcache import gettext as _
+from miro import app
+from miro import database
+from miro import eventloop
+from miro import folder
+from miro import config
+from miro import prefs
+from miro import guide
+from miro import item
+from miro import tabs
+from miro import playlist
+from miro import feed
+from miro import views
+from miro import indexes
+from miro import template
+from miro import util
+from miro.frontends.html.templatedisplay import TemplateDisplay
+from miro.gtcache import gettext as _
 
 def getID(obj):
     """Gets an ID to use for an object.  For tabs, this is the object ID that

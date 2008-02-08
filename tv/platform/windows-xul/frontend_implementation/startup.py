@@ -16,10 +16,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 from threading import Thread, Event
-import util
-import app
-from gtcache import gettext as _
-from gtcache import ngettext
+from miro import util
+from miro import app
+from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 
 class _Search:
     def __init__(self, path):

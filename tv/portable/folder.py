@@ -15,17 +15,17 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 
-import app
-from frontends.html import dialogs
-import indexes
-import playlist
-import sorts
-import util
-import views
-from database import DDBObject
-from databasehelper import makeSimpleGetSet
+from miro import app
+from miro.frontends.html import dialogs
+from miro import indexes
+from miro import playlist
+from miro import sorts
+from miro import util
+from miro import views
+from miro.database import DDBObject
+from miro.databasehelper import makeSimpleGetSet
 
 class FolderBase(DDBObject):
     """Base class for ChannelFolder and Playlist folder classes."""

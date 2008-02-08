@@ -1,6 +1,6 @@
 import unittest
-import feedparser
-import resources
+from miro import feedparser
+from miro import resources
 
 from test.framework import DemocracyTestCase
 

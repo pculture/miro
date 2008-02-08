@@ -1,11 +1,11 @@
-from feed import Feed
-from feedparser import FeedParserDict
-from item import Item
-from playlist import SavedPlaylist
-from folder import PlaylistFolder
-import app
-import views
-import tabs
+from miro.feed import Feed
+from miro.feedparser import FeedParserDict
+from miro.item import Item
+from miro.playlist import SavedPlaylist
+from miro.folder import PlaylistFolder
+from miro import app
+from miro import views
+from miro import tabs
 from test.framework import EventLoopTest
 
 class PlaylistTestBase(EventLoopTest):

@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 from xpcom import components
-import pyxpcomcalls
+from miro.platform import pyxpcomcalls
 
 class PyCallback:
     _com_interfaces_ = [components.interfaces.pcfIDTVPyCallback]

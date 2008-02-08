@@ -25,34 +25,34 @@ import re
 import threading
 import traceback
 
-from clock import clock
-from frontends.html import dialogs
-from gtcache import gettext as _
-from miroplatform.frontends.html.HTMLDisplay import HTMLDisplay
-import app
-import autodler
-import config
-import database
-import download_utils
-import eventloop
-import feed
-import folder
-import guide
-import indexes
-import item
+from miro.clock import clock
+from miro.frontends.html import dialogs
+from miro.gtcache import gettext as _
+from miro.platform.frontends.html.HTMLDisplay import HTMLDisplay
+from miro import app
+from miro import autodler
+from miro import config
+from miro import database
+from miro import download_utils
+from miro import eventloop
+from miro import feed
+from miro import folder
+from miro import guide
+from miro import indexes
+from miro import item
 import logging
-import platformutils
-import playlist
-import prefs
-import signals
-import singleclick
-import sorts
-import subscription
-import tabs
-import template
-import util
-import views
-import xhtmltools
+from miro.platform.utils import unicodeToFilename
+from miro import playlist
+from miro import prefs
+from miro import signals
+from miro import singleclick
+from miro import sorts
+from miro import subscription
+from miro import tabs
+from miro import template
+from miro import util
+from miro import views
+from miro import xhtmltools
 
 class TemplateDisplay(HTMLDisplay):
     """TemplateDisplay: a HTML-template-driven right-hand display panel."""
@@ -142,7 +142,7 @@ class TemplateDisplay(HTMLDisplay):
             for key in argLists.keys():
                 value = argLists[key]
                 if len(value) != 1:
-                    import template_compiler
+                    from miro import template_compiler
                     raise template_compiler.TemplateError, "Multiple values of '%s' argument passed to '%s' action" % (key, url)
                 # Cast the value results back to unicode
                 try:
@@ -243,7 +243,7 @@ class TemplateDisplay(HTMLDisplay):
                         newFeed.blink()
             elif type == 'download':
                 for url in normalizedURLs:
-                    filename = platformutils.unicodeToFilename(url)
+                    filename = unicodeToFilename(url)
                     singleclick.downloadURL(filename)
             elif type == 'guide':
                 for url in normalizedURLs:
@@ -703,7 +703,7 @@ class GUIActionHandler:
     def addDownload(self, url = None):
         def doAdd(url):
             app.db.confirmDBThread()
-            singleclick.downloadURL(platformutils.unicodeToFilename(url))
+            singleclick.downloadURL(unicodeToFilename(url))
         self.addURL (Template(_("$shortAppName - Download Video")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME)), _("Enter the URL of the video to download"), doAdd, url)
 
     def handleDrop(self, data, type, sourcedata):
@@ -902,7 +902,7 @@ class TemplateActionHandler:
         app.controller.selection.selectItem(area, view, int(id), shift, ctrl)
 
     def handleContextMenuSelect(self, id, area, viewName):
-        from frontends.html import contextmenu
+        from miro.frontends.html import contextmenu
         try:
             obj = app.db.getObjectByID(int(id))
         except:

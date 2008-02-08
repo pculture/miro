@@ -18,7 +18,7 @@
 import objc
 import Foundation
 
-import platformutils
+from miro import platformutils
 
 ###############################################################################
 

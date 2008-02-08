@@ -17,7 +17,7 @@
 
 import cgi
 import re
-import util
+from miro import util
 import urllib2
 import urlparse
 import xml.dom.minidom

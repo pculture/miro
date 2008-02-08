@@ -30,14 +30,14 @@ import errno
 import select
 import heapq
 import Queue
-import util
+from miro import util
 import logging
-import trapcall
-import signals
+from miro import trapcall
+from miro import signals
 
-from clock import clock
+from miro.clock import clock
 
-import util
+from miro import util
 
 cumulative = {}
 
@@ -412,6 +412,18 @@ def quit():
     threadPoolQuit()
     _eventLoop.quitFlag = True
     _eventLoop.wakeup()
+
+def finished():
+    """Returns True if the eventloop is done with it's work and has quit, or
+    is about to quit.
+    """
+
+    if _eventLoop.quitFlag:
+        # call wakeup() as a precaution to make sure we really are quitting.
+        _eventLoop.wakeup() 
+        return True
+    else:
+        return False
 
 def connect(signal, callback):
     _eventLoop.connect(signal, callback)

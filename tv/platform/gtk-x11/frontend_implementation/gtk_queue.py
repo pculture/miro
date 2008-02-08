@@ -43,7 +43,7 @@ import sys
 import traceback
 import logging
 
-from clock import clock
+from miro.clock import clock
 
 class ExceptionContainer:
     def __init__(self, exc_info):

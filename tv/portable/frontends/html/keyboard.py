@@ -19,9 +19,9 @@
 arrow keys, but it should be pretty easy to extend.
 """
 
-import app
-import eventloop
-import tabs
+from miro import app
+from miro import eventloop
+from miro import tabs
 
 UP = 1
 DOWN = 2

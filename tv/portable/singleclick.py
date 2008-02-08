@@ -27,27 +27,27 @@ democracy is already running.  They should arange for addVideo or addTorrent
 to be called in the existing democracy process.
 """
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 import os
 import logging
 import urllib
 
-from util import getTorrentInfoHash
-import app
-from frontends.html import dialogs
-import download_utils
-import item
-import feed
-import filetypes
-import folder
-import httpclient
-import views
-import platformutils
-import subscription
-import util
-import config
-import prefs
+from miro.util import getTorrentInfoHash
+from miro import app
+from miro.frontends.html import dialogs
+from miro import download_utils
+from miro import item
+from miro import feed
+from miro import filetypes
+from miro import folder
+from miro import httpclient
+from miro import views
+from miro import subscription
+from miro import util
+from miro import config
+from miro import prefs
 from string import Template
+from miro.platform.utils import samefile, filenameToUnicode
 
 _commandLineArgs = []
 commandLineVideoIds = None
@@ -65,7 +65,7 @@ def addVideo(path, single = False):
         itemFilename = i.getFilename()
         if (itemFilename != '' and 
                 os.path.exists(itemFilename) and
-                platformutils.samefile(itemFilename, path)):
+                samefile(itemFilename, path)):
             print "Not adding duplicate video: %s" % path.decode('ascii', 'ignore')
             commandLineVideoIds.add(i.getID())
             return
@@ -306,7 +306,7 @@ def parseCommandLineArgs(args=None):
         elif arg.startswith('democracy:'):
             addSubscriptionURL('democracy:', 'application/x-democracy', arg)
         elif arg.startswith('http:') or arg.startswith('https:'):
-            addDownload(platformutils.filenameToUnicode(arg))
+            addDownload(filenameToUnicode(arg))
         elif arg.startswith('feed:'):
             # hack so feed: acts as http:
             arg = "http:" + arg[len("feed:"):]

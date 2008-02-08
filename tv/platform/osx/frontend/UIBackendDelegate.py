@@ -27,14 +27,14 @@ from AppKit import *
 from Foundation import *
 from PyObjCTools import Conversion, AppHelper
 
-import app
-import feed
-import prefs
-import config
-from frontends.html import dialogs
-import eventloop
-import platformcfg
-import platformutils
+from miro import app
+from miro import feed
+from miro import prefs
+from miro import config
+from miro.frontends.html import dialogs
+from miro import eventloop
+from miro import platformcfg
+from miro import platformutils
 
 from StartupPanel import StartupPanelController
 import GrowlNotifier

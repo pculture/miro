@@ -15,24 +15,24 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 import logging
-import config
-import prefs
-import app
-import views
-import indexes
+from miro import config
+from miro import prefs
+from miro import app
+from miro import views
+from miro import indexes
 import os
-from eventloop import asUrgent
-from database import DDBObject
-import opml
-import iconcache
-import resources
-import platform
-import guide
-import feed
-import folder
-import playlist
+from miro.eventloop import asUrgent
+from miro.database import DDBObject
+from miro import opml
+from miro import iconcache
+from miro.platform import resources
+from miro import platform
+from miro import guide
+from miro import feed
+from miro import folder
+from miro import playlist
 
 class ThemeHistory(DDBObject):
     def __init__(self):

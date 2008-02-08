@@ -4,21 +4,21 @@ from time import sleep
 import time
 import types
 
-import feed
-import item
-import database
-import feedparser
-import app
-from frontends.html import dialogs
+from miro import feed
+from miro import item
+from miro import database
+from miro import feedparser
+from miro import app
+from miro.frontends.html import dialogs
 import framework
 import os
-import gtcache
+from miro import gtcache
 import gettext
-import resources
-import template
-import util
-from template_compiler import TemplateError
-import template_compiler
+from miro import resources
+from miro import template
+from miro import util
+from miro.template_compiler import TemplateError
+from miro import template_compiler
 
 from test.framework import DemocracyTestCase
 

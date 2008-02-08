@@ -31,7 +31,7 @@ import string
 import urllib
 import socket
 import logging
-import filetypes
+from miro import filetypes
 import tempfile
 import threading
 import traceback
@@ -155,7 +155,7 @@ def failedExn(when, **kwargs):
 def failed(when, withExn = False, details = None):
     logging.warn("util.failed is deprecated.  Use system.signals.failed\n"
             "stack:\n%s" % ''.join(traceback.format_stack()))
-    import signals
+    from miro import signals
     signals.system.failed(when, withExn, details)
 
 class AutoflushingStream:
@@ -191,7 +191,7 @@ def makeDummySocketPair():
     return first, second
 
 def getTorrentInfoHash(path):
-    import libtorrent as lt
+    import miro.libtorrent as lt
     f = open(path, 'rb')
     try:
         data = f.read()
@@ -215,10 +215,8 @@ class ExponentialBackoffTracker:
 
 # Gather movie files on the disk. Used by the startup dialog.
 def gatherVideos(path, progressCallback):
-    import item
-    import prefs
-    import config
-    import platformutils
+    from miro import prefs
+    from miro import config
     keepGoing = True
     parsed = 0
     found = list()
@@ -250,7 +248,7 @@ def formatSizeForUser(bytes, zeroString="", withDecimals=True, kbOnly=False):
     """Format an int containing the number of bytes into a string suitable for
     printing out to the user.  zeroString is the string to use if bytes == 0.
     """
-    from gtcache import gettext as _
+    from miro.gtcache import gettext as _
     if bytes > (1 << 30) and not kbOnly:
         value = (bytes / (1024.0 * 1024.0 * 1024.0))
         if withDecimals:
@@ -419,7 +417,7 @@ def returnsURL(func):
 
 # Returns exception if input isn't a filename type
 def checkF(text):
-    from platformutils import FilenameType
+    from miro.platform.utils import FilenameType
     if text is not None and type(text) != FilenameType:
         raise DemocracyUnicodeError, (u"text \"%s\" is not a valid filename type" %
                                      text)
@@ -565,3 +563,16 @@ def getFirstVideoEnclosure(entry):
             return enclosure
     return None
 
+def import_last(module_name):
+    """Handles runtime importing when you want to import the last module in
+    a list of modules.  
+
+    The difference between this function and __import__ is if you do
+    __import__('foo.bar.baz') it will return the foo package.  If you use
+    import_last, it will return baz.
+    """
+    components = module_name.split('.')
+    mod = __import__(module_name)
+    for comp in components[1:]:
+        mod = getattr(mod, comp)
+    return mod

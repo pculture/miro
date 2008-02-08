@@ -19,17 +19,17 @@
 # Contains runtime template code
 
 import os
-import config
-import eventloop
-from templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId
-from templateoptimize import HTMLChangeOptimizer
-from xhtmltools import urlencode
-from template_compiler import checkU
+from miro import config
+from miro import eventloop
+from miro.templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId
+from miro.templateoptimize import HTMLChangeOptimizer
+from miro.xhtmltools import urlencode
+from miro.template_compiler import checkU
 from itertools import chain
 import logging
-import util
+from miro import util
 
-from miroplatform.frontends.html.threading import inMainThread
+from miro.platform.frontends.html.threads import inMainThread
 
 # FIXME add support for onlyBody parameter for static templates so we
 #       don't need to strip the outer HTML
@@ -37,8 +37,8 @@ import re
 HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
 
 if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
-    import template_compiler
-    import resources
+    from miro import template_compiler
+    from miro.platform import resources
     template_compiler.setResourcePath(resources.path(''))
 
 ###############################################################################
@@ -61,11 +61,8 @@ def fillTemplate(filename, domHandler, platform, eventCookie, bodyTagExtra="", t
         exec tcc.getOutput() in locals()
         return fillTemplate(domHandler, platform, eventCookie, bodyTagExtra, *args, **kargs)
     else:
-        filename = filename.replace('/','.').replace('\\','.').replace('-','_')
-        components = filename.split('.')
-        mod = __import__("compiled_templates.%s"%filename)
-        for comp in components:
-            mod = getattr(mod,comp)
+        modname = filename.replace('/','.').replace('\\','.').replace('-','_')
+        mod = util.import_last("miro.compiled_templates.%s" % modname)
         return mod.fillTemplate(domHandler, platform, eventCookie, bodyTagExtra, *args, **kargs)
 
 # As fillTemplate, but no Javascript calls are made, and no template
@@ -553,7 +550,3 @@ def fillAttr(_value, _localVars):
                 return resources.url(match.group(1))
             else:
                 return _value
-
-# This has to be after Handle, so the compiled templates can get
-# access to Handle
-import compiled_templates

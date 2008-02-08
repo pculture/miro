@@ -63,7 +63,6 @@ from distutils.util import change_root
 from glob import glob
 from string import Template
 import distutils.command.build_py
-import distutils.command.build_py
 import distutils.command.install_data
 import os
 import pwd
@@ -99,21 +98,27 @@ compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
 compiled_templates_unittest_dir = os.path.join(compiled_templates_dir,'unittest')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
-miroplatform_dir = os.path.join(platform_dir, 'miroplatform')
+platform_package_dir = os.path.join(platform_dir, 'platform')
 glade_dir = os.path.join(platform_dir, 'glade')
 xine_dir = os.path.join(platform_dir, 'xine')
 frontend_implementation_dir = os.path.join(platform_dir,
         'frontend_implementation')
 debian_package_dir = os.path.join(platform_dir, 'debian_package')
 
-sys.path[0:0] = ['%s/platform/%s' % (root_dir, 'gtk-x11'), '%s/platform' % root_dir, '%s/portable' % root_dir]
+sys.path.insert(0, root_dir)
+# when we install the portable modules, they will be in the miro package, but
+# at this point, they are in a package named "portable", so let's hack it
+import portable
+sys.modules['miro'] = portable
+import platform
+sys.modules['miro'].platform = platform
 
-import template_compiler
-import setup_portable
+from miro import template_compiler
+from miro import setup_portable
 template_compiler.compileAllTemplates(root_dir)
 
 # little hack get the version from the current app.config.template
-import util
+from miro import util
 app_config = os.path.join(resource_dir, 'app.config.template')
 appVersion = util.readSimpleConfigFile(app_config)['appVersion']
 
@@ -286,7 +291,7 @@ for dir in mozilla_browser_options['include_dirs']:
 if nsI:
     mozilla_browser_options['extra_compile_args'].append('-DNS_I_SERVICE_MANAGER_UTILS=1')
 
-mozilla_browser_ext = Extension("miro.MozillaBrowser",
+mozilla_browser_ext = Extension("miro.platform.MozillaBrowser",
         [ os.path.join(frontend_implementation_dir,'MozillaBrowser.pyx'),
           os.path.join(frontend_implementation_dir,'MozillaBrowserXPCOM.cc'),
           os.path.join(frontend_implementation_dir,'HttpObserver.cc'),
@@ -298,7 +303,7 @@ mozilla_browser_ext = Extension("miro.MozillaBrowser",
         **mozilla_browser_options)
 #### Xlib Extension ####
 xlib_ext = \
-    Extension("miro.xlibhelper", 
+    Extension("miro.platform.xlibhelper", 
         [ os.path.join(frontend_implementation_dir,'xlibhelper.pyx') ],
         library_dirs = ['/usr/X11R6/lib'],
         libraries = ['X11'],
@@ -426,38 +431,10 @@ class build_py (distutils.command.build_py.build_py):
             expanded = template.substitute(**conf)
             write_file(path, expanded)
         
-    def find_miro_modules(self):
-        """Returns a list of modules to go in the miro directory.  Each
-        item has the form (package, module, path).  The trick here is merging
-        the contents of the platform/gtk-x11 and portable directories.
-        """
-        self.expand_templates()
-        files = glob(os.path.join(portable_dir, '*.py'))
-        files.extend(glob(os.path.join(platform_dir, '*.py')))
-        rv = []
-        for f in files:
-            if os.path.samefile(f, __file__):
-                continue
-            module = os.path.splitext(os.path.basename(f))[0]
-            rv.append(('miro', module, f))
-        return rv
-
     def find_all_modules (self):
         """Extend build_py's module list to include the miro modules."""
-        modules = distutils.command.build_py.build_py.find_all_modules(self)
-        modules.extend(self.find_miro_modules())
-        return modules
-
-    def run(self):
-        """Do the build work.  In addition to the default implementation, we
-        also build the miro package from the platform and portable code
-        and install the resources as package data.  
-        """
-
-        for (package, module, module_file) in self.find_miro_modules():
-            assert package == 'miro'
-            self.build_module(module, module_file, package)
-        return distutils.command.build_py.build_py.run(self)
+        self.expand_templates()
+        return distutils.command.build_py.build_py.find_all_modules(self)
 
 #### bdist_deb builds the miro debian package ####
 class bdist_deb (Command):
@@ -603,6 +580,7 @@ setup(name='miro',
         #        [os.path.join(portable_dir, 'template.pyx')]),
     ],
     packages = [
+        'miro',
         'miro.frontend_implementation',
         'miro.dl_daemon',
         'miro.test',
@@ -611,19 +589,15 @@ setup(name='miro',
         'miro.dl_daemon.private',
         'miro.frontends',
         'miro.frontends.html',
-        'miro.miroplatform',
-        'miro.miroplatform.frontends',
-        'miro.miroplatform.frontends.html',
+        'miro.platform',
+        'miro.platform.frontends',
+        'miro.platform.frontends.html',
     ],
     package_dir = {
-        'miro.frontends': portable_frontend_dir,
-        'miro.frontends.html': portable_html_frontend_dir,
-        'miro.frontend_implementation' : frontend_implementation_dir,
-        'miro.dl_daemon' : dl_daemon_dir,
+        'miro': portable_dir,
         'miro.test' : test_dir,
-        'miro.compiled_templates' : compiled_templates_dir,
-        'miro.compiled_templates.unittest' : compiled_templates_unittest_dir,
-        'miro.miroplatform': miroplatform_dir,
+        'miro.frontend_implementation': frontend_implementation_dir,
+        'miro.platform': platform_package_dir,
     },
     cmdclass = {
         'build_ext': build_ext, 

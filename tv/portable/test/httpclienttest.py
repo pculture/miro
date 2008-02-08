@@ -6,16 +6,16 @@ import traceback
 from copy import copy
 from StringIO import StringIO
 
-from clock import clock
+from miro.clock import clock
 import os
 
-from download_utils import cleanFilename
-import app
-import download_utils
-import database
-from frontends.html import dialogs
-import httpclient
-import util
+from miro.download_utils import cleanFilename
+from miro import app
+from miro import download_utils
+from miro import database
+from miro.frontends.html import dialogs
+from miro import httpclient
+from miro import util
 from framework import EventLoopTest, DemocracyTestCase, HadToStopEventLoop
 
 class TestingConnectionHandler(httpclient.ConnectionHandler):
@@ -1604,7 +1604,7 @@ class CookieExpirationDateTestCase(unittest.TestCase):
         problems with.
         """
         from time import mktime, strptime, localtime
-        from httpclient import get_cookie_expiration_date
+        from miro.httpclient import get_cookie_expiration_date
         
         for cd in ( ("Thu, 03-May-07 22:48:52 GMT", "2007-05-03 22:48:52 GMT" ),
                     ("Fri, 03-Jun-11 13:41:15 GMT", "2011-06-03 13:41:15 GMT" ),
@@ -1623,7 +1623,7 @@ class CookieExpirationDateTestCase(unittest.TestCase):
         expiration date causes an overflow error when parsing it.
         """
         from time import localtime
-        from httpclient import get_cookie_expiration_date, DATEINFUTURE
+        from miro.httpclient import get_cookie_expiration_date, DATEINFUTURE
             
         self.assertEquals( localtime(get_cookie_expiration_date("Tue, 26-Jul-2050 10:00:00 GMT")),
                            localtime(httpclient.DATEINFUTURE) )

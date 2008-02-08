@@ -1,5 +1,5 @@
 from test.framework import DemocracyTestCase
-from download_utils import parseURL
+from miro.download_utils import parseURL
 
 class TestParseURL(DemocracyTestCase):
     def doCheck(self, url, scheme, host, port, path):

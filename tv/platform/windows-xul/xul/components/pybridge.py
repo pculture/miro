@@ -15,9 +15,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
+# This space is only for system import that we are *absolutely* sure will
+# work.  If you think an import could possible fail, put it in the
+# try...finally block below.
 from gettext import gettext as _
 from xpcom import components
-from xulhelper import makeService, makeComp, proxify
 import ctypes
 import os
 import shutil
@@ -26,37 +28,36 @@ import traceback
 import _winreg
 
 try:
-    import platformutils
-    platformutils.initializeLocale()
-    platformutils.setupLogging()
-    import gtcache
+    from miro.platform.xulhelper import makeService, makeComp, proxify
+    from miro.platform.utils import initializeLocale, setupLogging, getLongPathName
+    initializeLocale()
+    setupLogging()
+    from miro import gtcache
     gtcache.init()
-    import app
-    import controller
-    import eventloop
-    import config
-    import frontends.html
-    from frontends.html import dialogs, keyboard
-    import folder
-    import playlist
-    import prefs
-    import platformcfg
-    import singleclick
-    import frontend
-    import util
-    import menubar
-    import feed
-    import database
-    from miroplatform.frontends.html import HTMLDisplay
-    from frontend_implementation.UIBackendDelegate import UIBackendDelegate
-    from frontend_implementation import MainFrame
-    from eventloop import asUrgent, asIdle
-    from platformutils import getLongPathName
-    import searchengines
-    import views
-    import moviedata
-    import migrateappname
-    import signals
+    from miro import app
+    from miro import controller
+    from miro import eventloop
+    from miro import config
+    from miro.frontends.html import dialogs, keyboard
+    from miro import folder
+    from miro import playlist
+    from miro import prefs
+    from miro import singleclick
+    from miro.platform import frontend
+    from miro import util
+    from miro import menubar
+    from miro import feed
+    from miro import database
+    from miro.platform.frontends.html import HTMLDisplay
+    from miro.frontend_implementation.UIBackendDelegate import UIBackendDelegate
+    from miro.frontend_implementation import MainFrame
+    from miro.eventloop import asUrgent, asIdle
+    from miro import searchengines
+    from miro import views
+    from miro import moviedata
+    from miro.platform import migrateappname
+    from miro.platform import specialfolders
+    from miro import signals
     moviedata.RUNNING_MAX = 1
 except:
     errorOnImport = True
@@ -131,6 +132,7 @@ def createProxyObjects():
     proxy objects, we ensure that the calls to them get made in the xul event
     loop.
     """
+
     app.jsBridge = makeService("@participatoryculture.org/dtv/jsbridge;1",
         components.interfaces.pcfIDTVJSBridge, True, False)
     app.vlcRenderer = makeService("@participatoryculture.org/dtv/vlc-renderer;1",  components.interfaces.pcfIDTVVLCRenderer, True, False)
@@ -142,6 +144,7 @@ def initializeProxyObjects(window):
 def initializeHTTPProxy():
     xulprefs = makeService("@mozilla.org/preferences-service;1",components.interfaces.nsIPrefService, False)
     branch = xulprefs.getBranch("network.proxy.")
+
     if config.get(prefs.HTTP_PROXY_ACTIVE):                     
         branch.setIntPref("type",1)
         branch.setCharPref("http", config.get(prefs.HTTP_PROXY_HOST))
@@ -243,9 +246,9 @@ class PyBridge:
         app.controller.onShutdown()
 
     def deleteVLCCache(self):
-        appDataPath = platformcfg.getSpecialFolder("AppData")
-        if appDataPath:
-            vlcCacheDir = os.path.join(appDataPath, "PCF-VLC")
+        if specialfolders.appDataDirectory:
+            vlcCacheDir = os.path.join(specialfolders.appDataDirectory, 
+                    "PCF-VLC")
             shutil.rmtree(vlcCacheDir, ignore_errors=True)
 
     def shortenDirectoryName(self, path):
@@ -258,7 +261,7 @@ class PyBridge:
         ]
 
         for name in tries:
-            virtualPath = platformcfg.getSpecialFolder(name)
+            virtualPath = specialfolders.getSpecialFolder(name)
             if virtualPath is None:
                 continue
             if path == virtualPath:
@@ -362,11 +365,13 @@ class PyBridge:
     def handleCommandLine(self, commandLine):
         # Here's a massive hack to get command line parameters into config
         args = getArgumentList(commandLine)
+        theme = None
         for x in range(len(args)-1):
             if args[x] == '--theme':
-                config.__currentThemeHack = args[x+1]
-                config.load(theme = args[x+1])
+                theme = args[x+1]
+                args[x:x+2] = []
                 break
+        config.load(theme)
 
         # Doesn't matter if this executes before the call to
         # parseCommandLineArgs in app.py. -clahey
@@ -633,7 +638,7 @@ class PyBridge:
         frontend.startup.cancelSearch()
 
     def getSpecialFolder(self, name):
-        return platformcfg.getSpecialFolder(name)
+        return specialfolders.getSpecialFolder(name)
 
     def extractFinish (self, duration, screenshot_success):
         app.controller.videoDisplay.extractFinish(duration, screenshot_success)

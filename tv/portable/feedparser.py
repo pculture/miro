@@ -46,8 +46,8 @@ _debug = 0
 # If you are embedding feedparser in a larger application, you should
 # change this to your application name and URL.
 USER_AGENT = "UniversalFeedParser/%s +http://feedparser.org/" % __version__
-import config
-import prefs
+from miro import config
+from miro import prefs
 USER_AGENT += " %s/%s (%s)" % \
     (config.get(prefs.SHORT_APP_NAME),
      config.get(prefs.APP_VERSION),

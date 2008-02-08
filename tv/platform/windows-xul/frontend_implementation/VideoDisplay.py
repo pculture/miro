@@ -15,18 +15,19 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import app
 import os
-import util
-import config
-import prefs
 import logging
-from download_utils import nextFreeFilename
-from frontends.html.displaybase import VideoDisplayBase
-from playbackcontroller import PlaybackControllerBase
-import pyxpcomcalls
 from threading import Lock
 import time
+
+from miro import app
+from miro import util
+from miro import config
+from miro import prefs
+from miro.download_utils import nextFreeFilename
+from miro.frontends.html.displaybase import VideoDisplayBase
+from miro.playbackcontroller import PlaybackControllerBase
+from miro.platform import pyxpcomcalls
 
 selectItemLock = Lock()
 

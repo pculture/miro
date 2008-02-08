@@ -17,34 +17,33 @@
 
 """Frontend callback handler.  Responsible for handling all GUI actions."""
 
-import app
+from miro import app
 import gobject
 import gtk
 import gtk.gdk
 import gtk.keysyms
 import os
 import shutil
-import frontend
-import config
-import prefs
-import resources
+from miro import config
+from miro import prefs
+from miro.platform import resources
 import MainFrame
-import singleclick
-import eventloop
+from miro import singleclick
+from miro import eventloop
 import math
-import folder
-import playlist
-import platformutils
-import startup
+from miro import folder
+from miro import playlist
+from miro.platform.utils import confirmMainThread, makeURLSafe, filenameToUnicode
+from miro import startup
 import logging
-import feed
-import views
-import database
-from menubar import menubar
-from frontends.html import keyboard
+from miro import feed
+from miro import views
+from miro import database
+from miro.menubar import menubar
+from miro.frontends.html import keyboard
 
 from gtk_queue import gtkAsyncMethod
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
  
 def AttachBoolean (dialog, widget, descriptor, sensitive_widget = None):
     def BoolChanged (widget):
@@ -123,7 +122,7 @@ def SetupDirList (widgetTree, toggleRenderer):
 
     @eventloop.asIdle
     def addFeed (filename):
-        feed.Feed (u"dtv:directoryfeed:%s" % (platformutils.makeURLSafe(filename),))
+        feed.Feed (u"dtv:directoryfeed:%s" % (makeURLSafe(filename),))
 
     @eventloop.asIdle
     def toggleFeed (id):
@@ -196,7 +195,7 @@ class Mediator:
             iter = self.model.iter_next (iter)
         if iter is None:
             iter = self.model.append(None)
-        self.model.set (iter, 0, id, 1, platformutils.filenameToUnicode (dir), 2, visible)
+        self.model.set (iter, 0, id, 1, filenameToUnicode (dir), 2, visible)
 
     @gtkAsyncMethod
     def removeDirectory (self, id):
@@ -252,7 +251,7 @@ class CallbackHandler(object):
         self.mainApp = app.controller
 
     def actionGroups (self):
-        platformutils.confirmMainThread()
+        confirmMainThread()
         actionGroups = {}
         actionGroups["VideoSelected"] = gtk.ActionGroup("VideoSelected")
         actionGroups["VideosSelected"] = gtk.ActionGroup("VideosSelected")
@@ -339,7 +338,7 @@ class CallbackHandler(object):
         return actionGroups
 
     def on_main_delete(self, *args):
-        platformutils.confirmMainThread()
+        confirmMainThread()
         app.controller.quit()
         return True
 
@@ -382,7 +381,7 @@ class CallbackHandler(object):
         scale.buttonsDown.add(event.button)
 
     def on_video_time_scale_button_release_event(self, scale, event):
-        platformutils.confirmMainThread()
+        confirmMainThread()
         # we want to remove the button from the buttonsDown set, but we can't
         # yet, because we haven't run the default signal handler yet, which
         # will emit the value-changed signal.  So we use use idle_add, to
@@ -528,7 +527,7 @@ class CallbackHandler(object):
         folder.createNewChannelFolder()
 
     def on_preference(self, event = None):
-        import autodler
+        from miro import autodler
         # get our add channel dialog
         movie_dir = config.get(prefs.MOVIES_DIRECTORY)
         widgetTree = MainFrame.WidgetTree(resources.path('miro.glade'), 'dialog-preferences', 'miro')

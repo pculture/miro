@@ -18,14 +18,14 @@
 from gettext import gettext as _
 import logging
 
-import app
-import eventloop
-import feed
-import folder
-import guide
-import item
-import playlist
-import tabs
+from miro import app
+from miro import eventloop
+from miro import feed
+from miro import folder
+from miro import guide
+from miro import item
+from miro import playlist
+from miro import tabs
 
 def makeMenu(items):
     """Convenience function to create a list of MenuItems given on a list of

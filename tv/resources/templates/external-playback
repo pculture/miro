@@ -18,8 +18,8 @@ this = app.controller.videoInfoItem
 thisItemView = views.items.filter(lambda x: x.getID() == this.getID())
 app.controller.videoInfoItem = None
 import os.path
-import platformutils
-filename = platformutils.filenameToUnicode(os.path.basename(this.getFilename()))
+from miro.platform.utils import filenameToUnicode
+filename = filenameToUnicode(os.path.basename(this.getFilename()))
 ]]></t:execOnLoad>
     <t:execOnUnload><![CDATA[
 thisItemView.unlink()

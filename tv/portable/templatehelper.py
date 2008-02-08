@@ -29,7 +29,7 @@ import random
 import types
 import logging
 from itertools import izip
-from xhtmltools import urlencode
+from miro.xhtmltools import urlencode
 
 HTMLPattern = re.compile("^.*<body.*?>(.*)</body\s*>", re.S)
 attrPattern = re.compile("^(.*?)@@@(.*?)@@@(.*)$")

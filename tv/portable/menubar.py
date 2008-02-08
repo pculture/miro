@@ -17,11 +17,11 @@
 
 # Defines menu, accelerator keys, and shortcuts
 # THIS IS STILL A WORK IN PROGRESS. THE FORMAT IS NOT FINAL
-from gtcache import gettext as _
-import config
-import prefs
+from miro.gtcache import gettext as _
+from miro import config
+from miro import prefs
 from string import Template
-import app
+from miro import app
 
 CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12 = range(24)
 _ = lambda x : x

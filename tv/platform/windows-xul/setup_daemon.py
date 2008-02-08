@@ -24,21 +24,15 @@ from distutils.extension import Extension
 import py2exe
 from Pyrex.Distutils import build_ext
 
-# The name of this platform.
-platform = 'windows-xul'
+# when we install the portable modules, they will be in the miro package, but
+# at this point, they are in a package named "portable", so let's hack it
+#import portable
+#sys.modules['miro'] = portable
 
-# Find the top of the source tree and set search path
 root = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), '..', '..')
-sys.path[0:0] = [
-    os.path.join(root, 'portable', 'dl_daemon'),
-
-    # The daemon's "platform" files are in the private directory
-    os.path.join(root, 'portable', 'dl_daemon','private'),
-    os.path.join(root, 'portable'),
-]
 root = os.path.normpath(root)
 
-import util
+from miro import util
 
 ext_modules=[
         core_setup.libtorrent_ext,
@@ -49,7 +43,16 @@ templateVars = util.readSimpleConfigFile(os.path.join(root, 'resources', 'app.co
 setup(
     console=[{"dest_base":("%s_Downloader"%templateVars['shortAppName']),"script":os.path.join(root, 'portable', 'dl_daemon', 'Democracy_Downloader.py')}],
     ext_modules=ext_modules,
-    zipfile=None,
+    packages = [
+        'miro',
+        'miro.dl_daemon',
+        'miro.dl_daemon.private',
+        'miro.platform',
+    ],
+    package_dir = {
+        'miro': core_setup.portable_dir,
+        'miro.platform': os.path.join(core_setup.platform_dir, 'platform'),
+    },
     cmdclass = {
 	'build_ext': build_ext,
     },

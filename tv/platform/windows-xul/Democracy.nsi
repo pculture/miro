@@ -160,6 +160,7 @@ Page custom iHeartMiroInstall iHeartMiroInstallLeave
   Delete   "${directory}\${CONFIG_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_ICON}"
   Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
+  Delete   "${directory}\*.dll"
   Delete   "${directory}\moviedata_util.py"
   Delete   "${directory}\application.ini"
   Delete   "${directory}\uninstall.exe"
@@ -386,6 +387,7 @@ unzipok:
   File  "${CONFIG_ICON}"
   File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
   File  "moviedata_util.py"
+  File  "*.dll"
   File  application.ini
   File  /r chrome
   File  /r components

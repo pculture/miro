@@ -15,11 +15,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import tabs
-import feed
-import folder
-import playlist
-import guide
+from miro import tabs
+from miro import feed
+from miro import folder
+from miro import playlist
+from miro import guide
 
 # Given an object for which mappableToTab returns true, return a Tab
 def mapToTab(obj):

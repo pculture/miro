@@ -17,10 +17,10 @@
 
 import os
 
-import prefs
-import config
+from miro import prefs
+from miro import config
 import urllib
-import platformcfg
+from miro import platformcfg
 
 # Find the full path to a resource data file. 'relative_path' is
 # expected to be supplied in Unix format, with forward-slashes as

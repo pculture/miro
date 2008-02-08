@@ -17,16 +17,16 @@
 
 """Miro playlist support."""
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 
-import app
-from frontends.html import dialogs
-import database
-import filters
-import item
-import views
-import sorts
-from databasehelper import makeSimpleGetSet, TrackedIDList
+from miro import app
+from miro.frontends.html import dialogs
+from miro import database
+from miro import filters
+from miro import item
+from miro import views
+from miro import sorts
+from miro.databasehelper import makeSimpleGetSet, TrackedIDList
 
 class PlaylistMixin:
     """Class that handles basic playlist functionality.  PlaylistMixin is used

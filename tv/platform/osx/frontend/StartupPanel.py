@@ -22,14 +22,14 @@ from objc import YES, NO, nil, signature, IBOutlet
 from AppKit import *
 from Foundation import *
 
-import app
-import util
-import prefs
-import config
-import eventloop
-import platformutils
+from miro import app
+from miro import util
+from miro import prefs
+from miro import config
+from miro import eventloop
+from miro import platformutils
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 
 ###############################################################################
 

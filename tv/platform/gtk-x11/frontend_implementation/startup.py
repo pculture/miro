@@ -15,18 +15,18 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import resources
+from miro.platform import resources
 import MainFrame
 import gtk_queue
 import gtk
 import os
 import shutil
 from threading import Thread
-import util
-import config
-import prefs
-from gtcache import gettext as _
-from gtcache import ngettext
+from miro import util
+from miro import config
+from miro import prefs
+from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 
 class _Search:
     def __init__(self, widgetTree, path):

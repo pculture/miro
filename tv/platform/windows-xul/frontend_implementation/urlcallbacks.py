@@ -23,9 +23,9 @@ when it sees a new URL.  This means that installCallback is called from the
 backend event loop, while runCallback is called from the frontend event loop.
 """
 
-import config
-import prefs
-import signals
+from miro import config
+from miro import prefs
+from miro import signals
 from threading import Lock
 
 callbacks = {}

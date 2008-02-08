@@ -15,28 +15,28 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import resources
-from database import DDBObject
-from template import fillStaticTemplate
-from httpclient import grabURL
+from miro.platform import resources
+from miro.database import DDBObject
+from miro.template import fillStaticTemplate
+from miro.httpclient import grabURL
 from urlparse import urlparse, urljoin
-from xhtmltools import urlencode
+from miro.xhtmltools import urlencode
 from copy import copy
-from util import returnsUnicode, unicodify, checkU
+from miro.util import returnsUnicode, unicodify, checkU
 import re
-import app
-import config
-import indexes
-import prefs
+from miro import app
+from miro import config
+from miro import indexes
+from miro import prefs
 import threading
 import urllib
-import eventloop
-import views
+from miro import eventloop
+from miro import views
 import logging
-import httpclient
-from gtcache import gettext as _
+from miro import httpclient
+from miro.gtcache import gettext as _
 from HTMLParser import HTMLParser,HTMLParseError
-import iconcache
+from miro import iconcache
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 

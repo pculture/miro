@@ -15,16 +15,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import tabs
-import feed
-import item
-import folder
-import playlist
-import guide
-import search
-
 # Returns items that match search
 def matchingItems(obj, searchString):
+    from miro import search
     if searchString is None:
         return True
     searchString = searchString.lower()
@@ -58,6 +51,7 @@ def autoUploadingDownloaders(obj):
     return obj.getState() == 'uploading' and not obj.manualUpload
 
 def notDeleted(obj):
+    from miro import item
     return not (isinstance (obj, item.FileItem) and obj.deleted)
 
 newMemory = {}
@@ -101,6 +95,11 @@ def newWatchableItems(obj):
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.
 def mappableToTab(obj):
+    from miro import tabs
+    from miro import feed
+    from miro import folder
+    from miro import playlist
+    from miro import guide
     return ((isinstance(obj, feed.Feed) and obj.isVisible()) or
             obj.__class__ in (tabs.StaticTab,
                 folder.ChannelFolder, playlist.SavedPlaylist,

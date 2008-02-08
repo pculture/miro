@@ -17,7 +17,7 @@
 
 from itertools import count
 
-import database
+from miro import database
 
 def makeSimpleGetSet(attributeName, changeNeedsSave=True):
     """Creates a simple DDBObject getter and setter for an attribute.

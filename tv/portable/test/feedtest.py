@@ -2,11 +2,11 @@ import unittest
 from tempfile import mkstemp
 from time import sleep
 
-import config
-import prefs
-from frontends.html import dialogs
-import database
-from feed import validateFeedURL, normalizeFeedURL, Feed
+from miro import config
+from miro import prefs
+from miro.frontends.html import dialogs
+from miro import database
+from miro.feed import validateFeedURL, normalizeFeedURL, Feed
 
 from test.framework import DemocracyTestCase, EventLoopTest
 

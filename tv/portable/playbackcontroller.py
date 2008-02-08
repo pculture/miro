@@ -18,13 +18,13 @@
 import os
 import logging
 
-from frontends.html.templatedisplay import TemplateDisplay
-import app
-import config
-import eventloop
-import item
-import prefs
-import signals
+from miro.frontends.html.templatedisplay import TemplateDisplay
+from miro import app
+from miro import config
+from miro import eventloop
+from miro import item
+from miro import prefs
+from miro import signals
 
 class PlaybackControllerBase:
     

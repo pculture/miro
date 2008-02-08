@@ -9,25 +9,25 @@ from threading import RLock, Event, Thread
 import traceback
 from copy import copy
 
-import libtorrent as lt
-from clock import clock
-from download_utils import cleanFilename, nextFreeFilename, checkFilenameExtension, filterDirectoryName
-from download_utils import filenameFromURL, getFileURLPath
-import eventloop
-import httpclient
+import miro.libtorrent as lt
+from miro.clock import clock
+from miro.download_utils import cleanFilename, nextFreeFilename, checkFilenameExtension, filterDirectoryName
+from miro.download_utils import filenameFromURL, getFileURLPath
+from miro import eventloop
+from miro import httpclient
 import datetime
 import logging
-import fileutil
+from miro import fileutil
 
-import config
-import prefs
+from miro import config
+from miro import prefs
 from sha import sha
 
-from dl_daemon import command, daemon
+from miro.dl_daemon import command, daemon
 from datetime import timedelta
-from util import checkF, checkU, stringify
+from miro.util import checkF, checkU, stringify
+from miro.platform.utils import getAvailableBytesForMovies
 
-import platformutils
 import string
 
 chatter = True
@@ -466,7 +466,7 @@ class BGDownloader:
             if size < 0:
                 size = 0
             preserved = config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024
-            available = platformutils.getAvailableBytesForMovies() - preserved
+            available = getAvailableBytesForMovies() - preserved
             accept = (size <= available)
         return accept
 

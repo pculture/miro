@@ -15,16 +15,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import prefs
-import config
-from frontends.html import dialogs
+from miro import prefs
+from miro import config
+from miro.frontends.html import dialogs
 import logging
-import eventloop
-import feedparser
-import signals
+from miro import eventloop
+from miro import feedparser
+from miro import signals
 
-from httpclient import grabURL
-from gtcache import gettext as _
+from miro.httpclient import grabURL
+from miro.gtcache import gettext as _
 
 checkInProgress = False
 

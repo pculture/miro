@@ -15,13 +15,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import filters
-import views
-import config
-import prefs
-import eventloop
-import httpclient
-from clock import clock
+from miro import filters
+from miro import views
+from miro import config
+from miro import prefs
+from miro import eventloop
+from miro import httpclient
+from miro.clock import clock
 from datetime import datetime
 from fasttypes import SortedList
 

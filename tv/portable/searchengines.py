@@ -15,19 +15,19 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import views
-import indexes
+from miro import views
+from miro import indexes
 import re
-import template
-from util import getSingletonDDBObject, checkU, returnsUnicode
-from database import DDBObject
-from xhtmltools import urlencode
-from templatehelper import quoteattr, escape
+from miro import template
+from miro.util import getSingletonDDBObject, checkU, returnsUnicode
+from miro.database import DDBObject
+from miro.xhtmltools import urlencode
+from miro.templatehelper import quoteattr, escape
 from xml.dom.minidom import parse
-import resources
+from miro.platform import resources
 import os
-import config
-import prefs
+from miro import config
+from miro import prefs
 import logging
 
 class SearchEngine(DDBObject):
@@ -125,7 +125,7 @@ def getRequestURL(engineName, query, filterAdultContents=True, limit=50):
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
         someVariable = intentionallyUndefinedVariableToTestCrashReporter
     if query == "LET'S DEBUG DTV: DUMP DATABASE":
-        import database
+        from miro import database
         database.defaultDatabase.liveStorage.dumpDatabase (database.defaultDatabase)
         return u""
     if engineName == u'all':

@@ -1,11 +1,11 @@
 import os
 import tempfile
 
-import util # This adds logging.timing
-import download_utils
-import httpclient
+from miro import util # This adds logging.timing
+from miro import download_utils
+from miro import httpclient
 from test import schedulertest
-from dl_daemon import download
+from miro.dl_daemon import download
 
 def testingNextFreeFilename(filename):
     return tempfile.mktemp()

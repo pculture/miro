@@ -21,13 +21,12 @@ NOTE: For really old versions (before the schema.py module, see
 olddatabaseupgrade.py)
 """
 
-import schema
-import util
+from miro import schema
+from miro import util
 import types
 from urlparse import urlparse
-from storedatabase import SavableObject
-import config
-import prefs
+from miro import config
+from miro import prefs
 
 class DatabaseTooNewError(Exception):
     """Error that we raise when we see a database that is newer than the
@@ -156,7 +155,7 @@ def upgrade11(objectList):
     return set()
 
 def upgrade12(objectList):
-    import filetypes
+    from miro import filetypes
     from datetime import datetime
     changed = set()
     for o in objectList:
@@ -357,7 +356,7 @@ def upgrade27(objectList):
     return set()
 
 def upgrade28(objectList):
-    import filetypes
+    from miro import filetypes
     objectList.sort(key=lambda o:o.savedData['id'])
     changed = set()
     items = set()
@@ -543,7 +542,7 @@ def upgrade40(objectList):
 
 # Turns all strings in data structure to unicode, used by upgrade 41 and 47
 def unicodify(d):
-    from feedparser import FeedParserDict
+    from miro.feedparser import FeedParserDict
     from types import StringType
     if isinstance(d, FeedParserDict):
         for key in d.keys():
@@ -565,7 +564,7 @@ def unicodify(d):
     return d
 
 def upgrade41(objectList):
-    from platformutils import FilenameType
+    from platform.utils import FilenameType
     # This is where John Lennon's ghost sings "Binary Fields Forever"
     if FilenameType == str:
         binaryFields = ['filename','videoFilename', 'shortFilename',
@@ -742,7 +741,7 @@ def upgrade51(objectList):
     return changed
 
 def upgrade52(objectList):
-    import filetypes
+    from miro import filetypes
     changed = set()
     removed = set()
     search_id = 0

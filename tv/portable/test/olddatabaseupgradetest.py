@@ -3,12 +3,12 @@ import shutil
 import tempfile
 import unittest
 
-import database
-import olddatabaseupgrade
-import storedatabase
-import databaseupgrade
-import databasesanity
-import resources
+from miro import database
+from miro import olddatabaseupgrade
+from miro import storedatabase
+from miro import databaseupgrade
+from miro import databasesanity
+from miro import resources
 
 from test.framework import EventLoopTest
 

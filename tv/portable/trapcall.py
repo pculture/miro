@@ -18,9 +18,9 @@
 """trapcall.py -- Execute a callback and trap exceptions.
 """
 
-from clock import clock
+from miro.clock import clock
 import logging
-import signals
+from miro import signals
 
 def trapCall(when, function, *args, **kwargs):
     """Make a call to a function, but trap any exceptions and convert them int

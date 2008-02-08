@@ -17,8 +17,8 @@
 
 """Support for licensing in Miro-consumed feeds."""
 
-from gtcache import gettext as _
-import rdfa
+from miro.gtcache import gettext as _
+from miro import rdfa
 
 DC_TITLE = "http://purl.org/dc/elements/1.1/title"
 

@@ -83,6 +83,7 @@ def set_thread (thread):
     if event_thread is None:
         event_thread = thread
     
+import traceback
 def confirmDBThread():
     global event_thread
     if event_thread is None or event_thread != threading.currentThread():
@@ -90,6 +91,7 @@ def confirmDBThread():
             errorString = "Database event thread not set"
         else:
             errorString = "Database called from %s" % threading.currentThread()
+        traceback.print_stack()
         raise DatabaseThreadError, errorString
 
 def findUnpicklableParts(obj, seen = {}, depth=0):

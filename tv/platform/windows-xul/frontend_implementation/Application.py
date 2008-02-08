@@ -16,20 +16,21 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 import sys
-import app
 import time
-import resources
-import config
-import prefs
 import os
-import searchengines
-import views
-from platformutils import _getLocale as getLocale
-from frontends.html.main import HTMLApplication
-from miroplatform.frontends.html import HTMLDisplay
-from xulhelper import makeService, pcfIDTVPyBridge
-import migrateappname
 import logging
+
+from miro import app
+from miro import config
+from miro import prefs
+from miro.platform import resources
+from miro import searchengines
+from miro import views
+from miro.platform.utils import _getLocale as getLocale
+from miro.frontends.html.main import HTMLApplication
+from miro.platform.frontends.html import HTMLDisplay
+from miro.platform import migrateappname
+from miro.platform.xulhelper import makeService, pcfIDTVPyBridge
 
 ###############################################################################
 #### Application object                                                    ####

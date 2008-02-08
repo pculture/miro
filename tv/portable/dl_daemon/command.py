@@ -2,7 +2,7 @@ import time
 
 import random
 import socket
-import eventloop
+from miro import eventloop
 import logging
 
 DAEMONIC_THREAD_TIMEOUT = 2
@@ -60,7 +60,7 @@ class Command:
 #############################################################################
 class FindHTTPAuthCommand(Command):
     def action(self):
-        import httpauth
+        from miro import httpauth
         id, args = self.args[0], self.args[1:]
         def callback(authHeader):
             c = GotHTTPAuthCommand(self.daemon, id, authHeader)
@@ -69,7 +69,7 @@ class FindHTTPAuthCommand(Command):
 
 class AskForHTTPAuthCommand(Command):
     def action(self):
-        import httpauth
+        from miro import httpauth
         id, args = self.args[0], self.args[1:]
         def callback(authHeader):
             c = GotHTTPAuthCommand(self.daemon, id, authHeader)
@@ -78,18 +78,18 @@ class AskForHTTPAuthCommand(Command):
 
 class UpdateDownloadStatus(Command):
     def action(self):
-        from downloader import RemoteDownloader
+        from miro.downloader import RemoteDownloader
         return RemoteDownloader.updateStatus(*self.args, **self.kws)
 
 class BatchUpdateDownloadStatus(Command):
     def action(self):
-        from downloader import RemoteDownloader
+        from miro.downloader import RemoteDownloader
         for status in self.args[0]:
             RemoteDownloader.updateStatus(status)
 
 class DownloaderErrorCommand(Command):
     def action(self):
-        import signals
+        from miro import signals
         signals.system.failed("In Downloader process", details=self.args[0])
 
 class ShutDownResponseCommand(Command):
@@ -101,73 +101,73 @@ class ShutDownResponseCommand(Command):
 #############################################################################
 class InitialConfigCommand(Command):
     def action(self):
-        import config
-        from dl_daemon import download
+        from miro import config
+        from miro.dl_daemon import download
         config.setDictionary(*self.args, **self.kws)
         download.configReceived()
 
 class UpdateConfigCommand(Command):
     def action(self):
-        import config
+        from miro import config
         config.updateDictionary(*self.args, **self.kws)
 
 class StartNewDownloadCommand(Command):
     def action(self):
-        from dl_daemon import download
+        from miro.dl_daemon import download
         return download.startNewDownload(*self.args, **self.kws)
 
 class StartDownloadCommand(Command):
     def action(self):
-        from dl_daemon import download
+        from miro.dl_daemon import download
         return download.startDownload(*self.args, **self.kws)
 
 class PauseDownloadCommand(Command):
     def action(self):
-        from dl_daemon import download
+        from miro.dl_daemon import download
         return download.pauseDownload(*self.args, **self.kws)
 
 class StopDownloadCommand(Command):
     def action(self):
-        from dl_daemon import download
+        from miro.dl_daemon import download
         return download.stopDownload(*self.args, **self.kws)
 
 class StopUploadCommand(Command):
     def action(self):
-        from dl_daemon import download
+        from miro.dl_daemon import download
         return download.stopUpload(*self.args, **self.kws)
 
 class GetDownloadStatusCommand(Command):
     def action(self):
-        from dl_daemon import download
+        from miro.dl_daemon import download
         return download.getDownloadStatus(*self.args, **self.kws)
 
 class RestoreDownloaderCommand(Command):
     def action(self):
-        from dl_daemon import download
+        from miro.dl_daemon import download
         return download.restoreDownloader(*self.args, **self.kws)
 
 class MigrateDownloadCommand(Command):
     def action(self):
-        from dl_daemon import download
+        from miro.dl_daemon import download
         return download.migrateDownload(*self.args, **self.kws)
 
 class GotHTTPAuthCommand(Command):
     def action(self):
         id, authHeader = self.args
-        import httpauth 
+        from miro import httpauth 
         # note since we're in the downloader process here, httpauth is
         # dl_daemon/private/httpauth.py
         httpauth.handleHTTPAuthResponse(id, authHeader)
 
 class ShutDownCommand(Command):
     def response_sent(self):
-        import eventloop
+        from miro import eventloop
         eventloop.quit()
         logging.info ("Shutdown complete")
 
     def action(self):
         starttime = time.time()
-        from dl_daemon import download
+        from miro.dl_daemon import download
         download.shutDown()
         import threading
         eventloop.threadPoolQuit()

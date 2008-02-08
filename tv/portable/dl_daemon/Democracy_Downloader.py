@@ -17,13 +17,22 @@
 
 # Democracy download daemon - background process
 
+def override_modules():
+    import miro
+    import miro.dl_daemon.private.config
+    import miro.dl_daemon.private.httpauth
+    import miro.dl_daemon.private.resources
+    miro.config = miro.dl_daemon.private.config
+    miro.httpauth = miro.dl_daemon.private.httpauth
+    miro.resources = miro.dl_daemon.private.resources
+
 def launch():
     # Make all output flush immediately.
     # Don't add extra import statements here.  If there's a problem importting
     # something we want to see the error in the log.
     import sys
     import os
-    import util
+    from miro import util
     import logging
     logPath = os.environ.get('DEMOCRACY_DOWNLOADER_LOG')
     if logPath is not None:
@@ -37,10 +46,12 @@ def launch():
     sys.stdout = util.AutoflushingStream(sys.stdout)
     sys.stderr = util.AutoflushingStream(sys.stderr)
 
-    import platformutils
-    platformutils.setupLogging(inDownloader=True)
+    override_modules()
+
+    from miro.platform.utils import setupLogging, initializeLocale
+    setupLogging(inDownloader=True)
     util.setupLogging()
-    platformutils.initializeLocale()
+    initializeLocale()
 
     if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':
         logging.info ("*** Starting new downloader log ***")
@@ -51,11 +62,10 @@ def launch():
     # Start of normal imports
     import threading
 
-    from dl_daemon import daemon
-    # This isn't used here, we just want to load it sooner.
-    from dl_daemon import download
-    import eventloop
-    import httpclient
+    from miro.dl_daemon import daemon
+    from miro.dl_daemon import download
+    from miro import eventloop
+    from miro import httpclient
 
     port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])
     server = daemon.DownloaderDaemon(port)
@@ -76,7 +86,7 @@ def launch():
     # Hack to init gettext after we can get config information
     #
     # See corresponding hack in gtcache.py
-    import gtcache
+    from miro import gtcache
     gtcache.init()
     logging.info ("*** Daemon ready ***")
 

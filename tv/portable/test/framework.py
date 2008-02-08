@@ -1,18 +1,18 @@
 import unittest
 import threading
 
-import database
-import eventloop
-import frontend
-import app
-import downloader
-import views
-import util
-import databaseupgrade
-import signals
-import storedatabase
-import subscription
-import selection
+from miro import database
+from miro import eventloop
+from miro import frontend
+from miro import app
+from miro import downloader
+from miro import views
+from miro import util
+from miro import databaseupgrade
+from miro import signals
+from miro import storedatabase
+from miro import subscription
+from miro import selection
 from time import sleep
 
 util.setupLogging()

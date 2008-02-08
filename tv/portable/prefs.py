@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 import os
-import util
+from miro import util
 
 class Pref:
     def __init__(self, **kwds):
@@ -122,8 +122,6 @@ NON_VIDEO_DIRECTORY = \
     Pref(key='NonVideoDirectory',  default=None, platformSpecific=True)
 SUPPORT_DIRECTORY = \
     Pref(key='SupportDirectory', default=None, platformSpecific=True)
-THEME_DIRECTORY = \
-    Pref(key='ThemeDirectory', default=None, platformSpecific=True)
 ICON_CACHE_DIRECTORY = \
     Pref(key='IconCacheDirectory', default=None, platformSpecific=True)
 DB_PATHNAME = \

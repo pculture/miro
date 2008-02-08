@@ -102,7 +102,7 @@ def _hasVideoType(enclosure):
              enclosure['type'] == u"application/x-shockwave-flash"))
 
 def _hasVideoExtension(enclosure, key):
-    import download_utils
+    from miro import download_utils
     if key in enclosure:
         elems = download_utils.parseURL(enclosure[key], split_path=True)
         return isAllowedFilename(elems[3])

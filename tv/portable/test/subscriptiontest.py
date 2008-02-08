@@ -1,7 +1,7 @@
 import os
 import unittest
 
-import subscription
+from miro import subscription
 
 from test.framework import DemocracyTestCase
 

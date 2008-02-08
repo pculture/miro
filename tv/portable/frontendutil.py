@@ -24,10 +24,10 @@ Miro modules.
 
 import logging
 
-import app
-import config
-import httpclient
-import prefs
+from miro import app
+from miro import config
+from miro import httpclient
+from miro import prefs
 
 sendingCrashReport = 0
 
@@ -49,7 +49,7 @@ def sendBugReport(report, description, send_database):
     if send_database:
         try:
             logging.info("Sending entire database")
-            import database
+            from miro import database
             backupfile = database.defaultDatabase.liveStorage.backupDatabase()
         except:
             traceback.print_exc()

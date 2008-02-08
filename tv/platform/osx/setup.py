@@ -45,7 +45,8 @@ ROOT_DIR = os.path.join(ROOT_DIR, '../..')
 ROOT_DIR = os.path.normpath(ROOT_DIR)
 
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
-sys.path.insert(0, PORTABLE_DIR)
+PLATFORM_DIR = os.path.join(ROOT_DIR, 'platform', 'osx')
+PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'platform')
 
 #SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
 #SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
@@ -108,8 +109,14 @@ from distutils.extension import Extension
 from distutils.cmd import Command
 from distutils.errors import DistutilsFileError
 
-import util
-import template_compiler
+# when we install the portable modules, they will be in the miro package, but
+# at this point, they are in a package named "portable", so let's hack it
+sys.path.append(ROOT_DIR)
+import portable
+sys.modules['miro'] = portable
+
+from miro import util
+from miro import template_compiler
 
 # =============================================================================
 # Utility function used to extract stuff from the binary kit
@@ -225,7 +232,7 @@ class MiroBuild (py2app):
         self.setup_config()
         self.setup_distribution()
         self.setup_options()
-                    
+
     def setup_config(self):
         # Get subversion revision information.
         revision = util.queryRevision(ROOT_DIR)
@@ -269,8 +276,25 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_sorts_ext())
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
         self.distribution.ext_modules.append(self.get_libtorrent_ext())
-        
-        self.packages = ['dl_daemon']        
+
+        self.packages = self.distribution.packages = [
+            'miro',
+            'miro.dl_daemon',
+            'miro.compiled_templates',
+            'miro.compiled_templates.unittest',
+            'miro.dl_daemon.private',
+            'miro.frontends',
+            'miro.frontends.html',
+            'miro.platform',
+            'miro.platform.frontend',
+            'miro.platform.frontends',
+            'miro.platform.frontends.html',
+        ]
+
+        self.distribution.package_dir = {
+            'miro': PORTABLE_DIR,
+            'miro.platform': PLATFORM_PACKAGE_DIR,
+        }
         self.iconfile = self.config.get_icon_file()
         
         excludedResources = ['.svn', '.DS_Store']
@@ -288,31 +312,31 @@ class MiroBuild (py2app):
     def get_idletime_ext(self):
         idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
         idletime_link_args = ['-framework', 'CoreFoundation']
-        return Extension("idletime", sources=idletime_src, extra_link_args=idletime_link_args)
+        return Extension("miro.platform.idletime", sources=idletime_src, extra_link_args=idletime_link_args)
     
     def get_keychain_ext(self):
         keychain_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'keychain.c'))
         keychain_link_args = ['-framework', 'Security']
-        return Extension("keychain", sources=keychain_src, extra_link_args=keychain_link_args)
+        return Extension("miro.platform.keychain", sources=keychain_src, extra_link_args=keychain_link_args)
     
     def get_qtcomp_ext(self):
         qtcomp_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'qtcomp.c'))
         qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'Quicktime']
-        return Extension("qtcomp", sources=qtcomp_src, extra_link_args=qtcomp_link_args)
+        return Extension("miro.platform.qtcomp", sources=qtcomp_src, extra_link_args=qtcomp_link_args)
     
     def get_database_ext(self):
         database_src = glob(os.path.join(ROOT_DIR, 'portable', 'database.pyx'))
-        return Extension("database", sources=database_src)
+        return Extension("miro.database", sources=database_src)
     
     def get_sorts_ext(self):
         sorts_src = glob(os.path.join(ROOT_DIR, 'portable', 'sorts.pyx'))
-        return Extension("sorts", sources=sorts_src)
+        return Extension("miro.sorts", sources=sorts_src)
     
     def get_fasttypes_ext(self):
         fasttypes_src = glob(os.path.join(ROOT_DIR, 'portable', 'fasttypes.cpp'))
         fasttypes_inc_dirs = [BOOST_INCLUDE_DIR]
         fasttypes_extras = [PYTHON_LIB, BOOST_PYTHON_LIB]
-        return Extension("fasttypes", sources=fasttypes_src, 
+        return Extension("miro.fasttypes", sources=fasttypes_src, 
                                       include_dirs=fasttypes_inc_dirs, 
                                       extra_objects=fasttypes_extras)
     
@@ -347,7 +371,7 @@ class MiroBuild (py2app):
                                   "-DHAVE_SSL=1",
                                   "-DNDEBUG"]
 
-        return Extension("libtorrent", sources=libtorrent_src, 
+        return Extension("miro.libtorrent", sources=libtorrent_src, 
                                        include_dirs=libtorrent_inc_dirs,
                                        libraries=libtorrent_libs, 
                                        extra_objects=libtorrent_extras,

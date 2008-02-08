@@ -26,15 +26,15 @@ from WebKit import *
 from Foundation import *
 from PyObjCTools import AppHelper
 
-from frontends.html import keyboard
-from frontends.html.displaybase import Display
-import prefs
-import config
-import resources
-import platformutils
-import templatehelper
+from miro.frontends.html import keyboard
+from miro.frontends.html.displaybase import Display
+from miro import prefs
+from miro import config
+from miro import resources
+from miro import platformutils
+from miro import templatehelper
 
-from frontend.MainFrame import mapKey, handleKey
+from miro.frontend.MainFrame import mapKey, handleKey
 
 ###############################################################################
 # These are used by the channel guide. This platform uses the

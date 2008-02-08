@@ -36,12 +36,12 @@ import threading
 import types
 import time
 
-from schema import ObjectSchema, SchemaInt, SchemaFloat, SchemaSimpleItem
-from schema import SchemaObject, SchemaBool, SchemaDateTime, SchemaTimeDelta
-from schema import SchemaList, SchemaDict
+from miro.schema import ObjectSchema, SchemaInt, SchemaFloat, SchemaSimpleItem
+from miro.schema import SchemaObject, SchemaBool, SchemaDateTime, SchemaTimeDelta
+from miro.schema import SchemaList, SchemaDict
 from fasttypes import LinkedList
 from types import NoneType
-import storedatabase
+from miro import storedatabase
 
 ######################### STAGE 1 helpers  #############################
 # Below is a snapshot of what the database looked like at 0.8.2.  DDBObject
@@ -67,8 +67,9 @@ import storedatabase
 # version 6 we avoid that bug, while still giving the people using version 1
 # and 2 an upgrade path that does something.
 
+
 def defaultFeedIconURL():
-    import resources
+    from miro.platform import resources
     return resources.url("images/feedicon.png")
 
 #Dummy class for removing bogus FileItem instances

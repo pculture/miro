@@ -19,7 +19,7 @@
 # "Compiles" Democracy templates to Python code
 #
 
-from util import checkU
+from miro.util import checkU
 
 ###############################################################################
 #### Functions used in repeating templates                                 ####
@@ -138,7 +138,7 @@ def genExecuteTemplate(varname, tid, prefix, args):
 
 from xml import sax
 from StringIO import StringIO # Oh! Why can't cStringIO support unicode?
-from templatehelper import quoteattr, escape, HTMLPattern, attrPattern, resourcePattern, rawAttrPattern, generateId
+from miro.templatehelper import quoteattr, escape, HTMLPattern, attrPattern, resourcePattern, rawAttrPattern, generateId
 import re
 import os
 import stat
@@ -302,18 +302,18 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
 
     def render(self, fileobj):
         fileobj.write(u'# This is a generated file. Do not edit.\n')
-        fileobj.write(u'from template import Handle, fillAttr, quoteAndFillAttr, fillStaticTemplate\n')
         fileobj.write(u'from StringIO import StringIO\n')
-        fileobj.write(u'from xhtmltools import urlencode\n')
-        fileobj.write(u'from templatehelper import quoteattr, escape\n')
         fileobj.write(u'from string import Template\n')
-        fileobj.write(u'import app\n')
-        fileobj.write(u'import views\n')
-        fileobj.write(u'import sorts\n')
-        fileobj.write(u'import indexes\n')
-        fileobj.write(u'import filters\n')
-        fileobj.write(u'import resources\n')
-        fileobj.write(u'import gtcache\n')
+        fileobj.write(u'from miro.xhtmltools import urlencode\n')
+        fileobj.write(u'from miro.template import Handle, fillAttr, quoteAndFillAttr, fillStaticTemplate\n')
+        fileobj.write(u'from miro.templatehelper import quoteattr, escape\n')
+        fileobj.write(u'from miro import app\n')
+        fileobj.write(u'from miro import views\n')
+        fileobj.write(u'from miro import sorts\n')
+        fileobj.write(u'from miro import indexes\n')
+        fileobj.write(u'from miro import filters\n')
+        fileobj.write(u'from miro.platform import resources\n')
+        fileobj.write(u'from miro import gtcache\n')
         fileobj.write(u'_ = gtcache.gettext\n')
         fileobj.write(u'def fillTemplate(domHandler, dtvPlatform, eventCookie, bodyTagExtra, *args, **kargs):\n')
         self.handle.render(fileobj)

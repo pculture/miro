@@ -15,9 +15,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import app
-import config
-import prefs
+from miro import app
+from miro import config
+from miro import prefs
 import logging
 
 """Base class for displays. """
@@ -118,7 +118,7 @@ class VideoDisplayBase (Display):
         return False
     
     def selectItem(self, anItem, renderer):
-        from frontends.html.templatedisplay import TemplateDisplay
+        from miro.frontends.html.templatedisplay import TemplateDisplay
         self.stopOnDeselect = True
         app.controller.videoInfoItem = anItem
         templ = TemplateDisplay('video-info', 'default')

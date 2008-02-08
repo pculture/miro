@@ -20,45 +20,45 @@ from HTMLParser import HTMLParser,HTMLParseError
 from cStringIO import StringIO
 from copy import copy
 from datetime import datetime, timedelta
-from gtcache import gettext as _
-from feedparser import FeedParserDict
+from miro.gtcache import gettext as _
+from miro.feedparser import FeedParserDict
 from inspect import isfunction
 from new import instancemethod
 from urlparse import urlparse, urljoin
-from xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, urlencode, urldecode
+from miro.xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, urlencode, urldecode
 import os
 import string
 import re
 import traceback
 import xml
 
-from database import defaultDatabase, DatabaseConstraintError, DDBObject
-from databasehelper import makeSimpleGetSet
-from httpclient import grabURL, NetworkError
-from templatehelper import quoteattr, escape, toUni
+from miro.database import defaultDatabase, DatabaseConstraintError, DDBObject
+from miro.databasehelper import makeSimpleGetSet
+from miro.httpclient import grabURL, NetworkError
+from miro.templatehelper import quoteattr, escape, toUni
 from string import Template
-import app
-import config
-import iconcache
-from frontends.html import dialogs
-import eventloop
-import filters
-import folder
-import prefs
-import resources
-import downloader
-from util import (returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure)
-from fileutil import miro_listdir
-from platformutils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
-import filetypes
-import item as itemmod
-import views
-import indexes
-import searchengines
-import sorts
+from miro import app
+from miro import config
+from miro import iconcache
+from miro.frontends.html import dialogs
+from miro import eventloop
+from miro import filters
+from miro import folder
+from miro import prefs
+from miro.platform import resources
+from miro import downloader
+from miro.util import (returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure)
+from miro.fileutil import miro_listdir
+from miro.platform.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
+from miro import filetypes
+from miro import item as itemmod
+from miro import views
+from miro import indexes
+from miro import searchengines
+from miro import sorts
 import logging
 import shutil
-from clock import clock
+from miro.clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 
@@ -85,7 +85,7 @@ def defaultFeedIconURLTablist():
 
 # Universal Feed Parser http://feedparser.org/
 # Licensed under Python license
-import feedparser
+from miro import feedparser
 
 #
 # Adds a new feed using USM
@@ -789,7 +789,7 @@ class Feed(DDBObject):
 #        for item in self.items:
 #            item.signalChange(needsSave=False)
         if self.maxNew >= oldMaxNew or self.maxNew < 0:
-            import autodler
+            from miro import autodler
             autodler.autoDownloader.startDownloads()
 
     def rename(self):

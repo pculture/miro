@@ -6,12 +6,12 @@ import os
 import tempfile
 import unittest
 
-import iconcache
-import item
-import feed
-import databasesanity
-import database
-import util
+from miro import iconcache
+from miro import item
+from miro import feed
+from miro import databasesanity
+from miro import database
+from miro import util
 
 from test.framework import DemocracyTestCase
 

@@ -2,7 +2,7 @@
 # -*- mode: python -*-
 
 # This comes first.  Seriously.
-import miro.xlibhelper as xlibhelper
+from miro.platform import xlibhelper
 if xlibhelper.XInitThreads() == 0:
     print "WARNING: XInitThreads() failed!"
 
@@ -13,24 +13,19 @@ import optparse
 import pygtk
 pygtk.require('2.0')
 
-import miro
-# Make sure miro modules are on the search path
-sys.path.insert(0, os.path.abspath(os.path.dirname(miro.__file__)))
-
-import upgrade
+from miro.platform import upgrade
 upgrade.upgrade()
 
 # Set up gettext before everything else
-import gtcache
+from miro import gtcache
 gtcache.init()
 
-import config
-import controller
-import frontend
-import miroplatform.options
-import platformutils
-import prefs
-import singleclick
+from miro import config
+from miro import controller
+from miro import platform
+from miro.platform import options
+from miro import prefs
+from miro import singleclick
 
 if '--unittest' in sys.argv:
     # handle this outside optparse, because unittest has its own option set
@@ -54,10 +49,10 @@ parser.add_option("--xine-driver", metavar="<driver>",
 parser.add_option('--enable-xine-hack', dest="use_xv_hack", action="store_true", help='Enable the Xine XV Hack (default)')
 parser.add_option('--disable-xine-hack', dest="use_xv_hack", action="store_false", help='Disable the Xine XV Hack')
 parser.add_option('--theme', dest='theme', metavar='<theme>', help='Theme to use')
-(options, args) = parser.parse_args()
+(parsed_options, args) = parser.parse_args()
 
 def startapp():
-    platformutils.initializeLocale()
+    platform.utils.initializeLocale()
     # Create miro directories in the user's home
     support_dir = config.get(prefs.SUPPORT_DIRECTORY)
     if not os.path.exists(support_dir):
@@ -68,17 +63,16 @@ def startapp():
     # command line, so config.get() wouldn't return the correct value
     # anyway.  Maybe, eventually, we should integrate command line
     # config support into prefs.py and config.py.
-    frontend.use_xine_hack = options.use_xv_hack
-    if frontend.use_xine_hack is None:
-        frontend.use_xine_hack = config.get(prefs.USE_XINE_XV_HACK)
-    #print "USING XINE XV HACK: %s" % frontend.use_xine_hack
-    frontend.defaultXineDriver = options.xine_driver
-    if frontend.defaultXineDriver is None:
-        frontend.defaultXineDriver = config.get(prefs.DEFAULT_XINE_DRIVER)
-    #print "Xine driver is %s" % frontend.defaultXineDriver
-    if options.theme:
-        frontend.themeName = options.theme
-        print 'Theme is %s' % options.theme
+    if parsed_options.use_xv_hack is None:
+        parsed_options.use_xv_hack = config.get(prefs.USE_XINE_XV_HACK)
+    if parsed_options.xine_driver is None:
+        parsed_options.xine_driver = config.get(prefs.DEFAULT_XINE_DRIVER)
+    options.shouldSyncX = parsed_options.sync
+    options.useXineHack = parsed_options.use_xv_hack
+    options.defaultXineDriver = parsed_options.xine_driver
+    if parsed_options.theme:
+        options.themeName = parsed_options.theme
+        print 'Theme is %s' % parsed_options.theme
 
     for i in xrange(len(args)):
         if args[i].startswith('file://'):
@@ -86,27 +80,27 @@ def startapp():
     singleclick.setCommandLineArgs(args)
 
     controller.main()
-if options.version:
+if parsed_options.version:
     print "Miro"
     print "Version: %s" % config.get(prefs.APP_VERSION)
     print ""
     print "Miro comes with ABSOLUTELY NO WARRANTY."
     print "This is free software, and you are welcome to redistribute it"
     print "under certain conditions.  See license.txt for details."
-elif options.profile:
+elif parsed_options.profile:
     import profile
     import eventloop
     def main():
         import controller
         controller.main()
-    if (options.bias):
-        profile.Profile.bias = options.bias
-    eventloop.profile_file = options.profile
-    profile.run ('main()', options.profile)
+    if (parsed_options.bias):
+        profile.Profile.bias = parsed_options.bias
+    eventloop.profile_file = parsed_options.profile
+    profile.run ('main()', parsed_options.profile)
 else:
     try:
         import dbus
-        import onetime
+        from miro.platform import onetime
         try:
             onetime.OneTime()
             startapp()

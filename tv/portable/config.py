@@ -19,16 +19,15 @@ from threading import RLock
 import os
 import traceback
 
-import util
-import prefs
-import resources
-import eventloop
-import platformcfg
+from miro.appconfig import AppConfig
+from miro import app
+from miro import util
+from miro import prefs
+from miro.platform import config as platformcfg
+from miro.platform import resources
 import urllib
 import logging
 
-__appConfig = None
-__themeConfig = dict()
 __data = None
 __lock = RLock()
 __callbacks = set()
@@ -42,42 +41,19 @@ def removeChangeCallback(callback):
 # The theme parameter is a horrible hack to load the theme before we
 # can import other modules. pybridge makes the extra, early call
 def load(theme = None):
-    global __appConfig
-    global __themeConfig
     global __data
     __lock.acquire()
     try:
-        if __appConfig is None and __data is None:
-            # There's some sleight-of-hand here. The Windows port needs to
-            # look up config.LONG_APP_NAME and config.PUBLISHER to compute
-            # the path to the data file that is read when load() is
-            # called. Setting __appConfig to a true value (and populating
-            # it with those keys) before calling load() ensures that (a)
-            # the values will be available and (b) we won't get caught in
-            # an infinite loop of load()s. But in general, you shouldn't
-            # call config.get() or config.set() from platformcfg.load()
-            # unless you know exactly what you are doing, and maybe not
-            # even then.
-            __appConfig = util.readSimpleConfigFile(resources.path('app.config'))
+        app.configfile = AppConfig(theme)
+        # Load the preferences
+        __data = platformcfg.load()
+        if __data is None:
+            __data = dict()
 
-            # Load the preferences
-            __data = platformcfg.load()
-            if __data is None:
-                __data = dict()
+        # This is a bit of a hack to automagically get the serial
+        # number for this platform
+        prefs.APP_SERIAL.key = ('appSerial-%s' % get(prefs.APP_PLATFORM))
 
-            # This is a bit of a hack to automagically get the serial
-            # number for this platform
-            prefs.APP_SERIAL.key = ('appSerial-%s' % get(prefs.APP_PLATFORM))
-        if theme is not None:
-            logging.info("Using theme %s" % theme)
-            try:
-                __themeConfig = util.readSimpleConfigFile(os.path.join(
-                    get(prefs.THEME_DIRECTORY),
-                    theme,
-                    'app.config'))
-            except:
-                logging.warn("Failed to load theme %s" % theme)
-                
     finally:
         __lock.release()
 
@@ -98,10 +74,8 @@ def get(descriptor, useThemeData=True):
             return __data[descriptor.key]
         elif descriptor.platformSpecific:
             return platformcfg.get(descriptor)
-        elif descriptor.key in __themeConfig and useThemeData:
-            return __themeConfig[descriptor.key]
-        elif descriptor.key in __appConfig:
-            return __appConfig[descriptor.key]
+        if app.configfile.contains(descriptor.key, useThemeData):
+            return app.configfile.get(descriptor.key, useThemeData)
         else:
             return descriptor.default
     finally:
@@ -110,14 +84,6 @@ def get(descriptor, useThemeData=True):
 def getList(descriptor):
     return [urllib.unquote(i) for i in get(descriptor).split(",") if i]
 
-def getAppConfig():
-    __lock.acquire()
-    try:
-        __checkValidity()
-        return __appConfig.copy()
-    finally:
-        __lock.release()
-    
 def set(descriptor, value):
     __lock.acquire()
     logging.debug("Setting %s to %s", descriptor.key, value)
@@ -133,10 +99,11 @@ def setList(descriptor, value):
     set(descriptor, ','.join ([urllib.quote(i) for i in value]))
 
 def __checkValidity():
-    if __appConfig == None:
+    if __data == None:
         load()
 
 def __notifyListeners(key, value):
+    from miro import eventloop
     for callback in __callbacks:
         eventloop.addIdle(callback, 'config callback: %s' % callback,
                 args=(key,value))

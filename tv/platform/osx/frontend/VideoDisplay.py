@@ -22,12 +22,12 @@ from objc import YES, NO, nil, IBOutlet
 from AppKit import *
 from Foundation import *
 
-import app
-import eventloop
-import platformcfg
-import platformutils
-from frontends.html.displaybase import VideoDisplayBase
-from playbackcontroller import PlaybackControllerBase
+from miro import app
+from miro import eventloop
+from miro import platformcfg
+from miro import platformutils
+from miro.frontends.html.displaybase import VideoDisplayBase
+from miro.playbackcontroller import PlaybackControllerBase
 
 from MainFrame import Slider, handleKey
 from QuicktimeRenderer import QuicktimeRenderer

@@ -15,19 +15,19 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-import app
+from miro import app
 import xine
 import gtk
 import traceback
 import gobject
-import eventloop
-import config
-import prefs
+from miro import eventloop
+from miro import config
+from miro import prefs
 import os
-from miroplatform import options
-import resources
-from download_utils import nextFreeFilename
-from platformutils import confirmMainThread
+from miro.platform import options
+from miro.platform import resources
+from miro.download_utils import nextFreeFilename
+from miro.platform.utils import confirmMainThread
 from gtk_queue import gtkSyncMethod, gtkAsyncMethod
 
 def waitForAttach(func):

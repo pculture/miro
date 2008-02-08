@@ -25,10 +25,10 @@ import threading
 import time
 import traceback
 
-import config
-import prefs
+from miro import config
+from miro import prefs
 import sys
-import util
+from miro import util
 
 class SignalEmitter:
     def __init__(self, *signal_names):

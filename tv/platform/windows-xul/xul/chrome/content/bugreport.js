@@ -18,7 +18,7 @@
 */
 
 function openBugReportWindow() {
-  var py = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge);
+  var py = makeService("@participatoryculture.org/dtv/pybridge;1",Components.interfaces.pcfIDTVPyBridge, false);
 
   py.openBugTracker();
 }

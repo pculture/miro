@@ -15,9 +15,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-from download_utils import parseURL
-from frontends.html import dialogs
-import eventloop
+from miro.download_utils import parseURL
+from miro.frontends.html import dialogs
+from miro import eventloop
 
 def formatAuthString(auth):
     return "%s %s" % (auth.getAuthScheme(), auth.getAuthToken())
@@ -27,7 +27,7 @@ def findHTTPAuth(callback, host, path):
     be called with a string to use for the Authorization header or None if we
     can't find anything in the DB.
     """
-    import downloader
+    from miro import downloader
 
     auth = downloader.findHTTPAuth(host, path)
     if auth is not None:
@@ -42,7 +42,7 @@ def askForHTTPAuth(callback, url, realm, authScheme):
 
     scheme, host, port, path = parseURL(url)
     def handleLoginResponse(dialog):
-        import downloader
+        from miro import downloader
         if dialog.choice == dialogs.BUTTON_OK:
             auth = downloader.HTTPAuthPassword(dialog.username,
                     dialog.password, host, realm, path, authScheme)

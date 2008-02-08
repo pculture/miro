@@ -21,7 +21,7 @@ import logging
 import os
 import traceback
 
-from platformutils import resizeImage
+from miro.platform.utils import resizeImage
 
 def _resizedKey(width, height):
     return u'%sx%s' % (width, height)

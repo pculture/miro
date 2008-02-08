@@ -99,9 +99,9 @@ def HIWORD(dword): return dword >> 16
 WNDPROCTYPE = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, UINT, WPARAM, LPARAM)
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, LPARAM)
 
-import config
-import prefs
-import resources
+from miro import config
+from miro import prefs
+from miro.platform import resources
 
 class GUID(ctypes.Structure):
     _fields_ = [("Data1", ctypes.c_int32),

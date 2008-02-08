@@ -27,5 +27,5 @@ platform = 'osx'
 root = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), '..', '..')
 sys.path[0:0]=['%s/platform/%s' % (root, platform), '%s/platform' % root, '%s/portable' % root]
 
-import app
+from miro import app
 app.main()

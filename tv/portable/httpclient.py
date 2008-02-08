@@ -32,24 +32,24 @@ import re
 import socket
 import traceback
 from urlparse import urljoin
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 
 from base64 import b64encode
 
-from clock import clock
+from miro.clock import clock
 
-import httpauth
-import config
-import prefs
-from download_utils import URIPattern, cleanFilename, parseURL, defaultPort, getFileURLPath, filenameFromURL
-from xhtmltools import URLEncodeDict, multipartEncode
-import eventloop
-import util
+from miro import httpauth
+from miro import config
+from miro import prefs
+from miro.download_utils import URIPattern, cleanFilename, parseURL, defaultPort, getFileURLPath, filenameFromURL
+from miro.xhtmltools import URLEncodeDict, multipartEncode
+from miro import eventloop
+from miro import util
 import sys
 import time
 import urllib
-import signals
-import trapcall
+from miro import signals
+from miro import trapcall
 
 PIPELINING_ENABLED = True
 SOCKET_READ_TIMEOUT = 60

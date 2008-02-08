@@ -46,21 +46,21 @@ import os
 import traceback
 import shutil
 
-import config
-import database
-import databaseupgrade
-import prefs
-import util
-import schema as schema_mod
-import eventloop
-import app
-from frontends.html import dialogs
+from miro import config
+from miro import database
+from miro import databaseupgrade
+from miro import prefs
+from miro import util
+from miro import schema as schema_mod
+from miro import eventloop
+from miro import app
+from miro.frontends.html import dialogs
 import logging
 from zipfile import ZipFile
 import tempfile
 from random import randrange, seed
 import os.path
-import platformutils
+from miro.platform.utils import exit
 
 try:
     import bsddb.db
@@ -72,9 +72,9 @@ try:
 except ImportError:
     import sqlite3 as sql
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 
-from clock import clock
+from miro.clock import clock
 
 # FILEMAGIC should be the first portion of the database file.  After that the
 # file will contain pickle data
@@ -110,6 +110,16 @@ class SavableObject:
     always safely unpickle them.
     """
 
+    # This is a complete hack to prevent problems if data is saved with a
+    # newer version of Miro and an older version of Miro tries to open it.
+    # Now adays the name of this module is "miro.storedatabase", but for older
+    # versions it's just "storedatabase".  Hacking the module name here
+    # changes where pickle tries to unpickle it from.
+    #
+    # In both cases "storedatabase" works, because we try to unpickle it from
+    # inside the miro directory.
+    __module__ = 'storedatabase'
+
     def __init__(self, classString):
         self.classString = classString
         self.savedData = {}
@@ -132,7 +142,7 @@ class ConverterBase(object):
     def __init__(self, objectSchemas=None):
         """Contruct a converter.  object schemas is a list of ObjectSchema
         objects to use.  If none is given (the default), the schemas will be
-        taken from schema.objectSchemas.
+        taken from miro.schema.objectSchemas.
         """
 
         if objectSchemas is None:
@@ -498,7 +508,7 @@ def getObjects(pathname, convertOnFail):
     except BadFileFormatError:
         if convertOnFail:
             logging.info ("trying to convert database from old version")
-            import olddatabaseupgrade
+            from miro import olddatabaseupgrade
             olddatabaseupgrade.convertOldDatabase(pathname)
             objects = restoreObjectList(pathname)
             logging.info ("*** Conversion Successfull ***")
@@ -519,7 +529,7 @@ def getObjects(pathname, convertOnFail):
         else:
             raise
 
-    import databasesanity
+    from miro import databasesanity
     try:
         databasesanity.checkSanity(objects, quiet=True, 
                 reallyQuiet=(not util.chatter))
@@ -596,10 +606,10 @@ class LiveStorageBDB:
             if end - start > 0.05 and util.chatter:
                 logging.timing ("Database load slow: %.3f", end - start)
         except bsddb.db.DBNoSpaceError:
-            platformutils.exit(28)
+            exit(28)
 
     def dumpDatabase(self, db):
-        from download_utils import nextFreeFilename
+        from miro.download_utils import nextFreeFilename
         output = open (nextFreeFilename (os.path.join (config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
         global indentation
         indentation = 0
@@ -992,7 +1002,7 @@ class LiveStorage:
     );""")
 
     def dumpDatabase(self, db):
-        from download_utils import nextFreeFilename
+        from miro.download_utils import nextFreeFilename
         output = open (nextFreeFilename (os.path.join (config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
         global indentation
         indentation = 0

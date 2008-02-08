@@ -4,9 +4,9 @@ import os
 import tempfile
 
 from test.framework import DemocracyTestCase
-import download_utils
-import util
-import xhtmltools
+from miro import download_utils
+from miro import util
+from miro import xhtmltools
 
 class FakeStream:
     """Fake streams are used for the AutoflushingStream test.  They don't

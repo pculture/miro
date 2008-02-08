@@ -30,19 +30,19 @@ from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMa
 
 from gestalt import gestalt
 
-import app
-import views
-import prefs
-import config
-from frontends.html import dialogs
-from frontends.html.main import HTMLApplication
-import filetypes
-import eventloop
-import autoupdate
-import singleclick
-import platformutils
+from miro import app
+from miro import views
+from miro import prefs
+from miro import config
+from miro.frontends.html import dialogs
+from miro.frontends.html.main import HTMLApplication
+from miro import filetypes
+from miro import eventloop
+from miro import autoupdate
+from miro import singleclick
+from miro import platformutils
 
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 
 import Preferences
 import GrowlNotifier

@@ -17,12 +17,12 @@
 
 from copy import copy
 from datetime import datetime, timedelta
-from gtcache import gettext as _
+from miro.gtcache import gettext as _
 from math import ceil
-from xhtmltools import unescape,xhtmlify
+from miro.xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
-from util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure
-from platformutils import FilenameType
+from miro.util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure
+from miro.platform.utils import FilenameType, filenameToUnicode, unicodeToFilename
 import locale
 import os
 import os.path
@@ -31,40 +31,38 @@ import urlparse
 import shutil
 import traceback
 
-from download_utils import cleanFilename, nextFreeFilename
-from feedparser import FeedParserDict
+from miro.download_utils import cleanFilename, nextFreeFilename
+from miro.feedparser import FeedParserDict
 
-from database import DDBObject, defaultDatabase, ObjectNotFoundError
-from database import DatabaseConstraintError
-from databasehelper import makeSimpleGetSet
-from iconcache import IconCache
-from templatehelper import escape,quoteattr
+from miro.database import DDBObject, defaultDatabase, ObjectNotFoundError
+from miro.database import DatabaseConstraintError
+from miro.databasehelper import makeSimpleGetSet
+from miro.iconcache import IconCache
+from miro.templatehelper import escape,quoteattr
 import types
-import app
-import template
-import downloader
-import config
-from frontends.html import dialogs
-import eventloop
-import feed
-import filters
-import prefs
-import resources
-import views
+from miro import app
+from miro import template
+from miro import downloader
+from miro import config
+from miro.frontends.html import dialogs
+from miro import eventloop
+from miro import filters
+from miro import prefs
+from miro.platform import resources
+from miro import views
 import random
-import indexes
-import util
-import adscraper
-import autodler
-import moviedata
+from miro import indexes
+from miro import util
+from miro import adscraper
+from miro import autodler
+from miro import moviedata
 import logging
-import platformutils
-import filetypes
-import searchengines
-import fileutil
-import imageresize
-import signals
-import license
+from miro import filetypes
+from miro import searchengines
+from miro import fileutil
+from miro import imageresize
+from miro import signals
+from miro import license
 
 _charset = locale.getpreferredencoding()
 
@@ -270,6 +268,7 @@ class Item(DDBObject):
                 self.releaseDateObj = datetime.min
 
     def checkConstraints(self):
+        from miro import feed
         if self.feed_id is not None:
             try:
                 obj = self.dd.getObjectByID(self.feed_id)
@@ -779,7 +778,7 @@ folder will be deleted.""")
         if self.downloader is None:
             self.downloader = downloader.getDownloader(self)
         if self.downloader is not None:
-            self.downloader.setChannelName (platformutils.unicodeToFilename(self.getChannelTitle(True)))
+            self.downloader.setChannelName (unicodeToFilename(self.getChannelTitle(True)))
             if self.downloader.isFinished():
                 self.onDownloadFinished()
             else:
@@ -890,6 +889,7 @@ folder will be deleted.""")
 
     @returnsUnicode
     def getChannelTitle(self, allowSearchFeedTitle=False):
+        from miro import feed
         implClass = self.getFeed().actualFeed.__class__
         if implClass in (feed.RSSFeedImpl, feed.ScraperFeedImpl):
             return self.getFeed().getTitle()
@@ -1040,7 +1040,7 @@ folder will be deleted.""")
             else:
                 label = _("REVEAL LOCAL FILE")
             link = util.makeEventURL(label, linkEventURL)
-            rv.append((_('Filename:'), u"%s<BR />%s" % (platformutils.filenameToUnicode(basename), link)))
+            rv.append((_('Filename:'), u"%s<BR />%s" % (filenameToUnicode(basename), link)))
         return rv
 
 
@@ -1666,7 +1666,7 @@ def reconnectDownloaders():
             item.remove()
 
 def getEntryForFile(filename):
-    return FeedParserDict({'title':platformutils.filenameToUnicode(os.path.basename(filename)),
+    return FeedParserDict({'title':filenameToUnicode(os.path.basename(filename)),
             'enclosures':[{'url': resources.url(filename)}]})
 
 def getEntryForURL(url, contentType=None):
