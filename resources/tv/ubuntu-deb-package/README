@@ -80,21 +80,17 @@ Packaging steps
    as your template.
 
    Make sure you change the version number.  The version number is the version
-   number from above + "-0".  If you make another package based on the same
-   version, increase to "-1"....
-
-   Previously we did versions like ``1.0-1ubuntupcf``, but this doesn't meet the
-   Ubuntu packaging criteria.  See 
-   http://doc.ubuntu.com/ubuntu/packagingguide/C/basic-scratch.html
+   number from above + "-0pcf1".  If you make another package based on the same
+   version, increase to "-0pcf2"....
 
    Good example:
 
-   * 1.0-0
+   * 1.0-0pcf1
 
    Bad examples:
 
    * 1.0
-   * 1.0-1ubuntupcf
+   * 1.0-1pcf0
    
    Make sure your date string is in RFC-2822 format.  Use ``date -R``.
 

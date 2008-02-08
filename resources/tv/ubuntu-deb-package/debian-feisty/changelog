@@ -1,3 +1,11 @@
+miro (1.1.2-0pcf1) feisty; urgency=low
+
+  * Fixed bug 9523 - added exception for distributing GPL code that links
+    with openssl
+  * Adjusted packaging version tags so it's clearer which debs we packaged
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Thu, 07 Feb 2008 21:40:56 -0500
+
 miro (1.1.1-2) feisty; urgency=low
 
   * Bug fix for #9486.
