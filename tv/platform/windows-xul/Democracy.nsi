@@ -170,6 +170,7 @@ Page custom iHeartMiroInstall iHeartMiroInstallLeave
   RMDir /r "${directory}\defaults"
   RMDir /r "${directory}\resources"
   RMDir /r "${directory}\vlc-plugins"
+  RMDir /r "${directory}\plugins"
   RMDir /r "${directory}\xulrunner"
   RMDir /r "${directory}\imagemagick"
 
@@ -394,6 +395,7 @@ unzipok:
   File  /r defaults
   File  /r resources
   File  /r vlc-plugins
+  File  /r plugins
   File  /r xulrunner
   File  /r imagemagick
 

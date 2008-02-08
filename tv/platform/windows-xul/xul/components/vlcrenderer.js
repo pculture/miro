@@ -58,7 +58,6 @@ VLCRenderer.prototype = {
     }
   },
   init: function(win) {
-    try {
       this.document = win.document;
       var videoBrowser = this.document.getElementById("mainDisplayVideo");
       this.vlc = videoBrowser.contentDocument.getElementById("video1");
@@ -72,17 +71,6 @@ VLCRenderer.prototype = {
       this.playTime = 0;
       this.volume = 0;
       var x = this.vlc.playlist.isPlaying; // Check to see if it's REALLY initialized
-    } catch(e) {
-      writelog("Error initializing VLC. Retrying...");
-      var callback = {
-	  notify: function(timer) { this.vlcr.init(win); }
-      };
-      callback.vlcr = this;
-      var timer = Components.classes["@mozilla.org/timer;1"].
-                  createInstance(Components.interfaces.nsITimer);
-      timer.initWithCallback(callback, 500,
-				  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-    }
   },
 
   doScheduleUpdates: function() {

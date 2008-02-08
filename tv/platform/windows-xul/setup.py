@@ -666,7 +666,7 @@ class bdist_xul_dumb(Command):
     # app bundle plugin directory, which is the way you're "supposed"
     # to do it so your app is cleanly separated from xulrunner.
     def copyVLCPluginFiles(self, baseDir, xulrunnerDir):
-        destDir = os.path.join(xulrunnerDir, 'plugins')
+        destDir = os.path.join(baseDir, 'plugins')
         if not os.access(destDir, os.F_OK):
             os.mkdir(destDir)
 
