@@ -39,27 +39,6 @@ var minimizer = makeService("@participatoryculture.org/dtv/minimize;1",Component
 
 window.maximized = false;
 
-function quitObserver()
-{
-  this.register();
-}
-
-quitObserver.prototype = {
-  observe: function(subject, topic, data) {
-    pybridge.onShutdown();
-  },
-  register: function() {
-    var observerService = Components.classes["@mozilla.org/observer-service;1"]
-                          .getService(Components.interfaces.nsIObserverService);
-    observerService.addObserver(this, "quit-application", false);
-  },
-  unregister: function() {
-    var observerService = Components.classes["@mozilla.org/observer-service;1"]
-                            .getService(Components.interfaces.nsIObserverService);
-    observerService.removeObserver(this, "quit-application");
-  }
-}
-
 function getPageCoords (element) {
   var coords = {x : 0, y : 0};
   while (element) {
@@ -216,7 +195,7 @@ function onLoad() {
 
     // Start watching for application exit.
     // NEEDS: should this move out of onLoad() and be global?
-    var qo = new quitObserver();
+    var qo = makeComp("@participatoryculture.org/dtv/quitobserver;1",Components.interfaces.nsIObserver, false);
 
     // Initialize the minimizer class
     minimizer.initialize();
@@ -484,3 +463,4 @@ function onSearchBoxFocus() {
 function onSearchBoxBlur() {
   searchBoxFocused = false;
 }
+
