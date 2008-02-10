@@ -178,13 +178,13 @@ class Renderer:
         confirmMainThread()
         self.xine.seek(int(seconds * 1000))
 
-    def getDuration(self, callback):
+    def getDuration(self):
         confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
-            callback(length / 1000)
+            return length / 1000
         except:
-            callback(None)
+            return None
 
     # @waitForAttach  -- Not necessary because stop does this
     def reset(self):

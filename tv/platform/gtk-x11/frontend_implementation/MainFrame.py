@@ -401,7 +401,7 @@ class MainFrame:
                                           (config.get(prefs.APP_VERSION), 
                                            config.get(prefs.APP_REVISION_NUM)))
             self.aboutWidget.set_website("http://www.getmiro.com/")
-            self.aboutWidget.set_copyright("Copyright (c) 2005-2007.  See LICENSE file for details.\nMiro and the Miro logo are trademarks of the Participatory Culture Foundation.")
+            self.aboutWidget.set_copyright("Copyright (c) 2005-2008.  See LICENSE file for details.\nMiro and the Miro logo are trademarks of the Participatory Culture Foundation.")
             def delete_event_cb(widget, event):
                 widget.hide()
                 return True
@@ -435,6 +435,7 @@ class MainFrame:
                 self.videoLength = 0
             videoLength = self.videoLength
             renderer.getCurrentTime(lambda x :CTCallback(videoTimeScale, videoLength, x))
+        return True
 
     @gtkAsyncMethod
     def setFullscreen(self, fullscreen):
