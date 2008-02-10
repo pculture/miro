@@ -45,7 +45,7 @@ import math
 from miro import folder
 from miro import playlist
 from miro.platform.utils import confirmMainThread, makeURLSafe, filenameToUnicode
-from miro import startup
+from miro.frontend_implementation import startup
 import logging
 from miro import feed
 from miro import views
