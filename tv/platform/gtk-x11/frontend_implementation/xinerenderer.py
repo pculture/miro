@@ -131,6 +131,10 @@ class Renderer:
         # nothing to do here
         confirmMainThread()
 
+    # FIXME - does this need anything?
+    def selectItem(self, anItem):
+        self.selectFile(anItem.getFilename())
+
     @gtkAsyncMethod
     @waitForAttach
     def selectFile(self, filename):

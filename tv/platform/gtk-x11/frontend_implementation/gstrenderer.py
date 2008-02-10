@@ -188,6 +188,10 @@ class Renderer:
         """Handle when the video window exits fullscreen mode."""
         print "haven't implemented exitFullscreen method yet!"
 
+    # FIXME - does this need anything?
+    def selectItem(self, anItem):
+        self.selectFile(anItem.getFilename())
+
     @gtkAsyncMethod
     def selectFile(self, filename):
         confirmMainThread()
