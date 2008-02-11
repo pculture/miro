@@ -578,13 +578,12 @@ class ProgressDisplayView (NSView):
             self.updateRemainingTimeIndicator('')
         else:
             self.progressSlider.setShowCursor_(True)
-            self.progressSlider.setFloatValue_(self.renderer.getProgress())
-            self.timeIndicator.setStringValue_(unicode(self.renderer.getDisplayTime()))
+            self.renderer.getProgress(lambda p: self.progressSlider.setFloatValue_(p))
+            self.renderer.getDisplayTime(lambda t: self.timeIndicator.setStringValue_(unicode(t)))
             if self.displayRemaining:
-                remaning = self.renderer.getDisplayRemainingTime()
+                self.renderer.getDisplayRemainingTime(lambda t: self.updateRemainingTimeIndicator(t))
             else:
-                remaning = self.renderer.getDisplayDuration()
-            self.updateRemainingTimeIndicator(remaning)
+                self.renderer.getDisplayDuration(lambda t: self.updateRemainingTimeIndicator(t))
     
     def updateRemainingTimeIndicator(self, content):
         title = NSAttributedString.alloc().initWithString_attributes_(unicode(content), self.remainingIndicatorAttributes)

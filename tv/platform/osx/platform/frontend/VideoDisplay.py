@@ -69,8 +69,8 @@ objc.loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity
 
 class PlaybackController (PlaybackControllerBase):
     
-    def playItemExternally(self, itemID):
-        item = PlaybackControllerBase.playItemExternally(self, itemID)
+    def playItemExternallyByID(self, itemID):
+	item = PlaybackControllerBase.playItemExternallyByID(self, itemID)
         moviePath = item.getVideoFilename()
         moviePath = filenameTypeToOSFilename(moviePath)
 
@@ -95,9 +95,19 @@ class VideoDisplay (VideoDisplayBase):
         VideoDisplayBase.__init__(self)
         self.controller = VideoDisplayController.getInstance()
         self.controller.videoDisplay = self
+	self.nextItem = None
+	self.nextRenderer = None
 
     def initRenderers(self):
         self.renderers.append(QuicktimeRenderer(self.controller))
+
+    def setRendererAndCallback(self, anItem, internal, external):
+        for renderer in self.renderers:
+            if renderer.canPlayFile(anItem.getFilename()):
+	        self.selectItem(anItem, renderer)
+                internal()
+                return
+        external()
 
     def setExternal(self, external):
         VideoDisplayBase.setExternal(self, external)
@@ -106,14 +116,19 @@ class VideoDisplay (VideoDisplayBase):
 
     def selectItem(self, item, renderer):
         VideoDisplayBase.selectItem(self, item, renderer)
-        self.controller.selectItem(item, renderer)
+	# We can't select the item in the display controller
+	# until we've initialized the display, so we store it here
+	self.nextItem = item
+	self.nextRenderer = renderer
  
     def play(self):
         VideoDisplayBase.play(self)
+        self.controller.selectItem(self.nextItem, self.nextRenderer)
         self.controller.play()
 
     def playFromTime(self, startTime):
         VideoDisplayBase.playFromTime(self, startTime)
+        self.controller.selectItem(self.nextItem, self.nextRenderer)
         self.controller.play()
 
     def pause(self):
@@ -669,7 +684,7 @@ class FullScreenPalette (NSWindow):
         threads.warnIfNotOnMainThread('FullScreenPalette.reveal')
         if not self.isVisible():
             self.update_(nil)
-            self.volumeSlider.setFloatValue_(app.controller.videoDisplay.getVolume())
+            app.controller.videoDisplay.getVolume(lambda v: self.volumeSlider.setFloatValue_(v))
             screenOrigin = parent.screen().frame().origin
             screenSize = parent.screen().frame().size
             height = self.frame().size.height
@@ -715,8 +730,8 @@ class FullScreenPalette (NSWindow):
         pass
         
     def update_(self, timer):
-        self.timeIndicator.setStringValue_(unicode(self.renderer.getDisplayTime()))
-        self.progressSlider.setFloatValue_(self.renderer.getProgress())
+        self.renderer.getDisplayTime(lambda t: self.timeIndicator.setStringValue_(unicode(t)))
+        self.renderer.getProgress(lambda p: self.progressSlider.setFloatValue_(p))
             
     def progressSliderWasClicked(self, slider):
         if app.controller.videoDisplay.isPlaying:
