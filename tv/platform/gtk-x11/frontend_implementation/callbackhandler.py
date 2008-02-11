@@ -560,6 +560,7 @@ class CallbackHandler(object):
         AttachInteger (dialog, widgetTree['spinbutton-max-auto'], prefs.DOWNLOADS_TARGET)
         AttachFloat   (dialog, widgetTree['spinbutton-padding'], prefs.PRESERVE_X_GB_FREE)
         AttachCombo   (dialog, widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
+        AttachCombo   (dialog, widgetTree['combobox-auto-setting'], prefs.CHANNEL_AUTO_DEFAULT, ("new", "all", "off"))
         AttachCombo   (dialog, widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
         AttachBooleanRadio (dialog, widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         AttachBoolean (dialog, widgetTree['checkbutton-resumemode'], prefs.RESUME_VIDEOS_MODE)

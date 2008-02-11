@@ -580,11 +580,29 @@ class Feed(DDBObject):
         (76, 76),
     ]
 
-    def __init__(self,url, initiallyAutoDownloadable=True):
+    def __init__(self,url, initiallyAutoDownloadable=None):
         DDBObject.__init__(self, add=False)
         checkU(url)
-        self.autoDownloadable = initiallyAutoDownloadable
-        self.getEverything = False
+        if initiallyAutoDownloadable == None:
+            mode = config.get(prefs.CHANNEL_AUTO_DEFAULT)
+            # note that this is somewhat duplicated in setAutoDownloadMode
+            logging.info ("wbg: setting autodownload stuff initially to %s" % mode)
+            if mode == u'all':
+                self.getEverything = True
+                self.autoDownloadable = True
+            elif mode == u'new':
+                self.getEverything = False
+                self.autoDownloadable = True
+            elif mode == u'off':
+                self.getEverything = False
+                self.autoDownloadable = False
+            else:
+                raise ValueError("Bad auto-download mode: %s" % mode)
+    
+        else:
+            self.autoDownloadable = initiallyAutoDownloadable
+            self.getEverything = False
+
         self.maxNew = 3
         self.expire = u"system"
         self.expireTime = None
@@ -700,6 +718,7 @@ class Feed(DDBObject):
             return u'off'
 
     def setAutoDownloadMode(self, mode):
+        # note that this is somewhat duplicated in __init__
         if mode == u'all':
             self.setGetEverything(True)
             self.setAutoDownloadable(True)

@@ -65,6 +65,7 @@ WARN_IF_DOWNLOADING_ON_QUIT = Pref( key='warnIfDownloadingOnQuit',default=True, 
 TRUNCATE_CHANNEL_AFTER_X_ITEMS = Pref( key='TruncateChannelAFterXItems',  default=1000, platformSpecific=False)
 USE_UPNP                    = Pref( key='useUpnp',               default=True,  platformSpecific=False )
 BT_ENC_REQ                  = Pref( key='BitTorrentEncReq',      default=False, platformSpecific=False )
+CHANNEL_AUTO_DEFAULT        = Pref( key='ChannelAutoDefault',    default=u"new", platformSpecific=False )
 IHEARTMIRO_REQUEST_COUNT    = Pref( key='iHeartMiroRequestCount',default=0,     platformSpecific=False )
 
 # This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.
