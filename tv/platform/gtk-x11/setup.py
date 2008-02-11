@@ -442,10 +442,10 @@ class build_py (distutils.command.build_py.build_py):
             expanded = template.substitute(**conf)
             write_file(path, expanded)
         
-    def find_all_modules (self):
+    def run (self):
         """Extend build_py's module list to include the miro modules."""
         self.expand_templates()
-        return distutils.command.build_py.build_py.find_all_modules(self)
+        return distutils.command.build_py.build_py.run(self)
 
 #### bdist_deb builds the miro debian package ####
 class bdist_deb (Command):
