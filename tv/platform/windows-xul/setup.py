@@ -86,7 +86,9 @@ STUB_PATH = os.path.join(BINARY_KIT_ROOT, 'stub')
 # py2exe.
 COMPILER_RUNTIMES = [
     # Visual C++ 7.1 C runtime library (required by Python, if nothing else)
-    os.path.join(BINARY_KIT_ROOT, 'vc71redist', 'msvcr71.dll'),
+    #
+    # This should get automatically detected now
+    #os.path.join(BINARY_KIT_ROOT, 'vc71redist', 'msvcr71.dll'),
     # Visual C++ 7.1 C++ runtime library (required by Boost-Python)
     os.path.join(BINARY_KIT_ROOT, 'vc71redist', 'msvcp71.dll'),
     ]
@@ -439,11 +441,19 @@ class bdist_xul_dumb(Command):
                                               packages = packageIncludes,
                                               path = packagePaths)
 
-        # Hack to add support for sqlite3 until it makes it into py2exe -NN
+        dlls = []
         for (source, dest) in manifest:
-            if source.endswith('_sqlite3.pyd'):
-                manifest.append((os.path.join(os.path.dirname(source), "sqlite3.dll"),"sqlite3.dll"))
-                break
+            if source.endswith(".pyd"):
+                dlls.append(source)
+ 
+        (alldlls,warninging, other_deps) = self.find_dependend_dlls(dlls,"",("xpcom.dll","pyxpcom.dll"))
+        for dll in alldlls:
+            manifest.append((dll,os.path.basename(dll)))
+
+        # Hack to get msvcp71.dll in there. py2exe.build_exe.isSystemDll()
+        # recognizes msvcr71.dll as non-system but misses the C++ runtime.
+        for dll in COMPILER_RUNTIMES:
+            manifest.append((dll,os.path.basename(dll)))
 
         #print '\n'.join(["%s -> %s" % (source, dest) \
         #                 for (source, dest) in manifest])
@@ -616,6 +626,60 @@ class bdist_xul_dumb(Command):
                             item.filename))
 
         return manifest
+
+    def find_dependend_dlls(self, dlls, pypath, dll_excludes):
+        # based off of function in py2exe 0.6.6 by jimmy@retzlaff.com
+        # licensed under MIT/X11 license        
+        from py2exe import py2exe_util
+        from py2exe.build_exe import bin_depends
+
+# Uncomment this and the line at the bottom of the function to get
+# py2exe to know that msvcp71.dll is not a system dll --NN
+#
+#         import py2exe
+#         from py2exe.build_exe import isSystemDLL
+#         origIsSystemDLL = isSystemDLL
+#         def newIsSystemDLL(pathname):
+#             if os.path.basename(pathname).lower() in ("msvcr71.dll", "msvcr71d.dll", "msvcp71.dll", "msvcp71d.dll"):
+#                 return 0
+#             else:
+#                 return origIsSystemDLL(pathname)
+#         py2exe.build_exe.isSystemDLL = newIsSystemDLL
+
+        sysdir = py2exe_util.get_sysdir()
+        windir = py2exe_util.get_windir()
+        # This is the tail of the path windows uses when looking for dlls
+        # XXX On Windows NT, the SYSTEM directory is also searched
+        exedir = os.path.dirname(sys.executable)
+        syspath = os.environ['PATH']
+        loadpath = ';'.join([exedir, sysdir, windir, syspath])
+
+        # Found by Duncan Booth:
+        # It may be possible that bin_depends needs extension modules,
+        # so the loadpath must be extended by our python path.
+        loadpath = loadpath + ';' + ';'.join(pypath)
+
+        # We use Python.exe to track the dependencies of our run stubs ...
+        images = dlls
+
+        log.info("Resolving binary dependencies:")
+
+        # we add python.exe (aka sys.executable) to the list of images
+        # to scan for dependencies, but remove it later again from the
+        # results list.  In this way pythonXY.dll is collected, and
+        # also the libraries it depends on.
+        alldlls, warnings, other_depends = \
+                 bin_depends(loadpath, images + [sys.executable], dll_excludes)
+        alldlls.remove(sys.executable)
+        for dll in alldlls:
+            log.info("  %s" % dll)
+
+        # uncomment this if you override py2exe's isSystemDLL above
+        #py2exe.build_exe.isSystemDLL = origIsSystemDLL
+        
+        return alldlls, warnings, other_depends
+    # find_dependend_dlls()
+
 
     def buildDownloadDaemon(self, baseDir):
         print "building download daemon"
