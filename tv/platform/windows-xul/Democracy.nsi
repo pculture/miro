@@ -15,6 +15,8 @@
 
 !define RUN_SHORTCUT "${CONFIG_LONG_APP_NAME}.lnk"
 !define UNINSTALL_SHORTCUT "Uninstall ${CONFIG_SHORT_APP_NAME}.lnk"
+!define MUI_ICON "miro-installer.ico"
+!define MUI_UNICON "miro-installer.ico"
 
 !define OLD_INST_KEY "Software\Participatory Culture Foundation\Democracy Player"
 !define OLD_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Democracy Player"
