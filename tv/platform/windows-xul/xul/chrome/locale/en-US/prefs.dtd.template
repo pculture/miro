@@ -30,7 +30,8 @@
 <!ENTITY prefs.folder.others.remove "Remove">
 
 <!ENTITY prefs.downloads "Downloads" >
-<!ENTITY prefs.downloads.max "Don't download more than this many videos at once:">
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Disk Space">
 <!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >

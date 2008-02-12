@@ -70,9 +70,15 @@
                     label="&prefs.folder.change;"
                     oncommand="selectMoviesDirectory();" />
             </groupbox>
-            <groupbox orient="horizontal" align="center">
-                <description>&prefs.downloads.max;</description>
-                <textbox id="maxmanual" flex="0" size="3" value="300" onchange="maxManualChange()"/>
+	    <groupbox>
+                <hbox align="center">
+                    <description>&prefs.downloads.max;</description>
+                    <textbox id="maxmanual" flex="0" size="3" value="30" onchange="maxManualChange()"/>
+                </hbox>
+                <hbox align="center">
+                    <description>&prefs.autodownloads.max;</description>
+                    <textbox id="maxauto" flex="0" size="3" value="30" onchange="maxAutoChange()"/>
+                </hbox>
             </groupbox>
             <groupbox>
                 <caption label="&prefs.torrent;" />
@@ -82,7 +88,7 @@
                     <description id="maxupstream-description">&prefs.torrent.limit.kbps;</description>
                 </hbox>
                 <hbox align="center">
-                <checkbox id="limitdownstream" checked="true" label="&prefs.torrent.limit.downstream;" value="1" />
+                    <checkbox id="limitdownstream" checked="true" label="&prefs.torrent.limit.downstream;" value="1" />
                     <textbox id="maxdownstream" flex="0" value="300" style="max-width: 30px;" />
                     <description id="maxdownstream-description">&prefs.torrent.limit.kbps;</description>
                 </hbox>
@@ -144,7 +150,7 @@
                 <checkbox id="hasminspace" checked="true" label="&prefs.disk.space.min.part1;" value="1" oncommand="hasMinSpaceChange();"/>
                 <textbox id="minspace" flex="0" value="1" style="max-width: 30px;" onchange="minSpaceChange()"/>
                 <description style="padding-top:5px;">&prefs.disk.space.min.part2;</description>
-            </hbox>				
+            </hbox>                
             <separator />
             <hbox>
                 <description style="padding-top:4px;">&prefs.videos.expire;</description>

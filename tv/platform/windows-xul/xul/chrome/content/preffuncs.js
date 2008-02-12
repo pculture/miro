@@ -44,6 +44,7 @@ function onload() {
   setMoviesDir(pybridge.getMoviesDirectory());
   originalMoviesDir = pybridge.getMoviesDirectory();
   setMaxManual(pybridge.getMaxManual());
+  setMaxAuto(pybridge.getMaxAuto());
   setHasMinDiskSpace(pybridge.getPreserveDiskSpace());
   setMinDiskSpace(pybridge.getPreserveDiskSpaceAmount());
   setExpire(pybridge.getExpireAfter());
@@ -233,12 +234,24 @@ function setMaxManual(max) {
     document.getElementById("maxmanual").value = max;
 }
 
+function setMaxAuto(max) {
+    document.getElementById("maxauto").value = max;
+}
+
 function maxManualChange() {
   var textbox = document.getElementById("maxmanual");
   var value = parseInt(textbox.value);
   if ((value == 0) || (isNaN(value))) value = 1;
   textbox.value=value;
   pybridge.setMaxManual(value);
+}
+
+function maxAutoChange() {
+  var textbox = document.getElementById("maxauto");
+  var value = parseInt(textbox.value);
+  if ((value == 0) || (isNaN(value))) value = 1;
+  textbox.value=value;
+  pybridge.setMaxAuto(value);
 }
 
 function setMinDiskSpace(min) {
