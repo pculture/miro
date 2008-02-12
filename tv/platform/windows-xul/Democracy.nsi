@@ -85,7 +85,7 @@ ReserveFile "iHeartMiro-installer-page.ini"
   "Please choose which optional components to install."
 !insertmacro MUI_PAGE_COMPONENTS
 
-Page custom iHeartMiroInstall iHeartMiroInstallLeave
+; Page custom iHeartMiroInstall iHeartMiroInstallLeave
 
 ; Installation directory selection page
 !insertmacro MUI_PAGE_DIRECTORY
