@@ -14,6 +14,11 @@
 <!ENTITY prefs.channels.check.sixty "Every hour">
 <!ENTITY prefs.channels.check.manually "Manually">
 
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "New">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+
 <!ENTITY prefs.playback "Playback">
 <!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
 <!ENTITY prefs.playback.auto.next.video "Play videos one after another.">

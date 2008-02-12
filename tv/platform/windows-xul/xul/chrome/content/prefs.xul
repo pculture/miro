@@ -57,6 +57,16 @@
                     </menupopup>
                 </menulist>
             </hbox>
+            <hbox align="end">
+                <description>&prefs.channels.autodownloaddefault;</description>
+                <menulist flex="0" id="autodownloaddefault">
+                    <menupopup>
+                        <menuitem label="&prefs.channels.autodownloaddefault.all;" oncommand="changeAutoDownloadDefault('all');" id="autodownloaddefaultall" value="all"/>
+                        <menuitem label="&prefs.channels.autodownloaddefault.new;" oncommand="changeAutoDownloadDefault('new');" id="autodownloaddefaultnew" value="new"/>
+                        <menuitem label="&prefs.channels.autodownloaddefault.off;" oncommand="changeAutoDownloadDefault('off');" id="autodownloaddefaultoff" value="off"/>
+                    </menupopup>
+                </menulist>
+            </hbox>
         </tabpanel>
         <tabpanel orient="vertical">
             <!--DOWNLOADS-->

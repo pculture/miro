@@ -41,6 +41,7 @@ function onload() {
   setCloseToTray(pybridge.minimizeToTray());
   document.getElementById('warn-on-quit').checked = pybridge.getWarnIfDownloadingOnQuit();
   setCheckEvery(pybridge.getCheckEvery());
+  setAutoDownloadDefault(pybridge.getAutoDownloadDefault());
   setMoviesDir(pybridge.getMoviesDirectory());
   originalMoviesDir = pybridge.getMoviesDirectory();
   setMaxManual(pybridge.getMaxManual());
@@ -119,7 +120,16 @@ function setCheckEvery(minutes) {
 }
 
 function checkEveryChange(minutes) {
-   pybridge.setCheckEvery(parseInt(minutes));
+  pybridge.setCheckEvery(parseInt(minutes));
+}
+
+function setAutoDownloadDefault(value) {
+  var autodefault = document.getElementById("autodownloaddefault");
+  autodefault.value = value; 
+}
+
+function changeAutoDownloadDefault(value) {
+  pybridge.setAutoDownloadDefault(value);
 }
 
 function setMoviesDir(directory) {
