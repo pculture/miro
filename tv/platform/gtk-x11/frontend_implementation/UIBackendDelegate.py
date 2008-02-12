@@ -49,6 +49,7 @@ import logging
 from miro import config
 from miro import prefs
 from miro.frontend_implementation.gtk_queue import gtkAsyncMethod
+from miro.frontend_implementation import startup
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####
@@ -380,7 +381,6 @@ class UIBackendDelegate:
         logging.warn("UIBackendDelegate.maximizeWindow() not implemented")
 
     def performStartupTasks(self, terminationCallback):
-        from miro import startup
         startup.performStartupTasks(terminationCallback)
         
     def openExternalURL(self, url):
