@@ -338,7 +338,7 @@ class BGDownloader:
         return x.send()
         
     ##
-    def pickInitialFilename(self):
+    def pickInitialFilename(self, suffix=".part"):
         """Pick a path to download to based on self.shortFilename.
 
         This method sets self.filename, as well as creates any leading paths
@@ -352,7 +352,7 @@ class BGDownloader:
             os.makedirs(downloadDir)
         except:
             pass
-        cleaned = cleanFilename(self.shortFilename+".part")
+        cleaned = cleanFilename(self.shortFilename + suffix)
         self.filename = nextFreeFilename(os.path.join(downloadDir, cleaned))
 
     def moveToMoviesDirectory(self):
@@ -771,7 +771,7 @@ class BTDownloader(BGDownloader):
                                  (self.totalSize / (2 ** 20)))
                 return
 
-            name = stringify(self.filename)
+            name = os.path.dirname(stringify(self.filename))
             if self.fastResumeData:
                 resume = lt.bdecode(self.fastResumeData)
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
@@ -951,7 +951,7 @@ class BTDownloader(BGDownloader):
                 return
             name = name.decode('utf-8', 'replace')
             self.shortFilename = cleanFilename(name)
-            self.pickInitialFilename()
+            self.pickInitialFilename("")
         self.updateClient()
         self._resumeTorrent()
 
