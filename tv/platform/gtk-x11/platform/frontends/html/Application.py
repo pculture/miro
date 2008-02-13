@@ -26,52 +26,41 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import os
+import gtk
+
+import threading
+from miro.platform.frontends.html.gtk_queue import queue, gtkAsyncMethod
+from miro.frontends.html.main import HTMLApplication
+from miro.platform import mozsetup
+from miro.platform import options
+from miro import app
+from miro import gtcache
 from miro import config
 from miro import prefs
-# Switch to a dummy frontend in the case we're running tests and
-# DISPLAY isn't set
-try:
-    import gtk
-    hasGTK = True
-except ImportError:
-    print "DTV: Warning: could not import GTK (is DISPLAY set?)"
-    hasGTK = False
+import gtk.glade
+from miro.platform.utils import setMainThread
 
-if hasGTK:
-    # Import MozillaBrowser ASAP.  On some systems the gtkmozembed
-    # module is linked against a different libxpcom than
-    # MozillaBrowser.  Importing it first ensures that
-    # MozillaBrowser's libxpcom gets linked to.
-    #
-    # NOTE: this could also lead to problems, since now gtkmozembed is
-    # being linked to a different libxpcom than it expects.  This way
-    # seems to be less bad though, so we'll use it for now.  See Bug
-    # #1560.
-    from miro.platform import MozillaBrowser
+###############################################################################
+#### Application object                                                    ####
+###############################################################################
 
-    # Almost everything is split out into files under
-    # frontend-implementation.
-    from miro.frontend_implementation.Application import Application
-    from miro.frontend_implementation.MainFrame import MainFrame
-    from miro.frontend_implementation.UIBackendDelegate import UIBackendDelegate
-    from miro.frontend_implementation.VideoDisplay import VideoDisplay
-    from miro.frontend_implementation.VideoDisplay import PlaybackController
-else:
-    class Application:
-        pass
-    class MainFrame:
-        pass
-    class NullDisplay:
-        pass
-    class UIBackendDelegate:
-        pass
-    class HTMLDisplay:
-        pass
-    class VideoDisplay:
-        pass
-    class PlaybackController:
-        pass
+class Application(HTMLApplication):
+    def Run(self):
+        mozsetup.setupMozillaEnvironment()
+        gtk.glade.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
+        gtk.glade.textdomain("miro")
+
+        queue.main_thread = threading.currentThread()
+        setMainThread()
+        gtk.gdk.threads_init()
+        config.load(options.themeName)
+        self.startup()
+        gtk.main()
+        app.controller.onShutdown()
+
+    @gtkAsyncMethod
+    def quitUI(self):
+        gtk.main_quit()
 
 ###############################################################################
 ###############################################################################

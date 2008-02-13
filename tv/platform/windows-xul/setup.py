@@ -1035,7 +1035,6 @@ if __name__ == "__main__":
         ext_modules = ext_modules,
         packages = [
             'miro',
-            'miro.frontend_implementation',
             'miro.dl_daemon',
             'miro.dl_daemon.private',
             'miro.compiled_templates',
@@ -1047,8 +1046,6 @@ if __name__ == "__main__":
         ],
         package_dir = {
             'miro': portable_dir,
-            'miro.frontend_implementation' : os.path.join(platform_dir,
-                'frontend_implementation'),
             'miro.platform': os.path.join(platform_dir, 'platform'),
         },
         cmdclass = {

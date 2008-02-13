@@ -26,20 +26,22 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro import app
-from miro import xine
-import gtk
-import traceback
-import gobject
-from miro import eventloop
-from miro import config
-from miro import prefs
 import os
+import traceback
+
+import gtk
+import gobject
+
+from miro import app
+from miro import config
+from miro import eventloop
+from miro import prefs
+from miro import xine
+from miro.download_utils import nextFreeFilename
+from miro.platform.frontends.html import gtk_queue
 from miro.platform import options
 from miro.platform import resources
-from miro.download_utils import nextFreeFilename
 from miro.platform.utils import confirmMainThread
-from gtk_queue import gtkSyncMethod, gtkAsyncMethod
 
 def waitForAttach(func):
     """Many xine calls can't be made until we attach the object to a X window.
@@ -102,7 +104,7 @@ class Renderer:
         self.xine.gotExposeEvent(event.area.x, event.area.y, event.area.width,
                 event.area.height)
 
-    @gtkSyncMethod
+    @gtk_queue.gtkSyncMethod
     def canPlayFile(self, filename):
         confirmMainThread()
         return self.xine.canPlayFile(filename)
@@ -135,7 +137,7 @@ class Renderer:
     def selectItem(self, anItem):
         self.selectFile(anItem.getFilename())
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     @waitForAttach
     def selectFile(self, filename):
         confirmMainThread()
@@ -159,7 +161,7 @@ class Renderer:
         except:
             pass
 
-    @gtkSyncMethod
+    @gtk_queue.gtkSyncMethod
     def getCurrentTime(self, callback):
         confirmMainThread()
         try:
@@ -195,19 +197,19 @@ class Renderer:
         # confirmMainThread() -- Not necessary because stop does this
         self.stop()
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     @waitForAttach
     def setVolume(self, level):
         confirmMainThread()
         self.xine.setVolume(int(level * 100))
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     @waitForAttach
     def play(self):
         confirmMainThread()
         self.xine.play()
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     @waitForAttach
     def pause(self):
         confirmMainThread()
@@ -218,12 +220,12 @@ class Renderer:
         # confirmMainThread() -- Not necessary since pause does this
         self.pause()
 
-    @gtkSyncMethod
+    @gtk_queue.gtkSyncMethod
     def getRate(self):
         confirmMainThread()
         return self.xine.getRate()
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     @waitForAttach
     def setRate(self, rate):
         confirmMainThread()

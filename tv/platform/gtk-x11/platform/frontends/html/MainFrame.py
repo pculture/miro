@@ -39,12 +39,12 @@ from miro.gtcache import gettext as _
 
 from miro.platform import resources
 from miro.platform.utils import confirmMainThread
-from miro.frontend_implementation import UIBackendDelegate
-from miro.frontend_implementation.gtk_queue import gtkAsyncMethod, gtkSyncMethod
-from miro.frontend_implementation.VideoDisplay import VideoDisplay
-from miro.frontend_implementation.callbackhandler import CallbackHandler
-from miro.frontend_implementation.mainwindowchanger import MainWindowChanger
-from miro.frontend_implementation import trayicon
+from miro.platform.frontends.html import UIBackendDelegate
+from miro.platform.frontends.html.gtk_queue import gtkAsyncMethod, gtkSyncMethod
+from miro.platform.frontends.html.VideoDisplay import VideoDisplay
+from miro.platform.frontends.html.callbackhandler import CallbackHandler
+from miro.platform.frontends.html.mainwindowchanger import MainWindowChanger
+from miro.platform.frontends.html import trayicon
 from miro.platform.frontends.html.HTMLDisplay import HTMLDisplay
 from miro.platform.config import gconf_lock
 from miro import config

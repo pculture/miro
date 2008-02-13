@@ -32,7 +32,7 @@ import os
 from miro import config
 from miro import prefs
 import gtkmozembed
-from miro.frontend_implementation.gtk_queue import gtkAsyncMethod
+from miro.platform.frontends.html.gtk_queue import gtkAsyncMethod
 
 def createProfileDirectory():
     """Create the mozilla profile directory, if needed."""

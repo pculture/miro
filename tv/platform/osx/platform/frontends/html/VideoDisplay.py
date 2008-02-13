@@ -29,9 +29,11 @@
 import time
 import logging
 
+import objc
 from objc import YES, NO, nil, IBOutlet
 from AppKit import *
 from Foundation import *
+from QTKit import QTMovieDidEndNotification
 
 from miro import app
 from miro import eventloop
@@ -40,17 +42,13 @@ from miro.platform.filenames import filenameTypeToOSFilename
 from miro.frontends.html.displaybase import VideoDisplayBase
 from miro.platform.frontends.html import threads
 from miro.playbackcontroller import PlaybackControllerBase
-
-from MainFrame import Slider, handleKey
-from QuicktimeRenderer import QuicktimeRenderer
-from QTKit import QTMovieDidEndNotification
+from miro.platform.frontends.html.MainFrame import Slider, handleKey
+from miro.platform.renderers.QuicktimeRenderer import QuicktimeRenderer
 
 ###############################################################################
 #### Dynamically link some specific Carbon functions which we need but     ####
 ###  which are not available in the default MacPython                      ####
 ###############################################################################
-
-import objc
 
 kUIModeNormal = 0
 kUIModeAllHidden = 3

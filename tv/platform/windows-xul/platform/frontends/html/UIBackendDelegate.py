@@ -41,7 +41,7 @@ from miro.frontends.html import dialogs
 from miro import feed
 from miro import app
 from miro.platform import clipboard
-from miro.frontend_implementation import urlcallbacks
+from miro.platform.frontends.html import urlcallbacks
 from miro.trapcall import trapCall
 
 currentId = 1

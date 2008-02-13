@@ -110,10 +110,10 @@ compiled_templates_unittest_dir = os.path.join(compiled_templates_dir,'unittest'
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
 platform_package_dir = os.path.join(platform_dir, 'platform')
+platform_html_frontend_dir = os.path.join(platform_package_dir, 'frontends',
+        'html')
 glade_dir = os.path.join(platform_dir, 'glade')
 xine_dir = os.path.join(platform_dir, 'xine')
-frontend_implementation_dir = os.path.join(platform_dir,
-        'frontend_implementation')
 debian_package_dir = os.path.join(platform_dir, 'debian_package')
 
 sys.path.insert(0, root_dir)
@@ -303,19 +303,19 @@ if nsI:
     mozilla_browser_options['extra_compile_args'].append('-DNS_I_SERVICE_MANAGER_UTILS=1')
 
 mozilla_browser_ext = Extension("miro.platform.MozillaBrowser",
-        [ os.path.join(frontend_implementation_dir,'MozillaBrowser.pyx'),
-          os.path.join(frontend_implementation_dir,'MozillaBrowserXPCOM.cc'),
-          os.path.join(frontend_implementation_dir,'HttpObserver.cc'),
-          os.path.join(frontend_implementation_dir,'PromptService.cc'),
-          os.path.join(frontend_implementation_dir,'DragAndDrop.cc'),
-          os.path.join(frontend_implementation_dir,'XPCOMUtil.cc'),
+        [ os.path.join(platform_html_frontend_dir,'MozillaBrowser.pyx'),
+          os.path.join(platform_html_frontend_dir,'MozillaBrowserXPCOM.cc'),
+          os.path.join(platform_html_frontend_dir,'HttpObserver.cc'),
+          os.path.join(platform_html_frontend_dir,'PromptService.cc'),
+          os.path.join(platform_html_frontend_dir,'DragAndDrop.cc'),
+          os.path.join(platform_html_frontend_dir,'XPCOMUtil.cc'),
         ],
         runtime_library_dirs=mozilla_lib_path,
         **mozilla_browser_options)
 #### Xlib Extension ####
 xlib_ext = \
     Extension("miro.platform.xlibhelper", 
-        [ os.path.join(frontend_implementation_dir,'xlibhelper.pyx') ],
+        [ os.path.join(platform_html_frontend_dir,'xlibhelper.pyx') ],
         library_dirs = ['/usr/X11R6/lib'],
         libraries = ['X11'],
     )
@@ -592,7 +592,6 @@ setup(name='miro',
     ],
     packages = [
         'miro',
-        'miro.frontend_implementation',
         'miro.dl_daemon',
         'miro.test',
         'miro.compiled_templates',
@@ -603,11 +602,11 @@ setup(name='miro',
         'miro.platform',
         'miro.platform.frontends',
         'miro.platform.frontends.html',
+        'miro.platform.renderers',
     ],
     package_dir = {
         'miro': portable_dir,
         'miro.test' : test_dir,
-        'miro.frontend_implementation': frontend_implementation_dir,
         'miro.platform': platform_package_dir,
     },
     cmdclass = {

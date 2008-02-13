@@ -48,8 +48,8 @@ import logging
 
 from miro import config
 from miro import prefs
-from miro.frontend_implementation.gtk_queue import gtkAsyncMethod
-from miro.frontend_implementation import startup
+from miro.platform.frontends.html.gtk_queue import gtkAsyncMethod
+from miro.platform.frontends.html import startup
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####

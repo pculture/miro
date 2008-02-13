@@ -36,7 +36,7 @@ import tempfile
 from xml.sax.saxutils import escape
 from miro.platform.MozillaBrowser import MozillaBrowser
 from miro.frontends.html.displaybase import Display
-from miro.frontend_implementation.gtk_queue import gtkAsyncMethod
+from miro.platform.frontends.html.gtk_queue import gtkAsyncMethod
 from miro.util import quoteJS, checkU
 from miro.platform.utils import confirmMainThread
 

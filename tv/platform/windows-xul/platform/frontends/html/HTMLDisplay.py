@@ -42,7 +42,7 @@ import os
 from miro.platform.utils import makeURLSafe, getLongPathName, osFilenameToFilenameType
 from miro import prefs
 from miro.frontends.html.displaybase import Display
-from miro.frontend_implementation import urlcallbacks
+from miro.platform.frontends.html import urlcallbacks
 
 tempdir = os.path.join(tempfile.gettempdir(), config.get(prefs.SHORT_APP_NAME))
 

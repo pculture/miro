@@ -48,9 +48,9 @@ from miro.platform import bundle
 from miro.platform.utils import filenameTypeToOSFilename
 from miro.platform.frontends.html import threads
 
-from StartupPanel import StartupPanelController
-import GrowlNotifier
-import SparkleUpdater
+from miro.platform.frontends.html.StartupPanel import StartupPanelController
+from miro.platform.frontends.html import GrowlNotifier
+from miro.platform.frontends.html import SparkleUpdater
 
 ###############################################################################
 

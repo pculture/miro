@@ -47,7 +47,8 @@ from miro import download_utils
 from miro import eventloop
 from miro import feed
 from miro import folder
-from miro.platform import frontend
+from miro.platform.frontends.html.Application import Application
+from miro.platform.frontends.html.UIBackendDelegate import UIBackendDelegate
 from miro import guide
 from miro import iconcache
 from miro import indexes
@@ -71,7 +72,7 @@ def main():
     setupLogging()
     util.setupLogging()
     app.db = database.defaultDatabase
-    app.delegate = frontend.UIBackendDelegate()
+    app.delegate = UIBackendDelegate()
     app.controller = Controller()
     app.controller.Run()
 
@@ -79,10 +80,10 @@ def main():
 ###############################################################################
 #### The main application app.controller object, binding model to view         ####
 ###############################################################################
-class Controller(frontend.Application):
+class Controller(Application):
 
     def __init__(self):
-        frontend.Application.__init__(self)
+        Application.__init__(self)
         self.frame = None
         self.inQuit = False
         self.guideURL = None

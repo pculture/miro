@@ -43,7 +43,7 @@ from miro import templatehelper
 from miro.frontends.html import keyboard
 from miro.frontends.html.displaybase import Display
 from miro.platform import resources
-from miro.platform.frontend.MainFrame import mapKey, handleKey
+from miro.platform.frontends.html.MainFrame import mapKey, handleKey
 from miro.platform.frontends.html import threads
 
 ###############################################################################

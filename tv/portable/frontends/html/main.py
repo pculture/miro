@@ -36,7 +36,8 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.html import dialogs
 from miro.frontends.html import templatedisplay
-import miro.platform.frontend # hack until we can remove the circular dependancies
+from miro.platform.frontends.html import MainFrame
+from miro.platform.frontends.html import VideoDisplay
 from miro import app
 from miro import autoupdate
 from miro import config
@@ -144,7 +145,7 @@ class HTMLApplication:
         self.onDownloadingItemsCountChange(None, None)
 
         # Set up the playback controller
-        self.playbackController = miro.platform.frontend.PlaybackController()
+        self.playbackController = VideoDisplay.PlaybackController()
 
         # HACK
         app.controller.playbackController = self.playbackController
@@ -153,13 +154,13 @@ class HTMLApplication:
 
         # Put up the main frame
         logging.info ("Displaying main frame...")
-        self.frame = miro.platform.frontend.MainFrame(self)
+        self.frame = MainFrame.MainFrame(self)
         # HACK
         app.controller.frame = self.frame
 
         logging.info ("Creating video display...")
         # Set up the video display
-        self.videoDisplay = miro.platform.frontend.VideoDisplay()
+        self.videoDisplay = VideoDisplay.VideoDisplay()
         self.videoDisplay.initRenderers()
         self.videoDisplay.playbackController = self.playbackController
         self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))

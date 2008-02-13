@@ -26,27 +26,26 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro import app
-import traceback
-import gobject
-from miro import eventloop
-from miro import config
-from miro import prefs
-import os
-import logging
-from miro.download_utils import nextFreeFilename
-from miro.platform.utils import confirmMainThread
-from gtk_queue import gtkAsyncMethod, gtkSyncMethod
-
 from threading import Event
-
-import pygtk
-import gtk
+import logging
+import os
+import traceback
 
 import pygst
 pygst.require('0.10')
+import gobject
 import gst
 import gst.interfaces
+import gtk
+import pygtk
+
+from miro import app
+from miro import config
+from miro import eventloop
+from miro import prefs
+from miro.download_utils import nextFreeFilename
+from miro.platform.frontends.html import gtk_queue
+from miro.platform.utils import confirmMainThread
 
 class Tester:
     def __init__(self, filename):
@@ -54,7 +53,7 @@ class Tester:
         self.success = False
         self.actualInit(filename)
 
-    @gtkSyncMethod
+    @gtk_queue.gtkSyncMethod
     def actualInit(self, filename):
         confirmMainThread()
         self.playbin = gst.element_factory_make('playbin')
@@ -88,7 +87,7 @@ class Tester:
                 self.success = False
                 self.done.set()
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     def disconnect (self):
         confirmMainThread()
         self.bus.disconnect (self.watch_id)
@@ -192,7 +191,7 @@ class Renderer:
     def selectItem(self, anItem):
         self.selectFile(anItem.getFilename())
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     def selectFile(self, filename):
         confirmMainThread()
         """starts playing the specified file"""
@@ -204,7 +203,7 @@ class Renderer:
         confirmMainThread()
         print "getProgress: what does this do?"
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     def getCurrentTime(self, callback):
         confirmMainThread()
         try:
@@ -244,31 +243,31 @@ class Renderer:
             duration = 1
         callback(duration)
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     def reset(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
 #        print "** RESET **"
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     def setVolume(self, level):
         confirmMainThread()
 #        print "setVolume: set volume to %s" % level
         self.playbin.set_property("volume", level * 4.0)
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     def play(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_PLAYING)
 #        print "** PLAY **"
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     def pause(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_PAUSED)
 #        print "** PAUSE **"
 
-    @gtkAsyncMethod
+    @gtk_queue.gtkAsyncMethod
     def stop(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
@@ -283,4 +282,4 @@ class Renderer:
         print "setRate: set rate to %s" % rate
 
     def movieDataProgramInfo(self, moviePath, thumbnailPath):
-        return (("python", 'frontend_implementation/gst_extractor.py', moviePath, thumbnailPath), None)
+        return (("python", 'platform/renderers/gst_extractor.py', moviePath, thumbnailPath), None)

@@ -296,10 +296,10 @@ class MiroBuild (py2app):
             'miro.frontends',
             'miro.frontends.html',
             'miro.platform',
-            'miro.platform.frontend',
             'miro.platform.frontends',
             'miro.platform.frontends.html',
-        ]        
+            'miro.platform.renderers',
+        ]
         self.includes.add('miro.compiled_templates')
 
         self.distribution.package_dir = {

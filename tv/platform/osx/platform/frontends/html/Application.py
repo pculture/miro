@@ -55,9 +55,9 @@ from miro.platform.utils import ensureDownloadDaemonIsTerminated, osFilenamesToF
 
 from miro.gtcache import gettext as _
 
-import Preferences
-import GrowlNotifier
-import SparkleUpdater
+from miro.platform.frontends.html import Preferences
+from miro.platform.frontends.html import GrowlNotifier
+from miro.platform.frontends.html import SparkleUpdater
 
 ###############################################################################
 

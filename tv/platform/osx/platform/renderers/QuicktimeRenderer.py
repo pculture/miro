@@ -36,7 +36,6 @@ from QTKit import *
 from AppKit import *
 from Foundation import *
 
-from miro.platform.videorenderer import VideoRenderer
 from miro import prefs
 from miro import config
 from miro.platform import qtcomp
@@ -55,10 +54,9 @@ ALL_SUPPORTED_MEDIA_TYPES   = SUPPORTED_VIDEO_MEDIA_TYPES + SUPPORTED_AUDIO_MEDI
 
 ###############################################################################
 
-class QuicktimeRenderer (VideoRenderer):
+class QuicktimeRenderer:
 
     def __init__(self, delegate):
-        VideoRenderer.__init__(self)
         self.view = nil
         self.movie = nil
         self.delegate = delegate
@@ -188,6 +186,49 @@ class QuicktimeRenderer (VideoRenderer):
         if self.movie is not nil:
             self.movie.gotoBeginning()
 
+    def getDisplayTime(self, callback = None):
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getDisplayTime(). Please, update your code")
+            return ""
+        else:
+            self.getCurrentTime(lambda secs : callback(util.formatTimeForUser(secs)))
+
+    def getDisplayDuration(self, callback = None):
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getDisplayDuration(). Please, update your code")
+            return ""
+        else:
+            self.getDuration(lambda secs : callback(util.formatTimeForUser(secs)))
+
+    def getDisplayRemainingTime(self, callback = None):
+        def startCallbackChain():
+            self.getDuration(durationCallback)
+        def durationCallback(duration):
+            self.getCurrentTime(lambda ct: currentTimeCallback(ct, duration))
+        def currentTimeCallback(currentTime, duration):
+            callback(util.formatTimeForUser(abs(currentTime-duration), -1))
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getDisplayRemainingTime(). Please, update your code")
+            return ""
+        else:
+            startCallbackChain()
+
+    def getProgress(self, callback = None):
+        def startCallbackChain():
+            self.getDuration(durationCallback)
+        def durationCallback(duration):
+            self.getCurrentTime(lambda ct: currentTimeCallback(ct, duration))
+        def currentTimeCallback(currentTime, duration):
+            if currentTime == 0 or duration == 0:
+                callback(0.0)
+            else:
+                callback(currentTime / duration)
+        if callback is None:
+            logging.warn("using deprecated VideoRenderer.getProgress(). Please, update your code")
+            return 0.0
+        else:
+            startCallbackChain()
+
     def getDuration(self, callback):
         callback(movieDuration(self.movie))
 
@@ -205,6 +246,16 @@ class QuicktimeRenderer (VideoRenderer):
             qttime.timeValue = time * float(qttime.timeScale)
             self.movie.setCurrentTime_(qttime)
 
+    def setProgress(self, progress):
+        if progress > 1.0:
+            progress = 1.0
+        if progress < 0.0:
+            progress = 0.0
+        self.getDuration(lambda x: self.setCurrentTime(x*progress))
+
+    def selectItem(self, anItem):
+        self.selectFile (anItem.getVideoFilename())
+
     def getRate(self, callback):
         if self.movie is nil:
             callback(0.0)
@@ -214,6 +265,10 @@ class QuicktimeRenderer (VideoRenderer):
         threads.warnIfNotOnMainThread('QuicktimeRenderer.setRate')
         if self.movie is not nil:
             self.movie.setRate_(rate)
+
+    def playFromTime(self, position):
+        self.play()
+        self.setCurrentTime(position)
         
     @threads.onMainThread
     def setVolume(self, level):
