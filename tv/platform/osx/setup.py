@@ -288,11 +288,10 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
         self.distribution.ext_modules.append(self.get_libtorrent_ext())
 
-        self.packages = self.distribution.packages = [
+        self.distribution.packages = [
             'miro',
-            'miro.dl_daemon',
             'miro.compiled_templates',
-            'miro.compiled_templates.unittest',
+            'miro.dl_daemon',
             'miro.dl_daemon.private',
             'miro.frontends',
             'miro.frontends.html',
@@ -300,12 +299,14 @@ class MiroBuild (py2app):
             'miro.platform.frontend',
             'miro.platform.frontends',
             'miro.platform.frontends.html',
-        ]
+        ]        
+        self.includes = ['miro.compiled_templates']
 
         self.distribution.package_dir = {
             'miro': PORTABLE_DIR,
             'miro.platform': PLATFORM_PACKAGE_DIR,
         }
+        
         self.iconfile = self.config.get_icon_file()
         
         excludedResources = ['.svn', '.DS_Store']
