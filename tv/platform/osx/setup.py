@@ -300,7 +300,7 @@ class MiroBuild (py2app):
             'miro.platform.frontends',
             'miro.platform.frontends.html',
         ]        
-        self.includes = ['miro.compiled_templates']
+        self.includes.add('miro.compiled_templates')
 
         self.distribution.package_dir = {
             'miro': PORTABLE_DIR,
