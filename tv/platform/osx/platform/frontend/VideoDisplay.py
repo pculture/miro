@@ -36,7 +36,7 @@ from Foundation import *
 from miro import app
 from miro import eventloop
 from miro.platform import bundle
-from miro.platform.utils import osFilenameToFilenameType
+from miro.platform.filenames import filenameTypeToOSFilename
 from miro.frontends.html.displaybase import VideoDisplayBase
 from miro.platform.frontends.html import threads
 from miro.playbackcontroller import PlaybackControllerBase
@@ -70,7 +70,7 @@ objc.loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity
 class PlaybackController (PlaybackControllerBase):
     
     def playItemExternallyByID(self, itemID):
-	item = PlaybackControllerBase.playItemExternallyByID(self, itemID)
+        item = PlaybackControllerBase.playItemExternallyByID(self, itemID)
         moviePath = item.getVideoFilename()
         moviePath = filenameTypeToOSFilename(moviePath)
 
