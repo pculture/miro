@@ -26,19 +26,19 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import os, sys
+import os
 import re
+import sys
 import urllib
 
 from miro.platform import specialfolders
 
-# Strategy: ask the directory service for
-# NS_XPCOM_CURRENT_PROCESS_DIR, the directory "associated with this
-# process," which is read to mean the root of the Mozilla
-# installation. Use a fixed offset from this path.
-
 def appRoot():
-    return os.path.abspath(os.getcwd())
+    """Determine the directory the .exe file is located in.  Taken from the
+    WhereAmI recipe on the py2exe website.
+    """
+    exe_path = unicode(sys.executable, sys.getfilesystemencoding())
+    return os.path.dirname(os.path.dirname(exe_path))
 
 def resourceRoot():
     return os.path.join(appRoot(), 'resources')
