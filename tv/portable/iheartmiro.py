@@ -1,4 +1,5 @@
 import os
+import sys
 import httpclient
 import tempfile
 import glob
@@ -8,10 +9,14 @@ from frontends.html import dialogs
 from gtcache import gettext as _
 
 def firefoxExecutable():
-    search_path = ["/usr/bin/firefox", "C:\\Program Files\\Mozilla Firefox\\firefox.exe"]
-    for poss in search_path:
-        if os.path.isfile(poss):
-            return poss
+    if sys.platform == "darwin":
+        import AppKit
+        return AppKit.NSWorkspace.sharedWorkspace().fullPathForApplication_("Firefox")
+    else:
+        search_path = ["/usr/bin/firefox", "C:\\Program Files\\Mozilla Firefox\\firefox.exe"]
+        for poss in search_path:
+            if os.path.isfile(poss):
+                return poss
     return None
 
 def isFirefoxInstalled():
@@ -20,7 +25,8 @@ def isFirefoxInstalled():
 def isIHeartMiroInstalled():
     id = "{216ec66d-214a-43ea-92f0-5373f8405c88}"
     locations = ["~/.mozilla/firefox/*/extensions/" + id,
-	"~\\Application Data\\Mozilla\\Firefox\\Profiles\\*\\extensions\\" + id, ]
+	             "~\\Application Data\\Mozilla\\Firefox\\Profiles\\*\\extensions\\" + id,
+	            "~/Library/Application Support/Firefox/Profiles/*/extensions/" + id ]
     for location in locations:
         if glob.glob (os.path.expanduser(location)):
             return True
@@ -32,8 +38,12 @@ def installIHeartMiro():
         output = os.fdopen(fd, "wb")
         output.write(info["body"])
         output.close()
-        exe = firefoxExecutable()
-        os.spawnl(os.P_NOWAIT, exe, exe, filename)
+        if sys.platform == "darwin":
+            import AppKit
+            AppKit.NSWorkspace.sharedWorkspace().openFile_withApplication_andDeactivate_(filename, "Firefox", True)
+        else:
+            exe = firefoxExecutable()
+            os.spawnl(os.P_NOWAIT, exe, exe, filename)
     def httpFailure(error):
         print "error: %s" % (error,)
     httpclient.grabURL("http://www.iheartmiro.org/iHeartMiro-latest.xpi", httpSuccess, httpFailure)
