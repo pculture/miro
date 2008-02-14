@@ -36,6 +36,7 @@ from QTKit import *
 from AppKit import *
 from Foundation import *
 
+from miro import util
 from miro import prefs
 from miro import config
 from miro.platform import qtcomp
