@@ -1542,7 +1542,7 @@ folder will be deleted.""")
                 self.downloader.addItem(other)
                 other.signalChange(needsSave=False)
         
-        signals.system.download_complete(self)
+        signals.system.downloadComplete(self)
 
     def getResizedScreenshot(self, width, height):
         try:

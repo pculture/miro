@@ -44,6 +44,7 @@ from miro import guide
 from miro import feed
 from miro import folder
 from miro import playlist
+from miro import signals
 
 class ThemeHistory(DDBObject):
     def __init__(self):
@@ -83,8 +84,6 @@ class ThemeHistory(DDBObject):
             guide.ChannelGuide(guideURL,
             unicode(config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split())
 
-        if config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']:
-            app.delegate.maximizeWindow()
         if self.theme is not None: # we have a theme
             new_guides = unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split()
             for temp_guide in new_guides:
@@ -114,6 +113,7 @@ class ThemeHistory(DDBObject):
                 self._installDefaultFeeds()
         else: # no theme
             self._installDefaultFeeds()
+        signals.system.themeFirstRun(self.theme)
 
     @asUrgent
     def _installDefaultFeeds(self):

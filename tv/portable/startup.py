@@ -160,7 +160,7 @@ def finalizeStartup():
     setupGlobalFeeds()
     setupTabs()
     searchengines.createEngines()
-    setupGuides()
+    setupTheme()
 
     # Start the automatic downloader daemon
     logging.info ("Spawning auto downloader...")
@@ -237,8 +237,9 @@ def installMoviesGoneHandler(callback):
     global moviesGoneHandler
     moviesGoneHandler = callback
 
-def setupGuides():
-    _getThemeHistory()
+def setupTheme():
+    themeHistory = _getThemeHistory()
+    themeHistory.checkNewTheme()
 
 def _getThemeHistory():
     if len(views.themeHistories) > 0:

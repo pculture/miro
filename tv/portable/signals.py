@@ -108,6 +108,8 @@ class SystemSignals(SignalEmitter):
     "download-complete" - An item has finished downloading.
 
     "new-dialog" - The backend wants to display a dialog to the user.
+
+    "theme-first-run" - A theme was used for the first time
     
         Arguments:
         - item -- The object that finished downloading.
@@ -115,7 +117,8 @@ class SystemSignals(SignalEmitter):
     def __init__(self):
         SignalEmitter.__init__(self, 'error', 'startup-success',
                 'startup-failure', 'shutdown', 'loaded-custom-channels',
-                'update-available', 'download-complete', 'new-dialog')
+                'update-available', 'download-complete', 'new-dialog',
+                'theme-first-run')
 
     def startupSuccess(self):
         self.emit('startup-success')
@@ -129,14 +132,17 @@ class SystemSignals(SignalEmitter):
     def loadedCustomChannels():
         self.emit('loaded-custom-channels')
 
-    def update_available(self, latest):
+    def updateAvailable(self, latest):
         self.emit('update-available', latest)
 
-    def download_complete(self, item):
+    def downloadComplet(self, item):
         self.emit('download-complete', item)
 
-    def new_dialog(self, dialog):
+    def newDialog(self, dialog):
         self.emit('new-dialog', dialog)
+
+    def themeFirstRun(self, theme):
+        self.emit('theme-first-run', theme)
 
     def failedExn(self, when, details=None):
         self.failed(when, withExn=True, details=details)

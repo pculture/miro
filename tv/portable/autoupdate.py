@@ -73,7 +73,7 @@ def _handleAppCast(data, upToDateCallback):
         
             if not upToDate:
                 logging.info('New update available.')
-                signals.system.update_available(latest)
+                signals.system.updateAvailable(latest)
             elif upToDateCallback:
                 logging.info('Up to date. Notifying')
                 upToDateCallback()

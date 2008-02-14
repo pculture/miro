@@ -75,8 +75,13 @@ class HTMLApplication:
         signals.system.connect('loaded-custom-channels',
                 self.handleCustomChannelLoad)
         signals.system.connect('new-dialog', self.handleDialog)
+        signals.system.connect('theme-first-run', self.handleThemeFirstRun)
         signals.system.connect('shutdown', self.onBackendShutdown)
         startup.initialize()
+
+    def handleThemeFirstRun(self, obj, theme):
+        if config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']:
+            app.delegate.maximizeWindow()
 
     def handleDialog(self, obj, dialog):
         app.delegate.runDialog(dialog)
