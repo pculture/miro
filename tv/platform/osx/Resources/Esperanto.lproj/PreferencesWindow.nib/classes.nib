@@ -1,10 +1,10 @@
 {
     IBClasses = (
         {
-            ACTIONS = {checkEvery = id; }; 
+            ACTIONS = {checkEvery = id; setAutoDownloadDefault = id; }; 
             CLASS = ChannelsPrefsController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {periodicityPopup = id; }; 
+            OUTLETS = {autoDownloadPopup = id; periodicityPopup = id; }; 
             SUPERCLASS = NSObject; 
         }, 
         {
@@ -28,6 +28,7 @@
                 setBTMaxPort = id; 
                 setBTMinPort = id; 
                 setDownstreamLimit = id; 
+                setMaxAutoDownloads = id; 
                 setMaxDownloads = id; 
                 setUpstreamLimit = id; 
             }; 
@@ -41,6 +42,7 @@
                 limitDownstreamField = id; 
                 limitUpstreamCheckBox = id; 
                 limitUpstreamField = id; 
+                maxAutoDownloadsField = id; 
                 maxDownloadsField = id; 
                 moviesDirectoryField = id; 
                 nonEncryptedCnxButton = id; 
