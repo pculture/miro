@@ -13,7 +13,7 @@ from miro.download_utils import cleanFilename
 from miro import app
 from miro import download_utils
 from miro import database
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro import httpclient
 from miro import util
 from framework import EventLoopTest, DemocracyTestCase, HadToStopEventLoop

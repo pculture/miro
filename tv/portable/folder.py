@@ -29,7 +29,7 @@
 from miro.gtcache import gettext as _
 
 from miro import app
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro import indexes
 from miro import playlist
 from miro import sorts

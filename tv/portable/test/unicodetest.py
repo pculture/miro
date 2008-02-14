@@ -9,7 +9,7 @@ from miro import item
 from miro import database
 from miro import feedparser
 from miro import app
-from miro.frontends.html import dialogs
+from miro import dialogs
 import framework
 import os
 from miro import gtcache

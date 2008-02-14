@@ -1,12 +1,13 @@
 import os
 import sys
-import httpclient
 import tempfile
 import glob
-import config
-import prefs
-from frontends.html import dialogs
-from gtcache import gettext as _
+
+from miro import httpclient
+from miro import config
+from miro import prefs
+from miro import dialogs
+from miro.gtcache import gettext as _
 
 def firefoxExecutable():
     if sys.platform == "darwin":

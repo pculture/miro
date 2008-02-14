@@ -45,7 +45,7 @@ from miro import app
 from miro import views
 from miro import prefs
 from miro import config
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro.frontends.html.main import HTMLApplication
 from miro import filetypes
 from miro import eventloop

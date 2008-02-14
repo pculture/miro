@@ -106,6 +106,8 @@ class SystemSignals(SignalEmitter):
           appcast format).
 
     "download-complete" - An item has finished downloading.
+
+    "new-dialog" - The backend wants to display a dialog to the user.
     
         Arguments:
         - item -- The object that finished downloading.
@@ -113,7 +115,7 @@ class SystemSignals(SignalEmitter):
     def __init__(self):
         SignalEmitter.__init__(self, 'error', 'startup-success',
                 'startup-failure', 'shutdown', 'loaded-custom-channels',
-                'update-available', 'download-complete')
+                'update-available', 'download-complete', 'new-dialog')
 
     def startupSuccess(self):
         self.emit('startup-success')
@@ -132,6 +134,9 @@ class SystemSignals(SignalEmitter):
 
     def download_complete(self, item):
         self.emit('download-complete', item)
+
+    def new_dialog(self, dialog):
+        self.emit('new-dialog', dialog)
 
     def failedExn(self, when, details=None):
         self.failed(when, withExn=True, details=details)

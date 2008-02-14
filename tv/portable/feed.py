@@ -51,7 +51,7 @@ from string import Template
 from miro import app
 from miro import config
 from miro import iconcache
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro import eventloop
 from miro import filters
 from miro import folder

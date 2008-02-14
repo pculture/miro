@@ -45,7 +45,7 @@ import urllib
 
 from miro.util import getTorrentInfoHash
 from miro import app
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro import download_utils
 from miro import item
 from miro import feed

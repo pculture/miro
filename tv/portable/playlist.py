@@ -31,7 +31,7 @@
 from miro.gtcache import gettext as _
 
 from miro import app
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro import database
 from miro import filters
 from miro import item

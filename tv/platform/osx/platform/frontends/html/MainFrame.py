@@ -40,7 +40,8 @@ from miro import prefs
 from miro import views
 from miro import config
 from miro import folder
-from miro.frontends.html import dialogs, keyboard
+from miro import dialogs
+from miro.frontends.html import keyboard
 from miro import playlist
 from miro.platform import resources
 from miro import eventloop

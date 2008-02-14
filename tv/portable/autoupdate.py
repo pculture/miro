@@ -28,7 +28,7 @@
 
 from miro import prefs
 from miro import config
-from miro.frontends.html import dialogs
+from miro import dialogs
 import logging
 from miro import eventloop
 from miro import feedparser

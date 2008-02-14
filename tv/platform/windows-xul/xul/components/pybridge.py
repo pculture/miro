@@ -49,6 +49,8 @@ try:
     from miro import controller
     from miro import eventloop
     from miro import config
+    from miro import dialogs
+    from miro.frontends.html import keyboard
     from miro.frontends.html import dialogs, keyboard
     from miro import folder
     from miro import playlist

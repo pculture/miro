@@ -27,7 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro.download_utils import parseURL
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro import eventloop
 
 def formatAuthString(auth):

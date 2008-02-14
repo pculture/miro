@@ -40,7 +40,7 @@ from miro import views
 from miro import prefs
 from miro import config
 from miro import folder
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro import eventloop
 
 from miro.gtcache import gettext as _

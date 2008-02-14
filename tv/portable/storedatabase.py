@@ -65,7 +65,7 @@ from miro import util
 from miro import schema as schema_mod
 from miro import eventloop
 from miro import app
-from miro.frontends.html import dialogs
+from miro import dialogs
 import logging
 from zipfile import ZipFile
 import tempfile

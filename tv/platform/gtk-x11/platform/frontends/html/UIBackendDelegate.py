@@ -34,7 +34,7 @@ import gtk
 import threading
 import traceback
 from miro import app
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 import re

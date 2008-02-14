@@ -4,7 +4,7 @@ from time import sleep
 
 from miro import config
 from miro import prefs
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro import database
 from miro.feed import validateFeedURL, normalizeFeedURL, Feed
 

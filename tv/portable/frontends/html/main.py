@@ -34,7 +34,7 @@ import logging
 
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
-from miro.frontends.html import dialogs
+from miro import dialogs
 from miro.frontends.html import templatedisplay
 from miro.platform.frontends.html import MainFrame
 from miro.platform.frontends.html import VideoDisplay
@@ -74,8 +74,12 @@ class HTMLApplication:
         signals.system.connect('startup-failure', self.handleStartupFailure)
         signals.system.connect('loaded-custom-channels',
                 self.handleCustomChannelLoad)
+        signals.system.connect('new-dialog', self.handleDialog)
         signals.system.connect('shutdown', self.onBackendShutdown)
         startup.initialize()
+
+    def handleDialog(self, obj, dialog):
+        app.delegate.runDialog(dialog)
 
     def handleStartupFailure(self, obj, summary, description):
         dialog = dialogs.MessageBoxDialog(summary, description)

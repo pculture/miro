@@ -66,10 +66,11 @@ Frontend requirements:
     platform (The default button is the 1st button in the list).  Frontends
     should try to recognize standard buttons and display the stock icons for
     them.  
-    """
+"""
 
 from miro import app
 from miro import eventloop
+from miro import signals
 from miro.gtcache import gettext as _
 
 class DialogButton(object):
@@ -119,7 +120,7 @@ class Dialog(object):
     def run(self, callback):
         self.callback = callback
         self.choice = None
-        app.delegate.runDialog(self)
+        signals.system.new_dialog(self)
 
     def runCallback(self, choice):
         """Run the callback for this dialog.  Choice should be the button that
