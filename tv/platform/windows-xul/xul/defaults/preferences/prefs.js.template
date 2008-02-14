@@ -19,3 +19,8 @@ pref("javascript.options.strict", true);
 pref("extensions.update.enabled", false);
 pref("extensions.update.autoUpdateEnabled", false);
 pref("extensions.update.notifyUser", false);
+
+/* Give some preferences to the Guide browser */
+user_pref("capability.principal.codebase.p0.granted", "UniversalBrowserWrite UniversalBrowserRead");
+user_pref("capability.principal.codebase.p0.id", "file://");
+user_pref("capability.principal.codebase.p0.subjectName", "")
