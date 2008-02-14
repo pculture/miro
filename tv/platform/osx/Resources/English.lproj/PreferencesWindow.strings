@@ -32,7 +32,7 @@
 /* NSMenuItem : <title:3 hours> (oid:82) */
 "3 hours" = "3 hours";
 
-/* NSTextField (200) : <title:4> (oid:168) */
+/* NSTextField (4) : <title:4> (oid:201) */
 "4" = "4";
 
 /* NSTextField (1) : <title:5> (oid:48) */
@@ -46,6 +46,12 @@
 
 /* NSButton (Add...) : <title:Add...> (oid:149) */
 "Add..." = "Add...";
+
+/* NSMenuItem : <title:All> (oid:196) */
+"All" = "All";
+
+/* NSTextField (Auto download default setting for new channels:) : <title:Auto download default setting for new channels:> (oid:192) */
+"Auto download default setting for new channels:" = "Auto download default setting for new channels:";
 
 /* NSButton (Automatically forward ports) : <title:Automatically forward ports> (oid:177) */
 "Automatically forward ports" = "Automatically forward ports";
@@ -64,6 +70,9 @@
 
 /* NSTextField (Check channels for new content:) : <title:Check channels for new content:> (oid:24) */
 "Check channels for new content:" = "Check channels for new content:";
+
+/* NSTextField (Don't auto-download more than this many videos per channel at once:) : <title:Don't auto-download more than this many videos per channel at once:> (oid:200) */
+"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:";
 
 /* NSTextField (Don't download more than this many videos at once:) : <title:Don't download more than this many videos at once:> (oid:129) */
 "Don't download more than this many videos at once:" = "Don't download more than this many videos at once:";
@@ -87,7 +96,13 @@
 /* NSMenuItem : <title:Never> (oid:86) */
 "Never" = "Never";
 
-/* NSMenu : <title:OtherViews> (oid:80) */
+/* NSMenuItem : <title:New> (oid:195) */
+"New" = "New";
+
+/* NSMenuItem : <title:Off> (oid:197) */
+"Off" = "Off";
+
+/* NSMenu : <title:OtherViews> (oid:194) */
 "OtherViews" = "OtherViews";
 
 /* NSButtonCell (Play videos one after another.) : <title:Play videos one after another.> (oid:103) */

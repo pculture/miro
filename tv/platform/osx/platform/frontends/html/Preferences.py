@@ -170,15 +170,26 @@ class GeneralPrefsController (NSObject):
 class ChannelsPrefsController (NSObject):
 
     periodicityPopup = IBOutlet('periodicityPopup')
+    autoDownloadPopup = IBOutlet('autoDownloadPopup')
+
+    AUTO_DOWNLOAD_VALS = ['all', 'new', 'off']
 
     def awakeFromNib(self):
         minutes = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
         itemIndex = self.periodicityPopup.indexOfItemWithTag_(minutes)
         self.periodicityPopup.selectItemAtIndex_(itemIndex)
+        
+        defaultAutoDownload = config.get(prefs.CHANNEL_AUTO_DEFAULT)
+        tag = self.AUTO_DOWNLOAD_VALS.index(defaultAutoDownload)
+        self.autoDownloadPopup.selectItemWithTag_(tag)
 
     def checkEvery_(self, sender):
         minutes = sender.selectedItem().tag()
         eventloop.addUrgentCall(lambda:config.set(prefs.CHECK_CHANNELS_EVERY_X_MN, minutes), "Setting update frequency pref.")
+    
+    def setAutoDownloadDefault_(self, sender):
+        val = self.AUTO_DOWNLOAD_VALS[sender.selectedItem().tag()]
+        eventloop.addUrgentCall(lambda:config.set(prefs.CHANNEL_AUTO_DEFAULT, val), "Setting auto download default pref.")
 
 ###############################################################################
 
@@ -186,6 +197,7 @@ class DownloadsPrefsController (NSObject):
     
     moviesDirectoryField    = IBOutlet('moviesDirectoryField')
     maxDownloadsField       = IBOutlet('maxDownloadsField')
+    maxAutoDownloadsField   = IBOutlet('maxAutoDownloadsField')
     btMinPortField          = IBOutlet('btMinPortField')
     btMaxPortField          = IBOutlet('btMaxPortField')
     autoForwardButton       = IBOutlet('autoForwardButton')
@@ -200,6 +212,7 @@ class DownloadsPrefsController (NSObject):
         self.moviesDirectoryField.setStringValue_(unicode(moviesDirPath))
 
         self.maxDownloadsField.setIntValue_(config.get(prefs.MAX_MANUAL_DOWNLOADS))
+        self.maxAutoDownloadsField.setIntValue_(config.get(prefs.DOWNLOADS_TARGET))
 
         btMinPort = config.get(prefs.BT_MIN_PORT)
         self.btMinPortField.setIntValue_(btMinPort)
@@ -250,6 +263,10 @@ class DownloadsPrefsController (NSObject):
     def setMaxDownloads_(self, sender):
         maxDownloads = self.maxDownloadsField.intValue()
         config.set(prefs.MAX_MANUAL_DOWNLOADS, maxDownloads)
+
+    def setMaxAutoDownloads_(self, sender):
+        maxAutoDownloads = self.maxAutoDownloadsField.intValue()
+        config.set(prefs.DOWNLOADS_TARGET, maxAutoDownloads)
 
     def setBTMinPort_(self, sender):
         self.validateBTPortValues()
