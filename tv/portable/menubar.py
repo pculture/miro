@@ -150,10 +150,13 @@ class MenuBar:
             return self.impls[action]
         except KeyError:
             return None
+    
+    def addImpl(self, action, impl):
+        self.impls[action] = impl
 
 VideoItems = [
     MenuItem(_("_Open"), "Open", (Key("o", MOD),)),
-    MenuItem(_("_Download Video"), "NewDownload", (), impl=lambda:app.htmlapp.newDownload()),
+    MenuItem(_("_Download Video"), "NewDownload", ()),
     #MenuItem(_("Op_en Recent"), "OpenRecent", ()),
     MenuItem(_("Check _Version"), "CheckVersion", ()),
     Separator(),
@@ -196,8 +199,8 @@ ChannelItems = [
              plural=_("_Update Channels...")),
     MenuItem(_("Update _All Channels"), "UpdateAllChannels", (Key("r",MOD,SHIFT),)),
     Separator(),
-    MenuItem(_("_Import Channels (OPML)..."), "ImportChannels", (), impl=lambda:app.htmlapp.importChannels()),
-    MenuItem(_("E_xport Channels (OPML)..."), "ExportChannels", (), impl=lambda:app.htmlapp.exportChannels()),
+    MenuItem(_("_Import Channels (OPML)..."), "ImportChannels", ()),
+    MenuItem(_("E_xport Channels (OPML)..."), "ExportChannels", ()),
     Separator(),
     MenuItem(_("_Send this channel to a friend"), "MailChannel", (), enabled=False),
     MenuItem(_("Copy Channel _Link"), "CopyChannelURL", (), enabled=False),

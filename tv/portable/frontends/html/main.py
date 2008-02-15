@@ -44,6 +44,7 @@ from miro import autoupdate
 from miro import config
 from miro import eventloop
 from miro import iheartmiro
+from miro import menubar
 from miro import opml
 from miro import prefs
 from miro import selection
@@ -78,6 +79,7 @@ class HTMLApplication:
         signals.system.connect('new-dialog', self.handleDialog)
         signals.system.connect('theme-first-run', self.handleThemeFirstRun)
         signals.system.connect('shutdown', self.onBackendShutdown)
+        self.installMenubarImplementations()
         startup.startup()
 
     def handleThemeFirstRun(self, obj, theme):
@@ -90,6 +92,11 @@ class HTMLApplication:
     def handleStartupFailure(self, obj, summary, description):
         dialog = dialogs.MessageBoxDialog(summary, description)
         dialog.run(lambda d: self.cancelStartup())
+
+    def installMenubarImplementations(self):
+        menubar.menubar.addImpl("NewDownload", self.newDownload)
+        menubar.menubar.addImpl("ImportChannels", self.importChannels)
+        menubar.menubar.addImpl("ExportChannels", self.exportChannels)
 
     def onBackendShutdown(self, obj):
         logging.info ("Shutting down frontend")
