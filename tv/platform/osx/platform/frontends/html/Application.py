@@ -73,7 +73,7 @@ class Application(HTMLApplication):
         ensureDownloadDaemonIsTerminated()
         NSApplication.sharedApplication().terminate_(nil)
 
-    def Run(self):
+    def run(self):
         if self.checkOtherAppInstances():
             eventloop.connect('begin-loop', self.beginLoop)
             eventloop.connect('end-loop', self.endLoop)
@@ -141,7 +141,7 @@ class AppController (NSObject):
         
     def applicationDidFinishLaunching_(self, notification):
         # Startup
-        app.controller.startup()
+        app.htmlapp.startup()
 
         # The database should be ready at this point, check Miro migration.
         from miro.platform import migrateappname
@@ -324,7 +324,7 @@ class AppController (NSObject):
         app.htmlapp.exportChannels()
     
     def shutdown_(self, sender):
-        app.controller.quit()
+        app.htmlapp.quit()
 
     def validateMenuItem_(self, item):
         return item.action() in ('donate:', 'checkForUpdates:', 'showMainWindow:',

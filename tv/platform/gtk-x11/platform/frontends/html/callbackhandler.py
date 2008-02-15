@@ -350,7 +350,7 @@ class CallbackHandler(object):
 
     def on_main_delete(self, *args):
         confirmMainThread()
-        app.controller.quit()
+        app.htmlapp.quit()
         return True
 
     def on_main_window_key_press_event(self, widget, event):

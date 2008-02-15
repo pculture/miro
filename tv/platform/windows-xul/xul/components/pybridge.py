@@ -51,19 +51,19 @@ try:
     from miro import config
     from miro import dialogs
     from miro.frontends.html import keyboard
-    from miro.frontends.html import dialogs, keyboard
     from miro import folder
     from miro import playlist
     from miro import prefs
     from miro import singleclick
-    from miro.platform import frontend
+    from miro import startup
     from miro import util
     from miro import menubar
     from miro import feed
     from miro import database
+    from miro.platform.frontends.html import startup as platform_startup
     from miro.platform.frontends.html import HTMLDisplay
-    from miro.frontend_implementation.UIBackendDelegate import UIBackendDelegate
-    from miro.frontend_implementation import MainFrame
+    from miro.platform.frontends.html.Application import Application
+    from miro.platform.frontends.html.MainFrame import MainFrame
     from miro.eventloop import asUrgent, asIdle
     from miro import searchengines
     from miro import views
@@ -230,7 +230,6 @@ class PyBridge:
         self.cursorDisplayCount = 0
         if not errorOnImport:
             migrateappname.migrateSupport('Democracy Player', 'Miro')
-            self.delegate = UIBackendDelegate()
 
     def getStartupError(self):
         if not errorOnImport:
@@ -248,7 +247,7 @@ class PyBridge:
         initializeProxyObjects(window)
         registerHttpObserver()
         initializeHTTPProxy()
-        controller.main()
+        Application().run()
 
     @asUrgent
     def initializeViews(self):
@@ -296,7 +295,7 @@ class PyBridge:
     def getRunAtStartup(self):
         return config.get(prefs.RUN_AT_STARTUP)
     def setRunAtStartup(self, value):
-        self.delegate.setRunAtStartup(value)
+        app.delegate.setRunAtStartup(value)
         config.set(prefs.RUN_AT_STARTUP, value)
     def getCheckEvery(self):
         return config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
@@ -392,7 +391,7 @@ class PyBridge:
                 theme = args[x+1]
                 args[x:x+2] = []
                 break
-        config.load(theme)
+        startup.initialize(theme)
 
         # Doesn't matter if this executes before the call to
         # parseCommandLineArgs in app.py. -clahey
@@ -420,7 +419,7 @@ class PyBridge:
     @asUrgent
     def quit(self):
         if app.controller.finishedStartup:
-            app.controller.quit()
+            app.htmlapp.quit()
 
     @asUrgent
     def removeCurrentChannel(self):
@@ -436,11 +435,11 @@ class PyBridge:
 
     @asUrgent
     def showHelp(self):
-        self.delegate.openExternalURL(config.get(prefs.HELP_URL))
+        app.delegate.openExternalURL(config.get(prefs.HELP_URL))
 
     @asUrgent
     def reportBug(self):
-        self.delegate.openExternalURL(config.get(prefs.BUG_REPORT_URL))
+        app.delegate.openExternalURL(config.get(prefs.BUG_REPORT_URL))
 
     @asUrgent
     def copyChannelLink(self):
@@ -448,38 +447,38 @@ class PyBridge:
 
     @asUrgent
     def handleContextMenu(self, index):
-        self.delegate.handleContextMenu(index)
+        app.delegate.handleContextMenu(index)
 
     @asUrgent
     def handleSimpleDialog(self, id, buttonIndex):
-        self.delegate.handleDialog(id, buttonIndex)
+        app.delegate.handleDialog(id, buttonIndex)
 
     @asUrgent
     def handleCheckboxDialog(self, id, buttonIndex, checkbox_value):
-        self.delegate.handleDialog(id, buttonIndex,
+        app.delegate.handleDialog(id, buttonIndex,
                 checkbox_value=checkbox_value)
     @asUrgent
     def handleCheckboxTextboxDialog(self, id, buttonIndex, checkbox_value,
                                     textbox_value):
-        self.delegate.handleDialog(id, buttonIndex,
+        app.delegate.handleDialog(id, buttonIndex,
                                    checkbox_value=checkbox_value,
                                    textbox_value=textbox_value)
 
     @asUrgent
     def handleHTTPAuthDialog(self, id, buttonIndex, username, password):
-        self.delegate.handleDialog(id, buttonIndex, username=username,
+        app.delegate.handleDialog(id, buttonIndex, username=username,
                 password=password)
 
     @asUrgent
     def handleTextEntryDialog(self, id, buttonIndex, text):
-        self.delegate.handleDialog(id, buttonIndex, value=text)
+        app.delegate.handleDialog(id, buttonIndex, value=text)
 
     @asUrgent
     def handleSearchChannelDialog(self, id, buttonIndex, term, style, loc):
-        self.delegate.handleDialog(id, buttonIndex, term=term, style=style, loc=loc)
+        app.delegate.handleDialog(id, buttonIndex, term=term, style=style, loc=loc)
     @asUrgent
     def handleFileDialog(self, id, pathname):
-        self.delegate.handleFileDialog(id, pathname)
+        app.delegate.handleFileDialog(id, pathname)
 
     @asUrgent
     def addChannel(self, url):
@@ -487,7 +486,7 @@ class PyBridge:
 
     @asUrgent
     def openURL(self, url):
-        self.delegate.openExternalURL(url)
+        app.delegate.openExternalURL(url)
 
     @asUrgent
     def playPause(self):
@@ -639,10 +638,10 @@ class PyBridge:
         app.controller.removeCurrentPlaylist()
 
     def openDonatePage(self):
-        self.delegate.openExternalURL(config.get(prefs.DONATE_URL))
+        app.delegate.openExternalURL(config.get(prefs.DONATE_URL))
 
     def openBugTracker(self):
-        self.delegate.openExternalURL(config.get(prefs.BUG_TRACKER_URL))
+        app.delegate.openExternalURL(config.get(prefs.BUG_TRACKER_URL))
 
     @asUrgent
     def saveVideoFile(self, path):
@@ -653,10 +652,10 @@ class PyBridge:
     def startupDoSearch(self, path):
         if path.endswith(":"):
             path = path + "\\" # convert C: to C:\
-        frontend.startup.doSearch(path)
+        platform_startup.doSearch(path)
 
     def startupCancelSearch(self):
-        frontend.startup.cancelSearch()
+        platform_startup.cancelSearch()
 
     def getSpecialFolder(self, name):
         return specialfolders.getSpecialFolder(name)
