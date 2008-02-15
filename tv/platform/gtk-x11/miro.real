@@ -21,7 +21,7 @@ from miro import gtcache
 gtcache.init()
 
 from miro import config
-from miro.platform.frontends.html.Application import Application
+from miro import controller
 from miro import platform
 from miro.platform import options
 from miro import prefs
@@ -79,7 +79,7 @@ def startapp():
             args[i] = args[i][len('file://'):]
     singleclick.setCommandLineArgs(args)
 
-    Application().run()
+    controller.main()
 if parsed_options.version:
     print "Miro"
     print "Version: %s" % config.get(prefs.APP_VERSION)
@@ -91,7 +91,8 @@ elif parsed_options.profile:
     import profile
     import eventloop
     def main():
-        Application().run()
+        import controller
+        controller.main()
     if (parsed_options.bias):
         profile.Profile.bias = parsed_options.bias
     eventloop.profile_file = parsed_options.profile

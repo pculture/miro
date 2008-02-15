@@ -47,7 +47,7 @@ from miro.platform.xulhelper import makeService, pcfIDTVPyBridge
 #### Application object                                                    ####
 ###############################################################################
 class Application(HTMLApplication):
-    def run(self):
+    def Run(self):
         HTMLDisplay.initTempDir()
 
         lang = getLocale()

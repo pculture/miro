@@ -56,14 +56,12 @@ try:
     from miro import playlist
     from miro import prefs
     from miro import singleclick
-    from miro import startup
     from miro.platform import frontend
     from miro import util
     from miro import menubar
     from miro import feed
     from miro import database
     from miro.platform.frontends.html import HTMLDisplay
-    from miro.platform.frontends.html.Application import Application
     from miro.frontend_implementation.UIBackendDelegate import UIBackendDelegate
     from miro.frontend_implementation import MainFrame
     from miro.eventloop import asUrgent, asIdle
@@ -250,7 +248,7 @@ class PyBridge:
         initializeProxyObjects(window)
         registerHttpObserver()
         initializeHTTPProxy()
-        Application().run()
+        controller.main()
 
     @asUrgent
     def initializeViews(self):
@@ -394,7 +392,7 @@ class PyBridge:
                 theme = args[x+1]
                 args[x:x+2] = []
                 break
-        startup.initialize(theme)
+        config.load(theme)
 
         # Doesn't matter if this executes before the call to
         # parseCommandLineArgs in app.py. -clahey

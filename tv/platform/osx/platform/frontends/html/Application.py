@@ -73,7 +73,7 @@ class Application(HTMLApplication):
         ensureDownloadDaemonIsTerminated()
         NSApplication.sharedApplication().terminate_(nil)
 
-    def run(self):
+    def Run(self):
         if self.checkOtherAppInstances():
             eventloop.connect('begin-loop', self.beginLoop)
             eventloop.connect('end-loop', self.endLoop)
@@ -141,7 +141,7 @@ class AppController (NSObject):
         
     def applicationDidFinishLaunching_(self, notification):
         # Startup
-        app.htmlapp.startup()
+        app.controller.startup()
 
         # The database should be ready at this point, check Miro migration.
         from miro.platform import migrateappname

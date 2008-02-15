@@ -37,7 +37,6 @@ from miro import app
 from miro import gtcache
 from miro import config
 from miro import prefs
-from miro import startup
 import gtk.glade
 from miro.platform.utils import setMainThread
 
@@ -46,7 +45,7 @@ from miro.platform.utils import setMainThread
 ###############################################################################
 
 class Application(HTMLApplication):
-    def run(self):
+    def Run(self):
         mozsetup.setupMozillaEnvironment()
         gtk.glade.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
         gtk.glade.textdomain("miro")
@@ -54,7 +53,7 @@ class Application(HTMLApplication):
         queue.main_thread = threading.currentThread()
         setMainThread()
         gtk.gdk.threads_init()
-        startup.initialize(options.themeName)
+        config.load(options.themeName)
         self.startup()
         gtk.main()
         app.controller.onShutdown()

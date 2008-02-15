@@ -45,7 +45,6 @@ from miro.clock import clock
 from miro import app
 from miro import autodler
 from miro import config
-from miro import controller
 from miro import database
 from miro import databaseupgrade
 from miro import downloader
@@ -61,7 +60,6 @@ from miro import platform
 from miro import playlist
 from miro import prefs
 from miro.platform import resources
-from miro.platform.utils import setupLogging
 from miro import signals
 from miro import tabs
 from miro import theme
@@ -109,27 +107,17 @@ def setupGlobalFeed(url, *args, **kwargs):
     finally:
         feedView.unlink()
 
-def initialize(themeName):
-    """Initialize Miro.  This sets up things like logging and the config
-    system and should be called as early as possible.
-    """
-    setupLogging()
-    util.setupLogging()
-    app.db = database.defaultDatabase
-    app.controller = controller.Controller()
-    config.load(themeName)
 
-def startup():
-    """Startup Miro.
+def initialize():
+    """Initialize Miro and schedule startup.
     
-    This method starts up the eventloop and schedules the rest of the startup
-    to run in the event loop.
+    This method starts up the config system and eventloop however it doesn't
+    complete the startup process.  Instead, that gets scheduled to run in the
+    event loop.
 
     Frontends should call this method, then wait for 1 of 2 system signals.
     "startup-success" is fired once the startup is done and the backend is
     ready to go.  "startup-failure" is fired if something bad happned
-
-    initialize() must be called before startup().
     """
     logging.info ("Starting up %s", config.get(prefs.LONG_APP_NAME))
     logging.info ("Version:    %s", config.get(prefs.APP_VERSION))
