@@ -76,13 +76,13 @@ def launchApplication():
         if os.path.isdir(themeDir):
             theme = os.path.basename(themeDir)
 
-    from miro import config
-    config.load(theme)
+    from miro import startup
+    startup.initialize(theme)
 
     from miro import gtcache
     gtcache.init()
 
-    from miro import controller
+    from miro import config
     from miro import prefs
 
     # Tee output off to a log file
@@ -104,7 +104,8 @@ def launchApplication():
         sys.stderr = AutoflushingTeeStream([h, sys.stderr])
 
     # Kick off the application
-    controller.main()
+    from miro.platform.frontends.html.Application import Application
+    Application().run()
 
 # =============================================================================
 

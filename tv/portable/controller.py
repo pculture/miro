@@ -47,8 +47,6 @@ from miro import download_utils
 from miro import eventloop
 from miro import feed
 from miro import folder
-from miro.platform.frontends.html.Application import Application
-from miro.platform.frontends.html.UIBackendDelegate import UIBackendDelegate
 from miro import guide
 from miro import iconcache
 from miro import indexes
@@ -64,26 +62,13 @@ from miro import views
 # Something needs to import this outside of Pyrex. Might as well be controller
 from miro import templatehelper
 from miro import databasehelper
-from miro.platform.utils import setupLogging, exit, osFilenameToFilenameType
-
-# Run the application. Call this, not start(), on platforms where we
-# are responsible for the event loop.
-def main():
-    setupLogging()
-    util.setupLogging()
-    app.db = database.defaultDatabase
-    app.delegate = UIBackendDelegate()
-    app.controller = Controller()
-    app.controller.Run()
-
+from miro.platform.utils import exit, osFilenameToFilenameType
 
 ###############################################################################
 #### The main application app.controller object, binding model to view         ####
 ###############################################################################
-class Controller(Application):
-
+class Controller:
     def __init__(self):
-        Application.__init__(self)
         self.frame = None
         self.inQuit = False
         self.guideURL = None

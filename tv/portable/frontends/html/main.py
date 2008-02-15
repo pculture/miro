@@ -36,7 +36,8 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import dialogs
 from miro.frontends.html import templatedisplay
-from miro.platform.frontends.html import MainFrame
+from miro.platform.frontends.html.MainFrame import MainFrame
+from miro.platform.frontends.html.UIBackendDelegate import UIBackendDelegate
 from miro.platform.frontends.html import VideoDisplay
 from miro import app
 from miro import autoupdate
@@ -66,6 +67,7 @@ class HTMLApplication:
         self.inQuit = False
         self.loadedCustomChannels = False
         app.htmlapp = self
+        app.delegate = UIBackendDelegate()
 
     def startup(self):
         signals.system.connect('error', self.handleError)
@@ -77,7 +79,7 @@ class HTMLApplication:
         signals.system.connect('new-dialog', self.handleDialog)
         signals.system.connect('theme-first-run', self.handleThemeFirstRun)
         signals.system.connect('shutdown', self.onBackendShutdown)
-        startup.initialize()
+        startup.startup()
 
     def handleThemeFirstRun(self, obj, theme):
         if config.get(prefs.MAXIMIZE_ON_FIRST_RUN).lower() not in ['false','no','0']:
@@ -163,7 +165,7 @@ class HTMLApplication:
 
         # Put up the main frame
         logging.info ("Displaying main frame...")
-        self.frame = MainFrame.MainFrame(self)
+        self.frame = MainFrame(self)
         # HACK
         app.controller.frame = self.frame
 
