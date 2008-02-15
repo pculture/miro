@@ -32,6 +32,7 @@
 import threading
 
 from Foundation import NSObject, NSNumber
+from objc import NO
 
 ###############################################################################
 #### THREADING UTILITIES                                                   ####
