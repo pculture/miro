@@ -63,7 +63,9 @@ user_pref("browser.xul.error_pages.enabled", false);
 user_pref("general.useragent.vendor", %s);
 user_pref("general.useragent.vendorSub", %s);
 user_pref("general.useragent.vendorComment", %s);
-
+user_pref("capability.principal.codebase.p0.granted", "UniversalBrowserWrite UniversalBrowserRead"); 
+user_pref("capability.principal.codebase.p0.id", "file://"); 
+user_pref("capability.principal.codebase.p0.subjectName", "") 
 """ % (repr(config.get(prefs.LONG_APP_NAME)),
        repr(config.get(prefs.APP_VERSION)),
        repr(config.get(prefs.PROJECT_URL)))
