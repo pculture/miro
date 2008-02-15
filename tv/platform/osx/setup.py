@@ -127,7 +127,7 @@ import portable
 sys.modules['miro'] = portable
 
 from miro import util
-from miro import template_compiler
+from miro.frontends.html import template_compiler
 
 # =============================================================================
 # Utility function used to extract stuff from the binary kit
@@ -290,17 +290,17 @@ class MiroBuild (py2app):
 
         self.distribution.packages = [
             'miro',
-            'miro.compiled_templates',
             'miro.dl_daemon',
             'miro.dl_daemon.private',
             'miro.frontends',
             'miro.frontends.html',
+            'miro.frontends.html.compiled_templates',
             'miro.platform',
             'miro.platform.frontends',
             'miro.platform.frontends.html',
             'miro.platform.renderers',
         ]
-        self.includes.add('miro.compiled_templates')
+        self.includes.add('miro.frontends.html.compiled_templates')
 
         self.distribution.package_dir = {
             'miro': PORTABLE_DIR,
@@ -661,7 +661,10 @@ class MiroClean (Command):
             pass
         print "Removing old compiled templates..."
         try:
-            for filename in os.listdir(os.path.join("..","..","portable","compiled_templates")):
+            template_dir = os.path.join("..","..","portable", "frontends",
+                    "html", "compiled_templates")
+            for filename in os.listdir(template_dir):
+                filename = os.path.join(template_dir, filename)
                 if not filename.startswith(".svn"):
                     filename = os.path.join("..","..","portable","compiled_templates",filename)
                     if os.path.isdir(filename):

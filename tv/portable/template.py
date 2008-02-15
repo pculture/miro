@@ -35,7 +35,6 @@ from miro import eventloop
 from miro.templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId
 from miro.templateoptimize import HTMLChangeOptimizer
 from miro.xhtmltools import urlencode
-from miro.template_compiler import checkU
 from itertools import chain
 import logging
 from miro import util
@@ -73,7 +72,7 @@ def fillTemplate(filename, domHandler, platform, eventCookie, bodyTagExtra="", t
         return fillTemplate(domHandler, platform, eventCookie, bodyTagExtra, *args, **kargs)
     else:
         modname = filename.replace('/','.').replace('\\','.').replace('-','_')
-        mod = util.import_last("miro.compiled_templates.%s" % modname)
+        mod = util.import_last("miro.frontends.html.compiled_templates.%s" % modname)
         return mod.fillTemplate(domHandler, platform, eventCookie, bodyTagExtra, *args, **kargs)
 
 # As fillTemplate, but no Javascript calls are made, and no template
@@ -534,7 +533,7 @@ def nullSort(x,y):
 
 # Returns a quoted, filled version of attribute text
 def quoteAndFillAttr(value, localVars):
-    checkU(value)
+    util.checkU(value)
     return ''.join(('"',quoteattr(fillAttr(value, localVars)),'"'))
 
 # Returns a filled version of attribute text
@@ -545,7 +544,7 @@ def quoteAndFillAttr(value, localVars):
 
 # FIXME: we should parse the attribute values ahead of time
 def fillAttr(_value, _localVars):
-    checkU(_value)
+    util.checkU(_value)
     match = attrPattern.match(_value)
     if match:
         result = eval(match.group(2), globals(), _localVars)

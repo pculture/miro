@@ -261,7 +261,7 @@ ext_modules = [
     #Extension("template", [os.path.join(root, 'portable', 'template.pyx')]),
 ]
 
-from miro import template_compiler
+from miro.frontends.html import template_compiler
 
 def fillTemplate(templatepath, outpath, xml=False, **vars):
     s = open(templatepath, 'rt').read()
@@ -908,8 +908,10 @@ class clean(Command):
             pass
         print "Removing old compiled templates..."
         try:
-            for filename in os.listdir(os.path.join("..","..","portable","compiled_templates")):
-                filename = os.path.join("..","..","portable","compiled_templates",filename)
+            template_dir = os.path.join("..","..","portable", "frontends",
+                    "html", "compiled_templates")
+            for filename in os.listdir(template_dir):
+                filename = os.path.join(template_dir, filename)
                 if os.path.isdir(filename):
                     shutil.rmtree(filename)
                 else:
@@ -1037,9 +1039,9 @@ if __name__ == "__main__":
             'miro',
             'miro.dl_daemon',
             'miro.dl_daemon.private',
-            'miro.compiled_templates',
             'miro.frontends',
             'miro.frontends.html',
+            'miro.frontends.html.compiled_templates',
             'miro.platform',
             'miro.platform.frontends',
             'miro.platform.frontends.html',

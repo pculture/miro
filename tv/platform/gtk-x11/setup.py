@@ -105,8 +105,6 @@ portable_frontend_dir = os.path.join(portable_dir, 'frontends')
 portable_html_frontend_dir = os.path.join(portable_frontend_dir, 'html')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
-compiled_templates_dir = os.path.join(portable_dir, 'compiled_templates')
-compiled_templates_unittest_dir = os.path.join(compiled_templates_dir,'unittest')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
 platform_package_dir = os.path.join(platform_dir, 'platform')
@@ -124,7 +122,7 @@ sys.modules['miro'] = portable
 import platform
 sys.modules['miro'].platform = platform
 
-from miro import template_compiler
+from miro.frontends.html import template_compiler
 from miro import setup_portable
 template_compiler.compileAllTemplates(root_dir)
 
@@ -594,11 +592,11 @@ setup(name='miro',
         'miro',
         'miro.dl_daemon',
         'miro.test',
-        'miro.compiled_templates',
-        'miro.compiled_templates.unittest',
         'miro.dl_daemon.private',
         'miro.frontends',
         'miro.frontends.html',
+        'miro.frontends.html.compiled_templates',
+        'miro.frontends.html.compiled_templates.unittest',
         'miro.platform',
         'miro.platform.frontends',
         'miro.platform.frontends.html',

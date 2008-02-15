@@ -233,21 +233,24 @@ def modifiedTime(dir):
     except:
         return 0
 
+def compiledTemplateDir():
+    return resource.path(os.path.join('..','portable', 'frontends', 'html',
+        'compiled_templates'))
+
 def compileAllTemplates(root):
     setResourcePath(os.path.join(root,'resources'))
     source = resource.path('templates')
     sourceTime = modifiedTime(source)
-    dest = resource.path(os.path.join('..','portable','compiled_templates'))
+    dest = compiledTemplateDir()
     if not os.path.isdir(dest):
         os.makedirs(dest)
     destTime = modifiedTime(dest)
-    compilerTime = os.stat(resource.path(os.path.join(
-                            '..','portable','template_compiler.py'))).st_mtime
+    compilerTime = os.stat(resource.path(__file__)).st_mtime
     if (sourceTime > destTime) or (compilerTime > destTime):
         compileTemplates()
 
 def compileTemplates(tpath = None):
-    outdir = resource.path(os.path.join('..','portable','compiled_templates'))
+    outdir = compiledTemplateDir()
     if not os.path.isdir(outdir):
         os.makedirs(outdir)
     indir = resource.path('templates')
