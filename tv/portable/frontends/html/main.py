@@ -395,3 +395,23 @@ class HTMLApplication:
         handler.performSearch(engine, query)
         self.selection.selectTabByTemplateBase('searchtab')
 
+    def copyCurrentFeedURL(self):
+        tabs = self.selection.getSelectedTabs()
+        if len(tabs) == 1 and tabs[0].isFeed():
+            app.delegate.copyTextToClipboard(tabs[0].obj.getURL())
+
+    def recommendCurrentFeed(self):
+        tabs = self.selection.getSelectedTabs()
+        if len(tabs) == 1 and tabs[0].isFeed():
+            # See also dynamic.js if changing this URL
+            feed = tabs[0].obj
+            query = urllib.urlencode({'url': feed.getURL(), 'title': feed.getTitle()})
+            app.delegate.openExternalURL('http://www.videobomb.com/democracy_channel/email_friend?%s' % (query, ))
+
+    def copyCurrentItemURL(self):
+        tabs = self.selection.getSelectedItems()
+        if len(tabs) == 1 and isinstance(tabs[0], item.Item):
+            url = tabs[0].getURL()
+            if url:
+                app.delegate.copyTextToClipboard(url)
+

@@ -281,7 +281,7 @@ class MainController (NSWindowController):
         print "NOT IMPLEMENTED" # $$$$$$$$$$$$$$
 
     def copyVideoURL_(self, sender):
-        eventloop.addIdle(app.controller.copyCurrentItemURL, "Copy Video URL")
+        eventloop.addIdle(app.htmlapp.copyCurrentItemURL, "Copy Video URL")
 
     # Edit menu #
     
@@ -323,10 +323,10 @@ class MainController (NSWindowController):
         eventloop.addIdle(app.controller.updateAllFeeds, "Update all channels")
 
     def tellAFriend_(self, sender):
-        eventloop.addIdle(app.controller.recommendCurrentFeed, "Recommend current feed")
+        eventloop.addIdle(app.htmlapp.recommendCurrentFeed, "Recommend current feed")
 
     def copyChannelURL_(self, sender):
-        eventloop.addIdle(app.controller.copyCurrentFeedURL, "Copy channel URL")
+        eventloop.addIdle(app.htmlapp.copyCurrentFeedURL, "Copy channel URL")
 
     # Playlists menu # 
 

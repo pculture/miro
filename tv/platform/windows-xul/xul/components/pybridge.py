@@ -444,7 +444,7 @@ class PyBridge:
 
     @asUrgent
     def copyChannelLink(self):
-        app.controller.copyCurrentFeedURL()
+        app.htmlapp.copyCurrentFeedURL()
 
     @asUrgent
     def handleContextMenu(self, index):
@@ -594,7 +594,7 @@ class PyBridge:
 
     @asUrgent
     def copyCurrentItemURL(self):
-        app.controller.copyCurrentItemURL()
+        app.htmlapp.copyCurrentItemURL()
 
     @asUrgent
     def selectAllItems(self):
@@ -628,7 +628,7 @@ class PyBridge:
 
     @asUrgent
     def recommendCurrentChannel(self):
-        app.controller.recommendCurrentFeed()
+        app.htmlapp.recommendCurrentFeed()
 
     @asUrgent
     def renameCurrentPlaylist(self):

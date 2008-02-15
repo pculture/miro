@@ -511,13 +511,13 @@ class CallbackHandler(object):
         eventloop.addIdle (app.controller.updateAllFeeds, "Update All Channels")
 
     def on_copy_channel_link_activate(self, event = None):
-        eventloop.addIdle (app.controller.copyCurrentFeedURL, "Copy feed URL")
+        eventloop.addIdle (app.htmlapp.copyCurrentFeedURL, "Copy feed URL")
 
     def on_mail_channel_link_activate(self, event = None):
-        eventloop.addIdle (app.controller.recommendCurrentFeed, "Copy feed URL")
+        eventloop.addIdle (app.htmlapp.recommendCurrentFeed, "Copy feed URL")
 
     def on_copy_video_link_activate(self, event = None):
-        eventloop.addIdle(lambda:app.controller.copyCurrentItemURL, "Copy Item URL")
+        eventloop.addIdle(lambda:app.htmlapp.copyCurrentItemURL, "Copy Item URL")
 
     def on_add_channel_button_clicked(self, event = None):
         eventloop.addIdle(lambda:app.htmlapp.addAndSelectFeed(), "Add Channel")
