@@ -48,6 +48,7 @@ from miro import eventloop
 from miro import feed
 from miro import folder
 from miro import guide
+from miro import httpclient
 from miro import iconcache
 from miro import indexes
 from miro import item
@@ -78,6 +79,7 @@ class Controller:
         self.gatheredVideos = None
         self.librarySearchTerm = None
         self.newVideosSearchTerm = None
+        self.sendingCrashReport = 0
 
     def getGlobalFeed(self, url):
         feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
@@ -525,3 +527,35 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             except:
                 pass
         util.getSingletonDDBObject(views.directoryFeed).update()
+
+    def sendBugReport(self, report, description, send_database):
+        def callback(result):
+            self.sendingCrashReport -= 1
+            if result['status'] != 200 or result['body'] != 'OK':
+                logging.warning(u"Failed to submit crash report. Server returned %r" % result)
+            else:
+                logging.info(u"Crash report submitted successfully")
+        def errback(error):
+            self.sendingCrashReport -= 1
+            logging.warning(u"Failed to submit crash report %r" % error)
+
+        backupfile = None
+        if send_database:
+            try:
+                logging.info("Sending entire database")
+                from miro import database
+                backupfile = database.defaultDatabase.liveStorage.backupDatabase()
+            except:
+                traceback.print_exc()
+                logging.warning(u"Failed to backup database")
+
+        description = description.encode("utf-8")
+        postVars = {"description":description,
+                    "app_name": config.get(prefs.LONG_APP_NAME),
+                    "log": report}
+        if backupfile:
+            postFiles = {"databasebackup": {"filename":"databasebackup.zip", "mimetype":"application/octet-stream", "handle":open(backupfile, "rb")}}
+        else:
+            postFiles = None
+        self.sendingCrashReport += 1
+        httpclient.grabURL("http://participatoryculture.org/bogondeflector/index.php", callback, errback, method="POST", postVariables = postVars, postFiles = postFiles)
