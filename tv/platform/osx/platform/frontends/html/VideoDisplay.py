@@ -41,7 +41,7 @@ from miro.platform import bundle
 from miro.platform.filenames import filenameTypeToOSFilename
 from miro.frontends.html.displaybase import VideoDisplayBase
 from miro.platform.frontends.html import threads
-from miro.playbackcontroller import PlaybackControllerBase
+from miro.frontends.html.playbackcontroller import PlaybackControllerBase
 from miro.platform.frontends.html.MainFrame import Slider, handleKey
 from miro.platform.renderers.QuicktimeRenderer import QuicktimeRenderer
 

@@ -37,7 +37,7 @@ from miro import config
 from miro import prefs
 from miro.download_utils import nextFreeFilename
 from miro.frontends.html.displaybase import VideoDisplayBase
-from miro.playbackcontroller import PlaybackControllerBase
+from miro.frontends.html.playbackcontroller import PlaybackControllerBase
 from miro.platform import pyxpcomcalls
 
 selectItemLock = Lock()
