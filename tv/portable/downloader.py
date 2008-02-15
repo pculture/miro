@@ -36,7 +36,7 @@ import shutil
 from miro.database import DDBObject, defaultDatabase
 from miro.dl_daemon import daemon, command
 from miro.download_utils import nextFreeFilename, getFileURLPath, filterDirectoryName
-from miro.util import getTorrentInfoHash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, stringify
+from miro.util import getTorrentInfoHash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, stringify, toUni
 from miro import app
 from miro import config
 from miro import httpclient
@@ -48,7 +48,6 @@ from miro.platform.utils import samefile, FilenameType, unicodeToFilename
 from miro import flashscraper
 import logging
 import traceback
-from miro import templatehelper
 from miro import fileutil
 
 # a hash of download ids that the server knows about.
@@ -308,7 +307,7 @@ class RemoteDownloader(DDBObject):
             fileutil.delete(filename)
         except:
             logging.warn("Error deleting downloaded file: %s\n%s" % 
-                    (templatehelper.toUni(filename), traceback.format_exc()))
+                    (toUni(filename), traceback.format_exc()))
 
         parent = os.path.join(filename, os.path.pardir)
         parent = os.path.normpath(parent)
@@ -320,7 +319,7 @@ class RemoteDownloader(DDBObject):
                 os.rmdir(parent)
             except:
                 logging.warn("Error deleting empty download directory: %s\n%s" %
-                        (templatehelper.toUni(parent), traceback.format_exc()))
+                        (toUni(parent), traceback.format_exc()))
 
     ##
     # Continues a paused, stopped, or failed download thread

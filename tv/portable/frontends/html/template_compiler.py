@@ -149,7 +149,8 @@ def genExecuteTemplate(varname, tid, prefix, args):
 
 from xml import sax
 from StringIO import StringIO # Oh! Why can't cStringIO support unicode?
-from miro.templatehelper import quoteattr, escape, HTMLPattern, attrPattern, resourcePattern, rawAttrPattern, generateId
+from miro.frontends.html.templatehelper import HTMLPattern, attrPattern, resourcePattern, rawAttrPattern, generateId
+from miro.util import quoteattr, escape
 import re
 import os
 import stat
@@ -319,8 +320,8 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write(u'from StringIO import StringIO\n')
         fileobj.write(u'from string import Template\n')
         fileobj.write(u'from miro.xhtmltools import urlencode\n')
-        fileobj.write(u'from miro.template import Handle, fillAttr, quoteAndFillAttr, fillStaticTemplate\n')
-        fileobj.write(u'from miro.templatehelper import quoteattr, escape\n')
+        fileobj.write(u'from miro.frontends.html.template import Handle, fillAttr, quoteAndFillAttr, fillStaticTemplate\n')
+        fileobj.write(u'from miro.util import quoteattr, escape\n')
         fileobj.write(u'from miro import app\n')
         fileobj.write(u'from miro import views\n')
         fileobj.write(u'from miro import sorts\n')

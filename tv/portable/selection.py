@@ -43,7 +43,7 @@ from miro import playlist
 from miro import feed
 from miro import views
 from miro import indexes
-from miro import template
+from miro.frontends.html import template
 from miro import util
 from miro.frontends.html.templatedisplay import TemplateDisplay
 from miro.gtcache import gettext as _

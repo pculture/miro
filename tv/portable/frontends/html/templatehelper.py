@@ -47,22 +47,6 @@ attrPattern = re.compile("^(.*?)@@@(.*?)@@@(.*)$")
 resourcePattern = re.compile("^resource:(.*)$")
 rawAttrPattern = re.compile("^(.*?)\*\*\*(.*?)\*\*\*(.*)$")
 
-_unicache = {}
-_escapecache = {}
-
-def quoteattr(orig):
-    orig = unicode(orig)
-    return orig.replace(u'"',u'&quot;')
-
-def escape(orig):
-    global _escapecache
-    orig = unicode(orig)
-    try:
-        return _escapecache[orig]
-    except:
-        _escapecache[orig] = orig.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
-        return _escapecache[orig]
-
 # Takes a string and do whatever needs to be done to make it into a
 # UTF-8 string. If a Unicode string is given, it is just encoded in
 # UTF-8. Otherwise, if an encoding hint is given, first try to decode
@@ -98,23 +82,6 @@ def toUTF8Bytes(string, encoding=None):
 
         _utf8cache[(string, encoding)] = result
         return _utf8cache[(string, encoding)]
-
-def toUni(orig, encoding = None):
-    global _unicache
-    try:
-        return _unicache[orig]
-    except:
-        if isinstance(orig, types.UnicodeType):
-            # Let's not bother putting this in the cache.  Calculating
-            # it is very fast, and since this is a very common case,
-            # not caching here should help with memory usage.
-            return orig
-        elif not isinstance(orig, types.StringType):
-            _unicache[orig] = unicode(orig)
-        else:
-            orig = toUTF8Bytes(orig, encoding)
-            _unicache[orig] = unicode(orig,'utf-8')
-        return _unicache[orig]
 
 
 # Generate an arbitrary string to use as an ID attribute.

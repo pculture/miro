@@ -49,10 +49,9 @@ from miro.database import DDBObject, defaultDatabase, ObjectNotFoundError
 from miro.database import DatabaseConstraintError
 from miro.databasehelper import makeSimpleGetSet
 from miro.iconcache import IconCache
-from miro.templatehelper import escape,quoteattr
 import types
 from miro import app
-from miro import template
+from miro.frontends.html import template
 from miro import downloader
 from miro import config
 from miro import dialogs
@@ -974,15 +973,15 @@ folder will be deleted.""")
             children = self.getChildren()
             details.append(u'<span class="details-count">%s items</span>' % len(children))
         if len(reldate) > 0:
-            details.append(u'<span class="details-date">%s</span>' % escape(reldate))
+            details.append(u'<span class="details-date">%s</span>' % util.escape(reldate))
         if len(size) > 0:
-            details.append(u'<span class="details-size">%s</span>' % escape(size))
+            details.append(u'<span class="details-size">%s</span>' % util.escape(size))
         if len(format) > 0:
-            details.append(u'<span class="details-format">%s</span>' % escape(format))
+            details.append(u'<span class="details-format">%s</span>' % util.escape(format))
         if self.looksLikeTorrent():
             details.append(u'<span class="details-torrent">%s</span>' % _("TORRENT"))
         if len(link) > 0 and link != self.getURL():
-            details.append(u'<a class="details-link" href="%s">%s</span>' % (quoteattr(link), _("WEB PAGE")))
+            details.append(u'<a class="details-link" href="%s">%s</span>' % (util.quoteattr(link), _("WEB PAGE")))
         out = u'<BR>'.join(details)
         return out
 

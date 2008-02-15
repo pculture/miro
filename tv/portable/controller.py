@@ -60,8 +60,6 @@ from miro import signals
 from miro import singleclick
 from miro import util
 from miro import views
-# Something needs to import this outside of Pyrex. Might as well be controller
-from miro import templatehelper
 from miro import databasehelper
 from miro.platform.utils import exit, osFilenameToFilenameType
 

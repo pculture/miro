@@ -28,7 +28,6 @@
 
 from miro.platform import resources
 from miro.database import DDBObject
-from miro.template import fillStaticTemplate
 from miro.httpclient import grabURL
 from urlparse import urlparse, urljoin
 from miro.xhtmltools import urlencode

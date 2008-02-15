@@ -587,3 +587,36 @@ def import_last(module_name):
     for comp in components[1:]:
         mod = getattr(mod, comp)
     return mod
+
+def quoteattr(orig):
+    orig = unicode(orig)
+    return orig.replace(u'"',u'&quot;')
+
+_unicache = {}
+_escapecache = {}
+
+def escape(orig):
+    global _escapecache
+    orig = unicode(orig)
+    try:
+        return _escapecache[orig]
+    except:
+        _escapecache[orig] = orig.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
+        return _escapecache[orig]
+
+def toUni(orig, encoding = None):
+    try:
+        return _unicache[orig]
+    except:
+        if isinstance(orig, types.UnicodeType):
+            # Let's not bother putting this in the cache.  Calculating
+            # it is very fast, and since this is a very common case,
+            # not caching here should help with memory usage.
+            return orig
+        elif not isinstance(orig, types.StringType):
+            _unicache[orig] = unicode(orig)
+        else:
+            orig = toUTF8Bytes(orig, encoding)
+            _unicache[orig] = unicode(orig,'utf-8')
+        return _unicache[orig]
+

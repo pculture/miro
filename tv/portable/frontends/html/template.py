@@ -32,8 +32,8 @@
 import os
 from miro import config
 from miro import eventloop
-from miro.templatehelper import quoteattr, escape, attrPattern, rawAttrPattern, resourcePattern, generateId
-from miro.templateoptimize import HTMLChangeOptimizer
+from miro.frontends.html.templatehelper import attrPattern, rawAttrPattern, resourcePattern, generateId
+from miro.frontends.html.templateoptimize import HTMLChangeOptimizer
 from miro.xhtmltools import urlencode
 from itertools import chain
 import logging
@@ -534,7 +534,7 @@ def nullSort(x,y):
 # Returns a quoted, filled version of attribute text
 def quoteAndFillAttr(value, localVars):
     util.checkU(value)
-    return ''.join(('"',quoteattr(fillAttr(value, localVars)),'"'))
+    return ''.join(('"', util.quoteattr(fillAttr(value, localVars)),'"'))
 
 # Returns a filled version of attribute text
 # Important: because we expand resource: URLs here, instead of defining a

@@ -60,10 +60,10 @@ from miro import singleclick
 from miro import sorts
 from miro import subscription
 from miro import tabs
-from miro import template
 from miro import util
 from miro import views
 from miro import xhtmltools
+from miro.frontends.html import template
 
 class TemplateDisplay(HTMLDisplay):
     """TemplateDisplay: a HTML-template-driven right-hand display panel."""

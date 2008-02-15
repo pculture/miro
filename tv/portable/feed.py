@@ -46,7 +46,6 @@ import xml
 from miro.database import defaultDatabase, DatabaseConstraintError, DDBObject
 from miro.databasehelper import makeSimpleGetSet
 from miro.httpclient import grabURL, NetworkError
-from miro.templatehelper import quoteattr, escape, toUni
 from string import Template
 from miro import app
 from miro import config
@@ -58,7 +57,7 @@ from miro import folder
 from miro import prefs
 from miro.platform import resources
 from miro import downloader
-from miro.util import (returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure)
+from miro.util import (returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure, escape, toUni)
 from miro.fileutil import miro_listdir
 from miro.platform.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
 from miro import filetypes
