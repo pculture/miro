@@ -135,7 +135,7 @@ class SystemSignals(SignalEmitter):
     def updateAvailable(self, latest):
         self.emit('update-available', latest)
 
-    def downloadComplet(self, item):
+    def downloadComplete(self, item):
         self.emit('download-complete', item)
 
     def newDialog(self, dialog):
