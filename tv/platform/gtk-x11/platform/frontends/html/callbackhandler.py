@@ -475,7 +475,7 @@ class CallbackHandler(object):
                 "stop playback")
 
     def on_quit_activate(self, event):
-        app.controller.quit()
+        app.htmlapp.quit()
 
     def on_fullscreen_activate(self, event):
         self.mainFrame.setFullscreen(True)
