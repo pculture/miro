@@ -592,6 +592,44 @@ def quoteattr(orig):
     orig = unicode(orig)
     return orig.replace(u'"',u'&quot;')
 
+
+# Takes a string and do whatever needs to be done to make it into a
+# UTF-8 string. If a Unicode string is given, it is just encoded in
+# UTF-8. Otherwise, if an encoding hint is given, first try to decode
+# the string as if it were in that encoding; if that fails (or the
+# hint isn't given), liberally (if necessary lossily) interpret it as
+# defaultEncoding, as declared on the next line:
+defaultEncoding = "iso-8859-1" # aka Latin-1
+_utf8cache = {}
+
+def toUTF8Bytes(s, encoding=None):
+    global _utf8cache
+    try:
+        return _utf8cache[(s, encoding)]
+    except KeyError:
+        result = None
+        # If we got a Unicode string, half of our work is already done.
+        if isinstance(s, UnicodeType):
+            result = s.encode('utf-8')
+        elif not isinstance(s, StringType):
+            s = str(s)
+        if result is None and encoding is not None:
+            # If we knew the encoding of the s, try that.
+            try:
+                decoded = s.decode(encoding,'replace')
+            except (UnicodeDecodeError, ValueError, LookupError):
+                pass
+            else:
+                result = decoded.encode('utf-8')
+        if result is None:
+            # Encoding wasn't provided, or it was wrong. Interpret provided string
+            # liberally as a fixed defaultEncoding (see above.)
+            result = s.decode(defaultEncoding, 'replace').encode('utf-8')
+
+        _utf8cache[(s, encoding)] = result
+        return _utf8cache[(s, encoding)]
+
+
 _unicache = {}
 _escapecache = {}
 
@@ -608,12 +646,12 @@ def toUni(orig, encoding = None):
     try:
         return _unicache[orig]
     except:
-        if isinstance(orig, types.UnicodeType):
+        if isinstance(orig, UnicodeType):
             # Let's not bother putting this in the cache.  Calculating
             # it is very fast, and since this is a very common case,
             # not caching here should help with memory usage.
             return orig
-        elif not isinstance(orig, types.StringType):
+        elif not isinstance(orig, StringType):
             _unicache[orig] = unicode(orig)
         else:
             orig = toUTF8Bytes(orig, encoding)
