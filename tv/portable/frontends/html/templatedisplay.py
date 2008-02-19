@@ -55,6 +55,7 @@ import logging
 from miro.platform.utils import unicodeToFilename
 from miro import playlist
 from miro import prefs
+from miro import searchengines
 from miro import signals
 from miro import singleclick
 from miro import sorts
@@ -622,7 +623,6 @@ class GUIActionHandler:
 
     def addSearchFeed(self, term=None, style = dialogs.SearchChannelDialog.CHANNEL, location = None):
         def baseTitle(dialog):
-            import searchengines
             if dialog.style != dialogs.SearchChannelDialog.ENGINE:
                 return None
             return "%s: %s" % (searchengines.getEngineTitle(dialog.location), dialog.term)
