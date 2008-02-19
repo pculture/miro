@@ -422,24 +422,27 @@ class HTMLApplication:
                 app.delegate.copyTextToClipboard(url)
 
     def onTabSelected(self, selection):
+        self.displayCurrentTabContent()
+
+    def displayCurrentTabContent(self):
         mainDisplay = self.frame.getDisplay(self.frame.mainDisplay)
 
         # Hack to avoid re-displaying channel template
         if (mainDisplay and hasattr(mainDisplay, 'templateName') and mainDisplay.templateName == 'channel'):
-            if len(selection.tabListSelection.currentSelection) == 1:
-                for id in selection.tabListSelection.currentSelection:
-                    tabView = selection.tabListSelection.currentView
+            if len(app.selection.tabListSelection.currentSelection) == 1:
+                for id in app.selection.tabListSelection.currentSelection:
+                    tabView = app.selection.tabListSelection.currentView
                     tab = tabView.getObjectByID(id)
                     if tab.contentsTemplate == 'channel':
                         newId = int(tab.obj.getID())
                         #print "swapping templates %d %d" % (mainDisplay.kargs['id'], newId)
                                                         
-                        selection.itemListSelection.clearSelection()
-                        self.updateMenus(selection)
+                        app.selection.itemListSelection.clearSelection()
+                        self.updateMenus(app.selection)
                         if mainDisplay.kargs['id'] != newId:
                             mainDisplay.reInit(id = newId)
                         return
-        newDisplay = self._chooseDisplayForCurrentTab(selection)
+        newDisplay = self._chooseDisplayForCurrentTab(app.selection)
 
         # Don't redisplay the current tab if it's being displayed.  It messes
         # up our database callbacks.  The one exception is the guide tab,
@@ -450,8 +453,8 @@ class HTMLApplication:
             newDisplay.unlink()
             return
 
-        selection.itemListSelection.clearSelection()
-        self.updateMenus(selection)
+        app.selection.itemListSelection.clearSelection()
+        self.updateMenus(app.selection)
         # do a queueSelectDisplay to make sure that the selectDisplay gets
         # executed after our changes to the tablist template.  This makes tab
         # selection feel faster because the selection changes quickly.

@@ -77,7 +77,7 @@ class PlaybackControllerBase:
     def exitPlayback(self, switchDisplay=True):
         self.reset()
         if switchDisplay:
-            app.selection.displayCurrentTabContent()
+            app.htmlapp.displayCurrentTabContent()
     
     def playPause(self):
         videoDisplay = app.controller.videoDisplay
