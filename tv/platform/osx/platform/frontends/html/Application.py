@@ -155,9 +155,9 @@ class AppController (NSObject):
             eventloop.addUrgentCall(*command)
     
     def applicationDidBecomeActive_(self, notification):
-        if app.controller.frame is not None:
+        if app.htmlapp.frame is not None:
             # This should hopefully avoid weird things like #1722
-            app.controller.frame.controller.window().contentView().setNeedsDisplay_(YES)
+            app.htmlapp.frame.controller.window().contentView().setNeedsDisplay_(YES)
 
     def applicationShouldTerminate_(self, sender):
         # External termination requests (through Dock menu or AppleScript) call
@@ -185,8 +185,8 @@ class AppController (NSObject):
     def applicationShouldHandleReopen_hasVisibleWindows_(self, appl, flag):
         if not flag:
             self.showMainWindow_(appl)
-        if app.controller is not None and app.controller.frame is not None:
-            mainWindow = app.controller.frame.controller.window()
+        if app.controller is not None and app.htmlapp.frame is not None:
+            mainWindow = app.htmlapp.frame.controller.window()
             if mainWindow.isMiniaturized():
                 mainWindow.deminiaturize_(appl)            
         return NO
@@ -299,8 +299,8 @@ class AppController (NSObject):
         app.htmlapp.checkForUpdates()
 
     def showMainWindow_(self, sender):
-        if app.controller is not None and app.controller.frame is not None:
-            app.controller.frame.controller.window().makeKeyAndOrderFront_(sender)
+        if app.controller is not None and app.htmlapp.frame is not None:
+            app.htmlapp.frame.controller.window().makeKeyAndOrderFront_(sender)
 
     def showPreferencesWindow_(self, sender):
         Preferences.showWindow()

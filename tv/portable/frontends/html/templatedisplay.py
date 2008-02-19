@@ -747,11 +747,11 @@ class TemplateActionHandler:
         # that these links always affect the right-hand 'content'
         # area, even if they are loaded from the left-hand 'tab'
         # area. Actually this whole invocation is pretty hacky.
-        template = TemplateDisplay(name, state, frameHint=app.controller.frame,
-                areaHint=app.controller.frame.mainDisplay, baseURL=baseURL,
+        template = TemplateDisplay(name, state, frameHint=app.htmlapp.frame,
+                areaHint=app.htmlapp.frame.mainDisplay, baseURL=baseURL,
                 *args, **kargs)
-        app.controller.frame.selectDisplay(template, 
-                app.controller.frame.mainDisplay)
+        app.htmlapp.frame.selectDisplay(template,
+                app.htmlapp.frame.mainDisplay)
         self.currentName = name
 
     def setViewFilter(self, viewName, fieldKey, functionKey, parameter, invert):

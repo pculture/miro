@@ -125,8 +125,8 @@ class VideoDisplay (VideoDisplayBase):
     def startVideoTimeUpdate(self):
         self.stopVideoTimeUpdate()
         self.videoUpdateTimeout = gobject.timeout_add(500,
-                app.controller.frame.updateVideoTime)
-        app.controller.frame.updateVideoTime()
+                app.htmlapp.frame.updateVideoTime)
+        app.htmlapp.frame.updateVideoTime()
 
     def stopVideoTimeUpdate(self):
         if self.videoUpdateTimeout is not None:
@@ -154,7 +154,7 @@ class VideoDisplay (VideoDisplayBase):
             self.activeRenderer.playFromTime(startTime)
         self.startVideoTimeUpdate()
         self.isPlaying = True
-        app.controller.frame.windowChanger.updatePlayPauseButton()
+        app.htmlapp.frame.windowChanger.updatePlayPauseButton()
 
     def playPause(self):
         if self.isPlaying:
@@ -173,7 +173,7 @@ class VideoDisplay (VideoDisplayBase):
     def pause(self):
         self.stopVideoTimeUpdate()
         VideoDisplayBase.pause(self)
-        app.controller.frame.windowChanger.updatePlayPauseButton()
+        app.htmlapp.frame.windowChanger.updatePlayPauseButton()
 
     def getWidget(self, area = None):
         return self.widget
@@ -184,7 +184,7 @@ class VideoDisplay (VideoDisplayBase):
 
     @gtkAsyncMethod
     def moveVolumeSlider(self, volume):
-        volumeScale = app.controller.frame.widgetTree['volume-scale']
+        volumeScale = app.htmlapp.frame.widgetTree['volume-scale']
         volumeScale.set_value(self.volume)
 
 ###############################################################################

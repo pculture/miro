@@ -81,7 +81,7 @@ class PlaybackControllerBase:
     
     def playPause(self):
         videoDisplay = app.htmlapp.videoDisplay
-        frame = app.controller.frame
+        frame = app.htmlapp.frame
         if frame.getDisplay(frame.mainDisplay) == videoDisplay:
             videoDisplay.playPause()
         else:
@@ -89,7 +89,7 @@ class PlaybackControllerBase:
 
     def pause(self):
         videoDisplay = app.htmlapp.videoDisplay
-        frame = app.controller.frame
+        frame = app.htmlapp.frame
         if frame.getDisplay(frame.mainDisplay) == videoDisplay:
             videoDisplay.pause()
 
@@ -119,7 +119,7 @@ class PlaybackControllerBase:
             self.stop()
 
     def playItemExternally(self, anItem):
-        frame = app.controller.frame
+        frame = app.htmlapp.frame
         videoDisplay = app.htmlapp.videoDisplay
         if frame.getDisplay(frame.mainDisplay) is videoDisplay:
             if videoDisplay.isFullScreen:
@@ -129,7 +129,7 @@ class PlaybackControllerBase:
 
     def playItemInternally(self, anItem):
         videoDisplay = app.htmlapp.videoDisplay
-        frame = app.controller.frame
+        frame = app.htmlapp.frame
         if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
         if config.get(prefs.RESUME_VIDEOS_MODE) and anItem.resumeTime > 10:
@@ -142,7 +142,7 @@ class PlaybackControllerBase:
         anItem = mapToPlaylistItem(app.db.getObjectByID(int(itemID)))
         app.controller.videoInfoItem = anItem
         newDisplay = TemplateDisplay('external-playback-continue','default')
-        frame = app.controller.frame
+        frame = app.htmlapp.frame
         frame.selectDisplay(newDisplay, frame.mainDisplay)
         return anItem
         
@@ -151,7 +151,7 @@ class PlaybackControllerBase:
         app.htmlapp.videoDisplay.stopOnDeselect = False
         app.controller.videoInfoItem = anItem
         newDisplay = TemplateDisplay('external-playback','default')
-        frame = app.controller.frame
+        frame = app.htmlapp.frame
         frame.selectDisplay(newDisplay, frame.mainDisplay)
         anItem.markItemSeen()
 
@@ -180,14 +180,14 @@ class PlaybackControllerBase:
         if self.currentItem:
             self.currentItem.onViewedCancel()
         self.currentItem = None
-        frame = app.controller.frame
+        frame = app.htmlapp.frame
         videoDisplay = app.htmlapp.videoDisplay
         if frame.getDisplay(frame.mainDisplay) == videoDisplay:
             videoDisplay.stop()
         self.exitPlayback(switchDisplay)
 
     def skip(self, direction, allowMovieReset=True):
-        frame = app.controller.frame
+        frame = app.htmlapp.frame
         currentDisplay = frame.getDisplay(frame.mainDisplay)
         def CTCallback(time):
             if time>2.0:
@@ -220,7 +220,7 @@ class PlaybackControllerBase:
             if self.currentItem.getFeedURL() == 'dtv:singleFeed':
                 setToStart = True
         if setToStart:
-            frame = app.controller.frame
+            frame = app.htmlapp.frame
             currentDisplay = frame.getDisplay(frame.mainDisplay)
             currentDisplay.pause()
             currentDisplay.goToBeginningOfMovie()

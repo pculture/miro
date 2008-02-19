@@ -516,7 +516,7 @@ class PyBridge:
     @asUrgent
     def loadURLInBrowser(self, browserId, url):
         try:
-            display = app.controller.frame.selectedDisplays[browserId]
+            display = app.htmlapp.frame.selectedDisplays[browserId]
         except KeyError:
             print "No HTMLDisplay for %s in loadURLInBrowser: "% browserId
         else:
@@ -796,15 +796,15 @@ class PyBridge:
             components.interfaces.pcfIDTVMinimize, False)
         if minimizer.isMinimized():
             minimizer.minimizeOrRestore()
-        app.controller.frame.mainDisplayCallback(u'action:playUnwatched')
+        app.htmlapp.frame.mainDisplayCallback(u'action:playUnwatched')
 
     @asIdle
     def pauseDownloads(self):
-        app.controller.frame.mainDisplayCallback(u'action:pauseAll')
+        app.htmlapp.frame.mainDisplayCallback(u'action:pauseAll')
 
     @asIdle
     def resumeDownloads(self):
-        app.controller.frame.mainDisplayCallback(u'action:resumeAll')
+        app.htmlapp.frame.mainDisplayCallback(u'action:resumeAll')
 
     def minimizeToTray(self):
         return config.get(prefs.MINIMIZE_TO_TRAY)

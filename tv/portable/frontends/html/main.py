@@ -173,8 +173,6 @@ class HTMLApplication:
         # Put up the main frame
         logging.info ("Displaying main frame...")
         self.frame = MainFrame(self)
-        # HACK
-        app.controller.frame = self.frame
 
         logging.info ("Creating video display...")
         # Set up the video display
@@ -460,7 +458,6 @@ class HTMLApplication:
 
     def _chooseDisplayForCurrentTab(self, selection):
         tls = selection.tabListSelection
-        frame = app.controller.frame
 
         if len(tls.currentSelection) == 0:
             raise AssertionError("No tabs selected")
@@ -468,8 +465,8 @@ class HTMLApplication:
             for id in tls.currentSelection:
                 tab = tls.currentView.getObjectByID(id)
                 return templatedisplay.TemplateDisplay(tab.contentsTemplate,
-                        tab.templateState, frameHint=frame,
-                        areaHint=frame.mainDisplay, id=tab.obj.getID())
+                        tab.templateState, frameHint=self.frame,
+                        areaHint=self.frame.mainDisplay, id=tab.obj.getID())
         else:
             foldersSelected = False
             type = tls.getType()
@@ -491,7 +488,7 @@ class HTMLApplication:
                 else:
                     selectedChildren += 1
             return templatedisplay.TemplateDisplay(templateName, 'default',
-                    frameHint=frame, areaHint=frame.mainDisplay,
+                    frameHint=self.frame, areaHint=self.frame.mainDisplay,
                     selectedFolders=selectedFolders,
                     selectedChildren=selectedChildren,
                     containedChildren=containedChildren)
@@ -565,6 +562,6 @@ class HTMLApplication:
 #            if playable_videos:
 #                actionGroups["VideoPlayable"] = True
 
-        app.controller.frame.onSelectedTabChange(states, actionGroups, 
-                guideURL, videoFileName)
+        self.frame.onSelectedTabChange(states, actionGroups, guideURL,
+                videoFileName)
 

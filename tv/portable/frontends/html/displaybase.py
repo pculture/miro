@@ -26,10 +26,11 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import logging
+
 from miro import app
 from miro import config
 from miro import prefs
-import logging
 
 """Base class for displays. """
 
@@ -132,8 +133,8 @@ class VideoDisplayBase (Display):
         self.stopOnDeselect = True
         app.controller.videoInfoItem = anItem
         templ = TemplateDisplay('video-info', 'default')
-        area = app.controller.frame.videoInfoDisplay
-        app.controller.frame.selectDisplay(templ, area)
+        area = app.htmlapp.frame.videoInfoDisplay
+        app.htmlapp.frame.selectDisplay(templ, area)
 
         self.setActiveRenderer(renderer)
         self.activeRenderer.selectItem(anItem)
