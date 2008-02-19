@@ -39,13 +39,11 @@ from cPickle import dump, dumps, load, HIGHEST_PROTOCOL, UnpicklingError
 from shutil import copyfile
 from copy import copy
 import traceback
-from fasttypes import LinkedList, SortedList
 import sys
 import types
 import threading
 
-import config
-
+from miro.fasttypes import LinkedList, SortedList
 
 class DatabaseConstraintError(Exception):
     """Raised when a DDBObject fails its constraint checking during

@@ -60,7 +60,7 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	selectArea='tablist' 
 	onmousedown="return handleContextMenuSelect(event);" 
         onclick="return handleSelect(event)">
-        <div id="***this.getFragment()***">
+        <div id="tab-***this.objID()***">
 	  <div t:showIf="this.isFeed()">
 	      <t:includeTemplate filename="feedtab" />
 	    </div>
@@ -87,7 +87,7 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	selectArea='tablist' 
 	onmousedown="return handleContextMenuSelect(event);" 
         onclick="return handleSelect(event);">
-        <div id="***this.getFragment()***">
+        <div id="tab-***this.objID()***">
 	  <div t:showIf="this.isPlaylist()">
 	      <t:includeTemplate filename="playlisttab" />
 	  </div>

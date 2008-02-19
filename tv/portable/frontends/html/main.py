@@ -200,11 +200,11 @@ class HTMLApplication:
 
         channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
         playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
+        channelTabOrder.connect('tab-added', self.makeLastTabVisible)
+        playlistTabOrder.connect('tab-added', self.makeLastTabVisible)
         self.tabDisplay = templatedisplay.TemplateDisplay('tablist',
                 'default', playlistTabOrder=playlistTabOrder,
                 channelTabOrder=channelTabOrder)
-        # HACK
-        app.controller.tabDisplay = self.tabDisplay
         self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
 
         # If we have newly available items, provide feedback
@@ -565,3 +565,17 @@ class HTMLApplication:
         self.frame.onSelectedTabChange(states, actionGroups, guideURL,
                 videoFileName)
 
+    def makeLastTabVisible(self, tabOrder, tab):
+        try:
+            tabDisplay = self.tabDisplay
+        except AttributeError:
+            # haven't created the tab display yet, just ignore the signal
+            return
+        # try to go back a little to make the view prettier
+        tabOrder.getView().moveCursorToID(tab.objID())
+        for i in range(3):
+            last = tabOrder.getView().getPrev()
+            if last is None:
+                break
+            tab = last
+        tabDisplay.navigateToFragment('tab-%d' % tab.objID())

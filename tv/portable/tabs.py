@@ -35,6 +35,7 @@ from miro import folder
 from miro.platform import resources
 from miro import guide
 from miro import playlist
+from miro import signals
 from miro import sorts
 from miro.util import checkU, getSingletonDDBObject
 from miro.databasehelper import TrackedIDList
@@ -233,20 +234,16 @@ class Tab:
     def onDeselected(self, frame):
         self.display.onDeselect(frame)
 
-    def getFragment(self):
-        """URL fragment to use as an anchor.  This lets us scroll the tablist
-        so that this tab is on top.
-        """
-        return 'tab-%d' % self.obj.getID()
-
 def expandedFolderFilter(tab):
     folder = tab.obj.getFolder()
     return folder is None or folder.getExpanded()
 
-class TabOrder(database.DDBObject):
+class TabOrder(database.DDBObject, signals.SignalEmitter):
     """TabOrder objects keep track of the order of the tabs.  Democracy
     creates 2 of these, one to track channels/channel folders and another to
     track playlists/playlist folders.
+
+    TabOrder objects emit the 'tab-added' signal when a new tab is added.
     """
     def __init__(self, type):
         """Construct a TabOrder.  type should be either "channel", or
@@ -268,6 +265,7 @@ class TabOrder(database.DDBObject):
                 "checking for non-existent TabOrder ids")
 
     def _initRestore(self):
+        signals.SignalEmitter.__init__(self, 'tab-added')
         if self.type == u'channel':
             self.tabView = views.feedTabs
         elif self.type == u'playlist':
@@ -289,25 +287,6 @@ class TabOrder(database.DDBObject):
         if changed:
             self.signalChange()
 
-    def makeLastTabVisible(self, obj):
-        try:
-            tabDisplay = app.controller.tabDisplay
-        except AttributeError:
-            # haven't created the tab display yet, just ignore this call
-            return
-        tabToShow = obj
-        # try to go back a little to make the view prettier
-        self.trackedTabs.view.moveCursorToID(obj.objID())
-        for i in range(3):
-            last = self.trackedTabs.view.getPrev()
-            if last is None:
-                break
-            tabToShow = last
-        if hasattr(tabDisplay, 'navigateToFragment'):
-            tabDisplay.navigateToFragment(tabToShow.getFragment())
-        else:
-            logging.warn("HTMLDisplay.navigateToFragment not implemented")
-
     def getView(self):
         """Get a database view for this tab ordering."""
         return self.trackedTabs.view
@@ -324,7 +303,7 @@ class TabOrder(database.DDBObject):
             self.trackedTabs.appendID(id, sendSignalChange=False)
             obj.signalChange(needsSave=False)
             self.signalChange()
-            self.makeLastTabVisible(obj)
+            self.emit('tab-added', obj)
 
     def onRemoveTab(self, obj, id):
         if id in self.trackedTabs:
