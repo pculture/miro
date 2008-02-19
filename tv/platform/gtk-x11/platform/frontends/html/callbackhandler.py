@@ -259,7 +259,7 @@ class CallbackHandler(object):
 
     def __init__(self, mainFrame):
         self.mainFrame = mainFrame
-        self.mainApp = app.controller
+        self.mainApp = app.htmlapp
 
     def actionGroups (self):
         confirmMainThread()
