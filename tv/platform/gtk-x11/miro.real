@@ -31,7 +31,7 @@ if '--unittest' in sys.argv:
     # handle this outside optparse, because unittest has its own option set
     sys.argv.remove('--unittest')
     import unittest
-    import test
+    from miro import test
     unittest.main(module=test)
 
 usage = "usage: %prog [options] [torrent files] [video files]"
