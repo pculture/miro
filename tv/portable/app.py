@@ -34,6 +34,8 @@ objects get set in startup.py, but some get set in frontend code as well.
 Here is the list of objects that app currently stores:
 
 controller -- Handle High-level control of Miro
+selection -- Handles selected objects
+renderers -- List of active renderers
 db -- Database object
 
 The html frontend adds:
@@ -42,6 +44,7 @@ delegate -- UIBackendDelegate that handles platform-specific UI tasks.
 htmlapp -- HTMLApplication object
 """
 
+renderers = []
 # NOTE: we could set controller, db, etc. to None here, but it seems better
 # not do.  This way if we call "from miro.app import controller" before the
 # controller singleton is created, then we will immediately get an error.

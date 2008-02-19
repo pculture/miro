@@ -97,10 +97,10 @@ class VideoDisplay (VideoDisplayBase):
 	self.nextRenderer = None
 
     def initRenderers(self):
-        self.renderers.append(QuicktimeRenderer(self.controller))
+        app.renderers.append(QuicktimeRenderer(self.controller))
 
     def setRendererAndCallback(self, anItem, internal, external):
-        for renderer in self.renderers:
+        for renderer in app.renderers:
             if renderer.canPlayFile(anItem.getFilename()):
 	        self.selectItem(anItem, renderer)
                 internal()

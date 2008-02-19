@@ -84,15 +84,14 @@ class MovieDataInfo:
         self.thumbnailPath = os.path.join(thumbnailDirectory(),
                 thumbnailFilename)
         self.programInfo = []
-        if hasattr(app, 'controller') and hasattr(app.controller, 'videoDisplay'):
-            for renderer in app.controller.videoDisplay.renderers:
-                try:
-                    commandLine, env = renderer.movieDataProgramInfo(
-                            self.videoPath, self.thumbnailPath)
-                except NotImplementedError:
-                    pass
-                else:
-                    self.programInfo.append((commandLine, env))
+        for renderer in app.renderers:
+            try:
+                commandLine, env = renderer.movieDataProgramInfo(
+                        self.videoPath, self.thumbnailPath)
+            except NotImplementedError:
+                pass
+            else:
+                self.programInfo.append((commandLine, env))
 
 class MovieDataUpdater:
     def __init__ (self):

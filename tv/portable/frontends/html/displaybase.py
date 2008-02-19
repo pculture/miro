@@ -92,7 +92,6 @@ class VideoDisplayBase (Display):
         self.isFullScreen = False
         self.isExternal = False
         self.stopOnDeselect = True
-        self.renderers = list()
         self.activeRenderer = None
 
     def initRenderers(self):
@@ -102,7 +101,7 @@ class VideoDisplayBase (Display):
         self.isExternal = external
 
     def fillMovieData (self, filename, movie_data, callback):
-        for renderer in self.renderers:
+        for renderer in app.renderers:
             success = renderer.fillMovieData(filename, movie_data)
             if success:
                 callback ()

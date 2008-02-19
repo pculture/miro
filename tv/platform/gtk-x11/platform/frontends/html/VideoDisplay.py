@@ -74,14 +74,13 @@ class VideoDisplay (VideoDisplayBase):
             widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
             widget.show()
             renderer.setWidget(widget)
-            self.renderers.append(renderer)
+            app.renderers.append(renderer)
             logging.info ("loaded renderer '%s'", modname)
         except:
             logging.info ("initRenderers: couldn't load %s: %s", modname, sys.exc_info()[1])
 
     @gtkAsyncMethod
     def initRenderers(self):
-        self.renderers = []
         gconf_lock.acquire()
         values = gconf.client_get_default().get("/apps/miro/renderers")
         if values == None:
@@ -91,7 +90,7 @@ class VideoDisplay (VideoDisplayBase):
         else:
             for value in values.get_list():
                 self.add_renderer(value.get_string())
-        self.widget.add (self.renderers[0].widget)
+        self.widget.add (app.renderers[0].widget)
         gconf_lock.release()
         self.renderersReady.set()
 
@@ -102,15 +101,15 @@ class VideoDisplay (VideoDisplayBase):
                 callback()
                 return
             i = i + 1
-            if i < len(self.renderers):
-                self.renderers[i].fillMovieData(filename, movie_data, lambda success: next_renderer(i, success))
+            if i < len(app.renderers):
+                app.renderers[i].fillMovieData(filename, movie_data, lambda success: next_renderer(i, success))
             else:
                 callback()
         next_renderer(-1, False)
 
     def setRendererAndCallback(self, anItem, internal, external):
         self.renderersReady.wait()
-        for renderer in self.renderers:
+        for renderer in app.renderers:
             if renderer.canPlayFile(anItem.getFilename()):
                 self.setActiveRenderer(renderer)
                 self.selectItem(anItem, renderer)

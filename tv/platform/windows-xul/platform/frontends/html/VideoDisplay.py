@@ -66,11 +66,11 @@ class VideoDisplay (VideoDisplayBase):
     "Video player shown in a MainFrame's right-hand pane."
 
     def initRenderers(self):
-        self.renderers.append(VLCRenderer())
+        app.renderers.append(VLCRenderer())
 
     def setRendererAndCallback(self, anItem, internal, external):
         #Always use VLC
-        renderer = self.renderers[0]
+        renderer = app.renderers[0]
         self.setExternal(False)
         self.selectItem(anItem, renderer)
         internal()
