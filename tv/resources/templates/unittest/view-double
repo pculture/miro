@@ -8,14 +8,14 @@
 <t:include filename="dynamic.js" />
 
 <t:execOnLoad><![CDATA[
-import database
+from miro import database
 replace = "<span>This is a database replace</span>"
 testview = database.defaultDatabase
 testview2 = database.defaultDatabase
 ]]></t:execOnLoad>
 <t:execOnUnload><![CDATA[
-import test.templatetest
-test.templatetest.ranOnUnload += 1
+import miro.test.templatetest
+miro.test.templatetest.ranOnUnload += 1
 ]]></t:execOnUnload>
 </head>
 <body>

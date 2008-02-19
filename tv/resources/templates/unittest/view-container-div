@@ -8,7 +8,7 @@
 <t:include filename="dynamic.js" />
 
 <t:execOnLoad><![CDATA[
-import database
+from miro import database
 replace = "<span>This is a database replace</span>"
 testview = database.defaultDatabase
 ]]></t:execOnLoad>
