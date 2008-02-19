@@ -426,7 +426,7 @@ class MainFrame:
             videoTimeScale.set_range(0, videoLength)
             videoTimeScale.set_value(currentTime)
 
-        renderer = app.controller.videoDisplay.activeRenderer
+        renderer = app.htmlapp.videoDisplay.activeRenderer
         videoTimeScale = self.widgetTree['video-time-scale']
         if renderer and not videoTimeScale.buttonsDown:
             try:

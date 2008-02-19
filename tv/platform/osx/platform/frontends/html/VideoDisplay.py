@@ -92,7 +92,7 @@ class VideoDisplay (VideoDisplayBase):
     def __init__(self):
         VideoDisplayBase.__init__(self)
         self.controller = VideoDisplayController.getInstance()
-        self.controller.videoDisplay = self
+        self.htmlapp.videoDisplay = self
 	self.nextItem = None
 	self.nextRenderer = None
 
@@ -249,7 +249,7 @@ class VideoDisplayController (NSObject):
     def enableSecondaryControls(self, enabled, allowFastSeeking=YES):
         self.backwardButton.setEnabled_(enabled)
         self.backwardButton.cell().setAllowsFastSeeking(allowFastSeeking)
-        self.stopButton.setEnabled_(enabled or app.controller.videoDisplay.isExternal)
+        self.stopButton.setEnabled_(enabled or app.htmlapp.videoDisplay.isExternal)
         self.forwardButton.setEnabled_(enabled)
         self.forwardButton.cell().setAllowsFastSeeking(allowFastSeeking)
 
@@ -292,7 +292,7 @@ class VideoDisplayController (NSObject):
 
     def playFullScreen_(self, sender):
         def performInEventLoop():
-            if not app.controller.videoDisplay.isPlaying:
+            if not app.htmlapp.videoDisplay.isPlaying:
                 app.controller.playbackController.playPause()
             self.videoDisplay.goFullScreen()
         eventloop.addUrgentCall(lambda:performInEventLoop(), "Play Video Fullscreen")
@@ -428,7 +428,7 @@ class VideoAreaView (NSView):
         self.adjustVideoWindowFrame()
     
     def windowWillClose_(self, notification):
-        eventloop.addUrgentCall(app.controller.videoDisplay.pause, "Pause Playback")
+        eventloop.addUrgentCall(app.htmlapp.videoDisplay.pause, "Pause Playback")
         self.window().removeChildWindow_(self.videoWindow)
         self.videoWindow.orderOut_(nil)
     
@@ -515,7 +515,7 @@ class VideoWindow (NSWindow):
         SetSystemUIMode(kUIModeNormal, 0)
         
     def toggleFullScreen_(self, sender):
-        app.controller.videoDisplay.exitFullScreen()
+        app.htmlapp.videoDisplay.exitFullScreen()
 
     def nextVideo_(self, sender):
         eventloop.addIdle(lambda:app.controller.playbackController.skip(1), "Skip Video")
@@ -531,7 +531,7 @@ class VideoWindow (NSWindow):
             if event.type() == NSLeftMouseDown:
                 if NSApplication.sharedApplication().isActive():
                     if event.clickCount() > 1:
-                        app.controller.videoDisplay.exitFullScreen()
+                        app.htmlapp.videoDisplay.exitFullScreen()
                 else:
                     NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
             elif event.type() == NSKeyDown:
@@ -545,7 +545,7 @@ class VideoWindow (NSWindow):
             if event.type() == NSLeftMouseDown:
                 if NSApplication.sharedApplication().isActive():
                     if event.clickCount() > 1:
-                        app.controller.videoDisplay.goFullScreen()
+                        app.htmlapp.videoDisplay.goFullScreen()
                 else:
                     NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
     
@@ -682,7 +682,7 @@ class FullScreenPalette (NSWindow):
         threads.warnIfNotOnMainThread('FullScreenPalette.reveal')
         if not self.isVisible():
             self.update_(nil)
-            app.controller.videoDisplay.getVolume(lambda v: self.volumeSlider.setFloatValue_(v))
+            app.htmlapp.videoDisplay.getVolume(lambda v: self.volumeSlider.setFloatValue_(v))
             screenOrigin = parent.screen().frame().origin
             screenSize = parent.screen().frame().size
             height = self.frame().size.height
@@ -732,7 +732,7 @@ class FullScreenPalette (NSWindow):
         self.renderer.getProgress(lambda p: self.progressSlider.setFloatValue_(p))
             
     def progressSliderWasClicked(self, slider):
-        if app.controller.videoDisplay.isPlaying:
+        if app.htmlapp.videoDisplay.isPlaying:
             self.wasPlaying = True
             self.renderer.pause()
         self.renderer.setProgress(slider.floatValue())
@@ -750,7 +750,7 @@ class FullScreenPalette (NSWindow):
             self.renderer.play()
 
     def volumeSliderWasDragged(self, slider):
-        app.controller.videoDisplay.setVolume(slider.floatValue())
+        app.htmlapp.videoDisplay.setVolume(slider.floatValue())
         self.resetAutoConceal()
 
     def videoWillPlay_(self, notification):

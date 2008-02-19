@@ -80,7 +80,7 @@ class PlaybackControllerBase:
             app.htmlapp.displayCurrentTabContent()
     
     def playPause(self):
-        videoDisplay = app.controller.videoDisplay
+        videoDisplay = app.htmlapp.videoDisplay
         frame = app.controller.frame
         if frame.getDisplay(frame.mainDisplay) == videoDisplay:
             videoDisplay.playPause()
@@ -88,7 +88,7 @@ class PlaybackControllerBase:
             self.enterPlayback()
 
     def pause(self):
-        videoDisplay = app.controller.videoDisplay
+        videoDisplay = app.htmlapp.videoDisplay
         frame = app.controller.frame
         if frame.getDisplay(frame.mainDisplay) == videoDisplay:
             videoDisplay.pause()
@@ -112,7 +112,7 @@ class PlaybackControllerBase:
                     return
             self.currentItem = anItem
             if anItem is not None:
-                videoDisplay = app.controller.videoDisplay
+                videoDisplay = app.htmlapp.videoDisplay
                 videoDisplay.setRendererAndCallback(anItem,lambda :self.playItemInternally(anItem),lambda :self.playItemExternally(anItem))
         except:
             signals.system.failedExn('when trying to play a video')
@@ -120,7 +120,7 @@ class PlaybackControllerBase:
 
     def playItemExternally(self, anItem):
         frame = app.controller.frame
-        videoDisplay = app.controller.videoDisplay
+        videoDisplay = app.htmlapp.videoDisplay
         if frame.getDisplay(frame.mainDisplay) is videoDisplay:
             if videoDisplay.isFullScreen:
                 videoDisplay.exitFullScreen()
@@ -128,7 +128,7 @@ class PlaybackControllerBase:
         self.scheduleExternalPlayback(anItem)
 
     def playItemInternally(self, anItem):
-        videoDisplay = app.controller.videoDisplay
+        videoDisplay = app.htmlapp.videoDisplay
         frame = app.controller.frame
         if frame.getDisplay(frame.mainDisplay) is not videoDisplay:
             frame.selectDisplay(videoDisplay, frame.mainDisplay)
@@ -147,8 +147,8 @@ class PlaybackControllerBase:
         return anItem
         
     def scheduleExternalPlayback(self, anItem):
-        app.controller.videoDisplay.setExternal(True)
-        app.controller.videoDisplay.stopOnDeselect = False
+        app.htmlapp.videoDisplay.setExternal(True)
+        app.htmlapp.videoDisplay.stopOnDeselect = False
         app.controller.videoInfoItem = anItem
         newDisplay = TemplateDisplay('external-playback','default')
         frame = app.controller.frame
@@ -170,10 +170,10 @@ class PlaybackControllerBase:
                 self.currentItem.setResumeTime(t)
             if repeat:
                 self.updateVideoTimeDC = eventloop.addTimeout(.5, self.updateVideoTime, "Update Video Time")
-        app.controller.videoDisplay.getCurrentTime(actualUpdateVT)
+        app.htmlapp.videoDisplay.getCurrentTime(actualUpdateVT)
 
     def stop(self, switchDisplay=True, markAsViewed=False):
-        app.controller.videoDisplay.setExternal(False)
+        app.htmlapp.videoDisplay.setExternal(False)
         if self.updateVideoTimeDC:
             self.updateVideoTime(repeat=False)
             self.stopUpdateVideoTime()
@@ -181,7 +181,7 @@ class PlaybackControllerBase:
             self.currentItem.onViewedCancel()
         self.currentItem = None
         frame = app.controller.frame
-        videoDisplay = app.controller.videoDisplay
+        videoDisplay = app.htmlapp.videoDisplay
         if frame.getDisplay(frame.mainDisplay) == videoDisplay:
             videoDisplay.stop()
         self.exitPlayback(switchDisplay)

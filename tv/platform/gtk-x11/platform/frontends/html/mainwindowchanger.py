@@ -83,7 +83,7 @@ class MainWindowChanger(object):
         """Update the play/pause button to have the correct image."""
         confirmMainThread()
         playPauseImage = self.widgetTree['play-pause-image']
-        if app.controller.videoDisplay.isPlaying:
+        if app.htmlapp.videoDisplay.isPlaying:
             pixbuf = playPauseImage.render_icon(gtk.STOCK_MEDIA_PAUSE, 
                     gtk.ICON_SIZE_LARGE_TOOLBAR)
             self.mainFrame.actionGroups["VideoPlayable"].get_action ("PlayPauseVideo").set_property("label", "_Pause")
@@ -129,7 +129,7 @@ class MainWindowChanger(object):
         confirmMainThread()
         try:
             fullscreen = (self.isFullScreen and self.currentState == self.VIDEO)
-            activeRenderer = app.controller.videoDisplay.activeRenderer
+            activeRenderer = app.htmlapp.videoDisplay.activeRenderer
             if fullscreen and (not self.wasFullScreen):
                 self.widgetTree['main-window'].fullscreen()
                 if activeRenderer != None:

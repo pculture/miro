@@ -414,7 +414,7 @@ class PyBridge:
         volume = float(volume)
         config.set(prefs.VOLUME_LEVEL, volume)
         if hasattr(app.controller, 'videoDisplay'):
-            app.controller.videoDisplay.setVolume(volume, moveSlider=False)
+            app.htmlapp.videoDisplay.setVolume(volume, moveSlider=False)
 
     @asUrgent
     def quit(self):
@@ -661,7 +661,7 @@ class PyBridge:
         return specialfolders.getSpecialFolder(name)
 
     def extractFinish (self, duration, screenshot_success):
-        app.controller.videoDisplay.extractFinish(duration, screenshot_success)
+        app.htmlapp.videoDisplay.extractFinish(duration, screenshot_success)
 
     def createProxyObjects(self):
         createProxyObjects()

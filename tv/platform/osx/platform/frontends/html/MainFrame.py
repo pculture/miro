@@ -261,7 +261,7 @@ class MainController (NSWindowController):
 
     def splitView_canCollapseSubview_(self, sender, subview):
         if hasattr(app.controller, 'videoDisplay'):
-            return self.channelsHostView.isDescendantOf_(subview) and app.controller.videoDisplay.isSelected()
+            return self.channelsHostView.isDescendantOf_(subview) and app.htmlapp.videoDisplay.isSelected()
         else:
             return NO
 
@@ -423,15 +423,15 @@ class MainController (NSWindowController):
             self.updateMenuItem(item, 'playlist_remove')
             return self.actionGroups['PlaylistLikeSelected'] or self.actionGroups['PlaylistLikesSelected']
         elif action == 'playPause:':
-            return display is app.controller.videoDisplay or self.actionGroups['VideoPlayable']
+            return display is app.htmlapp.videoDisplay or self.actionGroups['VideoPlayable']
         elif action == 'stopVideo:':
-            return display is app.controller.videoDisplay
+            return display is app.htmlapp.videoDisplay
         elif action == 'nextVideo:':
-            return display is app.controller.videoDisplay
+            return display is app.htmlapp.videoDisplay
         elif action == 'previousVideo:':
-            return display is app.controller.videoDisplay
+            return display is app.htmlapp.videoDisplay
         elif action == 'toggleFullScreen:':
-            return display is app.controller.videoDisplay
+            return display is app.htmlapp.videoDisplay
         elif action == 'showHelp:':
             return True
         elif action == 'reportBug:':
@@ -609,7 +609,7 @@ class ProgressDisplayView (NSView):
         self.refresh_(nil)
 
     def progressSliderWasClicked(self, slider):
-        if app.controller.videoDisplay.isPlaying:
+        if app.htmlapp.videoDisplay.isPlaying:
             self.wasPlaying = True
             self.renderer.pause()
         self.renderer.setProgress(slider.floatValue())

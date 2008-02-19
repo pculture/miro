@@ -184,9 +184,6 @@ class HTMLApplication:
         self.videoDisplay.setVolume(config.get(prefs.VOLUME_LEVEL))
         util.print_mem_usage("Post-UI memory check")
 
-        # HACK
-        app.controller.videoDisplay = self.videoDisplay
-
         # create our selection handler
         
         app.selection.connect('tab-selected', self.onTabSelected)
