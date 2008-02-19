@@ -52,12 +52,12 @@ def handleKey(key, shiftDown, controlDown):
 def handleKeyNoPlayback(key, shiftDown, controlDown):
     if key not in (UP, DOWN):
         return
-    if app.controller.selection.tabListActive:
-        selectionArea = app.controller.selection.tabListSelection
+    if app.selection.tabListActive:
+        selectionArea = app.selection.tabListSelection
         iterator = tabs.tabIterator()
         area = 'tablist'
     else:
-        selectionArea = app.controller.selection.itemListSelection
+        selectionArea = app.selection.itemListSelection
         if selectionArea.currentView is None:
             return
         iterator = selectionArea.currentView
@@ -67,11 +67,11 @@ def handleKeyNoPlayback(key, shiftDown, controlDown):
     else:
         toSelect = selectionArea.firstAfterSelection(iterator)
     if toSelect is not None:
-        if app.controller.selection.tabListActive:
+        if app.selection.tabListActive:
             itemView = tabs.getViewForTab(toSelect)
         else:
             itemView = selectionArea.currentView
-        app.controller.selection.selectItem(area, itemView, toSelect.getID(),
+        app.selection.selectItem(area, itemView, toSelect.getID(),
                 shiftDown, controlDown)
 
 def handleKeyPlayback(key, shiftDown, controlDown):

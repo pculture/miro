@@ -157,7 +157,7 @@ class Item(DDBObject):
 
     @returnsUnicode
     def getSelectedState(self, view):
-        currentView = app.controller.selection.itemListSelection.currentView
+        currentView = app.selection.itemListSelection.currentView
         if not self.selected or view != currentView:
             return u'normal'
         elif not self.active:

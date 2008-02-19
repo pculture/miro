@@ -351,7 +351,7 @@ class ModelActionHandler:
         app.controller.removeCurrentItems()
 
     def mergeToFolder(self):
-        tls = app.controller.selection.tabListSelection
+        tls = app.selection.tabListSelection
         selectionType = tls.getType()
         childIDs = set(tls.currentSelection)
         if selectionType == 'channeltab':
@@ -363,7 +363,7 @@ class ModelActionHandler:
                              selectionType)
 
     def remove(self, area, id):
-        selectedIDs = app.controller.selection.calcSelection(area, int(id))
+        selectedIDs = app.selection.calcSelection(area, int(id))
         selectedObjects = [app.db.getObjectByID(id) for id in selectedIDs]
         objType = selectedObjects[0].__class__
 
@@ -376,7 +376,7 @@ class ModelActionHandler:
                 raise AssertionError("Multiple guides selected in remove")
             app.controller.removeGuide(selectedObjects[0])
         elif objType == item.Item:
-            pl = app.controller.selection.getSelectedTabs()[0].obj
+            pl = app.selection.getSelectedTabs()[0].obj
             pl.handleRemove(destObj, selectedIDs)
         else:
             logging.warning ("Can't handle type %s in remove()", objType)
@@ -584,7 +584,7 @@ class HistoryActionHandler:
         self.display.execJS('top.miro_guide_frame.location="%s"' % newURL)
 
     def getGuide(self):
-        guides = [t.obj for t in app.controller.selection.getSelectedTabs()]
+        guides = [t.obj for t in app.selection.getSelectedTabs()]
         if len(guides) != 1:
             return
         if not isinstance(guides[0], guide.ChannelGuide):
@@ -685,7 +685,7 @@ class GUIActionHandler:
                     myFeed.setBaseTitle(baseTitle)
     
             if selected == '1':
-                app.controller.selection.selectTabByObject(myFeed)
+                app.selection.selectTabByObject(myFeed)
             else:
                 myFeed.blink()
         self.addURL (Template(_("$shortAppName - Add Channel")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME)), _("Enter the URL of the channel to add"), doAdd, url)
@@ -698,7 +698,7 @@ class GUIActionHandler:
         if myFeed is None:
             logging.warning ("selectFeed: no such feed: %s", url)
             return
-        app.controller.selection.selectTabByObject(myFeed)
+        app.selection.selectTabByObject(myFeed)
         
     def addGuide(self, url = None, selected = '1'):
         def doAdd(url):
@@ -708,7 +708,7 @@ class GUIActionHandler:
                 myGuide = guide.ChannelGuide(url)
     
             if selected == '1':
-                app.controller.selection.selectTabByObject(myGuide)
+                app.selection.selectTabByObject(myGuide)
         self.addURL (Template(_("$shortAppName - Add Miro Guide")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME)), _("Enter the URL of the Miro Guide to add"), doAdd, url)
 
     def addDownload(self, url = None):
@@ -844,7 +844,7 @@ class TemplateActionHandler:
                     not obj.isNonVideoFile() and
                     not obj.isContainerItem)
 
-        app.controller.selection.selectTabByObject(obj, displayTabContent=False)
+        app.selection.selectTabByObject(obj, sendSignal=False)
         if isinstance(obj, feed.Feed):
             feedView = views.items.filterWithIndex(indexes.itemsByFeed,
                     obj.getID())
@@ -910,7 +910,7 @@ class TemplateActionHandler:
             return
         shift = (shiftDown == '1')
         ctrl = (ctrlDown == '1')
-        app.controller.selection.selectItem(area, view, int(id), shift, ctrl)
+        app.selection.selectItem(area, view, int(id), shift, ctrl)
 
     def handleContextMenuSelect(self, id, area, viewName):
         from miro.frontends.html import contextmenu
@@ -924,10 +924,10 @@ class TemplateActionHandler:
             except KeyError, e: # user switched templates before we got this
                 logging.warning ("KeyError in getTemplateVariable (%s) during handleContextMenuSelect()" % (viewName,))
                 return
-            if not app.controller.selection.isSelected(area, view, int(id)):
+            if not app.selection.isSelected(area, view, int(id)):
                 self.handleSelect(area, viewName, id, False, False)
             popup = contextmenu.makeContextMenu(self.currentName, view,
-                    app.controller.selection.getSelectionForArea(area), int(id))
+                    app.selection.getSelectionForArea(area), int(id))
             if popup:
                 app.delegate.showContextMenu(popup)
 

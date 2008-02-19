@@ -60,6 +60,7 @@ from miro import moviedata
 from miro import platform
 from miro import playlist
 from miro import prefs
+from miro import selection
 from miro.platform import resources
 from miro.platform.utils import setupLogging
 from miro import signals
@@ -186,6 +187,8 @@ def finalizeStartup():
     logging.timing ("Icon clear: %.3f", clock() - starttime)
     logging.info ("Starting movie data updates")
     moviedata.movieDataUpdater.startThread()
+
+    app.selection = selection.SelectionHandler()
 
     signals.system.startupSuccess()
 

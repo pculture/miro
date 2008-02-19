@@ -244,7 +244,7 @@ def createNewPlaylist(childIDs=None):
     def callback(dialog):
         if dialog.choice == dialogs.BUTTON_CREATE:
             playlist = SavedPlaylist(dialog.value)
-            app.controller.selection.selectTabByObject(playlist)
+            app.selection.selectTabByObject(playlist)
             if childIDs:
                 playlist.handleDNDAppend(childIDs)
 

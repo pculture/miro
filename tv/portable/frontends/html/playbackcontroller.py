@@ -55,7 +55,7 @@ class PlaybackControllerBase:
             self.currentPlaylist = None
 
     def configureWithSelection(self):
-        itemSelection = app.controller.selection.itemListSelection
+        itemSelection = app.selection.itemListSelection
         view = itemSelection.currentView
         if itemSelection.currentView is None:
             return
@@ -77,7 +77,7 @@ class PlaybackControllerBase:
     def exitPlayback(self, switchDisplay=True):
         self.reset()
         if switchDisplay:
-            app.controller.selection.displayCurrentTabContent()
+            app.selection.displayCurrentTabContent()
     
     def playPause(self):
         videoDisplay = app.controller.videoDisplay

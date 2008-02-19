@@ -123,7 +123,7 @@ class Tab:
             raise TypeError("Bad tab object type: %s" % type(obj))
 
     def getDragSourceType(self):
-        selection = app.controller.selection.tabListSelection
+        selection = app.selection.tabListSelection
         if self.type == 'feed':
             if (isinstance(self.obj, folder.ChannelFolder) or
                     (self.selected and selection.isFolderSelected())):

@@ -40,12 +40,11 @@ from miro import guide
 from miro import item
 from miro import tabs
 from miro import playlist
+from miro import signals
 from miro import feed
 from miro import views
 from miro import indexes
-from miro.frontends.html import template
 from miro import util
-from miro.frontends.html.templatedisplay import TemplateDisplay
 from miro.gtcache import gettext as _
 
 def getID(obj):
@@ -70,10 +69,9 @@ class SelectionArea(object):
     currentSelection -- set of object IDs that are currently selected.
     """
 
-    def __init__(self, selectionHandler):
+    def __init__(self):
         self.currentSelection = set()
         self.currentView = None
-        self.handler = selectionHandler
 
     def switchView(self, view):
         if self.currentView == view:
@@ -313,10 +311,14 @@ class SelectionArea(object):
                 retval = item
         return retval
 
-class TabSelectionArea(SelectionArea):
+class TabSelectionArea(SelectionArea, signals.SignalEmitter):
     """Selection area for the tablist.  This has a couple special cases to
     ensure that we always have at least one tab selected.
     """
+
+    def __init__(self):
+        SelectionArea.__init__(self)
+        signals.SignalEmitter.__init__(self, 'tab-selected')
 
     def selectItem(self, view, id):
         SelectionArea.selectItem(self, view, id)
@@ -359,7 +361,7 @@ class TabSelectionArea(SelectionArea):
                 self.selectFirstTab()
             else:
                 self.selectItem(self.currentView, prevTab.objID())
-            self.handler.displayCurrentTabContent()
+            self.emit('tab-selected')
 
     def selectFirstTab(self):
         if config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None:
@@ -367,7 +369,7 @@ class TabSelectionArea(SelectionArea):
                           unicode(config.get(prefs.OPEN_CHANNEL_ON_STARTUP)))
             if len(view) > 0:
                 self.selectItem(views.allTabs, view[0].getID())
-                self.handler.displayCurrentTabContent()
+                self.emit('tab-selected')
                 view.unlink()
                 return
             else:
@@ -377,7 +379,7 @@ class TabSelectionArea(SelectionArea):
                           unicode(config.get(prefs.OPEN_FOLDER_ON_STARTUP)))
             if len(view) > 0:
                 self.selectItem(views.allTabs, view[0].getID())
-                self.handler.displayCurrentTabContent()
+                self.emit('tab-selected')
                 view.unlink()
                 return
             else:
@@ -386,7 +388,7 @@ class TabSelectionArea(SelectionArea):
         views.guideTabs.resetCursor()
         guide = views.guideTabs.getNext()
         self.selectItem(views.guideTabs, guide.objID())
-        self.handler.displayCurrentTabContent()
+        self.emit('tab-selected')
 
     def isFolderSelected(self):
         """Returns if a channel/playlist folder is selected."""
@@ -395,7 +397,7 @@ class TabSelectionArea(SelectionArea):
                 return True
         return False
 
-class SelectionHandler(object):
+class SelectionHandler(signals.SignalEmitter):
     """Handles selection for Democracy.
 
     Attributes:
@@ -404,13 +406,21 @@ class SelectionHandler(object):
     itemListSelection -- SelectionArea for the item list
     tabListActive -- does the tabListSelection the have the "active"
         selection?  In other words, is that the one that was clicked on last.
+
+    SelectionHandlers emit a tab-selected signal and an item-selected signal.
+    Frontends should connect to these signals and update the UI based on it.
     """
 
     def __init__(self):
-        self.tabListSelection = TabSelectionArea(self)
-        self.itemListSelection = SelectionArea(self)
-        self.lastDisplay = None
+        signals.SignalEmitter.__init__(self, 'tab-selected', 'item-selected')
+        self.tabListSelection = TabSelectionArea()
+        self.itemListSelection = SelectionArea()
         self.tabListActive = True
+        self.tabListSelection.connect('tab-selected',
+                self.propagateTabSelected)
+
+    def propagateTabSelected(self, tabListSelection):
+        self.emit('tab-selected')
 
     def getSelectionForArea(self, area):
         if area == 'tablist':
@@ -423,7 +433,8 @@ class SelectionHandler(object):
     def isSelected(self, area, view, id):
         return self.getSelectionForArea(area).isSelected(view, id)
 
-    def selectItem(self, area, view, id, shiftSelect, controlSelect, displayTabContent=True):
+    def selectItem(self, area, view, id, shiftSelect, controlSelect,
+            sendSignal=True):
         selection = self.getSelectionForArea(area)
         try:
             selectedObj = view.getObjectByID(id)
@@ -446,11 +457,12 @@ class SelectionHandler(object):
 
         if area == 'itemlist':
             self.setTabListActive(False)
-            self.updateMenus()
+            if sendSignal:
+                self.emit('item-selected')
         else:
             self.setTabListActive(True)
-            if displayTabContent:
-                self.displayCurrentTabContent()
+            if sendSignal:
+                self.emit('tab-selected')
 
     def setTabListActive(self, value):
         self.tabListActive = value
@@ -473,7 +485,7 @@ class SelectionHandler(object):
     def selectFirstTab(self):
         self.tabListSelection.selectFirstTab()
 
-    def selectTabByTemplateBase(self, tabTemplateBase, displayTabContent=True):
+    def selectTabByTemplateBase(self, tabTemplateBase, sendSignal=True):
         tabViews = [ 
             views.guideTabs, 
             views.staticTabs, 
@@ -485,10 +497,10 @@ class SelectionHandler(object):
                 if tab.tabTemplateBase == tabTemplateBase:
                     self.selectItem('tablist', view, tab.objID(),
                             shiftSelect=False, controlSelect=False,
-                            displayTabContent=displayTabContent)
+                            sendSignal=sendSignal)
                     return
 
-    def selectTabByObject(self, obj, displayTabContent=True):
+    def selectTabByObject(self, obj, sendSignal=True):
         channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
         playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
         tabViews = [ 
@@ -502,156 +514,8 @@ class SelectionHandler(object):
                 if tab.obj is obj:
                     self.selectItem('tablist', view, tab.objID(),
                             shiftSelect=False, controlSelect=False,
-                            displayTabContent=displayTabContent)
+                            sendSignal=sendSignal)
                     return
-
-    def _chooseDisplayForCurrentTab(self):
-        tls = self.tabListSelection
-        frame = app.controller.frame
-
-        if len(tls.currentSelection) == 0:
-            raise AssertionError("No tabs selected")
-        elif len(tls.currentSelection) == 1:
-            for id in tls.currentSelection:
-                tab = tls.currentView.getObjectByID(id)
-                return TemplateDisplay(tab.contentsTemplate,
-                        tab.templateState, frameHint=frame,
-                        areaHint=frame.mainDisplay, id=tab.obj.getID())
-        else:
-            foldersSelected = False
-            type = tls.getType()
-            if type == 'playlisttab':
-                templateName = 'multi-playlist'
-            elif type == 'channeltab':
-                templateName = 'multi-channel'
-            selectedChildren = 0
-            selectedFolders = 0
-            containedChildren = 0
-            for tab in self.getSelectedTabs():
-                if isinstance(tab.obj, folder.FolderBase):
-                    selectedFolders += 1
-                    view = tab.obj.getChildrenView()
-                    containedChildren += view.len()
-                    for child in view:
-                        if child.getID() in tls.currentSelection:
-                            selectedChildren -= 1
-                else:
-                    selectedChildren += 1
-            return TemplateDisplay(templateName,'default', frameHint=frame,
-                    areaHint=frame.mainDisplay,
-                    selectedFolders=selectedFolders,
-                    selectedChildren=selectedChildren,
-                    containedChildren=containedChildren)
-
-    def updateMenus(self):
-        tabTypes = self.tabListSelection.getTypesDetailed()
-        if tabTypes.issubset(set(['guidetab', 'addedguidetab'])):
-            guideURL = self.getSelectedTabs()[0].obj.getURL()
-        else:
-            guideURL = None
-        multiple = len(self.tabListSelection.currentSelection) > 1
-
-        actionGroups = {}
-        states = {"plural":[],
-                  "folders":[],
-                  "folder":[]}
-
-        is_playlistlike = tabTypes.issubset (set(['playlisttab', 'playlistfoldertab']))
-        is_channellike = tabTypes.issubset (set(['channeltab', 'channelfoldertab', 'addedguidetab']))
-        is_channel = tabTypes.issubset (set(['channeltab', 'channelfoldertab']))
-        if len (tabTypes) == 1:
-            if multiple:
-                if 'playlisttab' in tabTypes:
-                    states["plural"].append("RemovePlaylists")
-                elif 'playlistfoldertab' in tabTypes:
-                    states["folders"].append("RemovePlaylists")
-                elif 'channeltab' in tabTypes:
-                    states["plural"].append("RemoveChannels")
-                elif 'channelfoldertab' in tabTypes:
-                    states["folders"].append("RemoveChannels")
-                elif 'addedguidetab' in tabTypes:
-                    states["plural"].append("ChannelGuides")
-            else:
-                if 'playlisttab' in tabTypes:
-                    pass
-                elif 'playlistfoldertab' in tabTypes:
-                    states["folder"].append("RemovePlaylists")
-                elif 'channeltab' in tabTypes:
-                    pass
-                elif 'channelfoldertab' in tabTypes:
-                    states["folder"].append("RemoveChannels")
-                elif 'addedguidetab' in tabTypes:
-                    pass
-
-        if multiple and is_channel:
-            states["plural"].append("UpdateChannels")
-
-        actionGroups["ChannelLikeSelected"] = is_channellike and not multiple
-        actionGroups["ChannelLikesSelected"] = is_channellike
-        actionGroups["PlaylistLikeSelected"] = is_playlistlike and not multiple
-        actionGroups["PlaylistLikesSelected"] = is_playlistlike
-        actionGroups["ChannelSelected"] = tabTypes.issubset (set(['channeltab'])) and not multiple
-        actionGroups["ChannelsSelected"] = tabTypes.issubset (set(['channeltab', 'channelfoldertab']))
-        actionGroups["ChannelFolderSelected"] = tabTypes.issubset(set(['channelfoldertab'])) and not multiple
-
-        # Handle video item area.
-        actionGroups["VideoSelected"] = False
-        actionGroups["VideosSelected"] = False
-        actionGroups["VideoPlayable"] = False
-        videoFileName = None
-        if 'downloadeditem' in self.itemListSelection.getTypesDetailed():
-            actionGroups["VideosSelected"] = True
-            actionGroups["VideoPlayable"] = True
-            if len(self.itemListSelection.currentSelection) == 1:
-                actionGroups["VideoSelected"] = True
-                item = self.itemListSelection.getObjects()[0]
-                videoFileName = item.getVideoFilename()
-            else:
-                states["plural"].append("RemoveVideos")
-#        if len(self.itemListSelection.currentSelection) == 0:
-#            if playable_videos:
-#                actionGroups["VideoPlayable"] = True
-
-        app.controller.frame.onSelectedTabChange(states, actionGroups, 
-                guideURL, videoFileName)
-
-    def displayCurrentTabContent(self):
-        frame = app.controller.frame
-        mainDisplay = frame.getDisplay(frame.mainDisplay)
-
-        # Hack to avoid re-displaying channel template
-        if (mainDisplay and hasattr(mainDisplay, 'templateName') and mainDisplay.templateName == 'channel'):
-            tls = self.tabListSelection
-            if len(tls.currentSelection) == 1:
-                for id in tls.currentSelection:
-                    tab = tls.currentView.getObjectByID(id)
-                    if tab.contentsTemplate == 'channel':
-                        newId = int(tab.obj.getID())
-                        #print "swapping templates %d %d" % (mainDisplay.kargs['id'], newId)
-                                                        
-                        self.itemListSelection.clearSelection()
-                        self.updateMenus()
-                        if mainDisplay.kargs['id'] != newId:
-                            mainDisplay.reInit(id = newId)
-                        return
-        newDisplay = self._chooseDisplayForCurrentTab()
-
-        # Don't redisplay the current tab if it's being displayed.  It messes
-        # up our database callbacks.  The one exception is the guide tab,
-        # where redisplaying it will reopen the home page.
-        if (self.lastDisplay and newDisplay == self.lastDisplay and
-                self.lastDisplay is mainDisplay and
-                newDisplay.templateName != 'guide'):
-            newDisplay.unlink()
-            return
-
-        self.itemListSelection.clearSelection()
-        self.updateMenus()
-        # do a queueSelectDisplay to make sure that the selectDisplay gets
-        # executed after our changes to the tablist template.  This makes tab
-        # selection feel faster because the selection changes quickly.
-        template.queueSelectDisplay(frame, newDisplay, frame.mainDisplay)
-        self.lastDisplay = newDisplay
 
     def isTabSelected(self, tab):
         return tab.objID() in self.tabListSelection.currentSelection

@@ -35,6 +35,7 @@ import logging
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import dialogs
+from miro.frontends.html import template
 from miro.frontends.html import templatedisplay
 from miro.platform.frontends.html.MainFrame import MainFrame
 from miro.platform.frontends.html.UIBackendDelegate import UIBackendDelegate
@@ -47,7 +48,6 @@ from miro import iheartmiro
 from miro import menubar
 from miro import opml
 from miro import prefs
-from miro import selection
 from miro import startup
 from miro import singleclick
 from miro import signals
@@ -68,6 +68,7 @@ class HTMLApplication:
         self.loadedCustomChannels = False
         app.htmlapp = self
         app.delegate = UIBackendDelegate()
+        self.lastDisplay = None
 
     def startup(self):
         signals.system.connect('error', self.handleError)
@@ -188,12 +189,9 @@ class HTMLApplication:
 
         # create our selection handler
         
-        self.selection = selection.SelectionHandler()
-
-        # HACK
-        app.controller.selection = self.selection
-
-        self.selection.selectFirstTab()
+        app.selection.connect('tab-selected', self.onTabSelected)
+        app.selection.connect('item-selected', self.updateMenus)
+        app.selection.selectFirstTab()
 
         if self.loadedCustomChannels:
             dialog = dialogs.MessageBoxDialog(_("Custom Channels"), Template(_("You are running a version of $longAppName with a custom set of channels.")).substitute(longAppName=config.get(prefs.LONG_APP_NAME)))
@@ -201,7 +199,7 @@ class HTMLApplication:
             views.feedTabs.resetCursor()
             tab = views.feedTabs.getNext()
             if tab is not None:
-                self.selection.selectTabByObject(tab.obj)
+                app.selection.selectTabByObject(tab.obj)
 
         util.print_mem_usage("Post-selection memory check")
 
@@ -401,15 +399,15 @@ class HTMLApplication:
         handler.updateLastSearchEngine(engine)
         handler.updateLastSearchQuery(query)
         handler.performSearch(engine, query)
-        self.selection.selectTabByTemplateBase('searchtab')
+        app.selection.selectTabByTemplateBase('searchtab')
 
     def copyCurrentFeedURL(self):
-        tabs = self.selection.getSelectedTabs()
+        tabs = app.selection.getSelectedTabs()
         if len(tabs) == 1 and tabs[0].isFeed():
             app.delegate.copyTextToClipboard(tabs[0].obj.getURL())
 
     def recommendCurrentFeed(self):
-        tabs = self.selection.getSelectedTabs()
+        tabs = app.selection.getSelectedTabs()
         if len(tabs) == 1 and tabs[0].isFeed():
             # See also dynamic.js if changing this URL
             feed = tabs[0].obj
@@ -417,9 +415,156 @@ class HTMLApplication:
             app.delegate.openExternalURL('http://www.videobomb.com/democracy_channel/email_friend?%s' % (query, ))
 
     def copyCurrentItemURL(self):
-        tabs = self.selection.getSelectedItems()
+        tabs = app.selection.getSelectedItems()
         if len(tabs) == 1 and isinstance(tabs[0], item.Item):
             url = tabs[0].getURL()
             if url:
                 app.delegate.copyTextToClipboard(url)
+
+    def onTabSelected(self, selection):
+        mainDisplay = self.frame.getDisplay(self.frame.mainDisplay)
+
+        # Hack to avoid re-displaying channel template
+        if (mainDisplay and hasattr(mainDisplay, 'templateName') and mainDisplay.templateName == 'channel'):
+            if len(selection.tabListSelection.currentSelection) == 1:
+                for id in selection.tabListSelection.currentSelection:
+                    tabView = selection.tabListSelection.currentView
+                    tab = tabView.getObjectByID(id)
+                    if tab.contentsTemplate == 'channel':
+                        newId = int(tab.obj.getID())
+                        #print "swapping templates %d %d" % (mainDisplay.kargs['id'], newId)
+                                                        
+                        selection.itemListSelection.clearSelection()
+                        self.updateMenus(selection)
+                        if mainDisplay.kargs['id'] != newId:
+                            mainDisplay.reInit(id = newId)
+                        return
+        newDisplay = self._chooseDisplayForCurrentTab(selection)
+
+        # Don't redisplay the current tab if it's being displayed.  It messes
+        # up our database callbacks.  The one exception is the guide tab,
+        # where redisplaying it will reopen the home page.
+        if (self.lastDisplay and newDisplay == self.lastDisplay and
+                self.lastDisplay is mainDisplay and
+                newDisplay.templateName != 'guide'):
+            newDisplay.unlink()
+            return
+
+        selection.itemListSelection.clearSelection()
+        self.updateMenus(selection)
+        # do a queueSelectDisplay to make sure that the selectDisplay gets
+        # executed after our changes to the tablist template.  This makes tab
+        # selection feel faster because the selection changes quickly.
+        template.queueSelectDisplay(self.frame, newDisplay, self.frame.mainDisplay)
+        self.lastDisplay = newDisplay
+
+    def _chooseDisplayForCurrentTab(self, selection):
+        tls = selection.tabListSelection
+        frame = app.controller.frame
+
+        if len(tls.currentSelection) == 0:
+            raise AssertionError("No tabs selected")
+        elif len(tls.currentSelection) == 1:
+            for id in tls.currentSelection:
+                tab = tls.currentView.getObjectByID(id)
+                return templatedisplay.TemplateDisplay(tab.contentsTemplate,
+                        tab.templateState, frameHint=frame,
+                        areaHint=frame.mainDisplay, id=tab.obj.getID())
+        else:
+            foldersSelected = False
+            type = tls.getType()
+            if type == 'playlisttab':
+                templateName = 'multi-playlist'
+            elif type == 'channeltab':
+                templateName = 'multi-channel'
+            selectedChildren = 0
+            selectedFolders = 0
+            containedChildren = 0
+            for tab in selection.getSelectedTabs():
+                if isinstance(tab.obj, folder.FolderBase):
+                    selectedFolders += 1
+                    view = tab.obj.getChildrenView()
+                    containedChildren += view.len()
+                    for child in view:
+                        if child.getID() in tls.currentSelection:
+                            selectedChildren -= 1
+                else:
+                    selectedChildren += 1
+            return templatedisplay.TemplateDisplay(templateName, 'default',
+                    frameHint=frame, areaHint=frame.mainDisplay,
+                    selectedFolders=selectedFolders,
+                    selectedChildren=selectedChildren,
+                    containedChildren=containedChildren)
+
+    def updateMenus(self, selection):
+        tabTypes = selection.tabListSelection.getTypesDetailed()
+        if tabTypes.issubset(set(['guidetab', 'addedguidetab'])):
+            guideURL = selection.getSelectedTabs()[0].obj.getURL()
+        else:
+            guideURL = None
+        multiple = len(selection.tabListSelection.currentSelection) > 1
+
+        actionGroups = {}
+        states = {"plural":[],
+                  "folders":[],
+                  "folder":[]}
+
+        is_playlistlike = tabTypes.issubset (set(['playlisttab', 'playlistfoldertab']))
+        is_channellike = tabTypes.issubset (set(['channeltab', 'channelfoldertab', 'addedguidetab']))
+        is_channel = tabTypes.issubset (set(['channeltab', 'channelfoldertab']))
+        if len (tabTypes) == 1:
+            if multiple:
+                if 'playlisttab' in tabTypes:
+                    states["plural"].append("RemovePlaylists")
+                elif 'playlistfoldertab' in tabTypes:
+                    states["folders"].append("RemovePlaylists")
+                elif 'channeltab' in tabTypes:
+                    states["plural"].append("RemoveChannels")
+                elif 'channelfoldertab' in tabTypes:
+                    states["folders"].append("RemoveChannels")
+                elif 'addedguidetab' in tabTypes:
+                    states["plural"].append("ChannelGuides")
+            else:
+                if 'playlisttab' in tabTypes:
+                    pass
+                elif 'playlistfoldertab' in tabTypes:
+                    states["folder"].append("RemovePlaylists")
+                elif 'channeltab' in tabTypes:
+                    pass
+                elif 'channelfoldertab' in tabTypes:
+                    states["folder"].append("RemoveChannels")
+                elif 'addedguidetab' in tabTypes:
+                    pass
+
+        if multiple and is_channel:
+            states["plural"].append("UpdateChannels")
+
+        actionGroups["ChannelLikeSelected"] = is_channellike and not multiple
+        actionGroups["ChannelLikesSelected"] = is_channellike
+        actionGroups["PlaylistLikeSelected"] = is_playlistlike and not multiple
+        actionGroups["PlaylistLikesSelected"] = is_playlistlike
+        actionGroups["ChannelSelected"] = tabTypes.issubset (set(['channeltab'])) and not multiple
+        actionGroups["ChannelsSelected"] = tabTypes.issubset (set(['channeltab', 'channelfoldertab']))
+        actionGroups["ChannelFolderSelected"] = tabTypes.issubset(set(['channelfoldertab'])) and not multiple
+
+        # Handle video item area.
+        actionGroups["VideoSelected"] = False
+        actionGroups["VideosSelected"] = False
+        actionGroups["VideoPlayable"] = False
+        videoFileName = None
+        if 'downloadeditem' in selection.itemListSelection.getTypesDetailed():
+            actionGroups["VideosSelected"] = True
+            actionGroups["VideoPlayable"] = True
+            if len(selection.itemListSelection.currentSelection) == 1:
+                actionGroups["VideoSelected"] = True
+                item = selection.itemListSelection.getObjects()[0]
+                videoFileName = item.getVideoFilename()
+            else:
+                states["plural"].append("RemoveVideos")
+#        if len(self.itemListSelection.currentSelection) == 0:
+#            if playable_videos:
+#                actionGroups["VideoPlayable"] = True
+
+        app.controller.frame.onSelectedTabChange(states, actionGroups, 
+                guideURL, videoFileName)
 

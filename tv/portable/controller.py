@@ -55,7 +55,6 @@ from miro import item
 from miro import moviedata
 from miro import playlist
 from miro import prefs
-from miro import selection
 from miro import signals
 from miro import singleclick
 from miro import util
@@ -95,14 +94,14 @@ class Controller:
             nextfeed.remove()
 
     def selectAllItems(self):
-        self.selection.itemListSelection.selectAll()
-        self.selection.setTabListActive(False)
+        app.selection.itemListSelection.selectAll()
+        app.selection.setTabListActive(False)
 
     def removeCurrentSelection(self):
-        if self.selection.tabListActive:
-            selection = self.selection.tabListSelection
+        if app.selection.tabListActive:
+            selection = app.selection.tabListSelection
         else:
-            selection = self.selection.itemListSelection
+            selection = app.selection.itemListSelection
         seltype = selection.getType()
         if seltype == 'channeltab':
             self.removeCurrentFeed()
@@ -114,37 +113,37 @@ class Controller:
             self.removeCurrentItems()
 
     def removeCurrentFeed(self):
-        if self.selection.tabListSelection.getType() == 'channeltab':
-            feeds = [t.obj for t in self.selection.getSelectedTabs()]
+        if app.selection.tabListSelection.getType() == 'channeltab':
+            feeds = [t.obj for t in app.selection.getSelectedTabs()]
             self.removeFeeds(feeds)
 
     def removeCurrentGuide(self):
-        if self.selection.tabListSelection.getType() == 'addedguidetab':
-            guides = [t.obj for t in self.selection.getSelectedTabs()]
+        if app.selection.tabListSelection.getType() == 'addedguidetab':
+            guides = [t.obj for t in app.selection.getSelectedTabs()]
             if len(guides) != 1:
                 raise AssertionError("Multiple guides selected")
             self.removeGuide(guides[0])
 
     def removeCurrentPlaylist(self):
-        if self.selection.tabListSelection.getType() == 'playlisttab':
-            playlists = [t.obj for t in self.selection.getSelectedTabs()]
+        if app.selection.tabListSelection.getType() == 'playlisttab':
+            playlists = [t.obj for t in app.selection.getSelectedTabs()]
             self.removePlaylists(playlists)
 
     def removeCurrentItems(self):
-        if self.selection.itemListSelection.getType() != 'item':
+        if app.selection.itemListSelection.getType() != 'item':
             return
-        selected = self.selection.getSelectedItems()
-        if self.selection.tabListSelection.getType() != 'playlisttab':
+        selected = app.selection.getSelectedItems()
+        if app.selection.tabListSelection.getType() != 'playlisttab':
             removable = [i for i in selected if (i.isDownloaded() or i.isExternal()) ]
             if removable:
                 item.expireItems(removable)
         else:
-            playlist = self.selection.getSelectedTabs()[0].obj
+            playlist = app.selection.getSelectedTabs()[0].obj
             for i in selected:
                 playlist.removeItem(i)
 
     def renameCurrentTab(self, typeCheckList=None):
-        selected = self.selection.getSelectedTabs()
+        selected = app.selection.getSelectedTabs()
         if len(selected) != 1:
             return
         obj = selected[0].obj
@@ -164,25 +163,25 @@ class Controller:
                 folder.PlaylistFolder])
 
     def downloadCurrentItems(self):
-        selected = self.selection.getSelectedItems()
+        selected = app.selection.getSelectedItems()
         downloadable = [i for i in selected if i.isDownloadable() ]
         for item in downloadable:
             item.download()
 
     def stopDownloadingCurrentItems(self):
-        selected = self.selection.getSelectedItems()
+        selected = app.selection.getSelectedItems()
         downloading = [i for i in selected if i.getState() == 'downloading']
         for item in downloading:
             item.expire()
 
     def pauseDownloadingCurrentItems(self):
-        selected = self.selection.getSelectedItems()
+        selected = app.selection.getSelectedItems()
         downloading = [i for i in selected if i.getState() == 'downloading']
         for item in downloading:
             item.pause()
 
     def updateCurrentFeed(self):
-        for tab in self.selection.getSelectedTabs():
+        for tab in app.selection.getSelectedTabs():
             if tab.isFeed():
                 tab.obj.update()
 
@@ -368,7 +367,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
 
     @eventloop.asIdle
     def setLastVisitedGuideURL(self, url):
-        selectedTabs = self.selection.getSelectedTabs()
+        selectedTabs = app.selection.getSelectedTabs()
         selectedObjects = [t.obj for t in selectedTabs]
         if (len(selectedTabs) != 1 or 
                 not isinstance(selectedObjects[0], guide.ChannelGuide)):
@@ -432,7 +431,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
                     lastAddedFeed = feed.Feed(url)
 
         if lastAddedFeed:
-            app.controller.selection.selectTabByObject(lastAddedFeed)
+            app.selection.selectTabByObject(lastAddedFeed)
 
     def handleDrop(self, dropData, type, sourceData):
         try:
@@ -451,7 +450,7 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
                 destObj = app.db.getObjectByID(int(destID))
             sourceArea, sourceID = sourceData.split("-")
             sourceID = int(sourceID)
-            draggedIDs = self.selection.calcSelection(sourceArea, sourceID)
+            draggedIDs = app.selection.calcSelection(sourceArea, sourceID)
         except:
             logging.exception ("error parsing drop (%r, %r, %r)",
                                dropData, type, sourceData)
@@ -477,19 +476,19 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
             tabOrder.handleDNDReorder(destObj, draggedIDs)
         elif destType == "playlistitem" and type == "downloadeditem":
             # Reording items in a playlist
-            playlist = self.selection.getSelectedTabs()[0].obj
+            playlist = app.selection.getSelectedTabs()[0].obj
             playlist.handleDNDReorder(destObj, draggedIDs)
         else:
             logging.info ("Can't handle drop. Dest type: %s Dest id: %s Type: %s",
                           destType, destID, type)
 
     def addToNewPlaylist(self):
-        selected = app.controller.selection.getSelectedItems()
+        selected = app.selection.getSelectedItems()
         childIDs = [i.getID() for i in selected if i.isDownloaded()]
         playlist.createNewPlaylist(childIDs)
 
     def startUploads(self):
-        selected = app.controller.selection.getSelectedItems()
+        selected = app.selection.getSelectedItems()
         for i in selected:
             i.startUpload()
 

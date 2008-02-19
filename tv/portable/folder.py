@@ -81,11 +81,11 @@ class FolderBase(DDBObject):
             tab = tabOrder.tabView.getObjectByID(id)
             tab.obj.setFolder(self)
         tabOrder.moveTabs(self.getNextTab(), draggedIDs)
-        selection = app.controller.selection.tabListSelection
+        selection = app.selection.tabListSelection
         if len(selection.currentSelection) == 0:
             # we appended tabs to a non-expanded folder and now nothing is
             # selected.  Select that folder.
-            app.controller.selection.selectItem('tablist', tabOrder.tabView,
+            app.selection.selectItem('tablist', tabOrder.tabView,
                     self.getID(), False, False)
         self.signalChange()
 
@@ -226,7 +226,7 @@ def createNewChannelFolder(childIDs=None):
     def callback(dialog):
         if dialog.choice == dialogs.BUTTON_CREATE:
             folder = ChannelFolder(dialog.value)
-            app.controller.selection.selectTabByObject(folder)
+            app.selection.selectTabByObject(folder)
             if childIDs:
                 folder.handleDNDAppend(childIDs)
 
@@ -240,7 +240,7 @@ def createNewPlaylistFolder(childIDs=None):
     def callback(dialog):
         if dialog.choice == dialogs.BUTTON_CREATE:
             folder = PlaylistFolder(dialog.value)
-            app.controller.selection.selectTabByObject(folder)
+            app.selection.selectTabByObject(folder)
             if childIDs:
                 folder.handleDNDAppend(childIDs)
 

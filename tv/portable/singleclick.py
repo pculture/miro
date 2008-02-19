@@ -159,7 +159,7 @@ def downloadVideo(entry):
     manualFeed = getManualFeed()
     newItem = item.Item(entry, feed_id=manualFeed.getID())
     newItem.download()
-    app.controller.selection.selectTabByTemplateBase('downloadtab')
+    app.selection.selectTabByTemplateBase('downloadtab')
 
 def addTorrent(path, torrentInfohash):
     manualFeed = getManualFeed()
@@ -221,16 +221,16 @@ def addFeeds(urls, newFolderName=None):
                 for url in urls:
                     f = feed.getFeedByURL(url)
                     if f is lastFeed:
-                        app.controller.selection.selectTabByObject(f)
+                        app.selection.selectTabByObject(f)
                     else:
                         f.blink()
             else:
                 for i in xrange (len(urls) - 1):
                     feed.getFeedByURL(urls[i]).blink()
                 f = feed.getFeedByURL(urls[-1])
-                app.controller.selection.selectTabByObject(f)
+                app.selection.selectTabByObject(f)
         else:
-            app.controller.selection.selectTabByObject(newFolder)
+            app.selection.selectTabByObject(newFolder)
 
 def askForMultipleFeeds(urls):
     title = _("Subscribing to multiple channels") 
@@ -350,10 +350,10 @@ def parseCommandLineArgs(args=None):
             print "WARNING: %s doesn't exist" % arg
 
     if addedVideos:
-        app.controller.selection.selectTabByTemplateBase('librarytab', False)
+        app.selection.selectTabByTemplateBase('librarytab', False)
         playCommandLineView()
     elif addedDownloads:
-        app.controller.selection.selectTabByTemplateBase('downloadtab')
+        app.selection.selectTabByTemplateBase('downloadtab')
 
 def openFile(path):
     parseCommandLineArgs([path])
