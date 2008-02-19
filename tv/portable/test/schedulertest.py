@@ -3,7 +3,7 @@ from time import time, sleep
 import threading
 
 from miro import eventloop
-from test.framework import EventLoopTest
+from miro.test.framework import EventLoopTest
 
 class SchedulerTest(EventLoopTest):
     def setUp(self):

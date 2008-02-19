@@ -14,28 +14,29 @@ import framework
 import os
 from miro import gtcache
 import gettext
-from miro import resources
-from miro import template
+from miro import signals
+from miro.platform import resources
+from miro.frontends.html import template
 from miro import util
-from miro.template_compiler import TemplateError
-from miro import template_compiler
+from miro.frontends.html.template_compiler import TemplateError
+from miro.frontends.html import template_compiler
 
-from test.framework import DemocracyTestCase
-
-class UnicodeTestDelegate:
-    def __init__(self):
-        self.choice = None
-        self.numCalls = 0
-    def runDialog(self, dialog):
-        self.numCalls += 1
-        # print "rundialog called from %s" % dialog.title
-        dialog.choice = self.choice
-        # a bit of a hack to avoid using eventloop
-        dialog.callback(dialog)
+from miro.test.framework import DemocracyTestCase
 
 class UnicodeFeedTestCase(framework.EventLoopTest):
     def setUp(self):
         super(UnicodeFeedTestCase, self).setUp()
+        signals.system.connect('new-dialog', self.onNewDialog)
+        self.choice = None
+        self.numDialogs = 0
+
+    def onNewDialog(self, obj, dialog):
+        self.assertNotEqual(self.choice, None)
+        self.numDialogs += 1
+        # print "rundialog called from %s" % dialog.title
+        dialog.choice = self.choice
+        # a bit of a hack to avoid using eventloop
+        dialog.callback(dialog)
 
     def isProperFeedParserDict(self, parsed, name="top"):
         if isinstance(parsed, types.DictionaryType):
@@ -103,8 +104,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         handle.write('<?xml version="1.0"?>\n<rss version="2.0">\n   <channel>\n      <title>H\xe4ppy Birthday</title>\n      <description>H\xe4ppy Birthday</description>\n <language>zh-zh</language>\n      <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      <generator>Weblog Editor 2.0</generator>\n      <managingEditor>editor@example.com</managingEditor>\n      <webMaster>webmaster@example.com</webMaster>\n      <item>\n         <title>H\xe4ppy Birthday</title>\n         <link>http://participatoryculture.org/boguslink</link>\n         <description>H\xe4ppy Birthday</description>\n         <enclosure url="file://crap" length="0" type="video/mpeg"/>\n         <pubDate>Fri, 25 Aug 2006 17:39:21 GMT</pubDate>\n      </item>\n   </channel>\n</rss>')
         handle.close()
 
-        app.delegate = UnicodeTestDelegate()
-        app.delegate.choice = dialogs.BUTTON_YES
+        self.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed(u"file://"+self.filename)
 
@@ -123,12 +123,11 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n  <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
-        app.delegate = UnicodeTestDelegate()
-        app.delegate.choice = dialogs.BUTTON_YES
+        self.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed(u"file://"+self.filename)
         
-        self.assertEqual(app.delegate.numCalls, 1)
+        self.assertEqual(self.numDialogs, 1)
         myFeed.update()
         self.assertEqual(len(myFeed.items), 1)
         myItem = myFeed.items[0]
@@ -142,12 +141,11 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
-        app.delegate = UnicodeTestDelegate()
-        app.delegate.choice = dialogs.BUTTON_YES
+        self.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed(u"file://"+self.filename)
         
-        self.assertEqual(app.delegate.numCalls,1)
+        self.assertEqual(self.numDialogs,1)
         myFeed.update()
         self.assertEqual(len(myFeed.items),1)
         myItem = myFeed.items[0]
@@ -161,12 +159,11 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
-        app.delegate = UnicodeTestDelegate()
-        app.delegate.choice = dialogs.BUTTON_YES
+        self.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed(u"file://"+self.filename)
         
-        self.assertEqual(app.delegate.numCalls,1)
+        self.assertEqual(self.numDialogs,1)
         myFeed.update()
         self.assertEqual(len(myFeed.items),1)
         myItem = myFeed.items[0]
@@ -179,12 +176,11 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xc3\xa4ppy.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
-        app.delegate = UnicodeTestDelegate()
-        app.delegate.choice = dialogs.BUTTON_YES
+        self.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed(u"file://"+self.filename)
         
-        self.assertEqual(app.delegate.numCalls,1)
+        self.assertEqual(self.numDialogs,1)
         myFeed.update()
         # Either the item isn't added or it's added with an ascii URL
         if len(myFeed.items) > 0:
@@ -199,12 +195,11 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n   <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xe4ppy.mov">H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
-        app.delegate = UnicodeTestDelegate()
-        app.delegate.choice = dialogs.BUTTON_YES
+        self.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed(u"file://"+self.filename)
         
-        self.assertEqual(app.delegate.numCalls,1)
+        self.assertEqual(self.numDialogs,1)
         myFeed.update()
         # Either the item isn't added or it's added with an ascii URL
         if len(myFeed.items) > 0:
@@ -219,12 +214,11 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/H\xc3\xa4ppy.mov">H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
-        app.delegate = UnicodeTestDelegate()
-        app.delegate.choice = dialogs.BUTTON_YES
+        self.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed(u"file://"+self.filename)
         
-        self.assertEqual(app.delegate.numCalls,1)
+        self.assertEqual(self.numDialogs,1)
         myFeed.update()
         # Either the item isn't added or it's added with an ascii URL
         if len(myFeed.items) > 0:
@@ -239,12 +233,11 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         handle.write('<?xml version="1.0" encoding="utf-8"?>\n<html>\n   <head>\n <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n      <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xc3\xa4ppy.png"/>H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
-        app.delegate = UnicodeTestDelegate()
-        app.delegate.choice = dialogs.BUTTON_YES
+        self.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed(u"file://"+self.filename)
         
-        self.assertEqual(app.delegate.numCalls,1)
+        self.assertEqual(self.numDialogs,1)
         myFeed.update()
 
         self.assertEqual(len(myFeed.items),1)
@@ -262,12 +255,11 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n    <title>H\xe4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xe4ppy.png"/>H\xe4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
-        app.delegate = UnicodeTestDelegate()
-        app.delegate.choice = dialogs.BUTTON_YES
+        self.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed(u"file://"+self.filename)
         
-        self.assertEqual(app.delegate.numCalls,1)
+        self.assertEqual(self.numDialogs,1)
         myFeed.update()
 
         self.assertEqual(len(myFeed.items),1)
@@ -285,12 +277,11 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         handle.write('<?xml version="1.0" encoding="iso-8859-1"?>\n<html>\n   <head>\n       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n <title>H\xc3\xa4ppy Birthday</title>\n   </head>\n   <body>\n   <a href="http://www.wccatv.com/files/video/hbml.mov"><img src="http://www.wccatv.com/files/video/H\xc3\xa4ppy.png"/>H\xc3\xa4ppy Birthday</a>\n   </body>\n</html>')
         handle.close()
 
-        app.delegate = UnicodeTestDelegate()
-        app.delegate.choice = dialogs.BUTTON_YES
+        self.choice = dialogs.BUTTON_YES
 
         myFeed = feed.Feed(u"file://"+self.filename)
         
-        self.assertEqual(app.delegate.numCalls,1)
+        self.assertEqual(self.numDialogs,1)
         myFeed.update()
 
         self.assertEqual(len(myFeed.items),1)

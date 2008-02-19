@@ -1,8 +1,8 @@
 import unittest
 from miro import feedparser
-from miro import resources
+from miro.platform import resources
 
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 
 class FeedParserDictTest(DemocracyTestCase):
     def test(self):

@@ -314,11 +314,15 @@ class FakeClassUnpickler(pickle.Unpickler):
         'datetime.datetime', 
         'datetime.timedelta', 
         'time.struct_time',
-        'feedparser.FeedParserDict',
+        'miro.feedparser.FeedParserDict',
         '__builtin__.unicode',
     ]
 
     def find_class(self, module, name):
+        if module == 'feedparser':
+            # hack to handle the fact that everything is inside the miro
+            # package nowadays
+            module = 'miro.feedparser'
         fullyQualifiedName = "%s.%s" % (module, name)
         if fullyQualifiedName in fakeClasses:
             return fakeClasses[fullyQualifiedName]

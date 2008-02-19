@@ -1,7 +1,7 @@
 import unittest
-import fasttypes
+from miro import fasttypes
 
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 
 class Dummy:
     pass

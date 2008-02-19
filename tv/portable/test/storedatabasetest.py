@@ -11,7 +11,7 @@ from miro import schema
 import shutil
 from miro import storedatabase
 
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 # sooo much easier to type...
 from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaSimpleContainer
 from miro.schema import SchemaList, SchemaDict, SchemaObject

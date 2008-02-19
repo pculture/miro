@@ -1,5 +1,5 @@
 import unittest
-from miro import resources
+from miro.platform import resources
 import os
 import re
 import time
@@ -10,14 +10,14 @@ from miro import item
 from miro import app
 from miro import maps
 
-from miro.template import *
-from miro import templateoptimize
+from miro.frontends.html.template import *
+from miro.frontends.html import templateoptimize
 from time import time
 from miro import database
 import gettext
-import compiled_templates
+from miro.frontends.html import compiled_templates
 
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 
 # FIXME: Add tests for DOM Handles without changeItems or deprecate
 #        the old changeItem API
@@ -332,6 +332,7 @@ class TemplatePerformance(DemocracyTestCase):
         return totalTime
 
     def testRender(self):
+        repetitions = 3
         self.feeds = []
         self.items = []
         for x in range(50):
@@ -343,7 +344,7 @@ class TemplatePerformance(DemocracyTestCase):
                                             feed_id = self.feeds[-1].id
                                             ))
         
-        time1 = self.timeIt(self.fillAndUnlink, 10)
+        time1 = self.timeIt(self.fillAndUnlink, repetitions)
 
         for x in range(50):
             for y in range(450):
@@ -352,7 +353,7 @@ class TemplatePerformance(DemocracyTestCase):
                      'enclosures': [{'url': u'file://%d-%d.mpg' % (x, y)}]}),
                                             feed_id = self.feeds[x].id
                                             ))
-        time2 = self.timeIt(self.fillAndUnlink, 10)
+        time2 = self.timeIt(self.fillAndUnlink, repetitions)
 
         # print "Filling in a 500 item feed took roughly %.4f secs" % (time2/10.0)
         # Check that filling in 500 items takes no more than roughly

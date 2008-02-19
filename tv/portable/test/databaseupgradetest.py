@@ -2,7 +2,7 @@
 
 import tempfile
 
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 from miro import databaseupgrade
 from miro import feed
 from miro import item

@@ -13,7 +13,7 @@ from miro import databasesanity
 from miro import database
 from miro import util
 
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 
 class SanityCheckingTest(DemocracyTestCase):
     def setUp(self):

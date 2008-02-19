@@ -4,7 +4,7 @@ import tempfile
 from miro import util # This adds logging.timing
 from miro import download_utils
 from miro import httpclient
-from test import schedulertest
+from miro.test import schedulertest
 from miro.dl_daemon import download
 
 def testingNextFreeFilename(filename):
@@ -77,7 +77,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
 
     def testStop(self):
         # nice large download so that we have time to interrupt it
-        url = u'http://www.getdemocracy.com/images/linux-screen.jpg'
+        url = u'http://www.getmiro.com/images/linux-screen.jpg'
         self.downloader = TestingDownloader(self, url, "ID1")
         def stopOnData():
             if (self.downloader.state == 'downloading' and 
@@ -99,7 +99,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         self.assertEquals(self.downloader.totalSize, 45572)
 
     def testPause(self):
-        url = u'http://www.getdemocracy.com/images/linux-screen.jpg'
+        url = u'http://www.getmiro.com/images/linux-screen.jpg'
         self.downloader = TestingDownloader(self, url, "ID1")
         def pauseOnData():
             if (self.downloader.state == 'downloading' and 
@@ -121,7 +121,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         self.assertEquals(self.downloader.totalSize, 45572)
 
     def testRestore(self):
-        url = u'http://www.getdemocracy.com/images/linux-screen.jpg'
+        url = u'http://www.getmiro.com/images/linux-screen.jpg'
         self.downloader = TestingDownloader(self, url, "ID1")
         def pauseInMiddle():
             if (self.downloader.state == 'downloading' and 

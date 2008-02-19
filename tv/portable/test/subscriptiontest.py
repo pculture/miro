@@ -3,7 +3,7 @@ import unittest
 
 from miro import subscription
 
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 
 # =============================================================================
 # Test data

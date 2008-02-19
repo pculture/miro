@@ -13,7 +13,7 @@ import tempfile
 from miro import storedatabase
 from threading import Thread
 
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 
 class SortableObject(database.DDBObject):
     def __init__(self, value):

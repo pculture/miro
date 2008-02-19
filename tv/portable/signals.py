@@ -64,6 +64,10 @@ class SignalEmitter:
         callbacks = self.get_callbacks(name)
         del callbacks[callback]
 
+    def disconnect_all(self):
+        for signal in self.signal_callbacks:
+            self.signal_callbacks[signal] = {}
+
     def emit(self, name, *args):
         for callback, callback_args in self.get_callbacks(name).values():
             all_args = args + callback_args

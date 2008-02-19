@@ -8,9 +8,9 @@ from miro import olddatabaseupgrade
 from miro import storedatabase
 from miro import databaseupgrade
 from miro import databasesanity
-from miro import resources
+from miro.platform import resources
 
-from test.framework import EventLoopTest
+from miro.test.framework import EventLoopTest
 
 class TestConvert(EventLoopTest):
     def setUp(self):

@@ -29,25 +29,23 @@
 
 # Includes all PyUnit unit tests
 
-import unittest
-
-from test.databasetest import *
-from test.templatetest import *
-from test.fasttypestest import *
-from test.schematest import *
-from test.storedatabasetest import *
-from test.olddatabaseupgradetest import *
-from test.databasesanitytest import *
-from test.subscriptiontest import *
-from test.schedulertest import *
-from test.httpclienttest import *
-from test.httpdownloadertest import *
-from test.feedtest import *
-from test.feedparsertest import *
-from test.parseurltest import *
-from test.utiltest import *
-from test.playlisttest import *
-from test.unicodetest import *
-from test.databaseupgradetest import *
-from test.signalstest import *
-import test.bmachinetest
+from miro.test.databasetest import *
+from miro.test.templatetest import *
+from miro.test.fasttypestest import *
+from miro.test.schematest import *
+from miro.test.storedatabasetest import *
+from miro.test.olddatabaseupgradetest import *
+from miro.test.databasesanitytest import *
+from miro.test.subscriptiontest import *
+from miro.test.schedulertest import *
+from miro.test.httpclienttest import *
+from miro.test.httpdownloadertest import *
+from miro.test.feedtest import *
+from miro.test.feedparsertest import *
+from miro.test.parseurltest import *
+from miro.test.utiltest import *
+from miro.test.playlisttest import *
+from miro.test.unicodetest import *
+from miro.test.databaseupgradetest import *
+from miro.test.signalstest import *
+import miro.test.bmachinetest

@@ -9,7 +9,7 @@ from miro import schema
 from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaBool
 from miro.schema import SchemaDateTime, SchemaList, SchemaDict, SchemaObject
 from miro.schema import SchemaSimpleContainer, ValidationError
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 
 class TestValidation(DemocracyTestCase):
     def testModuleVariablesDefined(self):

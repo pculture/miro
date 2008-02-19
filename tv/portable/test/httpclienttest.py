@@ -1,6 +1,7 @@
 import unittest
 import email.Utils
 import socket
+import sys
 import tempfile
 import traceback
 from copy import copy
@@ -15,8 +16,9 @@ from miro import download_utils
 from miro import database
 from miro import dialogs
 from miro import httpclient
+from miro import signals
 from miro import util
-from framework import EventLoopTest, DemocracyTestCase, HadToStopEventLoop
+from miro.test.framework import EventLoopTest, DemocracyTestCase, HadToStopEventLoop
 
 class TestingConnectionHandler(httpclient.ConnectionHandler):
     def __init__(self, test):
@@ -284,19 +286,6 @@ class TestHTTPClient(httpclient.HTTPClient):
 class TestingHeaderGrabber(httpclient.HTTPHeaderGrabber):
     connectionPool = TestingHTTPConnectionPool()
 
-class TestingAuthDelegate:
-    def __init__(self):
-        self.logins = []
-    def addLogin(self, user, password):
-        self.logins.append((user, password))
-
-    def runDialog(self, dialog):
-        if self.logins:
-            user, password = self.logins.pop(0)
-            dialog.runCallback(dialogs.BUTTON_OK, user, password)
-        else:
-            dialog.runCallback(None)
-
 def startResponse(version='1.1', status=200, headers={}):
     rv = """\
 HTTP/%s %s OK\r
@@ -509,8 +498,6 @@ class DumbHTTPClientTest(AsyncSocketTest):
         self.testRequest.openConnection('foo.com', 80, lambda x: None,lambda x: None)
         self.testRequest.sendRequest(self.callback, self.errback, "", 80,
                 method='GET', path='/bar/baz;123?a=b') 
-        self.authDelegate = TestingAuthDelegate()
-        app.delegate = self.authDelegate
 
     def testScheme(self):
         conn = httpclient.HTTPConnection()
@@ -799,10 +786,21 @@ class HTTPClientTestBase(AsyncSocketTest):
         self.testRequest = TestingHTTPConnection()
         self.testRequest.openConnection('foo.com', 80, lambda x: None, lambda x: None)
         self.testRequest.sendRequest(self.callback, self.errback, "", 80, method='GET', path='/bar/baz;123?a=b') 
-        self.authDelegate = TestingAuthDelegate()
-        app.delegate = self.authDelegate
         TestHTTPClient.connectionPool = TestingHTTPConnectionPool()
         TestingHeaderGrabber.connectionPool = TestingHTTPConnectionPool()
+        self.logins = []
+        signals.system.connect('new-dialog', self.onNewDialog)
+
+    def addLogin(self, user, password):
+        self.logins.append((user, password))
+
+    def onNewDialog(self, obj, dialog):
+        self.assertEquals(dialog.__class__, dialogs.HTTPAuthDialog)
+        if self.logins:
+            user, password = self.logins.pop(0)
+            dialog.runCallback(dialogs.BUTTON_OK, user, password)
+        else:
+            dialog.runCallback(None)
 
 class HTTPClientTest(HTTPClientTestBase):
     def testRealRequest(self):
@@ -983,8 +981,8 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.gotData, 'I AM A NORMAL PAGE\n')
 
     def testAuth(self):
-        self.authDelegate.addLogin(u'ben', u'baddpassword')
-        self.authDelegate.addLogin(u'guest', u'guest')
+        self.addLogin(u'ben', u'baddpassword')
+        self.addLogin(u'guest', u'guest')
         url = 'http://jigsaw.w3.org/HTTP/Basic/'
         client = TestHTTPClient(url, self.callback, self.errback)
         client.startRequest()
@@ -994,9 +992,9 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(client.authAttempts, 2)
 
     def testBadAuth(self):
-        self.authDelegate.addLogin(u'baduser', u'baddpass')
-        self.authDelegate.addLogin(u'anotherbadtry', u'god')
-        self.authDelegate.addLogin(u'billgates', u'password')
+        self.addLogin(u'baduser', u'baddpass')
+        self.addLogin(u'anotherbadtry', u'god')
+        self.addLogin(u'billgates', u'password')
         url = 'http://jigsaw.w3.org/HTTP/Basic/'
         client = TestHTTPClient(url, self.callback, self.errback)
         client.startRequest()
@@ -1622,6 +1620,9 @@ class CookieExpirationDateTestCase(unittest.TestCase):
         """tests the case of get_cookie_expiration_date where the cookie
         expiration date causes an overflow error when parsing it.
         """
+        if sys.maxint > 2**31-1:
+            # this test can't be executed on 64 bit systems
+            return
         from time import localtime
         from miro.httpclient import get_cookie_expiration_date, DATEINFUTURE
             

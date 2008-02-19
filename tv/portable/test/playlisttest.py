@@ -6,7 +6,7 @@ from miro.folder import PlaylistFolder
 from miro import app
 from miro import views
 from miro import tabs
-from test.framework import EventLoopTest
+from miro.test.framework import EventLoopTest
 
 class PlaylistTestBase(EventLoopTest):
     def setUp(self):
@@ -162,12 +162,10 @@ class PlaylistFolderTestCase(PlaylistTestBase):
 
     def testHandleDropUnexpanded(self):
         self.folder.setExpanded(False)
-        selection = app.controller.selection
-        selection.selectItem('tablist', self.playlistTabOrder.getView(), 
+        app.selection.selectItem('tablist', self.playlistTabOrder.getView(), 
                 self.p1.getID(), shiftSelect=False, controlSelect=False)
         self.doAppend(self.folder, [self.p1])
-        app.controller.selection.tabListSelection
-        selectedTabIDs = selection.tabListSelection.currentSelection
+        selectedTabIDs = app.selection.tabListSelection.currentSelection
         self.assertEquals(selectedTabIDs, set([self.folder.getID()]))
 
     def testExpireRemovesItem(self):

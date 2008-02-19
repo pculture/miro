@@ -3,7 +3,7 @@ from StringIO import StringIO
 import os
 import tempfile
 
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 from miro import download_utils
 from miro import util
 from miro import xhtmltools

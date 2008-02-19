@@ -1,6 +1,6 @@
 from miro import signals
 
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 
 class TestSignaller(signals.SignalEmitter):
     def __init__(self):

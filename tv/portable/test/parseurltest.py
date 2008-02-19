@@ -1,4 +1,4 @@
-from test.framework import DemocracyTestCase
+from miro.test.framework import DemocracyTestCase
 from miro.download_utils import parseURL
 
 class TestParseURL(DemocracyTestCase):

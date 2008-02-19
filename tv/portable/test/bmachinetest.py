@@ -7,7 +7,7 @@ from copy import copy
 from miro import httpclient
 from miro import eventloop
 
-from test.framework import DownloaderTestCase
+from miro.test.framework import DownloaderTestCase
 
 # In order to use this test, you must set the following environment variables
 #

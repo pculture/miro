@@ -3,7 +3,6 @@ import threading
 
 from miro import database
 from miro import eventloop
-from miro import frontend
 from miro import app
 from miro import downloader
 from miro import views
@@ -59,7 +58,6 @@ class DummyVideoDisplay:
 
 class DummyController:
     def __init__(self):
-        self.selection = selection.SelectionHandler()
         self.frame = DummyMainFrame()
         self.videoDisplay = DummyVideoDisplay()
 
@@ -74,13 +72,10 @@ class DemocracyTestCase(unittest.TestCase):
         self.errorSignalOkay = False
         signals.system.connect('error', self.handle_error)
         app.controller = DummyController()
+        app.selection = selection.SelectionHandler()
 
     def tearDown(self):
-        try:
-            signals.system.disconnect('error', self.handle_error)
-        except KeyError:
-            raise AssertionError("Exception disconnecting the error callback."
-                    "  Did you forget to call DemocracyTestCase.setUp()?")
+        signals.system.disconnect_all()
         util.chatter = True
 
         # Remove any leftover database

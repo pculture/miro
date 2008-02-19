@@ -8,7 +8,7 @@ from miro import dialogs
 from miro import database
 from miro.feed import validateFeedURL, normalizeFeedURL, Feed
 
-from test.framework import DemocracyTestCase, EventLoopTest
+from miro.test.framework import DemocracyTestCase, EventLoopTest
 
 class FakeDownloader:
     pass
