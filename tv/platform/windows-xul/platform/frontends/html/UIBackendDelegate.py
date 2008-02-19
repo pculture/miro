@@ -28,9 +28,7 @@
 
 import os
 import logging
-from miro.platform import resources
 import webbrowser
-import _winreg
 import traceback
 from miro.gtcache import gettext as _
 from urlparse import urlparse
@@ -280,38 +278,6 @@ class UIBackendDelegate:
 
     def copyTextToClipboard(self, text):
         app.jsBridge.copyTextToClipboard(text)
-
-    # This is windows specific right now. We don't need it on other platforms
-    def setRunAtStartup(self, value):
-        runSubkey = "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
-        try:
-            folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, runSubkey, 0,
-                    _winreg.KEY_SET_VALUE)
-        except WindowsError, e:
-            if e.errno == 2: # registry key doesn't exist
-                folder = _winreg.CreateKey(_winreg.HKEY_CURRENT_USER,
-                        runSubkey)
-            else:
-                raise
-        if (value):
-            # We don't use the app name for the .exe, so branded
-            # versions work
-            filename = os.path.join(resources.resourceRoot(),"..","Miro.exe")
-            filename = os.path.normpath(filename)
-            themeName = config.get(prefs.THEME_NAME)
-            if themeName is not None:
-                filename = "%s --theme \"%s\"" % (filename, themeName.replace("\\","\\\\").replace('"','\\"'))
-            _winreg.SetValueEx(folder, config.get(prefs.LONG_APP_NAME), 0,_winreg.REG_SZ, filename)
-        else:
-            try:
-                _winreg.DeleteValue(folder, config.get(prefs.LONG_APP_NAME))
-            except WindowsError, e:
-                if e.errno == 2: 
-                    # registry key doesn't exist, user must have deleted it
-                    # manual
-                    pass
-                else:
-                    raise
 
     def handleNewUpdate(self, update_item):
         url = update_item['enclosures'][0]['href']

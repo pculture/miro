@@ -295,7 +295,7 @@ class PyBridge:
     def getRunAtStartup(self):
         return config.get(prefs.RUN_AT_STARTUP)
     def setRunAtStartup(self, value):
-        app.delegate.setRunAtStartup(value)
+        platform_startup.setRunAtStartup(value)
         config.set(prefs.RUN_AT_STARTUP, value)
     def getCheckEvery(self):
         return config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
