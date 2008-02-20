@@ -237,8 +237,9 @@ class QuicktimeRenderer:
     def getCurrentTime(self, callback):
         if self.movie is nil:
             callback(0)
-        qttime = self.movie.currentTime()
-        callback(_qttime2secs(qttime))
+        else:
+            qttime = self.movie.currentTime()
+            callback(_qttime2secs(qttime))
 
     @threads.onMainThread
     def setCurrentTime(self, time):
@@ -261,7 +262,8 @@ class QuicktimeRenderer:
     def getRate(self, callback):
         if self.movie is nil:
             callback(0.0)
-        callback(self.movie.rate())
+        else:
+            callback(self.movie.rate())
 
     def setRate(self, rate):
         threads.warnIfNotOnMainThread('QuicktimeRenderer.setRate')
