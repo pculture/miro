@@ -44,7 +44,7 @@ UNSUPPORTED = -1
 
 @eventloop.asUrgent
 def handleKey(key, shiftDown, controlDown):
-    if app.controller.playbackController.currentItem is None:
+    if app.htmlapp.playbackController.currentItem is None:
         handleKeyNoPlayback(key, shiftDown, controlDown)
     else:
         handleKeyPlayback(key, shiftDown, controlDown)
@@ -77,7 +77,7 @@ def handleKeyNoPlayback(key, shiftDown, controlDown):
 def handleKeyPlayback(key, shiftDown, controlDown):
     if key == RIGHT:
         if controlDown:
-            app.controller.playbackController.skip(1)
+            app.htmlapp.playbackController.skip(1)
         else:
             def rightKeyTimeCallback(time):
                 if time is not None:
@@ -89,7 +89,7 @@ def handleKeyPlayback(key, shiftDown, controlDown):
             app.htmlapp.videoDisplay.getCurrentTime(rightKeyTimeCallback)
     elif key == LEFT:
         if controlDown:
-            app.controller.playbackController.skip(-1)
+            app.htmlapp.playbackController.skip(-1)
         else:
             def leftKeyTimeCallback(time):
                 if time is not None:
@@ -102,6 +102,6 @@ def handleKeyPlayback(key, shiftDown, controlDown):
     elif key == DOWN:
         app.htmlapp.videoDisplay.getVolume(lambda v: app.htmlapp.videoDisplay.setVolume(v - 0.05))
     elif key == SPACE:
-        app.controller.playbackController.playPause()
+        app.htmlapp.playbackController.playPause()
     elif key == ESCAPE:
         app.htmlapp.videoDisplay.exitFullScreen()

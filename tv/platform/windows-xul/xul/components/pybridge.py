@@ -490,28 +490,28 @@ class PyBridge:
 
     @asUrgent
     def playPause(self):
-        app.controller.playbackController.playPause()
+        app.htmlapp.playbackController.playPause()
 
     @asUrgent
     def pause(self):
         if hasattr(app.controller, 'playbackController'):
-            app.controller.playbackController.pause()
+            app.htmlapp.playbackController.pause()
 
     @asUrgent
     def stop(self):
-        app.controller.playbackController.stop()
+        app.htmlapp.playbackController.stop()
 
     @asUrgent
     def skip(self, step):
-        app.controller.playbackController.skip(step)
+        app.htmlapp.playbackController.skip(step)
 
     @asUrgent
     def skipPrevious(self):
-        app.controller.playbackController.skip(-1, allowMovieReset=False)
+        app.htmlapp.playbackController.skip(-1, allowMovieReset=False)
 
     @asUrgent
     def onMovieFinished(self):
-        app.controller.playbackController.onMovieFinished()
+        app.htmlapp.playbackController.onMovieFinished()
 
     @asUrgent
     def loadURLInBrowser(self, browserId, url):

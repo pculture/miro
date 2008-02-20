@@ -331,10 +331,6 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
                         feed.remove()
         dialog.run(dialogCallback)
 
-    def playView(self, view, firstItemId=None, justPlayOne=False):
-        self.playbackController.configure(view, firstItemId, justPlayOne)
-        self.playbackController.enterPlayback()
-
     def shutdown(self):
         logging.info ("Shutting down Downloader...")
         downloader.shutdownDownloader(self.downloaderShutdown)

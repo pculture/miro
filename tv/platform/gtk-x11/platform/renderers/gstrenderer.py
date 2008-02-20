@@ -126,7 +126,7 @@ class Renderer:
             print "onBusMessage: gstreamer error: %s" % err
         elif message.type == gst.MESSAGE_EOS:
 #            print "onBusMessage: end of stream"
-            eventloop.addIdle(app.controller.playbackController.onMovieFinished,
+            eventloop.addIdle(app.htmlapp.playbackController.onMovieFinished,
                               "onBusMessage: skipping to next track")
         return None
             

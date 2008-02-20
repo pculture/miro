@@ -379,14 +379,14 @@ class CallbackHandler(object):
             return False
 
     def on_play_pause_button_clicked(self, event = None):
-        eventloop.addUrgentCall(app.controller.playbackController.playPause,
+        eventloop.addUrgentCall(app.htmlapp.playbackController.playPause,
                 'play/pause video')
 
     def on_previous_button_clicked(self, event):
-        eventloop.addIdle(lambda:app.controller.playbackController.skip(-1), "Skip to previous track")
+        eventloop.addIdle(lambda:app.htmlapp.playbackController.skip(-1), "Skip to previous track")
 
     def on_next_button_clicked(self, event):
-        eventloop.addIdle(lambda:app.controller.playbackController.skip(1), "Skip to next track")
+        eventloop.addIdle(lambda:app.htmlapp.playbackController.skip(1), "Skip to next track")
 
     def on_video_time_scale_button_press_event(self, scale, event):
         scale.buttonsDown.add(event.button)
@@ -471,7 +471,7 @@ class CallbackHandler(object):
         chooser.destroy()
 
     def on_stop_activate(self, event):
-        eventloop.addUrgentCall(app.controller.playbackController.stop,
+        eventloop.addUrgentCall(app.htmlapp.playbackController.stop,
                 "stop playback")
 
     def on_quit_activate(self, event):

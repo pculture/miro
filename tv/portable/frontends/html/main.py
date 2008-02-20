@@ -80,6 +80,7 @@ class HTMLApplication:
         signals.system.connect('new-dialog', self.handleDialog)
         signals.system.connect('theme-first-run', self.handleThemeFirstRun)
         signals.system.connect('shutdown', self.onBackendShutdown)
+        signals.system.connect('videos-added', self.onVideosAdded)
         self.installMenubarImplementations()
         startup.startup()
 
@@ -164,9 +165,6 @@ class HTMLApplication:
 
         # Set up the playback controller
         self.playbackController = VideoDisplay.PlaybackController()
-
-        # HACK
-        app.controller.playbackController = self.playbackController
 
         util.print_mem_usage("Pre-UI memory check")
 
@@ -579,3 +577,11 @@ class HTMLApplication:
                 break
             tab = last
         tabDisplay.navigateToFragment('tab-%d' % tab.objID())
+
+
+    def onVideosAdded(self, obj, commandLineView):
+        self.playView(commandLineView)
+
+    def playView(self, view, firstItemId=None, justPlayOne=False):
+        self.playbackController.configure(view, firstItemId, justPlayOne)
+        self.playbackController.enterPlayback()

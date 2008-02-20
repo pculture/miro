@@ -265,7 +265,7 @@ class VideoDisplayController (NSObject):
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'%s_blue' % prefix))
 
     def playPause_(self, sender):
-        eventloop.addUrgentCall(lambda:app.controller.playbackController.playPause(), "Play Video")
+        eventloop.addUrgentCall(lambda:app.htmlapp.playbackController.playPause(), "Play Video")
 
     @threads.onMainThread
     def play(self):
@@ -282,7 +282,7 @@ class VideoDisplayController (NSObject):
         self.updatePlayPauseButton('play')
 
     def stop_(self, sender):
-        eventloop.addUrgentCall(lambda:app.controller.playbackController.stop(), "Stop Video")
+        eventloop.addUrgentCall(lambda:app.htmlapp.playbackController.stop(), "Stop Video")
     
     @threads.onMainThread
     def stop(self):
@@ -293,7 +293,7 @@ class VideoDisplayController (NSObject):
     def playFullScreen_(self, sender):
         def performInEventLoop():
             if not app.htmlapp.videoDisplay.isPlaying:
-                app.controller.playbackController.playPause()
+                app.htmlapp.playbackController.playPause()
             self.videoDisplay.goFullScreen()
         eventloop.addUrgentCall(lambda:performInEventLoop(), "Play Video Fullscreen")
 
@@ -309,13 +309,13 @@ class VideoDisplayController (NSObject):
         self.videoAreaView.exitFullScreen()
 
     def skipForward_(self, sender):
-        eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(1), "Skip Forward")
+        eventloop.addUrgentCall(lambda:app.htmlapp.playbackController.skip(1), "Skip Forward")
 
     def fastForward_(self, sender):
         self.fastSeek(1)
 
     def skipBackward_(self, sender):
-        eventloop.addUrgentCall(lambda:app.controller.playbackController.skip(-1), "Skip Backward")
+        eventloop.addUrgentCall(lambda:app.htmlapp.playbackController.skip(-1), "Skip Backward")
 
     def fastBackward_(self, sender):
         self.fastSeek(-1)
@@ -360,7 +360,7 @@ class VideoDisplayController (NSObject):
     def handleMovieNotification_(self, notification):
         renderer = self.videoDisplay.activeRenderer
         if notification.name() == QTMovieDidEndNotification and not renderer.interactivelySeeking:
-            eventloop.addUrgentCall(lambda:app.controller.playbackController.onMovieFinished(), "Movie Finished Callback")
+            eventloop.addUrgentCall(lambda:app.htmlapp.playbackController.onMovieFinished(), "Movie Finished Callback")
 
 ###############################################################################
 
@@ -518,13 +518,13 @@ class VideoWindow (NSWindow):
         app.htmlapp.videoDisplay.exitFullScreen()
 
     def nextVideo_(self, sender):
-        eventloop.addIdle(lambda:app.controller.playbackController.skip(1), "Skip Video")
+        eventloop.addIdle(lambda:app.htmlapp.playbackController.skip(1), "Skip Video")
 
     def previousVideo_(self, sender):
-        eventloop.addIdle(lambda:app.controller.playbackController.skip(-1, False), "Skip Video")
+        eventloop.addIdle(lambda:app.htmlapp.playbackController.skip(-1, False), "Skip Video")
 
     def stopVideo_(self, sender):
-        eventloop.addIdle(lambda:app.controller.playbackController.stop(), "Stop Video")
+        eventloop.addIdle(lambda:app.htmlapp.playbackController.stop(), "Stop Video")
 
     def sendEvent_(self, event):
         if self.isFullScreen:

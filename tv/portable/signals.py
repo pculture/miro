@@ -98,10 +98,14 @@ class SystemSignals(SignalEmitter):
         - description -- Longer explanation of the problem
 
     "shutdown" - The backend has shutdown.  The event loop is stopped at this
-    point.
+        point.
+
+        No arguments.
 
     "loaded-custom-channels" - We loaded the initial channels from an OPML
         file.
+
+        No arguments.
 
     "update-available" - A new version of Miro is available.
      
@@ -111,18 +115,30 @@ class SystemSignals(SignalEmitter):
 
     "download-complete" - An item has finished downloading.
 
-    "new-dialog" - The backend wants to display a dialog to the user.
-
-    "theme-first-run" - A theme was used for the first time
-    
         Arguments:
         - item -- The object that finished downloading.
+
+    "new-dialog" - The backend wants to display a dialog to the user.
+
+        Arguments:
+        - dialog -- The dialog to be displayed.
+
+    "theme-first-run" - A theme was used for the first time
+
+        Arguments:
+        - theme -- The name of the theme.
+
+    "videos-added" -- Videos were added via the singleclick module.
+        Arguments:
+        - view -- A database view than contains the videos.
+
+
     """
     def __init__(self):
         SignalEmitter.__init__(self, 'error', 'startup-success',
                 'startup-failure', 'shutdown', 'loaded-custom-channels',
                 'update-available', 'download-complete', 'new-dialog',
-                'theme-first-run')
+                'theme-first-run', 'videos-added')
 
     def startupSuccess(self):
         self.emit('startup-success')
@@ -147,6 +163,9 @@ class SystemSignals(SignalEmitter):
 
     def themeFirstRun(self, theme):
         self.emit('theme-first-run', theme)
+
+    def videosAdded(self, view):
+        self.emit('videos-added', view)
 
     def failedExn(self, when, details=None):
         self.failed(when, withExn=True, details=details)

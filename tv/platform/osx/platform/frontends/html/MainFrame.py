@@ -351,10 +351,10 @@ class MainController (NSWindowController):
         self.videoDisplayController.stop_(sender)
 
     def nextVideo_(self, sender):
-        eventloop.addIdle(lambda:app.controller.playbackController.skip(1), "Skip Video")
+        eventloop.addIdle(lambda:app.htmlapp.playbackController.skip(1), "Skip Video")
 
     def previousVideo_(self, sender):
-        eventloop.addIdle(lambda:app.controller.playbackController.skip(-1, False), "Skip Video")
+        eventloop.addIdle(lambda:app.htmlapp.playbackController.skip(-1, False), "Skip Video")
 
     def toggleFullScreen_(self, sender):
         self.videoDisplayController.playFullScreen_(sender)

@@ -70,7 +70,7 @@ class Renderer:
         self.widget = widget
 
     def onEos(self):
-        eventloop.addIdle(app.controller.playbackController.onMovieFinished, "onEos: Skip to next track")
+        eventloop.addIdle(app.htmlapp.playbackController.onMovieFinished, "onEos: Skip to next track")
 
     def onRealize(self, widget):
         confirmMainThread()

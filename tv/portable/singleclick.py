@@ -53,6 +53,7 @@ from miro import filetypes
 from miro import folder
 from miro import httpclient
 from miro import views
+from miro import signals
 from miro import subscription
 from miro import util
 from miro import config
@@ -188,9 +189,7 @@ def playCommandLineView():
     if len(commandLineVideoIds) == 0:
         return
     commandLineView = views.items.filter(inCommandLineVideoIDs)
-    firstItemId = commandLineVideoIds.__iter__().next()
-    app.controller.playbackController.configure(commandLineView, firstItemId)
-    app.controller.playbackController.enterPlayback()
+    signals.system.videosAdded(commandLineView)
 
 def addFeed(path):
     feed.addFeedFromFile(path)

@@ -242,5 +242,5 @@ class VideoDisplayBase (Display):
 
     def onDeselected(self, frame):
         if self.stopOnDeselect and (self.isPlaying or self.isPaused):
-            app.controller.playbackController.stop(False)
+            app.htmlapp.playbackController.stop(False)
         

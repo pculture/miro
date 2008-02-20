@@ -425,7 +425,7 @@ class ModelActionHandler:
 
     def expirePlayingItem(self, item):
         self.expireItem(item)
-        app.controller.playbackController.skip(1)
+        app.htmlapp.playbackController.skip(1)
 
     def addItemToLibrary(self, item):
         obj = app.db.getObjectByID(int(item))
@@ -616,7 +616,7 @@ class HistoryActionHandler:
 class GUIActionHandler:
 
     def playUnwatched(self):
-        app.controller.playView(views.unwatchedItems)
+        app.htmlapp.playView(views.unwatchedItems)
 
     def openFile(self, path):
         singleclick.openFile(path)
@@ -823,7 +823,7 @@ class TemplateActionHandler:
         except KeyError, e:
             logging.warning ("KeyError in getTemplateVariable (%s) during playViewNamed()" % (viewName,))
             return
-        app.controller.playView(view, firstItemId)
+        app.htmlapp.playView(view, firstItemId)
 
     def playOneItem(self, viewName, itemID):
         try:
@@ -831,7 +831,7 @@ class TemplateActionHandler:
         except KeyError, e:
             logging.warning ("KeyError in getTemplateVariable (%s) during playOneItem()" % (viewName,))
             return
-        app.controller.playView(view, itemID, justPlayOne=True)
+        app.htmlapp.playView(view, itemID, justPlayOne=True)
 
     def playNewVideos(self, id):
         try:
@@ -850,27 +850,27 @@ class TemplateActionHandler:
                     obj.getID())
             view = feedView.filter(myUnwatchedItems,
                                    sortFunc=sorts.item)
-            app.controller.playView(view)
+            app.htmlapp.playView(view)
             view.unlink()
         elif isinstance(obj, folder.ChannelFolder):
             folderView = views.items.filterWithIndex(
                     indexes.itemsByChannelFolder, obj)
             view = folderView.filter(myUnwatchedItems,
                                      sortFunc=sorts.item)
-            app.controller.playView(view)
+            app.htmlapp.playView(view)
             view.unlink()
         elif isinstance(obj, tabs.StaticTab): # new videos tab
             view = views.unwatchedItems
-            app.controller.playView(view)
+            app.htmlapp.playView(view)
         else:
             raise TypeError("Can't get new videos for %s (type: %s)" % 
                     (obj, type(obj)))
 
     def playItemExternally(self, itemID):
-        app.controller.playbackController.playItemExternallyByID(itemID)
+        app.htmlapp.playbackController.playItemExternallyByID(itemID)
         
     def skipItem(self, itemID):
-        app.controller.playbackController.skip(1)
+        app.htmlapp.playbackController.skip(1)
     
     def updateLastSearchEngine(self, engine):
         searchFeed, searchDownloadsFeed = self.__getSearchFeeds()
