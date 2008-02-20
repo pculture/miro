@@ -74,12 +74,6 @@ class Display:
         and another display will take its place"""
         pass
 
-    def getWatchable(self):
-        """Subclasses can implement this if they can return a database view
-        of watchable items"""
-        return None
-
-
 class VideoDisplayBase (Display):
     """Provides cross platform part of Video Display """
     
