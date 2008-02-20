@@ -361,16 +361,13 @@ class MainFrame:
         displayBox = self.displayBoxes[area]
         oldDisplay = self.selectedDisplays.get(area)
         if oldDisplay:
-            oldDisplay.onDeselected_private(self)
             oldDisplay.onDeselected(self)
             if oldDisplay.getWidget(area) != newDisplay.getWidget(area):
                 displayBox.remove(oldDisplay.getWidget(area))
                 displayBox.add(newDisplay.getWidget(area))
-            newDisplay.onSelected_private(self)
             newDisplay.onSelected(self)
         else:
             displayBox.add(newDisplay.getWidget(area))
-            newDisplay.onSelected_private(self)
             newDisplay.onSelected(self)
 
         self.selectedDisplays[area] = newDisplay

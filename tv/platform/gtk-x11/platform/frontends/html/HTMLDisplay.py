@@ -109,9 +109,9 @@ class HTMLDisplay(Display):
     def __eq__ (self, other):
         return self is other
 
-    def onSelected_private(self, frame):
+    def onSelected(self, frame):
         confirmMainThread()
-        Display.onSelected_private (self, frame)
+        Display.onSelected(self, frame)
         self.impl.load_html (self)
         for deferment in self.deferred:
             (attr, args, kwargs) = deferment
