@@ -86,10 +86,8 @@ class HTMLDisplay (Display):
         try:
             return self._web
         except AttributeError:
-            print 'creating web'
             self._web = ManagedWebView.alloc().initWithInitialHTML_existinView_loadFinished_loadURL_sizeHint_baseURL_(
                             self.html, None, self.nowReadyToDisplay, lambda x:self.onURLLoad(unicode(x)), self.displaySizeHint, self.baseURL)
-            print 'created web'
             return self._web
     web = property(get_web)
 
@@ -218,9 +216,7 @@ class ManagedWebView (NSObject):
         self.view = existingView
         self.openPanelContextID = 1
         self.openPanelContext = dict()
-        print 'calling'
         threads.callOnMainThreadAndWaitUntilDone(self.initWebView, initialHTML, sizeHint, baseURL)        
-        print 'done'
         return self
 
     def initWebView(self, initialHTML, sizeHint, baseURL):
