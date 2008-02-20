@@ -98,14 +98,12 @@ class MainFrame:
         if area in self.selectedDisplays:
             oldDisplay = self.selectedDisplays[area]
             if oldDisplay:
-                oldDisplay.onDeselected_private(self)
                 oldDisplay.onDeselected(self)
                 oldDisplay.removedFromArea()
 
         # Generate a selection message for the new display, if any
         self.selectedDisplays[area] = newDisplay
         if newDisplay:
-            newDisplay.onSelected_private(self)
             newDisplay.onSelected(self)
             newDisplay.setArea(area)
         if area == self.mainDisplay:
