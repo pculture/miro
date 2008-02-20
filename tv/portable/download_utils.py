@@ -31,6 +31,8 @@ from urlparse import urlparse
 import os.path
 import re
 import urllib
+import logging
+
 from miro import filetypes
 from miro import util
 
@@ -63,7 +65,7 @@ def defaultPort(scheme):
         return None
     else:
         if util.chatter:
-            print "WARNING: Assuming port 80 for scheme: %s" % scheme
+            logging.warn("Assuming port 80 for scheme: %s" % scheme)
         return 80
 
 def parseURL(url, split_path=False):
@@ -75,14 +77,14 @@ def parseURL(url, split_path=False):
         host = host[0:host.rfind(':')]
 
     if scheme == '' and util.chatter:
-        print "WARNING: %r has no scheme" % url
+        logging.warn("%r has no scheme" % url)
 
     if ':' in host:
         host, port = host.split(':')
         try:
             port = int(port)
         except:
-            print "DTV: parseURL: WARNING: invalid port for %r" % url
+            logging.warn("invalid port for %r" % url)
             port = defaultPort(scheme)
     else:
         port = defaultPort(scheme)
