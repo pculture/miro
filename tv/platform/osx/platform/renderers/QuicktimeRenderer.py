@@ -62,6 +62,7 @@ class QuicktimeRenderer:
         self.movie = nil
         self.delegate = delegate
         self.cachedMovie = nil
+        self.interactivelySeeking = False
         self.registerComponents()
 
     def registerComponents(self):
