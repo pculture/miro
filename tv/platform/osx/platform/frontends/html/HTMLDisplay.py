@@ -39,7 +39,7 @@ from PyObjCTools import AppHelper
 
 from miro import config
 from miro import prefs
-from miro import templatehelper
+from miro.frontends.html import templatehelper
 from miro.frontends.html import keyboard
 from miro.frontends.html.displaybase import Display
 from miro.platform import resources
