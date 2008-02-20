@@ -469,7 +469,6 @@ class DisplayHostView (NSView):
 
         # Send notification to old display if any
         if self.hostedDisplay is not None:
-            self.hostedDisplay.onDeselected_private(owner)
             self.hostedDisplay.onDeselected(owner)
         oldView = self.hostedView
 
@@ -503,7 +502,6 @@ class DisplayHostView (NSView):
             oldView.removeFromSuperview()
 
         # Send notification to new display
-        display.onSelected_private(owner)
         display.onSelected(owner)
 
 ###############################################################################
