@@ -45,20 +45,14 @@ class Display:
 
     def onSelected(self, frame):
         "Called when the Display is shown in the given MainFrame."
-        pass
+        assert(self.currentFrame == None)
+        self.currentFrame = frame
 
     def onDeselected(self, frame):
         """Called when the Display is no longer shown in the given
         MainFrame. This function is called on the Display losing the
         selection before onSelected is called on the Display gaining the
         selection."""
-        pass
-
-    def onSelected_private(self, frame):
-        assert(self.currentFrame == None)
-        self.currentFrame = frame
-
-    def onDeselected_private(self, frame):
         assert(self.currentFrame == frame)
         self.currentFrame = None
 
