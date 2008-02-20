@@ -554,7 +554,7 @@ class ProgressDisplayView (NSView):
         
         self.refresh_(nil)
 
-    @threads.onMainThread
+    @threads.onMainThreadWaitingUntilDone
     def setup(self, renderer):
         if self.renderer != renderer:
             self.renderer = renderer

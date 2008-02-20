@@ -702,12 +702,6 @@ class FullScreenPalette (NSWindow):
     
     def conceal(self):
         threads.warnIfNotOnMainThread('FullScreenPalette.conceal')
-        if self.autoConcealTimer is not nil:
-            self.autoConcealTimer.invalidate()
-            self.autoConcealTimer = nil
-        if self.updateTimer is not nil:
-            self.updateTimer.invalidate()
-            self.updateTimer = nil
         frame = self.frame()
         frame.origin.y = -frame.size.height
         self.setFrame_display_animate_(frame, YES, YES)
@@ -763,6 +757,12 @@ class FullScreenPalette (NSWindow):
 
     def remove(self):
         threads.warnIfNotOnMainThread('FullScreenPalette.remove')
+        if self.autoConcealTimer is not nil:
+            self.autoConcealTimer.invalidate()
+            self.autoConcealTimer = nil
+        if self.updateTimer is not nil:
+            self.updateTimer.invalidate()
+            self.updateTimer = nil
         if self.parentWindow() is not nil:
             self.parentWindow().removeChildWindow_(self)
         self.orderOut_(nil)
