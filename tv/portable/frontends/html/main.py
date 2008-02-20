@@ -184,7 +184,6 @@ class HTMLApplication:
         
         app.selection.connect('tab-selected', self.onTabSelected)
         app.selection.connect('item-selected', self.updateMenus)
-        app.selection.selectFirstTab()
 
         if self.loadedCustomChannels:
             dialog = dialogs.MessageBoxDialog(_("Custom Channels"), Template(_("You are running a version of $longAppName with a custom set of channels.")).substitute(longAppName=config.get(prefs.LONG_APP_NAME)))
@@ -226,6 +225,7 @@ class HTMLApplication:
         # things.
         eventloop.addIdle(singleclick.parseCommandLineArgs, 
                 'parse command line')
+        eventloop.addIdle(self.selectInitialTab, 'select initial tab')
 
         util.print_mem_usage("Post single-click memory check")
 
@@ -585,3 +585,9 @@ class HTMLApplication:
     def playView(self, view, firstItemId=None, justPlayOne=False):
         self.playbackController.configure(view, firstItemId, justPlayOne)
         self.playbackController.enterPlayback()
+
+    def selectInitialTab(self):
+        # Don't select the first tab if we are playing videos from the command
+        # line
+        if self.playbackController.currentPlaylist is None:
+            app.selection.selectFirstTab()
