@@ -66,7 +66,6 @@ class Application(HTMLApplication):
     def __init__(self):
         appl = NSApplication.sharedApplication()
         NSBundle.loadNibNamed_owner_(u"MainMenu", appl)
-        controller = appl.delegate()
         HTMLApplication.__init__(self)
 
     def quitUI(self):

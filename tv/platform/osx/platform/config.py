@@ -86,8 +86,11 @@ def save(data):
 
 def get(descriptor):
     if descriptor == prefs.MOVIES_DIRECTORY:
-        path = os.path.join(MOVIES_DIRECTORY_PARENT,
-                app.configfile.get('shortAppName'))
+        path = os.path.join(MOVIES_DIRECTORY_PARENT, app.configfile.get('shortAppName'))
+        try:
+            os.makedirs(path)
+        except:
+            pass
         return path
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
@@ -97,8 +100,7 @@ def get(descriptor):
         return os.path.abspath(resources.path("../locale"))
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
-        path = os.path.join(SUPPORT_DIRECTORY_PARENT,
-                app.configfile.get('shortAppName'))
+        path = os.path.join(SUPPORT_DIRECTORY_PARENT, app.configfile.get('shortAppName'))
         os.environ['APPDATA'] = path # This is for the Bittorent module
         try:
             os.makedirs(path)

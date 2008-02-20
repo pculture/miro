@@ -186,8 +186,7 @@ class MainController (NSWindowController):
     ### Switching displays ###
 
     @threads.onMainThread
-    def onSelectedTabChange(self, strings, actionGroups, guideURL,
-            videoFilename):
+    def onSelectedTabChange(self, strings, actionGroups, guideURL, videoFilename):
         app.controller.setGuideURL(guideURL)
         self.menuStrings = strings
         self.actionGroups = actionGroups

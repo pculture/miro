@@ -92,9 +92,9 @@ class VideoDisplay (VideoDisplayBase):
     def __init__(self):
         VideoDisplayBase.__init__(self)
         self.controller = VideoDisplayController.getInstance()
-        self.htmlapp.videoDisplay = self
-	self.nextItem = None
-	self.nextRenderer = None
+        self.controller.videoDisplay = self
+        self.nextItem = None
+        self.nextRenderer = None
 
     def initRenderers(self):
         app.renderers.append(QuicktimeRenderer(self.controller))
@@ -102,7 +102,7 @@ class VideoDisplay (VideoDisplayBase):
     def setRendererAndCallback(self, anItem, internal, external):
         for renderer in app.renderers:
             if renderer.canPlayFile(anItem.getFilename()):
-	        self.selectItem(anItem, renderer)
+                self.selectItem(anItem, renderer)
                 internal()
                 return
         external()
@@ -114,10 +114,10 @@ class VideoDisplay (VideoDisplayBase):
 
     def selectItem(self, item, renderer):
         VideoDisplayBase.selectItem(self, item, renderer)
-	# We can't select the item in the display controller
-	# until we've initialized the display, so we store it here
-	self.nextItem = item
-	self.nextRenderer = renderer
+        # We can't select the item in the display controller
+        # until we've initialized the display, so we store it here
+        self.nextItem = item
+        self.nextRenderer = renderer
  
     def play(self):
         VideoDisplayBase.play(self)

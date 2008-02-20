@@ -68,6 +68,7 @@ class HTMLApplication:
         self.loadedCustomChannels = False
         app.htmlapp = self
         app.delegate = UIBackendDelegate()
+        self.frame = None
         self.lastDisplay = None
 
     def startup(self):
@@ -75,8 +76,7 @@ class HTMLApplication:
         signals.system.connect('download-complete', self.handleDownloadComplete)
         signals.system.connect('startup-success', self.handleStartupSuccess)
         signals.system.connect('startup-failure', self.handleStartupFailure)
-        signals.system.connect('loaded-custom-channels',
-                self.handleCustomChannelLoad)
+        signals.system.connect('loaded-custom-channels', self.handleCustomChannelLoad)
         signals.system.connect('new-dialog', self.handleDialog)
         signals.system.connect('theme-first-run', self.handleThemeFirstRun)
         signals.system.connect('shutdown', self.onBackendShutdown)
