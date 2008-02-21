@@ -28,7 +28,7 @@
 
 """clipboard.py.  Used to access the clipboard from python."""
 
-from miro.templatehelper import toUni
+from miro.util import toUni
 from ctypes import windll, c_char_p
 CF_TEXT = 1
 
