@@ -43,6 +43,7 @@ Var ONLY_INSTALL_THEME
 Var THEME_TEMP_DIR
 Var INITIAL_FEEDS
 Var TACKED_ON_FILE
+Var SIMPLE_INSTALL
 
 ; Runs in tv/platform/windows-xul/dist, so 4 ..s.
 !addplugindir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
@@ -58,6 +59,7 @@ Var TACKED_ON_FILE
 !include "TextFunc.nsh"
 !include "WordFunc.nsh"
 !include "FileFunc.nsh"
+!include "WinMessages.nsh"
 
 !insertmacro TrimNewLines
 !insertmacro WordFind
@@ -74,8 +76,116 @@ ReserveFile "iHeartMiro-installer-page.ini"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Welcome page
+!define MUI_PAGE_CUSTOMFUNCTION_PRE   "add_radio_buttons"
+!define MUI_PAGE_CUSTOMFUNCTION_SHOW  "fix_background_color"
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE "check_radio_buttons"
+
 !define MUI_COMPONENTSPAGE_NODESC
 !insertmacro MUI_PAGE_WELCOME
+
+Function add_radio_buttons
+
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NumFields" "5"
+  
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 3" "Bottom" "150"
+
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Type"   "radiobutton"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Text"   "Simple Install"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Left"   "120"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Top"    "150"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Bottom" "160"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "Flags"  "NOTIFY"
+
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Type"   "radiobutton"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Text"   "Custom Install"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Left"   "120"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Right"  "315"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Top"    "160"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Bottom" "170"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "Flags"  "NOTIFY"
+
+  StrCmp $SIMPLE_INSTALL "1" simple custom
+
+  custom:
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "State"  "0"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "State"  "1"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NextButtonText" "Next >"
+  goto end
+
+  simple:
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "State"  "1"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "State"  "0"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NextButtonText" "Install"
+  goto end
+
+  end:
+FunctionEnd
+
+Function fix_background_color
+  Push $0
+
+  GetDlgItem $0 $MUI_HWND 1203
+  SetCtlColors $0 "" 0xFFFFFF
+  GetDlgItem $0 $MUI_HWND 1204
+  SetCtlColors $0 "" 0xFFFFFF
+
+  StrCmp $SIMPLE_INSTALL "1" simple custom
+
+  simple:
+  GetDlgItem $0 $HWNDPARENT 1
+  SendMessage $0 ${WM_SETTEXT} 0 "STR:Install"
+  goto end
+
+  custom:
+  GetDlgItem $0 $HWNDPARENT 1
+  SendMessage $0 ${WM_SETTEXT} 0 "STR:Next >"
+  goto end
+
+  end:
+
+  Pop $0
+FunctionEnd
+
+Var STATE
+Function check_radio_buttons
+  Push $0
+  ReadINIStr $SIMPLE_INSTALL "$PLUGINSDIR\ioSpecial.ini" "Field 4" "State"
+  ReadINIStr $STATE "$PLUGINSDIR\ioSpecial.ini" "Settings" "State"
+  StrCmp $STATE "4" set
+  StrCmp $STATE "5" set
+
+  next_clicked:
+  goto end
+
+  set:
+  StrCmp $SIMPLE_INSTALL "1" simple custom
+
+  simple:
+  GetDlgItem $0 $HWNDPARENT 1
+  SendMessage $0 ${WM_SETTEXT} 0 "STR:Install"
+  goto end_set
+
+  custom:
+  GetDlgItem $0 $HWNDPARENT 1
+  SendMessage $0 ${WM_SETTEXT} 0 "STR:Next >"
+  goto end_set
+
+  end_set:
+  Abort
+
+  end:
+  Pop $0
+FunctionEnd
+
+Function skip_if_simple
+  StrCmp $SIMPLE_INSTALL "1" skip_for_simple
+  goto end
+  skip_for_simple:
+  Abort
+  end:
+FunctionEnd
+
 
 ; License page
 ; !insertmacro MUI_PAGE_LICENSE "license.txt"
@@ -83,14 +193,17 @@ ReserveFile "iHeartMiro-installer-page.ini"
 ; Component selection page
 !define MUI_COMPONENTSPAGE_TEXT_COMPLIST \
   "Please choose which optional components to install."
+!define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple"
 !insertmacro MUI_PAGE_COMPONENTS
 
 ; Page custom iHeartMiroInstall iHeartMiroInstallLeave
 
 ; Installation directory selection page
+!define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple"
 !insertmacro MUI_PAGE_DIRECTORY
 
 ; Start menu folder name selection page
+!define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple"
 !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
 
 ; Installation page
@@ -104,6 +217,15 @@ ReserveFile "iHeartMiro-installer-page.ini"
   "${CONFIG_PUBLISHER} homepage."
 !define MUI_FINISHPAGE_LINK_LOCATION "${CONFIG_PROJECT_URL}"
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE "dont_leave_early"
+Function dont_leave_early
+  ReadINIStr $STATE "$PLUGINSDIR\ioSpecial.ini" "Settings" "State"
+  StrCmp $STATE "4" dont_leave
+  goto end
+  dont_leave:
+  Abort
+  end:
+FunctionEnd
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -584,6 +706,7 @@ Function .onInit
   StrCpy $ONLY_INSTALL_THEME ""
   StrCpy $THEME_TEMP_DIR ""
   StrCpy $APP_NAME "${CONFIG_LONG_APP_NAME}"
+  StrCpy $SIMPLE_INSTALL "1"
 
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "iHeartMiro-installer-page.ini"
 
