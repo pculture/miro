@@ -16,7 +16,9 @@
             <img src="resource:images/play.png" />
         </div>
     </div>
+    <div class="line">
     <div class="name" t:replace="this.obj.getTitle()" />
+    </div>
 </a>
 <!--
 	<div class="channel_bar_divider" />

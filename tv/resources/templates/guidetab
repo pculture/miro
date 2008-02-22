@@ -5,8 +5,10 @@
 </head>
 <body>
 <a class="feeditem">
+    <div class="line">
     <img class="icon" alt="" src="***this.obj.getIconURL()***" />
     <div class="name" t:replace="this.obj.getTitle()" />
+    </div>
 </a>
 </body>
 </html>

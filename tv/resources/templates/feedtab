@@ -30,9 +30,10 @@
      <img src="resource:images/play.png" />
  </div>
 </div>
+<div class="line">
 <div t:showIf="this.obj.isUpdating()" class="feed-loading-icon" />
-
 <img id="channel-tnail-***this.objID()***" class="icon" src="***this.obj.getTablistThumbnail()***" /><div class="name noselect" t:replace="this.obj.getTitle()" />
+</div>
 </a>
 </div>
 

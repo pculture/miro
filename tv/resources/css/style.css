@@ -79,7 +79,6 @@ a.feeditem {
     font-size: 11px;
     text-decoration: none;
     height: 20px;
-    white-space: nowrap;
 }
 
 a.feeditem.folder {
@@ -116,6 +115,10 @@ a.feeditem span {
 
 .selected-inactive a.feeditem {
     background: url(../images/channel_bg.png) 0px -50px repeat-x; 
+}
+
+a.feeditem div.line {
+    white-space: nowrap;
 }
 
 a.feeditem img.icon {
