@@ -168,7 +168,10 @@ class ChannelGuide(DDBObject):
             pass
         else:
             self.title = unicode(parser.title)
-            self.favicon = unicode(parser.favicon)
+            if parser.favicon is not None:
+                self.favicon = unicode(parser.favicon)
+            else:
+                self.favicon = None
             self.extendHistory(self.updated_url)
             self.iconCache.requestUpdate(True)
             self.signalChange()
