@@ -559,6 +559,8 @@ class CallbackHandler(object):
         AttachInteger (dialog, widgetTree['spinbutton-max-manual'], prefs.MAX_MANUAL_DOWNLOADS)
         AttachInteger (dialog, widgetTree['spinbutton-max-auto'], prefs.DOWNLOADS_TARGET)
         AttachFloat   (dialog, widgetTree['spinbutton-padding'], prefs.PRESERVE_X_GB_FREE)
+        AttachBoolean (dialog, widgetTree['checkbutton-upload-ratio'], prefs.LIMIT_UPLOAD_RATIO, widgetTree['spinbutton-upload-ratio'])
+        AttachFloat   (dialog, widgetTree['spinbutton-upload-ratio'], prefs.UPLOAD_RATIO)
         AttachCombo   (dialog, widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, -1))
         AttachCombo   (dialog, widgetTree['combobox-auto-setting'], prefs.CHANNEL_AUTO_DEFAULT, ("new", "all", "off"))
         AttachCombo   (dialog, widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))

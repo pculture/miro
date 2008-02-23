@@ -206,6 +206,8 @@ class ControllerDaemon(Daemon):
                    prefs.DOWNLOADER_LOG_PATHNAME,
                    prefs.LOG_PATHNAME,
                    prefs.GETTEXT_PATHNAME,
+                   prefs.LIMIT_UPLOAD_RATIO,
+                   prefs.UPLOAD_RATIO
                 ]
 
         for desc in remoteConfigItems:

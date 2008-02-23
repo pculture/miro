@@ -855,6 +855,11 @@ class BTDownloader(BGDownloader):
         else:
             downloadUpdater.queueUpdate(self)
 
+        if config.get(prefs.LIMIT_UPLOAD_RATIO):
+            if status.state == lt.torrent_status.states.seeding:
+                if float(self.uploaded)/self.totalSize > config.get(prefs.UPLOAD_RATIO):
+                    self.stopUpload()
+
     def handleError(self, shortReason, reason):
         self._shutdownTorrent()
         BGDownloader.handleError(self, shortReason, reason)

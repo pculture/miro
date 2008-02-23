@@ -58,6 +58,7 @@ VOLUME_LEVEL                = Pref( key='VolumeLevel',           default=1.0,   
 BT_MIN_PORT                 = Pref( key='BitTorrentMinPort',     default=8500,  platformSpecific=False )
 BT_MAX_PORT                 = Pref( key='BitTorrentMaxPort',     default=8600,  platformSpecific=False )
 UPLOAD_RATIO                = Pref( key='uploadRatio',           default=2.0,   platformSpecific=False )
+LIMIT_UPLOAD_RATIO          = Pref( key='limitUploadRatio',      default=False, platformSpecific=False )
 STARTUP_TASKS_DONE          = Pref( key='startupTasksDone',      default=False, platformSpecific=False )
 SINGLE_VIDEO_PLAYBACK_MODE  = Pref( key='singleVideoPlaybackMode',default=False,platformSpecific=False )
 RESUME_VIDEOS_MODE          = Pref( key='resumeVideosMode',      default=True,  platformSpecific=False )
