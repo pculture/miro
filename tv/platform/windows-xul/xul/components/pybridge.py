@@ -381,6 +381,14 @@ class PyBridge:
         return config.get(prefs.BT_ENC_REQ)
     def setBitTorrentEncReq(self, value):
         config.set(prefs.BT_ENC_REQ, value)
+    def getBitTorrentLimitUploadRatio(self):
+        return config.get(prefs.LIMIT_UPLOAD_RATIO)
+    def setBitTorrentLimitUploadRatio(self, value):
+        config.set(prefs.LIMIT_UPLOAD_RATIO, value)
+    def getBitTorrentUploadRatio(self):
+        return config.get(prefs.UPLOAD_RATIO)
+    def setBitTorrentUploadRatio(self, value):
+        config.set(prefs.UPLOAD_RATIO, value)
 
     def handleCommandLine(self, commandLine):
         # Here's a massive hack to get command line parameters into config

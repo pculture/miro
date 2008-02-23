@@ -131,6 +131,10 @@ interface pcfIDTVPyBridge : nsISupports
   void setUseUpnp(in boolean value);
   boolean getBitTorrentEncReq();
   void setBitTorrentEncReq(in boolean value);
+  boolean getBitTorrentLimitUploadRatio();
+  void setBitTorrentLimitUploadRatio(in boolean value);
+  float getBitTorrentUploadRatio();
+  void setBitTorrentUploadRatio(in float value);
   void showCursor(in boolean display);
   void createNewPlaylist();
   void createNewPlaylistFolder();

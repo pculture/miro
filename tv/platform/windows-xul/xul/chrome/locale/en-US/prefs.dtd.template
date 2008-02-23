@@ -59,3 +59,4 @@
 <!ENTITY prefs.torrent.use_ports "Use these ports:">
 <!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
 <!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

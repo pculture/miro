@@ -57,7 +57,12 @@ function onload() {
           pybridge.getUseUpnp();
   document.getElementById("bittorrent-encryption-required").checked =
           pybridge.getBitTorrentEncReq();
-
+  document.getElementById("bittorrent-enable-uploadratio").checked =
+          pybridge.getBitTorrentLimitUploadRatio();
+  document.getElementById("bittorrent-uploadratio").value =
+          pybridge.getBitTorrentUploadRatio();
+  document.getElementById("bittorrent-uploadratio").disabled = 
+          !pybridge.getBitTorrentLimitUploadRatio();
 
   setupBandwidthLimiter('upstream',
           function() { return pybridge.getLimitUpstream(); },
@@ -366,4 +371,25 @@ function btUseUpnpChange() {
 function btEncryptionRequiredChange() {
   var checkbox = document.getElementById('bittorrent-encryption-required');
   pybridge.setBitTorrentEncReq(checkbox.checked);
+}
+
+function btToggleUploadRatio() {
+  var checkbox = document.getElementById('bittorrent-enable-uploadratio');
+  var uploadratio = document.getElementById('bittorrent-uploadratio');
+  uploadratio.disabled = !checkbox.checked;
+  pybridge.setBitTorrentLimitUploadRatio(checkbox.checked);
+}
+
+function btChangeUploadRatio() {
+  var uploadratio = document.getElementById('bittorrent-uploadratio');
+  var value = parseFloat(uploadratio.value);
+  if (isNaN(value)) {
+    value = 1.5;
+  } else if (value < 0.1) {
+    value = 0.1;
+  } else if (value > 100.0) {
+    value = 100.0;
+  }
+  uploadratio.value = value;
+  pybridge.setBitTorrentUploadRatio(uploadratio.value);
 }

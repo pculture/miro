@@ -112,6 +112,10 @@
                 </hbox>
                 <checkbox id="bittorrent-use-upnp" label="&prefs.torrent.use_upnp;" oncommand="btUseUpnpChange();" />
                 <checkbox id="bittorrent-encryption-required" label="&prefs.torrent.require_encryption;" oncommand="btEncryptionRequiredChange();" />
+                <hbox align="center">
+                    <checkbox id="bittorrent-enable-uploadratio" label="&prefs.torrent.uploadratio;" value="1" oncommand="btToggleUploadRatio();" />
+                    <textbox id="bittorrent-uploadratio" flex="0" value="1.5" style="max-width: 30px;" onchange="btChangeUploadRatio();" />
+                </hbox>
             </groupbox>
         </tabpanel>
         <tabpanel orient="vertical">
