@@ -26,6 +26,12 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+# FIXME - these should probably be moved to a central place along with
+# similar statements in other platforms.
+COPYRIGHT = """Copyright (c) 2005-2008.  See LICENSE file for details.
+Miro and the Miro logo are trademarks of the Participatory Culture Foundation."""
+WEBSITE = """http://www.getmiro.com/"""
+
 from miro import app
 import pygtk
 pygtk.require('2.0')
@@ -397,8 +403,8 @@ class MainFrame:
             self.aboutWidget.set_version( "%s (r%s)" % \
                                           (config.get(prefs.APP_VERSION), 
                                            config.get(prefs.APP_REVISION_NUM)))
-            self.aboutWidget.set_website("http://www.getmiro.com/")
-            self.aboutWidget.set_copyright("Copyright (c) 2005-2008.  See LICENSE file for details.\nMiro and the Miro logo are trademarks of the Participatory Culture Foundation.")
+            self.aboutWidget.set_website(WEBSITE)
+            self.aboutWidget.set_copyright(COPYRIGHT)
             def delete_event_cb(widget, event):
                 widget.hide()
                 return True
