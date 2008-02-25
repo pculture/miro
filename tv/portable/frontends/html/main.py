@@ -44,6 +44,7 @@ from miro import app
 from miro import autoupdate
 from miro import config
 from miro import eventloop
+from miro import folder
 from miro import iheartmiro
 from miro import menubar
 from miro import opml
