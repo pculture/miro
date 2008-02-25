@@ -30,7 +30,9 @@
                 setDownstreamLimit = id; 
                 setMaxAutoDownloads = id; 
                 setMaxDownloads = id; 
+                setUploadRatio = id; 
                 setUpstreamLimit = id; 
+                stopUploadAtRatio = id; 
             }; 
             CLASS = DownloadsPrefsController; 
             LANGUAGE = ObjC; 
@@ -46,6 +48,8 @@
                 maxDownloadsField = id; 
                 moviesDirectoryField = id; 
                 nonEncryptedCnxButton = id; 
+                stopAtRatioCheckbox = id; 
+                stopAtRatioField = id; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
