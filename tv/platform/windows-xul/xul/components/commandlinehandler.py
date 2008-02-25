@@ -61,10 +61,10 @@ class DemocracyCLH:
             return
 
         pybridge.createProxyObjects()
-        pybridge.handleCommandLine(commandLine)
 
         existingWindow = wwatch.getWindowByName(windowName, None)
         if existingWindow is None:
+            pybridge.handleCommandLine(commandLine)
             try:
                 pybridge.deleteVLCCache()
             except:
@@ -79,6 +79,7 @@ class DemocracyCLH:
         else:
             # If Democracy is already running and minimize, make the
             # tray icon disappear
+            pybridge.handleSecondaryCommandLine(commandLine)
             minimizer = makeService("@participatoryculture.org/dtv/minimize;1",components.interfaces.pcfIDTVMinimize, False)
             if minimizer.isMinimized():
                 minimizer.minimizeOrRestore()

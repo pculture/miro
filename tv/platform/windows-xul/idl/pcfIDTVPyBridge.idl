@@ -44,6 +44,7 @@ interface pcfIDTVPyBridge : nsISupports
   void onStartup(in nsIDOMWindow window);
   void onShutdown();
   void handleCommandLine(in nsICommandLine commandLine);
+  void handleSecondaryCommandLine(in nsICommandLine commandLine);
   void pageLoadFinished(in AString area, in AString url);
   void performSearch(in AString engine, in AString query);
   void setVolume(in float volume);

@@ -176,14 +176,25 @@ def registerHttpObserver():
     observer_service.addObserver(observer, "http-on-modify-request", False);
         
 def getArgumentList(commandLine):
-    """Convert a components.interfaces.nsICommandLine component to a list of arguments to pass
-    to the singleclick module."""
+    """Convert a components.interfaces.nsICommandLine component to a list of
+    arguments to pass to the singleclick module and a theme to load.
 
+    Returns the tuple (args, theme)
+    """
+
+    theme = None
     args = [commandLine.getArgument(i) for i in range(commandLine.length)]
     # filter out the application.ini that gets included
     if len(args) > 0 and args[0].lower().endswith('application.ini'):
         args = args[1:]
-    return [getLongPathName(path) for path in args]
+    # Here's a massive hack to get command line parameters into config
+    for x in range(len(args)-1):
+        if args[x] == '--theme':
+            theme = args[x+1]
+            args[x:x+2] = []
+            break
+    args = [getLongPathName(path) for path in args]
+    return args, theme
 
 # Functions to convert menu information into XUL form
 def XULifyLabel(label):
@@ -391,23 +402,24 @@ class PyBridge:
         config.set(prefs.UPLOAD_RATIO, value)
 
     def handleCommandLine(self, commandLine):
-        # Here's a massive hack to get command line parameters into config
-        args = getArgumentList(commandLine)
-        theme = None
-        for x in range(len(args)-1):
-            if args[x] == '--theme':
-                theme = args[x+1]
-                args[x:x+2] = []
-                break
+        args, theme = getArgumentList(commandLine)
         startup.initialize(theme)
-
         # Doesn't matter if this executes before the call to
         # parseCommandLineArgs in app.py. -clahey
-        self._handleCommandLine(commandLine)
+        self._handleCommandLine(args)
+
+    def handleSecondaryCommandLine(self, commandLine):
+        """Handle a command line that was passed to Miro from a second
+        instance (for example Miro was running, then the user opened a video
+        file with miro).
+        """
+
+        args, theme = getArgumentList(commandLine)
+        self._handleCommandLine(args)
 
     @asUrgent
-    def _handleCommandLine(self, commandLine):
-        singleclick.handleCommandLineArgs(getArgumentList(commandLine))
+    def _handleCommandLine(self, args):
+        singleclick.handleCommandLineArgs(args)
 
     def pageLoadFinished(self, area, url):
         eventloop.addUrgentCall(HTMLDisplay.runPageFinishCallback, 
