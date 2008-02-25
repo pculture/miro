@@ -206,6 +206,8 @@ class DownloadsPrefsController (NSObject):
     limitUpstreamField      = IBOutlet('limitUpstreamField')
     limitDownstreamCheckBox = IBOutlet('limitDownstreamCheckBox')
     limitDownstreamField    = IBOutlet('limitDownstreamField')
+    stopAtRatioCheckbox     = IBOutlet('stopAtRatioCheckbox')
+    stopAtRatioField        = IBOutlet('stopAtRatioField')
     
     def awakeFromNib(self):
         moviesDirPath = config.get(prefs.MOVIES_DIRECTORY)
@@ -234,6 +236,11 @@ class DownloadsPrefsController (NSObject):
         self.limitDownstreamCheckBox.setState_(limitDown and NSOnState or NSOffState)
         self.limitDownstreamField.setEnabled_(limitDown)
         self.limitDownstreamField.setIntValue_(config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS))
+        
+        stopUploads = config.get(prefs.LIMIT_UPLOAD_RATIO)
+        self.stopAtRatioCheckbox.setState_(stopUploads and NSOnState or NSOffState)
+        self.stopAtRatioField.setEnabled_(stopUploads)
+        self.stopAtRatioField.setFloatValue_(config.get(prefs.UPLOAD_RATIO))
 
     def changeMoviesDirectory_(self):
         panel = NSOpenPanel.openPanel()
@@ -310,6 +317,16 @@ class DownloadsPrefsController (NSObject):
     def setDownstreamLimit_(self, sender):
         limit = sender.intValue()
         config.set(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, limit)
+    
+    def stopUploadAtRatio_(self, sender):
+        stop = (sender.state() == NSOnState)
+        self.stopAtRatioField.setEnabled_(stop)
+        config.set(prefs.LIMIT_UPLOAD_RATIO, stop)
+        self.setUploadRatio_(self.stopAtRatioField)
+    
+    def setUploadRatio_(self, sender):
+        ratio = sender.floatValue()
+        config.set(prefs.UPLOAD_RATIO, ratio)
 
 ###############################################################################
 

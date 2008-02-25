@@ -1,9 +1,6 @@
 /* NSWindow () : <title:> (oid:5) */
 "" = "";
 
-/* NSButton ( limit downstream to) : <title: limit downstream to> (oid:166) */
-" limit downstream to" = " limit downstream to";
-
 /* NSTextField ((You must restart Miro for some of these changes to take effect)) : <title:(You must restart Miro for some of these changes to take effect)> (oid:127) */
 "(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)";
 
@@ -32,7 +29,7 @@
 /* NSMenuItem : <title:3 hours> (oid:82) */
 "3 hours" = "3 hours";
 
-/* NSTextField (4) : <title:4> (oid:201) */
+/* NSTextField (50.00) : <title:4> (oid:209) */
 "4" = "4";
 
 /* NSTextField (1) : <title:5> (oid:48) */
@@ -93,6 +90,9 @@
 /* NSButton (Keep at least this much free space on my drive:) : <title:Keep at least this much free space on my drive:> (oid:74) */
 "Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:";
 
+/* NSButton (Limit downstream to) : <title:Limit downstream to> (oid:166) */
+"Limit downstream to" = "Limit downstream to";
+
 /* NSMenuItem : <title:Never> (oid:86) */
 "Never" = "Never";
 
@@ -122,6 +122,9 @@
 
 /* NSButtonCell (Stop after each video.) : <title:Stop after each video.> (oid:104) */
 "Stop after each video." = "Stop after each video.";
+
+/* NSButton (Stop uploads when this ratio is reached:) : <title:Stop uploads when this ratio is reached:> (oid:208) */
+"Stop uploads when this ratio is reached:" = "Stop uploads when this ratio is reached:";
 
 /* NSTextField (Store downloads in this folder:) : <title:Store downloads in this folder:> (oid:92) */
 "Store downloads in this folder:" = "Store downloads in this folder:";
