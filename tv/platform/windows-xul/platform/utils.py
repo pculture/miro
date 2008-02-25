@@ -134,6 +134,13 @@ def setupLogging (inDownloader=False):
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(levelname)-8s %(message)s',
                         stream=logStream)
+    
+    # Disable the xpcom log handlers.  This just means the log handler we
+    # install at the root level will handle it instead.  The xpcom one
+    # generates errors when it writes to stderr.
+    xpcomLogger = logging.getLogger('xpcom')
+    for handler in xpcomLogger.handlers[:]:
+        xpcomLogger.removeHandler(handler)
     _loggingSetup = True
 
 # Takes in a unicode string representation of a filename and creates a
