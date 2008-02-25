@@ -40,7 +40,7 @@ import _winreg
 
 try:
     from miro.platform.xulhelper import makeService, makeComp, proxify
-    from miro.platform.utils import initializeLocale, setupLogging, getLongPathName
+    from miro.platform.utils import initializeLocale, setupLogging, getLongPathName, makeURLSafe
     initializeLocale()
     setupLogging()
     from miro import gtcache
@@ -780,7 +780,7 @@ class PyBridge:
 
     @asIdle
     def addDirectoryWatch(self, filename):
-        feed.Feed (u"dtv:directoryfeed:%s" % (platformutils.makeURLSafe(filename),))
+        feed.Feed (u"dtv:directoryfeed:%s" % (makeURLSafe(filename),))
 
     @asIdle
     def removeDirectoryWatch(self, id):
