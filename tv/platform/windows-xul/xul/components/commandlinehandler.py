@@ -80,7 +80,8 @@ class DemocracyCLH:
             # If Democracy is already running and minimize, make the
             # tray icon disappear
             minimizer = makeService("@participatoryculture.org/dtv/minimize;1",components.interfaces.pcfIDTVMinimize, False)
-            minimizer.restoreAll()
+            if minimizer.isMinimized():
+                minimizer.minimizeOrRestore()
 
 catman = makeService("@mozilla.org/categorymanager;1",components.interfaces.nsICategoryManager, False)
 catman.addCategoryEntry("command-line-handler", "z-default",
