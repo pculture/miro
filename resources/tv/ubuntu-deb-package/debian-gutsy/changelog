@@ -1,3 +1,9 @@
+miro (1.1.2-0pcf2) gutsy; urgency=low
+
+  * Pinning this package of Miro to version 1.1.7 of libxine1.
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Mon, 25 Feb 2008 15:41:37 -0500
+
 miro (1.1.2-0pcf1) gutsy; urgency=low
 
   * Fixed bug 9523 - added exception for distributing GPL code that links

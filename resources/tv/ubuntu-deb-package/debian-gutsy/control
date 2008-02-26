@@ -7,7 +7,7 @@ Standards-Version: 3.7.2
 
 Package: miro
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2, python-gnome2, python-gnome2-extras (>= 2.14.0-2), python-glade2, miro-data (>= 1.1.2), imagemagick, libxine1-plugins
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2, python-gnome2, python-gnome2-extras (>= 2.14.0-2), python-glade2, imagemagick, libxine1-plugins, libxine1 (<< 1.1.8), libxine1 (>= 1.1.7), miro-data (>= 1.1.2)
 Suggests: ttf-bitstream-vera
 Conflicts: democracyplayer (<< 0.9.8)
 Replaces: democracyplayer
