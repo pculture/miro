@@ -229,12 +229,17 @@ class MainWindowChanger(object):
 
     def changeFullScreen (self, fullscreen):
         confirmMainThread()
+        
+        # Get window XID (needed for xdg-screensaver)
+        win = self.widgetTree['main-window'];
+        xid = win.window.xid
+        
         if (self.isFullScreen == fullscreen):
             return
         if fullscreen:
-            cmd = "xset s off"
+            cmd = "xdg-screensaver suspend 0x%X" % (xid)
         else:
-            cmd = "xset s"
+            cmd = "xdg-screensaver resume 0x%X" % (xid)
         rv = os.system(cmd)
         if rv != 0:
             print "WARNING: %s returned %s" % (cmd, rv)
