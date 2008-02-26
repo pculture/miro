@@ -229,6 +229,5 @@ class VideoDisplayBase (Display):
         self.setVolume(self.previousVolume)
 
     def onDeselected(self, frame):
-        Display.onDeselected(self, frame)
         if self.stopOnDeselect and (self.isPlaying or self.isPaused):
             app.htmlapp.playbackController.stop(False)

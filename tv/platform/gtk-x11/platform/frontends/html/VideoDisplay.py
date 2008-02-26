@@ -35,7 +35,7 @@ import gconf
 import sys
 import logging
 from gtk_queue import gtkAsyncMethod, gtkSyncMethod
-from miro.frontends.html.displaybase import VideoDisplayBase
+from miro.frontends.html.displaybase import Display, VideoDisplayBase
 from miro.platform.config import gconf_lock
 from miro.frontends.html.playbackcontroller import PlaybackControllerBase
 
@@ -186,6 +186,10 @@ class VideoDisplay (VideoDisplayBase):
     def moveVolumeSlider(self, volume):
         volumeScale = app.htmlapp.frame.widgetTree['volume-scale']
         volumeScale.set_value(self.volume)
+
+    def onDeselected(self, frame):
+        Display.onDeselected(self, frame)
+        VideoDisplayBase.onDeselected(self, frame)
 
 ###############################################################################
 ###############################################################################
