@@ -93,17 +93,6 @@ COMPILER_RUNTIMES = [
     os.path.join(BINARY_KIT_ROOT, 'vc71redist', 'msvcp71.dll'),
     ]
 
-# Python runtime DLL to distribute with the application. Usually, the
-# Python installer drops it in c:\windows\system32.
-if sys.version.startswith("2.4"):
-    PYTHON_RUNTIMES = [
-        "C:\\windows\\system32\\python24.dll",
-        ]
-else: # We must be using Python 2.5
-    PYTHON_RUNTIMES = [
-        "C:\\windows\\system32\\python25.dll",
-        ]
-
 # Path to the Mozilla "xulrunner" distribution. We include a build in
 # the Binary Kit to save you a minute or two, but if you want to be
 # more up-to-date, nightlies are available from Mozilla at:
@@ -691,15 +680,17 @@ class bdist_xul_dumb(Command):
         print "moving all DLL files to %s" % self.dist_dir
         for dll in glob(os.path.join(self.xul_dist_dir, '*.dll')):
             basename = os.path.basename(dll)
+            # The Python DLL needs to be in the same directory
+            # as the main xulrunner binary
             if basename.lower() == 'python25.dll':
-                continue
-            dest = os.path.join(self.dist_dir, basename)
+                dest = os.path.join(self.dist_dir, 'xulrunner', basename)
+            else:
+                dest = os.path.join(self.dist_dir, basename)
             if not os.path.exists(dest):
                 shutil.move(dll, dest)
             else:
                 # maybe we should check that they're the same here?
                 os.remove(dll)
-
 
     def buildMovieDataUtil(self):
         print "building movie data utility"
