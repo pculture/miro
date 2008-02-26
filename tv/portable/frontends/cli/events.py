@@ -26,13 +26,46 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.platform.options -- Holds platform-specific command line options.
-Most/all of these are set in the miro.real script.  The values here are
-hopefully sane defaults.
-"""
+import threading
+import Queue
 
-shouldSyncX = False
-useXineHack = True
-defaultXineDriver = "xv"
-themeName = None
-frontend = 'html'
+from miro import signals
+from miro.frontends.cli.util import print_box
+
+class EventHandler:
+    def __init__(self):
+        self.startup_failure = None
+        self.startup_event = threading.Event()
+        self.dialog_queue = Queue.Queue()
+
+    def connect_to_signals(self):
+        signals.system.connect('error', self.handleError)
+        signals.system.connect('download-complete', self.handleDownloadComplete)
+        signals.system.connect('startup-success', self.handleStartupSuccess)
+        signals.system.connect('startup-failure', self.handleStartupFailure)
+        signals.system.connect('new-dialog', self.handleDialog)
+        signals.system.connect('shutdown', self.onBackendShutdown)
+
+    def handleDialog(self, obj, dialog):
+        self.dialog_queue.put(dialog)
+
+    def handleStartupFailure(self, obj, summary, description):
+        self.startup_failure = (summary, description)
+        self.startup_event.set()
+
+    def handleStartupSuccess(self, obj):
+        self.startup_event.set()
+
+    def handleDownloadComplete(self, obj, item):
+        print_box('Download Complete: %s' % item)
+
+    def handleError(self, obj, report):
+        print_box('ERROR')
+        print
+        print report
+        print
+
+    def onBackendShutdown(self, obj):
+        print
+        print 'Shutting down...'
+

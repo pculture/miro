@@ -39,6 +39,8 @@ import urllib
 import sys
 import time
 from miro.util import returnsUnicode, returnsBinary, checkU, checkB, call_command
+import miro
+from miro.platform import options
 
 FilenameType = str
 
@@ -82,7 +84,11 @@ def initializeLocale():
 
 def setupLogging (inDownloader=False):
     if inDownloader:
-        logging.basicConfig(level=logging.INFO,
+        if os.environ.get('MIRO_FRONTEND') == 'cli':
+            level = logging.WARN
+        else:
+            level = logging.INFO
+        logging.basicConfig(level=level,
                             format='%(levelname)-8s %(message)s',
                             stream=sys.stdout)
     else:
@@ -91,7 +97,11 @@ def setupLogging (inDownloader=False):
                             filename=config.get(prefs.LOG_PATHNAME),
                             filemode="w")
         console = logging.StreamHandler (sys.stdout)
-        console.setLevel(logging.INFO)
+        if options.frontend != 'cli':
+            level = logging.INFO
+        else:
+            level = logging.WARN
+        console.setLevel(level)
     
         formatter = logging.Formatter('%(levelname)-8s %(message)s')
         console.setFormatter(formatter)
@@ -266,8 +276,8 @@ def launchDownloadDaemon(oldpid, env):
         killProcess(oldpid)
 
     environ = os.environ.copy()
+    environ['MIRO_FRONTEND'] = options.frontend
     environ.update(env)
-    import miro
     miroPath = os.path.dirname(miro.__file__)
     dlDaemonPath = os.path.join(miroPath, 'dl_daemon')
 

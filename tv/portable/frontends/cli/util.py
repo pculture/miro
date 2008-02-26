@@ -26,13 +26,14 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.platform.options -- Holds platform-specific command line options.
-Most/all of these are set in the miro.real script.  The values here are
-hopefully sane defaults.
-"""
+import textwrap
 
-shouldSyncX = False
-useXineHack = True
-defaultXineDriver = "xv"
-themeName = None
-frontend = 'html'
+def print_box(text):
+    print "-" * 78
+    leftspace = ' ' * ((78 - 2 - len(text)) / 2)
+    rightspace = ' ' * ((78 - 2 - len(text)  +  1) / 2)
+    print "*%s%s%s*" % (leftspace, text, rightspace)
+    print "-" * 78
+
+def print_text(text):
+    print textwrap.fill(text)

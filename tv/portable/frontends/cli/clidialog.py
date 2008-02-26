@@ -26,13 +26,43 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.platform.options -- Holds platform-specific command line options.
-Most/all of these are set in the miro.real script.  The values here are
-hopefully sane defaults.
-"""
+import cmd
 
-shouldSyncX = False
-useXineHack = True
-defaultXineDriver = "xv"
-themeName = None
-frontend = 'html'
+from miro import app
+from miro.frontends.cli.util import print_box, print_text
+
+class DialogAsker(cmd.Cmd):
+    def __init__(self, dialog):
+        self.dialog = dialog
+        self.quit_flag = False
+        self.prompt = "Choose one: "
+        cmd.Cmd.__init__(self)
+
+    def completenames(self, text, line, begidx, endidx):
+        options = [b.text.lower() for b in self.dialog.buttons]
+        options.append('quit')
+        text = text.lower()
+        return [option for option in options if option.startswith(text)]
+
+    def default(self, line):
+        line = line.strip().lower()
+        for button in self.dialog.buttons:
+            if button.text.lower().startswith(line):
+                self.dialog.runCallback(button)
+                self.quit_flag = True
+                return
+        cmd.Cmd.default(self, line)
+
+    def do_quit(self, line):
+        app.cli_interpreter.quit_flag = self.quit_flag = True
+
+    def postcmd(self, stop, line):
+        return self.quit_flag
+
+def handle_dialog(dialog):
+    print_box("Question: %s" % dialog.title)
+    print_text(dialog.description)
+    print '   '.join(['[%s]' % button.text for button in dialog.buttons])
+
+    command = DialogAsker(dialog)
+    command.cmdloop()

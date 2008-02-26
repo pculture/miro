@@ -26,13 +26,27 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.platform.options -- Holds platform-specific command line options.
-Most/all of these are set in the miro.real script.  The values here are
-hopefully sane defaults.
-"""
+from miro import app
+from miro import startup
+from miro.frontends.cli.util import print_text, print_box
+from miro.frontends.cli.events import EventHandler
+from miro.frontends.cli.interpreter import MiroInterpreter
 
-shouldSyncX = False
-useXineHack = True
-defaultXineDriver = "xv"
-themeName = None
-frontend = 'html'
+def run(themeName):
+    print
+    print
+    startup.initialize(themeName)
+    app.cli_events = EventHandler()
+    app.cli_events.connect_to_signals()
+    startup.startup()
+    app.cli_events.startup_event.wait()
+    if app.cli_events.startup_failure:
+        print_box("Error Starting Up: %s" % app.cli_events.startup_failure[0])
+        print
+        print_text(app.cli_events.startup_failure[1])
+        app.controller.shutdown()
+        return
+    print "Startup complete"
+    app.cli_interpreter = MiroInterpreter()
+    app.cli_interpreter.cmdloop()
+    app.controller.shutdown()

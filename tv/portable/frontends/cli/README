@@ -1,0 +1,25 @@
+The cli frontend is a toy frontend.  It's main purpose is to show how to
+create an alternate frontend.  It might be a little bit useful if you want to
+manipulate miro without X11, however it's functionality is quite limited.
+
+Tab completion is fairly good, try it out.
+
+It's possible to answer dialog boxes.  But it's really a complete hack to do
+it with a CLI.
+
+Here are the supported commands:
+
+feeds -- list all feeds
+playlists -- list all playlists
+
+feed <name> -- select a feed
+playlist <name> -- select a playlist
+downloads -- select downloading items
+
+items -- list the items in the feed/playlist/downloads
+rm <item name> -- delete an item
+download <item name> -- download an item
+stop <item name> -- stop a download
+pause <item name> -- pause a download
+
+rmfeed <name> -- delete a feed
