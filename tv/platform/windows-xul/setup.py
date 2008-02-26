@@ -680,12 +680,15 @@ class bdist_xul_dumb(Command):
         print "moving all DLL files to %s" % self.dist_dir
         for dll in glob(os.path.join(self.xul_dist_dir, '*.dll')):
             basename = os.path.basename(dll)
-            # The Python DLL needs to be in the same directory
-            # as the main xulrunner binary
-            if basename.lower() == 'python25.dll':
+            # The Python DLL needs to be in the same directory as the
+            # main xulrunner binary for XULRunner to find it, but it
+            # also needs to be in the python directory for the
+            # downloader to find it. See #9648
+            if basename.lower() in ('python25.dll', 'python24.dll'):
                 dest = os.path.join(self.dist_dir, 'xulrunner', basename)
-            else:
-                dest = os.path.join(self.dist_dir, basename)
+                shutil.copy(dll, dest)
+                continue
+            dest = os.path.join(self.dist_dir, basename)
             if not os.path.exists(dest):
                 shutil.move(dll, dest)
             else:
