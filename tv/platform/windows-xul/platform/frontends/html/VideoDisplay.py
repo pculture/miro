@@ -177,11 +177,11 @@ class VLCRenderer:
     def getCurrentTime(self, callback):
         c = pyxpcomcalls.XPCOMifyCallback(callback)
         app.vlcRenderer.getCurrentTime(c)
-    def setCurrentTime(self, time): 
-        return app.vlcRenderer.setCurrentTime(time)
+    def setCurrentTime(self, t): 
+        return app.vlcRenderer.setCurrentTime(t)
     @lockAndPlay
-    def playFromTime(self, time):
-        return app.vlcRenderer.playFromTime(time)
+    def playFromTime(self, t):
+        return app.vlcRenderer.playFromTime(t)
     def getRate(self, callback): 
         app.vlcRenderer.getRate(callback)
     def setRate(self, rate): 
