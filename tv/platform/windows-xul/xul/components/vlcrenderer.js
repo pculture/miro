@@ -34,8 +34,8 @@ const VLCRENDERER_CLASSID = Components.ID("{F9F01D99-9D3B-4A69-BD5F-285FFD360079
 
 function writelog(str) {
     Components.classes['@mozilla.org/consoleservice;1']
-	.getService(Components.interfaces.nsIConsoleService)	
-	.logStringMessage(str);
+        .getService(Components.interfaces.nsIConsoleService)        
+        .logStringMessage(str);
 }
 
 function VLCRenderer() { 
@@ -75,54 +75,55 @@ VLCRenderer.prototype = {
 
   doScheduleUpdates: function() {
       var callback = {
-	  notify: function(timer) { this.parent.updateVideoControls()}
+          notify: function(timer) { this.parent.updateVideoControls()}
       };
       callback.parent = this;
       this.timer.initWithCallback(callback, 500,
-				  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+                                  Components.interfaces.nsITimer.TYPE_ONE_SHOT);
   },
 
   updateVideoControls: function() {
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     var jsbridge = Components.classes["@participatoryculture.org/dtv/jsbridge;1"].getService(Components.interfaces.pcfIDTVJSBridge);
     if (!this.hasVLC()) return;
+
     try {
       var elapsed = 0;
       var len = 1;
       if (this.active) {
-  	if(this.vlc.playlist.isPlaying) {
-  	    this.startedPlaying = true;
-  	    elapsed = this.vlc.input.time;
-  	    len = this.vlc.input.length;
-  	    if (len < 1) len = 1;
-  	    if (elapsed < 0) elapsed = 0;
-  	    if (elapsed > len) elapsed = len;
-  	} else if (this.startedPlaying) {
-  	    // hit the end of the playlist
-            this.active = false;
-  	    this.scheduleUpdates = false;
-  	    pybridge.onMovieFinished();
-  	}
+        if(this.vlc.playlist.isPlaying) {
+          this.startedPlaying = true;
+          elapsed = this.vlc.input.time;
+          len = this.vlc.input.length;
+          if (len < 1) len = 1;
+          if (elapsed < 0) elapsed = 0;
+          if (elapsed > len) elapsed = len;
+        } else if (this.startedPlaying) {
+          // hit the end of the playlist
+          this.active = false;
+          this.scheduleUpdates = false;
+          pybridge.onMovieFinished();
+        }
   
-  	var progressSlider = this.document.getElementById("progress-slider");
-  	if(!progressSlider.beingDragged) {
-  	    jsbridge.setSliderText(elapsed);
-  	    jsbridge.setDuration(len);
-  	    jsbridge.moveSlider(elapsed/len);
-  	}
+        var progressSlider = this.document.getElementById("progress-slider");
+        if(!progressSlider.beingDragged) {
+          jsbridge.setSliderText(elapsed);
+          jsbridge.setDuration(len);
+          jsbridge.moveSlider(elapsed/len);
+        }
       }
       if(this.scheduleUpdates) {
-	  this.doScheduleUpdates();
+        this.doScheduleUpdates();
 
       }
     } catch (e) {
       if (this.startedPlaying) {
-	// probably hit the end of the playlist in the middle of this function
+        // probably hit the end of the playlist in the middle of this function
         this.scheduleUpdates = false;
         this.active = false;
-	pybridge.onMovieFinished();
+        pybridge.onMovieFinished();
       } else if(this.scheduleUpdates) {
-	  this.doScheduleUpdates();
+          this.doScheduleUpdates();
       }
     }
   },
@@ -135,8 +136,9 @@ VLCRenderer.prototype = {
   },
 
   showPauseButton: function() {
-      // I think this is ok not to wrap in a proxy since vlcrenderer
-      // is always in the Mozilla thread --NN
+    // I think this is ok not to wrap in a proxy since vlcrenderer
+    // is always in the Mozilla thread --NN
+    //
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     var playButton = this.document.getElementById("bottom-buttons-play");
     playButton.className = "bottom-buttons-pause";
@@ -147,8 +149,8 @@ VLCRenderer.prototype = {
   },
 
   showPlayButton: function() {
-      // I think this is ok not to wrap in a proxy since vlcrenderer
-      // is always in the Mozilla thread --NN
+    // I think this is ok not to wrap in a proxy since vlcrenderer
+    // is always in the Mozilla thread --NN
 
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     var playButton = this.document.getElementById("bottom-buttons-play");
@@ -160,81 +162,84 @@ VLCRenderer.prototype = {
   },
 
   reset: function() {
-      // We don't need these, and stops seem to cause problems, so I'm
-      // commenting them out --NN
-      // this.stop();
-      // this.vlc.playlist.items.clear();
-      this.showPlayButton();
-      this.resetVideoControls();
+    // We don't need these, and stops seem to cause problems, so I'm
+    // commenting them out --NN
+    // this.stop();
+    // this.vlc.playlist.items.clear();
+    this.showPlayButton();
+    this.resetVideoControls();
   },
 
   selectURL: function(url) {
     if (!this.hasVLC()) return;
-      if (this.vlc.playlist.items.count > 0) {
-          this.stop();
-          this.vlc.playlist.items.clear();
-      }
-      this.item = this.vlc.playlist.add(url);
+
+    if (this.vlc.playlist.items.count > 0) {
+      this.stop();
+      this.vlc.playlist.items.clear();
+    }
+    this.item = this.vlc.playlist.add(url);
   },
 
   setCurrentTime: function(time) {
     if (!this.hasVLC()) return;
-      try {
-	  this.vlc.input.time = time * 1000;
-      } catch (e) {
-	  var callback = {
-	      notify: function(timer) {
-		  this.parent.setCurrentTime(this.parent.playTime);
-	      }
-	  };
-	  callback.parent = this;
-	  this.playTime = time;
-	  this.timer2.initWithCallback(callback, 10,
-				       Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-      }
-    },
+
+    try {
+      this.vlc.input.time = time * 1000;
+    } catch (e) {
+      var callback = {
+        notify: function(timer) {
+          this.parent.setCurrentTime(this.parent.playTime);
+        }
+      };
+      callback.parent = this;
+      this.playTime = time;
+      this.timer2.initWithCallback(callback, 10,
+                                   Components.interfaces.nsITimer.TYPE_ONE_SHOT);
+    }
+  },
   
   play: function() {
-      // I think this is ok not to wrap in a proxy since vlcrenderer
-      // is always in the Mozilla thread --NN
+    // I think this is ok not to wrap in a proxy since vlcrenderer
+    // is always in the Mozilla thread --NN
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
     if (!this.hasVLC()) return;
-      if (this.vlc.playlist.items.count > 0) {
-	  if(!this.vlc.playlist.isPlaying) {
-	      if (this.item != null) {
-		  this.vlc.playlist.playItem(this.item);
-		  this.item = null;
-	      } else {
-		  this.vlc.playlist.play();
-	      }
-	  } 
-	  this.scheduleUpdates = true;
-	  this.active = true;
-	  this.startedPlaying = false;
-	  this.doScheduleUpdates();
-	  this.showPauseButton();
-      } else {
-	  this.active = false;
-	  this.scheduleUpdates = false;
-	  pybridge.onMovieFinished();
-      }
+
+    if (this.vlc.playlist.items.count > 0) {
+      if(!this.vlc.playlist.isPlaying) {
+        if (this.item != null) {
+          this.vlc.playlist.playItem(this.item);
+          this.item = null;
+        } else {
+          this.vlc.playlist.play();
+        }
+      } 
+      this.scheduleUpdates = true;
+      this.active = true;
+      this.startedPlaying = false;
+      this.doScheduleUpdates();
+      this.showPauseButton();
+    } else {
+      this.active = false;
+      this.scheduleUpdates = false;
+      pybridge.onMovieFinished();
+    }
   },
 
   playFromTime: function(time) {
-      this.play();
-      this.setCurrentTime(time);
+    this.play();
+    this.setCurrentTime(time);
   },
 
   pause: function() {
     if (!this.hasVLC()) return;
-      this.scheduleUpdates = false;
-      this.active = false;
-      if (this.vlc.playlist.isPlaying) {
-	  if (this.vlc.playlist.items.count > 0) {
-	      this.vlc.playlist.togglePause();
-	  }
-      }
-      this.showPlayButton();
+    this.scheduleUpdates = false;
+    this.active = false;
+    if (this.vlc.playlist.isPlaying) {
+        if (this.vlc.playlist.items.count > 0) {
+            this.vlc.playlist.togglePause();
+        }
+    }
+    this.showPlayButton();
   },
   // This should NEVER be called from Python code
   isPlayingJSONLY: function () {
@@ -243,24 +248,24 @@ VLCRenderer.prototype = {
 
   pauseForDrag: function() {
     if (!this.hasVLC()) return;
-      this.scheduleUpdates = false;
-      this.active = false;
-      if (this.vlc.playlist.isPlaying) {
-	  if (this.vlc.playlist.items.count > 0) {
-	      this.vlc.playlist.togglePause();
-	  }
+    this.scheduleUpdates = false;
+    this.active = false;
+    if (this.vlc.playlist.isPlaying) {
+      if (this.vlc.playlist.items.count > 0) {
+        this.vlc.playlist.togglePause();
       }
+    }
   },
 
   stop: function() {
     if (!this.hasVLC()) return;
-      this.scheduleUpdates = false;
-      this.active = false;
-      if (this.vlc.playlist.items.count > 0) {
-	  this.vlc.playlist.stop();
-      }
-      this.showPlayButton();
-      this.resetVideoControls();
+    this.scheduleUpdates = false;
+    this.active = false;
+    if (this.vlc.playlist.items.count > 0) {
+      this.vlc.playlist.stop();
+    }
+    this.showPlayButton();
+    this.resetVideoControls();
   },
 
   goToBeginningOfMovie: function() {
@@ -290,25 +295,25 @@ VLCRenderer.prototype = {
 
   getCurrentTime: function(pyCallback) {
     if (!this.hasVLC()) return;
-      var rv;
-      rv = this.vlc.input.time;
-      pyCallback.makeCallbackFloat(rv);
+    var rv;
+    rv = this.vlc.input.time;
+    pyCallback.makeCallbackFloat(rv);
   },
 
   getCurrentTimeJSONLY: function(pyCallback) {
     if (!this.hasVLC()) return;
-      var rv;
-      rv = this.vlc.input.time;
-      return rv;
+    var rv;
+    rv = this.vlc.input.time;
+    return rv;
   },
 
   setVolume: function(level) {
     if (!this.hasVLC()) return;
-      this.volume = level * 200;
-      if (!this.extractMode) {
-	  this.vlc.audio.mute = false;
-	  this.vlc.audio.volume = this.volume;
-      }
+    this.volume = level * 200;
+    if (!this.extractMode) {
+      this.vlc.audio.mute = false;
+      this.vlc.audio.volume = this.volume;
+    }
   },
 
   goFullscreen: function() {
@@ -317,12 +322,12 @@ VLCRenderer.prototype = {
   },
 
   extractMovieData: function (url, screenshot_filename) {
-      // I think this is ok not to wrap in a proxy since vlcrenderer
-      // is always in the Mozilla thread --NN
+    // I think this is ok not to wrap in a proxy since vlcrenderer
+    // is always in the Mozilla thread --NN
 
     var pybridge = Components.classes["@participatoryculture.org/dtv/pybridge;1"].getService(Components.interfaces.pcfIDTVPyBridge);
-      // Disabled until the external helper application works.
-      pybridge.extractFinish (-1, false);
+    // Disabled until the external helper application works.
+    pybridge.extractFinish (-1, false);
   },
 };
 
