@@ -30,6 +30,7 @@
 
 from miro.gtcache import gettext as _
 from miro import rdfa
+from xml.sax import SAXParseException
 
 DC_TITLE = "http://purl.org/dc/elements/1.1/title"
 
@@ -62,6 +63,6 @@ def license_name(license_uri):
         # may invalidate this extraction 
         return license_name[1:license_name.find('"',1)]
 
-    except (IOError, KeyError), e:
+    except (IOError, KeyError, SAXParseException), e:
         
         return _('license page')
