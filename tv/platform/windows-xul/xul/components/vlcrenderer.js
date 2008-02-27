@@ -184,7 +184,7 @@ VLCRenderer.prototype = {
     if (!this.hasVLC()) return;
 
     try {
-      this.vlc.input.time = time * 1000;
+      this.vlc.input.time = time;
     } catch (e) {
       var callback = {
         notify: function(timer) {
@@ -283,7 +283,7 @@ VLCRenderer.prototype = {
   },
 
   // To avoid threading troubles, only call this from JavaScript
-  getDurationJSONLY: function(pyCallback) {
+  getDurationJSONLY: function() {
     if (!this.hasVLC()) return;
     try {
       rv = this.vlc.input.length;
@@ -300,7 +300,7 @@ VLCRenderer.prototype = {
     pyCallback.makeCallbackFloat(rv);
   },
 
-  getCurrentTimeJSONLY: function(pyCallback) {
+  getCurrentTimeJSONLY: function() {
     if (!this.hasVLC()) return;
     var rv;
     rv = this.vlc.input.time;
