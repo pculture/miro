@@ -1,6 +1,6 @@
 <searchengine>
    <id>youtube</id>
    <displayname>YouTube</displayname>
-   <url>http://www.youtube.com/rss/tag/%s.rss</url>
+   <url>http://gdata.youtube.com/feeds/api/videos?vq=%s&amp;alt=rss</url>
    <sort>0</sort>
 </searchengine>
