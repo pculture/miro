@@ -565,6 +565,7 @@ class CallbackHandler(object):
         AttachCombo   (dialog, widgetTree['combobox-auto-setting'], prefs.CHANNEL_AUTO_DEFAULT, ("new", "all", "off"))
         AttachCombo   (dialog, widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
         AttachBooleanRadio (dialog, widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+        AttachCombo   (dialog, widgetTree['combobox-renderer'], prefs.USE_RENDERER, ("xine", "gstreamer"))
         AttachBoolean (dialog, widgetTree['checkbutton-resumemode'], prefs.RESUME_VIDEOS_MODE)
         AttachBoolean (dialog, widgetTree['checkbutton-warnonquit'], prefs.WARN_IF_DOWNLOADING_ON_QUIT)
         AttachBoolean (dialog, widgetTree['checkbutton-bt-autoforward'], prefs.USE_UPNP)

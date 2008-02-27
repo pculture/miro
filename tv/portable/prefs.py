@@ -75,6 +75,10 @@ SHOW_ERROR_DIALOG           = Pref( key='showErrorDialog',       default=True,  
 # Only used on particular platforms.
 XINE_VIZ                    = Pref( key="xineViz",               default=u"goom",platformSpecific=False )
 
+# Only used on platforms where we have multiple renderers (like GTKX11).
+# This is a comma-delimited list of renderers.
+USE_RENDERER                = Pref( key="useRenderer",           default=u"xine",platformSpecific=False )
+
 # These can be safely ignored on non-GTK systems
 USE_XINE_XV_HACK  = Pref(key="UseXineXVHack", default=True, platformSpecific=False)
 DEFAULT_XINE_DRIVER  = Pref(key="DefaultXineDriver", default="xv", platformSpecific=False)
@@ -121,6 +125,7 @@ HELP_URL          = Pref(key='HelpURL', default=u"http://www.getmiro.com/help/",
                          platformSpecific=False)
 BUG_REPORT_URL    = Pref(key='ReportURL', default=u"http://www.getmiro.com/bug.html",
                          platformSpecific=False)
+
 # These can be safely ignored on platforms without minimize to tray
 MINIMIZE_TO_TRAY = \
     Pref(key='MinimizeToTray',   default=True, platformSpecific=False)

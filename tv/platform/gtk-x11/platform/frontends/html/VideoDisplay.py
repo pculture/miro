@@ -27,16 +27,16 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import app
+from miro import config
+from miro import prefs
 import gobject
 import gtk
 import gtk.gdk
 import gnomevfs
-import gconf
 import sys
 import logging
 from gtk_queue import gtkAsyncMethod, gtkSyncMethod
 from miro.frontends.html.displaybase import Display, VideoDisplayBase
-from miro.platform.config import gconf_lock
 from miro.frontends.html.playbackcontroller import PlaybackControllerBase
 
 from threading import Event
@@ -78,20 +78,25 @@ class VideoDisplay (VideoDisplayBase):
             logging.info ("loaded renderer '%s'", modname)
         except:
             logging.info ("initRenderers: couldn't load %s: %s", modname, sys.exc_info()[1])
+            raise
 
     @gtkAsyncMethod
     def initRenderers(self):
-        gconf_lock.acquire()
-        values = gconf.client_get_default().get("/apps/miro/renderers")
-        if values == None:
-            # using both renderers at once still sometimes causes problems
-            self.add_renderer("xinerenderer")
-            #self.add_renderer("gstrenderer")
-        else:
-            for value in values.get_list():
-                self.add_renderer(value.get_string())
+        # renderer modules have to be xxxxrenderer and xxxx shows up in the
+        # preferences.
+
+        r = config.get(prefs.USE_RENDERER)
+        try:
+            self.add_renderer(r + "renderer")
+        except:
+            try:
+                logging.error ("initRenderers: error detected...  trying to add xinerenderer")
+                # try to add the xine renderer if the preferences aren't right
+                self.add_renderer("xinerenderer")
+            except:
+                logging.error ("initRenderers: no valid renderer has been loaded")
+
         self.widget.add (app.renderers[0].widget)
-        gconf_lock.release()
         self.renderersReady.set()
 
     @gtkAsyncMethod
