@@ -86,7 +86,7 @@ class TemplateDisplay(HTMLDisplay):
         self.args = args
         self.kargs = kargs
         self.haveLoaded = False
-        html = tch.read()
+        html = tch.read().encode('utf-8')
 
         self.actionHandlers = [
             ModelActionHandler(),
