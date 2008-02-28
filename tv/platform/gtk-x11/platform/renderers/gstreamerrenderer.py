@@ -233,7 +233,7 @@ class Renderer:
         self.play()
 #        print "playFromTime: starting playback from %s sec" % seconds
 
-    def getDuration(self, callback):
+    def getDuration(self, callback=None):
         confirmMainThread()
         try:
             duration, format = self.playbin.query_duration(gst.FORMAT_TIME)
@@ -241,7 +241,10 @@ class Renderer:
         except Exception, e:
             print "getDuration: caught exception: %s" % e
             duration = 1
-        callback(duration)
+        if callback:
+            callback(duration)
+            return
+        return duration
 
     @gtk_queue.gtkAsyncMethod
     def reset(self):
