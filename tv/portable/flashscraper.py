@@ -143,7 +143,10 @@ def _scrapeDailyMotionCallback(info, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
-        url = unquote_plus(params['url'][0]).decode('ascii','replace')
+        url = unquote_plus(params['video'][0]).decode('ascii', 'replace')
+        url = url.split("||")[0]
+        url = url.split("@@")[0]
+        url = u"http://www.dailymotion.com%s" % url
         callback(url)
     except:
         print "DTV: WARNING, unable to scrape Daily Motion URL: %s" % url
@@ -229,5 +232,4 @@ scraperInfoMap = [
     {'pattern': 'http://([^/]+\.)?veoh.com/multiplayer.swf', 'func': _scrapeVeohTVVideoURL},
     {'pattern': 'http://([^/]+\.)?greenpeaceweb.org/GreenpeaceTV1Col.swf', 'func': _scrapeGreenPeaceVideoURL},
     {'pattern': 'http://([^/]+\.)?break.com/', 'func': _scrapeBreakVideoURL},
-
 ]
