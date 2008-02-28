@@ -32,6 +32,7 @@
 from gettext import gettext as _
 from xpcom import components
 import ctypes
+import logging
 import os
 import shutil
 import sys
@@ -669,7 +670,25 @@ class PyBridge:
         app.delegate.openExternalURL(config.get(prefs.DONATE_URL))
 
     def openBugTracker(self):
-        app.delegate.openExternalURL(config.get(prefs.BUG_TRACKER_URL))
+        # This call could be coming as a result of a startup error, so we
+        # have to assume as little as possible here.  It's possible the error
+        # happened when importing some miro module.
+        try:
+            from miro import config
+            from miro import prefs
+            # If possible get the UIBackendDelegate from app, but maybe that
+            # hasn't been set up yet.
+            try:
+                from miro import app
+                delegate = app.delegate
+            except:
+                from miro.platform.frontends.html.UIBackendDelegate import UIBackendDelegate
+                delegate = UIBackendDelegate()
+            delegate = UIBackendDelegate()
+            delegate.openExternalURL(config.get(prefs.BUG_TRACKER_URL))
+        except:
+            logging.warn("Error in openBugTracker():\n%s", 
+                    ''.join(traceback.format_exc()))
 
     @asUrgent
     def saveVideoFile(self, path):
