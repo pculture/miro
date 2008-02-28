@@ -182,6 +182,8 @@ add more menu elements later -NN -->
 <command id="StopVideo" oncommand="pybridge.stop();" />
 <command id="NextVideo" oncommand="pybridge.skip(1);" />
 <command id="PreviousVideo" oncommand="pybridge.skipPrevious();" />
+<command id="FastForward" oncommand="pybridge.fastForward();" />
+<command id="Rewind" oncommand="pybridge.rewind();" />
 <command id="Fullscreen" oncommand="onFullscreenActivate();" />
 
 <command id="About" oncommand="window.openDialog('chrome://dtv/content/about.xul','aboutdialog','chrome,dependent,centerscreen');" />

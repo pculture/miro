@@ -180,11 +180,11 @@ VLCRenderer.prototype = {
     this.item = this.vlc.playlist.add(url);
   },
 
-  setCurrentTime: function(time) {
+  setCurrentTime: function(seconds) {
     if (!this.hasVLC()) return;
 
     try {
-      this.vlc.input.time = time;
+      this.vlc.input.time = seconds * 1000;
     } catch (e) {
       var callback = {
         notify: function(timer) {
@@ -192,7 +192,7 @@ VLCRenderer.prototype = {
         }
       };
       callback.parent = this;
-      this.playTime = time;
+      this.playTime = seconds;
       this.timer2.initWithCallback(callback, 10,
                                    Components.interfaces.nsITimer.TYPE_ONE_SHOT);
     }
@@ -275,7 +275,7 @@ VLCRenderer.prototype = {
   getDuration: function(pyCallback) {
     if (!this.hasVLC()) return;
     try {
-      rv = this.vlc.input.length;
+      rv = this.vlc.input.length / 1000;
     } catch (e) {
       rv = -1;
     }
@@ -296,14 +296,14 @@ VLCRenderer.prototype = {
   getCurrentTime: function(pyCallback) {
     if (!this.hasVLC()) return;
     var rv;
-    rv = this.vlc.input.time;
+    rv = this.vlc.input.time / 1000;
     pyCallback.makeCallbackFloat(rv);
   },
 
   getCurrentTimeJSONLY: function() {
     if (!this.hasVLC()) return;
     var rv;
-    rv = this.vlc.input.time;
+    rv = this.vlc.input.time / 1000;
     return rv;
   },
 

@@ -78,6 +78,8 @@ interface pcfIDTVPyBridge : nsISupports
   void loadURLInBrowser(in AString browserAreaId, in AString url);
   void skip(in short step);
   void skipPrevious();
+  void fastForward();
+  void rewind();
   void onMovieFinished();
   void stop();
   void playPause();

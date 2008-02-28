@@ -223,7 +223,7 @@ function setupSeekButton(direction, buttonId) {
   var timeoutId = null;
   var element = document.getElementById(buttonId);
   var handleTimeout = function() {
-    var seekAmount = direction * 3 - 0.5;
+    var seekAmount = (direction * 3) - 0.5;
     // we want to seek at 3X speed in our current direction (-1 for back, 1
     // for forward).  We also need to take into account that we've played back
     // 0.5 seconds worth of video before the timeout.

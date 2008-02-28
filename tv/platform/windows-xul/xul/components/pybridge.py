@@ -530,6 +530,14 @@ class PyBridge:
         app.htmlapp.playbackController.skip(-1, allowMovieReset=False)
 
     @asUrgent
+    def fastForward(self):
+        keyboard.handleKey(keyboard.RIGHT, False, False)
+
+    @asUrgent
+    def rewind(self):
+        keyboard.handleKey(keyboard.LEFT, False, False)
+
+    @asUrgent
     def onMovieFinished(self):
         app.htmlapp.playbackController.onMovieFinished()
 
@@ -799,8 +807,8 @@ class PyBridge:
         try:
             obj = database.defaultDatabase.getObjectByID (int(id))
             app.controller.removeFeeds ([obj])
-	except:
-	    pass
+        except:
+            pass
 
     @asIdle
     def toggleDirectoryWatchShown(self, id):
