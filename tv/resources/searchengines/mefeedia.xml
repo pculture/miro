@@ -1,6 +1,0 @@
-<searchengine>
-   <id>mefeedia</id>
-   <displayname>Mefeedia</displayname>
-   <url>http://mefeedia.com/search.php?q=%s&amp;oformat=rss2&amp;object=video&amp;num=%l</url>
-   <sort>9</sort>
-</searchengine>
