@@ -180,12 +180,12 @@ class Renderer:
     def goFullscreen(self):
         confirmMainThread()
         """Handle when the video window goes fullscreen."""
-        print "haven't implemented goFullscreen method yet!"
+        logging.debug("haven't implemented goFullscreen method yet!")
         
     def exitFullscreen(self):
         confirmMainThread()
         """Handle when the video window exits fullscreen mode."""
-        print "haven't implemented exitFullscreen method yet!"
+        logging.debug("haven't implemented exitFullscreen method yet!")
 
     def selectItem(self, anItem):
         self.selectFile(anItem.getFilename())
@@ -200,7 +200,7 @@ class Renderer:
 
     def getProgress(self):
         confirmMainThread()
-        print "getProgress: what does this do?"
+        logging.info("getProgress: what does this do?")
 
     @gtk_queue.gtkAsyncMethod
     def getCurrentTime(self, callback):
@@ -209,9 +209,13 @@ class Renderer:
             position, format = self.playbin.query_position(gst.FORMAT_TIME)
             position = position / 1000000000
         except Exception, e:
-            print "getCurrentTime: caught exception: %s" % e
+            logging.error("getCurrentTime: caught exception: %s" % e)
             position = 0
         callback(position)
+
+    @gtk_queue.gtkAsyncMethod
+    def setCurrentTime(self, seconds):
+        self.seek(seconds)
 
     def seek(self, seconds):
         confirmMainThread()
@@ -223,7 +227,7 @@ class Renderer:
                                    gst.SEEK_TYPE_NONE, 0)
         result = self.playbin.send_event(event)
         if not result:
-            print "seek failed"
+            logging.error("seek failed")
         
     def playFromTime(self, seconds):
         confirmMainThread()
@@ -238,7 +242,7 @@ class Renderer:
             duration, format = self.playbin.query_duration(gst.FORMAT_TIME)
             duration = duration / 1000000000
         except Exception, e:
-            print "getDuration: caught exception: %s" % e
+            logging.error("getDuration: caught exception: %s" % e)
             duration = 1
         if callback:
             callback(duration)
@@ -281,7 +285,7 @@ class Renderer:
     
     def setRate(self, rate):
         confirmMainThread()
-        print "setRate: set rate to %s" % rate
+        logging.info("gstreamer setRate: set rate to %s" % rate)
 
     def movieDataProgramInfo(self, moviePath, thumbnailPath):
         return (("python", 'platform/renderers/gst_extractor.py', moviePath, thumbnailPath), None)
