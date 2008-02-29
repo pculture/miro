@@ -4,100 +4,86 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-10-19 11:53-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-02-29 06:29-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:77 */
 /* Flag: untranslated */
-"Cancel" = "Cancel" /* = "Mégse" */;
+"Cancel" = "Cancel" /* = "Mégsem" */;
 
 "OK" = "OK";
 
-/* Flag: untranslated */
+/* File: ../../portable/dialogs.py:76 */
+"Ok" = "Ok";
+
 "$log" = "$log";
 
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">A hibakövető rendszer a <a href=\"$bugTrackerURL\">$bugTrackerURL</a> címen található. Mondja el, éppen mit csinált, toldja be a fenti keretből a szöveget, válaszoljon néhány kérdésre, és mi azonnal elkezdünk dolgozni a probléma megoldásán.</font>";
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">A hibakövető rendszer a <a href=\"$bugTrackerURL\">$bugTrackerURL</a> címen található. Mondja el, éppen mit csinált, illessze be a fenti keretből a szöveget, válaszoljon néhány kérdésre, és mi azonnal elkezdünk dolgozni a probléma megoldásán.</font>";
 
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Van egy perce? Legyen szíves, küldje el ezt elszállást a hibakövető rendszerünknek. Kérjük legalább azt írja meg a lehető legpontosabban, hogy éppen mit csinált, és csatolja hozzá a lenti keretben lévő szöveget.";
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Van egy perce? Legyen szíves, küldje el a hibajelentést az összeomlásról a hibakövető rendszerünknek. Kérjük legalább azt írja meg a lehető legpontosabban, hogy éppen mit csinált, és csatolja hozzá a lenti keretben lévő szöveget.";
 
 "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Minő szerencsétlenség! A $longAppName program áldozatul esett valami belső vitának vagy hibának ($when); ezért elnézését kérjük. Legyen szíves, indítsa újra a $shortAppName programot. Ebből majd tanul a program, és egyúttal csökken a csatornák és az egyéb beállított értékek elvesztésének az esélye.";
 
 "The fall of $shortAppName??" = "A $shortAppName program halála??";
 
-/* Flag: untranslated */
-"About Miro" = "About Miro";
+"About Miro" = "A Miro névjegye";
 
-/* Flag: untranslated */
-"Add Channel..." = "Add Channel...";
+"Add Channel..." = "Csatorna hozzáadása...";
 
-/* Flag: untranslated */
-"Add Guide..." = "Add Guide...";
+"Add Guide..." = "Műsorfüzet hozzáadása...";
 
 "Bring All to Front" = "Hozd mind előre";
 
-/* File: ../../platform/osx/frontend/Preferences.py:39 */
+/* File: ../../platform/osx/frontend/Preferences.py:65 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
-/* Flag: untranslated */
-"Channels" = "Channels";
+"Channels" = "Csatornák";
 
-/* Flag: untranslated */
-"Check for New Version" = "Check for New Version";
+"Check for New Version" = "Új verzió keresése";
 
 "Clear Menu" = "Ürítsd ki a menüt";
 
-/* Flag: untranslated */
-"Close Window" = "Close Window";
+"Close Window" = "Az ablak bezárása";
 
-"Copy" = "Másold";
+"Copy" = "Másolás";
 
-/* Flag: untranslated */
-"Copy Channel URL" = "Copy Channel URL";
+"Copy Channel URL" = "Csatorna hivatkozás másolása";
 
-/* Flag: untranslated */
-"Copy Video URL" = "Copy Video URL";
+"Copy Video URL" = "Videó URL másolása";
 
-"Cut" = "Vágd ki";
+"Cut" = "Kivágás";
 
 /* File: ../../portable/dialogs.py:96 */
-"Delete" = "Töröld";
+"Delete" = "Törlés";
 
-/* Flag: untranslated */
-"Donate" = "Donate";
+"Donate" = "Támogatás";
 
-/* Flag: untranslated */
-"Download Video..." = "Download Video...";
+"Download Video..." = "Videó letöltése";
 
-"Edit" = "Szerkeszd";
+"Edit" = "Szerkesztés";
 
-/* Flag: untranslated */
-"Export Channels (OPML)..." = "Export Channels (OPML)...";
+"Export Channels (OPML)..." = "Csatornák exportálása (OPML)...";
 
-"File" = "Irat";
+"File" = "Fájl";
 
 "Full Screen" = "Teljes képernyő";
 
-"Help" = "Segítség";
+"Help" = "Súgó";
 
-/* Flag: untranslated */
-"Hide Miro" = "Hide Miro";
+"Hide Miro" = "Miro elrejtése";
 
 "Hide Others" = "Rejts el másokat";
 
-/* Flag: untranslated */
-"Import Channels (OPML)..." = "Import Channels (OPML)...";
+"Import Channels (OPML)..." = "Csatornák importálása (OPML)...";
 
-/* Flag: untranslated */
-"Main Window" = "Main Window";
+"Main Window" = "Főablak";
 
 "MainMenu" = "Főmenü";
 
-"Minimize" = "Kicsinyítsd le";
+"Minimize" = "Minimalizálás";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
-/* Flag: untranslated */
 "Miro" = "Miro";
 
-/* Flag: untranslated */
-"Miro Help" = "Miro Help";
+"Miro Help" = "Miro Súgó";
 
 "New Channel Folder..." = "Új csatorna mappa...";
 
@@ -105,66 +91,56 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "New Playlist..." = "Új lejátszási lista...";
 
-/* Flag: untranslated */
-"New Search Channel..." = "New Search Channel...";
+"New Search Channel..." = "Új Keresési Csatorna...";
 
-/* Flag: untranslated */
-"Next Video" = "Next Video";
+"Next Video" = "Következő Videó";
 
 "Open Recent" = "Nyisd a legutóbbit";
 
-"Open..." = "Nyisd...";
+"Open..." = "Megnyitás...";
 
-"Paste" = "Toldd be";
+"Paste" = "Beillesztés";
 
-/* File: ../../platform/osx/frontend/Application.py:231 */
-"Play Video" = "Játszd le a videót";
+/* File: ../../platform/osx/frontend/Application.py:249 */
+"Play Video" = "Videó lejátszása";
 
-/* File: ../../platform/osx/frontend/Preferences.py:43 */
+/* File: ../../platform/osx/frontend/Preferences.py:69 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-/* Flag: untranslated */
-"Playback" = "Playback";
+"Playback" = "Lejátszás";
 
-/* Flag: untranslated */
-"Playlists" = "Playlists";
+"Playlists" = "Lejátszólisták";
 
-"Preferencesâ¦" = "Beállítások";
+"Preferences..." = "Tulajdonságok...";
 
-/* Flag: untranslated */
-"Previous Video" = "Previous Video";
+"Previous Video" = "Előző Videó";
 
-/* Flag: untranslated */
-"Quit Miro" = "Quit Miro";
+"Quit Miro" = "Kilépés";
 
-/* Flag: untranslated */
-"Remove..." = "Remove...";
+"Remove..." = "Eltávolítás...";
 
-"Rename..." = "Nevezd át...";
+"Rename..." = "Átnevezés...";
 
-/* Flag: untranslated */
-"Report a bug" = "Report a bug";
+"Report a bug" = "Hiba jelentése";
 
-/* Flag: untranslated */
-"Save Video As..." = "Save Video As...";
+"Save Video As..." = "Videó mentése más néven...";
 
-"Select All" = "Válaszd ki mind";
+"Select All" = "Összes kiválasztása";
 
-/* Flag: untranslated */
-"Send This Channel to a Friend" = "Send This Channel to a Friend";
+"Send This Channel to a Friend" = "Csatorna elküldése egy barátnak";
 
 "Services" = "Szolgáltatások";
 
-"Show All" = "Mutasd mind";
+"Show All" = "Mindent mutat";
 
-"Stop Video" = "Állítsd le a videót";
+"Stop Video" = "Videó megállítása";
 
-"Update All Channels" = "Frissíts minden csatornát";
+"Update All Channels" = "Az összes csatorna frissítése";
 
-"Update Channel" = "Frissítsd a csatornát";
+"Update Channel" = "Csatorna frissítése";
 
 "Window" = "Ablak";
 
-"Zoom" = "Nagyítsd";
+"Zoom" = "Nagyítás";
 
 "%channel feed%" = "%csatorna forrás%";
 
@@ -172,49 +148,40 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "%donation label%" = "%adakozási címke%";
 
-/* Flag: untranslated */
 "-00:00:00" = "-00:00:00";
 
 "00:00:00" = "00:00:00";
 
-/* Flag: untranslated */
-"Box" = "Box";
+"Box" = "Téglalap";
 
-"FullScreen Controls" = "Teljes képernyő vezérlő";
+"FullScreen Controls" = "Teljes képernyős vezérlő";
 
-/* File: ../../portable/tabs.py:45 */
-/* Flag: untranslated */
-"Video Search" = "Video Search";
+/* File: ../../portable/tabs.py:46 */
+"Video Search" = "Videók keresése";
 
 "VideoWindow" = "VideóAblak";
 
-/* Flag: untranslated */
 "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
 
-"Password:\n" = "Jelszó:\n\n";
+"Password:\n" = "Jelszó:\n";
 
-"Username and password required" = "Szükség van a nevére és a jelszavára";
+"Username and password required" = "Szükség van a nevére és jelszavára";
 
-"Username:\n\n" = "Név:\n\n\n\n\n";
+"Username:\n\n" = "Név:\n\n";
 
 " limit upstream to" = " a feltöltés határa:";
 
-/* Flag: untranslated */
-"(You must restart Miro for this change to take effect)" = "(You must restart Miro for this change to take effect)";
+"(You must restart Miro for this change to take effect)" = "(A változtatás érvénybelépéséhez a Miro újraindítása szükséges.)";
 
-/* Flag: untranslated */
-"(You must restart Miro for this change to take effect)\n" = "(You must restart Miro for this change to take effect)\n";
+"(You must restart Miro for this change to take effect)\n" = "(A változtatás érvénybelépéséhez a Miro újraindítása szükséges.)\n";
 
-/* Flag: untranslated */
-"(movies directory path goes here)" = "(movies directory path goes here)";
+"(movies directory path goes here)" = "(a filmek elérési útja)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-/* Flag: untranslated */
-"1 day" = "1 day";
+"1 day" = "1 nap";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
-/* Flag: untranslated */
-"1 month" = "1 month";
+"1 month" = "1 hónap";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
 "10 days" = "10 nap";
@@ -231,43 +198,34 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
 "6 days" = "6 nap";
 
-/* Flag: untranslated */
 "99999" = "99999";
 
-/* Flag: untranslated */
-"Add..." = "Add...";
+"Add..." = "Hozzáadás...";
 
-/* Flag: untranslated */
-"BitTorrent ports:" = "BitTorrent ports:";
+"BitTorrent ports:" = "BitTorrent portok:";
 
 "By default, videos expire after:" = "A videó ennyi idő után avul el:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
-/* Flag: untranslated */
-"Change..." = "Change...";
+"Change..." = "Módosítás...";
 
-/* Flag: untranslated */
-"Check channels for new content:" = "Check channels for new content:";
+"Check channels for new content:" = "Új tartalom keresése a csatornákon:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
 "Don't start a download if it leaves less than" = "Ne kezdd el a letöltést, ha ennél kevesebb időt hagy:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-/* Flag: untranslated */
-"Download at most" = "Download at most";
+"Download at most" = "letöltési maximum";
 
-/* Flag: untranslated */
-"Folder location" = "Folder location";
+"Folder location" = "Mappa helye";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
 "GB free." = "GB szabad.";
 
 "KB/s when my computer is active." = "KB/s ha a számítógép aktív.";
 
-/* Flag: untranslated */
 "Maximum:" = "Maximum:";
 
-/* Flag: untranslated */
 "Minimum:" = "Minimum:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
@@ -276,45 +234,35 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "OtherViews" = "MásNézetek";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
-/* Flag: untranslated */
-"Play videos one after another." = "Play videos one after another.";
+"Play videos one after another." = "Videók lejátszása sorban.";
 
-/* Flag: untranslated */
-"Remember video position." = "Remember video position.";
+"Remember video position." = "Lejátszás helyének megjegyzése.";
 
-/* File: ../../portable/guide.py:86 */
+/* File: ../../portable/guide.py:107 */
 /* File: ../../portable/playlist.py:197 */
-/* File: ../../portable/feed.py:788 */
+/* File: ../../portable/feed.py:795 */
 /* File: ../../portable/menu.py:65 */
 /* File: ../../portable/menu.py:70 */
 /* File: ../../portable/folder.py:156 */
 /* File: ../../portable/folder.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
-/* Flag: untranslated */
-"Remove" = "Remove";
+"Remove" = "Eltávolitás";
 
-/* Flag: untranslated */
-"Run Miro at startup" = "Run Miro at startup";
+"Run Miro at startup" = "Miro indítása a rendszer indulásakor";
 
-/* Flag: untranslated */
-"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
+"Save downloaded videos in this folder:" = "Letöltött videók mentése ide:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:571 */
-/* Flag: untranslated */
-"Show as Channel" = "Show as Channel";
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573 */
+"Show as Channel" = "Megjelenítés Csatornaként";
 
-/* Flag: untranslated */
-"Stop after each video." = "Stop after each video.";
+"Stop after each video." = "Lejátszás megállítása minden video végén.";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
+"To avoid internet slowdowns:" = "A hálózat lelassulásának elkerülésére:";
 
-/* File: ../../portable/app.py:1187 */
-/* Flag: untranslated */
-"Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
+/* File: ../../portable/app.py:1206 */
+"Warn me when I attempt to quit with downloads in progress" = "Figyelmeztessen ha letöltés közben akarok kilépni";
 
-/* Flag: untranslated */
-"Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:";
+"Watch for new videos in these folders and include them in the Library:" = "Új videók figyelése és Könyvtárhoz adása a következő mappákban:";
 
 "every 30 minutes" = "30 percenként";
 
@@ -323,37 +271,28 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "manually" = "majd én magam";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
-/* Flag: untranslated */
-"videos at once." = "videos at once.";
+"videos at once." = "videók egyszerre.";
 
-/* Flag: untranslated */
 "$label$" = "$label$";
 
-/* Flag: untranslated */
 "$title$" = "$title$";
 
 "Channel" = "Csatorna";
 
 /* File: ../../portable/dialogs.py:91 */
-/* Flag: untranslated */
-"Create" = "Create";
+"Create" = "Létrehoz";
 
-/* Flag: untranslated */
-"In this:" = "In this:";
+"In this:" = "Ebben:";
 
-/* Flag: untranslated */
-"Item1" = "Item1";
+"Item1" = "Tétel1";
 
-/* Flag: untranslated */
-"Search Engine" = "Search Engine";
+"Search Engine" = "Keresési szolgáltató";
 
-/* Flag: untranslated */
-"Search for:" = "Search for:";
+"Search for:" = "Keresés:";
 
-/* Flag: untranslated */
 "URL" = "URL";
 
-/* File: ../../platform/windows-xul/frontend_implementation/startup.py:25 */
+/* File: ../../platform/windows-xul/frontend_implementation/startup.py:42 */
 /* File: ../../platform/gtk-x11/frontend_implementation/startup.py:48 */
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(%d fájlt feldolgoztam, %d videót találtam)";
@@ -362,318 +301,251 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Browse" = "Böngészés";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:90 */
-/* File: ../../platform/osx/frontend/StartupPanel.py:116 */
+/* File: ../../platform/osx/frontend/StartupPanel.py:106 */
 "Next" = "Tovább";
 
 /* File: ../../portable/dialogs.py:79 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "Nem";
 
-/* Flag: untranslated */
-"Only search my Movies folder." = "Only search my Movies folder.";
+"Only search my Movies folder." = "Csak a Videók mappában keressen.";
 
-/* Flag: untranslated */
-"Search my entire Home folder." = "Search my entire Home folder.";
+"Search my entire Home folder." = "Keressen az egész Home mappámban.";
 
-/* Flag: untranslated */
-"Search this folder:" = "Search this folder:";
+"Search this folder:" = "Keresés ebben a mappában:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37 */
-"Searching for Videos" = "Videókat keresek";
+"Searching for Videos" = "Videók keresése";
 
-/* Flag: untranslated */
-"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?";
+"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "A Miro Player megkeresheti az ön összes videóját, hogy segítse gyűjteménye kezelésében.\n\n\nSzeretné, hogy a Miro megkeresse a számítógépen található videókat?";
 
-/* Flag: untranslated */
-"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question.";
+"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "A következő néhány képernyő segíteni fog önnek a Miro megfelelő beállításában. Itt az első kérdés.";
 
-/* Flag: untranslated */
-"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?";
+"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Javasoljuk, hogy engedélyezze a Miro indítását a számítógép elindulásakor. Így a be nem fejezett letöltések befejeződhetnek, és a csatornák új videói azonnal elérhetőek lesznek, mikor nézni szeretné őket.\n\n\nSzeretné, hogy a Miro elinduljon, a számítógép indításakor?";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
 "Welcome to Internet TV!" = "Üdvözöljük az Internet TV-ben!";
 
-/* Flag: untranslated */
-"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
+"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Üdvözli önt az Internet TV! A Miro Player sokmindenben a segítségére lehet: automatikusan letöltheti kedvenc csatornájának videóit, új videókat nézhet egyiket a másik után, letölthet torrenteket, ajánlhat videókat barátainak, és még sok minden mást.\n\n";
 
 /* File: ../../portable/dialogs.py:78 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
 "Yes" = "Igen";
 
-/* Flag: untranslated */
-"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Miro is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Miro regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Miro Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Miro is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Miro regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Miro Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n";
-
 "%message%\n%message%" = "%message%\n\n%message%";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57 */
-/* Flag: untranslated */
-"Update Available" = "Update Available";
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78 */
+"Update Available" = "Új Frissítés elérhető";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:58 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79 */
 /* Flag: python-format */
-"A new version of %s is available for download." = "A new version of %s is available for download.";
+"A new version of %s is available for download." = "A %s új verziója elérhető.";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214 */
-/* Flag: untranslated */
-"Error Bombing Item" = "Error Bombing Item";
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240 */
+"Error Bombing Item" = "Hiba a video megnyitása közben";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:216 */
-/* Flag: untranslated */
-"Error Recommending Item" = "Error Recommending Item";
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242 */
+"Error Recommending Item" = "Hiba történt a tartalom ajánlásakor";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218 */
-/* Flag: untranslated */
-"Error Opening Website" = "Error Opening Website";
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244 */
+"Error Opening Website" = "Hiba történt az oldal megnyitásakor";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:222 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248 */
 /* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "Hiba történt a' %s megnyitása során. Próbálja újra néhány másodperc múlva";
+"There was an error opening %s.  Please try again in a few seconds" = "Hiba történt a %s megnyitása során. Próbálja újra néhány másodperc múlva";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:45 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:62 */
 /* Flag: python-format */
-"Error importing modules:\n%s" = "Error importing modules:\n%s";
+"Error importing modules:\n%s" = "Hiba a következő modulok importálásakor:\n%s";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:49 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:66 */
 "Starting up" = "Ébredezem";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:256 */
-/* Flag: untranslated */
-"Loading window" = "Loading window";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:273 */
+"Loading window" = "Ablak betöltése";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:257 */
-/* Flag: untranslated */
-"onStartup called twice" = "onStartup called twice";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:274 */
+"onStartup called twice" = "onStartup kétszer volt hívva";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:671 */
-/* Flag: untranslated */
-"Spacebar" = "Spacebar";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:702 */
+"Spacebar" = "Szóköz";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:818 */
-/* Flag: untranslated */
-"Close to tray?" = "Close to tray?";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:851 */
+"Close to tray?" = "Bezárás a tálcára?";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:819 */
-/* Flag: untranslated */
-"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options.";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:852 */
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Amikor a piros kilépés gombra kattint, szeretné hogy a Miro bezáruljon, vagy a tálcára helyeződjön? Később is megváltoztathatja ezt a Beállítások-nál.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:27 */
-/* Flag: untranslated */
-"Download Completed" = "Download Completed";
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:44 */
+"Download Completed" = "Letöltés Kész";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:28 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:45 */
 /* Flag: python-format */
-"Download of video '%s' is finished." = "Download of video '%s' is finished.";
+"Download of video '%s' is finished." = "A(z) '%s' videó letöltése befejeződött.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:37 */
-/* Flag: untranslated */
-"Download Failed" = "Download Failed";
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:54 */
+"Download Failed" = "Sikertelen Letöltés";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:38 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:55 */
 /* Flag: python-format */
-"Download of video '%s' has failed." = "Download of video '%s' has failed.";
+"Download of video '%s' has failed." = "A(z) '%s' videó letöltése sikertelen.";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:261 */
-/* Flag: untranslated */
-"Subscribe to Channel" = "Subscribe to Channel";
+/* File: ../../platform/osx/frontend/MainFrame.py:278 */
+"Subscribe to Channel" = "Feliratkozás a csatornára";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:262 */
-/* Flag: untranslated */
-"Enter the URL of the channel you would like to subscribe to." = "Enter the URL of the channel you would like to subscribe to.";
+/* File: ../../platform/osx/frontend/MainFrame.py:279 */
+"Enter the URL of the channel you would like to subscribe to." = "Írja be a csatorna URL-jét amelyre fel kíván iratkozni.";
 
-/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:218 */
-/* Flag: untranslated */
-"Audio" = "Audio";
+/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:248 */
+"Audio" = "Audió";
 
-/* File: ../../platform/osx/frontend/Preferences.py:38 */
+/* File: ../../platform/osx/frontend/Preferences.py:64 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
-/* Flag: untranslated */
-"General" = "General";
+"General" = "Általános";
 
-/* File: ../../platform/osx/frontend/Preferences.py:40 */
+/* File: ../../platform/osx/frontend/Preferences.py:66 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
-/* Flag: untranslated */
-"Downloads" = "Downloads";
+"Downloads" = "Letöltések";
 
-/* File: ../../platform/osx/frontend/Preferences.py:41 */
+/* File: ../../platform/osx/frontend/Preferences.py:67 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
-/* Flag: untranslated */
-"Folders" = "Folders";
+"Folders" = "Mappák";
 
-/* File: ../../platform/osx/frontend/Preferences.py:42 */
+/* File: ../../platform/osx/frontend/Preferences.py:68 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
-/* Flag: untranslated */
-"Disk Space" = "Disk Space";
+"Disk Space" = "Lemez tárhely";
 
-/* File: ../../platform/osx/frontend/Preferences.py:170 */
-/* Flag: untranslated */
-"Movies Directory" = "Movies Directory";
+/* File: ../../platform/osx/frontend/Preferences.py:196 */
+"Movies Directory" = "Film Könyvtár";
 
-/* File: ../../platform/osx/frontend/Preferences.py:171 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/frontend/Preferences.py:197 */
 /* Flag: python-format */
-"Select a Directory to store %s downloads in." = "Select a Directory to store %s downloads in.";
+"Select a Directory to store %s downloads in." = "Válassza ki a(z) %s letöltések tárolására használni kívánt Könyvtárat.";
 
-/* File: ../../platform/osx/frontend/Preferences.py:172 */
-/* File: ../../platform/osx/frontend/Preferences.py:236 */
-/* Flag: untranslated */
-"Select" = "Select";
+/* File: ../../platform/osx/frontend/Preferences.py:198 */
+/* File: ../../platform/osx/frontend/Preferences.py:262 */
+"Select" = "Kijelölés";
 
-/* File: ../../platform/osx/frontend/Preferences.py:181 */
+/* File: ../../platform/osx/frontend/Preferences.py:207 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
-/* Flag: untranslated */
-"Migrate existing movies?" = "Migrate existing movies?";
+"Migrate existing movies?" = "Mozgassuk a már létező filmeket?";
 
-/* File: ../../platform/osx/frontend/Preferences.py:182 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/frontend/Preferences.py:208 */
 /* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).";
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Új könyvtárat választott a filmek letöltésére. Átmozgassa a %s a már letöltött fájlokat? (Az éppen folyamatban lévő letöltések csak a befejeződésük után kerülnek áthelyezésre.)";
 
-/* File: ../../platform/osx/frontend/Preferences.py:234 */
-/* Flag: untranslated */
-"View this Directory in the Library" = "View this Directory in the Library";
+/* File: ../../platform/osx/frontend/Preferences.py:260 */
+"View this Directory in the Library" = "Mappa megtekintése a Könyvtárban";
 
-/* File: ../../platform/osx/frontend/Preferences.py:235 */
-/* Flag: untranslated */
-"Select a Directory to view in the Library." = "Select a Directory to view in the Library.";
+/* File: ../../platform/osx/frontend/Preferences.py:261 */
+"Select a Directory to view in the Library." = "Válasszon ki egy mappát a Könyvtárban történő megtekintéshez.";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:114 */
-/* Flag: untranslated */
-"Search!" = "Search!";
+/* File: ../../platform/osx/frontend/StartupPanel.py:80 */
+"Finish" = "Befejezés";
 
-/* File: ../../platform/osx/frontend/Application.py:228 */
-/* Flag: untranslated */
-"Pause Video" = "Pause Video";
+/* File: ../../platform/osx/frontend/StartupPanel.py:139 */
+"Search!" = "Keresés!";
 
-/* File: ../../platform/osx/frontend/Application.py:237 */
-/* Flag: untranslated */
-"Unsupported version of Quicktime" = "Unsupported version of Quicktime";
+/* File: ../../platform/osx/frontend/Application.py:246 */
+"Pause Video" = "Lejátszás szüneteltetése";
 
-/* File: ../../platform/osx/frontend/Application.py:238 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/frontend/Application.py:255 */
+"Unsupported version of Quicktime" = "Nem támogatott Quicktime verzió";
+
+/* File: ../../platform/osx/frontend/Application.py:256 */
 /* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "To run %s you need the most recent version of Quicktime, which is a free update.";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:5 */
-/* Flag: untranslated */
-"_Remove..." = "_Remove...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:6 */
-/* Flag: untranslated */
-"_Remove Playlist..." = "_Remove Playlist...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:7 */
-/* Flag: untranslated */
-"_Remove Playlists..." = "_Remove Playlists...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:8 */
-/* Flag: untranslated */
-"_Remove Playlist Folder..." = "_Remove Playlist Folder...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:9 */
-/* Flag: untranslated */
-"_Remove Playlist Folders..." = "_Remove Playlist Folders...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:10 */
-/* File: ../../portable/menubar.py:179 */
-/* Flag: untranslated */
-"_Remove Channel..." = "_Remove Channel...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:11 */
-/* File: ../../portable/menubar.py:180 */
-/* Flag: untranslated */
-"_Remove Channels..." = "_Remove Channels...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:12 */
-/* File: ../../portable/menubar.py:182 */
-/* Flag: untranslated */
-"_Remove Channel Folder..." = "_Remove Channel Folder...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:13 */
-/* File: ../../portable/menubar.py:181 */
-/* Flag: untranslated */
-"_Remove Channel Folders..." = "_Remove Channel Folders...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:14 */
-/* Flag: untranslated */
-"_Remove Miro Guide..." = "_Remove Miro Guide...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:15 */
-/* Flag: untranslated */
-"_Remove Miro Guides..." = "_Remove Miro Guides...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:16 */
-/* Flag: untranslated */
-"_Remove Video..." = "_Remove Video...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:17 */
-/* Flag: untranslated */
-"_Remove Videos..." = "_Remove Videos...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:18 */
-/* Flag: untranslated */
-"Re_name..." = "Re_name...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:19 */
-/* Flag: untranslated */
-"Re_name Playlist..." = "Re_name Playlist...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:20 */
-/* Flag: untranslated */
-"Re_name Playlist Folder..." = "Re_name Playlist Folder...";
-
-/* File: ../../platform/osx/frontend/UIStrings.py:21 */
-/* File: ../../portable/menubar.py:178 */
-/* Flag: untranslated */
-"Re_name Channel..." = "Re_name Channel...";
+"To run %s you need the most recent version of Quicktime, which is a free update." = "A %s futtatásához a Quicktime legújabb verziója szükséges, ami ingyenesen elérhető.";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:22 */
-/* Flag: untranslated */
-"Re_name Channel Folder..." = "Re_name Channel Folder...";
+"_Remove..." = "_Eltávolítás...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:23 */
-/* Flag: untranslated */
-"Re_name Miro Guide..." = "Re_name Miro Guide...";
+"_Remove Playlist..." = "_Lejátszási lista eltávolítása...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:24 */
-/* File: ../../portable/menubar.py:184 */
-/* Flag: untranslated */
-"_Update Channel..." = "_Update Channel...";
+"_Remove Playlists..." = "_Lejátszási listák eltávolítása...";
 
 /* File: ../../platform/osx/frontend/UIStrings.py:25 */
+"_Remove Playlist Folder..." = "_Lejátszólista mappa eltávolítása...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:26 */
+"_Remove Playlist Folders..." = "_Lejátszólista mappák eltávolítása...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:27 */
+/* File: ../../portable/menubar.py:179 */
+"_Remove Channel..." = "Csato_rna eltávolítása...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:28 */
+/* File: ../../portable/menubar.py:180 */
+"_Remove Channels..." = "Csato_rnák eltávolítása...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:29 */
+/* File: ../../portable/menubar.py:182 */
+"_Remove Channel Folder..." = "Csato_rna mappa eltávolítása...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:30 */
+/* File: ../../portable/menubar.py:181 */
+"_Remove Channel Folders..." = "_Csato_rna mappák eltávolítása...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:31 */
+"_Remove Miro Guide..." = "Mi_ro Guide eltávolítása...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:32 */
+"_Remove Miro Guides..." = "Több Mi_ro Guide eltávolítása...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:33 */
+"_Remove Video..." = "_Videó eltávolítása...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:34 */
+"_Remove Videos..." = "_Videók eltávolítása...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:35 */
+"Re_name..." = "Át_nevezés...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:36 */
+"Re_name Playlist..." = "Lejátszólista Át_nevezése...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:37 */
+"Re_name Playlist Folder..." = "Lejátszólista mappa Át_nevezése...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:38 */
+/* File: ../../portable/menubar.py:178 */
+"Re_name Channel..." = "Csatorna Át_nevezése...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:39 */
+"Re_name Channel Folder..." = "Csatorna mappa Át_nevezése...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:40 */
+"Re_name Miro Guide..." = "Miro Guide át_nevezése...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:41 */
+/* File: ../../portable/menubar.py:184 */
+"_Update Channel..." = "Csatorna _frissítése...";
+
+/* File: ../../platform/osx/frontend/UIStrings.py:42 */
 /* File: ../../portable/menubar.py:185 */
-/* Flag: untranslated */
-"_Update Channels..." = "_Update Channels...";
+"_Update Channels..." = "Csatornák _frissítése...";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42 */
 "Settings" = "Beállítások";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45 */
-/* Flag: untranslated */
-"Hide" = "Hide";
+"Hide" = "Elrejtés";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47 */
-/* Flag: untranslated */
-"Show" = "Show";
+"Show" = "Mutatás";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48 */
 /* File: ../../portable/dialogs.py:80 */
 /* File: ../../portable/menubar.py:257 */
-/* Flag: untranslated */
-"Quit" = "Quit";
+"Quit" = "Kilépés";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:322 */
-/* Flag: untranslated */
-"New Channel _Guide..." = "New Channel _Guide...";
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324 */
+"New Channel _Guide..." = "Új csatorna kalauz";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:562 */
-/* Flag: untranslated */
-"Folder Location" = "Folder Location";
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564 */
+"Folder Location" = "Mappa helye";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
@@ -683,376 +555,302 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
 "Password:" = "Jelszó:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:413 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416 */
 "Unknown Runtime Error" = "Ismeretlen Hiba";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:414 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417 */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "Ismeretlen hiba lépett fel %s.";
 
-/* File: ../../portable/dl_daemon/download.py:367 */
-/* Flag: untranslated */
-"Error" = "Error";
+/* File: ../../portable/dl_daemon/download.py:359 */
+"Error" = "Hiba";
 
-/* File: ../../portable/dl_daemon/download.py:440 */
-/* Flag: untranslated */
+/* File: ../../portable/dl_daemon/download.py:432 */
 /* Flag: python-format */
-"Could not write to %s" = "Could not write to %s";
+"Could not write to %s" = "%s nem írható";
 
-/* File: ../../portable/dl_daemon/download.py:459 */
-/* Flag: untranslated */
-"Not enough disk space" = "Not enough disk space";
+/* File: ../../portable/dl_daemon/download.py:452 */
+"Not enough disk space" = "Nincs elég lemezterület";
 
-/* File: ../../portable/dl_daemon/download.py:460 */
-/* Flag: untranslated */
+/* File: ../../portable/dl_daemon/download.py:453 */
 /* Flag: python-format */
-"%s MB required to store this video" = "%s MB required to store this video";
+"%s MB required to store this video" = "%s MB hely szükséges a videó tárolásához";
 
-/* File: ../../portable/dl_daemon/download.py:679 */
-/* Flag: untranslated */
-"BitTorrent failure" = "BitTorrent failure";
+/* File: ../../portable/dl_daemon/download.py:672 */
+"BitTorrent failure" = "BitTorrent hiba";
 
-/* File: ../../portable/dl_daemon/download.py:680 */
-/* Flag: untranslated */
-"BitTorrent failed to startup" = "BitTorrent failed to startup";
+/* File: ../../portable/dl_daemon/download.py:673 */
+"BitTorrent failed to startup" = "A BitTorrent indítása sikertelen";
 
-/* File: ../../portable/dl_daemon/download.py:803 */
-/* Flag: untranslated */
-"Corrupt Torrent" = "Corrupt Torrent";
+/* File: ../../portable/dl_daemon/download.py:796 */
+"Corrupt Torrent" = "Hibás Torrent";
 
-/* File: ../../portable/dl_daemon/download.py:804 */
-/* Flag: untranslated */
+/* File: ../../portable/dl_daemon/download.py:797 */
 /* Flag: python-format */
-"The torrent file at %s was not valid" = "The torrent file at %s was not valid";
+"The torrent file at %s was not valid" = "%s torrent fájl sérült";
 
-/* File: ../../portable/dl_daemon/download.py:830 */
-/* Flag: untranslated */
-"Torrent file deleted" = "Torrent file deleted";
+/* File: ../../portable/dl_daemon/download.py:822 */
+"Torrent file deleted" = "Torrent fájl törölve";
 
-/* File: ../../portable/dl_daemon/download.py:831 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted " = "The torrent file for this item was deleted ";
+/* File: ../../portable/dl_daemon/download.py:823 */
+"The torrent file for this item was deleted " = "Az ehhez az elemhez tartozó torrent fájl törölve lett ";
 
-/* File: ../../portable/dl_daemon/download.py:832 */
-/* Flag: untranslated */
-"outside of democracy." = "outside of democracy.";
-
-/* File: ../../portable/tabs.py:43 */
-/* Flag: untranslated */
-"Library" = "Library";
+/* File: ../../portable/dl_daemon/download.py:824 */
+"outside of Miro." = "Miron kívül";
 
 /* File: ../../portable/tabs.py:44 */
-/* Flag: untranslated */
-"New" = "New";
+"Library" = "Könyvtár";
 
-/* File: ../../portable/tabs.py:46 */
-/* Flag: untranslated */
-"Downloading" = "Downloading";
+/* File: ../../portable/tabs.py:45 */
+"New" = "Új...";
 
-/* File: ../../portable/guide.py:83 */
-/* File: ../../portable/feed.py:782 */
-/* Flag: untranslated */
-"Copy URL to clipboard" = "Copy URL to clipboard";
+/* File: ../../portable/tabs.py:47 */
+"Downloading" = "Letöltés";
 
-/* File: ../../portable/guide.py:118 */
-/* Flag: untranslated */
-"Miro Guide" = "Miro Guide";
+/* File: ../../portable/guide.py:104 */
+/* File: ../../portable/feed.py:789 */
+"Copy URL to clipboard" = "Hivatkozás másolása a vágólapra";
 
-/* File: ../../portable/extrastrings.py:5 */
-/* File: ../../portable/feed.py:2012 */
-/* File: ../../portable/feed.py:2104 */
-/* Flag: untranslated */
-"Search" = "Search";
+/* File: ../../portable/guide.py:154 */
+"Miro Guide" = "Miro Kalauz";
 
-/* File: ../../portable/downloader.py:214 */
-/* Flag: untranslated */
-"activity" = "activity";
+/* File: ../../portable/extrastrings.py:22 */
+/* File: ../../portable/feed.py:2028 */
+/* File: ../../portable/feed.py:2120 */
+"Search" = "Keresés";
 
-/* File: ../../portable/downloader.py:250 */
-/* File: ../../portable/httpclient.py:112 */
-/* Flag: untranslated */
-"File not found" = "File not found";
+/* File: ../../portable/downloader.py:215 */
+"activity" = "aktivitás";
 
 /* File: ../../portable/downloader.py:251 */
-/* Flag: untranslated */
-"Flash URL Scraping Error" = "Flash URL Scraping Error";
+/* File: ../../portable/httpclient.py:114 */
+/* File: ../../portable/httpclient.py:142 */
+"File not found" = "A fájl nem található";
 
-/* File: ../../portable/downloader.py:430 */
-/* Flag: untranslated */
-"starting up" = "starting up";
+/* File: ../../portable/downloader.py:252 */
+"Flash URL Scraping Error" = "Hiba a Flash fájl fogadásban az URL-ről";
+
+/* File: ../../portable/downloader.py:427 */
+"starting up" = "indítás";
 
 /* File: ../../portable/playlist.py:196 */
 /* File: ../../portable/playlist.py:201 */
-/* Flag: untranslated */
-"Rename Playlist" = "Rename Playlist";
+"Rename Playlist" = "Lejátszólista átnevezése";
 
 /* File: ../../portable/playlist.py:202 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s";
+"Enter a new name for the playlist %s" = "Írja be a(z) %s lejátszólista új nevét";
 
 /* File: ../../portable/playlist.py:224 */
-/* Flag: untranslated */
-"Create Playlist" = "Create Playlist";
+"Create Playlist" = "Lejátszólista létrehozása";
 
 /* File: ../../portable/playlist.py:225 */
-/* Flag: untranslated */
-"Enter a name for the new playlist" = "Enter a name for the new playlist";
-
-/* File: ../../portable/feed.py:381 */
-/* Flag: untranslated */
-"never" = "never";
+"Enter a name for the new playlist" = "Adjon nevet az új lejátszólistának";
 
 /* File: ../../portable/feed.py:383 */
-/* File: ../../portable/item.py:535 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%d hours" = "%d hours";
+"never" = "soha";
 
 /* File: ../../portable/feed.py:385 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:542 */
 /* Flag: python-format */
-"%d day" = "%d day";
+"%d hours" = "%d óra";
 
 /* File: ../../portable/feed.py:387 */
-/* File: ../../portable/item.py:533 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d days" = "%d days";
+"%d day" = "%d nap";
 
 /* File: ../../portable/feed.py:389 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:540 */
 /* Flag: python-format */
-"%d months" = "%d months";
+"%d days" = "%d nap";
 
-/* File: ../../portable/feed.py:780 */
-/* Flag: untranslated */
-"Update Channel Now" = "Update Channel Now";
-
-/* File: ../../portable/feed.py:783 */
-/* File: ../../portable/feed.py:792 */
-/* Flag: untranslated */
-"Rename Channel" = "Rename Channel";
+/* File: ../../portable/feed.py:391 */
+/* Flag: python-format */
+"%d months" = "%d hónap";
 
 /* File: ../../portable/feed.py:787 */
-/* Flag: untranslated */
-"Revert Title to Default" = "Revert Title to Default";
+"Update Channel Now" = "Csatorna frissítése most";
 
-/* File: ../../portable/feed.py:793 */
-/* Flag: untranslated */
+/* File: ../../portable/feed.py:790 */
+/* File: ../../portable/feed.py:799 */
+"Rename Channel" = "Csatorna átnevezése";
+
+/* File: ../../portable/feed.py:794 */
+"Revert Title to Default" = "Cím visszaállítása alapértelmezettre";
+
+/* File: ../../portable/feed.py:800 */
 /* Flag: python-format */
-"Enter a new name for the channel %s" = "Enter a new name for the channel %s";
+"Enter a new name for the channel %s" = "Írja be a(z) %s csatorna új nevét";
 
-/* File: ../../portable/feed.py:880 */
-/* Flag: untranslated */
-"Error loading feed" = "Error loading feed";
+/* File: ../../portable/feed.py:887 */
+"Error loading feed" = "Hiba a műsor betöltése közben";
 
-/* File: ../../portable/feed.py:881 */
-/* Flag: untranslated */
+/* File: ../../portable/feed.py:888 */
 /* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s).";
+"Couldn't load the feed at %s (%s)." = "Nem sikerült a műsor betöltése a következő helyről: %s (%s).";
 
-/* File: ../../portable/feed.py:884 */
-/* Flag: untranslated */
-"Would you like to keep the feed?" = "Would you like to keep the feed?";
+/* File: ../../portable/feed.py:891 */
+"Would you like to keep the feed?" = "Szeretné megőrizni a műsort?";
 
-/* File: ../../portable/feed.py:997 */
-/* Flag: untranslated */
-"Bad content-type" = "Bad content-type";
+/* File: ../../portable/feed.py:1004 */
+"Bad content-type" = "Rossz tartalom típus";
 
-/* File: ../../portable/feed.py:1010 */
+/* File: ../../portable/feed.py:1017 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-/* Flag: untranslated */
-"Channel is not compatible with $shortAppName!" = "Channel is not compatible with $shortAppName!";
+"Channel is not compatible with $shortAppName!" = "A csatorna nem $shortAppName kompatibilis!";
 
-/* File: ../../portable/feed.py:1011 */
-/* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
+/* File: ../../portable/feed.py:1018 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Megpróbálhatjuk letölteni a fájlokat. A szokásosnál több időt vehet igénybe a videók listázása, és a leírások furcsán jelenhetnek meg. Kerjük vegye fel a kapcsolatot $url kiadójával, és érdeklődjön a műsor $shortAppName kompatibilis verziójáról!\n\nMindenképpen meg szeretné próbálni a csatorna betöltését?";
 
-/* File: ../../portable/feed.py:2118 */
-/* Flag: untranslated */
-"Local Files" = "Local Files";
+/* File: ../../portable/feed.py:2134 */
+"Local Files" = "Helyi fájlok";
 
-/* File: ../../portable/feed.py:2132 */
-/* Flag: untranslated */
-"Playing File" = "Playing File";
+/* File: ../../portable/feed.py:2148 */
+"Playing File" = "Fájl lejátszása";
 
 /* File: ../../portable/menu.py:69 */
-/* Flag: untranslated */
-"Update Channels Now" = "Update Channels Now";
-
-/* File: ../../portable/menu.py:92 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%d Downloaded Items" = "%d Downloaded Items";
+"Update Channels Now" = "Csatornák frissítése most";
 
 /* File: ../../portable/menu.py:94 */
-/* File: ../../portable/item.py:1457 */
-/* Flag: untranslated */
-"Play" = "Play";
+/* Flag: python-format */
+"%d Downloaded Items" = "%d letöltött fájl";
 
-/* File: ../../portable/menu.py:95 */
-/* File: ../../portable/item.py:1460 */
-/* Flag: untranslated */
-"Add to new playlist" = "Add to new playlist";
+/* File: ../../portable/menu.py:96 */
+/* File: ../../portable/item.py:1475 */
+"Play" = "Lejátszás";
 
 /* File: ../../portable/menu.py:97 */
-/* File: ../../portable/item.py:1453 */
-/* Flag: untranslated */
-"Remove From Playlist" = "Remove From Playlist";
+/* File: ../../portable/item.py:1478 */
+"Add to new playlist" = "Hozzáadás új lejátszási listához";
 
 /* File: ../../portable/menu.py:99 */
-/* File: ../../portable/item.py:1455 */
-/* Flag: untranslated */
-"Remove From the Library" = "Remove From the Library";
+/* File: ../../portable/item.py:1471 */
+"Remove From Playlist" = "Eltávolítás a lejátszólistából";
 
-/* File: ../../portable/menu.py:105 */
-/* File: ../../portable/item.py:1464 */
-/* Flag: untranslated */
-"Mark as Unwatched" = "Mark as Unwatched";
+/* File: ../../portable/menu.py:101 */
+/* File: ../../portable/item.py:1473 */
+"Remove From the Library" = "Eltávolítás a Könyvtárból";
 
-/* File: ../../portable/menu.py:110 */
-/* Flag: untranslated */
+/* File: ../../portable/menu.py:107 */
+/* File: ../../portable/item.py:1482 */
+"Mark as Unwatched" = "Jelölés megtekintetlenként";
+
+/* File: ../../portable/menu.py:112 */
+/* File: ../../portable/item.py:1484 */
+"Mark as Watched" = "Jelölés megtekintettként";
+
+/* File: ../../portable/menu.py:117 */
 /* Flag: python-format */
-"%d Available Items" = "%d Available Items";
-
-/* File: ../../portable/menu.py:111 */
-/* File: ../../portable/dialogs.py:85 */
-/* File: ../../portable/item.py:1470 */
-/* Flag: untranslated */
-"Download" = "Download";
-
-/* File: ../../portable/menu.py:116 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%d Downloading Items" = "%d Downloading Items";
+"%d Available Items" = "%d elérhető tétel";
 
 /* File: ../../portable/menu.py:118 */
-/* File: ../../portable/item.py:1468 */
-/* Flag: untranslated */
-"Cancel Download" = "Cancel Download";
-
-/* File: ../../portable/menu.py:120 */
-/* File: ../../portable/item.py:1468 */
-/* Flag: untranslated */
-"Pause Download" = "Pause Download";
+/* File: ../../portable/dialogs.py:85 */
+/* File: ../../portable/item.py:1491 */
+"Download" = "Letöltés";
 
 /* File: ../../portable/menu.py:123 */
-/* File: ../../portable/item.py:1466 */
-/* Flag: untranslated */
-"Restart Upload" = "Restart Upload";
+/* Flag: python-format */
+"%d Downloading Items" = "%d tétel letöltése";
 
-/* File: ../../portable/opml.py:32 */
-/* Flag: untranslated */
-"Export OPML File" = "Export OPML File";
+/* File: ../../portable/menu.py:125 */
+/* File: ../../portable/item.py:1489 */
+"Cancel Download" = "Letöltés megszakítása";
 
-/* File: ../../portable/opml.py:106 */
-/* Flag: untranslated */
-"Import OPML File" = "Import OPML File";
+/* File: ../../portable/menu.py:127 */
+/* File: ../../portable/item.py:1489 */
+"Pause Download" = "Letöltés szüneteltetése";
 
-/* File: ../../portable/opml.py:108 */
-/* Flag: untranslated */
-"OPML Files" = "OPML Files";
+/* File: ../../portable/menu.py:130 */
+/* File: ../../portable/item.py:1487 */
+"Restart Upload" = "Feltöltés újraindítása";
 
-/* File: ../../portable/opml.py:127 */
-/* Flag: untranslated */
-"OPML Import failed" = "OPML Import failed";
+/* File: ../../portable/opml.py:49 */
+"Export OPML File" = "Exportálás OPML-be";
 
-/* File: ../../portable/opml.py:128 */
-/* Flag: untranslated */
-"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
+/* File: ../../portable/opml.py:123 */
+"Import OPML File" = "OPML fájl importálása";
 
-/* File: ../../portable/opml.py:133 */
-/* Flag: untranslated */
-"OPML Import summary" = "OPML Import summary";
+/* File: ../../portable/opml.py:125 */
+"OPML Files" = "OPML Fájlok";
+
+/* File: ../../portable/opml.py:145 */
+"OPML Import failed" = "OPML importálási hiba";
+
+/* File: ../../portable/opml.py:146 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "A kiválasztott OPML fájl érvénytelen. Importálás megszakítva.";
+
+/* File: ../../portable/opml.py:151 */
+"OPML Import summary" = "OPML import összegzés";
 
 /* File: ../../portable/autoupdate.py:121 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s Version Alert" = "%s Version Alert";
+"%s Version Alert" = "%s Verzió Figyelmeztetés";
 
 /* File: ../../portable/autoupdate.py:122 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"A new version of %s is available. Would you like to download it now?" = "A new version of %s is available. Would you like to download it now?";
+"A new version of %s is available. Would you like to download it now?" = "%s újabb verziója elérhető. Szeretné most letölteni?";
 
 /* File: ../../portable/autoupdate.py:128 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s Version Check" = "%s Version Check";
+"%s Version Check" = "%s Verzió Ellenőrzés";
 
 /* File: ../../portable/autoupdate.py:129 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s is up to date." = "%s is up to date.";
+"%s is up to date." = "%s naprakész.";
 
-/* File: ../../portable/util.py:257 */
-/* File: ../../portable/httpclient.py:124 */
-/* Flag: untranslated */
-"Internal Error" = "Internal Error";
+/* File: ../../portable/util.py:252 */
+/* File: ../../portable/httpclient.py:126 */
+"Internal Error" = "Belső hiba";
 
-/* File: ../../portable/util.py:257 */
-/* Flag: untranslated */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report.";
+/* File: ../../portable/util.py:252 */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "A Miro belső hibába ütközött. A hibajelentés elküldésével segíthet minket a hiba kijavításában.";
 
-/* File: ../../portable/util.py:257 */
-/* Flag: untranslated */
-"Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
+/* File: ../../portable/util.py:252 */
+"Include entire program database including all video and channel metadata with crash report" = "A hibajelentéssel együtt a teljes programadatbázis elküldése (beleértve a videó és csatorna metaadatokat is)";
 
-/* File: ../../portable/util.py:257 */
-/* Flag: untranslated */
-"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
+/* File: ../../portable/util.py:252 */
+"Describe what you were doing that caused this error" = "Írja le, hogy mit csinált mikor a hiba bekövetkezett.";
 
-/* File: ../../portable/util.py:460 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:455 */
 /* Flag: python-format */
 "%1.1fGB" = "%1.1fGB";
 
-/* File: ../../portable/util.py:462 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:457 */
 /* Flag: python-format */
 "%dGB" = "%dGB";
 
-/* File: ../../portable/util.py:466 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:461 */
 /* Flag: python-format */
 "%1.1fMB" = "%1.1fMB";
 
-/* File: ../../portable/util.py:468 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:463 */
 /* Flag: python-format */
 "%dMB" = "%dMB";
 
-/* File: ../../portable/util.py:472 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:467 */
 /* Flag: python-format */
 "%1.1fKB" = "%1.1fKB";
 
-/* File: ../../portable/util.py:474 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:469 */
 /* Flag: python-format */
 "%dKB" = "%dKB";
 
-/* File: ../../portable/util.py:478 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:473 */
 /* Flag: python-format */
 "%1.1fB" = "%1.1fB";
 
-/* File: ../../portable/util.py:480 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:475 */
 /* Flag: python-format */
 "%dB" = "%dB";
 
 /* File: ../../portable/storedatabase.py:832 */
 /* File: ../../portable/storedatabase.py:1231 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s database save succeeded" = "%s database save succeeded";
+"%s database save succeeded" = "%s adatbázis mentés befejezve";
 
 /* File: ../../portable/storedatabase.py:833 */
 /* File: ../../portable/storedatabase.py:1232 */
-/* Flag: untranslated */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "The database has been successfully saved. It is now safe to quit without losing any data.";
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Az adatbázis mentése befejeződött. Most már nyugodtan kiléphet.";
 
 /* File: ../../portable/storedatabase.py:840 */
 /* File: ../../portable/storedatabase.py:1240 */
@@ -1061,1120 +859,877 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/storedatabase.py:841 */
 /* File: ../../portable/storedatabase.py:1241 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.";
-
-/* File: ../../portable/dialogs.py:76 */
-/* Flag: untranslated */
-"Ok" = "Ok";
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s nem tudja elmenteni az adatbázist: Megtelt a Lemez.\nJavasoljuk, hogy töröljön néhány fájlt a meghajtóról, vagy néhány filmet a gyűjteményéből.\nA legutóbbi módosítások lehet hogy elvesztek.";
 
 /* File: ../../portable/dialogs.py:81 */
-/* Flag: untranslated */
-"Ignore" = "Ignore";
+"Ignore" = "Kihagyás";
 
 /* File: ../../portable/dialogs.py:82 */
-/* Flag: untranslated */
-"Submit Crash Report" = "Submit Crash Report";
+"Submit Crash Report" = "Hibajelentés elküldése";
 
 /* File: ../../portable/dialogs.py:83 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-/* Flag: untranslated */
-"Migrate" = "Migrate";
+"Migrate" = "Áthelyezés";
 
 /* File: ../../portable/dialogs.py:84 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-/* Flag: untranslated */
-"Don't Migrate" = "Don't Migrate";
+"Don't Migrate" = "Ne legyen áthelyezés";
 
 /* File: ../../portable/dialogs.py:86 */
-/* Flag: untranslated */
-"Remove Entry" = "Remove Entry";
+"Remove Entry" = "Bejegyzés Eltávolítása";
 
 /* File: ../../portable/dialogs.py:87 */
-/* Flag: untranslated */
-"Delete File" = "Delete File";
+"Delete File" = "A fájl törlése";
 
 /* File: ../../portable/dialogs.py:88 */
-/* Flag: untranslated */
-"Delete Files" = "Delete Files";
+"Delete Files" = "Fájlok törlése";
 
 /* File: ../../portable/dialogs.py:89 */
-/* Flag: untranslated */
-"Keep Videos" = "Keep Videos";
+"Keep Videos" = "Videók megtartása";
 
 /* File: ../../portable/dialogs.py:90 */
-/* Flag: untranslated */
-"Delete Videos" = "Delete Videos";
+"Delete Videos" = "Videók törlése";
 
 /* File: ../../portable/dialogs.py:92 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-/* Flag: untranslated */
-"Create Channel" = "Create Channel";
+"Create Channel" = "Csatorna létrehozása";
 
 /* File: ../../portable/dialogs.py:93 */
-/* Flag: untranslated */
-"Add" = "Add";
+"Add" = "Hozzáad";
 
 /* File: ../../portable/dialogs.py:94 */
-/* Flag: untranslated */
-"Add Into New Folder" = "Add Into New Folder";
+"Add Into New Folder" = "Hozzáadás új mappába";
 
 /* File: ../../portable/dialogs.py:95 */
-/* Flag: untranslated */
-"Keep" = "Keep";
+"Keep" = "Megőrzés";
 
 /* File: ../../portable/dialogs.py:97 */
-/* Flag: untranslated */
-"Not Now" = "Not Now";
+"Not Now" = "Most Nem";
 
 /* File: ../../portable/dialogs.py:98 */
-/* Flag: untranslated */
-"Close to Tray" = "Close to Tray";
+"Close to Tray" = "Tálcára helyezés";
 
 /* File: ../../portable/dialogs.py:99 */
-/* Flag: untranslated */
-"Launch Miro" = "Launch Miro";
+"Launch Miro" = "Miro indítása";
 
 /* File: ../../portable/dialogs.py:100 */
-/* Flag: untranslated */
-"Download Anyway" = "Download Anyway";
+"Download Anyway" = "Letöltés mindenképpen";
 
 /* File: ../../portable/dialogs.py:221 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-/* Flag: untranslated */
-"New Search Channel" = "New Search Channel";
+"New Search Channel" = "Új Keresési Csatorna";
 
 /* File: ../../portable/dialogs.py:221 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:25 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
-/* Flag: untranslated */
-"A search channel contains items that match a search term." = "A search channel contains items that match a search term.";
-
-/* File: ../../portable/singleclick.py:86 */
-/* Flag: untranslated */
-"Download already exists" = "Download already exists";
+"A search channel contains items that match a search term." = "A Keresési Csatorna olyan elemeket tartalmaz, amelyek megfelelnek egy keresési kifejezésnek.";
 
 /* File: ../../portable/singleclick.py:87 */
-/* Flag: untranslated */
-"That URL is already an external download." = "That URL is already an external download.";
+"Download already exists" = "A letöltendő fájl már létezik";
 
-/* File: ../../portable/singleclick.py:93 */
-/* Flag: untranslated */
-"Miro will begin downloading it now." = "Miro will begin downloading it now.";
+/* File: ../../portable/singleclick.py:88 */
+"That URL is already an external download." = "Ez az URL már egy külső állományra mutat.";
 
-/* File: ../../portable/singleclick.py:95 */
-/* Flag: untranslated */
-"It is downloading now." = "It is downloading now.";
+/* File: ../../portable/singleclick.py:94 */
+"Miro will begin downloading it now." = "A Miro most megkezdi a letöltést.";
 
-/* File: ../../portable/singleclick.py:97 */
-/* Flag: untranslated */
-"It has already been downloaded." = "It has already been downloaded.";
+/* File: ../../portable/singleclick.py:96 */
+"It is downloading now." = "Töltődik.";
 
-/* File: ../../portable/singleclick.py:124 */
-"Download Error" = "Letöltési hiba";
+/* File: ../../portable/singleclick.py:98 */
+"It has already been downloaded." = "Már letöltődött.";
 
 /* File: ../../portable/singleclick.py:125 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro is not able to download a file at this URL:\n\nURL: %s";
+"Download Error" = "Letöltési hiba";
 
-/* File: ../../portable/singleclick.py:133 */
-/* Flag: untranslated */
-"File Download" = "File Download";
+/* File: ../../portable/singleclick.py:126 */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "A Miro nem tudja letölteni a következő címen található fájlt:\n\nURL: %s";
 
 /* File: ../../portable/singleclick.py:134 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "This file at %s does not appear to be audio, video, or an RSS feed.";
+"File Download" = "Fájl letöltés";
 
-/* File: ../../portable/singleclick.py:224 */
-/* Flag: untranslated */
-"Subscribing to multiple channels" = "Subscribing to multiple channels";
+/* File: ../../portable/singleclick.py:135 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "A %s helyen található fájl nem hang, videó, vagy RSS hírforrás.";
 
 /* File: ../../portable/singleclick.py:225 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Create %d channels?" = "Create %d channels?";
+"Subscribing to multiple channels" = "Feliratkozás több csatornára";
 
-/* File: ../../portable/singleclick.py:238 */
-/* Flag: untranslated */
+/* File: ../../portable/singleclick.py:226 */
 /* Flag: python-format */
-"Adding %d channels to a new folder" = "Adding %d channels to a new folder";
+"Create %d channels?" = "%d Csatorna Létrehozása?";
 
 /* File: ../../portable/singleclick.py:239 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "%d csatorna hozzáadása új mappába";
+
+/* File: ../../portable/singleclick.py:240 */
 /* File: ../../portable/folder.py:226 */
-/* Flag: untranslated */
-"Enter a name for the new channel folder" = "Enter a name for the new channel folder";
+"Enter a name for the new channel folder" = "Adja meg az új csatorna-mappa nevét";
 
-/* File: ../../portable/singleclick.py:242 */
-/* Flag: untranslated */
+/* File: ../../portable/singleclick.py:243 */
 /* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "MEGJEGYZÉS: %d csatornára már feliratkozott. Ezek a csatornák maradnak az eddigi helyükön.";
 
-/* File: ../../portable/singleclick.py:253 */
-/* Flag: untranslated */
-"Subscription error" = "Subscription error";
+/* File: ../../portable/singleclick.py:254 */
+"Subscription error" = "Feliratkozási hiba";
 
-/* File: ../../portable/singleclick.py:263 */
-/* Flag: untranslated */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.";
+/* File: ../../portable/singleclick.py:264 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "A $shortAppName csatorna nem megfelelő formátumú: $url. Kérem vegye fel a kapcsolatot a csatrona kiadójával.";
 
-/* File: ../../portable/singleclick.py:271 */
-/* Flag: untranslated */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.";
+/* File: ../../portable/singleclick.py:272 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "A $shortAppName csatorna tartalom típusa nem megfelelő: $url. Kérem vegye fel a kapcsolatot a tartalom kiadójával.";
 
-/* File: ../../portable/singleclick.py:275 */
-/* Flag: untranslated */
-"Could not download the $shortAppName channel file: $url." = "Could not download the $shortAppName channel file: $url.";
+/* File: ../../portable/singleclick.py:276 */
+"Could not download the $shortAppName channel file: $url." = "Nem sikerült a következő $shortAppName csatorna-fájl letöltése: $url.";
 
-/* File: ../../portable/singleclick.py:313 */
-/* Flag: untranslated */
-"Invalid Torrent" = "Invalid Torrent";
+/* File: ../../portable/singleclick.py:316 */
+"Invalid Torrent" = "Érvénytelen Torrent";
 
-/* File: ../../portable/singleclick.py:314 */
-/* Flag: untranslated */
+/* File: ../../portable/singleclick.py:317 */
 /* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]";
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "A %s torrent fájl hibás, és ezért nem megnyitható. [OK]";
 
 /* File: ../../portable/menubar.py:144 */
-/* Flag: untranslated */
-"_Open" = "_Open";
+"_Open" = "_Megynyitás...";
 
 /* File: ../../portable/menubar.py:145 */
-/* Flag: untranslated */
-"_Download Video" = "_Download Video";
+"_Download Video" = "_Videó Letöltése";
 
 /* File: ../../portable/menubar.py:147 */
-/* Flag: untranslated */
-"Check _Version" = "Check _Version";
+"Check _Version" = "Verzió_Ellenőrzés";
 
 /* File: ../../portable/menubar.py:149 */
-/* Flag: untranslated */
-"_Remove Video" = "_Remove Video";
+"_Remove Video" = "_Videó Eltávolítása";
 
 /* File: ../../portable/menubar.py:150 */
-/* Flag: untranslated */
-"_Remove Videos" = "_Remove Videos";
+"_Remove Videos" = "_Videók Eltávolítása";
 
 /* File: ../../portable/menubar.py:151 */
-/* Flag: untranslated */
-"Re_name Video" = "Re_name Video";
+"Re_name Video" = "Videó átnevezése";
 
 /* File: ../../portable/menubar.py:152 */
-/* Flag: untranslated */
-"Save Video _As..." = "Save Video _As...";
+"Save Video _As..." = "Video mentése másként...";
 
 /* File: ../../portable/menubar.py:153 */
-/* Flag: untranslated */
-"Save Videos _As..." = "Save Videos _As...";
+"Save Videos _As..." = "Videók mentése másként...";
 
 /* File: ../../portable/menubar.py:154 */
-/* Flag: untranslated */
-"Copy Video _URL" = "Copy Video _URL";
+"Copy Video _URL" = "Videó _URL Másolása";
 
 /* File: ../../portable/menubar.py:156 */
-/* Flag: untranslated */
-"_Options..." = "_Options...";
+"_Options..." = "_Beállítások...";
 
 /* File: ../../portable/menubar.py:157 */
-"_Quit" = "_Lépj ki";
+"_Quit" = "_Kilépés";
 
 /* File: ../../portable/menubar.py:165 */
-/* Flag: untranslated */
-"Cu_t" = "Cu_t";
+"Cu_t" = "_Kivágás";
 
 /* File: ../../portable/menubar.py:166 */
-/* Flag: untranslated */
-"_Copy" = "_Copy";
+"_Copy" = "_Másolás";
 
 /* File: ../../portable/menubar.py:167 */
-/* Flag: untranslated */
-"_Paste" = "_Paste";
+"_Paste" = "_Beillesztés";
 
 /* File: ../../portable/menubar.py:168 */
-/* Flag: untranslated */
-"Select _All" = "Select _All";
+"Select _All" = "Mindent kijelöl";
 
 /* File: ../../portable/menubar.py:169 */
-/* Flag: untranslated */
-"_Delete" = "_Delete";
+"_Delete" = "_Törlés";
 
 /* File: ../../portable/menubar.py:173 */
-/* Flag: untranslated */
-"Add _Channel" = "Add _Channel";
+"Add _Channel" = "_Csatorna Hozzáadása";
 
 /* File: ../../portable/menubar.py:174 */
-/* Flag: untranslated */
-"New Searc_h Channel..." = "New Searc_h Channel...";
+"New Searc_h Channel..." = "Új kereső csatorna...";
 
 /* File: ../../portable/menubar.py:175 */
-/* Flag: untranslated */
-"New _Folder..." = "New _Folder...";
+"New _Folder..." = "Új Mappa";
 
 /* File: ../../portable/menubar.py:176 */
-/* Flag: untranslated */
-"Add Channel _Guide..." = "Add Channel _Guide...";
+"Add Channel _Guide..." = "Csatorna kalauz hozzáadása...";
 
 /* File: ../../portable/menubar.py:186 */
-/* Flag: untranslated */
-"Update _All Channels" = "Update _All Channels";
+"Update _All Channels" = "Összes Csatorna frissítése";
 
 /* File: ../../portable/menubar.py:188 */
-/* Flag: untranslated */
-"_Import Channels (OPML)..." = "_Import Channels (OPML)...";
+"_Import Channels (OPML)..." = "Csatornák _Importálása (OPML)...";
 
 /* File: ../../portable/menubar.py:189 */
-/* Flag: untranslated */
-"E_xport Channels (OPML)..." = "E_xport Channels (OPML)...";
+"E_xport Channels (OPML)..." = "CSatornák E_xportálása (OPML)...";
 
 /* File: ../../portable/menubar.py:191 */
-/* Flag: untranslated */
-"_Send this channel to a friend" = "_Send this channel to a friend";
+"_Send this channel to a friend" = "C_satorna küldése ismerősnek";
 
 /* File: ../../portable/menubar.py:192 */
 /* Flag: untranslated */
 "Copy Channel _Link" = "Copy Channel _Link" /* = "Csatorna _hivatkozásának másolása" */;
 
 /* File: ../../portable/menubar.py:195 */
-/* Flag: untranslated */
-"New _Playlist" = "New _Playlist";
+"New _Playlist" = "Új lejátszási lista";
 
 /* File: ../../portable/menubar.py:196 */
-/* Flag: untranslated */
-"New Playlist Fol_der" = "New Playlist Fol_der";
+"New Playlist Fol_der" = "Új lejátszási lista könyvtár";
 
 /* File: ../../portable/menubar.py:198 */
-/* Flag: untranslated */
-"Re_name Playlist" = "Re_name Playlist";
+"Re_name Playlist" = "Lejátszási lista át_nevezése";
 
 /* File: ../../portable/menubar.py:199 */
 /* Flag: untranslated */
-"_Remove Playlist" = "_Remove Playlist";
+"_Remove Playlist" = "_Remove Playlist" /* = "Lejátszási lista el_távolítása" */;
 
 /* File: ../../portable/menubar.py:200 */
 /* Flag: untranslated */
-"_Remove Playlists" = "_Remove Playlists";
+"_Remove Playlists" = "_Remove Playlists" /* = "Lejátszási listák el_távolítása" */;
 
 /* File: ../../portable/menubar.py:201 */
 /* Flag: untranslated */
-"_Remove Playlist Folders" = "_Remove Playlist Folders";
+"_Remove Playlist Folders" = "_Remove Playlist Folders" /* = "Lejátszási listák mappáinak _eltávolítása" */;
 
 /* File: ../../portable/menubar.py:202 */
 /* Flag: untranslated */
-"_Remove Playlist Folder" = "_Remove Playlist Folder";
+"_Remove Playlist Folder" = "_Remove Playlist Folder" /* = "Lejátszási listák mappájának _eltávolítása" */;
 
 /* File: ../../portable/menubar.py:212 */
-/* Flag: untranslated */
-"_Play" = "_Play";
+"_Play" = "_Lejátszás";
 
 /* File: ../../portable/menubar.py:213 */
-/* Flag: untranslated */
-"_Stop" = "_Stop";
+"_Stop" = "_Állj";
 
 /* File: ../../portable/menubar.py:215 */
-/* Flag: untranslated */
-"_Next Video" = "_Next Video";
+"_Next Video" = "_Következő videó";
 
 /* File: ../../portable/menubar.py:216 */
-/* Flag: untranslated */
-"_Previous Video" = "_Previous Video";
+"_Previous Video" = "_Előző videó";
 
 /* File: ../../portable/menubar.py:218 */
-/* Flag: untranslated */
-"Skip _Forward" = "Skip _Forward";
+"Skip _Forward" = "Ugrás _előre";
 
 /* File: ../../portable/menubar.py:219 */
-/* Flag: untranslated */
-"Skip _Back" = "Skip _Back";
+"Skip _Back" = "Ugrás _Vissza";
 
 /* File: ../../portable/menubar.py:221 */
-/* Flag: untranslated */
-"Volume _Up" = "Volume _Up";
+"Volume _Up" = "Hengerő _Növelés";
 
 /* File: ../../portable/menubar.py:222 */
-/* Flag: untranslated */
-"Volume _Down" = "Volume _Down";
+"Volume _Down" = "Hangerő _Csökkentés";
 
 /* File: ../../portable/menubar.py:224 */
 "_Fullscreen" = "_Teljes képernyő";
 
 /* File: ../../portable/menubar.py:228 */
-/* Flag: untranslated */
-"_About" = "_About";
+"_About" = "_Névjegy";
 
 /* File: ../../portable/menubar.py:229 */
-/* Flag: untranslated */
-"_Donate" = "_Donate";
+"_Donate" = "_Támogatás";
 
 /* File: ../../portable/menubar.py:230 */
 /* File: ../../portable/menubar.py:245 */
 "_Help" = "_Segítség";
 
 /* File: ../../portable/menubar.py:232 */
-/* Flag: untranslated */
-"Report a _Bug" = "Report a _Bug";
+"Report a _Bug" = "Hi_ba jelentése";
 
 /* File: ../../portable/menubar.py:236 */
 "_Video" = "_Videó";
 
 /* File: ../../portable/menubar.py:238 */
-/* Flag: untranslated */
-"_File" = "_File";
+"_File" = "_Fálj";
 
 /* File: ../../portable/menubar.py:242 */
-/* Flag: untranslated */
-"_Channels" = "_Channels";
+"_Channels" = "_Csatornák";
 
 /* File: ../../portable/menubar.py:243 */
-/* Flag: untranslated */
-"_Playlists" = "_Playlists";
+"_Playlists" = "Lejátszólisták (_P)";
 
 /* File: ../../portable/menubar.py:244 */
-/* Flag: untranslated */
-"P_layback" = "P_layback";
+"P_layback" = "_Lejátszás";
 
 /* File: ../../portable/menubar.py:249 */
-/* Flag: untranslated */
-"Play Unwatched ($numUnwatched)" = "Play Unwatched ($numUnwatched)";
+"Play Unwatched ($numUnwatched)" = "Még nem látottak lejátszása";
 
 /* File: ../../portable/menubar.py:250 */
-/* Flag: untranslated */
-"Pause All Downloads ($numDownloading)" = "Pause All Downloads ($numDownloading)";
+"Pause All Downloads ($numDownloading)" = "Összes letöltés szüneteltetése ($numDownloading)";
 
 /* File: ../../portable/menubar.py:251 */
-/* Flag: untranslated */
-"Resume All Downloads ($numPaused)" = "Resume All Downloads ($numPaused)";
+"Resume All Downloads ($numPaused)" = "Összes letöltés folytatása ($numDownloading)";
 
 /* File: ../../portable/menubar.py:253 */
-/* Flag: untranslated */
-"Options..." = "Options...";
+"Options..." = "Beállítások...";
 
 /* File: ../../portable/menubar.py:255 */
-/* Flag: untranslated */
-"Hide Window" = "Hide Window";
+"Hide Window" = "Ablak Elrejtése";
 
 /* File: ../../portable/menubar.py:256 */
-/* Flag: untranslated */
-"Show Window" = "Show Window";
+"Show Window" = "Ablak Mutatása";
 
-/* File: ../../portable/item.py:478 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:485 */
 /* Flag: python-format */
-"Removing %s" = "Removing %s";
+"Removing %s" = "%s eltávolítása";
 
-/* File: ../../portable/item.py:481 */
-/* Flag: untranslated */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Would you like to delete this folder and all of its videos or just remove its entry from the Library?";
+/* File: ../../portable/item.py:488 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Törölni szeretné a teljes mappát, és minden benne lévő videót, vagy csak a Könyvtári bejegyzését szeretné eltávolítani?";
 
-/* File: ../../portable/item.py:487 */
-/* Flag: untranslated */
-"Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
+/* File: ../../portable/item.py:494 */
+"Would you like to delete this file or just remove its entry from the Library?" = "Törölni szeretné a fájlt, vagy csak a Könyvtári bejegyzését szeretné eltávolítani?";
 
-/* File: ../../portable/item.py:507 */
-/* Flag: untranslated */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted.";
+/* File: ../../portable/item.py:514 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Ez az elem egy mappa. Mappa törlésekor az összes benne lévő elem törlődni fog.";
 
-/* File: ../../portable/item.py:537 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:544 */
 /* Flag: python-format */
-"%d minutes" = "%d minutes";
+"%d minutes" = "%d perc";
 
-/* File: ../../portable/item.py:547 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:554 */
 /* Flag: python-format */
-"Expires in %s" = "Expires in %s";
+"Expires in %s" = "Lejár %s múlva";
 
-/* File: ../../portable/item.py:559 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:566 */
 /* Flag: python-format */
-"Will retry in %s" = "Will retry in %s";
+"Will retry in %s" = "Újra próbálkozik %s múlva";
 
-/* File: ../../portable/item.py:561 */
-/* Flag: untranslated */
-"Paused" = "Paused";
+/* File: ../../portable/item.py:568 */
+"Paused" = "Szüneteltetve";
 
-/* File: ../../portable/item.py:941 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:954 */
 "TORRENT" = "TORRENT";
 
-/* File: ../../portable/item.py:943 */
-/* Flag: untranslated */
-"WEB PAGE" = "WEB PAGE";
-
-/* File: ../../portable/item.py:953 */
-/* Flag: untranslated */
-"Total Down:" = "Total Down:";
-
 /* File: ../../portable/item.py:956 */
-/* Flag: untranslated */
-"Error:" = "Error:";
+"WEB PAGE" = "WEB OLDAL";
 
-/* File: ../../portable/item.py:964 */
-/* Flag: untranslated */
-"Down Rate:" = "Down Rate:";
+/* File: ../../portable/item.py:966 */
+"Total Down:" = "Összes letöltés:";
 
-/* File: ../../portable/item.py:965 */
-/* Flag: untranslated */
-"Down Total:" = "Down Total:";
+/* File: ../../portable/item.py:969 */
+"Error:" = "Hiba:";
 
-/* File: ../../portable/item.py:967 */
-/* Flag: untranslated */
-"Up Rate:" = "Up Rate:";
+/* File: ../../portable/item.py:977 */
+"Down Rate:" = "Letöltési sebesség:";
 
-/* File: ../../portable/item.py:968 */
-/* Flag: untranslated */
-"Up Total:" = "Up Total:";
+/* File: ../../portable/item.py:978 */
+"Down Total:" = "Összes Letöltés:";
 
-/* File: ../../portable/item.py:973 */
-/* Flag: untranslated */
-"Web page:" = "Web page:";
+/* File: ../../portable/item.py:980 */
+"Up Rate:" = "Feltöltési sebesség:";
 
-/* File: ../../portable/item.py:973 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:981 */
+"Up Total:" = "Összes Feltöltés:";
+
+/* File: ../../portable/item.py:989 */
+"Web page:" = "Weboldal:";
+
+/* File: ../../portable/item.py:989 */
 "permalink" = "permalink";
 
-/* File: ../../portable/item.py:974 */
-/* Flag: untranslated */
-"File link:" = "File link:";
+/* File: ../../portable/item.py:993 */
+"File link:" = "Fájl hivatkozás:";
 
-/* File: ../../portable/item.py:974 */
-/* Flag: untranslated */
-"direct link to file" = "direct link to file";
+/* File: ../../portable/item.py:993 */
+"direct link to file" = "közvetlen hivatkozás a fájlra";
 
-/* File: ../../portable/item.py:976 */
-/* Flag: untranslated */
-"File type:" = "File type:";
+/* File: ../../portable/item.py:995 */
+"File type:" = "Fájltípus:";
 
-/* File: ../../portable/item.py:983 */
-/* Flag: untranslated */
-"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
+/* File: ../../portable/item.py:1002 */
+"REVEAL LOCAL FOLDER" = "HELYI MAPPA MUTATÁSA";
 
-/* File: ../../portable/item.py:985 */
-/* Flag: untranslated */
-"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
+/* File: ../../portable/item.py:1004 */
+"REVEAL LOCAL FILE" = "HELYI FÁJL MUTATÁSA";
 
-/* File: ../../portable/item.py:987 */
-/* Flag: untranslated */
-"Filename:" = "Filename:";
+/* File: ../../portable/item.py:1006 */
+"Filename:" = "Fájlnév:";
 
-/* File: ../../portable/item.py:994 */
-/* Flag: untranslated */
-"Down Total" = "Down Total";
+/* File: ../../portable/item.py:1013 */
+"Down Total" = "Összes Letöltés";
 
-/* File: ../../portable/item.py:996 */
-/* Flag: untranslated */
-"Up Total" = "Up Total";
+/* File: ../../portable/item.py:1015 */
+"Up Total" = "Összes Feltöltés";
 
-/* File: ../../portable/item.py:1014 */
-/* Flag: untranslated */
-"Item Details" = "Item Details";
+/* File: ../../portable/item.py:1033 */
+"Item Details" = "Elem Részletei";
 
-/* File: ../../portable/item.py:1021 */
-/* Flag: untranslated */
-"Torrent Details" = "Torrent Details";
+/* File: ../../portable/item.py:1040 */
+"Torrent Details" = "Torrent Részletei";
 
-/* File: ../../portable/item.py:1023 */
-/* Flag: untranslated */
-"Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
+/* File: ../../portable/item.py:1042 */
+"Torrent Details <i>stopped</i>" = "Torrent Részletei <i>stopped</i>";
 
-/* File: ../../portable/item.py:1027 */
-/* Flag: untranslated */
-"Download Details" = "Download Details";
+/* File: ../../portable/item.py:1046 */
+"Download Details" = "Letöltés Részletei";
 
-/* File: ../../portable/item.py:1241 */
-/* Flag: untranslated */
-"downloading..." = "downloading...";
+/* File: ../../portable/item.py:1263 */
+"downloading..." = "letöltés...";
 
-/* File: ../../portable/item.py:1248 */
-/* File: ../../portable/item.py:1251 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:1270 */
+/* File: ../../portable/item.py:1273 */
 /* Flag: python-format */
-"%s remaining" = "%s remaining";
+"%s remaining" = "%s van hátra";
 
-/* File: ../../portable/item.py:1260 */
-/* Flag: untranslated */
-"starting up..." = "starting up...";
+/* File: ../../portable/item.py:1282 */
+"starting up..." = "indítás...";
 
-/* File: ../../portable/item.py:1459 */
-/* Flag: untranslated */
-"Play Just This Video" = "Play Just This Video";
+/* File: ../../portable/item.py:1477 */
+"Play Just This Video" = "Csak ennek a videónak a lejátszása";
 
-/* File: ../../portable/item.py:1807 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:1854 */
 /* Flag: python-format */
-"Removing %s items" = "Removing %s items";
+"Removing %s items" = "%s elem eltávolítása";
 
-/* File: ../../portable/item.py:1809 */
-/* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?";
+/* File: ../../portable/item.py:1856 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Egy vagy több ezek közül a videók közül nem egy csatornáról lett letöltve. Törölni szeretné ezeket az elemeket, vagy csak a Könyvtári bejegyzéseiket távolítsuk el?";
 
-/* File: ../../portable/item.py:1817 */
-/* Flag: untranslated */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
+/* File: ../../portable/item.py:1864 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Egy vagy több elem mappa. Mappa törlésekor vagy eltávolításakor a benne lévő összes elem törlődik vagy eltávolítódik.";
 
 /* File: ../../portable/folder.py:132 */
 /* File: ../../portable/folder.py:155 */
-/* Flag: untranslated */
-"Rename Channel Folder" = "Rename Channel Folder";
+"Rename Channel Folder" = "Csatorna mappa átnevezése";
 
 /* File: ../../portable/folder.py:134 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Enter a new name for the channel folder %s";
+"Enter a new name for the channel folder %s" = "Adjon új nevet a(z) %s nevű csatorna mappának";
 
 /* File: ../../portable/folder.py:210 */
 /* File: ../../portable/folder.py:215 */
-/* Flag: untranslated */
-"Rename Playlist Folder" = "Rename Playlist Folder";
+"Rename Playlist Folder" = "Lejátszólista mappa átnevezése";
 
 /* File: ../../portable/folder.py:217 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Enter a new name for the playlist folder %s";
+"Enter a new name for the playlist folder %s" = "Adjon új nevet a(z) %s nevű lejátszólista mappának";
 
 /* File: ../../portable/folder.py:225 */
-/* Flag: untranslated */
-"Create Channel Folder" = "Create Channel Folder";
+"Create Channel Folder" = "Csatorna Mappa létrehozása";
 
 /* File: ../../portable/folder.py:239 */
-/* Flag: untranslated */
-"Create Playlist Folder" = "Create Playlist Folder";
+"Create Playlist Folder" = "Lejátszólista Mappa létrehozása";
 
 /* File: ../../portable/folder.py:240 */
-/* Flag: untranslated */
-"Enter a name for the new playlist folder" = "Enter a name for the new playlist folder";
+"Enter a name for the new playlist folder" = "Adjon nevet az új lejátszólista mappának";
 
-/* File: ../../portable/httpclient.py:67 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:68 */
 /* Flag: python-format */
-"Error: %s" = "Error: %s";
-
-/* File: ../../portable/httpclient.py:82 */
-/* File: ../../portable/httpclient.py:87 */
-/* Flag: untranslated */
-"Can't connect" = "Can't connect";
+"Error: %s" = "Hiba: %s";
 
 /* File: ../../portable/httpclient.py:83 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:89 */
+"Can't connect" = "Nem lehet kapcsolódni";
+
+/* File: ../../portable/httpclient.py:84 */
 /* Flag: python-format */
-"Connection Error: %s" = "Connection Error: %s";
+"Connection Error: %s" = "Kapcsolódási Hiba: %s";
 
-/* File: ../../portable/httpclient.py:88 */
-/* Flag: untranslated */
-"SSL connection error" = "SSL connection error";
+/* File: ../../portable/httpclient.py:90 */
+"SSL connection error" = "SSL kapcsolódási hiba";
 
-/* File: ../../portable/httpclient.py:92 */
-/* Flag: untranslated */
-"HTTP error" = "HTTP error";
+/* File: ../../portable/httpclient.py:94 */
+"HTTP error" = "HTTP hiba";
 
-/* File: ../../portable/httpclient.py:95 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:97 */
 /* Flag: python-format */
-"Bad Status Line: %s" = "Bad Status Line: %s";
+"Bad Status Line: %s" = "Hibás sor: %s";
 
-/* File: ../../portable/httpclient.py:98 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:100 */
 /* Flag: python-format */
-"Bad Header Line: %s" = "Bad Header Line: %s";
+"Bad Header Line: %s" = "Hibás fejléc sora: %s";
 
-/* File: ../../portable/httpclient.py:101 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:103 */
 /* Flag: python-format */
-"Bad Chunk size: %s" = "Bad Chunk size: %s";
+"Bad Chunk size: %s" = "Hibás rész fájl méret: %s";
 
-/* File: ../../portable/httpclient.py:104 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:106 */
 /* Flag: python-format */
-"Expected CRLF got: %r" = "Expected CRLF got: %r";
+"Expected CRLF got: %r" = "Várható CRLF, fogadott: %r";
 
-/* File: ../../portable/httpclient.py:107 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:109 */
 /* Flag: python-format */
-"%s closed connection" = "%s closed connection";
-
-/* File: ../../portable/httpclient.py:113 */
-/* Flag: untranslated */
-"Got 404 status code" = "Got 404 status code";
+"%s closed connection" = "%s kapcsolat megszakítva";
 
 /* File: ../../portable/httpclient.py:115 */
-/* Flag: untranslated */
+"Got 404 status code" = "404-es hiba";
+
+/* File: ../../portable/httpclient.py:117 */
 /* Flag: python-format */
-"Bad Status Code: %s" = "Bad Status Code: %s";
+"Bad Status Code: %s" = "Hiba kód: %s";
 
-/* File: ../../portable/httpclient.py:119 */
-/* Flag: untranslated */
-"Authorization failed" = "Authorization failed";
+/* File: ../../portable/httpclient.py:121 */
+"Authorization failed" = "Sikertelen azonosítás";
 
-/* File: ../../portable/httpclient.py:125 */
-/* Flag: untranslated */
-"Pipeline request never started" = "Pipeline request never started";
+/* File: ../../portable/httpclient.py:127 */
+"Pipeline request never started" = "A kapcsolat nem jött létre";
 
-/* File: ../../portable/httpclient.py:129 */
-/* Flag: untranslated */
-"Timeout" = "Timeout";
+/* File: ../../portable/httpclient.py:131 */
+"Timeout" = "Időtúllépés";
 
-/* File: ../../portable/httpclient.py:130 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:132 */
 /* Flag: python-format */
-"Connection to %s timed out" = "Connection to %s timed out";
+"Connection to %s timed out" = "Időtúllépés a következőhöz való csatlakozáskor: %s";
 
-/* File: ../../portable/httpclient.py:134 */
-/* Flag: untranslated */
-"Invalid URL" = "Invalid URL";
+/* File: ../../portable/httpclient.py:136 */
+"Invalid URL" = "Érvénytelen URL";
 
-/* File: ../../portable/httpclient.py:135 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:137 */
 /* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" is not a valid URL";
+"\"%s\" is not a valid URL" = "\"%s\" nem érvényes URL";
 
-/* File: ../../portable/httpclient.py:324 */
-/* Flag: untranslated */
-"Unknown Error code" = "Unknown Error code";
+/* File: ../../portable/httpclient.py:143 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "\"%s\" nem létezik";
 
-/* File: ../../portable/httpclient.py:356 */
-/* Flag: untranslated */
-"Connection closed" = "Connection closed";
+/* File: ../../portable/httpclient.py:147 */
+"Read error" = "Olvasási hiba";
 
-/* File: ../../portable/httpclient.py:781 */
-/* Flag: untranslated */
-"Unknown" = "Unknown";
+/* File: ../../portable/httpclient.py:148 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "Hiba a következő olvasásakor: \"%s\"";
 
-/* File: ../../portable/httpclient.py:782 */
-/* Flag: untranslated */
-"Internal Error: Not ready to send" = "Internal Error: Not ready to send";
+/* File: ../../portable/httpclient.py:341 */
+"Unknown Error code" = "Ismeretlen hibakód";
 
-/* File: ../../portable/app.py:684 */
-/* Flag: untranslated */
-"Database too new" = "Database too new";
+/* File: ../../portable/httpclient.py:373 */
+"Connection closed" = "A kapcsolat lezárva";
+
+/* File: ../../portable/httpclient.py:798 */
+"Unknown" = "Ismeretlen";
+
+/* File: ../../portable/httpclient.py:799 */
+"Internal Error: Not ready to send" = "Belső Hiba: Nincs felkészülve a küldésre";
 
 /* File: ../../portable/app.py:685 */
-/* Flag: untranslated */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that.";
+"Database too new" = "Az adatbázis túl új";
 
-/* File: ../../portable/app.py:699 */
-/* Flag: untranslated */
-"Video Directory Missing" = "Video Directory Missing";
+/* File: ../../portable/app.py:686 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Az ön által használt adatbázis a $shortAppName egy újabb verziójával lett létrehozva. A megnyitásához le kell töltenie a $shortAppName legújabb verzióját!";
 
 /* File: ../../portable/app.py:700 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro.";
+"Video Directory Missing" = "Hiányzó Videó Könyvtár";
 
-/* File: ../../portable/app.py:1019 */
-/* File: ../../portable/app.py:1033 */
-/* File: ../../portable/app.py:1077 */
-/* File: ../../portable/app.py:1103 */
-/* File: ../../portable/app.py:1123 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Remove %s" = "Remove %s";
+/* File: ../../portable/app.py:701 */
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nA Miro nem találja az elsődleges videó könyvtárat. Lehet hogy egy jelenleg nem csatlakoztatott külső tárolón van.\n\nHa folytatja, a videó könyvtár át lesz állítva a jelenlegi meghajtóra (ez néhány videó részleteinek elvesztését fogja okozni a külső meghajtóról). Ha gondolja inkább ki is léphet, csatlakoztassa a meghajtót, és indítsa újra a Miro-t.";
 
-/* File: ../../portable/app.py:1020 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1038 */
+/* File: ../../portable/app.py:1052 */
+/* File: ../../portable/app.py:1096 */
+/* File: ../../portable/app.py:1122 */
+/* File: ../../portable/app.py:1142 */
 /* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Are you sure you want to remove the guide %s?";
-
-/* File: ../../portable/app.py:1034 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove %s" = "Are you sure you want to remove %s";
-
-/* File: ../../portable/app.py:1037 */
-/* File: ../../portable/app.py:1082 */
-/* File: ../../portable/app.py:1108 */
-/* File: ../../portable/app.py:1127 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Remove %s channels" = "Remove %s channels";
+"Remove %s" = "%s eltávolítása";
 
 /* File: ../../portable/app.py:1039 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
+"Are you sure you want to remove the guide %s?" = "Bizos eltávolítja a %s kalauzt?";
 
-/* File: ../../portable/app.py:1078 */
-/* Flag: untranslated */
-"What would you like to do with the videos in this channel that you've downloaded?" = "What would you like to do with the videos in this channel that you've downloaded?";
-
-/* File: ../../portable/app.py:1083 */
-/* Flag: untranslated */
-"What would you like to do with the videos in these channels that you've downloaded?" = "What would you like to do with the videos in these channels that you've downloaded?";
-
-/* File: ../../portable/app.py:1104 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1053 */
 /* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Are you sure you want to remove %s?  Any downloads in progress will be canceled.";
+"Are you sure you want to remove %s" = "Biztos hogy le akarja távolítani ezt: %s";
 
-/* File: ../../portable/app.py:1109 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1056 */
+/* File: ../../portable/app.py:1101 */
+/* File: ../../portable/app.py:1127 */
+/* File: ../../portable/app.py:1146 */
 /* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
+"Remove %s channels" = "%s Csatorna eltávolítása";
 
-/* File: ../../portable/app.py:1124 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1058 */
 /* Flag: python-format */
-"Are you sure you want to remove %s?" = "Are you sure you want to remove %s?";
+"Are you sure you want to remove these %s playlists" = "Biztos benne, hogy el szeretné távolítani ezt a(s) %s lejátszási listát";
+
+/* File: ../../portable/app.py:1097 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Mit szeretne tenni az ebből a csatornából letöltött videókkal?";
+
+/* File: ../../portable/app.py:1102 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Mit szeretne tenni az ezekről a csatornákról letöltött videókkal?";
+
+/* File: ../../portable/app.py:1123 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Biztosan el akarja távolítani ezt: %s? A folyamatban lévő letöltések meg lesznek szakítva.";
 
 /* File: ../../portable/app.py:1128 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Biztosan el akarja távolítani a következő cstornákat: %s? A folyamatban lévő letöltések meg lesznek szakítva.";
+
+/* File: ../../portable/app.py:1143 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "Biztosan el akarja távolítani ezt: %s?";
+
+/* File: ../../portable/app.py:1147 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "Biztosan el akarja távolítani ezeket a csatornákat: %s?";
+
+/* File: ../../portable/app.py:1160 */
+/* Flag: python-format */
+"Stop watching %s" = "%s vetítés leállítása";
+
+/* File: ../../portable/app.py:1161 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "Biztos, hogy nem szeretné továbbnézni a(z) %s-t?";
+
+/* File: ../../portable/app.py:1164 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove these %s channels?" = "Are you sure you want to remove these %s channels?";
+"Stop watching %s directories" = "Stop watching %s directories" /* = "%s könyvtár nézésének befejezése" */;
 
-/* File: ../../portable/app.py:1141 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1165 */
 /* Flag: python-format */
-"Stop watching %s" = "Stop watching %s";
+"Are you sure you want to stop watching these %s directories?" = "Biztos, hogy nem szeretné továbbnézni a(z) %s könyvtárat?";
 
-/* File: ../../portable/app.py:1142 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "Are you sure you want to stop watching %s?";
-
-/* File: ../../portable/app.py:1145 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Stop watching %s directories" = "Stop watching %s directories";
-
-/* File: ../../portable/app.py:1146 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to stop watching these %s directories?" = "Are you sure you want to stop watching these %s directories?";
-
-/* File: ../../portable/app.py:1177 */
+/* File: ../../portable/app.py:1196 */
 "Are you sure you want to quit?" = "Biztosan ki szeretne lépni?";
 
-/* File: ../../portable/app.py:1179 */
-/* Flag: untranslated */
-"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?";
+/* File: ../../portable/app.py:1198 */
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "A Miro éppen feltölti a hibajelentését. Ha most kilép, a feltöltés meg fog szakadni. Biztosan kilép?";
 
-/* File: ../../portable/app.py:1680 */
-/* Flag: untranslated */
-"Invalid Value" = "Invalid Value";
+/* File: ../../portable/app.py:1712 */
+"Invalid Value" = "Érvénytelen érték";
 
-/* File: ../../portable/app.py:1681 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1713 */
 /* Flag: python-format */
-"%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number.";
+"%s is invalid.  You must enter a non-negative number." = "%s érvénytelen. Adjon meg egy nem negatív számot!";
 
-/* File: ../../portable/app.py:1972 */
+/* File: ../../portable/app.py:1839 */
 /* Flag: untranslated */
-" - Invalid URL" = " - Invalid URL";
+"Error Revealing File" = "Error Revealing File" /* = "Hiba a fájlban" */;
 
-/* File: ../../portable/app.py:1973 */
-/* Flag: untranslated */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "The address you entered is not a valid URL.\nPlease double check and try again.\n\n";
-
-/* File: ../../portable/app.py:1997 */
-/* Flag: untranslated */
-"$shortAppName - Add Channel" = "$shortAppName - Add Channel";
-
-/* File: ../../portable/app.py:1997 */
-/* Flag: untranslated */
-"Enter the URL of the channel to add" = "Enter the URL of the channel to add";
-
-/* File: ../../portable/app.py:2018 */
-/* Flag: untranslated */
-"$shortAppName - Add Miro Guide" = "$shortAppName - Add Miro Guide";
-
-/* File: ../../portable/app.py:2018 */
-/* Flag: untranslated */
-"Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add";
-
-/* File: ../../portable/app.py:2024 */
-/* Flag: untranslated */
-"$shortAppName - Download Video" = "$shortAppName - Download Video";
-
-/* File: ../../portable/app.py:2024 */
-/* Flag: untranslated */
-"Enter the URL of the video to download" = "Enter the URL of the video to download";
-
-/* File: ../../portable/app.py:2318 */
-/* Flag: untranslated */
-"News and Tech" = "News and Tech";
-
-/* File: ../../portable/app.py:2324 */
-/* Flag: untranslated */
-"Entertainment" = "Entertainment";
-
-/* File: ../../portable/app.py:2330 */
-/* Flag: untranslated */
-"High-Def" = "High-Def";
-
-/* File: ../../portable/app.py:2337 */
-/* Flag: untranslated */
-"Mac" = "Mac";
-
-/* File: ../../portable/app.py:2352 */
-/* Flag: untranslated */
-"Example Playlist" = "Example Playlist";
-
-/* File: ../../portable/app.py:2371 */
-/* Flag: untranslated */
-"Custom Channels" = "Custom Channels";
-
-/* File: ../../portable/app.py:2371 */
-/* Flag: untranslated */
-"You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels.";
-
-/* File: ../../portable/app.py:2386 */
-/* Flag: untranslated */
-"Error Changing Movies Directory" = "Error Changing Movies Directory";
-
-/* File: ../../portable/app.py:2387 */
-/* Flag: untranslated */
-"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory.";
-
-/* File: ../../portable/app.py:2422 */
-/* Flag: untranslated */
-"Error Saving Video" = "Error Saving Video";
-
-/* File: ../../portable/app.py:2424 */
-/* Flag: untranslated */
+/* File: ../../portable/app.py:1840 */
 /* Flag: python-format */
-"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "An error occured while trying to save %s.  Please check that the file has not been deleted and try again.";
+"The file \"%s\" was deleted from outside Miro." = "A következő fájlt a Miron kívülről törölték: \"%s\" .";
+
+/* File: ../../portable/app.py:2011 */
+" - Invalid URL" = " - Érvénytelen URL";
+
+/* File: ../../portable/app.py:2012 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Az ön által megadott cím nem valós URL.\nKérem ellenőrizze!\n\n";
+
+/* File: ../../portable/app.py:2036 */
+"$shortAppName - Add Channel" = "$shortAppName - Csatorna hozzáadása";
+
+/* File: ../../portable/app.py:2036 */
+"Enter the URL of the channel to add" = "Adja meg a hozzáadni kívánt csatorna címét";
+
+/* File: ../../portable/app.py:2057 */
+/* Flag: untranslated */
+"$shortAppName - Add Miro Guide" = "$shortAppName - Add Miro Guide" /* = "$shortAppName - Miro Kalaúz hozzáadása" */;
+
+/* File: ../../portable/app.py:2057 */
+/* Flag: untranslated */
+"Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add" /* = "Írja be a hozzáadni kívánt Miro Kalaúz URL-jét" */;
+
+/* File: ../../portable/app.py:2063 */
+"$shortAppName - Download Video" = "$shortAppName - Videó Letöltése";
+
+/* File: ../../portable/app.py:2063 */
+"Enter the URL of the video to download" = "adja meg a letöltendő videó címét";
+
+/* File: ../../portable/app.py:2420 */
+"Starter Channels" = "Kezdő Csatornák";
+
+/* File: ../../portable/app.py:2437 */
+"Example Playlist" = "Minta Lejátszási lista";
+
+/* File: ../../portable/app.py:2463 */
+"Custom Channels" = "Egyedi Csatornák";
+
+/* File: ../../portable/app.py:2463 */
+"You are running a version of $longAppName with a custom set of channels." = "Most a $longAppName egy testreszabott csatornás verziója fut.";
+
+/* File: ../../portable/app.py:2478 */
+"Error Changing Movies Directory" = "Hiba a Film Könyvtár váltása közben.";
+
+/* File: ../../portable/app.py:2479 */
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "Nincs jogosultsága a kiválasztott mappába való íráshoz. A Miro folytatja a régi mappa használatát.";
+
+/* File: ../../portable/app.py:2508 */
+"Error Saving Video" = "Hiba a videó mentése közben.";
+
+/* File: ../../portable/app.py:2510 */
+/* Flag: python-format */
+"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "Hiba történt %s mentése közben. Kérem ellenőrizze hogy nem lett-e törölve a fájl, és próbálja újra!";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-/* Flag: untranslated */
-"(Changes won't go into effect until you restart Miro)" = "(Changes won't go into effect until you restart Miro)";
+"(Changes won't go into effect until you restart Miro)" = "(A változtatások csak a Miro újraindítása után lépnek érvénybe)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
-/* Flag: untranslated */
-"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 day\n3 days\n6 days\n10 days\n1 month\nNever";
+"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 nap\n3 nap\n6 nap\n10 nap\n1 hónap\nsoha";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:8 */
-/* Flag: untranslated */
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-/* Flag: untranslated */
-"<b>Searching for Videos</b>" = "<b>Searching for Videos</b>";
+"<b>Searching for Videos</b>" = "<b>Videók keresése</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
-/* Flag: untranslated */
-"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Would you like Miro to look for video files on your computer?</b>";
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Szeretné hogy a Miro megkeresse a gépén található videókat?</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-/* Flag: untranslated */
-"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Would you like to run Miro when your computer starts up?</b>";
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Szeretné hogy a Miro elinduljon a számítógép indulásakor?</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
-/* Flag: untranslated */
-"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Kész!</b>\n\nA telepítés befejeződött -- máris elkezdhet nézni néhány csatornát.\n\n<b>Ne várjon:</b> A Miro más mint a weboldalakon történő videózás -- a kiadók nagy, jó minőségű videókat ajánlhatnak fel. Szóval ne csak üljön, amíg vár a videók letöltődésére: indítson néhány letöltést, és nézzen vissza később!\n\n<b>Hagyja bekapcsolva:</b> A Miro rendszeresen ellenőrzi a csatornákat új videók után kutatva, és letölti őket a háttérben. Ha futni hagyja, rögtön nézheti a videókat, amikor csak akarja.\n\n<b>Ne aggódjon a lemezterület miatt:</b> A Miro figyeli hogy mikor avulnak el a videók, és letörli a régieket hogy helyet csináljon az újaknak. Ha valamit meg szeretne őrizni, erre is van lehetőség.\n\n<b>Gondolkodjon nagyban:</b> A lejátszás gomb jobb oldalán található gombbal megjeleníti a videókat teljes képernyőn.\n\n<b>Keressen videókat:</b> A Miro Guide többszáz internet TV csatornát tartalmaz, és az összes ingyenes. Csak kattintson a \"Hozzáadás\" gombra, és kezdje nézni a kiválasztott csatornát!";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:26 */
-/* Flag: untranslated */
-"By default, videos _expire after" = "By default, videos _expire after";
+"By default, videos _expire after" = "Alapértelmezés szerint a videók elévülési ideje";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
-/* Flag: untranslated */
-"C_hannel:" = "C_hannel:";
+"C_hannel:" = "_Csatorna:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
-/* Flag: untranslated */
-"C_hannels" = "C_hannels";
+"C_hannels" = "_Csatornák";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-/* Flag: untranslated */
-"C_reate Channel" = "C_reate Channel";
+"C_reate Channel" = "Csatorna Lét_rehozása";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
-/* Flag: untranslated */
-"Check Channels for _new content" = "Check Channels for _new content";
+"Check Channels for _new content" = "Új tartalom keresése a csator_nákon";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
-/* Flag: untranslated */
-"Disk _Space" = "Disk _Space";
+"Disk _Space" = "Lemez_terület";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-/* Flag: untranslated */
-"Don't start a download _if it leaves less than" = "Don't start a download _if it leaves less than";
+"Don't start a download _if it leaves less than" = "Ne kezdjen letöltést ha kevesebb mint enny_i hely marad";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-/* Flag: untranslated */
-"Download at _most" = "Download at _most";
+"Download at _most" = "Letöltési _maximum";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
-/* Flag: untranslated */
-"Every 30 minutes\nEvery hour\nManually" = "Every 30 minutes\nEvery hour\nManually";
+"Every 30 minutes\nEvery hour\nManually" = "30 percenként\nÓránként\nÉn intézem";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
-/* Flag: untranslated */
-"G_B free" = "G_B free";
+"G_B free" = "G_B szabad";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
-/* Flag: untranslated */
-"Go" = "Go";
+"Go" = "Mehet!";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
-/* Flag: untranslated */
-"In This:" = "In This:";
+"In This:" = "Ebben:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
-/* Flag: untranslated */
-"Miro can find all the videos on your computer to help you organize your collection." = "Miro can find all the videos on your computer to help you organize your collection.";
+"Miro can find all the videos on your computer to help you organize your collection." = "A Miro megkeresheti az összes videót az ön számítógépén, hogy segítse gyűjteménye rendezését.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-/* Flag: untranslated */
-"Play _videos one after another" = "Play _videos one after another";
+"Play _videos one after another" = "_Videók lejátszása sorban";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-/* Flag: untranslated */
-"Preferences" = "Preferences";
+"Preferences" = "Beállítások...";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
-/* Flag: untranslated */
-"Restrict to my full _home folder" = "Restrict to my full _home folder";
+"Restrict to my full _home folder" = "Korlátozás a saját könyvtáromra";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-/* Flag: untranslated */
-"S_top after each video" = "S_top after each video";
+"S_top after each video" = "Lejá_tszás megállitása minden videó végén";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
-/* Flag: untranslated */
-"S_tore downloaded videos in this folder:" = "S_tore downloaded videos in this folder:";
+"S_tore downloaded videos in this folder:" = "Le_töltött videók tárolása a következő helyen:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
-/* Flag: untranslated */
-"Search _Engine:" = "Search _Engine:";
+"Search _Engine:" = "K_eresési Szolgáltató";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-/* Flag: untranslated */
-"Search _custom folder:" = "Search _custom folder:";
+"Search _custom folder:" = "_Keresés ebben a testreszabott mappában:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
-/* Flag: untranslated */
-"Select Movies Directory" = "Select Movies Directory";
+"Select Movies Directory" = "Filmeket tartalmazó könyvtár kiválasztása";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
-/* Flag: untranslated */
-"Select custom search directory" = "Select custom search directory";
+"Select custom search directory" = "Testreszabott keresés mappájának kiválasztása";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
-/* Flag: untranslated */
-"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "The next few screens will help you set up Miro so that it works best for you.  Here's the first question.";
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "A következő néhány képernyő segíteni fog önnek a Miro megfelelő beállításaában. Itt az első kérdés.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-/* Flag: untranslated */
-"To a_void slowdowns, limit upstream to" = "To a_void slowdowns, limit upstream to";
+"To a_void slowdowns, limit upstream to" = "A lelassulások megelőzése érdekében a feltöltési limit";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
-/* Flag: untranslated */
-"Volume:" = "Volume:";
+"Volume:" = "Hangerő:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
-/* Flag: untranslated */
-"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.";
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Javasoljuk, hogy engedélyezze a Miro indítását a számítógép indulásakor. Ezáltal a be nem fejezett és új videók letöltése befejeződhet mire ön nézni szeretné őket.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
-/* Flag: untranslated */
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.";
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Üdvözli önt az Internet TV! A Miroval sokmindent megtehet: automatikusan letöltheti a videókat kedvenc csatornáiról, új videókat nézhet egyiket a másik után, torrenteket tölthet le, ajánlhatja a videókat ismerőseinek...és még sok mást.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
-/* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Új letöltési könyvtár lett kiválasztva. Helyezze át a Miro a meglévő letöltéseket is az új helyre? (A folyamatban lévő letöltések nem leszenk áthelyezve addig amíg a letöltés be nem fejeződik)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
-/* Flag: untranslated */
-"_Add Folder" = "_Add Folder";
+"_Add Folder" = "M_appa hozzáadása";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-/* Flag: untranslated */
-"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
+"_Automatically run Miro when I log in" = "_A Miro automatikus indítása bejelentkezés után";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
-/* Flag: untranslated */
-"_Bit Torrent uses ports between" = "_Bit Torrent uses ports between";
+"_Bit Torrent uses ports between" = "A _BitTorrent használja a következő portokat";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
-/* Flag: untranslated */
-"_Downloads" = "_Downloads";
+"_Downloads" = "_Letöltések";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
-/* Flag: untranslated */
-"_Folders" = "_Folders";
+"_Folders" = "_Mappák";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
-/* Flag: untranslated */
-"_General" = "_General";
+"_General" = "_Általános";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-/* Flag: untranslated */
-"_KB/s when my computer is active" = "_KB/s when my computer is active";
+"_KB/s when my computer is active" = "_KB/s amikor a számítógép aktív";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
-/* Flag: untranslated */
-"_Playback" = "_Playback";
+"_Playback" = "_Lejátszás";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
-/* Flag: untranslated */
-"_Resume playback of videos from the point where they were stopped" = "_Resume playback of videos from the point where they were stopped";
+"_Resume playback of videos from the point where they were stopped" = "A videók lejátszásának _folytatása a korábban felfüggesztett helytől";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
-/* Flag: untranslated */
-"_Search" = "_Search";
+"_Search" = "_Keresés";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
-/* Flag: untranslated */
-"_Search For:" = "_Search For:";
+"_Search For:" = "Keresés erre:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
-/* Flag: untranslated */
 "_URL" = "_URL";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
-/* Flag: untranslated */
-"_Warn me when I attempt to quit with downloads in progress" = "_Warn me when I attempt to quit with downloads in progress";
+"_Warn me when I attempt to quit with downloads in progress" = "_Figyelmeztess, ha kilépéskor folyamatban lévő letöltések vannak még";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-/* Flag: untranslated */
-"_Watch for new videos in these folders and include them in the Library" = "_Watch for new videos in these folders and include them in the Library";
+"_Watch for new videos in these folders and include them in the Library" = "Ezekben a mappákban lévő új videók figyelése és _beillesztése a saját könyvtárba.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
-/* Flag: untranslated */
-"_and" = "_and";
+"_and" = "_és";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
-/* Flag: untranslated */
-"videos at once" = "videos at once";
+"videos at once" = "videók egyszerre";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
-/* Flag: untranslated */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName, $appVersion verzió ($appRevision); copyright (c) 2005-2007 $publisher. $longAppName és a $longAppName logo a $publisher bejegyzett védjegye.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
-/* Flag: untranslated */
-"About $longAppName" = "About $longAppName";
+"About $longAppName" = "$longAppName névjegye";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1 */
-"Add Channel" = "Adj hozzá egy csatornát";
+"Add Channel" = "Csatorna hozzáadása";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2 */
-/* Flag: untranslated */
-"Please enter the URL of the channel you'd like to add." = "Please enter the URL of the channel you'd like to add.";
+"Please enter the URL of the channel you'd like to add." = "Írja be a hozzáadni kívánt csatorna címét!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6 */
-/* Flag: untranslated */
-"Copy log to clipboard" = "Copy log to clipboard";
+"Copy log to clipboard" = "Naplófájl másolása a vágólapra";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5 */
-/* Flag: untranslated */
-"Open up the bug tracker" = "Open up the bug tracker";
+"Open up the bug tracker" = "A hibakövető rendszer megnyitása";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2 */
-/* Flag: untranslated */
-"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred.";
+"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "Kérjük segítsen megjavítani! Másolja be\naz összes információt a bug trackerbe, és írja le mit csinált amikor\na hiba bekövetkezett.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7 */
-/* Flag: untranslated */
-"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!";
+"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Ezek után indítsd újra az alkalmazást (különben újabb hibák előfordulása várható). Az okozott kellemetlenségért elnézést kérünk. A $longAppName még béta állapotban van, de a segítségeddel gyorsan javítjuk a hibákat!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1 */
-/* Flag: untranslated */
-"You found a bug in $longAppName!" = "You found a bug in $longAppName!";
+"You found a bug in $longAppName!" = "Ön megtalálta a $longAppName egy hibáját!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1 */
@@ -2182,239 +1737,182 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2 */
-/* Flag: untranslated */
 "'" = "'";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10 */
-/* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.";
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "Megpróbálhatjuk letölteni a fájlokat. A videók listázása több időt vehet igénybe, és a leírások furcsán jelenhetnek meg.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12 */
-/* Flag: untranslated */
-"Please contact the publishers of" = "Please contact the publishers of";
+"Please contact the publishers of" = "Kérjük vegye fel a kapcsolatot a kiadóval";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13 */
-/* Flag: untranslated */
-"and ask if they can supply a feed in a format that will work with $shortAppName." = "and ask if they can supply a feed in a format that will work with $shortAppName.";
+"and ask if they can supply a feed in a format that will work with $shortAppName." = "és kérdezze meg, hogy tudnának-e olyan formátumot használni ami együttműködik a $shortAppName-val.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1 */
 /* Flag: untranslated */
 "$longAppName" = "$longAppName" /* = "$longAppName" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4 */
-/* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)";
+"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "Új letöltési mappát adott meg. Helyezze át a $shortAppName a korábban letöltött fájlokat is ide? (A még folyamatban lévő letöltések addig nem lesznek áthelyezve, amíg a letöltésük be nem fejeződik)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1 */
 "Channel requires authentication" = "A csatorna bejelentkezést igényel";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
-/* Flag: untranslated */
-"Please enter the username and password given to you by this channel's publisher." = "Please enter the username and password given to you by this channel's publisher.";
+"Please enter the username and password given to you by this channel's publisher." = "Adja meg a csatorna kiadója által adott felhasználóinevet és jelszavat!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
-/* Flag: untranslated */
-"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(WARNING: Changes won't go into effect until you restart $longAppName.)";
+"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(FIGYELEM: A változtatások csak a $longAppName újraindítása után lépnek érvénybe!)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
-/* Flag: untranslated */
-"Add Folder..." = "Add Folder...";
+"Add Folder..." = "Mappa hozzáadása...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
-/* Flag: untranslated */
-"Automatically run $longAppName when I login." = "Automatically run $longAppName when I login.";
+"Automatically run $longAppName when I login." = "A $longAppName indítása bejelentkezéskor.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
-/* Flag: untranslated */
 "BitTorrent" = "BitTorrent";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
-/* Flag: untranslated */
-"By default, videos expire after" = "By default, videos expire after";
+"By default, videos expire after" = "Videók elavulnak ennyi idő múlva";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
-/* Flag: untranslated */
-"Check channels for new content" = "Check channels for new content";
+"Check channels for new content" = "Csatornák új tartalmának ellenőrzése";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
-/* Flag: untranslated */
-"Close to tray so that downloads can continue." = "Close to tray so that downloads can continue.";
+"Close to tray so that downloads can continue." = "Lerakás tálcára, hogy a letöltések folytatódhassanak.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
-/* Flag: untranslated */
-"Every 30 minutes" = "Every 30 minutes";
+"Every 30 minutes" = "30 percenként";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
-/* Flag: untranslated */
-"Every hour" = "Every hour";
+"Every hour" = "Óránként";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
-/* Flag: untranslated */
-"Folder" = "Folder";
+"Folder" = "Mappa";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
-/* Flag: untranslated */
-"Manually" = "Manually";
+"Manually" = "Manuálisan";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
-/* Flag: untranslated */
-"Options" = "Options";
+"Options" = "Beállítások";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
-/* Flag: untranslated */
-"Play one video, then stop." = "Play one video, then stop.";
+"Play one video, then stop." = "Egy videó lejátszása után megáll";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7 */
-/* Flag: untranslated */
-"Quit Miro completely." = "Quit Miro completely.";
+"Quit Miro completely." = "Kilépés a Miroból.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
-/* Flag: untranslated */
-"Remember where I stopped watching a video and continue playing from that point." = "Remember where I stopped watching a video and continue playing from that point.";
+"Remember where I stopped watching a video and continue playing from that point." = "Emlékezzen hol tartott a lejátszás, és onnan fojtassa legközelebb.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
-/* Flag: untranslated */
-"Show as a Channel" = "Show as a Channel";
+"Show as a Channel" = "Megjelenítés Csatornaként";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
-/* Flag: untranslated */
-"Store downloaded videos in this folder:" = "Store downloaded videos in this folder:";
+"Store downloaded videos in this folder:" = "A letöltött videók tárolása itt:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
-/* Flag: untranslated */
-"To avoid slowdowns, limit upstream bandwith when my computer is active." = "To avoid slowdowns, limit upstream bandwith when my computer is active.";
+"To avoid slowdowns, limit upstream bandwith when my computer is active." = "A lelassulások elkerülése érdekében limitálja a feltöltési sebességet ha a gép aktív.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
-/* Flag: untranslated */
-"Upstream limit (KB/s)" = "Upstream limit (KB/s)";
+"Upstream limit (KB/s)" = "Feltöltési limit (KB/s)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
-/* Flag: untranslated */
-"Use BitTorrent ports between" = "Use BitTorrent ports between";
+"Use BitTorrent ports between" = "A következő BitTorrent portok használata";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
-/* Flag: untranslated */
-"WARNING: This setting will not go into effect until you restart $longAppName." = "WARNING: This setting will not go into effect until you restart $longAppName.";
+"WARNING: This setting will not go into effect until you restart $longAppName." = "FIGYELEM: A megváltoztatott beállítás csak a $longAppName újraindítása után lép érvénybe.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10 */
-/* Flag: untranslated */
-"Warn me when I attempt to quit with downloads in progress." = "Warn me when I attempt to quit with downloads in progress.";
+"Warn me when I attempt to quit with downloads in progress." = "Figyelmeztessen, ha kilépéskor még aktív letöltések vannak.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
-/* Flag: untranslated */
-"Watch for new videos in these folders and include them in my Library." = "Watch for new videos in these folders and include them in my Library.";
+"Watch for new videos in these folders and include them in my Library." = "Új videók keresése, és hozzáadása a Könyvtáramhoz a következő mappákban.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
-/* Flag: untranslated */
-"When I click the red close button:" = "When I click the red close button:";
+"When I click the red close button:" = "Amikor a piros kilépés gombra kattintok:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
-/* Flag: untranslated */
-"and" = "and";
+"and" = "és";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
-/* Flag: untranslated */
-"Channel:" = "Channel:";
+"Channel:" = "Csatorna:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6 */
-/* Flag: untranslated */
-"Search Engine:" = "Search Engine:";
+"Search Engine:" = "Keresőmotor:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2 */
-/* Flag: untranslated */
-"Search For:" = "Search For:";
+"Search For:" = "Keresés erre:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7 */
-/* Flag: untranslated */
-"URL:" = "URL:";
+"URL:" = "Cím:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33 */
-/* Flag: untranslated */
-"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName can find all the videos on your computer to help you organize your collection.";
+"$longAppName can find all the videos on your computer to help you organize your collection." = "A $longAppName megkeresheti az összes videót az ön számítógépén, ezzel segítve gyűjteménye rendszerezését.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45 */
-/* Flag: untranslated */
-"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.";
+"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "A $longAppName rendszeresen ellenőrzi a csatornákat új tartalomért, és letölti ezeket a háttérben. Ha futni hagyja, akkor azonnal nézheti az új videókat amikor csak akarja.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29 */
-/* Flag: untranslated */
-"$shortAppName First Time Setup" = "$shortAppName First Time Setup";
+"$shortAppName First Time Setup" = "A $shortAppName első indítása";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39 */
-/* Flag: untranslated */
-"Cancel Search" = "Cancel Search";
+"Cancel Search" = "Keresés megszakítása";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38 */
-"Change" = "Módosítsd";
+"Change" = "Módosítás";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46 */
-/* Flag: untranslated */
-"Don't Worry About Disk Space:" = "Don't Worry About Disk Space:";
+"Don't Worry About Disk Space:" = "Ne aggódjon a lemezterület miatt:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50 */
-/* Flag: untranslated */
-"Find Videos:" = "Find Videos:";
+"Find Videos:" = "Keressen Videókat:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48 */
-/* Flag: untranslated */
-"Go Big:" = "Go Big:";
+"Go Big:" = "Gondolkodjon nagyban:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44 */
-/* Flag: untranslated */
-"Leave it On:" = "Leave it On:";
+"Leave it On:" = "Hagyja bekapcsolva:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47 */
-/* Flag: untranslated */
-"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.";
+"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "A TiVo-hoz hasonlóan, a $longAppName is ún. élettartam rendszerrel rendelkezik, ami segít eltakarítani a régebbi videókat, hogy helyet szabadítson fel az újabbak számára. De a \"Mentés\" gombra kattintással mindig lehetősége van a videók megtartására ugyanakkor a csatorna beállításainál automatikus mentést is kérhet.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42 */
-/* Flag: untranslated */
-"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:";
+"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Most már böngészehti a Csatorna Kalaúzt\nés kezdhet is tévézni. Néhány tipp az induláshoz:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40 */
-/* Flag: untranslated */
-"Reset Search" = "Reset Search";
+"Reset Search" = "A keresés alapállapotba hozása";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35 */
-/* Flag: untranslated */
-"Restrict to all my personal files." = "Restrict to all my personal files.";
+"Restrict to all my personal files." = "Csak a saját fájljaimat";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36 */
-/* Flag: untranslated */
-"Search custom folder:" = "Search custom folder:";
+"Search custom folder:" = "Keresés testreszabott mappában";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
-/* Flag: untranslated */
-"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.";
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "A $shortAppName Csatorna Kalaúzban internet tévés csatornák százai vannak; mind ingyen. Csak klikkeljen a \"Hozzáadás\" gombra ha nézni szeretné valamelyiket.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49 */
-/* Flag: untranslated */
-"The button to the right of the play button shows videos fullscreen." = "The button to the right of the play button shows videos fullscreen.";
+"The button to the right of the play button shows videos fullscreen." = "A lejátszó gombtól jobbra található gomb teljes képernyőn jeleníti meg a videókat.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30 */
-/* Flag: untranslated */
-"The next few screens will help you set up $longAppName so that it works best for you." = "The next few screens will help you set up $longAppName so that it works best for you.";
+"The next few screens will help you set up $longAppName so that it works best for you." = "A következő néhány képernyő segíteni fog a $longAppName minél zökkenőmentesebb működésre való beállításában.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31 */
-/* Flag: untranslated */
-"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.";
+"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "Javasoljuk, hogy rögtön indítsd el a $longAppName alkalmazást az operációs rendszer betöltődése után. Így a videók letöltése a háttérben tovább folyhat, hogy azonnal a rendelkezésedre álljanak, ha meg szeretnéd tekinteni őket.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34 */
-/* Flag: untranslated */
-"Would you like $longAppName to look for video files on your computer?" = "Would you like $longAppName to look for video files on your computer?";
+"Would you like $longAppName to look for video files on your computer?" = "Szeretnéd, hogy a $longAppName megkeresse a videófájlokat a számítógépen?";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32 */
-/* Flag: untranslated */
-"Would you like to run $shortAppName on startup?" = "Would you like to run $shortAppName on startup?";
+"Would you like to run $shortAppName on startup?" = "Szeretnéd, hogy a $longAppName automatikusan elinduljon a rendszer indításakor?";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41 */
-/* Flag: untranslated */
-"You're done!" = "You're done!";
+"You're done!" = "Kész!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1 */
-/* Flag: untranslated */
-"Release Notes:" = "Release Notes:";
+"Release Notes:" = "Kiadási megjegyzések:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1 */
-/* Flag: untranslated */
-"Question" = "Question";
+"Question" = "Kérdés";

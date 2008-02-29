@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2007-10-19 11:53-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-02-29 06:29-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:77 */
 /* Flag: python-format */
@@ -12,17 +12,18 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "OK" = "確定";
 
+/* File: ../../portable/dialogs.py:76 */
+"Ok" = "好的";
+
 "$log" = "$log";
 
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">现在我们的故障追踪系统停留在<a href=\"$bugTrackerURL\">$bugTrackerURL</a>. 请告诉我们故障发生时您做的动作，粘帖上面窗口中的日志信息,并回答几个问题，这些将有助于我们更好的解决问题。</font>";
 
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "如果您有时间，能否麻烦你顺便提交一个故障报告给我们的故障跟踪系统呢? 其实 ，我们只需要知道故障发生时您所做的动作, 越准确越好，当然您如果在下面的输入框中发点牢骚也未尝不可:";
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "如果您有时间，能否麻烦您顺便提交一个故障报告给我们的故障跟踪系统呢? 其实 ，我们只需要知道故障发生时您所做的动作, 越准确越好，当然您如果在下面的输入框中发点牢骚也未尝不可:";
 
-/* Flag: untranslated */
-"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." /* = "注意!$longAppName 会引起系统内部错误和异常$when。非常抱歉，我们建议您退出然后启动$shortAppName。那样就会正常了，同时也会减少你丢失系统设置和频道订阅列表的可能性。" */;
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "注意!$longAppName 会引起系统内部错误和异常$when。非常抱歉，我们建议您退出然后启动$shortAppName。那样就会正常了，同时也会减少您丢失系统设置和频道订阅列表的可能性。";
 
-/* Flag: untranslated */
-"The fall of $shortAppName??" = "The fall of $shortAppName??" /* = "降序排列$shortAppName??" */;
+"The fall of $shortAppName??" = "降序排列 $shortAppName??";
 
 "About Miro" = "关于 Miro";
 
@@ -32,7 +33,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Bring All to Front" = "提取全部到最前面";
 
-/* File: ../../platform/osx/frontend/Preferences.py:39 */
+/* File: ../../platform/osx/frontend/Preferences.py:65 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
 "Channels" = "频道";
 
@@ -100,16 +101,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Paste" = "粘贴";
 
-/* File: ../../platform/osx/frontend/Application.py:231 */
+/* File: ../../platform/osx/frontend/Application.py:249 */
 "Play Video" = "播放视频";
 
-/* File: ../../platform/osx/frontend/Preferences.py:43 */
+/* File: ../../platform/osx/frontend/Preferences.py:69 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
 "Playback" = "播放";
 
 "Playlists" = "播放列表";
 
-"Preferencesâ¦" = "选项";
+"Preferences..." = "首选项...";
 
 "Previous Video" = "前一个视频";
 
@@ -155,7 +156,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "FullScreen Controls" = "全屏控制";
 
-/* File: ../../portable/tabs.py:45 */
+/* File: ../../portable/tabs.py:46 */
 "Video Search" = "视频搜索";
 
 "VideoWindow" = "视频窗口";
@@ -172,7 +173,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "(You must restart Miro for this change to take effect)" = "您必须重新启动Miro以便此更改生效";
 
-"(You must restart Miro for this change to take effect)\n" = "你必须重启Miro才能使更改生效\n";
+"(You must restart Miro for this change to take effect)\n" = "您必须重启Miro才能使更改生效\n";
 
 "(movies directory path goes here)" = "(视频文件的文件夹置于此)";
 
@@ -237,9 +238,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Remember video position." = "记住影片位置";
 
-/* File: ../../portable/guide.py:86 */
+/* File: ../../portable/guide.py:107 */
 /* File: ../../portable/playlist.py:197 */
-/* File: ../../portable/feed.py:788 */
+/* File: ../../portable/feed.py:795 */
 /* File: ../../portable/menu.py:65 */
 /* File: ../../portable/menu.py:70 */
 /* File: ../../portable/folder.py:156 */
@@ -247,19 +248,18 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
 "Remove" = "移除";
 
-/* Flag: untranslated */
-"Run Miro at startup" = "Run Miro at startup" /* = "启动时运行Miro" */;
+"Run Miro at startup" = "启动时运行Miro";
 
 "Save downloaded videos in this folder:" = "保存下载的视频到这个文件夹：";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:571 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573 */
 "Show as Channel" = "作为频道显示";
 
 "Stop after each video." = "每个视频播放完后停止";
 
 "To avoid internet slowdowns:" = "为了避免互联网速度问题：";
 
-/* File: ../../portable/app.py:1187 */
+/* File: ../../portable/app.py:1206 */
 "Warn me when I attempt to quit with downloads in progress" = "当尝试退出时，如还有下载任务正在执行请提醒我。";
 
 "Watch for new videos in these folders and include them in the Library:" = "在这些目录中观看新的视频并把它们归入媒体库中";
@@ -292,17 +292,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "URL" = "网址";
 
-/* File: ../../platform/windows-xul/frontend_implementation/startup.py:25 */
+/* File: ../../platform/windows-xul/frontend_implementation/startup.py:42 */
 /* File: ../../platform/gtk-x11/frontend_implementation/startup.py:48 */
 /* Flag: python-format */
-"(parsed %d files - found %d videos)" = "（已分析组合了＊％文件，找到＊％视频文件）";
+"(parsed %d files - found %d videos)" = "（已分析组合%d文件─找到%d视频文件）";
 
 "Back" = "上一步";
 
 "Browse" = "浏览";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:90 */
-/* File: ../../platform/osx/frontend/StartupPanel.py:116 */
+/* File: ../../platform/osx/frontend/StartupPanel.py:106 */
 "Next" = "下一步";
 
 /* File: ../../portable/dialogs.py:79 */
@@ -318,217 +317,213 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37 */
 "Searching for Videos" = "正在搜索视频文件";
 
-/* Flag: untranslated */
-"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" /* = "Miro播放器能够查找在你电脑中所有的视频文件来帮助组织你的搜藏" */;
+"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "Miro播放器能够查找在您电脑中所有的视频文件，来帮助您整理收藏。\n\n\n您需要Miro开始寻找视频文件吗？";
 
-"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "下面几个屏幕的内容将帮助您设置Miro播放器，使之适合你。这是第一个问题。";
+"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "下面几个屏幕的内容将帮助您设置Miro播放器，使之适合您。这是第一个问题。";
 
-"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "我们建议你允许开机时自动启动Miro播放器。这样，未完成的视频会被完成并且您的频道上的新视频将会在您想看视频时准备好。\n\n您希望开机时启动Miro吗？";
+"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "我们建议您允许开机时自动启动Miro播放器。这样，未完成的视频会被完成并且您的频道上的新视频将会在您想看视频时准备好。\n\n您希望开机时启动Miro吗？";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
 "Welcome to Internet TV!" = "欢迎来到互联网电视！";
 
-"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "欢迎来到互连网络电视。使用Miro播放器你可以做很多事情：从你喜欢的频道自动下载电视节目，一个接一个的观看新的节目，下载torrent，向朋友推荐节目，以及更多的。\n\n";
+"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "欢迎来到互连网络电视。使用Miro播放器您可以做很多事情：从您喜欢的频道自动下载电视节目，一个接一个的观看新的节目，下载torrent，向朋友推荐节目，以及更多的。\n\n";
 
 /* File: ../../portable/dialogs.py:78 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
 "Yes" = "确定";
 
-"You're done!\n\nSetup is complete -- now you can find some channels and start watching.\n\nDon't Wait: Miro is different than watching webpage videos -- publishers can offer big, high quality videos. So don't sit around waiting for videos: start some downloads and check back later. \n\nLeave it On: Miro regularly checks channels for new videos and downloads in the background. Leaving it running means you'll have new videos when you're ready to watch.\n\nDon't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\nGo Big: The button to the right of the play button shows videos fullscreen.\n\nFind Videos: The Miro Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.\n" = "你成功了！\n\n安装完成了－－现在你可以找到一些频道并且开始观看。\n\n不用等待：使用Miro和观看网页上的节目不同－－出品人可以提供高质量的大文件节目。因此不用坐在那里等待节目下载，开始下载节目然后过一会再回来察看节目。 \n\n使程序一直开启： Miro会定期检查频道并在后台自动下载新节目。使它保持开启状态意味着当你要观看节目的时候会有新的节目。\n\n不用担心磁盘空间：与TiVo一样，Miro的功能包含“过期”系统，它可以帮助清理旧的节目并给新的节目留出磁盘空间。你可以点击 “保存”来永久保存一个节目，也可以设置频道自动保存节目。\n\n放大：播放按钮右边的按钮可使节目全屏幕播放。\n\n搜索节目：Miro的节目介绍拥有成百上千的网络电视频道，所有的频道都是免费的。只要点击“加入”就可观看这个频道。\n";
-
 "%message%\n%message%" = "%消息％\n％消息％";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:57 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78 */
 "Update Available" = "有可用的更新";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:58 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79 */
 /* Flag: python-format */
 "A new version of %s is available for download." = "%s的新版本已经可以下载";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:214 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240 */
 "Error Bombing Item" = "Bombing该项时出错";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:216 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242 */
 "Error Recommending Item" = "推荐该项时发生错误";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:218 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244 */
 "Error Opening Website" = "打开网站时发生错误";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:222 */
+/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248 */
 /* Flag: python-format */
 "There was an error opening %s.  Please try again in a few seconds" = "打开%s时发生错误。请几秒钟后重试看看";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:45 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:62 */
 /* Flag: python-format */
 "Error importing modules:\n%s" = "载入错误模块:\n%s";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:49 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:66 */
 "Starting up" = "正在启动";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:256 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:273 */
 "Loading window" = "正在装载窗口";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:257 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:274 */
 "onStartup called twice" = "onStartup被调用了两次";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:671 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:702 */
 "Spacebar" = "空格键";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:818 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:851 */
 "Close to tray?" = "最小化到系统托盘？";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:819 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:852 */
 "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "当您点击红色按钮时，您是希望Miro最小化到系统托盘还是退出？您可以稍后在选项里更改这个设定。";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:27 */
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:44 */
 "Download Completed" = "下载完成";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:28 */
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:45 */
 /* Flag: python-format */
 "Download of video '%s' is finished." = "影片'%s'下载完成";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:37 */
-/* Flag: untranslated */
-"Download Failed" = "Download Failed" /* = "下载失败" */;
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:54 */
+"Download Failed" = "下载失败";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:38 */
-/* Flag: untranslated */
-"Download of video '%s' has failed." = "Download of video '%s' has failed." /* = "下载视频\"%s\"失败" */;
+/* File: ../../platform/osx/frontend/GrowlNotifier.py:55 */
+/* Flag: python-format */
+"Download of video '%s' has failed." = "下载视频\"%s\"失败";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:261 */
+/* File: ../../platform/osx/frontend/MainFrame.py:278 */
 "Subscribe to Channel" = "订阅频道";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:262 */
-"Enter the URL of the channel you would like to subscribe to." = "输入你想要订阅频道的网络地址";
+/* File: ../../platform/osx/frontend/MainFrame.py:279 */
+"Enter the URL of the channel you would like to subscribe to." = "输入您想要订阅频道的网络地址";
 
-/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:218 */
+/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:248 */
 "Audio" = "声音";
 
-/* File: ../../platform/osx/frontend/Preferences.py:38 */
+/* File: ../../platform/osx/frontend/Preferences.py:64 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
 "General" = "主选项";
 
-/* File: ../../platform/osx/frontend/Preferences.py:40 */
+/* File: ../../platform/osx/frontend/Preferences.py:66 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
 "Downloads" = "下载";
 
-/* File: ../../platform/osx/frontend/Preferences.py:41 */
+/* File: ../../platform/osx/frontend/Preferences.py:67 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
 "Folders" = "文件夹";
 
-/* File: ../../platform/osx/frontend/Preferences.py:42 */
+/* File: ../../platform/osx/frontend/Preferences.py:68 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
 "Disk Space" = "磁盘空间";
 
-/* File: ../../platform/osx/frontend/Preferences.py:170 */
+/* File: ../../platform/osx/frontend/Preferences.py:196 */
 "Movies Directory" = "影片目录";
 
-/* File: ../../platform/osx/frontend/Preferences.py:171 */
-/* Flag: untranslated */
-"Select a Directory to store %s downloads in." = "Select a Directory to store %s downloads in." /* = "选择%s下载存放的目录" */;
+/* File: ../../platform/osx/frontend/Preferences.py:197 */
+/* Flag: python-format */
+"Select a Directory to store %s downloads in." = "选择下载 %s 后存放的目录";
 
-/* File: ../../platform/osx/frontend/Preferences.py:172 */
-/* File: ../../platform/osx/frontend/Preferences.py:236 */
+/* File: ../../platform/osx/frontend/Preferences.py:198 */
+/* File: ../../platform/osx/frontend/Preferences.py:262 */
 "Select" = "选择(&L)";
 
-/* File: ../../platform/osx/frontend/Preferences.py:181 */
+/* File: ../../platform/osx/frontend/Preferences.py:207 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
 "Migrate existing movies?" = "转移已存在的电影？";
 
-/* File: ../../platform/osx/frontend/Preferences.py:182 */
+/* File: ../../platform/osx/frontend/Preferences.py:208 */
 /* Flag: python-format */
 "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "您已经选择了一个新的下载视频的存放目录。要 %s 移动当前的下载文件到那里吗？（在下载完成前，当前正在下载的视频不会被移动）";
 
-/* File: ../../platform/osx/frontend/Preferences.py:234 */
+/* File: ../../platform/osx/frontend/Preferences.py:260 */
 "View this Directory in the Library" = "浏览库中的目录";
 
-/* File: ../../platform/osx/frontend/Preferences.py:235 */
-/* Flag: untranslated */
-"Select a Directory to view in the Library." = "Select a Directory to view in the Library." /* = "在媒体库中选择一个目录观看" */;
+/* File: ../../platform/osx/frontend/Preferences.py:261 */
+"Select a Directory to view in the Library." = "在媒体库中选择一个目录观看";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:114 */
+/* File: ../../platform/osx/frontend/StartupPanel.py:80 */
+"Finish" = "完成";
+
+/* File: ../../platform/osx/frontend/StartupPanel.py:139 */
 "Search!" = "搜索！";
 
-/* File: ../../platform/osx/frontend/Application.py:228 */
+/* File: ../../platform/osx/frontend/Application.py:246 */
 "Pause Video" = "暂停视频";
 
-/* File: ../../platform/osx/frontend/Application.py:237 */
+/* File: ../../platform/osx/frontend/Application.py:255 */
 "Unsupported version of Quicktime" = "不支持的Quicktime版本";
 
-/* File: ../../platform/osx/frontend/Application.py:238 */
+/* File: ../../platform/osx/frontend/Application.py:256 */
 /* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "你需要可免费下载的最新版本Quicktime来运行 %s";
+"To run %s you need the most recent version of Quicktime, which is a free update." = "您需要可免费下载的最新版本Quicktime来运行 %s";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:5 */
+/* File: ../../platform/osx/frontend/UIStrings.py:22 */
 "_Remove..." = "删除...(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:6 */
+/* File: ../../platform/osx/frontend/UIStrings.py:23 */
 "_Remove Playlist..." = "删除播放列表(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:7 */
+/* File: ../../platform/osx/frontend/UIStrings.py:24 */
 "_Remove Playlists..." = "删除多个播放列表...(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:8 */
+/* File: ../../platform/osx/frontend/UIStrings.py:25 */
 "_Remove Playlist Folder..." = "删除播放列表夹...(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:9 */
+/* File: ../../platform/osx/frontend/UIStrings.py:26 */
 "_Remove Playlist Folders..." = "删除多个播放列表夹...(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:10 */
+/* File: ../../platform/osx/frontend/UIStrings.py:27 */
 /* File: ../../portable/menubar.py:179 */
 "_Remove Channel..." = "删除频道...(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:11 */
+/* File: ../../platform/osx/frontend/UIStrings.py:28 */
 /* File: ../../portable/menubar.py:180 */
 "_Remove Channels..." = "删除多个频道...(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:12 */
+/* File: ../../platform/osx/frontend/UIStrings.py:29 */
 /* File: ../../portable/menubar.py:182 */
 "_Remove Channel Folder..." = "删除频道夹...(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:13 */
+/* File: ../../platform/osx/frontend/UIStrings.py:30 */
 /* File: ../../portable/menubar.py:181 */
 "_Remove Channel Folders..." = "删除多个频道夹...(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:14 */
-/* Flag: untranslated */
-"_Remove Miro Guide..." = "_Remove Miro Guide..." /* = "移除单个Miro指南" */;
+/* File: ../../platform/osx/frontend/UIStrings.py:31 */
+"_Remove Miro Guide..." = "_移除Miro指南...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:15 */
-/* Flag: untranslated */
-"_Remove Miro Guides..." = "_Remove Miro Guides..." /* = "移除多个Miro指南" */;
+/* File: ../../platform/osx/frontend/UIStrings.py:32 */
+"_Remove Miro Guides..." = "_移除Miro指南...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:16 */
+/* File: ../../platform/osx/frontend/UIStrings.py:33 */
 "_Remove Video..." = "删除视频...(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:17 */
+/* File: ../../platform/osx/frontend/UIStrings.py:34 */
 "_Remove Videos..." = "删除多个视频...(_R)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:18 */
+/* File: ../../platform/osx/frontend/UIStrings.py:35 */
 "Re_name..." = "重命名(_N)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:19 */
+/* File: ../../platform/osx/frontend/UIStrings.py:36 */
 "Re_name Playlist..." = "重命名播放列表(_N)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:20 */
+/* File: ../../platform/osx/frontend/UIStrings.py:37 */
 "Re_name Playlist Folder..." = "重命名播放列表夹(_N)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:21 */
+/* File: ../../platform/osx/frontend/UIStrings.py:38 */
 /* File: ../../portable/menubar.py:178 */
 "Re_name Channel..." = "重命名频道(_N)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:22 */
+/* File: ../../platform/osx/frontend/UIStrings.py:39 */
 "Re_name Channel Folder..." = "重命名频道夹(_N)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:23 */
+/* File: ../../platform/osx/frontend/UIStrings.py:40 */
 "Re_name Miro Guide..." = "重命名Miro指南";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:24 */
+/* File: ../../platform/osx/frontend/UIStrings.py:41 */
 /* File: ../../portable/menubar.py:184 */
 "_Update Channel..." = "更新频道...(_U)";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:25 */
+/* File: ../../platform/osx/frontend/UIStrings.py:42 */
 /* File: ../../portable/menubar.py:185 */
 "_Update Channels..." = "更新多个频道...(_U)";
 
@@ -546,10 +541,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/menubar.py:257 */
 "Quit" = "退出";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:322 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324 */
 "New Channel _Guide..." = "新建频道导航(_G)";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:562 */
+/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564 */
 "Folder Location" = "文件夹位置";
 
 /* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
@@ -560,81 +555,82 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
 "Password:" = "密码";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:413 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416 */
 "Unknown Runtime Error" = "未知的运行时错误";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:414 */
+/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417 */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "发生了未知错误%s。";
 
-/* File: ../../portable/dl_daemon/download.py:367 */
+/* File: ../../portable/dl_daemon/download.py:359 */
 "Error" = "出错";
 
-/* File: ../../portable/dl_daemon/download.py:440 */
+/* File: ../../portable/dl_daemon/download.py:432 */
 /* Flag: python-format */
 "Could not write to %s" = "不能写入 %s";
 
-/* File: ../../portable/dl_daemon/download.py:459 */
+/* File: ../../portable/dl_daemon/download.py:452 */
 "Not enough disk space" = "可用磁盘空间不足";
 
-/* File: ../../portable/dl_daemon/download.py:460 */
+/* File: ../../portable/dl_daemon/download.py:453 */
 /* Flag: python-format */
 "%s MB required to store this video" = "需要%s MB保存这个视频";
 
-/* File: ../../portable/dl_daemon/download.py:679 */
+/* File: ../../portable/dl_daemon/download.py:672 */
 "BitTorrent failure" = "BT下载错误";
 
-/* File: ../../portable/dl_daemon/download.py:680 */
+/* File: ../../portable/dl_daemon/download.py:673 */
 "BitTorrent failed to startup" = "BT启动失败";
 
-/* File: ../../portable/dl_daemon/download.py:803 */
+/* File: ../../portable/dl_daemon/download.py:796 */
 "Corrupt Torrent" = "错误的BitTorrent种子";
 
-/* File: ../../portable/dl_daemon/download.py:804 */
+/* File: ../../portable/dl_daemon/download.py:797 */
 /* Flag: python-format */
 "The torrent file at %s was not valid" = "%s的BitTorrent种子文件非法";
 
-/* File: ../../portable/dl_daemon/download.py:830 */
+/* File: ../../portable/dl_daemon/download.py:822 */
 "Torrent file deleted" = "BitTorrent种子被删除了";
 
-/* File: ../../portable/dl_daemon/download.py:831 */
+/* File: ../../portable/dl_daemon/download.py:823 */
 "The torrent file for this item was deleted " = "它的BitTorrent种子被删除了 ";
 
-/* File: ../../portable/dl_daemon/download.py:832 */
-"outside of democracy." = "在democracy之外。";
-
-/* File: ../../portable/tabs.py:43 */
-"Library" = "媒体库";
+/* File: ../../portable/dl_daemon/download.py:824 */
+"outside of Miro." = "Miro之外";
 
 /* File: ../../portable/tabs.py:44 */
+"Library" = "媒体库";
+
+/* File: ../../portable/tabs.py:45 */
 "New" = "新添";
 
-/* File: ../../portable/tabs.py:46 */
+/* File: ../../portable/tabs.py:47 */
 "Downloading" = "下载中";
 
-/* File: ../../portable/guide.py:83 */
-/* File: ../../portable/feed.py:782 */
+/* File: ../../portable/guide.py:104 */
+/* File: ../../portable/feed.py:789 */
 "Copy URL to clipboard" = "复制网络地址到剪切板";
 
-/* File: ../../portable/guide.py:118 */
+/* File: ../../portable/guide.py:154 */
 "Miro Guide" = "Miro 配置向导";
 
-/* File: ../../portable/extrastrings.py:5 */
-/* File: ../../portable/feed.py:2012 */
-/* File: ../../portable/feed.py:2104 */
+/* File: ../../portable/extrastrings.py:22 */
+/* File: ../../portable/feed.py:2028 */
+/* File: ../../portable/feed.py:2120 */
 "Search" = "搜索";
 
-/* File: ../../portable/downloader.py:214 */
+/* File: ../../portable/downloader.py:215 */
 "activity" = "活跃度";
 
-/* File: ../../portable/downloader.py:250 */
-/* File: ../../portable/httpclient.py:112 */
+/* File: ../../portable/downloader.py:251 */
+/* File: ../../portable/httpclient.py:114 */
+/* File: ../../portable/httpclient.py:142 */
 "File not found" = "没有找到文件";
 
-/* File: ../../portable/downloader.py:251 */
-"Flash URL Scraping Error" = "Copy text   \t\r\nFlash 链接脚本错误";
+/* File: ../../portable/downloader.py:252 */
+"Flash URL Scraping Error" = "Flash链接失效";
 
-/* File: ../../portable/downloader.py:430 */
+/* File: ../../portable/downloader.py:427 */
 "starting up" = "正在启动";
 
 /* File: ../../portable/playlist.py:196 */
@@ -651,142 +647,144 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/playlist.py:225 */
 "Enter a name for the new playlist" = "输入新播放列表的名字";
 
-/* File: ../../portable/feed.py:381 */
+/* File: ../../portable/feed.py:383 */
 "never" = "从不";
 
-/* File: ../../portable/feed.py:383 */
-/* File: ../../portable/item.py:535 */
+/* File: ../../portable/feed.py:385 */
+/* File: ../../portable/item.py:542 */
 /* Flag: python-format */
 "%d hours" = "%d 小时";
 
-/* File: ../../portable/feed.py:385 */
+/* File: ../../portable/feed.py:387 */
 /* Flag: python-format */
 "%d day" = "%d 天";
 
-/* File: ../../portable/feed.py:387 */
-/* File: ../../portable/item.py:533 */
+/* File: ../../portable/feed.py:389 */
+/* File: ../../portable/item.py:540 */
 /* Flag: python-format */
 "%d days" = "%d 天";
 
-/* File: ../../portable/feed.py:389 */
+/* File: ../../portable/feed.py:391 */
 /* Flag: python-format */
 "%d months" = "%d 月";
 
-/* File: ../../portable/feed.py:780 */
+/* File: ../../portable/feed.py:787 */
 "Update Channel Now" = "现在更新频道";
 
-/* File: ../../portable/feed.py:783 */
-/* File: ../../portable/feed.py:792 */
+/* File: ../../portable/feed.py:790 */
+/* File: ../../portable/feed.py:799 */
 "Rename Channel" = "重命名频道";
 
-/* File: ../../portable/feed.py:787 */
+/* File: ../../portable/feed.py:794 */
 "Revert Title to Default" = "恢复标题到默认值";
 
-/* File: ../../portable/feed.py:793 */
+/* File: ../../portable/feed.py:800 */
 /* Flag: python-format */
 "Enter a new name for the channel %s" = "为频道\"%s\"输入新名字";
 
-/* File: ../../portable/feed.py:880 */
+/* File: ../../portable/feed.py:887 */
 "Error loading feed" = "装载feed(供稿)时发生错误";
 
-/* File: ../../portable/feed.py:881 */
+/* File: ../../portable/feed.py:888 */
 /* Flag: python-format */
 "Couldn't load the feed at %s (%s)." = "无法装载feed(供稿)在%s (%s)。";
 
-/* File: ../../portable/feed.py:884 */
+/* File: ../../portable/feed.py:891 */
 "Would you like to keep the feed?" = "您想保留该feed(供稿)吗？";
 
-/* File: ../../portable/feed.py:997 */
+/* File: ../../portable/feed.py:1004 */
 "Bad content-type" = "无效的content-type(内容类型)";
 
-/* File: ../../portable/feed.py:1010 */
+/* File: ../../portable/feed.py:1017 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-/* Flag: untranslated */
-"Channel is not compatible with $shortAppName!" = "Channel is not compatible with $shortAppName!" /* = "频道与$shortAppName!不兼容" */;
+"Channel is not compatible with $shortAppName!" = "频道与$shortAppName!（短程序名）不兼容。";
 
-/* File: ../../portable/feed.py:1011 */
+/* File: ../../portable/feed.py:1018 */
 "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "但是我们将尽力获取文件。列出视频可能会需要额外时间，并且描述可能会看起来搞笑。请联系 $url 的发布者问问他们能否提供一个支持 $shortAppName的源。\n\n您不论如何都想载入这个频道？";
 
-/* File: ../../portable/feed.py:2118 */
+/* File: ../../portable/feed.py:2134 */
 "Local Files" = "本地文件";
 
-/* File: ../../portable/feed.py:2132 */
+/* File: ../../portable/feed.py:2148 */
 "Playing File" = "播放文件";
 
 /* File: ../../portable/menu.py:69 */
 "Update Channels Now" = "现在更新频道";
 
-/* File: ../../portable/menu.py:92 */
+/* File: ../../portable/menu.py:94 */
 /* Flag: python-format */
 "%d Downloaded Items" = "下载了%d项";
 
-/* File: ../../portable/menu.py:94 */
-/* File: ../../portable/item.py:1457 */
+/* File: ../../portable/menu.py:96 */
+/* File: ../../portable/item.py:1475 */
 "Play" = "播放";
 
-/* File: ../../portable/menu.py:95 */
-/* File: ../../portable/item.py:1460 */
+/* File: ../../portable/menu.py:97 */
+/* File: ../../portable/item.py:1478 */
 "Add to new playlist" = "添加到新的播放列表";
 
-/* File: ../../portable/menu.py:97 */
-/* File: ../../portable/item.py:1453 */
+/* File: ../../portable/menu.py:99 */
+/* File: ../../portable/item.py:1471 */
 "Remove From Playlist" = "从播放列表中移除";
 
-/* File: ../../portable/menu.py:99 */
-/* File: ../../portable/item.py:1455 */
+/* File: ../../portable/menu.py:101 */
+/* File: ../../portable/item.py:1473 */
 "Remove From the Library" = "从媒体库中移除";
 
-/* File: ../../portable/menu.py:105 */
-/* File: ../../portable/item.py:1464 */
+/* File: ../../portable/menu.py:107 */
+/* File: ../../portable/item.py:1482 */
 "Mark as Unwatched" = "标记为未观看";
 
-/* File: ../../portable/menu.py:110 */
+/* File: ../../portable/menu.py:112 */
+/* File: ../../portable/item.py:1484 */
+"Mark as Watched" = "标记为已观看过的";
+
+/* File: ../../portable/menu.py:117 */
 /* Flag: python-format */
 "%d Available Items" = "%d项可用";
 
-/* File: ../../portable/menu.py:111 */
+/* File: ../../portable/menu.py:118 */
 /* File: ../../portable/dialogs.py:85 */
-/* File: ../../portable/item.py:1470 */
+/* File: ../../portable/item.py:1491 */
 "Download" = "下载";
 
-/* File: ../../portable/menu.py:116 */
+/* File: ../../portable/menu.py:123 */
 /* Flag: python-format */
 "%d Downloading Items" = "%d项下载中";
 
-/* File: ../../portable/menu.py:118 */
-/* File: ../../portable/item.py:1468 */
+/* File: ../../portable/menu.py:125 */
+/* File: ../../portable/item.py:1489 */
 "Cancel Download" = "取消下载";
 
-/* File: ../../portable/menu.py:120 */
-/* File: ../../portable/item.py:1468 */
+/* File: ../../portable/menu.py:127 */
+/* File: ../../portable/item.py:1489 */
 "Pause Download" = "暂停下载";
 
-/* File: ../../portable/menu.py:123 */
-/* File: ../../portable/item.py:1466 */
+/* File: ../../portable/menu.py:130 */
+/* File: ../../portable/item.py:1487 */
 "Restart Upload" = "重新开始上传";
 
-/* File: ../../portable/opml.py:32 */
-/* Flag: untranslated */
-"Export OPML File" = "Export OPML File" /* = "导出OPML文件" */;
+/* File: ../../portable/opml.py:49 */
+"Export OPML File" = "导出OPML文件";
 
-/* File: ../../portable/opml.py:106 */
+/* File: ../../portable/opml.py:123 */
 "Import OPML File" = "导入 OPML 文档";
 
-/* File: ../../portable/opml.py:108 */
+/* File: ../../portable/opml.py:125 */
 "OPML Files" = "OPML 文档";
 
-/* File: ../../portable/opml.py:127 */
+/* File: ../../portable/opml.py:145 */
 "OPML Import failed" = "OPML 输入错误";
 
-/* File: ../../portable/opml.py:128 */
+/* File: ../../portable/opml.py:146 */
 "The selected OPML file appears to be invalid. Import was interrupted." = "选择的OPML文件无效。输入中断了。";
 
-/* File: ../../portable/opml.py:133 */
+/* File: ../../portable/opml.py:151 */
 "OPML Import summary" = "OPML输入总结";
 
 /* File: ../../portable/autoupdate.py:121 */
-/* Flag: untranslated */
-"%s Version Alert" = "%s Version Alert" /* = "%s 版本更新" */;
+/* Flag: python-format */
+"%s Version Alert" = "%s 版本更新提示";
 
 /* File: ../../portable/autoupdate.py:122 */
 /* Flag: python-format */
@@ -800,50 +798,50 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: python-format */
 "%s is up to date." = "%s 已更新";
 
-/* File: ../../portable/util.py:257 */
-/* File: ../../portable/httpclient.py:124 */
+/* File: ../../portable/util.py:252 */
+/* File: ../../portable/httpclient.py:126 */
 "Internal Error" = "内部错误";
 
-/* File: ../../portable/util.py:257 */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro遇到内部错误。你可以通过提交错误报告来帮助我们来查找这个问题并且修复它";
+/* File: ../../portable/util.py:252 */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro遇到内部错误。您可以通过提交错误报告来帮助我们来查找这个问题并且修复它";
 
-/* File: ../../portable/util.py:257 */
+/* File: ../../portable/util.py:252 */
 "Include entire program database including all video and channel metadata with crash report" = "在崩溃报告里面包括整个程序所有节目和频道数据库的描述文件";
 
-/* File: ../../portable/util.py:257 */
-"Describe what you were doing that caused this error" = "请描述造成这个错误时你正在做什么";
+/* File: ../../portable/util.py:252 */
+"Describe what you were doing that caused this error" = "请描述造成这个错误时您正在做什么";
 
-/* File: ../../portable/util.py:460 */
+/* File: ../../portable/util.py:455 */
 /* Flag: python-format */
 "%1.1fGB" = "%1.1fG字节";
 
-/* File: ../../portable/util.py:462 */
+/* File: ../../portable/util.py:457 */
 /* Flag: python-format */
 "%dGB" = "%dGB";
 
-/* File: ../../portable/util.py:466 */
+/* File: ../../portable/util.py:461 */
 /* Flag: python-format */
 "%1.1fMB" = "%1.1f兆字节";
 
-/* File: ../../portable/util.py:468 */
+/* File: ../../portable/util.py:463 */
 /* Flag: python-format */
 "%dMB" = "%dMB";
 
-/* File: ../../portable/util.py:472 */
+/* File: ../../portable/util.py:467 */
 /* Flag: python-format */
 "%1.1fKB" = "%1.1f千字节";
 
-/* File: ../../portable/util.py:474 */
+/* File: ../../portable/util.py:469 */
 /* Flag: python-format */
 "%dKB" = "%dKB";
 
-/* File: ../../portable/util.py:478 */
+/* File: ../../portable/util.py:473 */
 /* Flag: python-format */
 "%1.1fB" = "%1.1fB";
 
-/* File: ../../portable/util.py:480 */
-/* Flag: untranslated */
-"%dB" = "%dB" /* = "%dB" */;
+/* File: ../../portable/util.py:475 */
+/* Flag: python-format */
+"%dB" = "%dB 分贝";
 
 /* File: ../../portable/storedatabase.py:832 */
 /* File: ../../portable/storedatabase.py:1231 */
@@ -863,9 +861,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/storedatabase.py:1241 */
 /* Flag: python-format */
 "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.";
-
-/* File: ../../portable/dialogs.py:76 */
-"Ok" = "好的";
 
 /* File: ../../portable/dialogs.py:81 */
 "Ignore" = "忽略";
@@ -912,8 +907,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Keep" = "保留";
 
 /* File: ../../portable/dialogs.py:97 */
-/* Flag: untranslated */
-"Not Now" = "Not Now" /* = "不是现在" */;
+"Not Now" = "不是现在";
 
 /* File: ../../portable/dialogs.py:98 */
 "Close to Tray" = "最小化到系统托盘";
@@ -934,81 +928,81 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
 "A search channel contains items that match a search term." = "一个搜索频道包含了匹配搜索词语的搜索结果。";
 
-/* File: ../../portable/singleclick.py:86 */
+/* File: ../../portable/singleclick.py:87 */
 "Download already exists" = "下载已经存在";
 
-/* File: ../../portable/singleclick.py:87 */
+/* File: ../../portable/singleclick.py:88 */
 "That URL is already an external download." = "这个额外链接已经被下载";
 
-/* File: ../../portable/singleclick.py:93 */
+/* File: ../../portable/singleclick.py:94 */
 "Miro will begin downloading it now." = "Miro将要开始下载";
 
-/* File: ../../portable/singleclick.py:95 */
+/* File: ../../portable/singleclick.py:96 */
 "It is downloading now." = "正在下载";
 
-/* File: ../../portable/singleclick.py:97 */
+/* File: ../../portable/singleclick.py:98 */
 "It has already been downloaded." = "应景下载";
 
-/* File: ../../portable/singleclick.py:124 */
+/* File: ../../portable/singleclick.py:125 */
 "Download Error" = "下载错误";
 
-/* File: ../../portable/singleclick.py:125 */
+/* File: ../../portable/singleclick.py:126 */
 /* Flag: python-format */
 "Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro 无法从此地址下载文件:\nURL:%s";
 
-/* File: ../../portable/singleclick.py:133 */
+/* File: ../../portable/singleclick.py:134 */
 "File Download" = "下载文档";
 
-/* File: ../../portable/singleclick.py:134 */
-/* Flag: untranslated */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "This file at %s does not appear to be audio, video, or an RSS feed." /* = "在%s的文件不显示为音频,视频或RSS频道." */;
-
-/* File: ../../portable/singleclick.py:224 */
-"Subscribing to multiple channels" = "订阅多个频道";
+/* File: ../../portable/singleclick.py:135 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "在 %s 的文件不显示为音频,视频或RSS频道.";
 
 /* File: ../../portable/singleclick.py:225 */
+"Subscribing to multiple channels" = "订阅多个频道";
+
+/* File: ../../portable/singleclick.py:226 */
 /* Flag: python-format */
 "Create %d channels?" = "创建%d个频道？";
 
-/* File: ../../portable/singleclick.py:238 */
+/* File: ../../portable/singleclick.py:239 */
 /* Flag: python-format */
 "Adding %d channels to a new folder" = "添加%d个频道到新夹子中";
 
-/* File: ../../portable/singleclick.py:239 */
+/* File: ../../portable/singleclick.py:240 */
 /* File: ../../portable/folder.py:226 */
 "Enter a name for the new channel folder" = "为频道夹输入新名字";
 
-/* File: ../../portable/singleclick.py:242 */
+/* File: ../../portable/singleclick.py:243 */
 /* Flag: python-format */
 "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "注意：您早已订阅了这些频道中的%d个。这些频道将原地不动。";
 
-/* File: ../../portable/singleclick.py:253 */
+/* File: ../../portable/singleclick.py:254 */
 "Subscription error" = "订阅出错";
 
-/* File: ../../portable/singleclick.py:263 */
+/* File: ../../portable/singleclick.py:264 */
 "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "这个$shortAppName频道文件有一个不健康的格式：$url。请通知此文件的发布者。";
 
-/* File: ../../portable/singleclick.py:271 */
+/* File: ../../portable/singleclick.py:272 */
 "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "这个$shortAppName频道的内容类型错误：$url。请提醒文件发布者。";
 
-/* File: ../../portable/singleclick.py:275 */
+/* File: ../../portable/singleclick.py:276 */
 "Could not download the $shortAppName channel file: $url." = "无法下载频道 $shortAppName 的文件：$url";
 
-/* File: ../../portable/singleclick.py:313 */
+/* File: ../../portable/singleclick.py:316 */
 "Invalid Torrent" = "无效的BitTorrent种子文件";
 
-/* File: ../../portable/singleclick.py:314 */
+/* File: ../../portable/singleclick.py:317 */
 /* Flag: python-format */
 "The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "这个BitTorrent种子文件%s看起来是坏的，不能打开。[确定]";
 
 /* File: ../../portable/menubar.py:144 */
-"_Open" = "_打开";
+"_Open" = "打开(_O)";
 
 /* File: ../../portable/menubar.py:145 */
-"_Download Video" = "_下载节目";
+"_Download Video" = "下载视频(_D)";
 
 /* File: ../../portable/menubar.py:147 */
-"Check _Version" = "检查更新";
+"Check _Version" = "检查版本(_V)";
 
 /* File: ../../portable/menubar.py:149 */
 "_Remove Video" = "删除视频(_R)";
@@ -1035,20 +1029,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Quit" = "退出(_Q)";
 
 /* File: ../../portable/menubar.py:165 */
-/* Flag: untranslated */
-"Cu_t" = "Cu_t" /* = "剪切" */;
+"Cu_t" = "剪切(_t)";
 
 /* File: ../../portable/menubar.py:166 */
-/* Flag: untranslated */
-"_Copy" = "_Copy" /* = "复制" */;
+"_Copy" = "剪切(_C)";
 
 /* File: ../../portable/menubar.py:167 */
-/* Flag: untranslated */
-"_Paste" = "_Paste" /* = "粘贴" */;
+"_Paste" = "粘贴 (_P)";
 
 /* File: ../../portable/menubar.py:168 */
-/* Flag: untranslated */
-"Select _All" = "Select _All" /* = "全部选中(_A)" */;
+"Select _All" = "全选(_A)";
 
 /* File: ../../portable/menubar.py:169 */
 "_Delete" = "删除";
@@ -1063,8 +1053,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "New _Folder..." = "新建目录(_F)...";
 
 /* File: ../../portable/menubar.py:176 */
-/* Flag: untranslated */
-"Add Channel _Guide..." = "Add Channel _Guide..." /* = "添加频道指南" */;
+"Add Channel _Guide..." = "添加频道_指南(_G)...";
 
 /* File: ../../portable/menubar.py:186 */
 "Update _All Channels" = "更新所有频道";
@@ -1073,8 +1062,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Import Channels (OPML)..." = "_输入频道（OPML）";
 
 /* File: ../../portable/menubar.py:189 */
-/* Flag: untranslated */
-"E_xport Channels (OPML)..." = "E_xport Channels (OPML)..." /* = "导出频道（OPML）..." */;
+"E_xport Channels (OPML)..." = "导出频道（OPML）...(E)";
 
 /* File: ../../portable/menubar.py:191 */
 "_Send this channel to a friend" = "把该频道发送给朋友(_S)";
@@ -1104,12 +1092,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Remove Playlist Folder" = "删除播放列表文件夹";
 
 /* File: ../../portable/menubar.py:212 */
-/* Flag: untranslated */
-"_Play" = "_Play" /* = "播放(_P)" */;
+"_Play" = "播放(_P)";
 
 /* File: ../../portable/menubar.py:213 */
-/* Flag: untranslated */
-"_Stop" = "_Stop" /* = "停止(_S)" */;
+"_Stop" = "停止(_S)";
 
 /* File: ../../portable/menubar.py:215 */
 "_Next Video" = "下一个视频(_N)";
@@ -1118,12 +1104,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Previous Video" = "上一个视频(_P)";
 
 /* File: ../../portable/menubar.py:218 */
-/* Flag: untranslated */
-"Skip _Forward" = "Skip _Forward" /* = "快进(_F)" */;
+"Skip _Forward" = "快进(_F)";
 
 /* File: ../../portable/menubar.py:219 */
-/* Flag: untranslated */
-"Skip _Back" = "Skip _Back" /* = "快退(_B_" */;
+"Skip _Back" = "快退(_B)";
 
 /* File: ../../portable/menubar.py:221 */
 "Volume _Up" = "音量增大(_U)";
@@ -1180,122 +1164,122 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/menubar.py:256 */
 "Show Window" = "显示窗口";
 
-/* File: ../../portable/item.py:478 */
+/* File: ../../portable/item.py:485 */
 /* Flag: python-format */
 "Removing %s" = "正在删除 %s";
 
-/* File: ../../portable/item.py:481 */
+/* File: ../../portable/item.py:488 */
 "Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "您是想删除这个文件夹及其中的所有视频还是只是从媒体库中删除这一条目？";
 
-/* File: ../../portable/item.py:487 */
-"Would you like to delete this file or just remove its entry from the Library?" = "你要删除这个文件还是仅从节目库中删除连接";
+/* File: ../../portable/item.py:494 */
+"Would you like to delete this file or just remove its entry from the Library?" = "您要删除这个文件还是仅从节目库中删除连接";
 
-/* File: ../../portable/item.py:507 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "该项是文件夹。当你移除一个文件夹时，它里面的任何子项都会被删除。";
+/* File: ../../portable/item.py:514 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "该项是文件夹。当您移除一个文件夹时，它里面的任何子项都会被删除。";
 
-/* File: ../../portable/item.py:537 */
+/* File: ../../portable/item.py:544 */
 /* Flag: python-format */
 "%d minutes" = "%d 分钟";
 
-/* File: ../../portable/item.py:547 */
+/* File: ../../portable/item.py:554 */
 /* Flag: python-format */
 "Expires in %s" = "%s后过期";
 
-/* File: ../../portable/item.py:559 */
-/* Flag: untranslated */
-"Will retry in %s" = "Will retry in %s" /* = "%s 秒后将重试" */;
+/* File: ../../portable/item.py:566 */
+/* Flag: python-format */
+"Will retry in %s" = "%s 秒后将重试";
 
-/* File: ../../portable/item.py:561 */
+/* File: ../../portable/item.py:568 */
 "Paused" = "已暂停";
 
-/* File: ../../portable/item.py:941 */
+/* File: ../../portable/item.py:954 */
 "TORRENT" = "BitTorrent种子";
 
-/* File: ../../portable/item.py:943 */
+/* File: ../../portable/item.py:956 */
 "WEB PAGE" = "网页";
 
-/* File: ../../portable/item.py:953 */
+/* File: ../../portable/item.py:966 */
 "Total Down:" = "总共下载：";
 
-/* File: ../../portable/item.py:956 */
+/* File: ../../portable/item.py:969 */
 "Error:" = "错误：";
 
-/* File: ../../portable/item.py:964 */
+/* File: ../../portable/item.py:977 */
 "Down Rate:" = "下载速率：";
 
-/* File: ../../portable/item.py:965 */
+/* File: ../../portable/item.py:978 */
 "Down Total:" = "总共下载：";
 
-/* File: ../../portable/item.py:967 */
+/* File: ../../portable/item.py:980 */
 "Up Rate:" = "上传比率：";
 
-/* File: ../../portable/item.py:968 */
+/* File: ../../portable/item.py:981 */
 "Up Total:" = "总共上传：";
 
-/* File: ../../portable/item.py:973 */
+/* File: ../../portable/item.py:989 */
 "Web page:" = "网页：";
 
-/* File: ../../portable/item.py:973 */
+/* File: ../../portable/item.py:989 */
 "permalink" = "固定链接";
 
-/* File: ../../portable/item.py:974 */
+/* File: ../../portable/item.py:993 */
 "File link:" = "文件链接";
 
-/* File: ../../portable/item.py:974 */
+/* File: ../../portable/item.py:993 */
 "direct link to file" = "直接链接到文件";
 
-/* File: ../../portable/item.py:976 */
+/* File: ../../portable/item.py:995 */
 "File type:" = "文件类型：";
 
-/* File: ../../portable/item.py:983 */
+/* File: ../../portable/item.py:1002 */
 "REVEAL LOCAL FOLDER" = "显示本地文件夹";
 
-/* File: ../../portable/item.py:985 */
+/* File: ../../portable/item.py:1004 */
 "REVEAL LOCAL FILE" = "显示本地文件";
 
-/* File: ../../portable/item.py:987 */
+/* File: ../../portable/item.py:1006 */
 "Filename:" = "文件名";
 
-/* File: ../../portable/item.py:994 */
+/* File: ../../portable/item.py:1013 */
 "Down Total" = "总共下载";
 
-/* File: ../../portable/item.py:996 */
+/* File: ../../portable/item.py:1015 */
 "Up Total" = "总共上传";
 
-/* File: ../../portable/item.py:1014 */
+/* File: ../../portable/item.py:1033 */
 "Item Details" = "项目细节";
 
-/* File: ../../portable/item.py:1021 */
+/* File: ../../portable/item.py:1040 */
 "Torrent Details" = "Torrent细节";
 
-/* File: ../../portable/item.py:1023 */
+/* File: ../../portable/item.py:1042 */
 "Torrent Details <i>stopped</i>" = "BT下载详细情况 <i>已停止</i>";
 
-/* File: ../../portable/item.py:1027 */
+/* File: ../../portable/item.py:1046 */
 "Download Details" = "下载详情";
 
-/* File: ../../portable/item.py:1241 */
+/* File: ../../portable/item.py:1263 */
 "downloading..." = "下载中...";
 
-/* File: ../../portable/item.py:1248 */
-/* File: ../../portable/item.py:1251 */
+/* File: ../../portable/item.py:1270 */
+/* File: ../../portable/item.py:1273 */
 /* Flag: python-format */
 "%s remaining" = "%s 剩余时间";
 
-/* File: ../../portable/item.py:1260 */
+/* File: ../../portable/item.py:1282 */
 "starting up..." = "启动中...";
 
-/* File: ../../portable/item.py:1459 */
+/* File: ../../portable/item.py:1477 */
 "Play Just This Video" = "只播放这个视频";
 
-/* File: ../../portable/item.py:1807 */
+/* File: ../../portable/item.py:1854 */
 /* Flag: python-format */
 "Removing %s items" = "正在移除%s条目";
 
-/* File: ../../portable/item.py:1809 */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "没有从频道下载过一个或多个视频.你愿意从媒体库删除或只是移除这些项目吗?";
+/* File: ../../portable/item.py:1856 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "没有从此频道下载视频。 您愿意从媒体库删除这些项目或只是移除这些项目记录吗?";
 
-/* File: ../../portable/item.py:1817 */
+/* File: ../../portable/item.py:1864 */
 "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "这些条目中一个或多个是文件夹。当您移除或删除文件夹时，文件夹中的条目也将被移除或删除。";
 
 /* File: ../../portable/folder.py:132 */
@@ -1323,236 +1307,242 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/folder.py:240 */
 "Enter a name for the new playlist folder" = "为播放列表夹输入新名字";
 
-/* File: ../../portable/httpclient.py:67 */
+/* File: ../../portable/httpclient.py:68 */
 /* Flag: python-format */
 "Error: %s" = "错误: %s";
 
-/* File: ../../portable/httpclient.py:82 */
-/* File: ../../portable/httpclient.py:87 */
+/* File: ../../portable/httpclient.py:83 */
+/* File: ../../portable/httpclient.py:89 */
 "Can't connect" = "无法连接";
 
-/* File: ../../portable/httpclient.py:83 */
+/* File: ../../portable/httpclient.py:84 */
 /* Flag: python-format */
 "Connection Error: %s" = "连接错误：%s";
 
-/* File: ../../portable/httpclient.py:88 */
+/* File: ../../portable/httpclient.py:90 */
 "SSL connection error" = "SSL(加密套接字协议层)连接错误";
 
-/* File: ../../portable/httpclient.py:92 */
+/* File: ../../portable/httpclient.py:94 */
 "HTTP error" = "HTTP 错误";
 
-/* File: ../../portable/httpclient.py:95 */
+/* File: ../../portable/httpclient.py:97 */
 /* Flag: python-format */
 "Bad Status Line: %s" = "错误的状态行：%s";
 
-/* File: ../../portable/httpclient.py:98 */
+/* File: ../../portable/httpclient.py:100 */
 /* Flag: python-format */
 "Bad Header Line: %s" = "错误的Header行：%s";
 
-/* File: ../../portable/httpclient.py:101 */
+/* File: ../../portable/httpclient.py:103 */
 /* Flag: python-format */
 "Bad Chunk size: %s" = "错误的块尺寸：%s";
 
-/* File: ../../portable/httpclient.py:104 */
+/* File: ../../portable/httpclient.py:106 */
 /* Flag: python-format */
 "Expected CRLF got: %r" = "预期回车加接新行，结果是：%r";
 
-/* File: ../../portable/httpclient.py:107 */
+/* File: ../../portable/httpclient.py:109 */
 /* Flag: python-format */
 "%s closed connection" = "%s 关闭的连接";
 
-/* File: ../../portable/httpclient.py:113 */
+/* File: ../../portable/httpclient.py:115 */
 "Got 404 status code" = "网络请求时收到表示\"没有找到\"的404代码";
 
-/* File: ../../portable/httpclient.py:115 */
+/* File: ../../portable/httpclient.py:117 */
 /* Flag: python-format */
 "Bad Status Code: %s" = "错误的状态代码：%s";
 
-/* File: ../../portable/httpclient.py:119 */
+/* File: ../../portable/httpclient.py:121 */
 "Authorization failed" = "验证(授权)失败";
 
-/* File: ../../portable/httpclient.py:125 */
+/* File: ../../portable/httpclient.py:127 */
 "Pipeline request never started" = "管道请求没有启动";
 
-/* File: ../../portable/httpclient.py:129 */
+/* File: ../../portable/httpclient.py:131 */
 "Timeout" = "超时";
 
-/* File: ../../portable/httpclient.py:130 */
+/* File: ../../portable/httpclient.py:132 */
 /* Flag: python-format */
 "Connection to %s timed out" = "连接%s超时";
 
-/* File: ../../portable/httpclient.py:134 */
+/* File: ../../portable/httpclient.py:136 */
 "Invalid URL" = "错误的网址";
 
-/* File: ../../portable/httpclient.py:135 */
+/* File: ../../portable/httpclient.py:137 */
 /* Flag: python-format */
 "\"%s\" is not a valid URL" = "\"%s\" 不是一个有效的 URL";
 
-/* File: ../../portable/httpclient.py:324 */
+/* File: ../../portable/httpclient.py:143 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "文件 \"%s\" 不存在";
+
+/* File: ../../portable/httpclient.py:147 */
+"Read error" = "读取错误";
+
+/* File: ../../portable/httpclient.py:148 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "读取\"%s\"时出现错误";
+
+/* File: ../../portable/httpclient.py:341 */
 "Unknown Error code" = "未知错误代码";
 
-/* File: ../../portable/httpclient.py:356 */
+/* File: ../../portable/httpclient.py:373 */
 "Connection closed" = "连接已关闭";
 
-/* File: ../../portable/httpclient.py:781 */
+/* File: ../../portable/httpclient.py:798 */
 "Unknown" = "不明";
 
-/* File: ../../portable/httpclient.py:782 */
+/* File: ../../portable/httpclient.py:799 */
 "Internal Error: Not ready to send" = "内部错误：发送没有准备好";
 
-/* File: ../../portable/app.py:684 */
+/* File: ../../portable/app.py:685 */
 "Database too new" = "数据库太新了";
 
-/* File: ../../portable/app.py:685 */
-/* Flag: untranslated */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." /* = "你的数据库是由最新版本的$shortAppName保存的.你必须下载最新版本的$shortAppName来运行." */;
-
-/* File: ../../portable/app.py:699 */
-"Video Directory Missing" = "节目文件夹丢失";
+/* File: ../../portable/app.py:686 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "您的数据库被更新版本的 $shortAppName 保存而得。因此，您必须下载最新版本的$shortAppName运行，方可使用。";
 
 /* File: ../../portable/app.py:700 */
+"Video Directory Missing" = "节目文件夹丢失";
+
+/* File: ../../portable/app.py:701 */
 "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro 没法找到您的初始的视频目录。这可能是因为该目录在一个未连接到计算机的外部驱动器上。\n\n如果您继续，视频目录将被重设到一个本地的驱动器上（这样将导致您丢失一些保存于外部驱动器上的视频详情）。";
 
-/* File: ../../portable/app.py:1019 */
-/* File: ../../portable/app.py:1033 */
-/* File: ../../portable/app.py:1077 */
-/* File: ../../portable/app.py:1103 */
-/* File: ../../portable/app.py:1123 */
+/* File: ../../portable/app.py:1038 */
+/* File: ../../portable/app.py:1052 */
+/* File: ../../portable/app.py:1096 */
+/* File: ../../portable/app.py:1122 */
+/* File: ../../portable/app.py:1142 */
 /* Flag: python-format */
 "Remove %s" = "移除%s";
 
-/* File: ../../portable/app.py:1020 */
+/* File: ../../portable/app.py:1039 */
 /* Flag: python-format */
 "Are you sure you want to remove the guide %s?" = "您确定要移除向导%s吗？";
 
-/* File: ../../portable/app.py:1034 */
+/* File: ../../portable/app.py:1053 */
 /* Flag: python-format */
 "Are you sure you want to remove %s" = "您确定要移除%s吗？";
 
-/* File: ../../portable/app.py:1037 */
-/* File: ../../portable/app.py:1082 */
-/* File: ../../portable/app.py:1108 */
+/* File: ../../portable/app.py:1056 */
+/* File: ../../portable/app.py:1101 */
 /* File: ../../portable/app.py:1127 */
+/* File: ../../portable/app.py:1146 */
 /* Flag: python-format */
 "Remove %s channels" = "移除%s频道";
 
-/* File: ../../portable/app.py:1039 */
+/* File: ../../portable/app.py:1058 */
 /* Flag: python-format */
 "Are you sure you want to remove these %s playlists" = "您确定要移除%s这些播放列表吗？";
 
-/* File: ../../portable/app.py:1078 */
+/* File: ../../portable/app.py:1097 */
 "What would you like to do with the videos in this channel that you've downloaded?" = "对于这个频道的下载完成的视频您想怎样处理？";
 
-/* File: ../../portable/app.py:1083 */
+/* File: ../../portable/app.py:1102 */
 "What would you like to do with the videos in these channels that you've downloaded?" = "对于这些频道的下载完成的视频您想怎样处理？";
 
-/* File: ../../portable/app.py:1104 */
+/* File: ../../portable/app.py:1123 */
 /* Flag: python-format */
 "Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "您确定要删除%s吗？它的任何下载将被取消。";
 
-/* File: ../../portable/app.py:1109 */
+/* File: ../../portable/app.py:1128 */
 /* Flag: python-format */
 "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "您确定要删除这些%s吗？它的任何下载将被取消。";
 
-/* File: ../../portable/app.py:1124 */
+/* File: ../../portable/app.py:1143 */
 /* Flag: python-format */
 "Are you sure you want to remove %s?" = "您真的想要删除 %s 吗？";
 
-/* File: ../../portable/app.py:1128 */
+/* File: ../../portable/app.py:1147 */
 /* Flag: python-format */
 "Are you sure you want to remove these %s channels?" = "您真的想要删除这%s个频道吗？";
 
-/* File: ../../portable/app.py:1141 */
+/* File: ../../portable/app.py:1160 */
 /* Flag: python-format */
 "Stop watching %s" = "停止观看 %s";
 
-/* File: ../../portable/app.py:1142 */
+/* File: ../../portable/app.py:1161 */
 /* Flag: python-format */
 "Are you sure you want to stop watching %s?" = "您真的想要停止观看 %s吗？";
 
-/* File: ../../portable/app.py:1145 */
+/* File: ../../portable/app.py:1164 */
 /* Flag: python-format */
 "Stop watching %s directories" = "停止观看%s文件夹";
 
-/* File: ../../portable/app.py:1146 */
+/* File: ../../portable/app.py:1165 */
 /* Flag: python-format */
 "Are you sure you want to stop watching these %s directories?" = "您确信要停止观看这些%s文件夹吗？";
 
-/* File: ../../portable/app.py:1177 */
+/* File: ../../portable/app.py:1196 */
 "Are you sure you want to quit?" = "您确定要退出吗？";
 
-/* File: ../../portable/app.py:1179 */
-"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro正在上传你的崩溃报告。如果你现在退出的话上传将被取消。仍然要退出吗？";
+/* File: ../../portable/app.py:1198 */
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro正在上传您的崩溃报告。如果您现在退出的话上传将被取消。仍然要退出吗？";
 
-/* File: ../../portable/app.py:1680 */
+/* File: ../../portable/app.py:1712 */
 "Invalid Value" = "无效值";
 
-/* File: ../../portable/app.py:1681 */
+/* File: ../../portable/app.py:1713 */
 /* Flag: python-format */
 "%s is invalid.  You must enter a non-negative number." = "无效的%s。您必须输入非负的数字。";
 
-/* File: ../../portable/app.py:1972 */
+/* File: ../../portable/app.py:1839 */
+"Error Revealing File" = "显示文件出错";
+
+/* File: ../../portable/app.py:1840 */
+/* Flag: python-format */
+"The file \"%s\" was deleted from outside Miro." = "文件\"%s\" 已被删除";
+
+/* File: ../../portable/app.py:2011 */
 " - Invalid URL" = " - 无效的网络地址";
 
-/* File: ../../portable/app.py:1973 */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "你填入的地址是无效的网络地址。\n请仔细检查后再试。\n\n";
+/* File: ../../portable/app.py:2012 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "您填入的地址是无效的网络地址。\n请仔细检查后再试。\n\n";
 
-/* File: ../../portable/app.py:1997 */
+/* File: ../../portable/app.py:2036 */
 "$shortAppName - Add Channel" = "$shortAppName - 添加频道";
 
-/* File: ../../portable/app.py:1997 */
+/* File: ../../portable/app.py:2036 */
 "Enter the URL of the channel to add" = "输入要添加的频道网络地址";
 
-/* File: ../../portable/app.py:2018 */
+/* File: ../../portable/app.py:2057 */
 "$shortAppName - Add Miro Guide" = "$shortAppName - 添加Miro节目表";
 
-/* File: ../../portable/app.py:2018 */
+/* File: ../../portable/app.py:2057 */
 "Enter the URL of the Miro Guide to add" = "输入Miro节目表的网络地址来添加";
 
-/* File: ../../portable/app.py:2024 */
+/* File: ../../portable/app.py:2063 */
 "$shortAppName - Download Video" = "$shortAppName - 下载节目";
 
-/* File: ../../portable/app.py:2024 */
+/* File: ../../portable/app.py:2063 */
 "Enter the URL of the video to download" = "输入节目的链接来下载";
 
-/* File: ../../portable/app.py:2318 */
-"News and Tech" = "新闻和科技";
+/* File: ../../portable/app.py:2420 */
+"Starter Channels" = "初始频道";
 
-/* File: ../../portable/app.py:2324 */
-"Entertainment" = "娱乐";
-
-/* File: ../../portable/app.py:2330 */
-"High-Def" = "高清晰";
-
-/* File: ../../portable/app.py:2337 */
-"Mac" = "Mac";
-
-/* File: ../../portable/app.py:2352 */
+/* File: ../../portable/app.py:2437 */
 "Example Playlist" = "播放列表例子";
 
-/* File: ../../portable/app.py:2371 */
+/* File: ../../portable/app.py:2463 */
 "Custom Channels" = "自定义频道";
 
-/* File: ../../portable/app.py:2371 */
-/* Flag: untranslated */
-"You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels." /* = "你正在运行带有自定义频道集的$longAppName版本" */;
+/* File: ../../portable/app.py:2463 */
+"You are running a version of $longAppName with a custom set of channels." = "您正在运行带有常用频道的 $longAppName 版本";
 
-/* File: ../../portable/app.py:2386 */
+/* File: ../../portable/app.py:2478 */
 "Error Changing Movies Directory" = "改变节目目录出错";
 
-/* File: ../../portable/app.py:2387 */
-"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "你没有权限来写入当前你选择的文件夹，Miro将继续使用老的文件夹。";
+/* File: ../../portable/app.py:2479 */
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "您没有权限来写入当前您选择的文件夹，Miro将继续使用老的文件夹。";
 
-/* File: ../../portable/app.py:2422 */
+/* File: ../../portable/app.py:2508 */
 "Error Saving Video" = "保存视频错误";
 
-/* File: ../../portable/app.py:2424 */
+/* File: ../../portable/app.py:2510 */
 /* Flag: python-format */
 "An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "保存 %s 时出现错误.请确认文件未被删除后再试一次.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-/* Flag: untranslated */
-"(Changes won't go into effect until you restart Miro)" = "(Changes won't go into effect until you restart Miro)" /* = "变更需要重启Miro后才能生效" */;
+"(Changes won't go into effect until you restart Miro)" = "(变更需要重启Miro后才能生效)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1天\n3天\n6天\n10天\n1月\n从不";
@@ -1564,14 +1554,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>Searching for Videos</b>" = "<b>搜索视频</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
-/* Flag: untranslated */
-"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Would you like Miro to look for video files on your computer?</b>" /* = "<b>你愿意Miro在你的计算机中查找视频文件吗? </b>" */;
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>您愿意让Miro在您的计算机中查找视频文件吗? </b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>你愿意在你电脑启动时运行Miro吗?</b>";
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>您愿意在您电脑启动时运行Miro吗?</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
-"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>你完成了！</b>\n\n安装成功了 -- 你现在可以找些频道开始观看。\n\n<b>不要等待:</b> Miro和在网页上看节目是不同的-- 节目发布者可以提供高品质的大视频文件.您也不用一直坐在那里等待：开始下载任务然后回头再回来.\n\n<b>:保持程序运行</b> Miro会定期自动检查频道中的新节目并在后台自动下载. 使它一直运行意味着你要看节目的时候总有下载好的新节目.\n\n<b>b:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.";
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>您完成了！</b>\n\n安装成功了 -- 您现在可以找些频道开始观看。\n\n<b>不要等待:</b> Miro和在网页上看节目是不同的-- 节目发布者可以提供高品质的大视频文件.您也不用一直坐在那里等待：开始下载任务然后回头再回来.\n\n<b>:保持程序运行</b> Miro会定期自动检查频道中的新节目并在后台自动下载. 使它一直运行意味着您要看节目的时候总有下载好的新节目.\n\n<b>b:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos. You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free. Just click 'ADD' to watch a channel.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:26 */
 "By default, videos _expire after" = "默认设置，节目_之后过期";
@@ -1580,8 +1569,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "C_hannel:" = "频道(_C)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
-/* Flag: untranslated */
-"C_hannels" = "C_hannels" /* = "频道" */;
+"C_hannels" = "频道(C_)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
 "C_reate Channel" = "创建频道(_C)";
@@ -1645,31 +1633,25 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "下面的几个屏幕将帮助您设置Miro使之最好地为您工作。这是第一个问题。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-/* Flag: untranslated */
-"To a_void slowdowns, limit upstream to" = "To a_void slowdowns, limit upstream to" /* = "为避免降低速度，限制速度到" */;
+"To a_void slowdowns, limit upstream to" = "避免(_v)降低速度，限制上传速度到";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
 "Volume:" = "卷标：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
-/* Flag: untranslated */
-"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." /* = "我们建议你允许计算机启动时运行Miro.这样的话,那些未完成下载的视频就能够继续下载" */;
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "我们建议您允许计算机启动时运行Miro。这样的话,那些未完成下载的视频就能够继续下载.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
-/* Flag: untranslated */
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." /* = "欢迎使用Internet TV。您可以用Miro做很多事：从您最爱的频道自动下载视频，一个接一个地观看新的视频，下载种子，向朋友推荐视频，等等。" */;
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "欢迎使用Internet TV。您可以用Miro做很多事：从您最爱的频道自动下载视频，一个接一个观看新鲜的视频，下载种子，向朋友推荐视频，等等。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
-/* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" /* = "你已经选择了一个新的新的下载文件夹.需要现在就把已下载的文件迁移到这里吗?(正在下载的文件在完成前不会被迁移)" */;
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "您已经选择了一个新的新的下载文件夹.需要现在就把已下载的文件迁移到这里吗?(正在下载的文件在完成前不会被迁移)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
-/* Flag: untranslated */
-"_Add Folder" = "_Add Folder" /* = "添加文件夹(_A)" */;
+"_Add Folder" = "添加文件夹(_A)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-/* Flag: untranslated */
-"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in" /* = "当我登录时自动运行Miro" */;
+"_Automatically run Miro when I log in" = "当我登录时自动运行Miro";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
 "_Bit Torrent uses ports between" = "_BT使用端口";
@@ -1723,7 +1705,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Add Channel" = "添加频道";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2 */
-"Please enter the URL of the channel you'd like to add." = "请填写你要添加的频道的网络地址。";
+"Please enter the URL of the channel you'd like to add." = "请填写您要添加的频道的网络地址。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6 */
 "Copy log to clipboard" = "复制日志到剪切板";
@@ -1732,14 +1714,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Open up the bug tracker" = "开启臭虫(即错误缺陷)追踪器";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2 */
-"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "请帮助我们修复它。拷贝和粘贴所有\n信息到我们的错误追踪器并且告诉我们当时错误发生时你正在\n做什么.";
+"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "请帮助我们修复它。拷贝和粘贴所有\n信息到我们的错误追踪器并且告诉我们当时错误发生时您正在\n做什么.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7 */
-/* Flag: untranslated */
-"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" /* = "请重新启动 $longAppName(或许你仍然会得到相关错误).对此造成的不便我们十分抱歉. $longAppName 仍然在Beta中,但有了你的帮助我们会更快的解决问题." */;
+"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "请重新启动 $longAppName (否则您仍然会得到这样错误)。对此造成的不便我们十分抱歉. $longAppName 仍然在Beta中,但有了您的帮助我们会更快的解决问题。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1 */
-"You found a bug in $longAppName!" = "你在$longAppName发现一个错误！";
+"You found a bug in $longAppName!" = "您在$longAppName发现一个错误！";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1 */
@@ -1756,14 +1737,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Please contact the publishers of" = "请联系它的发布人--";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13 */
-/* Flag: untranslated */
-"and ask if they can supply a feed in a format that will work with $shortAppName." = "and ask if they can supply a feed in a format that will work with $shortAppName." /* = "并向他们询问能否提供一个 $shortAppName 可支持的Feed格式." */;
+"and ask if they can supply a feed in a format that will work with $shortAppName." = "并向他们询问能否提供一个可支持 $shortAppName 的Feed格式.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1 */
 "$longAppName" = "$longAppName";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4 */
-"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "你选择了一个新的下载目录,你希望$shortAppName 转移你已经存在的下载到那儿吗?(现在正下载的视频不会转移直到他们完成)";
+"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "您选择了一个新的下载目录,您希望$shortAppName 转移您已经存在的下载到那儿吗?(现在正下载的视频不会转移直到他们完成)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1 */
 "Channel requires authentication" = "频道需要验证授权";
@@ -1832,8 +1812,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Use BitTorrent ports between" = "使用一下BT端口";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
-/* Flag: untranslated */
-"WARNING: This setting will not go into effect until you restart $longAppName." = "WARNING: This setting will not go into effect until you restart $longAppName." /* = "警告:这项设置需要重启$longAppName后才能生效" */;
+"WARNING: This setting will not go into effect until you restart $longAppName." = "警告: 这项设置需要重新启动$longAppName后才能生效";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10 */
 "Warn me when I attempt to quit with downloads in progress." = "当退出时有下载任务运行请提醒我";
@@ -1842,8 +1821,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Watch for new videos in these folders and include them in my Library." = "监视这些文件夹内的新节目并且把它们加入我的节目库中";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
-/* Flag: untranslated */
-"When I click the red close button:" = "When I click the red close button:" /* = "当我点击红色关闭按钮" */;
+"When I click the red close button:" = "当我点击红色的关闭按钮";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
 "and" = "和";
@@ -1861,15 +1839,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "URL:" = "网络地址:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33 */
-/* Flag: untranslated */
-"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName can find all the videos on your computer to help you organize your collection." /* = "$longAppName 能够查找计算机里所有的视频文件来帮助你整理你的收藏" */;
+"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName 能够查找计算机里所有的视频文件来帮助您整理您的收藏";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45 */
-"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "通常$longAppName 会在后台检查和下载频道里的最新视频.让他继续运行意味着当最新视频下载好你就可以观看.";
+"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "通常$longAppName 会在后台检查和下载频道里的最新视频.让他继续运行意味着当最新视频下载好您就可以观看.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29 */
-/* Flag: untranslated */
-"$shortAppName First Time Setup" = "$shortAppName First Time Setup" /* = "$shortAppName首次设置" */;
+"$shortAppName First Time Setup" = "$shortAppName首次设置";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39 */
 "Cancel Search" = "取消搜索";
@@ -1890,7 +1866,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Leave it On:" = "让它开着：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47 */
-"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "与TiVo类似，$longAppName能令“过期”系统帮助清除旧的影像文件为新的影像文件留出空间。你可以通过点击“保存”永久保存一个影像文件，并且还可以通过设置频道的设置来自动保存影像。";
+"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "与TiVo类似，$longAppName能令“过期”系统帮助清除旧的影像文件为新的影像文件留出空间。您可以通过点击“保存”永久保存一个影像文件，并且还可以通过设置频道的设置来自动保存影像。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42 */
 "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "您现在可以在频道导航中漫游\n和开始观看了。这里有一些开始的技巧提示：";
@@ -1914,7 +1890,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The next few screens will help you set up $longAppName so that it works best for you." = "下面的几个屏幕将帮助您设置 $longAppName 以便它以最佳状态为您工作。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31 */
-"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "我们建议您让$longAppName在电脑开机就运行,这样的话程序会在后台下载最新视频并且继续上次未完成下载,一旦完成你就可以观看.";
+"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "我们建议您让$longAppName在电脑开机就运行,这样的话程序会在后台下载最新视频并且继续上次未完成下载,一旦完成您就可以观看.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34 */
 "Would you like $longAppName to look for video files on your computer?" = "您希望让$longAppName在您的计算机上寻找视频吗？";

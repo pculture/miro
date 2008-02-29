@@ -8,15 +8,221 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-09-28 07:45+0000\n"
-"Last-Translator: Channy <channy@mozilla.or.kr>\n"
+"PO-Revision-Date: 2007-11-15 12:56+0000\n"
+"Last-Translator: isilme <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#~ msgid "Save this video"
+#~ msgstr "현재 동영상 저장"
+
+#~ msgid "_Play / Pause"
+#~ msgstr "재생 / 중지"
+
+#~ msgid "_Remove Channel"
+#~ msgstr "채널 제거"
+
+#~ msgid "_Update Channel"
+#~ msgstr "채널 업데이트"
+
+#~ msgid "_Open..."
+#~ msgstr "새로 열기"
+
+#~ msgid "Open various files"
+#~ msgstr "여러 파일 열기"
+
+#~ msgid "P_references"
+#~ msgstr "설정"
+
+#~ msgid "Quit the Program"
+#~ msgstr "프로그램 종료"
+
+#~ msgid "U_pdate All Channels"
+#~ msgstr "모든 채널 갱신"
+
+#~ msgid "Pending Auto Download"
+#~ msgstr "자동 다운로드 중"
+
+#~ msgid "Unwatched"
+#~ msgstr "미 시청"
+
+#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
+#~ msgstr "표시할 사항 없음.<br></br>검색 항목에 찾을 단어를 입력하세요."
+
+#~ msgid "Searching..."
+#~ msgstr "검색 중..."
+
+#~ msgid "Channel Guide"
+#~ msgstr "채널 가이드"
+
+#~ msgid "My Collection"
+#~ msgstr "나의 모음집"
+
+#~ msgid "New Videos"
+#~ msgstr "새 동영상"
+
+#~ msgid "Democracy - External Playback Template"
+#~ msgstr "Democracy - 외부 재생기"
+
+#~ msgid "Continue To Next Video"
+#~ msgstr "다음 동영상으로 계속"
+
+#~ msgid "Recommend"
+#~ msgstr "추천"
+
+#~ msgid "Default"
+#~ msgstr "기본"
+
+#~ msgid "Watched"
+#~ msgstr "재생 완료"
+
+#~ msgid "Saved"
+#~ msgstr "저장 완료"
+
+#~ msgid "Play Externally"
+#~ msgstr "외부 재생"
+
+#~ msgid "Simple translation"
+#~ msgstr "간단 번역"
+
+#~ msgid "truck stop in a ${can}"
+#~ msgstr "truck stop in a ${can}"
+
+#~ msgid "Democracy Internet TV: How to Get Started"
+#~ msgstr "Democracy 인터넷 TV: 시작하기"
+
+#~ msgid "GO BIG:"
+#~ msgstr "크게 보기:"
+
+#~ msgid "This is your fullscreen button. Click it and lean back."
+#~ msgstr "전체화면 보기입니다."
+
+#~ msgid "NEW STUFF:"
+#~ msgstr "NEW STUFF:"
+
+#~ msgid ""
+#~ "Blue circles mean the channel has new videos available, green circles mean "
+#~ "you have downloaded videos ready to watch."
+#~ msgstr "파란 원은 새 동영상이 있습니다. 녹색 원은 시청 가능한 동영상이 있습니다."
+
+#~ msgid ""
+#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
+#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+#~ "channels in the guide are free.</strong>"
+#~ msgstr ""
+#~ "<strong>채널 추가:</strong> 채널 가이드는 집에서 사용가능한 인터넷 TV 채널입니다. 채널을 구독하시려면 '추가'를 "
+#~ "선택하세요. <strong>채널 가이드는 무료 입니다.</strong>"
+
+#~ msgid ""
+#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
+#~ "waiting for videos: start some downloads and check back later."
+#~ msgstr ""
+#~ "<strong>이제 기다리지 마세요!:</strong> Democracy는 웹 페이지 동영상을 보는 다른 방식입니다. 제작자는 고 품질 "
+#~ "비디오를 제공할 수 있고 시청자는 여러 곳을 다니지 않고도 동영상을  바로 볼 수 있습니다."
+
+#~ msgid ""
+#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
+#~ "new videos and downloads in the background. Leaving it running means you'll "
+#~ "have new videos when you're ready to watch."
+#~ msgstr ""
+#~ "<strong>기다리지 마세요:</strong> Democracy 플레이어는 새로운 동영상을 정기적으로 확인하여 다운로드 합니다. "
+#~ "기다리지 않고도 시청 가능하면 알려 줍니다."
+
+#~ msgid ""
+#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
+#~ "features an 'expiration' system that helps clean out older videos to make "
+#~ "room for new videos. You can always keep a video permanently by clicking "
+#~ "'save' and you can set a channel's settings to save videos automatically."
+#~ msgstr ""
+#~ "<strong>저장 공간에 대해 걱정하지 마세요!</strong> Tivo처럼 Democracy Player는 '만료'시스템을 가지고 "
+#~ "있습니다. 저장하고 싶은 파일은 '저장' 버튼을 눌러 저장 할 수 있지만 그렇지 않은 파일은 새로운 동영상이 다운로드 되면 자동적으로 "
+#~ "오래된 순서에 따라 지워집니다."
+
+#~ msgid "<b>Channels</b>"
+#~ msgstr "<b>채널</b>"
+
+#~ msgid "<b>Disk Space</b>"
+#~ msgstr "<b>저장 공간</b>"
+
+#~ msgid "<b>Downloads</b>"
+#~ msgstr "<b>다운로드</b>"
+
+#~ msgid "<b>Movies Directory</b>"
+#~ msgstr "<b>영화 디렉토리</b>"
+
+#~ msgid "Check Channels for new content"
+#~ msgstr "새 컨텐츠 채널 확인"
+
+#~ msgid "Democracy - Add Channel"
+#~ msgstr "Democracy - 채널 추가"
+
+#~ msgid "Democracy Player"
+#~ msgstr "Democracy 플레이어"
+
+#~ msgid "GB free"
+#~ msgstr "GB 사용 가능"
+
+#~ msgid "KB/s when my computer is active"
+#~ msgstr "KB/s (컴퓨터 켜져 있을 경우)"
+
+#~ msgid "To avoid slowdowns, limit upstream to"
+#~ msgstr "느려지지 않도록 트래픽 조정:"
+
+#~ msgid ""
+#~ "You've selected a new folder to download movies to.  Should Democracy "
+#~ "migrate your existing downloads there?  (Currently dowloading movies will "
+#~ "not be moved until they finish.)"
+#~ msgstr ""
+#~ "동영상을 다운로드할 새 폴더를 선택했습니다. Democracy에서 현재 다운로드한 동영상을 이동하시겠습니까? (현재 다운로드 중인 것은 "
+#~ "완료 후 이동합니다.)"
+
+#~ msgid ""
+#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
+#~ "style=\"color:red\">raw</b> text</span>"
+#~ msgstr ""
+#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
+#~ "style=\"color:red\">raw</b> text</span>"
+
+#~ msgid "Channel is not compatible with Democracy!"
+#~ msgstr "Democracy 비호환 채널입니다!"
+
+#~ msgid ""
+#~ "and ask if they can supply a feed in a format that will work with Democracy."
+#~ msgstr "Democracy이 동작 가능한 형식인지 확인해 주세요."
+
+#~ msgid ""
+#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
+#~ "$publisher."
+#~ msgstr ""
+#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
+#~ "$publisher."
+
+#~ msgid "Please help us fix it. Copy and paste all the"
+#~ msgstr "문제 파악에 도움을 주십시오. 아래 항목을 모두 복사해서 붙여 넣으세요."
+
+#~ msgid ""
+#~ "information into our bug tracker and tell us what you were doing when the"
+#~ msgstr "버그 시스템에 등록 해 주시고 문제가 발생할 때 알려 주십시오."
+
+#~ msgid "problem occurred."
+#~ msgstr "문제가 발생했습니다."
+
+#~ msgid ""
+#~ "Then, please restart Democracy Player (or you may keep getting related "
+#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
+#~ "with your help we're fixing problems fast!"
+#~ msgstr ""
+#~ "이제 Democracy 플레이어를 재시작 하십시오. 불편을 드려 죄송합니다. 현재 프로그램은 베타 버전이므로 문제점을 빠르게 "
+#~ "수정하겠습니다."
+
+#~ msgid "You found a bug in Democracy!"
+#~ msgstr "버그를 발견했습니다!"
 
 #~ msgid "About Democracy"
 #~ msgstr "Democracy 소개"
@@ -30,14 +236,14 @@ msgstr ""
 #~ msgid "Hide Democracy"
 #~ msgstr "Democracy 숨기기"
 
-#~ msgid "New Channel Guide..."
-#~ msgstr "새 채널 가이드..."
-
 #~ msgid "Preferencesâ¦"
 #~ msgstr "환경 설정"
 
 #~ msgid "Quit Democracy"
 #~ msgstr "Democracy 종료"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "채널 제거"
 
 #~ msgid "(You must restart Democracy for this change to take effect)\n"
 #~ msgstr "(변경 사항을 적용하려면 Democracy를 재시작 해야 합니다)\n"
@@ -116,8 +322,93 @@ msgstr ""
 #~ "Democracy는 웹 페이지에서 제공하는 동영상을 볼 수 있는 새로운 방법입니다. 제작자는 좀 더 고급 품질의 비디오를 제공할 수 있고 "
 #~ "어디에서나 기다리지 않고 동영상을 볼 수 있습니다.\n"
 
-#~ msgid "Save this video"
-#~ msgstr "현재 동영상 저장"
+#~ msgid "Create new playlist"
+#~ msgstr "새 재생 목록 만들기"
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "새 재생 목록 폴더 만들기"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "새 채널 폴더 만들기"
+
+#, python-format
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "democracy 모듈 가져 오기 중 오류:\n"
+#~ "%s"
+
+#~ msgid "${count} Downloads in Progress"
+#~ msgstr "${count}: 다운로드 진행 중..."
+
+#~ msgid "1 Download in Progress"
+#~ msgstr "다운로드 진행 중..."
+
+#~ msgid "${len} Videos On This Channel"
+#~ msgstr "현재 채널 동영상 수: ${len}개"
+
+#~ msgid "All ${len} Videos Match This Search"
+#~ msgstr "총 ${len}개 동영상을 검색하였습니다."
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len}개 동영상을 검색하였습니다."
+
+#~ msgid "Looking for videos at this URL"
+#~ msgstr "현재 페이지에서 동영상 찾기"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "현재 채널 동영상 수: ${count} 개"
+
+#~ msgid "SAVE"
+#~ msgstr "저장"
+
+#~ msgid ""
+#~ "Would you like to delete this file or just remove its entry from My "
+#~ "Collection?"
+#~ msgstr "내 항목에 있는 동영상만 삭제하시겠습니까?"
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr "Democracy 채널이 유효하지 않은 포맷입니다: %s. 이 파일의 제작자에게 알려주세요."
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr "Democracy 채널 파일의 컨텐츠 형식이 틀렸습니다: %s. 이 파일의 제작자에게 알려 주세요."
+
+#, python-format
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Democracy 채널을 다운로드 할 수 없습니다: %s"
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "파일을 찾고 있습니다. 동영상을 찾아 목록을 만드는 데 시간이 걸립니다. 만든 사람의 $url을 확인 하신 후 이 항목이 "
+#~ "Democracy에 동작 가능한지 여부를 확인해 보시기 바랍니다.\n"
+#~ "\n"
+#~ "그래도 이 채널을 계속 읽으시겠습니까?"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - 채널 가이드 추가"
+
+#~ msgid "Enter the URL of the channel guide to add"
+#~ msgstr "추가할 채널 가이드 URL 입력"
+
+#~ msgid ""
+#~ "You are running a version of Democracy Player with a custom set of channels."
+#~ msgstr "채널 설정으로 Democracy 플레이어 버전을 실행 하고 있습니다."
+
+#~ msgid "New Channel Guide..."
+#~ msgstr "새 채널 가이드..."
 
 #~ msgid "_Copy Video URL"
 #~ msgstr "동영상 URL 복사"
@@ -125,53 +416,20 @@ msgstr ""
 #~ msgid "_Stop Video"
 #~ msgstr "동영상 멈춤"
 
-#~ msgid "_Play / Pause"
-#~ msgstr "재생 / 중지"
-
-#~ msgid "_Update Channel"
-#~ msgstr "채널 업데이트"
-
 #~ msgid "Re_name Channel"
 #~ msgstr "채널 이름 변경"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "채널 제거"
-
-#~ msgid "_Open..."
-#~ msgstr "새로 열기"
-
-#~ msgid "Open various files"
-#~ msgstr "여러 파일 열기"
 
 #~ msgid "New _Playlist..."
 #~ msgstr "새 재생 목록..."
 
-#~ msgid "Create new playlist"
-#~ msgstr "새 재생 목록 만들기"
-
 #~ msgid "New Playlist _Folder..."
 #~ msgstr "새 재생 목록 폴더..."
-
-#~ msgid "Create new playlist folder"
-#~ msgstr "새 재생 목록 폴더 만들기"
 
 #~ msgid "New Channel _Folder..."
 #~ msgstr "새 채널 폴더..."
 
-#~ msgid "Create new channel folder"
-#~ msgstr "새 채널 폴더 만들기"
-
 #~ msgid "Add _Channel..."
 #~ msgstr "채널 추가..."
-
-#~ msgid "P_references"
-#~ msgstr "설정"
-
-#~ msgid "Quit the Program"
-#~ msgstr "프로그램 종료"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "모든 채널 갱신"
 
 #~ msgid "Delete selection"
 #~ msgstr "선택사항 삭제"
@@ -196,9 +454,6 @@ msgstr ""
 
 #~ msgid "Remove Playlist Folders..."
 #~ msgstr "재생 목록 폴더 삭제..."
-
-#~ msgid "Remove Channel..."
-#~ msgstr "채널 제거"
 
 #~ msgid "Remove Channels..."
 #~ msgstr "채널 삭제..."
@@ -242,255 +497,6 @@ msgstr ""
 #~ msgid "Update Channels..."
 #~ msgstr "채널 갱신..."
 
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "democracy 모듈 가져 오기 중 오류:\n"
-#~ "%s"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr "표시할 사항 없음.<br></br>검색 항목에 찾을 단어를 입력하세요."
-
-#~ msgid "Searching..."
-#~ msgstr "검색 중..."
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "검색 결과: \"${query}\""
-
-#~ msgid "Empty Playlist"
-#~ msgstr "빈 재생 목록"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr "다운로드한 동영상을 현재 재생 목록으로 이동하십시오."
-
-#~ msgid "Empty Playlist Folder"
-#~ msgstr "빈 재생 목록 폴더"
-
-#~ msgid ""
-#~ "This folder contains ${count} playlists, but the playlists do not contain "
-#~ "any items."
-#~ msgstr "현재 폴더에는 ${count}개의 재생 목록이 있습니다. 하지만 저장된 항목은 없습니다."
-
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "이 폴더를 재생 목록으로 이동하세요."
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr "${count}개의 재생 목록 폴더 선택<br></br>(재생 목록 갯수: ${containedcount}개)"
-
-#~ msgid "${count} Playlists Selected"
-#~ msgstr "선택한 재생 목록: ${count}개"
-
-#~ msgid "STAR"
-#~ msgstr "별표"
-
-#~ msgid "SAVE"
-#~ msgstr "저장"
-
-#~ msgid "SAVED"
-#~ msgstr "저장됨"
-
-#~ msgid "DELETE"
-#~ msgstr "삭제"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - 외부 재생기"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "다음 동영상으로 계속"
-
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "${count}: 다운로드 진행 중..."
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "다운로드 진행 중..."
-
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "현재 채널 동영상 수: ${len}개"
-
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "총 ${len}개 동영상을 검색하였습니다."
-
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len}개 동영상을 검색하였습니다."
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "현재 채널 동영상 수: ${count} 개"
-
-#~ msgid "Unwatched"
-#~ msgstr "미 시청"
-
-#~ msgid "Watched"
-#~ msgstr "재생 완료"
-
-#~ msgid "Saved"
-#~ msgstr "저장 완료"
-
-#~ msgid "Default"
-#~ msgstr "기본"
-
-#~ msgid "default"
-#~ msgstr "기본 설정"
-
-#~ msgid "Videos expire after"
-#~ msgstr "동영상 유효 기간:"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "재생 하면 자동 다운로드 시작"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr "총  ${maxnew} ${maxnew2}개 동영상을 시청 하지 않은 경우 자동 다운로드를 하지 마십시오."
-
-#~ msgid "Downloaded"
-#~ msgstr "다운로드 완료"
-
-#~ msgid "Recommend"
-#~ msgstr "추천"
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "<label for=\"automatic\">자동 다운로드</label>"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "현재 페이지에서 동영상 찾기"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy는 이 파일을 재생할 수 없습니다. 다른 프로그램을 사용하여 재생하시기 "
-#~ "바랍니다.<br></br><br></br><strong>파일명:</strong> ${filename}<Br></Br><strong>파일 "
-#~ "형식:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "REVEAL FILE"
-
-#~ msgid "Play Externally"
-#~ msgstr "외부 재생"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "건너뛰기 >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "SHOW FILE"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "SHOW FOLDER"
-
-#~ msgid "SHARE IT"
-#~ msgstr "SHARE IT"
-
-#~ msgid "STAR IT"
-#~ msgstr "STAR IT"
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "자동 다운로드 중"
-
-#~ msgid "Simple translation"
-#~ msgstr "간단 번역"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "truck stop in a ${can}"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-
-#~ msgid "${size} disk space free"
-#~ msgstr "남은 디스크 용량: ${size}"
-
-#~ msgid "${size} available for downloads"
-#~ msgstr "다운로드 가능 용량: ${size}"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "완료된 토런트 삭제"
-
-#~ msgid "Empty Channel Folder"
-#~ msgstr "빈 채널 폴더"
-
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr "이 폴더에 채널 옮기기"
-
-#~ msgid "My Collection"
-#~ msgstr "나의 모음집"
-
-#~ msgid "New Videos"
-#~ msgstr "새 동영상"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy 인터넷 TV: 시작하기"
-
-#~ msgid "GO BIG:"
-#~ msgstr "크게 보기:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr "전체화면 보기입니다."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "NEW STUFF:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr "파란 원은 새 동영상이 있습니다. 녹색 원은 시청 가능한 동영상이 있습니다."
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">소개 건너뛰기: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"doneWithIntro();\">채널 가이드로 바로 가기 >></a></strong>"
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>채널 추가:</strong> 채널 가이드는 집에서 사용가능한 인터넷 TV 채널입니다. 채널을 구독하시려면 '추가'를 "
-#~ "선택하세요. <strong>채널 가이드는 무료 입니다.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>이제 기다리지 마세요!:</strong> Democracy는 웹 페이지 동영상을 보는 다른 방식입니다. 제작자는 고 품질 "
-#~ "비디오를 제공할 수 있고 시청자는 여러 곳을 다니지 않고도 동영상을  바로 볼 수 있습니다."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>기다리지 마세요:</strong> Democracy 플레이어는 새로운 동영상을 정기적으로 확인하여 다운로드 합니다. "
-#~ "기다리지 않고도 시청 가능하면 알려 줍니다."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>저장 공간에 대해 걱정하지 마세요!</strong> Tivo처럼 Democracy Player는 '만료'시스템을 가지고 "
-#~ "있습니다. 저장하고 싶은 파일은 '저장' 버튼을 눌러 저장 할 수 있지만 그렇지 않은 파일은 새로운 동영상이 다운로드 되면 자동적으로 "
-#~ "오래된 순서에 따라 지워집니다."
-
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr "${count}개 폴더 선택<br></br>(채널 갯수: ${containedcount})"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count}개 채널 선택"
-
 #~ msgid "outside of democracy."
 #~ msgstr "외부 democracy"
 
@@ -515,11 +521,6 @@ msgstr ""
 #~ msgstr "이 폴더 내 동영상, 혹은 내 항목에 있는 모든 동영상 항목을 삭제하시겠습니까?"
 
 #~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr "내 항목에 있는 동영상만 삭제하시겠습니까?"
-
-#~ msgid ""
 #~ "One or more of these videos was not downloaded from a channel.  Would you "
 #~ "like to delete these items or just remove their entries from My Collection?"
 #~ msgstr "이 동영상등은 채널 항목으로 다운로드 되지 않았습니다. 이들 항목을 삭제 하거나 내 항목에서 이들을 제거 하시겠습니까?"
@@ -529,74 +530,8 @@ msgstr ""
 #~ "must download the latest version of Democracy and run that."
 #~ msgstr "Democracy의 새 버전에 저장된 데이터 베이스가 있습니다. 실행 하기 전에 최신 버전을 다운로드 해야 합니다."
 
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - 채널 추가"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - 채널 가이드 추가"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "추가할 채널 가이드 URL 입력"
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr "채널 설정으로 Democracy 플레이어 버전을 실행 하고 있습니다."
-
-#~ msgid "Channel Guide"
-#~ msgstr "채널 가이드"
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "Democracy 비호환 채널입니다!"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "파일을 찾고 있습니다. 동영상을 찾아 목록을 만드는 데 시간이 걸립니다. 만든 사람의 $url을 확인 하신 후 이 항목이 "
-#~ "Democracy에 동작 가능한지 여부를 확인해 보시기 바랍니다.\n"
-#~ "\n"
-#~ "그래도 이 채널을 계속 읽으시겠습니까?"
-
-#~ msgid "Local File"
-#~ msgstr "로컬 파일"
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr "Democracy 채널이 유효하지 않은 포맷입니다: %s. 이 파일의 제작자에게 알려주세요."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr "Democracy 채널 파일의 컨텐츠 형식이 틀렸습니다: %s. 이 파일의 제작자에게 알려 주세요."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Democracy 채널을 다운로드 할 수 없습니다: %s"
-
 #~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
 #~ msgstr "(Democracy 플레이어를 재시작 해야 변경 사항이 적용됩니다.)"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>채널</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>저장 공간</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>다운로드</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>일반</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>영화 디렉토리</b>"
 
 #~ msgid "<b>Playback</b>"
 #~ msgstr "<b>재생</b>"
@@ -651,39 +586,18 @@ msgstr ""
 #~ "<b>동영상 검색</b>: Deomocracy 채널 가이드는 수 백개의 TV 채널을 볼 수 있으며, 모두 무료로 제공됩니다. 단지 "
 #~ "\"추가\"만 누르세요."
 
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr "로그인 시 Democracy 플레이어 자동 실행"
-
 #~ msgid "Bit Torrent uses ports between"
 #~ msgstr "비트 토런트 사용 포트:"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "새 컨텐츠 채널 확인"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy 플레이어"
 
 #~ msgid ""
 #~ "Democracy Player can find all the videos on your computer to help you "
 #~ "organize your collection."
 #~ msgstr "Democracy 플레이어가 컴퓨터 내 모든 동영상을 찾아 관리하도록 도와 줍니다."
 
-#~ msgid "GB free"
-#~ msgstr "GB 사용 가능"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s (컴퓨터 켜져 있을 경우)"
-
-#~ msgid "Show movies in these directories in My Collection"
-#~ msgstr "내 항목내 이 디렉토리에 영화 보여주기"
-
 #~ msgid ""
 #~ "The next few screens will help you set up democracy player so that it works "
 #~ "best for you.  Here's the first question."
 #~ msgstr "다음 화면은 Democracy 플레이어를 최적으로 설정하는데 도움을 줍니다."
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "느려지지 않도록 트래픽 조정:"
 
 #~ msgid ""
 #~ "We recommend that you allow Democracy Player to launch when your computer "
@@ -702,23 +616,137 @@ msgstr ""
 #~ "인터넷 TV에 오신것을 환영합니다. Democracy 플레이어로 다양한 경험을 즐리세요! 선호 채널로 부터 동영상 자동 다운로드, 새 "
 #~ "동영상 시청, 비트토런트 다운로드, 친구에게 추천 기능 등 다양한 기능이 있습니다"
 
+#~ msgid "Results for \"${query}\""
+#~ msgstr "검색 결과: \"${query}\""
+
+#~ msgid "Empty Playlist"
+#~ msgstr "빈 재생 목록"
+
+#~ msgid "Drag downloaded videos to this playlist to add them."
+#~ msgstr "다운로드한 동영상을 현재 재생 목록으로 이동하십시오."
+
+#~ msgid "Empty Playlist Folder"
+#~ msgstr "빈 재생 목록 폴더"
+
 #~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
+#~ "This folder contains ${count} playlists, but the playlists do not contain "
+#~ "any items."
+#~ msgstr "현재 폴더에는 ${count}개의 재생 목록이 있습니다. 하지만 저장된 항목은 없습니다."
+
+#~ msgid "Drag playlists to this folder to add them."
+#~ msgstr "이 폴더를 재생 목록으로 이동하세요."
+
+#~ msgid ""
+#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+#~ "playlists)"
+#~ msgstr "${count}개의 재생 목록 폴더 선택<br></br>(재생 목록 갯수: ${containedcount}개)"
+
+#~ msgid "${count} Playlists Selected"
+#~ msgstr "선택한 재생 목록: ${count}개"
+
+#~ msgid "STAR"
+#~ msgstr "별표"
+
+#~ msgid "SAVED"
+#~ msgstr "저장됨"
+
+#~ msgid "DELETE"
+#~ msgstr "삭제"
+
+#~ msgid "default"
+#~ msgstr "기본 설정"
+
+#~ msgid "Videos expire after"
+#~ msgstr "동영상 유효 기간:"
+
+#~ msgid "When turned on, Auto Download should"
+#~ msgstr "재생 하면 자동 다운로드 시작"
+
+#~ msgid ""
+#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+#~ "unwatched."
+#~ msgstr "총  ${maxnew} ${maxnew2}개 동영상을 시청 하지 않은 경우 자동 다운로드를 하지 마십시오."
+
+#~ msgid "Downloaded"
+#~ msgstr "다운로드 완료"
+
+#~ msgid "<label for=\"automatic\">Auto Download</label>"
+#~ msgstr "<label for=\"automatic\">자동 다운로드</label>"
+
+#~ msgid ""
+#~ "Democracy can't play this file. You may be able to open it with a different "
+#~ "program.<br></br><br></br><strong>Filename:</strong> "
+#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
 #~ msgstr ""
-#~ "동영상을 다운로드할 새 폴더를 선택했습니다. Democracy에서 현재 다운로드한 동영상을 이동하시겠습니까? (현재 다운로드 중인 것은 "
-#~ "완료 후 이동합니다.)"
+#~ "Democracy는 이 파일을 재생할 수 없습니다. 다른 프로그램을 사용하여 재생하시기 "
+#~ "바랍니다.<br></br><br></br><strong>파일명:</strong> ${filename}<Br></Br><strong>파일 "
+#~ "형식:</strong> ${format}"
+
+#~ msgid "REVEAL FILE"
+#~ msgstr "REVEAL FILE"
+
+#~ msgid "Skip >> ${countdown}"
+#~ msgstr "건너뛰기 >> ${countdown}"
+
+#~ msgid "SHOW FILE"
+#~ msgstr "SHOW FILE"
+
+#~ msgid "SHOW FOLDER"
+#~ msgstr "SHOW FOLDER"
+
+#~ msgid "SHARE IT"
+#~ msgstr "SHARE IT"
+
+#~ msgid "STAR IT"
+#~ msgstr "STAR IT"
+
+#~ msgid "${size} disk space free"
+#~ msgstr "남은 디스크 용량: ${size}"
+
+#~ msgid "${size} available for downloads"
+#~ msgstr "다운로드 가능 용량: ${size}"
+
+#~ msgid "Clear Completed Torrents"
+#~ msgstr "완료된 토런트 삭제"
+
+#~ msgid "Empty Channel Folder"
+#~ msgstr "빈 채널 폴더"
+
+#~ msgid "Drag channels to this folder to add them."
+#~ msgstr "이 폴더에 채널 옮기기"
+
+#~ msgid ""
+#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
+#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
+#~ msgstr ""
+#~ "<strong i18n:translate=\"\">소개 건너뛰기: <a style=\"color: #090;\" href=\"#\" "
+#~ "onclick=\"doneWithIntro();\">채널 가이드로 바로 가기 >></a></strong>"
+
+#~ msgid ""
+#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+#~ "channels)"
+#~ msgstr "${count}개 폴더 선택<br></br>(채널 갯수: ${containedcount})"
+
+#~ msgid "${count} Channels Selected"
+#~ msgstr "${count}개 채널 선택"
+
+#~ msgid "Local File"
+#~ msgstr "로컬 파일"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>일반</b>"
+
+#~ msgid "Automatically run Democracy Player when I log in"
+#~ msgstr "로그인 시 Democracy 플레이어 자동 실행"
+
+#~ msgid "Show movies in these directories in My Collection"
+#~ msgstr "내 항목내 이 디렉토리에 영화 보여주기"
 
 #~ msgid "_Add Directory"
 #~ msgstr "디렉토리 추가"
 
 #~ msgid "_Store downloaded videos in this folder:"
 #~ msgstr "현재 폴더에 다운로드한 동영상 저장:"
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr "Democracy이 동작 가능한 형식인지 확인해 주세요."
 
 #~ msgid "A search channel contains"
 #~ msgstr "채널 검색"
@@ -770,34 +798,6 @@ msgstr ""
 
 #~ msgid "Would you like to run Democracy on startup?"
 #~ msgstr "Democracy를 시작 시 실행하겠습니까?"
-
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-
-#~ msgid "Please help us fix it. Copy and paste all the"
-#~ msgstr "문제 파악에 도움을 주십시오. 아래 항목을 모두 복사해서 붙여 넣으세요."
-
-#~ msgid ""
-#~ "information into our bug tracker and tell us what you were doing when the"
-#~ msgstr "버그 시스템에 등록 해 주시고 문제가 발생할 때 알려 주십시오."
-
-#~ msgid "problem occurred."
-#~ msgstr "문제가 발생했습니다."
-
-#~ msgid ""
-#~ "Then, please restart Democracy Player (or you may keep getting related "
-#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-#~ "with your help we're fixing problems fast!"
-#~ msgstr ""
-#~ "이제 Democracy 플레이어를 재시작 하십시오. 불편을 드려 죄송합니다. 현재 프로그램은 베타 버전이므로 문제점을 빠르게 "
-#~ "수정하겠습니다."
-
-#~ msgid "You found a bug in Democracy!"
-#~ msgstr "버그를 발견했습니다!"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -968,7 +968,7 @@ msgid "The fall of $shortAppName??"
 msgstr "$shortAppName 구동이 실패했습니까?"
 
 msgid "About Miro"
-msgstr ""
+msgstr "Miro에 대해서"
 
 msgid "Add Channel..."
 msgstr "채널 추가..."
@@ -1013,7 +1013,7 @@ msgid "Donate"
 msgstr "기부하기"
 
 msgid "Download Video..."
-msgstr ""
+msgstr "비디오 내려받기..."
 
 msgid "Edit"
 msgstr "편집"
@@ -1031,7 +1031,7 @@ msgid "Help"
 msgstr "도움말"
 
 msgid "Hide Miro"
-msgstr ""
+msgstr "Miro 숨기기"
 
 msgid "Hide Others"
 msgstr "다른 창 숨기기"
@@ -1050,10 +1050,10 @@ msgstr "최소화"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Miro"
-msgstr ""
+msgstr "Miro"
 
 msgid "Miro Help"
-msgstr ""
+msgstr "Miro 도움말"
 
 msgid "New Channel Folder..."
 msgstr "새 채널 폴더"
@@ -1092,13 +1092,13 @@ msgid "Playlists"
 msgstr "재생 목록"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "환경설정"
 
 msgid "Previous Video"
 msgstr "이전 동영상"
 
 msgid "Quit Miro"
-msgstr ""
+msgstr "Miro 끝내기"
 
 msgid "Remove..."
 msgstr "제거하기..."
@@ -1107,7 +1107,7 @@ msgid "Rename..."
 msgstr "새 이름으로..."
 
 msgid "Report a bug"
-msgstr ""
+msgstr "버그 보고하기"
 
 msgid "Save Video As..."
 msgstr "다른 이름으로 저장..."
@@ -1191,10 +1191,10 @@ msgid " limit upstream to"
 msgstr " limit upstream to"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(변경사항이 적용되려면 Miro를 재시작해야 합니다)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
-msgstr ""
+msgstr "(변경사항이 적용되려면 Miro를 재시작해야 합니다)\n"
 
 msgid "(movies directory path goes here)"
 msgstr "(영화 디렉토리 경로)"
@@ -1404,6 +1404,7 @@ msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"다음에 나올 몇 개의 화면은 Miro 플레이어를 당신에게 꼭 맞추도록 설정하는 것을 도와줄 것입니다. 이것이 첫 질문입니다."
 
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
@@ -1440,12 +1441,12 @@ msgstr ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78
 msgid "Update Available"
-msgstr ""
+msgstr "업데이트 가능"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr ""
+msgstr "%s의 새 버전을 내려받을 수 있습니다."
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240
 msgid "Error Bombing Item"
@@ -1507,7 +1508,7 @@ msgstr ""
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:44
 msgid "Download Completed"
-msgstr ""
+msgstr "내려받기 완료"
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:45
 #, python-format
@@ -1529,11 +1530,11 @@ msgstr ""
 
 #: ../../platform/osx/frontend/MainFrame.py:279
 msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr ""
+msgstr "시청하고자 하는 채널의 URL을 입력하세요."
 
 #: ../../platform/osx/frontend/QuicktimeRenderer.py:248
 msgid "Audio"
-msgstr ""
+msgstr "오디오"
 
 #: ../../platform/osx/frontend/Preferences.py:64
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
@@ -1567,7 +1568,7 @@ msgstr ""
 #: ../../platform/osx/frontend/Preferences.py:198
 #: ../../platform/osx/frontend/Preferences.py:262
 msgid "Select"
-msgstr ""
+msgstr "선택"
 
 #: ../../platform/osx/frontend/Preferences.py:207
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
@@ -1576,12 +1577,14 @@ msgid "Migrate existing movies?"
 msgstr "현재 동영상을 이동할까요?"
 
 #: ../../platform/osx/frontend/Preferences.py:208
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"동영상을 내려받을 새로운 폴더를 선택하셨습니다. %s가 존재하는 자료를 새로운 폴더로 옮깁니까? (현재 받고 있는 동영상은 완료되기 "
+"전까지 이동되지 않습니다)"
 
 #: ../../platform/osx/frontend/Preferences.py:260
 msgid "View this Directory in the Library"
@@ -1605,14 +1608,14 @@ msgstr "동영상 중지"
 
 #: ../../platform/osx/frontend/Application.py:255
 msgid "Unsupported version of Quicktime"
-msgstr ""
+msgstr "지원되지 않는 버전의 Quicktime"
 
 #: ../../platform/osx/frontend/Application.py:256
 #, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
-msgstr ""
+msgstr "%s를 실행하려면 최신 버전의 Quicktime이 필요합니다. 무료로 업데이트 가능합니다."
 
 #: ../../platform/osx/frontend/UIStrings.py:22
 msgid "_Remove..."
@@ -1870,7 +1873,7 @@ msgstr "%d 일"
 #: ../../portable/feed.py:391
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d 개월"
 
 #: ../../portable/feed.py:787
 msgid "Update Channel Now"
@@ -1983,35 +1986,35 @@ msgstr "다운로드 취소"
 
 #: ../../portable/menu.py:127 ../../portable/item.py:1489
 msgid "Pause Download"
-msgstr ""
+msgstr "내려받기 잠시 멈춤"
 
 #: ../../portable/menu.py:130 ../../portable/item.py:1487
 msgid "Restart Upload"
-msgstr ""
+msgstr "업로드 재시작"
 
 #: ../../portable/opml.py:49
 msgid "Export OPML File"
-msgstr ""
+msgstr "OPML 내보내기"
 
 #: ../../portable/opml.py:123
 msgid "Import OPML File"
-msgstr ""
+msgstr "OPML 가져오기"
 
 #: ../../portable/opml.py:125
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML 파일들"
 
 #: ../../portable/opml.py:145
 msgid "OPML Import failed"
-msgstr ""
+msgstr "OPML 가져오기 실패"
 
 #: ../../portable/opml.py:146
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
+msgstr "선택된 OPML 파일이 올바르지 않은 것 같습니다. 가져오기가 중단되었습니다."
 
 #: ../../portable/opml.py:151
 msgid "OPML Import summary"
-msgstr ""
+msgstr "OPML 가져오기 결과 요약"
 
 #: ../../portable/opml.py:152
 #, python-format

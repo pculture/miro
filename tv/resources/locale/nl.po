@@ -8,199 +8,196 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-18 13:28+0000\n"
-"Last-Translator: Balaam's Miracle <balaam@balaamsmiracle.com>\n"
+"PO-Revision-Date: 2007-12-09 18:27+0000\n"
+"Last-Translator: Dick Kuiper <dickenalice@orange.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Voorkeuren"
+#~ msgid "Save this video"
+#~ msgstr "Deze video opslaan"
 
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr "(De wijzigingen in Miro gaan in wanneer u deze opnieuw opent)\n"
+#~ msgid "_Play / Pause"
+#~ msgstr "Afs_pelen / Pauzeren"
+
+#~ msgid "_Remove Channel"
+#~ msgstr "_Verwijder Kanaal"
+
+#~ msgid "_Update Channel"
+#~ msgstr "V_ernieuw kanaal"
+
+#~ msgid "_Open..."
+#~ msgstr "_Openen..."
+
+#~ msgid "Open various files"
+#~ msgstr "Open verschillende bestanden"
+
+#~ msgid "P_references"
+#~ msgstr "Voo_rkeuren"
+
+#~ msgid "Quit the Program"
+#~ msgstr "Het programma afsluiten"
+
+#~ msgid "U_pdate All Channels"
+#~ msgstr "A_lle kanalen vernieuwen"
+
+#~ msgid "Pending Auto Download"
+#~ msgstr "Wachten op automatische download"
+
+#~ msgid "Unwatched"
+#~ msgstr "Niet bekeken"
+
+#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
+#~ msgstr ""
+#~ "Niets weer te geven.<br></br> Voer in het zoekveld hierboven een "
+#~ "zoekopdracht in."
+
+#~ msgid "Searching..."
+#~ msgstr "Zoeken..."
+
+#~ msgid "Channel Guide"
+#~ msgstr "Kanalengids"
+
+#~ msgid "My Collection"
+#~ msgstr "Mijn collectie"
+
+#~ msgid "New Videos"
+#~ msgstr "Nieuwe video's"
+
+#~ msgid "Democracy - External Playback Template"
+#~ msgstr "Democracy - sjabloon voor extern afspelen"
+
+#~ msgid "Continue To Next Video"
+#~ msgstr "Ga naar volgende video"
+
+#~ msgid "Recommend"
+#~ msgstr "Aanraden"
+
+#~ msgid "Default"
+#~ msgstr "Standaard"
+
+#~ msgid "Watched"
+#~ msgstr "Bekeken"
+
+#~ msgid "Saved"
+#~ msgstr "Opgeslagen"
+
+#~ msgid "Play Externally"
+#~ msgstr "Extern afspelen"
+
+#~ msgid "Simple translation"
+#~ msgstr "Eenvoudige vertaling"
+
+#~ msgid "truck stop in a ${can}"
+#~ msgstr "truck stop in een ${can}"
+
+#~ msgid "Democracy Internet TV: How to Get Started"
+#~ msgstr "Democracy Internet TV: Hoe te beginnen"
+
+#~ msgid "GO BIG:"
+#~ msgstr "GA GROOT:"
+
+#~ msgid "This is your fullscreen button. Click it and lean back."
+#~ msgstr ""
+#~ "Dit is de knop om schermvullend te gaan. Klik er op en leun achterover."
+
+#~ msgid "NEW STUFF:"
+#~ msgstr "NIEUWE ITEMS:"
 
 #~ msgid ""
-#~ "You're done!\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "Don't Wait: Miro is different than watching webpage videos -- publishers can "
-#~ "offer big, high quality videos. So don't sit around waiting for videos: "
-#~ "start some downloads and check back later. \n"
-#~ "\n"
-#~ "Leave it On: Miro regularly checks channels for new videos and downloads in "
-#~ "the background. Leaving it running means you'll have new videos when you're "
-#~ "ready to watch.\n"
-#~ "\n"
-#~ "Don't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' "
-#~ "system that helps clean out older videos to make room for new videos. You "
-#~ "can always keep a video permanently by clicking 'save' and you can set a "
-#~ "channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
-#~ "\n"
-#~ "Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
-#~ "them are free. Just click 'ADD' to watch a channel.\n"
+#~ "Blue circles mean the channel has new videos available, green circles mean "
+#~ "you have downloaded videos ready to watch."
 #~ msgstr ""
-#~ "U bent klaar!\n"
-#~ "\n"
-#~ "U heeft Miro ingesteld - ontdek meteen enkele kanalen en begin uw "
-#~ "kijkervaring.\n"
-#~ "\n"
-#~ "Wacht Niet Langer: Miro biedt u een compleet andere ervaring dan video's op "
-#~ "webpagina's - uitgevers kunnen u grote video's van een hoge kwaliteit "
-#~ "aanbieden. Rust niet op uw lauweren: start nu enkele downloads en check deze "
-#~ "achteraf. \n"
-#~ "\n"
-#~ "Laat het Aanstaan: Miro werkt regelmatig uw abonnementen op kanalen bij en "
-#~ "download nieuwe video's automatisch in de achtergrond. Deze video's zullen "
-#~ "automatisch voor u klaargezet worden voor uw kijkplezier.\n"
-#~ "\n"
-#~ "Geen Zorgen Over Vrije Ruimte: Net zoals de befaamde Amerikaanse TiVo's, "
-#~ "biedt Miro u een manier om automatisch oude video's te verwijderen en plaats "
-#~ "te maken voor nieuwere. U kunt uiteraard ook video's definitief bijhouden "
-#~ "door een enkele klik op 'bewaar' of u kunt uw voorkeuren simpelweg per "
-#~ "kanaal opgeven zodat dit geheel automatisch gebeurt.\n"
-#~ "\n"
-#~ "Bekijk Het Groot: De knop rechts van de afspeelknop start het afspelen "
-#~ "vanvideo's schermvullend.\n"
-#~ "\n"
-#~ "Ontdek Video's: De Miro Kanaalgids bevat meer dan duizend gratis kanalen "
-#~ "waaropu zich kunt abonneren. Klik simpelweg op 'VOEG TOE' om een kanaal te "
-#~ "bekijken.\n"
-
-#, python-format
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d download still in progress."
-#~ msgstr[0] "U heeft %d download welke nog bezig is."
-#~ msgstr[1] "U heeft %d downloads welke nog bezig zijn."
-
-#~ msgid "News and Tech"
-#~ msgstr "Nieuws en Technologie"
-
-#~ msgid "Entertainment"
-#~ msgstr "Amusement"
-
-#~ msgid "High-Def"
-#~ msgstr "Hoge Definitie"
-
-#~ msgid "Mac"
-#~ msgstr "Mac"
-
-#~ msgid "Local File"
-#~ msgstr "Lokaal Bestand"
-
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%s is een ongeldige URL"
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "Verwijderen %s"
-
-#~ msgid "Seeders:"
-#~ msgstr "Seeders:"
-
-#~ msgid "Leachers:"
-#~ msgstr "Leechers"
+#~ "Blauwe cirkels geven aan dat een kanaal nieuwe video's bevat, groene cirkels "
+#~ "geven aan dat video's gedownload zijn, klaar om te bekijken."
 
 #~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
+#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
+#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+#~ "channels in the guide are free.</strong>"
 #~ msgstr ""
-#~ "Wilt u dit bestand definitief verwijderen of wilt u het enkel uit uw "
-#~ "Bibliotheek verwijderen?"
+#~ "<strong>Kanelen toevoegen:</strong> De kanaalgids is uw beginpunt voor "
+#~ "online tv-kanalen. Klik op 'TOEVOEGEN' om u op een kanaal aan te melden -- "
+#~ "<strong>de kanalen in de gids zijn gratis.</strong>"
 
-#~ msgid "_Options"
-#~ msgstr "V_oorkeuren"
+#~ msgid ""
+#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
+#~ "waiting for videos: start some downloads and check back later."
+#~ msgstr ""
+#~ "<strong>Niet wachten:</strong> Democracy is anders dan video's op een "
+#~ "webpagina bekijken -- uitgevers kunnen grote video's van hoge kwaliteit "
+#~ "aanbieden. Ga dus niet zitten wachten op video's: begin met downloaden en "
+#~ "kom later nog eens terug."
 
-#~ msgid "Restore"
-#~ msgstr "Herstel"
+#~ msgid ""
+#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
+#~ "new videos and downloads in the background. Leaving it running means you'll "
+#~ "have new videos when you're ready to watch."
+#~ msgstr ""
+#~ "<strong>Niet afsluiten:</strong> Democracy Player controleert kanalen "
+#~ "regelmatig op nieuwe video's en downloadt deze in de achtergrond. Door "
+#~ "Democracy niet af te sluiten staan nieuwe videos klaar wanneer u er naar "
+#~ "wilt kijken."
+
+#~ msgid ""
+#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
+#~ "features an 'expiration' system that helps clean out older videos to make "
+#~ "room for new videos. You can always keep a video permanently by clicking "
+#~ "'save' and you can set a channel's settings to save videos automatically."
+#~ msgstr ""
+#~ "<strong>Maak je geen zorgen over schijfruimte:</strong> Net als TiVo heeft "
+#~ "Democracy Player een 'verloop'-systeem dat er voor zorgt dat oude video's "
+#~ "worden verwijderd om plaats te maken voor nieuwe. U kunt video's permanent "
+#~ "opslaan door op 'opslaan' te klikken. U kunt een kanaal ook zo instellen dat "
+#~ "video's automatisch opgeslagen worden."
 
 #~ msgid "<b>Channels</b>"
 #~ msgstr "<b>Kanalen</b>"
 
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>Vrije ruimte</b>"
-
 #~ msgid "<b>Downloads</b>"
 #~ msgstr "<b>Downloads</b>"
 
-#~ msgid "<b>Folders in the Library</b>"
-#~ msgstr "<b>Mappen in de Bibliotheek</b>"
+#~ msgid "<b>Movies Directory</b>"
+#~ msgstr "<b>Video Directory</b>"
 
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Algemeen</b>"
+#~ msgid "Democracy - Add Channel"
+#~ msgstr "Democracy - Kanaal toevoegen"
 
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Weergave</b>"
-
-#~ msgid "Automatically run Miro when I log in"
-#~ msgstr "Open Miro automatisch na inloggen"
-
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "BitTorrent gebruikt de poorten"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "Werk Kanalen bij"
+#~ msgid "Democracy Player"
+#~ msgstr "Democracy Player"
 
 #~ msgid "GB free"
 #~ msgstr "GB vrij"
 
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s wanneer mijn computer actief is"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Speel video's achtereen af"
-
-#~ msgid "Resume playback of videos from the point where they were stopped"
-#~ msgstr "Onthoud afspeelpositie"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Stop na elke video"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "Voorkom vertragingen, en beperk uploads tot"
-
-#~ msgid "Watch for new videos in these folders and include them in the Library"
+#~ msgid ""
+#~ "You've selected a new folder to download movies to.  Should Democracy "
+#~ "migrate your existing downloads there?  (Currently dowloading movies will "
+#~ "not be moved until they finish.)"
 #~ msgstr ""
-#~ "Monitor deze locaties voor nieuwe video's en voeg ze toe aan de Bibliotheek"
-
-#~ msgid "_Store downloaded videos in this folder:"
-#~ msgstr "_Locatie gedownloade video's:"
-
-#~ msgid "Automatically run $longAppName when I login"
-#~ msgstr "Open $longAppName na inloggen"
-
-#~ msgid "Quit Miro completely"
-#~ msgstr "Stop Miro volledig"
+#~ "U hebt een nieuwe map geselecteerd om video's in op te slaan. Moet Democracy "
+#~ "uw opgeslagen bestanden daarheen verplaatsen? (Video's die nog gedownload "
+#~ "worden zullen pas verplaatst worden als ze klaar zijn.)"
 
 #~ msgid ""
-#~ "Watch for new videos in these folders and include them in My Collection:"
+#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
+#~ "style=\"color:red\">raw</b> text</span>"
 #~ msgstr ""
-#~ "Monitor deze locaties voor nieuwe video's en voeg toe aan mijn Bibliotheek."
+#~ "Dit is een ${car} en dit is een ${truck} <span>Deze tekst is <b "
+#~ "style=\"color:red\">ruwe</b> tekst</span>"
+
+#~ msgid "Channel is not compatible with Democracy!"
+#~ msgstr "Kanaal werkt niet met Democracy!"
 
 #~ msgid ""
-#~ "The $shortAppName Channel Guide has hundreds of internet TV channels, all of "
-#~ "them are free.  Just click 'ADD' to watch a channel."
+#~ "and ask if they can supply a feed in a format that will work with Democracy."
 #~ msgstr ""
-#~ "De $shortAppName Kanaalgids bevat honderden internet-TV kanalen, welke allen "
-#~ "gratis zijn. Klik simpelweg op 'VOEG TOE' om u op een kanaal te abonneren en "
-#~ "deze te bekijken."
-
-#~ msgid "New Miro Guide..."
-#~ msgstr "Nieuwe Miro Gids..."
-
-#~ msgid "outside of democracy."
-#~ msgstr "buiten Democracy om."
-
-#~ msgid "Close"
-#~ msgstr "Stop"
+#~ "en vraag of zij de aanvoer kunnen leveren in een formaat dat wel met "
+#~ "Democracy werkt."
 
 #~ msgid ""
 #~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
@@ -209,8 +206,28 @@ msgstr ""
 #~ "$longAppName versie $appVersion ($appRevision); copyright (c) 2005, 2006 "
 #~ "$publisher."
 
-#~ msgid "Minimize $longAppName to the system tray when I close the program"
-#~ msgstr "Minimaliseer $longAppName naar het systeemvak wanneer ik het sluit"
+#~ msgid "Please help us fix it. Copy and paste all the"
+#~ msgstr "Help ons aub dit op te lossen. Kopieer en plak alle"
+
+#~ msgid ""
+#~ "information into our bug tracker and tell us what you were doing when the"
+#~ msgstr ""
+#~ "informatie in ons bugs-registratiesysteem en vertel wat u deed toen het"
+
+#~ msgid "problem occurred."
+#~ msgstr "probleem zich voordeed."
+
+#~ msgid ""
+#~ "Then, please restart Democracy Player (or you may keep getting related "
+#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
+#~ "with your help we're fixing problems fast!"
+#~ msgstr ""
+#~ "Start hierna Democracy Speler opnieuw op (anders doen zich wellicht "
+#~ "gerelateerde fouten voor). Onze excuses voor het ongemak. Democracy Speler "
+#~ "is nog in beta-fase, maar met uw hulp lossen we problemen snel op!"
+
+#~ msgid "You found a bug in Democracy!"
+#~ msgstr "U heeft een fout in Democracy gevonden!"
 
 #~ msgid "About Democracy"
 #~ msgstr "Over Democracy"
@@ -224,11 +241,14 @@ msgstr ""
 #~ msgid "Hide Democracy"
 #~ msgstr "Democracy verbergen"
 
-#~ msgid "New Channel Guide..."
-#~ msgstr "Nieuwe kanaalgids..."
+#~ msgid "Preferencesâ¦"
+#~ msgstr "Voorkeuren"
 
 #~ msgid "Quit Democracy"
 #~ msgstr "Democracy afsluiten"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Verwijder kanaal"
 
 #~ msgid "Run Democracy at startup"
 #~ msgstr "Demcocray bij het opstarten uitvoeren"
@@ -328,8 +348,91 @@ msgstr ""
 #~ "Vind video's: de Democracy kanaalgids bevat honderden online tv-kanalen, "
 #~ "allemaal gratis. Klik gewoon op 'Toevoegen' om een kanaal te bekijken.\n"
 
-#~ msgid "Save this video"
-#~ msgstr "Deze video opslaan"
+#~ msgid "Create new playlist"
+#~ msgstr "Nieuwe afspeellijst maken"
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "Nieuwe afspeellijstmap maken"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "Nieuwe kanaalmap maken"
+
+#, python-format
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Fout bij importeren van democracy modules:\n"
+#~ "%s"
+
+#~ msgid "${count} Downloads in Progress"
+#~ msgstr "${count} downloads bezig"
+
+#~ msgid "1 Download in Progress"
+#~ msgstr "1 download bezig"
+
+#~ msgid "${len} Videos On This Channel"
+#~ msgstr "${len} video's in dit kanaal"
+
+#~ msgid "All ${len} Videos Match This Search"
+#~ msgstr "Alle ${len} video's voldoen aan deze zoekopdracht"
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len} video's voldoen aan deze zoekopdracht"
+
+#~ msgid "Looking for videos at this URL"
+#~ msgstr "Zoeken naar video's op deze URL"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} video's in dit kanaal"
+
+#~ msgid "SAVE"
+#~ msgstr "OPSLAAN"
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr ""
+#~ "Dit Democracy kanaal heeft een ongeldige indeling: %s. Waarschuw a.u.b. de "
+#~ "uitgever van dit bestand."
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Dit Democracy kanaal heeft het verkeerd inhouds-type: %s. Waarschuw a.u.b. "
+#~ "de uitgever van dit bestand."
+
+#, python-format
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Kon het Democracy kanaal niet downloaden: %s."
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Maar we doen ons best om de bestanden te pakken te krijgen. Het kan extra "
+#~ "tijd kosten om een lijst van de video's op te bouwen en de beschrijvingen "
+#~ "kunnen er vreemd uitzien. Neem a.u.b. contact op met de uitgever van $url en "
+#~ "vraag ze of ze een webfeed in een formaat kunnen geven die werkt met "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Wilt u toch proberen dit kanaal te laden?"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - Kanalengids toevoegen"
+
+#~ msgid "Enter the URL of the channel guide to add"
+#~ msgstr "Voer het webadres van de kanalengids die u wilt toevoegen in."
+
+#~ msgid "New Channel Guide..."
+#~ msgstr "Nieuwe kanaalgids..."
 
 #~ msgid "_Copy Video URL"
 #~ msgstr "Video URL _kopiëren"
@@ -337,53 +440,20 @@ msgstr ""
 #~ msgid "_Stop Video"
 #~ msgstr "S_top Video"
 
-#~ msgid "_Play / Pause"
-#~ msgstr "Afs_pelen / Pauzeren"
-
-#~ msgid "_Update Channel"
-#~ msgstr "V_ernieuw kanaal"
-
 #~ msgid "Re_name Channel"
 #~ msgstr "_Hernoem kanaal"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "_Verwijder Kanaal"
-
-#~ msgid "_Open..."
-#~ msgstr "_Openen..."
-
-#~ msgid "Open various files"
-#~ msgstr "Open verschillende bestanden"
 
 #~ msgid "New _Playlist..."
 #~ msgstr "_Nieuwe afspeellijst"
 
-#~ msgid "Create new playlist"
-#~ msgstr "Nieuwe afspeellijst maken"
-
 #~ msgid "New Playlist _Folder..."
 #~ msgstr "Nieuwe afspeellijstmap"
-
-#~ msgid "Create new playlist folder"
-#~ msgstr "Nieuwe afspeellijstmap maken"
 
 #~ msgid "New Channel _Folder..."
 #~ msgstr "Nieuwe _kanaalmap"
 
-#~ msgid "Create new channel folder"
-#~ msgstr "Nieuwe kanaalmap maken"
-
 #~ msgid "Add _Channel..."
 #~ msgstr "Voeg kanaal _toe..."
-
-#~ msgid "P_references"
-#~ msgstr "Voo_rkeuren"
-
-#~ msgid "Quit the Program"
-#~ msgstr "Het programma afsluiten"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "A_lle kanalen vernieuwen"
 
 #~ msgid "Delete selection"
 #~ msgstr "Verwijder selectie"
@@ -408,9 +478,6 @@ msgstr ""
 
 #~ msgid "Remove Playlist Folders..."
 #~ msgstr "Verwijder afspeellijstmappen..."
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Verwijder kanaal"
 
 #~ msgid "Remove Channels..."
 #~ msgstr "Verwijder kanalen..."
@@ -454,274 +521,8 @@ msgstr ""
 #~ msgid "Update Channels..."
 #~ msgstr "Vernieuw kanalen..."
 
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Fout bij importeren van democracy modules:\n"
-#~ "%s"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr ""
-#~ "Niets weer te geven.<br></br> Voer in het zoekveld hierboven een "
-#~ "zoekopdracht in."
-
-#~ msgid "Searching..."
-#~ msgstr "Zoeken..."
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "Resultaten voor \"${query}\""
-
-#~ msgid "Empty Playlist"
-#~ msgstr "Lege afspeellijst"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr ""
-#~ "Sleep gedownloade video's naar deze afspeellijst om ze toe te voegen."
-
-#~ msgid "Empty Playlist Folder"
-#~ msgstr "Lege afspeellijstmap"
-
-#~ msgid ""
-#~ "This folder contains ${count} playlists, but the playlists do not contain "
-#~ "any items."
-#~ msgstr ""
-#~ "Deze map bevat ${count} afspeellijsten, maar de afspeellijsten bevatten geen "
-#~ "items."
-
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "Sleep afspeellijsten naar deze map om ze toe te voegen."
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr ""
-#~ "${count} afspeellijstmappen geselecteerd<br></br>(bevat ${containedcount} "
-#~ "afspeellijsten)"
-
-#~ msgid "${count} Playlists Selected"
-#~ msgstr "${count} afspeellijsten geselecteerd"
-
-#~ msgid "STAR"
-#~ msgstr "STER"
-
-#~ msgid "SAVE"
-#~ msgstr "OPSLAAN"
-
-#~ msgid "SAVED"
-#~ msgstr "OPGESLAGEN"
-
-#~ msgid "DELETE"
-#~ msgstr "VERWIJDEREN"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - sjabloon voor extern afspelen"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "Ga naar volgende video"
-
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "${count} downloads bezig"
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "1 download bezig"
-
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "${len} video's in dit kanaal"
-
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "Alle ${len} video's voldoen aan deze zoekopdracht"
-
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len} video's voldoen aan deze zoekopdracht"
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${count} video's in dit kanaal"
-
-#~ msgid "Unwatched"
-#~ msgstr "Niet bekeken"
-
-#~ msgid "Watched"
-#~ msgstr "Bekeken"
-
-#~ msgid "Saved"
-#~ msgstr "Opgeslagen"
-
-#~ msgid "Default"
-#~ msgstr "Standaard"
-
-#~ msgid "default"
-#~ msgstr "standaard"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Video's verlopen na"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "Indien ingeschakeld, moet auto-download"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr ""
-#~ "Niet automatisch downloaden wanneer meer dan ${maxnew} ${maxnew2} video's "
-#~ "onbekeken klaarstaan."
-
-#~ msgid "Downloaded"
-#~ msgstr "Gedownload"
-
-#~ msgid "Recommend"
-#~ msgstr "Aanraden"
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "<label for=\"automatic\">Automatisch downloaden</label>"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "Zoeken naar video's op deze URL"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy kan dit bestand niet afspelen. Mogelijk kunt u het openen met een "
-#~ "ander programma.<br></br><br></br><strong>Bestandsnaam:</strong> "
-#~ "${filename}<Br></Br><strong>Type bestand:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "TOON BESTAND"
-
-#~ msgid "Play Externally"
-#~ msgstr "Extern afspelen"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "Overslaan >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "TOON BESTAND"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "TOON MAP"
-
-#~ msgid "SHARE IT"
-#~ msgstr "DELEN"
-
-#~ msgid "STAR IT"
-#~ msgstr "GEEF STER"
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "Wachten op automatische download"
-
-#~ msgid "Simple translation"
-#~ msgstr "Eenvoudige vertaling"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "truck stop in een ${can}"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "Dit is een ${car} en dit is een ${truck} <span>Deze tekst is <b "
-#~ "style=\"color:red\">ruwe</b> tekst</span>"
-
-#~ msgid "${size} disk space free"
-#~ msgstr "${size} vrije schijfruimte"
-
-#~ msgid "${size} available for downloads"
-#~ msgstr "${size} beschikbaar voor downloads"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "Complete torrents verwijderen"
-
-#~ msgid "Empty Channel Folder"
-#~ msgstr "Kanaalmap leegmaken"
-
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr "Kanalen naar deze map slepen om ze toe te voegen"
-
-#~ msgid "My Collection"
-#~ msgstr "Mijn collectie"
-
-#~ msgid "New Videos"
-#~ msgstr "Nieuwe video's"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy Internet TV: Hoe te beginnen"
-
-#~ msgid "GO BIG:"
-#~ msgstr "GA GROOT:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr ""
-#~ "Dit is de knop om schermvullend te gaan. Klik er op en leun achterover."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "NIEUWE ITEMS:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "Blauwe cirkels geven aan dat een kanaal nieuwe video's bevat, groene cirkels "
-#~ "geven aan dat video's gedownload zijn, klaar om te bekijken."
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">SLA INTRO OVER: <a style=\"color: #090;\" "
-#~ "href=\"#\" onclick=\"doneWithIntro();\">Ga naar kanaalgids>></a></strong>"
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>Kanelen toevoegen:</strong> De kanaalgids is uw beginpunt voor "
-#~ "online tv-kanalen. Klik op 'TOEVOEGEN' om u op een kanaal aan te melden -- "
-#~ "<strong>de kanalen in de gids zijn gratis.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>Niet wachten:</strong> Democracy is anders dan video's op een "
-#~ "webpagina bekijken -- uitgevers kunnen grote video's van hoge kwaliteit "
-#~ "aanbieden. Ga dus niet zitten wachten op video's: begin met downloaden en "
-#~ "kom later nog eens terug."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>Niet afsluiten:</strong> Democracy Player controleert kanalen "
-#~ "regelmatig op nieuwe video's en downloadt deze in de achtergrond. Door "
-#~ "Democracy niet af te sluiten staan nieuwe videos klaar wanneer u er naar "
-#~ "wilt kijken."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>Maak je geen zorgen over schijfruimte:</strong> Net als TiVo heeft "
-#~ "Democracy Player een 'verloop'-systeem dat er voor zorgt dat oude video's "
-#~ "worden verwijderd om plaats te maken voor nieuwe. U kunt video's permanent "
-#~ "opslaan door op 'opslaan' te klikken. U kunt een kanaal ook zo instellen dat "
-#~ "video's automatisch opgeslagen worden."
-
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr ""
-#~ "${count} Kanaalmappen geselecteerd<br></br>(bevat ${containedcount} kanalen)"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count} kanalen geselecteerd"
+#~ msgid "outside of democracy."
+#~ msgstr "buiten Democracy om."
 
 #, python-format
 #~ msgid "%0.0fB"
@@ -751,67 +552,9 @@ msgstr ""
 #~ "U heeft een database die met een nieuwere versie van Democracy opgeslagen "
 #~ "is. Download de laatste versie van Democracy en gebruik die versie."
 
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - Kanaal toevoegen"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - Kanalengids toevoegen"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "Voer het webadres van de kanalengids die u wilt toevoegen in."
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr "U gebruikt een versie van Miro met aangepaste kanalen."
-
-#~ msgid "Channel Guide"
-#~ msgstr "Kanalengids"
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "Kanaal werkt niet met Democracy!"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "Maar we doen ons best om de bestanden te pakken te krijgen. Het kan extra "
-#~ "tijd kosten om een lijst van de video's op te bouwen en de beschrijvingen "
-#~ "kunnen er vreemd uitzien. Neem a.u.b. contact op met de uitgever van $url en "
-#~ "vraag ze of ze een webfeed in een formaat kunnen geven die werkt met "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Wilt u toch proberen dit kanaal te laden?"
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr ""
-#~ "Dit Democracy kanaal heeft een ongeldige indeling: %s. Waarschuw a.u.b. de "
-#~ "uitgever van dit bestand."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Dit Democracy kanaal heeft het verkeerd inhouds-type: %s. Waarschuw a.u.b. "
-#~ "de uitgever van dit bestand."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Kon het Democracy kanaal niet downloaden: %s."
-
 #~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
 #~ msgstr ""
 #~ "(Wijzigingen worden pas actief als de Democracy speler opnieuw gestart is.)"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>Video Directory</b>"
 
 #~ msgid ""
 #~ "<b>Would you like Democracy Player to look for video files on your "
@@ -871,21 +614,12 @@ msgstr ""
 #~ "kanalen die allemaal gratis zijn. Klik gewoon op 'TOEVOEGEN' en bekijk het "
 #~ "kanaal."
 
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr "Democracy Player automatisch starten als ik inlog"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy Player"
-
 #~ msgid ""
 #~ "Democracy Player can find all the videos on your computer to help you "
 #~ "organize your collection."
 #~ msgstr ""
 #~ "Democracy Player kan alle videobestanden op uw computer vinden om u te "
 #~ "helpen uw collectie te beheren."
-
-#~ msgid "Show movies in these directories in My Collection"
-#~ msgstr "Toon video's in deze mappen in Mijn collectie"
 
 #~ msgid ""
 #~ "The next few screens will help you set up democracy player so that it works "
@@ -914,23 +648,139 @@ msgstr ""
 #~ "bekijken, torrents downloaden, video's aanraden bij vrienden en nog veel "
 #~ "meer."
 
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
+#~ msgid "Results for \"${query}\""
+#~ msgstr "Resultaten voor \"${query}\""
+
+#~ msgid "Empty Playlist"
+#~ msgstr "Lege afspeellijst"
+
+#~ msgid "Drag downloaded videos to this playlist to add them."
 #~ msgstr ""
-#~ "U hebt een nieuwe map geselecteerd om video's in op te slaan. Moet Democracy "
-#~ "uw opgeslagen bestanden daarheen verplaatsen? (Video's die nog gedownload "
-#~ "worden zullen pas verplaatst worden als ze klaar zijn.)"
+#~ "Sleep gedownloade video's naar deze afspeellijst om ze toe te voegen."
+
+#~ msgid "Empty Playlist Folder"
+#~ msgstr "Lege afspeellijstmap"
+
+#~ msgid ""
+#~ "This folder contains ${count} playlists, but the playlists do not contain "
+#~ "any items."
+#~ msgstr ""
+#~ "Deze map bevat ${count} afspeellijsten, maar de afspeellijsten bevatten geen "
+#~ "items."
+
+#~ msgid "Drag playlists to this folder to add them."
+#~ msgstr "Sleep afspeellijsten naar deze map om ze toe te voegen."
+
+#~ msgid ""
+#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+#~ "playlists)"
+#~ msgstr ""
+#~ "${count} afspeellijstmappen geselecteerd<br></br>(bevat ${containedcount} "
+#~ "afspeellijsten)"
+
+#~ msgid "${count} Playlists Selected"
+#~ msgstr "${count} afspeellijsten geselecteerd"
+
+#~ msgid "STAR"
+#~ msgstr "STER"
+
+#~ msgid "SAVED"
+#~ msgstr "OPGESLAGEN"
+
+#~ msgid "DELETE"
+#~ msgstr "VERWIJDEREN"
+
+#~ msgid "default"
+#~ msgstr "standaard"
+
+#~ msgid "Videos expire after"
+#~ msgstr "Video's verlopen na"
+
+#~ msgid "When turned on, Auto Download should"
+#~ msgstr "Indien ingeschakeld, moet auto-download"
+
+#~ msgid ""
+#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+#~ "unwatched."
+#~ msgstr ""
+#~ "Niet automatisch downloaden wanneer meer dan ${maxnew} ${maxnew2} video's "
+#~ "onbekeken klaarstaan."
+
+#~ msgid "Downloaded"
+#~ msgstr "Gedownload"
+
+#~ msgid "<label for=\"automatic\">Auto Download</label>"
+#~ msgstr "<label for=\"automatic\">Automatisch downloaden</label>"
+
+#~ msgid ""
+#~ "Democracy can't play this file. You may be able to open it with a different "
+#~ "program.<br></br><br></br><strong>Filename:</strong> "
+#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
+#~ msgstr ""
+#~ "Democracy kan dit bestand niet afspelen. Mogelijk kunt u het openen met een "
+#~ "ander programma.<br></br><br></br><strong>Bestandsnaam:</strong> "
+#~ "${filename}<Br></Br><strong>Type bestand:</strong> ${format}"
+
+#~ msgid "REVEAL FILE"
+#~ msgstr "TOON BESTAND"
+
+#~ msgid "Skip >> ${countdown}"
+#~ msgstr "Overslaan >> ${countdown}"
+
+#~ msgid "SHOW FILE"
+#~ msgstr "TOON BESTAND"
+
+#~ msgid "SHOW FOLDER"
+#~ msgstr "TOON MAP"
+
+#~ msgid "SHARE IT"
+#~ msgstr "DELEN"
+
+#~ msgid "STAR IT"
+#~ msgstr "GEEF STER"
+
+#~ msgid "${size} disk space free"
+#~ msgstr "${size} vrije schijfruimte"
+
+#~ msgid "${size} available for downloads"
+#~ msgstr "${size} beschikbaar voor downloads"
+
+#~ msgid "Clear Completed Torrents"
+#~ msgstr "Complete torrents verwijderen"
+
+#~ msgid "Empty Channel Folder"
+#~ msgstr "Kanaalmap leegmaken"
+
+#~ msgid "Drag channels to this folder to add them."
+#~ msgstr "Kanalen naar deze map slepen om ze toe te voegen"
+
+#~ msgid ""
+#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
+#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
+#~ msgstr ""
+#~ "<strong i18n:translate=\"\">SLA INTRO OVER: <a style=\"color: #090;\" "
+#~ "href=\"#\" onclick=\"doneWithIntro();\">Ga naar kanaalgids>></a></strong>"
+
+#~ msgid ""
+#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+#~ "channels)"
+#~ msgstr ""
+#~ "${count} Kanaalmappen geselecteerd<br></br>(bevat ${containedcount} kanalen)"
+
+#~ msgid "${count} Channels Selected"
+#~ msgstr "${count} kanalen geselecteerd"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Algemeen</b>"
+
+#~ msgid "Automatically run Democracy Player when I log in"
+#~ msgstr "Democracy Player automatisch starten als ik inlog"
+
+#~ msgid "Show movies in these directories in My Collection"
+#~ msgstr "Toon video's in deze mappen in Mijn collectie"
 
 #~ msgid "_Add Directory"
 #~ msgstr "Voeg directory toe"
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr ""
-#~ "en vraag of zij de aanvoer kunnen leveren in een formaat dat wel met "
-#~ "Democracy werkt."
 
 #~ msgid "A search channel contains"
 #~ msgstr "Een zoekkanaal bevat"
@@ -992,29 +842,6 @@ msgstr ""
 
 #~ msgid "Would you like to run Democracy on startup?"
 #~ msgstr "Wilt u Democracy uitvoeren bij opstarten?"
-
-#~ msgid "Please help us fix it. Copy and paste all the"
-#~ msgstr "Help ons aub dit op te lossen. Kopieer en plak alle"
-
-#~ msgid ""
-#~ "information into our bug tracker and tell us what you were doing when the"
-#~ msgstr ""
-#~ "informatie in ons bugs-registratiesysteem en vertel wat u deed toen het"
-
-#~ msgid "problem occurred."
-#~ msgstr "probleem zich voordeed."
-
-#~ msgid ""
-#~ "Then, please restart Democracy Player (or you may keep getting related "
-#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-#~ "with your help we're fixing problems fast!"
-#~ msgstr ""
-#~ "Start hierna Democracy Speler opnieuw op (anders doen zich wellicht "
-#~ "gerelateerde fouten voor). Onze excuses voor het ongemak. Democracy Speler "
-#~ "is nog in beta-fase, maar met uw hulp lossen we problemen snel op!"
-
-#~ msgid "You found a bug in Democracy!"
-#~ msgstr "U heeft een fout in Democracy gevonden!"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -1138,7 +965,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
-msgstr "Annuleer"
+msgstr "Annuleren"
 
 msgid "OK"
 msgstr "OK"
@@ -1156,7 +983,7 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
-"<font face=\"Lucida Grande\" size=\"-1\">Problemen kunt u rappporteren op <a "
+"<font face=\"Lucida Grande\" size=\"-1\">Fouten kunt u rappporteren op <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Vertel ons wat u aan het doen "
 "was, plak bovenstaand problemenrapport in het veld, beantwoord enkele vragen "
 "en we gaan direct aan het werk.</font>"
@@ -1167,10 +994,10 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Overigens, als u een minuutje voor ons kunt vrijmaken, wilt u even dit "
-"probleem aan ons rapporteren? Wat we nodig hebben, is een zo nauwkeurig "
-"mogelijke beschrijving van wat u aan het doen was, samen met de fraai "
-"geformuleerde informatie die hieronder staat:"
+"Trouwens, als je even hebt, wil je dan een crash-rapport aan ons bug-"
+"tracking-systeem doorgeven? Wat we minimaal nodig hebben is een beschrijving "
+"van wat je aan het doen was -- zo nauwkeurig mogelijk -- plus de fraai "
+"geformuleerde nonsens die hieronder staat:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -1178,9 +1005,9 @@ msgid ""
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
-"Helaas! $longAppName is het slachtoffer geworden van een of ander intern "
+"Helaas! $longAppName is het slachtoffer geworden van één of ander intern "
 "probleem $when. Onze excuses hiervoor. Open $shortAppName aub opnieuw. Dat "
-"zal het leren zich te gedragen en bovendien vermijd u zo mogelijk "
+"zal het leren zich zo te gedragen en bovendien vermijd u zo mogelijk "
 "dataverlies."
 
 msgid "The fall of $shortAppName??"
@@ -1190,10 +1017,10 @@ msgid "About Miro"
 msgstr "Over Miro"
 
 msgid "Add Channel..."
-msgstr "Nieuw Kanaal..."
+msgstr "Kanaal toevoegen..."
 
 msgid "Add Guide..."
-msgstr "Nieuwe Kanaalgids..."
+msgstr "Kanaalgids toevoegen..."
 
 msgid "Bring All to Front"
 msgstr "Alles op Voorgrond"
@@ -1204,29 +1031,29 @@ msgid "Channels"
 msgstr "Kanalen"
 
 msgid "Check for New Version"
-msgstr "Zoek naar Nieuwe Versies"
+msgstr "Controleer op nieuwe versie"
 
 msgid "Clear Menu"
-msgstr "Wis Menu"
+msgstr "Menu leegmaken"
 
 msgid "Close Window"
-msgstr "Sluit Venster"
+msgstr "Venster sluiten"
 
 msgid "Copy"
-msgstr "Kopieer"
+msgstr "Kopiëren"
 
 msgid "Copy Channel URL"
 msgstr "Kopieer URL Kanaal"
 
 msgid "Copy Video URL"
-msgstr "Kopieer URL Video"
+msgstr "Video URL kopiëren"
 
 msgid "Cut"
-msgstr "Knip"
+msgstr "Knippen"
 
 #: ../../portable/dialogs.py:96
 msgid "Delete"
-msgstr "Verwijder"
+msgstr "Verwijderen"
 
 msgid "Donate"
 msgstr "Maak een Donatie"
@@ -1235,13 +1062,13 @@ msgid "Download Video..."
 msgstr "Download Video..."
 
 msgid "Edit"
-msgstr "Wijzig"
+msgstr "Bewerken"
 
 msgid "Export Channels (OPML)..."
 msgstr "Exporteer Kanalen (OPML)..."
 
 msgid "File"
-msgstr "Archief"
+msgstr "Bestand"
 
 msgid "Full Screen"
 msgstr "Schermvullend"
@@ -1262,7 +1089,7 @@ msgid "Main Window"
 msgstr "Hoofdvenster"
 
 msgid "MainMenu"
-msgstr "MainMenu"
+msgstr "Hoofdmenu"
 
 msgid "Minimize"
 msgstr "Minimaliseer"
@@ -1296,11 +1123,11 @@ msgid "Open..."
 msgstr "Open Bestand..."
 
 msgid "Paste"
-msgstr "Plak"
+msgstr "Plakken"
 
 #: ../../platform/osx/frontend/Application.py:249
 msgid "Play Video"
-msgstr "Speel Video Af"
+msgstr "Video Afspelen"
 
 #: ../../platform/osx/frontend/Preferences.py:69
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
@@ -1311,37 +1138,37 @@ msgid "Playlists"
 msgstr "Afspeellijsten"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Voorkeuren..."
 
 msgid "Previous Video"
 msgstr "Vorige Video"
 
 msgid "Quit Miro"
-msgstr "Stop Miro"
+msgstr "Miro Afsluiten"
 
 msgid "Remove..."
-msgstr "Verwijder..."
+msgstr "Verwijderen..."
 
 msgid "Rename..."
-msgstr "Hernoem..."
+msgstr "Hernoemen..."
 
 msgid "Report a bug"
-msgstr "Rapporteer een probleem"
+msgstr "Fout Rapporteren"
 
 msgid "Save Video As..."
-msgstr "Bewaar Als..."
+msgstr "Video opslaan als..."
 
 msgid "Select All"
-msgstr "Selecteer Alles"
+msgstr "Alles selecteren"
 
 msgid "Send This Channel to a Friend"
-msgstr "Stuur Kanaal naar een Vriend"
+msgstr "Stuur dit Kanaal naar een Vriend"
 
 msgid "Services"
-msgstr "Voorzieningen"
+msgstr "Diensten"
 
 msgid "Show All"
-msgstr "Toon alles"
+msgstr "Alles weergeven"
 
 msgid "Stop Video"
 msgstr "Stop Video"
@@ -1374,24 +1201,24 @@ msgid "00:00:00"
 msgstr "00:00:00"
 
 msgid "Box"
-msgstr "Box"
+msgstr "Kader"
 
 msgid "FullScreen Controls"
-msgstr "FullScreen Controls"
+msgstr "Volledig Scherm Bediening"
 
 #: ../../portable/tabs.py:46
 msgid "Video Search"
 msgstr "Zoek Video's"
 
 msgid "VideoWindow"
-msgstr "VideoWindow"
+msgstr "VideoVenster"
 
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
-"Location http://foo.bar.com/baz requires a username and password for \"text "
-"supplied by server\". (Do not localize -- test data)\n"
+"Locatie http://foo.bar.com/baz vereist een gebruikersnaam en wachtwoord voor "
+"\"text supplied by server\"\n"
 
 msgid "Password:\n"
 msgstr "Wachtwoord:\n"
@@ -1410,13 +1237,13 @@ msgid " limit upstream to"
 msgstr " Uploadlimiet"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr "(De wijzigingen in Miro gaan in wanneer u ze opnieuw opent)"
+msgstr "(De wijzigingen hebben pas effect als u Miro herstart)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
-msgstr "(De wijzigingen in Miro gaan in wanneer u ze opnieuw opent)\n"
+msgstr "(Deze wijziging heeft pas effect als u Miro herstart)\n"
 
 msgid "(movies directory path goes here)"
-msgstr "(locatie van de map met video's)"
+msgstr "(locatie van de videomap gaat hier)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "1 day"
@@ -1454,28 +1281,28 @@ msgid "Add..."
 msgstr "Voeg toe..."
 
 msgid "BitTorrent ports:"
-msgstr "Torrentpoorten:"
+msgstr "BitTorent-poorten:"
 
 msgid "By default, videos expire after:"
 msgstr "Standaard verlopen video's na:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid "Change..."
-msgstr "Wijzig..."
+msgstr "Wijzigen..."
 
 msgid "Check channels for new content:"
-msgstr "Werk kanalen bij:"
+msgstr "Controleer kanalen op nieuwe inhoud:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
 msgid "Don't start a download if it leaves less than"
-msgstr "Stop downloads en behoud ten minste"
+msgstr "Download niet starten wanneer minder overblijft dan"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Download at most"
 msgstr "Beperk downloads tot"
 
 msgid "Folder location"
-msgstr "Locatie map"
+msgstr "Maplocatie"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "GB free."
@@ -1495,11 +1322,11 @@ msgid "Never"
 msgstr "Nooit"
 
 msgid "OtherViews"
-msgstr "OtherViews"
+msgstr "AndereWeergaven"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "Play videos one after another."
-msgstr "Speel video's achtereen af."
+msgstr "Video's na elkaar afspelen."
 
 msgid "Remember video position."
 msgstr "Onthoud afspeelpositie video's."
@@ -1510,23 +1337,23 @@ msgstr "Onthoud afspeelpositie video's."
 #: ../../portable/folder.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Remove"
-msgstr "Verwijder"
+msgstr "Verwijderen"
 
 msgid "Run Miro at startup"
 msgstr "Open Miro na inloggen"
 
 msgid "Save downloaded videos in this folder:"
-msgstr "Locatie gedownloade video's:"
+msgstr "Gedownloade video's in deze map opslaan:"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573
 msgid "Show as Channel"
-msgstr "Toon Als Kanaal"
+msgstr "Toon als Kanaal"
 
 msgid "Stop after each video."
-msgstr "Stop na elke video."
+msgstr "Na elke video stoppen."
 
 msgid "To avoid internet slowdowns:"
-msgstr "Beperk internetgebruik:"
+msgstr "Om traag internet te voorkomen:"
 
 #: ../../portable/app.py:1206
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -1548,7 +1375,7 @@ msgstr "handmatig"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "videos at once."
-msgstr "video's."
+msgstr "video's in een keer."
 
 msgid "$label$"
 msgstr "$label$"
@@ -1561,10 +1388,10 @@ msgstr "Kanaal"
 
 #: ../../portable/dialogs.py:91
 msgid "Create"
-msgstr "Bewaar"
+msgstr "Aanmaken"
 
 msgid "In this:"
-msgstr "In:"
+msgstr "Hierin:"
 
 msgid "Item1"
 msgstr "Item1"
@@ -1573,7 +1400,7 @@ msgid "Search Engine"
 msgstr "Zoekmachine"
 
 msgid "Search for:"
-msgstr "Zoek naar:"
+msgstr "Zoeken naar:"
 
 msgid "URL"
 msgstr "URL"
@@ -1588,7 +1415,7 @@ msgid "Back"
 msgstr "Vorige"
 
 msgid "Browse"
-msgstr "Blader"
+msgstr "Bladeren"
 
 #: ../../platform/osx/frontend/StartupPanel.py:106
 msgid "Next"
@@ -1839,7 +1666,7 @@ msgstr "Selecteer een in de Bibliotheek te tonen Map."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Volttoid"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -2035,7 +1862,7 @@ msgstr "Verwijderde Torrent voor dit item "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "niet in Miro."
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -2214,7 +2041,7 @@ msgstr "Markeer als Onbekeken"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Markeer als gezien"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -3098,16 +2925,16 @@ msgstr "\"%s\" is geen geldige URL"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Het bestand \"%s\" bestaat niet"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Leesfout"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Fout bij het lezen van \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -3283,12 +3110,12 @@ msgstr "%s is ongeldig. U moet een niet-negatief getal opgeven."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Fout bij weergave van het bestand"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Het bestand \"%s\" is buiten Miro om gewist."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -3330,7 +3157,7 @@ msgstr "Geef de URL van de te downloaden video op."
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Standaard Kanalen"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -3987,8 +3814,8 @@ msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
-"De $shortAppName Kanaalgids bevat duizenden internet TV kanalen... allen "
-"gratis. Klik op 'ADD' om een kanaal te bekijken."
+"De $shortAppName Kanaalgids bevat duizenden internet TV kanalen, allemaal "
+"gratis. Klik op 'Toevoegen' om een kanaal te bekijken."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."
@@ -3999,8 +3826,8 @@ msgid ""
 "The next few screens will help you set up $longAppName so that it works best "
 "for you."
 msgstr ""
-"De volgende vraagjes zullen u assisteren bij het optimaal instellen van uw "
-"$longAppName-voorkeuren voor uw gebruik."
+"De volgende vragen zullen u helpen bij het instellen van $longAppName naar "
+"uw voorkeuren."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
 msgid ""

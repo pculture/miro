@@ -8,43 +8,74 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-08-31 10:58+0000\n"
-"Last-Translator: sabik <sabik@baum.com.au>\n"
+"PO-Revision-Date: 2008-02-27 15:54+0000\n"
+"Last-Translator: Vi <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#~ msgid "Open various files"
+#~ msgstr "Otevřít různé soubory"
+
+#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
+#~ msgstr ""
+#~ "Není co zobrazit.<br></br>Do vyhledávacího okénka nahoře napište dotaz."
+
+#~ msgid "Searching..."
+#~ msgstr "Hledám..."
+
+#~ msgid "New Videos"
+#~ msgstr "Nová videa"
+
+#~ msgid "Democracy - External Playback Template"
+#~ msgstr "Democracy - Šablona vnějšího přehrávání"
+
+#~ msgid "Recommend"
+#~ msgstr "Doporučit"
+
+#~ msgid "Play Externally"
+#~ msgstr "Přehrát vnějším přehravačem"
+
+#~ msgid "Simple translation"
+#~ msgstr "Jednoduchý překlad"
+
+#~ msgid "<b>Channels</b>"
+#~ msgstr "<b>Kanály</b>"
+
+#~ msgid "<b>Disk Space</b>"
+#~ msgstr "<b>Místo na disku</b>"
+
+#~ msgid "<b>Downloads</b>"
+#~ msgstr "<b>Stahování</b>"
+
+#~ msgid "Democracy - Add Channel"
+#~ msgstr "Democracy - Přidat kanál"
+
+#~ msgid "Democracy Player"
+#~ msgstr "přehrávač Democracy"
+
+#~ msgid "GB free"
+#~ msgstr "GB volných"
+
+#~ msgid "Channel is not compatible with Democracy!"
+#~ msgstr "Kanál není kompatibilní s Democracy!"
+
+#, python-format
+#~ msgid "You have %d download still in progress."
+#~ msgid_plural "You have %d downloads still in progress."
+#~ msgstr[0] "Stále běží %d stahování."
+#~ msgstr[1] "Stále běží %d stahování."
+#~ msgstr[2] "Stále běží %d stahování."
 
 #~ msgid "About Democracy"
 #~ msgstr "O programu Democracy"
 
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Nápověda přehrávače Democracy"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "Skrýt přehrávač Democracy"
-
-#~ msgid "New Channel Guide..."
-#~ msgstr "Nový průvodce kanálem..."
-
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Nastavení"
-
-#~ msgid "Quit Democracy"
-#~ msgstr "Ukončit přehrávač Democracy"
-
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr "(Pro aplikování změn musíte restartovat Democracy)\n"
-
-#~ msgid "Run Democracy at startup"
-#~ msgstr "Spustit přehrávač Democracy při startu"
+#~ msgid "Remove Channel..."
+#~ msgstr "Odstranit kanál..."
 
 #~ msgid ""
 #~ "Democracy Player can find all the videos on your computer to help you "
@@ -66,167 +97,30 @@ msgstr ""
 #~ "Dalších pár obrazovek vám pomůže nastavit přehravač Democracy tak, aby Vám "
 #~ "fungoval co nejlépe. Tady máme první otázku."
 
-#~ msgid ""
-#~ "We recommend that you allow Democracy Player to launch when your computer "
-#~ "starts up. This way, videos that haven't finished downloading can finish and "
-#~ "new videos on your channels will be ready when you want to watch.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like to run Democracy when your computer starts up?"
-#~ msgstr ""
-#~ "Doporučujeme povolit přehrávači Democracy automatické spouštění po startu "
-#~ "počítače. Tak se bude moci dokončit stahování nestažených videí a nová videa "
-#~ "ve vašich kanálech budou připravena kdykoli se budete chtít podívat.\n"
-#~ "\n"
-#~ "\n"
-#~ "Chcete spouštět Democracy po startu počítače?"
+#~ msgid "${count} Downloads in Progress"
+#~ msgstr "Probíhá stahování: ${count}"
 
-#~ msgid ""
-#~ "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
-#~ "automatically download videos from your favorite channels, watch new videos "
-#~ "one after the other, download torrents, recommend videos to friends, and "
-#~ "lots more.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Vítejte do internetové televize. Je pousta věcí, které můžete dělat pomocí "
-#~ "přehrávače Democracy: automaticky stahovat videa z vašich oblíbených kanálů, "
-#~ "sledovat nová jedno po druhém, stahovat torrenty, zasílat doporučení svým "
-#~ "přátelům a mnoho dalšího.\n"
-#~ "\n"
+#~ msgid "1 Download in Progress"
+#~ msgstr "Probíhá 1 stahování."
 
-#~ msgid ""
-#~ "You're done!\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "Don't Wait: Democracy is different than watching webpage videos -- "
-#~ "publishers can offer big, high quality videos. So don't sit around waiting "
-#~ "for videos: start some downloads and check back later. \n"
-#~ "\n"
-#~ "Leave it On: Democracy Player regularly checks channels for new videos and "
-#~ "downloads in the background. Leaving it running means you'll have new videos "
-#~ "when you're ready to watch.\n"
-#~ "\n"
-#~ "Don't Worry About Disk Space: Like a TiVo, Democracy Player features an "
-#~ "'expiration' system that helps clean out older videos to make room for new "
-#~ "videos. You can always keep a video permanently by clicking 'save' and you "
-#~ "can set a channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
-#~ "\n"
-#~ "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
-#~ "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
-#~ msgstr ""
-#~ "Skončili jste!\n"
-#~ "\n"
-#~ "Instalační program je dokončen -- nyní můžete začít hledat kanály a sledovat "
-#~ "videa.\n"
-#~ "\n"
-#~ "Nečekejte: Přehrávač Democracy je jiný než sledování videí na webových "
-#~ "stránkách -- vydavatelé mohou nabízet velké, vysoce kvalitní videa. Takže "
-#~ "neseďte a nečekejte na videa: začněte rovnou nějaká stahovat a zkontrolujte "
-#~ "je později. \n"
-#~ "\n"
-#~ "Nechte to běžet: Přehrávač Democracy pravidelně kontroluje kanály pro nová "
-#~ "videa a stahuje je na pozadí. Nechat to běžet znamená mít všechna nová videa "
-#~ "připravena ve chvíli, kdy je chcete sledovat.\n"
-#~ "\n"
-#~ "Nebojte se o diskový prostor: Podobně jako TiVo používá přehrávač Democracy "
-#~ "systém pro sledování 'vypršení platnosti', který vám pomůže odstranit starší "
-#~ "videa a připravit tak místo pro nová. Vždy si můžete některé video ponechat "
-#~ "pouhý stisknutím tlačítka 'uložit' nebo můžete nastavit vybraný kanál tak, "
-#~ "aby ukládal videa automaticky.\n"
-#~ "\n"
-#~ "Zvětšete si to: Tlačítko napravo od tlačítka přehrávání přepne do "
-#~ "celoobrazovkového režimu.\n"
-#~ "\n"
-#~ "Najděte si videa: Průvodce kanálem Democracy obsahuje stovky kanálů "
-#~ "internetových televizí, všechny z nich zdarma. Prostě jen klikněte na "
-#~ "tlačítko 'PŘIDEJ' a sledujte kanál.\n"
+#~ msgid "${len} Videos On This Channel"
+#~ msgstr "Videí v tomto kanálu: ${len}"
 
-#~ msgid "Save this video"
-#~ msgstr "Uložit toto video"
+#~ msgid "All ${len} Videos Match This Search"
+#~ msgstr "Videí které odpovídají tomuto vyhledávání: ${len} (tj. všechna)"
 
-#~ msgid "_Copy Video URL"
-#~ msgstr "_Kopírovat adresu videa"
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "Videí které odpovídají tomuto vyhledávání: ${len}"
 
-#~ msgid "_Stop Video"
-#~ msgstr "_Zastavit přehrávání"
+#~ msgid "Looking for videos at this URL"
+#~ msgstr "Hledám videa na tomto URL"
 
-#~ msgid "_Play / Pause"
-#~ msgstr "_Přehrávat / Pozastavit"
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "Videí v tomto kanálu: ${count}"
 
-#~ msgid "_Update Channel"
-#~ msgstr "Akt_ualizovat kanál"
-
-#~ msgid "Re_name Channel"
-#~ msgstr "Přejme_novat kanál"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "_Odstraň kanál"
-
-#~ msgid "_Open..."
-#~ msgstr "_Otevřít..."
-
-#~ msgid "Open various files"
-#~ msgstr "Otevřít různé soubory"
-
-#~ msgid "New _Playlist..."
-#~ msgstr "Nový _seznam skladeb"
-
-#~ msgid "Create new playlist"
-#~ msgstr "Vytvořit nový seznam skladeb"
-
-#~ msgid "New Playlist _Folder..."
-#~ msgstr "No_vá složka seznamu skladeb"
-
-#~ msgid "Create new playlist folder"
-#~ msgstr "Vytvořit novou složku seznamu skladeb"
-
-#~ msgid "New Channel _Folder..."
-#~ msgstr "Nová skložka _kanálu"
-
-#~ msgid "Create new channel folder"
-#~ msgstr "Vytvořit novou složku kanálu"
-
-#~ msgid "Add _Channel..."
-#~ msgstr "Přidat _kanál"
-
-#~ msgid "P_references"
-#~ msgstr "Nastav_ení"
-
-#~ msgid "Quit the Program"
-#~ msgstr "Ukončit program"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "Akt_ualizovat všechny kanály"
-
-#~ msgid "Delete selection"
-#~ msgstr "Odstranit výběr"
-
-#~ msgid "_Remove Channel Guide..."
-#~ msgstr "Odst_raň Průvodce kanálem..."
-
-#~ msgid "_Remove Channel Guides..."
-#~ msgstr "Odst_raň Průvodce kanály..."
-
-#~ msgid "Re_name Channel Guide..."
-#~ msgstr "Přejme_nuj Průvodce kanálem..."
-
-#~ msgid "Remove Playlist..."
-#~ msgstr "Odstranit seznam skladeb..."
-
-#~ msgid "Remove Playlists..."
-#~ msgstr "Odstranit seznamy skladeb..."
-
-#~ msgid "Remove Playlist Folder..."
-#~ msgstr "Odstranit složku seznamu skladeb..."
-
-#~ msgid "Remove Playlist Folders..."
-#~ msgstr "Odstranit složky seznamů skladeb..."
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Odstranit kanál..."
+#, python-format
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Stáhnutí souboru kanálu Democracy selhalo: %s."
 
 #~ msgid "Remove Channels..."
 #~ msgstr "Odstranit kanály..."
@@ -243,12 +137,6 @@ msgstr ""
 #~ msgid "Remove Videos..."
 #~ msgstr "Odstranit videa..."
 
-#~ msgid "Rename Playlist..."
-#~ msgstr "Přejmenovat seznam skladeb..."
-
-#~ msgid "Rename Playlist Folder..."
-#~ msgstr "Přejmenovat složku seznamu skladeb..."
-
 #~ msgid "Rename Channel..."
 #~ msgstr "Přejmenovat kanál..."
 
@@ -260,215 +148,6 @@ msgstr ""
 
 #~ msgid "Update Channels..."
 #~ msgstr "Aktualizovat kanály..."
-
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Chyba při načítání modulů přehrávače Democracy:\n"
-#~ "%s"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr ""
-#~ "Není co zobrazit.<br></br>Do vyhledávacího okénka nahoře napište dotaz."
-
-#~ msgid "Searching..."
-#~ msgstr "Hledám..."
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "Výsledky pro \"${query}\""
-
-#~ msgid "Empty Playlist"
-#~ msgstr "Prázdný seznam skladeb"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr ""
-#~ "Přetáhněte stažená videa do tohoto seznamu skladeb pokud je chcete přidat."
-
-#~ msgid "Empty Playlist Folder"
-#~ msgstr "Prázdná složka seznamu skladeb"
-
-#~ msgid ""
-#~ "This folder contains ${count} playlists, but the playlists do not contain "
-#~ "any items."
-#~ msgstr ""
-#~ "Tato složka obsahuje ${count} seznamů skladeb, ale všechny seznamy jsou "
-#~ "prázdné."
-
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "Přetáhněte seznamy skladeb do této složky pokud je chcete přidat."
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr ""
-#~ "Označeno ${count} složek seznamů skladeb<br></br>(obsahují ${containedcount} "
-#~ "seznamů skladeb)"
-
-#~ msgid "${count} Playlists Selected"
-#~ msgstr "Označeno ${count} seznamů skladeb"
-
-#~ msgid "STAR"
-#~ msgstr "HVĚZDA"
-
-#~ msgid "SAVE"
-#~ msgstr "ULOŽIT"
-
-#~ msgid "SAVED"
-#~ msgstr "ULOŽENO"
-
-#~ msgid "DELETE"
-#~ msgstr "SMAŽ"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - Šablona vnějšího přehrávání"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "Pokračovat na další video"
-
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "Probíhá stahování: ${count}"
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "Probíhá 1 stahování."
-
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "Videí v tomto kanálu: ${len}"
-
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "Videí které odpovídají tomuto vyhledávání: ${len} (tj. všechna)"
-
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "Videí které odpovídají tomuto vyhledávání: ${len}"
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "Videí v tomto kanálu: ${count}"
-
-#~ msgid "Unwatched"
-#~ msgstr "Neshlédnuté"
-
-#~ msgid "Watched"
-#~ msgstr "Shlédnuté"
-
-#~ msgid "Saved"
-#~ msgstr "Uložené"
-
-#~ msgid "Default"
-#~ msgstr "Výchozí"
-
-#~ msgid "default"
-#~ msgstr "výchozí"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Videa vyprší po"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "Pokud je zapnutý, má automatické stahování"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr ""
-#~ "Nezačínat automatické stahování pokud zbývá více než ${maxnew} ${maxnew2} "
-#~ "videí neshlédnutých."
-
-#~ msgid "Downloaded"
-#~ msgstr "Staženo"
-
-#~ msgid "Recommend"
-#~ msgstr "Doporučit"
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "<label for=\"automatic\">Automatické stahování</label>"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "Hledám videa na tomto URL"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy nemůže přehrát tento soubor. Můžete zkusit ho otevřít v jiném "
-#~ "programu.<br></br><br></br><strong>Jméno souboru:</strong> "
-#~ "${filename}<Br></Br><strong>Typ souboru:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "ZOBRAZ SOUBOR"
-
-#~ msgid "Play Externally"
-#~ msgstr "Přehrát vnějším přehravačem"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "Přeskočit >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "ZOBRAZ SOUBOR"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "ZOBRAZ SLOŽKU"
-
-#~ msgid "SHARE IT"
-#~ msgstr "SDÍLEJ"
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "Nedokončená automatická stahování"
-
-#~ msgid "Simple translation"
-#~ msgstr "Jednoduchý překlad"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "zastavit stopu v ${can}"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "Toto je ${car} a tohle je ${truck} <span>Tento text je <b "
-#~ "style=\"color:red\">prostý</b> text</span>"
-
-#, fuzzy
-#~ msgid "${size} disk space free"
-#~ msgstr "${size} volného místa na disku"
-
-#, fuzzy
-#~ msgid "${size} available for downloads"
-#~ msgstr "${size} dostupné pro stahování"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "Vymaž dokončené Torrenty"
-
-#~ msgid "Empty Channel Folder"
-#~ msgstr "Prázdná složka kanálu"
-
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr "Pokud chcete kanály přidat, přetáhněte je do této složky."
-
-#~ msgid "My Collection"
-#~ msgstr "Má sbírka"
-
-#~ msgid "New Videos"
-#~ msgstr "Nová videa"
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "NOVINKA"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "Modré kroužky značí, že kanál má k dispozici nová videa, zelené kroužky "
-#~ "značí, že stahované filmy jsou připraveny ke shlédnutí."
-
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr ""
-#~ "${count} označených složek kanálů<br></br>(obsahují ${containedcount} kanálů)"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count} kanálů označeno"
 
 #~ msgid "outside of democracy."
 #~ msgstr "mimo Democracy."
@@ -485,29 +164,6 @@ msgstr ""
 #~ msgid "Deleting %s"
 #~ msgstr "Mažu %s"
 
-#~ msgid "Remove From My Collection"
-#~ msgstr "Odstranit z Mé sbírky"
-
-#~ msgid ""
-#~ "Would you like to delete this folder and all of its videos or just remove "
-#~ "its entry from My Collection?"
-#~ msgstr ""
-#~ "Chcete smazat tuto složku a všechna její videa nebo pouze odstranit záznam o "
-#~ "ní z vaší sbírky?"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr ""
-#~ "Chcete tento soubor smazat nebo pouze odstranit záznam o něm z vaší sbírky?"
-
-#~ msgid ""
-#~ "One or more of these videos was not downloaded from a channel.  Would you "
-#~ "like to delete these items or just remove their entries from My Collection?"
-#~ msgstr ""
-#~ "Jedno či více z těchto videí nebylo z kanálu staženo. Chcete tyto položky "
-#~ "smazat nebo pouze odstranit záznamy o nich z vaší sbírky?"
-
 #~ msgid ""
 #~ "You have a database that was saved with a newer version of Democracy. You "
 #~ "must download the latest version of Democracy and run that."
@@ -515,154 +171,8 @@ msgstr ""
 #~ "Tuto databázi vytvořila novější verze Democracy, než kterou máte. "
 #~ "Potřebujete tedy tu novější..."
 
-#, python-format
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d downloads still in progress."
-#~ msgstr[0] "Stále běží %d stahování."
-#~ msgstr[1] "Stále běží %d stahování."
-#~ msgstr[2] "Stále běží %d stahování."
-
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - Přidat kanál"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "Vložte adresu průvodce kanálem, který přidáváte"
-
-#~ msgid "Channel Guide"
-#~ msgstr "Průvodce kanálem"
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "Kanál není kompatibilní s Democracy!"
-
-#~ msgid "Local File"
-#~ msgstr "Místní soubor"
-
-#, fuzzy
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr ""
-#~ "Tento Democracy soubor má spatný formát: %s. Prosíme, aby jste informovali "
-#~ "vydavatele tohoto souboru."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Tento soubor Democracy kanálu má špatný typ obsahu: %s. Oznamte to, prosím, "
-#~ "vydavateli tohoto souboru."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Stáhnutí souboru kanálu Democracy selhalo: %s."
-
 #~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
 #~ msgstr "(Změny se provedou při příštím startu přehrávače Democracy.)"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>Kanály</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>Místo na disku</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>Stahování</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Obecné</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>Složka filmů</b>"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Přehrát</b>"
-
-#~ msgid ""
-#~ "<b>Would you like Democracy Player to look for video files on your "
-#~ "computer?</b>"
-#~ msgstr ""
-#~ "<b>Chcete aby přehrávač Democracy prohledal váš počítač pro soubory s "
-#~ "videi?</b>"
-
-#~ msgid "<b>Would you like to run Democracy when your computer starts up?</b>"
-#~ msgstr "<b>Chcete spouštět přehrávač Democracy při startu počítače?</b>"
-
-#~ msgid ""
-#~ "<b>You're done!</b>\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "<b>Don't Wait:</b> Democracy is different than watching webpage videos -- "
-#~ "publishers can offer big, high quality videos.  So don't sit around waiting "
-#~ "for videos: start some downloads and check back later.\n"
-#~ "\n"
-#~ "<b>Leave it On:</b> Democracy Player regularly checks channels for new "
-#~ "videos and downloads in the background.  Leaving it running means you'll "
-#~ "have new videos when you're ready to watch.\n"
-#~ "\n"
-#~ "<b>Don't Worry About Disk Space:</b> Like a TiVo, Democracy Player features "
-#~ "an 'expiration' system that helps clean out older videos to make room for "
-#~ "new videos.  You can always keep a video permanently by clicking 'save' and "
-#~ "you can set a channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "<b>Go Big:</b> The button to the right of the play button shows videos "
-#~ "fullscreen.\n"
-#~ "\n"
-#~ "<b>Find Videos:</b> The Democracy Channel Guide has hundreds of internet TV "
-#~ "channels, all of them are free.  Just click 'ADD' to watch a channel."
-#~ msgstr ""
-#~ "<b>Skončili jste!</b>\n"
-#~ "\n"
-#~ "Instalační program je dokončen -- nyní můžete začít hledat kanály a sledovat "
-#~ "videa.\n"
-#~ "\n"
-#~ "<b>Nečekejte:</b> Přehrávač Democracy je jiný než sledování videí na "
-#~ "webových stránkách -- vydavatelé mohou nabízet velké, vysoce kvalitní videa. "
-#~ "Takže neseďte a nečekejte na videa: začněte rovnou nějaká stahovat a "
-#~ "zkontrolujte je později. \n"
-#~ "\n"
-#~ "<b>Nechte to běžet:</b> Přehrávač Democracy pravidelně kontroluje kanály pro "
-#~ "nová videa a stahuje je na pozadí. Nechat to běžet znamená mít všechna nová "
-#~ "videa připravena ve chvíli, kdy je chcete sledovat.\n"
-#~ "\n"
-#~ "<b>Nebojte se o diskový prostor:</b> Podobně jako TiVo používá přehrávač "
-#~ "Democracy systém pro sledování 'vypršení platnosti', který vám pomůže "
-#~ "odstranit starší videa a připravit tak místo pro nová. Vždy si můžete "
-#~ "některé video ponechat pouhý stisknutím tlačítka 'uložit' nebo můžete "
-#~ "nastavit vybraný kanál tak, aby ukládal videa automaticky.\n"
-#~ "\n"
-#~ "<b>Zvětšete si to:</b> Tlačítko napravo od tlačítka přehrávání přepne do "
-#~ "celoobrazovkového režimu.\n"
-#~ "\n"
-#~ "<b>Najděte si videa:</b> Průvodce kanálem Democracy obsahuje stovky kanálů "
-#~ "internetových televizí, všechny z nich zdarma. Prostě jen klikněte na "
-#~ "tlačítko 'PŘIDEJ' a sledujte kanál."
-
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr "Automaticky spouštět přehrávač Democracy, když se přihlásím"
-
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "Bit Torrent používá porty mezi"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "Zontrolovat kanály pro nový obsah"
-
-#~ msgid "Democracy Player"
-#~ msgstr "přehrávač Democracy"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection."
-#~ msgstr ""
-#~ "Aby vám přehrávač Democracy zjednodušil správu vaší sbírky, může projít váš "
-#~ "počítač a vyhledat všechna videa."
-
-#~ msgid "GB free"
-#~ msgstr "GB volných"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s pokud je můj počítač aktivní"
 
 #~ msgid ""
 #~ "The next few screens will help you set up democracy player so that it works "
@@ -670,63 +180,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Dalších pár obrazovek vám pomůže nastavit přehravač Democracy tak, aby Vám "
 #~ "fungoval co nejlépe. Tady máme první otázku."
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "Aby nedocházelo ke zpomalení připojení, omezit odchozí tok na"
-
-#~ msgid ""
-#~ "We recommend that you allow Democracy Player to launch when your computer "
-#~ "starts up.  This way, videos that haven't finished downloading can finish "
-#~ "and new videos on your channels will be ready when you want to watch."
-#~ msgstr ""
-#~ "Doporučujeme, aby jste umožnili spouštět přehrávač Democracy hned po startu "
-#~ "vašeho počítače. Tak, se budou moci dokončit přerušená stahování videí ve "
-#~ "vašich kanálech a budou tak připravena, až je budete chtít sledovat."
-
-#~ msgid ""
-#~ "Welcome to Internet TV.  There's a lot you can do with Democracy Player: "
-#~ "automatically download videos from your favorite channels, watch new videos "
-#~ "one after the other, download torrents, recommend videos to friends, and "
-#~ "lots more."
-#~ msgstr ""
-#~ "Vítejte v Internetové televizi. Je toho spousta, co můžete dělat s "
-#~ "přehrávačem Democracy: automaticky stahovat videa z vašich oblíbených "
-#~ "kanálů, sledovat nová videa jedno po druhém, stahovat torrenty, doporučovat "
-#~ "videa svým přátelům a mnoho dalšího."
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr ""
-#~ "Vybrali jste si novou složku, do které chcete ukládat videa. Má do ní "
-#~ "přehrávač Democracy přesunout již stažené soubory? (Aktuálně stahované "
-#~ "soubory nebudou přesunuty dokud se stahování nedokončí.)"
-
-#~ msgid "_Store downloaded videos in this folder:"
-#~ msgstr "_Ukládat stažená videa do této složky:"
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr ""
-#~ "a zeptejte se jich, zda nemohou poskytovat proud ve formátu, který přehrávač "
-#~ "Democracy podporuje."
-
-#~ msgid "A search channel contains"
-#~ msgstr "Vyhledávací kanál obsahuje"
-
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName verze $appVersion ($appRevision); autorská práva (c) 2005, 2006 "
-#~ "$publisher."
-
-#~ msgid "U"
-#~ msgstr "U"
-
-#~ msgid "V"
-#~ msgstr "V"
 
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
@@ -753,15 +206,14 @@ msgstr ""
 "a vložte text do schránky nahoře, odpovězte na pár otázek a my chybu "
 "opravíme.</font>"
 
-#, fuzzy
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
 "report to our bug-tracking system? At a minimum, what we'd need is "
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Nemáte chvilku, abyste vyplnili zprávu o pádu aplikace do našeho systému pro "
-"správu chyb? Přinejmenším bychom potřebovali popis - pokud možno co "
+"Nemáte chvilku, abyste vyplnili zprávu o chybě aplikace do našeho systému "
+"pro správu chyb? Přinejmenším bychom potřebovali popis - pokud možno co "
 "nejpřesnější - co jste dělali v okamžiku pádu aplikace a také znaky z "
 "obrázku níže:"
 
@@ -786,9 +238,8 @@ msgstr "O programu"
 msgid "Add Channel..."
 msgstr "Přidat kanál..."
 
-#, fuzzy
 msgid "Add Guide..."
-msgstr "Přidat průvodce"
+msgstr "Přidat průvodce..."
 
 #, fuzzy
 msgid "Bring All to Front"
@@ -910,7 +361,7 @@ msgid "Playlists"
 msgstr "Seznamy skladeb"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Nastavení..."
 
 msgid "Previous Video"
 msgstr "Předchozí video"
@@ -1011,7 +462,7 @@ msgid " limit upstream to"
 msgstr " omezit odchozí tok na"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(Musíte znovu spustit Miro, aby se změny projevily)"
 
 #, fuzzy
 msgid "(You must restart Miro for this change to take effect)\n"
@@ -1132,8 +583,9 @@ msgid "To avoid internet slowdowns:"
 msgstr "Aby se předšlo zpomalení internetu:"
 
 #: ../../portable/app.py:1206
+#, fuzzy
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "Upozorni mě při ukončení, pokud nebude dokončeno stahování"
 
 #, fuzzy
 msgid ""
@@ -1414,7 +866,7 @@ msgid "Movies Directory"
 msgstr "Složka filmů"
 
 #: ../../platform/osx/frontend/Preferences.py:197
-#, fuzzy
+#, fuzzy, python-format
 msgid "Select a Directory to store %s downloads in."
 msgstr "Vyberte adresář pro uložení %s stažení."
 
@@ -1430,7 +882,7 @@ msgid "Migrate existing movies?"
 msgstr "Přesunout existující filmy?"
 
 #: ../../platform/osx/frontend/Preferences.py:208
-#, fuzzy
+#, fuzzy, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
 "existing downloads there?  (Currently dowloading movies will not be moved "
@@ -1451,7 +903,7 @@ msgstr "Vyberte adresář pro zobraení ve videotéce."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Dokončit"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1624,12 +1076,14 @@ msgid "%s MB required to store this video"
 msgstr "Toto video potřebuje %s MB"
 
 #: ../../portable/dl_daemon/download.py:672
+#, fuzzy
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "BitTorrent selhal"
 
 #: ../../portable/dl_daemon/download.py:673
+#, fuzzy
 msgid "BitTorrent failed to startup"
-msgstr ""
+msgstr "Nepodařilo se spustit BitTorrent"
 
 #: ../../portable/dl_daemon/download.py:796
 msgid "Corrupt Torrent"
@@ -1649,8 +1103,9 @@ msgid "The torrent file for this item was deleted "
 msgstr "Soubor torrentu pro tuto položku byl smazán "
 
 #: ../../portable/dl_daemon/download.py:824
+#, fuzzy
 msgid "outside of Miro."
-msgstr ""
+msgstr "mimo Miro."
 
 #: ../../portable/tabs.py:44
 #, fuzzy
@@ -1832,8 +1287,9 @@ msgid "Mark as Unwatched"
 msgstr "Označit jako neshlédnuté"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
+#, fuzzy
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Označ jako shlédnuté"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -1868,37 +1324,42 @@ msgstr "Export OPML souboru"
 
 #: ../../portable/opml.py:123
 msgid "Import OPML File"
-msgstr ""
+msgstr "Importovat OPML soubor"
 
 #: ../../portable/opml.py:125
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML soubory"
 
 #: ../../portable/opml.py:145
+#, fuzzy
 msgid "OPML Import failed"
-msgstr ""
+msgstr "Selhal import OPML"
 
 #: ../../portable/opml.py:146
+#, fuzzy
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
+msgstr "Zdá se, že vybraný OPML soubor není platný. Import byl přerušen."
 
 #: ../../portable/opml.py:151
+#, fuzzy
 msgid "OPML Import summary"
-msgstr ""
+msgstr "Shrnutí importu OPML"
 
 #: ../../portable/opml.py:152
 #, python-format
 msgid "Successfully imported %d feed."
 msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Úspěšně naimportován %d proud."
+msgstr[1] "Úspěšně naimportován %d proudy."
+msgstr[2] "Úspěšně naimportován %d proudů."
 
 #: ../../portable/opml.py:155
-#, python-format
+#, fuzzy, python-format
 msgid "Skipped %d feed already present."
 msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Přeskočený %d proud je již přítomen."
+msgstr[1] "Přeskočené %d proudy jsou již přítomné."
+msgstr[2] "Přeskočený %d proudů je již přítomno."
 
 #: ../../portable/autoupdate.py:121
 #, python-format
@@ -1933,10 +1394,12 @@ msgstr ""
 "tím, že odešlete zprávu o chybě."
 
 #: ../../portable/util.py:252
+#, fuzzy
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
 msgstr ""
+"Do zprávy o chybě přidat celou databázi včetně všech videí a metadat kanálů"
 
 #: ../../portable/util.py:252
 msgid "Describe what you were doing that caused this error"
@@ -2095,45 +1558,54 @@ msgid "A search channel contains items that match a search term."
 msgstr "Vyhledávací kanál obsahuje položky podle klíčového slova."
 
 #: ../../portable/singleclick.py:87
+#, fuzzy
 msgid "Download already exists"
-msgstr ""
+msgstr "Stahování už existuje"
 
 #: ../../portable/singleclick.py:88
 msgid "That URL is already an external download."
 msgstr ""
 
 #: ../../portable/singleclick.py:94
+#, fuzzy
 msgid "Miro will begin downloading it now."
-msgstr ""
+msgstr "Miro nyní začne stahovat."
 
 #: ../../portable/singleclick.py:96
+#, fuzzy
 msgid "It is downloading now."
-msgstr ""
+msgstr "Právě se stahuje."
 
 #: ../../portable/singleclick.py:98
+#, fuzzy
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "Již byl stažen."
 
 #: ../../portable/singleclick.py:125
+#, fuzzy
 msgid "Download Error"
-msgstr ""
+msgstr "Chyba při stahování"
 
 #: ../../portable/singleclick.py:126
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Miro is not able to download a file at this URL:\n"
 "\n"
 "URL: %s"
 msgstr ""
+"Miro nedokáže stáhnout soubor na této URL:\n"
+"\n"
+"URL: %s"
 
 #: ../../portable/singleclick.py:134
+#, fuzzy
 msgid "File Download"
-msgstr ""
+msgstr "Stažení souboru"
 
 #: ../../portable/singleclick.py:135
-#, python-format
+#, fuzzy, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
+msgstr "Soubor na %s nevypadá jako audio, video nebo RSS kanál."
 
 #: ../../portable/singleclick.py:225
 msgid "Subscribing to multiple channels"
@@ -2552,8 +2024,9 @@ msgid "Torrent Details"
 msgstr "Detaily Torrentu"
 
 #: ../../portable/item.py:1042
+#, fuzzy
 msgid "Torrent Details <i>stopped</i>"
-msgstr ""
+msgstr "Podrobnosti Torrent <i>stopped</i>"
 
 #: ../../portable/item.py:1046
 msgid "Download Details"
@@ -2708,25 +2181,25 @@ msgstr "Neplatné URL"
 #: ../../portable/httpclient.py:137
 #, python-format
 msgid "\"%s\" is not a valid URL"
-msgstr ""
+msgstr "\"%s\" není platnou URL"
 
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Soubor: \"%s\" neexistuje"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Chyba při čtení"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Chyba při čtení z \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Neznámý chybový kód"
 
 #: ../../portable/httpclient.py:373
 msgid "Connection closed"
@@ -2753,10 +2226,12 @@ msgstr ""
 "poslední verzi $shortAppName a tu spustit."
 
 #: ../../portable/app.py:700
+#, fuzzy
 msgid "Video Directory Missing"
-msgstr ""
+msgstr "Chybí video adresář"
 
 #: ../../portable/app.py:701
+#, fuzzy
 msgid ""
 "\n"
 "Miro can't find your primary video directory.  This may be because it's "
@@ -2766,6 +2241,13 @@ msgid ""
 "drive (this will cause you to lose some details about the videos on the "
 "external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
+"\n"
+"Miro nemůže najít základní video adresář.  Může to být proto, že je umístěn "
+"na externím disku, který právě není připojen.\n"
+"\n"
+"Pokud budete pokračovat, video adresář bude nastaven na místo na tomto disku "
+"(to způsobí, že přijdete o některé podrobnosti o videích na externím disku). "
+"Také můžete ukončit program, připojit disk a znovu spustit Miro."
 
 #: ../../portable/app.py:1038 ../../portable/app.py:1052
 #: ../../portable/app.py:1096 ../../portable/app.py:1122
@@ -2858,17 +2340,21 @@ msgid "Are you sure you want to quit?"
 msgstr "Skutečně to chcete zavřít aplikaci?"
 
 #: ../../portable/app.py:1198
+#, fuzzy
 msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
+"Miro stále odesílá zprávu o chybě. Pokud skončíte nyní, odeslání zprávy bude "
+"zrušeno. Přesto ukončit?"
 
 #: ../../portable/app.py:1203
-#, python-format
+#, fuzzy, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Stále probíhá %d stahování. Přesto ukončit?"
+msgstr[1] "Stále probíhá %d stahování. Přesto ukončit?"
+msgstr[2] "Stále probíhá %d stahování. Přesto ukončit?"
 
 #: ../../portable/app.py:1712
 msgid "Invalid Value"
@@ -2884,9 +2370,9 @@ msgid "Error Revealing File"
 msgstr ""
 
 #: ../../portable/app.py:1840
-#, python-format
+#, fuzzy, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Soubor \"%s\" byl smazán odjinud než z Miro."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -2920,16 +2406,19 @@ msgid "Enter the URL of the Miro Guide to add"
 msgstr "Zadejte adresu nového průvodce"
 
 #: ../../portable/app.py:2063
+#, fuzzy
 msgid "$shortAppName - Download Video"
-msgstr ""
+msgstr "$shortAppName - Stahování videa"
 
 #: ../../portable/app.py:2063
+#, fuzzy
 msgid "Enter the URL of the video to download"
-msgstr ""
+msgstr "Zadejte URL videa ke stažení"
 
 #: ../../portable/app.py:2420
+#, fuzzy
 msgid "Starter Channels"
-msgstr ""
+msgstr "Počáteční kanál"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -2945,25 +2434,30 @@ msgid ""
 msgstr "Máte spuštěnu novější verzi $shortAppName s vybranou sadou kanálů."
 
 #: ../../portable/app.py:2478
+#, fuzzy
 msgid "Error Changing Movies Directory"
-msgstr ""
+msgstr "Chyba při změně adresáře pro filmy"
 
 #: ../../portable/app.py:2479
+#, fuzzy
 msgid ""
 "You don't have permission to write to the directory you selected.  Miro will "
 "continue to use the old videos directory."
 msgstr ""
+"Nemáte právo zápisu do zvolené adresáře. Miro bude používat původní adresář."
 
 #: ../../portable/app.py:2508
 msgid "Error Saving Video"
 msgstr "Chyba při ukládání videa"
 
 #: ../../portable/app.py:2510
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "An error occured while trying to save %s.  Please check that the file has "
 "not been deleted and try again."
 msgstr ""
+"Nastala chyba při pokusu o uložení %s. Prosím, zkontroluje, že soubor nebyl "
+"smazán a zkuste to znovu."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 #, fuzzy
@@ -3029,10 +2523,34 @@ msgid ""
 "<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
 "of them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"<b>Hotovo!</b>\n"
+"\n"
+"Nastevení je dokončeno -- nyní můžete najít nějaké kanály a začit je "
+"sledovat.\n"
+"\n"
+"<b>Nečekejte:</b> Miro je jiný, než ostatní webové videoportály -- "
+"vydavatelé nabízí dlouhá a vysoce kvalitní videa.  Tak nečekejte na videa: "
+"začněte stahovat a uvidíte.\n"
+"\n"
+"<b>Nechte ho zapnuté:</b> Miro pravidelně kontroluje kanály a nová videa  na "
+"pozadí stahuje.  Necháte-li zapnuté, bude mít připravena nová videa pro "
+"okamžik, kdy je budete chtít sledovat.\n"
+"\n"
+"<b>Nestarejte se o místo na disku:</b> Stejně jako TiVo i Miro podporuje "
+"omezenou platnost videa a tak pomáhá odstraňovat stará videa a uvolnit "
+"prostor pro nová.  Samozřejmě můžete uložit video natrvalo klepnutím na "
+"'uložit' nebo v nastavení kanálu zvolit samočinné trvalé ukládání.\n"
+"\n"
+"<b>Zvětši se:</b> Tlačítko na pravo od tlačítka přehrávání zobrazí video "
+"přes celou obrazovku.\n"
+"\n"
+"<b>Najdi videa:</b> Průvodce Miro ví o stovkách internetových TV kanálů, "
+"které jsou zdarma. Stačí klepnout na 'Přidat' a sledovat kanál."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
+#, fuzzy
 msgid "By default, videos _expire after"
-msgstr ""
+msgstr "Implicitně vyprší platnost videa po"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
@@ -3048,7 +2566,7 @@ msgstr "Vyt_vořit kanál"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Check Channels for _new content"
-msgstr ""
+msgstr "Zkontroluj _nový obsah kanálů"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "Disk _Space"
@@ -3059,8 +2577,9 @@ msgid "Don't start a download _if it leaves less than"
 msgstr "N_ezačínat stahování pokud je na méně než"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
+#, fuzzy
 msgid "Download at _most"
-msgstr ""
+msgstr "Stáhni nane_jvýš"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid ""
@@ -3073,8 +2592,9 @@ msgstr ""
 "Ručně"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
+#, fuzzy
 msgid "G_B free"
-msgstr ""
+msgstr "G_B volných"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 msgid "Go"
@@ -3094,8 +2614,9 @@ msgstr ""
 "správou vaší sbírky."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
+#, fuzzy
 msgid "Play _videos one after another"
-msgstr ""
+msgstr "Přehraj _videa jedno po druhém"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Preferences"
@@ -3107,11 +2628,12 @@ msgstr "Omez na celou moji _domovskou složku"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "S_top after each video"
-msgstr ""
+msgstr "Zas_tav po každém videu"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
+#, fuzzy
 msgid "S_tore downloaded videos in this folder:"
-msgstr ""
+msgstr "_Ulož nahraná videa do tohoto adresáře:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
@@ -3139,8 +2661,9 @@ msgstr ""
 "vám co nejlépe sloužil. Přejděme k první otázce."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
+#, fuzzy
 msgid "To a_void slowdowns, limit upstream to"
-msgstr ""
+msgstr "Aby se zabránilo zpomalení, omez odchozí tok na"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Volume:"
@@ -3185,36 +2708,43 @@ msgid "_Add Folder"
 msgstr "_Přidat složku"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
+#, fuzzy
 msgid "_Automatically run Miro when I log in"
-msgstr ""
+msgstr "_Automaticky spusť Miro, když se přihlásím"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "_Bit Torrent uses ports between"
-msgstr ""
+msgstr "_Bit Torrent používá porty mezi"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
+#, fuzzy
 msgid "_Downloads"
-msgstr ""
+msgstr "_Stahování"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
+#, fuzzy
 msgid "_Folders"
-msgstr ""
+msgstr "_Adresáře"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
+#, fuzzy
 msgid "_General"
-msgstr ""
+msgstr "_Obecně"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
+#, fuzzy
 msgid "_KB/s when my computer is active"
-msgstr ""
+msgstr "_KB/s, když je počítač aktivní"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
+#, fuzzy
 msgid "_Playback"
-msgstr ""
+msgstr "_Přehrávání"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
+#, fuzzy
 msgid "_Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgstr "Pok_račuj v přehrávání videí z místa, kde byla zastavena"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
@@ -3229,28 +2759,34 @@ msgid "_URL"
 msgstr "_Adresa"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
+#, fuzzy
 msgid "_Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "Upozorni mě, když se pokusím skončit, ale bude probíhat stahování"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
-msgstr ""
+msgstr "_Sleduj tento adresář a nová videa přidej do videotéky"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
+#, fuzzy
 msgid "_and"
-msgstr ""
+msgstr "_a"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "videos at once"
 msgstr "videí naráz"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
+#, fuzzy
 msgid ""
 "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName verze $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$publisher.  $longAppName a logo $longAppName jsou obchodní značky "
+"$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
@@ -3365,20 +2901,22 @@ msgid "Add Folder..."
 msgstr "Přidat složku..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
+#, fuzzy
 msgid "Automatically run $longAppName when I login."
-msgstr ""
+msgstr "Samočinně spusť $longAppName při přihlášení."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "By default, videos expire after"
 msgstr "Implicitně videa vyprší po"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
+#, fuzzy
 msgid "Check channels for new content"
-msgstr ""
+msgstr "Zkontroluj nový obsah kanálů"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Close to tray so that downloads can continue."
@@ -3393,8 +2931,9 @@ msgid "Every hour"
 msgstr "Každou hodinu"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
+#, fuzzy
 msgid "Folder"
-msgstr ""
+msgstr "Adresář"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
@@ -3406,39 +2945,49 @@ msgid "Options"
 msgstr "Možnosti"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
+#, fuzzy
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "Přehraj jen jedno video."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
+#, fuzzy
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Úplně ukonči Miro."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+#, fuzzy
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
 msgstr ""
+"Pamatuj si, kde jsem skončil se sledováním videa a pokračuj v přehrávání od "
+"tohoto místa."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
+#, fuzzy
 msgid "Show as a Channel"
-msgstr ""
+msgstr "Zobraz jako kanál"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Store downloaded videos in this folder:"
 msgstr "Uládat stažená videa do této složky:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
+#, fuzzy
 msgid ""
 "To avoid slowdowns, limit upstream bandwith when my computer is active."
 msgstr ""
+"Aby se předešlo zpomalení, omez odchozí tok dat, pokud je počítač aktivní."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
+#, fuzzy
 msgid "Upstream limit (KB/s)"
-msgstr ""
+msgstr "Omezení odchozího toku (KB/s)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
+#, fuzzy
 msgid "Use BitTorrent ports between"
-msgstr ""
+msgstr "Použijte BitTorrent porty mezi"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid ""
@@ -3449,11 +2998,12 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
 msgid "Warn me when I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "Upozorni mě, když se pokusím skončit, ale bude probíhat stahování."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+#, fuzzy
 msgid "Watch for new videos in these folders and include them in my Library."
-msgstr ""
+msgstr "Sleduj tento adresář a nová videa přidej do knihovny"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 #, fuzzy
@@ -3560,10 +3110,13 @@ msgid "Search custom folder:"
 msgstr "Prohledej složku:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
+#, fuzzy
 msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"Průvodce kanálem $shortAppName ví o stovkách internetových TV kanálů; "
+"všechny jsou zdarma.  Pro sledování kanálu stačí klepnout na 'Přidat'."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."

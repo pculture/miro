@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-02 00:37+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2008-01-10 17:59+0000\n"
+"Last-Translator: John Drinkwater <john@nextraweb.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -27,7 +27,7 @@ msgstr "OK"
 
 #: ../../portable/dialogs.py:76
 msgid "Ok"
-msgstr "Ok"
+msgstr "OK"
 
 msgid "$log"
 msgstr "$log"
@@ -49,10 +49,10 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Actually, if you have a minute, would you be willing to submit a crash "
-"report to our bug-tracking system? At a minimum, what we'd need is "
-"description of what you were doing at the time -- as precise as possible -- "
-"plus the artfully-phrased nonsense in the box below:"
+"If you have a minute, would you be willing to submit a crash report to our "
+"bug-tracking system? At a minimum, what we'd need is a description of what "
+"you were doing at the time -- as precise as possible -- plus the artfully-"
+"phrased nonsense in the box below:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -61,12 +61,12 @@ msgid ""
 "your preferences or channel subscriptions."
 msgstr ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
-"wrong-headedness $when. We apologize and suggest that you exit and restart "
-"$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
-"your preferences or channel subscriptions."
+"wrong-headedness $when. We apologise and suggest that you exit and restart "
+"$shortAppName. It'll also reduce your chance of losing your preferences or "
+"channel subscriptions."
 
 msgid "The fall of $shortAppName??"
-msgstr "The fall of $shortAppName??"
+msgstr "The fall of $shortAppName???"
 
 msgid "About Miro"
 msgstr "About Miro"
@@ -193,7 +193,7 @@ msgid "Playlists"
 msgstr "Playlists"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Preferences..."
 
 msgid "Previous Video"
 msgstr "Previous Video"
@@ -412,7 +412,7 @@ msgstr "To avoid Internet slowdowns:"
 
 #: ../../portable/app.py:1206
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "Warn me when I attempt to quit with downloads in progress"
+msgstr "Warn me when I quit with downloads in progress"
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
@@ -511,6 +511,8 @@ msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"The following screens will help you set up the Miro Player so that it works "
+"best for you. Here's the first question."
 
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
@@ -520,6 +522,12 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
+"We recommend that you allow the Miro Player to launch when your computer "
+"starts up. This way, videos that haven't finished downloading can finish and "
+"new videos on your channels will be ready when you want to watch.\n"
+"\n"
+"\n"
+"Would you like to run Miro when your computer starts up?"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Welcome to Internet TV!"
@@ -532,6 +540,11 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Welcome to Internet TV. There's a lot you can do with the Miro Player: "
+"automatically download videos from your favourite channels, watch new videos "
+"one after the other, download torrents, recommend videos to friends, and "
+"lots more.\n"
+"\n"
 
 #: ../../portable/dialogs.py:78
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
@@ -607,13 +620,15 @@ msgstr "Spacebar"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:851
 msgid "Close to tray?"
-msgstr ""
+msgstr "Minimise to tray?"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:852
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"When you click the red close button, would you like Miro to minimise to the "
+"system tray or quit?  You can change this setting later in the Options."
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:44
 msgid "Download Completed"
@@ -672,7 +687,7 @@ msgstr "Films Directory"
 #: ../../platform/osx/frontend/Preferences.py:197
 #, python-format
 msgid "Select a Directory to store %s downloads in."
-msgstr ""
+msgstr "Select a Directory to store %s downloads in."
 
 #: ../../platform/osx/frontend/Preferences.py:198
 #: ../../platform/osx/frontend/Preferences.py:262
@@ -683,7 +698,7 @@ msgstr "Select"
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
-msgstr "Migrate existing movies?"
+msgstr "Migrate existing films?"
 
 #: ../../platform/osx/frontend/Preferences.py:208
 #, python-format
@@ -692,18 +707,21 @@ msgid ""
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"You've selected a new directory to download films to.  Should %s migrate "
+"your existing downloads to there?  (Current downloads will not be moved "
+"until they finish)."
 
 #: ../../platform/osx/frontend/Preferences.py:260
 msgid "View this Directory in the Library"
-msgstr ""
+msgstr "View this Directory in the Library"
 
 #: ../../platform/osx/frontend/Preferences.py:261
 msgid "Select a Directory to view in the Library."
-msgstr ""
+msgstr "Select a Directory to view in the Library."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Finish"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -833,7 +851,7 @@ msgstr "New Channel _Guide..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564
 msgid "Folder Location"
-msgstr "Folder Location"
+msgstr "Directory Location"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
@@ -899,7 +917,7 @@ msgstr "The torrent file for this item was deleted "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "outside of Miro."
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -1062,15 +1080,15 @@ msgstr "Play"
 
 #: ../../portable/menu.py:97 ../../portable/item.py:1478
 msgid "Add to new playlist"
-msgstr "Add to new playlist"
+msgstr "Add to new Playlist"
 
 #: ../../portable/menu.py:99 ../../portable/item.py:1471
 msgid "Remove From Playlist"
-msgstr "Remove From Playlist"
+msgstr "Remove from Playlist"
 
 #: ../../portable/menu.py:101 ../../portable/item.py:1473
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Remove from the Library"
 
 #: ../../portable/menu.py:107 ../../portable/item.py:1482
 msgid "Mark as Unwatched"
@@ -1078,7 +1096,7 @@ msgstr "Mark as Unwatched"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Mark as Watched"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -1109,41 +1127,41 @@ msgstr "Restart Upload"
 
 #: ../../portable/opml.py:49
 msgid "Export OPML File"
-msgstr ""
+msgstr "Export OPML File"
 
 #: ../../portable/opml.py:123
 msgid "Import OPML File"
-msgstr ""
+msgstr "Import OPML File"
 
 #: ../../portable/opml.py:125
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML Files"
 
 #: ../../portable/opml.py:145
 msgid "OPML Import failed"
-msgstr ""
+msgstr "OPML Import failed"
 
 #: ../../portable/opml.py:146
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
+msgstr "The selected OPML resource is invalid. Import was interrupted."
 
 #: ../../portable/opml.py:151
 msgid "OPML Import summary"
-msgstr ""
+msgstr "OPML Import summary"
 
 #: ../../portable/opml.py:152
 #, python-format
 msgid "Successfully imported %d feed."
 msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Successfully imported %d feed."
+msgstr[1] "Successfully imported %d feeds."
 
 #: ../../portable/opml.py:155
 #, python-format
 msgid "Skipped %d feed already present."
 msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Skipped %d existing feed."
+msgstr[1] "Skipped %d existing feeds."
 
 #: ../../portable/autoupdate.py:121
 #, python-format
@@ -1174,14 +1192,15 @@ msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
 msgstr ""
+"Miro has encountered an internal error. You can help us track down this "
+"problem and fix it by submitting an error report."
 
 #: ../../portable/util.py:252
-#, fuzzy
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
 msgstr ""
-"Include entire programme database including all video and channel metadata "
+"Include entire program database including all video and channel metadata "
 "with crash report"
 
 #: ../../portable/util.py:252
@@ -1320,7 +1339,7 @@ msgstr "Not Now"
 
 #: ../../portable/dialogs.py:98
 msgid "Close to Tray"
-msgstr "Close to Tray"
+msgstr "Minimise to Tray"
 
 #: ../../portable/dialogs.py:99
 msgid "Launch Miro"
@@ -1354,11 +1373,11 @@ msgstr "Miro will begin downloading it now."
 
 #: ../../portable/singleclick.py:96
 msgid "It is downloading now."
-msgstr ""
+msgstr "It is downloading now."
 
 #: ../../portable/singleclick.py:98
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "It has already been downloaded."
 
 #: ../../portable/singleclick.py:125
 msgid "Download Error"
@@ -1371,15 +1390,18 @@ msgid ""
 "\n"
 "URL: %s"
 msgstr ""
+"Miro is not able to download the resource at this URL:\n"
+"\n"
+"%s"
 
 #: ../../portable/singleclick.py:134
 msgid "File Download"
-msgstr ""
+msgstr "File Download"
 
 #: ../../portable/singleclick.py:135
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
+msgstr "The resource %s does not appear to be audio, video, or an RSS feed."
 
 #: ../../portable/singleclick.py:225
 msgid "Subscribing to multiple channels"
@@ -1447,7 +1469,7 @@ msgstr "_Open"
 
 #: ../../portable/menubar.py:145
 msgid "_Download Video"
-msgstr ""
+msgstr "_Download Video"
 
 #: ../../portable/menubar.py:147
 msgid "Check _Version"
@@ -1479,7 +1501,7 @@ msgstr "Copy Video _URL"
 
 #: ../../portable/menubar.py:156
 msgid "_Options..."
-msgstr ""
+msgstr "_Options..."
 
 #: ../../portable/menubar.py:157
 msgid "_Quit"
@@ -1519,7 +1541,7 @@ msgstr "New _Folder..."
 
 #: ../../portable/menubar.py:176
 msgid "Add Channel _Guide..."
-msgstr ""
+msgstr "Add Channel _Guide..."
 
 #: ../../portable/menubar.py:186
 msgid "Update _All Channels"
@@ -1527,11 +1549,11 @@ msgstr "Update _All Channels"
 
 #: ../../portable/menubar.py:188
 msgid "_Import Channels (OPML)..."
-msgstr ""
+msgstr "_Import Channels (OPML)..."
 
 #: ../../portable/menubar.py:189
 msgid "E_xport Channels (OPML)..."
-msgstr ""
+msgstr "E_xport Channels (OPML)..."
 
 #: ../../portable/menubar.py:191
 msgid "_Send this channel to a friend"
@@ -1587,11 +1609,11 @@ msgstr "_Previous Video"
 
 #: ../../portable/menubar.py:218
 msgid "Skip _Forward"
-msgstr "Skip _Forward"
+msgstr "Skip _Forwards"
 
 #: ../../portable/menubar.py:219
 msgid "Skip _Back"
-msgstr "Skip _Back"
+msgstr "Skip _Backwards"
 
 #: ../../portable/menubar.py:221
 msgid "Volume _Up"
@@ -1725,7 +1747,7 @@ msgstr "Total Down:"
 
 #: ../../portable/item.py:969
 msgid "Error:"
-msgstr ""
+msgstr "Error:"
 
 #: ../../portable/item.py:977
 msgid "Down Rate:"
@@ -1765,7 +1787,7 @@ msgstr "File type:"
 
 #: ../../portable/item.py:1002
 msgid "REVEAL LOCAL FOLDER"
-msgstr "REVEAL LOCAL FOLDER"
+msgstr "REVEAL LOCAL DIRECTORY"
 
 #: ../../portable/item.py:1004
 msgid "REVEAL LOCAL FILE"
@@ -1777,11 +1799,11 @@ msgstr "Filename:"
 
 #: ../../portable/item.py:1013
 msgid "Down Total"
-msgstr "Down Total"
+msgstr "Total Downloaded"
 
 #: ../../portable/item.py:1015
 msgid "Up Total"
-msgstr "Up Total"
+msgstr "Total Uploaded"
 
 #: ../../portable/item.py:1033
 msgid "Item Details"
@@ -1793,7 +1815,7 @@ msgstr "Torrent Details"
 
 #: ../../portable/item.py:1042
 msgid "Torrent Details <i>stopped</i>"
-msgstr ""
+msgstr "Torrent Details <i>stopped</i>"
 
 #: ../../portable/item.py:1046
 msgid "Download Details"
@@ -1826,6 +1848,8 @@ msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from the Library?"
 msgstr ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or remove their entries from the Library?"
 
 #: ../../portable/item.py:1864
 msgid ""
@@ -1945,25 +1969,25 @@ msgstr "Invalid URL"
 #: ../../portable/httpclient.py:137
 #, python-format
 msgid "\"%s\" is not a valid URL"
-msgstr ""
+msgstr "The resource \"%s\" is not a valid URL"
 
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "The file \"%s\" does not exist"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Read error"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Error while reading \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Unknown Error code"
 
 #: ../../portable/httpclient.py:373
 msgid "Connection closed"
@@ -1991,7 +2015,7 @@ msgstr ""
 
 #: ../../portable/app.py:700
 msgid "Video Directory Missing"
-msgstr ""
+msgstr "Video Directory Missing"
 
 #: ../../portable/app.py:701
 msgid ""
@@ -2003,6 +2027,13 @@ msgid ""
 "drive (this will cause you to lose some details about the videos on the "
 "external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
+"\n"
+"Miro can't find your primary video directory.  This may be because it's "
+"located on an external drive that is currently disconnected.\n"
+"\n"
+"If you continue, the video directory will be reset to a location on this "
+"drive (this will cause you to lose some details about the videos on the "
+"external drive).  You may also quit, connect the drive, and relaunch Miro."
 
 #: ../../portable/app.py:1038 ../../portable/app.py:1052
 #: ../../portable/app.py:1096 ../../portable/app.py:1122
@@ -2105,13 +2136,15 @@ msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
+"Miro is uploading your crash report. If you quit now the upload will be "
+"cancelled.  Quit?"
 
 #: ../../portable/app.py:1203
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "You have %d download still in progress.  Quit?"
+msgstr[1] "You have %d downloads still in progress.  Quit?"
 
 #: ../../portable/app.py:1712
 msgid "Invalid Value"
@@ -2124,12 +2157,12 @@ msgstr "%s is invalid.  You must enter a non-negative number."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Error Finding File"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "The file \"%s\" was deleted from outside Miro."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -2155,7 +2188,7 @@ msgstr "Enter the URL of the channel to add"
 
 #: ../../portable/app.py:2057
 msgid "$shortAppName - Add Miro Guide"
-msgstr ""
+msgstr "$shortAppName - Add Miro Guide"
 
 #: ../../portable/app.py:2057
 msgid "Enter the URL of the Miro Guide to add"
@@ -2171,7 +2204,7 @@ msgstr "Enter the URL of the video to download"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Starter Channels"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -2189,7 +2222,7 @@ msgstr ""
 
 #: ../../portable/app.py:2478
 msgid "Error Changing Movies Directory"
-msgstr "Error Changing Movies Directory"
+msgstr "Error Changing Films Directory"
 
 #: ../../portable/app.py:2479
 msgid ""
@@ -2273,10 +2306,32 @@ msgid ""
 "<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
 "of them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"<b>You're done!</b>\n"
+"\n"
+"Set-up is complete -- now you can find channels and start watching.\n"
+"\n"
+"<b>Don't Wait:</b> Miro is different than watching Web videos -- publishers "
+"can offer big, high quality videos.  So don't sit around waiting for videos: "
+"start some downloads and come back later.\n"
+"\n"
+"<b>Leave it On:</b> Miro regularly checks channels for new videos and "
+"downloads in the background.  Leaving it running means you'll have new "
+"videos when you're ready to watch.\n"
+"\n"
+"<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an "
+"'expiration' system that helps clean out older videos to make room for new "
+"videos.  You can always keep a video permanently by clicking 'save' and you "
+"can set a channel's settings to save videos automatically.\n"
+"\n"
+"<b>Go Big:</b> The button to the right of the play button shows videos "
+"fullscreen.\n"
+"\n"
+"<b>Find Videos:</b> The Miro Guide has hundreds of Internet TV channels, all "
+"of them are free.  Click 'ADD' to watch a channel."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
 msgid "By default, videos _expire after"
-msgstr ""
+msgstr "By default, videos _expire after"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
@@ -2284,7 +2339,7 @@ msgstr "C_hannel:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 msgid "C_hannels"
-msgstr ""
+msgstr "C_hannels"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "C_reate Channel"
@@ -2292,19 +2347,19 @@ msgstr "C_reate Channel"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Check Channels for _new content"
-msgstr ""
+msgstr "Check Channels for _new content"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "Disk _Space"
-msgstr ""
+msgstr "Disk _Space"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "Don't start a download _if it leaves less than"
-msgstr ""
+msgstr "Don't start a download _if it leaves less than"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Download at _most"
-msgstr ""
+msgstr "Download at _most"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid ""
@@ -2318,7 +2373,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid "G_B free"
-msgstr ""
+msgstr "G_B free"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 msgid "Go"
@@ -2334,10 +2389,12 @@ msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
+"Miro can find all the videos on your computer to help you organise your "
+"collection."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Play _videos one after another"
-msgstr ""
+msgstr "Play _videos sequentially"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Preferences"
@@ -2349,11 +2406,11 @@ msgstr "Restrict to my full _home folder"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "S_top after each video"
-msgstr ""
+msgstr "S_top after each video"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "S_tore downloaded videos in this folder:"
-msgstr ""
+msgstr "S_tore downloaded videos in this directory:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
@@ -2365,7 +2422,7 @@ msgstr "Search _custom folder:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid "Select Movies Directory"
-msgstr "Select Movies Directory"
+msgstr "Select Films Directory"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:54
 msgid "Select custom search directory"
@@ -2376,10 +2433,12 @@ msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr ""
+"The following screens will help you set-up Miro so that it works best for "
+"you.  Here's the first question."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "To a_void slowdowns, limit upstream to"
-msgstr ""
+msgstr "To a_void lag, limit upstream to"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Volume:"
@@ -2391,6 +2450,9 @@ msgid ""
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr ""
+"We recommend that you allow Miro to launch when your computer starts up.  "
+"This way, videos that haven't finished downloading can finish and new videos "
+"on your channels will be ready when you want to watch."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid ""
@@ -2398,6 +2460,9 @@ msgid ""
 "download videos from your favorite channels, watch new videos one after the "
 "other, download torrents, recommend videos to friends, and lots more."
 msgstr ""
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
+"download videos from your favourite channels, watch new videos one after the "
+"other, download torrents, recommend videos to friends, and lots more."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid ""
@@ -2405,6 +2470,9 @@ msgid ""
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
+"You've selected a new directory to download films to.  Should Miro migrate "
+"your existing downloads to there?  (Currently downloading films will not be "
+"moved until they finish.)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "_Add Folder"
@@ -2412,35 +2480,35 @@ msgstr "_Add Folder"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "_Automatically run Miro when I log in"
-msgstr ""
+msgstr "_Automatically run Miro when I log-in"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "_Bit Torrent uses ports between"
-msgstr ""
+msgstr "_BitTorrent uses ports between"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "_Downloads"
-msgstr ""
+msgstr "_Downloads"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid "_Folders"
-msgstr ""
+msgstr "_Folders"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "_General"
-msgstr ""
+msgstr "_General"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "_KB/s when my computer is active"
-msgstr ""
+msgstr "_KB/s when my computer is active"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "_Playback"
-msgstr ""
+msgstr "_Playback"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "_Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgstr "_Continue playback of videos from the point where they were stopped"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
@@ -2456,16 +2524,17 @@ msgstr "_URL"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "_Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "_Warn me when I attempt to quit while downloads are in progress"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr ""
+"_Watch for new videos in these directories and include them in the Library"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "_and"
-msgstr ""
+msgstr "_and"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "videos at once"
@@ -2477,6 +2546,9 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$publisher.  $longAppName and the $longAppName logo are trademarks of "
+"$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
@@ -2562,9 +2634,9 @@ msgid ""
 "migrate your existing downloads there?(Currently dowloading movies will not "
 "be moved until they finish)"
 msgstr ""
-"You've selected a new folder to download movies to.  Should $shortAppName "
-"migrate your existing downloads there?(Currently dowloading movies will not "
-"be moved until they finish)"
+"You've selected a new folder to download films to.  Should $shortAppName "
+"migrate your existing downloads to there? (Currently downloading films will "
+"not be moved until they finish)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
@@ -2590,11 +2662,11 @@ msgstr "Add Folder..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Automatically run $longAppName when I login."
-msgstr ""
+msgstr "Automatically run $longAppName when I log-in."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "By default, videos expire after"
@@ -2602,11 +2674,11 @@ msgstr "By default, videos expire after"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Check channels for new content"
-msgstr ""
+msgstr "Check channels for new content."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgstr "Minimise to tray so that downloads can continue."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every 30 minutes"
@@ -2618,7 +2690,7 @@ msgstr "Every hour"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Folder"
-msgstr ""
+msgstr "Folder"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
@@ -2626,42 +2698,44 @@ msgstr "Manually"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
-msgstr ""
+msgstr "Options"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "Play one video, then stop."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Quit Miro."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
 msgstr ""
+"Remember where I stopped watching a video and continue playback from that "
+"point."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Show as a Channel"
-msgstr ""
+msgstr "Show as a Channel"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Store downloaded videos in this folder:"
-msgstr "Store downloaded videos in this folder:"
+msgstr "Store downloaded videos in this directory:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid ""
 "To avoid slowdowns, limit upstream bandwith when my computer is active."
-msgstr ""
+msgstr "To avoid lag, limit upstream bandwidth when my computer is active."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "Upstream limit (KB/s)"
-msgstr ""
+msgstr "Upstream limit (KB/s)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
-msgstr ""
+msgstr "Use BitTorrent ports between"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid ""
@@ -2671,15 +2745,16 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
 msgid "Warn me when I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "Warn me when I attempt to quit while downloads are in progress."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
 msgstr ""
+"Watch for new videos in these directories and include them in my Library."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "When I click the red close button:"
-msgstr ""
+msgstr "When I click the red close button:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
 msgid "and"
@@ -2721,7 +2796,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
 msgid "$shortAppName First Time Setup"
-msgstr "$shortAppName First Time Setup"
+msgstr "$shortAppName First Time Set-up"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
@@ -2784,6 +2859,8 @@ msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"The $shortAppName Channel Guide has hundreds of Internet TV channels, all of "
+"them are free.  Click 'ADD' to watch a channel."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."

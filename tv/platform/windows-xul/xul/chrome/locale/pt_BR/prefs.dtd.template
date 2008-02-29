@@ -1,5 +1,4 @@
 <!ENTITY prefs.title "Opções">
-<!ENTITY prefs.restart "(ATENÇÃO: as alterações apenas terão efeito após o re-inicio do $longAppName.)">
 
 <!ENTITY prefs.run.on.startup "Executar automaticamente $longAppName quando eu logar-me">
 <!ENTITY prefs.close_to_tray_start "Quando clicar no botão vermelho de fechar:">
@@ -14,6 +13,11 @@
 <!ENTITY prefs.channels.check.thirty "A cada 30 minutos">
 <!ENTITY prefs.channels.check.sixty "A cada hora">
 <!ENTITY prefs.channels.check.manually "Manualmente">
+
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Novo">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
 
 <!ENTITY prefs.playback "Reprodução">
 <!ENTITY prefs.playback.remember.pos "Lembrar onde eu parei de assistir o vídeo e continuar tocando à partir deste ponto.">
@@ -30,13 +34,13 @@
 <!ENTITY prefs.folder.others.add "Adicionar Pasta...">
 <!ENTITY prefs.folder.others.remove "Remover">
 
-<!ENTITY prefs.downloads.max "Recebimentos">
-<!ENTITY prefs.downloads.max.part1 "Download de no máximo">
-<!ENTITY prefs.downloads.max.part2 "vídeos de uma só vez.">
+<!ENTITY prefs.downloads "Recebimentos" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Espaço em Disco">
-<!ENTITY prefs.disk.space.min.part1 "Não iniciar um download se ele deixar menos que">
-<!ENTITY prefs.disk.space.min.part2 "GB livre(s).">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ATENÇÃO: Esta alteração terá efeito somente após o re-inicio do $longAppName.">
 
 <!ENTITY prefs.videos.expire "Por padrão, os vídeos expiram">
@@ -49,7 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ATENÇÃO: as alterações apenas terão efeito após o re-inicio do $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Para evitar desascelerações, limitar taxa de envio quando meu computador estiver ativo.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Limite de Upstream (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Usar portas BitTorrente entre">
-<!ENTITY prefs.torrent.uses.ports.part2 "e">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

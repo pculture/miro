@@ -8,15 +8,26 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-13 17:10+0000\n"
-"Last-Translator: zhchen543 <zhchen543@gmail.com>\n"
+"PO-Revision-Date: 2008-01-31 13:26+0000\n"
+"Last-Translator: Tony20715 <Unknown>\n"
 "Language-Team: Chinese (Taiwan) <zh_TW@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#, fuzzy
+#~ msgid "_Update Channel"
+#~ msgstr "更新頻道"
+
+#, fuzzy
+#~ msgid ""
+#~ "You've selected a new folder to download movies to.  Should Democracy "
+#~ "migrate your existing downloads there?  (Currently dowloading movies will "
+#~ "not be moved until they finish.)"
+#~ msgstr "你選擇了新的資料夾來儲存下載的電影，是否其他已下載的電影也要搬移至那個資料夾？（但現在正在下載的電影會在完成下載後才搬移）"
 
 #~ msgid "About Democracy"
 #~ msgstr "關於 Democracy"
@@ -31,15 +42,14 @@ msgstr ""
 #~ msgid "Hide Democracy"
 #~ msgstr "隱藏民主播放器"
 
-#, fuzzy
-#~ msgid "New Channel Guide..."
-#~ msgstr "新增頻道導覽"
-
 #~ msgid "Preferencesâ¦"
 #~ msgstr "偏好設定"
 
 #~ msgid "Quit Democracy"
 #~ msgstr "離開民主播放器程式"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "移除頻道"
 
 #~ msgid "(You must restart Democracy for this change to take effect)\n"
 #~ msgstr "(你必須重新啟動才能讓變更生效)\n"
@@ -89,14 +99,11 @@ msgstr ""
 #~ "\n"
 
 #, fuzzy
-#~ msgid "_Update Channel"
-#~ msgstr "更新頻道"
+#~ msgid "New Channel Guide..."
+#~ msgstr "新增頻道導覽"
 
 #~ msgid "Re_name Channel"
 #~ msgstr "重新命名頻道"
-
-#~ msgid "Remove Channel..."
-#~ msgstr "移除頻道"
 
 #, fuzzy
 #~ msgid ""
@@ -107,13 +114,6 @@ msgstr ""
 #~ msgstr ""
 #~ "歡迎收看網路電視。Democracy "
 #~ "Player有好多功能：你可以設定讓你的最愛頻道自動下載影片、連續播放不同的影片、下載torrent檔案、推薦影片給朋友，還有其他更多的功能。"
-
-#, fuzzy
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr "你選擇了新的資料夾來儲存下載的電影，是否其他已下載的電影也要搬移至那個資料夾？（但現在正在下載的電影會在完成下載後才搬移）"
 
 #~ msgid "_Add Directory"
 #~ msgstr "新增目錄"
@@ -193,7 +193,7 @@ msgid "Close Window"
 msgstr "關閉視窗"
 
 msgid "Copy"
-msgstr "復制"
+msgstr "複製"
 
 msgid "Copy Channel URL"
 msgstr "複製頻道網址"
@@ -293,7 +293,7 @@ msgid "Playlists"
 msgstr "播放清單"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "偏好設定..."
 
 msgid "Previous Video"
 msgstr "上一段影片"
@@ -442,7 +442,7 @@ msgstr "預設影片保存期限:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid "Change..."
-msgstr "變更..."
+msgstr "變更(&H)..."
 
 msgid "Check channels for new content:"
 msgstr "檢查各頻道是否有新內容:"
@@ -567,7 +567,7 @@ msgstr "網址"
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:48
 #, python-format
 msgid "(parsed %d files - found %d videos)"
-msgstr ""
+msgstr "(%d 個檔案暫停 — 找到 %d 部影片)"
 
 msgid "Back"
 msgstr "上一頁"
@@ -668,12 +668,13 @@ msgid "Error Bombing Item"
 msgstr ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242
+#, fuzzy
 msgid "Error Recommending Item"
-msgstr ""
+msgstr "錯誤建議項目"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244
 msgid "Error Opening Website"
-msgstr ""
+msgstr "開啟網頁發盛錯誤"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248
 #, python-format
@@ -694,14 +695,16 @@ msgid ""
 "Error importing modules:\n"
 "%s"
 msgstr ""
+"在匯入下列模組時發生錯誤:\n"
+"%s"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:66
 msgid "Starting up"
-msgstr ""
+msgstr "啟動中"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:273
 msgid "Loading window"
-msgstr ""
+msgstr "載入視窗"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:274
 msgid "onStartup called twice"
@@ -809,7 +812,7 @@ msgstr "選取要在影片收藏中檢視的目錄。"
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "完成"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1032,7 +1035,7 @@ msgstr "搜尋"
 
 #: ../../portable/downloader.py:215
 msgid "activity"
-msgstr ""
+msgstr "活動"
 
 #: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
 #: ../../portable/httpclient.py:142
@@ -1176,12 +1179,12 @@ msgstr "標示為尚未觀賞"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "標示為已播放"
 
 #: ../../portable/menu.py:117
 #, python-format
 msgid "%d Available Items"
-msgstr ""
+msgstr "%d 可用的項目"
 
 #: ../../portable/menu.py:118 ../../portable/dialogs.py:85
 #: ../../portable/item.py:1491
@@ -1191,7 +1194,7 @@ msgstr "下載"
 #: ../../portable/menu.py:123
 #, python-format
 msgid "%d Downloading Items"
-msgstr ""
+msgstr "%d 已下載的項目"
 
 #: ../../portable/menu.py:125 ../../portable/item.py:1489
 msgid "Cancel Download"
@@ -1203,7 +1206,7 @@ msgstr "暫停下載"
 
 #: ../../portable/menu.py:130 ../../portable/item.py:1487
 msgid "Restart Upload"
-msgstr ""
+msgstr "重新開始上傳"
 
 #: ../../portable/opml.py:49
 msgid "Export OPML File"
@@ -1435,8 +1438,9 @@ msgid "Download already exists"
 msgstr "已經在下載了"
 
 #: ../../portable/singleclick.py:88
+#, fuzzy
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "此 URL 已經是一個外在下載。"
 
 #: ../../portable/singleclick.py:94
 msgid "Miro will begin downloading it now."
@@ -1444,11 +1448,11 @@ msgstr "Miro 會立刻開始下載"
 
 #: ../../portable/singleclick.py:96
 msgid "It is downloading now."
-msgstr ""
+msgstr "現在開始下載。"
 
 #: ../../portable/singleclick.py:98
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "此項目已經下載過了。"
 
 #: ../../portable/singleclick.py:125
 msgid "Download Error"
@@ -1524,7 +1528,7 @@ msgid "Invalid Torrent"
 msgstr "無效的 Torrent 種子"
 
 #: ../../portable/singleclick.py:317
-#, fuzzy
+#, fuzzy, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
 msgstr "Torrent 種子檔「%s」有誤，無法開啟。 [OK]"
 
@@ -1843,15 +1847,15 @@ msgstr ""
 
 #: ../../portable/item.py:995
 msgid "File type:"
-msgstr ""
+msgstr "檔案類型："
 
 #: ../../portable/item.py:1002
 msgid "REVEAL LOCAL FOLDER"
-msgstr ""
+msgstr "顯示所在資料夾"
 
 #: ../../portable/item.py:1004
 msgid "REVEAL LOCAL FILE"
-msgstr ""
+msgstr "顯示檔案位置"
 
 #: ../../portable/item.py:1006
 msgid "Filename:"
@@ -1859,27 +1863,27 @@ msgstr "檔案名稱:"
 
 #: ../../portable/item.py:1013
 msgid "Down Total"
-msgstr ""
+msgstr "下載總計"
 
 #: ../../portable/item.py:1015
 msgid "Up Total"
-msgstr ""
+msgstr "上傳總計"
 
 #: ../../portable/item.py:1033
 msgid "Item Details"
-msgstr ""
+msgstr "項目詳細資訊"
 
 #: ../../portable/item.py:1040
 msgid "Torrent Details"
-msgstr ""
+msgstr "種子詳細資訊"
 
 #: ../../portable/item.py:1042
 msgid "Torrent Details <i>stopped</i>"
-msgstr ""
+msgstr "種子詳細資訊 <i>已停止</i>"
 
 #: ../../portable/item.py:1046
 msgid "Download Details"
-msgstr ""
+msgstr "下載詳細資訊"
 
 #: ../../portable/item.py:1263
 msgid "downloading..."

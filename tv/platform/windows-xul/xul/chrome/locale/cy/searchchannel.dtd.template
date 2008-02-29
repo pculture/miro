@@ -1,8 +1,8 @@
-<!ENTITY searchchannel.description	"A search channel contains items that match a search term.">
+<!ENTITY searchchannel.description	"Mae sianel chwilio yn cynnwys eitemau sy'n gyfateb a'r gair chwilio">
 <!ENTITY searchchannel.termlabel 	"Search For:">
 <!ENTITY searchchannel.title            "New Search Channel">
 <!ENTITY searchchannel.inthis "In This:">
 <!ENTITY searchchannel.channel "Channel:">
 <!ENTITY searchchannel.searchengine "Search Engine:">
 <!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Create Channel">
+<!ENTITY searchchannel.createchannel "Creu Sianel">

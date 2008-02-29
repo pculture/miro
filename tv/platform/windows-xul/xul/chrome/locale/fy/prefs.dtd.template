@@ -1,5 +1,4 @@
 <!ENTITY prefs.title "Opsjes">
-<!ENTITY prefs.restart "(WARSKOGING: Wizigings binne aktyf nei dat jo $longAppName op 'e nij start hawwe.)">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "As ik klik op de reade slútknop:">
@@ -14,6 +13,11 @@
 <!ENTITY prefs.channels.check.thirty "Elke 30 minuten">
 <!ENTITY prefs.channels.check.sixty "Elk oer">
 <!ENTITY prefs.channels.check.manually "Hânmjitich">
+
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Nij">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
 
 <!ENTITY prefs.playback "Ofspylje">
 <!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
@@ -30,13 +34,13 @@
 <!ENTITY prefs.folder.others.add "Foech Map ta...">
 <!ENTITY prefs.folder.others.remove "Fuortsmite">
 
-<!ENTITY prefs.downloads.max "Ynladen Bestannen">
-<!ENTITY prefs.downloads.max.part1 "Laad maksimaal yn">
-<!ENTITY prefs.downloads.max.part2 "fideos direkt.">
+<!ENTITY prefs.downloads "Ynladen Bestannen" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Skiifromte">
-<!ENTITY prefs.disk.space.min.part1 "Start gjin ynlaad as it minder achterlit as">
-<!ENTITY prefs.disk.space.min.part2 "GB frij">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "(WARSKOGING: Dizze ynstelling is aktyf nei dat jo $longAppName op 'e nij start hawwe.)">
 
 <!ENTITY prefs.videos.expire "Standert, ferrinne fideos nei">
@@ -49,7 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARSKOGING: Wizigings binne aktyf nei dat jo $longAppName op 'e nij start hawwe.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "en">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

@@ -8,114 +8,290 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-09 17:26+0000\n"
-"Last-Translator: Stian Ellingsen <stiell@gmail.com>\n"
+"PO-Revision-Date: 2008-02-02 18:27+0000\n"
+"Last-Translator: Ketil Wendelbo Aanensen <ketil.w.aanensen@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Innstillingerâ¦"
+#~ msgid "_Save Video..."
+#~ msgstr "_Lagre video..."
 
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr ""
-#~ "(Du må starte Democracy på nytt for at denne endringen skal tas i bruk.)\n"
+#~ msgid "Save this video"
+#~ msgstr "Lagre denne filmen"
+
+#~ msgid "_Play / Pause"
+#~ msgstr "S_pill av / pause"
+
+#~ msgid "_Remove Channel"
+#~ msgstr "Fje_rn kanal"
+
+#~ msgid "_Update Channel"
+#~ msgstr "Oppdater kanal (_u)"
+
+#~ msgid "_Open..."
+#~ msgstr "Åpne... (_o)"
+
+#~ msgid "Open various files"
+#~ msgstr "Åpne flere filer"
+
+#~ msgid "P_references"
+#~ msgstr "Innstillinge_r"
+
+#~ msgid "Quit the Program"
+#~ msgstr "Avslutt programmet"
+
+#~ msgid "_Channel"
+#~ msgstr "_Kanal"
+
+#~ msgid "_Add Channel..."
+#~ msgstr "_Legg til kanal..."
+
+#~ msgid "U_pdate All Channels"
+#~ msgstr "O_ppdater alle kanaler"
+
+#, python-format
+#~ msgid "%s requires a username and password for \"%s\"."
+#~ msgstr "%s krever et brukernavn og passord for \"%s\"."
+
+#~ msgid "Not a DTV-style channel"
+#~ msgstr "Ikke en DTV-kanal"
 
 #~ msgid ""
-#~ "You're done!\n"
+#~ "But we'll try our best to grab the files.\n"
+#~ "- It may take time to list the videos\n"
+#~ "- Descriptions may look funny\n"
 #~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "Don't Wait: Miro is different than watching webpage videos -- publishers can "
-#~ "offer big, high quality videos. So don't sit around waiting for videos: "
-#~ "start some downloads and check back later. \n"
-#~ "\n"
-#~ "Leave it On: Miro regularly checks channels for new videos and downloads in "
-#~ "the background. Leaving it running means you'll have new videos when you're "
-#~ "ready to watch.\n"
-#~ "\n"
-#~ "Don't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' "
-#~ "system that helps clean out older videos to make room for new videos. You "
-#~ "can always keep a video permanently by clicking 'save' and you can set a "
-#~ "channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
-#~ "\n"
-#~ "Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
-#~ "them are free. Just click 'ADD' to watch a channel.\n"
+#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
 #~ msgstr ""
-#~ "Du er ferdig!\n"
+#~ "Men vi vil prøve vårt beste å hente filene.\n"
+#~ "- Det kan ta tid å liste videoene\n"
+#~ "- Beskrivelser vises kanskje med feil\n"
 #~ "\n"
-#~ "Oppsettet er fullført – du kan nå finne noen kanaler og begynne å se "
-#~ "filmer.\n"
-#~ "Ikke vent: Miro er annerledes enn å se filmer på nettsider – utgivere kan "
-#~ "tilby store filmer med høy kvalitet. Så ikke sitt og vent på filmer: begynn "
-#~ "å laste ned og sjekk igjen senere.\n"
-#~ "\n"
-#~ "La programmet kjøre: Miro sjekker regelmessig kanaler for nye filmer og "
-#~ "laster dem ned i bakgrunnen. Lar du programmet kjøre, har du nye filmer når "
-#~ "du er klar for å se dem.\n"
-#~ "\n"
-#~ "Ikke bekymre deg for diskplass: Miro har et «utløpssystem» som hjelper til "
-#~ "med å fjerne gamle filmer for å gi rom til nye filmer. Du kan alltid beholde "
-#~ "en film ved å trykke «lagre», og du kan stille inn en kanal til å lagre "
-#~ "filmer automatisk.\n"
-#~ "\n"
-#~ "Gjør det stort: Knappen til høyre for avspillingsknappen lar deg vise filmer "
-#~ "i fullskjerm.\n"
-#~ "\n"
-#~ "Finn filmer: Miro-veilederen har hundrevis av nett-TV-kanaler, og alle er "
-#~ "gratis. Bare trykk «Legg til» for å se på en kanal.\n"
+#~ "Vennligst kontakt utgiverne av %s og spør om de har en DTV-kanal."
 
-#, python-format
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d downloads still in progress."
-#~ msgstr[0] "Du har %d uferdig nedlasting."
-#~ msgstr[1] "Du har %d uferdige nedlastinger."
+#~ msgid "Continue"
+#~ msgstr "Fortsett"
 
-#~ msgid "News and Tech"
-#~ msgstr "Nyeheter og teknologi"
-
-#~ msgid "Entertainment"
-#~ msgstr "Underholdning"
-
-#~ msgid "High-Def"
-#~ msgstr "Høyoppløsning"
-
-#~ msgid "Mac"
-#~ msgstr "Mac"
-
-#~ msgid "Local File"
-#~ msgstr "Lokal fil"
-
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%s er ikke en gyldig URL"
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "Sletter %s"
-
-#~ msgid "Seeders:"
-#~ msgstr "Opplastere:"
-
-#~ msgid "Leachers:"
-#~ msgstr "Nedlastere:"
+#~ msgid "DTV Version Alert"
+#~ msgstr "DTV versjonalarm"
 
 #~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr "Vil du slette denne filen eller bare fjerne den fra samlingen?"
+#~ "A new version of DTV is available.\n"
+#~ "\n"
+#~ "Would you like to download it now?"
+#~ msgstr ""
+#~ "En ny versjon av DTV er tilgjengelig.\n"
+#~ "\n"
+#~ "Vil du laste den ned nå?"
 
-#~ msgid "_Options"
-#~ msgstr "_Alternativer"
+#~ msgid "DTV Version Check"
+#~ msgstr "DTV versjonsjekk"
 
-#~ msgid "Restore"
-#~ msgstr "Gjenopprett"
+#~ msgid "This version of DTV is up to date."
+#~ msgstr "Denne versjonen av DTV er oppdatert."
+
+#, python-format
+#~ msgid ""
+#~ "%s was unable to save its database: %s.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%s klarte ikke å lagre databasen sin: %s.\n"
+#~ "Siste endringer kan ha blitt tapt."
+
+#~ msgid "Remove Channel"
+#~ msgstr "Fjern kanal"
+
+#, python-format
+#~ msgid ""
+#~ "Are you sure you want to <b>remove</b> the channel\n"
+#~ "   '<b>%s</b>'?\n"
+#~ "<b>This operation cannot be undone.</b>"
+#~ msgstr ""
+#~ "Er du sikker på at du vil <b>fjerne</b> kanalen\n"
+#~ "   '<b>%s</b>'?\n"
+#~ "<b>Denne operasjonen kan ikke angres.</b>"
+
+#~ msgid "Pending Auto Download"
+#~ msgstr "Ventende automatiske nedlastinger"
+
+#~ msgid "Pending Manual Download"
+#~ msgstr "Ventende manuelle nedlastinger"
+
+#~ msgid "Unwatched"
+#~ msgstr "Usett"
+
+#~ msgid "Save"
+#~ msgstr "Lagre"
+
+#~ msgid "Expires"
+#~ msgstr "Utløper"
+
+#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
+#~ msgstr "Ingenting å vise.<br></br> Skriv inn et søk i feltet over."
+
+#~ msgid "Searching..."
+#~ msgstr "Søker..."
+
+#~ msgid "Channel Guide"
+#~ msgstr "Kanalveileder"
+
+#~ msgid "My Collection"
+#~ msgstr "Min samling"
+
+#~ msgid "New Videos"
+#~ msgstr "Nye filmer"
+
+#~ msgid "Democracy - External Playback Template"
+#~ msgstr "Democracy - Ekstern avspillingsmal"
+
+#~ msgid "Continue To Next Video"
+#~ msgstr "Fortsett til neste film"
+
+#~ msgid "Auto Download"
+#~ msgstr "Automatisk nedlasting"
+
+#~ msgid "Recommend"
+#~ msgstr "Anbefal"
+
+#~ msgid "Back to Channel"
+#~ msgstr "Tilbake til kanal"
+
+#~ msgid "Channel Settings"
+#~ msgstr "Kanalinnstillinger"
+
+#~ msgid "Videos expire after:"
+#~ msgstr "Filmer utløper etter:"
+
+#~ msgid "Default"
+#~ msgstr "Standard"
+
+#~ msgid "Auto download should:"
+#~ msgstr "Automatisk netlastning skal:"
+
+#~ msgid ""
+#~ "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
+#~ msgstr ""
+#~ "Hvis jeg har ${maxnew} ${maxnew2} filmer som venter, stopp den automatiske "
+#~ "netlastningen av videoer."
+
+#~ msgid "(Keeps channel from hogging disk space)"
+#~ msgstr "(Hindrer kanaler fra å stjele lagringsplass)"
+
+#~ msgid "Channel URL"
+#~ msgstr "Kanal-URL"
+
+#~ msgid "Videos on this Channel"
+#~ msgstr "Videoer i denne kanalen"
+
+#~ msgid "Watched"
+#~ msgstr "Sett"
+
+#~ msgid "Saved"
+#~ msgstr "Lagret"
+
+#~ msgid ""
+#~ "This file type (${format}) can't be played in the main Democracy window."
+#~ msgstr ""
+#~ "Denne filtypen (${format}) kan ikke spilles av i hovedvinduet til Democracy."
+
+#~ msgid "Play Externally"
+#~ msgstr "Spill av eksternt"
+
+#~ msgid "Skip Video ${countdown}"
+#~ msgstr "Hopp over film ${countdown}"
+
+#~ msgid "Simple translation"
+#~ msgstr "Enkel oversettelse"
+
+#~ msgid "truck stop in a ${can}"
+#~ msgstr "truck stop in a ${can}"
+
+#~ msgid "Active Downloads"
+#~ msgstr "Aktive nedlastinger"
+
+#~ msgid "Expiring"
+#~ msgstr "Utløper"
+
+#~ msgid "Democracy Internet TV: How to Get Started"
+#~ msgstr "Democracy internett-TV: Hvordan komme i gang"
+
+#~ msgid "GO BIG:"
+#~ msgstr "Fullskjerm:"
+
+#~ msgid "This is your fullscreen button. Click it and lean back."
+#~ msgstr "Dette er din fullskjermsknapp. Klikk på den og len deg tilbake."
+
+#~ msgid "NEW STUFF:"
+#~ msgstr "NYTT INNHOLD:"
+
+#~ msgid ""
+#~ "Blue circles mean the channel has new videos available, green circles mean "
+#~ "you have downloaded videos ready to watch."
+#~ msgstr ""
+#~ "Blå sirkler betyr at kanalen har nye filmer tilgjengelig, grønne sirkler "
+#~ "betyr at du har nedlastede filmer klare til avspilling."
+
+#~ msgid ""
+#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
+#~ "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
+#~ ">></a></strong>"
+#~ msgstr ""
+#~ "<strong i18n:translate=\"\">AVBRYT INTRODUKSJON: <a style=\"color: #090;\" "
+#~ "href=\"#\" onclick=\"eventURL('action:doneWithIntro');\"Gå til kanalveileder "
+#~ ">></a></strong>"
+
+#~ msgid ""
+#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
+#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+#~ "channels in the guide are free.</strong>"
+#~ msgstr ""
+#~ "<strong>Legg til kanaler:</strong> Kanalveilederen er din base for TV-"
+#~ "kanaler på internett. Klikk 'LEGG TIL' for å abonnere på en kanal-- "
+#~ "<strong>kanalene i denne veilederen er gratis.</strong>"
+
+#~ msgid ""
+#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
+#~ "waiting for videos: start some downloads and check back later."
+#~ msgstr ""
+#~ "<strong>Ikke vent:</strong> Democracy er annerledes enn å se filmer på "
+#~ "nettsteder-- utgiverne kan tilby store, høykvalitetsfilmer. Så ikke sitt og "
+#~ "vent på filmer: Start noen nedlastinger og sjekk inn senere."
+
+#~ msgid ""
+#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
+#~ "new videos and downloads in the background. Leaving it running means you'll "
+#~ "have new videos when you're ready to watch."
+#~ msgstr ""
+#~ "<strong>La programmet kjøre:</strong> Democracy Player sjekker kanalene "
+#~ "løpende for nye videoer og begynner å hente dem i bakgrunnen. Ved å la "
+#~ "programmet kjøre vil du ha nye videoer klare når du vil se noe."
+
+#~ msgid ""
+#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
+#~ "features an 'expiration' system that helps clean out older videos to make "
+#~ "room for new videos. You can always keep a video permanently by clicking "
+#~ "'save' and you can set a channel's settings to save videos automatically."
+#~ msgstr ""
+#~ "<strong>Ikke tenk på lagringsplass:</strong> Democracy Player har et "
+#~ "avansert 'utløps'-system som hjelper med å slette gamle videoer så det er "
+#~ "plass til nye. Du kan velge å beholde videoer ved å klikke på 'Lagre' og du "
+#~ "kan sette innstillinger for en kanal slik at videoer lagres automatisk."
+
+#, python-format
+#~ msgid ""
+#~ "%s was unable to save its database: %s.\n"
+#~ "Recent changes may be lost.\n"
+#~ "Quit Anyway?"
+#~ msgstr ""
+#~ "%s klarte ikke å lagre databasen sin: %s.\n"
+#~ "Siste endringer kan ha blitt tapt.\n"
+#~ "Avslutt likevel?"
 
 #~ msgid "<b>Channels</b>"
 #~ msgstr "<b>Kanaler</b>"
@@ -126,64 +302,102 @@ msgstr ""
 #~ msgid "<b>Downloads</b>"
 #~ msgstr "<b>Nedlastinger</b>"
 
-#~ msgid "<b>Folders in the Library</b>"
-#~ msgstr "<b>Mapper i biblioteket</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Generelt</b>"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Avspilling</b>"
-
-#~ msgid "Automatically run Miro when I log in"
-#~ msgstr "Kjør Miro automatisk ved innlogging"
-
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "BitTorrent bruker porter mellom"
+#~ msgid "<b>Movies Directory</b>"
+#~ msgstr "<b>Filmbibliotek</b>"
 
 #~ msgid "Check Channels for new content"
 #~ msgstr "Sjekk kanaler for nytt innhold"
 
+#~ msgid "Democracy - Add Channel"
+#~ msgstr "Democracy - Legg til kanal"
+
+#~ msgid "Democracy Player"
+#~ msgstr "Democracy Player"
+
 #~ msgid "GB free"
 #~ msgstr "GB ledig"
 
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s når datamaskinen er i bruk"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Spill av filmer én etter én"
-
-#~ msgid "Resume playback of videos from the point where they were stopped"
-#~ msgstr "Fortsett å spille av filmer fra stedet de er stoppet"
-
-#~ msgid "Stop after each video"
-#~ msgstr "Stopp etter hver film"
+#~ msgid "Store downloaded movies in"
+#~ msgstr "Lagre nedlastede filmer i"
 
 #~ msgid "To avoid slowdowns, limit upstream to"
 #~ msgstr "For å unngå overbelastning, begrens opplasting til"
 
-#~ msgid "Watch for new videos in these folders and include them in the Library"
-#~ msgstr "Se etter nye filmer i disse mappene og legg dem til i biblioteket"
-
-#~ msgid "_Store downloaded videos in this folder:"
-#~ msgstr "_Lagre nedlastede filmer i denne mappen:"
-
-#~ msgid "Automatically run $longAppName when I login"
-#~ msgstr "Kjør $longAppName automatisk ved innlogging"
-
-#~ msgid "Quit Miro completely"
-#~ msgstr "Avslutt Miro fullstendig"
-
 #~ msgid ""
-#~ "Watch for new videos in these folders and include them in My Collection:"
-#~ msgstr "Se etter nye filmer i disse mappene og legg dem til i samlingen:"
-
-#~ msgid ""
-#~ "The $shortAppName Channel Guide has hundreds of internet TV channels, all of "
-#~ "them are free.  Just click 'ADD' to watch a channel."
+#~ "You've selected a new folder to download movies to.  Should Democracy "
+#~ "migrate your existing downloads there?  (Currently dowloading movies will "
+#~ "not be moved until they finish.)"
 #~ msgstr ""
-#~ "$shortAppName-veilederen har hundrevis av nett-TV-kanaler, og alle er "
-#~ "gratis. Bare trykk «Legg til» for å se på en kanal."
+#~ "Du har valgt en ny mappe å laste ned filmer til. Skal Democracy migrere dine "
+#~ "eksisterende filmer til det nye stedet? (Filmer som lastes ned nå blir ikke "
+#~ "flyttet før de er ferdige.)"
+
+#~ msgid ""
+#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
+#~ "style=\"color:red\">raw</b> text</span>"
+#~ msgstr ""
+#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
+#~ "style=\"color:red\">raw</b> text</span>"
+
+#~ msgid "Could not connect to server"
+#~ msgstr "Kunne ikke koble til tjener"
+
+#, python-format
+#~ msgid "Could not connect to server: %s"
+#~ msgstr "Kunne ikke koble til tjener: %s"
+
+#, python-format
+#~ msgid ""
+#~ "%s was unable to save its database: %s.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost.\n"
+#~ "Quit Anyway?"
+#~ msgstr ""
+#~ "%s klarte ikke å lagre databasen sin: %s.\n"
+#~ "Vi foreslår å slette filer fra den fulle lagringsområdet eller og enktelt "
+#~ "slette noen videoer fra din samling.\n"
+#~ "Siste endringer kan ha blitt tapt.\n"
+#~ "Avslutt likevel?"
+
+#~ msgid "Channel is not compatible with Democracy!"
+#~ msgstr "Kanalen er ikke kompatibel med Democracy!"
+
+#~ msgid ""
+#~ "and ask if they can supply a feed in a format that will work with Democracy."
+#~ msgstr ""
+#~ "og spør om de kan tilby en kanal i et format som vil virke med Democracy."
+
+#~ msgid ""
+#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
+#~ "$publisher."
+#~ msgstr ""
+#~ "$longAppName versjon $appVersion ($appRevision); copyright (c) 2005, 2006 "
+#~ "$publisher."
+
+#~ msgid "Please help us fix it. Copy and paste all the"
+#~ msgstr "Vennligst hjelp oss fikse det. Kopier og lim inn alle"
+
+#~ msgid ""
+#~ "information into our bug tracker and tell us what you were doing when the"
+#~ msgstr ""
+#~ "informasjonen i vår feilrapporteringsmodul og fortell oss hva det var du "
+#~ "gjorde da"
+
+#~ msgid "problem occurred."
+#~ msgstr "problemet skjedde. (Forklaringen skal være på engelsk.)"
+
+#~ msgid ""
+#~ "Then, please restart Democracy Player (or you may keep getting related "
+#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
+#~ "with your help we're fixing problems fast!"
+#~ msgstr ""
+#~ "Så, vennligst start Democracy på nytt (eller du får kanskje liknende feil). "
+#~ "Beklager bryet. Democracy er fortsatt i beta, men med din hjelp får vi "
+#~ "rettet feilene fortere!"
+
+#~ msgid "You found a bug in Democracy!"
+#~ msgstr "Du har funnet en feil i Democracy!"
 
 #~ msgid "About Democracy"
 #~ msgstr "Om Democracy"
@@ -197,11 +411,18 @@ msgstr ""
 #~ msgid "Hide Democracy"
 #~ msgstr "Gjem Democracy"
 
-#~ msgid "New Channel Guide..."
-#~ msgstr "Ny veiviser for kanaler..."
+#~ msgid "Preferencesâ¦"
+#~ msgstr "Innstillingerâ¦"
 
 #~ msgid "Quit Democracy"
 #~ msgstr "Avslutt Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Fjern kanal..."
+
+#~ msgid "(You must restart Democracy for this change to take effect)\n"
+#~ msgstr ""
+#~ "(Du må starte Democracy på nytt for at denne endringen skal tas i bruk.)\n"
 
 #~ msgid "Run Democracy at startup"
 #~ msgstr "Kjør Democracy ved oppstart"
@@ -301,8 +522,94 @@ msgstr ""
 #~ "Finn filmer: Democracys kanalveileder har hundrevis av TV-kanaler fra "
 #~ "internett, alle er gratis. Bare klikk \"LEGG TIL\" for å se på en kanal.\n"
 
-#~ msgid "Save this video"
-#~ msgstr "Lagre denne filmen"
+#~ msgid "Create new playlist"
+#~ msgstr "Lag ny spilleliste"
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "Lag ny mappe for spillelister"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "Lag ny mappe for kanaler"
+
+#, python-format
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Feil ved lasting av moduler for Democracy:\n"
+#~ "%s"
+
+#~ msgid "${count} Downloads in Progress"
+#~ msgstr "${count} nedlastinger pågår"
+
+#~ msgid "1 Download in Progress"
+#~ msgstr "1 nedlasting pågår"
+
+#~ msgid "${len} Videos On This Channel"
+#~ msgstr "${len} filmer på denne kanalen"
+
+#~ msgid "All ${len} Videos Match This Search"
+#~ msgstr "All ${len} filmer stemmer overens med dette søket"
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len} filmer stemmer overens med dette søket"
+
+#~ msgid "Looking for videos at this URL"
+#~ msgstr "Ser etter filmer på denne adressen"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} filmer på denne kanalen"
+
+#~ msgid "SAVE"
+#~ msgstr "LAGRE"
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr ""
+#~ "Denne Democracy-kanalfilen har et ugyldig format: %s. Vennligst gi melding "
+#~ "til utgiveren av denne filen."
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Denne Democracy-kanalfilen har feil innholdstype: %s. Vennligst gi melding "
+#~ "til utgiveren av denne filen."
+
+#, python-format
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Kunne ikke laste ned Democracy-kanafilen: %s"
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Men vi vil gjøre vårt beste for å få tak i filene. Det kan ta lenger tid å "
+#~ "liste opp filmene, og beskrivelser kan se merkelige ut. Vennligst kontakt "
+#~ "utgiverne av $url og spør om de kan tilby en mater i et format som vil "
+#~ "fungere med Democracy.\n"
+#~ "\n"
+#~ "Ønsker du å prøve å laste denne kanalen likevel?"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - Legg til kanalveileder"
+
+#~ msgid "Enter the URL of the channel guide to add"
+#~ msgstr "Skriv inn URL for kanalveilederen du vil legge til"
+
+#~ msgid ""
+#~ "You are running a version of Democracy Player with a custom set of channels."
+#~ msgstr "Du kjører en versjon av Democracy Player med ikke-forvalgte kanaler."
+
+#~ msgid "New Channel Guide..."
+#~ msgstr "Ny veiviser for kanaler..."
 
 #~ msgid "_Copy Video URL"
 #~ msgstr "Kopier filmens URL (_c)"
@@ -310,53 +617,20 @@ msgstr ""
 #~ msgid "_Stop Video"
 #~ msgstr "_Stopp film"
 
-#~ msgid "_Play / Pause"
-#~ msgstr "S_pill av / pause"
-
-#~ msgid "_Update Channel"
-#~ msgstr "Oppdater kanal (_u)"
-
 #~ msgid "Re_name Channel"
 #~ msgstr "Gi _nytt navn til kanal"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "Fje_rn kanal"
-
-#~ msgid "_Open..."
-#~ msgstr "Åpne... (_o)"
-
-#~ msgid "Open various files"
-#~ msgstr "Åpne flere filer"
 
 #~ msgid "New _Playlist..."
 #~ msgstr "Ny s_pilleliste"
 
-#~ msgid "Create new playlist"
-#~ msgstr "Lag ny spilleliste"
-
 #~ msgid "New Playlist _Folder..."
 #~ msgstr "Ny mappe _for spillelister"
-
-#~ msgid "Create new playlist folder"
-#~ msgstr "Lag ny mappe for spillelister"
 
 #~ msgid "New Channel _Folder..."
 #~ msgstr "Ny mappe _for spillelister"
 
-#~ msgid "Create new channel folder"
-#~ msgstr "Lag ny mappe for kanaler"
-
 #~ msgid "Add _Channel..."
 #~ msgstr "Legg til kanal... (_c)"
-
-#~ msgid "P_references"
-#~ msgstr "Innstillinge_r"
-
-#~ msgid "Quit the Program"
-#~ msgstr "Avslutt programmet"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "O_ppdater alle kanaler"
 
 #~ msgid "Delete selection"
 #~ msgstr "Slett utvalg"
@@ -381,9 +655,6 @@ msgstr ""
 
 #~ msgid "Remove Playlist Folders..."
 #~ msgstr "Fjern mapper for spillelister..."
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Fjern kanal..."
 
 #~ msgid "Remove Channels..."
 #~ msgstr "Fjern kanaler..."
@@ -427,250 +698,20 @@ msgstr ""
 #~ msgid "Update Channels..."
 #~ msgstr "Oppdater kanaler..."
 
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Feil ved lasting av moduler for Democracy:\n"
-#~ "%s"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr "Ingenting å vise.<br></br> Skriv inn et søk i feltet over."
-
-#~ msgid "Searching..."
-#~ msgstr "Søker..."
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "Resultater for \"${query}\""
-
-#~ msgid "Empty Playlist"
-#~ msgstr "Tom spilleliste"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr ""
-#~ "Legg til nedlastede videoer til denne spillelisten ved å dra dem hit."
-
-#~ msgid "Empty Playlist Folder"
-#~ msgstr "Tom spilleliste-katalog"
-
-#~ msgid ""
-#~ "This folder contains ${count} playlists, but the playlists do not contain "
-#~ "any items."
-#~ msgstr ""
-#~ "Denne katalogen inneholder ${count} splillelister, men spillelistene er "
-#~ "tomme."
-
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "Legg  til spillelister til denne katalogen ved å dra dem hit."
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr ""
-#~ "${count} valgte spilleliste-kataloger <br></br>(inneholder ${containedcount} "
-#~ "spillelister)"
-
-#~ msgid "${count} Playlists Selected"
-#~ msgstr "${count} valgte spillelister"
-
-#~ msgid "SAVE"
-#~ msgstr "LAGRE"
-
-#~ msgid "SAVED"
-#~ msgstr "LAGRET"
-
-#~ msgid "DELETE"
-#~ msgstr "SLETT"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - Ekstern avspillingsmal"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "Fortsett til neste film"
-
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "${count} nedlastinger pågår"
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "1 nedlasting pågår"
-
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "${len} filmer på denne kanalen"
-
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "All ${len} filmer stemmer overens med dette søket"
-
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len} filmer stemmer overens med dette søket"
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${count} filmer på denne kanalen"
-
-#~ msgid "Unwatched"
-#~ msgstr "Usett"
-
-#~ msgid "Watched"
-#~ msgstr "Sett"
-
-#~ msgid "Saved"
-#~ msgstr "Lagret"
-
-#~ msgid "Default"
-#~ msgstr "Standard"
-
-#~ msgid "default"
-#~ msgstr "forvalgt"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Videoer utgår etter"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr ""
-#~ "Ikke last ned automatisk når det er mer enn ${maxnew} ${maxnew2} usette "
-#~ "filmer."
-
-#~ msgid "Downloaded"
-#~ msgstr "Lasted ned"
-
-#~ msgid "Recommend"
-#~ msgstr "Anbefal"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "Ser etter filmer på denne adressen"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy kan ikke spille denne filen. Den kan kanskje spilles med et annet "
-#~ "program.<br></br><br></br><strong>Filnavn:</strong> "
-#~ "${filename}<Br></Br><strong>Filtype:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "VIS FIL"
-
-#~ msgid "Play Externally"
-#~ msgstr "Spill av eksternt"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "Hopp over >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "VIS FIL"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "VIS KATALOG"
-
-#~ msgid "SHARE IT"
-#~ msgstr "DEL"
-
-#~ msgid "STAR IT"
-#~ msgstr "MERK"
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "Ventende automatiske nedlastinger"
-
-#~ msgid "Simple translation"
-#~ msgstr "Enkel oversettelse"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "truck stop in a ${can}"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-
-#~ msgid "${size} disk space free"
-#~ msgstr "${size} ledig plass"
-
-#~ msgid "${size} available for downloads"
-#~ msgstr "${size} klar(e) for nedlastning"
-
-#~ msgid "My Collection"
-#~ msgstr "Min samling"
-
-#~ msgid "New Videos"
-#~ msgstr "Nye filmer"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy internett-TV: Hvordan komme i gang"
-
-#~ msgid "GO BIG:"
-#~ msgstr "Fullskjerm:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr "Dette er din fullskjermsknapp. Klikk på den og len deg tilbake."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "NYTT INNHOLD:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "Blå sirkler betyr at kanalen har nye filmer tilgjengelig, grønne sirkler "
-#~ "betyr at du har nedlastede filmer klare til avspilling."
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>Legg til kanaler:</strong> Kanalveilederen er din base for TV-"
-#~ "kanaler på internett. Klikk 'LEGG TIL' for å abonnere på en kanal-- "
-#~ "<strong>kanalene i denne veilederen er gratis.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>Ikke vent:</strong> Democracy er annerledes enn å se filmer på "
-#~ "nettsteder-- utgiverne kan tilby store, høykvalitetsfilmer. Så ikke sitt og "
-#~ "vent på filmer: Start noen nedlastinger og sjekk inn senere."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>La programmet kjøre:</strong> Democracy Player sjekker kanalene "
-#~ "løpende for nye videoer og begynner å hente dem i bakgrunnen. Ved å la "
-#~ "programmet kjøre vil du ha nye videoer klare når du vil se noe."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>Ikke tenk på lagringsplass:</strong> Democracy Player har et "
-#~ "avansert 'utløps'-system som hjelper med å slette gamle videoer så det er "
-#~ "plass til nye. Du kan velge å beholde videoer ved å klikke på 'Lagre' og du "
-#~ "kan sette innstillinger for en kanal slik at videoer lagres automatisk."
-
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr ""
-#~ "${count} kanalmapper valgt<br></br>(inneholder ${containedcount} kanaler)"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count} kanaler valgt"
-
 #~ msgid "outside of democracy."
 #~ msgstr "utenfor Democracy"
 
-#, fuzzy
+#, fuzzy, python-format
 #~ msgid "%0.0fB"
 #~ msgstr "%0.0fB"
+
+#, python-format
+#~ msgid "%s is not a valid URL"
+#~ msgstr "%s er ikke en gyldig URL"
+
+#, python-format
+#~ msgid "Deleting %s"
+#~ msgstr "Sletter %s"
 
 #~ msgid "Remove From My Collection"
 #~ msgstr "Fjern fra Min Samling"
@@ -696,66 +737,12 @@ msgstr ""
 #~ "Du har en database som ble lagret i en nyere versjon av Democracy. Du må "
 #~ "laste ned den nye versjonen av Democracy og kjøre denne."
 
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - Legg til kanal"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - Legg til kanalveileder"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "Skriv inn URL for kanalveilederen du vil legge til"
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr "Du kjører en versjon av Democracy Player med ikke-forvalgte kanaler."
-
-#~ msgid "Channel Guide"
-#~ msgstr "Kanalveileder"
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "Kanalen er ikke kompatibel med Democracy!"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "Men vi vil gjøre vårt beste for å få tak i filene. Det kan ta lenger tid å "
-#~ "liste opp filmene, og beskrivelser kan se merkelige ut. Vennligst kontakt "
-#~ "utgiverne av $url og spør om de kan tilby en mater i et format som vil "
-#~ "fungere med Democracy.\n"
-#~ "\n"
-#~ "Ønsker du å prøve å laste denne kanalen likevel?"
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr ""
-#~ "Denne Democracy-kanalfilen har et ugyldig format: %s. Vennligst gi melding "
-#~ "til utgiveren av denne filen."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Denne Democracy-kanalfilen har feil innholdstype: %s. Vennligst gi melding "
-#~ "til utgiveren av denne filen."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Kunne ikke laste ned Democracy-kanafilen: %s"
-
 #~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
 #~ msgstr ""
 #~ "(Endringer vil ikke tre i kraft før du starter Democracy Player på nytt.)"
 
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>Filmbibliotek</b>"
+#~ msgid "<b>Playback</b>"
+#~ msgstr "<b>Avspilling</b>"
 
 #~ msgid ""
 #~ "<b>Would you like Democracy Player to look for video files on your "
@@ -814,12 +801,6 @@ msgstr ""
 #~ "<b>Finn filmer:</b> Democracys kanalveileder har hundrevis av nettbaserter "
 #~ "TV-kanaler, alle er gratis. Bare klikk \"LEGG TIL\" for å legge til en kanal."
 
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr "Kjør Democracy Player automatisk når jeg logger inn"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy Player"
-
 #~ msgid ""
 #~ "Democracy Player can find all the videos on your computer to help you "
 #~ "organize your collection."
@@ -853,22 +834,114 @@ msgstr ""
 #~ "last ned filmer fra dine favorittkanaler automatisk, se nye filmer én etter "
 #~ "én, last ned \"torrents\", anbefal filmer til venner, og masse mer."
 
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
+#~ msgid "Results for \"${query}\""
+#~ msgstr "Resultater for \"${query}\""
+
+#~ msgid "Empty Playlist"
+#~ msgstr "Tom spilleliste"
+
+#~ msgid "Drag downloaded videos to this playlist to add them."
 #~ msgstr ""
-#~ "Du har valgt en ny mappe å laste ned filmer til. Skal Democracy migrere dine "
-#~ "eksisterende filmer til det nye stedet? (Filmer som lastes ned nå blir ikke "
-#~ "flyttet før de er ferdige.)"
+#~ "Legg til nedlastede videoer til denne spillelisten ved å dra dem hit."
+
+#~ msgid "Empty Playlist Folder"
+#~ msgstr "Tom spilleliste-katalog"
+
+#~ msgid ""
+#~ "This folder contains ${count} playlists, but the playlists do not contain "
+#~ "any items."
+#~ msgstr ""
+#~ "Denne katalogen inneholder ${count} splillelister, men spillelistene er "
+#~ "tomme."
+
+#~ msgid "Drag playlists to this folder to add them."
+#~ msgstr "Legg  til spillelister til denne katalogen ved å dra dem hit."
+
+#~ msgid ""
+#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+#~ "playlists)"
+#~ msgstr ""
+#~ "${count} valgte spilleliste-kataloger <br></br>(inneholder ${containedcount} "
+#~ "spillelister)"
+
+#~ msgid "${count} Playlists Selected"
+#~ msgstr "${count} valgte spillelister"
+
+#~ msgid "SAVED"
+#~ msgstr "LAGRET"
+
+#~ msgid "DELETE"
+#~ msgstr "SLETT"
+
+#~ msgid "default"
+#~ msgstr "forvalgt"
+
+#~ msgid "Videos expire after"
+#~ msgstr "Videoer utgår etter"
+
+#~ msgid ""
+#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+#~ "unwatched."
+#~ msgstr ""
+#~ "Ikke last ned automatisk når det er mer enn ${maxnew} ${maxnew2} usette "
+#~ "filmer."
+
+#~ msgid "Downloaded"
+#~ msgstr "Lasted ned"
+
+#~ msgid ""
+#~ "Democracy can't play this file. You may be able to open it with a different "
+#~ "program.<br></br><br></br><strong>Filename:</strong> "
+#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
+#~ msgstr ""
+#~ "Democracy kan ikke spille denne filen. Den kan kanskje spilles med et annet "
+#~ "program.<br></br><br></br><strong>Filnavn:</strong> "
+#~ "${filename}<Br></Br><strong>Filtype:</strong> ${format}"
+
+#~ msgid "REVEAL FILE"
+#~ msgstr "VIS FIL"
+
+#~ msgid "Skip >> ${countdown}"
+#~ msgstr "Hopp over >> ${countdown}"
+
+#~ msgid "SHOW FILE"
+#~ msgstr "VIS FIL"
+
+#~ msgid "SHOW FOLDER"
+#~ msgstr "VIS KATALOG"
+
+#~ msgid "SHARE IT"
+#~ msgstr "DEL"
+
+#~ msgid "STAR IT"
+#~ msgstr "MERK"
+
+#~ msgid "${size} disk space free"
+#~ msgstr "${size} ledig plass"
+
+#~ msgid "${size} available for downloads"
+#~ msgstr "${size} klar(e) for nedlastning"
+
+#~ msgid ""
+#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+#~ "channels)"
+#~ msgstr ""
+#~ "${count} kanalmapper valgt<br></br>(inneholder ${containedcount} kanaler)"
+
+#~ msgid "${count} Channels Selected"
+#~ msgstr "${count} kanaler valgt"
+
+#~ msgid "Local File"
+#~ msgstr "Lokal fil"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Generelt</b>"
+
+#~ msgid "Automatically run Democracy Player when I log in"
+#~ msgstr "Kjør Democracy Player automatisk når jeg logger inn"
 
 #~ msgid "_Add Directory"
 #~ msgstr "_Legg til katalog"
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr ""
-#~ "og spør om de kan tilby en kanal i et format som vil virke med Democracy."
 
 #~ msgid "Democracy First Time Setup"
 #~ msgstr "Oppsett for Democracy ved første kjøring"
@@ -876,37 +949,6 @@ msgstr ""
 #~ msgid ""
 #~ "Would you like Democracy Player to look for video files on your computer?"
 #~ msgstr "Vil du at Democracy Player skal lete etter filmer på maskinen din?"
-
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName versjon $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-
-#~ msgid "Please help us fix it. Copy and paste all the"
-#~ msgstr "Vennligst hjelp oss fikse det. Kopier og lim inn alle"
-
-#~ msgid ""
-#~ "information into our bug tracker and tell us what you were doing when the"
-#~ msgstr ""
-#~ "informasjonen i vår feilrapporteringsmodul og fortell oss hva det var du "
-#~ "gjorde da"
-
-#~ msgid "problem occurred."
-#~ msgstr "problemet skjedde. (Forklaringen skal være på engelsk.)"
-
-#~ msgid ""
-#~ "Then, please restart Democracy Player (or you may keep getting related "
-#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-#~ "with your help we're fixing problems fast!"
-#~ msgstr ""
-#~ "Så, vennligst start Democracy på nytt (eller du får kanskje liknende feil). "
-#~ "Beklager bryet. Democracy er fortsatt i beta, men med din hjelp får vi "
-#~ "rettet feilene fortere!"
-
-#~ msgid "You found a bug in Democracy!"
-#~ msgstr "Du har funnet en feil i Democracy!"
 
 #, fuzzy
 #~ msgid "A"
@@ -992,173 +1034,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "V"
 #~ msgstr "V"
-
-#, python-format
-#~ msgid "%s requires a username and password for \"%s\"."
-#~ msgstr "%s krever et brukernavn og passord for \"%s\"."
-
-#~ msgid "Not a DTV-style channel"
-#~ msgstr "Ikke en DTV-kanal"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files.\n"
-#~ "- It may take time to list the videos\n"
-#~ "- Descriptions may look funny\n"
-#~ "\n"
-#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
-#~ msgstr ""
-#~ "Men vi vil prøve vårt beste å hente filene.\n"
-#~ "- Det kan ta tid å liste videoene\n"
-#~ "- Beskrivelser vises kanskje med feil\n"
-#~ "\n"
-#~ "Vennligst kontakt utgiverne av %s og spør om de har en DTV-kanal."
-
-#~ msgid "Continue"
-#~ msgstr "Fortsett"
-
-#~ msgid "DTV Version Alert"
-#~ msgstr "DTV versjonalarm"
-
-#~ msgid ""
-#~ "A new version of DTV is available.\n"
-#~ "\n"
-#~ "Would you like to download it now?"
-#~ msgstr ""
-#~ "En ny versjon av DTV er tilgjengelig.\n"
-#~ "\n"
-#~ "Vil du laste den ned nå?"
-
-#~ msgid "DTV Version Check"
-#~ msgstr "DTV versjonsjekk"
-
-#~ msgid "This version of DTV is up to date."
-#~ msgstr "Denne versjonen av DTV er oppdatert."
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s klarte ikke å lagre databasen sin: %s.\n"
-#~ "Siste endringer kan ha blitt tapt."
-
-#~ msgid "Remove Channel"
-#~ msgstr "Fjern kanal"
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to <b>remove</b> the channel\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>This operation cannot be undone.</b>"
-#~ msgstr ""
-#~ "Er du sikker på at du vil <b>fjerne</b> kanalen\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>Denne operasjonen kan ikke angres.</b>"
-
-#~ msgid "_Save Video..."
-#~ msgstr "_Lagre video..."
-
-#~ msgid "_Channel"
-#~ msgstr "_Kanal"
-
-#~ msgid "_Add Channel..."
-#~ msgstr "_Legg til kanal..."
-
-#~ msgid "Pending Manual Download"
-#~ msgstr "Ventende manuelle nedlastinger"
-
-#~ msgid "Save"
-#~ msgstr "Lagre"
-
-#~ msgid "Expires"
-#~ msgstr "Utløper"
-
-#~ msgid "Expiring"
-#~ msgstr "Utløper"
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
-#~ ">></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">AVBRYT INTRODUKSJON: <a style=\"color: #090;\" "
-#~ "href=\"#\" onclick=\"eventURL('action:doneWithIntro');\"Gå til kanalveileder "
-#~ ">></a></strong>"
-
-#~ msgid ""
-#~ "This file type (${format}) can't be played in the main Democracy window."
-#~ msgstr ""
-#~ "Denne filtypen (${format}) kan ikke spilles av i hovedvinduet til Democracy."
-
-#~ msgid "Skip Video ${countdown}"
-#~ msgstr "Hopp over film ${countdown}"
-
-#~ msgid "Active Downloads"
-#~ msgstr "Aktive nedlastinger"
-
-#~ msgid "Auto Download"
-#~ msgstr "Automatisk nedlasting"
-
-#~ msgid "Back to Channel"
-#~ msgstr "Tilbake til kanal"
-
-#~ msgid "Channel Settings"
-#~ msgstr "Kanalinnstillinger"
-
-#~ msgid "Videos expire after:"
-#~ msgstr "Filmer utløper etter:"
-
-#~ msgid "Auto download should:"
-#~ msgstr "Automatisk netlastning skal:"
-
-#~ msgid ""
-#~ "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
-#~ msgstr ""
-#~ "Hvis jeg har ${maxnew} ${maxnew2} filmer som venter, stopp den automatiske "
-#~ "netlastningen av videoer."
-
-#~ msgid "(Keeps channel from hogging disk space)"
-#~ msgstr "(Hindrer kanaler fra å stjele lagringsplass)"
-
-#~ msgid "Channel URL"
-#~ msgstr "Kanal-URL"
-
-#~ msgid "Videos on this Channel"
-#~ msgstr "Videoer i denne kanalen"
-
-#~ msgid "Could not connect to server"
-#~ msgstr "Kunne ikke koble til tjener"
-
-#, python-format
-#~ msgid "Could not connect to server: %s"
-#~ msgstr "Kunne ikke koble til tjener: %s"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "We suggest deleting files from the full disk or simply deleting some movies "
-#~ "from your collection.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s klarte ikke å lagre databasen sin: %s.\n"
-#~ "Vi foreslår å slette filer fra den fulle lagringsområdet eller og enktelt "
-#~ "slette noen videoer fra din samling.\n"
-#~ "Siste endringer kan ha blitt tapt.\n"
-#~ "Avslutt likevel?"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s klarte ikke å lagre databasen sin: %s.\n"
-#~ "Siste endringer kan ha blitt tapt.\n"
-#~ "Avslutt likevel?"
-
-#~ msgid "Store downloaded movies in"
-#~ msgstr "Lagre nedlastede filmer i"
 
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
@@ -1335,7 +1210,7 @@ msgid "Playlists"
 msgstr "Spillelister"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Innstillinger..."
 
 msgid "Previous Video"
 msgstr "Forrige film"
@@ -1861,7 +1736,7 @@ msgstr "Velg en mappe for visning i biblioteket"
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Fullfør"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -2055,7 +1930,7 @@ msgstr "Torrent-filen for dette objektet er slettet "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "utenfor Miro."
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -2234,7 +2109,7 @@ msgstr "Merk som usett"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Merk som sett"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -2421,7 +2296,7 @@ msgstr "Ignorer"
 
 #: ../../portable/dialogs.py:82
 msgid "Submit Crash Report"
-msgstr ""
+msgstr "Send kræsjrapport"
 
 #: ../../portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
@@ -2501,7 +2376,6 @@ msgid "Download already exists"
 msgstr "Nedlastingen finnes allerede"
 
 #: ../../portable/singleclick.py:88
-#, fuzzy
 msgid "That URL is already an external download."
 msgstr "URL-adressen er allerede en ekstern nedlasting."
 
@@ -2537,7 +2411,7 @@ msgid "File Download"
 msgstr "Filnedlasting"
 
 #: ../../portable/singleclick.py:135
-#, fuzzy
+#, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
 msgstr ""
 "Filen på %s ser ikke ut til å være en lydfil, en film eller en RSS-kilde."
@@ -2607,7 +2481,6 @@ msgid "_Open"
 msgstr "_Åpne"
 
 #: ../../portable/menubar.py:145
-#, fuzzy
 msgid "_Download Video"
 msgstr "_Last ned film"
 
@@ -2640,7 +2513,6 @@ msgid "Copy Video _URL"
 msgstr "Kopier film-_URL"
 
 #: ../../portable/menubar.py:156
-#, fuzzy
 msgid "_Options..."
 msgstr "_Alternativer..."
 
@@ -3115,16 +2987,16 @@ msgstr "«%s» er ikke en gyldig URL"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Filen \"%s\" finnes ikke"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Lesefeil"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Feil ved lesing fra \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -3294,12 +3166,12 @@ msgstr "%s er ugyldig. Du må skrive inn et ikke-negativt nummer."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Feil ved visning av fil"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Filen \"%s\" ble slettet utenfra Miro."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -3341,7 +3213,7 @@ msgstr "Skriv inn URL-adressen til filmen du vil laste ned"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Startkanaler"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -3467,7 +3339,6 @@ msgstr ""
 "alle er gratis. Bare trykk «Legg til» for å se på en kanal."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
-#, fuzzy
 msgid "By default, videos _expire after"
 msgstr "Som standard _utgår filmer etter"
 
@@ -3476,7 +3347,6 @@ msgid "C_hannel:"
 msgstr "_Kanal:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
-#, fuzzy
 msgid "C_hannels"
 msgstr "_Kanaler"
 
@@ -3485,22 +3355,18 @@ msgid "C_reate Channel"
 msgstr "_Lag kanal"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
-#, fuzzy
 msgid "Check Channels for _new content"
 msgstr "Sjekk kanaler for _nytt innhold"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
-#, fuzzy
 msgid "Disk _Space"
 msgstr "Lagrings_plass"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
-#, fuzzy
 msgid "Don't start a download _if it leaves less than"
 msgstr "Ikke start en nedlasting _hvis det etterlater mindre enn"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
-#, fuzzy
 msgid "Download at _most"
 msgstr "Last ned _maksimalt"
 
@@ -3515,7 +3381,6 @@ msgstr ""
 "Manuelt"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
-#, fuzzy
 msgid "G_B free"
 msgstr "G_B ledig"
 
@@ -3537,7 +3402,6 @@ msgstr ""
 "organisere samlingen din."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
-#, fuzzy
 msgid "Play _videos one after another"
 msgstr "Spill av _filmer én etter én"
 
@@ -3550,14 +3414,12 @@ msgid "Restrict to my full _home folder"
 msgstr "Begrens til hele _hjemmemappen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
-#, fuzzy
 msgid "S_top after each video"
 msgstr "S_topp etter hver film"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
-#, fuzzy
 msgid "S_tore downloaded videos in this folder:"
-msgstr "L_agre nedlastede filmer i denne mappen:"
+msgstr "L_agre nedlastede filmer i denne katalogen:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
@@ -3584,7 +3446,6 @@ msgstr ""
 "virker best for deg. Her er første spørsmål."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
-#, fuzzy
 msgid "To a_void slowdowns, limit upstream to"
 msgstr "For å unn_gå tregheter, begrens opplasting til"
 
@@ -3627,32 +3488,26 @@ msgid "_Add Folder"
 msgstr "_Legg til mappe"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
-#, fuzzy
 msgid "_Automatically run Miro when I log in"
 msgstr "Kjør Miro _automatisk ved innlogging"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
-#, fuzzy
 msgid "_Bit Torrent uses ports between"
 msgstr "_BitTorrent bruker porter mellom"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
-#, fuzzy
 msgid "_Downloads"
 msgstr "_Nedlastinger"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
-#, fuzzy
 msgid "_Folders"
-msgstr "_Mapper"
+msgstr "_Kataloger"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
-#, fuzzy
 msgid "_General"
 msgstr "_Generelt"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
-#, fuzzy
 msgid "_KB/s when my computer is active"
 msgstr "_KB/s når datamaskinen er i bruk"
 
@@ -3661,7 +3516,6 @@ msgid "_Playback"
 msgstr "_Avspilling"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
-#, fuzzy
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr "_Fortsett avspilling av filmer fra det punktet de er stoppet"
 
@@ -3678,18 +3532,16 @@ msgid "_URL"
 msgstr "_URL"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
-#, fuzzy
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr "_Advar ved forsøk på å avslutte med uferdige nedlastinger"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
-#, fuzzy
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
-msgstr "_Se etter nye filmer i disse mappene og inkluder dem i biblioteket"
+msgstr ""
+"_Se etter nye filmer i disse katalogene og inkluder dem i biblioteket"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
-#, fuzzy
 msgid "_and"
 msgstr "_og"
 
@@ -3905,6 +3757,7 @@ msgstr "Advar meg når jeg prøver å avslutte mens nedlastinger pågår."
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
 msgstr ""
+"Se etter nye filmer i disse katalogene, og legg dem til i biblioteket."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "When I click the red close button:"
@@ -4012,6 +3865,8 @@ msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"$shortAppName-kanalveiledern har hundrevis av internettbaserte TV-kanaler, "
+"og alle er gratis. Trykk \"Legg til\" for å overvåke en kanal."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."

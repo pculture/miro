@@ -1,5 +1,4 @@
 <!ENTITY prefs.title "Voorkeuren">
-<!ENTITY prefs.restart "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
 
 <!ENTITY prefs.run.on.startup "Open $longAppName automatisch na het inloggen.">
 <!ENTITY prefs.close_to_tray_start "Wanneer ik het Miro venster sluit:">
@@ -15,28 +14,33 @@
 <!ENTITY prefs.channels.check.sixty "Elk uur">
 <!ENTITY prefs.channels.check.manually "Handmatig">
 
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Nieuw">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+
 <!ENTITY prefs.playback "Weergave">
 <!ENTITY prefs.playback.remember.pos "Onthoud afspeelpositie video's.">
-<!ENTITY prefs.playback.auto.next.video "Speel video's achtereen af.">
+<!ENTITY prefs.playback.auto.next.video "Video's na elkaar afspelen.">
 <!ENTITY prefs.playback.stop.after.each "Stop na elke video.">
 
 <!ENTITY prefs.folder.movies "Mappen">
 <!ENTITY prefs.folder.downloads "Locatie gedownloade video's:">
-<!ENTITY prefs.folder.change "Wijzig...">
+<!ENTITY prefs.folder.change "Wijzigen...">
 
 <!ENTITY prefs.folder.others.caption "Monitor locaties voor nieuwe video's en voeg toe aan Bibliotheek.">
 <!ENTITY prefs.folder.others.location "Map">
 <!ENTITY prefs.folder.others.shown "Toon als kanaal">
 <!ENTITY prefs.folder.others.add "Voeg Map Toe...">
-<!ENTITY prefs.folder.others.remove "Verwijder">
+<!ENTITY prefs.folder.others.remove "Verwijderen">
 
-<!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Beperk downloads tot">
-<!ENTITY prefs.downloads.max.part2 "video's.">
+<!ENTITY prefs.downloads "Downloads" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Vrije Ruimte">
-<!ENTITY prefs.disk.space.min.part1 "Stop downloads en behoud ten minste">
-<!ENTITY prefs.disk.space.min.part2 "GB vrij.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "NB: De wijzigingen in $longAppName gaan in wanneer u deze opnieuw opent.">
 
 <!ENTITY prefs.videos.expire "Standaard vervallen video's na">
@@ -49,7 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Voorkom internetvertragingen, beperk uploads indien mijn computer actief is.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Beperk uploads (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Gebruik BitTorrentpoorten tussen">
-<!ENTITY prefs.torrent.uses.ports.part2 "en">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

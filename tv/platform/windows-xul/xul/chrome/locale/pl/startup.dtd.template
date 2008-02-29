@@ -2,52 +2,52 @@
 <!ENTITY rsaquo				"&quot;">
 
 <!ENTITY startup.title			"Pierwsze uruchomienie $shortAppName">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Czy chcesz uruchamiać $shortAppName przy starcie systemu?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Czy chcesz by $longAppName przeszukał twój komputer w poszukiwaniu plików wideo?">
-<!ENTITY startup.search.restrict	"Ogranicz do moich osobistych plików.">
-<!ENTITY startup.search.custom          "Przeszukaj inny katalog:">
-<!ENTITY startup.search.searching	"Szukanie filmów">
+<!ENTITY startup.description		"W następnych oknach można dostosować $longAppName według własnych potrzeb i upodobań.">
+<!ENTITY startup.autostart.description	"Zaleca się, aby $longAppName był uruchamiany podczas startu komputera. Dzięki temu będzie można kontynuować w tle, przerwane pobieranie plików oraz pobieranie nowych, a po zakończeniu pobierania będą gotowe do odtwarzania.">
+<!ENTITY startup.autostart.question	"Czy chcesz, aby $shortAppName był uruchamiany podczas startu komputera?">
+<!ENTITY startup.search.description	"Aby pomóc w zorganizowaniu kolekcji, $longAppName może wyszukać wszystkie pliki wideo na tym komputerze.">
+<!ENTITY startup.search.question        "Czy chcesz, aby $longAppName przeszukał twój komputer w poszukiwaniu plików wideo?">
+<!ENTITY startup.search.restrict	"Ogranicz do wszystkich plików osobistych.">
+<!ENTITY startup.search.custom          "Przeszukaj inny folder:">
+<!ENTITY startup.search.searching	"Szukanie wideo">
 <!ENTITY startup.change	                "Zmień">
-<!ENTITY startup.cancel	                "Cancel Search">
+<!ENTITY startup.cancel	                "Anuluj wyszukiwanie">
 <!ENTITY startup.undo	                "Wyczyść wyszukiwanie">
 <!ENTITY startup.done1			"Gotowe!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Zostaw włączony:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
+<!ENTITY startup.done3.text		"$longAppName regularnie sprawdza kanały w poszukiwaniu nowych plików wideo i pobiera je w tle. Pozostawiając go włączonym zawsze będziesz mieć najnowszą wersję danego wideo.">
 <!ENTITY startup.done4.heading		"Nie martw się o miejsce na dysku:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
+<!ENTITY startup.done4.text		"Tak jak TiVo, $longAppName obsługuje funkcję &quot;przeterminowania&quot;, która pomaga usuwać starsze wersje plików wideo, aby zrobić miejsce dla nowych. Zawsze możesz zachować wideo na stałe, klikając przycisk &quot;Zapisz&quot;. Możesz także zmienić ustawienia danego kanału, aby pliki w tym kanale były zapisywane automatycznie.">
 <!ENTITY startup.done5.heading		"Idź na całość:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Znajdź filmy:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done5.text		"Przycisk po prawej stronie przycisku odtwarzania pokazuje wideo w trybie pełnoekranowym.">
+<!ENTITY startup.done6.heading		"Znajdź wideo:">
+<!ENTITY startup.done6.text		"Spis kanałów $shortAppName zawiera setki internetowych kanałów TV. Wszystkie są darmowe. Wystarczy kliknąć &quot;Dodaj&quot;, aby obejrzeć dany kanał.">
 <!ENTITY startup.answer.yes		"Tak">
 <!ENTITY startup.answer.no		"Nie">
 <!ENTITY startup.title			"Pierwsze uruchomienie $shortAppName">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Czy chcesz uruchamiać $shortAppName przy starcie systemu?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Czy chcesz by $longAppName przeszukał twój komputer w poszukiwaniu plików wideo?">
-<!ENTITY startup.search.restrict	"Ogranicz do moich osobistych plików.">
-<!ENTITY startup.search.custom          "Przeszukaj inny katalog:">
-<!ENTITY startup.search.searching	"Szukanie filmów">
+<!ENTITY startup.description		"W następnych oknach można dostosować $longAppName według własnych potrzeb i upodobań.">
+<!ENTITY startup.autostart.description	"Zaleca się, aby $longAppName był uruchamiany podczas startu komputera. Dzięki temu będzie można kontynuować w tle, przerwane pobieranie plików oraz pobieranie nowych, a po zakończeniu pobierania będą gotowe do odtwarzania.">
+<!ENTITY startup.autostart.question	"Czy chcesz, aby $shortAppName był uruchamiany podczas startu komputera?">
+<!ENTITY startup.search.description	"Aby pomóc w zorganizowaniu kolekcji, $longAppName może wyszukać wszystkie pliki wideo na tym komputerze.">
+<!ENTITY startup.search.question        "Czy chcesz, aby $longAppName przeszukał twój komputer w poszukiwaniu plików wideo?">
+<!ENTITY startup.search.restrict	"Ogranicz do wszystkich plików osobistych.">
+<!ENTITY startup.search.custom          "Przeszukaj inny folder:">
+<!ENTITY startup.search.searching	"Szukanie wideo">
 <!ENTITY startup.change	                "Zmień">
-<!ENTITY startup.cancel	                "Cancel Search">
+<!ENTITY startup.cancel	                "Anuluj wyszukiwanie">
 <!ENTITY startup.undo	                "Wyczyść wyszukiwanie">
 <!ENTITY startup.done1			"Gotowe!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Zostaw włączony:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
+<!ENTITY startup.done3.text		"$longAppName regularnie sprawdza kanały w poszukiwaniu nowych plików wideo i pobiera je w tle. Pozostawiając go włączonym zawsze będziesz mieć najnowszą wersję danego wideo.">
 <!ENTITY startup.done4.heading		"Nie martw się o miejsce na dysku:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
+<!ENTITY startup.done4.text		"Tak jak TiVo, $longAppName obsługuje funkcję &quot;przeterminowania&quot;, która pomaga usuwać starsze wersje plików wideo, aby zrobić miejsce dla nowych. Zawsze możesz zachować wideo na stałe, klikając przycisk &quot;Zapisz&quot;. Możesz także zmienić ustawienia danego kanału, aby pliki w tym kanale były zapisywane automatycznie.">
 <!ENTITY startup.done5.heading		"Idź na całość:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Znajdź filmy:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done5.text		"Przycisk po prawej stronie przycisku odtwarzania pokazuje wideo w trybie pełnoekranowym.">
+<!ENTITY startup.done6.heading		"Znajdź wideo:">
+<!ENTITY startup.done6.text		"Spis kanałów $shortAppName zawiera setki internetowych kanałów TV. Wszystkie są darmowe. Wystarczy kliknąć &quot;Dodaj&quot;, aby obejrzeć dany kanał.">
 <!ENTITY startup.answer.yes		"Tak">
 <!ENTITY startup.answer.no		"Nie">

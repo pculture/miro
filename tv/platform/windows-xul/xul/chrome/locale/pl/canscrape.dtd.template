@@ -2,12 +2,12 @@
 <!ENTITY rsaquo              "&quot;">
 
 <!ENTITY canscrape.title     "Kanał jest niekompatybilny z $shortAppName!">
-<!ENTITY canscrape.body      "Spróbujemy ściągnąć pliki. Wyświetlanie listy filmów może zająć więcej czasu, a opisy mogą wyglądać dziwnie.">
+<!ENTITY canscrape.body      "Spróbujemy pobrać pliki. Wyświetlanie listy wideo może zająć trochę czasu, a opisy mogą wyglądać dziwnie.">
 
-<!ENTITY canscrape.prefix    "Skontatkuj się z wydawcą">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
+<!ENTITY canscrape.prefix    "Skontaktuj się z wydawcą">
+<!ENTITY canscrape.suffix    "i zapytaj, czy jest możliwość udostępnienia plików w formacie, który będzie obsługiwany przez $shortAppName">
 <!ENTITY canscrape.title     "Kanał jest niekompatybilny z $shortAppName!">
-<!ENTITY canscrape.body      "Spróbujemy ściągnąć pliki. Wyświetlanie listy filmów może zająć więcej czasu, a opisy mogą wyglądać dziwnie.">
+<!ENTITY canscrape.body      "Spróbujemy pobrać pliki. Wyświetlanie listy wideo może zająć trochę czasu, a opisy mogą wyglądać dziwnie.">
 
-<!ENTITY canscrape.prefix    "Skontatkuj się z wydawcą">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
+<!ENTITY canscrape.prefix    "Skontaktuj się z wydawcą">
+<!ENTITY canscrape.suffix    "i zapytaj, czy jest możliwość udostępnienia plików w formacie, który będzie obsługiwany przez $shortAppName">

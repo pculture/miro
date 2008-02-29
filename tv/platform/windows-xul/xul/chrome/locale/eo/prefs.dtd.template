@@ -1,5 +1,4 @@
-<!ENTITY prefs.title "Options">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.title "Opcioj">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "When I click the red close button:">
@@ -10,14 +9,19 @@
 <!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
 <!ENTITY prefs.channels "Kanaloj">
-<!ENTITY prefs.channels.check "Check channels for new content">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
+<!ENTITY prefs.channels.check "Kontroli kanaloj por nova enhavo">
+<!ENTITY prefs.channels.check.thirty "Je ĉiuj 30 minutoj">
+<!ENTITY prefs.channels.check.sixty "Ĉiuhore">
 <!ENTITY prefs.channels.check.manually "Permane">
+
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Nova">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
 
 <!ENTITY prefs.playback "Listo de muzikpeco">
 <!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
+<!ENTITY prefs.playback.auto.next.video "Ludi videojn unu post alian.">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
 <!ENTITY prefs.folder.movies "Dosierujoj">
@@ -25,18 +29,18 @@
 <!ENTITY prefs.folder.change "Ŝanĝi...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
+<!ENTITY prefs.folder.others.location "Dosierujo">
 <!ENTITY prefs.folder.others.shown "Show as a Channel">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.add "Aldoni Dosierujon...">
 <!ENTITY prefs.folder.others.remove "Forigi">
 
-<!ENTITY prefs.downloads.max "Elŝutoj">
-<!ENTITY prefs.downloads.max.part1 "Elŝuti maksimume">
-<!ENTITY prefs.downloads.max.part2 "videos at once.">
+<!ENTITY prefs.downloads "Elŝutoj" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Diskspaco">
-<!ENTITY prefs.disk.space.min.part1 "Ne komencu elŝutadon se lasas malpli ol">
-<!ENTITY prefs.disk.space.min.part2 "GB liberaj.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "Videoj estas aŭtomate eksigataj post">
@@ -49,7 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "kaj">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

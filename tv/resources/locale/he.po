@@ -8,15 +8,53 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-09-19 11:27+0000\n"
-"Last-Translator: momi <mopr@walla.com>\n"
+"PO-Revision-Date: 2008-02-01 11:59+0000\n"
+"Last-Translator: Eyal Levin <eyalev@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#, fuzzy
+#~ msgid "Save this video"
+#~ msgstr "שמור את הוידאו הזה"
+
+#, fuzzy
+#~ msgid "_Play / Pause"
+#~ msgstr "_נגן \\ הפסק"
+
+#~ msgid "_Remove Channel"
+#~ msgstr "_הסר ערוץ"
+
+#~ msgid "_Update Channel"
+#~ msgstr "_עדכן ערוץ"
+
+#~ msgid "_Open..."
+#~ msgstr "_פתח..."
+
+#~ msgid "Open various files"
+#~ msgstr "פתח מגוון קבצים"
+
+#~ msgid "Quit the Program"
+#~ msgstr "צא מהתכנית"
+
+#~ msgid "My Collection"
+#~ msgstr "האוסף שלי"
+
+#~ msgid "New Videos"
+#~ msgstr "וידיאוים חדשים"
+
+#~ msgid "Democracy - External Playback Template"
+#~ msgstr "דמוקרטיה - תבנית ניגון נוספת"
+
+#~ msgid "Continue To Next Video"
+#~ msgstr "המשך לוידאו הבא"
+
+#~ msgid "Recommend"
+#~ msgstr "מומלץ"
 
 #~ msgid "About Democracy"
 #~ msgstr "אודות נגן דמוקרטיה"
@@ -29,12 +67,6 @@ msgstr ""
 
 #~ msgid "Hide Democracy"
 #~ msgstr "הסתר דמוקרטיה"
-
-#~ msgid "New Channel Guide..."
-#~ msgstr "מדריך ערוץ חדש..."
-
-#~ msgid "Preferencesâ¦"
-#~ msgstr "העדפות"
 
 #, fuzzy
 #~ msgid "Quit Democracy"
@@ -66,55 +98,45 @@ msgstr ""
 #~ "המסכים הבאים יעזרו לך להגדיר את נגן דמוקרטיה בצורה הטובה ביותר עבורך. הנה "
 #~ "השאלה הראשונה."
 
-#, fuzzy
-#~ msgid "Save this video"
-#~ msgstr "שמור את הוידאו הזה"
+#~ msgid "1 Download in Progress"
+#~ msgstr "הורדה אחת בתהליך"
 
-#, fuzzy
-#~ msgid "_Play / Pause"
-#~ msgstr "_נגן \\ הפסק"
+#~ msgid "Looking for videos at this URL"
+#~ msgstr "חפש וידיאוים בכתובת הזאת"
 
-#~ msgid "_Update Channel"
-#~ msgstr "_עדכן ערוץ"
+#~ msgid "SAVE"
+#~ msgstr "שמור"
+
+#~ msgid "New Channel Guide..."
+#~ msgstr "מדריך ערוץ חדש..."
 
 #~ msgid "Re_name Channel"
 #~ msgstr "_שנה שם ערוץ"
 
-#~ msgid "_Remove Channel"
-#~ msgstr "_הסר ערוץ"
-
-#~ msgid "_Open..."
-#~ msgstr "_פתח..."
-
-#~ msgid "Open various files"
-#~ msgstr "פתח מגוון קבצים"
-
 #~ msgid "New _Playlist..."
 #~ msgstr "רשימת השמעה_חדשה..."
-
-#~ msgid "Quit the Program"
-#~ msgstr "צא מהתכנית"
 
 #~ msgid "Delete selection"
 #~ msgstr "מחק בחירה"
 
-#~ msgid "SAVE"
-#~ msgstr "שמור"
+#~ msgid "outside of democracy."
+#~ msgstr "מחוץ לדמוקרטיה"
+
+#~ msgid "Remove From My Collection"
+#~ msgstr "הסר מהאוסף שלי"
+
+#~ msgid ""
+#~ "You have a database that was saved with a newer version of Democracy. You "
+#~ "must download the latest version of Democracy and run that."
+#~ msgstr ""
+#~ "יש לך מסד נתונים שנשמר עם גירסא חדשה יותר של דמוקרטיה . אתה חייב להוריד את "
+#~ "הגירסא החדשה של דמוקרטיה בשביל להריץ את זה."
 
 #~ msgid "SAVED"
 #~ msgstr "שמור"
 
 #~ msgid "DELETE"
 #~ msgstr "מחק"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "דמוקרטיה - תבנית ניגון נוספת"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "המשך לוידאו הבא"
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "הורדה אחת בתהליך"
 
 #~ msgid "Videos expire after"
 #~ msgstr "וידאוים פג תוקפם אחרי"
@@ -125,14 +147,8 @@ msgstr ""
 #~ msgid "Downloaded"
 #~ msgstr "הורד"
 
-#~ msgid "Recommend"
-#~ msgstr "מומלץ"
-
 #~ msgid "<label for=\"automatic\">Auto Download</label>"
 #~ msgstr "הורדה אוטומתית"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "חפש וידיאוים בכתובת הזאת"
 
 #, fuzzy
 #~ msgid "REVEAL FILE"
@@ -147,73 +163,6 @@ msgstr ""
 #~ msgid "Drag channels to this folder to add them."
 #~ msgstr "גרור ערוצים לתייקה הזאת בשביל להוסיף אותם"
 
-#~ msgid "My Collection"
-#~ msgstr "האוסף שלי"
-
-#~ msgid "New Videos"
-#~ msgstr "וידיאוים חדשים"
-
-#~ msgid "outside of democracy."
-#~ msgstr "מחוץ לדמוקרטיה"
-
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%s כתובת לא תקינה"
-
-#~ msgid "Remove From My Collection"
-#~ msgstr "הסר מהאוסף שלי"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr "אתם רוצים להסיר את התיקייה אם רק להסיר אותה מהאוסף שלי?"
-
-#~ msgid ""
-#~ "You have a database that was saved with a newer version of Democracy. You "
-#~ "must download the latest version of Democracy and run that."
-#~ msgstr ""
-#~ "יש לך מסד נתונים שנשמר עם גירסא חדשה יותר של דמוקרטיה . אתה חייב להוריד את "
-#~ "הגירסא החדשה של דמוקרטיה בשביל להריץ את זה."
-
-#, python-format
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d download still in progress."
-#~ msgstr[0] "יש לכם %d הורדה עדיין פעיל"
-#~ msgstr[1] "יש לכם %d הורדות עדיין פעיללות"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>ערוצים</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>במקום בדיסק</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>הורדות</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b/>כללי<b>"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>השמעה</b>"
-
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "ביטורנט ישתמש בפורטים בין"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "בדיקת תוכן חדש בערוצים"
-
-#~ msgid "GB free"
-#~ msgstr "GB פנוי"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s כשהמחשב שלי פעיל"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "על מנת להימנע מהאטה, הגבל העלה ל"
-
-#~ msgid "_Store downloaded videos in this folder:"
-#~ msgstr "_אחסון כל קטעי הווידאו שירדו לתיקייה הזאת:"
-
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
 msgstr "ביטול"
@@ -223,7 +172,7 @@ msgstr "אישור"
 
 #: ../../portable/dialogs.py:76
 msgid "Ok"
-msgstr "אוקי"
+msgstr "אישור"
 
 msgid "$log"
 msgstr "$log"
@@ -271,7 +220,7 @@ msgid "Add Guide..."
 msgstr "הוסף מדריך..."
 
 msgid "Bring All to Front"
-msgstr "קדם הכל לפנים"
+msgstr "קדם הכל לחזית"
 
 #: ../../platform/osx/frontend/Preferences.py:65
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
@@ -291,10 +240,10 @@ msgid "Copy"
 msgstr "העתק"
 
 msgid "Copy Channel URL"
-msgstr "העתק כתובת האינטרנט של הערוץ"
+msgstr "העתק כתובת הערוץ"
 
 msgid "Copy Video URL"
-msgstr "העתק כתובת האינטרנט של הוידאו"
+msgstr "העתק כתובת וידאו"
 
 msgid "Cut"
 msgstr "גזור"
@@ -313,7 +262,7 @@ msgid "Edit"
 msgstr "ערוך"
 
 msgid "Export Channels (OPML)..."
-msgstr "יצא ערוץ (OPML)..."
+msgstr "יצא ערוצים (OPML)..."
 
 msgid "File"
 msgstr "קובץ"
@@ -362,10 +311,10 @@ msgid "New Search Channel..."
 msgstr "ערוץ חיפוש חדש..."
 
 msgid "Next Video"
-msgstr "וידאו הבא"
+msgstr "הוידאו הבא"
 
 msgid "Open Recent"
-msgstr "פתח אחרונים"
+msgstr "נפתח לאחרונה"
 
 msgid "Open..."
 msgstr "פתח..."
@@ -386,7 +335,7 @@ msgid "Playlists"
 msgstr "רשימות השמעה"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "העדפות..."
 
 msgid "Previous Video"
 msgstr "וידאו קודם"
@@ -910,7 +859,7 @@ msgstr "בחירת תיקייה לצפייה בספרייה"
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "סיום"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1106,7 +1055,7 @@ msgstr "קובץ טורנט בשביל פריט זה נמחק "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "מחוץ למירו"
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -1284,7 +1233,7 @@ msgstr "סימון כלא ניצפה"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "סמן כנצפה"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -2153,16 +2102,16 @@ msgstr "\"%s\" אינה כתובת אינטרנט תקינה"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "הקובץ: \"%s\" אינו קיים"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "שגיאה בקריאה"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "שגיאה בזמן קריאה מ- \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -2328,12 +2277,12 @@ msgstr "%s לא תקין.  אתם ייבים להכניס מספר חיובי."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "שגיאה בחשיפת קובץ"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "הקובץ \"%s\" נמחק מחוץ למירו"
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -2375,7 +2324,7 @@ msgstr "הכנס כתובת אינטרנט של וידאו להורדה"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "ערוצי התחלה"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"

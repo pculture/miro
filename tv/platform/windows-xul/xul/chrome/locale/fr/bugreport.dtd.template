@@ -4,4 +4,4 @@ information into our bug tracker and tell us what you were doing when the
 problem occurred.">
 <!ENTITY bugreport.openbugtracker "Ouvrir le système de rapport de bug">
 <!ENTITY bugreport.copytoclipboard "Copier les messages dans le presse-papiers">
-<!ENTITY bugreport.pleaserestart "Redémarrez $longAppName (ou vous pourriez continuer à avoir des erreurs du même genre). Nous sommes désolés pour le dérangement. $longAppName est toujours en version béta, mais, mais avec votre aide, nous réglerons les problèmes rapidement !">
+<!ENTITY bugreport.pleaserestart "Ensuite, redémarrez $longAppName (pour éviter d'avoir de nouveau des erreurs du même genre). Nous sommes désolés pour le dérangement. $longAppName est toujours en version béta, mais, mais avec votre aide, nous réglerons les problèmes rapidement !">

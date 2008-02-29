@@ -3,82 +3,400 @@ msgstr ""
 "Project-Id-Version: Democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-16 21:21+0000\n"
-"Last-Translator: Riccardo <etms51@gmail.com>\n"
+"PO-Revision-Date: 2008-01-22 19:01+0000\n"
+"Last-Translator: Matteo Ferrabone <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Preferenze"
+#~ msgid "_Save Video..."
+#~ msgstr "_Salva video..."
+
+#~ msgid "Save this video"
+#~ msgstr "Salva questo video."
+
+#~ msgid "_Play / Pause"
+#~ msgstr "_Riproduci / Pausa"
+
+#~ msgid "_Remove Channel"
+#~ msgstr "_Rimuovi canale"
+
+#~ msgid "_Update Channel"
+#~ msgstr "Aggiorna canale"
+
+#~ msgid "_Open..."
+#~ msgstr "_Apri..."
+
+#~ msgid "Open various files"
+#~ msgstr "Apri più file"
+
+#~ msgid "P_references"
+#~ msgstr "P_referenze"
+
+#~ msgid "Quit the Program"
+#~ msgstr "Esci dal programma"
+
+#~ msgid "_Channel"
+#~ msgstr "_Canale"
+
+#~ msgid "_Add Channel..."
+#~ msgstr "_Aggiungi canale..."
+
+#~ msgid "U_pdate All Channels"
+#~ msgstr "A_ggiorna tutti i canali"
+
+#, python-format
+#~ msgid "%s requires a username and password for \"%s\"."
+#~ msgstr "%s richiede un Nome utente e password per \"%s\"."
+
+#~ msgid "Not a DTV-style channel"
+#~ msgstr "Non è un canale \"stile RBDC\""
 
 #~ msgid ""
-#~ "You're done!\n"
+#~ "But we'll try our best to grab the files.\n"
+#~ "- It may take time to list the videos\n"
+#~ "- Descriptions may look funny\n"
 #~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "Don't Wait: Miro is different than watching webpage videos -- publishers can "
-#~ "offer big, high quality videos. So don't sit around waiting for videos: "
-#~ "start some downloads and check back later. \n"
-#~ "\n"
-#~ "Leave it On: Miro regularly checks channels for new videos and downloads in "
-#~ "the background. Leaving it running means you'll have new videos when you're "
-#~ "ready to watch.\n"
-#~ "\n"
-#~ "Don't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' "
-#~ "system that helps clean out older videos to make room for new videos. You "
-#~ "can always keep a video permanently by clicking 'save' and you can set a "
-#~ "channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
-#~ "\n"
-#~ "Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
-#~ "them are free. Just click 'ADD' to watch a channel.\n"
+#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
 #~ msgstr ""
-#~ "Fatto!\n"
+#~ "Proverò comunque a scaricare i file. Attenzione:\n"
+#~ "- Ci potrebbe volere un po' di tempo a mostrare la lista dei video;\n"
+#~ "- Le descrizioni possono apparire in modo strano.\n"
 #~ "\n"
-#~ "La configurazione è terminata -- adesso puoi scegliere i canali e comnciare "
-#~ "a guardare nuovi video.\n"
-#~ "\n"
-#~ "Non attendere: la filosofia di Miro è differente da quela di vedere video "
-#~ "sul web -- chi pubblica offre video di elevate dimensioni e di qualità "
-#~ "elevata. Quindi non attendere il download di ogni video: fai partire il "
-#~ "dowload di più video e torna più tardi a guardarli. \n"
-#~ "\n"
-#~ "Lascialo attivo: Miro controlla regolarmente i canali e i download mentre è "
-#~ "attivo anche se nacosto. Lasciarlo attivo significa che avrai nuovi video "
-#~ "quando sarai pronto a guardarli.\n"
-#~ "\n"
-#~ "Non preoccuparti dello spazio sul disco: Miro, come TiVo, implementa un "
-#~ "sistema di 'scadenze' che automaticamente cancella i vecchi video in modo da "
-#~ "fare spazio per quelli nuovi. Puoi comunque tenere un video cliccando "
-#~ "'salva' ed è possibile settare i canali in modo che salvino automaticamente "
-#~ "i video.\n"
-#~ "\n"
-#~ "Espanditi: Il bottone alla destra del tasto play mostra il video a schermo "
-#~ "pieno.\n"
-#~ "\n"
-#~ "Cerca i video: La Guida di Miro contiene centinaia di canali di internet TV "
-#~ "tutti gratuiti. È sufficiente cliccare su 'AGGIUNGI' per vedere un canale.\n"
+#~ "Per risolvere, contatta gli editori dei %s e chiedi se hanno un canale stile "
+#~ "DTV."
 
-#~ msgid "outside of democracy."
-#~ msgstr "fuori da democracy"
+#~ msgid "Continue"
+#~ msgstr "Continua"
 
-#~ msgid "News and Tech"
-#~ msgstr "Novità e Tecnologia"
+#~ msgid "DTV Version Alert"
+#~ msgstr "Avviso: Nuova versione di RBDC Player"
 
-#~ msgid "Entertainment"
-#~ msgstr "Intrattenimento"
+#~ msgid ""
+#~ "A new version of DTV is available.\n"
+#~ "\n"
+#~ "Would you like to download it now?"
+#~ msgstr ""
+#~ "Una nuova versione di RBDC Player è disponibile.\n"
+#~ "\n"
+#~ "Vuoi scaricarla ora?"
 
-#~ msgid "High-Def"
-#~ msgstr "Alta definizione"
+#~ msgid "DTV Version Check"
+#~ msgstr "Controllo Versione RBDC Player"
 
-#~ msgid "Mac"
-#~ msgstr "Mac"
+#~ msgid "This version of DTV is up to date."
+#~ msgstr "Questa versione di DTV è aggiornata."
+
+#, python-format
+#~ msgid ""
+#~ "%s was unable to save its database: %s.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%s non è riuscito a salvare il proprio database: %s.\n"
+#~ "Gli ultimi cambiamenti possono essere andati persi."
+
+#~ msgid "Remove Channel"
+#~ msgstr "Rimuovi Canale"
+
+#, python-format
+#~ msgid ""
+#~ "Are you sure you want to <b>remove</b> the channel\n"
+#~ "   '<b>%s</b>'?\n"
+#~ "<b>This operation cannot be undone.</b>"
+#~ msgstr ""
+#~ "Sicuro di voler <b>rimuovere</b> il canale\n"
+#~ "   '<b>%s</b>'?\n"
+#~ "<b>Questa operazione non potrà essere annullata.</b>"
+
+#, python-format
+#~ msgid "You have %d download%s still in progress."
+#~ msgstr "Hai %d scaricamenti%s still in progress."
+
+#~ msgid "Pending Auto Download"
+#~ msgstr "Scaricamenti automatici in attesa"
+
+#, fuzzy
+#~ msgid "Pending Manual Download"
+#~ msgstr "In attesa di download manuale"
+
+#~ msgid "Unwatched"
+#~ msgstr "Non visto"
+
+#~ msgid "Save"
+#~ msgstr "Salva"
+
+#~ msgid "Expires"
+#~ msgstr "Scade il"
+
+#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
+#~ msgstr ""
+#~ "Nienete da mostrare.<br></br> Immetti una richiesta nel campo di ricerca "
+#~ "sottostante."
+
+#~ msgid "Searching..."
+#~ msgstr "Ricerca in corso..."
+
+#~ msgid "Channel Guide"
+#~ msgstr "Channel Guide"
+
+#~ msgid "My Collection"
+#~ msgstr "La mia collezione"
+
+#~ msgid "New Videos"
+#~ msgstr "Nuovi Video"
+
+#~ msgid "Democracy - External Playback Template"
+#~ msgstr "Democracy - Template per la riproduzione esterna"
+
+#~ msgid "Continue To Next Video"
+#~ msgstr "Continua con il prossimo video"
+
+#~ msgid "Auto Download"
+#~ msgstr "Scaricamento automatico"
+
+#~ msgid "Recommend"
+#~ msgstr "Consiglia"
+
+#~ msgid "Back to Channel"
+#~ msgstr "Torna al canale"
+
+#~ msgid "Channel Settings"
+#~ msgstr "Impostazioni canale"
+
+#~ msgid "Videos expire after:"
+#~ msgstr "I video scadono tra:"
+
+#~ msgid "Default"
+#~ msgstr "Predefinito"
+
+#~ msgid "Auto download should:"
+#~ msgstr "Lo scaricamento automatico dovrebbe:"
+
+#~ msgid ""
+#~ "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
+#~ msgstr ""
+#~ "Se ho ${maxnew} ${maxnew2} video in attesa, non scaricarne automaticamente "
+#~ "altri."
+
+#~ msgid "(Keeps channel from hogging disk space)"
+#~ msgstr "(Evita che il canale finisca lo spazio su disco)"
+
+#~ msgid "Channel URL"
+#~ msgstr "URL canale"
+
+#~ msgid "Videos on this Channel"
+#~ msgstr "Video in questo Canale"
+
+#~ msgid "Watched"
+#~ msgstr "Già visto"
+
+#~ msgid "Saved"
+#~ msgstr "Salvato"
+
+#~ msgid "Feed Title"
+#~ msgstr "Titolo Feed"
+
+#~ msgid ""
+#~ "This file type (${format}) can't be played in the main Democracy window."
+#~ msgstr ""
+#~ "Questo tipo di file (${format}) non può essere riprodotto nella finestra "
+#~ "principale di Democracy."
+
+#~ msgid "Play Externally"
+#~ msgstr "Riproduci all'esterno"
+
+#~ msgid "Skip Video ${countdown}"
+#~ msgstr "Salta video ${countdown}"
+
+#~ msgid "Simple translation"
+#~ msgstr "Traduzione semplice"
+
+#~ msgid "truck stop in a ${can}"
+#~ msgstr "Il camion si ferma in un ${can}"
+
+#~ msgid ""
+#~ "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> "
+#~ "text</span>"
+#~ msgstr ""
+#~ "Questa è una ${car} e questo è un ${truck} <span> Questo testo è un testo "
+#~ "<b>grezzo</b></span>"
+
+#~ msgid "Active Downloads"
+#~ msgstr "Scaricamenti attivi"
+
+#~ msgid "Expiring"
+#~ msgstr "In scadenza"
+
+#~ msgid "Democracy Internet TV: How to Get Started"
+#~ msgstr "Democracy Internet TV: come iniziare"
+
+#~ msgid "GO BIG:"
+#~ msgstr "INGRANDISCI:"
+
+#~ msgid "This is your fullscreen button. Click it and lean back."
+#~ msgstr ""
+#~ "Questo è il pulsante per lo schermo intero. Cliccalo e mettiti comodo."
+
+#~ msgid "NEW STUFF:"
+#~ msgstr "NOVITÀ:"
+
+#~ msgid ""
+#~ "Blue circles mean the channel has new videos available, green circles mean "
+#~ "you have downloaded videos ready to watch."
+#~ msgstr ""
+#~ "I bollini blu indicano che il canale hanuovi video disponibili, i bollini "
+#~ "verdi indicano che i video scaricati sono pronti per essere guardati."
+
+#~ msgid ""
+#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
+#~ "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
+#~ ">></a></strong>"
+#~ msgstr ""
+#~ "<strong i18n:translate=\"\">SALTA INTRODUZIONE: <a style=\"color: #090;\" "
+#~ "href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Vai alla Channel "
+#~ "Guide >></a></strong>"
+
+#~ msgid ""
+#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
+#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+#~ "channels in the guide are free.</strong>"
+#~ msgstr ""
+#~ "<strong>Aggiungi i Canali:</strong> La Channel Guide è la tua guida per i "
+#~ "canali della Internet TV. Clicca 'AGGIUNGI' per sottoscrivere il canale-- "
+#~ "<strong>i canali della Channel Guide sono gratuiti.</strong>"
+
+#~ msgid ""
+#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
+#~ "waiting for videos: start some downloads and check back later."
+#~ msgstr ""
+#~ "<strong>Non Aspettare:</strong> Democracy non è come guardare video dalle "
+#~ "pagine web -- gli editori possono offrire grandi video ad alta qualità. "
+#~ "Quindi non stare ad aspettare i video: comincia qualche scaricamento e torna "
+#~ "a controllare più tardi."
+
+#~ msgid ""
+#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
+#~ "new videos and downloads in the background. Leaving it running means you'll "
+#~ "have new videos when you're ready to watch."
+#~ msgstr ""
+#~ "<strong>Lascialo Acceso:</strong> Democracy Player controlla periodicamente "
+#~ "i canali e scarica i nuovi video automaticamente. Lasciarlo in esecuzione "
+#~ "significa avere i nuovi video già pronti quando avrai voglia di vederli."
+
+#~ msgid ""
+#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
+#~ "features an 'expiration' system that helps clean out older videos to make "
+#~ "room for new videos. You can always keep a video permanently by clicking "
+#~ "'save' and you can set a channel's settings to save videos automatically."
+#~ msgstr ""
+#~ "<strong>Non Preoccuparti dello Spazio su Disco:</strong> Come un TiVo, "
+#~ "Democracy Player usa un sistema di 'scadenze' che ti aiuta a eliminare i "
+#~ "video più vecchi per lasciare spazio ai nuovi. Puoi sempre cliccare 'salva' "
+#~ "per mantenere un video per sempre, oppure impostare un canale perchè salvi i "
+#~ "tuoi video automaticamente."
+
+#, python-format
+#~ msgid ""
+#~ "%s was unable to save its database: %s.\n"
+#~ "Recent changes may be lost.\n"
+#~ "Quit Anyway?"
+#~ msgstr ""
+#~ "%s non è riuscito a salvare il proprio database: %s.\n"
+#~ "Le ultime modifiche potrebbero essere state perse.\n"
+#~ "Uscire comunque?"
+
+#~ msgid "<b>Channels</b>"
+#~ msgstr "<b>Canali</b>"
+
+#~ msgid "<b>Disk Space</b>"
+#~ msgstr "<b>Spazio su disco</b>"
+
+#~ msgid "<b>Downloads</b>"
+#~ msgstr "<b>Scaricamenti</b>"
+
+#~ msgid "<b>Movies Directory</b>"
+#~ msgstr "<b>Cartella video</b>"
+
+#~ msgid "Check Channels for new content"
+#~ msgstr "Controlla se ci sono nuovi video nei canali"
+
+#~ msgid "Democracy - Add Channel"
+#~ msgstr "Democracy - Aggiungi canale"
+
+#~ msgid "Democracy Player"
+#~ msgstr "Democracy Player"
+
+#~ msgid "GB free"
+#~ msgstr "GB liberi"
+
+#~ msgid "KB/s when my computer is active"
+#~ msgstr "KB/s quando il mio computer è attivo"
+
+#~ msgid "Store downloaded movies in"
+#~ msgstr "Salva i video scaricati in"
+
+#~ msgid "To avoid slowdowns, limit upstream to"
+#~ msgstr "Per evitare rallentamenti, limita la banda in uscita a"
+
+#~ msgid ""
+#~ "You've selected a new folder to download movies to.  Should Democracy "
+#~ "migrate your existing downloads there?  (Currently dowloading movies will "
+#~ "not be moved until they finish.)"
+#~ msgstr ""
+#~ "Hai selezionato una nuova cartella dove scaricare i video. Vuoi che "
+#~ "Democracy sposti i tuoi scaricamenti qui? (i video incompleti verranno "
+#~ "spostati al termine dello scaricamento.)"
+
+#~ msgid ""
+#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
+#~ "style=\"color:red\">raw</b> text</span>"
+#~ msgstr ""
+#~ "Questa è una ${car} e questo è un ${truck} <span>Questo testo è testo <b "
+#~ "style=\"color:red\">semplice</b></span>"
+
+#~ msgid "Channel is not compatible with Democracy!"
+#~ msgstr "Canale non compatibile con Democracy!"
+
+#~ msgid ""
+#~ "and ask if they can supply a feed in a format that will work with Democracy."
+#~ msgstr "e chiedi se può fornire un feed compatibile con Democracy."
+
+#~ msgid ""
+#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
+#~ "$publisher."
+#~ msgstr ""
+#~ "$longAppName versione $appVersion ($appRevision); copyright © 2005, 2006 "
+#~ "$publisher"
+
+#~ msgid "Please help us fix it. Copy and paste all the"
+#~ msgstr "Aiutaci a correggerlo. Copia e incolla tutto il"
+
+#~ msgid ""
+#~ "information into our bug tracker and tell us what you were doing when the"
+#~ msgstr ""
+#~ "infomazioni nel nostro bug tracker e riporta le azioni che stavi eseguendo "
+#~ "quando"
+
+#~ msgid "problem occurred."
+#~ msgstr "si è verificato il problema."
+
+#~ msgid ""
+#~ "Then, please restart Democracy Player (or you may keep getting related "
+#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
+#~ "with your help we're fixing problems fast!"
+#~ msgstr ""
+#~ "Dopo, riavvia Democracy Player (altrimenti potresti avere ulteriori errori "
+#~ "correlati). Ci scusiamo per l'inconveniente. Democracy Player è ancora un "
+#~ "programma in sviluppo, ma col tuo aiuto stiamo risolvendo man mano "
+#~ "moltissimi problemi!"
+
+#~ msgid "You found a bug in Democracy!"
+#~ msgstr "Hai trovato un bug in Democracy!"
 
 #~ msgid "About Democracy"
 #~ msgstr "A proposito di Democracy"
@@ -92,11 +410,14 @@ msgstr ""
 #~ msgid "Hide Democracy"
 #~ msgstr "Nascondi Democracy"
 
-#~ msgid "New Channel Guide..."
-#~ msgstr "Nuova guida canali..."
+#~ msgid "Preferencesâ¦"
+#~ msgstr "Preferenze"
 
 #~ msgid "Quit Democracy"
 #~ msgstr "Esci da Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Rimuovi canale..."
 
 #~ msgid "(You must restart Democracy for this change to take effect)\n"
 #~ msgstr ""
@@ -204,8 +525,103 @@ msgstr ""
 #~ "TV, tutti gratuiti. Semplicemente, clicca 'Aggiungi' per guardare un "
 #~ "canale.\n"
 
-#~ msgid "Save this video"
-#~ msgstr "Salva questo video."
+#~ msgid "Create new playlist"
+#~ msgstr "Crea nuova playlist"
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "Crea nuova cartella playlist"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "Crea nuova cartella canale"
+
+#, python-format
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Errore nell'importazione dei moduli di democracy:\n"
+#~ "%s"
+
+#~ msgid "${count} Downloads in Progress"
+#~ msgstr "${count} scaricamenti in corso"
+
+#~ msgid "1 Download in Progress"
+#~ msgstr "1 scaricamento in corso"
+
+#~ msgid "${len} Videos On This Channel"
+#~ msgstr "${len} video su questo canale"
+
+#~ msgid "All ${len} Videos Match This Search"
+#~ msgstr "Tutti i ${len} video soddisfano questa ricerca"
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len} video soddisfano questa ricerca"
+
+#~ msgid "Looking for videos at this URL"
+#~ msgstr "In cerca di video su questo URL"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} video su questo canale"
+
+#~ msgid "SAVE"
+#~ msgstr "SALVA"
+
+#~ msgid ""
+#~ "Would you like to delete this file or just remove its entry from My "
+#~ "Collection?"
+#~ msgstr ""
+#~ "Desideri cancellare questo file o semplicemente rimuoverlo dalla Mia "
+#~ "Collezione?"
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr ""
+#~ "Questo file di canale Democracy ha un formato non valido: %s. Per favore "
+#~ "avverti chi ha pubblicato il video."
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Questo file di canale Democracy ha il tipo di contenuto errato: %s. Per "
+#~ "favore avverti chi ha pubblicato il video."
+
+#, python-format
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Impossibile scaricare il file del canale Democracy: %s."
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Ma faremo del nostro meglio per recuperare i file. È possibile che serva più "
+#~ "tempo per elencare i video e le descrizioni potrebbero sembrare strane. Per "
+#~ "favore, contatta chi ha pubblicato $url e chiedi se può fornire un feed "
+#~ "compatibile con Democracy.\n"
+#~ "\n"
+#~ "Desideri comunque provare a caricare questo canale?"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - Aggiungi Channel Guide"
+
+#~ msgid "Enter the URL of the channel guide to add"
+#~ msgstr "Immetti l'URL della guida del canale da aggiungere."
+
+#~ msgid ""
+#~ "You are running a version of Democracy Player with a custom set of channels."
+#~ msgstr ""
+#~ "Stai usando una versione di Democracy Player con un insieme di canali "
+#~ "personalizzati."
+
+#~ msgid "New Channel Guide..."
+#~ msgstr "Nuova guida canali..."
 
 #~ msgid "_Copy Video URL"
 #~ msgstr "_Copia URL Video"
@@ -213,50 +629,17 @@ msgstr ""
 #~ msgid "_Stop Video"
 #~ msgstr "_Ferma Video"
 
-#~ msgid "_Play / Pause"
-#~ msgstr "_Riproduci / Pausa"
-
-#~ msgid "_Update Channel"
-#~ msgstr "Aggiorna canale"
-
 #~ msgid "Re_name Channel"
 #~ msgstr "Ri_nomina Canale"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "_Rimuovi canale"
-
-#~ msgid "_Open..."
-#~ msgstr "_Apri..."
-
-#~ msgid "Open various files"
-#~ msgstr "Apri più file"
-
-#~ msgid "Create new playlist"
-#~ msgstr "Crea nuova playlist"
 
 #~ msgid "New Playlist _Folder..."
 #~ msgstr "Nuova _Cartella Playlist."
 
-#~ msgid "Create new playlist folder"
-#~ msgstr "Crea nuova cartella playlist"
-
 #~ msgid "New Channel _Folder..."
 #~ msgstr "Nuova _Cartella Canali"
 
-#~ msgid "Create new channel folder"
-#~ msgstr "Crea nuova cartella canale"
-
 #~ msgid "Add _Channel..."
 #~ msgstr "Aggiungi _Canale"
-
-#~ msgid "P_references"
-#~ msgstr "P_referenze"
-
-#~ msgid "Quit the Program"
-#~ msgstr "Esci dal programma"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "A_ggiorna tutti i canali"
 
 #~ msgid "Delete selection"
 #~ msgstr "Elimina la selezione"
@@ -272,24 +655,22 @@ msgstr ""
 #~ msgid "Re_name Channel Guide..."
 #~ msgstr "Ri_nomina la guida dei canali"
 
-#~ msgid "Remove Channel..."
-#~ msgstr "Rimuovi canale..."
+#~ msgid "outside of democracy."
+#~ msgstr "fuori da democracy"
 
 #, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Errore nell'importazione dei moduli di democracy:\n"
-#~ "%s"
+#~ msgid "%s is not a valid URL"
+#~ msgstr "%s non è un indirizzo valido"
 
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr ""
-#~ "Nienete da mostrare.<br></br> Immetti una richiesta nel campo di ricerca "
-#~ "sottostante."
+#, python-format
+#~ msgid "Deleting %s"
+#~ msgstr "Sto cancellando %s"
 
-#~ msgid "Searching..."
-#~ msgstr "Ricerca in corso..."
+#~ msgid "<b>Playback</b>"
+#~ msgstr "<b>Playback</b>"
+
+#~ msgid "Bit Torrent uses ports between"
+#~ msgstr "Bit Torrent utilizza le porte tra"
 
 #~ msgid "Results for \"${query}\""
 #~ msgstr "Risultati per \"${query}\""
@@ -313,59 +694,14 @@ msgstr ""
 #~ msgid "STAR"
 #~ msgstr "Stella"
 
-#~ msgid "SAVE"
-#~ msgstr "SALVA"
-
 #~ msgid "DELETE"
 #~ msgstr "CANCELLA"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - Template per la riproduzione esterna"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "Continua con il prossimo video"
-
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "${count} scaricamenti in corso"
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "1 scaricamento in corso"
-
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "${len} video su questo canale"
-
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "Tutti i ${len} video soddisfano questa ricerca"
-
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len} video soddisfano questa ricerca"
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${count} video su questo canale"
-
-#~ msgid "Unwatched"
-#~ msgstr "Non visto"
-
-#~ msgid "Watched"
-#~ msgstr "Già visto"
-
-#~ msgid "Saved"
-#~ msgstr "Salvato"
-
-#~ msgid "Default"
-#~ msgstr "Predefinito"
 
 #~ msgid "default"
 #~ msgstr "predefinita"
 
 #~ msgid "Videos expire after"
 #~ msgstr "I video scadranno dopo"
-
-#~ msgid "Recommend"
-#~ msgstr "Consiglia"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "In cerca di video su questo URL"
 
 #~ msgid ""
 #~ "Democracy can't play this file. You may be able to open it with a different "
@@ -379,27 +715,8 @@ msgstr ""
 #~ msgid "REVEAL FILE"
 #~ msgstr "MOSTRA FILE"
 
-#~ msgid "Play Externally"
-#~ msgstr "Riproduci all'esterno"
-
 #~ msgid "Skip >> ${countdown}"
 #~ msgstr "Salta >> ${countdown}"
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "Scaricamenti automatici in attesa"
-
-#~ msgid "Simple translation"
-#~ msgstr "Traduzione semplice"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "Il camion si ferma in un ${can}"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "Questa è una ${car} e questo è un ${truck} <span>Questo testo è testo <b "
-#~ "style=\"color:red\">semplice</b></span>"
 
 #~ msgid "Clear Completed Torrents"
 #~ msgstr "Elimina torrents completi"
@@ -409,72 +726,6 @@ msgstr ""
 
 #~ msgid "Drag channels to this folder to add them."
 #~ msgstr "Trascina i canali in questa cartella per aggiungerli"
-
-#~ msgid "My Collection"
-#~ msgstr "La mia collezione"
-
-#~ msgid "New Videos"
-#~ msgstr "Nuovi Video"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy Internet TV: come iniziare"
-
-#~ msgid "GO BIG:"
-#~ msgstr "INGRANDISCI:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr ""
-#~ "Questo è il pulsante per lo schermo intero. Cliccalo e mettiti comodo."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "NOVITÀ:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "I bollini blu indicano che il canale hanuovi video disponibili, i bollini "
-#~ "verdi indicano che i video scaricati sono pronti per essere guardati."
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>Aggiungi i Canali:</strong> La Channel Guide è la tua guida per i "
-#~ "canali della Internet TV. Clicca 'AGGIUNGI' per sottoscrivere il canale-- "
-#~ "<strong>i canali della Channel Guide sono gratuiti.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>Non Aspettare:</strong> Democracy non è come guardare video dalle "
-#~ "pagine web -- gli editori possono offrire grandi video ad alta qualità. "
-#~ "Quindi non stare ad aspettare i video: comincia qualche scaricamento e torna "
-#~ "a controllare più tardi."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>Lascialo Acceso:</strong> Democracy Player controlla periodicamente "
-#~ "i canali e scarica i nuovi video automaticamente. Lasciarlo in esecuzione "
-#~ "significa avere i nuovi video già pronti quando avrai voglia di vederli."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>Non Preoccuparti dello Spazio su Disco:</strong> Come un TiVo, "
-#~ "Democracy Player usa un sistema di 'scadenze' che ti aiuta a eliminare i "
-#~ "video più vecchi per lasciare spazio ai nuovi. Puoi sempre cliccare 'salva' "
-#~ "per mantenere un video per sempre, oppure impostare un canale perchè salvi i "
-#~ "tuoi video automaticamente."
 
 #~ msgid ""
 #~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
@@ -486,132 +737,15 @@ msgstr ""
 #~ msgid "${count} Channels Selected"
 #~ msgstr "${count} Canali selezionati"
 
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%s non è un indirizzo valido"
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "Sto cancellando %s"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr ""
-#~ "Desideri cancellare questo file o semplicemente rimuoverlo dalla Mia "
-#~ "Collezione?"
-
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - Aggiungi canale"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - Aggiungi Channel Guide"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "Immetti l'URL della guida del canale da aggiungere."
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr ""
-#~ "Stai usando una versione di Democracy Player con un insieme di canali "
-#~ "personalizzati."
-
-#~ msgid "Channel Guide"
-#~ msgstr "Channel Guide"
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "Canale non compatibile con Democracy!"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "Ma faremo del nostro meglio per recuperare i file. È possibile che serva più "
-#~ "tempo per elencare i video e le descrizioni potrebbero sembrare strane. Per "
-#~ "favore, contatta chi ha pubblicato $url e chiedi se può fornire un feed "
-#~ "compatibile con Democracy.\n"
-#~ "\n"
-#~ "Desideri comunque provare a caricare questo canale?"
-
 #~ msgid "Local File"
 #~ msgstr "File locale"
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr ""
-#~ "Questo file di canale Democracy ha un formato non valido: %s. Per favore "
-#~ "avverti chi ha pubblicato il video."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Questo file di canale Democracy ha il tipo di contenuto errato: %s. Per "
-#~ "favore avverti chi ha pubblicato il video."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Impossibile scaricare il file del canale Democracy: %s."
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>Canali</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>Spazio su disco</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>Scaricamenti</b>"
 
 #~ msgid "<b>General</b>"
 #~ msgstr "<b>Generale</b>"
 
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>Cartella video</b>"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Playback</b>"
-
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "Bit Torrent utilizza le porte tra"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "Controlla se ci sono nuovi video nei canali"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy Player"
-
-#~ msgid "GB free"
-#~ msgstr "GB liberi"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s quando il mio computer è attivo"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "Per evitare rallentamenti, limita la banda in uscita a"
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr ""
-#~ "Hai selezionato una nuova cartella dove scaricare i video. Vuoi che "
-#~ "Democracy sposti i tuoi scaricamenti qui? (i video incompleti verranno "
-#~ "spostati al termine dello scaricamento.)"
-
 #, fuzzy
 #~ msgid "_Store downloaded videos in this folder:"
 #~ msgstr "_Memorizza i video scaricati in questa cartella"
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr "e chiedi se può fornire un feed compatibile con Democracy."
 
 #, fuzzy
 #~ msgid "A search channel contains"
@@ -675,38 +809,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Vuoi che Democracy si avvii automaticamente quando accendi il computer?"
 
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName versione $appVersion ($appRevision); copyright © 2005, 2006 "
-#~ "$publisher"
-
-#~ msgid "Please help us fix it. Copy and paste all the"
-#~ msgstr "Aiutaci a correggerlo. Copia e incolla tutto il"
-
-#~ msgid ""
-#~ "information into our bug tracker and tell us what you were doing when the"
-#~ msgstr ""
-#~ "infomazioni nel nostro bug tracker e riporta le azioni che stavi eseguendo "
-#~ "quando"
-
-#~ msgid "problem occurred."
-#~ msgstr "si è verificato il problema."
-
-#~ msgid ""
-#~ "Then, please restart Democracy Player (or you may keep getting related "
-#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-#~ "with your help we're fixing problems fast!"
-#~ msgstr ""
-#~ "Dopo, riavvia Democracy Player (altrimenti potresti avere ulteriori errori "
-#~ "correlati). Ci scusiamo per l'inconveniente. Democracy Player è ancora un "
-#~ "programma in sviluppo, ma col tuo aiuto stiamo risolvendo man mano "
-#~ "moltissimi problemi!"
-
-#~ msgid "You found a bug in Democracy!"
-#~ msgstr "Hai trovato un bug in Democracy!"
-
 #, fuzzy
 #~ msgid "Alt+Enter"
 #~ msgstr "Alt+Invio"
@@ -732,168 +834,66 @@ msgstr ""
 #~ msgid "Send This Channel to a Friend..."
 #~ msgstr "Invia quest Canale ad un amico..."
 
-#~ msgid "_Save Video..."
-#~ msgstr "_Salva video..."
+#~ msgid "News and Tech"
+#~ msgstr "Novità e Tecnologia"
 
-#~ msgid "_Channel"
-#~ msgstr "_Canale"
+#~ msgid "Entertainment"
+#~ msgstr "Intrattenimento"
 
-#~ msgid "_Add Channel..."
-#~ msgstr "_Aggiungi canale..."
+#~ msgid "High-Def"
+#~ msgstr "Alta definizione"
 
-#, python-format
-#~ msgid "%s requires a username and password for \"%s\"."
-#~ msgstr "%s richiede un Nome utente e password per \"%s\"."
-
-#~ msgid "Not a DTV-style channel"
-#~ msgstr "Non è un canale \"stile RBDC\""
+#~ msgid "Mac"
+#~ msgstr "Mac"
 
 #~ msgid ""
-#~ "But we'll try our best to grab the files.\n"
-#~ "- It may take time to list the videos\n"
-#~ "- Descriptions may look funny\n"
+#~ "You're done!\n"
 #~ "\n"
-#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
-#~ msgstr ""
-#~ "Proverò comunque a scaricare i file. Attenzione:\n"
-#~ "- Ci potrebbe volere un po' di tempo a mostrare la lista dei video;\n"
-#~ "- Le descrizioni possono apparire in modo strano.\n"
+#~ "Setup is complete -- now you can find some channels and start watching.\n"
 #~ "\n"
-#~ "Per risolvere, contatta gli editori dei %s e chiedi se hanno un canale stile "
-#~ "DTV."
-
-#~ msgid "Continue"
-#~ msgstr "Continua"
-
-#~ msgid "DTV Version Alert"
-#~ msgstr "Avviso: Nuova versione di RBDC Player"
-
-#~ msgid ""
-#~ "A new version of DTV is available.\n"
+#~ "Don't Wait: Miro is different than watching webpage videos -- publishers can "
+#~ "offer big, high quality videos. So don't sit around waiting for videos: "
+#~ "start some downloads and check back later. \n"
 #~ "\n"
-#~ "Would you like to download it now?"
-#~ msgstr ""
-#~ "Una nuova versione di RBDC Player è disponibile.\n"
+#~ "Leave it On: Miro regularly checks channels for new videos and downloads in "
+#~ "the background. Leaving it running means you'll have new videos when you're "
+#~ "ready to watch.\n"
 #~ "\n"
-#~ "Vuoi scaricarla ora?"
-
-#~ msgid "DTV Version Check"
-#~ msgstr "Controllo Versione RBDC Player"
-
-#~ msgid "This version of DTV is up to date."
-#~ msgstr "Questa versione di DTV è aggiornata."
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost."
+#~ "Don't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' "
+#~ "system that helps clean out older videos to make room for new videos. You "
+#~ "can always keep a video permanently by clicking 'save' and you can set a "
+#~ "channel's settings to save videos automatically.\n"
+#~ "\n"
+#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
+#~ "\n"
+#~ "Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
+#~ "them are free. Just click 'ADD' to watch a channel.\n"
 #~ msgstr ""
-#~ "%s non è riuscito a salvare il proprio database: %s.\n"
-#~ "Gli ultimi cambiamenti possono essere andati persi."
-
-#~ msgid "Remove Channel"
-#~ msgstr "Rimuovi Canale"
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to <b>remove</b> the channel\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>This operation cannot be undone.</b>"
-#~ msgstr ""
-#~ "Sicuro di voler <b>rimuovere</b> il canale\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>Questa operazione non potrà essere annullata.</b>"
-
-#, python-format
-#~ msgid "You have %d download%s still in progress."
-#~ msgstr "Hai %d scaricamenti%s still in progress."
-
-#, fuzzy
-#~ msgid "Pending Manual Download"
-#~ msgstr "In attesa di download manuale"
-
-#~ msgid "Save"
-#~ msgstr "Salva"
-
-#~ msgid "Expires"
-#~ msgstr "Scade il"
-
-#~ msgid "Auto Download"
-#~ msgstr "Scaricamento automatico"
-
-#~ msgid "Back to Channel"
-#~ msgstr "Torna al canale"
-
-#~ msgid "Channel Settings"
-#~ msgstr "Impostazioni canale"
-
-#~ msgid "Videos expire after:"
-#~ msgstr "I video scadono tra:"
-
-#~ msgid "Auto download should:"
-#~ msgstr "Lo scaricamento automatico dovrebbe:"
-
-#~ msgid ""
-#~ "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
-#~ msgstr ""
-#~ "Se ho ${maxnew} ${maxnew2} video in attesa, non scaricarne automaticamente "
-#~ "altri."
-
-#~ msgid "(Keeps channel from hogging disk space)"
-#~ msgstr "(Evita che il canale finisca lo spazio su disco)"
-
-#~ msgid "Channel URL"
-#~ msgstr "URL canale"
-
-#~ msgid "Videos on this Channel"
-#~ msgstr "Video in questo Canale"
-
-#~ msgid "Feed Title"
-#~ msgstr "Titolo Feed"
-
-#~ msgid ""
-#~ "This file type (${format}) can't be played in the main Democracy window."
-#~ msgstr ""
-#~ "Questo tipo di file (${format}) non può essere riprodotto nella finestra "
-#~ "principale di Democracy."
-
-#~ msgid "Skip Video ${countdown}"
-#~ msgstr "Salta video ${countdown}"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> "
-#~ "text</span>"
-#~ msgstr ""
-#~ "Questa è una ${car} e questo è un ${truck} <span> Questo testo è un testo "
-#~ "<b>grezzo</b></span>"
-
-#~ msgid "Active Downloads"
-#~ msgstr "Scaricamenti attivi"
-
-#~ msgid "Expiring"
-#~ msgstr "In scadenza"
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
-#~ ">></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">SALTA INTRODUZIONE: <a style=\"color: #090;\" "
-#~ "href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Vai alla Channel "
-#~ "Guide >></a></strong>"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s non è riuscito a salvare il proprio database: %s.\n"
-#~ "Le ultime modifiche potrebbero essere state perse.\n"
-#~ "Uscire comunque?"
-
-#~ msgid "Store downloaded movies in"
-#~ msgstr "Salva i video scaricati in"
+#~ "Fatto!\n"
+#~ "\n"
+#~ "La configurazione è terminata -- adesso puoi scegliere i canali e comnciare "
+#~ "a guardare nuovi video.\n"
+#~ "\n"
+#~ "Non attendere: la filosofia di Miro è differente da quela di vedere video "
+#~ "sul web -- chi pubblica offre video di elevate dimensioni e di qualità "
+#~ "elevata. Quindi non attendere il download di ogni video: fai partire il "
+#~ "dowload di più video e torna più tardi a guardarli. \n"
+#~ "\n"
+#~ "Lascialo attivo: Miro controlla regolarmente i canali e i download mentre è "
+#~ "attivo anche se nacosto. Lasciarlo attivo significa che avrai nuovi video "
+#~ "quando sarai pronto a guardarli.\n"
+#~ "\n"
+#~ "Non preoccuparti dello spazio sul disco: Miro, come TiVo, implementa un "
+#~ "sistema di 'scadenze' che automaticamente cancella i vecchi video in modo da "
+#~ "fare spazio per quelli nuovi. Puoi comunque tenere un video cliccando "
+#~ "'salva' ed è possibile settare i canali in modo che salvino automaticamente "
+#~ "i video.\n"
+#~ "\n"
+#~ "Espanditi: Il bottone alla destra del tasto play mostra il video a schermo "
+#~ "pieno.\n"
+#~ "\n"
+#~ "Cerca i video: La Guida di Miro contiene centinaia di canali di internet TV "
+#~ "tutti gratuiti. È sufficiente cliccare su 'AGGIUNGI' per vedere un canale.\n"
 
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
@@ -968,7 +968,7 @@ msgid "Check for New Version"
 msgstr "Verifica se esiste una nuova versione"
 
 msgid "Clear Menu"
-msgstr "Svuota menu"
+msgstr "Pulisci Menu"
 
 msgid "Close Window"
 msgstr "Chiudi la finestra"
@@ -1072,7 +1072,7 @@ msgid "Playlists"
 msgstr "Scaletta"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Preferenze..."
 
 msgid "Previous Video"
 msgstr "Video precedente"
@@ -1147,7 +1147,6 @@ msgstr "Ricerca video"
 msgid "VideoWindow"
 msgstr "Finestra video"
 
-#, fuzzy
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
@@ -1600,7 +1599,7 @@ msgstr "Seleziona una cartella per vedere la Libreria."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Fatto"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1794,7 +1793,7 @@ msgstr "Il torrent per questo video è stato eliminato "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "fuori da Miro"
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -1972,7 +1971,7 @@ msgstr "Marca come non visto"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Segna come \"Già visto\""
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -2015,7 +2014,7 @@ msgstr "I file OPML"
 
 #: ../../portable/opml.py:145
 msgid "OPML Import failed"
-msgstr "Fallito l'importazione di OPML"
+msgstr "Fallita l'importazione di OPML"
 
 #: ../../portable/opml.py:146
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
@@ -2184,7 +2183,7 @@ msgstr "Elimina file"
 
 #: ../../portable/dialogs.py:88
 msgid "Delete Files"
-msgstr "Elimina file"
+msgstr "Elimina i file"
 
 #: ../../portable/dialogs.py:89
 msgid "Keep Videos"
@@ -2201,7 +2200,7 @@ msgstr "Crea canale"
 
 #: ../../portable/dialogs.py:93
 msgid "Add"
-msgstr "aggiungi"
+msgstr "Aggiungi"
 
 #: ../../portable/dialogs.py:94
 msgid "Add Into New Folder"
@@ -2257,7 +2256,7 @@ msgstr "In download adesso."
 
 #: ../../portable/singleclick.py:98
 msgid "It has already been downloaded."
-msgstr "È stato già scaricato"
+msgstr "È già stato scaricato"
 
 #: ../../portable/singleclick.py:125
 msgid "Download Error"
@@ -2349,7 +2348,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:144
 msgid "_Open"
-msgstr "Apri(_O)"
+msgstr "_Apri"
 
 #: ../../portable/menubar.py:145
 msgid "_Download Video"
@@ -2405,11 +2404,11 @@ msgstr "_Incolla"
 
 #: ../../portable/menubar.py:168
 msgid "Select _All"
-msgstr "Seleziona Tutto"
+msgstr "Seleziona _Tutto"
 
 #: ../../portable/menubar.py:169
 msgid "_Delete"
-msgstr "_Rimuovi"
+msgstr "_Cancella"
 
 #: ../../portable/menubar.py:173
 msgid "Add _Channel"
@@ -2477,7 +2476,7 @@ msgstr "_Rimuovi cartella della Playlist"
 
 #: ../../portable/menubar.py:212
 msgid "_Play"
-msgstr "Lancia"
+msgstr "_Riproduci"
 
 #: ../../portable/menubar.py:213
 msgid "_Stop"
@@ -2859,16 +2858,16 @@ msgstr "\"%s\" non è un URL valido"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Il file: \"%s\" non esiste"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Errore di lettura"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Errore durante la lettura da \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -3039,12 +3038,12 @@ msgstr "%s non è valido. Devi immettere un numero non negativo."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Errore Rivelando File"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Il file \"%s\" è stato cancellato dall'esterno di Miro."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -3086,7 +3085,7 @@ msgstr "Immetti l'URL del video da scaricare"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Canali Iniziali"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -3753,7 +3752,7 @@ msgid ""
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
 "La Guida del Canale $shortAppName  ha centinaia di canali TV internet; sono "
-"tutti liberi. Basta cliccare \"ADD\" per guardare un canale."
+"tutti liberi. Basta cliccare su \"ADD\" per guardare un canale."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."

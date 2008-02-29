@@ -8,630 +8,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-23 10:01+0000\n"
-"Last-Translator: Theodore Kouvelas <patreas@hotmail.com>\n"
+"PO-Revision-Date: 2008-02-18 15:39+0000\n"
+"Last-Translator: Antonios Dimopoulos <antoniosdimopoulos@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#~ msgid "About Democracy"
-#~ msgstr "Σχετικά με το Democracy"
-
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "H Βοήθεια  του Democracy"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "Απόκρυψη Democracy"
-
-#~ msgid "New Channel Guide..."
-#~ msgstr "Νέος Οδηγός Καναλιών..."
-
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Προτιμήσεις"
-
-#~ msgid "Quit Democracy"
-#~ msgstr "Έξοδος"
-
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr ""
-#~ "(πρέπει να επανεκκινήσετε το πρόγραμμα για να εφαρμοστούν οι αλλαγές σας)\n"
-
-#~ msgid "Run Democracy at startup"
-#~ msgstr "Εκκίνηση Democracy με την έναρξη"
-
-#~ msgid ""
-#~ "Watch for new videos in these folders and include them in My Collection:"
-#~ msgstr ""
-#~ "Να παρακολουθείς για νέα βίντεο σε αυτούς τους φακέλους και να τα "
-#~ "συμπεριλαμβάνεις στο Η Συλλογή Μου:"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "Το Democracy Player μπορεί να βρεί όλα τα αρχεία βίντεο στον υπολογιστή σας "
-#~ "και να σας βοηθήσει να οργανώσετε τη συλλογή σας.\n"
-#~ "\n"
-#~ "\n"
-#~ "Θέλετε να αναζητήσω αρχεία βίντεο στον υπολογιστή σας;"
-
-#~ msgid ""
-#~ "The next few screens will help you set up Democracy Player so that it works "
-#~ "best for you. Here's the first question."
-#~ msgstr ""
-#~ "Οι επόμενες οθόνες θα βοηθήσει τον Democracy Player να λειτουργήσει καλύτερα "
-#~ "για εσάς.  Η πρώτη ερώτηση είναι."
-
-#~ msgid ""
-#~ "We recommend that you allow Democracy Player to launch when your computer "
-#~ "starts up. This way, videos that haven't finished downloading can finish and "
-#~ "new videos on your channels will be ready when you want to watch.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like to run Democracy when your computer starts up?"
-#~ msgstr ""
-#~ "Σας προτείνουμε να επιτρέπετε τον Democracy Player να ξεκινάει όταν ανοίγετε "
-#~ "τον υπολογιστή σας. Με αυτόν τον τρόπο, τα βίντεο που δεν έχουν ακόμη "
-#~ "κατέβει, νε τελειώσουν το κατέβασμα και νέα βίντεο από τα κανάλια σας να "
-#~ "είναι έτοιμα όταν θα θελήσετε να τα δείτε.\n"
-#~ "\n"
-#~ "\n"
-#~ "Θέλετε να ξεκινάει ο Democracy Player όταν ανοίγετε τον υπολογιστή σας;"
-
-#~ msgid ""
-#~ "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
-#~ "automatically download videos from your favorite channels, watch new videos "
-#~ "one after the other, download torrents, recommend videos to friends, and "
-#~ "lots more.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Καλώς ήρθατε στην διαδυκτιακή τηλεόραση.  Υπάρχουν πολλά πράγματα που "
-#~ "μπορείτε να κάνετε με τον Democracy Player: αυτόματο κατέβασμα βίντεο από τα "
-#~ "αγαπήμενα σας κανάλια, να δείτε νέα βίντεο το ένα μέτα το άλλο, να "
-#~ "κατεβάζετε torrents, να προτείνετε βίντεο σε φίλους σας, και πολλά "
-#~ "περισσότερα.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "You're done!\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "Don't Wait: Democracy is different than watching webpage videos -- "
-#~ "publishers can offer big, high quality videos. So don't sit around waiting "
-#~ "for videos: start some downloads and check back later. \n"
-#~ "\n"
-#~ "Leave it On: Democracy Player regularly checks channels for new videos and "
-#~ "downloads in the background. Leaving it running means you'll have new videos "
-#~ "when you're ready to watch.\n"
-#~ "\n"
-#~ "Don't Worry About Disk Space: Like a TiVo, Democracy Player features an "
-#~ "'expiration' system that helps clean out older videos to make room for new "
-#~ "videos. You can always keep a video permanently by clicking 'save' and you "
-#~ "can set a channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
-#~ "\n"
-#~ "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
-#~ "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
-#~ msgstr ""
-#~ "Τα καταφέρατε!\n"
-#~ "\n"
-#~ "Το στήσιμο του προγράμματος ολοκληρώθηκε -- τώρα μπορείτε να βρείτε κανάλια "
-#~ "και να τα παρακολουθήσετε.\n"
-#~ "\n"
-#~ "Μην περιμένετε: Το Democracy είναι διαφορετικό από το να βλέπετε βίντεο από "
-#~ "ιστοσελίδες -- οι παραγωγοί προσφέρουν μεγάλα, υψήλης ποιότητας βίντεο.  Γι' "
-#~ "αύτο μην περιμένετε άλλο για τα βίντεο σας: αρχίστε να κατεβάζετε και ελέγξε "
-#~ "αργότερα. \n"
-#~ "\n"
-#~ "Αφήστε το να λειτουργεί:  Το Democracy Player ελέγχει συχνά τα κανάλια για "
-#~ "νέα βίντεο και τα κατέβάζει στο παρασκήνιο.  Αύτο σήμαινει ότι θα έχετε νέα "
-#~ "βίντεο όταν θα είστε έτοιμοι να τα παρακολουθήσετε.\n"
-#~ "\n"
-#~ "Μην ανησυχείτε για το χώρο του δίσκου σας: Όπως το TiVo, το Democracy Player "
-#~ "περιέχει ένα σύστημα \"ημερομηνίας λήξης\" το οποίο βοηθάει να διαγράφονται "
-#~ "τα παλαιότερα βίντεο για να έχετε χώρο για καινούργια.  Μπορείτε να "
-#~ "κρατήσετε ένα βίντεο για πάντα επιλέγοντας την επιλογή \"αποθήκευση\" και "
-#~ "μπορείτε να θέσετε τις επιλογές ενός καναλιού ώστε να αποθηκεύονται τα "
-#~ "βίντεο αυτόματα.\n"
-#~ "\n"
-#~ "Μεγενθύνετε: Η επιλογή στα δεξιά του πλήκτρου αναπαραγωγής δείχνει το βίντεο "
-#~ "σε πλήρη οθόνη.\n"
-#~ "\n"
-#~ "Βρείτε βίντεο: Ο οδηγός καναλιών του προγράμματος έχει εκατοντάδες "
-#~ "ιντερνετικών καναλιών, τα οποία είναι δωρεάν.  Απλά κάνετε κλικ στην επιλογή "
-#~ "\"Προσθήκη\" για να δείτε το κανάλι.\n"
-
-#~ msgid "Select a Directory to store Democracy downloads in."
-#~ msgstr ""
-#~ "Επιλέξτε ένα φάκελο για να αποθηκεύονται τα αρχεία που κατεβάζει το "
-#~ "Democracy."
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish)."
-#~ msgstr ""
-#~ "Έχετε επιλέξει ένα νέο φάκελο αποθήκευσης των κατεβασμένων ταινιών.  Θέλετε "
-#~ "το Democracy να μεταφέρει σε αυτόν τις ήδη κατεβασμένες?  (Οι ταινίες που "
-#~ "κατεβαίνουν τώρα θα μεταφερθούν αφού τελειώσει η μεταφορά τους)."
-
-#~ msgid "View this Directory in My Collection"
-#~ msgstr "Προβολή αυτού του φακέλου στο Η Συλλογή Μου"
-
-#~ msgid "Select a Directory to view in My Collection."
-#~ msgstr "Επιλέξτε ένα φάκελο για προβολή στο Η Συλλογή Μου."
-
-#~ msgid "_Remove Channel Guide..."
-#~ msgstr "_Απομάκρυνση οδηγού καναλιών..."
-
-#~ msgid "_Remove Channel Guides..."
-#~ msgstr "_Απομάκρυνση οδηγών καναλιού..."
-
-#~ msgid "Re_name Channel Guide..."
-#~ msgstr "Μετ-ονομασία οδηγού καναλιού..."
-
-#~ msgid "New Videos"
-#~ msgstr "Νέα Βίντεο"
-
-#~ msgid "Find"
-#~ msgstr "Εύρεση"
-
-#~ msgid "STAR"
-#~ msgstr "ΑΣΤΕΡΙ"
-
-#~ msgid "KEEP"
-#~ msgstr "ΚΡΑΤΑ"
-
-#~ msgid "DELETE"
-#~ msgstr "ΔΙΑΓΡΑΦΗ"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - Πρότυπο Εξωτερικής Αναπαραγωγής"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Ο Democracy δεν μπορεί να παίξει αυτό το αρχείο. Μπορεί να καταφέρετε να το "
-#~ "ανοίξετε με ενα άλλο πρόγραμμα.<br></br><br></br><strong>Όνομα "
-#~ "αρχείου:</strong> ${filename}<Br></Br><strong>Τύπος αρχείου:</strong> "
-#~ "${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "ΕΜΦΑΝΙΣΗ ΑΡΧΕΙΟΥ"
-
-#~ msgid "Play Externally"
-#~ msgstr "Αναπαραγωγή Εξωτερικά"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "Παράλειψη >> ${countdown}"
-
-#, python-format
-#~ msgid "%0.1f KB/s uploading"
-#~ msgstr "%0.1f KB/s ανεβάζονται"
-
-#, python-format
-#~ msgid "%0.1f KB/s downloading"
-#~ msgstr "%0.1f KB/s κατέβασμα"
-
-#~ msgid "External Torrents"
-#~ msgstr "Εξωτερικά Torrents"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "Εκκαθάριση Ολοκληρωμένων Torrents"
-
-#~ msgid "Seeding Torrents"
-#~ msgstr "Μοιρασμα Torrent"
-
-#~ msgid "${size} free for downloads"
-#~ msgstr "${size} ελέυθερα για κατέβασμα"
-
-#~ msgid "Pause All"
-#~ msgstr "Παύση Όλων"
-
-#~ msgid "Resume All"
-#~ msgstr "Σνέχιση Όλων"
-
-#~ msgid "${size} free on disk"
-#~ msgstr "${size} fελεύθερα στον δίσκο"
-
-#~ msgid "Channel Downloads"
-#~ msgstr "Μεταφορτώσεις Καναλιών"
-
-#~ msgid "Loading Channel Guide"
-#~ msgstr "Φόρτωση Οδηγού Καναλιών"
-
-#~ msgid "Empty Channel Folder"
-#~ msgstr "Άδειασμα του Φακέλου Καναλιών"
-
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr ""
-#~ "Τραβήξτε οποιοδήποτε κανάλι θέλετε σε αυτόν τον φάκελο για να το προσθέσετε"
-
-#~ msgid "AUTO DOWNLOAD"
-#~ msgstr "ΑΥΤΟΜΑΤΟ ΚΑΤΕΒΑΣΜΑ"
-
-#~ msgid "${len} Downloaded"
-#~ msgstr "${len} έχουν κατέβει"
-
-#~ msgid "Settings for ${title}"
-#~ msgstr "Ρυθμίσεις για ${title}"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Τα Videos λήγουν μετά τις"
-
-#~ msgid "Default"
-#~ msgstr "Προεπιλεγμένα"
-
-#~ msgid "default"
-#~ msgstr "προεπιλεγμένο"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr ""
-#~ "Να μην γίνεται Αυτόματο Κατέβασμα όταν περισσότερα από ${maxnew} ${maxnew2} "
-#~ "βίντεο αναμένουν προβολή."
-
-#~ msgid "Prevents this channel from using unlimited disk space."
-#~ msgstr "Εμπόδισε αυτό το κανάλι να χρησιμοποιεί απεριόριστο χώρο δίσκου."
-
-#~ msgid "Details"
-#~ msgstr "Λεπτομέρειες"
-
-#~ msgid "Close"
-#~ msgstr "Κλείσιμο"
-
-#~ msgid ".torrent"
-#~ msgstr ".torrent"
-
-#~ msgid "Email to a friend"
-#~ msgstr "Στείλτο με email σε ένα φίλο"
-
-#~ msgid "Post to Video Bomb"
-#~ msgstr "Αποστολή στο Video Bomb"
-
-#~ msgid "Post to del.icio.us"
-#~ msgstr "Δημοσίευση στο del.icio.us"
-
-#~ msgid "Post to digg"
-#~ msgstr "Δημοσίευση στο digg"
-
-#~ msgid "Post to Reddit"
-#~ msgstr "Δημοσίευση στο Reddit"
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "Εκκρεμεί Αυτόματο Κατέβασμα"
-
-#~ msgid "STOP SEEDING"
-#~ msgstr "ΣΤΑΜΑΤΗΜΑ SEEDING"
-
-#~ msgid "VISIT WEBSITE"
-#~ msgstr "ΕΠΙΣΚΕΥΤΕΙΤΕ ΤΟ SITE"
-
-#~ msgid "SEND TO FRIEND"
-#~ msgstr "ΑΠΟΣΤΟΛΗ ΣΕ ΦΙΛΟ"
-
-#~ msgid "SETTINGS"
-#~ msgstr "ΡΥΘΜΙΣΕΙΣ"
-
-#~ msgid "Find in channel"
-#~ msgstr "Εύρεση σε κανάλι"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "Αναζητώντας για βίντεο στη διεύθυνση"
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr ""
-#~ "${count} Φάκελοι Λιστών Αναπαραγωγής Επιλέγθηκαν<br></br>(περιέχει "
-#~ "${containedcount} λίστες αναπαραγωγής)"
-
-#~ msgid "${count} Playlists Selected"
-#~ msgstr "${count} Επιλεγμένες Λίστες Αναπαραγωγής"
-
-#~ msgid "My Collection"
-#~ msgstr "Η συλλογή μου"
-
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr ""
-#~ "${count} Επιλεγμένοι Φακέλοι Καναλιών<br></br>(περιέχει ${containedcount} "
-#~ "κανάλια)"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count} Επιλεγμένα Κανάλια"
-
-#~ msgid "Empty Playlist Folder"
-#~ msgstr "Άδειασμα Φακέλου Λιστών Αναπαραγωγής"
-
-#~ msgid ""
-#~ "This folder contains ${count} playlists, but the playlists do not contain "
-#~ "any items."
-#~ msgstr ""
-#~ "Αυτός ο φάκελος περιέχει ${count} λίστες αναπαραγωγής, αλλά οι λίστες "
-#~ "αναπαραγωγής δεν περιέχουν κανένα αντικείμενο."
-
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr ""
-#~ "Τραβήξτε λίστες αναπαραγωγής σε αυτό το φάκελο για να τις προσθέσετε."
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr ""
-#~ "Τίποτα για προβολή.<br></br> Εισάγετε μια ερώτηση στο πεδίο αναζήτησης πιο "
-#~ "πάνω."
-
-#~ msgid "Searching..."
-#~ msgstr "Αναζήτηση..."
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "Αποτελέσματα για \"${query}\""
-
-#~ msgid "Simple translation"
-#~ msgstr "Απλή μετάφραση"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "Αυτό είναι ενα ${car} και αυτό ένα ${truck} <span>Αυτό το κείμενο είναι <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "Συνέχεια στο επόμενο Video"
-
-#~ msgid "Empty Playlist"
-#~ msgstr "Άδειασμα Λίστας Αναπαραγωγής"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr ""
-#~ "Τραβήξτε τα κατεβασμένα βίντεο σε αυτή τη λίστα αναπαραγωγής για να τα "
-#~ "προσθέσετε."
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "Διαγραφή του %s"
-
-#~ msgid "Seeders:"
-#~ msgstr "Χρήστες που μοιράζονται:"
-
-#~ msgid "Leachers:"
-#~ msgstr "Χρήστες που κατεβάζουν:"
-
-#~ msgid "Remove From My Collection"
-#~ msgstr "Κατάργηση από το Η Συλλογή μου"
-
-#~ msgid ""
-#~ "Would you like to delete this folder and all of its videos or just remove "
-#~ "its entry from My Collection?"
-#~ msgstr ""
-#~ "Θα θέλατε να διαγράψετε αυτό τον φάκελο και τα video που περιέχει ή απλώς να "
-#~ "το αφαιρέσετε από την Συλλογή σας;"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr ""
-#~ "Θα θέλατε να διαγράψετε αυτό το αρχείο ή απλώς να το αφαιρέσετε από την "
-#~ "Συλλογή σας;"
-
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "Η %s δεν είναι έγκυρη διεύθυνση URL"
-
-#~ msgid "outside of democracy."
-#~ msgstr "έξω απο το democracy"
-
-#~ msgid "_Options"
-#~ msgstr "Επιλογές"
-
-#~ msgid "Local File"
-#~ msgstr "Τοπικό αρχείο"
-
-#~ msgid "News and Tech"
-#~ msgstr "Νέα και Τεχνολογία"
-
-#~ msgid "Entertainment"
-#~ msgstr "Διασκέδαση"
-
-#~ msgid "High-Def"
-#~ msgstr "Υψηλή-Ποιότητα"
-
-#~ msgid "Mac"
-#~ msgstr "Mac"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>Κανάλια</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>Ελεύθερος Χώρος</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>Μεταφορές</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Γενικά</b>"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Αναπαραγωγή</b>"
-
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "Το Bit Torrent χρησιμοποιεί τις θύρες μεταξύ"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "Ελέγχος καναλιών για νέο περιεχόμενο"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy Player"
-
-#~ msgid "GB free"
-#~ msgstr "GB ελεύθερα"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s όταν ο υπολογιστής είναι ενεργός"
-
-#~ msgid "Play videos one after another"
-#~ msgstr "Αναπαραγωγή βίντεο διαδοχικά"
-
-#~ msgid "Resume playback of videos from the point where they were stopped"
-#~ msgstr ""
-#~ "Συνεχίσε την αναπαραγωγή των βίντεο από το σημείο στο οποίο σταμάτησε"
-
-#~ msgid ""
-#~ "The $shortAppName Channel Guide has hundreds of internet TV channels, all of "
-#~ "them are free.  Just click 'ADD' to watch a channel."
-#~ msgstr ""
-#~ "Ο Οδηγών Καναλιών $shortAppName περιέχει εκατοντάδες ιντερνετικά κανάλια TV, "
-#~ "όλα δωρεάν. Απλά πατήστε 'ADD' για να παρακολουθήσετε ένα κανάλι."
-
-#~ msgid "_Save Video..."
-#~ msgstr "Απο_θήκευση Βίντεο..."
-
-#~ msgid "Save this video"
-#~ msgstr "Αποθήκευση αυτού του βίντεο"
-
-#~ msgid "_Play / Pause"
-#~ msgstr "Ανα_παραγωγή / Παύση"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "_Αφαίρεση Καναλιού"
-
-#~ msgid "_Update Channel"
-#~ msgstr "_Ανανέωση Καναλιού"
-
-#~ msgid "_Open..."
-#~ msgstr "_Άνοιγμα"
-
-#~ msgid "Open various files"
-#~ msgstr "Άνοιγμα διαφόρων αρχείων"
-
-#~ msgid "P_references"
-#~ msgstr "Π_ροτιμήσεις"
-
-#~ msgid "Quit the Program"
-#~ msgstr "Έξοδος απο το πρόγραμμα"
-
-#~ msgid "_Channel"
-#~ msgstr "_Κανάλι"
-
-#~ msgid "_Add Channel..."
-#~ msgstr "_Προσθήκη Καναλιού"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "_Ενημέρωση όλων των καναλιών"
-
-#, python-format
-#~ msgid "%s requires a username and password for \"%s\"."
-#~ msgstr "Το %s χρειάζετε όνομα χρήστη και κωδικό για \"%s\"."
-
-#~ msgid "Not a DTV-style channel"
-#~ msgstr "Το κανάλι δεν είναι σε στυλ DTV"
-
-#, fuzzy
-#~ msgid ""
-#~ "But we'll try our best to grab the files.\n"
-#~ "- It may take time to list the videos\n"
-#~ "- Descriptions may look funny\n"
-#~ "\n"
-#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
-#~ msgstr ""
-#~ "Αλλά θα κάνουμε τα δυνατά μας για να πάρουμε τα αρχεία.\n"
-#~ "- Μπορεί να πάρει λίγη ώρα για να εμφανιστούν τα βίντεο\n"
-#~ "- Οι περιγραφές μπορεί να φαίνονται αστείες\n"
-#~ "\n"
-#~ "Παρακαλώ επικοινωνήστε με τους εκδότες του %s και ρωτήστε αν έχουν κανάλι σε "
-#~ "στυλ DTV"
-
-#~ msgid "Continue"
-#~ msgstr "Συνέχεια"
-
-#, fuzzy
-#~ msgid "DTV Version Alert"
-#~ msgstr "Ανακοίνωση Έκδοσης DTV"
-
-#~ msgid ""
-#~ "A new version of DTV is available.\n"
-#~ "\n"
-#~ "Would you like to download it now?"
-#~ msgstr ""
-#~ "Μια νέα έκδοση είναι διαθέσιμη\n"
-#~ "\n"
-#~ "Θα θέλατε να την κατεβάσετε τώρα;"
-
-#, fuzzy
-#~ msgid "DTV Version Check"
-#~ msgstr "Έλεγχος Έκδοσης DTV"
-
-#~ msgid "This version of DTV is up to date."
-#~ msgstr "Έχετε την τελευταία έκδοση  του DTV"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "Το %s δεν ήταν δυνατό να σώσει την βάση δεδομένων: %s.\n"
-#~ "Οι τελευταίες αλλαγές μπορεί να χαθούν"
-
-#~ msgid "Remove Channel"
-#~ msgstr "Αφαίρεση Καναλιού"
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to <b>remove</b> the channel\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>This operation cannot be undone.</b>"
-#~ msgstr ""
-#~ "Θέλετε σίγουρα να <b>διαγράψετε</b> το κανάλι\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>Αυτή η ενέργεια δεν μπορεί να αναιρεθεί</b>"
-
-#~ msgid "Save"
-#~ msgstr "Αποθήκευση"
-
-#~ msgid "Recommend"
-#~ msgstr "Προτείνετε το"
-
-#~ msgid "Channel Settings"
-#~ msgstr "Ρυθμήσεις καναλιού"
-
-#~ msgid "Channel URL"
-#~ msgstr "Διεύθυνση Καναλιού"
-
-#~ msgid "Saved"
-#~ msgstr "Αποθηκεύτηκε"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy Διαδυκτιακή TV: Πώς να αρχίσετε"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr ""
-#~ "Αυτό είναι το κουμπι για πλήρη οθόνη. Πατήστε το, καθήστε αναπαυτικά και "
-#~ "απολάυστε"
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "ΝΕΑ:"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>Κατάλογος Ταινιών</b>"
-
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - Προσθήκη καναλιού"
 
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
@@ -642,7 +27,7 @@ msgstr "OK"
 
 #: ../../portable/dialogs.py:76
 msgid "Ok"
-msgstr "Εντάξει"
+msgstr "ΟΚ"
 
 msgid "$log"
 msgstr "$log"
@@ -666,7 +51,7 @@ msgid ""
 msgstr ""
 "Αν είχατε στην διάθεση σας ένα λεπτό, θα θέλατε να μας αποστείλετε μια "
 "αναφορά λάθους στο σύστημα εξεύρεσης λαθών; Το ελάχιστο που χρειαζόμαστε "
-"είναι μια περιγραφή το τι ήταν αυτό που κάνατε αυτή τη στιγμή -- με όση "
+"είναι μια περιγραφή το τι ήταν αυτό που κάνατε εκείνη τη στιγμή -- με όση "
 "μεγαλύτερη ακρίβεια γίνεται -- στο παρακάτω πλαίσιο:"
 
 msgid ""
@@ -810,7 +195,7 @@ msgid "Playlists"
 msgstr "Λίστες αναπαραγωγής"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Προτιμήσεις..."
 
 msgid "Previous Video"
 msgstr "Προηγούμενο video"
@@ -1344,7 +729,7 @@ msgstr "Επιλέξτε έναν φάκελο για να δείτε στην �
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Τέλος"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1755,15 +1140,15 @@ msgstr "Εξαγωγή Αρχείου OPML"
 
 #: ../../portable/opml.py:123
 msgid "Import OPML File"
-msgstr ""
+msgstr "Εισαγωγή Αρχείου OPML"
 
 #: ../../portable/opml.py:125
 msgid "OPML Files"
-msgstr ""
+msgstr "Αρχεία OPML"
 
 #: ../../portable/opml.py:145
 msgid "OPML Import failed"
-msgstr ""
+msgstr "Η Εισαγωγή OPML απέτυχε"
 
 #: ../../portable/opml.py:146
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
@@ -1788,7 +1173,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../../portable/autoupdate.py:121
-#, fuzzy
+#, fuzzy, python-format
 msgid "%s Version Alert"
 msgstr "Συναγερμός Έκδοσης %s"
 
@@ -2015,7 +1400,7 @@ msgstr ""
 
 #: ../../portable/singleclick.py:134
 msgid "File Download"
-msgstr ""
+msgstr "Λήψη Αρχείου"
 
 #: ../../portable/singleclick.py:135
 #, python-format
@@ -2086,7 +1471,7 @@ msgstr "Άν_οιγμα"
 
 #: ../../portable/menubar.py:145
 msgid "_Download Video"
-msgstr ""
+msgstr "_Λήψη Βίντεο"
 
 #: ../../portable/menubar.py:147
 msgid "Check _Version"
@@ -2110,7 +1495,7 @@ msgstr "Αποθήκευση αυτού του βίντεο ως"
 
 #: ../../portable/menubar.py:153
 msgid "Save Videos _As..."
-msgstr "Σώσε τα Βίντεο"
+msgstr "Αποθήκευση των Βίντεο _Ως"
 
 #: ../../portable/menubar.py:154
 msgid "Copy Video _URL"
@@ -2118,7 +1503,7 @@ msgstr "Αντέγραψε το Βίντεο στη διεύθυνση _URL"
 
 #: ../../portable/menubar.py:156
 msgid "_Options..."
-msgstr ""
+msgstr "_Επιλογές..."
 
 #: ../../portable/menubar.py:157
 msgid "_Quit"
@@ -2146,7 +1531,7 @@ msgstr "Διαγραφή"
 
 #: ../../portable/menubar.py:173
 msgid "Add _Channel"
-msgstr "Πρόσθεσε"
+msgstr "Προσθήκη _Καναλιού"
 
 #: ../../portable/menubar.py:174
 msgid "New Searc_h Channel..."
@@ -2162,7 +1547,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:186
 msgid "Update _All Channels"
-msgstr ""
+msgstr "Ανανέωση Όλων των _Καναλιών"
 
 #: ../../portable/menubar.py:188
 msgid "_Import Channels (OPML)..."
@@ -2541,7 +1926,7 @@ msgid "HTTP error"
 msgstr "σφάλμα HTTP"
 
 #: ../../portable/httpclient.py:97
-#, fuzzy
+#, fuzzy, python-format
 msgid "Bad Status Line: %s"
 msgstr "Κακή γραμμή %s"
 
@@ -2603,16 +1988,16 @@ msgstr ""
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Το αρχείο: \"%s\" δεν υπάρχει"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Σφάλμα ανάγνωσης"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Σφάλμα κατά την ανάγνωση από το \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -2937,15 +2322,15 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
-msgstr ""
+msgstr "_Κανάλι:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 msgid "C_hannels"
-msgstr ""
+msgstr "Κ_ανάλια"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "C_reate Channel"
-msgstr ""
+msgstr "_Δημιουργία Καναλιού"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Check Channels for _new content"
@@ -3016,7 +2401,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
-msgstr ""
+msgstr "Μηχανή _Αναζήτησης:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:52
 msgid "Search _custom folder:"
@@ -3079,15 +2464,15 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "_Downloads"
-msgstr ""
+msgstr "_Λήψεις"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid "_Folders"
-msgstr ""
+msgstr "_Φάκελοι"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "_General"
-msgstr ""
+msgstr "_Γενικά"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "_KB/s when my computer is active"

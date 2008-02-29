@@ -2,7 +2,7 @@
 <!ENTITY rsaquo				"'">
 
 <!ENTITY startup.title			"Nieuwe Installatie $shortAppName">
-<!ENTITY startup.description		"De volgende vraagjes zullen u assisteren bij het optimaal instellen van uw $longAppName-voorkeuren voor uw gebruik.">
+<!ENTITY startup.description		"De volgende vragen zullen u helpen bij het instellen van $longAppName naar uw voorkeuren.">
 <!ENTITY startup.autostart.description	"Het is aan te raden om $longAppName automatisch te openen na inloggen. Bestaande downloads kunnen zo voortgezet worden, en nieuwe downloads zullen in de achtergrond gestart worden, en klaarstaan voor wanneer u deze wenst te bekijken.">
 <!ENTITY startup.autostart.question	"Wilt u $shortAppName openen na het inloggen op uw computer?">
 <!ENTITY startup.search.description	"$longAppName kan alle video's op uw computer vinden en u helpen bij het organiseren van uw collectie.">
@@ -23,11 +23,11 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Bekijk Het Groot:">
 <!ENTITY startup.done5.text		"De knop rechts van de afspeelknop speelt video's schermvullend af.">
 <!ENTITY startup.done6.heading		"Zoek video's:">
-<!ENTITY startup.done6.text		"De $shortAppName Kanaalgids bevat duizenden internet TV kanalen... allen gratis. Klik op 'ADD' om een kanaal te bekijken.">
+<!ENTITY startup.done6.text		"De $shortAppName Kanaalgids bevat duizenden internet TV kanalen, allemaal gratis. Klik op 'Toevoegen' om een kanaal te bekijken.">
 <!ENTITY startup.answer.yes		"Ja">
 <!ENTITY startup.answer.no		"Nee">
 <!ENTITY startup.title			"Nieuwe Installatie $shortAppName">
-<!ENTITY startup.description		"De volgende vraagjes zullen u assisteren bij het optimaal instellen van uw $longAppName-voorkeuren voor uw gebruik.">
+<!ENTITY startup.description		"De volgende vragen zullen u helpen bij het instellen van $longAppName naar uw voorkeuren.">
 <!ENTITY startup.autostart.description	"Het is aan te raden om $longAppName automatisch te openen na inloggen. Bestaande downloads kunnen zo voortgezet worden, en nieuwe downloads zullen in de achtergrond gestart worden, en klaarstaan voor wanneer u deze wenst te bekijken.">
 <!ENTITY startup.autostart.question	"Wilt u $shortAppName openen na het inloggen op uw computer?">
 <!ENTITY startup.search.description	"$longAppName kan alle video's op uw computer vinden en u helpen bij het organiseren van uw collectie.">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Bekijk Het Groot:">
 <!ENTITY startup.done5.text		"De knop rechts van de afspeelknop speelt video's schermvullend af.">
 <!ENTITY startup.done6.heading		"Zoek video's:">
-<!ENTITY startup.done6.text		"De $shortAppName Kanaalgids bevat duizenden internet TV kanalen... allen gratis. Klik op 'ADD' om een kanaal te bekijken.">
+<!ENTITY startup.done6.text		"De $shortAppName Kanaalgids bevat duizenden internet TV kanalen, allemaal gratis. Klik op 'Toevoegen' om een kanaal te bekijken.">
 <!ENTITY startup.answer.yes		"Ja">
 <!ENTITY startup.answer.no		"Nee">

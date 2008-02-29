@@ -1,11 +1,11 @@
 <!ENTITY nbsp				" ">
 <!ENTITY rsaquo				"’">
 
-<!ENTITY startup.title			"$shortAppName First Time Setup">
+<!ENTITY startup.title			"$shortAppName首次设置">
 <!ENTITY startup.description		"下面的几个屏幕将帮助您设置 $longAppName 以便它以最佳状态为您工作。">
-<!ENTITY startup.autostart.description	"我们建议您让$longAppName在电脑开机就运行,这样的话程序会在后台下载最新视频并且继续上次未完成下载,一旦完成你就可以观看.">
+<!ENTITY startup.autostart.description	"我们建议您让$longAppName在电脑开机就运行,这样的话程序会在后台下载最新视频并且继续上次未完成下载,一旦完成您就可以观看.">
 <!ENTITY startup.autostart.question	"您希望让$shortAppName随系统启动吗？">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
+<!ENTITY startup.search.description	"$longAppName 能够查找计算机里所有的视频文件来帮助您整理您的收藏">
 <!ENTITY startup.search.question        "您希望让$longAppName在您的计算机上寻找视频吗？">
 <!ENTITY startup.search.restrict	"限定于我个人的配置文件。">
 <!ENTITY startup.search.custom          "搜索自定义文件夹：">
@@ -17,20 +17,20 @@
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"让它开着：">
-<!ENTITY startup.done3.text		"通常$longAppName 会在后台检查和下载频道里的最新视频.让他继续运行意味着当最新视频下载好你就可以观看.">
+<!ENTITY startup.done3.text		"通常$longAppName 会在后台检查和下载频道里的最新视频.让他继续运行意味着当最新视频下载好您就可以观看.">
 <!ENTITY startup.done4.heading		"不要担心磁盘空间：">
-<!ENTITY startup.done4.text		"与TiVo类似，$longAppName能令“过期”系统帮助清除旧的影像文件为新的影像文件留出空间。你可以通过点击“保存”永久保存一个影像文件，并且还可以通过设置频道的设置来自动保存影像。">
+<!ENTITY startup.done4.text		"与TiVo类似，$longAppName能令“过期”系统帮助清除旧的影像文件为新的影像文件留出空间。您可以通过点击“保存”永久保存一个影像文件，并且还可以通过设置频道的设置来自动保存影像。">
 <!ENTITY startup.done5.heading		"放大：">
 <!ENTITY startup.done5.text		"播放按钮右边的按钮让视频全屏播放。">
 <!ENTITY startup.done6.heading		"找到视频：">
 <!ENTITY startup.done6.text		"$shortAppName 频道向导包含上百个网络电视频道;并且他们都是免费的,只要点击'添加'就可以观看他们.">
 <!ENTITY startup.answer.yes		"确定">
 <!ENTITY startup.answer.no		"不">
-<!ENTITY startup.title			"$shortAppName First Time Setup">
+<!ENTITY startup.title			"$shortAppName首次设置">
 <!ENTITY startup.description		"下面的几个屏幕将帮助您设置 $longAppName 以便它以最佳状态为您工作。">
-<!ENTITY startup.autostart.description	"我们建议您让$longAppName在电脑开机就运行,这样的话程序会在后台下载最新视频并且继续上次未完成下载,一旦完成你就可以观看.">
+<!ENTITY startup.autostart.description	"我们建议您让$longAppName在电脑开机就运行,这样的话程序会在后台下载最新视频并且继续上次未完成下载,一旦完成您就可以观看.">
 <!ENTITY startup.autostart.question	"您希望让$shortAppName随系统启动吗？">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
+<!ENTITY startup.search.description	"$longAppName 能够查找计算机里所有的视频文件来帮助您整理您的收藏">
 <!ENTITY startup.search.question        "您希望让$longAppName在您的计算机上寻找视频吗？">
 <!ENTITY startup.search.restrict	"限定于我个人的配置文件。">
 <!ENTITY startup.search.custom          "搜索自定义文件夹：">
@@ -42,9 +42,9 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"让它开着：">
-<!ENTITY startup.done3.text		"通常$longAppName 会在后台检查和下载频道里的最新视频.让他继续运行意味着当最新视频下载好你就可以观看.">
+<!ENTITY startup.done3.text		"通常$longAppName 会在后台检查和下载频道里的最新视频.让他继续运行意味着当最新视频下载好您就可以观看.">
 <!ENTITY startup.done4.heading		"不要担心磁盘空间：">
-<!ENTITY startup.done4.text		"与TiVo类似，$longAppName能令“过期”系统帮助清除旧的影像文件为新的影像文件留出空间。你可以通过点击“保存”永久保存一个影像文件，并且还可以通过设置频道的设置来自动保存影像。">
+<!ENTITY startup.done4.text		"与TiVo类似，$longAppName能令“过期”系统帮助清除旧的影像文件为新的影像文件留出空间。您可以通过点击“保存”永久保存一个影像文件，并且还可以通过设置频道的设置来自动保存影像。">
 <!ENTITY startup.done5.heading		"放大：">
 <!ENTITY startup.done5.text		"播放按钮右边的按钮让视频全屏播放。">
 <!ENTITY startup.done6.heading		"找到视频：">

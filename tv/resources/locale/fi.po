@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-21 19:45+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2007-12-12 15:46+0000\n"
+"Last-Translator: veepee <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -193,7 +193,7 @@ msgid "Playlists"
 msgstr "Soittoluettelo"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Asetukset"
 
 msgid "Previous Video"
 msgstr "Edellinen video"
@@ -727,7 +727,7 @@ msgstr "Valitse Kirjastossa näytettävä kansio."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Valmis"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -738,17 +738,16 @@ msgid "Pause Video"
 msgstr "Keskeytä video"
 
 #: ../../platform/osx/frontend/Application.py:255
-#, fuzzy
 msgid "Unsupported version of Quicktime"
 msgstr "Ei-tuettu versio Quicktimesta"
 
 #: ../../platform/osx/frontend/Application.py:256
-#, fuzzy
+#, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
 msgstr ""
-"Ajaaksesi %s tarvitset uusimman version Quicktimesta. Päivittäminen on "
+"Ajaaksesi %s :n tarvitset uusimman version Quicktimesta. Päivittäminen on "
 "ilmaista."
 
 #: ../../platform/osx/frontend/UIStrings.py:22
@@ -924,7 +923,7 @@ msgstr "Tämän kohteen torrent-tiedosto on poistettu "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "Miron ulkopuolella."
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -953,7 +952,7 @@ msgstr "Etsi"
 
 #: ../../portable/downloader.py:215
 msgid "activity"
-msgstr ""
+msgstr "Aktiivisuus"
 
 #: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
 #: ../../portable/httpclient.py:142
@@ -1101,7 +1100,7 @@ msgstr "Merkitse katsomattomaksi"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Merkitse tarkkailtavaksi"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -1372,7 +1371,6 @@ msgid "Download already exists"
 msgstr "Lataus on jo olemassa"
 
 #: ../../portable/singleclick.py:88
-#, fuzzy
 msgid "That URL is already an external download."
 msgstr "Kohde on jo ulkoisena latauksena."
 
@@ -1381,7 +1379,6 @@ msgid "Miro will begin downloading it now."
 msgstr "Miro aloittaa nyt latauksen."
 
 #: ../../portable/singleclick.py:96
-#, fuzzy
 msgid "It is downloading now."
 msgstr "Lataus on jo käynnissä."
 
@@ -1554,7 +1551,7 @@ msgstr "Uusi _kansio..."
 
 #: ../../portable/menubar.py:176
 msgid "Add Channel _Guide..."
-msgstr ""
+msgstr "Lisää kanava_opas"
 
 #: ../../portable/menubar.py:186
 msgid "Update _All Channels"
@@ -1582,7 +1579,7 @@ msgstr "Uusi _soittolista"
 
 #: ../../portable/menubar.py:196
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "Uusi soittolista_kansio"
 
 #: ../../portable/menubar.py:198
 msgid "Re_name Playlist"
@@ -1593,17 +1590,16 @@ msgid "_Remove Playlist"
 msgstr "P_oista soittolista"
 
 #: ../../portable/menubar.py:200
-#, fuzzy
 msgid "_Remove Playlists"
 msgstr "_Poista soittolistoja"
 
 #: ../../portable/menubar.py:201
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "_Poista soittolistakansiot"
 
 #: ../../portable/menubar.py:202
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "_Poista soittolistakansio"
 
 #: ../../portable/menubar.py:212
 msgid "_Play"
@@ -1623,11 +1619,11 @@ msgstr "_Edellinen video"
 
 #: ../../portable/menubar.py:218
 msgid "Skip _Forward"
-msgstr ""
+msgstr "Siirry _seuraavaan"
 
 #: ../../portable/menubar.py:219
 msgid "Skip _Back"
-msgstr ""
+msgstr "Siirry _edelliseen"
 
 #: ../../portable/menubar.py:221
 msgid "Volume _Up"
@@ -1790,15 +1786,15 @@ msgstr "permalink"
 
 #: ../../portable/item.py:993
 msgid "File link:"
-msgstr ""
+msgstr "Tiedostolinkki:"
 
 #: ../../portable/item.py:993
 msgid "direct link to file"
-msgstr ""
+msgstr "suora linkki tiedostoon"
 
 #: ../../portable/item.py:995
 msgid "File type:"
-msgstr ""
+msgstr "Tiedostotyyppi:"
 
 #: ../../portable/item.py:1002
 msgid "REVEAL LOCAL FOLDER"
@@ -1814,11 +1810,11 @@ msgstr "Tiedoston nimi:"
 
 #: ../../portable/item.py:1013
 msgid "Down Total"
-msgstr ""
+msgstr "Kokonaislatausnopeus"
 
 #: ../../portable/item.py:1015
 msgid "Up Total"
-msgstr ""
+msgstr "Kokonaislähetysnopeus"
 
 #: ../../portable/item.py:1033
 msgid "Item Details"
@@ -1989,16 +1985,16 @@ msgstr "\"%s\" on virheellinen osoite"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Tiedostoa \"%s\" ei ole olemassa"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Lukuvirhe"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Virhe luettaessa \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -2108,32 +2104,33 @@ msgstr ""
 #: ../../portable/app.py:1143
 #, python-format
 msgid "Are you sure you want to remove %s?"
-msgstr ""
+msgstr "Oletko varma, että haluat poistaa %s :n?"
 
 #: ../../portable/app.py:1147
 #, python-format
 msgid "Are you sure you want to remove these %s channels?"
-msgstr ""
+msgstr "Oletko varma, että haluat poistaa nämä %s kanavaa?"
 
 #: ../../portable/app.py:1160
 #, python-format
 msgid "Stop watching %s"
-msgstr ""
+msgstr "Lopeta %s :n katsominen"
 
 #: ../../portable/app.py:1161
 #, python-format
 msgid "Are you sure you want to stop watching %s?"
-msgstr ""
+msgstr "Oletko varma, että haluat lopettaa %s :n katsomisen?"
 
 #: ../../portable/app.py:1164
 #, python-format
 msgid "Stop watching %s directories"
-msgstr ""
+msgstr "Lopeta %s -hakemiston katsominen"
 
 #: ../../portable/app.py:1165
 #, python-format
 msgid "Are you sure you want to stop watching these %s directories?"
 msgstr ""
+"Oletko varma, että haluat lopettaa näiden %s :n hakemiston katsomisen?"
 
 #: ../../portable/app.py:1196
 msgid "Are you sure you want to quit?"
@@ -2144,6 +2141,8 @@ msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
+"Miro lähettää yhä kaatumisraporttiasi. Jos lopetat nyt, niin lähettäminen "
+"perutaan. Lopetetaanko silti?"
 
 #: ../../portable/app.py:1203
 #, python-format
@@ -2163,12 +2162,12 @@ msgstr "%s on virheellinen arvo. Kirjoita ei-negatiivinen luku."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Virhe tiedoston näyttämisessä"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Tiedosto \"%s\" on poistettu Miron ulkopuolelta."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -2206,11 +2205,11 @@ msgstr "$shortAppName - Lataa video"
 
 #: ../../portable/app.py:2063
 msgid "Enter the URL of the video to download"
-msgstr ""
+msgstr "Kirjoita ladattavan videon URL"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Aloituskanavat"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -2224,6 +2223,7 @@ msgstr "Valinnaiset kanavat"
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
 msgstr ""
+"Sinulla on $longAppName :n versio, jossa on mukautettu kanavavalikoima"
 
 #: ../../portable/app.py:2478
 msgid "Error Changing Movies Directory"
@@ -2234,6 +2234,8 @@ msgid ""
 "You don't have permission to write to the directory you selected.  Miro will "
 "continue to use the old videos directory."
 msgstr ""
+"Sinulla ei ole kirjoitusoikeuksia valitsemaasi hakemistoon. Miro jatkaa "
+"vanhan videohakemiston käyttämistä."
 
 #: ../../portable/app.py:2508
 msgid "Error Saving Video"
@@ -2245,6 +2247,8 @@ msgid ""
 "An error occured while trying to save %s.  Please check that the file has "
 "not been deleted and try again."
 msgstr ""
+"On tapahtunut virhe tallennettaessa %s. Tarkista, ettei tiedostoa ole "
+"poistettu ja yritä uudelleen."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "(Changes won't go into effect until you restart Miro)"
@@ -2277,11 +2281,12 @@ msgstr "<b>Etsitään videoita</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:10
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
-msgstr ""
+msgstr "<b>Haluaisitko Miron etsivän videotiedostoja tietokoneeltasi?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
 msgstr ""
+"<b>Haluaisitko käynnistää Miron tietokoneen käynnistyksen yhteydessä?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12
 msgid ""
@@ -2308,10 +2313,34 @@ msgid ""
 "<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
 "of them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"<b>Valmista on!</b>\n"
+"\n"
+"Asetukset on tehty - nyt voit etsiä kanavia ja aloittaa katsomisen.\n"
+"\n"
+"<b>Älä odottele:</b> Miro on erilainen kuin nettisivuilla olevat videot - "
+"julkaisijat voivat tarjota isoja, korkealaatuisia videoita. Älä siis turhaan "
+"odottele videoita: käynnistä muutama lataus ja katso ne myöhemmin.\n"
+"\n"
+"<b>Jätä se päälle:</b> Miro tarkistaa säännöllisin väliajoin kanavat uusien "
+"videoiden varalta ja lataa ne taustalla. Jättämällä sen päälle näet uudet "
+"videot silloin kun haluat.\n"
+"\n"
+"<b>Älä huolehdi kiintolevytilasta:</b> Edistyneen kiintolevytallentimen "
+"tavoin Mirossa on \"vanhenemisjärjestelmä\", joka poistaa vanhat videot ja "
+"tekee tilaa uusille. Voit tallentaa videot pysyvästi klikkaamalla "
+"\"tallenna\" ja voit valita kanavan asetuksista, että videot tallennetaan "
+"aina pysyvästi.\n"
+"\n"
+"<b>Ajattele isosti:</b> Toistonapin oikealla puolella oleva nappi näyttää "
+"videot kokoruudussa.\n"
+"\n"
+"<b>Löydä videoita:</b> Miron ohjelmaoppassa on satoja Internet-"
+"televisiokanavia ja ne ovat kaikki ilmaisia. Klikkaa vain \"Lisää\" "
+"katsoaksesi kanavaa."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
 msgid "By default, videos _expire after"
-msgstr ""
+msgstr "Oletuksena videot _vanhenevat ajassa"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
@@ -2327,7 +2356,7 @@ msgstr "L_uo kanava"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Check Channels for _new content"
-msgstr ""
+msgstr "Tarkista kanavien _uusi sisältö"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "Disk _Space"
@@ -2335,7 +2364,7 @@ msgstr "_Levytila"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "Don't start a download _if it leaves less than"
-msgstr ""
+msgstr "Älä aloita latausta _jos tilaa jää vähemmän kuin"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Download at _most"
@@ -2353,11 +2382,11 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid "G_B free"
-msgstr ""
+msgstr "G_t vapaana"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 msgid "Go"
-msgstr ""
+msgstr "Siirry"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
@@ -2369,10 +2398,12 @@ msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
+"Miro voi etsiä kaikki tietokoneellasi olevat videot ja näin auttaa sinua "
+"organisoimaan kokoelmasi."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Play _videos one after another"
-msgstr ""
+msgstr "Toista _videot peräkkäin"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Preferences"
@@ -2384,11 +2415,11 @@ msgstr "Rajoita _kotikansiooni"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "S_top after each video"
-msgstr ""
+msgstr "_Pysäytä jokaisen videon jälkeen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "S_tore downloaded videos in this folder:"
-msgstr ""
+msgstr "T_allenna ladatut videot tähän kansioon:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
@@ -2396,7 +2427,7 @@ msgstr "Hakukone:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:52
 msgid "Search _custom folder:"
-msgstr ""
+msgstr "Etsi _valinnaisesta kansiosta:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid "Select Movies Directory"
@@ -2411,10 +2442,12 @@ msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr ""
+"Seuraavat pari sivua auttavat sinua Miron asetusten kanssa jotta se toimisi "
+"sinulle parhaalla mahdollisella tavalla. Tässä on ensimmäinen kysymys."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "To a_void slowdowns, limit upstream to"
-msgstr ""
+msgstr "Hidastumisen _välttämiseksi rajoita lähetysnopeutta"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Volume:"
@@ -2426,6 +2459,9 @@ msgid ""
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr ""
+"Suosittelemme, että annat Miron käynnistyä aina kun käynnistät tietokoneesi. "
+"Tällä tavoin videot, jotka eivät ole vielä latautuneet voidaan ladata "
+"loppuun ja ne ovat valmiina katsottavaksi kanavilta silloin kun haluat."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid ""
@@ -2433,6 +2469,9 @@ msgid ""
 "download videos from your favorite channels, watch new videos one after the "
 "other, download torrents, recommend videos to friends, and lots more."
 msgstr ""
+"Tervetuloa Internet-Televisioon. Mirolla voi tehdä monia eri asioita: ladata "
+"videoita suosikkikanavilta, katsoa videoita yksi toisensa jälkeen, ladata "
+"torrentteja, suositella videoita ystäville ja paljon muuta."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid ""
@@ -2445,41 +2484,40 @@ msgstr ""
 "elokuvia ei siirretä ennen kuin lataus on valmis.)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:62
-#, fuzzy
 msgid "_Add Folder"
 msgstr "_Lisää kansio"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "_Automatically run Miro when I log in"
-msgstr ""
+msgstr "Käynnistä Miro _automaattisesti kun kirjaudun sisään"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "_Bit Torrent uses ports between"
-msgstr ""
+msgstr "_BitTorrent käyttää portteja väliltä"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "_Downloads"
-msgstr ""
+msgstr "_Lataukset"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid "_Folders"
-msgstr ""
+msgstr "_Kansiot"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "_General"
-msgstr ""
+msgstr "_Yleistä"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "_KB/s when my computer is active"
-msgstr ""
+msgstr "_kt/s kun tietokoneeni on aktiivinen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "_Playback"
-msgstr ""
+msgstr "_Toisto"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "_Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgstr "_Jatka videon toistoa kohdasta, johon se jäi pysäytettäessä"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
@@ -2495,20 +2533,20 @@ msgstr "_URL"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "_Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "_Varoita, kun yritän sammuttaa ohjelman ja latauksia on kesken"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
-msgstr ""
+msgstr "_Tarkkaile uusia videoita näissä kansioissa ja lisää ne kirjastoon"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "_and"
-msgstr ""
+msgstr "_ja"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "videos at once"
-msgstr ""
+msgstr "videot kerralla"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
@@ -2516,6 +2554,9 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName versio $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$publisher. $longAppName ja $longAppName -logo ovat $publisher :in "
+"tuotemerkkejä."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
@@ -2543,6 +2584,10 @@ msgid ""
 "information into our bug tracker and tell us what you were doing when the\n"
 "problem occurred."
 msgstr ""
+"Ole hyvä ja auta meitä korjaamaan se. Kopioi ja liitä kaikki\n"
+"informaatio virheenjäljitysjärjestelmäämme ja kerro meille, mitä olit "
+"tekemässä,\n"
+"kun virhe ilmeni."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
 msgid ""
@@ -2550,10 +2595,13 @@ msgid ""
 "Sorry for the inconvenience. $longAppName is still in beta, but with your "
 "help we're fixing problems fast!"
 msgstr ""
+"Sitten käynnistä $longAppName uudestaan (tai saatat yhä saada tähän "
+"liittyviä virheitä). Pahoittelemme tästä aiheutuvaa vaivaa. $longAppName on "
+"yhä kehitysversio, mutta sinun avullasi korjaamme ongelmat nopeasti!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
 msgid "You found a bug in $longAppName!"
-msgstr ""
+msgstr "Löysit virheen $longAppName :ssa!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
@@ -2583,6 +2631,8 @@ msgid ""
 "and ask if they can supply a feed in a format that will work with "
 "$shortAppName."
 msgstr ""
+"ja pyydä heitä tarjoamaan syöte muodossa, joka toimii $shortAppName :n "
+"kanssa."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
 msgid "$longAppName"
@@ -2594,6 +2644,9 @@ msgid ""
 "migrate your existing downloads there?(Currently dowloading movies will not "
 "be moved until they finish)"
 msgstr ""
+"Olet valinnut uuden kansion, jonne videot ladataan. Pitäisikö $shortAppName "
+":n siirtää olemassa olevat lataukset sinne? (Tällä hetkellä ladattavat "
+"videot siirretään vasta, kun ne ovat latautuneet)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
@@ -2609,18 +2662,20 @@ msgstr "Syötä tämän kanavan julkaisijalta saamasi käyttäjänimi ja salasan
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
 msgstr ""
+"(VAROITUS: Muutokset tulevat voimaan vasta, kun käynnistät $longAppName :n "
+"uudestaan.)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Add Folder..."
-msgstr ""
+msgstr "Luo kansio..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Automatically run $longAppName when I login."
-msgstr ""
+msgstr "Käynnistä $longAppName automaattisesti kun kirjaudun sisään."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "By default, videos expire after"
@@ -2628,83 +2683,90 @@ msgstr "Oletusarvona videoiden vanhenemisaika on"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Check channels for new content"
-msgstr ""
+msgstr "Tarkista kanavien uusi sisältö"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgstr "Sulje ilmoitusalueelle jotta lataukset voivat jatkua."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "30:n minuutin välein"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Every hour"
-msgstr ""
+msgstr "Tunnin välein"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Folder"
-msgstr ""
+msgstr "Kansio"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
-msgstr ""
+msgstr "Manuaalisesti"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
-msgstr ""
+msgstr "Asetukset"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "Toista yksi video ja pysähdy."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Sammuta Miro kokonaan."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
 msgstr ""
+"Muista mihin kohtaan jäin videon katsomisessa ja jatka toistamista samasta "
+"kohdasta."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Show as a Channel"
-msgstr ""
+msgstr "Näytä kanavana"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Store downloaded videos in this folder:"
-msgstr ""
+msgstr "Tallenna ladatut videot tähän kansioon:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid ""
 "To avoid slowdowns, limit upstream bandwith when my computer is active."
 msgstr ""
+"Hidastumisen välttämiseksi rajoita lähetysnopeutta, kun tietokoneeni on "
+"aktiivinen."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "Upstream limit (KB/s)"
-msgstr ""
+msgstr "Lähetysraja (kt/s)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
-msgstr ""
+msgstr "Käytä BitTorrent-portteja väliltä"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr ""
+"VAROITUS: Tämä asetus tulee voimaan vasta, kun käynnistät $longAppName :n "
+"uudestaan."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
 msgid "Warn me when I attempt to quit with downloads in progress."
 msgstr ""
+"Varoita minua, kun yritän sammuttaa ohjelman ja latauksia on vielä kesken."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
-msgstr ""
+msgstr "Tarkkaile uusia videoita näissä kansioissa ja lisää ne kirjastooni."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "When I click the red close button:"
-msgstr ""
+msgstr "Kun klikkaan punaista sulje-nappia:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
 msgid "and"
@@ -2712,25 +2774,27 @@ msgstr "ja"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
-msgstr ""
+msgstr "Kanava:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
 msgid "Search Engine:"
-msgstr ""
+msgstr "Hakukone:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
 msgid "Search For:"
-msgstr ""
+msgstr "Etsi:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
 msgid ""
 "$longAppName can find all the videos on your computer to help you organize "
 "your collection."
 msgstr ""
+"$longAppName voi etsiä kaikki tietokoneellasi olevat videot ja auttaa sinua "
+"järjestämään kokoelmasi."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
 msgid ""
@@ -2738,14 +2802,17 @@ msgid ""
 "background.  Leaving it running means you'll have new videos when you're "
 "ready to watch."
 msgstr ""
+"$longAppName tarkistaa säännöllisin väliajoin kanavat uusien videoiden "
+"varalta ja lataa ne taustalla. Jättämälle sen päälle näet uudet videot heti, "
+"kun haluat katsoa niitä."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
 msgid "$shortAppName First Time Setup"
-msgstr ""
+msgstr "$shortAppName ensimmäisen käynnistyksen asetukset"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
-msgstr ""
+msgstr "Peruuta haku"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
 msgid "Change"
@@ -2761,11 +2828,11 @@ msgstr "Etsi videoita:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
 msgid "Go Big:"
-msgstr ""
+msgstr "Ajattele isosti:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
 msgid "Leave it On:"
-msgstr ""
+msgstr "Jätä se päälle:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
 msgid ""
@@ -2774,15 +2841,21 @@ msgid ""
 "permanently by clicking 'save' and you can set a channel's settings to save "
 "videos automatically."
 msgstr ""
+"Edistyneen kiintolevytallentimen tavoin $longAppName :ssa on "
+"\"vanhenemisjärjestelmä\", joka auttaa poistamaan vanhat videot, jotta "
+"uusille olisi tilaa. Voit tallentaa videot pysyvästi klikkaamalla "
+"\"tallenna\" ja voit myös valita kanavan asetuksista, että video "
+"tallennetaan pysyvästi."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
 msgid ""
 "Now you can explore the Channel Guide\n"
 "and start watching.  A few tips to get started:"
 msgstr ""
+"Nyt voit tutustua kanavaoppaaseen ja\n"
+"aloittaa katsomisen. Muutama vinkki aluksi:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
-#, fuzzy
 msgid "Reset Search"
 msgstr "Tyhjennä hakukenttä"
 
@@ -2792,13 +2865,16 @@ msgstr "Rajoita kaikkiin henkilökohtaisiin tiedostoihini."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
 msgid "Search custom folder:"
-msgstr ""
+msgstr "Etsi valinnaisesta kansiosta:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
 msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"$shortAppName :n kanavaoppaassa on satoja Internet-televisiokanavia ja "
+"kaikki niistä ovat ilmaisia. Klikkaa vain \"Lisää\" aloittaaksesi kanavan "
+"katsominen."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."
@@ -2807,36 +2883,31 @@ msgstr ""
 "näytön kokoisena."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30
-#, fuzzy
 msgid ""
 "The next few screens will help you set up $longAppName so that it works best "
 "for you."
 msgstr ""
-"Seuraavien ikkunoiden avulla voit laatia $longAppName -ohjelman asetukset "
-"niin, että ohjelma toimii haluamallasi tavalla."
+"Parin seuraavan ruudun avulla voit säätä $longAppName :n asetukset niin, "
+"että ohjelma toimii haluamallasi tavalla."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
-#, fuzzy
 msgid ""
 "We recommend that you have $longAppName launch when your computer starts up. "
 " This way, videos in progress can finish downloading and new videos can be "
 "downloaded in the background, ready when you want to watch."
 msgstr ""
-"Suosittelemme, että asetat $longAppName -ohjelman käynnistymään "
-"automaattisesti, kun tietokoneesi käynnistyy. Tällä tavoin latauksessa "
-"olevat videot voivat latautua loppuun ja voit asettaa usia videoita "
-"latautumaan taustalle, jotta ne olisivat valmiina katseltaviksi silloin, kun "
-"haluat."
+"Suosittelemme, että asetat $longAppName :n käynnistymään automaattisesti "
+"tietokoneen käynnistyessä. Näin keskeneräiset videot saadaan ladattua "
+"loppuun taustalla ja voit katsoa ne milloin haluat."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
-#, fuzzy
 msgid "Would you like $longAppName to look for video files on your computer?"
-msgstr ""
-"Haluaisitko $longAppName -ohjelman etsivän videotiedostoja tietokoneeltasi?"
+msgstr "Haluaisitko $longAppName :n etsivän videotiedostoja tietokoneeltasi?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
 msgid "Would you like to run $shortAppName on startup?"
 msgstr ""
+"Haluaisitko käynnistää $shortAppName :n aina tietokoneen käynnistyessä?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
 msgid "You're done!"
@@ -2844,7 +2915,7 @@ msgstr "Valmis!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
 msgid "Release Notes:"
-msgstr ""
+msgstr "Julkaisumerkinnät:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"

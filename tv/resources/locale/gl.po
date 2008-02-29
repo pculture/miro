@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-07-22 21:28+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2007-12-13 10:46+0000\n"
+"Last-Translator: Alexandre Vázquez <alexandre.vazquez@gmail.com>\n"
 "Language-Team: Galician <gl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -23,11 +23,11 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 msgid "OK"
-msgstr "Confirmar"
+msgstr "Aceptar"
 
 #: ../../portable/dialogs.py:76
 msgid "Ok"
-msgstr ""
+msgstr "Aceptar"
 
 msgid "$log"
 msgstr "$log"
@@ -51,8 +51,8 @@ msgid ""
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
 "Se ten vostede un minuto, podería enviar un informe de erros ao noso sistema "
-"de xestión de bugs? Necesitamos, polo menos, unha descrição -da forma máis "
-"precisa posível- do que estaba a facenr no momento do erro e unha copia da "
+"de xestión de bugs? Necesitamos, polo menos, unha descrición -da forma máis "
+"precisa posible- do que estaba a facer no momento do erro e unha copia da "
 "estraña frase que aparece na caixa:"
 
 msgid ""
@@ -61,10 +61,10 @@ msgid ""
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
-"Má sorte! O $longAppName foi vítima dalgún tipo de confusión interna ou de "
-"teimosía $when. Pedimos desculpas e suxerimos que feche e reinicie o "
+"Mala sorte! O $longAppName foi vítima dalgún tipo de confusión interna ou de "
+"rallantería $when. Pedimos desculpas e suxerimos que peche e reinicie o "
 "$shortAppName. Iso lle ensinará a comportarse, e reducirá a posibilidade de "
-"que vostede perda as sáas preferencias ou os canais nos cais está inscrito."
+"que vostede perda as súas preferencias ou os canais nos cales está inscrito."
 
 msgid "The fall of $shortAppName??"
 msgstr "A caída do $shortAppName??"
@@ -685,7 +685,7 @@ msgid "Migrate existing movies?"
 msgstr ""
 
 #: ../../platform/osx/frontend/Preferences.py:208
-#, fuzzy
+#, fuzzy, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
 "existing downloads there?  (Currently dowloading movies will not be moved "
@@ -721,7 +721,7 @@ msgid "Unsupported version of Quicktime"
 msgstr "Versión non soportada de Quicktime"
 
 #: ../../platform/osx/frontend/Application.py:256
-#, fuzzy
+#, fuzzy, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."

@@ -9,15 +9,159 @@ msgstr ""
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
 "PO-Revision-Date: 2007-10-05 10:18+0000\n"
-"Last-Translator: Dusko Gunjic <dgunjic@yahoo.com>\n"
+"Last-Translator: Vladimir Baltić <paretimpar@gmail.com>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#~ msgid "Save this video"
+#~ msgstr "Snimi ovaj video"
+
+#, fuzzy
+#~ msgid "_Play / Pause"
+#~ msgstr "_Pusti / Pauziraj"
+
+#, fuzzy
+#~ msgid "_Remove Channel"
+#~ msgstr "_Ukloni Kanal"
+
+#~ msgid "_Update Channel"
+#~ msgstr "_Osveži Kanal"
+
+#~ msgid "_Open..."
+#~ msgstr "_Otvori..."
+
+#, fuzzy
+#~ msgid "Open various files"
+#~ msgstr "Otvori razne fajlove"
+
+#, fuzzy
+#~ msgid "P_references"
+#~ msgstr "P_ostavke"
+
+#, fuzzy
+#~ msgid "Quit the Program"
+#~ msgstr "Izađi iz Programa"
+
+#, fuzzy
+#~ msgid "U_pdate All Channels"
+#~ msgstr "O_sveži Sve Kanale"
+
+#, fuzzy
+#~ msgid "Pending Auto Download"
+#~ msgstr "Aktivan Auto Download"
+
+#, fuzzy
+#~ msgid "Unwatched"
+#~ msgstr "Nije pregledano"
+
+#, fuzzy
+#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
+#~ msgstr ""
+#~ "Ništa za prikaz.<br></br> Unesite upit u polje za pretraživanje iznad."
+
+#, fuzzy
+#~ msgid "Searching..."
+#~ msgstr "Tražim..."
+
+#~ msgid "My Collection"
+#~ msgstr "Moja kolekcija"
+
+#~ msgid "New Videos"
+#~ msgstr "Novi video fajlovi"
+
+#, fuzzy
+#~ msgid "Democracy - External Playback Template"
+#~ msgstr "Democracy - External Playback Template"
+
+#, fuzzy
+#~ msgid "Continue To Next Video"
+#~ msgstr "Nastavi do sledećeg Video fajla"
+
+#~ msgid "Recommend"
+#~ msgstr "Preporuči"
+
+#, fuzzy
+#~ msgid "Default"
+#~ msgstr "Početna"
+
+#, fuzzy
+#~ msgid "Watched"
+#~ msgstr "Pregledano"
+
+#~ msgid "Saved"
+#~ msgstr "Snimljeno"
+
+#, fuzzy
+#~ msgid "Play Externally"
+#~ msgstr "Reprodukuj eksterno"
+
+#~ msgid "Simple translation"
+#~ msgstr "Jednostavan prevod"
+
+#~ msgid "truck stop in a ${can}"
+#~ msgstr "kamion staje za ${can}"
+
+#, fuzzy
+#~ msgid "Democracy Internet TV: How to Get Started"
+#~ msgstr "Democracy Internet TV: Kako početi"
+
+#~ msgid "GO BIG:"
+#~ msgstr "GO BIG:"
+
+#, fuzzy
+#~ msgid "This is your fullscreen button. Click it and lean back."
+#~ msgstr "Ovo je fullscreen taster. Klikni i opusti se."
+
+#~ msgid "NEW STUFF:"
+#~ msgstr "NOVO:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Blue circles mean the channel has new videos available, green circles mean "
+#~ "you have downloaded videos ready to watch."
+#~ msgstr ""
+#~ "Plavi krugovi označavaju da kanal ima nove video fajlove na raspolaganju, "
+#~ "zeleni krugovi označavaju da su preuzeti fajlovi spremni da ih pogledate."
+
+#, fuzzy
+#~ msgid ""
+#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
+#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+#~ "channels in the guide are free.</strong>"
+#~ msgstr ""
+#~ "<strong>Dodaj kanale:</strong> TV Vodič je tvoja baza internet TV kanala. "
+#~ "Klikni 'DODAJ' da biste se pretplatili na kanal-- <strong>tkanali u vodiču "
+#~ "su besplatni.</strong>"
+
+#, fuzzy
+#~ msgid ""
+#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
+#~ "waiting for videos: start some downloads and check back later."
+#~ msgstr ""
+#~ "<strong>Ne čekaj:</strong> Democracy je drugačiji od gledanja video fajlova "
+#~ "na web stranicama-- izdavači mogu ponuditi velike, high quality video "
+#~ "snimke. Ne gubi vreme: startuj neki download i proveri ga malo kasnije."
+
+#, fuzzy
+#~ msgid ""
+#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
+#~ "style=\"color:red\">raw</b> text</span>"
+#~ msgstr ""
+#~ "Ovo je ${car} a ovo je ${truck} <span>Ovaj tekst je <b "
+#~ "style=\"color:red\">raw</b> text</span>"
+
+#, python-format
+#~ msgid "You have %d download still in progress."
+#~ msgid_plural "You have %d downloads still in progress."
+#~ msgstr[0] "Имате %d скидање још увек у току."
+#~ msgstr[1] "Имате %d скидања још увек у току."
 
 #~ msgid "About Democracy"
 #~ msgstr "O Democracy"
@@ -32,16 +176,15 @@ msgstr ""
 #~ msgstr "Sakrij Democracy"
 
 #, fuzzy
-#~ msgid "New Channel Guide..."
-#~ msgstr "Novi Vodič Kanala..."
-
-#, fuzzy
 #~ msgid "Preferencesâ¦"
 #~ msgstr "Podešavanja"
 
 #, fuzzy
 #~ msgid "Quit Democracy"
 #~ msgstr "Napusti Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Ukloni Kanal..."
 
 #, fuzzy
 #~ msgid "(You must restart Democracy for this change to take effect)\n"
@@ -153,8 +296,60 @@ msgstr ""
 #~ "Pronađite Video: The Democracy TV Vodič poseduje stotine internet TV kanala, "
 #~ "svi su besplatni. Samo kliknite \"Dodaj\" da biste gledali određeni kanal.\n"
 
-#~ msgid "Save this video"
-#~ msgstr "Snimi ovaj video"
+#~ msgid "Create new playlist"
+#~ msgstr "Kreiraj novu plejlistu"
+
+#, fuzzy
+#~ msgid "Create new playlist folder"
+#~ msgstr "Kreiraj novi folder plejliste"
+
+#, fuzzy
+#~ msgid "Create new channel folder"
+#~ msgstr "Kreiraj folder novog kanala"
+
+#, fuzzy, python-format
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Grečka pri importu democracy modula:\n"
+#~ "%s"
+
+#, fuzzy
+#~ msgid "${count} Downloads in Progress"
+#~ msgstr "${count} Download-a u toku"
+
+#, fuzzy
+#~ msgid "1 Download in Progress"
+#~ msgstr "1 Download u toku"
+
+#, fuzzy
+#~ msgid "${len} Videos On This Channel"
+#~ msgstr "${len} Video Fajlova na ovom kanalu"
+
+#, fuzzy
+#~ msgid "All ${len} Videos Match This Search"
+#~ msgstr "Svi ${len} Video fajlovi odgovaraju upitu ove pretrage"
+
+#, fuzzy
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len} Video fajlova odgovara ovoj pretrazi"
+
+#, fuzzy
+#~ msgid "Looking for videos at this URL"
+#~ msgstr "Tražim video fajlove na URL"
+
+#, fuzzy
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} Video fajlova na ovom kanalu"
+
+#, fuzzy
+#~ msgid "SAVE"
+#~ msgstr "Snimi"
+
+#, fuzzy
+#~ msgid "New Channel Guide..."
+#~ msgstr "Novi Vodič Kanala..."
 
 #, fuzzy
 #~ msgid "_Copy Video URL"
@@ -164,65 +359,24 @@ msgstr ""
 #~ msgstr "_Stop Video"
 
 #, fuzzy
-#~ msgid "_Play / Pause"
-#~ msgstr "_Pusti / Pauziraj"
-
-#~ msgid "_Update Channel"
-#~ msgstr "_Osveži Kanal"
-
-#, fuzzy
 #~ msgid "Re_name Channel"
 #~ msgstr "Promeni_ime Kanala"
 
 #, fuzzy
-#~ msgid "_Remove Channel"
-#~ msgstr "_Ukloni Kanal"
-
-#~ msgid "_Open..."
-#~ msgstr "_Otvori..."
-
-#, fuzzy
-#~ msgid "Open various files"
-#~ msgstr "Otvori razne fajlove"
-
-#, fuzzy
 #~ msgid "New _Playlist..."
 #~ msgstr "Nova _Play lista..."
-
-#~ msgid "Create new playlist"
-#~ msgstr "Kreiraj novu plejlistu"
 
 #, fuzzy
 #~ msgid "New Playlist _Folder..."
 #~ msgstr "Novi _Folder Plejliste..."
 
 #, fuzzy
-#~ msgid "Create new playlist folder"
-#~ msgstr "Kreiraj novi folder plejliste"
-
-#, fuzzy
 #~ msgid "New Channel _Folder..."
 #~ msgstr "Novi _Folder Kanala"
 
 #, fuzzy
-#~ msgid "Create new channel folder"
-#~ msgstr "Kreiraj folder novog kanala"
-
-#, fuzzy
 #~ msgid "Add _Channel..."
 #~ msgstr "Dodaj_Kanal"
-
-#, fuzzy
-#~ msgid "P_references"
-#~ msgstr "P_ostavke"
-
-#, fuzzy
-#~ msgid "Quit the Program"
-#~ msgstr "Izađi iz Programa"
-
-#, fuzzy
-#~ msgid "U_pdate All Channels"
-#~ msgstr "O_sveži Sve Kanale"
 
 #, fuzzy
 #~ msgid "Delete selection"
@@ -255,9 +409,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Remove Playlist Folders..."
 #~ msgstr "Ukloni Foldere Plejliste..."
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Ukloni Kanal..."
 
 #, fuzzy
 #~ msgid "Remove Channels..."
@@ -314,23 +465,6 @@ msgstr ""
 #~ msgstr "Osveži Kanale..."
 
 #, fuzzy
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Grečka pri importu democracy modula:\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr ""
-#~ "Ništa za prikaz.<br></br> Unesite upit u polje za pretraživanje iznad."
-
-#, fuzzy
-#~ msgid "Searching..."
-#~ msgstr "Tražim..."
-
-#, fuzzy
 #~ msgid "Results for \"${query}\""
 #~ msgstr "Rezultati za \"${upit}\""
 
@@ -373,62 +507,11 @@ msgstr ""
 #~ msgstr "ZVEZDA"
 
 #, fuzzy
-#~ msgid "SAVE"
-#~ msgstr "Snimi"
-
-#, fuzzy
 #~ msgid "SAVED"
 #~ msgstr "Snimljeno"
 
 #~ msgid "DELETE"
 #~ msgstr "IZBRIŠI"
-
-#, fuzzy
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - External Playback Template"
-
-#, fuzzy
-#~ msgid "Continue To Next Video"
-#~ msgstr "Nastavi do sledećeg Video fajla"
-
-#, fuzzy
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "${count} Download-a u toku"
-
-#, fuzzy
-#~ msgid "1 Download in Progress"
-#~ msgstr "1 Download u toku"
-
-#, fuzzy
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "${len} Video Fajlova na ovom kanalu"
-
-#, fuzzy
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "Svi ${len} Video fajlovi odgovaraju upitu ove pretrage"
-
-#, fuzzy
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len} Video fajlova odgovara ovoj pretrazi"
-
-#, fuzzy
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${count} Video fajlova na ovom kanalu"
-
-#, fuzzy
-#~ msgid "Unwatched"
-#~ msgstr "Nije pregledano"
-
-#, fuzzy
-#~ msgid "Watched"
-#~ msgstr "Pregledano"
-
-#~ msgid "Saved"
-#~ msgstr "Snimljeno"
-
-#, fuzzy
-#~ msgid "Default"
-#~ msgstr "Početna"
 
 #~ msgid "default"
 #~ msgstr "podrazumevano"
@@ -452,16 +535,9 @@ msgstr ""
 #~ msgid "Downloaded"
 #~ msgstr "Preuzeto"
 
-#~ msgid "Recommend"
-#~ msgstr "Preporuči"
-
 #, fuzzy
 #~ msgid "<label for=\"automatic\">Auto Download</label>"
 #~ msgstr "<label for=\"automatic\">Auto Download</label>"
-
-#, fuzzy
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "Tražim video fajlove na URL"
 
 #, fuzzy
 #~ msgid ""
@@ -476,10 +552,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "REVEAL FILE"
 #~ msgstr "OTKRIJ FAJL"
-
-#, fuzzy
-#~ msgid "Play Externally"
-#~ msgstr "Reprodukuj eksterno"
 
 #, fuzzy
 #~ msgid "Skip >> ${countdown}"
@@ -501,24 +573,6 @@ msgstr ""
 #~ msgstr "DODELI ZVEZDICU"
 
 #, fuzzy
-#~ msgid "Pending Auto Download"
-#~ msgstr "Aktivan Auto Download"
-
-#~ msgid "Simple translation"
-#~ msgstr "Jednostavan prevod"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "kamion staje za ${can}"
-
-#, fuzzy
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "Ovo je ${car} a ovo je ${truck} <span>Ovaj tekst je <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-
-#, fuzzy
 #~ msgid "${size} disk space free"
 #~ msgstr "${size} slobodno na disku"
 
@@ -538,34 +592,6 @@ msgstr ""
 #~ msgid "Drag channels to this folder to add them."
 #~ msgstr "Prevucite kanale u ovaj folder da ih dodate."
 
-#~ msgid "My Collection"
-#~ msgstr "Moja kolekcija"
-
-#~ msgid "New Videos"
-#~ msgstr "Novi video fajlovi"
-
-#, fuzzy
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy Internet TV: Kako početi"
-
-#~ msgid "GO BIG:"
-#~ msgstr "GO BIG:"
-
-#, fuzzy
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr "Ovo je fullscreen taster. Klikni i opusti se."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "NOVO:"
-
-#, fuzzy
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "Plavi krugovi označavaju da kanal ima nove video fajlove na raspolaganju, "
-#~ "zeleni krugovi označavaju da su preuzeti fajlovi spremni da ih pogledate."
-
 #, fuzzy
 #~ msgid ""
 #~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
@@ -574,34 +600,8 @@ msgstr ""
 #~ "<strong i18n:translate=\"\">PRESKOČI INTRO: <a style=\"color: #090;\" "
 #~ "href=\"#\" onclick=\"doneWithIntro();\">Idi na TV Vodič >></a></strong>"
 
-#, fuzzy
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>Dodaj kanale:</strong> TV Vodič je tvoja baza internet TV kanala. "
-#~ "Klikni 'DODAJ' da biste se pretplatili na kanal-- <strong>tkanali u vodiču "
-#~ "su besplatni.</strong>"
-
-#, fuzzy
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>Ne čekaj:</strong> Democracy je drugačiji od gledanja video fajlova "
-#~ "na web stranicama-- izdavači mogu ponuditi velike, high quality video "
-#~ "snimke. Ne gubi vreme: startuj neki download i proveri ga malo kasnije."
-
 #~ msgid "${count} Channels Selected"
 #~ msgstr "${count} kanala izabrano"
-
-#, python-format
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d download still in progress."
-#~ msgstr[0] "Имате %d скидање још увек у току."
-#~ msgstr[1] "Имате %d скидања још увек у току."
 
 #: ../../portable/dialogs.py:77
 #, fuzzy
@@ -1090,7 +1090,7 @@ msgstr "Internet adresa"
 
 #: ../../platform/windows-xul/frontend_implementation/startup.py:42
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:48
-#, fuzzy
+#, fuzzy, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "(pretraženo %d fajlova - pronađeno %d video fajlova)"
 
@@ -1199,7 +1199,7 @@ msgid "Error Opening Website"
 msgstr "Greška u Otvaranju Web sajta"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248
-#, fuzzy
+#, fuzzy, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
 "Greška u otvaranju %s.  Molimo Vas pokusajte ponovo za nekoliko sekundi"
@@ -1207,7 +1207,7 @@ msgstr ""
 #: ../../platform/windows-xul/frontend_implementation/startup.py:50
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:76
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:174
-#, fuzzy
+#, fuzzy, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
 msgstr[0] "%d video fajl pronađen"
@@ -1502,7 +1502,7 @@ msgid "Unknown Runtime Error"
 msgstr "Nepoznata Runtime Greška"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417
-#, fuzzy
+#, fuzzy, python-format
 msgid "An unknown error has occurred %s."
 msgstr "Došlo je do nepoznate greške %s."
 
@@ -1601,7 +1601,7 @@ msgid "Rename Playlist"
 msgstr "Promeni Ime Plejliste"
 
 #: ../../portable/playlist.py:202
-#, fuzzy
+#, fuzzy, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr "Unesi novo ime za plejlistu %s"
 

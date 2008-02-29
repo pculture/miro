@@ -8,93 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-06-02 01:44+0000\n"
-"Last-Translator: Akos <somorjai@fastmail.fm>\n"
+"PO-Revision-Date: 2008-02-09 21:30+0000\n"
+"Last-Translator: NITSCH Zoltán <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#~ msgid "About Democracy"
-#~ msgstr "A Democracy-ról"
-
-#~ msgid "Democracy"
-#~ msgstr "Demokrácia"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Segítség a Demokráciának"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "Rejtsd el a Demokráciát"
-
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Beállítások"
-
-#~ msgid "Quit Democracy"
-#~ msgstr "Lépj ki a Demokráciából"
-
-#~ msgid "Run Democracy at startup"
-#~ msgstr "Bekapcsoláskor indítsd el a Demokráciát"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "A Demokrácia Lejátszó képes megkeresni a számítógépen található összes "
-#~ "videót, hogy így segítsen azok rendezésében.\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "Kívánja, hogy a Demokrácia Lejátszó megkeresse a számítógépén lévő videókat?"
-
-#~ msgid ""
-#~ "The next few screens will help you set up Democracy Player so that it works "
-#~ "best for you. Here's the first question."
-#~ msgstr ""
-#~ "A következő néhány oldal segít beállítani a Demokrácia Lejátszót úgy, hogy a "
-#~ "Önnek a legmegfelelőbben működjék. Első kérdésünk:"
-
-#~ msgid ""
-#~ "We recommend that you allow Democracy Player to launch when your computer "
-#~ "starts up. This way, videos that haven't finished downloading can finish and "
-#~ "new videos on your channels will be ready when you want to watch.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like to run Democracy when your computer starts up?"
-#~ msgstr ""
-#~ "Javasoljuk, hogy engedje meg a Demokrácia Lejátszónak, hogy a szmítógép "
-#~ "bekapcsolásakor elinduljon. Így a félig letöltött és a kiválasztott "
-#~ "csatornákon lévő új videók letöltődhetnek, és készen állnak addigra, mikor "
-#~ "meg szeretné azokat nézni.\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "Engedélyezi, hogy a Demokrácia elinduljon a számítógép bekapcsolásakor?"
-
-#, fuzzy
-#~ msgid ""
-#~ "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
-#~ "automatically download videos from your favorite channels, watch new videos "
-#~ "one after the other, download torrents, recommend videos to friends, and "
-#~ "lots more.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Üdvözöljük az Internet TV-ben. A Demokráci Lejátszó rengeteg mindenre képes: "
-#~ "magától letölti a videókat a kedvenc csatornáiról, majd Ön egymás után "
-#~ "lejátszhatja azokat, letölthet torrenteket, ajánlhatja azokat a barátainak "
-#~ "stb.↵\n"
-#~ "↵\n"
-#~ "\n"
 
 #~ msgid "Save this video"
 #~ msgstr "Videó elmentése"
@@ -102,26 +24,17 @@ msgstr ""
 #~ msgid "_Play / Pause"
 #~ msgstr "_Lejátszás / Szünet"
 
-#~ msgid "_Update Channel"
-#~ msgstr "_Csatorna Frissítése"
-
 #~ msgid "_Remove Channel"
 #~ msgstr "_Csatorna eltávolítása"
+
+#~ msgid "_Update Channel"
+#~ msgstr "_Csatorna Frissítése"
 
 #~ msgid "_Open..."
 #~ msgstr "_Megnyitás..."
 
 #~ msgid "Open various files"
 #~ msgstr "Különböző fájlok megnyitása"
-
-#~ msgid "Create new playlist"
-#~ msgstr "Új lejátszási lista"
-
-#~ msgid "Create new playlist folder"
-#~ msgstr "Új mappa létrehozása"
-
-#~ msgid "Create new channel folder"
-#~ msgstr "Új mappa létrehozása a csatornának"
 
 #, fuzzy
 #~ msgid "P_references"
@@ -134,37 +47,25 @@ msgstr ""
 #~ msgid "U_pdate All Channels"
 #~ msgstr "Ö_sszes csatorna frissítése"
 
-#~ msgid "Remove Channel..."
-#~ msgstr "Törölj egy csatornát..."
-
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Hiba történt a demokrácia moduljainak a behozatala során:\n"
-#~ "\n"
-#~ "%s"
+#, fuzzy
+#~ msgid "Pending Auto Download"
+#~ msgstr "Automatikus letöltésre vár"
 
 #, fuzzy
 #~ msgid "Unwatched"
 #~ msgstr "Még nem látott"
 
-#~ msgid "Default"
-#~ msgstr "Alapértelmezett"
+#~ msgid "New Videos"
+#~ msgstr "Új videók"
 
 #~ msgid "Recommend"
 #~ msgstr "Ajánl"
 
+#~ msgid "Default"
+#~ msgstr "Alapértelmezett"
+
 #~ msgid "Play Externally"
 #~ msgstr "Játszd le másssal"
-
-#, fuzzy
-#~ msgid "Pending Auto Download"
-#~ msgstr "Automatikus letöltésre vár"
-
-#~ msgid "New Videos"
-#~ msgstr "Új videók"
 
 #, fuzzy
 #~ msgid "Democracy Internet TV: How to Get Started"
@@ -209,11 +110,6 @@ msgstr ""
 #~ "a Mentésre bök, valamint egy csatornánál beállíthatja, hogy annak a filmjeit "
 #~ "magától mentse a program."
 
-#, python-format
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d download still in progress."
-#~ msgstr[0] "Önnek %d darab letöltése van folyamatban."
-
 #~ msgid ""
 #~ "information into our bug tracker and tell us what you were doing when the"
 #~ msgstr ""
@@ -235,19 +131,79 @@ msgstr ""
 #~ msgid "You found a bug in Democracy!"
 #~ msgstr "Ön talált egy hibát a Democracy-ban!"
 
+#, python-format
+#~ msgid "You have %d download still in progress."
+#~ msgid_plural "You have %d downloads still in progress."
+#~ msgstr[0] "Önnek %d darab letöltése van folyamatban."
+
+#~ msgid "About Democracy"
+#~ msgstr "A Democracy-ról"
+
+#~ msgid "Democracy"
+#~ msgstr "Demokrácia"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Segítség a Demokráciának"
+
+#~ msgid "Hide Democracy"
+#~ msgstr "Rejtsd el a Demokráciát"
+
+#~ msgid "Preferencesâ¦"
+#~ msgstr "Beállítások"
+
+#~ msgid "Quit Democracy"
+#~ msgstr "Lépj ki a Demokráciából"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Törölj egy csatornát..."
+
+#~ msgid "Run Democracy at startup"
+#~ msgstr "Bekapcsoláskor indítsd el a Demokráciát"
+
+#~ msgid ""
+#~ "The next few screens will help you set up Democracy Player so that it works "
+#~ "best for you. Here's the first question."
+#~ msgstr ""
+#~ "A következő néhány oldal segít beállítani a Demokrácia Lejátszót úgy, hogy a "
+#~ "Önnek a legmegfelelőbben működjék. Első kérdésünk:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
+#~ "automatically download videos from your favorite channels, watch new videos "
+#~ "one after the other, download torrents, recommend videos to friends, and "
+#~ "lots more.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Üdvözöljük az Internet TV-ben. A Demokráci Lejátszó rengeteg mindenre képes: "
+#~ "magától letölti a videókat a kedvenc csatornáiról, majd Ön egymás után "
+#~ "lejátszhatja azokat, letölthet torrenteket, ajánlhatja azokat a barátainak "
+#~ "stb.↵\n"
+#~ "↵\n"
+#~ "\n"
+
+#~ msgid "Create new playlist"
+#~ msgstr "Új lejátszási lista"
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "Új mappa létrehozása"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "Új mappa létrehozása a csatornának"
+
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
-msgstr "Mégse"
+msgstr "Mégsem"
 
 msgid "OK"
 msgstr "OK"
 
 #: ../../portable/dialogs.py:76
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 msgid "$log"
-msgstr ""
+msgstr "$log"
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
@@ -257,7 +213,7 @@ msgid ""
 msgstr ""
 "<font face=\"Lucida Grande\" size=\"-1\">A hibakövető rendszer a <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a> címen található. Mondja el, éppen "
-"mit csinált, toldja be a fenti keretből a szöveget, válaszoljon néhány "
+"mit csinált, illessze be a fenti keretből a szöveget, válaszoljon néhány "
 "kérdésre, és mi azonnal elkezdünk dolgozni a probléma megoldásán.</font>"
 
 msgid ""
@@ -266,9 +222,10 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Van egy perce? Legyen szíves, küldje el ezt elszállást a hibakövető "
-"rendszerünknek. Kérjük legalább azt írja meg a lehető legpontosabban, hogy "
-"éppen mit csinált, és csatolja hozzá a lenti keretben lévő szöveget."
+"Van egy perce? Legyen szíves, küldje el a hibajelentést az összeomlásról a "
+"hibakövető rendszerünknek. Kérjük legalább azt írja meg a lehető "
+"legpontosabban, hogy éppen mit csinált, és csatolja hozzá a lenti keretben "
+"lévő szöveget."
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -285,13 +242,13 @@ msgid "The fall of $shortAppName??"
 msgstr "A $shortAppName program halála??"
 
 msgid "About Miro"
-msgstr ""
+msgstr "A Miro névjegye"
 
 msgid "Add Channel..."
-msgstr ""
+msgstr "Csatorna hozzáadása..."
 
 msgid "Add Guide..."
-msgstr ""
+msgstr "Műsorfüzet hozzáadása..."
 
 msgid "Bring All to Front"
 msgstr "Hozd mind előre"
@@ -299,78 +256,78 @@ msgstr "Hozd mind előre"
 #: ../../platform/osx/frontend/Preferences.py:65
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
 msgid "Channels"
-msgstr ""
+msgstr "Csatornák"
 
 msgid "Check for New Version"
-msgstr ""
+msgstr "Új verzió keresése"
 
 msgid "Clear Menu"
 msgstr "Ürítsd ki a menüt"
 
 msgid "Close Window"
-msgstr ""
+msgstr "Az ablak bezárása"
 
 msgid "Copy"
-msgstr "Másold"
+msgstr "Másolás"
 
 msgid "Copy Channel URL"
-msgstr ""
+msgstr "Csatorna hivatkozás másolása"
 
 msgid "Copy Video URL"
-msgstr ""
+msgstr "Videó URL másolása"
 
 msgid "Cut"
-msgstr "Vágd ki"
+msgstr "Kivágás"
 
 #: ../../portable/dialogs.py:96
 msgid "Delete"
-msgstr "Töröld"
+msgstr "Törlés"
 
 msgid "Donate"
-msgstr ""
+msgstr "Támogatás"
 
 msgid "Download Video..."
-msgstr ""
+msgstr "Videó letöltése"
 
 msgid "Edit"
-msgstr "Szerkeszd"
+msgstr "Szerkesztés"
 
 msgid "Export Channels (OPML)..."
-msgstr ""
+msgstr "Csatornák exportálása (OPML)..."
 
 msgid "File"
-msgstr "Irat"
+msgstr "Fájl"
 
 msgid "Full Screen"
 msgstr "Teljes képernyő"
 
 msgid "Help"
-msgstr "Segítség"
+msgstr "Súgó"
 
 msgid "Hide Miro"
-msgstr ""
+msgstr "Miro elrejtése"
 
 msgid "Hide Others"
 msgstr "Rejts el másokat"
 
 msgid "Import Channels (OPML)..."
-msgstr ""
+msgstr "Csatornák importálása (OPML)..."
 
 msgid "Main Window"
-msgstr ""
+msgstr "Főablak"
 
 msgid "MainMenu"
 msgstr "Főmenü"
 
 msgid "Minimize"
-msgstr "Kicsinyítsd le"
+msgstr "Minimalizálás"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Miro"
-msgstr ""
+msgstr "Miro"
 
 msgid "Miro Help"
-msgstr ""
+msgstr "Miro Súgó"
 
 msgid "New Channel Folder..."
 msgstr "Új csatorna mappa..."
@@ -382,79 +339,79 @@ msgid "New Playlist..."
 msgstr "Új lejátszási lista..."
 
 msgid "New Search Channel..."
-msgstr ""
+msgstr "Új Keresési Csatorna..."
 
 msgid "Next Video"
-msgstr ""
+msgstr "Következő Videó"
 
 msgid "Open Recent"
 msgstr "Nyisd a legutóbbit"
 
 msgid "Open..."
-msgstr "Nyisd..."
+msgstr "Megnyitás..."
 
 msgid "Paste"
-msgstr "Toldd be"
+msgstr "Beillesztés"
 
 #: ../../platform/osx/frontend/Application.py:249
 msgid "Play Video"
-msgstr "Játszd le a videót"
+msgstr "Videó lejátszása"
 
 #: ../../platform/osx/frontend/Preferences.py:69
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "Playback"
-msgstr ""
+msgstr "Lejátszás"
 
 msgid "Playlists"
-msgstr ""
+msgstr "Lejátszólisták"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Tulajdonságok..."
 
 msgid "Previous Video"
-msgstr ""
+msgstr "Előző Videó"
 
 msgid "Quit Miro"
-msgstr ""
+msgstr "Kilépés"
 
 msgid "Remove..."
-msgstr ""
+msgstr "Eltávolítás..."
 
 msgid "Rename..."
-msgstr "Nevezd át..."
+msgstr "Átnevezés..."
 
 msgid "Report a bug"
-msgstr ""
+msgstr "Hiba jelentése"
 
 msgid "Save Video As..."
-msgstr ""
+msgstr "Videó mentése más néven..."
 
 msgid "Select All"
-msgstr "Válaszd ki mind"
+msgstr "Összes kiválasztása"
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Csatorna elküldése egy barátnak"
 
 msgid "Services"
 msgstr "Szolgáltatások"
 
 msgid "Show All"
-msgstr "Mutasd mind"
+msgstr "Mindent mutat"
 
 msgid "Stop Video"
-msgstr "Állítsd le a videót"
+msgstr "Videó megállítása"
 
 msgid "Update All Channels"
-msgstr "Frissíts minden csatornát"
+msgstr "Az összes csatorna frissítése"
 
 msgid "Update Channel"
-msgstr "Frissítsd a csatornát"
+msgstr "Csatorna frissítése"
 
 msgid "Window"
 msgstr "Ablak"
 
 msgid "Zoom"
-msgstr "Nagyítsd"
+msgstr "Nagyítás"
 
 msgid "%channel feed%"
 msgstr "%csatorna forrás%"
@@ -466,20 +423,20 @@ msgid "%donation label%"
 msgstr "%adakozási címke%"
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
 msgstr "00:00:00"
 
 msgid "Box"
-msgstr ""
+msgstr "Téglalap"
 
 msgid "FullScreen Controls"
-msgstr "Teljes képernyő vezérlő"
+msgstr "Teljes képernyős vezérlő"
 
 #: ../../portable/tabs.py:46
 msgid "Video Search"
-msgstr ""
+msgstr "Videók keresése"
 
 msgid "VideoWindow"
 msgstr "VideóAblak"
@@ -488,14 +445,14 @@ msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
+"Location http://foo.bar.com/baz requires a username and password for \"text "
+"supplied by server\". (Do not localize -- test data)\n"
 
 msgid "Password:\n"
-msgstr ""
-"Jelszó:\n"
-"\n"
+msgstr "Jelszó:\n"
 
 msgid "Username and password required"
-msgstr "Szükség van a nevére és a jelszavára"
+msgstr "Szükség van a nevére és jelszavára"
 
 msgid ""
 "Username:\n"
@@ -503,29 +460,26 @@ msgid ""
 msgstr ""
 "Név:\n"
 "\n"
-"\n"
-"\n"
-"\n"
 
 msgid " limit upstream to"
 msgstr " a feltöltés határa:"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(A változtatás érvénybelépéséhez a Miro újraindítása szükséges.)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
-msgstr ""
+msgstr "(A változtatás érvénybelépéséhez a Miro újraindítása szükséges.)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(a filmek elérési útja)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "1 day"
-msgstr ""
+msgstr "1 nap"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 month"
-msgstr ""
+msgstr "1 hónap"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid "10 days"
@@ -549,23 +503,23 @@ msgid "6 days"
 msgstr "6 nap"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "Add..."
-msgstr ""
+msgstr "Hozzáadás..."
 
 msgid "BitTorrent ports:"
-msgstr ""
+msgstr "BitTorrent portok:"
 
 msgid "By default, videos expire after:"
 msgstr "A videó ennyi idő után avul el:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid "Change..."
-msgstr ""
+msgstr "Módosítás..."
 
 msgid "Check channels for new content:"
-msgstr ""
+msgstr "Új tartalom keresése a csatornákon:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
 msgid "Don't start a download if it leaves less than"
@@ -573,10 +527,10 @@ msgstr "Ne kezdd el a letöltést, ha ennél kevesebb időt hagy:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Download at most"
-msgstr ""
+msgstr "letöltési maximum"
 
 msgid "Folder location"
-msgstr ""
+msgstr "Mappa helye"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "GB free."
@@ -586,10 +540,10 @@ msgid "KB/s when my computer is active."
 msgstr "KB/s ha a számítógép aktív."
 
 msgid "Maximum:"
-msgstr ""
+msgstr "Maximum:"
 
 msgid "Minimum:"
-msgstr ""
+msgstr "Minimum:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "Never"
@@ -600,10 +554,10 @@ msgstr "MásNézetek"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "Play videos one after another."
-msgstr ""
+msgstr "Videók lejátszása sorban."
 
 msgid "Remember video position."
-msgstr ""
+msgstr "Lejátszás helyének megjegyzése."
 
 #: ../../portable/guide.py:107 ../../portable/playlist.py:197
 #: ../../portable/feed.py:795 ../../portable/menu.py:65
@@ -611,31 +565,31 @@ msgstr ""
 #: ../../portable/folder.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Remove"
-msgstr ""
+msgstr "Eltávolitás"
 
 msgid "Run Miro at startup"
-msgstr ""
+msgstr "Miro indítása a rendszer indulásakor"
 
 msgid "Save downloaded videos in this folder:"
-msgstr ""
+msgstr "Letöltött videók mentése ide:"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573
 msgid "Show as Channel"
-msgstr ""
+msgstr "Megjelenítés Csatornaként"
 
 msgid "Stop after each video."
-msgstr ""
+msgstr "Lejátszás megállítása minden video végén."
 
 msgid "To avoid internet slowdowns:"
-msgstr ""
+msgstr "A hálózat lelassulásának elkerülésére:"
 
 #: ../../portable/app.py:1206
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "Figyelmeztessen ha letöltés közben akarok kilépni"
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
-msgstr ""
+msgstr "Új videók figyelése és Könyvtárhoz adása a következő mappákban:"
 
 msgid "every 30 minutes"
 msgstr "30 percenként"
@@ -648,35 +602,35 @@ msgstr "majd én magam"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "videos at once."
-msgstr ""
+msgstr "videók egyszerre."
 
 msgid "$label$"
-msgstr ""
+msgstr "$label$"
 
 msgid "$title$"
-msgstr ""
+msgstr "$title$"
 
 msgid "Channel"
 msgstr "Csatorna"
 
 #: ../../portable/dialogs.py:91
 msgid "Create"
-msgstr ""
+msgstr "Létrehoz"
 
 msgid "In this:"
-msgstr ""
+msgstr "Ebben:"
 
 msgid "Item1"
-msgstr ""
+msgstr "Tétel1"
 
 msgid "Search Engine"
-msgstr ""
+msgstr "Keresési szolgáltató"
 
 msgid "Search for:"
-msgstr ""
+msgstr "Keresés:"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../../platform/windows-xul/frontend_implementation/startup.py:42
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:48
@@ -700,17 +654,17 @@ msgid "No"
 msgstr "Nem"
 
 msgid "Only search my Movies folder."
-msgstr ""
+msgstr "Csak a Videók mappában keressen."
 
 msgid "Search my entire Home folder."
-msgstr ""
+msgstr "Keressen az egész Home mappámban."
 
 msgid "Search this folder:"
-msgstr ""
+msgstr "Keresés ebben a mappában:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37
 msgid "Searching for Videos"
-msgstr "Videókat keresek"
+msgstr "Videók keresése"
 
 msgid ""
 "The Miro Player can find all the videos on your computer to help you "
@@ -719,11 +673,18 @@ msgid ""
 "\n"
 "Would you like Miro to look for video files on your computer?"
 msgstr ""
+"A Miro Player megkeresheti az ön összes videóját, hogy segítse gyűjteménye "
+"kezelésében.\n"
+"\n"
+"\n"
+"Szeretné, hogy a Miro megkeresse a számítógépen található videókat?"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"A következő néhány képernyő segíteni fog önnek a Miro megfelelő "
+"beállításában. Itt az első kérdés."
 
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
@@ -733,6 +694,12 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
+"Javasoljuk, hogy engedélyezze a Miro indítását a számítógép elindulásakor. "
+"Így a be nem fejezett letöltések befejeződhetnek, és a csatornák új videói "
+"azonnal elérhetőek lesznek, mikor nézni szeretné őket.\n"
+"\n"
+"\n"
+"Szeretné, hogy a Miro elinduljon, a számítógép indításakor?"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Welcome to Internet TV!"
@@ -745,6 +712,11 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Üdvözli önt az Internet TV! A Miro Player sokmindenben a segítségére lehet: "
+"automatikusan letöltheti kedvenc csatornájának videóit, új videókat nézhet "
+"egyiket a másik után, letölthet torrenteket, ajánlhat videókat barátainak, "
+"és még sok minden mást.\n"
+"\n"
 
 #: ../../portable/dialogs.py:78
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
@@ -761,30 +733,30 @@ msgstr ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78
 msgid "Update Available"
-msgstr ""
+msgstr "Új Frissítés elérhető"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr ""
+msgstr "A %s új verziója elérhető."
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240
 msgid "Error Bombing Item"
-msgstr ""
+msgstr "Hiba a video megnyitása közben"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242
 msgid "Error Recommending Item"
-msgstr ""
+msgstr "Hiba történt a tartalom ajánlásakor"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244
 msgid "Error Opening Website"
-msgstr ""
+msgstr "Hiba történt az oldal megnyitásakor"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
-"Hiba történt a' %s megnyitása során. Próbálja újra néhány másodperc múlva"
+"Hiba történt a %s megnyitása során. Próbálja újra néhány másodperc múlva"
 
 #: ../../platform/windows-xul/frontend_implementation/startup.py:50
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:76
@@ -792,8 +764,8 @@ msgstr ""
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d videó találat"
+msgstr[1] "%d videót találtam"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:62
 #, python-format
@@ -801,6 +773,8 @@ msgid ""
 "Error importing modules:\n"
 "%s"
 msgstr ""
+"Hiba a következő modulok importálásakor:\n"
+"%s"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:66
 msgid "Starting up"
@@ -808,95 +782,98 @@ msgstr "Ébredezem"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:273
 msgid "Loading window"
-msgstr ""
+msgstr "Ablak betöltése"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:274
 msgid "onStartup called twice"
-msgstr ""
+msgstr "onStartup kétszer volt hívva"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:702
 msgid "Spacebar"
-msgstr ""
+msgstr "Szóköz"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:851
 msgid "Close to tray?"
-msgstr ""
+msgstr "Bezárás a tálcára?"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:852
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Amikor a piros kilépés gombra kattint, szeretné hogy a Miro bezáruljon, vagy "
+"a tálcára helyeződjön? Később is megváltoztathatja ezt a Beállítások-nál."
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:44
 msgid "Download Completed"
-msgstr ""
+msgstr "Letöltés Kész"
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:45
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "A(z) '%s' videó letöltése befejeződött."
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:54
 msgid "Download Failed"
-msgstr ""
+msgstr "Sikertelen Letöltés"
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:55
 #, python-format
 msgid "Download of video '%s' has failed."
-msgstr ""
+msgstr "A(z) '%s' videó letöltése sikertelen."
 
 #: ../../platform/osx/frontend/MainFrame.py:278
 msgid "Subscribe to Channel"
-msgstr ""
+msgstr "Feliratkozás a csatornára"
 
 #: ../../platform/osx/frontend/MainFrame.py:279
 msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr ""
+msgstr "Írja be a csatorna URL-jét amelyre fel kíván iratkozni."
 
 #: ../../platform/osx/frontend/QuicktimeRenderer.py:248
 msgid "Audio"
-msgstr ""
+msgstr "Audió"
 
 #: ../../platform/osx/frontend/Preferences.py:64
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "General"
-msgstr ""
+msgstr "Általános"
 
 #: ../../platform/osx/frontend/Preferences.py:66
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Downloads"
-msgstr ""
+msgstr "Letöltések"
 
 #: ../../platform/osx/frontend/Preferences.py:67
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
 msgid "Folders"
-msgstr ""
+msgstr "Mappák"
 
 #: ../../platform/osx/frontend/Preferences.py:68
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Disk Space"
-msgstr ""
+msgstr "Lemez tárhely"
 
 #: ../../platform/osx/frontend/Preferences.py:196
 msgid "Movies Directory"
-msgstr ""
+msgstr "Film Könyvtár"
 
 #: ../../platform/osx/frontend/Preferences.py:197
 #, python-format
 msgid "Select a Directory to store %s downloads in."
 msgstr ""
+"Válassza ki a(z) %s letöltések tárolására használni kívánt Könyvtárat."
 
 #: ../../platform/osx/frontend/Preferences.py:198
 #: ../../platform/osx/frontend/Preferences.py:262
 msgid "Select"
-msgstr ""
+msgstr "Kijelölés"
 
 #: ../../platform/osx/frontend/Preferences.py:207
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
-msgstr ""
+msgstr "Mozgassuk a már létező filmeket?"
 
 #: ../../platform/osx/frontend/Preferences.py:208
 #, python-format
@@ -905,30 +882,33 @@ msgid ""
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"Új könyvtárat választott a filmek letöltésére. Átmozgassa a %s a már "
+"letöltött fájlokat? (Az éppen folyamatban lévő letöltések csak a "
+"befejeződésük után kerülnek áthelyezésre.)"
 
 #: ../../platform/osx/frontend/Preferences.py:260
 msgid "View this Directory in the Library"
-msgstr ""
+msgstr "Mappa megtekintése a Könyvtárban"
 
 #: ../../platform/osx/frontend/Preferences.py:261
 msgid "Select a Directory to view in the Library."
-msgstr ""
+msgstr "Válasszon ki egy mappát a Könyvtárban történő megtekintéshez."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Befejezés"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
-msgstr ""
+msgstr "Keresés!"
 
 #: ../../platform/osx/frontend/Application.py:246
 msgid "Pause Video"
-msgstr ""
+msgstr "Lejátszás szüneteltetése"
 
 #: ../../platform/osx/frontend/Application.py:255
 msgid "Unsupported version of Quicktime"
-msgstr ""
+msgstr "Nem támogatott Quicktime verzió"
 
 #: ../../platform/osx/frontend/Application.py:256
 #, python-format
@@ -936,90 +916,92 @@ msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
 msgstr ""
+"A %s futtatásához a Quicktime legújabb verziója szükséges, ami ingyenesen "
+"elérhető."
 
 #: ../../platform/osx/frontend/UIStrings.py:22
 msgid "_Remove..."
-msgstr ""
+msgstr "_Eltávolítás..."
 
 #: ../../platform/osx/frontend/UIStrings.py:23
 msgid "_Remove Playlist..."
-msgstr ""
+msgstr "_Lejátszási lista eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:24
 msgid "_Remove Playlists..."
-msgstr ""
+msgstr "_Lejátszási listák eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:25
 msgid "_Remove Playlist Folder..."
-msgstr ""
+msgstr "_Lejátszólista mappa eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:26
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "_Lejátszólista mappák eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:27 ../../portable/menubar.py:179
 msgid "_Remove Channel..."
-msgstr ""
+msgstr "Csato_rna eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:28 ../../portable/menubar.py:180
 msgid "_Remove Channels..."
-msgstr ""
+msgstr "Csato_rnák eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:29 ../../portable/menubar.py:182
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "Csato_rna mappa eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:30 ../../portable/menubar.py:181
 msgid "_Remove Channel Folders..."
-msgstr ""
+msgstr "_Csato_rna mappák eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:31
 msgid "_Remove Miro Guide..."
-msgstr ""
+msgstr "Mi_ro Guide eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:32
 msgid "_Remove Miro Guides..."
-msgstr ""
+msgstr "Több Mi_ro Guide eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:33
 msgid "_Remove Video..."
-msgstr ""
+msgstr "_Videó eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:34
 msgid "_Remove Videos..."
-msgstr ""
+msgstr "_Videók eltávolítása..."
 
 #: ../../platform/osx/frontend/UIStrings.py:35
 msgid "Re_name..."
-msgstr ""
+msgstr "Át_nevezés..."
 
 #: ../../platform/osx/frontend/UIStrings.py:36
 msgid "Re_name Playlist..."
-msgstr ""
+msgstr "Lejátszólista Át_nevezése..."
 
 #: ../../platform/osx/frontend/UIStrings.py:37
 msgid "Re_name Playlist Folder..."
-msgstr ""
+msgstr "Lejátszólista mappa Át_nevezése..."
 
 #: ../../platform/osx/frontend/UIStrings.py:38 ../../portable/menubar.py:178
 msgid "Re_name Channel..."
-msgstr ""
+msgstr "Csatorna Át_nevezése..."
 
 #: ../../platform/osx/frontend/UIStrings.py:39
 msgid "Re_name Channel Folder..."
-msgstr ""
+msgstr "Csatorna mappa Át_nevezése..."
 
 #: ../../platform/osx/frontend/UIStrings.py:40
 msgid "Re_name Miro Guide..."
-msgstr ""
+msgstr "Miro Guide át_nevezése..."
 
 #: ../../platform/osx/frontend/UIStrings.py:41 ../../portable/menubar.py:184
 msgid "_Update Channel..."
-msgstr ""
+msgstr "Csatorna _frissítése..."
 
 #: ../../platform/osx/frontend/UIStrings.py:42 ../../portable/menubar.py:185
 msgid "_Update Channels..."
-msgstr ""
+msgstr "Csatornák _frissítése..."
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42
 msgid "Settings"
@@ -1027,24 +1009,24 @@ msgstr "Beállítások"
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45
 msgid "Hide"
-msgstr ""
+msgstr "Elrejtés"
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47
 msgid "Show"
-msgstr ""
+msgstr "Mutatás"
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48
 #: ../../portable/dialogs.py:80 ../../portable/menubar.py:257
 msgid "Quit"
-msgstr ""
+msgstr "Kilépés"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324
 msgid "New Channel _Guide..."
-msgstr ""
+msgstr "Új csatorna kalauz"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564
 msgid "Folder Location"
-msgstr ""
+msgstr "Mappa helye"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
@@ -1067,172 +1049,172 @@ msgstr "Ismeretlen hiba lépett fel %s."
 
 #: ../../portable/dl_daemon/download.py:359
 msgid "Error"
-msgstr ""
+msgstr "Hiba"
 
 #: ../../portable/dl_daemon/download.py:432
 #, python-format
 msgid "Could not write to %s"
-msgstr ""
+msgstr "%s nem írható"
 
 #: ../../portable/dl_daemon/download.py:452
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Nincs elég lemezterület"
 
 #: ../../portable/dl_daemon/download.py:453
 #, python-format
 msgid "%s MB required to store this video"
-msgstr ""
+msgstr "%s MB hely szükséges a videó tárolásához"
 
 #: ../../portable/dl_daemon/download.py:672
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "BitTorrent hiba"
 
 #: ../../portable/dl_daemon/download.py:673
 msgid "BitTorrent failed to startup"
-msgstr ""
+msgstr "A BitTorrent indítása sikertelen"
 
 #: ../../portable/dl_daemon/download.py:796
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "Hibás Torrent"
 
 #: ../../portable/dl_daemon/download.py:797
 #, python-format
 msgid "The torrent file at %s was not valid"
-msgstr ""
+msgstr "%s torrent fájl sérült"
 
 #: ../../portable/dl_daemon/download.py:822
 msgid "Torrent file deleted"
-msgstr ""
+msgstr "Torrent fájl törölve"
 
 #: ../../portable/dl_daemon/download.py:823
 msgid "The torrent file for this item was deleted "
-msgstr ""
+msgstr "Az ehhez az elemhez tartozó torrent fájl törölve lett "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "Miron kívül"
 
 #: ../../portable/tabs.py:44
 msgid "Library"
-msgstr ""
+msgstr "Könyvtár"
 
 #: ../../portable/tabs.py:45
 msgid "New"
-msgstr ""
+msgstr "Új..."
 
 #: ../../portable/tabs.py:47
 msgid "Downloading"
-msgstr ""
+msgstr "Letöltés"
 
 #: ../../portable/guide.py:104 ../../portable/feed.py:789
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "Hivatkozás másolása a vágólapra"
 
 #: ../../portable/guide.py:154
 msgid "Miro Guide"
-msgstr ""
+msgstr "Miro Kalauz"
 
 #: ../../portable/extrastrings.py:22 ../../portable/feed.py:2028
 #: ../../portable/feed.py:2120
 msgid "Search"
-msgstr ""
+msgstr "Keresés"
 
 #: ../../portable/downloader.py:215
 msgid "activity"
-msgstr ""
+msgstr "aktivitás"
 
 #: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
 #: ../../portable/httpclient.py:142
 msgid "File not found"
-msgstr ""
+msgstr "A fájl nem található"
 
 #: ../../portable/downloader.py:252
 msgid "Flash URL Scraping Error"
-msgstr ""
+msgstr "Hiba a Flash fájl fogadásban az URL-ről"
 
 #: ../../portable/downloader.py:427
 msgid "starting up"
-msgstr ""
+msgstr "indítás"
 
 #: ../../portable/playlist.py:196 ../../portable/playlist.py:201
 msgid "Rename Playlist"
-msgstr ""
+msgstr "Lejátszólista átnevezése"
 
 #: ../../portable/playlist.py:202
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Írja be a(z) %s lejátszólista új nevét"
 
 #: ../../portable/playlist.py:224
 msgid "Create Playlist"
-msgstr ""
+msgstr "Lejátszólista létrehozása"
 
 #: ../../portable/playlist.py:225
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Adjon nevet az új lejátszólistának"
 
 #: ../../portable/feed.py:383
 msgid "never"
-msgstr ""
+msgstr "soha"
 
 #: ../../portable/feed.py:385 ../../portable/item.py:542
 #, python-format
 msgid "%d hours"
-msgstr ""
+msgstr "%d óra"
 
 #: ../../portable/feed.py:387
 #, python-format
 msgid "%d day"
-msgstr ""
+msgstr "%d nap"
 
 #: ../../portable/feed.py:389 ../../portable/item.py:540
 #, python-format
 msgid "%d days"
-msgstr ""
+msgstr "%d nap"
 
 #: ../../portable/feed.py:391
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d hónap"
 
 #: ../../portable/feed.py:787
 msgid "Update Channel Now"
-msgstr ""
+msgstr "Csatorna frissítése most"
 
 #: ../../portable/feed.py:790 ../../portable/feed.py:799
 msgid "Rename Channel"
-msgstr ""
+msgstr "Csatorna átnevezése"
 
 #: ../../portable/feed.py:794
 msgid "Revert Title to Default"
-msgstr ""
+msgstr "Cím visszaállítása alapértelmezettre"
 
 #: ../../portable/feed.py:800
 #, python-format
 msgid "Enter a new name for the channel %s"
-msgstr ""
+msgstr "Írja be a(z) %s csatorna új nevét"
 
 #: ../../portable/feed.py:887
 msgid "Error loading feed"
-msgstr ""
+msgstr "Hiba a műsor betöltése közben"
 
 #: ../../portable/feed.py:888
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
-msgstr ""
+msgstr "Nem sikerült a műsor betöltése a következő helyről: %s (%s)."
 
 #: ../../portable/feed.py:891
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "Szeretné megőrizni a műsort?"
 
 #: ../../portable/feed.py:1004
 msgid "Bad content-type"
-msgstr ""
+msgstr "Rossz tartalom típus"
 
 #: ../../portable/feed.py:1017
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
-msgstr ""
+msgstr "A csatorna nem $shortAppName kompatibilis!"
 
 #: ../../portable/feed.py:1018
 msgid ""
@@ -1243,203 +1225,213 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Megpróbálhatjuk letölteni a fájlokat. A szokásosnál több időt vehet igénybe "
+"a videók listázása, és a leírások furcsán jelenhetnek meg. Kerjük vegye fel "
+"a kapcsolatot $url kiadójával, és érdeklődjön a műsor $shortAppName "
+"kompatibilis verziójáról!\n"
+"\n"
+"Mindenképpen meg szeretné próbálni a csatorna betöltését?"
 
 #: ../../portable/feed.py:2134
 msgid "Local Files"
-msgstr ""
+msgstr "Helyi fájlok"
 
 #: ../../portable/feed.py:2148
 msgid "Playing File"
-msgstr ""
+msgstr "Fájl lejátszása"
 
 #: ../../portable/menu.py:69
 msgid "Update Channels Now"
-msgstr ""
+msgstr "Csatornák frissítése most"
 
 #: ../../portable/menu.py:94
 #, python-format
 msgid "%d Downloaded Items"
-msgstr ""
+msgstr "%d letöltött fájl"
 
 #: ../../portable/menu.py:96 ../../portable/item.py:1475
 msgid "Play"
-msgstr ""
+msgstr "Lejátszás"
 
 #: ../../portable/menu.py:97 ../../portable/item.py:1478
 msgid "Add to new playlist"
-msgstr ""
+msgstr "Hozzáadás új lejátszási listához"
 
 #: ../../portable/menu.py:99 ../../portable/item.py:1471
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "Eltávolítás a lejátszólistából"
 
 #: ../../portable/menu.py:101 ../../portable/item.py:1473
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Eltávolítás a Könyvtárból"
 
 #: ../../portable/menu.py:107 ../../portable/item.py:1482
 msgid "Mark as Unwatched"
-msgstr ""
+msgstr "Jelölés megtekintetlenként"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Jelölés megtekintettként"
 
 #: ../../portable/menu.py:117
 #, python-format
 msgid "%d Available Items"
-msgstr ""
+msgstr "%d elérhető tétel"
 
 #: ../../portable/menu.py:118 ../../portable/dialogs.py:85
 #: ../../portable/item.py:1491
 msgid "Download"
-msgstr ""
+msgstr "Letöltés"
 
 #: ../../portable/menu.py:123
 #, python-format
 msgid "%d Downloading Items"
-msgstr ""
+msgstr "%d tétel letöltése"
 
 #: ../../portable/menu.py:125 ../../portable/item.py:1489
 msgid "Cancel Download"
-msgstr ""
+msgstr "Letöltés megszakítása"
 
 #: ../../portable/menu.py:127 ../../portable/item.py:1489
 msgid "Pause Download"
-msgstr ""
+msgstr "Letöltés szüneteltetése"
 
 #: ../../portable/menu.py:130 ../../portable/item.py:1487
 msgid "Restart Upload"
-msgstr ""
+msgstr "Feltöltés újraindítása"
 
 #: ../../portable/opml.py:49
 msgid "Export OPML File"
-msgstr ""
+msgstr "Exportálás OPML-be"
 
 #: ../../portable/opml.py:123
 msgid "Import OPML File"
-msgstr ""
+msgstr "OPML fájl importálása"
 
 #: ../../portable/opml.py:125
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML Fájlok"
 
 #: ../../portable/opml.py:145
 msgid "OPML Import failed"
-msgstr ""
+msgstr "OPML importálási hiba"
 
 #: ../../portable/opml.py:146
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
+msgstr "A kiválasztott OPML fájl érvénytelen. Importálás megszakítva."
 
 #: ../../portable/opml.py:151
 msgid "OPML Import summary"
-msgstr ""
+msgstr "OPML import összegzés"
 
 #: ../../portable/opml.py:152
 #, python-format
 msgid "Successfully imported %d feed."
 msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d műsor sikeresen importálva."
+msgstr[1] "%d csatorna sikeresen importálva."
 
 #: ../../portable/opml.py:155
 #, python-format
 msgid "Skipped %d feed already present."
 msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d már meglévő műsor átugorva."
+msgstr[1] "%d már meglévő csatorna átugorva."
 
 #: ../../portable/autoupdate.py:121
 #, python-format
 msgid "%s Version Alert"
-msgstr ""
+msgstr "%s Verzió Figyelmeztetés"
 
 #: ../../portable/autoupdate.py:122
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
-msgstr ""
+msgstr "%s újabb verziója elérhető. Szeretné most letölteni?"
 
 #: ../../portable/autoupdate.py:128
 #, python-format
 msgid "%s Version Check"
-msgstr ""
+msgstr "%s Verzió Ellenőrzés"
 
 #: ../../portable/autoupdate.py:129
 #, python-format
 msgid "%s is up to date."
-msgstr ""
+msgstr "%s naprakész."
 
 #: ../../portable/util.py:252 ../../portable/httpclient.py:126
 msgid "Internal Error"
-msgstr ""
+msgstr "Belső hiba"
 
 #: ../../portable/util.py:252
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
 msgstr ""
+"A Miro belső hibába ütközött. A hibajelentés elküldésével segíthet minket a "
+"hiba kijavításában."
 
 #: ../../portable/util.py:252
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
 msgstr ""
+"A hibajelentéssel együtt a teljes programadatbázis elküldése (beleértve a "
+"videó és csatorna metaadatokat is)"
 
 #: ../../portable/util.py:252
 msgid "Describe what you were doing that caused this error"
-msgstr ""
+msgstr "Írja le, hogy mit csinált mikor a hiba bekövetkezett."
 
 #: ../../portable/util.py:455
 #, python-format
 msgid "%1.1fGB"
-msgstr ""
+msgstr "%1.1fGB"
 
 #: ../../portable/util.py:457
 #, python-format
 msgid "%dGB"
-msgstr ""
+msgstr "%dGB"
 
 #: ../../portable/util.py:461
 #, python-format
 msgid "%1.1fMB"
-msgstr ""
+msgstr "%1.1fMB"
 
 #: ../../portable/util.py:463
 #, python-format
 msgid "%dMB"
-msgstr ""
+msgstr "%dMB"
 
 #: ../../portable/util.py:467
 #, python-format
 msgid "%1.1fKB"
-msgstr ""
+msgstr "%1.1fKB"
 
 #: ../../portable/util.py:469
 #, python-format
 msgid "%dKB"
-msgstr ""
+msgstr "%dKB"
 
 #: ../../portable/util.py:473
 #, python-format
 msgid "%1.1fB"
-msgstr ""
+msgstr "%1.1fB"
 
 #: ../../portable/util.py:475
 #, python-format
 msgid "%dB"
-msgstr ""
+msgstr "%dB"
 
 #: ../../portable/storedatabase.py:832 ../../portable/storedatabase.py:1231
 #, python-format
 msgid "%s database save succeeded"
-msgstr ""
+msgstr "%s adatbázis mentés befejezve"
 
 #: ../../portable/storedatabase.py:833 ../../portable/storedatabase.py:1232
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
-msgstr ""
+msgstr "Az adatbázis mentése befejeződött. Most már nyugodtan kiléphet."
 
 #: ../../portable/storedatabase.py:840 ../../portable/storedatabase.py:1240
 #, python-format
@@ -1454,107 +1446,113 @@ msgid ""
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
+"%s nem tudja elmenteni az adatbázist: Megtelt a Lemez.\n"
+"Javasoljuk, hogy töröljön néhány fájlt a meghajtóról, vagy néhány filmet a "
+"gyűjteményéből.\n"
+"A legutóbbi módosítások lehet hogy elvesztek."
 
 #: ../../portable/dialogs.py:81
 msgid "Ignore"
-msgstr ""
+msgstr "Kihagyás"
 
 #: ../../portable/dialogs.py:82
 msgid "Submit Crash Report"
-msgstr ""
+msgstr "Hibajelentés elküldése"
 
 #: ../../portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
-msgstr ""
+msgstr "Áthelyezés"
 
 #: ../../portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
-msgstr ""
+msgstr "Ne legyen áthelyezés"
 
 #: ../../portable/dialogs.py:86
 msgid "Remove Entry"
-msgstr ""
+msgstr "Bejegyzés Eltávolítása"
 
 #: ../../portable/dialogs.py:87
 msgid "Delete File"
-msgstr ""
+msgstr "A fájl törlése"
 
 #: ../../portable/dialogs.py:88
 msgid "Delete Files"
-msgstr ""
+msgstr "Fájlok törlése"
 
 #: ../../portable/dialogs.py:89
 msgid "Keep Videos"
-msgstr ""
+msgstr "Videók megtartása"
 
 #: ../../portable/dialogs.py:90
 msgid "Delete Videos"
-msgstr ""
+msgstr "Videók törlése"
 
 #: ../../portable/dialogs.py:92
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
 msgid "Create Channel"
-msgstr ""
+msgstr "Csatorna létrehozása"
 
 #: ../../portable/dialogs.py:93
 msgid "Add"
-msgstr ""
+msgstr "Hozzáad"
 
 #: ../../portable/dialogs.py:94
 msgid "Add Into New Folder"
-msgstr ""
+msgstr "Hozzáadás új mappába"
 
 #: ../../portable/dialogs.py:95
 msgid "Keep"
-msgstr ""
+msgstr "Megőrzés"
 
 #: ../../portable/dialogs.py:97
 msgid "Not Now"
-msgstr ""
+msgstr "Most Nem"
 
 #: ../../portable/dialogs.py:98
 msgid "Close to Tray"
-msgstr ""
+msgstr "Tálcára helyezés"
 
 #: ../../portable/dialogs.py:99
 msgid "Launch Miro"
-msgstr ""
+msgstr "Miro indítása"
 
 #: ../../portable/dialogs.py:100
 msgid "Download Anyway"
-msgstr ""
+msgstr "Letöltés mindenképpen"
 
 #: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:45
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
-msgstr ""
+msgstr "Új Keresési Csatorna"
 
 #: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:25
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr ""
+"A Keresési Csatorna olyan elemeket tartalmaz, amelyek megfelelnek egy "
+"keresési kifejezésnek."
 
 #: ../../portable/singleclick.py:87
 msgid "Download already exists"
-msgstr ""
+msgstr "A letöltendő fájl már létezik"
 
 #: ../../portable/singleclick.py:88
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "Ez az URL már egy külső állományra mutat."
 
 #: ../../portable/singleclick.py:94
 msgid "Miro will begin downloading it now."
-msgstr ""
+msgstr "A Miro most megkezdi a letöltést."
 
 #: ../../portable/singleclick.py:96
 msgid "It is downloading now."
-msgstr ""
+msgstr "Töltődik."
 
 #: ../../portable/singleclick.py:98
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "Már letöltődött."
 
 #: ../../portable/singleclick.py:125
 msgid "Download Error"
@@ -1567,33 +1565,36 @@ msgid ""
 "\n"
 "URL: %s"
 msgstr ""
+"A Miro nem tudja letölteni a következő címen található fájlt:\n"
+"\n"
+"URL: %s"
 
 #: ../../portable/singleclick.py:134
 msgid "File Download"
-msgstr ""
+msgstr "Fájl letöltés"
 
 #: ../../portable/singleclick.py:135
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
+msgstr "A %s helyen található fájl nem hang, videó, vagy RSS hírforrás."
 
 #: ../../portable/singleclick.py:225
 msgid "Subscribing to multiple channels"
-msgstr ""
+msgstr "Feliratkozás több csatornára"
 
 #: ../../portable/singleclick.py:226
 #, python-format
 msgid "Create %d channels?"
-msgstr ""
+msgstr "%d Csatorna Létrehozása?"
 
 #: ../../portable/singleclick.py:239
 #, python-format
 msgid "Adding %d channels to a new folder"
-msgstr ""
+msgstr "%d csatorna hozzáadása új mappába"
 
 #: ../../portable/singleclick.py:240 ../../portable/folder.py:226
 msgid "Enter a name for the new channel folder"
-msgstr ""
+msgstr "Adja meg az új csatorna-mappa nevét"
 
 #: ../../portable/singleclick.py:243
 #, python-format
@@ -1601,131 +1602,138 @@ msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
 "will stay where they currently are."
 msgstr ""
+"MEGJEGYZÉS: %d csatornára már feliratkozott. Ezek a csatornák maradnak az "
+"eddigi helyükön."
 
 #: ../../portable/singleclick.py:254
 msgid "Subscription error"
-msgstr ""
+msgstr "Feliratkozási hiba"
 
 #: ../../portable/singleclick.py:264
 msgid ""
 "This $shortAppName channel file has an invalid format: $url. Please notify "
 "the publisher of this file."
 msgstr ""
+"A $shortAppName csatorna nem megfelelő formátumú: $url. Kérem vegye fel a "
+"kapcsolatot a csatrona kiadójával."
 
 #: ../../portable/singleclick.py:272
 msgid ""
 "This $shortAppName channel file has the wrong content type: $url. Please "
 "notify the publisher of this file."
 msgstr ""
+"A $shortAppName csatorna tartalom típusa nem megfelelő: $url. Kérem vegye "
+"fel a kapcsolatot a tartalom kiadójával."
 
 #: ../../portable/singleclick.py:276
 msgid "Could not download the $shortAppName channel file: $url."
 msgstr ""
+"Nem sikerült a következő $shortAppName csatorna-fájl letöltése: $url."
 
 #: ../../portable/singleclick.py:316
 msgid "Invalid Torrent"
-msgstr ""
+msgstr "Érvénytelen Torrent"
 
 #: ../../portable/singleclick.py:317
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr ""
+msgstr "A %s torrent fájl hibás, és ezért nem megnyitható. [OK]"
 
 #: ../../portable/menubar.py:144
 msgid "_Open"
-msgstr ""
+msgstr "_Megynyitás..."
 
 #: ../../portable/menubar.py:145
 msgid "_Download Video"
-msgstr ""
+msgstr "_Videó Letöltése"
 
 #: ../../portable/menubar.py:147
 msgid "Check _Version"
-msgstr ""
+msgstr "Verzió_Ellenőrzés"
 
 #: ../../portable/menubar.py:149
 msgid "_Remove Video"
-msgstr ""
+msgstr "_Videó Eltávolítása"
 
 #: ../../portable/menubar.py:150
 msgid "_Remove Videos"
-msgstr ""
+msgstr "_Videók Eltávolítása"
 
 #: ../../portable/menubar.py:151
 msgid "Re_name Video"
-msgstr ""
+msgstr "Videó átnevezése"
 
 #: ../../portable/menubar.py:152
 msgid "Save Video _As..."
-msgstr ""
+msgstr "Video mentése másként..."
 
 #: ../../portable/menubar.py:153
 msgid "Save Videos _As..."
-msgstr ""
+msgstr "Videók mentése másként..."
 
 #: ../../portable/menubar.py:154
 msgid "Copy Video _URL"
-msgstr ""
+msgstr "Videó _URL Másolása"
 
 #: ../../portable/menubar.py:156
 msgid "_Options..."
-msgstr ""
+msgstr "_Beállítások..."
 
 #: ../../portable/menubar.py:157
 msgid "_Quit"
-msgstr "_Lépj ki"
+msgstr "_Kilépés"
 
 #: ../../portable/menubar.py:165
 msgid "Cu_t"
-msgstr ""
+msgstr "_Kivágás"
 
 #: ../../portable/menubar.py:166
 msgid "_Copy"
-msgstr ""
+msgstr "_Másolás"
 
 #: ../../portable/menubar.py:167
 msgid "_Paste"
-msgstr ""
+msgstr "_Beillesztés"
 
 #: ../../portable/menubar.py:168
 msgid "Select _All"
-msgstr ""
+msgstr "Mindent kijelöl"
 
 #: ../../portable/menubar.py:169
 msgid "_Delete"
-msgstr ""
+msgstr "_Törlés"
 
 #: ../../portable/menubar.py:173
 msgid "Add _Channel"
-msgstr ""
+msgstr "_Csatorna Hozzáadása"
 
 #: ../../portable/menubar.py:174
 msgid "New Searc_h Channel..."
-msgstr ""
+msgstr "Új kereső csatorna..."
 
 #: ../../portable/menubar.py:175
 msgid "New _Folder..."
-msgstr ""
+msgstr "Új Mappa"
 
 #: ../../portable/menubar.py:176
 msgid "Add Channel _Guide..."
-msgstr ""
+msgstr "Csatorna kalauz hozzáadása..."
 
 #: ../../portable/menubar.py:186
 msgid "Update _All Channels"
-msgstr ""
+msgstr "Összes Csatorna frissítése"
 
 #: ../../portable/menubar.py:188
 msgid "_Import Channels (OPML)..."
-msgstr ""
+msgstr "Csatornák _Importálása (OPML)..."
 
 #: ../../portable/menubar.py:189
 msgid "E_xport Channels (OPML)..."
-msgstr ""
+msgstr "CSatornák E_xportálása (OPML)..."
 
 #: ../../portable/menubar.py:191
 msgid "_Send this channel to a friend"
-msgstr ""
+msgstr "C_satorna küldése ismerősnek"
 
 #: ../../portable/menubar.py:192
 #, fuzzy
@@ -1734,63 +1742,67 @@ msgstr "Csatorna _hivatkozásának másolása"
 
 #: ../../portable/menubar.py:195
 msgid "New _Playlist"
-msgstr ""
+msgstr "Új lejátszási lista"
 
 #: ../../portable/menubar.py:196
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "Új lejátszási lista könyvtár"
 
 #: ../../portable/menubar.py:198
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "Lejátszási lista át_nevezése"
 
 #: ../../portable/menubar.py:199
+#, fuzzy
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "Lejátszási lista el_távolítása"
 
 #: ../../portable/menubar.py:200
+#, fuzzy
 msgid "_Remove Playlists"
-msgstr ""
+msgstr "Lejátszási listák el_távolítása"
 
 #: ../../portable/menubar.py:201
+#, fuzzy
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "Lejátszási listák mappáinak _eltávolítása"
 
 #: ../../portable/menubar.py:202
+#, fuzzy
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "Lejátszási listák mappájának _eltávolítása"
 
 #: ../../portable/menubar.py:212
 msgid "_Play"
-msgstr ""
+msgstr "_Lejátszás"
 
 #: ../../portable/menubar.py:213
 msgid "_Stop"
-msgstr ""
+msgstr "_Állj"
 
 #: ../../portable/menubar.py:215
 msgid "_Next Video"
-msgstr ""
+msgstr "_Következő videó"
 
 #: ../../portable/menubar.py:216
 msgid "_Previous Video"
-msgstr ""
+msgstr "_Előző videó"
 
 #: ../../portable/menubar.py:218
 msgid "Skip _Forward"
-msgstr ""
+msgstr "Ugrás _előre"
 
 #: ../../portable/menubar.py:219
 msgid "Skip _Back"
-msgstr ""
+msgstr "Ugrás _Vissza"
 
 #: ../../portable/menubar.py:221
 msgid "Volume _Up"
-msgstr ""
+msgstr "Hengerő _Növelés"
 
 #: ../../portable/menubar.py:222
 msgid "Volume _Down"
-msgstr ""
+msgstr "Hangerő _Csökkentés"
 
 #: ../../portable/menubar.py:224
 msgid "_Fullscreen"
@@ -1798,11 +1810,11 @@ msgstr "_Teljes képernyő"
 
 #: ../../portable/menubar.py:228
 msgid "_About"
-msgstr ""
+msgstr "_Névjegy"
 
 #: ../../portable/menubar.py:229
 msgid "_Donate"
-msgstr ""
+msgstr "_Támogatás"
 
 #: ../../portable/menubar.py:230 ../../portable/menubar.py:245
 msgid "_Help"
@@ -1810,7 +1822,7 @@ msgstr "_Segítség"
 
 #: ../../portable/menubar.py:232
 msgid "Report a _Bug"
-msgstr ""
+msgstr "Hi_ba jelentése"
 
 #: ../../portable/menubar.py:236
 msgid "_Video"
@@ -1818,362 +1830,376 @@ msgstr "_Videó"
 
 #: ../../portable/menubar.py:238
 msgid "_File"
-msgstr ""
+msgstr "_Fálj"
 
 #: ../../portable/menubar.py:242
 msgid "_Channels"
-msgstr ""
+msgstr "_Csatornák"
 
 #: ../../portable/menubar.py:243
 msgid "_Playlists"
-msgstr ""
+msgstr "Lejátszólisták (_P)"
 
 #: ../../portable/menubar.py:244
 msgid "P_layback"
-msgstr ""
+msgstr "_Lejátszás"
 
 #: ../../portable/menubar.py:249
 msgid "Play Unwatched ($numUnwatched)"
-msgstr ""
+msgstr "Még nem látottak lejátszása"
 
 #: ../../portable/menubar.py:250
 msgid "Pause All Downloads ($numDownloading)"
-msgstr ""
+msgstr "Összes letöltés szüneteltetése ($numDownloading)"
 
 #: ../../portable/menubar.py:251
 msgid "Resume All Downloads ($numPaused)"
-msgstr ""
+msgstr "Összes letöltés folytatása ($numDownloading)"
 
 #: ../../portable/menubar.py:253
 msgid "Options..."
-msgstr ""
+msgstr "Beállítások..."
 
 #: ../../portable/menubar.py:255
 msgid "Hide Window"
-msgstr ""
+msgstr "Ablak Elrejtése"
 
 #: ../../portable/menubar.py:256
 msgid "Show Window"
-msgstr ""
+msgstr "Ablak Mutatása"
 
 #: ../../portable/item.py:485
 #, python-format
 msgid "Removing %s"
-msgstr ""
+msgstr "%s eltávolítása"
 
 #: ../../portable/item.py:488
 msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from the Library?"
 msgstr ""
+"Törölni szeretné a teljes mappát, és minden benne lévő videót, vagy csak a "
+"Könyvtári bejegyzését szeretné eltávolítani?"
 
 #: ../../portable/item.py:494
 msgid ""
 "Would you like to delete this file or just remove its entry from the Library?"
 msgstr ""
+"Törölni szeretné a fájlt, vagy csak a Könyvtári bejegyzését szeretné "
+"eltávolítani?"
 
 #: ../../portable/item.py:514
 msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
 msgstr ""
+"Ez az elem egy mappa. Mappa törlésekor az összes benne lévő elem törlődni "
+"fog."
 
 #: ../../portable/item.py:544
 #, python-format
 msgid "%d minutes"
-msgstr ""
+msgstr "%d perc"
 
 #: ../../portable/item.py:554
 #, python-format
 msgid "Expires in %s"
-msgstr ""
+msgstr "Lejár %s múlva"
 
 #: ../../portable/item.py:566
 #, python-format
 msgid "Will retry in %s"
-msgstr ""
+msgstr "Újra próbálkozik %s múlva"
 
 #: ../../portable/item.py:568
 msgid "Paused"
-msgstr ""
+msgstr "Szüneteltetve"
 
 #: ../../portable/item.py:954
 msgid "TORRENT"
-msgstr ""
+msgstr "TORRENT"
 
 #: ../../portable/item.py:956
 msgid "WEB PAGE"
-msgstr ""
+msgstr "WEB OLDAL"
 
 #: ../../portable/item.py:966
 msgid "Total Down:"
-msgstr ""
+msgstr "Összes letöltés:"
 
 #: ../../portable/item.py:969
 msgid "Error:"
-msgstr ""
+msgstr "Hiba:"
 
 #: ../../portable/item.py:977
 msgid "Down Rate:"
-msgstr ""
+msgstr "Letöltési sebesség:"
 
 #: ../../portable/item.py:978
 msgid "Down Total:"
-msgstr ""
+msgstr "Összes Letöltés:"
 
 #: ../../portable/item.py:980
 msgid "Up Rate:"
-msgstr ""
+msgstr "Feltöltési sebesség:"
 
 #: ../../portable/item.py:981
 msgid "Up Total:"
-msgstr ""
+msgstr "Összes Feltöltés:"
 
 #: ../../portable/item.py:989
 msgid "Web page:"
-msgstr ""
+msgstr "Weboldal:"
 
 #: ../../portable/item.py:989
 msgid "permalink"
-msgstr ""
+msgstr "permalink"
 
 #: ../../portable/item.py:993
 msgid "File link:"
-msgstr ""
+msgstr "Fájl hivatkozás:"
 
 #: ../../portable/item.py:993
 msgid "direct link to file"
-msgstr ""
+msgstr "közvetlen hivatkozás a fájlra"
 
 #: ../../portable/item.py:995
 msgid "File type:"
-msgstr ""
+msgstr "Fájltípus:"
 
 #: ../../portable/item.py:1002
 msgid "REVEAL LOCAL FOLDER"
-msgstr ""
+msgstr "HELYI MAPPA MUTATÁSA"
 
 #: ../../portable/item.py:1004
 msgid "REVEAL LOCAL FILE"
-msgstr ""
+msgstr "HELYI FÁJL MUTATÁSA"
 
 #: ../../portable/item.py:1006
 msgid "Filename:"
-msgstr ""
+msgstr "Fájlnév:"
 
 #: ../../portable/item.py:1013
 msgid "Down Total"
-msgstr ""
+msgstr "Összes Letöltés"
 
 #: ../../portable/item.py:1015
 msgid "Up Total"
-msgstr ""
+msgstr "Összes Feltöltés"
 
 #: ../../portable/item.py:1033
 msgid "Item Details"
-msgstr ""
+msgstr "Elem Részletei"
 
 #: ../../portable/item.py:1040
 msgid "Torrent Details"
-msgstr ""
+msgstr "Torrent Részletei"
 
 #: ../../portable/item.py:1042
 msgid "Torrent Details <i>stopped</i>"
-msgstr ""
+msgstr "Torrent Részletei <i>stopped</i>"
 
 #: ../../portable/item.py:1046
 msgid "Download Details"
-msgstr ""
+msgstr "Letöltés Részletei"
 
 #: ../../portable/item.py:1263
 msgid "downloading..."
-msgstr ""
+msgstr "letöltés..."
 
 #: ../../portable/item.py:1270 ../../portable/item.py:1273
 #, python-format
 msgid "%s remaining"
-msgstr ""
+msgstr "%s van hátra"
 
 #: ../../portable/item.py:1282
 msgid "starting up..."
-msgstr ""
+msgstr "indítás..."
 
 #: ../../portable/item.py:1477
 msgid "Play Just This Video"
-msgstr ""
+msgstr "Csak ennek a videónak a lejátszása"
 
 #: ../../portable/item.py:1854
 #, python-format
 msgid "Removing %s items"
-msgstr ""
+msgstr "%s elem eltávolítása"
 
 #: ../../portable/item.py:1856
 msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from the Library?"
 msgstr ""
+"Egy vagy több ezek közül a videók közül nem egy csatornáról lett letöltve. "
+"Törölni szeretné ezeket az elemeket, vagy csak a Könyvtári bejegyzéseiket "
+"távolítsuk el?"
 
 #: ../../portable/item.py:1864
 msgid ""
 "One or more of these items is a folder.  When you remove or delete a folder, "
 "any items inside that folder will also be removed or deleted."
 msgstr ""
+"Egy vagy több elem mappa. Mappa törlésekor vagy eltávolításakor a benne lévő "
+"összes elem törlődik vagy eltávolítódik."
 
 #: ../../portable/folder.py:132 ../../portable/folder.py:155
 msgid "Rename Channel Folder"
-msgstr ""
+msgstr "Csatorna mappa átnevezése"
 
 #: ../../portable/folder.py:134
 #, python-format
 msgid "Enter a new name for the channel folder %s"
-msgstr ""
+msgstr "Adjon új nevet a(z) %s nevű csatorna mappának"
 
 #: ../../portable/folder.py:210 ../../portable/folder.py:215
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Lejátszólista mappa átnevezése"
 
 #: ../../portable/folder.py:217
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
-msgstr ""
+msgstr "Adjon új nevet a(z) %s nevű lejátszólista mappának"
 
 #: ../../portable/folder.py:225
 msgid "Create Channel Folder"
-msgstr ""
+msgstr "Csatorna Mappa létrehozása"
 
 #: ../../portable/folder.py:239
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Lejátszólista Mappa létrehozása"
 
 #: ../../portable/folder.py:240
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Adjon nevet az új lejátszólista mappának"
 
 #: ../../portable/httpclient.py:68
 #, python-format
 msgid "Error: %s"
-msgstr ""
+msgstr "Hiba: %s"
 
 #: ../../portable/httpclient.py:83 ../../portable/httpclient.py:89
 msgid "Can't connect"
-msgstr ""
+msgstr "Nem lehet kapcsolódni"
 
 #: ../../portable/httpclient.py:84
 #, python-format
 msgid "Connection Error: %s"
-msgstr ""
+msgstr "Kapcsolódási Hiba: %s"
 
 #: ../../portable/httpclient.py:90
 msgid "SSL connection error"
-msgstr ""
+msgstr "SSL kapcsolódási hiba"
 
 #: ../../portable/httpclient.py:94
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP hiba"
 
 #: ../../portable/httpclient.py:97
 #, python-format
 msgid "Bad Status Line: %s"
-msgstr ""
+msgstr "Hibás sor: %s"
 
 #: ../../portable/httpclient.py:100
 #, python-format
 msgid "Bad Header Line: %s"
-msgstr ""
+msgstr "Hibás fejléc sora: %s"
 
 #: ../../portable/httpclient.py:103
 #, python-format
 msgid "Bad Chunk size: %s"
-msgstr ""
+msgstr "Hibás rész fájl méret: %s"
 
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Expected CRLF got: %r"
-msgstr ""
+msgstr "Várható CRLF, fogadott: %r"
 
 #: ../../portable/httpclient.py:109
 #, python-format
 msgid "%s closed connection"
-msgstr ""
+msgstr "%s kapcsolat megszakítva"
 
 #: ../../portable/httpclient.py:115
 msgid "Got 404 status code"
-msgstr ""
+msgstr "404-es hiba"
 
 #: ../../portable/httpclient.py:117
 #, python-format
 msgid "Bad Status Code: %s"
-msgstr ""
+msgstr "Hiba kód: %s"
 
 #: ../../portable/httpclient.py:121
 msgid "Authorization failed"
-msgstr ""
+msgstr "Sikertelen azonosítás"
 
 #: ../../portable/httpclient.py:127
 msgid "Pipeline request never started"
-msgstr ""
+msgstr "A kapcsolat nem jött létre"
 
 #: ../../portable/httpclient.py:131
 msgid "Timeout"
-msgstr ""
+msgstr "Időtúllépés"
 
 #: ../../portable/httpclient.py:132
 #, python-format
 msgid "Connection to %s timed out"
-msgstr ""
+msgstr "Időtúllépés a következőhöz való csatlakozáskor: %s"
 
 #: ../../portable/httpclient.py:136
 msgid "Invalid URL"
-msgstr ""
+msgstr "Érvénytelen URL"
 
 #: ../../portable/httpclient.py:137
 #, python-format
 msgid "\"%s\" is not a valid URL"
-msgstr ""
+msgstr "\"%s\" nem érvényes URL"
 
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "\"%s\" nem létezik"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Olvasási hiba"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Hiba a következő olvasásakor: \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Ismeretlen hibakód"
 
 #: ../../portable/httpclient.py:373
 msgid "Connection closed"
-msgstr ""
+msgstr "A kapcsolat lezárva"
 
 #: ../../portable/httpclient.py:798
 msgid "Unknown"
-msgstr ""
+msgstr "Ismeretlen"
 
 #: ../../portable/httpclient.py:799
 msgid "Internal Error: Not ready to send"
-msgstr ""
+msgstr "Belső Hiba: Nincs felkészülve a küldésre"
 
 #: ../../portable/app.py:685
 msgid "Database too new"
-msgstr ""
+msgstr "Az adatbázis túl új"
 
 #: ../../portable/app.py:686
 msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
+"Az ön által használt adatbázis a $shortAppName egy újabb verziójával lett "
+"létrehozva. A megnyitásához le kell töltenie a $shortAppName legújabb "
+"verzióját!"
 
 #: ../../portable/app.py:700
 msgid "Video Directory Missing"
-msgstr ""
+msgstr "Hiányzó Videó Könyvtár"
 
 #: ../../portable/app.py:701
 msgid ""
@@ -2185,46 +2211,55 @@ msgid ""
 "drive (this will cause you to lose some details about the videos on the "
 "external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
+"\n"
+"A Miro nem találja az elsődleges videó könyvtárat. Lehet hogy egy jelenleg "
+"nem csatlakoztatott külső tárolón van.\n"
+"\n"
+"Ha folytatja, a videó könyvtár át lesz állítva a jelenlegi meghajtóra (ez "
+"néhány videó részleteinek elvesztését fogja okozni a külső meghajtóról). Ha "
+"gondolja inkább ki is léphet, csatlakoztassa a meghajtót, és indítsa újra a "
+"Miro-t."
 
 #: ../../portable/app.py:1038 ../../portable/app.py:1052
 #: ../../portable/app.py:1096 ../../portable/app.py:1122
 #: ../../portable/app.py:1142
 #, python-format
 msgid "Remove %s"
-msgstr ""
+msgstr "%s eltávolítása"
 
 #: ../../portable/app.py:1039
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
-msgstr ""
+msgstr "Bizos eltávolítja a %s kalauzt?"
 
 #: ../../portable/app.py:1053
 #, python-format
 msgid "Are you sure you want to remove %s"
-msgstr ""
+msgstr "Biztos hogy le akarja távolítani ezt: %s"
 
 #: ../../portable/app.py:1056 ../../portable/app.py:1101
 #: ../../portable/app.py:1127 ../../portable/app.py:1146
 #, python-format
 msgid "Remove %s channels"
-msgstr ""
+msgstr "%s Csatorna eltávolítása"
 
 #: ../../portable/app.py:1058
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
 msgstr ""
+"Biztos benne, hogy el szeretné távolítani ezt a(s) %s lejátszási listát"
 
 #: ../../portable/app.py:1097
 msgid ""
 "What would you like to do with the videos in this channel that you've "
 "downloaded?"
-msgstr ""
+msgstr "Mit szeretne tenni az ebből a csatornából letöltött videókkal?"
 
 #: ../../portable/app.py:1102
 msgid ""
 "What would you like to do with the videos in these channels that you've "
 "downloaded?"
-msgstr ""
+msgstr "Mit szeretne tenni az ezekről a csatornákról letöltött videókkal?"
 
 #: ../../portable/app.py:1123
 #, python-format
@@ -2232,6 +2267,8 @@ msgid ""
 "Are you sure you want to remove %s?  Any downloads in progress will be "
 "canceled."
 msgstr ""
+"Biztosan el akarja távolítani ezt: %s? A folyamatban lévő letöltések meg "
+"lesznek szakítva."
 
 #: ../../portable/app.py:1128
 #, python-format
@@ -2239,36 +2276,38 @@ msgid ""
 "Are you sure you want to remove these %s channels?  Any downloads in "
 "progress will be canceled."
 msgstr ""
+"Biztosan el akarja távolítani a következő cstornákat: %s? A folyamatban lévő "
+"letöltések meg lesznek szakítva."
 
 #: ../../portable/app.py:1143
 #, python-format
 msgid "Are you sure you want to remove %s?"
-msgstr ""
+msgstr "Biztosan el akarja távolítani ezt: %s?"
 
 #: ../../portable/app.py:1147
 #, python-format
 msgid "Are you sure you want to remove these %s channels?"
-msgstr ""
+msgstr "Biztosan el akarja távolítani ezeket a csatornákat: %s?"
 
 #: ../../portable/app.py:1160
 #, python-format
 msgid "Stop watching %s"
-msgstr ""
+msgstr "%s vetítés leállítása"
 
 #: ../../portable/app.py:1161
 #, python-format
 msgid "Are you sure you want to stop watching %s?"
-msgstr ""
+msgstr "Biztos, hogy nem szeretné továbbnézni a(z) %s-t?"
 
 #: ../../portable/app.py:1164
-#, python-format
+#, fuzzy, python-format
 msgid "Stop watching %s directories"
-msgstr ""
+msgstr "%s könyvtár nézésének befejezése"
 
 #: ../../portable/app.py:1165
 #, python-format
 msgid "Are you sure you want to stop watching these %s directories?"
-msgstr ""
+msgstr "Biztos, hogy nem szeretné továbbnézni a(z) %s könyvtárat?"
 
 #: ../../portable/app.py:1196
 msgid "Are you sure you want to quit?"
@@ -2279,35 +2318,38 @@ msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
+"A Miro éppen feltölti a hibajelentését. Ha most kilép, a feltöltés meg fog "
+"szakadni. Biztosan kilép?"
 
 #: ../../portable/app.py:1203
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d letöltés van még folyamatban. Biztosan kilép?"
+msgstr[1] "%d letöltés még folyamatban van. Biztosan kilép?"
 
 #: ../../portable/app.py:1712
 msgid "Invalid Value"
-msgstr ""
+msgstr "Érvénytelen érték"
 
 #: ../../portable/app.py:1713
 #, python-format
 msgid "%s is invalid.  You must enter a non-negative number."
-msgstr ""
+msgstr "%s érvénytelen. Adjon meg egy nem negatív számot!"
 
 #: ../../portable/app.py:1839
+#, fuzzy
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Hiba a fájlban"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "A következő fájlt a Miron kívülről törölték: \"%s\" ."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
-msgstr ""
+msgstr " - Érvénytelen URL"
 
 #: ../../portable/app.py:2012
 msgid ""
@@ -2315,61 +2357,68 @@ msgid ""
 "Please double check and try again.\n"
 "\n"
 msgstr ""
+"Az ön által megadott cím nem valós URL.\n"
+"Kérem ellenőrizze!\n"
+"\n"
 
 #: ../../portable/app.py:2036
 msgid "$shortAppName - Add Channel"
-msgstr ""
+msgstr "$shortAppName - Csatorna hozzáadása"
 
 #: ../../portable/app.py:2036
 msgid "Enter the URL of the channel to add"
-msgstr ""
+msgstr "Adja meg a hozzáadni kívánt csatorna címét"
 
 #: ../../portable/app.py:2057
+#, fuzzy
 msgid "$shortAppName - Add Miro Guide"
-msgstr ""
+msgstr "$shortAppName - Miro Kalaúz hozzáadása"
 
 #: ../../portable/app.py:2057
+#, fuzzy
 msgid "Enter the URL of the Miro Guide to add"
-msgstr ""
+msgstr "Írja be a hozzáadni kívánt Miro Kalaúz URL-jét"
 
 #: ../../portable/app.py:2063
 msgid "$shortAppName - Download Video"
-msgstr ""
+msgstr "$shortAppName - Videó Letöltése"
 
 #: ../../portable/app.py:2063
 msgid "Enter the URL of the video to download"
-msgstr ""
+msgstr "adja meg a letöltendő videó címét"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Kezdő Csatornák"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
-msgstr ""
+msgstr "Minta Lejátszási lista"
 
 #: ../../portable/app.py:2463
 msgid "Custom Channels"
-msgstr ""
+msgstr "Egyedi Csatornák"
 
 #: ../../portable/app.py:2463
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
-msgstr ""
+msgstr "Most a $longAppName egy testreszabott csatornás verziója fut."
 
 #: ../../portable/app.py:2478
 msgid "Error Changing Movies Directory"
-msgstr ""
+msgstr "Hiba a Film Könyvtár váltása közben."
 
 #: ../../portable/app.py:2479
 msgid ""
 "You don't have permission to write to the directory you selected.  Miro will "
 "continue to use the old videos directory."
 msgstr ""
+"Nincs jogosultsága a kiválasztott mappába való íráshoz. A Miro folytatja a "
+"régi mappa használatát."
 
 #: ../../portable/app.py:2508
 msgid "Error Saving Video"
-msgstr ""
+msgstr "Hiba a videó mentése közben."
 
 #: ../../portable/app.py:2510
 #, python-format
@@ -2377,10 +2426,12 @@ msgid ""
 "An error occured while trying to save %s.  Please check that the file has "
 "not been deleted and try again."
 msgstr ""
+"Hiba történt %s mentése közben. Kérem ellenőrizze hogy nem lett-e törölve a "
+"fájl, és próbálja újra!"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "(Changes won't go into effect until you restart Miro)"
-msgstr ""
+msgstr "(A változtatások csak a Miro újraindítása után lépnek érvénybe)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -2391,22 +2442,28 @@ msgid ""
 "1 month\n"
 "Never"
 msgstr ""
+"1 nap\n"
+"3 nap\n"
+"6 nap\n"
+"10 nap\n"
+"1 hónap\n"
+"soha"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:8
 msgid "<b>BitTorrent</b>"
-msgstr ""
+msgstr "<b>BitTorrent</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
 msgid "<b>Searching for Videos</b>"
-msgstr ""
+msgstr "<b>Videók keresése</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:10
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
-msgstr ""
+msgstr "<b>Szeretné hogy a Miro megkeresse a gépén található videókat?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
-msgstr ""
+msgstr "<b>Szeretné hogy a Miro elinduljon a számítógép indulásakor?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12
 msgid ""
@@ -2433,38 +2490,61 @@ msgid ""
 "<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
 "of them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"<b>Kész!</b>\n"
+"\n"
+"A telepítés befejeződött -- máris elkezdhet nézni néhány csatornát.\n"
+"\n"
+"<b>Ne várjon:</b> A Miro más mint a weboldalakon történő videózás -- a "
+"kiadók nagy, jó minőségű videókat ajánlhatnak fel. Szóval ne csak üljön, "
+"amíg vár a videók letöltődésére: indítson néhány letöltést, és nézzen vissza "
+"később!\n"
+"\n"
+"<b>Hagyja bekapcsolva:</b> A Miro rendszeresen ellenőrzi a csatornákat új "
+"videók után kutatva, és letölti őket a háttérben. Ha futni hagyja, rögtön "
+"nézheti a videókat, amikor csak akarja.\n"
+"\n"
+"<b>Ne aggódjon a lemezterület miatt:</b> A Miro figyeli hogy mikor avulnak "
+"el a videók, és letörli a régieket hogy helyet csináljon az újaknak. Ha "
+"valamit meg szeretne őrizni, erre is van lehetőség.\n"
+"\n"
+"<b>Gondolkodjon nagyban:</b> A lejátszás gomb jobb oldalán található gombbal "
+"megjeleníti a videókat teljes képernyőn.\n"
+"\n"
+"<b>Keressen videókat:</b> A Miro Guide többszáz internet TV csatornát "
+"tartalmaz, és az összes ingyenes. Csak kattintson a \"Hozzáadás\" gombra, és "
+"kezdje nézni a kiválasztott csatornát!"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
 msgid "By default, videos _expire after"
-msgstr ""
+msgstr "Alapértelmezés szerint a videók elévülési ideje"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
-msgstr ""
+msgstr "_Csatorna:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 msgid "C_hannels"
-msgstr ""
+msgstr "_Csatornák"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "C_reate Channel"
-msgstr ""
+msgstr "Csatorna Lét_rehozása"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Check Channels for _new content"
-msgstr ""
+msgstr "Új tartalom keresése a csator_nákon"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "Disk _Space"
-msgstr ""
+msgstr "Lemez_terület"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "Don't start a download _if it leaves less than"
-msgstr ""
+msgstr "Ne kezdjen letöltést ha kevesebb mint enny_i hely marad"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Download at _most"
-msgstr ""
+msgstr "Letöltési _maximum"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid ""
@@ -2472,75 +2552,82 @@ msgid ""
 "Every hour\n"
 "Manually"
 msgstr ""
+"30 percenként\n"
+"Óránként\n"
+"Én intézem"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid "G_B free"
-msgstr ""
+msgstr "G_B szabad"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 msgid "Go"
-msgstr ""
+msgstr "Mehet!"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
-msgstr ""
+msgstr "Ebben:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
+"A Miro megkeresheti az összes videót az ön számítógépén, hogy segítse "
+"gyűjteménye rendezését."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Play _videos one after another"
-msgstr ""
+msgstr "_Videók lejátszása sorban"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Preferences"
-msgstr ""
+msgstr "Beállítások..."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:48
 msgid "Restrict to my full _home folder"
-msgstr ""
+msgstr "Korlátozás a saját könyvtáromra"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "S_top after each video"
-msgstr ""
+msgstr "Lejá_tszás megállitása minden videó végén"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "S_tore downloaded videos in this folder:"
-msgstr ""
+msgstr "Le_töltött videók tárolása a következő helyen:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
-msgstr ""
+msgstr "K_eresési Szolgáltató"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:52
 msgid "Search _custom folder:"
-msgstr ""
+msgstr "_Keresés ebben a testreszabott mappában:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid "Select Movies Directory"
-msgstr ""
+msgstr "Filmeket tartalmazó könyvtár kiválasztása"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:54
 msgid "Select custom search directory"
-msgstr ""
+msgstr "Testreszabott keresés mappájának kiválasztása"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:55
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr ""
+"A következő néhány képernyő segíteni fog önnek a Miro megfelelő "
+"beállításaában. Itt az első kérdés."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "To a_void slowdowns, limit upstream to"
-msgstr ""
+msgstr "A lelassulások megelőzése érdekében a feltöltési limit"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Volume:"
-msgstr ""
+msgstr "Hangerő:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:58
 msgid ""
@@ -2548,6 +2635,9 @@ msgid ""
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr ""
+"Javasoljuk, hogy engedélyezze a Miro indítását a számítógép indulásakor. "
+"Ezáltal a be nem fejezett és új videók letöltése befejeződhet mire ön nézni "
+"szeretné őket."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid ""
@@ -2555,6 +2645,10 @@ msgid ""
 "download videos from your favorite channels, watch new videos one after the "
 "other, download torrents, recommend videos to friends, and lots more."
 msgstr ""
+"Üdvözli önt az Internet TV! A Miroval sokmindent megtehet: automatikusan "
+"letöltheti a videókat kedvenc csatornáiról, új videókat nézhet egyiket a "
+"másik után, torrenteket tölthet le, ajánlhatja a videókat ismerőseinek...és "
+"még sok mást."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid ""
@@ -2562,71 +2656,76 @@ msgid ""
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
+"Új letöltési könyvtár lett kiválasztva. Helyezze át a Miro a meglévő "
+"letöltéseket is az új helyre? (A folyamatban lévő letöltések nem leszenk "
+"áthelyezve addig amíg a letöltés be nem fejeződik)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "_Add Folder"
-msgstr ""
+msgstr "M_appa hozzáadása"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "_Automatically run Miro when I log in"
-msgstr ""
+msgstr "_A Miro automatikus indítása bejelentkezés után"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "_Bit Torrent uses ports between"
-msgstr ""
+msgstr "A _BitTorrent használja a következő portokat"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "_Downloads"
-msgstr ""
+msgstr "_Letöltések"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid "_Folders"
-msgstr ""
+msgstr "_Mappák"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "_General"
-msgstr ""
+msgstr "_Általános"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "_KB/s when my computer is active"
-msgstr ""
+msgstr "_KB/s amikor a számítógép aktív"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "_Playback"
-msgstr ""
+msgstr "_Lejátszás"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "_Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgstr "A videók lejátszásának _folytatása a korábban felfüggesztett helytől"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
-msgstr ""
+msgstr "_Keresés"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "_Search For:"
-msgstr ""
+msgstr "Keresés erre:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid "_URL"
-msgstr ""
+msgstr "_URL"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "_Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "_Figyelmeztess, ha kilépéskor folyamatban lévő letöltések vannak még"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr ""
+"Ezekben a mappákban lévő új videók figyelése és _beillesztése a saját "
+"könyvtárba."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "_and"
-msgstr ""
+msgstr "_és"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "videos at once"
-msgstr ""
+msgstr "videók egyszerre"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
@@ -2634,26 +2733,29 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName, $appVersion verzió ($appRevision); copyright (c) 2005-2007 "
+"$publisher. $longAppName és a $longAppName logo a $publisher bejegyzett "
+"védjegye."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
-msgstr ""
+msgstr "$longAppName névjegye"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
 msgid "Add Channel"
-msgstr "Adj hozzá egy csatornát"
+msgstr "Csatorna hozzáadása"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
 msgid "Please enter the URL of the channel you'd like to add."
-msgstr ""
+msgstr "Írja be a hozzáadni kívánt csatorna címét!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
 msgid "Copy log to clipboard"
-msgstr ""
+msgstr "Naplófájl másolása a vágólapra"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
 msgid "Open up the bug tracker"
-msgstr ""
+msgstr "A hibakövető rendszer megnyitása"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
 msgid ""
@@ -2661,6 +2763,9 @@ msgid ""
 "information into our bug tracker and tell us what you were doing when the\n"
 "problem occurred."
 msgstr ""
+"Kérjük segítsen megjavítani! Másolja be\n"
+"az összes információt a bug trackerbe, és írja le mit csinált amikor\n"
+"a hiba bekövetkezett."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
 msgid ""
@@ -2668,10 +2773,13 @@ msgid ""
 "Sorry for the inconvenience. $longAppName is still in beta, but with your "
 "help we're fixing problems fast!"
 msgstr ""
+"Ezek után indítsd újra az alkalmazást (különben újabb hibák előfordulása "
+"várható). Az okozott kellemetlenségért elnézést kérünk. A $longAppName még "
+"béta állapotban van, de a segítségeddel gyorsan javítjuk a hibákat!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
 msgid "You found a bug in $longAppName!"
-msgstr ""
+msgstr "Ön megtalálta a $longAppName egy hibáját!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
@@ -2681,23 +2789,27 @@ msgstr " "
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
 msgid "'"
-msgstr ""
+msgstr "'"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
 msgstr ""
+"Megpróbálhatjuk letölteni a fájlokat. A videók listázása több időt vehet "
+"igénybe, és a leírások furcsán jelenhetnek meg."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
 msgid "Please contact the publishers of"
-msgstr ""
+msgstr "Kérjük vegye fel a kapcsolatot a kiadóval"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
 msgid ""
 "and ask if they can supply a feed in a format that will work with "
 "$shortAppName."
 msgstr ""
+"és kérdezze meg, hogy tudnának-e olyan formátumot használni ami "
+"együttműködik a $shortAppName-val."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
 #, fuzzy
@@ -2710,6 +2822,9 @@ msgid ""
 "migrate your existing downloads there?(Currently dowloading movies will not "
 "be moved until they finish)"
 msgstr ""
+"Új letöltési mappát adott meg. Helyezze át a $shortAppName a korábban "
+"letöltött fájlokat is ide? (A még folyamatban lévő letöltések addig nem "
+"lesznek áthelyezve, amíg a letöltésük be nem fejeződik)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
@@ -2720,133 +2835,143 @@ msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
 msgstr ""
+"Adja meg a csatorna kiadója által adott felhasználóinevet és jelszavat!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
 msgstr ""
+"(FIGYELEM: A változtatások csak a $longAppName újraindítása után lépnek "
+"érvénybe!)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Add Folder..."
-msgstr ""
+msgstr "Mappa hozzáadása..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Automatically run $longAppName when I login."
-msgstr ""
+msgstr "A $longAppName indítása bejelentkezéskor."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "By default, videos expire after"
-msgstr ""
+msgstr "Videók elavulnak ennyi idő múlva"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Check channels for new content"
-msgstr ""
+msgstr "Csatornák új tartalmának ellenőrzése"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgstr "Lerakás tálcára, hogy a letöltések folytatódhassanak."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "30 percenként"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Every hour"
-msgstr ""
+msgstr "Óránként"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Folder"
-msgstr ""
+msgstr "Mappa"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
-msgstr ""
+msgstr "Manuálisan"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
-msgstr ""
+msgstr "Beállítások"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "Egy videó lejátszása után megáll"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Kilépés a Miroból."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
-msgstr ""
+msgstr "Emlékezzen hol tartott a lejátszás, és onnan fojtassa legközelebb."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Show as a Channel"
-msgstr ""
+msgstr "Megjelenítés Csatornaként"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Store downloaded videos in this folder:"
-msgstr ""
+msgstr "A letöltött videók tárolása itt:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid ""
 "To avoid slowdowns, limit upstream bandwith when my computer is active."
 msgstr ""
+"A lelassulások elkerülése érdekében limitálja a feltöltési sebességet ha a "
+"gép aktív."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "Upstream limit (KB/s)"
-msgstr ""
+msgstr "Feltöltési limit (KB/s)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
-msgstr ""
+msgstr "A következő BitTorrent portok használata"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr ""
+"FIGYELEM: A megváltoztatott beállítás csak a $longAppName újraindítása után "
+"lép érvénybe."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
 msgid "Warn me when I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "Figyelmeztessen, ha kilépéskor még aktív letöltések vannak."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
 msgstr ""
+"Új videók keresése, és hozzáadása a Könyvtáramhoz a következő mappákban."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "When I click the red close button:"
-msgstr ""
+msgstr "Amikor a piros kilépés gombra kattintok:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
 msgid "and"
-msgstr ""
+msgstr "és"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
-msgstr ""
+msgstr "Csatorna:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
 msgid "Search Engine:"
-msgstr ""
+msgstr "Keresőmotor:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
 msgid "Search For:"
-msgstr ""
+msgstr "Keresés erre:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
-msgstr ""
+msgstr "Cím:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
 msgid ""
 "$longAppName can find all the videos on your computer to help you organize "
 "your collection."
 msgstr ""
+"A $longAppName megkeresheti az összes videót az ön számítógépén, ezzel "
+"segítve gyűjteménye rendszerezését."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
 msgid ""
@@ -2854,34 +2979,37 @@ msgid ""
 "background.  Leaving it running means you'll have new videos when you're "
 "ready to watch."
 msgstr ""
+"A $longAppName rendszeresen ellenőrzi a csatornákat új tartalomért, és "
+"letölti ezeket a háttérben. Ha futni hagyja, akkor azonnal nézheti az új "
+"videókat amikor csak akarja."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
 msgid "$shortAppName First Time Setup"
-msgstr ""
+msgstr "A $shortAppName első indítása"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
-msgstr ""
+msgstr "Keresés megszakítása"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
 msgid "Change"
-msgstr "Módosítsd"
+msgstr "Módosítás"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46
 msgid "Don't Worry About Disk Space:"
-msgstr ""
+msgstr "Ne aggódjon a lemezterület miatt:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50
 msgid "Find Videos:"
-msgstr ""
+msgstr "Keressen Videókat:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
 msgid "Go Big:"
-msgstr ""
+msgstr "Gondolkodjon nagyban:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
 msgid "Leave it On:"
-msgstr ""
+msgstr "Hagyja bekapcsolva:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
 msgid ""
@@ -2890,40 +3018,54 @@ msgid ""
 "permanently by clicking 'save' and you can set a channel's settings to save "
 "videos automatically."
 msgstr ""
+"A TiVo-hoz hasonlóan, a $longAppName is ún. élettartam rendszerrel "
+"rendelkezik, ami segít eltakarítani a régebbi videókat, hogy helyet "
+"szabadítson fel az újabbak számára. De a \"Mentés\" gombra kattintással "
+"mindig lehetősége van a videók megtartására ugyanakkor a csatorna "
+"beállításainál automatikus mentést is kérhet."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
 msgid ""
 "Now you can explore the Channel Guide\n"
 "and start watching.  A few tips to get started:"
 msgstr ""
+"Most már böngészehti a Csatorna Kalaúzt\n"
+"és kezdhet is tévézni. Néhány tipp az induláshoz:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
 msgid "Reset Search"
-msgstr ""
+msgstr "A keresés alapállapotba hozása"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Csak a saját fájljaimat"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
 msgid "Search custom folder:"
-msgstr ""
+msgstr "Keresés testreszabott mappában"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
 msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"A $shortAppName Csatorna Kalaúzban internet tévés csatornák százai vannak; "
+"mind ingyen. Csak klikkeljen a \"Hozzáadás\" gombra ha nézni szeretné "
+"valamelyiket."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."
 msgstr ""
+"A lejátszó gombtól jobbra található gomb teljes képernyőn jeleníti meg a "
+"videókat."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30
 msgid ""
 "The next few screens will help you set up $longAppName so that it works best "
 "for you."
 msgstr ""
+"A következő néhány képernyő segíteni fog a $longAppName minél "
+"zökkenőmentesebb működésre való beállításában."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
 msgid ""
@@ -2931,23 +3073,30 @@ msgid ""
 " This way, videos in progress can finish downloading and new videos can be "
 "downloaded in the background, ready when you want to watch."
 msgstr ""
+"Javasoljuk, hogy rögtön indítsd el a $longAppName alkalmazást az operációs "
+"rendszer betöltődése után. Így a videók letöltése a háttérben tovább "
+"folyhat, hogy azonnal a rendelkezésedre álljanak, ha meg szeretnéd tekinteni "
+"őket."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
 msgid "Would you like $longAppName to look for video files on your computer?"
 msgstr ""
+"Szeretnéd, hogy a $longAppName megkeresse a videófájlokat a számítógépen?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
 msgid "Would you like to run $shortAppName on startup?"
 msgstr ""
+"Szeretnéd, hogy a $longAppName automatikusan elinduljon a rendszer "
+"indításakor?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
 msgid "You're done!"
-msgstr ""
+msgstr "Kész!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
 msgid "Release Notes:"
-msgstr ""
+msgstr "Kiadási megjegyzések:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"
-msgstr ""
+msgstr "Kérdés"

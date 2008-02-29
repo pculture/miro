@@ -8,64 +8,64 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-09-12 14:00+0000\n"
-"Last-Translator: vinceshortino <vince@vshortino.com>\n"
+"PO-Revision-Date: 2008-01-31 04:19+0000\n"
+"Last-Translator: Japanese <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#~ msgid "Preferencesâ¦"
-#~ msgstr "設定"
+#~ msgid "Save this video"
+#~ msgstr "保存"
 
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%sは無効なURLです"
-
-#~ msgid "_Options"
-#~ msgstr "_設定"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>チャンネル</b>"
+#~ msgid "_Play / Pause"
+#~ msgstr "再生 / 一時停止"
 
 #, fuzzy
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>ディスク容量</b>"
-
-#~ msgid "<b>Folders in the Library</b>"
-#~ msgstr "<b>ライブラリ内のフォルダ</b>"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>再生</b>"
+#~ msgid "_Remove Channel"
+#~ msgstr "チャンネルの削除(_R)"
 
 #, fuzzy
-#~ msgid "Automatically run Miro when I log in"
-#~ msgstr "ログイン時に Miro を実行"
+#~ msgid "_Update Channel"
+#~ msgstr "チャンネルの更新(_U)"
 
 #, fuzzy
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "Bit Torrent が使うポート"
+#~ msgid "_Open..."
+#~ msgstr "開く(_O)"
 
 #, fuzzy
-#~ msgid "Automatically run $longAppName when I login"
-#~ msgstr "ログイン時に $longAppName を起動"
+#~ msgid "Open various files"
+#~ msgstr "開くいろいろなファイル"
 
-#~ msgid "Quit Miro completely"
-#~ msgstr "Miro を完全に終了"
+#~ msgid "P_references"
+#~ msgstr "設定(_P)"
 
-#~ msgid ""
-#~ "Watch for new videos in these folders and include them in My Collection:"
-#~ msgstr "以下のフォルダで新しいビデオを探して My Collection に追加:"
+#~ msgid "Quit the Program"
+#~ msgstr "プログラムを終了する"
 
-#, fuzzy
-#~ msgid ""
-#~ "The $shortAppName Channel Guide has hundreds of internet TV channels, all of "
-#~ "them are free.  Just click 'ADD' to watch a channel."
-#~ msgstr ""
-#~ "$shortAppName チャンネルガイドには数百の無料TVチャンネルがあります。「追加」をクリックして見たいチャンネルを選んで下さい。"
+#~ msgid "U_pdate All Channels"
+#~ msgstr "すべてのチャンネルを更新する(_p)"
+
+#~ msgid "Unwatched"
+#~ msgstr "未視聴"
+
+#~ msgid "Searching..."
+#~ msgstr "検索中..."
+
+#~ msgid "My Collection"
+#~ msgstr "マイコレクション"
+
+#~ msgid "New Videos"
+#~ msgstr "最近追加したビデオ"
+
+#~ msgid "Watched"
+#~ msgstr "視聴済"
+
+#~ msgid "Democracy Internet TV: How to Get Started"
+#~ msgstr "デモクラシーネットテレビ:始め方"
 
 #~ msgid "About Democracy"
 #~ msgstr "Democracyについて"
@@ -80,11 +80,14 @@ msgstr ""
 #~ msgid "Hide Democracy"
 #~ msgstr "デモクラシーを非表示にする"
 
-#~ msgid "New Channel Guide..."
-#~ msgstr "チャンネルガイドを追加"
+#~ msgid "Preferencesâ¦"
+#~ msgstr "設定"
 
 #~ msgid "Quit Democracy"
 #~ msgstr "デモクラシーを終了する"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "チャンネルを削除する"
 
 #, fuzzy
 #~ msgid "(You must restart Democracy for this change to take effect)\n"
@@ -152,8 +155,17 @@ msgstr ""
 #~ "\n"
 #~ "再生ボタンの右のボタンを押すと、全画面でビデオを見ることができます。\n"
 
-#~ msgid "Save this video"
-#~ msgstr "保存"
+#~ msgid "Create new playlist"
+#~ msgstr "プレイリストを作る"
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "プレイリストフォルダを作る"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "チャンネルフォルダを作る"
+
+#~ msgid "New Channel Guide..."
+#~ msgstr "チャンネルガイドを追加"
 
 #~ msgid "_Copy Video URL"
 #~ msgstr "ビデオのURLをコピー"
@@ -161,57 +173,20 @@ msgstr ""
 #~ msgid "_Stop Video"
 #~ msgstr "停止"
 
-#~ msgid "_Play / Pause"
-#~ msgstr "再生 / 一時停止"
-
-#, fuzzy
-#~ msgid "_Update Channel"
-#~ msgstr "チャンネルの更新(_U)"
-
 #~ msgid "Re_name Channel"
 #~ msgstr "チャンネルの名前を変える(_N)"
-
-#, fuzzy
-#~ msgid "_Remove Channel"
-#~ msgstr "チャンネルの削除(_R)"
-
-#, fuzzy
-#~ msgid "_Open..."
-#~ msgstr "開く(_O)"
-
-#, fuzzy
-#~ msgid "Open various files"
-#~ msgstr "開くいろいろなファイル"
 
 #~ msgid "New _Playlist..."
 #~ msgstr "新規プレイリスト(_P)"
 
-#~ msgid "Create new playlist"
-#~ msgstr "プレイリストを作る"
-
 #~ msgid "New Playlist _Folder..."
 #~ msgstr "新規プレイリストフォルダ(_F)"
-
-#~ msgid "Create new playlist folder"
-#~ msgstr "プレイリストフォルダを作る"
 
 #~ msgid "New Channel _Folder..."
 #~ msgstr "新規チャンネルフォルダ(_F)"
 
-#~ msgid "Create new channel folder"
-#~ msgstr "チャンネルフォルダを作る"
-
 #~ msgid "Add _Channel..."
 #~ msgstr "チャンネルを追加(_C)"
-
-#~ msgid "P_references"
-#~ msgstr "設定(_P)"
-
-#~ msgid "Quit the Program"
-#~ msgstr "プログラムを終了する"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "すべてのチャンネルを更新する(_p)"
 
 #~ msgid "Delete selection"
 #~ msgstr "選択したものを削除"
@@ -222,11 +197,16 @@ msgstr ""
 #~ msgid "_Remove Channel Guides..."
 #~ msgstr "複数の番組表を削除(_R)"
 
-#~ msgid "Remove Channel..."
-#~ msgstr "チャンネルを削除する"
+#, python-format
+#~ msgid "%s is not a valid URL"
+#~ msgstr "%sは無効なURLです"
 
-#~ msgid "Searching..."
-#~ msgstr "検索中..."
+#, python-format
+#~ msgid "Deleting %s"
+#~ msgstr "%s を削除しています"
+
+#~ msgid "Remove From My Collection"
+#~ msgstr "マイコレクションから削除"
 
 #, fuzzy
 #~ msgid "Empty Playlist"
@@ -251,12 +231,6 @@ msgstr ""
 #~ msgid "STAR"
 #~ msgstr "評価"
 
-#~ msgid "Unwatched"
-#~ msgstr "未視聴"
-
-#~ msgid "Watched"
-#~ msgstr "視聴済"
-
 #~ msgid "Skip >> ${countdown}"
 #~ msgstr "スキップ >> ${countdown}"
 
@@ -277,22 +251,6 @@ msgstr ""
 #~ msgid "Clear Completed Torrents"
 #~ msgstr "ダウンロードが完了したファイルをクリアする"
 
-#~ msgid "My Collection"
-#~ msgstr "マイコレクション"
-
-#~ msgid "New Videos"
-#~ msgstr "最近追加したビデオ"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "デモクラシーネットテレビ:始め方"
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "%s を削除しています"
-
-#~ msgid "Remove From My Collection"
-#~ msgstr "マイコレクションから削除"
-
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
 msgstr "キャンセル"
@@ -307,7 +265,6 @@ msgstr "Ok"
 msgid "$log"
 msgstr "$log"
 
-#, fuzzy
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
@@ -316,9 +273,8 @@ msgid ""
 msgstr ""
 "<font face=\"Lucida Grande\" size=\"-1\">バグトラッカーは <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a> "
-"にあります。していたことを書き、上のボックスからログメッセージをペーストしてから、幾つか質問に答えて下さい。私達が正しく対応できるように。</font>"
+"にあります。何をしていたかを書き、上のボックスからログメッセージをコピーし、幾つか質問に答えて下さい。その後、作業が整然と進むでしょう。</font>"
 
-#, fuzzy
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
 "report to our bug-tracking system? At a minimum, what we'd need is "
@@ -326,15 +282,15 @@ msgid ""
 "plus the artfully-phrased nonsense in the box below:"
 msgstr "時間があったら、クラッシュレポートを提出していただけませんか？クラッシュした時にしていた事を、できるだけ正確に教えてください。"
 
-#, fuzzy
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
 "wrong-headedness $when. We apologize and suggest that you exit and restart "
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
-"アンラッキー! $longAppName は $when に、何か内部の混乱または頑迷の犠牲になりました。ごめんなさい。$shortAppName "
-"を終了して再起動することをお勧めします。そうすれば設定やチャンネル登録を失う可能性を下げることができます。"
+"不幸な事が起こりました。$longAppName が、$when "
+"に内部に何らかの混乱が発生したと判断、もしくは誤判断されて、その犠牲となってしまいました。私たちは謝意を表し、つつしんで $shortAppName "
+"を再起動することを提案いたします。そうすれば設定やチャンネル登録を失うことが避けられるかもしれません。"
 
 msgid "The fall of $shortAppName??"
 msgstr ""
@@ -427,7 +383,7 @@ msgstr "最小化"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Miro"
-msgstr "ミロ"
+msgstr "Miro"
 
 #, fuzzy
 msgid "Miro Help"
@@ -457,7 +413,7 @@ msgstr "開く"
 
 #, fuzzy
 msgid "Paste"
-msgstr "ペースト"
+msgstr "貼り付け"
 
 #: ../../platform/osx/frontend/Application.py:249
 msgid "Play Video"
@@ -472,7 +428,7 @@ msgid "Playlists"
 msgstr "プレイリスト"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "設定..."
 
 msgid "Previous Video"
 msgstr "前のビデオ"
@@ -482,21 +438,20 @@ msgid "Quit Miro"
 msgstr "Miro を終了"
 
 msgid "Remove..."
-msgstr "削除"
+msgstr "削除..."
 
 msgid "Rename..."
-msgstr "名称変更"
+msgstr "名前の変更..."
 
 #, fuzzy
 msgid "Report a bug"
 msgstr "バグを報告する"
 
 msgid "Save Video As..."
-msgstr "名前をつけて保存"
+msgstr "名前をつけて保存..."
 
-#, fuzzy
 msgid "Select All"
-msgstr "全てを選択"
+msgstr "全て選択"
 
 #, fuzzy
 msgid "Send This Channel to a Friend"
@@ -525,16 +480,16 @@ msgid "Zoom"
 msgstr "拡大"
 
 msgid "%channel feed%"
-msgstr ""
+msgstr "%channel feed%"
 
 msgid "%channel title%"
-msgstr ""
+msgstr "%channel title%"
 
 msgid "%donation label%"
-msgstr ""
+msgstr "%donation label%"
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
 msgstr "00:00:00"
@@ -558,8 +513,9 @@ msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
+"Location http://foo.bar.com/baz requires a username and password for \"text "
+"supplied by server\". (Do not localize -- test data)\n"
 
-#, fuzzy
 msgid "Password:\n"
 msgstr "パスワード:\n"
 
@@ -567,7 +523,6 @@ msgstr "パスワード:\n"
 msgid "Username and password required"
 msgstr "ユーザー名とパスワードを入力してください"
 
-#, fuzzy
 msgid ""
 "Username:\n"
 "\n"
@@ -576,27 +531,25 @@ msgstr ""
 "\n"
 
 msgid " limit upstream to"
-msgstr " アップストリーム制限"
+msgstr " アップストリーム制限:"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr "（この変更が反映されるには、Miroを再起動する必要がある）"
+msgstr "（この変更を反映するには、Miroを再起動する必要があります。）"
 
-#, fuzzy
 msgid "(You must restart Miro for this change to take effect)\n"
-msgstr "(再起動後に適用)\n"
+msgstr "（この変更を反映するには、Miroを再起動する必要があります。）\n"
 
 #, fuzzy
 msgid "(movies directory path goes here)"
-msgstr "(ムービーのディレクトリパスをここに)"
+msgstr "(ムービーのディレクトリパスはここです。)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "1 day"
 msgstr "1日"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
-#, fuzzy
 msgid "1 month"
-msgstr "1ヵ月"
+msgstr "1ヶ月"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid "10 days"
@@ -607,7 +560,7 @@ msgid "3 days"
 msgstr "3日"
 
 msgid "3 hours"
-msgstr "3時間"
+msgstr "3 時間"
 
 msgid "4"
 msgstr "4"
@@ -630,13 +583,12 @@ msgstr "追加..."
 msgid "BitTorrent ports:"
 msgstr "BitTorrentのポート:"
 
-#, fuzzy
 msgid "By default, videos expire after:"
-msgstr "ビデオのデフォルト有効期限:"
+msgstr "ビデオの標準の有効期限:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid "Change..."
-msgstr "変更"
+msgstr "変更..."
 
 msgid "Check channels for new content:"
 msgstr "新しいコンテンツをチェック:"
@@ -694,8 +646,9 @@ msgstr "ビデオの位置を記憶。"
 msgid "Remove"
 msgstr "削除"
 
+#, fuzzy
 msgid "Run Miro at startup"
-msgstr "起動する際に、Miroを起動する"
+msgstr "コンピューター起動時にMiroを起動する"
 
 #, fuzzy
 msgid "Save downloaded videos in this folder:"
@@ -813,6 +766,7 @@ msgid ""
 "best for you. Here's the first question."
 msgstr "次の数画面は、あなたが快適にMiroプレイヤーを楽しむためです。最初の質問は以下です。"
 
+#, fuzzy
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
 "starts up. This way, videos that haven't finished downloading can finish and "
@@ -821,6 +775,10 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
+"何時も新のビデオをダウンロードできるので、パソコンを点いてからMiroをスタートして勧めます。。\n"
+"\n"
+"\n"
+"パソコンを点いてからMiroをスタートしてよろしですか？"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:59
 #, fuzzy
@@ -847,10 +805,12 @@ msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
+"%message%\n"
+"%message%"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78
 msgid "Update Available"
-msgstr ""
+msgstr "アップデートできます"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
 #, python-format
@@ -909,7 +869,7 @@ msgstr "スペースキー"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:851
 msgid "Close to tray?"
-msgstr ""
+msgstr "トーレへ閉まりますか？"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:852
 msgid ""
@@ -1008,7 +968,7 @@ msgstr "ライブラリーに表示するディレクトリーを選択してく
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "完了"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1027,7 +987,7 @@ msgstr "このバージョンのQicktimeは、サポートされていません"
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
-msgstr ""
+msgstr "%s 動作するためには、最新のQuicktimeのバージョンは必要です。無料でダウンロードは可能です。"
 
 #: ../../platform/osx/frontend/UIStrings.py:22
 msgid "_Remove..."
@@ -1105,7 +1065,7 @@ msgstr "チャンネルフォルダの名前を変更(_N)"
 
 #: ../../platform/osx/frontend/UIStrings.py:40
 msgid "Re_name Miro Guide..."
-msgstr ""
+msgstr "Miroガイドの名前を変更"
 
 #: ../../platform/osx/frontend/UIStrings.py:41 ../../portable/menubar.py:184
 msgid "_Update Channel..."
@@ -1206,7 +1166,7 @@ msgstr "このアイテムのトレントファイルが削除されました "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "Miro外"
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -1222,7 +1182,7 @@ msgstr "ダウンロード中"
 
 #: ../../portable/guide.py:104 ../../portable/feed.py:789
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "コピーURL"
 
 #: ../../portable/guide.py:154
 msgid "Miro Guide"
@@ -1235,7 +1195,7 @@ msgstr "検索"
 
 #: ../../portable/downloader.py:215
 msgid "activity"
-msgstr ""
+msgstr "動き"
 
 #: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
 #: ../../portable/httpclient.py:142
@@ -1270,7 +1230,7 @@ msgstr "新しいプレイリストの名前:"
 
 #: ../../portable/feed.py:383
 msgid "never"
-msgstr ""
+msgstr "無期限"
 
 #: ../../portable/feed.py:385 ../../portable/item.py:542
 #, python-format
@@ -1280,7 +1240,7 @@ msgstr "%d時間"
 #: ../../portable/feed.py:387
 #, python-format
 msgid "%d day"
-msgstr ""
+msgstr "%d日"
 
 #: ../../portable/feed.py:389 ../../portable/item.py:540
 #, python-format
@@ -1290,15 +1250,16 @@ msgstr "%d日"
 #: ../../portable/feed.py:391
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d月間"
 
 #: ../../portable/feed.py:787
+#, fuzzy
 msgid "Update Channel Now"
-msgstr ""
+msgstr "チャンネルをアップデートする"
 
 #: ../../portable/feed.py:790 ../../portable/feed.py:799
 msgid "Rename Channel"
-msgstr ""
+msgstr "チャンネル名の変更"
 
 #: ../../portable/feed.py:794
 msgid "Revert Title to Default"
@@ -1324,7 +1285,7 @@ msgstr "フィードを保存したいですか？"
 
 #: ../../portable/feed.py:1004
 msgid "Bad content-type"
-msgstr ""
+msgstr "content-type　エラー"
 
 #: ../../portable/feed.py:1017
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
@@ -1345,28 +1306,30 @@ msgstr ""
 
 #: ../../portable/feed.py:2134
 msgid "Local Files"
-msgstr ""
+msgstr "ローカルファイル"
 
 #: ../../portable/feed.py:2148
+#, fuzzy
 msgid "Playing File"
-msgstr ""
+msgstr "ファイルを上げる"
 
 #: ../../portable/menu.py:69
 msgid "Update Channels Now"
-msgstr ""
+msgstr "チャネルをアップデートする"
 
 #: ../../portable/menu.py:94
-#, python-format
+#, fuzzy, python-format
 msgid "%d Downloaded Items"
-msgstr ""
+msgstr "%dダウンロードの件"
 
 #: ../../portable/menu.py:96 ../../portable/item.py:1475
 msgid "Play"
 msgstr "再生"
 
 #: ../../portable/menu.py:97 ../../portable/item.py:1478
+#, fuzzy
 msgid "Add to new playlist"
-msgstr ""
+msgstr "新プレリストに着ける"
 
 #: ../../portable/menu.py:99 ../../portable/item.py:1471
 msgid "Remove From Playlist"
@@ -1374,20 +1337,22 @@ msgstr "プレイリストから削除"
 
 #: ../../portable/menu.py:101 ../../portable/item.py:1473
 msgid "Remove From the Library"
-msgstr ""
+msgstr "ライブラリkara"
 
 #: ../../portable/menu.py:107 ../../portable/item.py:1482
+#, fuzzy
 msgid "Mark as Unwatched"
-msgstr ""
+msgstr "見たこと無い的する"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
+#, fuzzy
 msgid "Mark as Watched"
-msgstr ""
+msgstr "「見た」と銘打"
 
 #: ../../portable/menu.py:117
-#, python-format
+#, fuzzy, python-format
 msgid "%d Available Items"
-msgstr ""
+msgstr "%d 在り合わせ"
 
 #: ../../portable/menu.py:118 ../../portable/dialogs.py:85
 #: ../../portable/item.py:1491
@@ -1405,7 +1370,7 @@ msgstr "キャンセル"
 
 #: ../../portable/menu.py:127 ../../portable/item.py:1489
 msgid "Pause Download"
-msgstr ""
+msgstr "ダウンロードを一時停止"
 
 #: ../../portable/menu.py:130 ../../portable/item.py:1487
 msgid "Restart Upload"
@@ -1416,8 +1381,9 @@ msgid "Export OPML File"
 msgstr "OPMLファイルをエクスポートする"
 
 #: ../../portable/opml.py:123
+#, fuzzy
 msgid "Import OPML File"
-msgstr ""
+msgstr "OPMLファイルを使う"
 
 #: ../../portable/opml.py:125
 msgid "OPML Files"
@@ -1451,22 +1417,22 @@ msgstr[1] ""
 #: ../../portable/autoupdate.py:121
 #, python-format
 msgid "%s Version Alert"
-msgstr ""
+msgstr "%s バージョンアップできます！"
 
 #: ../../portable/autoupdate.py:122
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
-msgstr ""
+msgstr "新作%sがあります。ダウンロードをよろしいですか？"
 
 #: ../../portable/autoupdate.py:128
 #, python-format
 msgid "%s Version Check"
-msgstr ""
+msgstr "%sのバージョンを調べる"
 
 #: ../../portable/autoupdate.py:129
 #, python-format
 msgid "%s is up to date."
-msgstr ""
+msgstr "%sは最新です。"
 
 #: ../../portable/util.py:252 ../../portable/httpclient.py:126
 msgid "Internal Error"
@@ -1476,7 +1442,7 @@ msgstr "インターナルエラー"
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
-msgstr ""
+msgstr "Miroはエラーしまいました。直すためにレポートを出してください。"
 
 #: ../../portable/util.py:252
 msgid ""
@@ -1529,7 +1495,7 @@ msgid "%dB"
 msgstr "%dB"
 
 #: ../../portable/storedatabase.py:832 ../../portable/storedatabase.py:1231
-#, fuzzy
+#, fuzzy, python-format
 msgid "%s database save succeeded"
 msgstr "データベース %s の保存に成功しました"
 
@@ -1541,12 +1507,12 @@ msgid ""
 msgstr "データベースの保存に成功しました。終了してもデータは失われません。"
 
 #: ../../portable/storedatabase.py:840 ../../portable/storedatabase.py:1240
-#, fuzzy
+#, fuzzy, python-format
 msgid "%s database save failed"
 msgstr "データベース %s の保存に失敗しました"
 
 #: ../../portable/storedatabase.py:841 ../../portable/storedatabase.py:1241
-#, fuzzy
+#, fuzzy, python-format
 msgid ""
 "%s was unable to save its database: Disk Full.\n"
 "We suggest deleting files from the full disk or simply deleting some movies "
@@ -1585,40 +1551,41 @@ msgstr "ファイルの削除"
 
 #: ../../portable/dialogs.py:88
 msgid "Delete Files"
-msgstr ""
+msgstr "ファイルを削除"
 
 #: ../../portable/dialogs.py:89
 msgid "Keep Videos"
-msgstr ""
+msgstr "ビデオを持て"
 
 #: ../../portable/dialogs.py:90
 msgid "Delete Videos"
-msgstr ""
+msgstr "ビデオを削除"
 
 #: ../../portable/dialogs.py:92
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
+#, fuzzy
 msgid "Create Channel"
-msgstr ""
+msgstr "チャンネルをを作る"
 
 #: ../../portable/dialogs.py:93
 msgid "Add"
-msgstr ""
+msgstr "挿入"
 
 #: ../../portable/dialogs.py:94
 msgid "Add Into New Folder"
-msgstr ""
+msgstr "新フォルダに挿入"
 
 #: ../../portable/dialogs.py:95
 msgid "Keep"
-msgstr ""
+msgstr "保持"
 
 #: ../../portable/dialogs.py:97
 msgid "Not Now"
-msgstr ""
+msgstr "後で"
 
 #: ../../portable/dialogs.py:98
 msgid "Close to Tray"
-msgstr ""
+msgstr "トレイni"
 
 #: ../../portable/dialogs.py:99
 msgid "Launch Miro"
@@ -1644,7 +1611,7 @@ msgstr "ダウンロードするファイルは既に存在します"
 
 #: ../../portable/singleclick.py:88
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "このURLは外ダウンロードしてあります。"
 
 #: ../../portable/singleclick.py:94
 msgid "Miro will begin downloading it now."
@@ -1669,15 +1636,18 @@ msgid ""
 "\n"
 "URL: %s"
 msgstr ""
+"MiroはこのURLでファイルをダウンロードできません。\n"
+"\n"
+"URL: %s"
 
 #: ../../portable/singleclick.py:134
 msgid "File Download"
-msgstr ""
+msgstr "ダウンロード"
 
 #: ../../portable/singleclick.py:135
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
+msgstr "ファイル「%s」はオーディオかビデオかフィードじゃありません。"
 
 #: ../../portable/singleclick.py:225
 #, fuzzy
@@ -1685,21 +1655,21 @@ msgid "Subscribing to multiple channels"
 msgstr "複数のチャンネルを購読"
 
 #: ../../portable/singleclick.py:226
-#, fuzzy
+#, fuzzy, python-format
 msgid "Create %d channels?"
 msgstr "%d 本のチャンネルを作成?"
 
 #: ../../portable/singleclick.py:239
-#, fuzzy
+#, fuzzy, python-format
 msgid "Adding %d channels to a new folder"
 msgstr "新しいフォルダに %d 本のチャンネルを追加"
 
 #: ../../portable/singleclick.py:240 ../../portable/folder.py:226
 msgid "Enter a name for the new channel folder"
-msgstr ""
+msgstr "新名前を入力して下さい。"
 
 #: ../../portable/singleclick.py:243
-#, fuzzy
+#, fuzzy, python-format
 msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
 "will stay where they currently are."
@@ -1734,7 +1704,7 @@ msgid "Invalid Torrent"
 msgstr "不正な Torrent"
 
 #: ../../portable/singleclick.py:317
-#, fuzzy
+#, fuzzy, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
 msgstr "torrentファイル %s が壊れているようで開けません。[OK]"
 
@@ -1743,8 +1713,9 @@ msgid "_Open"
 msgstr ""
 
 #: ../../portable/menubar.py:145
+#, fuzzy
 msgid "_Download Video"
-msgstr ""
+msgstr "ビデオをダウンロード"
 
 #: ../../portable/menubar.py:147
 msgid "Check _Version"
@@ -1771,12 +1742,14 @@ msgid "Save Videos _As..."
 msgstr "別名で保存..."
 
 #: ../../portable/menubar.py:154
+#, fuzzy
 msgid "Copy Video _URL"
-msgstr ""
+msgstr "ビデオをコピーする"
 
 #: ../../portable/menubar.py:156
+#, fuzzy
 msgid "_Options..."
-msgstr ""
+msgstr "オプショーン"
 
 #: ../../portable/menubar.py:157
 msgid "_Quit"
@@ -3024,7 +2997,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
 msgid "$shortAppName First Time Setup"
-msgstr "$shortAppName の初めてのセットアップ"
+msgstr "$shortAppName の最初のセットアップ"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
@@ -3074,7 +3047,7 @@ msgstr "検索をリセット"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "自分の個人ファイルのみに制限する。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
 msgid "Search custom folder:"
@@ -3085,11 +3058,12 @@ msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"$shortAppNameのチャンネルガイドは数百のフリーのインターネットテレビチャンネルに対応しています。\n"
+"「追加」をクリックしてチャンネルを視聴してください。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
-#, fuzzy
 msgid "The button to the right of the play button shows videos fullscreen."
-msgstr "再生ボタンの右側のボタンでフルスクリーン表示が可能です。"
+msgstr "再生ボタンの右にあるボタンでフルスクリーン表示に変更します。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30
 #, fuzzy
@@ -3099,28 +3073,26 @@ msgid ""
 msgstr "これから幾つかの画面で $longAppName をセットアップし、自分にぴったりに動くようにします。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
-#, fuzzy
 msgid ""
 "We recommend that you have $longAppName launch when your computer starts up. "
 " This way, videos in progress can finish downloading and new videos can be "
 "downloaded in the background, ready when you want to watch."
 msgstr ""
 "コンピュータの起動時に $longAppName "
-"も起動することをお勧めします。ダウンロード途中のビデオを完了し、新しいビデオはバックグラウンドでダウンロードし、見たい時に見られるようにする為です。"
+"を起動することをお勧めします。起動することによって、ダウンロード途中のビデオのダウンロードを終わらせたり、新しいビデオをバックグラウンドでダウンロードした"
+"りでき、見たい時に見られるようになります。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
 msgid "Would you like $longAppName to look for video files on your computer?"
 msgstr "$longAppName にコンピュータ内のビデオを検索させますか?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
-#, fuzzy
 msgid "Would you like to run $shortAppName on startup?"
-msgstr "スタートアップ時に $shortAppName を起動?"
+msgstr "コンピューター起動時に $shortAppName を起動しますか?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
-#, fuzzy
 msgid "You're done!"
-msgstr "やったね!"
+msgstr "完了"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
 #, fuzzy

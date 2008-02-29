@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-21 09:04+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2008-02-02 10:37+0000\n"
+"Last-Translator: carson <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -75,7 +75,7 @@ msgid "Add Channel..."
 msgstr "Tilføj kanal"
 
 msgid "Add Guide..."
-msgstr "Tilføj guide"
+msgstr "Tilføj Guide..."
 
 msgid "Bring All to Front"
 msgstr "Anbring alle forrest"
@@ -92,16 +92,16 @@ msgid "Clear Menu"
 msgstr "Ryd menu"
 
 msgid "Close Window"
-msgstr "Luk Vindue"
+msgstr "Luk vindue"
 
 msgid "Copy"
 msgstr "Kopier"
 
 msgid "Copy Channel URL"
-msgstr "Kopiér kanal URL"
+msgstr "Kopier kanal URL"
 
 msgid "Copy Video URL"
-msgstr "Kopiér video URL"
+msgstr "Kopier video URL"
 
 msgid "Cut"
 msgstr "Klip"
@@ -193,7 +193,7 @@ msgid "Playlists"
 msgstr "Spillelister"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Indstillinger..."
 
 msgid "Previous Video"
 msgstr "Foregående Video"
@@ -716,7 +716,7 @@ msgstr "Vælg en mappe til visning i Biblioteket."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Afslut"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -912,7 +912,7 @@ msgstr "Torrent filen for dette emne er slettet "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "udenfor Miro"
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -1091,7 +1091,7 @@ msgstr "Markér som uset"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Marker som set"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -1134,29 +1134,30 @@ msgstr "OPML filer"
 
 #: ../../portable/opml.py:145
 msgid "OPML Import failed"
-msgstr ""
+msgstr "Impotering af OPML fejlede"
 
 #: ../../portable/opml.py:146
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
 msgstr ""
+"Den valgte OPML fil ser ikke ud til at fungere. Indlæsning blev afbrudt."
 
 #: ../../portable/opml.py:151
 msgid "OPML Import summary"
-msgstr ""
+msgstr "OPML importoversigt"
 
 #: ../../portable/opml.py:152
 #, python-format
 msgid "Successfully imported %d feed."
 msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Indlæsning af %d feed gennemført"
+msgstr[1] "Indlæsning af %d feeds gennemført"
 
 #: ../../portable/opml.py:155
 #, python-format
 msgid "Skipped %d feed already present."
 msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Udelod %d allerede eksisterende feed"
+msgstr[1] "Udelod %d allerede eksisterende feeds"
 
 #: ../../portable/autoupdate.py:121
 #, python-format
@@ -1353,11 +1354,11 @@ msgstr "En søge kanal indeholder emner, der matcher søgeord."
 
 #: ../../portable/singleclick.py:87
 msgid "Download already exists"
-msgstr ""
+msgstr "Download findes allerede"
 
 #: ../../portable/singleclick.py:88
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "Den URL er allerede et eksternt download"
 
 #: ../../portable/singleclick.py:94
 msgid "Miro will begin downloading it now."
@@ -1382,6 +1383,8 @@ msgid ""
 "\n"
 "URL: %s"
 msgstr ""
+"Miro er ikke i stand til at downloade en fil på følgende URL:\n"
+"URL: %s"
 
 #: ../../portable/singleclick.py:134
 msgid "File Download"
@@ -1390,7 +1393,7 @@ msgstr "Fil download"
 #: ../../portable/singleclick.py:135
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
+msgstr "Filen på %s lader hverken til at være et lyd-, video- eller RSS-feed"
 
 #: ../../portable/singleclick.py:225
 msgid "Subscribing to multiple channels"
@@ -1489,7 +1492,7 @@ msgstr "Kopiér video _URL"
 
 #: ../../portable/menubar.py:156
 msgid "_Options..."
-msgstr ""
+msgstr "Indstillinger"
 
 #: ../../portable/menubar.py:157
 msgid "_Quit"
@@ -1692,6 +1695,7 @@ msgstr ""
 msgid ""
 "Would you like to delete this file or just remove its entry from the Library?"
 msgstr ""
+"Vil du slette denne fil, eller blot fjerne den fra visningen af Biblioteket?"
 
 #: ../../portable/item.py:514
 msgid ""
@@ -1801,7 +1805,7 @@ msgstr "Torrent detaljer"
 
 #: ../../portable/item.py:1042
 msgid "Torrent Details <i>stopped</i>"
-msgstr ""
+msgstr "Torrent detaljer <i>stoppet</i>"
 
 #: ../../portable/item.py:1046
 msgid "Download Details"
@@ -1960,20 +1964,20 @@ msgstr "\"%s\" er ikke en gyldig URL"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Filen: \"%s\" eksisterer ikke"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Fejl ved læsning"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Fejl ved læsning fra \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Ukendt fejlkode"
 
 #: ../../portable/httpclient.py:373
 msgid "Connection closed"
@@ -2001,7 +2005,7 @@ msgstr ""
 
 #: ../../portable/app.py:700
 msgid "Video Directory Missing"
-msgstr ""
+msgstr "Videomappe mangler"
 
 #: ../../portable/app.py:701
 msgid ""
@@ -2013,6 +2017,14 @@ msgid ""
 "drive (this will cause you to lose some details about the videos on the "
 "external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
+"\n"
+"Miro kan ikke finde dit primære videomappe. Det kan skyldes at det findes på "
+"et eksternt drev, som pt ikke er tilsluttet.\n"
+"\n"
+"Hvis du fortsætter, så vil videomappen blive ændret til et sted på dette "
+"drev (det vil betyde at du kan miste nogle informationer om videoerne på det "
+"eksterne drev). Du kan også forlade Miro, tilslutte drevet og genstrate "
+"programmet."
 
 #: ../../portable/app.py:1038 ../../portable/app.py:1052
 #: ../../portable/app.py:1096 ../../portable/app.py:1122
@@ -2111,13 +2123,15 @@ msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
+"Miro uploader stadig din crash report. Hvis du går ud nu, vil uploadingen "
+"blive annulleret. Luk Miro alligevel?"
 
 #: ../../portable/app.py:1203
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Der er stadig %d download igang. Luk Miro alligevel?"
+msgstr[1] "Der er stadig %d downloads igang. Luk Miro alligevel?"
 
 #: ../../portable/app.py:1712
 msgid "Invalid Value"
@@ -2130,12 +2144,12 @@ msgstr "%s er ugyldig - du skal indtaste en ikke negativ værdi."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Kan ikke finde filen"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Filen \"%s\" er blevet slettet udenfor Miro."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -2169,15 +2183,15 @@ msgstr "Indtast URL´en på den Miro guide, der skal tilføjes"
 
 #: ../../portable/app.py:2063
 msgid "$shortAppName - Download Video"
-msgstr ""
+msgstr "$shortAppName - Download video"
 
 #: ../../portable/app.py:2063
 msgid "Enter the URL of the video to download"
-msgstr ""
+msgstr "Indtast URL til den video du vil downloade"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Begynderkanaler"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -2194,13 +2208,15 @@ msgstr "Du bruger en version af $longAppName med et specielt kanal sæt"
 
 #: ../../portable/app.py:2478
 msgid "Error Changing Movies Directory"
-msgstr ""
+msgstr "Fejl ved ændring af film-mappen"
 
 #: ../../portable/app.py:2479
 msgid ""
 "You don't have permission to write to the directory you selected.  Miro will "
 "continue to use the old videos directory."
 msgstr ""
+"Du har ikke tilladelser til at skrive i den mappe du har valgt. Miro vil "
+"fortsætte med at bruge den gamle video-mappe"
 
 #: ../../portable/app.py:2508
 msgid "Error Saving Video"
@@ -2212,6 +2228,8 @@ msgid ""
 "An error occured while trying to save %s.  Please check that the file has "
 "not been deleted and try again."
 msgstr ""
+"Der opstod en fejl mens %s blev forsøgt gemt. Check venligst at filen ikke "
+"er blevet slettet og prøv igen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "(Changes won't go into effect until you restart Miro)"
@@ -2300,7 +2318,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
 msgid "By default, videos _expire after"
-msgstr ""
+msgstr "Som standard, _udløber film efter"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
@@ -2308,7 +2326,7 @@ msgstr "K_annal:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 msgid "C_hannels"
-msgstr ""
+msgstr "Ka_naler"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "C_reate Channel"
@@ -2316,19 +2334,19 @@ msgstr "O_pret kanal"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Check Channels for _new content"
-msgstr ""
+msgstr "Tjek kanaler for _nyt indhold"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "Disk _Space"
-msgstr ""
+msgstr "Disk _plads"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "Don't start a download _if it leaves less than"
-msgstr ""
+msgstr "Start ikke en download hv_is den efterlader mindre end"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Download at _most"
-msgstr ""
+msgstr "Download _højst"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid ""
@@ -2342,7 +2360,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid "G_B free"
-msgstr ""
+msgstr "G_B frie"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 msgid "Go"
@@ -2363,7 +2381,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Play _videos one after another"
-msgstr ""
+msgstr "Afspil _videoerne efter hinanden"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Preferences"
@@ -2375,11 +2393,11 @@ msgstr "Begræns til min _Hjemme mappe"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "S_top after each video"
-msgstr ""
+msgstr "S_top efter hver video"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "S_tore downloaded videos in this folder:"
-msgstr ""
+msgstr "G_em downloadede videoer i denne mappe:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
@@ -2407,7 +2425,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "To a_void slowdowns, limit upstream to"
-msgstr ""
+msgstr "For at _undgå langsom afvikling, begræns upstreams til"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Volume:"
@@ -2449,35 +2467,35 @@ msgstr "_Tilføj Mappe"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "_Automatically run Miro when I log in"
-msgstr ""
+msgstr "_Automatisk kørsel af Miro, når jeg logger på"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "_Bit Torrent uses ports between"
-msgstr ""
+msgstr "_Bit Torrent bruger porte mellem"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "_Downloads"
-msgstr ""
+msgstr "_Downloads"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid "_Folders"
-msgstr ""
+msgstr "_Mapper"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "_General"
-msgstr ""
+msgstr "_Generelt"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "_KB/s when my computer is active"
-msgstr ""
+msgstr "_KB/s når min computer er aktiv"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "_Playback"
-msgstr ""
+msgstr "_Afspil"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "_Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgstr "_Genoptag afspilning af videoen fra det sted de blev stoppet"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
@@ -2493,16 +2511,16 @@ msgstr "_Adresse"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "_Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "_Advar mig hvis jeg forsøger at forlade Miro når downloads pågår"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
-msgstr ""
+msgstr "_Kig efter nye videoer i disse mapper og inkludér dem i biblioteket"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "_and"
-msgstr ""
+msgstr "_og"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "videos at once"
@@ -2631,11 +2649,11 @@ msgstr "Tilføj Mappe..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Automatically run $longAppName when I login."
-msgstr ""
+msgstr "Start automatisk $longAppName når jeg logger ind."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "By default, videos expire after"
@@ -2643,7 +2661,7 @@ msgstr "Som standard udløber videoer efter"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Check channels for new content"
-msgstr ""
+msgstr "Tjek kanaler for nyt indhold"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Close to tray so that downloads can continue."
@@ -2659,7 +2677,7 @@ msgstr "Hver time"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Folder"
-msgstr ""
+msgstr "Mappe"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
@@ -2671,11 +2689,11 @@ msgstr "Valgmuligheder"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "Afspil en video og stop."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Forlad Miro helt."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid ""
@@ -2695,10 +2713,12 @@ msgstr "Gem hentede videoer idenne mappe:"
 msgid ""
 "To avoid slowdowns, limit upstream bandwith when my computer is active."
 msgstr ""
+"For at undgå langsom forbindelse, begræns upload hastigheden når min "
+"computer er aktiv."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "Upstream limit (KB/s)"
-msgstr ""
+msgstr "Grænse på upload hastighed (KB/s)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
@@ -2710,9 +2730,8 @@ msgid ""
 msgstr "ADVARSEL: Denne ændring kræver at genstarter $longAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
-#, fuzzy
 msgid "Warn me when I attempt to quit with downloads in progress."
-msgstr "Advar mig hvis jeg forsøger at afslutte mens en download er igang"
+msgstr "Advar mig hvis jeg forsøger at afslutte, mens en download er igang."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
@@ -2825,6 +2844,8 @@ msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"$shortAppName kanal guiden har hundredvis af internet TV kanaler; allesammen "
+"er gratis. Bare klik 'TILFØJ' to at se en kanal."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."

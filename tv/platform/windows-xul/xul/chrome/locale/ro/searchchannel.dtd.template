@@ -1,8 +1,8 @@
 <!ENTITY searchchannel.description	"A search channel contains items that match a search term.">
 <!ENTITY searchchannel.termlabel 	"Caută:">
-<!ENTITY searchchannel.title            "New Search Channel">
+<!ENTITY searchchannel.title            "Căutare nouă de canale">
 <!ENTITY searchchannel.inthis "In This:">
 <!ENTITY searchchannel.channel "Canal:">
 <!ENTITY searchchannel.searchengine "Motor de căutare:">
 <!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Create Channel">
+<!ENTITY searchchannel.createchannel "Creează Canal">

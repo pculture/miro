@@ -23,7 +23,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Vai alla Grande:">
 <!ENTITY startup.done5.text		"Sul bottone alla destra del bottoni &quot;Riproduci&quot; mostra tutti i video a tutto schermo.">
 <!ENTITY startup.done6.heading		"Trova i Video">
-<!ENTITY startup.done6.text		"La Guida del Canale $shortAppName  ha centinaia di canali TV internet; sono tutti liberi. Basta cliccare &quot;ADD&quot; per guardare un canale.">
+<!ENTITY startup.done6.text		"La Guida del Canale $shortAppName  ha centinaia di canali TV internet; sono tutti liberi. Basta cliccare su &quot;ADD&quot; per guardare un canale.">
 <!ENTITY startup.answer.yes		"Sì">
 <!ENTITY startup.answer.no		"No">
 <!ENTITY startup.title			"Configurazione iniziale di $shortAppName">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Vai alla Grande:">
 <!ENTITY startup.done5.text		"Sul bottone alla destra del bottoni &quot;Riproduci&quot; mostra tutti i video a tutto schermo.">
 <!ENTITY startup.done6.heading		"Trova i Video">
-<!ENTITY startup.done6.text		"La Guida del Canale $shortAppName  ha centinaia di canali TV internet; sono tutti liberi. Basta cliccare &quot;ADD&quot; per guardare un canale.">
+<!ENTITY startup.done6.text		"La Guida del Canale $shortAppName  ha centinaia di canali TV internet; sono tutti liberi. Basta cliccare su &quot;ADD&quot; per guardare un canale.">
 <!ENTITY startup.answer.yes		"Sì">
 <!ENTITY startup.answer.no		"No">

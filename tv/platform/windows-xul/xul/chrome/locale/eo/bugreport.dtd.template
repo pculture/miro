@@ -1,4 +1,4 @@
-<!ENTITY bugreport.title     "You found a bug in $longAppName!">
+<!ENTITY bugreport.title     "Vi trovis cimon en $longAppName!">
 <!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
 information into our bug tracker and tell us what you were doing when the
 problem occurred.">

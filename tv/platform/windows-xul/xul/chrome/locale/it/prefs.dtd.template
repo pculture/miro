@@ -1,5 +1,4 @@
 <!ENTITY prefs.title "Opzioni">
-<!ENTITY prefs.restart "(ATTENZIONE: le modifiche non avranno effetto finchè $longAppName non sarà riavviato)">
 
 <!ENTITY prefs.run.on.startup "Avvia automaticamente $longAppName quando eseguo il login.">
 <!ENTITY prefs.close_to_tray_start "Quando seleziono il bottone rosso di chiusura:">
@@ -14,6 +13,11 @@
 <!ENTITY prefs.channels.check.thirty "Ogni 30 minuti">
 <!ENTITY prefs.channels.check.sixty "Ogni ora">
 <!ENTITY prefs.channels.check.manually "Manualmente">
+
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Nuovo">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
 
 <!ENTITY prefs.playback "Riproduzione">
 <!ENTITY prefs.playback.remember.pos "Ricordati a che punto ho smesso di guardare un video e continua la riproduzione da quel punto.">
@@ -30,13 +34,13 @@
 <!ENTITY prefs.folder.others.add "Aggiungi Cartella...">
 <!ENTITY prefs.folder.others.remove "_Rimuovi">
 
-<!ENTITY prefs.downloads.max "File Scaricati">
-<!ENTITY prefs.downloads.max.part1 "Scarica non più di">
-<!ENTITY prefs.downloads.max.part2 "video ad esecuzione">
+<!ENTITY prefs.downloads "File Scaricati" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Spazio su disco">
-<!ENTITY prefs.disk.space.min.part1 "Non avviare lo scaricamento se lascia meno di">
-<!ENTITY prefs.disk.space.min.part2 "GB liberi.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ATTENZIONE: questa impostazione sarà attiva al prossimo riavvio di $longAppName.">
 
 <!ENTITY prefs.videos.expire "Di norma, i video scadono dopo">
@@ -49,7 +53,10 @@
 
 <!ENTITY prefs.torrent "BItTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ATTENZIONE: le modifiche non avranno effetto finchè $longAppName non sarà riavviato)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Per evitare rallentamenti, limita la banda in uscita quando il mio computer è attivo.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Limite di banda in uscita (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Usa porte BitTorrent tra">
-<!ENTITY prefs.torrent.uses.ports.part2 "e">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

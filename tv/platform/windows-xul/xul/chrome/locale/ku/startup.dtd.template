@@ -9,7 +9,7 @@
 <!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"Searching for Videos">
+<!ENTITY startup.search.searching	"Li Vîdeoyan tê gerandin">
 <!ENTITY startup.change	                "Change">
 <!ENTITY startup.cancel	                "Cancel Search">
 <!ENTITY startup.undo	                "Reset Search">
@@ -34,7 +34,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"Searching for Videos">
+<!ENTITY startup.search.searching	"Li Vîdeoyan tê gerandin">
 <!ENTITY startup.change	                "Change">
 <!ENTITY startup.cancel	                "Cancel Search">
 <!ENTITY startup.undo	                "Reset Search">

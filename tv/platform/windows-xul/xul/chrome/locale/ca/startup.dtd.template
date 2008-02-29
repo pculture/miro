@@ -1,53 +1,53 @@
 <!ENTITY nbsp				" ">
 <!ENTITY rsaquo				"'">
 
-<!ENTITY startup.title			"$shortAppName First Time Setup">
+<!ENTITY startup.title			"$shortAppName Configuració inicial">
 <!ENTITY startup.description		"Les següents pantalles us ajudaran a configurar $longAppName de la forma més adient.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
+<!ENTITY startup.autostart.description	"Us recomanem que s'executi $longAppName en iniciar el vostre sistema. D'aquesta manera, els vídeos pendents podran finalitzar la descàrrega correctament, els que estan en espera llavors passaran a descarregar-se, i així romandran disponibles per quan vulgueu veure'ls.">
 <!ENTITY startup.autostart.question	"Voleu que $longAppName s'executi automàticament en iniciar el sistema?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
+<!ENTITY startup.search.description	"Per ajudar-vos a organitzar els vostres vídeos, $longAppName pot cercar tots els que teniu al vostre ordinador,">
 <!ENTITY startup.search.question        "Voleu que $longAppName cerqui els arxius de vídeo del vostre ordinador?">
 <!ENTITY startup.search.restrict	"Restringeix a tots els meus arxius personals.">
-<!ENTITY startup.search.custom          "Cercar la carpeta personal:">
+<!ENTITY startup.search.custom          "Cerca la carpeta personal:">
 <!ENTITY startup.search.searching	"Cercant videos">
 <!ENTITY startup.change	                "Canvia">
 <!ENTITY startup.cancel	                "Cancel·la la cerca">
 <!ENTITY startup.undo	                "Inicialitza la recerca">
-<!ENTITY startup.done1			"Heu finalitzat!">
+<!ENTITY startup.done1			"Llestos!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Deixeu-lo estar">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
+<!ENTITY startup.done3.heading		"Deixa'l estar">
+<!ENTITY startup.done3.text		"$longAppName regularment comprova, en segon pla, si els canals disposen de vídeos nous per descarregar. Deixar-lo funcionant significa que tindreu a punt els vostres vídeos quan voleu veure'ls.">
 <!ENTITY startup.done4.heading		"No us amoïneu per l'espai al disc:">
-<!ENTITY startup.done4.text		"Com TiVo, $longAppName te la característica de caducitat dels vídeos per tal d'esborrar els vídeos antics i deixar espai pels nous. Sempre podeu, però, conservar un vídeo prement &quot;desa&quot; i especificant el nombre de canals que voleu desar automàticament">
-<!ENTITY startup.done5.heading		"És gran:">
+<!ENTITY startup.done4.text		"Al igual que el TiVo, $longAppName té la característica d'afegir data de caducitat als vídeos per tal d'eliminar els més antics i deixar espai pels nous. Sempre podeu, però, conservar un vídeo prement &quot;Conserva&quot; i també podeu configurar els canals que no voleu que caduquin.">
+<!ENTITY startup.done5.heading		"Més gran:">
 <!ENTITY startup.done5.text		"El botó situat a la dreta del botó de reproducció mostra els vídeos a pantalla completa.">
 <!ENTITY startup.done6.heading		"Troba Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"El Canal Guia $shortAppName té un munt de canals de televisió per Internet, tots ells de franc. Només cal prémer 'Afegeix' per poder veure'ls.">
 <!ENTITY startup.answer.yes		"Sí">
 <!ENTITY startup.answer.no		"No">
-<!ENTITY startup.title			"$shortAppName First Time Setup">
+<!ENTITY startup.title			"$shortAppName Configuració inicial">
 <!ENTITY startup.description		"Les següents pantalles us ajudaran a configurar $longAppName de la forma més adient.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
+<!ENTITY startup.autostart.description	"Us recomanem que s'executi $longAppName en iniciar el vostre sistema. D'aquesta manera, els vídeos pendents podran finalitzar la descàrrega correctament, els que estan en espera llavors passaran a descarregar-se, i així romandran disponibles per quan vulgueu veure'ls.">
 <!ENTITY startup.autostart.question	"Voleu que $longAppName s'executi automàticament en iniciar el sistema?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
+<!ENTITY startup.search.description	"Per ajudar-vos a organitzar els vostres vídeos, $longAppName pot cercar tots els que teniu al vostre ordinador,">
 <!ENTITY startup.search.question        "Voleu que $longAppName cerqui els arxius de vídeo del vostre ordinador?">
 <!ENTITY startup.search.restrict	"Restringeix a tots els meus arxius personals.">
-<!ENTITY startup.search.custom          "Cercar la carpeta personal:">
+<!ENTITY startup.search.custom          "Cerca la carpeta personal:">
 <!ENTITY startup.search.searching	"Cercant videos">
 <!ENTITY startup.change	                "Canvia">
 <!ENTITY startup.cancel	                "Cancel·la la cerca">
 <!ENTITY startup.undo	                "Inicialitza la recerca">
-<!ENTITY startup.done1			"Heu finalitzat!">
+<!ENTITY startup.done1			"Llestos!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Deixeu-lo estar">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
+<!ENTITY startup.done3.heading		"Deixa'l estar">
+<!ENTITY startup.done3.text		"$longAppName regularment comprova, en segon pla, si els canals disposen de vídeos nous per descarregar. Deixar-lo funcionant significa que tindreu a punt els vostres vídeos quan voleu veure'ls.">
 <!ENTITY startup.done4.heading		"No us amoïneu per l'espai al disc:">
-<!ENTITY startup.done4.text		"Com TiVo, $longAppName te la característica de caducitat dels vídeos per tal d'esborrar els vídeos antics i deixar espai pels nous. Sempre podeu, però, conservar un vídeo prement &quot;desa&quot; i especificant el nombre de canals que voleu desar automàticament">
-<!ENTITY startup.done5.heading		"És gran:">
+<!ENTITY startup.done4.text		"Al igual que el TiVo, $longAppName té la característica d'afegir data de caducitat als vídeos per tal d'eliminar els més antics i deixar espai pels nous. Sempre podeu, però, conservar un vídeo prement &quot;Conserva&quot; i també podeu configurar els canals que no voleu que caduquin.">
+<!ENTITY startup.done5.heading		"Més gran:">
 <!ENTITY startup.done5.text		"El botó situat a la dreta del botó de reproducció mostra els vídeos a pantalla completa.">
 <!ENTITY startup.done6.heading		"Troba Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"El Canal Guia $shortAppName té un munt de canals de televisió per Internet, tots ells de franc. Només cal prémer 'Afegeix' per poder veure'ls.">
 <!ENTITY startup.answer.yes		"Sí">
 <!ENTITY startup.answer.no		"No">

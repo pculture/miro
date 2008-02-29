@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-24 20:37+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2008-01-12 02:53+0000\n"
+"Last-Translator: mnc <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -158,10 +158,10 @@ msgid "Miro Help"
 msgstr "Miro Yardımı"
 
 msgid "New Channel Folder..."
-msgstr "Yeni Kanal Dizini..."
+msgstr "Yeni Kanal Klasörü"
 
 msgid "New Playlist Folder..."
-msgstr "Yeni Çalma Listesi Dizini..."
+msgstr "Yeni Çalma Listesi Klasörü"
 
 msgid "New Playlist..."
 msgstr "Yeni Çalma Listesi..."
@@ -183,7 +183,7 @@ msgstr "Yapıştır"
 
 #: ../../platform/osx/frontend/Application.py:249
 msgid "Play Video"
-msgstr "Vİdeo Oynat"
+msgstr "Video Oynat"
 
 #: ../../platform/osx/frontend/Preferences.py:69
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
@@ -194,7 +194,7 @@ msgid "Playlists"
 msgstr "Oynatma Listeleri"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Tercihler..."
 
 msgid "Previous Video"
 msgstr "Önceki Video"
@@ -724,7 +724,7 @@ msgstr "Kütüphanede izlemek için bir dizin seçin."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Bitti"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -920,7 +920,7 @@ msgstr "Bu öge için olan torrent dosyası silindi "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "Miro dışından"
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -1099,7 +1099,7 @@ msgstr "İzlenmedi Olarak İşaretle"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "İzlendi Olarak İşaretle"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -1702,10 +1702,9 @@ msgstr ""
 "kayıtlarını temizlemek mi istiyorsunuz?"
 
 #: ../../portable/item.py:494
-#, fuzzy
 msgid ""
 "Would you like to delete this file or just remove its entry from the Library?"
-msgstr "Dosyayı diskten mi yoksa kütüphaneden mi sileyim"
+msgstr "Dosyayı diskten mi yoksa Kütüphaneden mi silmek istersiniz ?"
 
 #: ../../portable/item.py:514
 msgid ""
@@ -1977,16 +1976,16 @@ msgstr "\"%s\" geçerli bir URL değil"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "\"%s\" Dosyası Bulunamadı"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Okuma hatası"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "\"%s\" ' den Okurken Hata Oluştu"
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -2157,12 +2156,12 @@ msgstr "%s geçersiz. Negatif olmayan bir rakam girmelisiniz."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Tanımlanan dosyada hata"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "%s dosyası Miro dışından silindi."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -2204,7 +2203,7 @@ msgstr "İndirilecek videonun adresini girin"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Yeni Başlayanlar İçin Kanallar"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -2338,7 +2337,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
 msgid "By default, videos _expire after"
-msgstr ""
+msgstr "Varsayılan, videos_after sonrası"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
@@ -2362,11 +2361,11 @@ msgstr "_Boş disk alanı"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "Don't start a download _if it leaves less than"
-msgstr ""
+msgstr "İndirme işlemine bu miktardan az ise başlama"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Download at _most"
-msgstr ""
+msgstr "İndir at_most"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid ""
@@ -2380,7 +2379,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid "G_B free"
-msgstr ""
+msgstr "G_B içermiyor"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 msgid "Go"
@@ -2445,7 +2444,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "To a_void slowdowns, limit upstream to"
-msgstr ""
+msgstr "Yavaşlamalara karşılık hızı a_void düşür"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Volume:"
@@ -2492,7 +2491,7 @@ msgstr "_Oturum açtığımda Miro'yu çalıştır"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "_Bit Torrent uses ports between"
-msgstr ""
+msgstr "_Bit Torrentin kullandığı port aralığı"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "_Downloads"
@@ -2508,7 +2507,7 @@ msgstr "_Genel"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "_KB/s when my computer is active"
-msgstr ""
+msgstr "KB/s bilgisayarım aktif olduğu zaman"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "_Playback"
@@ -2537,7 +2536,7 @@ msgstr "_Dosya indirme işlemi sürerken çıkmaya çalışırsam, beni uyar"
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
-msgstr ""
+msgstr "Kütüphanem de dahil, yeni videoları kontrol et."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "_and"
@@ -2717,12 +2716,10 @@ msgid "Quit Miro completely."
 msgstr "Mirodan tamamen çık"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
-#, fuzzy
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
-msgstr ""
-"Video oynatırken durdurduğum yeri hatırla ve oynatmaya oradan devam et"
+msgstr "Videolarda kaldığım yeri hatırla, oradan devam et."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Show as a Channel"
@@ -2736,14 +2733,16 @@ msgstr "İndirilmiş videoları bu dizinde sakla:"
 msgid ""
 "To avoid slowdowns, limit upstream bandwith when my computer is active."
 msgstr ""
+"Yavaşlamaların önüne geçmek için yükleme hızını bilgisayarım aktif olduğunda "
+"limitle."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "Upstream limit (KB/s)"
-msgstr ""
+msgstr "Geriakış limiti (KB/s)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
-msgstr ""
+msgstr "BitTorrent için kullanılacak port aralığı"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid ""
@@ -2754,11 +2753,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
 msgid "Warn me when I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "İndirme sırasında çıkmayı denersem beni uyar."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
-msgstr ""
+msgstr "Kütüphanem dahil yeni görüntüleri ara."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "When I click the red close button:"
@@ -2869,6 +2868,8 @@ msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"$shortAppName Kanal İçeriği yüzlerce internet TV kanalını barındırıyor, "
+"hepsi de ücretsiz. Sadece EKLE tuşuna basıp izleyin."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."

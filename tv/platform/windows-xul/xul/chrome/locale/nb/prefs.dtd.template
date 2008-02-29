@@ -1,5 +1,4 @@
 <!ENTITY prefs.title "Alternativer">
-<!ENTITY prefs.restart "(ADVARSEL: Endringer tas ikke i bruk før $longAppName startes på nytt.)">
 
 <!ENTITY prefs.run.on.startup "Kjør $longAppName automatisk ved innlogging.">
 <!ENTITY prefs.close_to_tray_start "Når jeg trykker lukk-knappen">
@@ -15,6 +14,11 @@
 <!ENTITY prefs.channels.check.sixty "Hver time">
 <!ENTITY prefs.channels.check.manually "Manuelt">
 
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Nye">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+
 <!ENTITY prefs.playback "Avspilling">
 <!ENTITY prefs.playback.remember.pos "Husk hvor jeg sluttet å se en video og fortsett avspilling fra det stedet.">
 <!ENTITY prefs.playback.auto.next.video "Spill av filmer én etter én">
@@ -24,19 +28,19 @@
 <!ENTITY prefs.folder.downloads "Lagre nedlastede filmer i denne mappen:">
 <!ENTITY prefs.folder.change "Endre …">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
+<!ENTITY prefs.folder.others.caption "Se etter nye filmer i disse katalogene, og legg dem til i biblioteket.">
 <!ENTITY prefs.folder.others.location "Mappe">
 <!ENTITY prefs.folder.others.shown "Vis som kanal">
 <!ENTITY prefs.folder.others.add "Legg til mappe …">
 <!ENTITY prefs.folder.others.remove "Fjern">
 
-<!ENTITY prefs.downloads.max "Nedlastinger">
-<!ENTITY prefs.downloads.max.part1 "Last ned høyst">
-<!ENTITY prefs.downloads.max.part2 "filmer på én gang.">
+<!ENTITY prefs.downloads "Nedlastinger" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Ledig diskplass">
-<!ENTITY prefs.disk.space.min.part1 "Ikke begynn nedlasting hvis det etterlater mindre enn">
-<!ENTITY prefs.disk.space.min.part2 "GB ledig.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ADVARSEL: Denne innstillingen tas ikke i bruk før $longAppName startes på nytt.">
 
 <!ENTITY prefs.videos.expire "Som standard utløper filmer etter">
@@ -49,7 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ADVARSEL: Endringer tas ikke i bruk før $longAppName startes på nytt.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "For å forhindre nedsatt ytelse, begrens utgående båndbredde når min datamaskin er aktiv.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Utgående båndbreddegrense (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Bruk BitTorrent-porter mellom">
-<!ENTITY prefs.torrent.uses.ports.part2 "og">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

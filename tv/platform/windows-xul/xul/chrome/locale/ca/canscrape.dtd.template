@@ -1,13 +1,13 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
-<!ENTITY canscrape.body      "Trieu el millor mètode de gravar els arxius. Això pot trigar temps extra, però les descripcions poden ser molt divertides.">
+<!ENTITY canscrape.title     "El canal no és compatible amb $shortAppName!">
+<!ENTITY canscrape.body      "Trieu el millor mètode de gravar els arxius. Això pot trigar temps extra, però les descripcions poden ser més completes.">
 
-<!ENTITY canscrape.prefix    "Favor de contactar amb els productors de">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
-<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
-<!ENTITY canscrape.body      "Trieu el millor mètode de gravar els arxius. Això pot trigar temps extra, però les descripcions poden ser molt divertides.">
+<!ENTITY canscrape.prefix    "Contacteu amb els propietaris de">
+<!ENTITY canscrape.suffix    "i demana'ls si poden suministrar un canal en un format que funcioni amb $shortAppName.">
+<!ENTITY canscrape.title     "El canal no és compatible amb $shortAppName!">
+<!ENTITY canscrape.body      "Trieu el millor mètode de gravar els arxius. Això pot trigar temps extra, però les descripcions poden ser més completes.">
 
-<!ENTITY canscrape.prefix    "Favor de contactar amb els productors de">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
+<!ENTITY canscrape.prefix    "Contacteu amb els propietaris de">
+<!ENTITY canscrape.suffix    "i demana'ls si poden suministrar un canal en un format que funcioni amb $shortAppName.">

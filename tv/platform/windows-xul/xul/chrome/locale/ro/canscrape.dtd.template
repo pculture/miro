@@ -1,12 +1,12 @@
 <!ENTITY nbsp                " ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
+<!ENTITY canscrape.title     "Canalul nu este compatibil cu $shortAppName!">
 <!ENTITY canscrape.body      "Dar noi vom face tot ceea ce e posibil ca să preluam fişierele. E posibil să necesite timp suplimentar pentru a afişa secvenţele video iar descrierile pot parea distractive.">
 
 <!ENTITY canscrape.prefix    "Te rog contactează editorul lui">
 <!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
-<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
+<!ENTITY canscrape.title     "Canalul nu este compatibil cu $shortAppName!">
 <!ENTITY canscrape.body      "Dar noi vom face tot ceea ce e posibil ca să preluam fişierele. E posibil să necesite timp suplimentar pentru a afişa secvenţele video iar descrierile pot parea distractive.">
 
 <!ENTITY canscrape.prefix    "Te rog contactează editorul lui">

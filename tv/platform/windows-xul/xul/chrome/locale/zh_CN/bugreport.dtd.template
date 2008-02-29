@@ -1,7 +1,7 @@
-<!ENTITY bugreport.title     "你在$longAppName发现一个错误！">
+<!ENTITY bugreport.title     "您在$longAppName发现一个错误！">
 <!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
 information into our bug tracker and tell us what you were doing when the
 problem occurred.">
 <!ENTITY bugreport.openbugtracker "开启臭虫(即错误缺陷)追踪器">
 <!ENTITY bugreport.copytoclipboard "复制日志到剪切板">
-<!ENTITY bugreport.pleaserestart "Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!">
+<!ENTITY bugreport.pleaserestart "请重新启动 $longAppName (否则您仍然会得到这样错误)。对此造成的不便我们十分抱歉. $longAppName 仍然在Beta中,但有了您的帮助我们会更快的解决问题。">

@@ -1,42 +1,46 @@
 <!ENTITY prefs.title "Valgmuligheder">
-<!ENTITY prefs.restart "ADVARSEL: Ændringer effektueres først når du har genstartet $longAppName).">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
+<!ENTITY prefs.run.on.startup "Start automatisk $longAppName når jeg logger ind.">
 <!ENTITY prefs.close_to_tray_start "Når jeg klikker på den røde Luk knap:">
 <!ENTITY prefs.close_to_tray "Minimér så downloads kan fortsætte.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.no_close_to_tray "Forlad Miro helt.">
 
 <!ENTITY prefs.general "Generel">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general.warn_on_quit "Advar mig hvis jeg forsøger at afslutte, mens en download er igang.">
 
 <!ENTITY prefs.channels "Kanaler">
-<!ENTITY prefs.channels.check "Check channels for new content">
+<!ENTITY prefs.channels.check "Tjek kanaler for nyt indhold">
 <!ENTITY prefs.channels.check.thirty "Hver 30. minut">
 <!ENTITY prefs.channels.check.sixty "Hver time">
 <!ENTITY prefs.channels.check.manually "Manuelt">
 
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Ny">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+
 <!ENTITY prefs.playback "Afspil">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
+<!ENTITY prefs.playback.remember.pos "Husk hvor jeg stoppede visningen og fortsæt derfra.">
 <!ENTITY prefs.playback.auto.next.video "Afspil videoer efter hinanden.">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback.stop.after.each "Afspil en video og stop.">
 
 <!ENTITY prefs.folder.movies "Mapper">
 <!ENTITY prefs.folder.downloads "Gem hentede videoer idenne mappe:">
 <!ENTITY prefs.folder.change "Ændr...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
+<!ENTITY prefs.folder.others.caption "Kontroller for nye videoer i disse mapper og inkluder dem i mit bibliotek">
+<!ENTITY prefs.folder.others.location "Mappe">
+<!ENTITY prefs.folder.others.shown "Vis som kanal">
 <!ENTITY prefs.folder.others.add "Tilføj Mappe...">
 <!ENTITY prefs.folder.others.remove "Fjern">
 
-<!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Download højest">
-<!ENTITY prefs.downloads.max.part2 "videoer ad gangen.">
+<!ENTITY prefs.downloads "Downloads" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Diskplads">
-<!ENTITY prefs.disk.space.min.part1 "Start ikke download hvis det efterlader mindre end">
-<!ENTITY prefs.disk.space.min.part2 "GB ledig.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ADVARSEL: Denne ændring kræver at genstarter $longAppName.">
 
 <!ENTITY prefs.videos.expire "Som standard udløber videoer efter">
@@ -49,7 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "ADVARSEL: Ændringer effektueres først når du har genstartet $longAppName).">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "og">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

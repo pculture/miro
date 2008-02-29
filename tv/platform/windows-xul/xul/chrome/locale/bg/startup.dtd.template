@@ -1,19 +1,19 @@
 <!ENTITY nbsp				" ">
 <!ENTITY rsaquo				"'">
 
-<!ENTITY startup.title			"$shortAppName First Time Setup">
+<!ENTITY startup.title			"Първоначална настройка на $shortAppName">
 <!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
+<!ENTITY startup.autostart.question	"Искате ли да се зарежда $shortAppName при пускане на компютъра?">
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
+<!ENTITY startup.search.question        "Искате ли $longAppName да потърси файлове с филми в компютъра ви?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"Претърси за видео">
-<!ENTITY startup.change	                "Промени">
-<!ENTITY startup.cancel	                "Cancel Search">
+<!ENTITY startup.search.searching	"Търсене за филми">
+<!ENTITY startup.change	                "Промяна">
+<!ENTITY startup.cancel	                "Отказване на търсенето">
 <!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.done1			"Готово!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Leave it On:">
@@ -22,23 +22,23 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
 <!ENTITY startup.done5.heading		"Go Big:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
+<!ENTITY startup.done6.heading		"Търсене на филми:">
 <!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Да">
 <!ENTITY startup.answer.no		"Не">
-<!ENTITY startup.title			"$shortAppName First Time Setup">
+<!ENTITY startup.title			"Първоначална настройка на $shortAppName">
 <!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
+<!ENTITY startup.autostart.question	"Искате ли да се зарежда $shortAppName при пускане на компютъра?">
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
+<!ENTITY startup.search.question        "Искате ли $longAppName да потърси файлове с филми в компютъра ви?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"Претърси за видео">
-<!ENTITY startup.change	                "Промени">
-<!ENTITY startup.cancel	                "Cancel Search">
+<!ENTITY startup.search.searching	"Търсене за филми">
+<!ENTITY startup.change	                "Промяна">
+<!ENTITY startup.cancel	                "Отказване на търсенето">
 <!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.done1			"Готово!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Leave it On:">
@@ -47,7 +47,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
 <!ENTITY startup.done5.heading		"Go Big:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
+<!ENTITY startup.done6.heading		"Търсене на филми:">
 <!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Да">
 <!ENTITY startup.answer.no		"Не">

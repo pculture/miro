@@ -1,42 +1,46 @@
 <!ENTITY prefs.title "Options">
-<!ENTITY prefs.restart "(ATTENTION: Les changements ne seront effectifs qu'après un redémarrage de $longAppName.)">
 
-<!ENTITY prefs.run.on.startup "Lancer automatiquement $longAppName à la connexion">
+<!ENTITY prefs.run.on.startup "Lancer automatiquement $longAppName au démarrage">
 <!ENTITY prefs.close_to_tray_start "Lorsque je clique le bouton de fermeture rouge :">
-<!ENTITY prefs.close_to_tray "Minimisez dans la barre de tâche afin que les téléchargements se poursuivent.">
+<!ENTITY prefs.close_to_tray "Minimiser dans la barre de tâche afin que les téléchargements se poursuivent.">
 <!ENTITY prefs.no_close_to_tray "Quitter Miro définitivement.">
 
 <!ENTITY prefs.general "Général">
-<!ENTITY prefs.general.warn_on_quit "M'avertir quand des téléchargement sont en cours lors de la fermeture.">
+<!ENTITY prefs.general.warn_on_quit "M'avertir quand des téléchargements sont en cours lors de la fermeture.">
 
 <!ENTITY prefs.channels "Chaînes">
-<!ENTITY prefs.channels.check "Vérifier les canaux pour du nouveau contenu">
-<!ENTITY prefs.channels.check.thirty "Tous les 30 minutes">
+<!ENTITY prefs.channels.check "Mettre à jour les chaînes pour du nouveau contenu">
+<!ENTITY prefs.channels.check.thirty "Toutes les 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Toutes les heures">
 <!ENTITY prefs.channels.check.manually "Manuellement">
 
-<!ENTITY prefs.playback "Rejouer">
-<!ENTITY prefs.playback.remember.pos "Se souvenir de l'endroit où la vidéo a été arrêté et redémarrer à partir de ce point.">
-<!ENTITY prefs.playback.auto.next.video "Lire les vidéos en continu.">
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Nouveau">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+
+<!ENTITY prefs.playback "Lecture">
+<!ENTITY prefs.playback.remember.pos "Se souvenir de l'endroit où la vidéo a été arrêtée et redémarrer à partir de là.">
+<!ENTITY prefs.playback.auto.next.video "Lire les vidéos les unes à la suite des autres">
 <!ENTITY prefs.playback.stop.after.each "Lire une vidéo puis s'arrêter">
 
 <!ENTITY prefs.folder.movies "Dossiers">
 <!ENTITY prefs.folder.downloads "Enregistrer les vidéos téléchargées dans ce dossier:">
 <!ENTITY prefs.folder.change "Modifier...">
 
-<!ENTITY prefs.folder.others.caption "Surveiller les nouvelles vidéos dans ces répertoires et les ajouter à la librairie.">
+<!ENTITY prefs.folder.others.caption "Surveiller les nouvelles vidéos dans ces dossiers et les ajouter à la bibliothèque.">
 <!ENTITY prefs.folder.others.location "Répertoire">
-<!ENTITY prefs.folder.others.shown "Afficher en tant que canal">
+<!ENTITY prefs.folder.others.shown "Afficher en tant que chaîne">
 <!ENTITY prefs.folder.others.add "Ajouter un dossier...">
 <!ENTITY prefs.folder.others.remove "Supprimer">
 
-<!ENTITY prefs.downloads.max "Téléchargements">
-<!ENTITY prefs.downloads.max.part1 "Télécharger au maximum">
-<!ENTITY prefs.downloads.max.part2 "vidéos immédiatement.">
+<!ENTITY prefs.downloads "Téléchargements" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Espace disque">
-<!ENTITY prefs.disk.space.min.part1 "Bloquer les téléchargements s'il y a moins de">
-<!ENTITY prefs.disk.space.min.part2 "Gb libre(s).">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "AVERTISSEMENT: Cette option n'aura pas d'effet tant que vous ne redémarrez pas $longAppName.">
 
 <!ENTITY prefs.videos.expire "Par défaut, les vidéos expirent après">
@@ -49,7 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ATTENTION: Les changements ne seront effectifs qu'après un redémarrage de $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "Pour éviter les ralentissement, limiter la bande passante en émission quand mon ordinateur est actif.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Limite d'émission (Ko/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Utiliser pour BitTorrent des ports entre">
-<!ENTITY prefs.torrent.uses.ports.part2 "et">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

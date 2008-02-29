@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-06 19:22+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2007-11-17 16:42+0000\n"
+"Last-Translator: trebere.com <Unknown>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -38,6 +38,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
+"<font face=\"Lucida Grande\" size=\"-1\">Gure akats azterkaria <a "
+"href=\"$bugTrackerURL\">$bugTrackerURL</a>an dago. Just tell us what you "
+"were doing, paste in the log message from the box above, and answer a few "
+"questions, and we'll get right to work.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -181,7 +185,7 @@ msgid "Playlists"
 msgstr "Erreprodukzio-zerrendak"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Hobespenak..."
 
 msgid "Previous Video"
 msgstr "Aurreko Bideoa"
@@ -196,7 +200,7 @@ msgid "Rename..."
 msgstr "Izena aldatu..."
 
 msgid "Report a bug"
-msgstr ""
+msgstr "Bug-a bidali"
 
 msgid "Save Video As..."
 msgstr "Honela Gorde Bideoa..."
@@ -276,8 +280,9 @@ msgstr ""
 "Erabiltzailea:\n"
 "\n"
 
+#, fuzzy
 msgid " limit upstream to"
-msgstr ""
+msgstr " igoera jarioa mugatu"
 
 #, fuzzy
 msgid "(You must restart Miro for this change to take effect)"
@@ -398,15 +403,17 @@ msgstr "Bideo bakoitzaren ostean gelditu."
 
 #, fuzzy
 msgid "To avoid internet slowdowns:"
-msgstr "Interneten abiadura moteltzeak ekiditeko:"
+msgstr "Interneten abiadura galerak ekiditeko:"
 
 #: ../../portable/app.py:1206
+#, fuzzy
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "Deskargak martxan daudela atera nahi badut ni abisatu"
 
+#, fuzzy
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
-msgstr ""
+msgstr "Ikusi karpeta hauetako bideo berriak eta Biltegira gehitu"
 
 msgid "every 30 minutes"
 msgstr "30 minuturo"
@@ -484,6 +491,7 @@ msgstr "Karpeta hau bilatu:"
 msgid "Searching for Videos"
 msgstr "Bideoak Bilatzen"
 
+#, fuzzy
 msgid ""
 "The Miro Player can find all the videos on your computer to help you "
 "organize your collection.\n"
@@ -491,6 +499,11 @@ msgid ""
 "\n"
 "Would you like Miro to look for video files on your computer?"
 msgstr ""
+"Zure bilduma antolatzen laguntzeko, Miro Playerrek zure ordenagailuko bideo "
+"guztiak aurkitu ditzake.\n"
+"\n"
+"\n"
+"Miro-k zure ordenagailua bideo fitxategien bila aztertzea nahi duzu?"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
@@ -586,12 +599,14 @@ msgid "onStartup called twice"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:702
+#, fuzzy
 msgid "Spacebar"
-msgstr ""
+msgstr "Espazio barra"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:851
+#, fuzzy
 msgid "Close to tray?"
-msgstr ""
+msgstr "Azpira jetsi?"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:852
 msgid ""
@@ -607,7 +622,7 @@ msgstr "Deskarga Osaturik"
 #: ../../platform/osx/frontend/GrowlNotifier.py:45
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "'%s' bideoaren deskarga amaituta."
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:54
 #, fuzzy
@@ -615,7 +630,7 @@ msgid "Download Failed"
 msgstr "Deskargak Huts Egin Du"
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:55
-#, fuzzy
+#, fuzzy, python-format
 msgid "Download of video '%s' has failed."
 msgstr "Bideoaren '%s'k huts egin du."
 
@@ -664,12 +679,12 @@ msgstr "Filmen Direktorioa"
 #: ../../platform/osx/frontend/Preferences.py:197
 #, python-format
 msgid "Select a Directory to store %s downloads in."
-msgstr ""
+msgstr "Jeitsitako bideoak karpeta honetan gorde: %s"
 
 #: ../../platform/osx/frontend/Preferences.py:198
 #: ../../platform/osx/frontend/Preferences.py:262
 msgid "Select"
-msgstr ""
+msgstr "Hautatu"
 
 #: ../../platform/osx/frontend/Preferences.py:207
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
@@ -686,8 +701,9 @@ msgid ""
 msgstr ""
 
 #: ../../platform/osx/frontend/Preferences.py:260
+#, fuzzy
 msgid "View this Directory in the Library"
-msgstr ""
+msgstr "Biltegian erakutsi Direktorio hau"
 
 #: ../../platform/osx/frontend/Preferences.py:261
 msgid "Select a Directory to view in the Library."
@@ -695,11 +711,11 @@ msgstr ""
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Amaituta"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
-msgstr ""
+msgstr "Bilatu!"
 
 #: ../../platform/osx/frontend/Application.py:246
 msgid "Pause Video"
@@ -707,14 +723,16 @@ msgstr "Pausatu bideoa"
 
 #: ../../platform/osx/frontend/Application.py:255
 msgid "Unsupported version of Quicktime"
-msgstr ""
+msgstr "Ezin da suportatu Quicktime bertsioa"
 
 #: ../../platform/osx/frontend/Application.py:256
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
 msgstr ""
+"Quicktime-en bertsio berriena behar duzu %s abian jartzeko, dohaninik den "
+"eguneraketa."
 
 #: ../../platform/osx/frontend/UIStrings.py:22
 msgid "_Remove..."
@@ -726,15 +744,15 @@ msgstr "_Zerrenda Ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:24
 msgid "_Remove Playlists..."
-msgstr ""
+msgstr "_Erreprodukzio zerrenda ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:25
 msgid "_Remove Playlist Folder..."
-msgstr ""
+msgstr "_Erreprodukzio zerrendaren karpeta ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:26
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "_Erreprodukzio zerrendaren karpetak ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:27 ../../portable/menubar.py:179
 msgid "_Remove Channel..."
@@ -746,7 +764,7 @@ msgstr "_Kanalak Ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:29 ../../portable/menubar.py:182
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "_Kanalen karpeta ezabatu..."
 
 #: ../../platform/osx/frontend/UIStrings.py:30 ../../portable/menubar.py:181
 msgid "_Remove Channel Folders..."
@@ -805,12 +823,14 @@ msgid "Settings"
 msgstr "Ezarpenak"
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45
+#, fuzzy
 msgid "Hide"
-msgstr ""
+msgstr "Ezkutarazi"
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47
+#, fuzzy
 msgid "Show"
-msgstr ""
+msgstr "Agertarazi"
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48
 #: ../../portable/dialogs.py:80 ../../portable/menubar.py:257
@@ -864,12 +884,13 @@ msgid "%s MB required to store this video"
 msgstr "%s MB behar dira bideo hau gordetzeko"
 
 #: ../../portable/dl_daemon/download.py:672
+#, fuzzy
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "BitTorrenten hutsegitea"
 
 #: ../../portable/dl_daemon/download.py:673
 msgid "BitTorrent failed to startup"
-msgstr ""
+msgstr "Abiatzean BitTorrent-en hutsegitea"
 
 #: ../../portable/dl_daemon/download.py:796
 msgid "Corrupt Torrent"
@@ -889,8 +910,9 @@ msgid "The torrent file for this item was deleted "
 msgstr "Bideo honen torrent fitxategia ezabatu da "
 
 #: ../../portable/dl_daemon/download.py:824
+#, fuzzy
 msgid "outside of Miro."
-msgstr ""
+msgstr "Mirotik kanpo"
 
 #: ../../portable/tabs.py:44
 #, fuzzy
@@ -899,7 +921,7 @@ msgstr "Biltegia"
 
 #: ../../portable/tabs.py:45
 msgid "New"
-msgstr ""
+msgstr "Berria"
 
 #: ../../portable/tabs.py:47
 msgid "Downloading"
@@ -943,15 +965,15 @@ msgstr "Zerrendaren izena aldatu"
 #: ../../portable/playlist.py:202
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Erreprodukzio zerrendarako izen berria sartu %s"
 
 #: ../../portable/playlist.py:224
 msgid "Create Playlist"
-msgstr ""
+msgstr "Erreprodukzio zerrenda sortu"
 
 #: ../../portable/playlist.py:225
 msgid "Enter a name for the new playlist"
-msgstr ""
+msgstr "Erreprodukzio zerrendarako izen berria sartu"
 
 #: ../../portable/feed.py:383
 msgid "never"
@@ -965,7 +987,7 @@ msgstr "%d ordu"
 #: ../../portable/feed.py:387
 #, python-format
 msgid "%d day"
-msgstr ""
+msgstr "%d egun"
 
 #: ../../portable/feed.py:389 ../../portable/item.py:540
 #, python-format
@@ -975,7 +997,7 @@ msgstr "%d egun"
 #: ../../portable/feed.py:391
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d hilabete"
 
 #: ../../portable/feed.py:787
 msgid "Update Channel Now"
@@ -995,8 +1017,9 @@ msgid "Enter a new name for the channel %s"
 msgstr "Sartu %s kanalarentzat izen berri bat"
 
 #: ../../portable/feed.py:887
+#, fuzzy
 msgid "Error loading feed"
-msgstr ""
+msgstr "Jarioa kargatzean hutsegitea"
 
 #: ../../portable/feed.py:888
 #, python-format
@@ -1013,8 +1036,9 @@ msgstr ""
 
 #: ../../portable/feed.py:1017
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+#, fuzzy
 msgid "Channel is not compatible with $shortAppName!"
-msgstr ""
+msgstr "Kanala ez da $shortAppName-(re)kin bateragarria!"
 
 #: ../../portable/feed.py:1018
 msgid ""
@@ -1027,12 +1051,13 @@ msgid ""
 msgstr ""
 
 #: ../../portable/feed.py:2134
+#, fuzzy
 msgid "Local Files"
-msgstr ""
+msgstr "Lekuko Fitxategiak"
 
 #: ../../portable/feed.py:2148
 msgid "Playing File"
-msgstr ""
+msgstr "Fitxategia erreproduzitzen"
 
 #: ../../portable/menu.py:69
 msgid "Update Channels Now"
@@ -1049,7 +1074,7 @@ msgstr "Jo"
 
 #: ../../portable/menu.py:97 ../../portable/item.py:1478
 msgid "Add to new playlist"
-msgstr ""
+msgstr "Erreprodukzio zerrenda berrira sartu"
 
 #: ../../portable/menu.py:99 ../../portable/item.py:1471
 msgid "Remove From Playlist"
@@ -1057,7 +1082,7 @@ msgstr "Zerrendatik Ezabatu"
 
 #: ../../portable/menu.py:101 ../../portable/item.py:1473
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Liburutegitik ezabatu"
 
 #: ../../portable/menu.py:107 ../../portable/item.py:1482
 msgid "Mark as Unwatched"
@@ -1065,12 +1090,12 @@ msgstr "Ez-ikusia bezala markatu"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Ikusita moduan markatu"
 
 #: ../../portable/menu.py:117
-#, python-format
+#, fuzzy, python-format
 msgid "%d Available Items"
-msgstr ""
+msgstr "%d Ale Erabilgarri"
 
 #: ../../portable/menu.py:118 ../../portable/dialogs.py:85
 #: ../../portable/item.py:1491
@@ -1088,35 +1113,37 @@ msgstr "Deskarga Utzi"
 
 #: ../../portable/menu.py:127 ../../portable/item.py:1489
 msgid "Pause Download"
-msgstr ""
+msgstr "Deskarga Gelditu"
 
 #: ../../portable/menu.py:130 ../../portable/item.py:1487
 msgid "Restart Upload"
-msgstr ""
+msgstr "Igoera Berrabiarazi"
 
 #: ../../portable/opml.py:49
 msgid "Export OPML File"
-msgstr ""
+msgstr "OPML Fitxategia Exportatu"
 
 #: ../../portable/opml.py:123
 msgid "Import OPML File"
-msgstr ""
+msgstr "OPML Fitxategia Inportatu"
 
 #: ../../portable/opml.py:125
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML Fitxategia"
 
 #: ../../portable/opml.py:145
 msgid "OPML Import failed"
-msgstr ""
+msgstr "OPML Inportazio hutsegitea"
 
 #: ../../portable/opml.py:146
+#, fuzzy
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
+msgstr "Hautatutako OPML fitxategia okerra dirudi. Inportazioa eten da."
 
 #: ../../portable/opml.py:151
+#, fuzzy
 msgid "OPML Import summary"
-msgstr ""
+msgstr "OPML Inportazio laburpena"
 
 #: ../../portable/opml.py:152
 #, python-format
@@ -1138,9 +1165,10 @@ msgid "%s Version Alert"
 msgstr ""
 
 #: ../../portable/autoupdate.py:122
-#, python-format
+#, fuzzy, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
 msgstr ""
+"%s-(r)en bertsio berria erabilgarria dago. Orain deskargatu nahi duzu?"
 
 #: ../../portable/autoupdate.py:128
 #, python-format
@@ -1154,7 +1182,7 @@ msgstr ""
 
 #: ../../portable/util.py:252 ../../portable/httpclient.py:126
 msgid "Internal Error"
-msgstr ""
+msgstr "Barneko errorea"
 
 #: ../../portable/util.py:252
 msgid ""
@@ -1169,8 +1197,9 @@ msgid ""
 msgstr ""
 
 #: ../../portable/util.py:252
+#, fuzzy
 msgid "Describe what you were doing that caused this error"
-msgstr ""
+msgstr "Errorea gauzatu denean egiten hari zinena deskribatu"
 
 #: ../../portable/util.py:455
 #, python-format
@@ -1180,7 +1209,7 @@ msgstr "%1.1fGB"
 #: ../../portable/util.py:457
 #, python-format
 msgid "%dGB"
-msgstr ""
+msgstr "%dGB"
 
 #: ../../portable/util.py:461
 #, python-format
@@ -1190,7 +1219,7 @@ msgstr "%1.1fMB"
 #: ../../portable/util.py:463
 #, python-format
 msgid "%dMB"
-msgstr ""
+msgstr "%dMB"
 
 #: ../../portable/util.py:467
 #, python-format
@@ -1200,17 +1229,19 @@ msgstr "%1.1fKB"
 #: ../../portable/util.py:469
 #, python-format
 msgid "%dKB"
-msgstr ""
+msgstr "%dKB"
 
 #: ../../portable/util.py:473
 #, python-format
 msgid "%1.1fB"
-msgstr ""
+msgstr "%1.1fB"
 
 #: ../../portable/util.py:475
 #, python-format
 msgid "%dB"
 msgstr ""
+"Copy text   \t\n"
+"%dB"
 
 #: ../../portable/storedatabase.py:832 ../../portable/storedatabase.py:1231
 #, python-format
@@ -1297,25 +1328,30 @@ msgid "Keep"
 msgstr "Mantendu"
 
 #: ../../portable/dialogs.py:97
+#, fuzzy
 msgid "Not Now"
-msgstr ""
+msgstr "Orain Ez"
 
 #: ../../portable/dialogs.py:98
+#, fuzzy
 msgid "Close to Tray"
-msgstr ""
+msgstr "Azpira Jetsi"
 
 #: ../../portable/dialogs.py:99
+#, fuzzy
 msgid "Launch Miro"
-msgstr ""
+msgstr "Miro Abiatu"
 
 #: ../../portable/dialogs.py:100
+#, fuzzy
 msgid "Download Anyway"
-msgstr ""
+msgstr "Edonola Deskargatu"
 
 #: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:45
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
+#, fuzzy
 msgid "New Search Channel"
-msgstr ""
+msgstr "Bilaketa Kanal Berria"
 
 #: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:25
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
@@ -1325,23 +1361,26 @@ msgstr ""
 
 #: ../../portable/singleclick.py:87
 msgid "Download already exists"
-msgstr ""
+msgstr "Deskarga jadanik existitzen da"
 
 #: ../../portable/singleclick.py:88
+#, fuzzy
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "URLa hori kanpoko deskarga bat da dagoeneko."
 
 #: ../../portable/singleclick.py:94
 msgid "Miro will begin downloading it now."
 msgstr ""
 
 #: ../../portable/singleclick.py:96
+#, fuzzy
 msgid "It is downloading now."
-msgstr ""
+msgstr "Orain deskargatzen ari da."
 
 #: ../../portable/singleclick.py:98
+#, fuzzy
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "Deskargatuta dago dagoeneko."
 
 #: ../../portable/singleclick.py:125
 msgid "Download Error"
@@ -1357,7 +1396,7 @@ msgstr ""
 
 #: ../../portable/singleclick.py:134
 msgid "File Download"
-msgstr ""
+msgstr "Fitxategia Deskargatu"
 
 #: ../../portable/singleclick.py:135
 #, python-format
@@ -1420,11 +1459,11 @@ msgstr ""
 
 #: ../../portable/menubar.py:144
 msgid "_Open"
-msgstr ""
+msgstr "_Ireki"
 
 #: ../../portable/menubar.py:145
 msgid "_Download Video"
-msgstr ""
+msgstr "_Bideoa Deskargatu"
 
 #: ../../portable/menubar.py:147
 msgid "Check _Version"
@@ -1436,11 +1475,11 @@ msgstr "_Ezabatu bideoa"
 
 #: ../../portable/menubar.py:150
 msgid "_Remove Videos"
-msgstr ""
+msgstr "_Bideoak ezabatu"
 
 #: ../../portable/menubar.py:151
 msgid "Re_name Video"
-msgstr ""
+msgstr "Bideoaren izena aldatu"
 
 #: ../../portable/menubar.py:152
 msgid "Save Video _As..."
@@ -1448,15 +1487,15 @@ msgstr "Gorde bideoa _honela..."
 
 #: ../../portable/menubar.py:153
 msgid "Save Videos _As..."
-msgstr ""
+msgstr "Gorde Bideoa _honela..."
 
 #: ../../portable/menubar.py:154
 msgid "Copy Video _URL"
-msgstr ""
+msgstr "Bideoa Kopiatu _URL"
 
 #: ../../portable/menubar.py:156
 msgid "_Options..."
-msgstr ""
+msgstr "_Hobespenak..."
 
 #: ../../portable/menubar.py:157
 msgid "_Quit"
@@ -1496,19 +1535,19 @@ msgstr ""
 
 #: ../../portable/menubar.py:176
 msgid "Add Channel _Guide..."
-msgstr ""
+msgstr "Kanal Gida Sartu..."
 
 #: ../../portable/menubar.py:186
 msgid "Update _All Channels"
-msgstr ""
+msgstr "Kanal Guztiak Berritu"
 
 #: ../../portable/menubar.py:188
 msgid "_Import Channels (OPML)..."
-msgstr ""
+msgstr "(OPML) Kanalak Importatu..."
 
 #: ../../portable/menubar.py:189
 msgid "E_xport Channels (OPML)..."
-msgstr ""
+msgstr "(OPML) Kanalak Exportatu"
 
 #: ../../portable/menubar.py:191
 msgid "_Send this channel to a friend"
@@ -1520,11 +1559,11 @@ msgstr "Kanala Kopiatu _Esteka"
 
 #: ../../portable/menubar.py:195
 msgid "New _Playlist"
-msgstr ""
+msgstr "Erreprodukzio Zerrenda Berria"
 
 #: ../../portable/menubar.py:196
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "Erreprodukzio Zerrenda Karpeta Beria"
 
 #: ../../portable/menubar.py:198
 msgid "Re_name Playlist"
@@ -1536,19 +1575,19 @@ msgstr "_Zerrenda Ezabatu"
 
 #: ../../portable/menubar.py:200
 msgid "_Remove Playlists"
-msgstr ""
+msgstr "Erreprodukzio zerrenda Ezabatu"
 
 #: ../../portable/menubar.py:201
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "Erreprodukzio Zerrenda Karpetak Ezabatu"
 
 #: ../../portable/menubar.py:202
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "Erreprodukzio Zerrenda Karpeta Ezabatu"
 
 #: ../../portable/menubar.py:212
 msgid "_Play"
-msgstr ""
+msgstr "_Erreproduzitu"
 
 #: ../../portable/menubar.py:213
 msgid "_Stop"
@@ -2680,12 +2719,14 @@ msgid "Find Videos:"
 msgstr "Bideoak aurkitu:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
+#, fuzzy
 msgid "Go Big:"
-msgstr ""
+msgstr "Handitu:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
+#, fuzzy
 msgid "Leave it On:"
-msgstr ""
+msgstr "Horrela Utzi:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
 msgid ""
@@ -2702,16 +2743,19 @@ msgid ""
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
+#, fuzzy
 msgid "Reset Search"
-msgstr ""
+msgstr "Bilaketa Garbitu"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
+#, fuzzy
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Nere fitxategi pertsonal guztietara mugatu."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
+#, fuzzy
 msgid "Search custom folder:"
-msgstr ""
+msgstr "Norbere bilaketa karpeta:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
 msgid ""
@@ -2737,20 +2781,24 @@ msgid ""
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
+#, fuzzy
 msgid "Would you like $longAppName to look for video files on your computer?"
 msgstr ""
+"$longAppName-(e)k zure ordenadorean bideo fitxategiak topatzea nahi duzu?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
+#, fuzzy
 msgid "Would you like to run $shortAppName on startup?"
-msgstr ""
+msgstr "$shortAppName hasieran abiatzea nahi duzu?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
 msgid "You're done!"
 msgstr "Bukatu duzu!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
+#, fuzzy
 msgid "Release Notes:"
-msgstr ""
+msgstr "Azken Oharrak:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"

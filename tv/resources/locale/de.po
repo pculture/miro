@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-09-18 21:19+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2008-01-30 09:21+0000\n"
+"Last-Translator: moadin <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
@@ -27,22 +27,23 @@ msgstr "OK"
 
 #: ../../portable/dialogs.py:76
 msgid "Ok"
-msgstr "OK"
+msgstr "Ok"
 
 msgid "$log"
 msgstr "$log"
 
+#, fuzzy
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
-"<font face=\"Lucida Grande\" size=\"-1\">Unsere Fehlerverwaltung finden sie "
-"hier: <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Teilen Sie uns bitte "
-"mit, was Sie vor dem Fehler gemacht haben, kopieren Sie die obere Logmeldung "
-"und beantworten Sie einige kurze Fragen. Wir machen uns danach sofort an die "
-"Arbeit.</font>"
+"<font face=\"Lucida Grande\" size=\"-1\">Unsere Fehlerverwaltung findest du "
+"hier: <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Teile uns bitte mit, "
+"was du vor dem Erscheinen der Fehlermeldung gemacht hast, kopiere obige "
+"Logmeldung und beantworte einige kurze Fragen. Wir machen uns danach "
+"umgehend an die Arbeit!</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -50,10 +51,9 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Haben Sie einen Moment Zeit und wären so freundlich, einen Fehlerbericht für "
-"unseren Bug-Tracking-System einzureichen? Wir brauchen mindestens eine kurze "
-"Beschreibung, was Sie gerade gemacht haben -- so exakt, wie möglich -- und "
-"dazu noch den kunstvoll formulierten Schwachsinn in der unten stehenden Box:"
+"Hast du vielleicht einen Moment Zeit, uns einen Fehlerbericht einzureichen? "
+"Gib bitte zumindest eine kurze und möglichst exakte Beschreibung an, wie es "
+"zu der Fehlermeldung kam und was dir sonst noch auf dem Herzen liegt:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -61,11 +61,11 @@ msgid ""
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
-"So ein Unglück! $longAppName ist aus Verwirrung oder schierer Verbohrtheit "
-"abgestürzt $when. Wir entschuldigen uns und schlagen vor, dass Sie "
-"$shortAppName beenden und neu starten. Das wird dem Ding eine Lehre sein und "
-"Ihr Risiko minimieren, Ihre Programmeinstellungen und Kanalabonnements zu "
-"verlieren."
+"Verdammt! $longAppName ist aus Verwirrung oder schierer Verbohrtheit "
+"abgestürzt $when. Das tut uns wirklich verdammt leid und wir schlagen vor, "
+"dass du $shortAppName beendest und neu startest. Das wird dem Ding eine "
+"Lehre sein und das Risiko minimieren, deine Programmeinstellungen und "
+"Kanalabonnements zu verlieren."
 
 msgid "The fall of $shortAppName??"
 msgstr "Der Untergang von $shortAppName??"
@@ -85,7 +85,7 @@ msgstr "Alle in den Vordergrund bringen"
 #: ../../platform/osx/frontend/Preferences.py:65
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
 msgid "Channels"
-msgstr "Kanäle"
+msgstr "Tonspuren"
 
 msgid "Check for New Version"
 msgstr "Nach neuer Version suchen"
@@ -94,13 +94,13 @@ msgid "Clear Menu"
 msgstr "Menü leeren"
 
 msgid "Close Window"
-msgstr "Fenster schließen"
+msgstr "Fenster schliessen"
 
 msgid "Copy"
 msgstr "Kopieren"
 
 msgid "Copy Channel URL"
-msgstr "Kanal-URL kopieren"
+msgstr "Sender-URL kopieren"
 
 msgid "Copy Video URL"
 msgstr "Video-URL kopieren"
@@ -195,7 +195,7 @@ msgid "Playlists"
 msgstr "Wiedergabelisten"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Einstellungen …"
 
 msgid "Previous Video"
 msgstr "Letztes Video"
@@ -723,7 +723,7 @@ msgstr "Wählen sie ein Verzeichnis, um es in der Bibliothek anzuzeigen"
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Beenden"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -919,7 +919,7 @@ msgstr "Die Torrentdatei wurde gelöscht "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "ausserhalb von Miro."
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -1098,7 +1098,7 @@ msgstr "Als nicht gespielt markieren"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Als gesehen markieren"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -1988,16 +1988,16 @@ msgstr "\"%s\" ist keine gültige URL"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Die Datei: \"%s\" existiert nicht"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Lesefehler"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Fehler während Lesen von \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -2170,12 +2170,12 @@ msgstr "%s ist ungültig. Sie müssen eine positive Zahl eingeben."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Fehler beim Anzeigen der Datei"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Die Datei \"%s\" ist ausserhalb von Miro gelöscht worden."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -2218,7 +2218,7 @@ msgstr "Geben sie die URL des herunterzuladenen Videos ein"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Standard Starter-Kanäle"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -2296,7 +2296,7 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
 msgstr ""
-"<p>Möchten Sie, dass Miro automatisch startet, wenn Sie sich am Computer "
+"<b>Möchten Sie, dass Miro automatisch startet, wenn Sie sich am Computer "
 "anmelden?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12

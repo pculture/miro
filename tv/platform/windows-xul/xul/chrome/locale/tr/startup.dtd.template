@@ -23,7 +23,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Tamekran Olarak İzleyin:">
 <!ENTITY startup.done5.text		"Oynat düğmesinin sağ yanındaki düğme videoyu tam ekran olarak izlemenize olanak sağlar.">
 <!ENTITY startup.done6.heading		"Videoları Bulun:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"$shortAppName Kanal İçeriği yüzlerce internet TV kanalını barındırıyor, hepsi de ücretsiz. Sadece EKLE tuşuna basıp izleyin.">
 <!ENTITY startup.answer.yes		"Evet">
 <!ENTITY startup.answer.no		"Hayır">
 <!ENTITY startup.title			"$shortAppName İlk Kurulum">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Tamekran Olarak İzleyin:">
 <!ENTITY startup.done5.text		"Oynat düğmesinin sağ yanındaki düğme videoyu tam ekran olarak izlemenize olanak sağlar.">
 <!ENTITY startup.done6.heading		"Videoları Bulun:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"$shortAppName Kanal İçeriği yüzlerce internet TV kanalını barındırıyor, hepsi de ücretsiz. Sadece EKLE tuşuna basıp izleyin.">
 <!ENTITY startup.answer.yes		"Evet">
 <!ENTITY startup.answer.no		"Hayır">

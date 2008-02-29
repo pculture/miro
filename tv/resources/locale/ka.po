@@ -15,14 +15,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: GEORGIA\n"
 "X-Poedit-Language: Georgian\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#~ msgid "About Democracy"
-#~ msgstr "Democracy-ს შესახებ"
+#~ msgid "_Save Video..."
+#~ msgstr "_ვიდეოს შენახვა..."
 
 #~ msgid "Save this video"
 #~ msgstr "ამ ვიდეოს შენახვა"
@@ -30,11 +30,11 @@ msgstr ""
 #~ msgid "_Play / Pause"
 #~ msgstr "_დაკვრა / პაუზა"
 
-#~ msgid "_Update Channel"
-#~ msgstr "_არხის განახლება"
-
 #~ msgid "_Remove Channel"
 #~ msgstr "_არხის წაშლა"
+
+#~ msgid "_Update Channel"
+#~ msgstr "_არხის განახლება"
 
 #~ msgid "_Open..."
 #~ msgstr "_გახსნა..."
@@ -48,177 +48,14 @@ msgstr ""
 #~ msgid "Quit the Program"
 #~ msgstr "პროგრამიდან გასვლა"
 
-#~ msgid "U_pdate All Channels"
-#~ msgstr "ყვე_ლა არხის განახლება"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr ""
-#~ "არაფერია საჩვენებელი.<br></br> შეიყვანეთ საძიებელი ფრაზა ზემოთა ველში."
-
-#~ msgid "Searching..."
-#~ msgstr "მიმდინარეობს ძიება..."
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - გარე დაკვრის შაბლონი"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "შემდეგ ვიდეოზე გადასვლა"
-
-#~ msgid "Unwatched"
-#~ msgstr "მაყურებლის გარეშე"
-
-#~ msgid "Watched"
-#~ msgstr "მაყურებლით"
-
-#~ msgid "Saved"
-#~ msgstr "შენახულია"
-
-#~ msgid "Default"
-#~ msgstr "სტანდარტული"
-
-#~ msgid "Recommend"
-#~ msgstr "რეკომენდაცია"
-
-#~ msgid "Play Externally"
-#~ msgstr "გარე დაკვრა"
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "რიგშია ავტო-ჩამოტვირთვა"
-
-#~ msgid "Simple translation"
-#~ msgstr "მარტივი თარგმანი"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "სასადილო შეგხვდებათ ${can}-ში"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "ეს არის ${car}, ხოლო ეს არის ${truck} <span>ეს ტექსტი <b "
-#~ "style=\"color:red\">დაუმუშავებელი</b> ტექსტია</span>"
-
-#~ msgid "My Collection"
-#~ msgstr "ჩემი კოლექცია"
-
-#~ msgid "New Videos"
-#~ msgstr "ახალი ვიდეოები"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy ინტერნეტ-ტელევიზია: როგორ გამოვიყენოთ"
-
-#~ msgid "GO BIG:"
-#~ msgstr "დიიდი:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr "ეს გახლავთ მთელ ეკრანზე ხილვის ღილაკი. დააჭირეთ და ისიამოვნეთ."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "ახალი მასალა:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "ლურჯი წრეები ნიშნავს, რომ არხ ახალი ვიდეოები აქვს, ხოლო მწვანე წრეები კი "
-#~ "მიგვანიშნებს, რომ თქვენ კვე ჩამოტვირთეთ ვიდეოეი და საყურებლად მზად არის."
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>არხების დამატება:</strong> არხთა მეგზური თქვენი საწყისი წერტილია "
-#~ "ინტერნეტ-ტელევიზიათა სამყაროში. დააწკაპუნეთ „დამატება”-ზე არხის გამოსაწერად--"
-#~ " <strong>მეგზურში არსებული არხები უფასოა.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>ნუ დაელოდებით:</strong> Democracy ძირეულად განსხვავდება ვებგვერდებზე "
-#~ "განთავსებული ვიდეოების ყურებისაგან-- გამომცემლებს შეუძლიათ დიდი, "
-#~ "მაღალხარისხიანი ვიდეო-ჩანაწერები შემოგთავაზონ. ასე რომ, ნუ დაელოდებით ვიდეოს "
-#~ "უმალ დაკვრას: დაიწყეთ ჩამოტვირთვა და შეამოწმეთ მოგვიანებით."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>დატოვეთ ჩართული:</strong> Democracy Player დროდადრო ამოწმებს არხებს "
-#~ "ახალ ვიდეოებზე და მათ უკანა ფონზე ჩამოტვირთავს. თუ პროგრამას ჩართულს "
-#~ "დატოვებთ, ყურების სუვილისას ვიდეოები ჩამოტვირთული დაგხვდებათ."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>დისკის თავისუფალ ადგილზე ნუ იდარდებთ:</strong> როგორც „TiVo” "
-#~ "მოწყობილობა, Democracy Player ვადის გასვლის ფუნციით არის აღჭურვილი, რაც "
-#~ "საშუალებას იძლევა ავტომატურად წაიშალოს ვადაგასული ვიდეო, რათა ადგილი ახალი "
-#~ "ვიდეოსათვის გათავისუფლდეს. ვიდეოს სამუდამოდ შენახვა „შენახვა”-ზე "
-#~ "დაწკაპუნებით შეგიძლიათ. ასევე შეგიძლიათ დააყენოთ არხის პარამეტრებში, რომ "
-#~ "ავტომატურად შენახულ იქნას ვიდეოები."
-
-#, python-format
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d downloads still in progress."
-#~ msgstr[0] "ამჟამად მიმდინარეობს %d ჩამოტვირთვა"
-
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - არხის დამატება"
-
-#~ msgid "Channel Guide"
-#~ msgstr "არხთა მეგზური"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>არხები</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>ადგილი დისკზე</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>ჩამოტვირთვები</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>ფილმების დირექტორია</b>"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "არხების ახალ მასალაზე შემოწმება"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy Player"
-
-#~ msgid "GB free"
-#~ msgstr "გბაიტი თავისუფალია"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "კბაიტი/წმ როდესაც კომპიუტერი აქტიურია"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "შეფერხებების ასაცილებლად ატვირთვა შეზღუდე"
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr ""
-#~ "თქვენ ფილმების ჩამოსატვირთად ახალი ფოლდერი მიუთითეთ.  გსურთ Democracy-მ "
-#~ "თქვენი არსებული ჩამოტვირთვებიც იქ გადაიტანოს?  (ჩამოტვირთვის პროცესში მყოფი "
-#~ "ფილმები დასრულებამდე არ გადაადგილდება.)"
-
-#~ msgid "_Save Video..."
-#~ msgstr "_ვიდეოს შენახვა..."
-
 #~ msgid "_Channel"
 #~ msgstr "_არხი"
 
 #~ msgid "_Add Channel..."
 #~ msgstr "_არხის დამატება..."
+
+#~ msgid "U_pdate All Channels"
+#~ msgstr "ყვე_ლა არხის განახლება"
 
 #, python-format
 #~ msgid "%s requires a username and password for \"%s\"."
@@ -287,8 +124,14 @@ msgstr ""
 #~ msgid "You have %d download%s still in progress."
 #~ msgstr "ამჟამად მიმდინარეობს %d ჩამოტვირთვა%s."
 
+#~ msgid "Pending Auto Download"
+#~ msgstr "რიგშია ავტო-ჩამოტვირთვა"
+
 #~ msgid "Pending Manual Download"
 #~ msgstr "რიგშია ხელით ჩამოტვირთვა"
+
+#~ msgid "Unwatched"
+#~ msgstr "მაყურებლის გარეშე"
 
 #~ msgid "Save"
 #~ msgstr "დამახსოვრება"
@@ -296,8 +139,33 @@ msgstr ""
 #~ msgid "Expires"
 #~ msgstr "ვადა გადის"
 
+#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
+#~ msgstr ""
+#~ "არაფერია საჩვენებელი.<br></br> შეიყვანეთ საძიებელი ფრაზა ზემოთა ველში."
+
+#~ msgid "Searching..."
+#~ msgstr "მიმდინარეობს ძიება..."
+
+#~ msgid "Channel Guide"
+#~ msgstr "არხთა მეგზური"
+
+#~ msgid "My Collection"
+#~ msgstr "ჩემი კოლექცია"
+
+#~ msgid "New Videos"
+#~ msgstr "ახალი ვიდეოები"
+
+#~ msgid "Democracy - External Playback Template"
+#~ msgstr "Democracy - გარე დაკვრის შაბლონი"
+
+#~ msgid "Continue To Next Video"
+#~ msgstr "შემდეგ ვიდეოზე გადასვლა"
+
 #~ msgid "Auto Download"
 #~ msgstr "ავტო გადმოწერა"
+
+#~ msgid "Recommend"
+#~ msgstr "რეკომენდაცია"
 
 #~ msgid "Back to Channel"
 #~ msgstr "არხთან დაბრუნება"
@@ -307,6 +175,9 @@ msgstr ""
 
 #~ msgid "Videos expire after:"
 #~ msgstr "ვიდეოს ვადა გადის:"
+
+#~ msgid "Default"
+#~ msgstr "სტანდარტული"
 
 #~ msgid "Auto download should:"
 #~ msgstr "ავტო ჩამოტვირთვა:"
@@ -325,6 +196,12 @@ msgstr ""
 #~ msgid "Videos on this Channel"
 #~ msgstr "ვიდეოები ამ არხზე"
 
+#~ msgid "Watched"
+#~ msgstr "მაყურებლით"
+
+#~ msgid "Saved"
+#~ msgstr "შენახულია"
+
 #~ msgid "Feed Title"
 #~ msgstr "არხის სათაური"
 
@@ -333,8 +210,17 @@ msgstr ""
 #~ msgstr ""
 #~ "ფაილის ეს ტიპი (${format}) Democracy-ს მთავარ ფანჯარაში ვერ დაიკვრება."
 
+#~ msgid "Play Externally"
+#~ msgstr "გარე დაკვრა"
+
 #~ msgid "Skip Video ${countdown}"
 #~ msgstr "ვიდეოს გამოტოვება ${countdown}"
+
+#~ msgid "Simple translation"
+#~ msgstr "მარტივი თარგმანი"
+
+#~ msgid "truck stop in a ${can}"
+#~ msgstr "სასადილო შეგხვდებათ ${can}-ში"
 
 #~ msgid ""
 #~ "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> "
@@ -349,6 +235,25 @@ msgstr ""
 #~ msgid "Expiring"
 #~ msgstr "ვადა გადის"
 
+#~ msgid "Democracy Internet TV: How to Get Started"
+#~ msgstr "Democracy ინტერნეტ-ტელევიზია: როგორ გამოვიყენოთ"
+
+#~ msgid "GO BIG:"
+#~ msgstr "დიიდი:"
+
+#~ msgid "This is your fullscreen button. Click it and lean back."
+#~ msgstr "ეს გახლავთ მთელ ეკრანზე ხილვის ღილაკი. დააჭირეთ და ისიამოვნეთ."
+
+#~ msgid "NEW STUFF:"
+#~ msgstr "ახალი მასალა:"
+
+#~ msgid ""
+#~ "Blue circles mean the channel has new videos available, green circles mean "
+#~ "you have downloaded videos ready to watch."
+#~ msgstr ""
+#~ "ლურჯი წრეები ნიშნავს, რომ არხ ახალი ვიდეოები აქვს, ხოლო მწვანე წრეები კი "
+#~ "მიგვანიშნებს, რომ თქვენ კვე ჩამოტვირთეთ ვიდეოეი და საყურებლად მზად არის."
+
 #~ msgid ""
 #~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
 #~ "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
@@ -357,6 +262,47 @@ msgstr ""
 #~ "<strong i18n:translate=\"\">შესავალის გამოტოვება: <a style=\"color: #090;\" "
 #~ "href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">არხთა მეგზურის "
 #~ "მონახულება >></a></strong>"
+
+#~ msgid ""
+#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
+#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+#~ "channels in the guide are free.</strong>"
+#~ msgstr ""
+#~ "<strong>არხების დამატება:</strong> არხთა მეგზური თქვენი საწყისი წერტილია "
+#~ "ინტერნეტ-ტელევიზიათა სამყაროში. დააწკაპუნეთ „დამატება”-ზე არხის გამოსაწერად--"
+#~ " <strong>მეგზურში არსებული არხები უფასოა.</strong>"
+
+#~ msgid ""
+#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
+#~ "waiting for videos: start some downloads and check back later."
+#~ msgstr ""
+#~ "<strong>ნუ დაელოდებით:</strong> Democracy ძირეულად განსხვავდება ვებგვერდებზე "
+#~ "განთავსებული ვიდეოების ყურებისაგან-- გამომცემლებს შეუძლიათ დიდი, "
+#~ "მაღალხარისხიანი ვიდეო-ჩანაწერები შემოგთავაზონ. ასე რომ, ნუ დაელოდებით ვიდეოს "
+#~ "უმალ დაკვრას: დაიწყეთ ჩამოტვირთვა და შეამოწმეთ მოგვიანებით."
+
+#~ msgid ""
+#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
+#~ "new videos and downloads in the background. Leaving it running means you'll "
+#~ "have new videos when you're ready to watch."
+#~ msgstr ""
+#~ "<strong>დატოვეთ ჩართული:</strong> Democracy Player დროდადრო ამოწმებს არხებს "
+#~ "ახალ ვიდეოებზე და მათ უკანა ფონზე ჩამოტვირთავს. თუ პროგრამას ჩართულს "
+#~ "დატოვებთ, ყურების სუვილისას ვიდეოები ჩამოტვირთული დაგხვდებათ."
+
+#~ msgid ""
+#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
+#~ "features an 'expiration' system that helps clean out older videos to make "
+#~ "room for new videos. You can always keep a video permanently by clicking "
+#~ "'save' and you can set a channel's settings to save videos automatically."
+#~ msgstr ""
+#~ "<strong>დისკის თავისუფალ ადგილზე ნუ იდარდებთ:</strong> როგორც „TiVo” "
+#~ "მოწყობილობა, Democracy Player ვადის გასვლის ფუნციით არის აღჭურვილი, რაც "
+#~ "საშუალებას იძლევა ავტომატურად წაიშალოს ვადაგასული ვიდეო, რათა ადგილი ახალი "
+#~ "ვიდეოსათვის გათავისუფლდეს. ვიდეოს სამუდამოდ შენახვა „შენახვა”-ზე "
+#~ "დაწკაპუნებით შეგიძლიათ. ასევე შეგიძლიათ დააყენოთ არხის პარამეტრებში, რომ "
+#~ "ავტომატურად შენახულ იქნას ვიდეოები."
 
 #, python-format
 #~ msgid ""
@@ -368,8 +314,59 @@ msgstr ""
 #~ "ბოლო ცვლილებები შესაძლოა დაიკარგოს.\n"
 #~ "მაინც გსურთ გასვლა?"
 
+#~ msgid "<b>Channels</b>"
+#~ msgstr "<b>არხები</b>"
+
+#~ msgid "<b>Disk Space</b>"
+#~ msgstr "<b>ადგილი დისკზე</b>"
+
+#~ msgid "<b>Downloads</b>"
+#~ msgstr "<b>ჩამოტვირთვები</b>"
+
+#~ msgid "<b>Movies Directory</b>"
+#~ msgstr "<b>ფილმების დირექტორია</b>"
+
+#~ msgid "Check Channels for new content"
+#~ msgstr "არხების ახალ მასალაზე შემოწმება"
+
+#~ msgid "Democracy - Add Channel"
+#~ msgstr "Democracy - არხის დამატება"
+
+#~ msgid "Democracy Player"
+#~ msgstr "Democracy Player"
+
+#~ msgid "GB free"
+#~ msgstr "გბაიტი თავისუფალია"
+
+#~ msgid "KB/s when my computer is active"
+#~ msgstr "კბაიტი/წმ როდესაც კომპიუტერი აქტიურია"
+
 #~ msgid "Store downloaded movies in"
 #~ msgstr "ჩამოტვირთული ფილმების მდებარეობა"
+
+#~ msgid "To avoid slowdowns, limit upstream to"
+#~ msgstr "შეფერხებების ასაცილებლად ატვირთვა შეზღუდე"
+
+#~ msgid ""
+#~ "You've selected a new folder to download movies to.  Should Democracy "
+#~ "migrate your existing downloads there?  (Currently dowloading movies will "
+#~ "not be moved until they finish.)"
+#~ msgstr ""
+#~ "თქვენ ფილმების ჩამოსატვირთად ახალი ფოლდერი მიუთითეთ.  გსურთ Democracy-მ "
+#~ "თქვენი არსებული ჩამოტვირთვებიც იქ გადაიტანოს?  (ჩამოტვირთვის პროცესში მყოფი "
+#~ "ფილმები დასრულებამდე არ გადაადგილდება.)"
+
+#~ msgid ""
+#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
+#~ "style=\"color:red\">raw</b> text</span>"
+#~ msgstr ""
+#~ "ეს არის ${car}, ხოლო ეს არის ${truck} <span>ეს ტექსტი <b "
+#~ "style=\"color:red\">დაუმუშავებელი</b> ტექსტია</span>"
+
+#, python-format
+#~ msgid "You have %d download still in progress."
+#~ msgid_plural "You have %d downloads still in progress."
+#~ msgstr[0] "ამჟამად მიმდინარეობს %d ჩამოტვირთვა"
 
 #: ../../portable/dialogs.py:77
 msgid "Cancel"

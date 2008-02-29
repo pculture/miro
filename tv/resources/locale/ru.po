@@ -8,16 +8,237 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-23 14:16+0000\n"
-"Last-Translator: cDima <sadakov@gmail.com>\n"
+"PO-Revision-Date: 2007-12-25 15:14+0000\n"
+"Last-Translator: Timur <tim_tim2000@mail.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#~ msgid "Save this video"
+#~ msgstr "Сохранить видео"
+
+#~ msgid "_Play / Pause"
+#~ msgstr "_Воспроизведение/Пауза"
+
+#~ msgid "_Remove Channel"
+#~ msgstr "Удалить канал"
+
+#~ msgid "_Update Channel"
+#~ msgstr "Обновить канал"
+
+#~ msgid "_Open..."
+#~ msgstr "Открыть..."
+
+#~ msgid "Open various files"
+#~ msgstr "Открыть разные файлы"
+
+#~ msgid "P_references"
+#~ msgstr "Настройки"
+
+#~ msgid "Quit the Program"
+#~ msgstr "Выйти из программы"
+
+#~ msgid "U_pdate All Channels"
+#~ msgstr "Обновить все каналы"
+
+#~ msgid "Pending Auto Download"
+#~ msgstr "Ожидающие скачивания файлы"
+
+#~ msgid "Unwatched"
+#~ msgstr "Непросмотренные"
+
+#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
+#~ msgstr "Здесь пусто.<br></br> Введите поисковой термин в поле чуть выше."
+
+#~ msgid "Searching..."
+#~ msgstr "Идет поиск..."
+
+#~ msgid "Channel Guide"
+#~ msgstr "Путеводитель по каналам"
+
+#~ msgid "My Collection"
+#~ msgstr "Моя коллекция"
+
+#~ msgid "New Videos"
+#~ msgstr "Новые видео"
+
+#~ msgid "Democracy - External Playback Template"
+#~ msgstr "Democracy - Внешний Шаблон Воспроизведения"
+
+#~ msgid "Continue To Next Video"
+#~ msgstr "Продолжить к следующему видео"
+
+#~ msgid "Recommend"
+#~ msgstr "Рекомендованный"
+
+#~ msgid "Default"
+#~ msgstr "По умолчанию"
+
+#~ msgid "Watched"
+#~ msgstr "Просмотренные"
+
+#~ msgid "Saved"
+#~ msgstr "Сохранено"
+
+#~ msgid "Play Externally"
+#~ msgstr "Запустить другой программой"
+
+#~ msgid "Simple translation"
+#~ msgstr "Простой перевод"
+
+#~ msgid "truck stop in a ${can}"
+#~ msgstr "грузовик остановился в ${can}"
+
+#~ msgid "Democracy Internet TV: How to Get Started"
+#~ msgstr "Democracy интернет-ТВ: Как начать"
+
+#~ msgid "GO BIG:"
+#~ msgstr "МЫСЛИТЕ ШИРЕ:"
+
+#~ msgid "This is your fullscreen button. Click it and lean back."
+#~ msgstr ""
+#~ "Это кнопка полноэкранного режима. Нажмите её и откиньтесь назад в Вашем "
+#~ "кресле."
+
+#~ msgid "NEW STUFF:"
+#~ msgstr "СВЕЖЕЕ:"
+
+#~ msgid ""
+#~ "Blue circles mean the channel has new videos available, green circles mean "
+#~ "you have downloaded videos ready to watch."
+#~ msgstr ""
+#~ "Синие кружки означают что в канале есть новое видео, зелёные кружки означают "
+#~ "что есть новое видео скачалось и ждёт просмотра."
+
+#~ msgid ""
+#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
+#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+#~ "channels in the guide are free.</strong>"
+#~ msgstr ""
+#~ "<strong>Добавить каналы:</strong> Путеводитель по каналам поможет вам "
+#~ "составить собственный домашний телеканал. Щелкните 'Добавить' чтобы "
+#~ "подключиться к каналу-- <strong>все каналы в путеводителе бесплатны.</strong>"
+
+#~ msgid ""
+#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
+#~ "waiting for videos: start some downloads and check back later."
+#~ msgstr ""
+#~ "<strong>Удобный просмотр:</strong> В Democracy применён другой подход чем на "
+#~ "страницах с видео-клипами-- авторы видео-каналов могут предоставить большую, "
+#~ "качественную картинку. Вам не придётся ждать пока скачается видео: "
+#~ "подключитесь к каналу и вернитесь когда видео скачается."
+
+#~ msgid ""
+#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
+#~ "new videos and downloads in the background. Leaving it running means you'll "
+#~ "have new videos when you're ready to watch."
+#~ msgstr ""
+#~ "<strong>Не выключайте:</strong> Democracy Player проверяет каналы на наличие "
+#~ "новых видео-файлов, и скачивает их не отвлекая вас. Оставьте Democracy "
+#~ "включенным и просмотрите новые видео, когда у вас будет время."
+
+#~ msgid ""
+#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
+#~ "features an 'expiration' system that helps clean out older videos to make "
+#~ "room for new videos. You can always keep a video permanently by clicking "
+#~ "'save' and you can set a channel's settings to save videos automatically."
+#~ msgstr ""
+#~ "<strong>Не волнуйтесь о захламлении жёсткого диска:</strong> Так же как "
+#~ "TiVo, Democracy Player определяет срок жизни для видео-файлов, чтобы всегда "
+#~ "было место для более новых файлов. Можно сохранить файл на всегда нажав "
+#~ "'Сохранить', или настроить автоматическое сохранение видео в настройках "
+#~ "канала."
+
+#~ msgid "<b>Channels</b>"
+#~ msgstr "<b>Каналы</b>"
+
+#~ msgid "<b>Disk Space</b>"
+#~ msgstr "<b>Дисковое пространство</b>"
+
+#~ msgid "<b>Downloads</b>"
+#~ msgstr "<b>Скаченное</b>"
+
+#~ msgid "<b>Movies Directory</b>"
+#~ msgstr "<b>Каталог Фильмов</b>"
+
+#~ msgid "Check Channels for new content"
+#~ msgstr "Проверить каналы на наличие нового видео"
+
+#~ msgid "Democracy - Add Channel"
+#~ msgstr "Democracy - Добавить Канал"
+
+#~ msgid "Democracy Player"
+#~ msgstr "Democracy Player"
+
+#~ msgid "GB free"
+#~ msgstr "Гб свободно"
+
+#~ msgid "KB/s when my computer is active"
+#~ msgstr "КБ/с когда компьютером активно пользуется"
+
+#~ msgid "To avoid slowdowns, limit upstream to"
+#~ msgstr ""
+#~ "Чтобы избежать замедление канала, ограничьте скорость закачки на сервер до"
+
+#~ msgid ""
+#~ "You've selected a new folder to download movies to.  Should Democracy "
+#~ "migrate your existing downloads there?  (Currently dowloading movies will "
+#~ "not be moved until they finish.)"
+#~ msgstr ""
+#~ "Вы выбрали новую папку для сохранения закачек. Переместить ли в неё "
+#~ "существующие закачки? (Файлы, загружаемые в данный момент, не будут "
+#~ "перемещены до окончания загрузок.)"
+
+#~ msgid ""
+#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
+#~ "style=\"color:red\">raw</b> text</span>"
+#~ msgstr ""
+#~ "Это ${car} и это ${truck} <span>А это <b style=\"color:red\">сырой</b> "
+#~ "текст</span>"
+
+#~ msgid "Channel is not compatible with Democracy!"
+#~ msgstr "Канал не совместим с Democracy!"
+
+#, fuzzy
+#~ msgid ""
+#~ "and ask if they can supply a feed in a format that will work with Democracy."
+#~ msgstr "и попросите предоставить фид в формате, поддерживаемом Democracy."
+
+#~ msgid ""
+#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
+#~ "$publisher."
+#~ msgstr ""
+#~ "$longAppName версия $appVersion ($appRevision). Все права защищены (c) 2005, "
+#~ "2006 $publisher."
+
+#~ msgid "Please help us fix it. Copy and paste all the"
+#~ msgstr "Помогите нам исправить Democracy. Скопируйте всю информацию"
+
+#~ msgid ""
+#~ "information into our bug tracker and tell us what you were doing when the"
+#~ msgstr ""
+#~ ", вставьте ее в систему отслеживания багов и раскажите, что Вы делали."
+
+#~ msgid "problem occurred."
+#~ msgstr "возникла проблема."
+
+#~ msgid ""
+#~ "Then, please restart Democracy Player (or you may keep getting related "
+#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
+#~ "with your help we're fixing problems fast!"
+#~ msgstr ""
+#~ "Затем перезапустите Democracy Player (в противном случае, ошибки будут "
+#~ "продолжаться). Приносим свои извинения за неудобства. Democracy Player еще  "
+#~ "не выпущен, и с Вашей помощью мы решаем проблемы быстрее."
+
+#~ msgid "You found a bug in Democracy!"
+#~ msgstr "Вы нашли ошибку в Democracy!"
 
 #~ msgid "About Democracy"
 #~ msgstr "О Democracy"
@@ -31,14 +252,14 @@ msgstr ""
 #~ msgid "Hide Democracy"
 #~ msgstr "Спрятать Democracy"
 
-#~ msgid "New Channel Guide..."
-#~ msgstr "Новый путеводитель по каналам"
-
 #~ msgid "Preferencesâ¦"
 #~ msgstr "Настройки"
 
 #~ msgid "Quit Democracy"
 #~ msgstr "Выйти из Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Удалить канал..."
 
 #~ msgid "(You must restart Democracy for this change to take effect)\n"
 #~ msgstr ""
@@ -82,8 +303,98 @@ msgstr ""
 #~ "\n"
 #~ "Желаете ли вы запускать Democracy когда включается компьютер?"
 
-#~ msgid "Save this video"
-#~ msgstr "Сохранить видео"
+#~ msgid "Create new playlist"
+#~ msgstr "Создать новый список воспроизведения"
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "Создать новую папку под списки воспроизведения"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "Создать новую папку каналов"
+
+#, python-format
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Ошибка при импорте модулей democracy:\n"
+#~ "%s"
+
+#~ msgid "${count} Downloads in Progress"
+#~ msgstr "Качается ${count} файлов"
+
+#~ msgid "1 Download in Progress"
+#~ msgstr "Качается 1 файл"
+
+#~ msgid "${len} Videos On This Channel"
+#~ msgstr "${len} видео в этом канале"
+
+#~ msgid "All ${len} Videos Match This Search"
+#~ msgstr "Все ${len} видео подходят по поиску"
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "Найдено ${len} видео-файлов"
+
+#~ msgid "Looking for videos at this URL"
+#~ msgstr "Идёт поиск по видео по этому адресу"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} видео-файлов на канале"
+
+#~ msgid "SAVE"
+#~ msgstr "СОХРАНИТЬ"
+
+#~ msgid ""
+#~ "Would you like to delete this file or just remove its entry from My "
+#~ "Collection?"
+#~ msgstr "Желаете ли вы удалить этот файл или исключить его из коллекции?"
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr ""
+#~ "Этот канал Democracy имеет неверный формат: %s. Пожалуйста сообщите об этом "
+#~ "авторам сайта."
+
+#, python-format
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Этот канал Democracy имеет неверный тип содержимого: %s. Пожалуйста сообщите "
+#~ "об этом авторам сайта."
+
+#, python-format
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Файл канала Democracy на скачался: %s."
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Но мы постараемся добыть файлы. Показ видео-файлов может занять несколько "
+#~ "дольше, и описания могут быть исковерканы. Пожалуйста свяжитесь с авторами "
+#~ "$url и попросите их предоставить rss-канал в формате понятный Democracy.\n"
+#~ "\n"
+#~ "Загрузить этот канал?"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - Добавить Путеводитель по Каналам"
+
+#~ msgid "Enter the URL of the channel guide to add"
+#~ msgstr "Введите адрес нового путеводителя по каналам"
+
+#~ msgid ""
+#~ "You are running a version of Democracy Player with a custom set of channels."
+#~ msgstr "Ваша версия Democracy Player работает с настроенными вами каналами."
+
+#~ msgid "New Channel Guide..."
+#~ msgstr "Новый путеводитель по каналам"
 
 #~ msgid "_Copy Video URL"
 #~ msgstr "_Скопировать адрес видео-файла"
@@ -91,53 +402,20 @@ msgstr ""
 #~ msgid "_Stop Video"
 #~ msgstr "Остановить видео"
 
-#~ msgid "_Play / Pause"
-#~ msgstr "_Воспроизведение/Пауза"
-
-#~ msgid "_Update Channel"
-#~ msgstr "Обновить канал"
-
 #~ msgid "Re_name Channel"
 #~ msgstr "Переименовать канал"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "Удалить канал"
-
-#~ msgid "_Open..."
-#~ msgstr "Открыть..."
-
-#~ msgid "Open various files"
-#~ msgstr "Открыть разные файлы"
 
 #~ msgid "New _Playlist..."
 #~ msgstr "Новый список воспроизведения..."
 
-#~ msgid "Create new playlist"
-#~ msgstr "Создать новый список воспроизведения"
-
 #~ msgid "New Playlist _Folder..."
 #~ msgstr "Создать новую папку под списки воспроизведения..."
-
-#~ msgid "Create new playlist folder"
-#~ msgstr "Создать новую папку под списки воспроизведения"
 
 #~ msgid "New Channel _Folder..."
 #~ msgstr "Создать новую папку каналов..."
 
-#~ msgid "Create new channel folder"
-#~ msgstr "Создать новую папку каналов"
-
 #~ msgid "Add _Channel..."
 #~ msgstr "Добавить канал..."
-
-#~ msgid "P_references"
-#~ msgstr "Настройки"
-
-#~ msgid "Quit the Program"
-#~ msgstr "Выйти из программы"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "Обновить все каналы"
 
 #~ msgid "Delete selection"
 #~ msgstr "Удалить выделенное"
@@ -162,9 +440,6 @@ msgstr ""
 
 #~ msgid "Remove Playlist Folders..."
 #~ msgstr "Удалить папки плейлистов..."
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Удалить канал..."
 
 #~ msgid "Remove Channels..."
 #~ msgstr "Удалить каналы..."
@@ -208,270 +483,6 @@ msgstr ""
 #~ msgid "Update Channels..."
 #~ msgstr "Обновить каналы..."
 
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Ошибка при импорте модулей democracy:\n"
-#~ "%s"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr "Здесь пусто.<br></br> Введите поисковой термин в поле чуть выше."
-
-#~ msgid "Searching..."
-#~ msgstr "Идет поиск..."
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "Результаты поиска \"${query}\""
-
-#~ msgid "Empty Playlist"
-#~ msgstr "Очистить плейлист"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr "Чтобы добавить скаченное видео в плейлист перетащите видео мышкой."
-
-#~ msgid "Empty Playlist Folder"
-#~ msgstr "Очистить папку плейлистов"
-
-#~ msgid ""
-#~ "This folder contains ${count} playlists, but the playlists do not contain "
-#~ "any items."
-#~ msgstr "Папка содержит ${count}  пустых плейлистов."
-
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "Перетащите мышкой плейлисты в эту папку чтобы их добавить."
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr ""
-#~ "Выделенно ${count} папок плейлистов<br></br>(в целом ${containedcount} "
-#~ "плейлистов)"
-
-#~ msgid "${count} Playlists Selected"
-#~ msgstr "Выделенно ${count} плейлистов"
-
-#~ msgid "STAR"
-#~ msgstr "В ИЗБРАННОЕ"
-
-#~ msgid "SAVE"
-#~ msgstr "СОХРАНИТЬ"
-
-#~ msgid "SAVED"
-#~ msgstr "СОХРАНЕНО"
-
-#~ msgid "DELETE"
-#~ msgstr "УДАЛИТЬ"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - Внешний Шаблон Воспроизведения"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "Продолжить к следующему видео"
-
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "Качается ${count} файлов"
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "Качается 1 файл"
-
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "${len} видео в этом канале"
-
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "Все ${len} видео подходят по поиску"
-
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "Найдено ${len} видео-файлов"
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${count} видео-файлов на канале"
-
-#~ msgid "Unwatched"
-#~ msgstr "Непросмотренные"
-
-#~ msgid "Watched"
-#~ msgstr "Просмотренные"
-
-#~ msgid "Saved"
-#~ msgstr "Сохранено"
-
-#~ msgid "Default"
-#~ msgstr "По умолчанию"
-
-#~ msgid "default"
-#~ msgstr "По умолчанию"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Видео удаляются после"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "Если включен, автоматическое скачивание должно"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr ""
-#~ "Не скачивать автоматически видео-файлы, если больше чем ${maxnew} ${maxnew2} "
-#~ "видео-файлов непросмотрены."
-
-#~ msgid "Downloaded"
-#~ msgstr "Скачано"
-
-#~ msgid "Recommend"
-#~ msgstr "Рекомендованный"
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "<label for=\"automatic\">Автоматически скачивать</label>"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "Идёт поиск по видео по этому адресу"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy не может воспроизвести файл. Можно попробывать открыть его другой "
-#~ "программой.<br></br><br></br><strong>Имя файла:</strong> "
-#~ "${filename}<Br></Br><strong>Тип файла:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "ВЫЯВИТЬ ФАЙЛ"
-
-#~ msgid "Play Externally"
-#~ msgstr "Запустить другой программой"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "Пропустить >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "Показать файл"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "ПОКАЗАТЬ ПАПКУ"
-
-#~ msgid "SHARE IT"
-#~ msgstr "ОТПРАВИТЬ ДРУГУ"
-
-#~ msgid "STAR IT"
-#~ msgstr "В ИЗБРАННОЕ"
-
-#~ msgid "Pending Auto Download"
-#~ msgstr "Ожидающие скачивания файлы"
-
-#~ msgid "Simple translation"
-#~ msgstr "Простой перевод"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "грузовик остановился в ${can}"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "Это ${car} и это ${truck} <span>А это <b style=\"color:red\">сырой</b> "
-#~ "текст</span>"
-
-#~ msgid "${size} disk space free"
-#~ msgstr "${size} свободного места"
-
-#~ msgid "${size} available for downloads"
-#~ msgstr "${size} свободного места для файлов"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "Удалить скаченные торренты"
-
-#~ msgid "Empty Channel Folder"
-#~ msgstr "Очистить папку канала"
-
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr "Перетащите мышкой каналы в эту папку чтобы их добавить."
-
-#~ msgid "My Collection"
-#~ msgstr "Моя коллекция"
-
-#~ msgid "New Videos"
-#~ msgstr "Новые видео"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy интернет-ТВ: Как начать"
-
-#~ msgid "GO BIG:"
-#~ msgstr "МЫСЛИТЕ ШИРЕ:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr ""
-#~ "Это кнопка полноэкранного режима. Нажмите её и откиньтесь назад в Вашем "
-#~ "кресле."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "СВЕЖЕЕ:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "Синие кружки означают что в канале есть новое видео, зелёные кружки означают "
-#~ "что есть новое видео скачалось и ждёт просмотра."
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">ПРОПУСТИТЬ: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"doneWithIntro();\">Путеводитель по каналам >></a></strong>"
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>Добавить каналы:</strong> Путеводитель по каналам поможет вам "
-#~ "составить собственный домашний телеканал. Щелкните 'Добавить' чтобы "
-#~ "подключиться к каналу-- <strong>все каналы в путеводителе бесплатны.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>Удобный просмотр:</strong> В Democracy применён другой подход чем на "
-#~ "страницах с видео-клипами-- авторы видео-каналов могут предоставить большую, "
-#~ "качественную картинку. Вам не придётся ждать пока скачается видео: "
-#~ "подключитесь к каналу и вернитесь когда видео скачается."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>Не выключайте:</strong> Democracy Player проверяет каналы на наличие "
-#~ "новых видео-файлов, и скачивает их не отвлекая вас. Оставьте Democracy "
-#~ "включенным и просмотрите новые видео, когда у вас будет время."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>Не волнуйтесь о захламлении жёсткого диска:</strong> Так же как "
-#~ "TiVo, Democracy Player определяет срок жизни для видео-файлов, чтобы всегда "
-#~ "было место для более новых файлов. Можно сохранить файл на всегда нажав "
-#~ "'Сохранить', или настроить автоматическое сохранение видео в настройках "
-#~ "канала."
-
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr ""
-#~ "Выделено ${count} папок каналов<br></br>(в целом ${containedcount} каналов)"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "Выделено ${count} каналов"
-
 #~ msgid "outside of democracy."
 #~ msgstr "вне democracy."
 
@@ -498,11 +509,6 @@ msgstr ""
 #~ "из Вашей коллекции?"
 
 #~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr "Желаете ли вы удалить этот файл или исключить его из коллекции?"
-
-#~ msgid ""
 #~ "One or more of these videos was not downloaded from a channel.  Would you "
 #~ "like to delete these items or just remove their entries from My Collection?"
 #~ msgstr ""
@@ -516,81 +522,9 @@ msgstr ""
 #~ "Обнаружена база данных, сохраненная в новой версии Democracy. Необходимо "
 #~ "скачать и запустить эту версию Democracy."
 
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - Добавить Канал"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - Добавить Путеводитель по Каналам"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "Введите адрес нового путеводителя по каналам"
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr "Ваша версия Democracy Player работает с настроенными вами каналами."
-
-#~ msgid "Channel Guide"
-#~ msgstr "Путеводитель по каналам"
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "Канал не совместим с Democracy!"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "Но мы постараемся добыть файлы. Показ видео-файлов может занять несколько "
-#~ "дольше, и описания могут быть исковерканы. Пожалуйста свяжитесь с авторами "
-#~ "$url и попросите их предоставить rss-канал в формате понятный Democracy.\n"
-#~ "\n"
-#~ "Загрузить этот канал?"
-
-#~ msgid "Local File"
-#~ msgstr "Локальный файл"
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr ""
-#~ "Этот канал Democracy имеет неверный формат: %s. Пожалуйста сообщите об этом "
-#~ "авторам сайта."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Этот канал Democracy имеет неверный тип содержимого: %s. Пожалуйста сообщите "
-#~ "об этом авторам сайта."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Файл канала Democracy на скачался: %s."
-
 #~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
 #~ msgstr ""
 #~ "(Изменения вступят в силу только после перезапуска Democracy Player.)"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>Каналы</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>Дисковое пространство</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>Скаченное</b>"
-
-#, fuzzy
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Основные</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>Каталог Фильмов</b>"
 
 #~ msgid "<b>Playback</b>"
 #~ msgstr "<b>Воспроизведение</b>"
@@ -655,17 +589,8 @@ msgstr ""
 #~ "интернет-ТВ каналов, каждый бесплатный. Просто нажмите 'Добавить Канал' "
 #~ "чтобы смотреть видео из канала."
 
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr "Автоматичеси запускать Democracy Player когда я вхожу в систему"
-
 #~ msgid "Bit Torrent uses ports between"
 #~ msgstr "Bit Torrent использует порты между"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "Проверить каналы на наличие нового видео"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy Player"
 
 #~ msgid ""
 #~ "Democracy Player can find all the videos on your computer to help you "
@@ -674,25 +599,12 @@ msgstr ""
 #~ "Democracy Player может найти видео-файлы на вашем компьютере и создать "
 #~ "коллекцию."
 
-#~ msgid "GB free"
-#~ msgstr "Гб свободно"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "КБ/с когда компьютером активно пользуется"
-
-#~ msgid "Show movies in these directories in My Collection"
-#~ msgstr "Показать фильмы в этих папках в моей коллекции"
-
 #~ msgid ""
 #~ "The next few screens will help you set up democracy player so that it works "
 #~ "best for you.  Here's the first question."
 #~ msgstr ""
 #~ "Несколько следующих вопросов помогут вам настроить Democracy Player под "
 #~ "себя. Вот первый вопрос."
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr ""
-#~ "Чтобы избежать замедление канала, ограничьте скорость закачки на сервер до"
 
 #~ msgid ""
 #~ "We recommend that you allow Democracy Player to launch when your computer "
@@ -714,25 +626,143 @@ msgstr ""
 #~ "потоком, качать с торрент-сети, отправлять ссылки на видео Вашим друзьям, и "
 #~ "многое другое."
 
+#~ msgid "Results for \"${query}\""
+#~ msgstr "Результаты поиска \"${query}\""
+
+#~ msgid "Empty Playlist"
+#~ msgstr "Очистить плейлист"
+
+#~ msgid "Drag downloaded videos to this playlist to add them."
+#~ msgstr "Чтобы добавить скаченное видео в плейлист перетащите видео мышкой."
+
+#~ msgid "Empty Playlist Folder"
+#~ msgstr "Очистить папку плейлистов"
+
 #~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
+#~ "This folder contains ${count} playlists, but the playlists do not contain "
+#~ "any items."
+#~ msgstr "Папка содержит ${count}  пустых плейлистов."
+
+#~ msgid "Drag playlists to this folder to add them."
+#~ msgstr "Перетащите мышкой плейлисты в эту папку чтобы их добавить."
+
+#~ msgid ""
+#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+#~ "playlists)"
 #~ msgstr ""
-#~ "Вы выбрали новую папку для сохранения закачек. Переместить ли в неё "
-#~ "существующие закачки? (Файлы, загружаемые в данный момент, не будут "
-#~ "перемещены до окончания загрузок.)"
+#~ "Выделенно ${count} папок плейлистов<br></br>(в целом ${containedcount} "
+#~ "плейлистов)"
+
+#~ msgid "${count} Playlists Selected"
+#~ msgstr "Выделенно ${count} плейлистов"
+
+#~ msgid "STAR"
+#~ msgstr "В ИЗБРАННОЕ"
+
+#~ msgid "SAVED"
+#~ msgstr "СОХРАНЕНО"
+
+#~ msgid "DELETE"
+#~ msgstr "УДАЛИТЬ"
+
+#~ msgid "default"
+#~ msgstr "По умолчанию"
+
+#~ msgid "Videos expire after"
+#~ msgstr "Видео удаляются после"
+
+#~ msgid "When turned on, Auto Download should"
+#~ msgstr "Если включен, автоматическое скачивание должно"
+
+#~ msgid ""
+#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+#~ "unwatched."
+#~ msgstr ""
+#~ "Не скачивать автоматически видео-файлы, если больше чем ${maxnew} ${maxnew2} "
+#~ "видео-файлов непросмотрены."
+
+#~ msgid "Downloaded"
+#~ msgstr "Скачано"
+
+#~ msgid "<label for=\"automatic\">Auto Download</label>"
+#~ msgstr "<label for=\"automatic\">Автоматически скачивать</label>"
+
+#~ msgid ""
+#~ "Democracy can't play this file. You may be able to open it with a different "
+#~ "program.<br></br><br></br><strong>Filename:</strong> "
+#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
+#~ msgstr ""
+#~ "Democracy не может воспроизвести файл. Можно попробывать открыть его другой "
+#~ "программой.<br></br><br></br><strong>Имя файла:</strong> "
+#~ "${filename}<Br></Br><strong>Тип файла:</strong> ${format}"
+
+#~ msgid "REVEAL FILE"
+#~ msgstr "ВЫЯВИТЬ ФАЙЛ"
+
+#~ msgid "Skip >> ${countdown}"
+#~ msgstr "Пропустить >> ${countdown}"
+
+#~ msgid "SHOW FILE"
+#~ msgstr "Показать файл"
+
+#~ msgid "SHOW FOLDER"
+#~ msgstr "ПОКАЗАТЬ ПАПКУ"
+
+#~ msgid "SHARE IT"
+#~ msgstr "ОТПРАВИТЬ ДРУГУ"
+
+#~ msgid "STAR IT"
+#~ msgstr "В ИЗБРАННОЕ"
+
+#~ msgid "${size} disk space free"
+#~ msgstr "${size} свободного места"
+
+#~ msgid "${size} available for downloads"
+#~ msgstr "${size} свободного места для файлов"
+
+#~ msgid "Clear Completed Torrents"
+#~ msgstr "Удалить скаченные торренты"
+
+#~ msgid "Empty Channel Folder"
+#~ msgstr "Очистить папку канала"
+
+#~ msgid "Drag channels to this folder to add them."
+#~ msgstr "Перетащите мышкой каналы в эту папку чтобы их добавить."
+
+#~ msgid ""
+#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
+#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
+#~ msgstr ""
+#~ "<strong i18n:translate=\"\">ПРОПУСТИТЬ: <a style=\"color: #090;\" href=\"#\" "
+#~ "onclick=\"doneWithIntro();\">Путеводитель по каналам >></a></strong>"
+
+#~ msgid ""
+#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+#~ "channels)"
+#~ msgstr ""
+#~ "Выделено ${count} папок каналов<br></br>(в целом ${containedcount} каналов)"
+
+#~ msgid "${count} Channels Selected"
+#~ msgstr "Выделено ${count} каналов"
+
+#~ msgid "Local File"
+#~ msgstr "Локальный файл"
+
+#, fuzzy
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Основные</b>"
+
+#~ msgid "Automatically run Democracy Player when I log in"
+#~ msgstr "Автоматичеси запускать Democracy Player когда я вхожу в систему"
+
+#~ msgid "Show movies in these directories in My Collection"
+#~ msgstr "Показать фильмы в этих папках в моей коллекции"
 
 #~ msgid "_Add Directory"
 #~ msgstr "Добавить директорию"
 
 #~ msgid "_Store downloaded videos in this folder:"
 #~ msgstr "Сохранять скаченное видео в папку:"
-
-#, fuzzy
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr "и попросите предоставить фид в формате, поддерживаемом Democracy."
 
 #~ msgid "A search channel contains"
 #~ msgstr "Поисковой канал содержит"
@@ -776,36 +806,6 @@ msgstr ""
 
 #~ msgid "Would you like to run Democracy on startup?"
 #~ msgstr "Запускать ли Democracy при загрузке системы?"
-
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName версия $appVersion ($appRevision). Все права защищены (c) 2005, "
-#~ "2006 $publisher."
-
-#~ msgid "Please help us fix it. Copy and paste all the"
-#~ msgstr "Помогите нам исправить Democracy. Скопируйте всю информацию"
-
-#~ msgid ""
-#~ "information into our bug tracker and tell us what you were doing when the"
-#~ msgstr ""
-#~ ", вставьте ее в систему отслеживания багов и раскажите, что Вы делали."
-
-#~ msgid "problem occurred."
-#~ msgstr "возникла проблема."
-
-#~ msgid ""
-#~ "Then, please restart Democracy Player (or you may keep getting related "
-#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-#~ "with your help we're fixing problems fast!"
-#~ msgstr ""
-#~ "Затем перезапустите Democracy Player (в противном случае, ошибки будут "
-#~ "продолжаться). Приносим свои извинения за неудобства. Democracy Player еще  "
-#~ "не выпущен, и с Вашей помощью мы решаем проблемы быстрее."
-
-#~ msgid "You found a bug in Democracy!"
-#~ msgstr "Вы нашли ошибку в Democracy!"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -932,7 +932,6 @@ msgstr ""
 #~ msgstr "V"
 
 #: ../../portable/dialogs.py:77
-#, fuzzy
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -1105,7 +1104,7 @@ msgid "Playlists"
 msgstr "Списки воспроизведения"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Настройка..."
 
 msgid "Previous Video"
 msgstr "Предыдущее видео"
@@ -1180,13 +1179,10 @@ msgstr "Видео-поиск"
 msgid "VideoWindow"
 msgstr "Окно воспроизведения"
 
-#, fuzzy
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
-"Location http://foo.bar.com/baz requires a username and password for \"text "
-"supplied by server\". (Do not localize -- test data)\n"
 
 msgid "Password:\n"
 msgstr "Пароль:\n"
@@ -1289,7 +1285,6 @@ msgstr "Минимум:"
 msgid "Never"
 msgstr "Никогда"
 
-#, fuzzy
 msgid "OtherViews"
 msgstr "Другие виды"
 
@@ -1358,7 +1353,6 @@ msgstr "Канал"
 msgid "Create"
 msgstr "Создать"
 
-#, fuzzy
 msgid "In this:"
 msgstr "В этом:"
 
@@ -1482,7 +1476,6 @@ msgid "A new version of %s is available for download."
 msgstr "Новая версия %s доступна для загрузки."
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240
-#, fuzzy
 msgid "Error Bombing Item"
 msgstr "Ошибка при открытии видео"
 
@@ -1576,41 +1569,41 @@ msgstr "Введите адрес канала, на который вы жел�
 
 #: ../../platform/osx/frontend/QuicktimeRenderer.py:248
 msgid "Audio"
-msgstr ""
+msgstr "Звук"
 
 #: ../../platform/osx/frontend/Preferences.py:64
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "General"
-msgstr ""
+msgstr "Общий"
 
 #: ../../platform/osx/frontend/Preferences.py:66
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Downloads"
-msgstr ""
+msgstr "Загрузки"
 
 #: ../../platform/osx/frontend/Preferences.py:67
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
 msgid "Folders"
-msgstr ""
+msgstr "Каталоги"
 
 #: ../../platform/osx/frontend/Preferences.py:68
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Disk Space"
-msgstr ""
+msgstr "Дисковое пространство"
 
 #: ../../platform/osx/frontend/Preferences.py:196
 msgid "Movies Directory"
-msgstr ""
+msgstr "Каталог фильмов"
 
 #: ../../platform/osx/frontend/Preferences.py:197
 #, python-format
 msgid "Select a Directory to store %s downloads in."
-msgstr ""
+msgstr "Выберите каталог для хранения %s загрузок."
 
 #: ../../platform/osx/frontend/Preferences.py:198
 #: ../../platform/osx/frontend/Preferences.py:262
 msgid "Select"
-msgstr ""
+msgstr "Выбор"
 
 #: ../../platform/osx/frontend/Preferences.py:207
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
@@ -1625,6 +1618,9 @@ msgid ""
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"Вы выбрали новую папку для загрузки фильмов. Желаете %s переместить "
+"существующие загрузки туда? (Загружаемые фильмы не будут перемещаться до их "
+"полной загрузки)."
 
 #: ../../platform/osx/frontend/Preferences.py:260
 msgid "View this Directory in the Library"
@@ -1636,7 +1632,7 @@ msgstr "Выбирете папку для просмотра в библиот�
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Закончить"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1766,7 +1762,7 @@ msgstr "Новый путеводитель по каналам..."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564
 msgid "Folder Location"
-msgstr ""
+msgstr "Размещение папки"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
@@ -1807,11 +1803,11 @@ msgstr "Для сохранения видео необходимо %s Мб"
 
 #: ../../portable/dl_daemon/download.py:672
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "Сбой BitTorrent"
 
 #: ../../portable/dl_daemon/download.py:673
 msgid "BitTorrent failed to startup"
-msgstr ""
+msgstr "Не удалось запустить BitTorrent"
 
 #: ../../portable/dl_daemon/download.py:796
 msgid "Corrupt Torrent"
@@ -1832,15 +1828,15 @@ msgstr "Torrent-файл для этого видео был удален "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "вне Miro."
 
 #: ../../portable/tabs.py:44
 msgid "Library"
-msgstr ""
+msgstr "Библиотека"
 
 #: ../../portable/tabs.py:45
 msgid "New"
-msgstr ""
+msgstr "Новый"
 
 #: ../../portable/tabs.py:47
 msgid "Downloading"
@@ -1852,7 +1848,7 @@ msgstr "Скопировать адрес в буфер"
 
 #: ../../portable/guide.py:154
 msgid "Miro Guide"
-msgstr ""
+msgstr "Путеводитель по Miro"
 
 #: ../../portable/extrastrings.py:22 ../../portable/feed.py:2028
 #: ../../portable/feed.py:2120
@@ -1861,7 +1857,7 @@ msgstr "Поиск"
 
 #: ../../portable/downloader.py:215
 msgid "activity"
-msgstr ""
+msgstr "активность"
 
 #: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
 #: ../../portable/httpclient.py:142
@@ -1895,7 +1891,7 @@ msgstr "Введите новое имя для плейлиста:"
 
 #: ../../portable/feed.py:383
 msgid "never"
-msgstr ""
+msgstr "никогда"
 
 #: ../../portable/feed.py:385 ../../portable/item.py:542
 #, python-format
@@ -1905,7 +1901,7 @@ msgstr "%d часов"
 #: ../../portable/feed.py:387
 #, python-format
 msgid "%d day"
-msgstr ""
+msgstr "%d дней"
 
 #: ../../portable/feed.py:389 ../../portable/item.py:540
 #, python-format
@@ -1915,7 +1911,7 @@ msgstr "%d дней"
 #: ../../portable/feed.py:391
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d месяцев"
 
 #: ../../portable/feed.py:787
 msgid "Update Channel Now"
@@ -2010,7 +2006,7 @@ msgstr "Отметить как непросмотренное"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Отметить как просмотренный"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -2053,49 +2049,51 @@ msgstr "OPML-файлы"
 
 #: ../../portable/opml.py:145
 msgid "OPML Import failed"
-msgstr ""
+msgstr "Не удалось импортировать OPML"
 
 #: ../../portable/opml.py:146
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
+msgstr "Выбранный OPML файл выглядит поврежденным. Импорт был прерван."
 
 #: ../../portable/opml.py:151
 msgid "OPML Import summary"
-msgstr ""
+msgstr "Общий импорт OPML"
 
 #: ../../portable/opml.py:152
 #, python-format
 msgid "Successfully imported %d feed."
 msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Успешно импортирован %d фид."
+msgstr[1] "Успешно импортировано %d фида."
+msgstr[2] "Успешно импортированы %d фидов."
 
 #: ../../portable/opml.py:155
 #, python-format
 msgid "Skipped %d feed already present."
 msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Пропущенный %d фид уже присутствует."
+msgstr[1] "Пропущенные %d фида уже присутствуют."
+msgstr[2] "Пропущенные %d фидов уже присутствуют."
 
 #: ../../portable/autoupdate.py:121
 #, python-format
 msgid "%s Version Alert"
-msgstr ""
+msgstr "%s Оповещение о версии"
 
 #: ../../portable/autoupdate.py:122
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
-msgstr ""
+msgstr "Новая версия %s доступна. Хотите скачать ее сейчас?"
 
 #: ../../portable/autoupdate.py:128
 #, python-format
 msgid "%s Version Check"
-msgstr ""
+msgstr "%s проверка версии"
 
 #: ../../portable/autoupdate.py:129
 #, python-format
 msgid "%s is up to date."
-msgstr ""
+msgstr "%s уже обновлен."
 
 #: ../../portable/util.py:252 ../../portable/httpclient.py:126
 msgid "Internal Error"
@@ -2106,6 +2104,8 @@ msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
 msgstr ""
+"Возникла внутренняя ошибка. Вы можете помочь выяснить причину ошибки и "
+"помочь её устранению направив нам отчет об ошибке."
 
 #: ../../portable/util.py:252
 msgid ""
@@ -2251,15 +2251,15 @@ msgstr "Позже"
 
 #: ../../portable/dialogs.py:98
 msgid "Close to Tray"
-msgstr ""
+msgstr "Свернуть в трей"
 
 #: ../../portable/dialogs.py:99
 msgid "Launch Miro"
-msgstr ""
+msgstr "Запустить Miro"
 
 #: ../../portable/dialogs.py:100
 msgid "Download Anyway"
-msgstr ""
+msgstr "Скачать всё равно"
 
 #: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:45
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
@@ -2273,27 +2273,27 @@ msgstr "По поисковому термину найдены видео в к
 
 #: ../../portable/singleclick.py:87
 msgid "Download already exists"
-msgstr ""
+msgstr "Загрузка уже существует"
 
 #: ../../portable/singleclick.py:88
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "Этот URL уже загружается внешней программой."
 
 #: ../../portable/singleclick.py:94
 msgid "Miro will begin downloading it now."
-msgstr ""
+msgstr "Miro начнет заугрзку сейчас."
 
 #: ../../portable/singleclick.py:96
 msgid "It is downloading now."
-msgstr ""
+msgstr "Загружается."
 
 #: ../../portable/singleclick.py:98
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "Уже загружена."
 
 #: ../../portable/singleclick.py:125
 msgid "Download Error"
-msgstr ""
+msgstr "Ошибка скачивания"
 
 #: ../../portable/singleclick.py:126
 #, python-format
@@ -2302,6 +2302,9 @@ msgid ""
 "\n"
 "URL: %s"
 msgstr ""
+"Miro не в состоянии загрузить файл по этой ссылке:\n"
+"\n"
+"URL: %s"
 
 #: ../../portable/singleclick.py:134
 msgid "File Download"
@@ -2402,15 +2405,15 @@ msgstr "Сохранить видео как..."
 
 #: ../../portable/menubar.py:153
 msgid "Save Videos _As..."
-msgstr ""
+msgstr "Сохранить видео _Как ..."
 
 #: ../../portable/menubar.py:154
 msgid "Copy Video _URL"
-msgstr ""
+msgstr "Копировать видео _URL"
 
 #: ../../portable/menubar.py:156
 msgid "_Options..."
-msgstr ""
+msgstr "_Опции..."
 
 #: ../../portable/menubar.py:157
 msgid "_Quit"
@@ -2418,27 +2421,27 @@ msgstr "Выход"
 
 #: ../../portable/menubar.py:165
 msgid "Cu_t"
-msgstr ""
+msgstr "_Вырезать"
 
 #: ../../portable/menubar.py:166
 msgid "_Copy"
-msgstr ""
+msgstr "_Копировать"
 
 #: ../../portable/menubar.py:167
 msgid "_Paste"
-msgstr ""
+msgstr "_Вставить"
 
 #: ../../portable/menubar.py:168
 msgid "Select _All"
-msgstr ""
+msgstr "Выделить_все"
 
 #: ../../portable/menubar.py:169
 msgid "_Delete"
-msgstr ""
+msgstr "_Удалить"
 
 #: ../../portable/menubar.py:173
 msgid "Add _Channel"
-msgstr ""
+msgstr "Добавить _канал"
 
 #: ../../portable/menubar.py:174
 msgid "New Searc_h Channel..."
@@ -2446,7 +2449,7 @@ msgstr "Новый поисковой канал..."
 
 #: ../../portable/menubar.py:175
 msgid "New _Folder..."
-msgstr ""
+msgstr "Новая _папка"
 
 #: ../../portable/menubar.py:176
 msgid "Add Channel _Guide..."
@@ -2506,7 +2509,7 @@ msgstr "Воспроизвести"
 
 #: ../../portable/menubar.py:213
 msgid "_Stop"
-msgstr ""
+msgstr "_Остановить"
 
 #: ../../portable/menubar.py:215
 msgid "_Next Video"
@@ -2518,19 +2521,19 @@ msgstr "Предыдущее видео"
 
 #: ../../portable/menubar.py:218
 msgid "Skip _Forward"
-msgstr ""
+msgstr "Прыгнуть _вперед"
 
 #: ../../portable/menubar.py:219
 msgid "Skip _Back"
-msgstr ""
+msgstr "Прыгнуть _назад"
 
 #: ../../portable/menubar.py:221
 msgid "Volume _Up"
-msgstr ""
+msgstr "_Увеличить громкость"
 
 #: ../../portable/menubar.py:222
 msgid "Volume _Down"
-msgstr ""
+msgstr "У_меньшить громкость"
 
 #: ../../portable/menubar.py:224
 msgid "_Fullscreen"
@@ -2538,7 +2541,7 @@ msgstr "Полноэкранный режим"
 
 #: ../../portable/menubar.py:228
 msgid "_About"
-msgstr ""
+msgstr "_О программе"
 
 #: ../../portable/menubar.py:229
 msgid "_Donate"
@@ -2550,7 +2553,7 @@ msgstr "_Справка"
 
 #: ../../portable/menubar.py:232
 msgid "Report a _Bug"
-msgstr ""
+msgstr "Сообщить об о_шибке"
 
 #: ../../portable/menubar.py:236
 msgid "_Video"
@@ -2558,7 +2561,7 @@ msgstr "_Видео"
 
 #: ../../portable/menubar.py:238
 msgid "_File"
-msgstr ""
+msgstr "_Файл"
 
 #: ../../portable/menubar.py:242
 msgid "_Channels"
@@ -2574,11 +2577,11 @@ msgstr "Воспроизвести"
 
 #: ../../portable/menubar.py:249
 msgid "Play Unwatched ($numUnwatched)"
-msgstr ""
+msgstr "Играть непросмотренные ($numUnwatched)"
 
 #: ../../portable/menubar.py:250
 msgid "Pause All Downloads ($numDownloading)"
-msgstr ""
+msgstr "Остановить все закачки ($numDownloading)"
 
 #: ../../portable/menubar.py:251
 msgid "Resume All Downloads ($numPaused)"
@@ -2657,43 +2660,43 @@ msgstr "Ошибка:"
 
 #: ../../portable/item.py:977
 msgid "Down Rate:"
-msgstr ""
+msgstr "Скорость скачивания:"
 
 #: ../../portable/item.py:978
 msgid "Down Total:"
-msgstr ""
+msgstr "Всего скачиваний:"
 
 #: ../../portable/item.py:980
 msgid "Up Rate:"
-msgstr ""
+msgstr "Скорость загрузки"
 
 #: ../../portable/item.py:981
 msgid "Up Total:"
-msgstr ""
+msgstr "Всего загрузок:"
 
 #: ../../portable/item.py:989
 msgid "Web page:"
-msgstr ""
+msgstr "Веб страница:"
 
 #: ../../portable/item.py:989
 msgid "permalink"
-msgstr ""
+msgstr "постоянная ссылка"
 
 #: ../../portable/item.py:993
 msgid "File link:"
-msgstr ""
+msgstr "Ссылка на файл:"
 
 #: ../../portable/item.py:993
 msgid "direct link to file"
-msgstr ""
+msgstr "прямая ссылка на файл"
 
 #: ../../portable/item.py:995
 msgid "File type:"
-msgstr ""
+msgstr "Тип файла:"
 
 #: ../../portable/item.py:1002
 msgid "REVEAL LOCAL FOLDER"
-msgstr ""
+msgstr "РАСКРЫТь ЛОКАЛЬНУЮ ПАПКУ"
 
 #: ../../portable/item.py:1004
 msgid "REVEAL LOCAL FILE"
@@ -2880,20 +2883,20 @@ msgstr "\"%s\" не валидный адрес URL"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Файл \"%s\" не существует"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Ошибка чтения"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Ошибка при чтении из \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Неизвестый код ошибки"
 
 #: ../../portable/httpclient.py:373
 msgid "Connection closed"
@@ -2916,10 +2919,12 @@ msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
+"Вы имеете базу данных, которая была сохранена в новой версии $shortAppName. "
+"Вы должны загрузить последнюю версию $shortAppName и запустить ее."
 
 #: ../../portable/app.py:700
 msgid "Video Directory Missing"
-msgstr ""
+msgstr "Видео каталог отсутствует"
 
 #: ../../portable/app.py:701
 msgid ""
@@ -2931,6 +2936,13 @@ msgid ""
 "drive (this will cause you to lose some details about the videos on the "
 "external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
+"\n"
+"Miro не может найти свой основной видео каталог. Это может быть связано с "
+"тем, что он находится на внешнем диске, который в настоящее время отключен.\n"
+"\n"
+"Если вы продолжите, видео каталог будет помещён на этот диск (это приведет к "
+"потере некоторых деталей о видео на внешнем диске). Вы также можете выйти, "
+"подключить диск и запустить Miro."
 
 #: ../../portable/app.py:1038 ../../portable/app.py:1052
 #: ../../portable/app.py:1096 ../../portable/app.py:1122
@@ -2991,32 +3003,32 @@ msgstr ""
 #: ../../portable/app.py:1143
 #, python-format
 msgid "Are you sure you want to remove %s?"
-msgstr ""
+msgstr "Точно удалить %s?"
 
 #: ../../portable/app.py:1147
 #, python-format
 msgid "Are you sure you want to remove these %s channels?"
-msgstr ""
+msgstr "Вы действительно хотите удалить эти %s каналы?"
 
 #: ../../portable/app.py:1160
 #, python-format
 msgid "Stop watching %s"
-msgstr ""
+msgstr "Остановить просмотр %s"
 
 #: ../../portable/app.py:1161
 #, python-format
 msgid "Are you sure you want to stop watching %s?"
-msgstr ""
+msgstr "Вы действительно хотите прекратить просмотр %s?"
 
 #: ../../portable/app.py:1164
 #, python-format
 msgid "Stop watching %s directories"
-msgstr ""
+msgstr "Остановить просмотр %s каталогов."
 
 #: ../../portable/app.py:1165
 #, python-format
 msgid "Are you sure you want to stop watching these %s directories?"
-msgstr ""
+msgstr "Хотите ли вы остановить просмотр %s директорий?"
 
 #: ../../portable/app.py:1196
 msgid "Are you sure you want to quit?"
@@ -3027,13 +3039,16 @@ msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
+"Miro все еще пытается отправить отчет об ошибке. Если выйти сейчас, отправка "
+"отменится. Выйти в любом случае?"
 
 #: ../../portable/app.py:1203
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d закачка всё ещё выполняется. Всё равно выйти?"
+msgstr[1] "%d закачки всё ещё выполняются. Всё равно выйти?"
+msgstr[2] "%d закачки всё ещё выполняются. Всё равно выйти?"
 
 #: ../../portable/app.py:1712
 msgid "Invalid Value"
@@ -3046,12 +3061,12 @@ msgstr "Недопустимое значение %s. Введите полож�
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Ошибка воспроизведения файла"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Файл \"%s\" был удалён другой программой вне Miro."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -3069,7 +3084,7 @@ msgstr ""
 
 #: ../../portable/app.py:2036
 msgid "$shortAppName - Add Channel"
-msgstr ""
+msgstr "$shortAppName - Добавить канал"
 
 #: ../../portable/app.py:2036
 msgid "Enter the URL of the channel to add"
@@ -3077,23 +3092,23 @@ msgstr "Введите адрес нового канала"
 
 #: ../../portable/app.py:2057
 msgid "$shortAppName - Add Miro Guide"
-msgstr ""
+msgstr "$shortAppName - Добавить Miro Guide"
 
 #: ../../portable/app.py:2057
 msgid "Enter the URL of the Miro Guide to add"
-msgstr ""
+msgstr "Введите URL для добавления Miro Guide"
 
 #: ../../portable/app.py:2063
 msgid "$shortAppName - Download Video"
-msgstr ""
+msgstr "$shortAppName - Скачать видео"
 
 #: ../../portable/app.py:2063
 msgid "Enter the URL of the video to download"
-msgstr ""
+msgstr "Введите URL для скачиваемого видео"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Начальные каналы"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -3107,20 +3122,23 @@ msgstr "Пользовательский канал"
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
 msgstr ""
+"У вас запущенна версия $longAppName с пользовательским набор каналов."
 
 #: ../../portable/app.py:2478
 msgid "Error Changing Movies Directory"
-msgstr ""
+msgstr "Ошибка при изменении каталога фильмов"
 
 #: ../../portable/app.py:2479
 msgid ""
 "You don't have permission to write to the directory you selected.  Miro will "
 "continue to use the old videos directory."
 msgstr ""
+"У вас нет разрешения на запись в каталог, который вы выбрали. Miro будет "
+"продолжать использовать старый каталог видеофильмов."
 
 #: ../../portable/app.py:2508
 msgid "Error Saving Video"
-msgstr ""
+msgstr "Ошибка при сохранении видео"
 
 #: ../../portable/app.py:2510
 #, python-format
@@ -3128,10 +3146,12 @@ msgid ""
 "An error occured while trying to save %s.  Please check that the file has "
 "not been deleted and try again."
 msgstr ""
+"Произошла ошибка при попытке сохранить %s. Убедитесь, что файл не был "
+"удален, и повторите попытку."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "(Changes won't go into effect until you restart Miro)"
-msgstr ""
+msgstr "(Изменения не будут применены до перезапуска Miro)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -3159,11 +3179,11 @@ msgstr "<b>Поиск Видео</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:10
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
-msgstr ""
+msgstr "<b>Хотите, чтобы Miro искал видео файлы на вашем компьютере?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
-msgstr ""
+msgstr "<b>Хотите запускать Miro при загрузке компьютера?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12
 msgid ""
@@ -3190,10 +3210,34 @@ msgid ""
 "<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
 "of them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"<b>Все готово!</b>\n"
+"\n"
+"Настройка завершена -- сейчас можно найти какие-нибудь каналы и начать "
+"просмотр.\n"
+"\n"
+"<b>Не ждите:</b> Miro отличается способностью просмотра видео с веб-страниц -"
+"- издатели могут предложить большие, качественные видео. Поэтому не сидите в "
+"ожидании: начните загрузки и проверьте их позже.\n"
+"\n"
+"<b>Оставьте его:</b> Miro регулярно проверяет каналы для получения новых "
+"видео и загрузки в фоновом режиме. Оставив его в текущий момент означает, "
+"что вы будете иметь новое видео, когда будете готовы к просмотру.\n"
+"\n"
+"<b>Не волнуйтесь по поводу дискового пространства:</b> Как TiVo, Miro имеет "
+"системы \"истечения\", что помогает очищать старое видео, чтобы освободить "
+"место для нового видео. Вы всегда можете сохранить видео, нажав "
+"\"Сохранить\", а можно установить параметры канала для сохранения видео "
+"автоматически.\n"
+"\n"
+"<b>Go Big:</b> Кнопка, расположенная справа от кнопки воспроизведения "
+"показывает полноэкранное видео.\n"
+"\n"
+"<b>Ищите видео:</b> Miro имеет сотни интернет TV-каналов, все они бесплатны. "
+"Просто нажмите 'Добавить', чтобы смотреть канал."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
 msgid "By default, videos _expire after"
-msgstr ""
+msgstr "По умолчанию, видео устаревает после"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
@@ -3201,7 +3245,7 @@ msgstr "Канал"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 msgid "C_hannels"
-msgstr ""
+msgstr "К_аналы"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "C_reate Channel"
@@ -3209,19 +3253,19 @@ msgstr "Создать канал"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Check Channels for _new content"
-msgstr ""
+msgstr "Проверить каналы на обновлённый контент"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "Disk _Space"
-msgstr ""
+msgstr "_Места на диске"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "Don't start a download _if it leaves less than"
-msgstr ""
+msgstr "Не начинать загрузку _если станет меньше чем"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Download at _most"
-msgstr ""
+msgstr "Загрузить самое _большое"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid ""
@@ -3235,7 +3279,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid "G_B free"
-msgstr ""
+msgstr "G_b свободно"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 msgid "Go"
@@ -3243,7 +3287,6 @@ msgstr "Go"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:40
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
-#, fuzzy
 msgid "In This:"
 msgstr "В этом:"
 
@@ -3252,10 +3295,11 @@ msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
+"Miro может найти все ваши видео файлы, чтобы помочь организовать коллекцию"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Play _videos one after another"
-msgstr ""
+msgstr "Игарть _видео файлы один за другим"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Preferences"
@@ -3267,11 +3311,11 @@ msgstr "Ограничить моим домашним каталогом"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "S_top after each video"
-msgstr ""
+msgstr "О_станавливаться после каждого видео"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "S_tore downloaded videos in this folder:"
-msgstr ""
+msgstr "Х_ранить скачанные видео в этой папке:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
@@ -3294,10 +3338,12 @@ msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr ""
+"Следующие несколько картинок помогут вам настроить Miro так, чтобы лучше "
+"работать с ним. Вот первый вопрос."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "To a_void slowdowns, limit upstream to"
-msgstr ""
+msgstr "Чтобы избежать замедления, ограничить исходящий трафик до"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Volume:"
@@ -3309,6 +3355,9 @@ msgid ""
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr ""
+"Мы рекомендуем вам включить Miro в автозапуск. Таким образом, "
+"видеоматериалы, которые не загрузились могут загрузиться и новые видеофильмы "
+"на своих каналах будут готовы, когда вы захотите посмотреть."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid ""
@@ -3316,6 +3365,9 @@ msgid ""
 "download videos from your favorite channels, watch new videos one after the "
 "other, download torrents, recommend videos to friends, and lots more."
 msgstr ""
+"Добро пожаловать в Интернет ТВ. Здесь с Miro вы можете: автоматически "
+"загружать видеоролики из ваших любимых каналов, смотреть новое видео один за "
+"другим, скачать торренты, рекомендовать видео друзьям и многое другое."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid ""
@@ -3323,42 +3375,44 @@ msgid ""
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
+"Вы выбрали новую папку для загрузки фильмов. Переместить существующие "
+"загрузки туда? (Загружаемые фильмы не будут перемещаться до конца)."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "_Add Folder"
-msgstr ""
+msgstr "_ Добавить папку"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "_Automatically run Miro when I log in"
-msgstr ""
+msgstr "_ Автоматически запустить Miro при входе в систему"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "_Bit Torrent uses ports between"
-msgstr ""
+msgstr "_ Bit Torrent использует порты между"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "_Downloads"
-msgstr ""
+msgstr "_ Загрузки"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid "_Folders"
-msgstr ""
+msgstr "П_апки"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "_General"
-msgstr ""
+msgstr "_Общие"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "_KB/s when my computer is active"
-msgstr ""
+msgstr "_КБ/с когда мой компьютер активен"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "_Playback"
-msgstr ""
+msgstr "_Воспроизведение"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "_Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgstr "_Возобновить воспроизведение видео с места остановки"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
@@ -3374,20 +3428,21 @@ msgstr "_Адрес"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "_Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "_Оповещать если при закрытии программы есть активные закачки"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr ""
+"_Просмотреть новые видео файлы в этой папке и включить их в библиотеку"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "_and"
-msgstr ""
+msgstr "_и"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "videos at once"
-msgstr ""
+msgstr "видео одновременно"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
@@ -3395,6 +3450,9 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName версия $appVersion ($appRevision); авторские права защищены (c) "
+"2005-2007 $publisher. $longAppName и $longAppName логотипы являются "
+"торговыми знаками $publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
@@ -3422,6 +3480,9 @@ msgid ""
 "information into our bug tracker and tell us what you were doing when the\n"
 "problem occurred."
 msgstr ""
+"Помогите нам исправить Miro. Скопируйте всю\n"
+"информацию в bug tracker и расскажите нам, что вы делали, когда\n"
+"возникла проблема."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
 msgid ""
@@ -3429,10 +3490,14 @@ msgid ""
 "Sorry for the inconvenience. $longAppName is still in beta, but with your "
 "help we're fixing problems fast!"
 msgstr ""
+"Тогда, пожалуйста, перезапустите $longAppName (или вы можете оставить все "
+"как есть). Приносим извинения за неудобства. $longAppName по-прежнему "
+"находится в стадии разработки, но с вашей помощью мы устраняем проблемы "
+"быстро!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
 msgid "You found a bug in $longAppName!"
-msgstr ""
+msgstr "Вы обнаружили ошибку в $longAppName!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
@@ -3441,7 +3506,6 @@ msgstr " "
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
-#, fuzzy
 msgid "'"
 msgstr "'"
 
@@ -3462,6 +3526,8 @@ msgid ""
 "and ask if they can supply a feed in a format that will work with "
 "$shortAppName."
 msgstr ""
+"и спросить, могут ли они поставлять кформат фида, который будет работать с $ "
+"shortAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
 msgid "$longAppName"
@@ -3473,6 +3539,9 @@ msgid ""
 "migrate your existing downloads there?(Currently dowloading movies will not "
 "be moved until they finish)"
 msgstr ""
+"Вы выбрали новую папку для загрузки фильма. Переместить $shortAppName "
+"существующие загрузки? (Загружаемые фильмы не будут перемещаться до их "
+"завершения)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
@@ -3488,18 +3557,19 @@ msgstr "Введите имя и пароль, выданный поставщи
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
 msgstr ""
+"(ВНИМАНИЕ: Изменения не будут действовать до перезапуска $ longAppName.)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Add Folder..."
-msgstr ""
+msgstr "Добавить папку"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Automatically run $longAppName when I login."
-msgstr ""
+msgstr "Автоматически запустить $longAppName, когда я вхожу в систему."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "By default, videos expire after"
@@ -3507,83 +3577,88 @@ msgstr "По умолчанию, видео устаревает через"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Check channels for new content"
-msgstr ""
+msgstr "Проверить каналы на обновлённый контент"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgstr "Свернуть в трэй, при этом закачки могут продолжаться."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "Каждые 30 минут"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Every hour"
-msgstr ""
+msgstr "Каждый час"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Folder"
-msgstr ""
+msgstr "Папка"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
-msgstr ""
+msgstr "Вручную"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
-msgstr ""
+msgstr "Параметры"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "Проиграть одно видео, затем остановиться."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Полностью выйти из Miro."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
 msgstr ""
+"Запомнить, где я остановил просмотр видео и продолжить воспроизведение с "
+"этого момента."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Show as a Channel"
-msgstr ""
+msgstr "Показать как канал"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Store downloaded videos in this folder:"
-msgstr ""
+msgstr "Хранить загруженные видео в этой папке:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid ""
 "To avoid slowdowns, limit upstream bandwith when my computer is active."
 msgstr ""
+"Чтобы избежать замедления, ограничьте полосы пропускания вверх, когда "
+"компьютер активен."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "Upstream limit (KB/s)"
-msgstr ""
+msgstr "Ограничить отдачу (KB/s)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
-msgstr ""
+msgstr "Использовать BitTorrent порты между"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr ""
+"ВНИМАНИЕ: Этот параметр не вступит в силу до перезапуска $longAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
 msgid "Warn me when I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "Оповещать если пытаюсь выйти при активных закачках."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
-msgstr ""
+msgstr "Предупреждать меня, когда я пытаюсь выйти с запущенными загрузками."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "When I click the red close button:"
-msgstr ""
+msgstr "Когда я нажимаю красную кнопку:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
 msgid "and"
@@ -3610,6 +3685,8 @@ msgid ""
 "$longAppName can find all the videos on your computer to help you organize "
 "your collection."
 msgstr ""
+"$longAppName может отыскать все видео на вашем компьютере и поможет "
+"организовать коллекцию."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
 msgid ""
@@ -3617,10 +3694,13 @@ msgid ""
 "background.  Leaving it running means you'll have new videos when you're "
 "ready to watch."
 msgstr ""
+"$longAppName регулярно проверяет каналы на наличие новых видео и закачивает "
+"их в фоновом режиме. Оставив Miro запущенным, вы сможете начинать просмотр "
+"всегда самых новых видео файлов."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
 msgid "$shortAppName First Time Setup"
-msgstr ""
+msgstr "$shortAppName Настройка при первом запуске"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
@@ -3653,6 +3733,10 @@ msgid ""
 "permanently by clicking 'save' and you can set a channel's settings to save "
 "videos automatically."
 msgstr ""
+"Как и в TiVo, особенность $longAppName в ситеме 'просрочки', которая "
+"помогает очищать папку от старых видео файлов и оставлять в комнате только "
+"новые файлы. Также вы можно сохранять некоторые файлы от очистки нажатием на "
+"кнопку 'сохранить' или настроить канал на автоматическое сохранение."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
 msgid ""
@@ -3679,6 +3763,9 @@ msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
+"Пеутеводитель по каналам $shortAppName содержитсотни интернет-ТВ каналов; "
+"Все они бесплатны. Достаточно нажать на кнопку 'ДОБАВИТЬ', чтобы начать "
+"просмотр канала."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."
@@ -3699,14 +3786,19 @@ msgid ""
 " This way, videos in progress can finish downloading and new videos can be "
 "downloaded in the background, ready when you want to watch."
 msgstr ""
+"Рекомендуется поместить $longAppName в автозагрузку. В этом случае, "
+"загружаемые видео файлы смогут сразу же продолжить загрузку, а новые видео "
+"файлы смогут загружаться в фоновом режиме и уже будут готовы к просмотру "
+"когда вы захотите их просмотреть."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
 msgid "Would you like $longAppName to look for video files on your computer?"
 msgstr ""
+"Хотите ли вы чтобы $longAppName поискал видео файлы на вашем компьютере?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
 msgid "Would you like to run $shortAppName on startup?"
-msgstr ""
+msgstr "Хотите ли вы поместить $shortAppName в автозагрузку?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
 msgid "You're done!"
@@ -3714,7 +3806,7 @@ msgstr "Конец!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
 msgid "Release Notes:"
-msgstr ""
+msgstr "Информация по версии:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"

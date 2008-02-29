@@ -1,45 +1,49 @@
 <!ENTITY prefs.title "Opcions">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.run.on.startup "Inicia automaticament $longAppName al conectar">
+<!ENTITY prefs.close_to_tray_start "Quan cliqui el botó de tancar:">
+<!ENTITY prefs.close_to_tray "Tanca a la safata de sistema, així les descarregues no s'aturaran.">
+<!ENTITY prefs.no_close_to_tray "Surt totalment">
 
 <!ENTITY prefs.general "General">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general.warn_on_quit "Alerta'm quan intenti sortir tenint descarreges baixant-se.">
 
 <!ENTITY prefs.channels "Canals">
-<!ENTITY prefs.channels.check "Check channels for new content">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check "Comprova si hi han continguts nous als canals">
+<!ENTITY prefs.channels.check.thirty "Cada 30 minuts">
+<!ENTITY prefs.channels.check.sixty "Cada hora">
+<!ENTITY prefs.channels.check.manually "Manualment">
 
-<!ENTITY prefs.playback "Reproducció">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Novetats">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+
+<!ENTITY prefs.playback "Reprodueix">
+<!ENTITY prefs.playback.remember.pos "Recorda el punt on s'ha aturat un vídeo i al reprendre el visionat fes-ho des d'aquest lloc.">
 <!ENTITY prefs.playback.auto.next.video "Reprodueix els vídeos un rera l'altre">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback.stop.after.each "Reprodueix un vídeo i després atura't">
 
 <!ENTITY prefs.folder.movies "Carpetes">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Canviar...">
+<!ENTITY prefs.folder.downloads "Desa els vídeos descarregats en aquesta carpeta:">
+<!ENTITY prefs.folder.change "Canvia...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
+<!ENTITY prefs.folder.others.caption "Mira si hi han vídeos nous en aquesta carpeta i inclou-los a la mediateca.">
 <!ENTITY prefs.folder.others.location "Directori">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
-<!ENTITY prefs.folder.others.add "Add Folder...">
-<!ENTITY prefs.folder.others.remove "Eliminar">
+<!ENTITY prefs.folder.others.shown "Mostra com a un canal">
+<!ENTITY prefs.folder.others.add "Afegeix carpeta...">
+<!ENTITY prefs.folder.others.remove "Elimina">
 
-<!ENTITY prefs.downloads.max "Descàrregues">
-<!ENTITY prefs.downloads.max.part1 "Descarregar-ho igualment">
-<!ENTITY prefs.downloads.max.part2 "vídeos tot d'una">
+<!ENTITY prefs.downloads "Descàrregues" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Espai al disc">
-<!ENTITY prefs.disk.space.min.part1 "No iniciar una descàrrega si deixa menys de">
-<!ENTITY prefs.disk.space.min.part2 "Gb lliures">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
+<!ENTITY prefs.disk.space.warning.restart "ALERTA: Aquesta configuració no serà efectiva fins que no reinicieu $longAppName.">
 
-<!ENTITY prefs.videos.expire "Per defecte, els vídeos expiren després de">
+<!ENTITY prefs.videos.expire "Per defecte, els vídeos caduquen després de">
 <!ENTITY prefs.videos.expire.one "1 dia">
 <!ENTITY prefs.videos.expire.three "3 dies">
 <!ENTITY prefs.videos.expire.six "6 dies">
@@ -48,8 +52,11 @@
 <!ENTITY prefs.videos.expire.never "Mai">
 
 <!ENTITY prefs.torrent "BitTorrent">
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "i">
+<!ENTITY prefs.torrent.restart.warning "(ALERTA: Els canvis no seran efectius fins que no reinicieu $longAppName.)">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

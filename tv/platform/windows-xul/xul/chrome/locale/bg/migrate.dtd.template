@@ -1,4 +1,4 @@
 <!ENTITY migrate.title "Да се прехвърлят ли съществуващите филми?">
-<!ENTITY migrate.accept "Migrate">
-<!ENTITY migrate.cancel "Don't Migrate">
+<!ENTITY migrate.accept "Мигриране">
+<!ENTITY migrate.cancel "Без мигриране">
 <!ENTITY migrate.description "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)">

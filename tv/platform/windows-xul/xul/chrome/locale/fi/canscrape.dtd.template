@@ -5,9 +5,9 @@
 <!ENTITY canscrape.body      "Mutta yritämme parhaamme mukaan ladata tiedostot. Videoiden listaamiseen saattaa kulua tavallista enemmän aikaa ja kuvaukset saattavat näyttää omituisilta.">
 
 <!ENTITY canscrape.prefix    "Ole hyvä ja ota yhteyttä julkaisijoihin:">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
+<!ENTITY canscrape.suffix    "ja pyydä heitä tarjoamaan syöte muodossa, joka toimii $shortAppName :n kanssa.">
 <!ENTITY canscrape.title     "Kanava ei ole $shortAppName-yhteensopiva!">
 <!ENTITY canscrape.body      "Mutta yritämme parhaamme mukaan ladata tiedostot. Videoiden listaamiseen saattaa kulua tavallista enemmän aikaa ja kuvaukset saattavat näyttää omituisilta.">
 
 <!ENTITY canscrape.prefix    "Ole hyvä ja ota yhteyttä julkaisijoihin:">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
+<!ENTITY canscrape.suffix    "ja pyydä heitä tarjoamaan syöte muodossa, joka toimii $shortAppName :n kanssa.">

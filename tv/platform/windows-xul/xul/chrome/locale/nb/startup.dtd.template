@@ -23,7 +23,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Gjør det stort:">
 <!ENTITY startup.done5.text		"Knappen til høyre for avspillingsknappen lar deg vise filmer i fullskjerm.">
 <!ENTITY startup.done6.heading		"Finn filmer:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"$shortAppName-kanalveiledern har hundrevis av internettbaserte TV-kanaler, og alle er gratis. Trykk &quot;Legg til&quot; for å overvåke en kanal.">
 <!ENTITY startup.answer.yes		"Ja">
 <!ENTITY startup.answer.no		"Nei">
 <!ENTITY startup.title			"$shortAppName førstegangsoppsett">
@@ -48,6 +48,6 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.heading		"Gjør det stort:">
 <!ENTITY startup.done5.text		"Knappen til høyre for avspillingsknappen lar deg vise filmer i fullskjerm.">
 <!ENTITY startup.done6.heading		"Finn filmer:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done6.text		"$shortAppName-kanalveiledern har hundrevis av internettbaserte TV-kanaler, og alle er gratis. Trykk &quot;Legg til&quot; for å overvåke en kanal.">
 <!ENTITY startup.answer.yes		"Ja">
 <!ENTITY startup.answer.no		"Nei">

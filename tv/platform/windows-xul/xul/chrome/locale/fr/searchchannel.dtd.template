@@ -1,8 +1,8 @@
 <!ENTITY searchchannel.description	"Une chaîne de recherche contient des éléments correspondant à un terme de recherche.">
-<!ENTITY searchchannel.termlabel 	"Rechercher:">
+<!ENTITY searchchannel.termlabel 	"Rechercher :">
 <!ENTITY searchchannel.title            "Nouvelle chaîne de recherche">
 <!ENTITY searchchannel.inthis "Dans Ceci:">
 <!ENTITY searchchannel.channel "Chaîne:">
-<!ENTITY searchchannel.searchengine "Moteur de Recherche:">
+<!ENTITY searchchannel.searchengine "Moteur de recherche :">
 <!ENTITY searchchannel.url "URL:">
 <!ENTITY searchchannel.createchannel "Créer un canal">

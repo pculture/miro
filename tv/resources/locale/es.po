@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-19 04:30+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2008-02-24 00:50+0000\n"
+"Last-Translator: Eric Báez <ericbaez@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr ""
 
 msgid "OK"
 msgstr "Aceptar"
@@ -41,8 +41,8 @@ msgstr ""
 "<font face=\"Lucida Grande\" size=\"-1\">Nuestro gestor de errores se "
 "encuentra en <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Por favor, "
 "díganos lo que estaba haciendo cuando ocurrió el problema, Copie el mensaje "
-"de la caja de arriba, conteste unas cuantas preguntas, y nos pondremos en "
-"seguida a trabajar.</font>"
+"de la caja de registro de arriba, conteste unas cuantas preguntas, y nos "
+"pondremos en seguida a trabajar.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -193,7 +193,7 @@ msgid "Playlists"
 msgstr "Listas de reproducción"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Preferencias..."
 
 msgid "Previous Video"
 msgstr "Vídeo anterior"
@@ -636,7 +636,7 @@ msgstr ""
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:44
 msgid "Download Completed"
-msgstr "Descarga completa"
+msgstr "Descarga Completada"
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:45
 #, python-format
@@ -725,7 +725,7 @@ msgstr "Elija un directorio para verlo en la biblioteca"
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Finalizar"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -921,7 +921,7 @@ msgstr "El archivo torrent para este elemento fue eliminado "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "Fuera de Miro"
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -1100,7 +1100,7 @@ msgstr "Marcar como no visto"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Marcar como Visto"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -1277,8 +1277,8 @@ msgid ""
 "Recent changes may be lost."
 msgstr ""
 "%s fue incapaz de guardar su base de datos: Su disco está lleno.\n"
-"Sugerimos eliminar archivos del disco duro lleno, o simplemente eliminar "
-"algunos vídeos de su biblioteca.\n"
+"Sugerimos eliminar archivos del mismo, o simplemente eliminar algunos vídeos "
+"de su biblioteca.\n"
 "Los cambios recientes podrían perderse."
 
 #: ../../portable/dialogs.py:81
@@ -1977,16 +1977,16 @@ msgstr "\"%s\" no es una URL válida"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "El archivo \"%s\" no existe"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Error de Lectura"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Error mientras leia \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -2157,12 +2157,12 @@ msgstr "%s es inválido. Debe introducir un número positivo."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Error revelando archivo"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "El archivo \"%s\" fue eliminado externamente"
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -2204,7 +2204,7 @@ msgstr "Escriba la URL del vídeo a descargar"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Canales Iniciales"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
@@ -2574,8 +2574,9 @@ msgid "Copy log to clipboard"
 msgstr "Copiar el registro al portapapeles"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
+#, fuzzy
 msgid "Open up the bug tracker"
-msgstr "Abrir el sistema de seguimiento de fallos"
+msgstr "Acceder al sistema de seguimiento de fallos"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
 msgid ""
@@ -2688,7 +2689,8 @@ msgstr "Comprobar si hay contenido nuevo en los canales"
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Close to tray so that downloads can continue."
 msgstr ""
-"minimizar al área de notificación para que las descargas puedan continuar."
+"Minimizar al área de notificación del panel manteniendo las descargas "
+"activas."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every 30 minutes"
@@ -2738,12 +2740,12 @@ msgstr "Almacenar videos descargados en esta carpeta:"
 msgid ""
 "To avoid slowdowns, limit upstream bandwith when my computer is active."
 msgstr ""
-"Para evitar relentizaciones, limita el ancho de banda de subida cuando el "
-"ordenador este activo."
+"Para evitar congestiones de red, limita el ancho de banda de subida cuando "
+"el ordenador esté activo."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "Upstream limit (KB/s)"
-msgstr "Limite de subida (KB/s)"
+msgstr "Límite de subida (KB/s)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
@@ -2756,7 +2758,8 @@ msgstr "Atención: Este ajuste no funcionara hasta que reinicie $longAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
 msgid "Warn me when I attempt to quit with downloads in progress."
-msgstr "Avisarme si intento salir del programa y todavía hay descargas"
+msgstr ""
+"Avisarme si intento salir del programa y todavía hay descargas activas"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
@@ -2918,4 +2921,4 @@ msgstr "Notas de la versión:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"
-msgstr "Pregunta"
+msgstr "Consulta"

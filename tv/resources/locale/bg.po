@@ -1,36 +1,39 @@
+# translation of democracyplayer-bg.po to Bulgarian
 # Bulgarian translation for democracy
 # Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
 #
+#
+# <>, 2006.
+# Yasen Pramatarov <yasen@lindeas.com>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: democracy\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: democracyplayer-bg\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-07-31 10:49+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Bulgarian <bg@li.org>\n"
+"PO-Revision-Date: 2008-02-22 18:07+0000\n"
+"Last-Translator: Narf <Unknown>\n"
+"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
-msgstr "Откажи"
+msgstr "Отказ"
 
 msgid "OK"
 msgstr "ОК"
 
 #: ../../portable/dialogs.py:76
 msgid "Ok"
-msgstr ""
+msgstr "ОК"
 
 msgid "$log"
-msgstr "Slog"
+msgstr "$log"
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
@@ -38,10 +41,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
-"<font face=\"Lucida Grande\" size=\"-1\">Полето за грешки...<a "
-"href=\"$bugTrackerURL\">$bugTrackerURL</a>.Кажете ни с какво правите, "
-"напишете го в полето за съобщения отгоре и отговорете на няколко въпроса. "
-"После приминете към работа.</font>"
+"<font face=\"Lucida Grande\" size=\"-1\">Системата ни за грешки е на <a "
+"href=\"$bugTrackerURL\">$bugTrackerURL</a>. Кажете ни какво правехте, "
+"напишете го в полето за съобщения отгоре и отговорете на няколко въпроса и "
+"ние ще се заемем с решаване на проблема.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -49,10 +52,10 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Всъщност, ако имате минутка, бихте могли да напишете рапорт за грешки до "
-"нашата система за отчитане на грешки? Минималното, от което се нуждаем, е "
-"описание на какво сте правили в този момент -- колкото е възможно по-"
-"прецизно -- плюс резултата от това в полето отдолу:"
+"Всъщност, ако имате минутка, бихте ли могли да напишете доклад до нашата "
+"система за отчитане на грешки? Най-малкото, от което се нуждаем, е описание "
+"на това какво сте правили преди грешката -- колкото е възможно по-прецизно --"
+" плюс резултата от полето по-долу:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -61,26 +64,24 @@ msgid ""
 "your preferences or channel subscriptions."
 msgstr ""
 "Лош късмет! $longAppName отказа поради вътрешна грешка $when. Извиняваме се "
-"и препоръчваме да излезнете от програмата и да я рестартирате $shortAppName. "
-"Това ще я обучи и ще намали шанса Ви да загубите своите предпочитания и "
-"регистрации в канали."
+"и препоръчваме да затворите и рестартирате $shortAppName. Това ще й е за "
+"урок, пък и ще намали вероятността да загубите настройки и регистрациите си "
+"в канали."
 
 msgid "The fall of $shortAppName??"
 msgstr "Повреда на $shortAppName??"
 
-#, fuzzy
 msgid "About Miro"
 msgstr "За Miro"
 
 msgid "Add Channel..."
-msgstr "Добави канал..."
+msgstr "Добавяне на канал..."
 
-#, fuzzy
 msgid "Add Guide..."
-msgstr "Добави Guide..."
+msgstr "Добавяне на портал..."
 
 msgid "Bring All to Front"
-msgstr "Изведи всичко на преден план"
+msgstr "Всичко на преден план"
 
 #: ../../platform/osx/frontend/Preferences.py:65
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
@@ -88,23 +89,22 @@ msgid "Channels"
 msgstr "Канали"
 
 msgid "Check for New Version"
-msgstr "Провери за нова версия"
+msgstr "Проверка за нова версия"
 
-#, fuzzy
 msgid "Clear Menu"
-msgstr "Изчисти менюто"
+msgstr "Изчистване на менюто"
 
 msgid "Close Window"
-msgstr "Затвори прозореца"
+msgstr "Затваряне на прозореца"
 
 msgid "Copy"
 msgstr "Копирай"
 
 msgid "Copy Channel URL"
-msgstr "Копирай URL на канала"
+msgstr "Копиране адреса на канала"
 
 msgid "Copy Video URL"
-msgstr "Копирай URL на видеото"
+msgstr "Копиране URL-адреса на филма"
 
 msgid "Cut"
 msgstr "Изрежи"
@@ -114,16 +114,16 @@ msgid "Delete"
 msgstr "Изтрий"
 
 msgid "Donate"
-msgstr "Направи дарение"
+msgstr "Дарение"
 
 msgid "Download Video..."
-msgstr ""
+msgstr "Изтеляне на филма..."
 
 msgid "Edit"
-msgstr "Редактирай"
+msgstr "Редактиране"
 
 msgid "Export Channels (OPML)..."
-msgstr ""
+msgstr "Изнасяне на каналите (OPML)..."
 
 msgid "File"
 msgstr "Файл"
@@ -134,56 +134,51 @@ msgstr "Цял екран"
 msgid "Help"
 msgstr "Помощ"
 
-#, fuzzy
 msgid "Hide Miro"
-msgstr "Скрий Miro"
+msgstr "Скриване на Miro"
 
 msgid "Hide Others"
-msgstr "Скрий другите"
+msgstr "Скриване на другите"
 
 msgid "Import Channels (OPML)..."
-msgstr ""
+msgstr "Внасяне на канали (OPML)"
 
 msgid "Main Window"
 msgstr "Главен прозорец"
 
 msgid "MainMenu"
-msgstr "Основно Меню"
+msgstr "Основно меню"
 
 msgid "Minimize"
-msgstr "Минимизирай"
+msgstr "Минимизиране"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:43
-#, fuzzy
 msgid "Miro"
-msgstr "Miro(Миро)"
+msgstr "Miro"
 
-#, fuzzy
 msgid "Miro Help"
-msgstr "Miro Помощ"
+msgstr "Помощ за Miro"
 
 msgid "New Channel Folder..."
 msgstr "Нова папка за канали..."
 
 msgid "New Playlist Folder..."
-msgstr "Нова папка за плейлиста"
+msgstr "Нова папка за списъци..."
 
 msgid "New Playlist..."
-msgstr "Нова плейлиста"
+msgstr "Нов списък..."
 
-#, fuzzy
 msgid "New Search Channel..."
 msgstr "Нов канал за търсене..."
 
-#, fuzzy
 msgid "Next Video"
-msgstr "Следващо видео..."
+msgstr "Следващо видео"
 
 msgid "Open Recent"
-msgstr "Отвори предишен"
+msgstr "Отворяне на скорошни"
 
 msgid "Open..."
-msgstr "Отвори..."
+msgstr "Отваряне..."
 
 msgid "Paste"
 msgstr "Постави"
@@ -195,52 +190,52 @@ msgstr "Пусни видео"
 #: ../../platform/osx/frontend/Preferences.py:69
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "Playback"
-msgstr ""
+msgstr "Възпроизвеждане"
 
 msgid "Playlists"
-msgstr ""
+msgstr "Плейлисти"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Настройки..."
 
 msgid "Previous Video"
-msgstr ""
+msgstr "Предходно видео"
 
 msgid "Quit Miro"
-msgstr ""
+msgstr "Излез от Miro"
 
 msgid "Remove..."
-msgstr ""
+msgstr "Премахване..."
 
 msgid "Rename..."
-msgstr "Преименувай"
+msgstr "Преименуване..."
 
 msgid "Report a bug"
-msgstr ""
+msgstr "Докладване за грешка"
 
 msgid "Save Video As..."
-msgstr ""
+msgstr "Запазване на филма като..."
 
 msgid "Select All"
-msgstr "Избери всички"
+msgstr "Избиране на всички"
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Изпращане този канал на приятел"
 
 msgid "Services"
 msgstr "Услуги"
 
 msgid "Show All"
-msgstr "Покажи всички"
+msgstr "Показване на всички"
 
 msgid "Stop Video"
-msgstr "Спри видео"
+msgstr "Спиране на филма"
 
 msgid "Update All Channels"
-msgstr "Осъвремени всички канали"
+msgstr "Обновяване на всички канали"
 
 msgid "Update Channel"
-msgstr "Осъвремени канал"
+msgstr "Обновяване на канала"
 
 msgid "Window"
 msgstr "Прозорец"
@@ -249,16 +244,16 @@ msgid "Zoom"
 msgstr "Размер"
 
 msgid "%channel feed%"
-msgstr "%Източник на канал%"
+msgstr "%channel feed%"
 
 msgid "%channel title%"
-msgstr "%Име на канал%"
+msgstr "%channel title%"
 
 msgid "%donation label%"
-msgstr "%дарителска марка%"
+msgstr "%donation label%"
 
 msgid "-00:00:00"
-msgstr ""
+msgstr "-00:00:00"
 
 msgid "00:00:00"
 msgstr "00:00:00"
@@ -267,21 +262,19 @@ msgid "Box"
 msgstr "Кутия"
 
 msgid "FullScreen Controls"
-msgstr "Контрол за цял екран"
+msgstr "Бутони при цял екран"
 
 #: ../../portable/tabs.py:46
 msgid "Video Search"
-msgstr ""
+msgstr "Търсене на филми"
 
 msgid "VideoWindow"
-msgstr "Видео прозорец"
+msgstr "Прозорец за филма"
 
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
 "supplied by server\". (Do not localize -- test data)\n"
 msgstr ""
-"Местонахождение http://foo.bar.com/baz изисква потребителско име и парола за "
-"\"текст от сървър\". (Не локализирайте -- тест данни)\n"
 
 msgid "Password:\n"
 msgstr "Парола:\n"
@@ -297,16 +290,16 @@ msgstr ""
 "\n"
 
 msgid " limit upstream to"
-msgstr " Лимит за изходен поток"
+msgstr " ограничаване изходящия трафик до"
 
 msgid "(You must restart Miro for this change to take effect)"
-msgstr ""
+msgstr "(Тази промяна влиза в сила сред рестартиране на програмата)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
-msgstr ""
+msgstr "(Тази промяна влиза в сила след рестартиране на програмата)\n"
 
 msgid "(movies directory path goes here)"
-msgstr "(път към директорията за филми)"
+msgstr "(път към папката за филми)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "1 day"
@@ -341,44 +334,44 @@ msgid "99999"
 msgstr "99999"
 
 msgid "Add..."
-msgstr ""
+msgstr "Добавяне..."
 
 msgid "BitTorrent ports:"
-msgstr "Торент коментари:"
+msgstr "Портове за торенти:"
 
 msgid "By default, videos expire after:"
-msgstr "По подразбиране, видео файловете са валидни:"
+msgstr "По подразбиране филмите са валидни:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid "Change..."
-msgstr "Промени..."
+msgstr "Промяна..."
 
 msgid "Check channels for new content:"
-msgstr "Провери каналите за ново съдържание:"
+msgstr "Проверка на каналите за ново съдържание:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
 msgid "Don't start a download if it leaves less than"
-msgstr "Не стартирай сваляне, ако остават по-малко от"
+msgstr "Да не се започва изтегляне, ако остават по-малко от"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Download at most"
-msgstr ""
+msgstr "Изтегляне на най-много"
 
 msgid "Folder location"
-msgstr ""
+msgstr "Местоположение на папката"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "GB free."
-msgstr "GB свободни"
+msgstr "GB свободни."
 
 msgid "KB/s when my computer is active."
-msgstr "KB/s когато компютърът ми е активен."
+msgstr "KB/s когато компютърът е активен."
 
 msgid "Maximum:"
-msgstr "Максимум:"
+msgstr "Най-много:"
 
 msgid "Minimum:"
-msgstr "Минимум:"
+msgstr "Най-малко:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "Never"
@@ -389,10 +382,10 @@ msgstr "Други"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "Play videos one after another."
-msgstr "Пусни видеотата едно след друго."
+msgstr "Изпълнение на филмите един след друг."
 
 msgid "Remember video position."
-msgstr ""
+msgstr "Запомняне мястото във филма."
 
 #: ../../portable/guide.py:107 ../../portable/playlist.py:197
 #: ../../portable/feed.py:795 ../../portable/menu.py:65
@@ -400,31 +393,32 @@ msgstr ""
 #: ../../portable/folder.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Remove"
-msgstr ""
+msgstr "Премахване"
 
 msgid "Run Miro at startup"
-msgstr ""
+msgstr "Стартиране на Miro при зареждане на системата"
 
 msgid "Save downloaded videos in this folder:"
-msgstr "Запамети свалените файлове в тази папка:"
+msgstr "Запазване изтеглените филми в тази папка:"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573
 msgid "Show as Channel"
-msgstr ""
+msgstr "Показване като канал"
 
 msgid "Stop after each video."
-msgstr "Спри след всяко видео."
+msgstr "Спиране след всеки филм."
 
 msgid "To avoid internet slowdowns:"
-msgstr ""
+msgstr "За избягване забавяне на връзката:"
 
 #: ../../portable/app.py:1206
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
+"Предупреждаване при опит за спиране на програмата при продължаващо изтегляне"
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
-msgstr ""
+msgstr "Следене за нови филмие в следните папки и добавяне към видеотеката:"
 
 msgid "every 30 minutes"
 msgstr "всеки 30 минути"
@@ -437,32 +431,32 @@ msgstr "ръчно"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "videos at once."
-msgstr ""
+msgstr "филма наведнъж."
 
 msgid "$label$"
-msgstr ""
+msgstr "$label$"
 
 msgid "$title$"
-msgstr ""
+msgstr "$title$"
 
 msgid "Channel"
-msgstr "Канали"
+msgstr "Канал"
 
 #: ../../portable/dialogs.py:91
 msgid "Create"
-msgstr ""
+msgstr "Създаване"
 
 msgid "In this:"
-msgstr ""
+msgstr "В това:"
 
 msgid "Item1"
-msgstr ""
+msgstr "Запис1"
 
 msgid "Search Engine"
-msgstr ""
+msgstr "Търсачка"
 
 msgid "Search for:"
-msgstr ""
+msgstr "Търсене за:"
 
 msgid "URL"
 msgstr "URL"
@@ -471,7 +465,7 @@ msgstr "URL"
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:48
 #, python-format
 msgid "(parsed %d files - found %d videos)"
-msgstr "прегледани %d файла - намерени %d видео файла"
+msgstr "(прегледани са %d файла - намерени са %d филма)"
 
 msgid "Back"
 msgstr "Назад"
@@ -489,17 +483,17 @@ msgid "No"
 msgstr "Не"
 
 msgid "Only search my Movies folder."
-msgstr "Търси единствено в моите директории"
+msgstr "Търсене само в папката за филми."
 
 msgid "Search my entire Home folder."
-msgstr "Претърси цялата ми домашна папка."
+msgstr "Търсене в цялата домашна папка."
 
 msgid "Search this folder:"
-msgstr "Търси в тази папка:"
+msgstr "Търсене в тази папка:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37
 msgid "Searching for Videos"
-msgstr "Претърси за видео"
+msgstr "Търсене за филми"
 
 msgid ""
 "The Miro Player can find all the videos on your computer to help you "
@@ -508,11 +502,18 @@ msgid ""
 "\n"
 "Would you like Miro to look for video files on your computer?"
 msgstr ""
+"Miro може да потърси за филми на компютъра и да помогне за организирането "
+"им.\n"
+"\n"
+"\n"
+"Искате ли да се претърси компютъра за филми?"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"Следващите няколко екрана ще помогнат за настройка на програмата, така че "
+"той да работи най-добре за вас. Ето първия въпрос."
 
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
@@ -522,10 +523,16 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
+"Препоръчваме ви да позволите на програмата да се стартира при зареждане на "
+"системата. По този начин филмите, които не са били изтеглени, както и новите "
+"филми в каналите ви са готови, когато поискате да ги гледате.\n"
+"\n"
+"\n"
+"Искате ли програмата да се стартира при зареждане на системата?"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Welcome to Internet TV!"
-msgstr "Добре дошли в Интернет Телевизията!"
+msgstr "Добре дошли в интернет-телевизията!"
 
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: "
@@ -534,6 +541,11 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Добре дошли в интернет-телевизията! Благодарение на Miro, можете да правите "
+"толкова много неща: автоматично изтегляне на филми от вашите канали, гледане "
+"на нови и нови филми, изтегляне на торенти, препоръчване на филми на "
+"приятели, както и още много други неща.\n"
+"\n"
 
 #: ../../portable/dialogs.py:78
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
@@ -545,34 +557,33 @@ msgid ""
 "%message%"
 msgstr ""
 "%съобщение%\n"
-"\n"
 "%съобщение%"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78
 msgid "Update Available"
-msgstr ""
+msgstr "Налични са обновявания"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr ""
+msgstr "Нова версия на %s е достъпна за изтегляне."
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240
 msgid "Error Bombing Item"
-msgstr "Грешка при бомбандиране"
+msgstr ""
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242
 msgid "Error Recommending Item"
-msgstr "Грешка при препоръчване"
+msgstr "Грешка при препоръчването"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244
 msgid "Error Opening Website"
-msgstr "Грешка при отваряне на уеб-сайт"
+msgstr "Грешка при зареждане на интернет-страницата"
 
 #: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr "Има грешка при отваряне на %s. Моля, опитайте след малко."
+msgstr "Грешка при отваряне на %s. Опитайте пак след малко."
 
 #: ../../platform/windows-xul/frontend_implementation/startup.py:50
 #: ../../platform/gtk-x11/frontend_implementation/startup.py:76
@@ -580,8 +591,8 @@ msgstr "Има грешка при отваряне на %s. Моля, опит�
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] "%d намерено видео"
-msgstr[1] "%d намерени видеота"
+msgstr[0] "%d намерен филм"
+msgstr[1] "%d намерени филма"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:62
 #, python-format
@@ -589,6 +600,8 @@ msgid ""
 "Error importing modules:\n"
 "%s"
 msgstr ""
+"Грешка при внасяне на приставките:\n"
+"%s"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:66
 msgid "Starting up"
@@ -599,77 +612,79 @@ msgid "Loading window"
 msgstr "Зареждане на прозореца"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:274
-#, fuzzy
 msgid "onStartup called twice"
-msgstr "Повторно"
+msgstr "onStartup е извикано два пъти"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:702
 msgid "Spacebar"
-msgstr ""
+msgstr "Интервал"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:851
 msgid "Close to tray?"
-msgstr ""
+msgstr "Да се затваря ли в системния панел?"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:852
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Когато натиснете червения бутон за затваряне, искате ли програмата да се "
+"спре или само да се свие в системния панел? Това може да се промени и по "
+"късно от менюто \"Настройки\"."
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:44
 msgid "Download Completed"
-msgstr ""
+msgstr "Изтеглянето приключи"
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:45
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "Изтеглянето на филма '%s' приключи."
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:54
 msgid "Download Failed"
-msgstr ""
+msgstr "Изтеглянето се провали"
 
 #: ../../platform/osx/frontend/GrowlNotifier.py:55
 #, python-format
 msgid "Download of video '%s' has failed."
-msgstr ""
+msgstr "Изтеглянето на филма '%s' се провали."
 
 #: ../../platform/osx/frontend/MainFrame.py:278
 msgid "Subscribe to Channel"
-msgstr ""
+msgstr "Записване за канала"
 
 #: ../../platform/osx/frontend/MainFrame.py:279
 msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr ""
+msgstr "Въведете URL-адреса на канала, за който искате да се запишете."
 
 #: ../../platform/osx/frontend/QuicktimeRenderer.py:248
 msgid "Audio"
-msgstr ""
+msgstr "Звук"
 
 #: ../../platform/osx/frontend/Preferences.py:64
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "General"
-msgstr ""
+msgstr "Общи"
 
 #: ../../platform/osx/frontend/Preferences.py:66
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Downloads"
-msgstr ""
+msgstr "Изтегляния"
 
 #: ../../platform/osx/frontend/Preferences.py:67
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
 msgid "Folders"
-msgstr ""
+msgstr "Папки"
 
 #: ../../platform/osx/frontend/Preferences.py:68
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Disk Space"
-msgstr ""
+msgstr "Дисково пространство"
 
 #: ../../platform/osx/frontend/Preferences.py:196
 msgid "Movies Directory"
-msgstr ""
+msgstr "Папка с филми"
 
 #: ../../platform/osx/frontend/Preferences.py:197
 #, python-format
@@ -679,7 +694,7 @@ msgstr ""
 #: ../../platform/osx/frontend/Preferences.py:198
 #: ../../platform/osx/frontend/Preferences.py:262
 msgid "Select"
-msgstr ""
+msgstr "Избиране"
 
 #: ../../platform/osx/frontend/Preferences.py:207
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
@@ -694,30 +709,33 @@ msgid ""
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"Избрахте нова папка, в която да записвате филмите. Искате ли %s да премести "
+"изтеглените вече файлове там? (Текущите изтегляния няма да бъдат преместени, "
+"докато не приключат)."
 
 #: ../../platform/osx/frontend/Preferences.py:260
 msgid "View this Directory in the Library"
-msgstr ""
+msgstr "Преглед на тази папка във видеотеката"
 
 #: ../../platform/osx/frontend/Preferences.py:261
 msgid "Select a Directory to view in the Library."
-msgstr ""
+msgstr "Изберете папка за преглед от видеотеката."
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Край"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
-msgstr ""
+msgstr "Търсене"
 
 #: ../../platform/osx/frontend/Application.py:246
 msgid "Pause Video"
-msgstr ""
+msgstr "Пауза на филма"
 
 #: ../../platform/osx/frontend/Application.py:255
 msgid "Unsupported version of Quicktime"
-msgstr ""
+msgstr "Тази версия на Quicktime не се поддържа"
 
 #: ../../platform/osx/frontend/Application.py:256
 #, python-format
@@ -725,115 +743,117 @@ msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
 msgstr ""
+"За да заредите %s е нужна най-новата версия на Quicktime, която може да се "
+"обнови безплатно."
 
 #: ../../platform/osx/frontend/UIStrings.py:22
 msgid "_Remove..."
-msgstr "_Премахни"
+msgstr "_Премахване..."
 
 #: ../../platform/osx/frontend/UIStrings.py:23
 msgid "_Remove Playlist..."
-msgstr "_Премахни Списък..."
+msgstr "_Премахване на списъка..."
 
 #: ../../platform/osx/frontend/UIStrings.py:24
 msgid "_Remove Playlists..."
-msgstr "_Премахни Списъци"
+msgstr "_Премахване на списъците..."
 
 #: ../../platform/osx/frontend/UIStrings.py:25
 msgid "_Remove Playlist Folder..."
-msgstr "_Премахни папка със списъци"
+msgstr "_Премахване на папката със списъци..."
 
 #: ../../platform/osx/frontend/UIStrings.py:26
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "_Премахване на папките със списъци..."
 
 #: ../../platform/osx/frontend/UIStrings.py:27 ../../portable/menubar.py:179
 msgid "_Remove Channel..."
-msgstr "_Премахни Канал"
+msgstr "_Премахване на канала..."
 
 #: ../../platform/osx/frontend/UIStrings.py:28 ../../portable/menubar.py:180
 msgid "_Remove Channels..."
-msgstr "_Премахни Канали"
+msgstr "_Премахване на каналите..."
 
 #: ../../platform/osx/frontend/UIStrings.py:29 ../../portable/menubar.py:182
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "_Премахване на папката за канали..."
 
 #: ../../platform/osx/frontend/UIStrings.py:30 ../../portable/menubar.py:181
 msgid "_Remove Channel Folders..."
-msgstr ""
+msgstr "_Премахване на папките за канали..."
 
 #: ../../platform/osx/frontend/UIStrings.py:31
 msgid "_Remove Miro Guide..."
-msgstr ""
+msgstr "_Премахване на портала..."
 
 #: ../../platform/osx/frontend/UIStrings.py:32
 msgid "_Remove Miro Guides..."
-msgstr ""
+msgstr "_Премахване на порталите..."
 
 #: ../../platform/osx/frontend/UIStrings.py:33
 msgid "_Remove Video..."
-msgstr ""
+msgstr "_Премахване на филма..."
 
 #: ../../platform/osx/frontend/UIStrings.py:34
 msgid "_Remove Videos..."
-msgstr ""
+msgstr "_Премахване на филмите..."
 
 #: ../../platform/osx/frontend/UIStrings.py:35
 msgid "Re_name..."
-msgstr ""
+msgstr "Пре_именуване..."
 
 #: ../../platform/osx/frontend/UIStrings.py:36
 msgid "Re_name Playlist..."
-msgstr ""
+msgstr "Пре_именуване на списъка..."
 
 #: ../../platform/osx/frontend/UIStrings.py:37
 msgid "Re_name Playlist Folder..."
-msgstr ""
+msgstr "Пре_именуване на папката със списъци..."
 
 #: ../../platform/osx/frontend/UIStrings.py:38 ../../portable/menubar.py:178
 msgid "Re_name Channel..."
-msgstr ""
+msgstr "Пре_именуване на канала..."
 
 #: ../../platform/osx/frontend/UIStrings.py:39
 msgid "Re_name Channel Folder..."
-msgstr ""
+msgstr "Пре_именуване на папката с канали..."
 
 #: ../../platform/osx/frontend/UIStrings.py:40
 msgid "Re_name Miro Guide..."
-msgstr ""
+msgstr "Пре_именуване на програмния портал..."
 
 #: ../../platform/osx/frontend/UIStrings.py:41 ../../portable/menubar.py:184
 msgid "_Update Channel..."
-msgstr ""
+msgstr "_Обновяване на канала..."
 
 #: ../../platform/osx/frontend/UIStrings.py:42 ../../portable/menubar.py:185
 msgid "_Update Channels..."
-msgstr ""
+msgstr "_Обновяване на каналите..."
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42
 msgid "Settings"
-msgstr ""
+msgstr "Настройки"
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45
 msgid "Hide"
-msgstr ""
+msgstr "Скриване"
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47
 msgid "Show"
-msgstr ""
+msgstr "Показване"
 
 #: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48
 #: ../../portable/dialogs.py:80 ../../portable/menubar.py:257
 msgid "Quit"
-msgstr ""
+msgstr "Спиране на програмата"
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324
 msgid "New Channel _Guide..."
-msgstr ""
+msgstr "Нов _портал за канали.."
 
 #: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564
 msgid "Folder Location"
-msgstr ""
+msgstr "Местоположение на папката"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
@@ -847,7 +867,7 @@ msgstr "Парола:"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416
 msgid "Unknown Runtime Error"
-msgstr "Неизвестна грешка при работа"
+msgstr "Неизвестна грешка при изпълнение"
 
 #: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417
 #, python-format
@@ -856,70 +876,70 @@ msgstr "Появи се неизвестна грешка %s."
 
 #: ../../portable/dl_daemon/download.py:359
 msgid "Error"
-msgstr ""
+msgstr "Грешка"
 
 #: ../../portable/dl_daemon/download.py:432
 #, python-format
 msgid "Could not write to %s"
-msgstr ""
+msgstr "Не може да се пише в %s"
 
 #: ../../portable/dl_daemon/download.py:452
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Няма достатъчно дисково пространство"
 
 #: ../../portable/dl_daemon/download.py:453
 #, python-format
 msgid "%s MB required to store this video"
-msgstr ""
+msgstr "%s MB са нужни за запазване на филма"
 
 #: ../../portable/dl_daemon/download.py:672
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "Грешка в BitRorrent"
 
 #: ../../portable/dl_daemon/download.py:673
 msgid "BitTorrent failed to startup"
-msgstr ""
+msgstr "Грешка при зареждане на BitTorrent"
 
 #: ../../portable/dl_daemon/download.py:796
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "Повреден торент"
 
 #: ../../portable/dl_daemon/download.py:797
 #, python-format
 msgid "The torrent file at %s was not valid"
-msgstr ""
+msgstr "Торент-файлът %s не е правилен"
 
 #: ../../portable/dl_daemon/download.py:822
 msgid "Torrent file deleted"
-msgstr ""
+msgstr "Торрент-файлът е изтрит"
 
 #: ../../portable/dl_daemon/download.py:823
 msgid "The torrent file for this item was deleted "
-msgstr ""
+msgstr "Торент-файлът за това изтеглане е изтрит "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "извън Miro."
 
 #: ../../portable/tabs.py:44
 msgid "Library"
-msgstr ""
+msgstr "Видеотека"
 
 #: ../../portable/tabs.py:45
 msgid "New"
-msgstr ""
+msgstr "Ново"
 
 #: ../../portable/tabs.py:47
 msgid "Downloading"
-msgstr ""
+msgstr "Изтегляне"
 
 #: ../../portable/guide.py:104 ../../portable/feed.py:789
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "Копиране на адреса в системния буфер"
 
 #: ../../portable/guide.py:154
 msgid "Miro Guide"
-msgstr ""
+msgstr "Програмен портал"
 
 #: ../../portable/extrastrings.py:22 ../../portable/feed.py:2028
 #: ../../portable/feed.py:2120
@@ -928,12 +948,12 @@ msgstr "Търсене"
 
 #: ../../portable/downloader.py:215
 msgid "activity"
-msgstr ""
+msgstr "дейност"
 
 #: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
 #: ../../portable/httpclient.py:142
 msgid "File not found"
-msgstr ""
+msgstr "Файлът не е намерен"
 
 #: ../../portable/downloader.py:252
 msgid "Flash URL Scraping Error"
@@ -941,78 +961,78 @@ msgstr ""
 
 #: ../../portable/downloader.py:427
 msgid "starting up"
-msgstr ""
+msgstr "зареждане"
 
 #: ../../portable/playlist.py:196 ../../portable/playlist.py:201
 msgid "Rename Playlist"
-msgstr "Преименувай плейлиста"
+msgstr "Преименуване на списъка"
 
 #: ../../portable/playlist.py:202
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr "Въведете ново име на плейлиста %s"
+msgstr "Въведете ново име за списъка %s"
 
 #: ../../portable/playlist.py:224
 msgid "Create Playlist"
-msgstr "Създай плейлиста"
+msgstr "Създаване на списък"
 
 #: ../../portable/playlist.py:225
 msgid "Enter a name for the new playlist"
-msgstr "Въведете име на новата плейлиста"
+msgstr "Въведете име за новия списък"
 
 #: ../../portable/feed.py:383
 msgid "never"
-msgstr ""
+msgstr "никога"
 
 #: ../../portable/feed.py:385 ../../portable/item.py:542
 #, python-format
 msgid "%d hours"
-msgstr ""
+msgstr "%d часа"
 
 #: ../../portable/feed.py:387
 #, python-format
 msgid "%d day"
-msgstr ""
+msgstr "%d ден"
 
 #: ../../portable/feed.py:389 ../../portable/item.py:540
 #, python-format
 msgid "%d days"
-msgstr ""
+msgstr "%d дни"
 
 #: ../../portable/feed.py:391
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d месеца"
 
 #: ../../portable/feed.py:787
 msgid "Update Channel Now"
-msgstr ""
+msgstr "Обновяване на канала сега"
 
 #: ../../portable/feed.py:790 ../../portable/feed.py:799
 msgid "Rename Channel"
-msgstr ""
+msgstr "Преименуване на канала"
 
 #: ../../portable/feed.py:794
 msgid "Revert Title to Default"
-msgstr ""
+msgstr "Връщане на подразбиращото се заглавие"
 
 #: ../../portable/feed.py:800
 #, python-format
 msgid "Enter a new name for the channel %s"
-msgstr ""
+msgstr "Въвеете ново име за канала %s"
 
 #: ../../portable/feed.py:887
 msgid "Error loading feed"
-msgstr ""
+msgstr "Грешка при зареждане на емисията"
 
 #: ../../portable/feed.py:888
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
-msgstr ""
+msgstr "Грешка при зареждане на емисията от %s (%s)."
 
 #: ../../portable/feed.py:891
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "Искате ли да запазите емисията?"
 
 #: ../../portable/feed.py:1004
 msgid "Bad content-type"
@@ -1021,7 +1041,7 @@ msgstr ""
 #: ../../portable/feed.py:1017
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
-msgstr ""
+msgstr "Каналът не е съвместим с $shortAppName!"
 
 #: ../../portable/feed.py:1018
 msgid ""
@@ -1035,139 +1055,142 @@ msgstr ""
 
 #: ../../portable/feed.py:2134
 msgid "Local Files"
-msgstr ""
+msgstr "Локални файлове"
 
 #: ../../portable/feed.py:2148
 msgid "Playing File"
-msgstr ""
+msgstr "Изпълнение на файл"
 
 #: ../../portable/menu.py:69
 msgid "Update Channels Now"
-msgstr ""
+msgstr "Обновяване на каналите сега"
 
 #: ../../portable/menu.py:94
 #, python-format
 msgid "%d Downloaded Items"
-msgstr ""
+msgstr "%d изтеглени файла"
 
 #: ../../portable/menu.py:96 ../../portable/item.py:1475
 msgid "Play"
-msgstr ""
+msgstr "Изпълнение"
 
 #: ../../portable/menu.py:97 ../../portable/item.py:1478
 msgid "Add to new playlist"
-msgstr ""
+msgstr "Добавяне към нов списък"
 
 #: ../../portable/menu.py:99 ../../portable/item.py:1471
 msgid "Remove From Playlist"
-msgstr ""
+msgstr "Премахване от списъка"
 
 #: ../../portable/menu.py:101 ../../portable/item.py:1473
 msgid "Remove From the Library"
-msgstr ""
+msgstr "Премахване от видеотеката"
 
 #: ../../portable/menu.py:107 ../../portable/item.py:1482
 msgid "Mark as Unwatched"
-msgstr ""
+msgstr "Отбелязване като негледано"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Отбелязване като гледано"
 
 #: ../../portable/menu.py:117
 #, python-format
 msgid "%d Available Items"
-msgstr ""
+msgstr "%d налични файла"
 
 #: ../../portable/menu.py:118 ../../portable/dialogs.py:85
 #: ../../portable/item.py:1491
 msgid "Download"
-msgstr ""
+msgstr "Изтегляне"
 
 #: ../../portable/menu.py:123
 #, python-format
 msgid "%d Downloading Items"
-msgstr ""
+msgstr "%d изтегляни файла"
 
 #: ../../portable/menu.py:125 ../../portable/item.py:1489
 msgid "Cancel Download"
-msgstr ""
+msgstr "Отмяна на изтеглянето"
 
 #: ../../portable/menu.py:127 ../../portable/item.py:1489
 msgid "Pause Download"
-msgstr ""
+msgstr "Изтеглянето на пауза"
 
 #: ../../portable/menu.py:130 ../../portable/item.py:1487
 msgid "Restart Upload"
-msgstr ""
+msgstr "Рестартиране на качването"
 
 #: ../../portable/opml.py:49
 msgid "Export OPML File"
-msgstr ""
+msgstr "Изнасяне в OPML-файл"
 
 #: ../../portable/opml.py:123
 msgid "Import OPML File"
-msgstr ""
+msgstr "Внасяне от OPML-файл"
 
 #: ../../portable/opml.py:125
 msgid "OPML Files"
-msgstr ""
+msgstr "OPML-файлове"
 
 #: ../../portable/opml.py:145
 msgid "OPML Import failed"
-msgstr ""
+msgstr "Грешка при внасянето от OPML"
 
 #: ../../portable/opml.py:146
 msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
+msgstr "Избраният OPML файл изглежда невалиден. Вмъкването бе прекъснато."
 
 #: ../../portable/opml.py:151
 msgid "OPML Import summary"
-msgstr ""
+msgstr "Отчет от OPML вмъкване"
 
 #: ../../portable/opml.py:152
 #, python-format
 msgid "Successfully imported %d feed."
 msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Успешно е вмъкнат %d поток."
+msgstr[1] "Успешно са вмъкнати %d потока."
 
 #: ../../portable/opml.py:155
 #, python-format
 msgid "Skipped %d feed already present."
 msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Пропуснат %d поток - вече съществува."
+msgstr[1] "Пропуснати %d потока - вече съществуват."
 
 #: ../../portable/autoupdate.py:121
 #, python-format
 msgid "%s Version Alert"
-msgstr ""
+msgstr "%s има по-нова версия"
 
 #: ../../portable/autoupdate.py:122
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
-msgstr ""
+msgstr "Има нова версия на %s. Искате ли да я изтеглите сега?"
 
 #: ../../portable/autoupdate.py:128
 #, python-format
 msgid "%s Version Check"
-msgstr ""
+msgstr "Проверка на версията на %s"
 
 #: ../../portable/autoupdate.py:129
 #, python-format
 msgid "%s is up to date."
-msgstr ""
+msgstr "%s е с най-нова версия."
 
 #: ../../portable/util.py:252 ../../portable/httpclient.py:126
 msgid "Internal Error"
-msgstr ""
+msgstr "Вътрешна грешка"
 
 #: ../../portable/util.py:252
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
 msgstr ""
+"Програмата се натъкна на вътрешна грешка. Можете да ни помогнете да "
+"проследим причината за проблема и да го отстраним, като ни изпратите доклад "
+"за грешката."
 
 #: ../../portable/util.py:252
 msgid ""
@@ -1177,7 +1200,7 @@ msgstr ""
 
 #: ../../portable/util.py:252
 msgid "Describe what you were doing that caused this error"
-msgstr ""
+msgstr "Опишете действията си, които са довели до грешката"
 
 #: ../../portable/util.py:455
 #, python-format
@@ -1187,7 +1210,7 @@ msgstr ""
 #: ../../portable/util.py:457
 #, python-format
 msgid "%dGB"
-msgstr ""
+msgstr "%dGB"
 
 #: ../../portable/util.py:461
 #, python-format
@@ -1197,7 +1220,7 @@ msgstr ""
 #: ../../portable/util.py:463
 #, python-format
 msgid "%dMB"
-msgstr ""
+msgstr "%dMB"
 
 #: ../../portable/util.py:467
 #, python-format
@@ -1207,7 +1230,7 @@ msgstr ""
 #: ../../portable/util.py:469
 #, python-format
 msgid "%dKB"
-msgstr ""
+msgstr "%dKB"
 
 #: ../../portable/util.py:473
 #, python-format
@@ -1217,7 +1240,7 @@ msgstr ""
 #: ../../portable/util.py:475
 #, python-format
 msgid "%dB"
-msgstr ""
+msgstr "%dB"
 
 #: ../../portable/storedatabase.py:832 ../../portable/storedatabase.py:1231
 #, python-format
@@ -1229,6 +1252,8 @@ msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
+"Базата от данни е успешно записана. Сега може спокойно да спрете програмата, "
+"без опасност от загуба на данни."
 
 #: ../../portable/storedatabase.py:840 ../../portable/storedatabase.py:1240
 #, python-format
@@ -1246,108 +1271,108 @@ msgstr ""
 
 #: ../../portable/dialogs.py:81
 msgid "Ignore"
-msgstr ""
+msgstr "Пренебрегване"
 
 #: ../../portable/dialogs.py:82
 msgid "Submit Crash Report"
-msgstr ""
+msgstr "Изпращане на доклад за грешка"
 
 #: ../../portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
-msgstr ""
+msgstr "Мигриране"
 
 #: ../../portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
-msgstr ""
+msgstr "Без мигриране"
 
 #: ../../portable/dialogs.py:86
 msgid "Remove Entry"
-msgstr ""
+msgstr "Премахване на записа"
 
 #: ../../portable/dialogs.py:87
 msgid "Delete File"
-msgstr ""
+msgstr "Изтриване на файла"
 
 #: ../../portable/dialogs.py:88
 msgid "Delete Files"
-msgstr ""
+msgstr "Изтриване на файловете"
 
 #: ../../portable/dialogs.py:89
 msgid "Keep Videos"
-msgstr ""
+msgstr "Запазване на филмите"
 
 #: ../../portable/dialogs.py:90
 msgid "Delete Videos"
-msgstr ""
+msgstr "Изтриване на филмите"
 
 #: ../../portable/dialogs.py:92
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
 msgid "Create Channel"
-msgstr ""
+msgstr "Създаване на канал"
 
 #: ../../portable/dialogs.py:93
 msgid "Add"
-msgstr ""
+msgstr "Добавяне"
 
 #: ../../portable/dialogs.py:94
 msgid "Add Into New Folder"
-msgstr ""
+msgstr "Добавяне в нова папка"
 
 #: ../../portable/dialogs.py:95
 msgid "Keep"
-msgstr ""
+msgstr "Запазване"
 
 #: ../../portable/dialogs.py:97
 msgid "Not Now"
-msgstr ""
+msgstr "Не сега"
 
 #: ../../portable/dialogs.py:98
 msgid "Close to Tray"
-msgstr ""
+msgstr "Затваряне в ситеминя поднос"
 
 #: ../../portable/dialogs.py:99
 msgid "Launch Miro"
-msgstr ""
+msgstr "Зареждане на програмата"
 
 #: ../../portable/dialogs.py:100
 msgid "Download Anyway"
-msgstr ""
+msgstr "Изтегляне все пак"
 
 #: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:45
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
-msgstr ""
+msgstr "Нов канал за търсене"
 
 #: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:25
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
-msgstr ""
+msgstr "Каналът за търсене съдържа записи, отговарящи на даденото търсене."
 
 #: ../../portable/singleclick.py:87
 msgid "Download already exists"
-msgstr ""
+msgstr "Файлът вече съществува"
 
 #: ../../portable/singleclick.py:88
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "Този URL-адрес вече е даден за изтегляне."
 
 #: ../../portable/singleclick.py:94
 msgid "Miro will begin downloading it now."
-msgstr ""
+msgstr "Програмата ще започне изтеглянето сега."
 
 #: ../../portable/singleclick.py:96
 msgid "It is downloading now."
-msgstr ""
+msgstr "Изтегля се в момента."
 
 #: ../../portable/singleclick.py:98
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "Вече е изтеглено."
 
 #: ../../portable/singleclick.py:125
 msgid "Download Error"
-msgstr ""
+msgstr "Грешка при изтегляне"
 
 #: ../../portable/singleclick.py:126
 #, python-format
@@ -1359,30 +1384,30 @@ msgstr ""
 
 #: ../../portable/singleclick.py:134
 msgid "File Download"
-msgstr ""
+msgstr "Изтегляне на файл"
 
 #: ../../portable/singleclick.py:135
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
+msgstr "Файлът на %s изглежда не е нито звуков, нито видео, нито емисия."
 
 #: ../../portable/singleclick.py:225
 msgid "Subscribing to multiple channels"
-msgstr ""
+msgstr "Записване за множество канали"
 
 #: ../../portable/singleclick.py:226
 #, python-format
 msgid "Create %d channels?"
-msgstr ""
+msgstr "Да се създадат ли %d канала?"
 
 #: ../../portable/singleclick.py:239
 #, python-format
 msgid "Adding %d channels to a new folder"
-msgstr ""
+msgstr "Добавяне на %d канала към нова папка"
 
 #: ../../portable/singleclick.py:240 ../../portable/folder.py:226
 msgid "Enter a name for the new channel folder"
-msgstr ""
+msgstr "Въведете име за новата папка за канали"
 
 #: ../../portable/singleclick.py:243
 #, python-format
@@ -1393,7 +1418,7 @@ msgstr ""
 
 #: ../../portable/singleclick.py:254
 msgid "Subscription error"
-msgstr ""
+msgstr "Грешка при записване"
 
 #: ../../portable/singleclick.py:264
 msgid ""
@@ -1409,56 +1434,56 @@ msgstr ""
 
 #: ../../portable/singleclick.py:276
 msgid "Could not download the $shortAppName channel file: $url."
-msgstr ""
+msgstr "Грешка при изтегляне на файла с канали за $shortAppName $url."
 
 #: ../../portable/singleclick.py:316
 msgid "Invalid Torrent"
-msgstr ""
+msgstr "Неправилен торент-файл"
 
 #: ../../portable/singleclick.py:317
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr ""
+msgstr "Торент-файлът %s изглежда е повреден и не може да бъде отворен. [OK]"
 
 #: ../../portable/menubar.py:144
 msgid "_Open"
-msgstr ""
+msgstr "_Отваряне"
 
 #: ../../portable/menubar.py:145
 msgid "_Download Video"
-msgstr ""
+msgstr "_Изтегляне на филма"
 
 #: ../../portable/menubar.py:147
 msgid "Check _Version"
-msgstr ""
+msgstr "Проверка на _версията"
 
 #: ../../portable/menubar.py:149
 msgid "_Remove Video"
-msgstr ""
+msgstr "_Премахване на филма"
 
 #: ../../portable/menubar.py:150
 msgid "_Remove Videos"
-msgstr ""
+msgstr "_Премахване на филмите"
 
 #: ../../portable/menubar.py:151
 msgid "Re_name Video"
-msgstr ""
+msgstr "Пре_именуване на филма"
 
 #: ../../portable/menubar.py:152
 msgid "Save Video _As..."
-msgstr ""
+msgstr "Запазване на филма _като..."
 
 #: ../../portable/menubar.py:153
 msgid "Save Videos _As..."
-msgstr ""
+msgstr "Запазване на филмите _като..."
 
 #: ../../portable/menubar.py:154
 msgid "Copy Video _URL"
-msgstr ""
+msgstr "Копиране _URL-адреса на филма"
 
 #: ../../portable/menubar.py:156
 msgid "_Options..."
-msgstr ""
+msgstr "_Настройки..."
 
 #: ../../portable/menubar.py:157
 msgid "_Quit"
@@ -1466,103 +1491,103 @@ msgstr "Изхо_д"
 
 #: ../../portable/menubar.py:165
 msgid "Cu_t"
-msgstr ""
+msgstr "От_рязване"
 
 #: ../../portable/menubar.py:166
 msgid "_Copy"
-msgstr ""
+msgstr "_Копиране"
 
 #: ../../portable/menubar.py:167
 msgid "_Paste"
-msgstr ""
+msgstr "_Поставяне"
 
 #: ../../portable/menubar.py:168
 msgid "Select _All"
-msgstr ""
+msgstr "Избиране на _всички"
 
 #: ../../portable/menubar.py:169
 msgid "_Delete"
-msgstr ""
+msgstr "Из_триване"
 
 #: ../../portable/menubar.py:173
 msgid "Add _Channel"
-msgstr ""
+msgstr "Добавяне на _канал"
 
 #: ../../portable/menubar.py:174
 msgid "New Searc_h Channel..."
-msgstr ""
+msgstr "Нов канал за _търсене..."
 
 #: ../../portable/menubar.py:175
 msgid "New _Folder..."
-msgstr ""
+msgstr "Нова _папка..."
 
 #: ../../portable/menubar.py:176
 msgid "Add Channel _Guide..."
-msgstr ""
+msgstr "Добавяне на _портал за канали..."
 
 #: ../../portable/menubar.py:186
 msgid "Update _All Channels"
-msgstr ""
+msgstr "Обновяване на _всички канали"
 
 #: ../../portable/menubar.py:188
 msgid "_Import Channels (OPML)..."
-msgstr ""
+msgstr "_Внасяне на канали (OPML)..."
 
 #: ../../portable/menubar.py:189
 msgid "E_xport Channels (OPML)..."
-msgstr ""
+msgstr "Из_насяне на канали (OPML)..."
 
 #: ../../portable/menubar.py:191
 msgid "_Send this channel to a friend"
-msgstr ""
+msgstr "_Изпращане този канал на приятел"
 
 #: ../../portable/menubar.py:192
 msgid "Copy Channel _Link"
-msgstr "_Копирай адреса на канала"
+msgstr "_Копиране адреса на канала"
 
 #: ../../portable/menubar.py:195
 msgid "New _Playlist"
-msgstr ""
+msgstr "Нов _списък"
 
 #: ../../portable/menubar.py:196
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "Нова _папка за списъци"
 
 #: ../../portable/menubar.py:198
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "Пре_именуване на списъка"
 
 #: ../../portable/menubar.py:199
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "_Премахване на списъка"
 
 #: ../../portable/menubar.py:200
 msgid "_Remove Playlists"
-msgstr ""
+msgstr "_Премахване на списъците"
 
 #: ../../portable/menubar.py:201
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "_Премахване на папките за списъци"
 
 #: ../../portable/menubar.py:202
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "_Премахване на папката за списъци"
 
 #: ../../portable/menubar.py:212
 msgid "_Play"
-msgstr ""
+msgstr "_Изпълнение"
 
 #: ../../portable/menubar.py:213
 msgid "_Stop"
-msgstr ""
+msgstr "_Спиране"
 
 #: ../../portable/menubar.py:215
 msgid "_Next Video"
-msgstr ""
+msgstr "_Следващ филм"
 
 #: ../../portable/menubar.py:216
 msgid "_Previous Video"
-msgstr ""
+msgstr "_Предишен филм"
 
 #: ../../portable/menubar.py:218
 msgid "Skip _Forward"
@@ -1574,11 +1599,11 @@ msgstr ""
 
 #: ../../portable/menubar.py:221
 msgid "Volume _Up"
-msgstr ""
+msgstr "_Усилване на звука"
 
 #: ../../portable/menubar.py:222
 msgid "Volume _Down"
-msgstr ""
+msgstr "_Намаляане на звука"
 
 #: ../../portable/menubar.py:224
 msgid "_Fullscreen"
@@ -1586,11 +1611,11 @@ msgstr "_Цял екран"
 
 #: ../../portable/menubar.py:228
 msgid "_About"
-msgstr ""
+msgstr "_Относно"
 
 #: ../../portable/menubar.py:229
 msgid "_Donate"
-msgstr "_Направи Дарение"
+msgstr "_Даряване"
 
 #: ../../portable/menubar.py:230 ../../portable/menubar.py:245
 msgid "_Help"
@@ -1598,31 +1623,31 @@ msgstr "Помо_щ"
 
 #: ../../portable/menubar.py:232
 msgid "Report a _Bug"
-msgstr ""
+msgstr "Докладване за _грешка"
 
 #: ../../portable/menubar.py:236
 msgid "_Video"
-msgstr "_Видео"
+msgstr "_Филм"
 
 #: ../../portable/menubar.py:238
 msgid "_File"
-msgstr ""
+msgstr "_Файл"
 
 #: ../../portable/menubar.py:242
 msgid "_Channels"
-msgstr ""
+msgstr "_Канали"
 
 #: ../../portable/menubar.py:243
 msgid "_Playlists"
-msgstr ""
+msgstr "_Списъци"
 
 #: ../../portable/menubar.py:244
 msgid "P_layback"
-msgstr ""
+msgstr "Из_пълнение"
 
 #: ../../portable/menubar.py:249
 msgid "Play Unwatched ($numUnwatched)"
-msgstr ""
+msgstr "Изпълнение на негледаните ($numUnwatched)"
 
 #: ../../portable/menubar.py:250
 msgid "Pause All Downloads ($numDownloading)"
@@ -1634,56 +1659,61 @@ msgstr ""
 
 #: ../../portable/menubar.py:253
 msgid "Options..."
-msgstr ""
+msgstr "Настройки..."
 
 #: ../../portable/menubar.py:255
 msgid "Hide Window"
-msgstr ""
+msgstr "Скриване на прозореца"
 
 #: ../../portable/menubar.py:256
 msgid "Show Window"
-msgstr ""
+msgstr "Показване на прозореца"
 
 #: ../../portable/item.py:485
 #, python-format
 msgid "Removing %s"
-msgstr ""
+msgstr "Премахване на %s"
 
 #: ../../portable/item.py:488
 msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from the Library?"
 msgstr ""
+"Искате да изтриете тази папка и всички филми в нея или само да премахнете "
+"записа й от видеотеката?"
 
 #: ../../portable/item.py:494
 msgid ""
 "Would you like to delete this file or just remove its entry from the Library?"
 msgstr ""
+"Искате да изтриете този файл или само да премахнете записа му от видеотеката?"
 
 #: ../../portable/item.py:514
 msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
 msgstr ""
+"Този запис е папка. Когато премахнете папка, всички записи в нея се изтриват "
+"също."
 
 #: ../../portable/item.py:544
 #, python-format
 msgid "%d minutes"
-msgstr ""
+msgstr "%d минути"
 
 #: ../../portable/item.py:554
 #, python-format
 msgid "Expires in %s"
-msgstr ""
+msgstr "Изтича след %s"
 
 #: ../../portable/item.py:566
 #, python-format
 msgid "Will retry in %s"
-msgstr ""
+msgstr "Повторен опит след %s"
 
 #: ../../portable/item.py:568
 msgid "Paused"
-msgstr ""
+msgstr "На пауза"
 
 #: ../../portable/item.py:954
 msgid "TORRENT"
@@ -1695,11 +1725,11 @@ msgstr ""
 
 #: ../../portable/item.py:966
 msgid "Total Down:"
-msgstr ""
+msgstr "Общо изтеглено:"
 
 #: ../../portable/item.py:969
 msgid "Error:"
-msgstr ""
+msgstr "Грешка:"
 
 #: ../../portable/item.py:977
 msgid "Down Rate:"
@@ -1707,7 +1737,7 @@ msgstr ""
 
 #: ../../portable/item.py:978
 msgid "Down Total:"
-msgstr ""
+msgstr "Общо изтеглено:"
 
 #: ../../portable/item.py:980
 msgid "Up Rate:"
@@ -1715,11 +1745,11 @@ msgstr ""
 
 #: ../../portable/item.py:981
 msgid "Up Total:"
-msgstr ""
+msgstr "Общо качено:"
 
 #: ../../portable/item.py:989
 msgid "Web page:"
-msgstr ""
+msgstr "Интернет-страница:"
 
 #: ../../portable/item.py:989
 msgid "permalink"
@@ -1727,15 +1757,15 @@ msgstr ""
 
 #: ../../portable/item.py:993
 msgid "File link:"
-msgstr ""
+msgstr "Връзка към файла:"
 
 #: ../../portable/item.py:993
 msgid "direct link to file"
-msgstr ""
+msgstr "пряка връзка към файла"
 
 #: ../../portable/item.py:995
 msgid "File type:"
-msgstr ""
+msgstr "Вид на файла:"
 
 #: ../../portable/item.py:1002
 msgid "REVEAL LOCAL FOLDER"
@@ -1747,53 +1777,53 @@ msgstr ""
 
 #: ../../portable/item.py:1006
 msgid "Filename:"
-msgstr ""
+msgstr "Име нафайла:"
 
 #: ../../portable/item.py:1013
 msgid "Down Total"
-msgstr ""
+msgstr "Общо изтеглено"
 
 #: ../../portable/item.py:1015
 msgid "Up Total"
-msgstr ""
+msgstr "Общо качено"
 
 #: ../../portable/item.py:1033
 msgid "Item Details"
-msgstr ""
+msgstr "Данни за записа"
 
 #: ../../portable/item.py:1040
 msgid "Torrent Details"
-msgstr ""
+msgstr "Подробности за торента"
 
 #: ../../portable/item.py:1042
 msgid "Torrent Details <i>stopped</i>"
-msgstr ""
+msgstr "Подробности за торента - <i>спряно</i>"
 
 #: ../../portable/item.py:1046
 msgid "Download Details"
-msgstr ""
+msgstr "Данни за изтеглянето"
 
 #: ../../portable/item.py:1263
 msgid "downloading..."
-msgstr ""
+msgstr "изтегляне..."
 
 #: ../../portable/item.py:1270 ../../portable/item.py:1273
 #, python-format
 msgid "%s remaining"
-msgstr ""
+msgstr "остават %s"
 
 #: ../../portable/item.py:1282
 msgid "starting up..."
-msgstr ""
+msgstr "започване..."
 
 #: ../../portable/item.py:1477
 msgid "Play Just This Video"
-msgstr ""
+msgstr "Изпълнение само на този филм"
 
 #: ../../portable/item.py:1854
 #, python-format
 msgid "Removing %s items"
-msgstr ""
+msgstr "Премахване на %s записа"
 
 #: ../../portable/item.py:1856
 msgid ""
@@ -1809,55 +1839,55 @@ msgstr ""
 
 #: ../../portable/folder.py:132 ../../portable/folder.py:155
 msgid "Rename Channel Folder"
-msgstr ""
+msgstr "Преименуване на папката за канали"
 
 #: ../../portable/folder.py:134
 #, python-format
 msgid "Enter a new name for the channel folder %s"
-msgstr ""
+msgstr "Въведете ново име за папката с канали %s"
 
 #: ../../portable/folder.py:210 ../../portable/folder.py:215
 msgid "Rename Playlist Folder"
-msgstr ""
+msgstr "Преименуване на папката за списъци"
 
 #: ../../portable/folder.py:217
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
-msgstr ""
+msgstr "Въведете ново име за папката със списъци %s"
 
 #: ../../portable/folder.py:225
 msgid "Create Channel Folder"
-msgstr ""
+msgstr "Създаване на папка за канали"
 
 #: ../../portable/folder.py:239
 msgid "Create Playlist Folder"
-msgstr ""
+msgstr "Създаване на папка за списъци"
 
 #: ../../portable/folder.py:240
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Въведете име за новата папка със списъци"
 
 #: ../../portable/httpclient.py:68
 #, python-format
 msgid "Error: %s"
-msgstr ""
+msgstr "Грешка: %s"
 
 #: ../../portable/httpclient.py:83 ../../portable/httpclient.py:89
 msgid "Can't connect"
-msgstr ""
+msgstr "Грешка при свързване"
 
 #: ../../portable/httpclient.py:84
 #, python-format
 msgid "Connection Error: %s"
-msgstr ""
+msgstr "Грешка при свързване: %s"
 
 #: ../../portable/httpclient.py:90
 msgid "SSL connection error"
-msgstr ""
+msgstr "Грешка при свързване по SSL"
 
 #: ../../portable/httpclient.py:94
 msgid "HTTP error"
-msgstr ""
+msgstr "Грешка в HTTP"
 
 #: ../../portable/httpclient.py:97
 #, python-format
@@ -1877,25 +1907,25 @@ msgstr ""
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Expected CRLF got: %r"
-msgstr ""
+msgstr "Очаквано CRLF, получено: %r"
 
 #: ../../portable/httpclient.py:109
 #, python-format
 msgid "%s closed connection"
-msgstr ""
+msgstr "%s прекрати връзката"
 
 #: ../../portable/httpclient.py:115
 msgid "Got 404 status code"
-msgstr ""
+msgstr "Получен е код на грешка 404"
 
 #: ../../portable/httpclient.py:117
 #, python-format
 msgid "Bad Status Code: %s"
-msgstr ""
+msgstr "Неправилен код за състояние: %s"
 
 #: ../../portable/httpclient.py:121
 msgid "Authorization failed"
-msgstr ""
+msgstr "Грешка при автентикацията"
 
 #: ../../portable/httpclient.py:127
 msgid "Pipeline request never started"
@@ -1912,38 +1942,38 @@ msgstr ""
 
 #: ../../portable/httpclient.py:136
 msgid "Invalid URL"
-msgstr ""
+msgstr "Неправилен URL-адрес"
 
 #: ../../portable/httpclient.py:137
 #, python-format
 msgid "\"%s\" is not a valid URL"
-msgstr ""
+msgstr "\"%s\" не е правилен URL-адрес"
 
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Файлът \"%s\" не съществува"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Грешка при четене"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Грешка при четене от \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Неизвестен код на грешка"
 
 #: ../../portable/httpclient.py:373
 msgid "Connection closed"
-msgstr ""
+msgstr "Връзката е прекъсната"
 
 #: ../../portable/httpclient.py:798
 msgid "Unknown"
-msgstr ""
+msgstr "Непознато"
 
 #: ../../portable/httpclient.py:799
 msgid "Internal Error: Not ready to send"
@@ -1951,7 +1981,7 @@ msgstr ""
 
 #: ../../portable/app.py:685
 msgid "Database too new"
-msgstr ""
+msgstr "Базата от данни е твърде нова"
 
 #: ../../portable/app.py:686
 msgid ""
@@ -1961,7 +1991,7 @@ msgstr ""
 
 #: ../../portable/app.py:700
 msgid "Video Directory Missing"
-msgstr ""
+msgstr "Липсва папка за филми"
 
 #: ../../portable/app.py:701
 msgid ""
@@ -1979,28 +2009,28 @@ msgstr ""
 #: ../../portable/app.py:1142
 #, python-format
 msgid "Remove %s"
-msgstr ""
+msgstr "Премахване на %s"
 
 #: ../../portable/app.py:1039
 #, python-format
 msgid "Are you sure you want to remove the guide %s?"
-msgstr ""
+msgstr "Наистина ли искате да премахнете портала %s?"
 
 #: ../../portable/app.py:1053
 #, python-format
 msgid "Are you sure you want to remove %s"
-msgstr ""
+msgstr "Наистина·ли·искате·да·премахнете·%s"
 
 #: ../../portable/app.py:1056 ../../portable/app.py:1101
 #: ../../portable/app.py:1127 ../../portable/app.py:1146
 #, python-format
 msgid "Remove %s channels"
-msgstr ""
+msgstr "Премахване на %s канала"
 
 #: ../../portable/app.py:1058
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
+msgstr "Наистина·ли·искате·да·премахнете·тези %s списъка?"
 
 #: ../../portable/app.py:1097
 msgid ""
@@ -2020,6 +2050,8 @@ msgid ""
 "Are you sure you want to remove %s?  Any downloads in progress will be "
 "canceled."
 msgstr ""
+"Наистина·ли·искате·да·премахнете·%s? Всички текущи изтегляния ще бъдат "
+"отменени."
 
 #: ../../portable/app.py:1128
 #, python-format
@@ -2027,40 +2059,42 @@ msgid ""
 "Are you sure you want to remove these %s channels?  Any downloads in "
 "progress will be canceled."
 msgstr ""
+"Наистина·ли·искате·да·премахнете·тези %s канала? Всички текущи изтегляния ще "
+"бъдат отменени."
 
 #: ../../portable/app.py:1143
 #, python-format
 msgid "Are you sure you want to remove %s?"
-msgstr ""
+msgstr "Наистина·ли·искате·да·премахнете·%s?"
 
 #: ../../portable/app.py:1147
 #, python-format
 msgid "Are you sure you want to remove these %s channels?"
-msgstr ""
+msgstr "Наистина·ли·искате·да·премахнете·тези·%s канала?"
 
 #: ../../portable/app.py:1160
 #, python-format
 msgid "Stop watching %s"
-msgstr ""
+msgstr "Спиране наблюдението на %s"
 
 #: ../../portable/app.py:1161
 #, python-format
 msgid "Are you sure you want to stop watching %s?"
-msgstr ""
+msgstr "Наистина ли искате да спрете наблюдаването на %s?"
 
 #: ../../portable/app.py:1164
 #, python-format
 msgid "Stop watching %s directories"
-msgstr ""
+msgstr "Спиране наблюдението на %s папки"
 
 #: ../../portable/app.py:1165
 #, python-format
 msgid "Are you sure you want to stop watching these %s directories?"
-msgstr ""
+msgstr "Наистина ли искате да спрете наблюдението на тези %s папки?"
 
 #: ../../portable/app.py:1196
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "Наистина ли искате да спрете програмата?"
 
 #: ../../portable/app.py:1198
 msgid ""
@@ -2077,25 +2111,25 @@ msgstr[1] ""
 
 #: ../../portable/app.py:1712
 msgid "Invalid Value"
-msgstr "Невалидна стойност"
+msgstr "Неправилна стойност"
 
 #: ../../portable/app.py:1713
 #, python-format
 msgid "%s is invalid.  You must enter a non-negative number."
-msgstr "%s е невалидна. Трябва да въведете не отрицателно число."
+msgstr "%s е неправилно. Трябва да въведете неотрицателно число."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Грешка при откриване на файла"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Файлът \"%s\" е изтрит извън програмата."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
-msgstr " - Невалиден адрес"
+msgstr " - Неправилен URL-адрес"
 
 #: ../../portable/app.py:2012
 msgid ""
@@ -2103,13 +2137,13 @@ msgid ""
 "Please double check and try again.\n"
 "\n"
 msgstr ""
-"Адресът, който въведохте е невалиден.\n"
-"Моля, проверете отново и опитайте пак.\n"
+"Адресът, който въведохте е неправилен.\n"
+"Проверете го и опитайте пак.\n"
 "\n"
 
 #: ../../portable/app.py:2036
 msgid "$shortAppName - Add Channel"
-msgstr ""
+msgstr "$shortAppName - Добавяне на канал"
 
 #: ../../portable/app.py:2036
 msgid "Enter the URL of the channel to add"
@@ -2117,7 +2151,7 @@ msgstr "Въведете адрес на канал за добавяне"
 
 #: ../../portable/app.py:2057
 msgid "$shortAppName - Add Miro Guide"
-msgstr ""
+msgstr "$shortAppName·-·Добавяне на програмен портал"
 
 #: ../../portable/app.py:2057
 msgid "Enter the URL of the Miro Guide to add"
@@ -2125,42 +2159,44 @@ msgstr ""
 
 #: ../../portable/app.py:2063
 msgid "$shortAppName - Download Video"
-msgstr ""
+msgstr "$shortAppName - Изтегляне на филма"
 
 #: ../../portable/app.py:2063
 msgid "Enter the URL of the video to download"
-msgstr ""
+msgstr "Въведете URL-адреса на филма за изтегляне"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Първоначални канали"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"
-msgstr ""
+msgstr "Примерен списък"
 
 #: ../../portable/app.py:2463
 msgid "Custom Channels"
-msgstr "Обичаен канал"
+msgstr "Потребителски канал"
 
 #: ../../portable/app.py:2463
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
-msgstr ""
+msgstr "Ползвате версия на $longAppName с набор от първоначални канали."
 
 #: ../../portable/app.py:2478
 msgid "Error Changing Movies Directory"
-msgstr ""
+msgstr "Грешка при смяна на папката с филми"
 
 #: ../../portable/app.py:2479
 msgid ""
 "You don't have permission to write to the directory you selected.  Miro will "
 "continue to use the old videos directory."
 msgstr ""
+"Нямате достатъчно права за запис в избраната папка. Програмата ще продължи "
+"да ползва предишната папка за филми."
 
 #: ../../portable/app.py:2508
 msgid "Error Saving Video"
-msgstr ""
+msgstr "Грешка при записване на филма"
 
 #: ../../portable/app.py:2510
 #, python-format
@@ -2191,19 +2227,20 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:8
 msgid "<b>BitTorrent</b>"
-msgstr ""
+msgstr "<b>Торент</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
 msgid "<b>Searching for Videos</b>"
-msgstr ""
+msgstr "<b>Търсене на филми</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:10
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
 msgstr ""
+"<b>Искате ли програмата да потърси файлове с филми на компютъра ви?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
-msgstr ""
+msgstr "<b>Искате ли програмата да се зарежда при пускане на компютъра?</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12
 msgid ""
@@ -2233,35 +2270,35 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:26
 msgid "By default, videos _expire after"
-msgstr ""
+msgstr "По подразбиране филмите са _валидни"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "C_hannel:"
-msgstr ""
+msgstr "_Канал:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 msgid "C_hannels"
-msgstr ""
+msgstr "_Канали"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "C_reate Channel"
-msgstr ""
+msgstr "_Създаване на канал"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Check Channels for _new content"
-msgstr ""
+msgstr "Проверка на каналите за _ново съдържание"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "Disk _Space"
-msgstr ""
+msgstr "Дисково _пространство"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "Don't start a download _if it leaves less than"
-msgstr ""
+msgstr "Да не се започва изтегляне, ако ще _остави по-малко от"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Download at _most"
-msgstr ""
+msgstr "Изтегляне на _най-много"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid ""
@@ -2275,7 +2312,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid "G_B free"
-msgstr ""
+msgstr "G_B свободни"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:39
 msgid "Go"
@@ -2294,7 +2331,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Play _videos one after another"
-msgstr ""
+msgstr "Изпълнение на _филмите един след друг"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Preferences"
@@ -2306,15 +2343,15 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "S_top after each video"
-msgstr ""
+msgstr "_Спиране след всеки филм"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "S_tore downloaded videos in this folder:"
-msgstr ""
+msgstr "Запазване на _изтеглените филми в тази папка:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Search _Engine:"
-msgstr ""
+msgstr "_Търсачка:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:52
 msgid "Search _custom folder:"
@@ -2322,7 +2359,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid "Select Movies Directory"
-msgstr "Избери папка за филми"
+msgstr "Избор на папка за филми"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:54
 msgid "Select custom search directory"
@@ -2365,7 +2402,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "_Add Folder"
-msgstr ""
+msgstr "_Добавяне на папка"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "_Automatically run Miro when I log in"
@@ -2373,19 +2410,19 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "_Bit Torrent uses ports between"
-msgstr ""
+msgstr "_BitTorrent използва портове между"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "_Downloads"
-msgstr ""
+msgstr "_Изтегляния"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid "_Folders"
-msgstr ""
+msgstr "_Папки"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "_General"
-msgstr ""
+msgstr "_Общи"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "_KB/s when my computer is active"
@@ -2393,23 +2430,23 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "_Playback"
-msgstr ""
+msgstr "_Изпълнение"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "_Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgstr "_Продължаване на изпълнението от мястото, където е било спряно"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "_Search"
-msgstr ""
+msgstr "_Търсене"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "_Search For:"
-msgstr ""
+msgstr "_Търсене за:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid "_URL"
-msgstr ""
+msgstr "_URL-адрес"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "_Warn me when I attempt to quit with downloads in progress"
@@ -2418,15 +2455,15 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
-msgstr ""
+msgstr "_Наблюдение за нови филми в тези папки и добавяне към видеотеката"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "_and"
-msgstr ""
+msgstr "_и"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "videos at once"
-msgstr ""
+msgstr "филма наведнъж"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
@@ -2437,23 +2474,23 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
-msgstr "За $longAppName"
+msgstr "Относно $longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
 msgid "Add Channel"
-msgstr "Добави канал"
+msgstr "Добавяне на канал"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
 msgid "Please enter the URL of the channel you'd like to add."
-msgstr "Моля, въведете адреса на канала, който желаете да добавите."
+msgstr "Въведете адреса на канала, който желаете да добавите."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
 msgid "Copy log to clipboard"
-msgstr "Копирай лог файла в паметта"
+msgstr "Копиране журналния файл в системния буфер"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
 msgid "Open up the bug tracker"
-msgstr "Отвори полето за грешки"
+msgstr "Зареждане на системата за грешки"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
 msgid ""
@@ -2471,12 +2508,12 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
 msgid "You found a bug in $longAppName!"
-msgstr ""
+msgstr "Открихте грешка в $longAppName!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
 msgid " "
-msgstr ""
+msgstr " "
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
@@ -2488,13 +2525,12 @@ msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
 msgstr ""
-"Ние ще направим най-доброто за да прехванем тези файлове. Може да отнеме "
-"доста време за да се изведе списък на видеото, а описанието може да изглежда "
-"странно."
+"Ще направим възможното за получаване на тези файлове. Може да отнеме повече "
+"време и описанията им може да изглеждат странно."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
 msgid "Please contact the publishers of"
-msgstr "Моля, свържете се с издателите на"
+msgstr "Свържете се с издателите на"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
 msgid ""
@@ -2515,14 +2551,15 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
-msgstr "Канала изисква идентификация"
+msgstr "Каналът изисква идентификация"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2
 msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
 msgstr ""
-"Моля, въведете потребителско име и парола, дадена Ви от издателите на канала."
+"Въведете потребителско име и парола, както са ви дадени от издателите на "
+"канала."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid ""
@@ -2531,7 +2568,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Add Folder..."
-msgstr ""
+msgstr "Добавяне на папка..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "Automatically run $longAppName when I login."
@@ -2539,47 +2576,47 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "BitTorrent"
-msgstr ""
+msgstr "Торент"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "By default, videos expire after"
-msgstr "По подразбиране, валидността на видео файловете изтича след"
+msgstr "По подразбиране филмите са валидни"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Check channels for new content"
-msgstr ""
+msgstr "Проверка на каналите за ново съдържание"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgstr "Затваряне в системния панел, за да продължат изтеглянията."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "Веки 30 минути"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Every hour"
-msgstr ""
+msgstr "Всеки час"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Folder"
-msgstr ""
+msgstr "Папка"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
-msgstr ""
+msgstr "Ръчно"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
-msgstr ""
+msgstr "Настройки"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "Изпълнение на един филм и след това спиране."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Спиране на програмата напълно"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid ""
@@ -2589,11 +2626,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Show as a Channel"
-msgstr ""
+msgstr "Показване като канал"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Store downloaded videos in this folder:"
-msgstr ""
+msgstr "Запазване на изтеглените филми в тази папка:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid ""
@@ -2602,11 +2639,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "Upstream limit (KB/s)"
-msgstr ""
+msgstr "Ограничение скоростта на качване (KB/s)"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Use BitTorrent ports between"
-msgstr ""
+msgstr "Използване на портове за торент между"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid ""
@@ -2619,7 +2656,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Watch for new videos in these folders and include them in my Library."
-msgstr ""
+msgstr "Наблюдение за нови филми в тези папки и добавяне към видеотеката."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "When I click the red close button:"
@@ -2627,23 +2664,23 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
 msgid "and"
-msgstr ""
+msgstr "и"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
-msgstr ""
+msgstr "Канал:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
 msgid "Search Engine:"
-msgstr ""
+msgstr "Търсачка:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
 msgid "Search For:"
-msgstr ""
+msgstr "Търсене за:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
-msgstr ""
+msgstr "URL-адрес:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
 msgid ""
@@ -2660,15 +2697,15 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
 msgid "$shortAppName First Time Setup"
-msgstr ""
+msgstr "Първоначална настройка на $shortAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
-msgstr ""
+msgstr "Отказване на търсенето"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
 msgid "Change"
-msgstr "Промени"
+msgstr "Промяна"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46
 msgid "Don't Worry About Disk Space:"
@@ -2676,7 +2713,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50
 msgid "Find Videos:"
-msgstr ""
+msgstr "Търсене на филми:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
 msgid "Go Big:"
@@ -2737,19 +2774,19 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
 msgid "Would you like $longAppName to look for video files on your computer?"
-msgstr ""
+msgstr "Искате ли $longAppName да потърси файлове с филми в компютъра ви?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
 msgid "Would you like to run $shortAppName on startup?"
-msgstr ""
+msgstr "Искате ли да се зарежда $shortAppName при пускане на компютъра?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
 msgid "You're done!"
-msgstr ""
+msgstr "Готово!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
 msgid "Release Notes:"
-msgstr ""
+msgstr "Бележки за версията:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"

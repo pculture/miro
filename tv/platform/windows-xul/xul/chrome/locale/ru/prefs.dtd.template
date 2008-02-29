@@ -1,43 +1,47 @@
-<!ENTITY prefs.title "Options">
-<!ENTITY prefs.restart "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.title "Параметры">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.run.on.startup "Автоматически запустить $longAppName, когда я вхожу в систему.">
+<!ENTITY prefs.close_to_tray_start "Когда я нажимаю красную кнопку:">
+<!ENTITY prefs.close_to_tray "Свернуть в трэй, при этом закачки могут продолжаться.">
+<!ENTITY prefs.no_close_to_tray "Полностью выйти из Miro.">
 
-<!ENTITY prefs.general "General">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general "Общий">
+<!ENTITY prefs.general.warn_on_quit "Оповещать если пытаюсь выйти при активных закачках.">
 
 <!ENTITY prefs.channels "Каналы">
-<!ENTITY prefs.channels.check "Check channels for new content">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check "Проверить каналы на обновлённый контент">
+<!ENTITY prefs.channels.check.thirty "Каждые 30 минут">
+<!ENTITY prefs.channels.check.sixty "Каждый час">
+<!ENTITY prefs.channels.check.manually "Вручную">
+
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Новый">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
 
 <!ENTITY prefs.playback "Воспроизведение">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
+<!ENTITY prefs.playback.remember.pos "Запомнить, где я остановил просмотр видео и продолжить воспроизведение с этого момента.">
 <!ENTITY prefs.playback.auto.next.video "Проигрывать файлы непрерывно">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback.stop.after.each "Проиграть одно видео, затем остановиться.">
 
-<!ENTITY prefs.folder.movies "Folders">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.movies "Каталоги">
+<!ENTITY prefs.folder.downloads "Хранить загруженные видео в этой папке:">
 <!ENTITY prefs.folder.change "Изменить...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
-<!ENTITY prefs.folder.others.add "Add Folder...">
+<!ENTITY prefs.folder.others.caption "Предупреждать меня, когда я пытаюсь выйти с запущенными загрузками.">
+<!ENTITY prefs.folder.others.location "Папка">
+<!ENTITY prefs.folder.others.shown "Показать как канал">
+<!ENTITY prefs.folder.others.add "Добавить папку">
 <!ENTITY prefs.folder.others.remove "Удалить">
 
-<!ENTITY prefs.downloads.max "Downloads">
-<!ENTITY prefs.downloads.max.part1 "Скачивать не более чем">
-<!ENTITY prefs.downloads.max.part2 "видео единовременно">
+<!ENTITY prefs.downloads "Загрузки" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
-<!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Не начинать загрузку, если после нее остается свободного места менее">
-<!ENTITY prefs.disk.space.min.part2 "Гб свободно.">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space "Дисковое пространство">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
+<!ENTITY prefs.disk.space.warning.restart "ВНИМАНИЕ: Этот параметр не вступит в силу до перезапуска $longAppName.">
 
 <!ENTITY prefs.videos.expire "По умолчанию, видео устаревает через">
 <!ENTITY prefs.videos.expire.one "1 день">
@@ -48,8 +52,11 @@
 <!ENTITY prefs.videos.expire.never "Никогда">
 
 <!ENTITY prefs.torrent "BitTorrent">
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Use BitTorrent ports between">
-<!ENTITY prefs.torrent.uses.ports.part2 "и">
+<!ENTITY prefs.torrent.restart.warning "(ВНИМАНИЕ: Изменения не будут действовать до перезапуска $ longAppName.)">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

@@ -1,5 +1,4 @@
 <!ENTITY prefs.title "אפשרויות">
-<!ENTITY prefs.restart "(אזהרה: השינויים לא יכנסו לתוקף עד שלא תפעילו מחדש את $longAppName.)">
 
 <!ENTITY prefs.run.on.startup "הפעל אוטומטית את $longAppName כשאני מתחבר למערכת.">
 <!ENTITY prefs.close_to_tray_start "כשאני מקליד על כפתור הסגירה האדום:">
@@ -14,6 +13,11 @@
 <!ENTITY prefs.channels.check.thirty "כל 30 דקות">
 <!ENTITY prefs.channels.check.sixty "כל שעה">
 <!ENTITY prefs.channels.check.manually "ידנית">
+
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "חדש">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
 
 <!ENTITY prefs.playback "השמעה">
 <!ENTITY prefs.playback.remember.pos "זכור היכן הפסקתי לצפות בוידאו והמשך מנקודה זו.">
@@ -30,13 +34,13 @@
 <!ENTITY prefs.folder.others.add "הוסף תיקייה...">
 <!ENTITY prefs.folder.others.remove "הסר">
 
-<!ENTITY prefs.downloads.max "הורדות">
-<!ENTITY prefs.downloads.max.part1 "הורד לכל היותר">
-<!ENTITY prefs.downloads.max.part2 "קבצי וידאו בו-זמנית.">
+<!ENTITY prefs.downloads "הורדות" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "מקום בכונן">
-<!ENTITY prefs.disk.space.min.part1 "אל תתחיל להוריד אם זה משאיר פחות מ-">
-<!ENTITY prefs.disk.space.min.part2 "GB פנוי">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "אזהרה: השינויים לא יכנסו לתוקף עד שלא תפעילו מחדש את $longAppName.">
 
 <!ENTITY prefs.videos.expire "כברירת מחדל יפוג תוקפו של יודאו לאחר">
@@ -49,7 +53,10 @@
 
 <!ENTITY prefs.torrent "ביטורנט">
 <!ENTITY prefs.torrent.restart.warning "(אזהרה: השינויים לא יכנסו לתוקף עד שלא תפעילו מחדש את $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "כדי להימנע מהאטות, הגבל את קצב ההעלאה כאשר המחשב שלי פעיל.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "גבול קצב העלאה (קילובייט\שניה)">
-<!ENTITY prefs.torrent.uses.ports.part1 "השתמש בפורטי ביטורנט בין">
-<!ENTITY prefs.torrent.uses.ports.part2 "וגם">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

@@ -1,8 +1,7 @@
 <!ENTITY prefs.title "选项">
-<!ENTITY prefs.restart "(警告：更改直到您重启 $longAppName 后才会生效。)">
 
 <!ENTITY prefs.run.on.startup "当我登陆时，自动运行 $longAppName">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
+<!ENTITY prefs.close_to_tray_start "当我点击红色的关闭按钮">
 <!ENTITY prefs.close_to_tray "最小化到托盘以便继续下载">
 <!ENTITY prefs.no_close_to_tray "完全退出Miro">
 
@@ -14,6 +13,11 @@
 <!ENTITY prefs.channels.check.thirty "每30分钟">
 <!ENTITY prefs.channels.check.sixty "每小时">
 <!ENTITY prefs.channels.check.manually "手动">
+
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "新添">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
 
 <!ENTITY prefs.playback "播放">
 <!ENTITY prefs.playback.remember.pos "记住我停止观看节目的位置，并且下次从这个位置继续播放。">
@@ -30,14 +34,14 @@
 <!ENTITY prefs.folder.others.add "添加文件夹...">
 <!ENTITY prefs.folder.others.remove "移除">
 
-<!ENTITY prefs.downloads.max "下载">
-<!ENTITY prefs.downloads.max.part1 "一次最多下载">
-<!ENTITY prefs.downloads.max.part2 "个视频">
+<!ENTITY prefs.downloads "下载" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "磁盘空间">
-<!ENTITY prefs.disk.space.min.part1 "不要启动下载低于">
-<!ENTITY prefs.disk.space.min.part2 "千兆的剩余空间。">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
+<!ENTITY prefs.disk.space.warning.restart "警告: 这项设置需要重新启动$longAppName后才能生效">
 
 <!ENTITY prefs.videos.expire "默认地，视频在这之后过期">
 <!ENTITY prefs.videos.expire.one "一天">
@@ -49,7 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(警告：更改直到您重启 $longAppName 后才会生效。)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "当电脑活动时,为了避免降低下载速度,限制上传带宽.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "限制上传速度 (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "使用一下BT端口">
-<!ENTITY prefs.torrent.uses.ports.part2 "和">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

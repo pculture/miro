@@ -5,9 +5,9 @@
 <!ENTITY canscrape.body      "Но мы постараемся найти файлы. Это может занять больше времени, чем обычно, и описания могут быть исковерканы.">
 
 <!ENTITY canscrape.prefix    "Свяжитесь с издателем">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
+<!ENTITY canscrape.suffix    "и спросить, могут ли они поставлять кформат фида, который будет работать с $ shortAppName.">
 <!ENTITY canscrape.title     "Канал не совместим с $shortAppName!">
 <!ENTITY canscrape.body      "Но мы постараемся найти файлы. Это может занять больше времени, чем обычно, и описания могут быть исковерканы.">
 
 <!ENTITY canscrape.prefix    "Свяжитесь с издателем">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
+<!ENTITY canscrape.suffix    "и спросить, могут ли они поставлять кформат фида, который будет работать с $ shortAppName.">

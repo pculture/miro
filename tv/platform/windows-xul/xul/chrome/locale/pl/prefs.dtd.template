@@ -1,55 +1,62 @@
 <!ENTITY prefs.title "Opcje">
-<!ENTITY prefs.restart "(OSTRZEŻENIE: Wprowadzone zmiany nie zaczną obowiązywać zanim nie uruchomisz ponownie $longAppName.)">
 
-<!ENTITY prefs.run.on.startup "Automatycznie uruchamiaj $longAppName gdy się zaloguję.">
-<!ENTITY prefs.close_to_tray_start "Kiedy klikam na czerwony przycisk zamknięcia programu:">
-<!ENTITY prefs.close_to_tray "Zamknij do tacki systemowej dzięki czemu pobieranie będzie kontynuowane.">
-<!ENTITY prefs.no_close_to_tray "Całkowicie opuść Miro.">
+<!ENTITY prefs.run.on.startup "Automatycznie uruchamiaj $longAppName po zalogowaniu">
+<!ENTITY prefs.close_to_tray_start "Po naciśnięciu czerwonego przycisku zamykania programu:">
+<!ENTITY prefs.close_to_tray "Minimalizuj do obszaru powiadamiania, dzięki czemu pobieranie będzie kontynuowane.">
+<!ENTITY prefs.no_close_to_tray "Zamknij Miro">
 
 <!ENTITY prefs.general "Ogólne">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general.warn_on_quit "Ostrzegaj przed zamknięciem programu, gdy trwa pobieranie plików">
 
 <!ENTITY prefs.channels "Kanały">
-<!ENTITY prefs.channels.check "Sprawdź czy kanały zawierają nowe treści">
-<!ENTITY prefs.channels.check.thirty "Co 30 minut">
-<!ENTITY prefs.channels.check.sixty "Co godzinę">
-<!ENTITY prefs.channels.check.manually "Ręcznie">
+<!ENTITY prefs.channels.check "Sprawdzaj, czy kanały zawierają nowe treści">
+<!ENTITY prefs.channels.check.thirty "co 30 minut">
+<!ENTITY prefs.channels.check.sixty "co godzinę">
+<!ENTITY prefs.channels.check.manually "ręcznie">
+
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Nowe">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
 
 <!ENTITY prefs.playback "Odtwarzanie">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
-<!ENTITY prefs.playback.stop.after.each "Odtwórz jedno wideo i zatrzymaj.">
+<!ENTITY prefs.playback.remember.pos "Zapamiętaj miejsce, w którym zostało przerwane oglądanie i przy ponownym uruchomieniu rozpocznij od tego miejsca">
+<!ENTITY prefs.playback.auto.next.video "Odtwarzaj wideo jedno za drugim">
+<!ENTITY prefs.playback.stop.after.each "Odtwarzaj tylko jedno wideo">
 
 <!ENTITY prefs.folder.movies "Foldery">
-<!ENTITY prefs.folder.downloads "Przechowuj pobrane filmiki w tym katalogu:">
+<!ENTITY prefs.folder.downloads "Przechowuj pobrane wideo w folderze:">
 <!ENTITY prefs.folder.change "Zmień...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Katalog">
+<!ENTITY prefs.folder.others.caption "Monitoruj, czy w tych folderach pojawiły się nowe wideo i dodaj je do biblioteki">
+<!ENTITY prefs.folder.others.location "Folder">
 <!ENTITY prefs.folder.others.shown "Pokaż jako kanał">
 <!ENTITY prefs.folder.others.add "Dodaj folder...">
 <!ENTITY prefs.folder.others.remove "Usuń">
 
-<!ENTITY prefs.downloads.max "Pobierane">
-<!ENTITY prefs.downloads.max.part1 "Ściągnij najwyżej">
-<!ENTITY prefs.downloads.max.part2 "filmów na raz.">
+<!ENTITY prefs.downloads "Pobrania" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Miejsce na dysku">
-<!ENTITY prefs.disk.space.min.part1 "Nie zaczynaj pobierania jeśli po zakończeniu pozostanie mniej niż">
-<!ENTITY prefs.disk.space.min.part2 "GB wolnego miejsca na dysku.">
-<!ENTITY prefs.disk.space.warning.restart "OSTRZEŻENIE: To ustawienie nie będzie obowiązywać zanim nie uruchomisz ponownie $longAppName.">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
+<!ENTITY prefs.disk.space.warning.restart "Uwaga! Aby zmiana ustawienia została zastosowana należy uruchomić ponownie $longAppName.">
 
-<!ENTITY prefs.videos.expire "Domyślnie, pliki wideo wygasają po">
-<!ENTITY prefs.videos.expire.one "1 dzień">
-<!ENTITY prefs.videos.expire.three "3 dni">
-<!ENTITY prefs.videos.expire.six "6 dni">
-<!ENTITY prefs.videos.expire.ten "10 dni">
-<!ENTITY prefs.videos.expire.thirty "1 miesiąc">
-<!ENTITY prefs.videos.expire.never "Nigdy">
+<!ENTITY prefs.videos.expire "Usuwaj pliki wideo po">
+<!ENTITY prefs.videos.expire.one "1 dniu">
+<!ENTITY prefs.videos.expire.three "3 dniach">
+<!ENTITY prefs.videos.expire.six "6 dniach">
+<!ENTITY prefs.videos.expire.ten "10 dniach">
+<!ENTITY prefs.videos.expire.thirty "miesiącu">
+<!ENTITY prefs.videos.expire.never "Nie usuwaj">
 
 <!ENTITY prefs.torrent "BitTorrent">
-<!ENTITY prefs.torrent.restart.warning "(OSTRZEŻENIE: Wprowadzone zmiany nie zaczną obowiązywać zanim nie uruchomisz ponownie $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream.part1 "To avoid slowdowns, limit upstream bandwith when my computer is active.">
-<!ENTITY prefs.torrent.limit.upstream.part2 "Upstream limit (KB/s)">
-<!ENTITY prefs.torrent.uses.ports.part1 "Użyj portów BitTorrenta pomiędzy">
-<!ENTITY prefs.torrent.uses.ports.part2 "i">
+<!ENTITY prefs.torrent.restart.warning "(Uwaga! Aby wprowadzone zmiany zostały zastosowane należy uruchomić ponownie $longAppName.)">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

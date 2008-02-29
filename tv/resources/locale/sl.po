@@ -7,83 +7,224 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2007-10-12 15:58+0000\n"
-"Last-Translator: Matej Urbančič <matej.urban@gmail.com>\n"
+"PO-Revision-Date: 2008-01-29 19:06+0000\n"
+"Last-Translator: AnzeT'o <anzetx@gmail.com>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
+"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Lastnosti:"
+#~ msgid "Save this video"
+#~ msgstr "Shrani ta video"
+
+#~ msgid "_Play / Pause"
+#~ msgstr "_Predvajaj / Ustavi"
+
+#~ msgid "_Remove Channel"
+#~ msgstr "O_dstrani kanal"
+
+#~ msgid "_Update Channel"
+#~ msgstr "Osvež_i kanal"
+
+#~ msgid "_Open..."
+#~ msgstr "_Odpri..."
+
+#~ msgid "Open various files"
+#~ msgstr "Odpri več datotek"
+
+#~ msgid "P_references"
+#~ msgstr "Nas_tavitve"
+
+#~ msgid "Quit the Program"
+#~ msgstr "Izhod iz programa"
+
+#~ msgid "U_pdate All Channels"
+#~ msgstr "_Osveži vse kanale"
+
+#~ msgid "Pending Auto Download"
+#~ msgstr "Čakajoč samodejni prenos"
+
+#~ msgid "Unwatched"
+#~ msgstr "Neopazovano"
+
+#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
+#~ msgstr "Nič za prikazati.<br></br> Vnesi poizvedbo v iskalno polje zgoraj."
+
+#~ msgid "Searching..."
+#~ msgstr "Iščem..."
+
+#~ msgid "Channel Guide"
+#~ msgstr "TV vodnik"
+
+#~ msgid "My Collection"
+#~ msgstr "Moja zbirka"
+
+#~ msgid "New Videos"
+#~ msgstr "Novi videi"
+
+#~ msgid "Continue To Next Video"
+#~ msgstr "Nadaljuj na naslednji video"
+
+#~ msgid "Recommend"
+#~ msgstr "Priporoči"
+
+#~ msgid "Default"
+#~ msgstr "Privzeto"
+
+#~ msgid "Watched"
+#~ msgstr "Opazovan"
+
+#~ msgid "Saved"
+#~ msgstr "Shranjen"
+
+#~ msgid "Play Externally"
+#~ msgstr "Predvajaj zunaj"
+
+#~ msgid "Simple translation"
+#~ msgstr "Preprost prevod"
+
+#~ msgid "Democracy Internet TV: How to Get Started"
+#~ msgstr "Democracy spletna TV: Kako začeti"
+
+#~ msgid "GO BIG:"
+#~ msgstr "NA VELIKO:"
+
+#~ msgid "This is your fullscreen button. Click it and lean back."
+#~ msgstr "To je vaš celozaslonski gumb. Kliknite ga in se sprostite."
+
+#~ msgid "NEW STUFF:"
+#~ msgstr "NOVE ZADEVE:"
 
 #~ msgid ""
-#~ "You're done!\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "Don't Wait: Miro is different than watching webpage videos -- publishers can "
-#~ "offer big, high quality videos. So don't sit around waiting for videos: "
-#~ "start some downloads and check back later. \n"
-#~ "\n"
-#~ "Leave it On: Miro regularly checks channels for new videos and downloads in "
-#~ "the background. Leaving it running means you'll have new videos when you're "
-#~ "ready to watch.\n"
-#~ "\n"
-#~ "Don't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' "
-#~ "system that helps clean out older videos to make room for new videos. You "
-#~ "can always keep a video permanently by clicking 'save' and you can set a "
-#~ "channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
-#~ "\n"
-#~ "Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
-#~ "them are free. Just click 'ADD' to watch a channel.\n"
+#~ "Blue circles mean the channel has new videos available, green circles mean "
+#~ "you have downloaded videos ready to watch."
 #~ msgstr ""
-#~ "Končali ste!\n"
-#~ "\n"
-#~ "Nastavitev je končana -- sedaj lahko poiščete kanale in začnete z ogledi.\n"
-#~ "\n"
-#~ "Ne čakajte: pregledovanje s predvajalnik Miro se razlikuje od pregledovanja "
-#~ "spletnih posnetkov -- ponudniki omogočajo velike visoko kakovostne posnetke. "
-#~ "Ne čakajte na posnetke: pričnite s prenosi. \n"
-#~ "\n"
-#~ "Pustite predvajalnik dejaven: predvajalnik redno preveri kanale za nove "
-#~ "posnetke in jih prenaša v ozadju. Če program pustite delovati, boste imeli "
-#~ "vedno nove posnetke pripravljene za ogled.\n"
-#~ "\n"
-#~ "Ne skrbite za prostor na disku: Kot TiVo tudi Miro ponuja možnost 'preteka' "
-#~ "posnetkov, ki omogoči enostavno čiščenje starejših posnetkov. Posnetek pa "
-#~ "lahko tudi ohranite, če ga enostavno shranite ali pa shranjujete kar vse "
-#~ "posnetke, ki prihajajo iz določenega kanala.\n"
-#~ "\n"
-#~ "Povečaj: Gumb na desni strani od gumba predvajanja, prikaže posnetek v "
-#~ "celozaslonskem načinu.\n"
-#~ "\n"
-#~ "Poišči posnetke: Vodnik programov Miro vsebuje na stotine spletnih TV "
-#~ "kanalov in vsi so brezplačni. Kliknite 'Dodaj' in si kanal oglejte.\n"
+#~ "Modri krogci pomenijo, da ima kanal na voljo nove videje, zeleni krogci "
+#~ "pomenijo, da imate nove prenešene videje, ki so pripravljeni za ogled."
 
-#~ msgid "outside of democracy."
-#~ msgstr "izven demokracije."
+#~ msgid ""
+#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
+#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
+#~ "channels in the guide are free.</strong>"
+#~ msgstr ""
+#~ "<strong>Dodaj kanale:</strong> TV vodnik je vaš dom za spletne TV kanale. Če "
+#~ "se želite naročiti na kanal, kliknite 'Dodaj' -- <strong>kanali in vodnik so "
+#~ "brezplačni.</strong>"
 
-#~ msgid "News and Tech"
-#~ msgstr "Novice in tehnika"
+#~ msgid ""
+#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
+#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
+#~ "waiting for videos: start some downloads and check back later."
+#~ msgstr ""
+#~ "<strong>Ne čakajte:</strong> Democracy je drugačen od videov na spletnih "
+#~ "straneh -- založniki lahko ponujajo velike in kvalitetne videje, zato ne "
+#~ "čakaj da se videji prenesejo: prični nekaj prenosov in pridi pogledat nazaj "
+#~ "čez nekaj časa."
 
-#~ msgid "Entertainment"
-#~ msgstr "Zabava"
+#~ msgid ""
+#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
+#~ "new videos and downloads in the background. Leaving it running means you'll "
+#~ "have new videos when you're ready to watch."
+#~ msgstr ""
+#~ "<strong>Pustite prižganega:</strong> Democracy Player v ozadju neprestano "
+#~ "pregleduje kanale za nove videje in prenose. Če ga boste pustili prižganega, "
+#~ "boste imeli vedno na voljo nove videje za ogled."
 
-#~ msgid "High-Def"
-#~ msgstr "Visoka ločljivost"
+#~ msgid ""
+#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
+#~ "features an 'expiration' system that helps clean out older videos to make "
+#~ "room for new videos. You can always keep a video permanently by clicking "
+#~ "'save' and you can set a channel's settings to save videos automatically."
+#~ msgstr ""
+#~ "<strong>Ne skrbite za prostor na svojem disku:</strong> Tako kot T2-TV "
+#~ "snemalniki, ima tudi Democracy Player funkcijo zapadlosti. To je sistem, ki "
+#~ "bo stare videje samodejno pobrisal. Če želite videje obdržati, lahko kadar "
+#~ "koli kliknete na opcijo 'Shrani', ali pa izberete to v nastavitvah kanala."
 
-#~ msgid "Mac"
-#~ msgstr "Mac"
+#~ msgid "<b>Channels</b>"
+#~ msgstr "<b>Kanali</b>"
+
+#~ msgid "<b>Disk Space</b>"
+#~ msgstr "<b>Prostor na disku</b>"
+
+#~ msgid "<b>Downloads</b>"
+#~ msgstr "<b>Prenosi</b>"
+
+#~ msgid "<b>Movies Directory</b>"
+#~ msgstr "<b>Mapa s filmi</b>"
+
+#~ msgid "Check Channels for new content"
+#~ msgstr "Preveri če imajo kanali novo vsebine"
+
+#~ msgid "Democracy - Add Channel"
+#~ msgstr "Democracy - Dodaj kanal"
+
+#~ msgid "Democracy Player"
+#~ msgstr "Democracy Player"
+
+#~ msgid "GB free"
+#~ msgstr "GB prostih"
+
+#~ msgid "KB/s when my computer is active"
+#~ msgstr "KB/s kadar je moj računalnik aktiven"
+
+#~ msgid "To avoid slowdowns, limit upstream to"
+#~ msgstr "Da bi se iyognil"
+
+#~ msgid ""
+#~ "You've selected a new folder to download movies to.  Should Democracy "
+#~ "migrate your existing downloads there?  (Currently dowloading movies will "
+#~ "not be moved until they finish.)"
+#~ msgstr ""
+#~ "Izbrali ste novo mapo kamor se bodo prenašali videji. Naj Democracy migrira "
+#~ "že obstoječe prenose tja? (Videji, ki se trenutno prenašajo ne bodo "
+#~ "premaknjeni dokler se prenosi ne končajo.)"
+
+#~ msgid "Channel is not compatible with Democracy!"
+#~ msgstr "Kanal ni kompatibilen s programom Democracy!"
+
+#~ msgid ""
+#~ "and ask if they can supply a feed in a format that will work with Democracy."
+#~ msgstr ""
+#~ "in povprašajte ali lahko priskrbijo prenos v formatu, ki bo deloval v "
+#~ "programu Democracy."
+
+#~ msgid ""
+#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
+#~ "$publisher."
+#~ msgstr ""
+#~ "$longAppName verzija $appVersion ($appRevision); copyright (c) 2005, 2006 "
+#~ "$publisher."
+
+#~ msgid "Please help us fix it. Copy and paste all the"
+#~ msgstr "Prosimo pomagajte nam odpraviti napako. Kopirajte in prilepite vse"
+
+#~ msgid ""
+#~ "information into our bug tracker and tell us what you were doing when the"
+#~ msgstr ""
+#~ "informacije v naš sledilnik hroščev in nam povejte, kaj ste počeli, ko je"
+
+#~ msgid "problem occurred."
+#~ msgstr "prišlo do problema."
+
+#~ msgid ""
+#~ "Then, please restart Democracy Player (or you may keep getting related "
+#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
+#~ "with your help we're fixing problems fast!"
+#~ msgstr ""
+#~ "Potem prosimo ponovno zaženite Democracy Player (sicer se lahko zgodi, da bo "
+#~ "prišlo do povezanih napak). Oproščamo se za nevšečnosti. Democracy Player je "
+#~ "še vedno beta, vendar z vašo pomočjo hitreje odpravljamo probleme."
+
+#~ msgid "You found a bug in Democracy!"
+#~ msgstr "Našli ste hrošča v Democracy!"
 
 #~ msgid "About Democracy"
 #~ msgstr "O Democracy"
@@ -99,6 +240,9 @@ msgstr ""
 
 #~ msgid "Quit Democracy"
 #~ msgstr "Izklop Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Umaknji kanal ..."
 
 #~ msgid "(You must restart Democracy for this change to take effect)\n"
 #~ msgstr "(Za to spremembo je treba Democracy ponovno zagnati)\n"
@@ -218,24 +362,6 @@ msgstr ""
 #~ "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
 #~ "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
 
-#~ msgid "Save this video"
-#~ msgstr "Shrani ta video"
-
-#~ msgid "_Play / Pause"
-#~ msgstr "_Predvajaj / Ustavi"
-
-#~ msgid "_Update Channel"
-#~ msgstr "Osvež_i kanal"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "O_dstrani kanal"
-
-#~ msgid "_Open..."
-#~ msgstr "_Odpri..."
-
-#~ msgid "Open various files"
-#~ msgstr "Odpri več datotek"
-
 #~ msgid "Create new playlist"
 #~ msgstr "Pripravi nov seznam"
 
@@ -245,18 +371,6 @@ msgstr ""
 #~ msgid "Create new channel folder"
 #~ msgstr "Pripravi novo mapo za kanale"
 
-#~ msgid "P_references"
-#~ msgstr "Nas_tavitve"
-
-#~ msgid "Quit the Program"
-#~ msgstr "Izhod iz programa"
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "_Osveži vse kanale"
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Umaknji kanal ..."
-
 #, python-format
 #~ msgid ""
 #~ "Error importing democracy modules:\n"
@@ -265,18 +379,6 @@ msgstr ""
 #~ "Napaka pri uvažanju modulov demokracije:\n"
 #~ "\n"
 #~ "%s"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr "Nič za prikazati.<br></br> Vnesi poizvedbo v iskalno polje zgoraj."
-
-#~ msgid "Searching..."
-#~ msgstr "Iščem..."
-
-#~ msgid "SAVE"
-#~ msgstr "SHRANI"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "Nadaljuj na naslednji video"
 
 #~ msgid "${count} Downloads in Progress"
 #~ msgstr "Poteka ${count} prenosov"
@@ -293,115 +395,21 @@ msgstr ""
 #~ msgid "${len} Videos Match This Search"
 #~ msgstr "${len} videov se ujema s tem iskanjem"
 
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${count} videov na tem kanalu"
-
-#~ msgid "Unwatched"
-#~ msgstr "Neopazovano"
-
-#~ msgid "Watched"
-#~ msgstr "Opazovan"
-
-#~ msgid "Saved"
-#~ msgstr "Shranjen"
-
-#~ msgid "Default"
-#~ msgstr "Privzeto"
-
-#~ msgid "Recommend"
-#~ msgstr "Priporoči"
-
 #~ msgid "Looking for videos at this URL"
 #~ msgstr "Iščem videe na tem URLju"
 
-#~ msgid "Play Externally"
-#~ msgstr "Predvajaj zunaj"
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} videov na tem kanalu"
 
-#~ msgid "Pending Auto Download"
-#~ msgstr "Čakajoč samodejni prenos"
-
-#~ msgid "Simple translation"
-#~ msgstr "Preprost prevod"
-
-#~ msgid "My Collection"
-#~ msgstr "Moja zbirka"
-
-#~ msgid "New Videos"
-#~ msgstr "Novi videi"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy spletna TV: Kako začeti"
-
-#~ msgid "GO BIG:"
-#~ msgstr "NA VELIKO:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr "To je vaš celozaslonski gumb. Kliknite ga in se sprostite."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "NOVE ZADEVE:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "Modri krogci pomenijo, da ima kanal na voljo nove videje, zeleni krogci "
-#~ "pomenijo, da imate nove prenešene videje, ki so pripravljeni za ogled."
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>Dodaj kanale:</strong> TV vodnik je vaš dom za spletne TV kanale. Če "
-#~ "se želite naročiti na kanal, kliknite 'Dodaj' -- <strong>kanali in vodnik so "
-#~ "brezplačni.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>Ne čakajte:</strong> Democracy je drugačen od videov na spletnih "
-#~ "straneh -- založniki lahko ponujajo velike in kvalitetne videje, zato ne "
-#~ "čakaj da se videji prenesejo: prični nekaj prenosov in pridi pogledat nazaj "
-#~ "čez nekaj časa."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>Pustite prižganega:</strong> Democracy Player v ozadju neprestano "
-#~ "pregleduje kanale za nove videje in prenose. Če ga boste pustili prižganega, "
-#~ "boste imeli vedno na voljo nove videje za ogled."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>Ne skrbite za prostor na svojem disku:</strong> Tako kot T2-TV "
-#~ "snemalniki, ima tudi Democracy Player funkcijo zapadlosti. To je sistem, ki "
-#~ "bo stare videje samodejno pobrisal. Če želite videje obdržati, lahko kadar "
-#~ "koli kliknete na opcijo 'Shrani', ali pa izberete to v nastavitvah kanala."
+#~ msgid "SAVE"
+#~ msgstr "SHRANI"
 
 #~ msgid ""
 #~ "Would you like to delete this file or just remove its entry from My "
 #~ "Collection?"
 #~ msgstr "Zbrišem to datoteko ali jo samo umaknem iz Moje Zbirke?"
 
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - Dodaj kanal"
-
-#~ msgid "Channel Guide"
-#~ msgstr "TV vodnik"
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "Kanal ni kompatibilen s programom Democracy!"
-
-#, fuzzy
+#, fuzzy, python-format
 #~ msgid ""
 #~ "This Democracy channel file has an invalid format: %s. Please notify the "
 #~ "publisher of this file."
@@ -409,7 +417,7 @@ msgstr ""
 #~ "Datoteka s kanalom ima napačen format: %s. Prosim, obvestite lastnika "
 #~ "datoteke."
 
-#, fuzzy
+#, fuzzy, python-format
 #~ msgid ""
 #~ "This Democracy channel file has the wrong content type: %s. Please notify "
 #~ "the publisher of this file."
@@ -421,84 +429,12 @@ msgstr ""
 #~ msgid "Could not download the Democracy channel file: %s."
 #~ msgstr "Ne morem prenesti datoteke s kanalom: %s."
 
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>Kanali</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>Prostor na disku</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>Prenosi</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>Mapa s filmi</b>"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "Preveri če imajo kanali novo vsebine"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy Player"
-
-#~ msgid "GB free"
-#~ msgstr "GB prostih"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s kadar je moj računalnik aktiven"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "Da bi se iyognil"
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr ""
-#~ "Izbrali ste novo mapo kamor se bodo prenašali videji. Naj Democracy migrira "
-#~ "že obstoječe prenose tja? (Videji, ki se trenutno prenašajo ne bodo "
-#~ "premaknjeni dokler se prenosi ne končajo.)"
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr ""
-#~ "in povprašajte ali lahko priskrbijo prenos v formatu, ki bo deloval v "
-#~ "programu Democracy."
-
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName verzija $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-
-#~ msgid "Please help us fix it. Copy and paste all the"
-#~ msgstr "Prosimo pomagajte nam odpraviti napako. Kopirajte in prilepite vse"
-
-#~ msgid ""
-#~ "information into our bug tracker and tell us what you were doing when the"
-#~ msgstr ""
-#~ "informacije v naš sledilnik hroščev in nam povejte, kaj ste počeli, ko je"
-
-#~ msgid "problem occurred."
-#~ msgstr "prišlo do problema."
-
-#~ msgid ""
-#~ "Then, please restart Democracy Player (or you may keep getting related "
-#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-#~ "with your help we're fixing problems fast!"
-#~ msgstr ""
-#~ "Potem prosimo ponovno zaženite Democracy Player (sicer se lahko zgodi, da bo "
-#~ "prišlo do povezanih napak). Oproščamo se za nevšečnosti. Democracy Player je "
-#~ "še vedno beta, vendar z vašo pomočjo hitreje odpravljamo probleme."
-
-#~ msgid "You found a bug in Democracy!"
-#~ msgstr "Našli ste hrošča v Democracy!"
-
 #: ../../portable/dialogs.py:77
 msgid "Cancel"
 msgstr "Prekliči"
 
 msgid "OK"
-msgstr "V redu"
+msgstr "OK"
 
 #: ../../portable/dialogs.py:76
 msgid "Ok"
@@ -668,7 +604,7 @@ msgid "Playlists"
 msgstr "Seznami predvajanja"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Lastnosti ..."
 
 msgid "Previous Video"
 msgstr "Predhodni posnetek"
@@ -1199,7 +1135,7 @@ msgstr "Izbor mape za prikaz v zbirki"
 
 #: ../../platform/osx/frontend/StartupPanel.py:80
 msgid "Finish"
-msgstr ""
+msgstr "Končaj"
 
 #: ../../platform/osx/frontend/StartupPanel.py:139
 msgid "Search!"
@@ -1395,7 +1331,7 @@ msgstr "Datoteka torrent za ta predmet je bila izbrisana "
 
 #: ../../portable/dl_daemon/download.py:824
 msgid "outside of Miro."
-msgstr ""
+msgstr "izven programa Miro"
 
 #: ../../portable/tabs.py:44
 msgid "Library"
@@ -1574,7 +1510,7 @@ msgstr "Označi kot novo"
 
 #: ../../portable/menu.py:112 ../../portable/item.py:1484
 msgid "Mark as Watched"
-msgstr ""
+msgstr "označi kot Ogledano"
 
 #: ../../portable/menu.py:117
 #, python-format
@@ -2456,16 +2392,16 @@ msgstr "\"%s\" ni veljaven naslov URL"
 #: ../../portable/httpclient.py:143
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "Datoteka: \"%s\" ne obstaja"
 
 #: ../../portable/httpclient.py:147
 msgid "Read error"
-msgstr ""
+msgstr "Napaka med branjem"
 
 #: ../../portable/httpclient.py:148
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Napaka med branjem iz \"%s\""
 
 #: ../../portable/httpclient.py:341
 msgid "Unknown Error code"
@@ -2636,12 +2572,12 @@ msgstr "%s ni veljaven. Vnesti morate pozitivno število."
 
 #: ../../portable/app.py:1839
 msgid "Error Revealing File"
-msgstr ""
+msgstr "Napaka med odkrivanjem datoteke"
 
 #: ../../portable/app.py:1840
 #, python-format
 msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Datoteka \"%s\" je bila izbrisana izven programa Miro."
 
 #: ../../portable/app.py:2011
 msgid " - Invalid URL"
@@ -2683,7 +2619,7 @@ msgstr "Vnesite naslov URL za prenos videa"
 
 #: ../../portable/app.py:2420
 msgid "Starter Channels"
-msgstr ""
+msgstr "Začetni kanali"
 
 #: ../../portable/app.py:2437
 msgid "Example Playlist"

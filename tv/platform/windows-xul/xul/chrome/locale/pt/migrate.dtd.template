@@ -1,4 +1,4 @@
 <!ENTITY migrate.title "Migrar os filmes existentes?">
 <!ENTITY migrate.accept "Migrar">
-<!ENTITY migrate.cancel "Não Migrar">
+<!ENTITY migrate.cancel "Não migrar">
 <!ENTITY migrate.description "Seleccionou uma nova pasta para onde descarregar os vídeos. O $shortAppName deve migrar os seus ficheiros existentes para a nova pasta? (Vídeos com transferência em curso não serão migrados enquanto não estiverem completos.)">
