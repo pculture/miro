@@ -113,7 +113,7 @@ class HTMLDisplay (Display):
         handle, location = tempfile.mkstemp('.html', dir=tempdir)
         handle = os.fdopen(handle, "wt")
         try:
-            handle.write(self.initialHTML)
+            handle.write(self.initialHTML.encode('utf-8'))
         finally:
             handle.close()
         self.location = os.path.abspath(location)
