@@ -338,7 +338,7 @@ class CallbackHandler(object):
             ('EditPreferences', gtk.STOCK_PREFERENCES, menubar.getLabel('EditPreferences'), menubar.getShortcut('EditPreferences').GTKString(), None, self.on_preference),
             ('Quit', gtk.STOCK_QUIT, menubar.getLabel('Quit'), menubar.getShortcut('Quit').GTKString(), None, self.on_quit_activate),
             ('UpdateAllChannels', None, menubar.getLabel('UpdateAllChannels'), menubar.getShortcut('UpdateAllChannels').GTKString(), None, self.on_update_all_channels_activate),
-            ('Help', None, menubar.getLabel('Help'), menubar.getShortcut('Help').GTKString(), None, self.on_help_clicked),
+            ('Help', gtk.STOCK_HELP, menubar.getLabel('Help'), menubar.getShortcut('Help').GTKString(), None, self.on_help_clicked),
             ('ReportBug', None, menubar.getLabel('ReportBug'), menubar.getShortcut('ReportBug').GTKString(), None, self.on_report_bug_clicked),
             ('About', gtk.STOCK_ABOUT, menubar.getLabel('About'), menubar.getShortcut('About').GTKString(), None, self.on_about_clicked),
             ('Donate', None, menubar.getLabel('Donate'), menubar.getShortcut('Donate').GTKString(), None, self.on_donate_clicked),
