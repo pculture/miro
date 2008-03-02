@@ -232,7 +232,7 @@ class TemplateDisplay(HTMLDisplay):
         because it's happens in the gui thread and can't access the DB.
         """
 
-        # check for subscribe.getdemocracy.com links
+        # check for subscribe.getdemocracy.com/subscribe.getmiro.com links
         type, subscribeURLs = subscription.findSubscribeLinks(url)
 
         # check if the url that came from a guide, but the user switched tabs
