@@ -937,6 +937,8 @@ def upgrade62(objectList):
             changed.add(o)
     return changed
 
+upgrade63 = upgrade37
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

@@ -58,7 +58,7 @@ from miro import prefs
 from miro.platform import resources
 from miro import downloader
 from miro.util import (returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure, escape, toUni)
-from miro.fileutil import miro_listdir
+from miro.fileutil import miro_listdir, miro_allfiles
 from miro.platform.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
 from miro import filetypes
 from miro import item as itemmod
@@ -2332,42 +2332,10 @@ class DirectoryFeedImpl(FeedImpl):
         #Adds any files we don't know about
         #Files on the filesystem
         if os.path.isdir(moviesDir):
-            files, dirs = miro_listdir(moviesDir)
-            for file in files:
-                if not file in knownFiles:
+            all_files = miro_allfiles(moviesDir)
+            for file in all_files:
+                if file not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file)):
                     itemmod.FileItem(file, feed_id=self.ufeed.id)
-            for dir in dirs:
-                if dir in knownFiles:
-                    continue
-                found = 0
-                not_found = []
-                subfiles, subdirs = miro_listdir(dir)
-                for subfile in subfiles:
-                    if subfile in knownFiles:
-                        found = found + 1
-                    else:
-                        not_found.append(subfile)
-                for subdir in subdirs:
-                    if subdir in knownFiles:
-                        found = found + 1
-                # If every subfile or subdirectory is
-                # already in the database (including
-                # the case where the directory is
-                # empty) do nothing.
-                if len(not_found) > 0:
-                    # If there were any files found,
-                    # this is probably a channel
-                    # directory that someone added
-                    # some thing to.  There are few
-                    # other cases where a directory
-                    # would have some things shown.
-                    if found != 0:
-                        for subfile in not_found:
-                            itemmod.FileItem(subfile, feed_id=self.ufeed.id)
-                    # But if not, it's probably a
-                    # directory added wholesale.
-                    else:
-                        itemmod.FileItem(dir, feed_id=self.ufeed.id)
 
         for item in self.items:
             if not os.path.exists(item.getFilename()):
