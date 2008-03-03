@@ -220,7 +220,7 @@ class Renderer:
         confirmMainThread()
         self.xine.pause()
 
-    #@waitForAttach -- Not necessary because stop does this
+    #@waitForAttach -- Not necessary because pause does this
     def stop(self):
         # confirmMainThread() -- Not necessary since pause does this
         self.pause()
