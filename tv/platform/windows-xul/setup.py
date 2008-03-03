@@ -346,9 +346,12 @@ class bdist_xul_dumb(Command):
         self.xul_dist_dir = os.path.join(self.dist_dir, 'xulrunner', 'python')
 
     def run(self):
-        self.buildMovieDataUtil()
         self.makeAppConfig()
+        # It seems that buildMovieDataUtil changes the Include env variable 
+        # which messes up makeStubEXE for me.  So we need to make sure to call
+        # makeStubEXE() first (BDK)
         self.makeStubEXE()
+        self.buildMovieDataUtil()
         self.setTemplateVariable("pyxpcomIsEmbedded", "true")
         self.fillTemplates()                  
 
@@ -811,6 +814,7 @@ class bdist_xul_dumb(Command):
         self.templateVars = util.readSimpleConfigFile(path)
 
     def makeStubEXE(self):
+         print "building EXE stub"
          version = self.getTemplateVariable('appVersion')
          versionComponents = version.split('-')[0].split('.')
          # FIXME - should this be < 4 or <= 4 ?
@@ -828,7 +832,7 @@ class bdist_xul_dumb(Command):
          os.chdir(stubDir)
          rv = os.system("rc Democracy.rc")
          if rv == 0:
-             cmd = 'cl  /DXULRUNNER_BIN="\\"%s.exe\\"" Democracy.cpp /link shell32.lib /subsystem:windows /machine:x86 Democracy.RES /out:"%s.exe"' % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('shortAppName'))
+             cmd = 'cl  /DXULRUNNER_BIN="\\"%s.exe\\"" Democracy.cpp /link shell32.lib Advapi32.lib /subsystem:windows /machine:x86 Democracy.RES /out:"%s.exe"' % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('shortAppName'))
              #print cmd
              rv = os.system(cmd)
          os.chdir(olddir)
