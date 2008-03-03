@@ -73,6 +73,7 @@ def makeObjectContextMenu(obj, templateName, view):
         folder.PlaylistFolder: makePlaylistFolderContextMenu,
         guide.ChannelGuide: makeGuideContextMenu,
         item.Item: makeItemContextMenu,
+        item.FileItem: makeItemContextMenu,
     }
     try:
         menuFunction = menuFunctions[obj.__class__]
@@ -107,7 +108,6 @@ def makeContextMenu(templateName, view, selection, clickedID):
             return None
 
 def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
-    c = app.controller # easier/shorter to type
     watched = unwatched = downloaded = downloading = available = uploadable = 0
     for i in selectedItems:
         if i.getState() == 'downloading':
@@ -126,14 +126,14 @@ def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
     items = []
     if downloaded > 0:
         items.append((None, _('%d Downloaded Items') % downloaded))
-        items.append((lambda: c.playView(view, clickedID),
+        items.append((lambda: app.htmlapp.playView(view, clickedID),
             _('Play')))
-        items.append((c.addToNewPlaylist, _('Add to new playlist')))
+        items.append((app.controller.addToNewPlaylist, _('Add to new playlist')))
         if templateName in ('playlist', 'playlist-folder'):
             label = _('Remove From Playlist')
         else:
             label = _('Remove From the Library')
-        items.append((c.removeCurrentItems, label))
+        items.append((app.controller.removeCurrentItems, label))
         if watched:
             def markAllUnseen():
                 for item in selectedItems:
@@ -161,7 +161,7 @@ def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
             _('Pause Download')))
 
     if uploadable > 0:
-        items.append((c.startUploads, _('Restart Upload')))
+        items.append((app.controller.startUploads, _('Restart Upload')))
 
     return makeMenu(items)
 
@@ -201,18 +201,17 @@ def makeGuideContextMenu(guideObj, templateName, view):
     return makeMenu(menuItems)
 
 def makeItemContextMenu(itemObj, templateName, view):
-    c = app.controller # easier/shorter to type
     if itemObj.isDownloaded():
         if templateName in ('playlist', 'playlist-folder'):
             label = _('Remove From Playlist')
         else:
             label = _('Remove From the Library')
         items = [
-            (lambda: c.playView(view, itemObj.getID()), _('Play')),
-            (lambda: c.playView(view, itemObj.getID(), True), 
+            (lambda: app.htmlapp.playView(view, itemObj.getID()), _('Play')),
+            (lambda: app.htmlapp.playView(view, itemObj.getID(), True), 
                 _('Play Just This Video')),
-            (c.addToNewPlaylist, _('Add to new playlist')),
-            (c.removeCurrentItems, label),
+            (app.controller.addToNewPlaylist, _('Add to new playlist')),
+            (app.controller.removeCurrentItems, label),
         ]
         if itemObj.getSeen():
             items.append((itemObj.markItemUnseen, _('Mark as Unwatched')))
