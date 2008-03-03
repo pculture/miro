@@ -140,3 +140,6 @@ def miro_listdir(directory):
             pass
     return files, directories
 
+# FIXME -- implement this
+def miro_allfiles(d):
+    return []
