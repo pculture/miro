@@ -204,6 +204,16 @@ class ManagedWebHTMLView (WebHTMLView):
 
 ###############################################################################
 
+class JSOpened (NSObject):
+    
+    def webView_willPerformClientRedirectToURL_delay_fireDate_forFrame_(self, webView, url, delay, fireDate, frame):
+        webView.stopLoading_(nil)
+        NSWorkspace.sharedWorkspace().openURL_(url)
+
+jsOpened = JSOpened.alloc().init()
+
+###############################################################################
+
 class ManagedWebView (NSObject):
 
     WebView.registerViewClass_representationClass_forMIMEType_(ManagedWebHTMLView, WebHTMLRepresentation, u'text/html')
@@ -335,6 +345,13 @@ class ManagedWebView (NSObject):
         url = info["WebActionOriginalURLKey"]
         NSWorkspace.sharedWorkspace().openURL_(url)
         listener.ignore()
+
+    def webView_createWebViewWithRequest_(self, webView, request):
+        global jsOpened
+        webView = WebView.alloc().init()
+        webView.setFrameLoadDelegate_(jsOpened)
+        webView.mainFrame().loadRequest_(request)
+        return webView
 
     # Redirect resource: links to files in resource bundle
     def webView_resource_willSendRequest_redirectResponse_fromDataSource_(self, webview, resourceCookie, request, redirectResponse, dataSource):
