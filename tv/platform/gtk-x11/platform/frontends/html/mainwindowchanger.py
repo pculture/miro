@@ -135,7 +135,7 @@ class MainWindowChanger(object):
                 if activeRenderer != None:
                     activeRenderer.goFullscreen()
                 self.wasFullScreen = True
-            if (not fullscreen) and self.wasFullScreen:
+            elif (not fullscreen) and self.wasFullScreen:
                 self.widgetTree['main-window'].unfullscreen()
                 if activeRenderer != None:
                     activeRenderer.exitFullscreen()
@@ -171,19 +171,17 @@ class MainWindowChanger(object):
                         self.widgetTree['video-info-box'].hide()
                         self.widgetTree['video-control-box'].hide()
                         self.widgetTree['menubar-box'].hide()
-                        self.setVideoWidgetsSensitive(True)
                     else:
                         self.widgetTree['channels-box'].hide()
                         self.widgetTree['video-info-box'].show()
                         self.widgetTree['video-control-box'].show()
                         self.widgetTree['menubar-box'].hide()
-                        self.setVideoWidgetsSensitive(True)
                 else:
                     self.widgetTree['channels-box'].show()
                     self.widgetTree['video-info-box'].show()
                     self.widgetTree['video-control-box'].show()
                     self.widgetTree['menubar-box'].show()
-                    self.setVideoWidgetsSensitive(True)
+                self.setVideoWidgetsSensitive(True)
             else:
                 raise TypeError("invalid state: %r" % newState)
             self.updatePlayPauseButton()
