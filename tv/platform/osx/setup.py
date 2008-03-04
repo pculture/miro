@@ -296,9 +296,7 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_database_ext())
         self.distribution.ext_modules.append(self.get_sorts_ext())
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
-
-        if OS_VERSION < 9:
-            self.distribution.ext_modules.append(self.get_libtorrent_ext())
+        self.distribution.ext_modules.append(self.get_libtorrent_ext())
 
         self.distribution.packages = [
             'miro',
