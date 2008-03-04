@@ -63,29 +63,3 @@ $SBOX_DIR/bin/bjam  --prefix=$SBOX_DIR \
                     --toolset=darwin \
                     release \
                     install
-
-# libtorrent ==================================================================
-
-cd $WORK_DIR
-
-tar -xzf $BKIT_DIR/libtorrent-0.12.1.tar.gz
-cd $WORK_DIR/libtorrent-0.12.1
-
-export CXXFLAGS=-I$SBOX_DIR/include/boost-1_34_1
-export LDFLAGS=-L$SBOX_DIR/lib
-
-./configure --prefix=$SBOX_DIR
-make
-make install
-
-# libtorrent python bindings ==================================================
-
-cd bindings/python
-
-export BOOST_BUILD_PATH=$SBOX_DIR/pkg/boost_1_34_1
-
-$SBOX_DIR/bin/bjam --toolset=darwin \
-                   link=static \
-                   release
-
-cp bin/darwin/release/dht-support-on/link-static/logging-none/threading-multi/libtorrent.so $SBOX_DIR/Library/Python/2.5/site-packages/libtorrent.so
