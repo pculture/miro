@@ -495,10 +495,15 @@ class MiroBuild (py2app):
                 print "    %s" % dest
                 copy(src, dest)
             os.mkdir(os.path.join(self.prsrcRoot, 'templates'))
-            for js in glob(os.path.join(ROOT_DIR, 'resources', 'templates/*.js')):
-                dest = os.path.join(self.prsrcRoot, 'templates', os.path.basename(js))
+            if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
+                template_items = glob(os.path.join(ROOT_DIR, 'resources', 'templates', '*'))
+            else:
+                template_items = glob(os.path.join(ROOT_DIR, 'resources', 'templates', '*.js'))
+            for template_item in template_items:
+                dest = os.path.join(self.prsrcRoot, 'templates', os.path.basename(template_item))
                 print "    %s" % dest
-                copy(js, dest)
+                if not os.path.isdir(template_item):
+                    copy(template_item, dest)
                 
     def copy_config_file(self):
         print "Copying config file to application bundle"
