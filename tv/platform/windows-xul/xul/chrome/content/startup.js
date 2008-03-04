@@ -68,7 +68,7 @@ function onwizardfinish() {
             .getService(Components.interfaces.nsIWindowWatcher);
     var startupTasksURL = "chrome://dtv/content/startup.xul";
     wwatch.openWindow(null, "chrome://dtv/content/main.xul",
-            "DemocracyPlayer", "chrome,dialog=yes,all", null);
+            "DemocracyPlayer", "chrome,resizable,dialog=no,all", null);
 }
 
 function searchPossible() {
