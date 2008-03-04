@@ -140,6 +140,36 @@ def miro_listdir(directory):
             pass
     return files, directories
 
-# FIXME -- implement this
-def miro_allfiles(d):
-    return []
+def miro_allfiles(directory):
+    """Directory listing that's safe and convenient for finding new videos in
+    a directory.
+
+    Returns the tuple (files, directories) where both elements are a list of
+    absolute pathnames.  OSErrors are silently ignored.  Hidden files aren't
+    returned.  Pathnames are run through os.path.normcase.
+    """
+
+    files = []
+    directory = os.path.abspath(os.path.normcase(directory))
+    if directory in deletes_in_progress:
+        return
+    try:
+        listing = os.listdir(directory)
+    except OSError:
+        return [], []
+    for name in listing:
+        if name[0] == '.' or name.lower() == 'thumbs.db':
+            # thumbs.db is a windows file that speeds up thumbnails.  We know
+            # it's not a movie file.
+            continue
+        path = os.path.join(directory, os.path.normcase(name))
+        if path in deletes_in_progress:
+            continue
+        try:
+            if os.path.isdir(path):
+                files.extend(miro_allfiles(path))
+            else:
+                files.append(path)
+        except OSError:
+            pass
+    return files
