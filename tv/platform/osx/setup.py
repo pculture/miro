@@ -59,10 +59,17 @@ PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
 PLATFORM_DIR = os.path.join(ROOT_DIR, 'platform', 'osx')
 PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'platform')
 
-#SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
-#SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
-SANDBOX_DIR = "/usr/local"
-#sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python%s' % PYTHON_VERSION, 'site-packages'))
+OS_INFO = os.uname()
+OS_VERSION = int(OS_INFO[2][0])
+
+if OS_VERSION == 9:
+    SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
+    SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
+    PYTHON_LIB = os.path.join("/", "System", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+    sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python2.5', 'site-packages'))
+else:
+    SANDBOX_DIR = "/usr/local"
+    PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
 
 # =============================================================================
 # Look for the Boost library in various common places.
@@ -103,12 +110,15 @@ else:
 #   isysroot flag.
 # =============================================================================
 
-#PYTHON_LIB = os.path.join(SANDBOX_DIR, "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
-PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
-BOOST_PYTHON_LIB = os.path.join(SANDBOX_DIR, "lib", "libboost_python-%s.a" % BOOST_VERSION)
-BOOST_FILESYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_filesystem-%s.a' % BOOST_VERSION)
-BOOST_DATETIME_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_date_time-%s.a' % BOOST_VERSION)
-BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread-%s.a' % BOOST_VERSION)
+if OS_VERSION < 9:
+    BOOST_TYPE = ""
+else:
+    BOOST_TYPE = "-mt"
+
+BOOST_PYTHON_LIB = os.path.join(SANDBOX_DIR, "lib", "libboost_python%s-%s.a" % (BOOST_TYPE, BOOST_VERSION))
+BOOST_FILESYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_filesystem%s-%s.a' % (BOOST_TYPE, BOOST_VERSION))
+BOOST_DATETIME_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_date_time%s-%s.a' % (BOOST_TYPE, BOOST_VERSION))
+BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread%s-%s.a' % (BOOST_TYPE, BOOST_VERSION))
 
 # =============================================================================
 # Only now may we import things from the local sandbox and our own tree
@@ -286,7 +296,9 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_database_ext())
         self.distribution.ext_modules.append(self.get_sorts_ext())
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
-        self.distribution.ext_modules.append(self.get_libtorrent_ext())
+
+        if OS_VERSION < 9:
+            self.distribution.ext_modules.append(self.get_libtorrent_ext())
 
         self.distribution.packages = [
             'miro',
@@ -375,13 +387,15 @@ class MiroBuild (py2app):
                              BOOST_FILESYSTEM_LIB,
                              BOOST_DATETIME_LIB,
                              BOOST_THREAD_LIB]
-        libtorrent_compil_args = ["-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1", 
+        libtorrent_compil_args = ["-Wno-missing-braces",
+                                  "-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1", 
                                   "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1", 
                                   "-DHAVE_INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1", 
                                   "-DHAVE_PTHREAD=1", 
                                   "-DTORRENT_USE_OPENSSL=1", 
                                   "-DHAVE_SSL=1",
-                                  "-DNDEBUG"]
+                                  "-DNDEBUG",
+                                  "-O2"]
 
         return Extension("miro.libtorrent", sources=libtorrent_src, 
                                        include_dirs=libtorrent_inc_dirs,

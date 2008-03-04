@@ -34,7 +34,10 @@ import logging
 # (very) weird errors ("library routine called out of sequence") and even 
 # crashes on Leopard, probably due to a conflict between the standard OS X 
 # sqlite lib and our own most recent one.
-from pysqlite2 import dbapi2
+try:
+    from pysqlite2 import dbapi2
+except ImportError:
+    from sqlite3 import dbapi2
 
 import Foundation
 
@@ -104,6 +107,9 @@ def launchApplication():
         sys.stderr = AutoflushingTeeStream([h, sys.stderr])
 
     # Kick off the application
+    from AppKit import NSApplication
+    NSApplication.sharedApplication()
+
     from miro.platform.frontends.html.Application import Application
     Application().run()
 
@@ -120,7 +126,7 @@ def launchDownloaderDaemon():
     # Increase the maximum file descriptor count (to the max)
     import resource
     logging.info('Increasing file descriptor count limit in Downloader.')
-    resource.setrlimit(resource.RLIMIT_NOFILE, (-1,-1))
+    resource.setrlimit(resource.RLIMIT_NOFILE, (10240,-1))
 
     # Make sure we don't leak from the downloader eventloop
     from miro import eventloop

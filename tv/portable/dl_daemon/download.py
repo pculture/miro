@@ -9,7 +9,11 @@ from threading import RLock, Event, Thread
 import traceback
 from copy import copy
 
-import miro.libtorrent as lt
+try:
+    import miro.libtorrent as lt
+except:
+    import libtorrent as lt
+
 from miro.clock import clock
 from miro.download_utils import cleanFilename, nextFreeFilename, checkFilenameExtension, filterDirectoryName
 from miro.download_utils import filenameFromURL, getFileURLPath
