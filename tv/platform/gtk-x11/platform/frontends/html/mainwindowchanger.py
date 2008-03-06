@@ -173,7 +173,7 @@ class MainWindowChanger(object):
                         self.widgetTree['menubar-box'].hide()
                     else:
                         self.widgetTree['channels-box'].hide()
-                        self.widgetTree['video-info-box'].show()
+                        self.widgetTree['video-info-box'].hide()
                         self.widgetTree['video-control-box'].show()
                         self.widgetTree['menubar-box'].hide()
                 else:
