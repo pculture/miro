@@ -1642,6 +1642,7 @@ folder will be deleted.""")
         
         if not isinstance (self, FileItem) and self.downloader is None:
             self.downloader = downloader.getExistingDownloader(self)
+            self.fixIncorrectTorrentSubdir()
             if self.downloader is not None:
                 self.signalChange(needsSave=False)
         self.splitItem()
@@ -1654,6 +1655,23 @@ folder will be deleted.""")
             self.signalChange()
         if self.duration is None or self.screenshot is None:
             moviedata.movieDataUpdater.requestUpdate (self)
+
+    # Up to revision 6257, torrent downloads were incorrectly being created in 
+    # an extra subdirectory. This method "migrates" those torrent downloads to 
+    # the correct layout.
+    # from: /path/to/movies/foobar.mp4/foobar.mp4
+    # to:   /path/to/movies/foobar.mp4
+    def fixIncorrectTorrentSubdir(self):
+        filenamePath = self.getFilename()
+        if (os.path.isdir(filenamePath)):
+            enclosedFile = os.path.join(filenamePath, os.path.basename(filenamePath))
+            if (os.path.exists(enclosedFile)):
+                logging.info("Migrating incorrect torrent download: %s" % enclosedFile)
+                temp = filenamePath + ".tmp"
+                shutil.move(enclosedFile, temp)
+                os.rmdir(filenamePath)
+                os.rename(temp, filenamePath)
+                self.videoFilename = FilenameType("")
 
     def __str__(self):
         return "Item - %s" % self.getTitle()
