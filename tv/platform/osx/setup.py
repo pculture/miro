@@ -88,7 +88,7 @@ BOOST_INCLUDE_DIR = None
 BOOST_VERSION = None
 
 for searchDir in (SANDBOX_DIR, '/usr/local', '/opt/local', '/sw'):
-    libItems = glob(os.path.join(searchDir, 'lib/libboost_python-1_3*.*'))
+    libItems = glob(os.path.join(searchDir, 'lib/libboost_python*-1_3*.*'))
     incItems = glob(os.path.join(searchDir, 'include/boost-1_3*/'))
     if len(libItems) >= 1 and len(incItems) >= 1:
         BOOST_LIB_DIR = os.path.dirname(libItems[0])
