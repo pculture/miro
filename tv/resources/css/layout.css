@@ -1,0 +1,972 @@
+/* This is used to make the feed settings section float above the channel */
+#feed-settings {
+    position: fixed;
+    top: 90px;
+    left: 0px;
+    width: 100%;
+    display: none;
+    z-index: 5; /* Needs to be float above the main page */
+    }
+#settings-inner {
+    padding: 15px 18px 20px 18px;
+    height: 142px;
+    margin-bottom: 4px;
+}
+
+#settings-inner h2 {
+    margin: 0;
+    padding: 0px 0 12px 0px;
+}
+
+#channel-url {
+	padding-top:7px;
+	float:right;
+    }
+a.remove-channel {
+	padding-left:12px;
+	margin-left:12px;
+}
+.settings-small {
+    padding: 3px 0 0 23px;
+}
+.settings-button {
+    position: absolute;
+    bottom: 24px;
+		right:18px;
+}
+/* The block of drop downs and fields */
+#actual-settings {
+	padding: 18px 0 0 0px;
+	clear:both;
+}
+/* This is the title section of the channel view */
+#main-titlebar {
+    height: 60px;
+    width: 100%;
+    min-width: 600px;
+    margin: 0px;
+    position: fixed;
+    top: 0px;
+    z-index: 6; 
+    /* This should be above feed-settings, so that feed-settings doesn't cover
+     * it up durring the opening animation.  It also needs to be above
+     * sort-bar, so the auto-download select menu is above sort-bar.
+     */
+}
+
+/* The icon for the channel view. Usually in the titlebar */
+#main-icon {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  /*  width: 76px;*/
+    height: 61px;
+    }
+#main-icon.no-border.static-tab {
+	top:1px;
+	left:8px;
+}
+#main-titlebar .noborder {
+    margin: 2px;
+}
+
+/* This wraps just the name of the view */
+#main-title {
+    position: absolute;
+    left: 78px;
+    /*right: 120px;*/
+    top: 0px;
+    /*height: 32px;*/
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    /*letter-spacing: -0.5px;*/
+}
+h1#main-title.static-tab {
+	left:63px;
+}
+/* Search box */
+#search-box-container {
+    position: absolute;
+    right:40px;
+    top: 20px;
+}
+
+#search-box {
+    width: 121px;
+}
+/* Sub-title bar and elements */
+
+#sub-titlebar {
+	position:fixed;
+	width: 100%;
+  min-width: 600px;
+	left:0px;
+	top:61px;
+	height:27px;
+	z-index:6;
+}
+/* The right side of the titlebar (visit website, settings, etc). */
+.sub-titlebar-right {
+	position:absolute;
+	top:3px;
+	right:8px;
+}
+.sub-titlebar-right ul, 
+.sub-titlebar-right ul li {
+	display:inline;
+	margin:0;
+	padding:0;
+}
+/* Just around auto-download */
+#auto-download,
+#download-info {
+    position: absolute;
+    top:4px;
+    left: 10px;
+    display: block;
+    height: 20px;
+    padding: 0px;
+    margin:0;
+    z-index: 2;
+}
+
+#auto-label {
+    float: left;
+    padding-right: 6px;
+    padding-top: 1px;
+		}
+
+/* views bar --------------------- */
+/*#views-bar {
+	position:fixed;
+	top:90px;
+	left:0;
+	width: 100%;
+  min-width: 600px;
+	height:27px;
+	z-index:6;
+}
+.views-bar-right {
+	position:absolute;
+	top:6px;
+	right:8px;
+}
+ul#view_style li,
+ul#view_style {
+	display:inline;
+}
+ul#view_style li a {
+	display:block;
+	float:left;
+}*/
+/* Download page titlebar components */
+/*#downloads-global-actions {
+    position: absolute;
+    top: 24px;
+    right: 5px;
+    }
+
+#downloads-global-actions div {
+    display: block;
+    float: left;
+    width: 100px;
+    height: 45px;
+    overflow: hidden;
+}
+#download-info {
+    position: absolute;
+    top: 14px;
+    right: 195px;
+    }
+*/
+.download-rates {
+    margin: 10px 0px 0px 0px;
+}
+
+/* Search page components */
+#engine-search {
+    position: absolute;
+    left: 98px;
+    top: 40px;
+    overflow: hidden;
+}
+
+/* Used for scraping indicator on channel page */
+.main-container-scraping {
+    margin: 15px 0px;
+    padding: 0px;
+}
+
+/* this goes in the main-container-scraping section */
+.scraping-indicator {
+    margin: auto;
+    width: 600px;
+    height: 56px;
+    white-space: nowrap;
+    margin-top: 18px;
+    position:relative;
+}
+
+/* this goes around the text of the scraping section */
+.scraping-content {
+    position: absolute;
+    left: 20px;
+    bottom: 16px;
+}
+
+/* This holds everything below the channel bar*/
+#main-container {
+    position: absolute;
+    padding-top: 0px;
+    top: 117px;
+    width: 100%;
+    /*
+    It would be nice to include these next two lines.  This would make the
+    scrollbars only affect the items in a channel, not it's header too.  The
+    problem is it causes the div to scroll to the top whenever we change an
+    item on ubuntu at least, possibly OS X too.
+
+    bottom: 0px;
+    overflow: auto;
+     */
+}
+
+
+/* SORT BUTTONS AND VIDEO STATS -- THEY ARE GROUPED TOGETHER IN THE CSS SINCE THEY NEED TO LINE UP WITH EACH OTHER */
+.sort-buttons {
+    position: relative;
+    height: 17px;
+    padding-top: 4px;
+    padding-left: 122px;
+}
+
+
+
+.video-stats div {
+    float: left;
+    padding-top: 3px;
+    height: 15px;
+}
+
+a.sort-button {
+    display: block;
+    float: left;
+}
+
+.sort-buttons-right {
+    width: 315px;
+    float: right;
+}
+
+.details-link {
+    padding-top: 1px;
+    float: right;
+}
+
+.details-link a img {
+    vertical-align: -4px;
+}
+
+
+a.sort-button img {
+    padding-left: 3px;
+    vertical-align: 0px;
+    display: none;
+}
+
+a.sort-button.ascending img.up-arrow {
+    display: inline;
+}
+
+a.sort-button.descending img.down-arrow {
+    display: inline;
+}
+
+/* The section dividers */
+
+.main-channelbar {
+    height: 22px;
+    display: block;
+    overflow: hidden;
+    padding-top: 4px;
+    }
+
+.main-channelbar.no-arrow {
+    padding-left: 12px;
+    }
+
+
+.available-channelbar-wrap {
+    position: relative;
+}
+
+a.download-bar-action {
+    float: right;
+    margin: 2px 12px 0px 0px;
+}
+
+
+.clear-completed-link {
+    margin-left: 15px; 
+    margin-top: -1px;
+}
+
+/* triangle for the bars */
+.triangle {
+    float: left;
+    width: 15px;
+    height: 16px;
+    margin: 4px 1px 0px 8px;
+}
+
+/* The N more videos oval */
+.main-notification {    
+    float: left;
+    display: block;
+    height: 24px;
+    padding: 3px 0px 0px 20px;
+    margin: 15px 0px 12px 35px;
+    }
+.main-notification-right {  
+    float: left;
+    display: block;
+    width: 20px;
+    height: 24px;
+    margin: 15px 0px 12px 0px;
+    overflow: hidden;
+}
+
+
+/* Used in playlist and playlist-folder */
+.playlist-end-drag-hitbox {
+    height: 10px;
+    width: 100%;
+}
+
+/* used in search view */
+.search-message {
+    margin-top: 50px;
+}
+
+.search-results-bar {
+    padding: 5px 10px;
+    height: 22px;
+    }
+
+#results-text {
+    float: left;
+}
+
+/* Around  the "empty folder" message */
+.channel-blank {
+    margin-top: 110px;
+    padding: 30px;
+}
+.channel-message {
+    margin-top: 50px;
+    }
+.channel-message.small {
+    margin-top: 20px;
+    }
+
+/* used in multi-channel */
+
+.button-zone-two {
+    margin: 0 auto 0 auto;
+    width: 500px;
+}
+.button-zone-one {
+    margin: 0 auto 0 auto;
+    width: 270px;
+}
+.gray-button-wrap {
+    margin-right: 10px;
+    float: left;
+}
+.gray-button-bg {
+    margin: 0 8px;
+    height: 31px;
+    margin: auto;
+    width: 240px;
+}
+.gray-button-left {
+    width: 8px;
+    height: 31px;
+    float: left;
+}
+.gray-button-right {
+    width: 8px;
+    height: 31px;
+    float: right;
+}
+.gray-button-content {
+    padding-top: 8px;
+}
+
+/* Everything below is used in download-item */
+.item-wrapper {
+	padding:5px 20px;
+}
+table.item {
+	width:100%;
+	min-width:750px;
+	height:127px;
+}
+.tl, .tr, .bl, .br {
+	width:8px;
+	height:8px;
+	padding:0 0 0 8px;
+}
+.tc, .bc {
+	height:8px;
+	width:100%;
+}
+.cl, .cr {
+	height:111px;
+	width:8px;
+	padding:0 0 0 8px;
+}
+.cc {
+	width:100%;
+}
+table.item.selected.more-info,
+table.item.selected.more-info .cl,
+table.item.selected.more-info .cr {
+	height:auto;
+}
+table.select-box {
+	display:none;
+	width:auto;
+	height:auto;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+}
+table#auto-download-menu.select-box {
+	width:200px;
+}
+table.select-box.share {
+	width:180px;
+	position:absolute;
+	top:10px;
+	z-index:20;
+}
+table.select-box .cc {
+	vertical-align:top;
+	cursor: pointer;
+	height:20px;
+}
+table.select-box .tl,
+table.select-box .cl,
+table.select-box .bl {
+	width:16px;
+	padding:0 0 0 16px;
+}
+table.select-box .tl,
+table.select-box .tc,
+table.select-box .bc,
+table.select-box .bl {
+	height:20px;
+}
+table.select-box .tr,
+table.select-box .cr,
+table.select-box .br {
+	width:22px;
+	padding:0 0 0 22px;
+}
+table.select-box .cl,
+table.select-box .cr {
+	height:20px;
+}
+table.select-box ul {
+	float:left;
+	position:relative;
+	left:-16px;
+	margin:0;
+	padding:0 0 0 6px;
+}
+table.select-box a {
+	display: block;
+	white-space:nowrap;
+	width:100%;
+	margin: 0px;
+	padding:2px 13px 2px 12px;
+    }
+
+/*.main-video-wrapper.more-info {
+	min-width:848px;
+}
+.main-video-left {
+	margin-left:20px;
+	padding-left:12px;
+}
+.main-video-right {
+	margin-right:20px;
+	padding-right:12px;
+}
+*/
+.main-video {
+		margin:2px 2px 0px 2px;
+		height: 109px;
+		position: relative;
+		min-width:775px;
+}
+/*.main-video.selected {
+		padding:10 0 12px 0;
+}
+*/
+.main-video.more-info {  
+	height: auto;
+}
+
+/* This is the line that appears when you reorder items. When
+an element is dragged, the drag-highlight class is added to it */
+.main-video .dnd-reorder-line {
+        position: absolute;
+        top: -1px;
+        height: 2px;
+        width: 100%;
+        display: none;
+}
+.main-video.drag-highlight .dnd-reorder-line {
+    display: block;
+}
+
+/* These change the background based on whether or not it's selected */
+
+
+.main-video-tnail {
+	float:left;
+	width: 154px;
+  height: 105px;
+}
+.more-info .main-video-tnail {
+    width: 252px;
+    height: 190px;
+		padding-bottom:2px;
+}
+.main-video a.play {
+	display:none;
+}
+.main-video.selected a.play {
+	position:absolute;
+	display:block;
+	width:154px;
+	top:0px;
+	height:0px;
+	overflow:hidden;
+	padding-top:104px;
+}
+.main-video.more-info a.play {
+	width:252px;
+	padding-top:190px;
+}
+.main-video-desc {
+	float:left;
+	padding:0 185px 0 16px;
+	margin-left:8px;
+	width:auto;
+	height:105px;
+	overflow:hidden;
+}
+
+.main-video.selected.more-info .main-video-desc {
+    height: auto;
+    min-height: 190px;
+}
+.main-video-desc h1 {
+    margin: 0px;
+    padding: 0px;
+    height: 22px;
+    overflow: hidden;
+}
+
+.main-video-desc-desc {
+   	height: 100px;
+    overflow: hidden;
+}
+.main-video.selected .main-video-desc-desc {
+	height:50px;
+	overflow:hidden;
+}
+
+.main-video.selected.more-info .main-video-desc-desc {
+    height: auto;
+}
+
+.donate-html {
+    display: none;
+}
+
+.more-info .donate-html {
+    margin-top: 5px;
+    display: block;
+}
+
+.channel-title {
+    height: 1.3em;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.hide-channel-title .channel-title {
+    display: none;
+}
+
+.main-video-desc p {
+    display: inline;
+    padding: 0px;
+    margin: 0px;
+}
+.main-video-desc p br {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    height: 0;
+}
+.details-buttons {
+  display:none; 	
+	position:absolute;
+	bottom:7px;
+}
+.main-video.selected .details-buttons {
+	display:block;
+}
+.item-links {
+    position: absolute;
+    bottom: 4px;
+}
+
+.main-video-details {
+		position:absolute;
+		right:20px;
+		top:2px;
+    width: 145px;
+    height: 75px;
+}
+
+.more-info .main-video-details {
+    height: auto;
+}
+col.col1 {
+/*	width:50px;*/
+	padding-right:16px;
+}
+table.video-stats {
+	width:100%;
+}
+table.video-stats td {
+	white-space:nowrap;
+	padding:1px 0;
+}
+.more-info table.video-stats td {
+	padding:0;
+}
+
+/* hack to hide h3 from auto generated table in item.py */
+.more-info-details h3 {
+    display:none;
+}
+.more-info-details table {
+    width: 100%;
+    margin: 0px;
+}
+.more-info-details td {
+    vertical-align: top;
+}
+.more-info-details .label {
+    width: 50px;
+    margin-right: 18px;
+}
+
+
+.share-menu {
+    position: absolute;
+    top: 46px;
+    z-index: 10;
+}
+
+/*.share-menu img {
+    vertical-align: -3px;
+    margin-right: 3px;
+}*/
+
+.download-button {
+		position:absolute;
+		right:85px;
+}
+.download-button.torrent {
+	white-space:nowrap;
+	right:45px;
+}
+
+.main-video-status {
+  position:absolute;
+  right:0;
+	bottom:27px;
+}
+
+.main-video .download-status-strings {
+	position:absolute;
+	width:178px;
+	right:-10px;
+}
+.main-video.selected .download-status-strings {
+	right:-7px;
+	width:175px;
+}
+.download-status-strings {
+	width:165px;
+	position:absolute;
+	right:0;
+}
+.download-status-strings span {
+	display:block;
+	padding:2px 0 8px 8px;
+}
+.main-video-status-progress {
+	top:-4px;
+	position: absolute;
+	right: 37px;
+}
+.progress-strings {
+	white-space:nowrap;
+	margin-left:3px;
+}
+.progress-strings .downloading,
+.progress-strings .paused, 
+.download-rate-and-eta {
+	display:inline;
+}
+.download-rate-and-eta {
+/*	padding-left:12px;*/
+}
+
+.main-progress-bar-bg {
+    width: 130px;
+    height: 8px;
+/*    margin: 1px 1px 2px 1px;*/
+    }
+
+.main-progress-bar {
+    height: 8px;
+    }
+
+.main-progress-throbber-bg {
+    width: 130px;
+    height: 8px;
+/*    margin: 0px 0px 1px 0px;*/
+    }
+
+.main-progress-throbber-bg img {
+/*    margin: 1px;*/
+    }
+.main-progress-pause,
+.main-progress-resume,
+.main-progress-cancel {
+	display: block;
+  position: absolute;
+	top:12px;
+	left: 135px;
+	width: 17px;
+	height: 17px;
+}
+.main-progress-cancel {
+	left: 155px;
+}
+
+
+/* ---buttons--- */
+a.button {
+	float:left;
+	margin-right:5px;
+	padding:0 0 0 11px;
+	height:18px;
+	display:block;
+}
+a.button span {
+	height:18px;
+	display:block;
+	padding:0 22px 0 11px;
+}
+a.button.gray {
+	height:20px;
+}
+a.button.gray span {
+	padding:0 16px 0 5px;
+	height:20px;
+}
+a.button.select span {
+	padding:0 25px 0 0;
+}
+
+/*.round-button-left {
+    display: block;
+    padding-left: 7px;
+}
+
+.round-button-right {
+    padding-right: 7px;
+}
+
+.round-button-content {
+    height: 11px;
+    padding: 3px 0px;
+    }
+
+
+.round-button-left.delete, .round-button-left.save {
+    width: 54px;
+}
+
+.round-button-left.stop-seeding {
+    position: absolute;
+    top: 47px;
+    right: 95px;
+    display: none;
+}
+
+body#download .round-button-left.stop-seeding {
+    display: block;
+}
+.round-button-left.black {
+    width: 100px;
+    padding:0 0 0px 13px;
+}
+
+.round-button-right.black {
+    padding:0 13px 0px 0;
+}
+
+
+a.round-button-left.black {
+    display:block;
+		float:right	;
+}
+
+
+.saved-note {
+    margin-top: 7px;
+    }
+
+.video-state {
+    height: 20px;
+    margin: 0 0 5px 0;
+    position: absolute;
+    top: 15px;
+    right: 0px;
+    }
+
+.video-state-left {
+    height: 18px;
+}
+
+.video-state-right {
+    height: 18px;
+}
+
+.video-state-mid {
+    margin: 0px 5px;
+    padding: 0px 4px 3px 4px;
+    }
+
+.small-button {
+    margin: 0px 3px;
+    padding: 3px 3px;
+    height: 17px;
+}
+
+a.small-button-left {
+    display: block;
+    }
+
+a.small-button-left:hover {
+    text-decoration: underline;
+}
+
+.white-button-middle {
+    height: 20px;
+    margin: 0px 13px;
+    padding-top: 3px;
+    }
+
+.white-button-left.save-search-searchpage {
+    float: left;
+    margin-left: 8px;
+    margin-top: 2px;
+}
+
+.white-button-left.save-search-channel {
+    position: absolute;
+    top: 65px;
+    left: 230px;
+    margin-right: 0px;
+}
+
+.share-box {
+    position: absolute;
+    top: 26px;
+    left: 2px;
+}
+
+.share-box .select-box-mid {
+    margin-right: 21px;
+}
+.main-video-hitbox {
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    width: 108px;
+    height: 81px;
+}
+
+.more-info .main-video-hitbox {
+    width: 226px;
+    height: 170px;
+}
+
+.main-video-hitbox a, .main-video-hitbox span {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.main-video-hitbox .download-pending-icon {
+    display: block;
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    width: 15px;
+    height: 15px;
+}
+
+.main-video-hitbox .inprogress-arrows {
+    display: block;
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+    width: 19px;
+    height: 19px;
+}
+
+
+.main-video-details-expiring {
+    position: absolute;
+    top: 24px;
+    right: 80px;
+    width: 100px;
+    }
+
+.main-video-details-pending-auto, .main-video-details-failed-download {
+    position: absolute;
+    top: 48px;
+    right: 20px;
+    width: 200px;
+    overflow: hidden;
+}
+
+.video-state.downloading, .video-state.paused {
+    width: 130px;
+    padding-top: 4px;
+    padding-left: 5px;
+}*/

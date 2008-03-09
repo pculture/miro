@@ -1,0 +1,449 @@
+/*/////////////////////////////////////////////
+
+CSS For the Desktop Player
+-----------------------------------------------
+Participatoryculture.org
+
+///////////////////////////////////////////////
+
+Some common HTML
+ 
+/////////////////////////////////////////////*/
+
+
+a img{
+	border: none;
+	}
+
+body {
+	font-family: "Helvetica Neue", "Tahoma", "Bitstream Vera Sans", Arial, sans-serif;
+	font-size: 12px;
+	background-color: #d5dde5;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.noselect {
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    cursor: default;
+}
+ 
+.draggable {
+    -khtml-user-drag: element;
+}
+
+
+/*/////////////////////////////////////////////
+
+SIDEBAR
+-----------------------------------------------
+Contains the channels
+ 
+/////////////////////////////////////////////*/
+
+#sidebar{
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	overflow: hidden;
+}
+
+.tab-list {
+       padding: 10px 0px;
+       margin: 0px;
+       width: 100%;
+}
+.tab-list.third {
+	padding-top: 0px;
+}
+.tab-list.second {
+	border-top: 1px solid #cbd5df;
+} 
+.tab-list.first a {
+	font-size:13px;
+	line-height:19px;
+	color:#26292b;
+}
+.tablist.first li a img.icon {
+	margin-top:2px;
+}
+.tab-list li{
+       list-style: none;
+       clear: both;
+       margin: 1px 0px 0px 0px;
+}
+
+.tab-list li:hover {
+	cursor: default;
+}
+
+a.feeditem {
+    display: block;
+    padding: 1px 5px 1px 16px;
+    color: #000;
+    font-size: 11px;
+    text-decoration: none;
+    height: 20px;
+    white-space: nowrap;
+}
+
+a.feeditem.folder {
+    padding-left: 3px;
+}
+
+.child a.feeditem {
+   padding-left: 37px;
+}
+
+a.feeditem.blinking {
+    background: #ff9;
+}
+
+.selected a.feeditem, .selected-inactive a.feeditem {
+    color: #fff;
+    font-weight: bold;
+}
+
+a.feeditem span {
+    margin-left: 6px;
+    margin-top: 3px;
+    padding: 0px 0 5px 0px;
+    overflow: hidden;
+}
+
+.selected a.feeditem span, .selected-inactive a.feeditem span {
+    color: #fff;
+}
+
+.selected a.feeditem {
+    background: url('../images/channel_bg.png') 0% 0% repeat-x; 
+}
+
+/*.selected-inactive a.feeditem {
+    background: url('../images/channel_bg.png') 0px -50px repeat-x; 
+}*/
+
+a.feeditem img.icon {
+    height: 20px;
+    width: 20px;
+    margin: 0;
+    border: 0;
+    float: left;
+}
+.tab-list.first a.feeditem img.icon {
+	margin:2px 4px 2px 0;
+}
+
+.expanded-triangle {
+    margin: 4px 0px;
+    border: 0px;
+    float: left;
+}
+
+.dnd-background-outer  {
+    position: relative;
+    height: 22px;
+    width: 100%;
+}
+
+.dnd-background-inner1, .dnd-background-inner2  {
+    position: absolute;
+    height: 22px;
+}
+
+/* DND Folder drop effects 
+
+The basic strategy here is to create 3 hidden DIVs for the left, right and
+middle highlight images.  When a drag is in place, the div that the mouse is
+over gets the drag-highlight class and we use that to show the divs. 
+
+The divs are absolutely positioned so they don't interrupt the layout of the
+tab lists.
+*/
+
+.tab-container-drop-target {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+}
+
+.tab-container-drop-target .dnd-container-drop-indicator {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 22px;
+    z-index: -1;
+}
+
+.tab-container-drop-target.drag-highlight .dnd-container-drop-indicator {
+    display: block;
+}
+
+
+.dnd-container-drop-indicator.mid {
+    background: url('../images/dnd-highlight-mid.png') top left repeat-x;
+    left: 5px;
+    right: 5px;
+    width: auto;
+}
+
+.dnd-container-drop-indicator.left {
+    background: url('../images/dnd-highlight-left.png') top left no-repeat;
+}
+
+.dnd-container-drop-indicator.right {
+    background: url('../images/dnd-highlight-right.png') top right no-repeat;
+}
+
+/* DND reorder effects */
+
+.tab-drop-target {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+}
+
+.dnd-reorder-indicator {
+    display: none;
+    position: absolute;
+}
+
+.drag-highlight > .dnd-reorder-indicator {
+    display: block;
+}
+
+.dnd-reorder-indicator.circle  {
+    width: 8px;
+    height: 8px;
+    background: url("../images/dnd-reorder-circle.png");
+}
+
+.dnd-reorder-indicator.line  {
+    width: auto;
+    height: 4px;
+    background: url("../images/dnd-reorder-line.png") repeat-x;
+}
+
+.tab-drop-target .dnd-reorder-indicator.circle  {
+    top: -4px;
+    left: 11px;
+}
+
+.tab-drop-target .dnd-reorder-indicator.line {
+    top: -2px;
+    left: 17px;
+    right: 0px;
+}
+
+.tab-drop-target.child .dnd-reorder-indicator.line {
+   left: 38px;
+}
+
+.tab-drop-target.child .dnd-reorder-indicator.circle {
+   left: 32px;
+}
+
+/* These next ones catch things like dragging a playlist all the way up to the
+* channels tablist */
+
+.tab-list-drop-target {
+       position: relative;
+       margin: 0px;
+       padding: 0px;
+       min-height: 10px;
+}
+
+.tab-list-drop-target > .dnd-reorder-indicator {
+    z-index: 3;
+}
+
+.tab-list-drop-target > .dnd-reorder-indicator.circle  {
+    left: 11px;
+    bottom: -8px;
+    height: 8px;
+    width: 8px;
+}
+
+.tab-list-drop-target > .dnd-reorder-indicator.line {
+    left: 17px;
+    bottom: -6px;
+    height: 4px;
+    width: 100%;
+}
+
+.tab-list-drop-target > .dnd-reorder-indicator.show-on-top.circle {
+    top: -7px;
+}
+
+.tab-list-drop-target > .dnd-reorder-indicator.show-on-top.line {
+    top: -5px;
+}
+
+a.feeditem div.name {
+	padding: 3px;
+	overflow: hidden;
+}
+
+.tab-list-end {
+	height: 5px;
+}
+
+.feed-loading-icon {
+	float: right;
+	position: relative;
+	width: 16px;
+	height: 16px;
+	margin: 1px 0px 0 0;
+	padding: 1px;
+	z-index: 2;
+	background: url('../images/feed-loading-normal.gif') top left no-repeat;
+}
+
+a.feeditem.normal .feed-loading-icon {
+	background: url('../images/feed-loading-normal.gif') top left no-repeat;
+}
+.selected a.feeditem .feed-loading-icon {
+	background: url('../images/feed-loading-selected.gif') top left no-repeat;
+}
+.selected-inactive a.feeditem .feed-loading-icon {
+	background: url('../images/feed-loading-selected-inactive.gif') top left no-repeat;
+}
+
+.number-count {
+	font-size: 10px;
+	line-height:14px;
+	color: #FFFFFF;
+	padding:0;
+	font-weight: normal;
+	background-position: left top;
+	background-repeat:repeat-x;
+	min-width: 10px;
+	text-align: center;
+}
+
+.bubble-left {
+	padding-left: 5px;
+	margin: 1px 0px 0px 5px;
+	float: right;
+	position: relative;
+	z-index: 2;
+	background-position:left top;
+	background-repeat:no-repeat;
+}
+
+.bubble-left.second {
+	margin-left: 1px;
+}
+
+.bubble-right {
+	background-repeat:no-repeat;
+	background-position:right top;
+	padding-right: 5px;
+}
+
+.bubble-left.green {
+	background-image: url('../images/bubble-left_green.png');
+}
+.bubble-right.green {
+	background-image: url('../images/bubble-right_green.png');
+}
+
+.number-count.green {
+	background-image: url('../images/bubble-number-count_green.png');
+}
+
+.bubble-left.blue {
+	background-image: url('../images/bubble-left_blue.png');
+}
+
+.bubble-right.blue {
+	background-image: url('../images/bubble-right_blue.png');
+}
+
+.number-count.blue {
+	background-image: url('../images/bubble-number-count_blue.png');
+}
+
+.left-bubble.orange {
+	background-image: url('../images/circle-orange-left.png');
+}
+
+.right-bubble.orange {
+	background-image: url('../images/circle-orange-right.png');
+}
+
+.number-count.orange {
+	background-image: url('../images/circle-orange-mid.png');
+}
+
+.new-video-play-button {
+	position: absolute;
+	left: 6px;
+	right: 6px;
+	top: 0px;
+	height: 19px;
+	text-align: center;
+	z-index: 5;
+}
+
+.new-video-play-button:hover {
+/*	background: url('../images/circle-green-mid.png') repeat-x left top;*/
+}
+
+.new-video-play-button img {
+	display: none;
+	width: 11px;
+	height: 14px;
+	margin-top: 2px;
+}
+
+.new-video-play-button:hover img {
+	display: inline;
+}
+
+/* Reverse the color scheme for blue bubbles when they are selected */
+
+.selected a.feeditem .left-bubble.blue {
+	background-image: url('../images/circle-white-left.png');
+}
+
+.selected a.feeditem .right-bubble.blue {
+	background-image: url('../images/circle-white-right.png');
+}
+
+.selected a.feeditem .number-count.blue {
+	color: #4081EC;
+	background-image: url('../images/circle-white-mid.png');
+}
+
+/*///////////////////////////////////////////////
+
+Channel guide
+ 
+/////////////////////////////////////////////*/
+
+.channel-guide-body {
+background-color: #e7e7e7;
+}
+
+#channel-guide-loading-image{
+	width: 324px;
+	height: 128px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -64px 0 0 -162px;
+	background: url('../images/loading.gif') no-repeat left top;
+	}
+
+#channel-guide-loading-text{
+        position: absolute;
+	font-size: 18px;
+        left: 16px;
+        right: 16px;
+        top: 30px;
+        height: 50px;
+	text-align: center;
+	}
