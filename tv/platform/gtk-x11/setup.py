@@ -36,18 +36,22 @@ def use_xine_hack_default():
     try:
         # Non-debian based system will throw an exception here
         f = open('/etc/debian_version')
-        if f.read().strip() == '4.0': # Debian etch
-            f.close()
+        osname = f.read().strip()
+        f.close()
+        # Debian Etch
+        if osname == '4.0':
             return True
-        else:
-            # Ubuntu Feisty is Debian based but lists testing/unstable
-            # in /etc/debian_version, so we check /etc/issue
-            f.close()
-            f = open('/etc/issue')
-            osname = f.read()
-            if (osname.find("Ubuntu") > -1) and (osname.find("7.04")>-1):
-                f.close()
-                return True
+
+        # Ubuntu Feisty et al is Debian-based but lists testing/unstable
+        # and similar things in /etc/debian_version, so we check /etc/issue.
+        f.close()
+        f = open('/etc/issue')
+        osname = f.read()
+        f.close()
+
+        if ((osname.find("Ubuntu") > -1) and 
+                ((osname.find("7.04")>-1) or (osname.find("7.10")>-1) or (osname.find("hardy")>-1))):
+            return True
     except:
         pass
     return False
