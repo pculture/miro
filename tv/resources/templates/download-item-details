@@ -1,183 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://www.participatorypolitics.org/"
-      xmlns:i18n="http://www.participatoryculture.org/i18n"
-      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+xmlns:t="http://www.participatorypolitics.org/"
+xmlns:i18n="http://www.participatoryculture.org/i18n"
+eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />        
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />        
 </head>
 <body>
-    <div class="main-video-details">
-        <div class="main-video-details-top">
-            <div class="details-link">
-                <div t:hideIf="this.showMoreInfo">
-                    <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');"><span i18n:translate="">Details</span> <img src="resource:images/more-info-button.png" alt="" /></a>
-                </div>
+	<div class="main-video-details">
+		<table class="video-stats">
+			<colgroup width="165">
+				<col class="col1" />
+				<col />
+			</colgroup>
+			<tr>
+				<td class="col1">Category:</td>
+				<!-- not-implemented	<td t:replace="this.getCategory()" />			-->
+				<td />
+			</tr>
+			<tr>  
+				<td class="col1">Date:</td>
+				<td><b t:replace="this.getReleaseDate()" /></td>
+			</tr>
+			<tr>
+				<td class="col1">Length:</td>
+				<td><b t:replace="this.getDuration()" /></td>
+			</tr>
+			<tr>	
+				<td class="col1">Size:</td>
+				<td><b t:replace="this.getSizeForDisplay()" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" t:showIf="this.showMoreInfo" class="more-info-details">
+					<div t:replaceMarkup="this.getMoreInfo()" />
+				</td>
+			</tr>
+		</table>
+	</div>	<!-- // end details -->
+	<div class="main-video-status">
+		<div t:hideIf="this.looksLikeTorrent()" class="download-button">
+		<a t:showIf="this.isDownloadable()" class="button gray download" href="#" title="Download '***this.getTitle()***'" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');">
+			<span i18n:translate="">Download</span>
+		</a>
+		</div>
+		<div t:showIf="this.looksLikeTorrent()" class="download-button torrent">
+		<a t:showIf="this.isDownloadable()" class="button gray download" href="#" title="Download '***this.getTitle()***'" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');">
+			<span i18n:translate="">Download Torrent</span>
+		</a>
+		</div>
+	
+		<div t:hotspot="download-progress-***viewName***-***this.getID()***">
+			<div t:showIf="this.getState() in ('downloading','paused')" class="main-video-status-progress">
+				<div class="progress-strings">
+					<div t:showIf="this.getState() == 'downloading'" class="downloading">
+						<div t:hideIf="this.downloadInProgress()">
+							<span t:replace="this.getStartupActivity()" />
+						</div>
+						<span t:showIf="this.downloadInProgress()">Downloading...</span>
+					</div>
+					<div t:showIf="this.getState() == 'paused'" class="paused">
+						<span t:replace="this.getPausedString()" />
+					</div>
+					<div t:showIf="this.downloadInProgress()" class="download-rate-and-eta">
+						<span t:replace="this.downloadETA()" />
+						<!--<span class="download-rate" t:replace="this.downloadRate()" />-->
+					</div>
+				</div>
+				<div t:showIf="this.gotContentLength()">
+					<div class="main-progress-bar-bg">
+						<div class="main-progress-bar" style="width: ***this.downloadProgressWidth()***px;" />
+					</div>
+				</div>
+				<div t:hideIf="this.gotContentLength()">
+					<div class="progress-throbber-bg">
+						<span t:showIf="this.downloadRate() != '0KB/s'">
+							<img src="resource:images/progress-throbber.gif" />
+						</span>
+						<span t:showIf="this.downloadRate() == '0KB/s'">
+							<img src="resource:images/progress-throbber-gray.png" />
+						</span>
+					</div>
+				</div>
+				<a t:hideIf="this.getState() == 'paused'" class="main-progress-pause" href="#" onclick="return eventURL('action:pauseDownload?item=@@@this.getID()@@@');" title="Pause Download" />
+				<a t:showIf="this.getState() == 'paused'" class="main-progress-resume" href="#" onclick="return eventURL('action:resumeDownload?item=@@@this.getID()@@@');" title="Resume Download" />
+				<a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
+			</div>
+		</div>
 
-                <div t:showIf="this.showMoreInfo">
-                    <a href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');"><span i18n:translate="">Close</span> <img src="resource:images/more-info-button-close.png" alt="" /></a>
-                </div>
-            </div>
-            <div class="video-stats">
-                <div class="length">
-                    <span t:replace="this.getDuration()" />
-                </div>
-                <div class="date">
-                    <span t:showIf="this.getReleaseDate() != ''"><span t:replace="this.getReleaseDate()" /></span>
-                </div>
+		<!--
+			<div class="main-video-hitbox">
 
-                <div class="size">
-                    <span t:showIf="(this.getURL() != this.getLink() and this.getLink() != '') or this.isDownloaded()"><span t:replace="this.getSizeForDisplay()" /></span>
-                </div>
-                <div class="torrent">
-                    <span t:showIf="this.looksLikeTorrent()">
-                        <span i18n:translate="">.torrent</span>
-                    </span>
-                </div>
-           </div>
-        </div>
+				<a t:showIf="this.getState() == 'paused'" class="icon paused-circle" href="#" title="Download '***this.getTitle()***'" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');"  />
+				<span t:showIf="this.getState() == 'downloading'" class="icon inprogress-background" >
+					<img t:hideIf="this.isPendingManualDownload()" class="inprogress-arrows" title="Downloading '***this.getTitle()***'" src="resource:images/main-video-inprogress-arrows.gif" />
+					<img t:showIf="this.isPendingManualDownload()" class="download-pending-icon" title="Download Pending for '***this.getTitle()***'" src="resource:images/download-pending-dot.png" />
+				</span>
+			</div>
+		-->
+		<div class="download-status-strings">
+			
+			<div t:showIf="this.getExpiring()" class="main-video-details-expiring">
+				<span t:replace="this.getExpirationString()" />
+			</div>
+			
+			<div t:showIf="this.isPendingAutoDownload()" class="main-video-details-pending-auto">
+				<span i18n:translate="">Pending Auto Download</span>
+			</div>
+			
+			<div t:showIf="this.isFailedDownload() and not this.isPendingManualDownload()" class="main-video-details-failed-download">
+				<span t:replace="this.getFailureReason()" />
+			</div>
+			
+			<div t:hideIf="this.getEmblemCSSString() == '' or this.getEmblemCSSString() == 'NEW'" class="video-state ***this.getEmblemCSSClass()***">
+				<span t:replace="this.getEmblemCSSString()" />
+			</div>
+			
+			<div t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
+				<a href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');" class="button gray">
+					<span i18n:translate="">STOP SEEDING</span>
+				</a>
+			</div>
+			
+		</div> <!-- // end status strings -->
 
-        <div class="main-video-details-main">
-            <div class="details-buttons-right">
-                <div class="save-button-container">
-                    <div t:showIf="this.showSaveButton()">
-                        <a href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');" class="round-button-left save">
-                        <div class="round-button-right">
-                        <div class="round-button-content">
-                            <span i18n:translate="">KEEP</span>
-                        </div>
-                        </div>
-                        </a>
-                    </div>
-                    <div t:showIf="this.showSaved()" class="saved-note">SAVED</div>
-                </div>
-                <div t:showIf="this.showTrashButton()">
-                    <a href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" class="round-button-left delete">
-                    <div class="round-button-right">
-                    <div class="round-button-content">
-                        <span i18n:translate="">DELETE</span>
-                    </div>
-                    </div>
-                    </a>
-                </div>
-            </div>
+	</div>	<!-- // end main-video-status -->
 
-            <!-- need to call event.stopPropagation() to prevent us from selecting the div -->
-            <div t:showIf="this.hasSharableURL()" class="select-box-left share-box" onclick="showSelectBoxMenu('share-menu-@@@viewName@@@-@@@this.getID()@@@'); event.stopPropagation();">
-                <div class="select-box-right">
-                    <div class="select-box-mid">
-                        SHARE
-                    </div>
-                </div>
-            </div>
-            <br class="clear" />
-            <ul id="share-menu-@@@viewName@@@-@@@this.getID()@@@" class="select-box-menu share-menu">
-                <li>
-                    <a href="#" class="main-video-details-task-mail" onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');">
-                        <img src="resource:images/email-a-friend.gif" alt="email-a-friend icon" />
-                        <span i18n:translate=""> Email to a friend</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="main-video-details-task-bomb" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
-                        <img src="resource:images/videobomb.gif" alt="videobomb icon" />
-                        <span i18n:translate=""> Post to Video Bomb</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="main-video-details-delicious" onclick="return eventURL('http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=@@@this.getURL()@@@&amp;title=@@@this.getTitle()@@@');" >
-                        <img src="resource:images/delicious.gif" alt="delicious icon" />
-                        <span i18n:translate=""> Post to del.icio.us</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="main-video-details-digg" onclick="return eventURL('http://www.digg.com/submit?phrase=2&amp;url=@@@this.getQuotedURL()@@@');" >
-                        <img src="resource:images/digg.gif" alt="digg icon" />
-                        <span i18n:translate=""> Post to digg</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="main-video-details-reddit" onclick="return eventURL('http://reddit.com/submit?url=@@@this.getQuotedURL()@@@&amp;title=@@@this.getQuotedTitle()@@@');">
-                        <img src="resource:images/reddit.gif" alt="reddit icon" />
-                        <span i18n:translate=""> Post to Reddit</span>
-                    </a>
-                </li>
-            </ul>
-            <div t:hotspot="download-progress-***viewName***-***this.getID()***">
-                <div t:showIf="this.getState() in ('downloading','paused')"
-                    class="main-video-details-download-info">
-                    <div t:showIf="this.gotContentLength()">
-                        <div class="main-progress-bar-bg">
-                            <div class="main-progress-bar" style="width: ***this.downloadProgressWidth()***px;" />
-                        </div>
-                    </div>
-                    <div t:hideIf="this.gotContentLength()">
-                        <div class="progress-throbber-bg">
-                            <span t:showIf="this.downloadRate() != '0KB/s'">
-                                <img src="resource:images/progress-throbber.gif" />
-                            </span>
-                            <span t:showIf="this.downloadRate() == '0KB/s'">
-                                <img src="resource:images/progress-throbber-gray.png" />
-                            </span>
-                        </div>
-                    </div>
-                    <div t:showIf="this.getState() == 'downloading'" class="downloading">
-                        <div t:showIf="this.downloadInProgress()" 
-                            class="download-rate-and-eta">
-                            <span class="download-rate" t:replace="this.downloadRate()" />
-                            <span t:replace="this.downloadETA()" />
-                        </div>
-                        <div t:hideIf="this.downloadInProgress()">
-                            <span t:replace="this.getStartupActivity()" />
-                        </div>
-                    </div>
-                    <div t:showIf="this.getState() == 'paused'" 
-                        class="paused">
-                        <span t:replace="this.getPausedString()" />
-                    </div>
-                    <a t:hideIf="this.getState() == 'paused'" class="main-progress-pause" href="#" onclick="return eventURL('action:pauseDownload?item=@@@this.getID()@@@');" title="Pause Download" />
-                    <a t:showIf="this.getState() == 'paused'" class="main-progress-resume" href="#" onclick="return eventURL('action:resumeDownload?item=@@@this.getID()@@@');" title="Pause Download" />
-                    <a class="main-progress-cancel" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" title="Cancel Download" />
-                </div>
-            </div>
-            <div class="download-status-strings">
-                <div t:showIf="this.getExpiring()" 
-                    class="main-video-details-expiring">
-                    <span t:replace="this.getExpirationString()" />
-                </div>
-                <div t:showIf="this.isPendingAutoDownload()"
-                    class="main-video-details-pending-auto">
-                    <span i18n:translate="">Pending Auto Download</span>
-                </div>
-                <div t:showIf="this.isFailedDownload() and not this.isPendingManualDownload()"
-                    class="main-video-details-failed-download">
-                    <span t:replace="this.getFailureReason()" />
-                </div>
-            </div>
-            <div t:hideIf="this.getEmblemCSSString() == ''" 
-                class="video-state ***this.getEmblemCSSClass()***">
-                <div class="video-state-left">
-                    <div class="video-state-right">
-                        <span class="video-state-mid">
-                            <span t:replace="this.getEmblemCSSString()" />
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
-                 <a href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');" class="round-button-left stop-seeding">
-                <div class="round-button-right">
-                <div class="round-button-content">
-                    <span i18n:translate="">STOP SEEDING</span>
-                </div>
-                </div>
-                </a>
-            </div>
-        </div>
-        <div t:showIf="this.showMoreInfo" class="more-info-details">
-            <div t:replaceMarkup="this.getMoreInfo()" />
-        </div>
-    </div>
+	
 </body>
 </html>

@@ -9,7 +9,7 @@
 guide = views.guides.getObjectByID(int(kargs['id']))
 ]]></t:execOnLoad>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="resource:css/style.css" />
+<link rel="stylesheet" type="text/css" href="resource:css/sidebar.css" />
 <script type="text/javascript">
     function guideLoaded() {
     netscape.security.PrivilegeManager.enablePrivilege('UniversalBrowserRead');

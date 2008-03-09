@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
 <link href="resource:css/main.css" rel="stylesheet" type="text/css" />
-<link href="resource:css/download.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="resource:templates/osxdnd.js" />
 <t:include filename="dynamic.js" />
 <t:include filename="settings.js" />
@@ -92,84 +91,86 @@ allPausedDownloads.unlink()
 
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
-	<div id="main-icon" class="noborder"><img src="resource:images/download-icon.png" /></div>
-        <h1 id="main-title" i18n:translate="">Downloading</h1>
-        <div id="search-box-container">
-            <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***"/>
-        </div>
-        <div id="downloads-global-actions">
-            <div><p t:hideIf="views.downloadingItems.len() == 0" t:updateHideOnView="views.downloadingItems"><a href="#" onclick="return eventURL('action:pauseAll');" title="Pause All"><img src="resource:images/pause-all-downloads.png" /><br /><span i18n:translate="">Pause All</span></a></p>&nbsp;</div>
-            <div><p t:hideIf="views.pausedItems.len() == 0" t:updateHideOnView="views.pausedItems"><a href="#" onclick="return eventURL('action:resumeAll');" title="Resume All"><img src="resource:images/resume-all-downloads.png" /><br /><span i18n:translate="">Resume All</span></a></p>&nbsp;</div>
-        </div>
+	<div id="main-icon" class="noborder static-tab">
+		<img src="resource:images/icon-downloading_large.png" />
+	</div>
+	<h1 id="main-title" class="static-tab" i18n:translate="">Downloading</h1>
+	<div id="search-box-container">
+		<input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***"/>
+	</div>
+</div> <!-- end main-titlebar -->
+	<div id="sub-titlebar">
+		
+		<div class="sub-titlebar-right">
+			<a t:hideIf="views.downloadingItems.len() == 0" t:updateHideOnView="views.downloadingItems" class="button gray" href="#" onclick="return eventURL('action:pauseAll');" title="Pause All">
+				<span i18n:translate="">Pause All</span>
+			</a>
+			<a class="button gray" t:hideIf="views.pausedItems.len() == 0" t:updateHideOnView="views.pausedItems" href="#" onclick="return eventURL('action:resumeAll');" title="Resume All">
+				<span i18n:translate="">Resume All</span>
+			</a>
+		</div>
 
-        <div id="download-info">
-            <ul>
-                <li>
-                    <span i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk</span>
-                </li>
-                <li>
-                    <span t:updateForConfigChange="">
-                        <span t:hideIf="getFreeSpace() == getAvailableSpace()">
-                            <span i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
-                        </span>
-                    </span>
-                </li>
-            </ul>
-            <div t:updateForView="views.remoteDownloads">
-                <ul class="download-rates">
-                    <li t:showIf="downloader.totalDownRate > 1">
-                        <span t:replace="getDownRate()"/>
-                    </li>
-                    <li t:showIf="downloader.totalUpRate > 1">
-                        <span t:replace="getUpRate()"/>
-                    </li>
-                </ul>
-            </div>
-        </div>
-</div>
-<!-- / TITLE BAR -->
+	<div id="download-info">
+				<span i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk</span>
+				<span t:updateForConfigChange="">
+					<span t:hideIf="getFreeSpace() == getAvailableSpace()">
+						<span i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
+					</span>
+				</span>
+		<div t:updateForView="views.remoteDownloads">
+			<ul class="download-rates">
+				<li t:showIf="downloader.totalDownRate > 1">
+					<span t:replace="getDownRate()"/>
+				</li>
+				<li t:showIf="downloader.totalUpRate > 1">
+					<span t:replace="getUpRate()"/>
+				</li>
+			</ul>
+		</div>
+	</div>	<!-- end download-info -->
+</div> <!-- end sub-titlebar -->
 
 <div id="main-container">
-        <div t:hideIf="allNormalDownloads.len() == 0" t:updateHideOnView="allNormalDownloads" class="main-channelbar downloading-channelbar no-arrow">
-                <span i18n:translate="">Channel Downloads</span>
-        </div>
+	<div t:hideIf="allNormalDownloads.len() == 0" t:updateHideOnView="allNormalDownloads" class="main-channelbar downloading-channelbar no-arrow">
+		<span i18n:translate="">Channel Downloads</span>
+	</div>
 
-    <!-- SORT BAR ************************************************************* --> 
-    <div t:updateForView="views.downloadingItems"> 
-        <div t:hideIf="matchingNormalDLs.len() + matchingPendingDLs.len() + matchingPausedDLs.len() == 0">
-            <t:executeTemplate filename="static-tab-sort-bar" 
-                    itemSort="sorts.itemSortDownloads"
-                    section="'main'" />
-        </div>
-    </div> 
-    <!-- / SORT BAR -->
+	<!-- SORT BAR ************************************************************* --> 
+	<div t:updateForView="views.downloadingItems"> 
+		<div t:hideIf="matchingNormalDLs.len() + matchingPendingDLs.len() + matchingPausedDLs.len() == 0">
+			<t:executeTemplate filename="static-tab-sort-bar" 
+			itemSort="sorts.itemSortDownloads"
+			section="'main'" />
+		</div>
+	</div> 
+	<!-- / SORT BAR -->
 
 	<!-- VIDEOS ************************************************** -->
-    <div t:repeatForView="matchingNormalDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
-    <div t:repeatForView="matchingPendingDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
-    <div t:repeatForView="matchingPausedDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
+	<div t:repeatForView="matchingNormalDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
+	<div t:repeatForView="matchingPendingDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
+	<div t:repeatForView="matchingPausedDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
 	<!-- / VIDEOS -->
-    <div t:updateForView="matchingExternalDLs">
-        <div t:hideIf="matchingExternalDLs.len() == 0">
-            <div class="main-channelbar downloading-channelbar no-arrow">
-                <span i18n:translate="">External Downloads</span>
-                <a i18n:translate="" href="#" onclick="return eventURL('action:clearTorrents');" class="clear-completed-link" title="Clear Completed and Failed Downloads">Clear Completed and Failed Downloads</a>
-            </div>
-        </div>
-    </div> 
-    <div t:repeatForView="matchingExternalDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
+	<div t:updateForView="matchingExternalDLs">
+		<div t:hideIf="matchingExternalDLs.len() == 0">
+			<div class="main-channelbar downloading-channelbar no-arrow">
+				<span i18n:translate="">External Downloads</span>
+				<a i18n:translate="" href="#" onclick="return eventURL('action:clearTorrents');" class="clear-completed-link" title="Clear Completed and Failed Downloads">Clear Completed and Failed Downloads</a>
+			</div>
+		</div>
+	</div> 
+	<div t:repeatForView="matchingExternalDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
 
-    <div t:updateForView="matchingULs">
-        <div t:hideIf="matchingULs.len() == 0">
-            <div class="main-channelbar seeding-channelbar no-arrow">
-                <span i18n:translate="">Seeding Torrents</span>
-            </div>
-            <t:executeTemplate filename="static-tab-sort-bar" 
-                    itemSort="sorts.itemSortSeedingTorrents"
-                    section="'seeding-torrents'" />
-        </div>
-    </div>
-    <div t:repeatForView="matchingULs" t:repeatTemplate='download-item' t:containerDiv="true" />
+	<div t:updateForView="matchingULs">
+		<div t:hideIf="matchingULs.len() == 0">
+			<div class="main-channelbar seeding-channelbar no-arrow">
+				<span i18n:translate="">Seeding Torrents</span>
+			</div>
+			<t:executeTemplate filename="static-tab-sort-bar" 
+			itemSort="sorts.itemSortSeedingTorrents"
+			section="'seeding-torrents'" />
+		</div>
+	</div>
+	<div t:repeatForView="matchingULs" t:repeatTemplate='download-item' t:containerDiv="true" />
 </div>
 
 </body>

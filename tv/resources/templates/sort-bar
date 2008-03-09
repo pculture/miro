@@ -14,24 +14,24 @@ section = kargs['section']
 <body>
 <div class="sort-bar">
     <div class="sort-buttons">
-        <div class="sort-buttons-right">
-            <a href="#" class="length sort-button ***itemSort.getSortButtonState('duration')***" onclick="return eventURL('action:sortBy?by=duration&amp;section=***section***');">
-                Length<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
-            </a>
-            <a href="#" class="date sort-button ***itemSort.getSortButtonState('date')***" onclick="return eventURL('action:sortBy?by=date&amp;section=***section***');">
-                Date<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
-            </a>
+			<div class="sort-buttons-right">
+				<a href="#" class="length sort-button ***itemSort.getSortButtonState('duration')***" onclick="return eventURL('action:sortBy?by=duration&amp;section=***section***');">
+					Length<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
+				</a>
+				<a href="#" class="date sort-button ***itemSort.getSortButtonState('date')***" onclick="return eventURL('action:sortBy?by=date&amp;section=***section***');">
+					Date<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
+				</a>
 
-            <a href="#" class="size sort-button ***itemSort.getSortButtonState('size')***" onclick="return eventURL('action:sortBy?by=size&amp;section=***section***');">
-                Size<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
-            </a>
-            <div class="clear" />
-        </div>
+				<a href="#" class="size sort-button ***itemSort.getSortButtonState('size')***" onclick="return eventURL('action:sortBy?by=size&amp;section=***section***');">
+					Size<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
+				</a>
+				<div class="clear" />
+			</div>
 
-        <a href="#" class="name sort-button ***itemSort.getSortButtonState('name')***" onclick="return eventURL('action:sortBy?by=name&amp;section=***section***');">
-            Name<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
-        </a>
-    </div>
+			<a href="#" class="name sort-button ***itemSort.getSortButtonState('name')***" onclick="return eventURL('action:sortBy?by=name&amp;section=***section***');">
+				Name<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
+			</a>
+		</div>
 </div>
 </body>
 </html>

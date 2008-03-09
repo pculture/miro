@@ -19,13 +19,13 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 
 <form action="javascript:eventURL('template:channel?id=@@@feed.getID()@@@')" method="GET" name="settings">
 	<input name="feed" type="hidden" value="@@@feed.getID()@@@" />
-	
+
 	<div id="settings-inner">
-            <div id="channel-url">
-                <div t:replace="feed.getURL()" class="selectable" />
-                <div><a class="remove-channel" href="#" onclick="return eventURL('action:removeFeed?id=@@@feed.getID()@@@');"><span i18n:translate="">remove channel</span></a></div>
-            </div>
-	<h2 i18n:translate="">Settings for <span i18n:name="title" t:replace="feed.getTitle()" /></h2> 
+		<div id="channel-url">
+			<span t:replace="feed.getURL()" class="selectable" />
+			<a class="remove-channel" href="#" onclick="return eventURL('action:removeFeed?id=@@@feed.getID()@@@');"><span i18n:translate="">remove channel</span></a>
+		</div>
+		<h2 i18n:translate="">Settings for <span i18n:name="title" t:replace="feed.getTitle()" /></h2> 
 				
 		<div id="actual-settings">
 		
@@ -72,15 +72,16 @@ t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
 		<span i18n:translate="">Don't Auto Download when more than 
 		<input i18n:name="maxnew" name="maxNew" type="text" size="3" value="3" disabled="1" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
 		<input i18n:name="maxnew2" name="maxNew" type="text" size="3" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
-		videos are waiting unwatched.</span><div i18n:translate="" class="settings-small">Prevents this channel from using unlimited disk space.</div>
+		videos are waiting unwatched.</span>
+		<!--
+			<div i18n:translate="" class="settings-small">Prevents this channel from using unlimited disk space.</div>
+			-->
 
-	    <div class="gray-button-wrap settings-button">
-		    <div id="feed-settings-close-button" class="gray-button-bg" onclick="return hideSettings()" >
-                <div class="gray-button-left" />
-                <div class="gray-button-right" />
-                <div i18:translate="" class="gray-button-content">Done</div>
-            </div>
-	</div>
+	    <div class="settings-button">
+		    <a id="feed-settings-close-button" class="button gray" onclick="return hideSettings()" >
+          <span i18:translate="">Done</span>
+        </a>
+			</div>
  	</div>         
 </div>
 

@@ -6,8 +6,8 @@
 <body>
 <a class="feeditem noselect">
     <img class="icon" alt="" src="***this.obj.getIconURL()***" />
-    <div t:hideIf="this.obj.getNumber() == 0" class="left-bubble @@@this.obj.getNumberColor()@@@">
-        <div class="right-bubble @@@this.obj.getNumberColor()@@@">
+    <div t:hideIf="this.obj.getNumber() == 0" class="bubble-left @@@this.obj.getNumberColor()@@@">
+        <div class="bubble-right @@@this.obj.getNumberColor()@@@">
             <div class="number-count @@@this.obj.getNumberColor()@@@" t:replace="this.obj.getNumber()" />
         </div>
         <div t:showIf="this.obj.enableNewVideoPlayButton()" href="#" 
@@ -16,9 +16,7 @@
             <img src="resource:images/play.png" />
         </div>
     </div>
-    <div class="line">
     <div class="name" t:replace="this.obj.getTitle()" />
-    </div>
 </a>
 <!--
 	<div class="channel_bar_divider" />

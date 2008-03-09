@@ -16,13 +16,13 @@
 	dragsourcetype="***this.getDragSourceType()***"
 	dragsourcedata="tablist-***this.objID()***"
 	dragicon="channel-tnail-***this.objID()***">
-<div t:showIf="this.obj.showA()" class="left-bubble blue ***this.obj.showU() and 'second' or ''***">
- <div class="right-bubble blue">
+<div t:showIf="this.obj.showA()" class="bubble-left blue ***this.obj.showU() and 'second' or ''***">
+ <div class="bubble-right blue">
   <div class="number-count blue" t:replace="this.obj.numAvailable()" />
  </div>
 </div>
-<div t:showIf="this.obj.showU()" class="left-bubble green">
- <div class="right-bubble green">
+<div t:showIf="this.obj.showU()" class="bubble-left green">
+ <div class="bubble-right green">
   <div class="number-count green" t:replace="this.obj.numUnwatched()" />
  </div>
  <div href="#" class="new-video-play-button"
@@ -30,10 +30,9 @@
      <img src="resource:images/play.png" />
  </div>
 </div>
-<div class="line">
 <div t:showIf="this.obj.isUpdating()" class="feed-loading-icon" />
+
 <img id="channel-tnail-***this.objID()***" class="icon" src="***this.obj.getTablistThumbnail()***" /><div class="name noselect" t:replace="this.obj.getTitle()" />
-</div>
 </a>
 </div>
 

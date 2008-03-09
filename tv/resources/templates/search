@@ -39,8 +39,8 @@ searchItems.unlink()
 
 <body onkeydown="sendKeyToSearchBox(event);">
   <div id="main-titlebar">
-      <div id="main-icon" class="noborder"><img src="resource:images/search-icon.png" /></div>
-      <h1 id="main-title" i18n:translate="">Video Search</h1>
+      <div id="main-icon" class="noborder static-tab"><img src="resource:images/icon-search_large.png" /></div>
+      <h1 id="main-title" class="static-tab" i18n:translate="">Video Search</h1>
       <div t:updateForView="searchFeed">
       <div id="engine-search">
          <form name="search" onsubmit="return performSearch();">

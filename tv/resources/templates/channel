@@ -107,14 +107,14 @@ def toggleAllItemsMode(handle):
 
 def setSortBy(by, which, handle):
     if which == 'main':
-        feed.itemSort.setSortBy(by)
-        matchingItems.recomputeSort(newItems)
+      feed.itemSort.setSortBy(by)
+      matchingItems.recomputeSort(newItems)
     elif which == 'downloading':
-        feed.itemSortDownloading.setSortBy(by)
-        allDownloadingItems.recomputeSort(downloadingItems)
+      feed.itemSortDownloading.setSortBy(by)
+      allDownloadingItems.recomputeSort(downloadingItems)
     else:
-        feed.itemSortWatchable.setSortBy(by)
-        allWatchableItems.recomputeSort(watchableItems)
+      feed.itemSortWatchable.setSortBy(by)
+      allWatchableItems.recomputeSort(watchableItems)
     handle.forceUpdate()
 
 _setFeed(kargs)
@@ -162,115 +162,163 @@ if feed.idExists():
 </head>
 
 <body onkeydown="sendKeyToSearchBox(event);">
-<div id="feed-settings">
-  <div t:updateForView="thisFeedView">
-    <t:includeTemplate filename="feed-settings" />
-  </div>
-</div>
-    
-<!-- TITLE BAR ************************************************************ -->
+	<div id="feed-settings">
+		<div t:updateForView="thisFeedView">
+			<t:includeTemplate filename="feed-settings" />
+		</div>
+	</div>
 
-<div id="main-titlebar">
-        <div t:updateForView="thisFeedView">
-            <div>
-                <img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
-	    </div>
-            <div class="main-titlebar-right" t:hideIf="feed.getURL().startswith('dtv:directoryfeed')">
-                <ul>
-                    <li t:hideIf="feed.getLink() == ''">
-                        <a href="***feed.getLink()***" class="round-button-left black">
-                        <div class="round-button-right black">
-                        <div class="round-button-content black">
-                        <span i18n:translate="">VISIT WEBSITE</span>
-                        </div>
-                        </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="return recommendChannel('@@@feed.getTitle()@@@', '@@@feed.getURL()@@@');" class="round-button-left black">
-                        <div class="round-button-right black">
-                        <div class="round-button-content black">
-                        <span i18n:translate="">SEND TO FRIEND</span>
-                        </div>
-                        </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="return showSettings();" class="round-button-left black">
-                        <div class="round-button-right black">
-                        <div class="round-button-content black">
-                        <span i18n:translate="">SETTINGS</span>
-                        </div>
-                        </div>
-                        </a>
-                    </li>
-                </ul>
-	    </div>
-        </div>
+	<!-- TITLE BAR ************************************************************ -->
 
-        <div class="main-titlebar-left">
-            <div t:updateForView="thisFeedView">
-            <h1 id="main-title" t:replace="feed.getTitle()" />
-            <div id="auto-download">
-                <div t:hideIf="feed.getURL().startswith('dtv:directoryfeed')">
-                    <div class="auto-download">
-                        <span id="auto-label" i18n:translate="">AUTO DOWNLOAD</span>
-                        <div class="select-box-left" onclick="showSelectBoxMenu('auto-download-menu');">
-                        <div class="select-box-right">
-                        <div class="select-box-mid" t:hideIf="feed is None">
-                            <span t:replace="feed.getAutoDownloadMode()" />
-                        </div>
-                        </div>
-                        </div>
-                        
-                        <br clear="all" />
-                        <ul id="auto-download-menu" class="select-box-menu" t:hideIf="feed is None">
-                            <li onclick="return eventURL('action:setAutoDownloadMode?mode=all&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>ALL</strong> - Get all videos</a></li>
-                            <li onclick="return eventURL('action:setAutoDownloadMode?mode=new&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>NEW</strong> - Get only new videos</a></li>
-                            <li onclick="return eventURL('action:setAutoDownloadMode?mode=off&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>OFF</strong> - Don't auto-download videos</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="search-box-container" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
-                <div t:showIf="feed.inlineSearchTerm is None">
-                    <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***" />
-                </div>
-                <div t:showIf="feed.inlineSearchTerm is not None">
-                    <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***feed.inlineSearchTerm***" searching="1"/>
-                </div>
-            </div>
-            </div>
-            <div t:updateForView="matchingItems">
-            <div t:hideIf="feed.inlineSearchTerm is None or feed.getURL().startswith('dtv:directoryfeed')">
-                <div class="white-button-left save-search-channel">
-                <div class="white-button-right">
-                <div class="white-button-middle">
-                    <a href="#" onclick="return eventURL('action:addChannelSearchFeed?id=@@@feed.getID()@@@');">Save Search</a>
-                </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-</div>
-<!-- / TITLE BAR -->
+	<div id="main-titlebar">
+		<div t:updateForView="thisFeedView">
+			<div>
+				<img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
+			</div>
+			<h1 id="main-title" t:replace="feed.getTitle()" />
+			
+			<div id="search-box-container" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
+				<div t:showIf="feed.inlineSearchTerm is None">
+					<input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Search')***" />
+				</div>
+				<div t:showIf="feed.inlineSearchTerm is not None">
+					<input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***feed.inlineSearchTerm***" searching="1"/>
+				</div>
+			</div>
+		</div>
+		
+		<div t:updateForView="matchingItems">
+			<div t:hideIf="feed.inlineSearchTerm is None or feed.getURL().startswith('dtv:directoryfeed')">
+				<div class="white-button-left save-search-channel">
+					<div class="white-button-right">
+						<div class="white-button-middle">
+							<a href="#" onclick="return eventURL('action:addChannelSearchFeed?id=@@@feed.getID()@@@');">Save Search</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div> <!-- // end main-titlebar -->
+		
+	<div id="sub-titlebar">
+		<div t:updateForView="thisFeedView">
+			
+			<div class="sub-titlebar-right" t:hideIf="feed.getURL().startswith('dtv:directoryfeed')">
+				<ul>
+					<li t:hideIf="feed.getLink() == ''">
+						<a class="button gray" href="***feed.getLink()***">
+									<span i18n:translate="">Visit Website</span>
+						</a>
+					</li>
+					<li>
+						<a class="button gray" href="#" onclick="return recommendChannel('@@@feed.getTitle()@@@', '@@@feed.getURL()@@@');">
+							<span i18n:translate="">Send to a Friend</span>
+						</a>
+					</li>
+					<li>
+						<a class="button gray" href="#" onclick="return showSettings();">
+									<span i18n:translate="">Settings</span>
+						</a>
+					</li>
+				</ul>
+			</div>
 
-<!-- CHANNEL CONTAINER **************************************************** -->
-<div id="main-container">
-    <div class="main-container-scraping" t:showIf="feed.isScraped() and feed.isUpdating()" t:updateHideOnView="thisFeedView">
-    <div class="scraping-indicator">
-      <img align="left" src="resource:images/scraping-indicator-left.gif" />
-      <img align="right" src="resource:images/scraping-indicator-right.gif" />
-      <div class="scraping-content" i18n:translate="">Looking for videos 
-      at this URL</div>
-    </div>
-    </div>
-    <div class="hide-channel-title">
-        <t:includeTemplate filename="channel-content" />
-    </div>
-</div>
-<!-- / CHANNEL ITEMS LIST -->
+
+				<div id="auto-download">
+					<div t:hideIf="feed.getURL().startswith('dtv:directoryfeed')">
+						<div class="auto-download">
+							
+							<span id="auto-label" i18n:translate="">Auto Download</span>
+							
+							<a class="button select" onclick="showSelectBoxMenu('auto-download-menu');">
+								<div t:hideIf="feed is None"><span t:replace="feed.getAutoDownloadMode()" /></div>
+							</a>
+
+
+
+
+							<br style="clear:both;" />
+							<table cellpadding="0" cellspacing="0" id="auto-download-menu" class="select-box">
+								<tr>
+									<td class="tl" />
+									<td class="tc" />
+									<td class="tr" />
+								</tr>
+								<tr>
+									<td class="cl" />
+									<td class="cc">
+										<ul t:hideIf="feed is None">
+											<li onclick="return eventURL('action:setAutoDownloadMode?mode=all&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>ALL</strong> - Get all videos</a></li>
+											<li onclick="return eventURL('action:setAutoDownloadMode?mode=new&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>NEW</strong> - Get only new videos</a></li>
+											<li onclick="return eventURL('action:setAutoDownloadMode?mode=off&amp;feed=@@@feed.getID()@@@');" ><a href="#"><strong>OFF</strong> - Don't auto-download videos</a></li>
+										</ul>
+									</td>
+									<td class="cr" />
+								</tr>
+								<tr>
+									<td class="bl" />
+									<td class="bc" />
+									<td class="br" />
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+				
+	</div> <!-- // end sub-titlebar -->
+
+	<!--
+		<div id="views-bar">
+			
+			<div class="views-bar-left">
+				<ul id="view_style">
+					<li>
+						<a>box</a>
+					</li>
+					<li>
+						<a>box</a>
+					</li>
+					<li>
+						<a>box</a>
+					</li>
+				</ul> 
+			</div>
+		
+			<div class="views-bar-right">
+				<span>Sort By</span>
+				<div class="select-box-left">
+					<div class="select-box-right">
+						<div class="select-box-mid">
+							<span>(dropdown)</span>
+						</div>
+					</div>
+				</div>
+				<span>Status Groups:</span>
+			</div>
+
+	</div> 		-->
+	<!-- // views-bar -->
+
+
+	<!-- CHANNEL CONTAINER **************************************************** -->
+	<div id="main-container">
+		<div class="main-container-scraping" t:showIf="feed.isScraped() and feed.isUpdating()" t:updateHideOnView="thisFeedView">
+			<div class="scraping-indicator">
+				<img align="left" src="resource:images/scraping-indicator-left.gif" />
+				<img align="right" src="resource:images/scraping-indicator-right.gif" />
+				<div class="scraping-content" i18n:translate="">Looking for videos 
+					at this URL
+				</div>
+			</div>
+		</div>
+		<div class="hide-channel-title">
+			<t:includeTemplate filename="channel-content" />
+		</div>
+	</div>
+	<!-- / CHANNEL ITEMS LIST -->
 
 </body>
 </html>

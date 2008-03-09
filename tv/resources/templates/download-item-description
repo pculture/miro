@@ -1,26 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://www.participatorypolitics.org/"
-      xmlns:i18n="http://www.participatoryculture.org/i18n"
-      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+xmlns:t="http://www.participatorypolitics.org/"
+xmlns:i18n="http://www.participatoryculture.org/i18n"
+eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />        
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />        
 </head>
 <body>
-    <div class="main-video-desc noselect">
-        <h1 t:replace="this.getTitle()" class="noselect"/>
-        <div class="main-video-desc-desc noselect">
-            <span t:replaceMarkup="this.getDescription()" />
-        </div>
-        <div class="main-video-bottom">
-                <div class="channel-title">
-                        <span t:replace="this.getChannelTitle()" />
-                </div>
-                <div class="donate-html noselect">
-                    <span t:replaceMarkup="this.getPaymentHTML()" />
-                </div>
-        </div>
-    </div>
+	<div class="main-video-desc noselect ***this.getEmblemCSSClass()***">
+		<h1 t:replace="this.getTitle()" class="noselect"/>
+		<div class="main-video-desc-desc noselect">
+			<span t:replaceMarkup="this.getDescription()" />
+		</div>
+
+
+		<div class="details-buttons">
+			<a class="button blue" href="#" onclick="return eventURL('action:keepItem?item=@@@this.getID()@@@');" t:showIf="this.showSaveButton()">
+				<span i18n:translate="">Keep</span>
+			</a>
+			<a class="button blue saved" t:showIf="this.showSaved()">							
+				<span i18n:translate="">Saved</span>
+			</a>
+
+			<a class="button blue" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" t:showIf="this.showTrashButton()">
+				<span i18n:translate="">Delete</span>
+			</a>
+			<!-- need to call event.stopPropagation() to prevent us from selecting the div -->
+			<a class="button blue" t:showIf="this.hasSharableURL()" onclick="showSelectBoxMenu('share-menu-@@@viewName@@@-@@@this.getID()@@@'); event.stopPropagation();">
+				<span i18n:translate="">Share</span>
+			</a>
+			<a class="button blue" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" t:hideIf="this.showMoreInfo">
+				<span i18n:translate="">Details <img src="resource:images/triangle-blue-button.png" alt="" /></span>
+			</a>
+			<a class="button blue" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" t:showIf="this.showMoreInfo">
+				<span i18n:translate="">Close <img src="resource:images/triangle-blue-button-up.png" alt="" /></span>
+			</a>
+		</div>
+
+		<br class="clear" />
+		<table cellpadding="0" cellspacing="0" id="share-menu-@@@viewName@@@-@@@this.getID()@@@" class="select-box share">
+			<tr>
+				<td class="tl" />
+				<td class="tc" />
+				<td class="tr" />
+			</tr>
+			<tr>
+				<td class="cl" />
+				<td class="cc">
+						<ul>
+							<li>
+								<a href="#" class="main-video-details-task-mail" onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');">
+									<img src="resource:images/share-email.png" alt="email-a-friend icon" />
+									<span i18n:translate=""> Email to a friend</span>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="main-video-details-task-bomb" onclick="return eventURL('action:videoBombExternally?item=@@@this.getID()@@@');" >
+									<img src="resource:images/share-videobomb.png" alt="videobomb icon" />
+									<span i18n:translate=""> Post to Video Bomb</span>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="main-video-details-delicious" onclick="return eventURL('http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=@@@this.getURL()@@@&amp;title=@@@this.getTitle()@@@');" >
+									<img src="resource:images/share-delicious.png" alt="delicious icon" />
+									<span i18n:translate=""> Post to del.icio.us</span>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="main-video-details-digg" onclick="return eventURL('http://www.digg.com/submit?phrase=2&amp;url=@@@this.getQuotedURL()@@@');" >
+									<img src="resource:images/share-digg.png" alt="digg icon" />
+									<span i18n:translate=""> Post to digg</span>
+								</a>
+							</li>
+							<li>
+								<a href="#" class="main-video-details-reddit" onclick="return eventURL('http://reddit.com/submit?url=@@@this.getQuotedURL()@@@&amp;title=@@@this.getQuotedTitle()@@@');">
+									<img src="resource:images/share-reddit.png" alt="reddit icon" />
+									<span i18n:translate=""> Post to Reddit</span>
+								</a>
+							</li>
+						</ul>
+				</td>
+				<td class="cr" />
+			</tr>
+			<tr>
+				<td class="bl" />
+				<td class="bc" />
+				<td class="br" />
+			</tr>
+		</table>
+					
+
+		<div class="main-video-bottom">
+			<div class="channel-title">
+				<span t:replace="this.getChannelTitle()" />
+			</div>
+			<div class="donate-html noselect">
+				<span t:replaceMarkup="this.getPaymentHTML()" />
+			</div>
+		</div>
+
+	</div>
 </body>
 </html>

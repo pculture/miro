@@ -8,7 +8,7 @@
 <head>
     <title>video player interface</title>
 
-    <link rel="stylesheet" type="text/css" href="resource:css/style.css" />
+    <link rel="stylesheet" type="text/css" href="resource:css/sidebar.css" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <t:include filename="dynamic.js" />
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
@@ -53,7 +53,7 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	dragdestdata="playlist-START"
 	drageffectplaylist="move" 
 	drageffectplaylistfolder="move" >
-    <ul class="tab-list">
+    <ul class="tab-list second">
       <li t:repeatForView="feedTabs" 
 	class="***this.getState()***"
 	selectID="***this.objID()***" selectViewName="feedTabs"
@@ -80,7 +80,7 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	drageffectchannelfolder="move" >
 	<div class="dnd-reorder-indicator show-on-top circle" />
 	<div class="dnd-reorder-indicator show-on-top line" />
-      <ul class="tab-list">
+      <ul class="tab-list third">
       <li t:repeatForView="playlistTabs" 
 	class="***this.getState()***"
 	selectID="***this.objID()***" selectViewName="playlistTabs"

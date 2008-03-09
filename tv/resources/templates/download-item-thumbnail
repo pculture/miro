@@ -8,32 +8,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />        
 </head>
 <body>
-    <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
-
-    <div class="main-video-hitbox">
-        <a t:showIf="this.isDownloadable()"
-            class="icon download" href="#"
-            title="Download '***this.getTitle()***'"
-            onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');"  />
-        <a t:showIf="this.getState() == 'paused'"
-            class="icon paused-circle" href="#"
-            title="Download '***this.getTitle()***'"
-            onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');"  />
-        <span t:showIf="this.getState() == 'downloading'"
-            class="icon inprogress-background" >
-            <img t:hideIf="this.isPendingManualDownload()"
-                class="inprogress-arrows"
-                title="Downloading '***this.getTitle()***'"
-                src="resource:images/main-video-inprogress-arrows.gif" />
-            <img t:showIf="this.isPendingManualDownload()"
-                class="download-pending-icon"
-                title="Download Pending for '***this.getTitle()***'"
-                src="resource:images/download-pending-dot.png" />
-        </span>
-        <a t:showIf="this.isPlayable()"
-            class="icon play" href="#"
-            title="Play '***this.getTitle()***'"
-            onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');" />
-    </div>
+		<img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
+		<a t:showIf="this.isPlayable()" class="play" href="#" title="Play '***this.getTitle()***'" onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');">Play</a>
 </body>
 </html>
