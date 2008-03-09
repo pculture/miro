@@ -45,8 +45,8 @@ from miro.gtcache import gettext as _
 
 class PreferenceItem (NSToolbarItem):
 
-    def setView_(self, view):
-        self.view = view
+    def setPrefView_(self, pref_view):
+        self.pref_view = pref_view
 
 ###############################################################################
 
@@ -101,7 +101,7 @@ class PreferencesWindowController (NSWindowController):
         item.setImage_(NSImage.imageNamed_(imageName))
         item.setTarget_(self)
         item.setAction_("switchPreferenceView:")
-        item.setView_(view)
+        item.setPrefView_(view)
         
         identifier = item.itemIdentifier()
         self.items[identifier] = item
@@ -129,18 +129,18 @@ class PreferencesWindowController (NSWindowController):
         return YES
 
     def switchPreferenceView_(self, sender):
-        if self.window().contentView() == sender.view:
+        if self.window().contentView() == sender.pref_view:
             return
 
         window = self.window()
         wframe = window.frame()
-        vframe = sender.view.frame()
+        vframe = sender.pref_view.frame()
         toolbarHeight = wframe.size.height - window.contentView().frame().size.height
         wframe.origin.y += wframe.size.height - vframe.size.height - toolbarHeight
         wframe.size = vframe.size
         wframe.size.height += toolbarHeight
 
-        self.window().setContentView_(sender.view)
+        self.window().setContentView_(sender.pref_view)
         self.window().setFrame_display_animate_(wframe, YES, YES)
 
 ###############################################################################
