@@ -65,8 +65,9 @@ OS_VERSION = int(OS_INFO[2][0])
 if OS_VERSION == 9:
     SANDBOX_ROOT_DIR = os.path.normpath(os.path.normpath(os.path.join(ROOT_DIR, '..')))
     SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
-    PYTHON_LIB = os.path.join("/", "System", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
-    sys.path.insert(0, os.path.join(SANDBOX_DIR, 'lib', 'python2.5', 'site-packages'))
+    PYTHON_ROOT = os.path.join(SANDBOX_DIR, "Library", "Frameworks", "Python.framework", "Versions", "Current")
+    PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
+    sys.path.insert(0, os.path.join(PYTHON_ROOT, 'lib', 'python2.5', 'site-packages'))
 else:
     SANDBOX_DIR = "/usr/local"
     PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
@@ -87,12 +88,12 @@ BOOST_INCLUDE_DIR = None
 BOOST_VERSION = None
 
 for searchDir in (SANDBOX_DIR, '/usr/local', '/opt/local', '/sw'):
-    libItems = glob(os.path.join(searchDir, 'lib/libboost_python-1_3*.dylib'))
+    libItems = glob(os.path.join(searchDir, 'lib/libboost_python-[mt]?-1_3*.a'))
     incItems = glob(os.path.join(searchDir, 'include/boost-1_3*/'))
     if len(libItems) == 1 and len(incItems) == 1:
         BOOST_LIB_DIR = os.path.dirname(libItems[0])
         BOOST_INCLUDE_DIR = incItems[0]
-        match = re.search(r'libboost_python-(.*)\.dylib', libItems[0])
+        match = re.search(r'libboost_python-(.*)\.a', libItems[0])
         BOOST_VERSION = match.groups()[0]
         break
 
@@ -110,15 +111,11 @@ else:
 #   isysroot flag.
 # =============================================================================
 
-if OS_VERSION < 9:
-    BOOST_TYPE = ""
-else:
-    BOOST_TYPE = "-mt"
-
-BOOST_PYTHON_LIB = os.path.join(SANDBOX_DIR, "lib", "libboost_python%s-%s.a" % (BOOST_TYPE, BOOST_VERSION))
-BOOST_FILESYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_filesystem%s-%s.a' % (BOOST_TYPE, BOOST_VERSION))
-BOOST_DATETIME_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_date_time%s-%s.a' % (BOOST_TYPE, BOOST_VERSION))
-BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread%s-%s.a' % (BOOST_TYPE, BOOST_VERSION))
+BOOST_PYTHON_LIB = os.path.join(SANDBOX_DIR, "lib", "libboost_python-%s.a" % BOOST_VERSION)
+BOOST_FILESYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_filesystem-%s.a' % BOOST_VERSION)
+BOOST_DATETIME_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_date_time-%s.a' % BOOST_VERSION)
+BOOST_THREAD_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_thread-%s.a' % BOOST_VERSION)
+BOOST_SYSTEM_LIB = os.path.join(SANDBOX_DIR, "lib", 'libboost_system-%s.a' % BOOST_VERSION)
 
 # =============================================================================
 # Only now may we import things from the local sandbox and our own tree
@@ -380,11 +377,15 @@ class MiroBuild (py2app):
         libtorrent_libs = ['z', 
                            'pthread', 
                            'ssl']
+
         libtorrent_extras = [PYTHON_LIB,
                              BOOST_PYTHON_LIB,
                              BOOST_FILESYSTEM_LIB,
                              BOOST_DATETIME_LIB,
                              BOOST_THREAD_LIB]
+        if OS_VERSION >= 9:
+            libtorrent_extras.append(BOOST_SYSTEM_LIB)
+
         libtorrent_compil_args = ["-Wno-missing-braces",
                                   "-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1", 
                                   "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1", 

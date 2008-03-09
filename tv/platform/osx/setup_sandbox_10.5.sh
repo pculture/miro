@@ -7,7 +7,62 @@ BKIT_DIR=$ROOT_DIR/dtv-binary-kit-mac/sandbox
 SBOX_DIR=$ROOT_DIR/sandbox
 WORK_DIR=$SBOX_DIR/pkg
 
+TARGET_OS_VERSION=10.5
+SDK_DIR="/Developer/SDKs/MacOSX$TARGET_OS_VERSION.sdk"
+
 mkdir -p $WORK_DIR
+
+# Python ======================================================================
+
+PYTHON_VERSION=2.5
+PYTHON_RELEASE_VERSION=2.5
+
+cd $WORK_DIR
+tar -xzf $BKIT_DIR/Python-$PYTHON_RELEASE_VERSION.tgz
+cd Python-$PYTHON_RELEASE_VERSION
+
+patch -p0 < $BKIT_DIR/patches/Python/Makefile.pre.in.patch
+
+./configure --prefix=$SBOX_DIR \
+            --enable-universalsdk=$SDK_DIR \
+            --enable-framework=$SBOX_DIR/Library/Frameworks \
+            --with-suffix="" \
+            --enable-ipv6
+
+echo '#define SETPGRP_HAVE_ARG' >> pyconfig.h
+
+make
+make install
+
+PYTHON=$SBOX_DIR/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION/bin/python
+
+# =============================================================================
+
+export CFLAGS="-mmacosx-version-min=$TARGET_OS_VERSION -isysroot $SDK_DIR -arch ppc -arch i386"
+export LDFLAGS=$CFLAGS
+
+# PyObjC ======================================================================
+
+cd $WORK_DIR
+svn co http://svn.red-bean.com/pyobjc/trunk/pyobjc PyObjC-2.0
+cd PyObjC-2.0
+
+for proj in altgraph \
+            macholib \
+            modulegraph \
+            py2app \
+            pyobjc-core \
+            pyobjc-metadata \
+            pyobjc-framework-Cocoa \
+            pyobjc-framework-QTKit \
+            pyobjc-framework-Quartz \
+            pyobjc-framework-WebKit \
+            pyobjc-framework-ExceptionHandling
+do
+    pushd $proj
+    $PYTHON setup.py install
+    popd
+done
 
 # BerkeleyDB ==================================================================
 
@@ -27,8 +82,8 @@ cd $WORK_DIR
 tar -xzf $BKIT_DIR/bsddb3-4.5.0.tar.gz
 cd $WORK_DIR/bsddb3-4.5.0
 
-python2.5 setup.py --berkeley-db=$SBOX_DIR build
-python2.5 setup.py --berkeley-db=$SBOX_DIR install --root=$SBOX_DIR
+$PYTHON setup.py --berkeley-db=$SBOX_DIR build
+$PYTHON setup.py --berkeley-db=$SBOX_DIR install
 
 # Pyrex =======================================================================
 
@@ -37,29 +92,32 @@ cd $WORK_DIR
 tar -xzf $BKIT_DIR/Pyrex-0.9.6.4.tar.gz
 cd $WORK_DIR/Pyrex-0.9.6.4
 
-python2.5 setup.py build
-python2.5 setup.py install --root=$SBOX_DIR
+$PYTHON setup.py build
+$PYTHON setup.py install
 
 # Boost =======================================================================
 
 cd $WORK_DIR
 
-tar -xzf $BKIT_DIR/boost_1_34_1.tar.gz
-cd $WORK_DIR/boost_1_34_1
+svn co http://svn.boost.org/svn/boost/trunk boost-1_35
+cd boost-1_35
 
 cd tools/jam/src
 ./build.sh
 cd `find . -type d -maxdepth 1 | grep bin.`
-mkdir $SBOX_DIR/bin
+mkdir -p $SBOX_DIR/bin
 cp bjam $SBOX_DIR/bin
 
-cd $WORK_DIR/boost_1_34_1
+cd $WORK_DIR/boost-1_35
 $SBOX_DIR/bin/bjam  --prefix=$SBOX_DIR \
                     --with-python \
                     --with-date_time \
                     --with-filesystem \
                     --with-thread \
                     --with-regex \
-                    --toolset=darwin \
+                    toolset=darwin \
+                    macosx-version=$TARGET_OS_VERSION \
+                    architecture=combined \
+                    link=static \
                     release \
                     install
