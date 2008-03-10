@@ -5,7 +5,6 @@
         var i;
         for (i=0; i < metas.length; i++)
         {
-            alert(metas[i]);
             if (metas[i].getAttribute('name') == "guideURL")
             {
                 miro_guide_frame.location = metas[i].getAttribute('content');
