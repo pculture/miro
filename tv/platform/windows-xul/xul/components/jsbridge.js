@@ -275,11 +275,12 @@ jsBridge.prototype = {
         newItem.setAttribute("image", "chrome://dtv/content/images/search_icon_" + this.searchEngineNames[i] + ".png");
         newItem.setAttribute("class", "menuitem-iconic");
         newItem.setAttribute("oncommand", 
-           "jsbridge.setSearchEngine('" + this.searchEngineNames[i] + "');");
+			     "jsbridge.setSearchEngine('" + this.searchEngineNames[i] + "');");
+        newItem.setAttribute("value", this.searchEngineNames[i]);
         popup.appendChild(newItem);
     }
     var textbox = this.document.getElementById('search-textbox');
-    popup.showPopup(textbox, -1, -1, "popup", "bottomleft", "topleft");
+    popup.openPopup(textbox, "before_end", -1, -1, true, false);
   },
 
   showChoiceDialog: function(id, title, description, defaultLabel, otherLabel) {
@@ -349,9 +350,9 @@ jsBridge.prototype = {
 
   showSearchChannelDialog: function(id, channels, engines, defaultTerm, defaultStyle, defaultChannel, defaultEngine, defaultURL) {
     var params = { "id": id, "channels" : channels, "engines" : engines,
-		   "defaultTerm": defaultTerm, "defaultStyle": defaultStyle,
-		   "defaultChannel": defaultChannel, "defaultEngine": defaultEngine,
-		   "defaultURL": defaultURL, "Out" : -1};
+                   "defaultTerm": defaultTerm, "defaultStyle": defaultStyle,
+                   "defaultChannel": defaultChannel, "defaultEngine": defaultEngine,
+                   "defaultURL": defaultURL, "Out" : -1};
     this.window.openDialog("chrome://dtv/content/searchchannel.xul",
             "dialog", "chrome,dependent,centerscreen,modal", params);
   },
@@ -645,6 +646,7 @@ jsBridge.prototype = {
     var searchIcon = this.document.getElementById("search-icon");
     searchIcon.setAttribute("src",'images/search_icon_' + engine + '.png');
   },
+
   updateMenus: function (states) {
       var pybridge = getPyBridge();
      // Strings with new labels
@@ -736,20 +738,20 @@ jsBridge.prototype = {
 
     var setVals = function (xulDirectory) {
       xulDirectory.getElementsByAttribute('role', 'directory')[0]
-	.setAttribute('value', dirname);
+        .setAttribute('value', dirname);
       xulDirectory.getElementsByAttribute('role', 'shown')[0]
-	.setAttribute('checked', shown);
+        .setAttribute('checked', shown);
       xulDirectory.getElementsByAttribute('role', 'shown')[0]
-	.setAttribute('folder_id', id);
+        .setAttribute('folder_id', id);
     }
 
     var xulListBox = this.prefDocument.getElementById('movies-collection-listbox');
     var oldChildList = xulListBox.getElementsByAttribute('folder_id', id);
     if (oldChildList.length > 0) {
-	setVals(oldChildList[0]);
+        setVals(oldChildList[0]);
     } else {
       var xulDirectory = this.prefDocument.getElementById('blueprints')
-	.getElementsByAttribute('role', 'movies-collection-directory')[0].cloneNode(true);
+        .getElementsByAttribute('role', 'movies-collection-directory')[0].cloneNode(true);
       setVals(xulDirectory);
       xulDirectory.setAttribute('folder_id', id);
       xulListBox.appendChild(xulDirectory);
