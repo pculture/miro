@@ -15,22 +15,24 @@
 
     function guideLoaded() 
     {
-        if (netscape)
+        try
         {
             netscape.security.PrivilegeManager.enablePrivilege('UniversalBrowserRead');
             netscape.security.PrivilegeManager.enablePrivilege('UniversalBrowserWrite');
         }
+        catch (e) {}
         
         miro_navigation_frame.document.getElementById('load-indicator').style.display = 'none';
     }
 
     function guideUnloaded() 
     {
-        if (netscape)
+        try
         {
             netscape.security.PrivilegeManager.enablePrivilege('UniversalBrowserRead');
             netscape.security.PrivilegeManager.enablePrivilege('UniversalBrowserWrite');
         }
+        catch (e) {}
         
         miro_navigation_frame.document.getElementById('load-indicator').style.display = 'block';    
     }
