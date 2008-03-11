@@ -90,15 +90,16 @@ class ThemeHistory(DDBObject):
                 if guide.getGuideByURL(temp_guide) is None:
                     guide.ChannelGuide(temp_guide)
             if ((config.get(prefs.DEFAULT_CHANNELS_FILE) is not None) and
-                (config.get(prefs.THEME_NAME) is not None) and 
-                (config.get(prefs.THEME_DIRECTORY) is not None)):
+                    (config.get(prefs.THEME_NAME) is not None)):
                 importer = opml.Importer()
-                filepath = os.path.join(
-                    config.get(prefs.THEME_DIRECTORY),
-                    config.get(prefs.THEME_NAME),
+                filepath = resources.theme_path(config.get(prefs.THEME_NAME), 
                     config.get(prefs.DEFAULT_CHANNELS_FILE))
-                importer.importSubscriptionsFrom(filepath,
-                                                 showSummary = False)
+                if os.path.exists(filepath):
+                    importer.importSubscriptionsFrom(filepath,
+                            showSummary = False)
+                else:
+                    logging.warn("Theme subscription file doesn't exist: %s",
+                            filepath)
             elif None not in self.pastThemes:
                 # We pretend to have run the default theme, and then
                 # install the default channels.  XXX: If Miro Guide isn't
@@ -142,7 +143,6 @@ class ThemeHistory(DDBObject):
                                    ])
 
             for default in defaultFeedURLs:
-                print repr(default)
                 if isinstance(default, tuple): # folder
                     defaultFolder = default
                     c_folder = folder.ChannelFolder(defaultFolder[0])
