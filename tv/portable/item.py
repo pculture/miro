@@ -1667,10 +1667,15 @@ folder will be deleted.""")
             enclosedFile = os.path.join(filenamePath, os.path.basename(filenamePath))
             if (os.path.exists(enclosedFile)):
                 logging.info("Migrating incorrect torrent download: %s" % enclosedFile)
-                temp = filenamePath + ".tmp"
-                shutil.move(enclosedFile, temp)
-                os.rmdir(filenamePath)
-                os.rename(temp, filenamePath)
+                try:
+                    temp = filenamePath + ".tmp"
+                    shutil.move(enclosedFile, temp)
+                    for turd in os.listdir(filenamePath):
+                        os.remove(turd)
+                    os.rmdir(filenamePath)
+                    os.rename(temp, filenamePath)
+                except:
+                    pass
                 self.videoFilename = FilenameType("")
 
     def __str__(self):
