@@ -262,7 +262,7 @@ jsBridge.prototype = {
     popup.showPopup(this.document.documentElement, this.lastMouseDownX,
         this.lastMouseDownY, "popup", null, null);
   },
-  showSearchMenu: function() {
+  fillSearchMenu: function() {
     if(!this.searchEngineNames || !this.searchEngineTitles) return;
 
     var popup = this.document.getElementById('searchMenu');
@@ -278,8 +278,6 @@ jsBridge.prototype = {
            "jsbridge.setSearchEngine('" + this.searchEngineNames[i] + "');");
         popup.appendChild(newItem);
     }
-    var textbox = this.document.getElementById('search-textbox');
-    popup.showPopup(textbox, -1, -1, "popup", "bottomleft", "topleft");
   },
 
   showChoiceDialog: function(id, title, description, defaultLabel, otherLabel) {
@@ -644,6 +642,9 @@ jsBridge.prototype = {
   setSearchEngine: function(engine) {
     var searchIcon = this.document.getElementById("search-icon");
     searchIcon.setAttribute("src",'images/search_icon_' + engine + '.png');
+    var searchTextBox = this.document.getElementById("search-textbox");
+    searchTextBox.select();
+    searchTextBox.focus();
   },
   updateMenus: function (states) {
       var pybridge = getPyBridge();
