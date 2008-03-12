@@ -1,3 +1,9 @@
+miro (1.2-0pcf1) dapper; urgency=low
+
+  * New upstream release.
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Wed, 12 Mar 2008 13:15:44 -0400
+
 miro (1.1.2-0pcf1) dapper; urgency=low
 
   * Fixed bug 9523 - added exception for distributing GPL code that links

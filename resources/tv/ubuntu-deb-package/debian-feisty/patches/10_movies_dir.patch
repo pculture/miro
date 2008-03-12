@@ -1,8 +1,8 @@
-Index: platform/gtk-x11/platformcfg.py
+Index: platform/gtk-x11/platform/config.py
 ===================================================================
---- platform/gtk-x11/platformcfg.py	(revision 5904)
-+++ platform/gtk-x11/platformcfg.py	(working copy)
-@@ -92,7 +92,7 @@
+--- platform/gtk-x11/platform/config.py	(revision 6519)
++++ platform/gtk-x11/platform/config.py	(working copy)
+@@ -103,13 +103,13 @@
      value = descriptor.default
  
      if descriptor == prefs.MOVIES_DIRECTORY:
@@ -11,20 +11,18 @@ Index: platform/gtk-x11/platformcfg.py
          try:
              os.makedirs (value)
          except:
-@@ -101,7 +101,7 @@
-         value = '/usr/share/miro/themes'
- 
+             pass
      elif descriptor == prefs.NON_VIDEO_DIRECTORY:
 -        value = os.path.expanduser('~/Desktop')
 +        value = os.path.expanduser('~/.miro/Nonvideo')
  
      elif descriptor == prefs.GETTEXT_PATHNAME:
          value = resources.path("../../locale")
-Index: platform/gtk-x11/upgrade.py
+Index: platform/gtk-x11/platform/upgrade.py
 ===================================================================
---- platform/gtk-x11/upgrade.py	(revision 5904)
-+++ platform/gtk-x11/upgrade.py	(working copy)
-@@ -21,6 +21,29 @@
+--- platform/gtk-x11/platform/upgrade.py	(revision 6519)
++++ platform/gtk-x11/platform/upgrade.py	(working copy)
+@@ -32,6 +32,29 @@
  import gconf
  
  def upgrade():
@@ -54,7 +52,7 @@ Index: platform/gtk-x11/upgrade.py
      # dot directory
      src = os.path.expanduser('~/.democracy')
      dst = os.path.expanduser('~/.miro')
-@@ -50,25 +73,3 @@
+@@ -61,25 +84,3 @@
              except:
                  pass
  

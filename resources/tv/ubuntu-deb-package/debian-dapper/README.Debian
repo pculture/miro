@@ -1,13 +1,13 @@
-democracyplayer for Debian
+miro for Debian
 --------------------------
 
- * The default Democracy Player movies directory in Debian
-   is ~/.democracy/Movies instead of ~/Movies/Democracy.
+ * The default Miro movies directory in Debian
+   is ~/.miro/Movies instead of ~/Movies/Miro.
 
- * Also, the non-video directory in Debian is ~/.democracy/Nonvideo
+ * Also, the non-video directory in Debian is ~/.miro/Nonvideo
    instead of ~/Desktop.
 
- * The autoupdate feature, which checks for new versions of Democracy Player,
+ * The autoupdate feature, which checks for new versions of Miro Player,
    has been disabled in the Debian package.
 
  -- Uwe Hermann <uwe@debian.org>, Mon, 11 Sep 2006 08:49:05 +0200

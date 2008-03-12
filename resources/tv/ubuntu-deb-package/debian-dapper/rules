@@ -41,4 +41,9 @@ clean::
 	rm -f platform/gtk-x11/miro.1.gz
 	rm -f portable/*.pyc
 	# rm -f resources/locale/*.mo
+	rm -f platform/gtk-x11/platform/__init__.pyc
+	rm -f portable/frontends/__init__.pyc 
+	rm -f portable/frontends/html/templatehelper.pyc 
+	rm -f portable/frontends/html/__init__.pyc 
+	rm -f portable/frontends/html/template_compiler.pyc
 
