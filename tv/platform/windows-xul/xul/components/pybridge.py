@@ -434,7 +434,7 @@ class PyBridge:
     def setVolume(self, volume):
         volume = float(volume)
         config.set(prefs.VOLUME_LEVEL, volume)
-        if hasattr(app.controller, 'videoDisplay'):
+        if hasattr(app.htmlapp, 'videoDisplay'):
             app.htmlapp.videoDisplay.setVolume(volume, moveSlider=False)
 
     @asUrgent
