@@ -22,7 +22,11 @@
         }
         catch (e) {}
         
-        miro_navigation_frame.document.getElementById('load-indicator').style.display = 'none';
+        var loadIndicator = miro_navigation_frame.document.getElementById('load-indicator');
+        if (loadIndicator !== null)
+        {
+            loadIndicator.style.display = 'none';
+        }
     }
 
     function guideUnloaded() 
@@ -34,6 +38,7 @@
         }
         catch (e) {}
         
-        miro_navigation_frame.document.getElementById('load-indicator').style.display = 'block';    
+        miro_navigation_frame.document.getElementById('load-indicator').style.display = 'block';
     }
 </script>
+
