@@ -31,6 +31,7 @@ error reporting, etc.
 """
 
 import logging
+import urllib
 
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
