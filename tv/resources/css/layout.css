@@ -131,7 +131,7 @@ h1#main-title.static-tab {
     z-index: 2;
 }
 
-#auto-label {
+#auto-label, #sort-by-label {
     float: left;
     padding-right: 6px;
     padding-top: 1px;
@@ -186,10 +186,10 @@ ul#view_style li a {
 
 /* Search page components */
 #engine-search {
-    position: absolute;
-    left: 98px;
-    top: 40px;
-    overflow: hidden;
+  position: absolute;
+  right:40px;
+  top: 20px;
+	overflow: hidden;
 }
 
 /* Used for scraping indicator on channel page */
@@ -444,6 +444,11 @@ table.select-box {
 }
 table#auto-download-menu.select-box {
 	width:200px;
+}
+table#sort-by-menu.select-box {
+	width:75px;
+	position:relative;
+	z-index:20;
 }
 table.select-box.share {
 	width:180px;

@@ -1,37 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://www.participatorypolitics.org/"
-      xmlns:i18n="http://www.participatoryculture.org/i18n"
-      eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
+		xmlns:t="http://www.participatorypolitics.org/"
+		xmlns:i18n="http://www.participatoryculture.org/i18n"
+		eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <t:execOnLoad><![CDATA[
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<t:execOnLoad><![CDATA[
 itemSort = kargs['itemSort']
 section = kargs['section']
-    ]]></t:execOnLoad>
+		]]></t:execOnLoad>
 </head>
 <body>
-<div class="sort-bar">
-    <div class="sort-buttons">
+	<div class="sort-bar">
+		<div class="sort-buttons">
 			<div class="sort-buttons-right">
-				<a href="#" class="length sort-button ***itemSort.getSortButtonState('duration')***" onclick="return eventURL('action:sortBy?by=duration&amp;section=***section***');">
-					Length<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
-				</a>
-				<a href="#" class="date sort-button ***itemSort.getSortButtonState('date')***" onclick="return eventURL('action:sortBy?by=date&amp;section=***section***');">
-					Date<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
-				</a>
+				<span id="sort-by-label" i18n:translate="">Sort By:</span>
 
-				<a href="#" class="size sort-button ***itemSort.getSortButtonState('size')***" onclick="return eventURL('action:sortBy?by=size&amp;section=***section***');">
-					Size<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
+				<a class="button select dark" onclick="showSelectBoxMenu('sort-by-menu');">
+					<!-- #FIXME 
+						needs actual method
+						<span t:replace="itemSort.getSortBy()" />
+					-->
+					<span>Name</span>
 				</a>
-				<div class="clear" />
+				
+				<br style="clear:both;" />
+				<table cellpadding="0" cellspacing="0" id="sort-by-menu" class="select-box">
+					<tr>
+						<td class="tl" />
+						<td class="tc" />
+						<td class="tr" />
+					</tr>
+					<tr>
+						<td class="cl" />
+						<td class="cc">
+							<ul>
+								<li onclick="return eventURL('action:sortBy?by=duration&amp;section=***section***');"><a href="#"><strong>Length</strong></a></li>
+								<li onclick="return eventURL('action:sortBy?by=date&amp;section=***section***');"><a href="#"><strong>Date</strong></a></li>
+								<li onclick="return eventURL('action:sortBy?by=size&amp;section=***section***');"><a href="#"><strong>Size</strong></a></li>
+								<li onclick="return eventURL('action:sortBy?by=name&amp;section=***section***');"><a href="#"><strong>Name</strong></a></li>
+
+							</ul>
+						</td>
+						<td class="cr" />
+					</tr>
+					<tr>
+						<td class="bl" />
+						<td class="bc" />
+						<td class="br" />
+					</tr>
+				</table>
 			</div>
-
-			<a href="#" class="name sort-button ***itemSort.getSortButtonState('name')***" onclick="return eventURL('action:sortBy?by=name&amp;section=***section***');">
-				Name<img class="up-arrow" src="resource:images/sort-up.png" /><img class="down-arrow" src="resource:images/sort-down.png" />
-			</a>
+			<div class="clear" />
 		</div>
-</div>
+	</div>
 </body>
 </html>

@@ -111,6 +111,11 @@ a.button.gray span {
 	text-shadow:#f3f3f3 1px 1px 1px;
 	text-decoration:none;
 }
+#sort-by-label {
+	color:#fff;
+	text-shadow:#454545 1px 1px 1px;
+	text-decoration:none;
+}
 a.button.gray span {
 	line-height:19px;
 	font-weight:bold;
@@ -135,11 +140,15 @@ a.button.blue span {
 a.button.select {
 	color:#636363;
 }
+a.button.select.dark {
+	color:#e9e9e9;
+}
 a.button.blue.saved,
 a.button.blue.saved span {
 	color:#eee;
 	cursor:default;
 }
+
 /* Download page titlebar components */
 /*#downloads-global-actions {
     font-size: 10px;
@@ -320,14 +329,16 @@ body.gray-background {
     color: #666;
     line-height: 130%;
 }
-.main-video .main-video-desc.newly-downloaded h1 {
-	color:#4eb222;
-}
-.main-video .main-video-desc.new h1 {
-	color:#2887fa;
-}
 .main-video.selected .main-video-desc h1 {
 	color:#1b4065
+}
+.main-video .main-video-desc.newly-downloaded h1,
+.main-video.selected .main-video-desc.newly-downloaded h1 {
+	color:#4eb222;
+}
+.main-video .main-video-desc.new h1,
+.main-video.selected .main-video-desc.new h1 {
+	color:#2887fa;
 }
 .main-video.selected .main-video-desc-desc, .main-video.selected .channel-title {
     color:#6b9ccd; 

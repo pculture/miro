@@ -117,7 +117,8 @@ a.feeditem span {
     color: #fff;
 }
 
-.selected a.feeditem {
+.selected a.feeditem,
+.selected-inactive a.feeditem {
     background: url('../images/channel_bg.png') 0% 0% repeat-x; 
 }
 
@@ -366,16 +367,16 @@ a.feeditem.normal .feed-loading-icon {
 	background-image: url('../images/bubble-number-count_blue.png');
 }
 
-.left-bubble.orange {
-	background-image: url('../images/circle-orange-left.png');
+.bubble-left.orange {
+	background-image: url('../images/bubble-left_orange.png');
 }
 
-.right-bubble.orange {
-	background-image: url('../images/circle-orange-right.png');
+.bubble-right.orange {
+	background-image: url('../images/bubble-right_orange.png');
 }
 
 .number-count.orange {
-	background-image: url('../images/circle-orange-mid.png');
+	background-image: url('../images/bubble-number-count_orange.png');
 }
 
 .new-video-play-button {
@@ -405,7 +406,7 @@ a.feeditem.normal .feed-loading-icon {
 
 /* Reverse the color scheme for blue bubbles when they are selected */
 
-.selected a.feeditem .left-bubble.blue {
+/*.selected a.feeditem .left-bubble.blue {
 	background-image: url('../images/circle-white-left.png');
 }
 
@@ -416,7 +417,7 @@ a.feeditem.normal .feed-loading-icon {
 .selected a.feeditem .number-count.blue {
 	color: #4081EC;
 	background-image: url('../images/circle-white-mid.png');
-}
+}*/
 
 /*///////////////////////////////////////////////
 

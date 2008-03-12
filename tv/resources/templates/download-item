@@ -9,7 +9,7 @@
     <t:include filename="dynamic.js" />
 </head>
 
-<body id="dl-item">
+<body>
 <div class="item-wrapper">
 	<table cellpadding="0" cellspacing="0" class="item ***this.getSelectedState(view)*** ***this.getMoreInfoState()***">
 		<tr>

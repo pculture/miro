@@ -32,7 +32,7 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 				<td><b t:replace="this.getSizeForDisplay()" /></td>
 			</tr>
 			<tr>
-				<td colspan="2" t:showIf="this.showMoreInfo" class="more-info-details">
+				<td colspan="2" t:showIf="this.showMoreInfo">
 					<div t:replaceMarkup="this.getMoreInfo()" />
 				</td>
 			</tr>
@@ -57,13 +57,13 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 						<div t:hideIf="this.downloadInProgress()">
 							<span t:replace="this.getStartupActivity()" />
 						</div>
-						<span t:showIf="this.downloadInProgress()">Downloading...</span>
+						<span t:showIf="this.downloadInProgress()">Downloading:</span>
 					</div>
 					<div t:showIf="this.getState() == 'paused'" class="paused">
 						<span t:replace="this.getPausedString()" />
 					</div>
 					<div t:showIf="this.downloadInProgress()" class="download-rate-and-eta">
-						<span t:replace="this.downloadETA()" />
+						<span t:replace="this.twoDigitPercentDone()" />
 						<!--<span class="download-rate" t:replace="this.downloadRate()" />-->
 					</div>
 				</div>
@@ -112,7 +112,7 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 				<span t:replace="this.getFailureReason()" />
 			</div>
 			
-			<div t:hideIf="this.getEmblemCSSString() == '' or this.getEmblemCSSString() == 'NEW'" class="video-state ***this.getEmblemCSSClass()***">
+			<div t:hideIf="this.getEmblemCSSString() == '' or this.getEmblemCSSString() == 'New'" class="video-state ***this.getEmblemCSSClass()***">
 				<span t:replace="this.getEmblemCSSString()" />
 			</div>
 			
