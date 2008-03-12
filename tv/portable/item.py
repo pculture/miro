@@ -600,9 +600,9 @@ folder will be deleted.""")
     @returnsUnicode
     def getEmblemCSSString(self):
         if self.getState() == u'newly-downloaded':
-            return u'UNWATCHED'
+            return u'Unwatched'
         elif self.getState() == u'new':
-            return u'NEW'
+            return u'New'
         else:
             return u''
 
@@ -1296,7 +1296,13 @@ folder will be deleted.""")
     @returnsUnicode
     def threeDigitPercentDone(self):
         return u'%03d' % int(self.downloadProgress())
-
+    def twoDigitPercentDone(self):
+        if int(self.downloadProgress()) < 10:
+          out = u'%d' % int(self.downloadProgress())
+        else:
+          out = u'%02d' % int(self.downloadProgress())
+        return out + u'%'
+          
     def downloadInProgress(self):
         return self.downloader is not None and self.downloader.getETA() != 0
 
