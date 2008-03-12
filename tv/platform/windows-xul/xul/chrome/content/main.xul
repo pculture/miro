@@ -99,10 +99,12 @@ add more menu elements later -NN -->
 <hbox flex="0" container="1" height="64" minheight="64" id="bottom-left">
 <hbox flex="0" maxheight="29" id="bottom-left-search" >
       <textbox type="autocomplete" flex="1" id="search-textbox" onfocus="onSearchBoxFocus();" onblur="onSearchBoxBlur();" onkeydown="onSearchKeyDown(event);">
-        <stack onclick="jsbridge.showSearchMenu();">
+        <stack popup="searchMenu">
           <hbox>
           <image id="search-icon" />
-          <popupset><popup id="searchMenu"></popup></popupset>
+          <popupset><popup onpopupshowing="jsbridge.fillSearchMenu();"
+                          position="before_start"
+                          id="searchMenu"></popup></popupset>
           </hbox>
           <image class="searchbar-dropmarker-image" />
         </stack>

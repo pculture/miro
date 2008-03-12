@@ -52,7 +52,7 @@ interface pcfIDTVJSBridge : nsISupports
   void xulShowElement(in AString area, in AString id);
   void copyTextToClipboard(in AString text);
   void showContextMenu(in AString menuItems);
-  void showSearchMenu();
+  void fillSearchMenu();
   void showChoiceDialog(in unsigned long id, in AString title, 
         in AString description, in AString defaultLabel, 
         in AString otherLabel);
