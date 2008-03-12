@@ -257,8 +257,9 @@ class ManagedWebView (NSObject):
 
         html = NSString.stringWithString_(unicode(initialHTML))
         data = html.dataUsingEncoding_(NSUTF8StringEncoding)
-        if baseURL is not None:
-            baseURL = NSURL.URLWithString_(unicode(baseURL))
+        if baseURL is None:
+            baseURL = os.path.join(NSBundle.mainBundle().resourcePath(), "resources")
+        baseURL = NSURL.URLWithString_(unicode(baseURL))
 
         self.view.mainFrame().loadData_MIMEType_textEncodingName_baseURL_(data, u'text/html', u'utf-8', baseURL)        
 
@@ -391,6 +392,9 @@ class ManagedWebView (NSObject):
         if result == NSOKButton:
             filenames = panel.filenames()
             listener.chooseFilename_(filenames[0])
+
+    def webView_addMessageToConsole_(self, webview, message):
+        logging.jsalert(message)
 
     def webView_runJavaScriptAlertPanelWithMessage_(self, webview, message):
         logging.jsalert(message)
