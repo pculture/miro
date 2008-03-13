@@ -34,7 +34,7 @@ import sys
 from time import sleep, time
 
 path_list = os.environ.get('PATH', '').split(';')
-path_list.insert(0, 'xulrunner\\plugins\\')
+path_list.insert(0, 'plugins')
 os.environ['PATH'] = ';'.join(path_list)
 
 # load the DLL

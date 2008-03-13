@@ -192,7 +192,15 @@ class VLCRenderer:
         # named versions can use the same code --NN
         moviedata_util_filename = "Miro_MovieData.exe"
         cmdLine = [moviedata_util_filename, videoPath, thumbnailPath]
-        return cmdLine, None
+        env = os.environ.copy()
+        currentPath = env.get("PATH")
+        if currentPath is not None:
+            currentPathSplit = currentPath.split(";")
+        else:
+            currentPathSplit = []
+        currentPathSplit.insert(0, "xulrunner\\python")
+        env['PATH'] = ';'.join(currentPathSplit)
+        return cmdLine, env
 
 
 ###############################################################################
