@@ -7,31 +7,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2008-02-29 12:40-0500\n"
+"PO-Revision-Date: 2008-02-22 22:28+0000\n"
+"Last-Translator: Vincas Dargis <Unknown>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2007-10-25 18:24+0000\n"
+"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: ../../portable/dialogs.py:77
+#: ../../portable/dialogs.py:85
 msgid "Cancel"
-msgstr ""
+msgstr "Atsisakyti"
 
 msgid "OK"
-msgstr ""
+msgstr "Gerai"
 
-#: ../../portable/dialogs.py:76
+#: ../../portable/dialogs.py:84
 msgid "Ok"
-msgstr ""
+msgstr "Gerai"
 
 msgid "$log"
-msgstr ""
+msgstr "$log"
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
@@ -58,176 +58,176 @@ msgid "The fall of $shortAppName??"
 msgstr ""
 
 msgid "About Miro"
-msgstr ""
+msgstr "Apie „Miro“"
 
 msgid "Add Channel..."
-msgstr ""
+msgstr "Pridėti kanalą..."
 
 msgid "Add Guide..."
-msgstr ""
+msgstr "Pridėti gidą..."
 
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Perkelti viską į priekį"
 
-#: ../../platform/osx/frontend/Preferences.py:65
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
+#: ../../platform/osx/platform/frontends/html/Preferences.py:80
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "Channels"
-msgstr ""
+msgstr "Kanalai"
 
 msgid "Check for New Version"
-msgstr ""
+msgstr "Ieškoti naujos versijos"
 
 msgid "Clear Menu"
-msgstr ""
+msgstr "Išvalyti meniu"
 
 msgid "Close Window"
-msgstr ""
+msgstr "Užverti langą"
 
 msgid "Copy"
-msgstr ""
+msgstr "Kopijuoti"
 
 msgid "Copy Channel URL"
-msgstr ""
+msgstr "Kopijuoti kanalo URL"
 
 msgid "Copy Video URL"
-msgstr ""
+msgstr "Kopijuoti video URL"
 
 msgid "Cut"
-msgstr ""
+msgstr "Iškirpti"
 
-#: ../../portable/dialogs.py:96
+#: ../../portable/dialogs.py:104
 msgid "Delete"
-msgstr ""
+msgstr "Ištrinti"
 
 msgid "Donate"
-msgstr ""
+msgstr "Paaukoti"
 
 msgid "Download Video..."
-msgstr ""
+msgstr "Atsisiųsti video..."
 
 msgid "Edit"
-msgstr ""
+msgstr "Redaguoti"
 
 msgid "Export Channels (OPML)..."
-msgstr ""
+msgstr "Eksportuoti kanalus (OPML)..."
 
 msgid "File"
-msgstr ""
+msgstr "Failas"
 
 msgid "Full Screen"
-msgstr ""
+msgstr "Visas ekranas"
 
 msgid "Help"
-msgstr ""
+msgstr "Žinynas"
 
 msgid "Hide Miro"
-msgstr ""
+msgstr "Paslėpti „Miro“"
 
 msgid "Hide Others"
-msgstr ""
+msgstr "Paslėpti kitus"
 
 msgid "Import Channels (OPML)..."
-msgstr ""
+msgstr "Importuoti kanalus (OPML)..."
 
 msgid "Main Window"
-msgstr ""
+msgstr "Pagrindinis langas"
 
 msgid "MainMenu"
-msgstr ""
+msgstr "Pagrindinis meniu"
 
 msgid "Minimize"
-msgstr ""
+msgstr "Sumažinti"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "Miro"
-msgstr ""
+msgstr "„Miro“"
 
 msgid "Miro Help"
-msgstr ""
+msgstr "„Miro“ žinynas"
 
 msgid "New Channel Folder..."
-msgstr ""
+msgstr "Naujas kanalo aplankas..."
 
 msgid "New Playlist Folder..."
-msgstr ""
+msgstr "Naujas grojaraščio aplankas..."
 
 msgid "New Playlist..."
-msgstr ""
+msgstr "Naujas grojaraštis..."
 
 msgid "New Search Channel..."
-msgstr ""
+msgstr "Naujas paieškos kanalas..."
 
 msgid "Next Video"
-msgstr ""
+msgstr "Kitas video"
 
 msgid "Open Recent"
-msgstr ""
+msgstr "Atverti paskutinį naudotą"
 
 msgid "Open..."
-msgstr ""
+msgstr "Atverti..."
 
 msgid "Paste"
-msgstr ""
+msgstr "Įdėti"
 
-#: ../../platform/osx/frontend/Application.py:249
+#: ../../platform/osx/platform/frontends/html/Application.py:244
 msgid "Play Video"
-msgstr ""
+msgstr "Groti video"
 
-#: ../../platform/osx/frontend/Preferences.py:69
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+#: ../../platform/osx/platform/frontends/html/Preferences.py:84
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Playback"
-msgstr ""
+msgstr "Grojimas"
 
 msgid "Playlists"
-msgstr ""
+msgstr "Grojaraščiai"
 
 msgid "Preferences..."
-msgstr ""
+msgstr "Nustatymai..."
 
 msgid "Previous Video"
-msgstr ""
+msgstr "Praėjęs video"
 
 msgid "Quit Miro"
-msgstr ""
+msgstr "Išjungti „Miro“"
 
 msgid "Remove..."
-msgstr ""
+msgstr "Pašalinti..."
 
 msgid "Rename..."
-msgstr ""
+msgstr "Pervadinti..."
 
 msgid "Report a bug"
-msgstr ""
+msgstr "Pranešti apie klaidą"
 
 msgid "Save Video As..."
-msgstr ""
+msgstr "Išsaugoti video kaip..."
 
 msgid "Select All"
-msgstr ""
+msgstr "Pasirinkti viską"
 
 msgid "Send This Channel to a Friend"
-msgstr ""
+msgstr "Nusiųsti šį kanalą draugui"
 
 msgid "Services"
-msgstr ""
+msgstr "Paslaugos"
 
 msgid "Show All"
-msgstr ""
+msgstr "Rodyti viską"
 
 msgid "Stop Video"
-msgstr ""
+msgstr "Sustabdyti video"
 
 msgid "Update All Channels"
-msgstr ""
+msgstr "Atnaujinti visus kanalus"
 
 msgid "Update Channel"
-msgstr ""
+msgstr "Atnaujinti kanalą"
 
 msgid "Window"
-msgstr ""
+msgstr "Langas"
 
 msgid "Zoom"
-msgstr ""
+msgstr "Mastelis"
 
 msgid "%channel feed%"
 msgstr ""
@@ -245,17 +245,17 @@ msgid "00:00:00"
 msgstr ""
 
 msgid "Box"
-msgstr ""
+msgstr "Dėžė"
 
 msgid "FullScreen Controls"
-msgstr ""
+msgstr "Viso ekrano valdymas"
 
-#: ../../portable/tabs.py:46
+#: ../../portable/tabs.py:57
 msgid "Video Search"
-msgstr ""
+msgstr "Video paieška"
 
 msgid "VideoWindow"
-msgstr ""
+msgstr "Video langas"
 
 msgid ""
 "Location http://foo.bar.com/baz requires a username and password for \"text "
@@ -263,158 +263,192 @@ msgid ""
 msgstr ""
 
 msgid "Password:\n"
-msgstr ""
+msgstr "Slaptažodis:\n"
 
 msgid "Username and password required"
-msgstr ""
+msgstr "Prisijungimo vardas ir slaptažodis yra būtini"
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
+"Prisijungimo vardas:\n"
+"\n"
 
-msgid " limit upstream to"
-msgstr ""
-
-msgid "(You must restart Miro for this change to take effect)"
+msgid "(You must restart Miro for some of these changes to take effect)"
 msgstr ""
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr ""
+"(norėdami, kad įsigaliotų šie pakeitimai, turite iš naujo paleisti „Miro“)\n"
 
 msgid "(movies directory path goes here)"
-msgstr ""
+msgstr "(čia turi būti filmų aplanko kelias)"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
-msgid "1 day"
+#: ../../platform/gtk-x11/glade/miro.glade.h:1
+msgid "-"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
+msgid "1 day"
+msgstr "1 diena"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid "1 month"
-msgstr ""
+msgstr "1 mėnuo"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "10 days"
-msgstr ""
+msgstr "10 dienų"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "3 days"
-msgstr ""
+msgstr "3 dienos"
 
 msgid "3 hours"
-msgstr ""
+msgstr "3 valandos"
 
 msgid "4"
-msgstr ""
+msgstr "4"
 
 msgid "5"
-msgstr ""
+msgstr "5"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
 msgid "6 days"
-msgstr ""
+msgstr "6 dienos"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "Add..."
+msgstr "Pridėti..."
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+msgid "All"
 msgstr ""
 
-msgid "BitTorrent ports:"
+msgid "Auto download default setting for new channels:"
 msgstr ""
+
+msgid "Automatically forward ports"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
+msgid "BitTorrent"
+msgstr "BitTorrent"
 
 msgid "By default, videos expire after:"
-msgstr ""
+msgstr "Pagal nutylėjimą, video nustoja galioti po:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Change..."
-msgstr ""
+msgstr "Pakeisti..."
 
+#, fuzzy
 msgid "Check channels for new content:"
+msgstr "Patikrinti, ar yra naujo turinio kanaluose:"
+
+msgid "Don't auto-download more than this many videos per channel at once:"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
-msgid "Don't start a download if it leaves less than"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
-msgid "Download at most"
+msgid "Don't download more than this many videos at once:"
 msgstr ""
 
 msgid "Folder location"
+msgstr "Aplanko vieta"
+
+msgid "GB\n"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
-msgid "GB free."
+msgid "Ignore unencrypted connections"
 msgstr ""
 
-msgid "KB/s when my computer is active."
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
+msgid "KB/s."
 msgstr ""
 
-msgid "Maximum:"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
+msgid "Keep at least this much free space on my drive:"
 msgstr ""
 
-msgid "Minimum:"
+msgid "Limit downstream to"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Never"
-msgstr ""
+msgstr "Niekada"
 
-msgid "OtherViews"
-msgstr ""
+#: ../../portable/tabs.py:56
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+msgid "New"
+msgstr "Naujas"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
-msgid "Play videos one after another."
+msgid "Off"
 msgstr ""
+
+#, fuzzy
+msgid "OtherViews"
+msgstr "Kiti vaizdavimo būdai"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
+msgid "Play videos one after another."
+msgstr "Groti video vieną po kito:"
 
 msgid "Remember video position."
-msgstr ""
+msgstr "Įsiminti video poziciją."
 
-#: ../../portable/guide.py:107 ../../portable/playlist.py:197
-#: ../../portable/feed.py:795 ../../portable/menu.py:65
-#: ../../portable/menu.py:70 ../../portable/folder.py:156
-#: ../../portable/folder.py:211
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
+#: ../../portable/frontends/html/contextmenu.py:99
+#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:178
+#: ../../portable/frontends/html/contextmenu.py:184
+#: ../../portable/frontends/html/contextmenu.py:190
+#: ../../portable/frontends/html/contextmenu.py:199
+#: ../../portable/frontends/html/contextmenu.py:233
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Remove"
-msgstr ""
+msgstr "Pašalinti"
 
 msgid "Run Miro at startup"
-msgstr ""
+msgstr "Paleisti „Miro“ įkrovus kompiuterį"
 
-msgid "Save downloaded videos in this folder:"
-msgstr ""
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
 msgid "Show as Channel"
-msgstr ""
+msgstr "Rodyti kaip kanalą"
 
 msgid "Stop after each video."
+msgstr "Sustoti po kiekvieno video."
+
+msgid "Stop uploads when this ratio is reached:"
 msgstr ""
 
-msgid "To avoid internet slowdowns:"
+msgid "Store downloads in this folder:"
 msgstr ""
 
-#: ../../portable/app.py:1206
+msgid "To avoid internet slowdowns, limit upstream to"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
+msgid "Use these ports:"
+msgstr ""
+
+#: ../../portable/frontends/html/main.py:319
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "Įspėti mane bandant išjungti programą esant aktyviems siuntimams"
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
-msgstr ""
+msgstr "Stebėti šiuos aplankus dėl naujų video ir įkelti juos į biblioteką:"
 
 msgid "every 30 minutes"
-msgstr ""
+msgstr "kas 30 minučių"
 
 msgid "every hour"
-msgstr ""
+msgstr "kas valandą"
 
 msgid "manually"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
-msgid "videos at once."
-msgstr ""
+msgstr "rankiniu būdu"
 
 msgid "$label$"
 msgstr ""
@@ -423,60 +457,60 @@ msgid "$title$"
 msgstr ""
 
 msgid "Channel"
-msgstr ""
+msgstr "Kanalas"
 
-#: ../../portable/dialogs.py:91
+#: ../../portable/dialogs.py:99
 msgid "Create"
-msgstr ""
+msgstr "Sukurti"
 
 msgid "In this:"
-msgstr ""
+msgstr "Šiame:"
 
 msgid "Item1"
-msgstr ""
+msgstr "Elementas1"
 
 msgid "Search Engine"
-msgstr ""
+msgstr "Paieškos variklis"
 
 msgid "Search for:"
-msgstr ""
+msgstr "Ieškoti:"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
-#: ../../platform/windows-xul/frontend_implementation/startup.py:42
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:48
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
 #, python-format
 msgid "(parsed %d files - found %d videos)"
-msgstr ""
+msgstr "(nuskaityta %d failai(ų) - surasta %d video)"
 
 msgid "Back"
-msgstr ""
+msgstr "Atgal"
 
 msgid "Browse"
-msgstr ""
+msgstr "Naršyti"
 
-#: ../../platform/osx/frontend/StartupPanel.py:106
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:121
 msgid "Next"
-msgstr ""
+msgstr "Kitas"
 
-#: ../../portable/dialogs.py:79
+#: ../../portable/dialogs.py:87
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 msgid "Only search my Movies folder."
-msgstr ""
+msgstr "Ieškoti tik mano Filmų aplanke:"
 
 msgid "Search my entire Home folder."
-msgstr ""
+msgstr "Ieškoti visame Namų aplanke:"
 
 msgid "Search this folder:"
-msgstr ""
+msgstr "Ieškoti šiame aplanke:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37
 msgid "Searching for Videos"
-msgstr ""
+msgstr "Ieškoma video failų"
 
 msgid ""
 "The Miro Player can find all the videos on your computer to help you "
@@ -485,11 +519,18 @@ msgid ""
 "\n"
 "Would you like Miro to look for video files on your computer?"
 msgstr ""
+"„Miro“ grotuvas gali surasti visus video failus Jūsų kompiuteryje, taip "
+"padėdamas palaikyti tvarką Jūsų kolekcijoje.\n"
+"\n"
+"\n"
+"Ar norėtumėte, kad „Miro“ ieškotų video failų Jūsų kompiuteryje?"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
 "best for you. Here's the first question."
 msgstr ""
+"Kiti keli langai padės Jums suderinti „Miro“ grotuvą taip, kad jis būtų "
+"patogiausias naudoti. Štai pirmasis klausimas."
 
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
@@ -499,10 +540,17 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
+"Rekomenduojame, kad Jūs leistumėte „Miro“ grotuvui pasileisti įkrovus "
+"kompiuterį. Tokiu atveju video, kurie nebuvo pilnai atsiųsti, gali būti "
+"atsiųsti ir nauji video Jūsų kanaluose gali būti paruošti, kai juos norėsite "
+"žiūrėti.\n"
+"\n"
+"\n"
+"Ar norėtumėte paleisti „Miro“, kai Jūsų kompiuteris bus įkrautas?"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "Welcome to Internet TV!"
-msgstr ""
+msgstr "Sveiki atvykę į Internetinę televiziją!"
 
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: "
@@ -511,492 +559,1188 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"Sveiki atvykę į Internetinę televiziją. Yra daug dalykų, kuriuos galite "
+"padaryti su „Miro“ grotuvu: automatiškai atsisiųsti video iš mėgiamiausių "
+"kanalų, stebėti video vieną po kito, atsisiųsti .torrent failus, "
+"rekomenduoti video draugams ir daug daugiau.\n"
+"\n"
 
-#: ../../portable/dialogs.py:78
+#: ../../portable/dialogs.py:86
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
 msgid "Yes"
-msgstr ""
+msgstr "Taip"
 
 msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
 msgid "Update Available"
-msgstr ""
+msgstr "Yra atnaujinimas"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr ""
+msgstr "Nauja %s versija yra prieinama atsisiuntimui."
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
 msgid "Error Bombing Item"
-msgstr ""
+msgstr "Klaida bombarduojant elementą"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
 msgid "Error Recommending Item"
-msgstr ""
+msgstr "Klaida rekomenduojant elementą"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
 msgid "Error Opening Website"
-msgstr ""
+msgstr "Klaida atveriant internetinį tinklalapį"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr ""
+msgstr "Iškilo bėdų atveriant %s. Pabandykite dar kartą po kelių sekundžių."
 
-#: ../../platform/windows-xul/frontend_implementation/startup.py:50
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:76
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:174
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "surastas %d video failas"
+msgstr[1] "surasti %d video failai"
+msgstr[2] "surasta %d video failų"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:62
+#: ../../platform/windows-xul/xul/components/pybridge.py:79
 #, python-format
 msgid ""
 "Error importing modules:\n"
 "%s"
 msgstr ""
+"Klaida importuojant modulius:\n"
+"%s"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:66
-msgid "Starting up"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:273
+#: ../../platform/windows-xul/xul/components/pybridge.py:254
 msgid "Loading window"
-msgstr ""
+msgstr "Įkeliamas langas"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:274
+#: ../../platform/windows-xul/xul/components/pybridge.py:255
 msgid "onStartup called twice"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:702
+#: ../../platform/windows-xul/xul/components/pybridge.py:739
 msgid "Spacebar"
-msgstr ""
+msgstr "Tarpo klavišas"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:851
+#: ../../platform/windows-xul/xul/components/pybridge.py:887
 msgid "Close to tray?"
-msgstr ""
+msgstr "Užverti į sisteminį skydelį?"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:852
+#: ../../platform/windows-xul/xul/components/pybridge.py:888
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Kai paspausite raudoną užvėrimo mygtuką, ar norėtumėte nukelti „Miro“ į "
+"sisteminį skydelį, ar visiškai išjungti programą? Šį pasirinkimą vėliau "
+"galėsite pakeisti nustatymuose."
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:44
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
 msgid "Download Completed"
-msgstr ""
+msgstr "Atsiuntimas baigtas"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:45
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "Video failo „%s“ atsiuntimas baigtas."
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:54
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
 msgid "Download Failed"
-msgstr ""
+msgstr "Atsiuntimas nepavyko"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:55
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
 #, python-format
 msgid "Download of video '%s' has failed."
-msgstr ""
+msgstr "Video failo „%s“ atsiųsti nepavyko."
 
-#: ../../platform/osx/frontend/MainFrame.py:278
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
 msgid "Subscribe to Channel"
-msgstr ""
+msgstr "Prenumeruoti kanalą"
 
-#: ../../platform/osx/frontend/MainFrame.py:279
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
 msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr ""
+msgstr "Įveskite kanalo, kurį norite prenumeruoti, URL."
 
-#: ../../platform/osx/frontend/QuicktimeRenderer.py:248
-msgid "Audio"
-msgstr ""
-
-#: ../../platform/osx/frontend/Preferences.py:64
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
+#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
 msgid "General"
-msgstr ""
+msgstr "Bendra"
 
-#: ../../platform/osx/frontend/Preferences.py:66
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
-msgid "Downloads"
-msgstr ""
-
-#: ../../platform/osx/frontend/Preferences.py:67
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
-msgid "Folders"
-msgstr ""
-
-#: ../../platform/osx/frontend/Preferences.py:68
+#: ../../platform/osx/platform/frontends/html/Preferences.py:81
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+msgid "Downloads"
+msgstr "Parsiuntimai"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+msgid "Folders"
+msgstr "Aplankai"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid "Disk Space"
-msgstr ""
+msgstr "Disko vieta"
 
-#: ../../platform/osx/frontend/Preferences.py:196
+#: ../../platform/osx/platform/frontends/html/Preferences.py:251
 msgid "Movies Directory"
-msgstr ""
+msgstr "Filmų aplankas"
 
-#: ../../platform/osx/frontend/Preferences.py:197
+#: ../../platform/osx/platform/frontends/html/Preferences.py:252
 #, python-format
 msgid "Select a Directory to store %s downloads in."
-msgstr ""
+msgstr "Pasirinkite aplanką, kuriame laikysite %s atsiuntimus."
 
-#: ../../platform/osx/frontend/Preferences.py:198
-#: ../../platform/osx/frontend/Preferences.py:262
+#: ../../platform/osx/platform/frontends/html/Preferences.py:253
+#: ../../platform/osx/platform/frontends/html/Preferences.py:362
 msgid "Select"
-msgstr ""
+msgstr "Pasirinkti"
 
-#: ../../platform/osx/frontend/Preferences.py:207
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/osx/platform/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
-msgstr ""
+msgstr "Ar migruoti turimus filmus?"
 
-#: ../../platform/osx/frontend/Preferences.py:208
+#: ../../platform/osx/platform/frontends/html/Preferences.py:263
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"Jūs pasirinkote naują filmų atsiuntimo aplanką. Ar norėtumėte, kad %s ten "
+"migruotų Jūsų dabartinius atsiuntimus? (Šiuo metu siunčiami filmai nebus "
+"perkelti, kol siuntimas nebus baigtas)."
 
-#: ../../platform/osx/frontend/Preferences.py:260
+#: ../../platform/osx/platform/frontends/html/Preferences.py:360
 msgid "View this Directory in the Library"
-msgstr ""
+msgstr "Žiūrėti šį aplanką bibliotekoje"
 
-#: ../../platform/osx/frontend/Preferences.py:261
+#: ../../platform/osx/platform/frontends/html/Preferences.py:361
 msgid "Select a Directory to view in the Library."
-msgstr ""
+msgstr "Pasirinkite aplanką, kurį norėsite matyti bibliotekoje."
 
-#: ../../platform/osx/frontend/StartupPanel.py:80
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
 msgid "Finish"
-msgstr ""
+msgstr "Baigti"
 
-#: ../../platform/osx/frontend/StartupPanel.py:139
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
 msgid "Search!"
-msgstr ""
+msgstr "Ieškoti!"
 
-#: ../../platform/osx/frontend/Application.py:246
+#: ../../platform/osx/platform/frontends/html/Application.py:241
 msgid "Pause Video"
-msgstr ""
+msgstr "Pauzė"
 
-#: ../../platform/osx/frontend/Application.py:255
+#: ../../platform/osx/platform/frontends/html/Application.py:250
 msgid "Unsupported version of Quicktime"
-msgstr ""
+msgstr "Nepalaikoma „Quicktime“ versija"
 
-#: ../../platform/osx/frontend/Application.py:256
+#: ../../platform/osx/platform/frontends/html/Application.py:251
 #, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
 msgstr ""
+"Norėdami paleisti „%s“, turite turėti naujausią „Quicktime“ versiją, kurią "
+"galima atsisiųsti nemokamai."
 
-#: ../../platform/osx/frontend/UIStrings.py:22
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
-msgstr ""
+msgstr "P_ašalinti..."
 
-#: ../../platform/osx/frontend/UIStrings.py:23
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:34
 msgid "_Remove Playlist..."
-msgstr ""
+msgstr "Pašalinti _grojaraštį..."
 
-#: ../../platform/osx/frontend/UIStrings.py:24
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:35
 msgid "_Remove Playlists..."
-msgstr ""
+msgstr "Pašalinti gro_jaraščius..."
 
-#: ../../platform/osx/frontend/UIStrings.py:25
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:36
 msgid "_Remove Playlist Folder..."
-msgstr ""
+msgstr "Pašalinti grojaraščio _aplanką..."
 
-#: ../../platform/osx/frontend/UIStrings.py:26
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:37
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "Pašalinti grojaraščio ap_lankus..."
 
-#: ../../platform/osx/frontend/UIStrings.py:27 ../../portable/menubar.py:179
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:38
+#: ../../portable/menubar.py:193
 msgid "_Remove Channel..."
-msgstr ""
+msgstr "Pašalinti _kanalą..."
 
-#: ../../platform/osx/frontend/UIStrings.py:28 ../../portable/menubar.py:180
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:39
+#: ../../portable/menubar.py:194
 msgid "_Remove Channels..."
-msgstr ""
+msgstr "Pašalinti ka_nalus..."
 
-#: ../../platform/osx/frontend/UIStrings.py:29 ../../portable/menubar.py:182
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:40
+#: ../../portable/menubar.py:196
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "Pašalinti kanal_o aplanką..."
 
-#: ../../platform/osx/frontend/UIStrings.py:30 ../../portable/menubar.py:181
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:41
+#: ../../portable/menubar.py:195
 msgid "_Remove Channel Folders..."
-msgstr ""
+msgstr "Pašalinti kanalo aplank_us..."
 
-#: ../../platform/osx/frontend/UIStrings.py:31
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:42
 msgid "_Remove Miro Guide..."
-msgstr ""
+msgstr "_Pašalinti „Miro“ gidą..."
 
-#: ../../platform/osx/frontend/UIStrings.py:32
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:43
 msgid "_Remove Miro Guides..."
-msgstr ""
+msgstr "_Pašalinti „Miro“ gidus..."
 
-#: ../../platform/osx/frontend/UIStrings.py:33
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:44
 msgid "_Remove Video..."
-msgstr ""
+msgstr "Pašalinti _video failą..."
 
-#: ../../platform/osx/frontend/UIStrings.py:34
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:45
 msgid "_Remove Videos..."
-msgstr ""
+msgstr "Pašalinti _video failus..."
 
-#: ../../platform/osx/frontend/UIStrings.py:35
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:46
 msgid "Re_name..."
-msgstr ""
+msgstr "Per_vadinti..."
 
-#: ../../platform/osx/frontend/UIStrings.py:36
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:47
 msgid "Re_name Playlist..."
-msgstr ""
+msgstr "Per_vadinti grojaraštį..."
 
-#: ../../platform/osx/frontend/UIStrings.py:37
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:48
 msgid "Re_name Playlist Folder..."
-msgstr ""
+msgstr "Per_vadinti grojaraščio aplanką..."
 
-#: ../../platform/osx/frontend/UIStrings.py:38 ../../portable/menubar.py:178
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:49
+#: ../../portable/menubar.py:192
 msgid "Re_name Channel..."
-msgstr ""
+msgstr "Per_vadinti kanalą..."
 
-#: ../../platform/osx/frontend/UIStrings.py:39
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:50
 msgid "Re_name Channel Folder..."
-msgstr ""
+msgstr "Per_vadinti kanalo aplanką..."
 
-#: ../../platform/osx/frontend/UIStrings.py:40
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:51
 msgid "Re_name Miro Guide..."
-msgstr ""
+msgstr "Per_vadinti „Miro“ gidą..."
 
-#: ../../platform/osx/frontend/UIStrings.py:41 ../../portable/menubar.py:184
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:52
+#: ../../portable/menubar.py:198
 msgid "_Update Channel..."
-msgstr ""
+msgstr "At_naujinti kanalą..."
 
-#: ../../platform/osx/frontend/UIStrings.py:42 ../../portable/menubar.py:185
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:53
+#: ../../portable/menubar.py:199
 msgid "_Update Channels..."
-msgstr ""
+msgstr "At_naujinti kanalus..."
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42
+#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+msgid "Audio"
+msgstr "Garsas"
+
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
-msgstr ""
+msgstr "Nustatymai"
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56
 msgid "Hide"
-msgstr ""
+msgstr "Paslėpti"
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58
 msgid "Show"
-msgstr ""
+msgstr "Parodyti"
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48
-#: ../../portable/dialogs.py:80 ../../portable/menubar.py:257
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59
+#: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
 msgid "Quit"
-msgstr ""
+msgstr "Išeiti"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
 msgid "New Channel _Guide..."
-msgstr ""
+msgstr "Naujas kanalo _gidas..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
 msgid "Folder Location"
-msgstr ""
+msgstr "Aplanko vieta"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
 msgid "Username:"
-msgstr ""
+msgstr "Vartotojo vardas:"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
 msgid "Password:"
-msgstr ""
+msgstr "Slaptažodis:"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416
 msgid "Unknown Runtime Error"
-msgstr ""
+msgstr "Nežinoma vykdymo klaida"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417
 #, python-format
 msgid "An unknown error has occurred %s."
-msgstr ""
+msgstr "Nežinoma vykdymo klaida %s."
 
-#: ../../portable/dl_daemon/download.py:359
+#: ../../portable/dl_daemon/download.py:458
 msgid "Error"
-msgstr ""
+msgstr "Klaida"
 
-#: ../../portable/dl_daemon/download.py:432
+#: ../../portable/dl_daemon/download.py:544
 #, python-format
 msgid "Could not write to %s"
-msgstr ""
+msgstr "Nepavyko rašyti į %s"
 
-#: ../../portable/dl_daemon/download.py:452
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:769
 msgid "Not enough disk space"
-msgstr ""
+msgstr "Nepakanka vietos diske"
 
-#: ../../portable/dl_daemon/download.py:453
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:770
 #, python-format
 msgid "%s MB required to store this video"
-msgstr ""
+msgstr "Norint išsaugoti šį video failą reikia %s MB vietos"
 
-#: ../../portable/dl_daemon/download.py:672
+#: ../../portable/dl_daemon/download.py:781
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "BitTorrent klaida"
 
-#: ../../portable/dl_daemon/download.py:673
+#: ../../portable/dl_daemon/download.py:782
 msgid "BitTorrent failed to startup"
-msgstr ""
+msgstr "Nepavyko paleisti BitTorrent"
 
-#: ../../portable/dl_daemon/download.py:796
+#: ../../portable/dl_daemon/download.py:954
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "Sugadintas „.torrent“ failas"
 
-#: ../../portable/dl_daemon/download.py:797
+#: ../../portable/dl_daemon/download.py:955
 #, python-format
 msgid "The torrent file at %s was not valid"
-msgstr ""
+msgstr "Torrent failas ties %s buvo netinkamas"
 
-#: ../../portable/dl_daemon/download.py:822
+#: ../../portable/dl_daemon/download.py:980
 msgid "Torrent file deleted"
+msgstr "Torrent failas ištrintas"
+
+#: ../../portable/dl_daemon/download.py:981
+msgid "The torrent file for this item was deleted outside of Miro."
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:823
-msgid "The torrent file for this item was deleted "
-msgstr ""
+#: ../../portable/frontends/html/contextmenu.py:103
+msgid "Update Channels Now"
+msgstr "Dabar atnaujinti kanalus"
 
-#: ../../portable/dl_daemon/download.py:824
-msgid "outside of Miro."
-msgstr ""
+#: ../../portable/frontends/html/contextmenu.py:128
+#, python-format
+msgid "%d Downloaded Items"
+msgstr "%d atsisiųsta elementų"
 
-#: ../../portable/tabs.py:44
-msgid "Library"
-msgstr ""
+#: ../../portable/frontends/html/contextmenu.py:130
+#: ../../portable/frontends/html/contextmenu.py:211
+msgid "Play"
+msgstr "Groti"
 
-#: ../../portable/tabs.py:45
-msgid "New"
-msgstr ""
+#: ../../portable/frontends/html/contextmenu.py:131
+#: ../../portable/frontends/html/contextmenu.py:214
+msgid "Add to new playlist"
+msgstr "Pridėti į naują grojaraštį"
 
-#: ../../portable/tabs.py:47
-msgid "Downloading"
-msgstr ""
+#: ../../portable/frontends/html/contextmenu.py:133
+#: ../../portable/frontends/html/contextmenu.py:207
+msgid "Remove From Playlist"
+msgstr "Pašalinti iš grojaraščio"
 
-#: ../../portable/guide.py:104 ../../portable/feed.py:789
+#: ../../portable/frontends/html/contextmenu.py:135
+#: ../../portable/frontends/html/contextmenu.py:209
+msgid "Remove From the Library"
+msgstr "Pašalinti iš bibliotekos"
+
+#: ../../portable/frontends/html/contextmenu.py:141
+#: ../../portable/frontends/html/contextmenu.py:218
+msgid "Mark as Unwatched"
+msgstr "Pažymėti kaip nežiūrėtą"
+
+#: ../../portable/frontends/html/contextmenu.py:146
+#: ../../portable/frontends/html/contextmenu.py:220
+msgid "Mark as Watched"
+msgstr "Pažymėti kaip žiūrėtą"
+
+#: ../../portable/frontends/html/contextmenu.py:151
+#, python-format
+msgid "%d Available Items"
+msgstr "%d prieinamų elementų"
+
+#: ../../portable/frontends/html/contextmenu.py:152
+#: ../../portable/frontends/html/contextmenu.py:227
+#: ../../portable/dialogs.py:93
+msgid "Download"
+msgstr "Atsisiųsti"
+
+#: ../../portable/frontends/html/contextmenu.py:157
+#, python-format
+msgid "%d Downloading Items"
+msgstr "%d atsisiųsta elementų"
+
+#: ../../portable/frontends/html/contextmenu.py:159
+#: ../../portable/frontends/html/contextmenu.py:225
+msgid "Cancel Download"
+msgstr "Nutraukti siuntimą"
+
+#: ../../portable/frontends/html/contextmenu.py:161
+#: ../../portable/frontends/html/contextmenu.py:225
+msgid "Pause Download"
+msgstr "Pauzė siuntimui"
+
+#: ../../portable/frontends/html/contextmenu.py:164
+#: ../../portable/frontends/html/contextmenu.py:223
+msgid "Restart Upload"
+msgstr "Iš naujo pradėti išsiuntimą"
+
+#: ../../portable/frontends/html/contextmenu.py:170
+msgid "Update Channel Now"
+msgstr "Dabar atnaujinti kanalą"
+
+#: ../../portable/frontends/html/contextmenu.py:172
+#: ../../portable/frontends/html/contextmenu.py:196
 msgid "Copy URL to clipboard"
-msgstr ""
+msgstr "Kopijuoti URL į laikinąją saugyklą"
 
-#: ../../portable/guide.py:154
-msgid "Miro Guide"
-msgstr ""
+#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
+msgid "Rename Channel"
+msgstr "Pervadinti kanalą"
 
-#: ../../portable/extrastrings.py:22 ../../portable/feed.py:2028
-#: ../../portable/feed.py:2120
-msgid "Search"
-msgstr ""
+#: ../../portable/frontends/html/contextmenu.py:177
+msgid "Revert Title to Default"
+msgstr "Atstatyti pavadinimą į numatytąjį"
 
-#: ../../portable/downloader.py:215
-msgid "activity"
-msgstr ""
+#: ../../portable/frontends/html/contextmenu.py:183
+#: ../../portable/folder.py:142
+msgid "Rename Channel Folder"
+msgstr "Pervadinti kanalo aplanką"
 
-#: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
-#: ../../portable/httpclient.py:142
-msgid "File not found"
-msgstr ""
+#: ../../portable/frontends/html/contextmenu.py:189
+#: ../../portable/folder.py:213
+msgid "Rename Playlist Folder"
+msgstr "Pervadinti grojaraščio aplanką"
 
-#: ../../portable/downloader.py:252
-msgid "Flash URL Scraping Error"
-msgstr ""
+#: ../../portable/frontends/html/contextmenu.py:213
+msgid "Play Just This Video"
+msgstr "Rodyti tik šį video failą"
 
-#: ../../portable/downloader.py:427
-msgid "starting up"
-msgstr ""
-
-#: ../../portable/playlist.py:196 ../../portable/playlist.py:201
+#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../portable/playlist.py:218
 msgid "Rename Playlist"
+msgstr "Pervadinti grojaraštį"
+
+#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
+msgid "Video Directory Missing"
+msgstr "Trūksta video aplanko"
+
+#: ../../portable/frontends/html/main.py:133
+msgid ""
+"\n"
+"    Miro can't find your primary video directory.  This may be because it's  "
+"   located on an external drive that is currently disconnected.\n"
+"\n"
+"    If you continue, the video directory will be reset to a location on this "
+"    drive (this will cause you to lose some details about the videos on the  "
+"   external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
 
-#: ../../portable/playlist.py:202
+#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
+msgid "Custom Channels"
+msgstr "Pasirinktiniai kanalai"
+
+#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr "Jūsų paleista $longAppName versija su pasirinktiniu kanalų rinkiniu."
+
+#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
+msgid "Internal Error"
+msgstr "Vidinė klaida"
+
+#: ../../portable/frontends/html/main.py:269
+msgid ""
+"Miro has encountered an internal error. You can help us track down this "
+"problem and fix it by submitting an error report."
+msgstr ""
+"Miro ištik vidinė klaida. Jūs galite padėti taisant klaidą pateikus "
+"pranešimą."
+
+#: ../../portable/frontends/html/main.py:269
+msgid ""
+"Include entire program database including all video and channel metadata "
+"with crash report"
+msgstr ""
+"Lūžio pranešime pateikti visą programų duomenų bazę su visais video ir "
+"kanalų meta-duomenimis"
+
+#: ../../portable/frontends/html/main.py:269
+msgid "Describe what you were doing that caused this error"
+msgstr "Aprašykite, ką darėte kai ivyko klaida"
+
+#: ../../portable/frontends/html/main.py:284
+#, python-format
+msgid "%s Version Alert"
+msgstr "%s Versijos Pranešimas"
+
+#: ../../portable/frontends/html/main.py:285
+#, python-format
+msgid "A new version of %s is available. Would you like to download it now?"
+msgstr "Pasirodė nauja %s versija, Ar norėtumėte ją parsisiųsti?"
+
+#: ../../portable/frontends/html/main.py:290
+#, python-format
+msgid "%s Version Check"
+msgstr "%s Versijos Tikrinimas"
+
+#: ../../portable/frontends/html/main.py:291
+#, python-format
+msgid "%s is up to date."
+msgstr "%s naujausia."
+
+#: ../../portable/frontends/html/main.py:309
+msgid "Are you sure you want to quit?"
+msgstr "Ar tikrai norite išeiti?"
+
+#: ../../portable/frontends/html/main.py:311
+msgid ""
+"Miro is still uploading your crash report. If you quit now the upload will "
+"be canceled.  Quit Anyway?"
+msgstr ""
+"„Miro“ vis dar siunčia Jūsų lūžimo ataskaitą. Jei dabar išeisite, "
+"išsiuntimas bus nutrauktas. Ar vistiek norite išeiti?"
+
+#: ../../portable/frontends/html/main.py:316
+#, python-format
+msgid "You have %d download still in progress.  Quit Anyway?"
+msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
+msgstr[0] "%d aktyvus atsiuntimas. Ar vistiek norite išeiti?"
+msgstr[1] "%d aktyvūs atsiuntimai. Ar vistiek norite išeiti?"
+msgstr[2] "%d aktyvių atsiuntimų. Ar vistiek norite išeiti?"
+
+#: ../../portable/frontends/html/main.py:340
+msgid "Import OPML File"
+msgstr "Importuoti OPML failą"
+
+#: ../../portable/frontends/html/main.py:342
+msgid "OPML Files"
+msgstr "OPML failai"
+
+#: ../../portable/frontends/html/main.py:347
+msgid "Export OPML File"
+msgstr "Eksportuoti OPML failą"
+
+#: ../../portable/frontends/html/templatedisplay.py:325
+msgid "Invalid Value"
+msgstr "Netinkama reikšmė"
+
+#: ../../portable/frontends/html/templatedisplay.py:326
+#, python-format
+msgid "%s is invalid.  You must enter a non-negative number."
+msgstr "%s yra netinkamas. Jūs privalote įvesti neneigiamą skaičių."
+
+#: ../../portable/frontends/html/templatedisplay.py:452
+msgid "Error Revealing File"
+msgstr "Klaida parodant failą"
+
+#: ../../portable/frontends/html/templatedisplay.py:453
+#, python-format
+msgid "The file \"%s\" was deleted from outside Miro."
+msgstr "Failas „%s“ buvo ištrintas už „Miro“ ribų."
+
+#: ../../portable/frontends/html/templatedisplay.py:560
+msgid "Error Changing Movies Directory"
+msgstr "Klaida pakeičiant filmų aplanką"
+
+#: ../../portable/frontends/html/templatedisplay.py:561
+msgid ""
+"You don't have permission to write to the directory you selected.  Miro will "
+"continue to use the old videos directory."
+msgstr ""
+"Jūs neturite teisių rašyti į aplanką, kurį pasirinkote. „Miro“ ir toliau "
+"naudos senąjį video failų aplanką."
+
+#: ../../portable/frontends/html/templatedisplay.py:664
+msgid " - Invalid URL"
+msgstr " - netinkamas URL"
+
+#: ../../portable/frontends/html/templatedisplay.py:665
+msgid ""
+"The address you entered is not a valid URL.\n"
+"Please double check and try again.\n"
+"\n"
+msgstr ""
+"Adresas, kurį įvedėte, yra netinkamas URL.\n"
+"Patikrinkite, ką įvedėte, ir pabandykite dar kartą.\n"
+"\n"
+
+#: ../../portable/frontends/html/templatedisplay.py:691
+msgid "$shortAppName - Add Channel"
+msgstr "$shortAppName - pridėti kanalą"
+
+#: ../../portable/frontends/html/templatedisplay.py:691
+msgid "Enter the URL of the channel to add"
+msgstr "Įveskite kanalo, kurį norite pridėti, URL"
+
+#: ../../portable/frontends/html/templatedisplay.py:712
+msgid "$shortAppName - Add Miro Guide"
+msgstr "$shortAppName - pridėti „Miro“ gidą"
+
+#: ../../portable/frontends/html/templatedisplay.py:712
+msgid "Enter the URL of the Miro Guide to add"
+msgstr "Įveskite „Miro“ gido, kurį norite pridėti, URL"
+
+#: ../../portable/frontends/html/templatedisplay.py:718
+msgid "$shortAppName - Download Video"
+msgstr "$shortAppName - atsiųsti video"
+
+#: ../../portable/frontends/html/templatedisplay.py:718
+msgid "Enter the URL of the video to download"
+msgstr "Įveskite video, kurį norite atsisiųsti, URL"
+
+#: ../../portable/tabs.py:55
+msgid "Library"
+msgstr "Biblioteka"
+
+#: ../../portable/tabs.py:58
+msgid "Downloading"
+msgstr "Atsiunčiama"
+
+#: ../../portable/downloader.py:234
+#, fuzzy
+msgid "activity"
+msgstr "veikla"
+
+#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
+#: ../../portable/httpclient.py:155
+msgid "File not found"
+msgstr "Failas nerastas"
+
+#: ../../portable/downloader.py:269
+msgid "Flash URL Scraping Error"
+msgstr "Klaida nagrinėjant Flash URL"
+
+#: ../../portable/downloader.py:445
+msgid "starting up"
+msgstr "paleidžiama"
+
+#: ../../portable/playlist.py:219
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr ""
+msgstr "Įveskite naujo grojaraščio %s vardą"
 
-#: ../../portable/playlist.py:224
+#: ../../portable/playlist.py:241
 msgid "Create Playlist"
-msgstr ""
+msgstr "Sukurti grojaraštį"
 
-#: ../../portable/playlist.py:225
+#: ../../portable/playlist.py:242
 msgid "Enter a name for the new playlist"
+msgstr "Įveskite naujo grojaraščio vardą"
+
+#: ../../portable/opml.py:144
+msgid "OPML Import failed"
+msgstr "OPML importavimas nepavyko"
+
+#: ../../portable/opml.py:145
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr ""
+"Panašu, kad pasirinktas OPML failas yra netinkamas. Importavimas nutrūko."
+
+#: ../../portable/opml.py:150
+msgid "OPML Import summary"
+msgstr "OPML importo apibendrinimas"
+
+#: ../../portable/opml.py:151
+#, python-format
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "Sėkmingai importuotas %d srautas."
+msgstr[1] "Sėkmingai importuoti %d srautai."
+msgstr[2] "Sėkmingai importuota %d srautų."
+
+#: ../../portable/opml.py:154
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/util.py:266
+#, python-format
+msgid "%1.1fGB"
+msgstr "%1.1fGB"
+
+#: ../../portable/util.py:268
+#, python-format
+msgid "%dGB"
+msgstr "%dGB"
+
+#: ../../portable/util.py:272
+#, python-format
+msgid "%1.1fMB"
+msgstr "%1.1fMB"
+
+#: ../../portable/util.py:274
+#, python-format
+msgid "%dMB"
+msgstr "%dMB"
+
+#: ../../portable/util.py:278
+#, python-format
+msgid "%1.1fKB"
+msgstr "%1.1fKB"
+
+#: ../../portable/util.py:280
+#, python-format
+msgid "%dKB"
+msgstr "%dKB"
+
+#: ../../portable/util.py:284
+#, python-format
+msgid "%1.1fB"
+msgstr "%1.1fB"
+
+#: ../../portable/util.py:286
+#, python-format
+msgid "%dB"
+msgstr "%dB"
+
+#: ../../portable/iheartmiro.py:82
+msgid ""
+"An Effortless Way to Help Miro\n"
+"\n"
+"Miro is open-source and built by a non-profit.  We need your help to "
+"continue our work.\n"
+"\n"
+"I Heart Miro is a simple Firefox extension that gives a referral fee to the "
+"Miro organization when you shop at Amazon.  You'll never notice it, it "
+"doesn't cost you a thing, and it's easy to uninstall at any time.\n"
+"\n"
+"If you click 'Install iHeartMiro' below, Firefox will launch and ask if it's "
+"ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks "
+"for your help."
 msgstr ""
 
-#: ../../portable/feed.py:383
+#: ../../portable/menubar.py:158
+msgid "_Open"
+msgstr "_Atverti"
+
+#: ../../portable/menubar.py:159
+msgid "_Download Video"
+msgstr "At_siųsti video"
+
+#: ../../portable/menubar.py:161
+msgid "Check _Version"
+msgstr "Patikrinti _versiją"
+
+#: ../../portable/menubar.py:163
+msgid "_Remove Video"
+msgstr "Paša_linti video failą"
+
+#: ../../portable/menubar.py:164
+msgid "_Remove Videos"
+msgstr "Paša_linti video failus"
+
+#: ../../portable/menubar.py:165
+msgid "Re_name Video"
+msgstr "Per_vadinti video"
+
+#: ../../portable/menubar.py:166
+msgid "Save Video _As..."
+msgstr "Išsaugoti video _kaip..."
+
+#: ../../portable/menubar.py:167
+msgid "Save Videos _As..."
+msgstr "Išsaugoti video failus _kaip..."
+
+#: ../../portable/menubar.py:168
+msgid "Copy Video _URL"
+msgstr "Kopijuoti video _URL"
+
+#: ../../portable/menubar.py:170
+msgid "_Options..."
+msgstr "_Pasirinkimai..."
+
+#: ../../portable/menubar.py:171
+msgid "_Quit"
+msgstr "Iš_eiti"
+
+#: ../../portable/menubar.py:179
+msgid "Cu_t"
+msgstr "_Iškirpti"
+
+#: ../../portable/menubar.py:180
+msgid "_Copy"
+msgstr "_Kopijuoti"
+
+#: ../../portable/menubar.py:181
+msgid "_Paste"
+msgstr "Į_dėti"
+
+#: ../../portable/menubar.py:182
+msgid "Select _All"
+msgstr "Pasirinkti _viską"
+
+#: ../../portable/menubar.py:183
+msgid "_Delete"
+msgstr "Iš_trinti"
+
+#: ../../portable/menubar.py:187
+msgid "Add _Channel"
+msgstr "Pridėti _kanalą"
+
+#: ../../portable/menubar.py:188
+msgid "New Searc_h Channel..."
+msgstr "Naujas pai_eškos kanalas..."
+
+#: ../../portable/menubar.py:189
+msgid "New _Folder..."
+msgstr "Naujas a_plankas..."
+
+#: ../../portable/menubar.py:190
+msgid "Add Channel _Guide..."
+msgstr "Pridėti kanalo _gidą..."
+
+#: ../../portable/menubar.py:200
+msgid "Update _All Channels"
+msgstr "At_naujinti visus kanalus"
+
+#: ../../portable/menubar.py:202
+msgid "_Import Channels (OPML)..."
+msgstr "_Importuoti kanalus (OPML)..."
+
+#: ../../portable/menubar.py:203
+msgid "E_xport Channels (OPML)..."
+msgstr "E_ksportuoti kanalus (OPML)..."
+
+#: ../../portable/menubar.py:205
+msgid "_Send this channel to a friend"
+msgstr "Iš_siųsti šį kanalą draugui"
+
+#: ../../portable/menubar.py:206
+msgid "Copy Channel _Link"
+msgstr "Kopijuoti kanalo _nuorodą"
+
+#: ../../portable/menubar.py:209
+msgid "New _Playlist"
+msgstr "Naujas _grojaraštis"
+
+#: ../../portable/menubar.py:210
+msgid "New Playlist Fol_der"
+msgstr "Naujas grojaraščio ap_lankas"
+
+#: ../../portable/menubar.py:212
+msgid "Re_name Playlist"
+msgstr "Per_vadinti grojaraštį"
+
+#: ../../portable/menubar.py:213
+msgid "_Remove Playlist"
+msgstr "Paša_linti grojaraštį"
+
+#: ../../portable/menubar.py:214
+msgid "_Remove Playlists"
+msgstr "Paša_linti grojaraščius"
+
+#: ../../portable/menubar.py:215
+msgid "_Remove Playlist Folders"
+msgstr "Paša_linti grojaraščio aplankus"
+
+#: ../../portable/menubar.py:216
+msgid "_Remove Playlist Folder"
+msgstr "Paša_linti grojaraščio aplanką"
+
+#: ../../portable/menubar.py:226 ../../portable/menubar.py:227
+msgid "_Play"
+msgstr "_Rodyti"
+
+#: ../../portable/menubar.py:228
+msgid "_Pause"
+msgstr ""
+
+#: ../../portable/menubar.py:229
+msgid "_Stop"
+msgstr "_Sustabdyti"
+
+#: ../../portable/menubar.py:231
+msgid "_Next Video"
+msgstr "_Kitas video"
+
+#: ../../portable/menubar.py:232
+msgid "_Previous Video"
+msgstr "_Praeitas video"
+
+#: ../../portable/menubar.py:234
+msgid "Skip _Forward"
+msgstr "Persukti į _priekį"
+
+#: ../../portable/menubar.py:235
+msgid "Skip _Back"
+msgstr "Grįžti _Atgal"
+
+#: ../../portable/menubar.py:237
+msgid "Volume _Up"
+msgstr "_Didinti garsumą"
+
+#: ../../portable/menubar.py:238
+msgid "Volume _Down"
+msgstr "_Mažinti garsumą"
+
+#: ../../portable/menubar.py:240
+msgid "_Fullscreen"
+msgstr "_Visame ekrane"
+
+#: ../../portable/menubar.py:244
+msgid "_About"
+msgstr "_Apie"
+
+#: ../../portable/menubar.py:245
+msgid "_Donate"
+msgstr "Pa_aukoti"
+
+#: ../../portable/menubar.py:246 ../../portable/menubar.py:261
+msgid "_Help"
+msgstr "Ži_nynas"
+
+#: ../../portable/menubar.py:248
+msgid "Report a _Bug"
+msgstr "Pranešti apie _klaidą"
+
+#: ../../portable/menubar.py:252
+msgid "_Video"
+msgstr "_Video"
+
+#: ../../portable/menubar.py:254
+msgid "_File"
+msgstr "_Failas"
+
+#: ../../portable/menubar.py:258
+msgid "_Channels"
+msgstr "_Kanalai"
+
+#: ../../portable/menubar.py:259
+msgid "_Playlists"
+msgstr "Groja_raščiai"
+
+#: ../../portable/menubar.py:260
+msgid "P_layback"
+msgstr "_Grojimas"
+
+#: ../../portable/menubar.py:265
+msgid "Play Unwatched ($numUnwatched)"
+msgstr "Rodyti nematytus ($numUnwatched)"
+
+#: ../../portable/menubar.py:266
+msgid "Pause All Downloads ($numDownloading)"
+msgstr "Pauzė visiems atsiuntimams ($numDownloading)"
+
+#: ../../portable/menubar.py:267
+msgid "Resume All Downloads ($numPaused)"
+msgstr "Pratęsti visus atsiuntimus ($numPaused)"
+
+#: ../../portable/menubar.py:269
+msgid "Options..."
+msgstr "Pasirinkimai..."
+
+#: ../../portable/menubar.py:271
+msgid "Hide Window"
+msgstr "Paslėpti langą"
+
+#: ../../portable/menubar.py:272
+msgid "Show Window"
+msgstr "Rodyti langą"
+
+#: ../../portable/theme.py:137
+msgid "Starter Channels"
+msgstr "Pradedančiojo kanalai"
+
+#: ../../portable/theme.py:154
+msgid "Example Playlist"
+msgstr "Pavyzdinis grojaraštis"
+
+#: ../../portable/httpclient.py:81
+#, python-format
+msgid "Error: %s"
+msgstr "Klaida: %s"
+
+#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
+msgid "Can't connect"
+msgstr "Prisijungti nepavyko"
+
+#: ../../portable/httpclient.py:97
+#, python-format
+msgid "Connection Error: %s"
+msgstr "Prisijungimo klaida: %s"
+
+#: ../../portable/httpclient.py:103
+msgid "SSL connection error"
+msgstr "SSL prisijungimo klaida"
+
+#: ../../portable/httpclient.py:107
+msgid "HTTP error"
+msgstr "HTTP klaida"
+
+#: ../../portable/httpclient.py:110
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "Bloga būsenos eilutė: %s"
+
+#: ../../portable/httpclient.py:113
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "Bloga antraštės eilutė: %s"
+
+#: ../../portable/httpclient.py:116
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr "Blogas Gabalo dydis: %s"
+
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr "Tikėtasi CRLF o gauta: %r"
+
+#: ../../portable/httpclient.py:122
+#, python-format
+msgid "%s closed connection"
+msgstr "%s uždarytas susijungimas"
+
+#: ../../portable/httpclient.py:128
+msgid "Got 404 status code"
+msgstr "Gautas 404 būsenos kodas"
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "Blogas būsenos kodas: %s"
+
+#: ../../portable/httpclient.py:134
+msgid "Authorization failed"
+msgstr "Patvirtinimas nepavyko"
+
+#: ../../portable/httpclient.py:140
+msgid "Pipeline request never started"
+msgstr ""
+
+#: ../../portable/httpclient.py:144
+msgid "Timeout"
+msgstr "Baigėsi laiko limitas"
+
+#: ../../portable/httpclient.py:145
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "Baigėsi laiko limitas jungiantis į %s"
+
+#: ../../portable/httpclient.py:149
+msgid "Invalid URL"
+msgstr "Netinkamas URL"
+
+#: ../../portable/httpclient.py:150
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr "„%s“ yra netinkamas URL"
+
+#: ../../portable/httpclient.py:156
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr "Failas „%s“ neegzistuoja"
+
+#: ../../portable/httpclient.py:160
+msgid "Read error"
+msgstr "Skaitymo klaida"
+
+#: ../../portable/httpclient.py:161
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr "Klaida skaitant iš „%s“"
+
+#: ../../portable/httpclient.py:354
+msgid "Unknown Error code"
+msgstr "Nežinomas klaidos kodas"
+
+#: ../../portable/httpclient.py:386
+msgid "Connection closed"
+msgstr "Prisijungimas baigtas"
+
+#: ../../portable/httpclient.py:811
+msgid "Unknown"
+msgstr "Nežinoma"
+
+#: ../../portable/httpclient.py:812
+msgid "Internal Error: Not ready to send"
+msgstr "Vidinė klaida: nepasiruošta išsiųsti"
+
+#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
+#: ../../portable/feed.py:2499
+msgid "Search"
+msgstr "Paieška"
+
+#: ../../portable/feed.py:384
 msgid "never"
-msgstr ""
+msgstr "niekada"
 
-#: ../../portable/feed.py:385 ../../portable/item.py:542
+#: ../../portable/feed.py:386 ../../portable/item.py:554
 #, python-format
 msgid "%d hours"
-msgstr ""
+msgstr "%d valandų"
 
-#: ../../portable/feed.py:387
+#: ../../portable/feed.py:388
 #, python-format
 msgid "%d day"
-msgstr ""
+msgstr "%d diena"
 
-#: ../../portable/feed.py:389 ../../portable/item.py:540
+#: ../../portable/feed.py:390 ../../portable/item.py:552
 #, python-format
 msgid "%d days"
-msgstr ""
+msgstr "%d dienų"
 
-#: ../../portable/feed.py:391
+#: ../../portable/feed.py:392
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d mėnesių"
 
-#: ../../portable/feed.py:787
-msgid "Update Channel Now"
-msgstr ""
-
-#: ../../portable/feed.py:790 ../../portable/feed.py:799
-msgid "Rename Channel"
-msgstr ""
-
-#: ../../portable/feed.py:794
-msgid "Revert Title to Default"
-msgstr ""
-
-#: ../../portable/feed.py:800
+#: ../../portable/feed.py:826
 #, python-format
 msgid "Enter a new name for the channel %s"
-msgstr ""
+msgstr "Įveskite šio kanalo %s vardą"
 
-#: ../../portable/feed.py:887
+#: ../../portable/feed.py:923
 msgid "Error loading feed"
-msgstr ""
+msgstr "Klaida įkeliant srautą"
 
-#: ../../portable/feed.py:888
+#: ../../portable/feed.py:924
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
-msgstr ""
+msgstr "Nepavyko įkelti srauto ties %s (%s)."
 
-#: ../../portable/feed.py:891
+#: ../../portable/feed.py:927
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "Ar norėtumėte palikti šį srautą?"
 
-#: ../../portable/feed.py:1004
+#: ../../portable/feed.py:1040
 msgid "Bad content-type"
-msgstr ""
+msgstr "Blogas turinio tipas"
 
-#: ../../portable/feed.py:1017
+#: ../../portable/feed.py:1053
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
-msgstr ""
+msgstr "Kanalas nesuderinamas su $shortAppName!"
 
-#: ../../portable/feed.py:1018
+#: ../../portable/feed.py:1054
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny.  Please contact the publishers of "
@@ -1006,209 +1750,33 @@ msgid ""
 "Do you want to try to load this channel anyway?"
 msgstr ""
 
-#: ../../portable/feed.py:2134
+#: ../../portable/feed.py:2513
 msgid "Local Files"
-msgstr ""
+msgstr "Vietiniai failai"
 
-#: ../../portable/feed.py:2148
+#: ../../portable/feed.py:2527
 msgid "Playing File"
-msgstr ""
+msgstr "Grojantysis failas"
 
-#: ../../portable/menu.py:69
-msgid "Update Channels Now"
-msgstr ""
-
-#: ../../portable/menu.py:94
-#, python-format
-msgid "%d Downloaded Items"
-msgstr ""
-
-#: ../../portable/menu.py:96 ../../portable/item.py:1475
-msgid "Play"
-msgstr ""
-
-#: ../../portable/menu.py:97 ../../portable/item.py:1478
-msgid "Add to new playlist"
-msgstr ""
-
-#: ../../portable/menu.py:99 ../../portable/item.py:1471
-msgid "Remove From Playlist"
-msgstr ""
-
-#: ../../portable/menu.py:101 ../../portable/item.py:1473
-msgid "Remove From the Library"
-msgstr ""
-
-#: ../../portable/menu.py:107 ../../portable/item.py:1482
-msgid "Mark as Unwatched"
-msgstr ""
-
-#: ../../portable/menu.py:112 ../../portable/item.py:1484
-msgid "Mark as Watched"
-msgstr ""
-
-#: ../../portable/menu.py:117
-#, python-format
-msgid "%d Available Items"
-msgstr ""
-
-#: ../../portable/menu.py:118 ../../portable/dialogs.py:85
-#: ../../portable/item.py:1491
-msgid "Download"
-msgstr ""
-
-#: ../../portable/menu.py:123
-#, python-format
-msgid "%d Downloading Items"
-msgstr ""
-
-#: ../../portable/menu.py:125 ../../portable/item.py:1489
-msgid "Cancel Download"
-msgstr ""
-
-#: ../../portable/menu.py:127 ../../portable/item.py:1489
-msgid "Pause Download"
-msgstr ""
-
-#: ../../portable/menu.py:130 ../../portable/item.py:1487
-msgid "Restart Upload"
-msgstr ""
-
-#: ../../portable/opml.py:49
-msgid "Export OPML File"
-msgstr ""
-
-#: ../../portable/opml.py:123
-msgid "Import OPML File"
-msgstr ""
-
-#: ../../portable/opml.py:125
-msgid "OPML Files"
-msgstr ""
-
-#: ../../portable/opml.py:145
-msgid "OPML Import failed"
-msgstr ""
-
-#: ../../portable/opml.py:146
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
-
-#: ../../portable/opml.py:151
-msgid "OPML Import summary"
-msgstr ""
-
-#: ../../portable/opml.py:152
-#, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/opml.py:155
-#, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/autoupdate.py:121
-#, python-format
-msgid "%s Version Alert"
-msgstr ""
-
-#: ../../portable/autoupdate.py:122
-#, python-format
-msgid "A new version of %s is available. Would you like to download it now?"
-msgstr ""
-
-#: ../../portable/autoupdate.py:128
-#, python-format
-msgid "%s Version Check"
-msgstr ""
-
-#: ../../portable/autoupdate.py:129
-#, python-format
-msgid "%s is up to date."
-msgstr ""
-
-#: ../../portable/util.py:252 ../../portable/httpclient.py:126
-msgid "Internal Error"
-msgstr ""
-
-#: ../../portable/util.py:252
-msgid ""
-"Miro has encountered an internal error. You can help us track down this "
-"problem and fix it by submitting an error report."
-msgstr ""
-
-#: ../../portable/util.py:252
-msgid ""
-"Include entire program database including all video and channel metadata "
-"with crash report"
-msgstr ""
-
-#: ../../portable/util.py:252
-msgid "Describe what you were doing that caused this error"
-msgstr ""
-
-#: ../../portable/util.py:455
-#, python-format
-msgid "%1.1fGB"
-msgstr ""
-
-#: ../../portable/util.py:457
-#, python-format
-msgid "%dGB"
-msgstr ""
-
-#: ../../portable/util.py:461
-#, python-format
-msgid "%1.1fMB"
-msgstr ""
-
-#: ../../portable/util.py:463
-#, python-format
-msgid "%dMB"
-msgstr ""
-
-#: ../../portable/util.py:467
-#, python-format
-msgid "%1.1fKB"
-msgstr ""
-
-#: ../../portable/util.py:469
-#, python-format
-msgid "%dKB"
-msgstr ""
-
-#: ../../portable/util.py:473
-#, python-format
-msgid "%1.1fB"
-msgstr ""
-
-#: ../../portable/util.py:475
-#, python-format
-msgid "%dB"
-msgstr ""
-
-#: ../../portable/storedatabase.py:832 ../../portable/storedatabase.py:1231
+#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
 #, python-format
 msgid "%s database save succeeded"
-msgstr ""
+msgstr "%s duomenų bazės išsaugojimas pavyko"
 
-#: ../../portable/storedatabase.py:833 ../../portable/storedatabase.py:1232
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
+"Duomenų bazė buvo sėkmingai išsaugota. Dabar saugu išjungti „Miro“ "
+"neprarandant jokių duomenų."
 
-#: ../../portable/storedatabase.py:840 ../../portable/storedatabase.py:1240
+#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
 #, python-format
 msgid "%s database save failed"
-msgstr ""
+msgstr "%s duomenų bazės išsaugojimas nepavyko"
 
-#: ../../portable/storedatabase.py:841 ../../portable/storedatabase.py:1241
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
 #, python-format
 msgid ""
 "%s was unable to save its database: Disk Full.\n"
@@ -1216,931 +1784,543 @@ msgid ""
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
-
-#: ../../portable/dialogs.py:81
-msgid "Ignore"
-msgstr ""
-
-#: ../../portable/dialogs.py:82
-msgid "Submit Crash Report"
-msgstr ""
-
-#: ../../portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
-msgid "Migrate"
-msgstr ""
-
-#: ../../portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
-msgid "Don't Migrate"
-msgstr ""
-
-#: ../../portable/dialogs.py:86
-msgid "Remove Entry"
-msgstr ""
-
-#: ../../portable/dialogs.py:87
-msgid "Delete File"
-msgstr ""
-
-#: ../../portable/dialogs.py:88
-msgid "Delete Files"
-msgstr ""
+"%s nepavyko išsaugoti savo duomenų bazės. Diskas pilnas.\n"
+"Siūlome ištrinti keletą failų iš pilnojo disko arba ištrinti keletą filmų iš "
+"Jūsų kolekcijos.\n"
+"Paskutiniai pakeitimai gali būti prarasti."
 
 #: ../../portable/dialogs.py:89
-msgid "Keep Videos"
-msgstr ""
+msgid "Ignore"
+msgstr "Nepaisyti"
 
 #: ../../portable/dialogs.py:90
-msgid "Delete Videos"
-msgstr ""
+msgid "Submit Crash Report"
+msgstr "Išsiųsti lūžimo ataskaitą"
 
-#: ../../portable/dialogs.py:92
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
-msgid "Create Channel"
-msgstr ""
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
+msgid "Migrate"
+msgstr "Migruoti"
 
-#: ../../portable/dialogs.py:93
-msgid "Add"
-msgstr ""
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
+msgid "Don't Migrate"
+msgstr "Nemigruoti"
 
 #: ../../portable/dialogs.py:94
-msgid "Add Into New Folder"
-msgstr ""
+msgid "Remove Entry"
+msgstr "Pašalinti įrašą"
 
 #: ../../portable/dialogs.py:95
-msgid "Keep"
-msgstr ""
+msgid "Delete File"
+msgstr "Ištrinti failą"
+
+#: ../../portable/dialogs.py:96
+msgid "Delete Files"
+msgstr "Ištrinti failus"
 
 #: ../../portable/dialogs.py:97
-msgid "Not Now"
-msgstr ""
+msgid "Keep Videos"
+msgstr "Palikti video failus"
 
 #: ../../portable/dialogs.py:98
-msgid "Close to Tray"
-msgstr ""
-
-#: ../../portable/dialogs.py:99
-msgid "Launch Miro"
-msgstr ""
+msgid "Delete Videos"
+msgstr "Ištrinti video failus"
 
 #: ../../portable/dialogs.py:100
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
+msgid "Create Channel"
+msgstr "Sukurti kanalą"
+
+#: ../../portable/dialogs.py:101
+msgid "Add"
+msgstr "Pridėti"
+
+#: ../../portable/dialogs.py:102
+msgid "Add Into New Folder"
+msgstr "Pridėti į naują aplanką"
+
+#: ../../portable/dialogs.py:103
+msgid "Keep"
+msgstr "Palikti"
+
+#: ../../portable/dialogs.py:105
+msgid "Not Now"
+msgstr "Ne dabar"
+
+#: ../../portable/dialogs.py:106
+msgid "Close to Tray"
+msgstr "Užverti į sisteminį skydelį"
+
+#: ../../portable/dialogs.py:107
+msgid "Launch Miro"
+msgstr "Paleisti „Miro“"
+
+#: ../../portable/dialogs.py:108
 msgid "Download Anyway"
+msgstr "Vistiek atsisiųsti"
+
+#: ../../portable/dialogs.py:109
+msgid "Install iHeartMiro"
 msgstr ""
 
-#: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../portable/dialogs.py:110
+msgid "Don't Install"
+msgstr ""
+
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
-msgstr ""
+msgstr "Naujas paieškos kanalas"
 
-#: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:25
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
-msgstr ""
+msgstr "Paieškos kanale yra elementų, kurie atitinka paieškos kriterijų."
 
-#: ../../portable/singleclick.py:87
+#: ../../portable/controller.py:196 ../../portable/controller.py:210
+#: ../../portable/controller.py:254 ../../portable/controller.py:280
+#: ../../portable/controller.py:300
+#, python-format
+msgid "Remove %s"
+msgstr "P_ašalinti %s"
+
+#: ../../portable/controller.py:197
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr "Ar tikrai norite pašalinti %s gidą?"
+
+#: ../../portable/controller.py:211
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr "Ar tikrai norite pašalinti %s"
+
+#: ../../portable/controller.py:214 ../../portable/controller.py:259
+#: ../../portable/controller.py:285 ../../portable/controller.py:304
+#, python-format
+msgid "Remove %s channels"
+msgstr "Pašalinti %s kanalus"
+
+#: ../../portable/controller.py:216
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr "Ar tikrai norite pašalinti šiuos %s grojaraščius"
+
+#: ../../portable/controller.py:255
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr ""
+"Ką norėtumėte daryti su šio kanalo video failais, kuriuos atsisiuntėte?"
+
+#: ../../portable/controller.py:260
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr ""
+"Ką norėtumėte daryti su šių kanalų video failais, kuriuos atsisiuntėte?"
+
+#: ../../portable/controller.py:281
+#, python-format
+msgid ""
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
+msgstr ""
+"Ar tikrai norite pašalinti %s? Bet kokie aktyvūs atsiuntimai bus nutraukti."
+
+#: ../../portable/controller.py:286
+#, python-format
+msgid ""
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
+msgstr ""
+"Ar tikrai norite pašalinti šiuos %s kanalus? Bet kokie aktyvūs atsiuntimai "
+"bus nutraukti."
+
+#: ../../portable/controller.py:301
+#, python-format
+msgid "Are you sure you want to remove %s?"
+msgstr "Ar tikrai norite pašalinti %s?"
+
+#: ../../portable/controller.py:305
+#, python-format
+msgid "Are you sure you want to remove these %s channels?"
+msgstr "Ar tikrai norite pašalinti šiuos %s kanalus?"
+
+#: ../../portable/controller.py:318
+#, python-format
+msgid "Stop watching %s"
+msgstr "Sustabdyti %s stebėjimą"
+
+#: ../../portable/controller.py:319
+#, python-format
+msgid "Are you sure you want to stop watching %s?"
+msgstr "Ar tikrai norite sustabdyti %s stebėjimą?"
+
+#: ../../portable/controller.py:322
+#, python-format
+msgid "Stop watching %s directories"
+msgstr "Sustabdyti %s aplankų stebėjimą"
+
+#: ../../portable/controller.py:323
+#, python-format
+msgid "Are you sure you want to stop watching these %s directories?"
+msgstr "Ar tikrai norite sustabdyti šių %s aplankų stebėjimą?"
+
+#: ../../portable/controller.py:497
+msgid "Error Saving Video"
+msgstr "Klaida išsaugojant video"
+
+#: ../../portable/controller.py:499
+#, python-format
+msgid ""
+"An error occured while trying to save %s.  Please check that the file has "
+"not been deleted and try again."
+msgstr ""
+"Įvyko klaida išsaugojant %s. Patikrinkite, ar failas nebuvo ištrintas, ir "
+"pabandykite dar kartą."
+
+#: ../../portable/singleclick.py:99
 msgid "Download already exists"
-msgstr ""
+msgstr "Atsiuntimas jau egzistuoja"
 
-#: ../../portable/singleclick.py:88
+#: ../../portable/singleclick.py:100
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "Šis URL jau yra išorinis atsiuntimas."
 
-#: ../../portable/singleclick.py:94
+#: ../../portable/singleclick.py:106
 msgid "Miro will begin downloading it now."
-msgstr ""
+msgstr "„Miro“ pradės jo atsiuntimą."
 
-#: ../../portable/singleclick.py:96
+#: ../../portable/singleclick.py:108
 msgid "It is downloading now."
-msgstr ""
+msgstr "Jis yra siunčiamas."
 
-#: ../../portable/singleclick.py:98
+#: ../../portable/singleclick.py:110
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "Jis jau atsiųstas."
 
-#: ../../portable/singleclick.py:125
+#: ../../portable/singleclick.py:137
 msgid "Download Error"
-msgstr ""
+msgstr "Klaida besisiunčiant"
 
-#: ../../portable/singleclick.py:126
+#: ../../portable/singleclick.py:138
 #, python-format
 msgid ""
 "Miro is not able to download a file at this URL:\n"
 "\n"
 "URL: %s"
 msgstr ""
+"„Miro“ negali atsiųsti failo šiame URL:\n"
+"\n"
+"URL: %s"
 
-#: ../../portable/singleclick.py:134
+#: ../../portable/singleclick.py:146
 msgid "File Download"
-msgstr ""
+msgstr "Failo atsiuntimas"
 
-#: ../../portable/singleclick.py:135
+#: ../../portable/singleclick.py:147
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
+msgstr "Šis failas adresu %s nėra nei garsinis, nei video, nei RSS srautas."
 
-#: ../../portable/singleclick.py:225
+#: ../../portable/singleclick.py:235
 msgid "Subscribing to multiple channels"
-msgstr ""
+msgstr "Prenumeruojami keli kanalai"
 
-#: ../../portable/singleclick.py:226
+#: ../../portable/singleclick.py:236
 #, python-format
 msgid "Create %d channels?"
-msgstr ""
+msgstr "Ar sukurti %d kanalus?"
 
-#: ../../portable/singleclick.py:239
+#: ../../portable/singleclick.py:249
 #, python-format
 msgid "Adding %d channels to a new folder"
-msgstr ""
+msgstr "Pridedami %d kanalai į naują aplanką"
 
-#: ../../portable/singleclick.py:240 ../../portable/folder.py:226
+#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
 msgid "Enter a name for the new channel folder"
-msgstr ""
+msgstr "Įveskite naujo kanalo aplanko vardą"
 
-#: ../../portable/singleclick.py:243
+#: ../../portable/singleclick.py:253
 #, python-format
 msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
 "will stay where they currently are."
 msgstr ""
-
-#: ../../portable/singleclick.py:254
-msgid "Subscription error"
-msgstr ""
+"DĖMESIO: Jūs jau užsiprenumeravote %d iš šių kanalų. Šie kanalai išliks ten, "
+"kur jie yra šiuo metu."
 
 #: ../../portable/singleclick.py:264
+msgid "Subscription error"
+msgstr "Prenumeratos klaida"
+
+#: ../../portable/singleclick.py:274
 msgid ""
 "This $shortAppName channel file has an invalid format: $url. Please notify "
 "the publisher of this file."
 msgstr ""
+"Šis $shortAppName kanalo failas yra netinkamo formato: $url. Perspėkite šio "
+"failo leidėją."
 
-#: ../../portable/singleclick.py:272
+#: ../../portable/singleclick.py:282
 msgid ""
 "This $shortAppName channel file has the wrong content type: $url. Please "
 "notify the publisher of this file."
 msgstr ""
+"Šis $shortAppName kanalo failas turi nurodytą netinkamą turinio tipą: $url. "
+"Perspėkite šio failo leidėją."
 
-#: ../../portable/singleclick.py:276
+#: ../../portable/singleclick.py:286
 msgid "Could not download the $shortAppName channel file: $url."
-msgstr ""
+msgstr "Nepavyko atsiųsti $shortAppName kanalo failo: $url."
 
-#: ../../portable/singleclick.py:316
+#: ../../portable/singleclick.py:334
 msgid "Invalid Torrent"
-msgstr ""
+msgstr "Netinkamas „Torrent“ failas"
 
-#: ../../portable/singleclick.py:317
-#, python-format
+#: ../../portable/singleclick.py:335
+#, fuzzy, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr ""
+msgstr "„Torrent“ failas %s yra sugadintas ir negali būti atvertas. [Gerai]"
 
-#: ../../portable/menubar.py:144
-msgid "_Open"
-msgstr ""
-
-#: ../../portable/menubar.py:145
-msgid "_Download Video"
-msgstr ""
-
-#: ../../portable/menubar.py:147
-msgid "Check _Version"
-msgstr ""
-
-#: ../../portable/menubar.py:149
-msgid "_Remove Video"
-msgstr ""
-
-#: ../../portable/menubar.py:150
-msgid "_Remove Videos"
-msgstr ""
-
-#: ../../portable/menubar.py:151
-msgid "Re_name Video"
-msgstr ""
-
-#: ../../portable/menubar.py:152
-msgid "Save Video _As..."
-msgstr ""
-
-#: ../../portable/menubar.py:153
-msgid "Save Videos _As..."
-msgstr ""
-
-#: ../../portable/menubar.py:154
-msgid "Copy Video _URL"
-msgstr ""
-
-#: ../../portable/menubar.py:156
-msgid "_Options..."
-msgstr ""
-
-#: ../../portable/menubar.py:157
-msgid "_Quit"
-msgstr ""
-
-#: ../../portable/menubar.py:165
-msgid "Cu_t"
-msgstr ""
-
-#: ../../portable/menubar.py:166
-msgid "_Copy"
-msgstr ""
-
-#: ../../portable/menubar.py:167
-msgid "_Paste"
-msgstr ""
-
-#: ../../portable/menubar.py:168
-msgid "Select _All"
-msgstr ""
-
-#: ../../portable/menubar.py:169
-msgid "_Delete"
-msgstr ""
-
-#: ../../portable/menubar.py:173
-msgid "Add _Channel"
-msgstr ""
-
-#: ../../portable/menubar.py:174
-msgid "New Searc_h Channel..."
-msgstr ""
-
-#: ../../portable/menubar.py:175
-msgid "New _Folder..."
-msgstr ""
-
-#: ../../portable/menubar.py:176
-msgid "Add Channel _Guide..."
-msgstr ""
-
-#: ../../portable/menubar.py:186
-msgid "Update _All Channels"
-msgstr ""
-
-#: ../../portable/menubar.py:188
-msgid "_Import Channels (OPML)..."
-msgstr ""
-
-#: ../../portable/menubar.py:189
-msgid "E_xport Channels (OPML)..."
-msgstr ""
-
-#: ../../portable/menubar.py:191
-msgid "_Send this channel to a friend"
-msgstr ""
-
-#: ../../portable/menubar.py:192
-msgid "Copy Channel _Link"
-msgstr ""
-
-#: ../../portable/menubar.py:195
-msgid "New _Playlist"
-msgstr ""
-
-#: ../../portable/menubar.py:196
-msgid "New Playlist Fol_der"
-msgstr ""
-
-#: ../../portable/menubar.py:198
-msgid "Re_name Playlist"
-msgstr ""
-
-#: ../../portable/menubar.py:199
-msgid "_Remove Playlist"
-msgstr ""
-
-#: ../../portable/menubar.py:200
-msgid "_Remove Playlists"
-msgstr ""
-
-#: ../../portable/menubar.py:201
-msgid "_Remove Playlist Folders"
-msgstr ""
-
-#: ../../portable/menubar.py:202
-msgid "_Remove Playlist Folder"
-msgstr ""
-
-#: ../../portable/menubar.py:212
-msgid "_Play"
-msgstr ""
-
-#: ../../portable/menubar.py:213
-msgid "_Stop"
-msgstr ""
-
-#: ../../portable/menubar.py:215
-msgid "_Next Video"
-msgstr ""
-
-#: ../../portable/menubar.py:216
-msgid "_Previous Video"
-msgstr ""
-
-#: ../../portable/menubar.py:218
-msgid "Skip _Forward"
-msgstr ""
-
-#: ../../portable/menubar.py:219
-msgid "Skip _Back"
-msgstr ""
-
-#: ../../portable/menubar.py:221
-msgid "Volume _Up"
-msgstr ""
-
-#: ../../portable/menubar.py:222
-msgid "Volume _Down"
-msgstr ""
-
-#: ../../portable/menubar.py:224
-msgid "_Fullscreen"
-msgstr ""
-
-#: ../../portable/menubar.py:228
-msgid "_About"
-msgstr ""
-
-#: ../../portable/menubar.py:229
-msgid "_Donate"
-msgstr ""
-
-#: ../../portable/menubar.py:230 ../../portable/menubar.py:245
-msgid "_Help"
-msgstr ""
-
-#: ../../portable/menubar.py:232
-msgid "Report a _Bug"
-msgstr ""
-
-#: ../../portable/menubar.py:236
-msgid "_Video"
-msgstr ""
-
-#: ../../portable/menubar.py:238
-msgid "_File"
-msgstr ""
-
-#: ../../portable/menubar.py:242
-msgid "_Channels"
-msgstr ""
-
-#: ../../portable/menubar.py:243
-msgid "_Playlists"
-msgstr ""
-
-#: ../../portable/menubar.py:244
-msgid "P_layback"
-msgstr ""
-
-#: ../../portable/menubar.py:249
-msgid "Play Unwatched ($numUnwatched)"
-msgstr ""
-
-#: ../../portable/menubar.py:250
-msgid "Pause All Downloads ($numDownloading)"
-msgstr ""
-
-#: ../../portable/menubar.py:251
-msgid "Resume All Downloads ($numPaused)"
-msgstr ""
-
-#: ../../portable/menubar.py:253
-msgid "Options..."
-msgstr ""
-
-#: ../../portable/menubar.py:255
-msgid "Hide Window"
-msgstr ""
-
-#: ../../portable/menubar.py:256
-msgid "Show Window"
-msgstr ""
-
-#: ../../portable/item.py:485
+#: ../../portable/item.py:497
 #, python-format
 msgid "Removing %s"
-msgstr ""
+msgstr "Šalinama %s"
 
-#: ../../portable/item.py:488
+#: ../../portable/item.py:500
 msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from the Library?"
 msgstr ""
+"Ar norite ištrinti šį aplanką ir visus jo video failus, ar tik pašalinti jo "
+"įrašą bibliotekoje?"
 
-#: ../../portable/item.py:494
+#: ../../portable/item.py:506
 msgid ""
 "Would you like to delete this file or just remove its entry from the Library?"
-msgstr ""
+msgstr "Ar norite ištrinti šį failą, ar tik pašalinti jo įrašą bibliotekoje?"
 
-#: ../../portable/item.py:514
+#: ../../portable/item.py:526
 msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
 msgstr ""
+"Šis elementas yra aplankas. Kai pašalinsite aplanką, visi šiame aplanke "
+"esantys elementai taip pat bus ištrinti."
 
-#: ../../portable/item.py:544
+#: ../../portable/item.py:556
 #, python-format
 msgid "%d minutes"
-msgstr ""
-
-#: ../../portable/item.py:554
-#, python-format
-msgid "Expires in %s"
-msgstr ""
+msgstr "%d minučių"
 
 #: ../../portable/item.py:566
 #, python-format
+msgid "Expires in %s"
+msgstr "Baigia galioti po %s"
+
+#: ../../portable/item.py:578
+#, python-format
 msgid "Will retry in %s"
-msgstr ""
+msgstr "Bandoma iš naujo po %s"
 
-#: ../../portable/item.py:568
+#: ../../portable/item.py:580
 msgid "Paused"
-msgstr ""
+msgstr "Pristabdyta"
 
-#: ../../portable/item.py:954
+#: ../../portable/item.py:982
 msgid "TORRENT"
-msgstr ""
+msgstr "TORRENT failas"
 
-#: ../../portable/item.py:956
+#: ../../portable/item.py:984
 msgid "WEB PAGE"
-msgstr ""
+msgstr "Interneto puslapis"
 
-#: ../../portable/item.py:966
+#: ../../portable/item.py:994
 msgid "Total Down:"
-msgstr ""
+msgstr "Iš viso atsiųsta:"
 
-#: ../../portable/item.py:969
+#: ../../portable/item.py:997
 msgid "Error:"
+msgstr "Klaida:"
+
+#: ../../portable/item.py:1006
+msgid "Seeders:"
 msgstr ""
 
-#: ../../portable/item.py:977
+#: ../../portable/item.py:1008
+msgid "Leechers:"
+msgstr ""
+
+#: ../../portable/item.py:1010
 msgid "Down Rate:"
-msgstr ""
+msgstr "Atsiuntimo greitis:"
 
-#: ../../portable/item.py:978
+#: ../../portable/item.py:1011
 msgid "Down Total:"
-msgstr ""
+msgstr "Iš viso atsiųsta:"
 
-#: ../../portable/item.py:980
+#: ../../portable/item.py:1013
 msgid "Up Rate:"
-msgstr ""
+msgstr "Išsiuntimo greitis:"
 
-#: ../../portable/item.py:981
+#: ../../portable/item.py:1014
 msgid "Up Total:"
-msgstr ""
+msgstr "Iš viso išsiųsta:"
 
-#: ../../portable/item.py:989
+#: ../../portable/item.py:1024
 msgid "Web page:"
-msgstr ""
+msgstr "Tinklalapis:"
 
-#: ../../portable/item.py:989
+#: ../../portable/item.py:1024
 msgid "permalink"
 msgstr ""
 
-#: ../../portable/item.py:993
+#: ../../portable/item.py:1028
 msgid "File link:"
-msgstr ""
+msgstr "Failo nuoroda:"
 
-#: ../../portable/item.py:993
+#: ../../portable/item.py:1028
 msgid "direct link to file"
-msgstr ""
+msgstr "tiesioginė nuoroda į failą"
 
-#: ../../portable/item.py:995
+#: ../../portable/item.py:1030
 msgid "File type:"
-msgstr ""
+msgstr "Failo tipas:"
 
-#: ../../portable/item.py:1002
-msgid "REVEAL LOCAL FOLDER"
-msgstr ""
-
-#: ../../portable/item.py:1004
-msgid "REVEAL LOCAL FILE"
-msgstr ""
-
-#: ../../portable/item.py:1006
-msgid "Filename:"
-msgstr ""
-
-#: ../../portable/item.py:1013
-msgid "Down Total"
-msgstr ""
-
-#: ../../portable/item.py:1015
-msgid "Up Total"
-msgstr ""
-
-#: ../../portable/item.py:1033
-msgid "Item Details"
-msgstr ""
-
-#: ../../portable/item.py:1040
-msgid "Torrent Details"
-msgstr ""
-
+#: ../../portable/item.py:1037 ../../portable/item.py:1040
 #: ../../portable/item.py:1042
+msgid "License:"
+msgstr ""
+
+#: ../../portable/item.py:1040 ../../portable/item.py:1042
+msgid "see permalink"
+msgstr ""
+
+#: ../../portable/item.py:1049
+msgid "REVEAL LOCAL FOLDER"
+msgstr "Parodyti vietinį aplanką"
+
+#: ../../portable/item.py:1051
+msgid "REVEAL LOCAL FILE"
+msgstr "Parodyti vietinį failą"
+
+#: ../../portable/item.py:1053
+msgid "Filename:"
+msgstr "Failo vardas:"
+
+#: ../../portable/item.py:1060
+msgid "Down Total"
+msgstr "Iš viso atsiųsta"
+
+#: ../../portable/item.py:1062
+msgid "Up Total"
+msgstr "Iš viso išsiųsta"
+
+#: ../../portable/item.py:1080
+msgid "Item Details"
+msgstr "Elemento duomenys"
+
+#: ../../portable/item.py:1087
+msgid "Torrent Details"
+msgstr "Torrent failo duomenys"
+
+#: ../../portable/item.py:1089
 msgid "Torrent Details <i>stopped</i>"
-msgstr ""
+msgstr "Torrent failo duomenys <i>sustabdyta</i>"
 
-#: ../../portable/item.py:1046
+#: ../../portable/item.py:1093
 msgid "Download Details"
-msgstr ""
+msgstr "Atsiuntimo duomenys"
 
-#: ../../portable/item.py:1263
+#: ../../portable/item.py:1310
 msgid "downloading..."
-msgstr ""
+msgstr "atsiunčiama..."
 
-#: ../../portable/item.py:1270 ../../portable/item.py:1273
+#: ../../portable/item.py:1317 ../../portable/item.py:1320
 #, python-format
 msgid "%s remaining"
-msgstr ""
+msgstr "%s liko"
 
-#: ../../portable/item.py:1282
+#: ../../portable/item.py:1329
 msgid "starting up..."
-msgstr ""
+msgstr "pradedama..."
 
-#: ../../portable/item.py:1477
-msgid "Play Just This Video"
-msgstr ""
-
-#: ../../portable/item.py:1854
+#: ../../portable/item.py:1878
 #, python-format
 msgid "Removing %s items"
-msgstr ""
+msgstr "Pašalinami %s elementai(ų)"
 
-#: ../../portable/item.py:1856
+#: ../../portable/item.py:1880
 msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from the Library?"
 msgstr ""
+"Vienas ar daugiau iš šių video failų nebuvo atsiųsti iš kanalo. Ar "
+"norėtumėte ištrinti šiuos failus, ar tik pašalinti jų įrašus bibliotekoje?"
 
-#: ../../portable/item.py:1864
+#: ../../portable/item.py:1888
 msgid ""
 "One or more of these items is a folder.  When you remove or delete a folder, "
 "any items inside that folder will also be removed or deleted."
 msgstr ""
+"Vienas ar daugiau iš šių elementų yra aplankas. Ar norėtumėte ištrinti "
+"aplanką? Visi aplanke esantys elementai taip pat bus ištrinti."
 
-#: ../../portable/folder.py:132 ../../portable/folder.py:155
-msgid "Rename Channel Folder"
+#: ../../portable/startup.py:92
+msgid "Unknown Error"
 msgstr ""
 
-#: ../../portable/folder.py:134
+#: ../../portable/startup.py:93
 #, python-format
-msgid "Enter a new name for the channel folder %s"
+msgid ""
+"An unkown error prevented Miro from startup.  Please file a bug report at %s"
 msgstr ""
 
-#: ../../portable/folder.py:210 ../../portable/folder.py:215
-msgid "Rename Playlist Folder"
-msgstr ""
-
-#: ../../portable/folder.py:217
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr ""
-
-#: ../../portable/folder.py:225
-msgid "Create Channel Folder"
-msgstr ""
-
-#: ../../portable/folder.py:239
-msgid "Create Playlist Folder"
-msgstr ""
-
-#: ../../portable/folder.py:240
-msgid "Enter a name for the new playlist folder"
-msgstr ""
-
-#: ../../portable/httpclient.py:68
-#, python-format
-msgid "Error: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:83 ../../portable/httpclient.py:89
-msgid "Can't connect"
-msgstr ""
-
-#: ../../portable/httpclient.py:84
-#, python-format
-msgid "Connection Error: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:90
-msgid "SSL connection error"
-msgstr ""
-
-#: ../../portable/httpclient.py:94
-msgid "HTTP error"
-msgstr ""
-
-#: ../../portable/httpclient.py:97
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:100
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:103
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:106
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr ""
-
-#: ../../portable/httpclient.py:109
-#, python-format
-msgid "%s closed connection"
-msgstr ""
-
-#: ../../portable/httpclient.py:115
-msgid "Got 404 status code"
-msgstr ""
-
-#: ../../portable/httpclient.py:117
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:121
-msgid "Authorization failed"
-msgstr ""
-
-#: ../../portable/httpclient.py:127
-msgid "Pipeline request never started"
-msgstr ""
-
-#: ../../portable/httpclient.py:131
-msgid "Timeout"
-msgstr ""
-
-#: ../../portable/httpclient.py:132
-#, python-format
-msgid "Connection to %s timed out"
-msgstr ""
-
-#: ../../portable/httpclient.py:136
-msgid "Invalid URL"
-msgstr ""
-
-#: ../../portable/httpclient.py:137
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr ""
-
-#: ../../portable/httpclient.py:143
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr ""
-
-#: ../../portable/httpclient.py:147
-msgid "Read error"
-msgstr ""
-
-#: ../../portable/httpclient.py:148
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr ""
-
-#: ../../portable/httpclient.py:341
-msgid "Unknown Error code"
-msgstr ""
-
-#: ../../portable/httpclient.py:373
-msgid "Connection closed"
-msgstr ""
-
-#: ../../portable/httpclient.py:798
-msgid "Unknown"
-msgstr ""
-
-#: ../../portable/httpclient.py:799
-msgid "Internal Error: Not ready to send"
-msgstr ""
-
-#: ../../portable/app.py:685
+#: ../../portable/startup.py:155
 msgid "Database too new"
-msgstr ""
+msgstr "Duomenų bazė per nauja"
 
-#: ../../portable/app.py:686
+#: ../../portable/startup.py:156
 msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
+"Jūsų duomenų bazė buvo išsaugota su naujesne $shortAppName versija. Jums "
+"reikia atsisiųsti naują $shortAppName versiją ir ją paleisti."
 
-#: ../../portable/app.py:700
-msgid "Video Directory Missing"
-msgstr ""
-
-#: ../../portable/app.py:701
+#: ../../portable/startup.py:238
 msgid ""
 "\n"
 "Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected.\n"
-"\n"
-"If you continue, the video directory will be reset to a location on this "
-"drive (this will cause you to lose some details about the videos on the "
-"external drive).  You can also quit, connect the drive, and relaunch Miro."
+"located on an external drive that is currently disconnected."
 msgstr ""
 
-#: ../../portable/app.py:1038 ../../portable/app.py:1052
-#: ../../portable/app.py:1096 ../../portable/app.py:1122
-#: ../../portable/app.py:1142
+#: ../../portable/folder.py:144
 #, python-format
-msgid "Remove %s"
-msgstr ""
+msgid "Enter a new name for the channel folder %s"
+msgstr "Įveskite naują kanalo aplanko vardą %s"
 
-#: ../../portable/app.py:1039
+#: ../../portable/folder.py:215
 #, python-format
-msgid "Are you sure you want to remove the guide %s?"
-msgstr ""
+msgid "Enter a new name for the playlist folder %s"
+msgstr "Įveskite naują grojaraščio aplanko vardą %s"
 
-#: ../../portable/app.py:1053
-#, python-format
-msgid "Are you sure you want to remove %s"
-msgstr ""
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "Sukurti kanalo aplanką"
 
-#: ../../portable/app.py:1056 ../../portable/app.py:1101
-#: ../../portable/app.py:1127 ../../portable/app.py:1146
-#, python-format
-msgid "Remove %s channels"
-msgstr ""
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "Sukurti grojaraščio aplanką"
 
-#: ../../portable/app.py:1058
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "Įveskite naujo grojaraščio aplanko vardą"
 
-#: ../../portable/app.py:1097
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr ""
-
-#: ../../portable/app.py:1102
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr ""
-
-#: ../../portable/app.py:1123
-#, python-format
-msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
-msgstr ""
-
-#: ../../portable/app.py:1128
-#, python-format
-msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
-msgstr ""
-
-#: ../../portable/app.py:1143
-#, python-format
-msgid "Are you sure you want to remove %s?"
-msgstr ""
-
-#: ../../portable/app.py:1147
-#, python-format
-msgid "Are you sure you want to remove these %s channels?"
-msgstr ""
-
-#: ../../portable/app.py:1160
-#, python-format
-msgid "Stop watching %s"
-msgstr ""
-
-#: ../../portable/app.py:1161
-#, python-format
-msgid "Are you sure you want to stop watching %s?"
-msgstr ""
-
-#: ../../portable/app.py:1164
-#, python-format
-msgid "Stop watching %s directories"
-msgstr ""
-
-#: ../../portable/app.py:1165
-#, python-format
-msgid "Are you sure you want to stop watching these %s directories?"
-msgstr ""
-
-#: ../../portable/app.py:1196
-msgid "Are you sure you want to quit?"
-msgstr ""
-
-#: ../../portable/app.py:1198
-msgid ""
-"Miro is still uploading your crash report. If you quit now the upload will "
-"be canceled.  Quit Anyway?"
-msgstr ""
-
-#: ../../portable/app.py:1203
-#, python-format
-msgid "You have %d download still in progress.  Quit Anyway?"
-msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/app.py:1712
-msgid "Invalid Value"
-msgstr ""
-
-#: ../../portable/app.py:1713
-#, python-format
-msgid "%s is invalid.  You must enter a non-negative number."
-msgstr ""
-
-#: ../../portable/app.py:1839
-msgid "Error Revealing File"
-msgstr ""
-
-#: ../../portable/app.py:1840
-#, python-format
-msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
-
-#: ../../portable/app.py:2011
-msgid " - Invalid URL"
-msgstr ""
-
-#: ../../portable/app.py:2012
-msgid ""
-"The address you entered is not a valid URL.\n"
-"Please double check and try again.\n"
-"\n"
-msgstr ""
-
-#: ../../portable/app.py:2036
-msgid "$shortAppName - Add Channel"
-msgstr ""
-
-#: ../../portable/app.py:2036
-msgid "Enter the URL of the channel to add"
-msgstr ""
-
-#: ../../portable/app.py:2057
-msgid "$shortAppName - Add Miro Guide"
-msgstr ""
-
-#: ../../portable/app.py:2057
-msgid "Enter the URL of the Miro Guide to add"
-msgstr ""
-
-#: ../../portable/app.py:2063
-msgid "$shortAppName - Download Video"
-msgstr ""
-
-#: ../../portable/app.py:2063
-msgid "Enter the URL of the video to download"
-msgstr ""
-
-#: ../../portable/app.py:2420
-msgid "Starter Channels"
-msgstr ""
-
-#: ../../portable/app.py:2437
-msgid "Example Playlist"
-msgstr ""
-
-#: ../../portable/app.py:2463
-msgid "Custom Channels"
-msgstr ""
-
-#: ../../portable/app.py:2463
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr ""
-
-#: ../../portable/app.py:2478
-msgid "Error Changing Movies Directory"
-msgstr ""
-
-#: ../../portable/app.py:2479
-msgid ""
-"You don't have permission to write to the directory you selected.  Miro will "
-"continue to use the old videos directory."
-msgstr ""
-
-#: ../../portable/app.py:2508
-msgid "Error Saving Video"
-msgstr ""
-
-#: ../../portable/app.py:2510
-#, python-format
-msgid ""
-"An error occured while trying to save %s.  Please check that the file has "
-"not been deleted and try again."
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:1
-msgid "(Changes won't go into effect until you restart Miro)"
+#: ../../portable/license.py:68
+msgid "license page"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
@@ -2152,24 +2332,36 @@ msgid ""
 "1 month\n"
 "Never"
 msgstr ""
+"1 diena\n"
+"3 dienos\n"
+"6 dienos\n"
+"10 dienų\n"
+"1 mėnuo\n"
+"Niekada"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:8
 msgid "<b>BitTorrent</b>"
-msgstr ""
+msgstr "<b>BitTorrent</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
-msgid "<b>Searching for Videos</b>"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:10
-msgid "<b>Would you like Miro to look for video files on your computer?</b>"
+msgid ""
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \n"
+"restart Miro for the changes to take effect."
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
-msgid "<b>Would you like to run Miro when your computer starts up?</b>"
-msgstr ""
+msgid "<b>Searching for Videos</b>"
+msgstr "<b>Ieškoma video</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12
+msgid "<b>Would you like Miro to look for video files on your computer?</b>"
+msgstr "<b>Ar norite, kad „Miro“ ieškotų video failų Jūsų kompiuteryje?</b>"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:13
+msgid "<b>Would you like to run Miro when your computer starts up?</b>"
+msgstr "<b>Ar norite paleisti „Miro“, kai Jūsų kompiuteris įsikraus?</b>"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:14
 msgid ""
 "<b>You're done!</b>\n"
 "\n"
@@ -2194,199 +2386,268 @@ msgid ""
 "<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
 "of them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:26
-msgid "By default, videos _expire after"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:27
-msgid "C_hannel:"
-msgstr ""
+"<b>Suderinimas baigtas!</b>\n"
+"\n"
+"Suderinimas baigtas -- dabar galite ieškoti kanalų bei juos žiūrėti.\n"
+"\n"
+"<b>Nelaukite:</b> „Miro“ skirasi nuo video stebėjimo Interneto "
+"tinklalapiuose -- leidėjai gali pasiūlyti didelių, aukštos kokybės video. "
+"Taigi nesėdėkit laukdami video: pradėkite kelis atsiuntimus ir po kurio "
+"laiko grįžkite.\n"
+"\n"
+"<b>Palikite įjungtą:</b> „Miro“ reguliariai patikrina kanalus, ar nėra naujų "
+"video, ir juos atsiunčia fone. Palikus įjungtą programą turėsite naujus "
+"video tuomet, kai panorėsite juos peržiūrėti.\n"
+"\n"
+"<b>Nesijaudinkite dėl disko vietos:</b> Kaip ir „TiVo“, „Miro“ programoje "
+"yra riboto galiojimo laiko sistema, leidžianti pašalinti senesnius video "
+"failus taip paliekant vietos naujiems. Jūs visada galite pasilikti video "
+"failus, pasirinkdami „išsaugoti“ funkciją, ir galite suderinti kanalų "
+"nustatymus, kad video failai būtų automatiškai išsaugojami.\n"
+"\n"
+"<b>Mėgaukitės dideliu vaizdu:</b> Dešiniau grojimo mygtuko esantis mygtukas "
+"leis peržiūrėti video pilnu ekranu.\n"
+"\n"
+"<b>Suraskite video:</b> „Miro“ gide yra šimtai Internetinių TV kanalų, ir "
+"visi jie absoliučiai nemokami. Tiesiog spragtelkite „Pridėti“, norėdami "
+"žiūrėti kanalą."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
-msgid "C_hannels"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
+msgid "Auto download default setting for new channels"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
-msgid "C_reate Channel"
+msgid "Automatically for_ward ports."
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
-msgid "Check Channels for _new content"
-msgstr ""
+msgid "By default, videos _expire after"
+msgstr "Pagal nutylėjimą, video failų _galiojimas baigiasi po"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
-msgid "Disk _Space"
-msgstr ""
+msgid "C_hannel:"
+msgstr "_Kanalas:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:32
+msgid "C_hannels"
+msgstr "_Kanalai"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
-msgid "Don't start a download _if it leaves less than"
-msgstr ""
+msgid "C_reate Channel"
+msgstr "Suk_urti kanalą"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
-msgid "Download at _most"
-msgstr ""
+msgid "Check Channels for _new content"
+msgstr "Patikrinti kanalus, ar yra _naujų video"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
+msgid "Disk _Space"
+msgstr "_Disko vieta"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:37
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
 "Manually"
 msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:38
-msgid "G_B free"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:39
-msgid "Go"
-msgstr ""
+"Kas 30 minučių\n"
+"Kas valandą\n"
+"Rankiniu būdu"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:40
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
-msgid "In This:"
+msgid "G_B"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:41
+msgid "Go"
+msgstr "Vykdyti"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:42
+msgid "Ignore Un_encrypted Connections."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
+msgid "In This:"
+msgstr "Šiame:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:45
+msgid "Limit torrent _downstream to:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
+msgid "Maximum number of channel auto-downloads at a time: "
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
+msgid "Maximum number of manual downloads at a time: "
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
-msgid "Play _videos one after another"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
-msgid "Preferences"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:48
-msgid "Restrict to my full _home folder"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
-msgid "S_top after each video"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
-msgid "S_tore downloaded videos in this folder:"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
-msgid "Search _Engine:"
-msgstr ""
+"Miro gali surasti visus vaizdo įrašus jūsų kompiuteryje kad padėtų "
+"organizuoti kolekciją."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:52
+msgid ""
+"New\n"
+"All\n"
+"Off"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:56
+msgid "Play _videos one after another"
+msgstr "Rodyti _video vieną po kito"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:57
+msgid "Preferences"
+msgstr "Nustatymai"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:58
+msgid "Restrict to my full _home folder"
+msgstr "Apriboti iki mano viso _namų aplanko"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:59
+msgid "S_top after each video"
+msgstr "Sus_tabdyti po kiekvieno video"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
+msgid "S_tore downloaded videos in this folder:"
+msgstr "Sau_goti atsiųstus video šiame aplanke:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
+msgid "Search _Engine:"
+msgstr "Paieškos _variklis:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "Search _custom folder:"
-msgstr ""
+msgstr "Ieškoti _pasirinktiniame aplanke:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:53
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "Select Movies Directory"
-msgstr ""
+msgstr "Pasirinkti filmų aplanką"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:54
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "Select custom search directory"
+msgstr "Pasirinkti norimą ieškojimo aplanką"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
+msgid "Stop torrent uploads when this ratio is reached:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:55
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr ""
+"Keli kiti langai padės Jums suderinti „Miro“ taip, kad būtų patogiausia "
+"naudotis. Štai pirmasis klausimas."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
-msgid "To a_void slowdowns, limit upstream to"
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
+msgid "To avoid internet slowdowns, limit _upstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
+msgid "Use _ports:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
+msgid "Use this renderer to play videos:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "Volume:"
-msgstr ""
+msgstr "Garsumas:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
+#: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
 "download videos from your favorite channels, watch new videos one after the "
 "other, download torrents, recommend videos to friends, and lots more."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid "_Add Folder"
-msgstr ""
+msgstr "_Pridėti aplanką"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "_Automatically run Miro when I log in"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
-msgid "_Bit Torrent uses ports between"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "_Downloads"
-msgstr ""
+msgstr "At_siuntimai"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 msgid "_Folders"
-msgstr ""
+msgstr "_Aplankai"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 msgid "_General"
+msgstr "_Bendra"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:80
+msgid "_KB/s."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
-msgid "_KB/s when my computer is active"
+#: ../../platform/gtk-x11/glade/miro.glade.h:81
+msgid "_Keep at least this much free space on my drive:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_Playback"
-msgstr ""
+msgstr "_Grojimas"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
+#: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgstr "Pratęsti video failų rodymą nuo tos vietos, kur jie buvo sustabdyti"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:71
+#: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_Search"
-msgstr ""
+msgstr "_Paieška"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
+#: ../../platform/gtk-x11/glade/miro.glade.h:85
 msgid "_Search For:"
-msgstr ""
+msgstr "_Ieškoti"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:86
 msgid "_URL"
-msgstr ""
+msgstr "_URL"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:87
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr ""
+"Įs_pėti mane, kai bandau išjungti programą esant aktyviems atsiuntimams"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
+#: ../../platform/gtk-x11/glade/miro.glade.h:88
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr ""
+"_Stebėti šiuos aplankus dėl naujų video failų ir įkelti juos į biblioteką"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
-msgid "_and"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
-msgid "videos at once"
+#: ../../platform/gtk-x11/glade/miro.glade.h:89
+msgid ""
+"xine\n"
+"gstreamer"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
@@ -2395,14 +2656,17 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName versija $appVersion ($appRevision); visos teisės saugomos (c) "
+"2005-2007 $publisher. $longAppName ir $longAppName logotipas yra $publisher "
+"registruoti prekiniai ženklai."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
-msgstr ""
+msgstr "Apie $longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
 msgid "Add Channel"
-msgstr ""
+msgstr "Pridėti kanalą"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
 msgid "Please enter the URL of the channel you'd like to add."
@@ -2410,7 +2674,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
 msgid "Copy log to clipboard"
-msgstr ""
+msgstr "Kopijuoti žurnalą į laikinąją saugyklą"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
 msgid "Open up the bug tracker"
@@ -2437,12 +2701,12 @@ msgstr ""
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
 msgid " "
-msgstr ""
+msgstr " "
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
 msgid "'"
-msgstr ""
+msgstr "'"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10
 msgid ""
@@ -2452,13 +2716,15 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
 msgid "Please contact the publishers of"
-msgstr ""
+msgstr "Susisiekite su leidėjais"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
 msgid ""
 "and ask if they can supply a feed in a format that will work with "
 "$shortAppName."
 msgstr ""
+"ir paklauskite, ar jie gali pateikti srautą tokiu formatu, kuris veiktų su "
+"$shortAppName."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
 msgid "$longAppName"
@@ -2473,140 +2739,160 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
-msgstr ""
+msgstr "Kanalas reikalauja prisijungimo patvirtinimo"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2
 msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
 msgstr ""
+"Įveskite vartotojo vardą bei slaptažodį, kuriuos Jums suteikė šio kanalo "
+"leidėjas."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
-msgstr ""
+msgstr "(DĖMESIO: pakeitimai įsigalios tik iš naujo paleidus $longAppName.)"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Add Folder..."
+msgstr "Pridėti aplanką…"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
+msgid "Automatically Forward Ports"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3
 msgid "Automatically run $longAppName when I login."
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
-msgid "BitTorrent"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid "By default, videos expire after"
-msgstr ""
+msgstr "Pagal nutylėjimą, video galiojimo laikas baigiasi po"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
+msgid "Check channels for new content"
+msgstr "Patikrinti, ar kanaluose nėra naujų video"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
+msgid "Close to tray so that downloads can continue."
+msgstr "Užverti į sisteminį skydelį, kad atsiuntimai būtų tęsiami."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
-msgid "Check channels for new content"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
-msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgid "Every 30 minutes"
+msgstr "Kas 30 minučių"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
-msgid "Every 30 minutes"
+msgid "Every hour"
+msgstr "Kas valandą"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
+msgid "Folder"
+msgstr "Aplankas"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
+msgid "GB"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
+msgid "Ignore Unencrypted Connections"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
+msgid "KB/s"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
+msgid "Limit downstream bandwith to:"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
-msgid "Every hour"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
-msgid "Folder"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
+msgstr "Rankiniu būdu"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
+msgid "Maximum number of channel auto-downloads at a time:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
+msgid "Maximum number of manual downloads at a time:"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
-msgstr ""
+msgstr "Pasirinktys"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "Rodyti vieną video, tada sustoti."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Visiškai išjungti „Miro“."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
 msgstr ""
+"Įsiminti, kur aš sustojau žiūrėti video, ir nuo tos vietos vėliau pratęsti."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Show as a Channel"
-msgstr ""
+msgstr "Rodyti kaip kanalą"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Store downloaded videos in this folder:"
+msgstr "Saugoti atsiųstus video failus šiame aplanke:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
+msgid "To avoid internet slowdowns, limit upstream bandwith to:"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
-msgid ""
-"To avoid slowdowns, limit upstream bandwith when my computer is active."
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
-msgid "Upstream limit (KB/s)"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
-msgid "Use BitTorrent ports between"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr ""
+"DĖMESIO: Šiam nustatymui įsigalioti reikės iš naujo paleisti $longAppName."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "Warn me when I attempt to quit with downloads in progress."
 msgstr ""
+"Įspėti mane, kai aš bandau išjungti programą esant aktyviems atsiuntimams."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Watch for new videos in these folders and include them in my Library."
 msgstr ""
+"Stebėti, ar nėra naujų video šiuose aplankuose, bei juos pridėti į "
+"biblioteką."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "When I click the red close button:"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
-msgid "and"
-msgstr ""
+msgstr "Kai aš paspaudžiu raudoną užvėrimo mygtuką:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
-msgstr ""
+msgstr "Kanalas:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
 msgid "Search Engine:"
-msgstr ""
+msgstr "Paieškos variklis:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
 msgid "Search For:"
-msgstr ""
+msgstr "Ieškoti:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
 msgid ""
 "$longAppName can find all the videos on your computer to help you organize "
 "your collection."
 msgstr ""
+"$longAppName gali surasti visus video failus Jūsų kompiuteryje, taip "
+"palaikant tvarką Jūsų kolekcijoje."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
 msgid ""
@@ -2614,34 +2900,37 @@ msgid ""
 "background.  Leaving it running means you'll have new videos when you're "
 "ready to watch."
 msgstr ""
+"$longAppName nuolat tikrina, ar nėra kanaluose naujų video failų, ir juos "
+"fone atsiunčia. Palikę programą veikti, Jūsų turėsite naujų video failų "
+"tuomet, kai norėsite juos peržiūrėti."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
 msgid "$shortAppName First Time Setup"
-msgstr ""
+msgstr "$shortAppName pirmasis suderinimas"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
-msgstr ""
+msgstr "Nutraukti paiešką"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
 msgid "Change"
-msgstr ""
+msgstr "Pakeisti"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46
 msgid "Don't Worry About Disk Space:"
-msgstr ""
+msgstr "Nesijaudinkite dėl disko vietos:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50
 msgid "Find Videos:"
-msgstr ""
+msgstr "Suraskite video:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
 msgid "Go Big:"
-msgstr ""
+msgstr "Mėgaukitės dideliu vaizdu:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
 msgid "Leave it On:"
-msgstr ""
+msgstr "Palikite įjungtą:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
 msgid ""
@@ -2656,18 +2945,20 @@ msgid ""
 "Now you can explore the Channel Guide\n"
 "and start watching.  A few tips to get started:"
 msgstr ""
+"Dabar galite naršyti po kanalų gidą\n"
+"ir pradėti žiūrėti. Keli patarimai pradedant:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
 msgid "Reset Search"
-msgstr ""
+msgstr "Atstatyti paiešką"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "Apriboti iki visų mano asmeninių failų."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
 msgid "Search custom folder:"
-msgstr ""
+msgstr "Ieškoti pasirinktiniame aplanke:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
 msgid ""
@@ -2702,12 +2993,12 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
 msgid "You're done!"
-msgstr ""
+msgstr "Suderinimas baigtas!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
 msgid "Release Notes:"
-msgstr ""
+msgstr "Laidos informacija:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"
-msgstr ""
+msgstr "Klausimas"
