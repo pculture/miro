@@ -1,28 +1,13 @@
-Index: portable/app.py
+Index: portable/frontends/html/main.py
 ===================================================================
---- portable/app.py	(revision 5514)
-+++ portable/app.py	(working copy)
-@@ -45,7 +45,6 @@
- import storedatabase
- import subscription
- import downloader
--import autoupdate
- import xhtmltools
- import guide
- import idlenotifier 
-@@ -652,7 +651,6 @@
-         global delegate
-         feed.setDelegate(delegate)
-         feed.setSortFunc(sorts.item)
--        autoupdate.setDelegate(delegate)
-         database.setDelegate(delegate)
-         dialogs.setDelegate(delegate)
-         
-@@ -816,7 +814,6 @@
+--- portable/frontends/html/main.py	(revision 6519)
++++ portable/frontends/html/main.py	(working copy)
+@@ -62,7 +62,7 @@
+     templates for the display (i.e. the Miro frontend for version 1.0)
+     """
  
-         util.print_mem_usage("Post-item reconnect memory check")
+-    AUTOUPDATE_SUPPORTED = True
++    AUTOUPDATE_SUPPORTED = False
  
--        eventloop.addTimeout (3, autoupdate.checkForUpdates, "Check for updates")
-         feed.expireItems()
- 
-         self.tabDisplay = TemplateDisplay('tablist', 'default',
+     def __init__(self):
+         self.ignoreErrors = False
