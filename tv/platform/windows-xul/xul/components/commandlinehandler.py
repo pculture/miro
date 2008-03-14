@@ -30,7 +30,38 @@
 
 from xpcom import components
 
+import string
+from xml.sax.saxutils import escape
+from glob import glob
+import os.path
+
 from miro.platform.xulhelper import makeService, proxify
+from miro import config
+from miro.platform import resources
+
+def _recalculateThemeLocale(theme):
+    templateVars = config.app.configfile.default_vars.copy()
+    templateVars.update(config.app.configfile.theme_vars)
+    xmlVars = {}
+    for key in templateVars:
+        xmlVars[key] = escape(templateVars[key],
+                              {"'": "&apos;", '"': "&quot;"})
+        theme_dir = resources._getThemeDirectory()
+        theme_locale_dir = resources.theme_path(theme, 'xul\\locale')
+        for lang_path in glob(os.path.join(theme_locale_dir, '*')):
+            language = os.path.basename(lang_path)
+            builtin_path = os.path.join(resources.appRoot(), 'chrome',
+                                        'locale', language)
+            for fname in glob(os.path.join(builtin_path, '*.template')):
+                dtd_fname = os.path.join(lang_path,
+                                         fname[len(builtin_path)+1:-len('.template')])
+                dtd_fname = dtd_fname.encode('mbcs')
+                if fname.find('prefs') != -1:
+                    print fname, dtd_fname
+                    s = string.Template(open(fname, 'rt').read())
+                    f = open(dtd_fname+'foo', 'wt')
+                    f.write(s.safe_substitute(**xmlVars))
+                    f.close()
 
 class DemocracyCLH:
     _com_interfaces_ = [components.interfaces.nsICommandLineHandler]
@@ -45,6 +76,12 @@ class DemocracyCLH:
         commandLine = proxify(commandLine,components.interfaces.nsICommandLine)
         args = [commandLine.getArgument(i) for i in range(commandLine.length)]
         if "--register-xul-only" in args:
+            return
+
+        if "--theme" in args and "--recalc-theme-locale" in args:
+            theme = args[args.index("--theme")+1]
+            config.load(theme)
+            _recalculateThemeLocale(theme)
             return
 
         chromeURL = "chrome://dtv/content/main.xul"
