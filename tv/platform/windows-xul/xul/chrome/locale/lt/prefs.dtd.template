@@ -1,58 +1,58 @@
-<!ENTITY prefs.title "Options">
+<!ENTITY prefs.title "Pasirinktys">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.close_to_tray_start "Kai aš paspaudžiu raudoną užvėrimo mygtuką:">
+<!ENTITY prefs.close_to_tray "Užverti į sisteminį skydelį, kad atsiuntimai būtų tęsiami.">
+<!ENTITY prefs.no_close_to_tray "Visiškai išjungti „Miro“.">
 
-<!ENTITY prefs.general "General">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general "Bendra">
+<!ENTITY prefs.general.warn_on_quit "Įspėti mane, kai aš bandau išjungti programą esant aktyviems atsiuntimams.">
 
-<!ENTITY prefs.channels "Channels">
-<!ENTITY prefs.channels.check "Check channels for new content">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels "Kanalai">
+<!ENTITY prefs.channels.check "Patikrinti, ar kanaluose nėra naujų video">
+<!ENTITY prefs.channels.check.thirty "Kas 30 minučių">
+<!ENTITY prefs.channels.check.sixty "Kas valandą">
+<!ENTITY prefs.channels.check.manually "Rankiniu būdu">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
 <!ENTITY prefs.channels.autodownloaddefault.all "All">
-<!ENTITY prefs.channels.autodownloaddefault.new "New">
+<!ENTITY prefs.channels.autodownloaddefault.new "Naujas">
 <!ENTITY prefs.channels.autodownloaddefault.off "Off">
 
-<!ENTITY prefs.playback "Playback">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback "Grojimas">
+<!ENTITY prefs.playback.remember.pos "Įsiminti, kur aš sustojau žiūrėti video, ir nuo tos vietos vėliau pratęsti.">
+<!ENTITY prefs.playback.auto.next.video "Groti video vieną po kito:">
+<!ENTITY prefs.playback.stop.after.each "Rodyti vieną video, tada sustoti.">
 
-<!ENTITY prefs.folder.movies "Folders">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.movies "Aplankai">
+<!ENTITY prefs.folder.downloads "Saugoti atsiųstus video failus šiame aplanke:">
+<!ENTITY prefs.folder.change "Pakeisti...">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
-<!ENTITY prefs.folder.others.add "Add Folder...">
-<!ENTITY prefs.folder.others.remove "Remove">
+<!ENTITY prefs.folder.others.caption "Stebėti, ar nėra naujų video šiuose aplankuose, bei juos pridėti į biblioteką.">
+<!ENTITY prefs.folder.others.location "Aplankas">
+<!ENTITY prefs.folder.others.shown "Rodyti kaip kanalą">
+<!ENTITY prefs.folder.others.add "Pridėti aplanką…">
+<!ENTITY prefs.folder.others.remove "Pašalinti">
 
-<!ENTITY prefs.downloads "Downloads" >
+<!ENTITY prefs.downloads "Parsiuntimai" >
 <!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
-<!ENTITY prefs.disk.space "Disk Space">
+<!ENTITY prefs.disk.space "Disko vieta">
 <!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "DĖMESIO: Šiam nustatymui įsigalioti reikės iš naujo paleisti $longAppName.">
 
-<!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
-<!ENTITY prefs.videos.expire.six "6 days">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire "Pagal nutylėjimą, video galiojimo laikas baigiasi po">
+<!ENTITY prefs.videos.expire.one "1 diena">
+<!ENTITY prefs.videos.expire.three "3 dienos">
+<!ENTITY prefs.videos.expire.six "6 dienos">
+<!ENTITY prefs.videos.expire.ten "10 dienų">
+<!ENTITY prefs.videos.expire.thirty "1 mėnuo">
+<!ENTITY prefs.videos.expire.never "Niekada">
 
 <!ENTITY prefs.torrent "BitTorrent">
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
+<!ENTITY prefs.torrent.restart.warning "(DĖMESIO: pakeitimai įsigalios tik iš naujo paleidus $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">

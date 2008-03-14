@@ -1,0 +1,2 @@
+<!ENTITY about.title         "‚Äì√ª $longAppName">
+<!ENTITY about.body          "$longAppName версія $appVersion ($appRevision); права інтелектуальної власності (c) 2005-2007 $publisher.  $longAppName та $longAppName є зареєстрованими торговими марками $publisher.">

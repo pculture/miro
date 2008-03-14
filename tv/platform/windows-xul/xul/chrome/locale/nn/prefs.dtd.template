@@ -1,49 +1,49 @@
-<!ENTITY prefs.title "Options">
+<!ENTITY prefs.title "Innstillingar">
 
-<!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
-<!ENTITY prefs.close_to_tray_start "When I click the red close button:">
-<!ENTITY prefs.close_to_tray "Close to tray so that downloads can continue.">
-<!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
+<!ENTITY prefs.run.on.startup "Køyr automatisk $longAppName ved innlogging.">
+<!ENTITY prefs.close_to_tray_start "Når eg trykkjer på den raude lukk-knappen:">
+<!ENTITY prefs.close_to_tray "Minimer til systemtrau, slik at nedlastingar kan halda fram.">
+<!ENTITY prefs.no_close_to_tray "Avslutt Miro fullstendig.">
 
-<!ENTITY prefs.general "General">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general "Generelt">
+<!ENTITY prefs.general.warn_on_quit "Åtvar ved forsøk på å avslutta med uferdige nedlastingar.">
 
 <!ENTITY prefs.channels "Kanalar">
-<!ENTITY prefs.channels.check "Check channels for new content">
-<!ENTITY prefs.channels.check.thirty "Every 30 minutes">
-<!ENTITY prefs.channels.check.sixty "Every hour">
-<!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check "Sjå etter nytt innhald på kanalar">
+<!ENTITY prefs.channels.check.thirty "Kvar halvtime">
+<!ENTITY prefs.channels.check.sixty "Kvar time">
+<!ENTITY prefs.channels.check.manually "Manuelt">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
-<!ENTITY prefs.channels.autodownloaddefault.new "New">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault "Innstillingar for automatisk nedlasting av nye kanalar">
+<!ENTITY prefs.channels.autodownloaddefault.all "Alle">
+<!ENTITY prefs.channels.autodownloaddefault.new "Ny">
+<!ENTITY prefs.channels.autodownloaddefault.off "Av">
 
 <!ENTITY prefs.playback "Avspeling">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
-<!ENTITY prefs.playback.auto.next.video "Spel av filmar ein etter ein">
-<!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
+<!ENTITY prefs.playback.remember.pos "Hugs kor eg slutta å sjå på ein film, og hald fram avspelinga frå den staden neste gong.">
+<!ENTITY prefs.playback.auto.next.video "Spel av filmar éin etter éin.">
+<!ENTITY prefs.playback.stop.after.each "Spel éin film, og så stopp.">
 
-<!ENTITY prefs.folder.movies "Folders">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.movies "Mapper">
+<!ENTITY prefs.folder.downloads "Lagra nedlasta filmar i denne mappa:">
+<!ENTITY prefs.folder.change "Endra …">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
-<!ENTITY prefs.folder.others.shown "Show as a Channel">
-<!ENTITY prefs.folder.others.add "Add Folder...">
-<!ENTITY prefs.folder.others.remove "Remove">
+<!ENTITY prefs.folder.others.caption "Sjå etter nye filmar i desse mappene, og legg dei automatisk til biblioteket.">
+<!ENTITY prefs.folder.others.location "Mappe">
+<!ENTITY prefs.folder.others.shown "Vis som kanal">
+<!ENTITY prefs.folder.others.add "Legg til mappe …">
+<!ENTITY prefs.folder.others.remove "Fjern">
 
-<!ENTITY prefs.downloads "Downloads" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
-<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+<!ENTITY prefs.downloads "Nedlastingar" >
+<!ENTITY prefs.downloads.max "Maks tal på manuelle nedlastingar på éin gong:">
+<!ENTITY prefs.autodownloads.max "Maks tal på automatiske nedlastingar på éin gong, per kanal:">
 
-<!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space "Diskplass">
+<!ENTITY prefs.disk.space.min.part1 "Ha alltid minst så mykje ledig plass att på disken:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "Åtvaring: Endringane vil først trå i kraft etter at du har starta $longAppName på nytt.">
 
-<!ENTITY prefs.videos.expire "By default, videos expire after">
+<!ENTITY prefs.videos.expire "Som standard utgår filmar etter">
 <!ENTITY prefs.videos.expire.one "1 dag">
 <!ENTITY prefs.videos.expire.three "3 dagar">
 <!ENTITY prefs.videos.expire.six "6 dagar">
@@ -52,11 +52,11 @@
 <!ENTITY prefs.videos.expire.never "Aldri">
 
 <!ENTITY prefs.torrent "BitTorrent">
-<!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.restart.warning "(Åtvaring: Endringane vil først trå i kraft etter at du har starta $longAppName på nytt.)">
+<!ENTITY prefs.torrent.limit.upstream "For å hindra overbelasta nettverk, avgrens opplastingsbandbreidd til:">
+<!ENTITY prefs.torrent.limit.downstream "Avgrens nedlastingsbandbreidd til:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_ports "Bruk desse portane:">
+<!ENTITY prefs.torrent.use_upnp "Vidaresend automatisk portar">
+<!ENTITY prefs.torrent.require_encryption "Ignorer ukrypterte samband">
+<!ENTITY prefs.torrent.uploadratio "Stopp torrent-opplastingar når dette forholdet er nådd:">

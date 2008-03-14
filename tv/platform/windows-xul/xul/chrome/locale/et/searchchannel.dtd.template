@@ -2,7 +2,7 @@
 <!ENTITY searchchannel.termlabel 	"Search For:">
 <!ENTITY searchchannel.title            "New Search Channel">
 <!ENTITY searchchannel.inthis "In This:">
-<!ENTITY searchchannel.channel "Channel:">
-<!ENTITY searchchannel.searchengine "Search Engine:">
+<!ENTITY searchchannel.channel "Kanal:">
+<!ENTITY searchchannel.searchengine "Otsingumootor:">
 <!ENTITY searchchannel.url "URL:">
 <!ENTITY searchchannel.createchannel "Create Channel">

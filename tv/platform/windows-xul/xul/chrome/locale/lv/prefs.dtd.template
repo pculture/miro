@@ -1,0 +1,62 @@
+<!ENTITY prefs.title "Iestatījumi">
+
+<!ENTITY prefs.run.on.startup "Automātiski palaist $longAppName ieslēdzot datoru.">
+<!ENTITY prefs.close_to_tray_start "Kad es nospiežu sarkano aizvēršanas pogu:">
+<!ENTITY prefs.close_to_tray "Aizvērt uz palodzi, lai lejupielādes var turpināties.">
+<!ENTITY prefs.no_close_to_tray "Pilnībā aizver Miro.">
+
+<!ENTITY prefs.general "Vispārējās Īpašības">
+<!ENTITY prefs.general.warn_on_quit "Brīdināt mani, kad mēģinu aizvērt kamēr notiek kāda lejupielāde.">
+
+<!ENTITY prefs.channels "Kanāli">
+<!ENTITY prefs.channels.check "Pārbaudīt jaunus video kanālos">
+<!ENTITY prefs.channels.check.thirty "Katras 30 minūtes">
+<!ENTITY prefs.channels.check.sixty "Katru stundu">
+<!ENTITY prefs.channels.check.manually "Manuāli">
+
+<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.new "Jauns">
+<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+
+<!ENTITY prefs.playback "Atskaņošana">
+<!ENTITY prefs.playback.remember.pos "Atcerēties kurā vietā es pārtraucu skatīties video un vēlāk turpināt no šīs vietas.">
+<!ENTITY prefs.playback.auto.next.video "Atskaņot vienu video pēc otra.">
+<!ENTITY prefs.playback.stop.after.each "Atskaņot vienu video, tad apstāties.">
+
+<!ENTITY prefs.folder.movies "Mapes">
+<!ENTITY prefs.folder.downloads "Saglabāt lejupielādētos video šajā mapē:">
+<!ENTITY prefs.folder.change "Izmainīt...">
+
+<!ENTITY prefs.folder.others.caption "Sekot līdz jauniem video šajās mapēs un iekļaut tos manā bibliotēkā.">
+<!ENTITY prefs.folder.others.location "Mape">
+<!ENTITY prefs.folder.others.shown "Rādīt kā kanālu">
+<!ENTITY prefs.folder.others.add "Pievienot mapi...">
+<!ENTITY prefs.folder.others.remove "Aizvākt">
+
+<!ENTITY prefs.downloads "Lejupielāde" >
+<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+
+<!ENTITY prefs.disk.space "Diska vieta">
+<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part2 "GB">
+<!ENTITY prefs.disk.space.warning.restart "UZMANĪBU: Šī izmaiņa nestāsies spēkā līdz jūš nepārstartēsiet $longAppName.">
+
+<!ENTITY prefs.videos.expire "Pēc noklusējuma video tiek dzēsti pēc">
+<!ENTITY prefs.videos.expire.one "1 diena">
+<!ENTITY prefs.videos.expire.three "3 dienas">
+<!ENTITY prefs.videos.expire.six "6 dienas">
+<!ENTITY prefs.videos.expire.ten "10 dienas">
+<!ENTITY prefs.videos.expire.thirty "1 mēnesis">
+<!ENTITY prefs.videos.expire.never "Nekad">
+
+<!ENTITY prefs.torrent "BitTorrent">
+<!ENTITY prefs.torrent.restart.warning "(UZMANĪBU: Izmaiņas nestāsies spēkā līdz jūs nepārstartēsiet $longAppName.)">
+<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

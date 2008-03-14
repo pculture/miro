@@ -1,13 +1,13 @@
 <!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
+<!ENTITY rsaquo              "’">
 
-<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
-<!ENTITY canscrape.body      "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.">
+<!ENTITY canscrape.title     "Kanalen er ikkje kompatibel med $shortAppName.">
+<!ENTITY canscrape.body      "Men me vil gjera vårt beste for å få tak i filmfilene. Det kan vera det tar lengre tid å visa filmoversikta, og programskildringane kan sjå rare ut.">
 
-<!ENTITY canscrape.prefix    "Please contact the publishers of">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
-<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
-<!ENTITY canscrape.body      "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.">
+<!ENTITY canscrape.prefix    "Ta kontakt med utgjevaren av">
+<!ENTITY canscrape.suffix    "og spør om dei kan tilby filmkjelda i eit format som $shortAppName støttar.">
+<!ENTITY canscrape.title     "Kanalen er ikkje kompatibel med $shortAppName.">
+<!ENTITY canscrape.body      "Men me vil gjera vårt beste for å få tak i filmfilene. Det kan vera det tar lengre tid å visa filmoversikta, og programskildringane kan sjå rare ut.">
 
-<!ENTITY canscrape.prefix    "Please contact the publishers of">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
+<!ENTITY canscrape.prefix    "Ta kontakt med utgjevaren av">
+<!ENTITY canscrape.suffix    "og spør om dei kan tilby filmkjelda i eit format som $shortAppName støttar.">
