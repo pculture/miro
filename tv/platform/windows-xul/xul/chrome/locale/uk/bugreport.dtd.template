@@ -1,0 +1,7 @@
+<!ENTITY bugreport.title     "Ви знайшли програмну помилку в $longAppName!">
+<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
+information into our bug tracker and tell us what you were doing when the
+problem occurred.">
+<!ENTITY bugreport.openbugtracker "‚Äì√ª‚Äî√á‚Äì‚à´‚Äî√Ñ‚Äî√£‚Äî√á‚Äî√  ‚Äî√Ö‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì¬µ‚Äì¬∫‚Äî√â ‚Äì√¶‚Äî√á‚Äî√Ö‚Äì¬™‚Äì¬µ‚Äì‚àÇ‚Äì‚àè‚Äì‚â§‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√® ‚Äì¬±‚Äì‚àû‚Äì‚â ‚Äì√¶‚Äì‚â§">
+<!ENTITY bugreport.copytoclipboard "‚Äì¬∞‚Äì‚à´‚Äì√¶‚Äì√∏‚Äì‚àè‚Äî√Ñ‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√á‚Äî√  ‚Äî√Ö‚Äì√¶‚Äì√¶‚Äì¬±‚Äî√¢‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äì¬µ ‚Äì‚â§ ‚Äì¬±‚Äî√â‚Äî√ë‚Äì¬µ‚Äî√Ñ ‚Äì√¶‚Äì¬±‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àû">
+<!ENTITY bugreport.pleaserestart "Після чого, будь ласка, перезапустіть $longAppName (інакше ми можете надалі стикатись с пов'язаними помилками). Вибачте за незручності. $longAppName наразі у тестовій версії, але завдяки вашій підтримці ми виправимо помилки швидко!">

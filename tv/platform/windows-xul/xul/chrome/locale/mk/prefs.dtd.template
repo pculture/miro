@@ -26,13 +26,13 @@
 
 <!ENTITY prefs.folder.movies "Folders">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
-<!ENTITY prefs.folder.change "Change...">
+<!ENTITY prefs.folder.change "Измени...">
 
 <!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
 <!ENTITY prefs.folder.others.location "Folder">
 <!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Add Folder...">
-<!ENTITY prefs.folder.others.remove "Remove">
+<!ENTITY prefs.folder.others.remove "Отстрани">
 
 <!ENTITY prefs.downloads "Downloads" >
 <!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
@@ -44,12 +44,12 @@
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
 <!ENTITY prefs.videos.expire "By default, videos expire after">
-<!ENTITY prefs.videos.expire.one "1 day">
-<!ENTITY prefs.videos.expire.three "3 days">
-<!ENTITY prefs.videos.expire.six "6 days">
-<!ENTITY prefs.videos.expire.ten "10 days">
-<!ENTITY prefs.videos.expire.thirty "1 month">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire.one "1 ден">
+<!ENTITY prefs.videos.expire.three "3 дена">
+<!ENTITY prefs.videos.expire.six "6 дена">
+<!ENTITY prefs.videos.expire.ten "10 дена">
+<!ENTITY prefs.videos.expire.thirty "1 месец">
+<!ENTITY prefs.videos.expire.never "Никогаш">
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">

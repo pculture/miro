@@ -1,4 +1,4 @@
-<!ENTITY migrate.title "Migrate existing movies?">
-<!ENTITY migrate.accept "Migrate">
-<!ENTITY migrate.cancel "Don't Migrate">
-<!ENTITY migrate.description "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)">
+<!ENTITY migrate.title "Flytta lagra filmar?">
+<!ENTITY migrate.accept "Flytt">
+<!ENTITY migrate.cancel "Ikkje flytt">
+<!ENTITY migrate.description "Du har vald ei ny mappe for nedlasting av filmar. Vil du at $shortAppName skal flytta ferdige nedlastingar der? (Filmar som er i ferd med å lastast ned vert ikkje flytta før dei er ferdig nedlasta.)">

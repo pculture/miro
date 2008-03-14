@@ -1,0 +1,94 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {checkEvery = id; setAutoDownloadDefault = id; }; 
+            CLASS = ChannelsPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {autoDownloadPopup = id; periodicityPopup = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {preserveDiskSpace = id; setExpirationDelay = id; setMinimumSpace = id; }; 
+            CLASS = DiskSpacePrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                expirationDelayPopupButton = id; 
+                minimumSpaceField = id; 
+                preserveSpaceCheckBox = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                autoForwardPort = id; 
+                changeMoviesDirectory = id; 
+                ignoreNonEncryptedCnx = id; 
+                limitDownstream = id; 
+                limitUpstream = id; 
+                setBTMaxPort = id; 
+                setBTMinPort = id; 
+                setDownstreamLimit = id; 
+                setMaxAutoDownloads = id; 
+                setMaxDownloads = id; 
+                setUploadRatio = id; 
+                setUpstreamLimit = id; 
+                stopUploadAtRatio = id; 
+            }; 
+            CLASS = DownloadsPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                autoForwardButton = id; 
+                btMaxPortField = id; 
+                btMinPortField = id; 
+                limitDownstreamCheckBox = id; 
+                limitDownstreamField = id; 
+                limitUpstreamCheckBox = id; 
+                limitUpstreamField = id; 
+                maxAutoDownloadsField = id; 
+                maxDownloadsField = id; 
+                moviesDirectoryField = id; 
+                nonEncryptedCnxButton = id; 
+                stopAtRatioCheckbox = id; 
+                stopAtRatioField = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {addFolder = id; removeFolder = id; showFolderAsChannel = id; }; 
+            CLASS = FoldersPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {deleteButton = id; foldersTable = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {runAtStartup = id; warnIfDownloading = id; }; 
+            CLASS = GeneralPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {runAtStartupCheckBox = id; warnIfDownloadingCheckBox = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {rememberVideoPosition = id; setPlaybackMode = id; }; 
+            CLASS = PlaybackPrefsController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {modesMatrix = id; rememberCheckBox = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {switchPreferenceView = id; }; 
+            CLASS = PreferencesWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                channelsView = id; 
+                diskSpaceView = id; 
+                downloadsView = id; 
+                foldersView = id; 
+                generalView = id; 
+                playbackView = id; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

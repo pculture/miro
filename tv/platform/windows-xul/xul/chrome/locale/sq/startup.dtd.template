@@ -9,8 +9,8 @@
 <!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"Searching for Videos">
-<!ENTITY startup.change	                "Change">
+<!ENTITY startup.search.searching	"Po kërkoj për Video">
+<!ENTITY startup.change	                "Ndrysho">
 <!ENTITY startup.cancel	                "Cancel Search">
 <!ENTITY startup.undo	                "Reset Search">
 <!ENTITY startup.done1			"You're done!">
@@ -22,10 +22,10 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
 <!ENTITY startup.done5.heading		"Go Big:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
+<!ENTITY startup.done6.heading		"Gjej Video">
 <!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
-<!ENTITY startup.answer.yes		"Yes">
-<!ENTITY startup.answer.no		"No">
+<!ENTITY startup.answer.yes		"Po">
+<!ENTITY startup.answer.no		"Jo">
 <!ENTITY startup.title			"$shortAppName First Time Setup">
 <!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
@@ -34,8 +34,8 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"Searching for Videos">
-<!ENTITY startup.change	                "Change">
+<!ENTITY startup.search.searching	"Po kërkoj për Video">
+<!ENTITY startup.change	                "Ndrysho">
 <!ENTITY startup.cancel	                "Cancel Search">
 <!ENTITY startup.undo	                "Reset Search">
 <!ENTITY startup.done1			"You're done!">
@@ -47,7 +47,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
 <!ENTITY startup.done5.heading		"Go Big:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
+<!ENTITY startup.done6.heading		"Gjej Video">
 <!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
-<!ENTITY startup.answer.yes		"Yes">
-<!ENTITY startup.answer.no		"No">
+<!ENTITY startup.answer.yes		"Po">
+<!ENTITY startup.answer.no		"Jo">

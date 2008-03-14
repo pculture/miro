@@ -33,7 +33,7 @@ langs = (
          ("eo", "Esperanto"),
          ("es", "Spanish"),
          ("et", "Estonian"),
-         ("eu", "Basque"),head
+         ("eu", "Basque"),
          ("fa", "Persian"),
          ("fi", "Finnish"),
          ("fr", "French"),

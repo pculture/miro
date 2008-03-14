@@ -1,23 +1,19 @@
-/* SOME DESCRIPTIVE TITLE.
+﻿/* SOME DESCRIPTIVE TITLE.
 Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-02-29 07:40-0500\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-14 08:49-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
-/* File: ../../portable/dialogs.py:77 */
-/* Flag: untranslated */
-"Cancel" = "Cancel";
+/* File: ../../portable/dialogs.py:85 */
+"Cancel" = "Atsisakyti";
 
-/* Flag: untranslated */
-"OK" = "OK";
+"OK" = "Gerai";
 
-/* File: ../../portable/dialogs.py:76 */
-/* Flag: untranslated */
-"Ok" = "Ok";
+/* File: ../../portable/dialogs.py:84 */
+"Ok" = "Gerai";
 
-/* Flag: untranslated */
 "$log" = "$log";
 
 /* Flag: untranslated */
@@ -32,177 +28,122 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "The fall of $shortAppName??" = "The fall of $shortAppName??";
 
-/* Flag: untranslated */
-"About Miro" = "About Miro";
+"About Miro" = "Apie „Miro“";
 
-/* Flag: untranslated */
-"Add Channel..." = "Add Channel...";
+"Add Channel..." = "Pridėti kanalą...";
 
-/* Flag: untranslated */
-"Add Guide..." = "Add Guide...";
+"Add Guide..." = "Pridėti gidą...";
 
-/* Flag: untranslated */
-"Bring All to Front" = "Bring All to Front";
+"Bring All to Front" = "Perkelti viską į priekį";
 
-/* File: ../../platform/osx/frontend/Preferences.py:65 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
-/* Flag: untranslated */
-"Channels" = "Channels";
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:80 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
+"Channels" = "Kanalai";
 
-/* Flag: untranslated */
-"Check for New Version" = "Check for New Version";
+"Check for New Version" = "Ieškoti naujos versijos";
 
-/* Flag: untranslated */
-"Clear Menu" = "Clear Menu";
+"Clear Menu" = "Išvalyti meniu";
 
-/* Flag: untranslated */
-"Close Window" = "Close Window";
+"Close Window" = "Užverti langą";
 
-/* Flag: untranslated */
-"Copy" = "Copy";
+"Copy" = "Kopijuoti";
 
-/* Flag: untranslated */
-"Copy Channel URL" = "Copy Channel URL";
+"Copy Channel URL" = "Kopijuoti kanalo URL";
 
-/* Flag: untranslated */
-"Copy Video URL" = "Copy Video URL";
+"Copy Video URL" = "Kopijuoti video URL";
 
-/* Flag: untranslated */
-"Cut" = "Cut";
+"Cut" = "Iškirpti";
 
-/* File: ../../portable/dialogs.py:96 */
-/* Flag: untranslated */
-"Delete" = "Delete";
+/* File: ../../portable/dialogs.py:104 */
+"Delete" = "Ištrinti";
 
-/* Flag: untranslated */
-"Donate" = "Donate";
+"Donate" = "Paaukoti";
 
-/* Flag: untranslated */
-"Download Video..." = "Download Video...";
+"Download Video..." = "Atsisiųsti video...";
 
-/* Flag: untranslated */
-"Edit" = "Edit";
+"Edit" = "Redaguoti";
 
-/* Flag: untranslated */
-"Export Channels (OPML)..." = "Export Channels (OPML)...";
+"Export Channels (OPML)..." = "Eksportuoti kanalus (OPML)...";
 
-/* Flag: untranslated */
-"File" = "File";
+"File" = "Failas";
 
-/* Flag: untranslated */
-"Full Screen" = "Full Screen";
+"Full Screen" = "Visas ekranas";
 
-/* Flag: untranslated */
-"Help" = "Help";
+"Help" = "Žinynas";
 
-/* Flag: untranslated */
-"Hide Miro" = "Hide Miro";
+"Hide Miro" = "Paslėpti „Miro“";
 
-/* Flag: untranslated */
-"Hide Others" = "Hide Others";
+"Hide Others" = "Paslėpti kitus";
 
-/* Flag: untranslated */
-"Import Channels (OPML)..." = "Import Channels (OPML)...";
+"Import Channels (OPML)..." = "Importuoti kanalus (OPML)...";
 
-/* Flag: untranslated */
-"Main Window" = "Main Window";
+"Main Window" = "Pagrindinis langas";
 
-/* Flag: untranslated */
-"MainMenu" = "MainMenu";
+"MainMenu" = "Pagrindinis meniu";
 
-/* Flag: untranslated */
-"Minimize" = "Minimize";
+"Minimize" = "Sumažinti";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
-/* Flag: untranslated */
-"Miro" = "Miro";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+"Miro" = "„Miro“";
 
-/* Flag: untranslated */
-"Miro Help" = "Miro Help";
+"Miro Help" = "„Miro“ žinynas";
 
-/* Flag: untranslated */
-"New Channel Folder..." = "New Channel Folder...";
+"New Channel Folder..." = "Naujas kanalo aplankas...";
 
-/* Flag: untranslated */
-"New Playlist Folder..." = "New Playlist Folder...";
+"New Playlist Folder..." = "Naujas grojaraščio aplankas...";
 
-/* Flag: untranslated */
-"New Playlist..." = "New Playlist...";
+"New Playlist..." = "Naujas grojaraštis...";
 
-/* Flag: untranslated */
-"New Search Channel..." = "New Search Channel...";
+"New Search Channel..." = "Naujas paieškos kanalas...";
 
-/* Flag: untranslated */
-"Next Video" = "Next Video";
+"Next Video" = "Kitas video";
 
-/* Flag: untranslated */
-"Open Recent" = "Open Recent";
+"Open Recent" = "Atverti paskutinį naudotą";
 
-/* Flag: untranslated */
-"Open..." = "Open...";
+"Open..." = "Atverti...";
 
-/* Flag: untranslated */
-"Paste" = "Paste";
+"Paste" = "Įdėti";
 
-/* File: ../../platform/osx/frontend/Application.py:249 */
-/* Flag: untranslated */
-"Play Video" = "Play Video";
+/* File: ../../platform/osx/platform/frontends/html/Application.py:244 */
+"Play Video" = "Groti video";
 
-/* File: ../../platform/osx/frontend/Preferences.py:69 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-/* Flag: untranslated */
-"Playback" = "Playback";
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:84 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
+"Playback" = "Grojimas";
 
-/* Flag: untranslated */
-"Playlists" = "Playlists";
+"Playlists" = "Grojaraščiai";
 
-/* Flag: untranslated */
-"Preferences..." = "Preferences...";
+"Preferences..." = "Nustatymai...";
 
-/* Flag: untranslated */
-"Previous Video" = "Previous Video";
+"Previous Video" = "Praėjęs video";
 
-/* Flag: untranslated */
-"Quit Miro" = "Quit Miro";
+"Quit Miro" = "Išjungti „Miro“";
 
-/* Flag: untranslated */
-"Remove..." = "Remove...";
+"Remove..." = "Pašalinti...";
 
-/* Flag: untranslated */
-"Rename..." = "Rename...";
+"Rename..." = "Pervadinti...";
 
-/* Flag: untranslated */
-"Report a bug" = "Report a bug";
+"Report a bug" = "Pranešti apie klaidą";
 
-/* Flag: untranslated */
-"Save Video As..." = "Save Video As...";
+"Save Video As..." = "Išsaugoti video kaip...";
 
-/* Flag: untranslated */
-"Select All" = "Select All";
+"Select All" = "Pasirinkti viską";
 
-/* Flag: untranslated */
-"Send This Channel to a Friend" = "Send This Channel to a Friend";
+"Send This Channel to a Friend" = "Nusiųsti šį kanalą draugui";
 
-/* Flag: untranslated */
-"Services" = "Services";
+"Services" = "Paslaugos";
 
-/* Flag: untranslated */
-"Show All" = "Show All";
+"Show All" = "Rodyti viską";
 
-/* Flag: untranslated */
-"Stop Video" = "Stop Video";
+"Stop Video" = "Sustabdyti video";
 
-/* Flag: untranslated */
-"Update All Channels" = "Update All Channels";
+"Update All Channels" = "Atnaujinti visus kanalus";
 
-/* Flag: untranslated */
-"Update Channel" = "Update Channel";
+"Update Channel" = "Atnaujinti kanalą";
 
-/* Flag: untranslated */
-"Window" = "Window";
+"Window" = "Langas";
 
-/* Flag: untranslated */
-"Zoom" = "Zoom";
+"Zoom" = "Mastelis";
 
 /* Flag: untranslated */
 "%channel feed%" = "%channel feed%";
@@ -219,175 +160,165 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "00:00:00" = "00:00:00";
 
-/* Flag: untranslated */
-"Box" = "Box";
+"Box" = "Dėžė";
 
-/* Flag: untranslated */
-"FullScreen Controls" = "FullScreen Controls";
+"FullScreen Controls" = "Viso ekrano valdymas";
 
-/* File: ../../portable/tabs.py:46 */
-/* Flag: untranslated */
-"Video Search" = "Video Search";
+/* File: ../../portable/tabs.py:57 */
+"Video Search" = "Video paieška";
 
-/* Flag: untranslated */
-"VideoWindow" = "VideoWindow";
+"VideoWindow" = "Video langas";
 
 /* Flag: untranslated */
 "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
 
-/* Flag: untranslated */
-"Password:\n" = "Password:\n";
+"Password:\n" = "Slaptažodis:\n";
+
+"Username and password required" = "Prisijungimo vardas ir slaptažodis yra būtini";
+
+"Username:\n\n" = "Prisijungimo vardas:\n\n";
 
 /* Flag: untranslated */
-"Username and password required" = "Username and password required";
+"(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)";
 
-/* Flag: untranslated */
-"Username:\n\n" = "Username:\n\n";
+"(You must restart Miro for this change to take effect)\n" = "(norėdami, kad įsigaliotų šie pakeitimai, turite iš naujo paleisti „Miro“)\n";
 
-/* Flag: untranslated */
-" limit upstream to" = " limit upstream to";
+"(movies directory path goes here)" = "(čia turi būti filmų aplanko kelias)";
 
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
 /* Flag: untranslated */
-"(You must restart Miro for this change to take effect)" = "(You must restart Miro for this change to take effect)";
-
-/* Flag: untranslated */
-"(You must restart Miro for this change to take effect)\n" = "(You must restart Miro for this change to take effect)\n";
-
-/* Flag: untranslated */
-"(movies directory path goes here)" = "(movies directory path goes here)";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-/* Flag: untranslated */
-"1 day" = "1 day";
+"-" = "-";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
-/* Flag: untranslated */
-"1 month" = "1 month";
+"1 day" = "1 diena";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
-/* Flag: untranslated */
-"10 days" = "10 days";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
+"1 month" = "1 mėnuo";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
-/* Flag: untranslated */
-"3 days" = "3 days";
-
-/* Flag: untranslated */
-"3 hours" = "3 hours";
-
-/* Flag: untranslated */
-"4" = "4";
-
-/* Flag: untranslated */
-"5" = "5";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
-/* Flag: untranslated */
-"6 days" = "6 days";
-
-/* Flag: untranslated */
-"99999" = "99999";
-
-/* Flag: untranslated */
-"Add..." = "Add...";
-
-/* Flag: untranslated */
-"BitTorrent ports:" = "BitTorrent ports:";
-
-/* Flag: untranslated */
-"By default, videos expire after:" = "By default, videos expire after:";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
-/* Flag: untranslated */
-"Change..." = "Change...";
-
-/* Flag: untranslated */
-"Check channels for new content:" = "Check channels for new content:";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-/* Flag: untranslated */
-"Don't start a download if it leaves less than" = "Don't start a download if it leaves less than";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-/* Flag: untranslated */
-"Download at most" = "Download at most";
-
-/* Flag: untranslated */
-"Folder location" = "Folder location";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-/* Flag: untranslated */
-"GB free." = "GB free.";
-
-/* Flag: untranslated */
-"KB/s when my computer is active." = "KB/s when my computer is active.";
-
-/* Flag: untranslated */
-"Maximum:" = "Maximum:";
-
-/* Flag: untranslated */
-"Minimum:" = "Minimum:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
+"10 days" = "10 dienų";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+"3 days" = "3 dienos";
+
+"3 hours" = "3 valandos";
+
+"4" = "4";
+
+"5" = "5";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
+"6 days" = "6 dienos";
+
+"99999" = "99999";
+
+"Add..." = "Pridėti...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
 /* Flag: untranslated */
-"Never" = "Never";
+"All" = "All";
 
 /* Flag: untranslated */
-"OtherViews" = "OtherViews";
+"Auto download default setting for new channels:" = "Auto download default setting for new channels:";
+
+/* Flag: untranslated */
+"Automatically forward ports" = "Automatically forward ports";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
+"BitTorrent" = "BitTorrent";
+
+"By default, videos expire after:" = "Pagal nutylėjimą, video nustoja galioti po:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+"Change..." = "Pakeisti...";
+
+/* Flag: untranslated */
+"Check channels for new content:" = "Check channels for new content:" /* = "Patikrinti, ar yra naujo turinio kanaluose:" */;
+
+/* Flag: untranslated */
+"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:";
+
+/* Flag: untranslated */
+"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:";
+
+"Folder location" = "Aplanko vieta";
+
+/* Flag: untranslated */
+"GB\n" = "GB\n";
+
+/* Flag: untranslated */
+"Ignore unencrypted connections" = "Ignore unencrypted connections";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+/* Flag: untranslated */
+"KB/s." = "KB/s.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+/* Flag: untranslated */
+"Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:";
+
+/* Flag: untranslated */
+"Limit downstream to" = "Limit downstream to";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
+"Never" = "Niekada";
+
+/* File: ../../portable/tabs.py:56 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+"New" = "Naujas";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
 /* Flag: untranslated */
-"Play videos one after another." = "Play videos one after another.";
+"Off" = "Off";
 
 /* Flag: untranslated */
-"Remember video position." = "Remember video position.";
+"OtherViews" = "OtherViews" /* = "Kiti vaizdavimo būdai" */;
 
-/* File: ../../portable/guide.py:107 */
-/* File: ../../portable/playlist.py:197 */
-/* File: ../../portable/feed.py:795 */
-/* File: ../../portable/menu.py:65 */
-/* File: ../../portable/menu.py:70 */
-/* File: ../../portable/folder.py:156 */
-/* File: ../../portable/folder.py:211 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
-/* Flag: untranslated */
-"Remove" = "Remove";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+"Play videos one after another." = "Groti video vieną po kito:";
 
-/* Flag: untranslated */
-"Run Miro at startup" = "Run Miro at startup";
+"Remember video position." = "Įsiminti video poziciją.";
 
-/* Flag: untranslated */
-"Save downloaded videos in this folder:" = "Save downloaded videos in this folder:";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573 */
-/* Flag: untranslated */
-"Show as Channel" = "Show as Channel";
-
-/* Flag: untranslated */
-"Stop after each video." = "Stop after each video.";
-
-/* Flag: untranslated */
-"To avoid internet slowdowns:" = "To avoid internet slowdowns:";
-
-/* File: ../../portable/app.py:1206 */
-/* Flag: untranslated */
-"Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
-
-/* Flag: untranslated */
-"Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:";
-
-/* Flag: untranslated */
-"every 30 minutes" = "every 30 minutes";
-
-/* Flag: untranslated */
-"every hour" = "every hour";
-
-/* Flag: untranslated */
-"manually" = "manually";
-
+/* File: ../../portable/frontends/html/contextmenu.py:99 */
+/* File: ../../portable/frontends/html/contextmenu.py:104 */
+/* File: ../../portable/frontends/html/contextmenu.py:178 */
+/* File: ../../portable/frontends/html/contextmenu.py:184 */
+/* File: ../../portable/frontends/html/contextmenu.py:190 */
+/* File: ../../portable/frontends/html/contextmenu.py:199 */
+/* File: ../../portable/frontends/html/contextmenu.py:233 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
+"Remove" = "Pašalinti";
+
+"Run Miro at startup" = "Paleisti „Miro“ įkrovus kompiuterį";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591 */
+"Show as Channel" = "Rodyti kaip kanalą";
+
+"Stop after each video." = "Sustoti po kiekvieno video.";
+
 /* Flag: untranslated */
-"videos at once." = "videos at once.";
+"Stop uploads when this ratio is reached:" = "Stop uploads when this ratio is reached:";
+
+/* Flag: untranslated */
+"Store downloads in this folder:" = "Store downloads in this folder:";
+
+/* Flag: untranslated */
+"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
+/* Flag: untranslated */
+"Use these ports:" = "Use these ports:";
+
+/* File: ../../portable/frontends/html/main.py:319 */
+"Warn me when I attempt to quit with downloads in progress" = "Įspėti mane bandant išjungti programą esant aktyviems siuntimams";
+
+"Watch for new videos in these folders and include them in the Library:" = "Stebėti šiuos aplankus dėl naujų video ir įkelti juos į biblioteką:";
+
+"every 30 minutes" = "kas 30 minučių";
+
+"every hour" = "kas valandą";
+
+"manually" = "rankiniu būdu";
 
 /* Flag: untranslated */
 "$label$" = "$label$";
@@ -395,1871 +326,1537 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "$title$" = "$title$";
 
-/* Flag: untranslated */
-"Channel" = "Channel";
+"Channel" = "Kanalas";
 
-/* File: ../../portable/dialogs.py:91 */
-/* Flag: untranslated */
-"Create" = "Create";
+/* File: ../../portable/dialogs.py:99 */
+"Create" = "Sukurti";
 
-/* Flag: untranslated */
-"In this:" = "In this:";
+"In this:" = "Šiame:";
 
-/* Flag: untranslated */
-"Item1" = "Item1";
+"Item1" = "Elementas1";
 
-/* Flag: untranslated */
-"Search Engine" = "Search Engine";
+"Search Engine" = "Paieškos variklis";
 
-/* Flag: untranslated */
-"Search for:" = "Search for:";
+"Search for:" = "Ieškoti:";
 
-/* Flag: untranslated */
 "URL" = "URL";
 
-/* File: ../../platform/windows-xul/frontend_implementation/startup.py:42 */
-/* File: ../../platform/gtk-x11/frontend_implementation/startup.py:48 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/startup.py:56 */
 /* Flag: python-format */
-"(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)";
+"(parsed %d files - found %d videos)" = "(nuskaityta %d failai(ų) - surasta %d video)";
 
-/* Flag: untranslated */
-"Back" = "Back";
+"Back" = "Atgal";
 
-/* Flag: untranslated */
-"Browse" = "Browse";
+"Browse" = "Naršyti";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:106 */
-/* Flag: untranslated */
-"Next" = "Next";
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:121 */
+"Next" = "Kitas";
 
-/* File: ../../portable/dialogs.py:79 */
+/* File: ../../portable/dialogs.py:87 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
-/* Flag: untranslated */
-"No" = "No";
+"No" = "Ne";
 
-/* Flag: untranslated */
-"Only search my Movies folder." = "Only search my Movies folder.";
+"Only search my Movies folder." = "Ieškoti tik mano Filmų aplanke:";
 
-/* Flag: untranslated */
-"Search my entire Home folder." = "Search my entire Home folder.";
+"Search my entire Home folder." = "Ieškoti visame Namų aplanke:";
 
-/* Flag: untranslated */
-"Search this folder:" = "Search this folder:";
+"Search this folder:" = "Ieškoti šiame aplanke:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37 */
-/* Flag: untranslated */
-"Searching for Videos" = "Searching for Videos";
+"Searching for Videos" = "Ieškoma video failų";
 
-/* Flag: untranslated */
-"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?";
+"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "„Miro“ grotuvas gali surasti visus video failus Jūsų kompiuteryje, taip padėdamas palaikyti tvarką Jūsų kolekcijoje.\n\n\nAr norėtumėte, kad „Miro“ ieškotų video failų Jūsų kompiuteryje?";
 
-/* Flag: untranslated */
-"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question.";
+"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "Kiti keli langai padės Jums suderinti „Miro“ grotuvą taip, kad jis būtų patogiausias naudoti. Štai pirmasis klausimas.";
 
-/* Flag: untranslated */
-"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?";
+"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Rekomenduojame, kad Jūs leistumėte „Miro“ grotuvui pasileisti įkrovus kompiuterį. Tokiu atveju video, kurie nebuvo pilnai atsiųsti, gali būti atsiųsti ir nauji video Jūsų kanaluose gali būti paruošti, kai juos norėsite žiūrėti.\n\n\nAr norėtumėte paleisti „Miro“, kai Jūsų kompiuteris bus įkrautas?";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
-/* Flag: untranslated */
-"Welcome to Internet TV!" = "Welcome to Internet TV!";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
+"Welcome to Internet TV!" = "Sveiki atvykę į Internetinę televiziją!";
 
-/* Flag: untranslated */
-"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
+"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Sveiki atvykę į Internetinę televiziją. Yra daug dalykų, kuriuos galite padaryti su „Miro“ grotuvu: automatiškai atsisiųsti video iš mėgiamiausių kanalų, stebėti video vieną po kito, atsisiųsti .torrent failus, rekomenduoti video draugams ir daug daugiau.\n\n";
 
-/* File: ../../portable/dialogs.py:78 */
+/* File: ../../portable/dialogs.py:86 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
-/* Flag: untranslated */
-"Yes" = "Yes";
+"Yes" = "Taip";
 
 /* Flag: untranslated */
 "%message%\n%message%" = "%message%\n%message%";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78 */
-/* Flag: untranslated */
-"Update Available" = "Update Available";
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
+"Update Available" = "Yra atnaujinimas";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
 /* Flag: python-format */
-"A new version of %s is available for download." = "A new version of %s is available for download.";
+"A new version of %s is available for download." = "Nauja %s versija yra prieinama atsisiuntimui.";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240 */
-/* Flag: untranslated */
-"Error Bombing Item" = "Error Bombing Item";
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
+"Error Bombing Item" = "Klaida bombarduojant elementą";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242 */
-/* Flag: untranslated */
-"Error Recommending Item" = "Error Recommending Item";
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
+"Error Recommending Item" = "Klaida rekomenduojant elementą";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244 */
-/* Flag: untranslated */
-"Error Opening Website" = "Error Opening Website";
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
+"Error Opening Website" = "Klaida atveriant internetinį tinklalapį";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
 /* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "There was an error opening %s.  Please try again in a few seconds";
+"There was an error opening %s.  Please try again in a few seconds" = "Iškilo bėdų atveriant %s. Pabandykite dar kartą po kelių sekundžių.";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:62 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
 /* Flag: python-format */
-"Error importing modules:\n%s" = "Error importing modules:\n%s";
+"Error importing modules:\n%s" = "Klaida importuojant modulius:\n%s";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:66 */
-/* Flag: untranslated */
-"Starting up" = "Starting up";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
+"Loading window" = "Įkeliamas langas";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:273 */
-/* Flag: untranslated */
-"Loading window" = "Loading window";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:274 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
 /* Flag: untranslated */
 "onStartup called twice" = "onStartup called twice";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:702 */
-/* Flag: untranslated */
-"Spacebar" = "Spacebar";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
+"Spacebar" = "Tarpo klavišas";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:851 */
-/* Flag: untranslated */
-"Close to tray?" = "Close to tray?";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
+"Close to tray?" = "Užverti į sisteminį skydelį?";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:852 */
-/* Flag: untranslated */
-"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options.";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Kai paspausite raudoną užvėrimo mygtuką, ar norėtumėte nukelti „Miro“ į sisteminį skydelį, ar visiškai išjungti programą? Šį pasirinkimą vėliau galėsite pakeisti nustatymuose.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:44 */
-/* Flag: untranslated */
-"Download Completed" = "Download Completed";
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
+"Download Completed" = "Atsiuntimas baigtas";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:45 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
 /* Flag: python-format */
-"Download of video '%s' is finished." = "Download of video '%s' is finished.";
+"Download of video '%s' is finished." = "Video failo „%s“ atsiuntimas baigtas.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:54 */
-/* Flag: untranslated */
-"Download Failed" = "Download Failed";
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
+"Download Failed" = "Atsiuntimas nepavyko";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:55 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
 /* Flag: python-format */
-"Download of video '%s' has failed." = "Download of video '%s' has failed.";
+"Download of video '%s' has failed." = "Video failo „%s“ atsiųsti nepavyko.";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:278 */
-/* Flag: untranslated */
-"Subscribe to Channel" = "Subscribe to Channel";
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
+"Subscribe to Channel" = "Prenumeruoti kanalą";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:279 */
-/* Flag: untranslated */
-"Enter the URL of the channel you would like to subscribe to." = "Enter the URL of the channel you would like to subscribe to.";
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
+"Enter the URL of the channel you would like to subscribe to." = "Įveskite kanalo, kurį norite prenumeruoti, URL.";
 
-/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:248 */
-/* Flag: untranslated */
-"Audio" = "Audio";
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
+"General" = "Bendra";
 
-/* File: ../../platform/osx/frontend/Preferences.py:64 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
-/* Flag: untranslated */
-"General" = "General";
-
-/* File: ../../platform/osx/frontend/Preferences.py:66 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
-/* Flag: untranslated */
-"Downloads" = "Downloads";
-
-/* File: ../../platform/osx/frontend/Preferences.py:67 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
-/* Flag: untranslated */
-"Folders" = "Folders";
-
-/* File: ../../platform/osx/frontend/Preferences.py:68 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
-/* Flag: untranslated */
-"Disk Space" = "Disk Space";
+"Downloads" = "Parsiuntimai";
 
-/* File: ../../platform/osx/frontend/Preferences.py:196 */
-/* Flag: untranslated */
-"Movies Directory" = "Movies Directory";
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+"Folders" = "Aplankai";
 
-/* File: ../../platform/osx/frontend/Preferences.py:197 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
+"Disk Space" = "Disko vieta";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
+"Movies Directory" = "Filmų aplankas";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
 /* Flag: python-format */
-"Select a Directory to store %s downloads in." = "Select a Directory to store %s downloads in.";
+"Select a Directory to store %s downloads in." = "Pasirinkite aplanką, kuriame laikysite %s atsiuntimus.";
 
-/* File: ../../platform/osx/frontend/Preferences.py:198 */
-/* File: ../../platform/osx/frontend/Preferences.py:262 */
-/* Flag: untranslated */
-"Select" = "Select";
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
+"Select" = "Pasirinkti";
 
-/* File: ../../platform/osx/frontend/Preferences.py:207 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
-/* Flag: untranslated */
-"Migrate existing movies?" = "Migrate existing movies?";
+"Migrate existing movies?" = "Ar migruoti turimus filmus?";
 
-/* File: ../../platform/osx/frontend/Preferences.py:208 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
 /* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).";
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Jūs pasirinkote naują filmų atsiuntimo aplanką. Ar norėtumėte, kad %s ten migruotų Jūsų dabartinius atsiuntimus? (Šiuo metu siunčiami filmai nebus perkelti, kol siuntimas nebus baigtas).";
 
-/* File: ../../platform/osx/frontend/Preferences.py:260 */
-/* Flag: untranslated */
-"View this Directory in the Library" = "View this Directory in the Library";
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
+"View this Directory in the Library" = "Žiūrėti šį aplanką bibliotekoje";
 
-/* File: ../../platform/osx/frontend/Preferences.py:261 */
-/* Flag: untranslated */
-"Select a Directory to view in the Library." = "Select a Directory to view in the Library.";
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
+"Select a Directory to view in the Library." = "Pasirinkite aplanką, kurį norėsite matyti bibliotekoje.";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:80 */
-/* Flag: untranslated */
-"Finish" = "Finish";
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
+"Finish" = "Baigti";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:139 */
-/* Flag: untranslated */
-"Search!" = "Search!";
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
+"Search!" = "Ieškoti!";
 
-/* File: ../../platform/osx/frontend/Application.py:246 */
-/* Flag: untranslated */
-"Pause Video" = "Pause Video";
+/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
+"Pause Video" = "Pauzė";
 
-/* File: ../../platform/osx/frontend/Application.py:255 */
-/* Flag: untranslated */
-"Unsupported version of Quicktime" = "Unsupported version of Quicktime";
+/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
+"Unsupported version of Quicktime" = "Nepalaikoma „Quicktime“ versija";
 
-/* File: ../../platform/osx/frontend/Application.py:256 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
 /* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "To run %s you need the most recent version of Quicktime, which is a free update.";
+"To run %s you need the most recent version of Quicktime, which is a free update." = "Norėdami paleisti „%s“, turite turėti naujausią „Quicktime“ versiją, kurią galima atsisiųsti nemokamai.";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:22 */
-/* Flag: untranslated */
-"_Remove..." = "_Remove...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
+"_Remove..." = "P_ašalinti...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:23 */
-/* Flag: untranslated */
-"_Remove Playlist..." = "_Remove Playlist...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:34 */
+"_Remove Playlist..." = "Pašalinti _grojaraštį...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:24 */
-/* Flag: untranslated */
-"_Remove Playlists..." = "_Remove Playlists...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:35 */
+"_Remove Playlists..." = "Pašalinti gro_jaraščius...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:25 */
-/* Flag: untranslated */
-"_Remove Playlist Folder..." = "_Remove Playlist Folder...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:36 */
+"_Remove Playlist Folder..." = "Pašalinti grojaraščio _aplanką...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:26 */
-/* Flag: untranslated */
-"_Remove Playlist Folders..." = "_Remove Playlist Folders...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:37 */
+"_Remove Playlist Folders..." = "Pašalinti grojaraščio ap_lankus...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:27 */
-/* File: ../../portable/menubar.py:179 */
-/* Flag: untranslated */
-"_Remove Channel..." = "_Remove Channel...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:38 */
+/* File: ../../portable/menubar.py:193 */
+"_Remove Channel..." = "Pašalinti _kanalą...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:28 */
-/* File: ../../portable/menubar.py:180 */
-/* Flag: untranslated */
-"_Remove Channels..." = "_Remove Channels...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:39 */
+/* File: ../../portable/menubar.py:194 */
+"_Remove Channels..." = "Pašalinti ka_nalus...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:29 */
-/* File: ../../portable/menubar.py:182 */
-/* Flag: untranslated */
-"_Remove Channel Folder..." = "_Remove Channel Folder...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:40 */
+/* File: ../../portable/menubar.py:196 */
+"_Remove Channel Folder..." = "Pašalinti kanal_o aplanką...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:30 */
-/* File: ../../portable/menubar.py:181 */
-/* Flag: untranslated */
-"_Remove Channel Folders..." = "_Remove Channel Folders...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:41 */
+/* File: ../../portable/menubar.py:195 */
+"_Remove Channel Folders..." = "Pašalinti kanalo aplank_us...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:31 */
-/* Flag: untranslated */
-"_Remove Miro Guide..." = "_Remove Miro Guide...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:42 */
+"_Remove Miro Guide..." = "_Pašalinti „Miro“ gidą...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:32 */
-/* Flag: untranslated */
-"_Remove Miro Guides..." = "_Remove Miro Guides...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:43 */
+"_Remove Miro Guides..." = "_Pašalinti „Miro“ gidus...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:33 */
-/* Flag: untranslated */
-"_Remove Video..." = "_Remove Video...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:44 */
+"_Remove Video..." = "Pašalinti _video failą...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:34 */
-/* Flag: untranslated */
-"_Remove Videos..." = "_Remove Videos...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:45 */
+"_Remove Videos..." = "Pašalinti _video failus...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:35 */
-/* Flag: untranslated */
-"Re_name..." = "Re_name...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:46 */
+"Re_name..." = "Per_vadinti...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:36 */
-/* Flag: untranslated */
-"Re_name Playlist..." = "Re_name Playlist...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:47 */
+"Re_name Playlist..." = "Per_vadinti grojaraštį...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:37 */
-/* Flag: untranslated */
-"Re_name Playlist Folder..." = "Re_name Playlist Folder...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:48 */
+"Re_name Playlist Folder..." = "Per_vadinti grojaraščio aplanką...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:38 */
-/* File: ../../portable/menubar.py:178 */
-/* Flag: untranslated */
-"Re_name Channel..." = "Re_name Channel...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:49 */
+/* File: ../../portable/menubar.py:192 */
+"Re_name Channel..." = "Per_vadinti kanalą...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:39 */
-/* Flag: untranslated */
-"Re_name Channel Folder..." = "Re_name Channel Folder...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:50 */
+"Re_name Channel Folder..." = "Per_vadinti kanalo aplanką...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:40 */
-/* Flag: untranslated */
-"Re_name Miro Guide..." = "Re_name Miro Guide...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:51 */
+"Re_name Miro Guide..." = "Per_vadinti „Miro“ gidą...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:41 */
-/* File: ../../portable/menubar.py:184 */
-/* Flag: untranslated */
-"_Update Channel..." = "_Update Channel...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:52 */
+/* File: ../../portable/menubar.py:198 */
+"_Update Channel..." = "At_naujinti kanalą...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:42 */
-/* File: ../../portable/menubar.py:185 */
-/* Flag: untranslated */
-"_Update Channels..." = "_Update Channels...";
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:53 */
+/* File: ../../portable/menubar.py:199 */
+"_Update Channels..." = "At_naujinti kanalus...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42 */
-/* Flag: untranslated */
-"Settings" = "Settings";
+/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
+"Audio" = "Garsas";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45 */
-/* Flag: untranslated */
-"Hide" = "Hide";
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
+"Settings" = "Nustatymai";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47 */
-/* Flag: untranslated */
-"Show" = "Show";
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56 */
+"Hide" = "Paslėpti";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48 */
-/* File: ../../portable/dialogs.py:80 */
-/* File: ../../portable/menubar.py:257 */
-/* Flag: untranslated */
-"Quit" = "Quit";
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58 */
+"Show" = "Parodyti";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324 */
-/* Flag: untranslated */
-"New Channel _Guide..." = "New Channel _Guide...";
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59 */
+/* File: ../../portable/menubar.py:273 */
+/* File: ../../portable/dialogs.py:88 */
+"Quit" = "Išeiti";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564 */
-/* Flag: untranslated */
-"Folder Location" = "Folder Location";
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
+"New Channel _Guide..." = "Naujas kanalo _gidas...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
+"Folder Location" = "Aplanko vieta";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
-/* Flag: untranslated */
-"Username:" = "Username:";
+"Username:" = "Vartotojo vardas:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
-/* Flag: untranslated */
-"Password:" = "Password:";
+"Password:" = "Slaptažodis:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416 */
-/* Flag: untranslated */
-"Unknown Runtime Error" = "Unknown Runtime Error";
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416 */
+"Unknown Runtime Error" = "Nežinoma vykdymo klaida";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417 */
-/* Flag: untranslated */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417 */
 /* Flag: python-format */
-"An unknown error has occurred %s." = "An unknown error has occurred %s.";
+"An unknown error has occurred %s." = "Nežinoma vykdymo klaida %s.";
 
-/* File: ../../portable/dl_daemon/download.py:359 */
-/* Flag: untranslated */
-"Error" = "Error";
+/* File: ../../portable/dl_daemon/download.py:458 */
+"Error" = "Klaida";
 
-/* File: ../../portable/dl_daemon/download.py:432 */
-/* Flag: untranslated */
+/* File: ../../portable/dl_daemon/download.py:544 */
 /* Flag: python-format */
-"Could not write to %s" = "Could not write to %s";
+"Could not write to %s" = "Nepavyko rašyti į %s";
 
-/* File: ../../portable/dl_daemon/download.py:452 */
-/* Flag: untranslated */
-"Not enough disk space" = "Not enough disk space";
+/* File: ../../portable/dl_daemon/download.py:564 */
+/* File: ../../portable/dl_daemon/download.py:769 */
+"Not enough disk space" = "Nepakanka vietos diske";
 
-/* File: ../../portable/dl_daemon/download.py:453 */
-/* Flag: untranslated */
+/* File: ../../portable/dl_daemon/download.py:565 */
+/* File: ../../portable/dl_daemon/download.py:770 */
 /* Flag: python-format */
-"%s MB required to store this video" = "%s MB required to store this video";
+"%s MB required to store this video" = "Norint išsaugoti šį video failą reikia %s MB vietos";
 
-/* File: ../../portable/dl_daemon/download.py:672 */
-/* Flag: untranslated */
-"BitTorrent failure" = "BitTorrent failure";
+/* File: ../../portable/dl_daemon/download.py:781 */
+"BitTorrent failure" = "BitTorrent klaida";
 
-/* File: ../../portable/dl_daemon/download.py:673 */
-/* Flag: untranslated */
-"BitTorrent failed to startup" = "BitTorrent failed to startup";
+/* File: ../../portable/dl_daemon/download.py:782 */
+"BitTorrent failed to startup" = "Nepavyko paleisti BitTorrent";
 
-/* File: ../../portable/dl_daemon/download.py:796 */
-/* Flag: untranslated */
-"Corrupt Torrent" = "Corrupt Torrent";
+/* File: ../../portable/dl_daemon/download.py:954 */
+"Corrupt Torrent" = "Sugadintas „.torrent“ failas";
 
-/* File: ../../portable/dl_daemon/download.py:797 */
-/* Flag: untranslated */
+/* File: ../../portable/dl_daemon/download.py:955 */
 /* Flag: python-format */
-"The torrent file at %s was not valid" = "The torrent file at %s was not valid";
+"The torrent file at %s was not valid" = "Torrent failas ties %s buvo netinkamas";
 
-/* File: ../../portable/dl_daemon/download.py:822 */
-/* Flag: untranslated */
-"Torrent file deleted" = "Torrent file deleted";
+/* File: ../../portable/dl_daemon/download.py:980 */
+"Torrent file deleted" = "Torrent failas ištrintas";
 
-/* File: ../../portable/dl_daemon/download.py:823 */
+/* File: ../../portable/dl_daemon/download.py:981 */
 /* Flag: untranslated */
-"The torrent file for this item was deleted " = "The torrent file for this item was deleted ";
+"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
 
-/* File: ../../portable/dl_daemon/download.py:824 */
-/* Flag: untranslated */
-"outside of Miro." = "outside of Miro.";
+/* File: ../../portable/frontends/html/contextmenu.py:103 */
+"Update Channels Now" = "Dabar atnaujinti kanalus";
 
-/* File: ../../portable/tabs.py:44 */
-/* Flag: untranslated */
-"Library" = "Library";
-
-/* File: ../../portable/tabs.py:45 */
-/* Flag: untranslated */
-"New" = "New";
-
-/* File: ../../portable/tabs.py:47 */
-/* Flag: untranslated */
-"Downloading" = "Downloading";
-
-/* File: ../../portable/guide.py:104 */
-/* File: ../../portable/feed.py:789 */
-/* Flag: untranslated */
-"Copy URL to clipboard" = "Copy URL to clipboard";
-
-/* File: ../../portable/guide.py:154 */
-/* Flag: untranslated */
-"Miro Guide" = "Miro Guide";
-
-/* File: ../../portable/extrastrings.py:22 */
-/* File: ../../portable/feed.py:2028 */
-/* File: ../../portable/feed.py:2120 */
-/* Flag: untranslated */
-"Search" = "Search";
-
-/* File: ../../portable/downloader.py:215 */
-/* Flag: untranslated */
-"activity" = "activity";
-
-/* File: ../../portable/downloader.py:251 */
-/* File: ../../portable/httpclient.py:114 */
-/* File: ../../portable/httpclient.py:142 */
-/* Flag: untranslated */
-"File not found" = "File not found";
-
-/* File: ../../portable/downloader.py:252 */
-/* Flag: untranslated */
-"Flash URL Scraping Error" = "Flash URL Scraping Error";
-
-/* File: ../../portable/downloader.py:427 */
-/* Flag: untranslated */
-"starting up" = "starting up";
-
-/* File: ../../portable/playlist.py:196 */
-/* File: ../../portable/playlist.py:201 */
-/* Flag: untranslated */
-"Rename Playlist" = "Rename Playlist";
-
-/* File: ../../portable/playlist.py:202 */
-/* Flag: untranslated */
+/* File: ../../portable/frontends/html/contextmenu.py:128 */
 /* Flag: python-format */
-"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s";
+"%d Downloaded Items" = "%d atsisiųsta elementų";
 
-/* File: ../../portable/playlist.py:224 */
-/* Flag: untranslated */
-"Create Playlist" = "Create Playlist";
+/* File: ../../portable/frontends/html/contextmenu.py:130 */
+/* File: ../../portable/frontends/html/contextmenu.py:211 */
+"Play" = "Groti";
 
-/* File: ../../portable/playlist.py:225 */
-/* Flag: untranslated */
-"Enter a name for the new playlist" = "Enter a name for the new playlist";
+/* File: ../../portable/frontends/html/contextmenu.py:131 */
+/* File: ../../portable/frontends/html/contextmenu.py:214 */
+"Add to new playlist" = "Pridėti į naują grojaraštį";
 
-/* File: ../../portable/feed.py:383 */
-/* Flag: untranslated */
-"never" = "never";
+/* File: ../../portable/frontends/html/contextmenu.py:133 */
+/* File: ../../portable/frontends/html/contextmenu.py:207 */
+"Remove From Playlist" = "Pašalinti iš grojaraščio";
 
-/* File: ../../portable/feed.py:385 */
-/* File: ../../portable/item.py:542 */
-/* Flag: untranslated */
+/* File: ../../portable/frontends/html/contextmenu.py:135 */
+/* File: ../../portable/frontends/html/contextmenu.py:209 */
+"Remove From the Library" = "Pašalinti iš bibliotekos";
+
+/* File: ../../portable/frontends/html/contextmenu.py:141 */
+/* File: ../../portable/frontends/html/contextmenu.py:218 */
+"Mark as Unwatched" = "Pažymėti kaip nežiūrėtą";
+
+/* File: ../../portable/frontends/html/contextmenu.py:146 */
+/* File: ../../portable/frontends/html/contextmenu.py:220 */
+"Mark as Watched" = "Pažymėti kaip žiūrėtą";
+
+/* File: ../../portable/frontends/html/contextmenu.py:151 */
 /* Flag: python-format */
-"%d hours" = "%d hours";
+"%d Available Items" = "%d prieinamų elementų";
 
-/* File: ../../portable/feed.py:387 */
-/* Flag: untranslated */
+/* File: ../../portable/frontends/html/contextmenu.py:152 */
+/* File: ../../portable/frontends/html/contextmenu.py:227 */
+/* File: ../../portable/dialogs.py:93 */
+"Download" = "Atsisiųsti";
+
+/* File: ../../portable/frontends/html/contextmenu.py:157 */
 /* Flag: python-format */
-"%d day" = "%d day";
+"%d Downloading Items" = "%d atsisiųsta elementų";
 
-/* File: ../../portable/feed.py:389 */
-/* File: ../../portable/item.py:540 */
+/* File: ../../portable/frontends/html/contextmenu.py:159 */
+/* File: ../../portable/frontends/html/contextmenu.py:225 */
+"Cancel Download" = "Nutraukti siuntimą";
+
+/* File: ../../portable/frontends/html/contextmenu.py:161 */
+/* File: ../../portable/frontends/html/contextmenu.py:225 */
+"Pause Download" = "Pauzė siuntimui";
+
+/* File: ../../portable/frontends/html/contextmenu.py:164 */
+/* File: ../../portable/frontends/html/contextmenu.py:223 */
+"Restart Upload" = "Iš naujo pradėti išsiuntimą";
+
+/* File: ../../portable/frontends/html/contextmenu.py:170 */
+"Update Channel Now" = "Dabar atnaujinti kanalą";
+
+/* File: ../../portable/frontends/html/contextmenu.py:172 */
+/* File: ../../portable/frontends/html/contextmenu.py:196 */
+"Copy URL to clipboard" = "Kopijuoti URL į laikinąją saugyklą";
+
+/* File: ../../portable/frontends/html/contextmenu.py:173 */
+/* File: ../../portable/feed.py:825 */
+"Rename Channel" = "Pervadinti kanalą";
+
+/* File: ../../portable/frontends/html/contextmenu.py:177 */
+"Revert Title to Default" = "Atstatyti pavadinimą į numatytąjį";
+
+/* File: ../../portable/frontends/html/contextmenu.py:183 */
+/* File: ../../portable/folder.py:142 */
+"Rename Channel Folder" = "Pervadinti kanalo aplanką";
+
+/* File: ../../portable/frontends/html/contextmenu.py:189 */
+/* File: ../../portable/folder.py:213 */
+"Rename Playlist Folder" = "Pervadinti grojaraščio aplanką";
+
+/* File: ../../portable/frontends/html/contextmenu.py:213 */
+"Play Just This Video" = "Rodyti tik šį video failą";
+
+/* File: ../../portable/frontends/html/contextmenu.py:232 */
+/* File: ../../portable/playlist.py:218 */
+"Rename Playlist" = "Pervadinti grojaraštį";
+
+/* File: ../../portable/frontends/html/main.py:132 */
+/* File: ../../portable/startup.py:237 */
+"Video Directory Missing" = "Trūksta video aplanko";
+
+/* File: ../../portable/frontends/html/main.py:133 */
 /* Flag: untranslated */
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
+
+/* File: ../../portable/frontends/html/main.py:190 */
+/* File: ../../portable/theme.py:126 */
+"Custom Channels" = "Pasirinktiniai kanalai";
+
+/* File: ../../portable/frontends/html/main.py:190 */
+/* File: ../../portable/theme.py:126 */
+"You are running a version of $longAppName with a custom set of channels." = "Jūsų paleista $longAppName versija su pasirinktiniu kanalų rinkiniu.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/httpclient.py:139 */
+"Internal Error" = "Vidinė klaida";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro ištik vidinė klaida. Jūs galite padėti taisant klaidą pateikus pranešimą.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Include entire program database including all video and channel metadata with crash report" = "Lūžio pranešime pateikti visą programų duomenų bazę su visais video ir kanalų meta-duomenimis";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Describe what you were doing that caused this error" = "Aprašykite, ką darėte kai ivyko klaida";
+
+/* File: ../../portable/frontends/html/main.py:284 */
 /* Flag: python-format */
-"%d days" = "%d days";
+"%s Version Alert" = "%s Versijos Pranešimas";
 
-/* File: ../../portable/feed.py:391 */
-/* Flag: untranslated */
+/* File: ../../portable/frontends/html/main.py:285 */
 /* Flag: python-format */
-"%d months" = "%d months";
+"A new version of %s is available. Would you like to download it now?" = "Pasirodė nauja %s versija, Ar norėtumėte ją parsisiųsti?";
 
-/* File: ../../portable/feed.py:787 */
-/* Flag: untranslated */
-"Update Channel Now" = "Update Channel Now";
-
-/* File: ../../portable/feed.py:790 */
-/* File: ../../portable/feed.py:799 */
-/* Flag: untranslated */
-"Rename Channel" = "Rename Channel";
-
-/* File: ../../portable/feed.py:794 */
-/* Flag: untranslated */
-"Revert Title to Default" = "Revert Title to Default";
-
-/* File: ../../portable/feed.py:800 */
-/* Flag: untranslated */
+/* File: ../../portable/frontends/html/main.py:290 */
 /* Flag: python-format */
-"Enter a new name for the channel %s" = "Enter a new name for the channel %s";
+"%s Version Check" = "%s Versijos Tikrinimas";
 
-/* File: ../../portable/feed.py:887 */
-/* Flag: untranslated */
-"Error loading feed" = "Error loading feed";
-
-/* File: ../../portable/feed.py:888 */
-/* Flag: untranslated */
+/* File: ../../portable/frontends/html/main.py:291 */
 /* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s).";
+"%s is up to date." = "%s naujausia.";
 
-/* File: ../../portable/feed.py:891 */
-/* Flag: untranslated */
-"Would you like to keep the feed?" = "Would you like to keep the feed?";
+/* File: ../../portable/frontends/html/main.py:309 */
+"Are you sure you want to quit?" = "Ar tikrai norite išeiti?";
 
-/* File: ../../portable/feed.py:1004 */
-/* Flag: untranslated */
-"Bad content-type" = "Bad content-type";
+/* File: ../../portable/frontends/html/main.py:311 */
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "„Miro“ vis dar siunčia Jūsų lūžimo ataskaitą. Jei dabar išeisite, išsiuntimas bus nutrauktas. Ar vistiek norite išeiti?";
 
-/* File: ../../portable/feed.py:1017 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-/* Flag: untranslated */
-"Channel is not compatible with $shortAppName!" = "Channel is not compatible with $shortAppName!";
+/* File: ../../portable/frontends/html/main.py:340 */
+"Import OPML File" = "Importuoti OPML failą";
 
-/* File: ../../portable/feed.py:1018 */
-/* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
+/* File: ../../portable/frontends/html/main.py:342 */
+"OPML Files" = "OPML failai";
 
-/* File: ../../portable/feed.py:2134 */
-/* Flag: untranslated */
-"Local Files" = "Local Files";
+/* File: ../../portable/frontends/html/main.py:347 */
+"Export OPML File" = "Eksportuoti OPML failą";
 
-/* File: ../../portable/feed.py:2148 */
-/* Flag: untranslated */
-"Playing File" = "Playing File";
+/* File: ../../portable/frontends/html/templatedisplay.py:325 */
+"Invalid Value" = "Netinkama reikšmė";
 
-/* File: ../../portable/menu.py:69 */
-/* Flag: untranslated */
-"Update Channels Now" = "Update Channels Now";
-
-/* File: ../../portable/menu.py:94 */
-/* Flag: untranslated */
+/* File: ../../portable/frontends/html/templatedisplay.py:326 */
 /* Flag: python-format */
-"%d Downloaded Items" = "%d Downloaded Items";
+"%s is invalid.  You must enter a non-negative number." = "%s yra netinkamas. Jūs privalote įvesti neneigiamą skaičių.";
 
-/* File: ../../portable/menu.py:96 */
-/* File: ../../portable/item.py:1475 */
-/* Flag: untranslated */
-"Play" = "Play";
+/* File: ../../portable/frontends/html/templatedisplay.py:452 */
+"Error Revealing File" = "Klaida parodant failą";
 
-/* File: ../../portable/menu.py:97 */
-/* File: ../../portable/item.py:1478 */
-/* Flag: untranslated */
-"Add to new playlist" = "Add to new playlist";
-
-/* File: ../../portable/menu.py:99 */
-/* File: ../../portable/item.py:1471 */
-/* Flag: untranslated */
-"Remove From Playlist" = "Remove From Playlist";
-
-/* File: ../../portable/menu.py:101 */
-/* File: ../../portable/item.py:1473 */
-/* Flag: untranslated */
-"Remove From the Library" = "Remove From the Library";
-
-/* File: ../../portable/menu.py:107 */
-/* File: ../../portable/item.py:1482 */
-/* Flag: untranslated */
-"Mark as Unwatched" = "Mark as Unwatched";
-
-/* File: ../../portable/menu.py:112 */
-/* File: ../../portable/item.py:1484 */
-/* Flag: untranslated */
-"Mark as Watched" = "Mark as Watched";
-
-/* File: ../../portable/menu.py:117 */
-/* Flag: untranslated */
+/* File: ../../portable/frontends/html/templatedisplay.py:453 */
 /* Flag: python-format */
-"%d Available Items" = "%d Available Items";
+"The file \"%s\" was deleted from outside Miro." = "Failas „%s“ buvo ištrintas už „Miro“ ribų.";
 
-/* File: ../../portable/menu.py:118 */
-/* File: ../../portable/dialogs.py:85 */
-/* File: ../../portable/item.py:1491 */
-/* Flag: untranslated */
-"Download" = "Download";
+/* File: ../../portable/frontends/html/templatedisplay.py:560 */
+"Error Changing Movies Directory" = "Klaida pakeičiant filmų aplanką";
 
-/* File: ../../portable/menu.py:123 */
+/* File: ../../portable/frontends/html/templatedisplay.py:561 */
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "Jūs neturite teisių rašyti į aplanką, kurį pasirinkote. „Miro“ ir toliau naudos senąjį video failų aplanką.";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:664 */
+" - Invalid URL" = " - netinkamas URL";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:665 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Adresas, kurį įvedėte, yra netinkamas URL.\nPatikrinkite, ką įvedėte, ir pabandykite dar kartą.\n\n";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"$shortAppName - Add Channel" = "$shortAppName - pridėti kanalą";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"Enter the URL of the channel to add" = "Įveskite kanalo, kurį norite pridėti, URL";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"$shortAppName - Add Miro Guide" = "$shortAppName - pridėti „Miro“ gidą";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"Enter the URL of the Miro Guide to add" = "Įveskite „Miro“ gido, kurį norite pridėti, URL";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"$shortAppName - Download Video" = "$shortAppName - atsiųsti video";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"Enter the URL of the video to download" = "Įveskite video, kurį norite atsisiųsti, URL";
+
+/* File: ../../portable/tabs.py:55 */
+"Library" = "Biblioteka";
+
+/* File: ../../portable/tabs.py:58 */
+"Downloading" = "Atsiunčiama";
+
+/* File: ../../portable/downloader.py:234 */
 /* Flag: untranslated */
+"activity" = "activity" /* = "veikla" */;
+
+/* File: ../../portable/downloader.py:268 */
+/* File: ../../portable/httpclient.py:127 */
+/* File: ../../portable/httpclient.py:155 */
+"File not found" = "Failas nerastas";
+
+/* File: ../../portable/downloader.py:269 */
+"Flash URL Scraping Error" = "Klaida nagrinėjant Flash URL";
+
+/* File: ../../portable/downloader.py:445 */
+"starting up" = "paleidžiama";
+
+/* File: ../../portable/playlist.py:219 */
 /* Flag: python-format */
-"%d Downloading Items" = "%d Downloading Items";
+"Enter a new name for the playlist %s" = "Įveskite naujo grojaraščio %s vardą";
 
-/* File: ../../portable/menu.py:125 */
-/* File: ../../portable/item.py:1489 */
-/* Flag: untranslated */
-"Cancel Download" = "Cancel Download";
+/* File: ../../portable/playlist.py:241 */
+"Create Playlist" = "Sukurti grojaraštį";
 
-/* File: ../../portable/menu.py:127 */
-/* File: ../../portable/item.py:1489 */
-/* Flag: untranslated */
-"Pause Download" = "Pause Download";
+/* File: ../../portable/playlist.py:242 */
+"Enter a name for the new playlist" = "Įveskite naujo grojaraščio vardą";
 
-/* File: ../../portable/menu.py:130 */
-/* File: ../../portable/item.py:1487 */
-/* Flag: untranslated */
-"Restart Upload" = "Restart Upload";
-
-/* File: ../../portable/opml.py:49 */
-/* Flag: untranslated */
-"Export OPML File" = "Export OPML File";
-
-/* File: ../../portable/opml.py:123 */
-/* Flag: untranslated */
-"Import OPML File" = "Import OPML File";
-
-/* File: ../../portable/opml.py:125 */
-/* Flag: untranslated */
-"OPML Files" = "OPML Files";
+/* File: ../../portable/opml.py:144 */
+"OPML Import failed" = "OPML importavimas nepavyko";
 
 /* File: ../../portable/opml.py:145 */
-/* Flag: untranslated */
-"OPML Import failed" = "OPML Import failed";
+"The selected OPML file appears to be invalid. Import was interrupted." = "Panašu, kad pasirinktas OPML failas yra netinkamas. Importavimas nutrūko.";
 
-/* File: ../../portable/opml.py:146 */
-/* Flag: untranslated */
-"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
+/* File: ../../portable/opml.py:150 */
+"OPML Import summary" = "OPML importo apibendrinimas";
 
-/* File: ../../portable/opml.py:151 */
-/* Flag: untranslated */
-"OPML Import summary" = "OPML Import summary";
-
-/* File: ../../portable/autoupdate.py:121 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s Version Alert" = "%s Version Alert";
-
-/* File: ../../portable/autoupdate.py:122 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"A new version of %s is available. Would you like to download it now?" = "A new version of %s is available. Would you like to download it now?";
-
-/* File: ../../portable/autoupdate.py:128 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s Version Check" = "%s Version Check";
-
-/* File: ../../portable/autoupdate.py:129 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s is up to date." = "%s is up to date.";
-
-/* File: ../../portable/util.py:252 */
-/* File: ../../portable/httpclient.py:126 */
-/* Flag: untranslated */
-"Internal Error" = "Internal Error";
-
-/* File: ../../portable/util.py:252 */
-/* Flag: untranslated */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report.";
-
-/* File: ../../portable/util.py:252 */
-/* Flag: untranslated */
-"Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
-
-/* File: ../../portable/util.py:252 */
-/* Flag: untranslated */
-"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
-
-/* File: ../../portable/util.py:455 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:266 */
 /* Flag: python-format */
 "%1.1fGB" = "%1.1fGB";
 
-/* File: ../../portable/util.py:457 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:268 */
 /* Flag: python-format */
 "%dGB" = "%dGB";
 
-/* File: ../../portable/util.py:461 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:272 */
 /* Flag: python-format */
 "%1.1fMB" = "%1.1fMB";
 
-/* File: ../../portable/util.py:463 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:274 */
 /* Flag: python-format */
 "%dMB" = "%dMB";
 
-/* File: ../../portable/util.py:467 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:278 */
 /* Flag: python-format */
 "%1.1fKB" = "%1.1fKB";
 
-/* File: ../../portable/util.py:469 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:280 */
 /* Flag: python-format */
 "%dKB" = "%dKB";
 
-/* File: ../../portable/util.py:473 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:284 */
 /* Flag: python-format */
 "%1.1fB" = "%1.1fB";
 
-/* File: ../../portable/util.py:475 */
-/* Flag: untranslated */
+/* File: ../../portable/util.py:286 */
 /* Flag: python-format */
 "%dB" = "%dB";
 
-/* File: ../../portable/storedatabase.py:832 */
-/* File: ../../portable/storedatabase.py:1231 */
+/* File: ../../portable/iheartmiro.py:82 */
 /* Flag: untranslated */
-/* Flag: python-format */
-"%s database save succeeded" = "%s database save succeeded";
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.";
 
-/* File: ../../portable/storedatabase.py:833 */
-/* File: ../../portable/storedatabase.py:1232 */
-/* Flag: untranslated */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "The database has been successfully saved. It is now safe to quit without losing any data.";
+/* File: ../../portable/menubar.py:158 */
+"_Open" = "_Atverti";
 
-/* File: ../../portable/storedatabase.py:840 */
-/* File: ../../portable/storedatabase.py:1240 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s database save failed" = "%s database save failed";
+/* File: ../../portable/menubar.py:159 */
+"_Download Video" = "At_siųsti video";
 
-/* File: ../../portable/storedatabase.py:841 */
-/* File: ../../portable/storedatabase.py:1241 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.";
+/* File: ../../portable/menubar.py:161 */
+"Check _Version" = "Patikrinti _versiją";
 
-/* File: ../../portable/dialogs.py:81 */
-/* Flag: untranslated */
-"Ignore" = "Ignore";
+/* File: ../../portable/menubar.py:163 */
+"_Remove Video" = "Paša_linti video failą";
 
-/* File: ../../portable/dialogs.py:82 */
-/* Flag: untranslated */
-"Submit Crash Report" = "Submit Crash Report";
-
-/* File: ../../portable/dialogs.py:83 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-/* Flag: untranslated */
-"Migrate" = "Migrate";
-
-/* File: ../../portable/dialogs.py:84 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-/* Flag: untranslated */
-"Don't Migrate" = "Don't Migrate";
-
-/* File: ../../portable/dialogs.py:86 */
-/* Flag: untranslated */
-"Remove Entry" = "Remove Entry";
-
-/* File: ../../portable/dialogs.py:87 */
-/* Flag: untranslated */
-"Delete File" = "Delete File";
-
-/* File: ../../portable/dialogs.py:88 */
-/* Flag: untranslated */
-"Delete Files" = "Delete Files";
-
-/* File: ../../portable/dialogs.py:89 */
-/* Flag: untranslated */
-"Keep Videos" = "Keep Videos";
-
-/* File: ../../portable/dialogs.py:90 */
-/* Flag: untranslated */
-"Delete Videos" = "Delete Videos";
-
-/* File: ../../portable/dialogs.py:92 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-/* Flag: untranslated */
-"Create Channel" = "Create Channel";
-
-/* File: ../../portable/dialogs.py:93 */
-/* Flag: untranslated */
-"Add" = "Add";
-
-/* File: ../../portable/dialogs.py:94 */
-/* Flag: untranslated */
-"Add Into New Folder" = "Add Into New Folder";
-
-/* File: ../../portable/dialogs.py:95 */
-/* Flag: untranslated */
-"Keep" = "Keep";
-
-/* File: ../../portable/dialogs.py:97 */
-/* Flag: untranslated */
-"Not Now" = "Not Now";
-
-/* File: ../../portable/dialogs.py:98 */
-/* Flag: untranslated */
-"Close to Tray" = "Close to Tray";
-
-/* File: ../../portable/dialogs.py:99 */
-/* Flag: untranslated */
-"Launch Miro" = "Launch Miro";
-
-/* File: ../../portable/dialogs.py:100 */
-/* Flag: untranslated */
-"Download Anyway" = "Download Anyway";
-
-/* File: ../../portable/dialogs.py:221 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-/* Flag: untranslated */
-"New Search Channel" = "New Search Channel";
-
-/* File: ../../portable/dialogs.py:221 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:25 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
-/* Flag: untranslated */
-"A search channel contains items that match a search term." = "A search channel contains items that match a search term.";
-
-/* File: ../../portable/singleclick.py:87 */
-/* Flag: untranslated */
-"Download already exists" = "Download already exists";
-
-/* File: ../../portable/singleclick.py:88 */
-/* Flag: untranslated */
-"That URL is already an external download." = "That URL is already an external download.";
-
-/* File: ../../portable/singleclick.py:94 */
-/* Flag: untranslated */
-"Miro will begin downloading it now." = "Miro will begin downloading it now.";
-
-/* File: ../../portable/singleclick.py:96 */
-/* Flag: untranslated */
-"It is downloading now." = "It is downloading now.";
-
-/* File: ../../portable/singleclick.py:98 */
-/* Flag: untranslated */
-"It has already been downloaded." = "It has already been downloaded.";
-
-/* File: ../../portable/singleclick.py:125 */
-/* Flag: untranslated */
-"Download Error" = "Download Error";
-
-/* File: ../../portable/singleclick.py:126 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro is not able to download a file at this URL:\n\nURL: %s";
-
-/* File: ../../portable/singleclick.py:134 */
-/* Flag: untranslated */
-"File Download" = "File Download";
-
-/* File: ../../portable/singleclick.py:135 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "This file at %s does not appear to be audio, video, or an RSS feed.";
-
-/* File: ../../portable/singleclick.py:225 */
-/* Flag: untranslated */
-"Subscribing to multiple channels" = "Subscribing to multiple channels";
-
-/* File: ../../portable/singleclick.py:226 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Create %d channels?" = "Create %d channels?";
-
-/* File: ../../portable/singleclick.py:239 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Adding %d channels to a new folder" = "Adding %d channels to a new folder";
-
-/* File: ../../portable/singleclick.py:240 */
-/* File: ../../portable/folder.py:226 */
-/* Flag: untranslated */
-"Enter a name for the new channel folder" = "Enter a name for the new channel folder";
-
-/* File: ../../portable/singleclick.py:243 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
-
-/* File: ../../portable/singleclick.py:254 */
-/* Flag: untranslated */
-"Subscription error" = "Subscription error";
-
-/* File: ../../portable/singleclick.py:264 */
-/* Flag: untranslated */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.";
-
-/* File: ../../portable/singleclick.py:272 */
-/* Flag: untranslated */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.";
-
-/* File: ../../portable/singleclick.py:276 */
-/* Flag: untranslated */
-"Could not download the $shortAppName channel file: $url." = "Could not download the $shortAppName channel file: $url.";
-
-/* File: ../../portable/singleclick.py:316 */
-/* Flag: untranslated */
-"Invalid Torrent" = "Invalid Torrent";
-
-/* File: ../../portable/singleclick.py:317 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]";
-
-/* File: ../../portable/menubar.py:144 */
-/* Flag: untranslated */
-"_Open" = "_Open";
-
-/* File: ../../portable/menubar.py:145 */
-/* Flag: untranslated */
-"_Download Video" = "_Download Video";
-
-/* File: ../../portable/menubar.py:147 */
-/* Flag: untranslated */
-"Check _Version" = "Check _Version";
-
-/* File: ../../portable/menubar.py:149 */
-/* Flag: untranslated */
-"_Remove Video" = "_Remove Video";
-
-/* File: ../../portable/menubar.py:150 */
-/* Flag: untranslated */
-"_Remove Videos" = "_Remove Videos";
-
-/* File: ../../portable/menubar.py:151 */
-/* Flag: untranslated */
-"Re_name Video" = "Re_name Video";
-
-/* File: ../../portable/menubar.py:152 */
-/* Flag: untranslated */
-"Save Video _As..." = "Save Video _As...";
-
-/* File: ../../portable/menubar.py:153 */
-/* Flag: untranslated */
-"Save Videos _As..." = "Save Videos _As...";
-
-/* File: ../../portable/menubar.py:154 */
-/* Flag: untranslated */
-"Copy Video _URL" = "Copy Video _URL";
-
-/* File: ../../portable/menubar.py:156 */
-/* Flag: untranslated */
-"_Options..." = "_Options...";
-
-/* File: ../../portable/menubar.py:157 */
-/* Flag: untranslated */
-"_Quit" = "_Quit";
+/* File: ../../portable/menubar.py:164 */
+"_Remove Videos" = "Paša_linti video failus";
 
 /* File: ../../portable/menubar.py:165 */
-/* Flag: untranslated */
-"Cu_t" = "Cu_t";
+"Re_name Video" = "Per_vadinti video";
 
 /* File: ../../portable/menubar.py:166 */
-/* Flag: untranslated */
-"_Copy" = "_Copy";
+"Save Video _As..." = "Išsaugoti video _kaip...";
 
 /* File: ../../portable/menubar.py:167 */
-/* Flag: untranslated */
-"_Paste" = "_Paste";
+"Save Videos _As..." = "Išsaugoti video failus _kaip...";
 
 /* File: ../../portable/menubar.py:168 */
-/* Flag: untranslated */
-"Select _All" = "Select _All";
+"Copy Video _URL" = "Kopijuoti video _URL";
 
-/* File: ../../portable/menubar.py:169 */
-/* Flag: untranslated */
-"_Delete" = "_Delete";
+/* File: ../../portable/menubar.py:170 */
+"_Options..." = "_Pasirinkimai...";
 
-/* File: ../../portable/menubar.py:173 */
-/* Flag: untranslated */
-"Add _Channel" = "Add _Channel";
+/* File: ../../portable/menubar.py:171 */
+"_Quit" = "Iš_eiti";
 
-/* File: ../../portable/menubar.py:174 */
-/* Flag: untranslated */
-"New Searc_h Channel..." = "New Searc_h Channel...";
+/* File: ../../portable/menubar.py:179 */
+"Cu_t" = "_Iškirpti";
 
-/* File: ../../portable/menubar.py:175 */
-/* Flag: untranslated */
-"New _Folder..." = "New _Folder...";
+/* File: ../../portable/menubar.py:180 */
+"_Copy" = "_Kopijuoti";
 
-/* File: ../../portable/menubar.py:176 */
-/* Flag: untranslated */
-"Add Channel _Guide..." = "Add Channel _Guide...";
+/* File: ../../portable/menubar.py:181 */
+"_Paste" = "Į_dėti";
 
-/* File: ../../portable/menubar.py:186 */
-/* Flag: untranslated */
-"Update _All Channels" = "Update _All Channels";
+/* File: ../../portable/menubar.py:182 */
+"Select _All" = "Pasirinkti _viską";
+
+/* File: ../../portable/menubar.py:183 */
+"_Delete" = "Iš_trinti";
+
+/* File: ../../portable/menubar.py:187 */
+"Add _Channel" = "Pridėti _kanalą";
 
 /* File: ../../portable/menubar.py:188 */
-/* Flag: untranslated */
-"_Import Channels (OPML)..." = "_Import Channels (OPML)...";
+"New Searc_h Channel..." = "Naujas pai_eškos kanalas...";
 
 /* File: ../../portable/menubar.py:189 */
-/* Flag: untranslated */
-"E_xport Channels (OPML)..." = "E_xport Channels (OPML)...";
+"New _Folder..." = "Naujas a_plankas...";
 
-/* File: ../../portable/menubar.py:191 */
-/* Flag: untranslated */
-"_Send this channel to a friend" = "_Send this channel to a friend";
-
-/* File: ../../portable/menubar.py:192 */
-/* Flag: untranslated */
-"Copy Channel _Link" = "Copy Channel _Link";
-
-/* File: ../../portable/menubar.py:195 */
-/* Flag: untranslated */
-"New _Playlist" = "New _Playlist";
-
-/* File: ../../portable/menubar.py:196 */
-/* Flag: untranslated */
-"New Playlist Fol_der" = "New Playlist Fol_der";
-
-/* File: ../../portable/menubar.py:198 */
-/* Flag: untranslated */
-"Re_name Playlist" = "Re_name Playlist";
-
-/* File: ../../portable/menubar.py:199 */
-/* Flag: untranslated */
-"_Remove Playlist" = "_Remove Playlist";
+/* File: ../../portable/menubar.py:190 */
+"Add Channel _Guide..." = "Pridėti kanalo _gidą...";
 
 /* File: ../../portable/menubar.py:200 */
-/* Flag: untranslated */
-"_Remove Playlists" = "_Remove Playlists";
-
-/* File: ../../portable/menubar.py:201 */
-/* Flag: untranslated */
-"_Remove Playlist Folders" = "_Remove Playlist Folders";
+"Update _All Channels" = "At_naujinti visus kanalus";
 
 /* File: ../../portable/menubar.py:202 */
-/* Flag: untranslated */
-"_Remove Playlist Folder" = "_Remove Playlist Folder";
+"_Import Channels (OPML)..." = "_Importuoti kanalus (OPML)...";
+
+/* File: ../../portable/menubar.py:203 */
+"E_xport Channels (OPML)..." = "E_ksportuoti kanalus (OPML)...";
+
+/* File: ../../portable/menubar.py:205 */
+"_Send this channel to a friend" = "Iš_siųsti šį kanalą draugui";
+
+/* File: ../../portable/menubar.py:206 */
+"Copy Channel _Link" = "Kopijuoti kanalo _nuorodą";
+
+/* File: ../../portable/menubar.py:209 */
+"New _Playlist" = "Naujas _grojaraštis";
+
+/* File: ../../portable/menubar.py:210 */
+"New Playlist Fol_der" = "Naujas grojaraščio ap_lankas";
 
 /* File: ../../portable/menubar.py:212 */
-/* Flag: untranslated */
-"_Play" = "_Play";
+"Re_name Playlist" = "Per_vadinti grojaraštį";
 
 /* File: ../../portable/menubar.py:213 */
-/* Flag: untranslated */
-"_Stop" = "_Stop";
+"_Remove Playlist" = "Paša_linti grojaraštį";
+
+/* File: ../../portable/menubar.py:214 */
+"_Remove Playlists" = "Paša_linti grojaraščius";
 
 /* File: ../../portable/menubar.py:215 */
-/* Flag: untranslated */
-"_Next Video" = "_Next Video";
+"_Remove Playlist Folders" = "Paša_linti grojaraščio aplankus";
 
 /* File: ../../portable/menubar.py:216 */
-/* Flag: untranslated */
-"_Previous Video" = "_Previous Video";
+"_Remove Playlist Folder" = "Paša_linti grojaraščio aplanką";
 
-/* File: ../../portable/menubar.py:218 */
-/* Flag: untranslated */
-"Skip _Forward" = "Skip _Forward";
-
-/* File: ../../portable/menubar.py:219 */
-/* Flag: untranslated */
-"Skip _Back" = "Skip _Back";
-
-/* File: ../../portable/menubar.py:221 */
-/* Flag: untranslated */
-"Volume _Up" = "Volume _Up";
-
-/* File: ../../portable/menubar.py:222 */
-/* Flag: untranslated */
-"Volume _Down" = "Volume _Down";
-
-/* File: ../../portable/menubar.py:224 */
-/* Flag: untranslated */
-"_Fullscreen" = "_Fullscreen";
+/* File: ../../portable/menubar.py:226 */
+/* File: ../../portable/menubar.py:227 */
+"_Play" = "_Rodyti";
 
 /* File: ../../portable/menubar.py:228 */
 /* Flag: untranslated */
-"_About" = "_About";
+"_Pause" = "_Pause";
 
 /* File: ../../portable/menubar.py:229 */
-/* Flag: untranslated */
-"_Donate" = "_Donate";
+"_Stop" = "_Sustabdyti";
 
-/* File: ../../portable/menubar.py:230 */
-/* File: ../../portable/menubar.py:245 */
-/* Flag: untranslated */
-"_Help" = "_Help";
+/* File: ../../portable/menubar.py:231 */
+"_Next Video" = "_Kitas video";
 
 /* File: ../../portable/menubar.py:232 */
-/* Flag: untranslated */
-"Report a _Bug" = "Report a _Bug";
+"_Previous Video" = "_Praeitas video";
 
-/* File: ../../portable/menubar.py:236 */
-/* Flag: untranslated */
-"_Video" = "_Video";
+/* File: ../../portable/menubar.py:234 */
+"Skip _Forward" = "Persukti į _priekį";
+
+/* File: ../../portable/menubar.py:235 */
+"Skip _Back" = "Grįžti _Atgal";
+
+/* File: ../../portable/menubar.py:237 */
+"Volume _Up" = "_Didinti garsumą";
 
 /* File: ../../portable/menubar.py:238 */
-/* Flag: untranslated */
-"_File" = "_File";
+"Volume _Down" = "_Mažinti garsumą";
 
-/* File: ../../portable/menubar.py:242 */
-/* Flag: untranslated */
-"_Channels" = "_Channels";
-
-/* File: ../../portable/menubar.py:243 */
-/* Flag: untranslated */
-"_Playlists" = "_Playlists";
+/* File: ../../portable/menubar.py:240 */
+"_Fullscreen" = "_Visame ekrane";
 
 /* File: ../../portable/menubar.py:244 */
-/* Flag: untranslated */
-"P_layback" = "P_layback";
+"_About" = "_Apie";
 
-/* File: ../../portable/menubar.py:249 */
-/* Flag: untranslated */
-"Play Unwatched ($numUnwatched)" = "Play Unwatched ($numUnwatched)";
+/* File: ../../portable/menubar.py:245 */
+"_Donate" = "Pa_aukoti";
 
-/* File: ../../portable/menubar.py:250 */
-/* Flag: untranslated */
-"Pause All Downloads ($numDownloading)" = "Pause All Downloads ($numDownloading)";
+/* File: ../../portable/menubar.py:246 */
+/* File: ../../portable/menubar.py:261 */
+"_Help" = "Ži_nynas";
 
-/* File: ../../portable/menubar.py:251 */
-/* Flag: untranslated */
-"Resume All Downloads ($numPaused)" = "Resume All Downloads ($numPaused)";
+/* File: ../../portable/menubar.py:248 */
+"Report a _Bug" = "Pranešti apie _klaidą";
 
-/* File: ../../portable/menubar.py:253 */
-/* Flag: untranslated */
-"Options..." = "Options...";
+/* File: ../../portable/menubar.py:252 */
+"_Video" = "_Video";
 
-/* File: ../../portable/menubar.py:255 */
-/* Flag: untranslated */
-"Hide Window" = "Hide Window";
+/* File: ../../portable/menubar.py:254 */
+"_File" = "_Failas";
 
-/* File: ../../portable/menubar.py:256 */
-/* Flag: untranslated */
-"Show Window" = "Show Window";
+/* File: ../../portable/menubar.py:258 */
+"_Channels" = "_Kanalai";
 
-/* File: ../../portable/item.py:485 */
-/* Flag: untranslated */
+/* File: ../../portable/menubar.py:259 */
+"_Playlists" = "Groja_raščiai";
+
+/* File: ../../portable/menubar.py:260 */
+"P_layback" = "_Grojimas";
+
+/* File: ../../portable/menubar.py:265 */
+"Play Unwatched ($numUnwatched)" = "Rodyti nematytus ($numUnwatched)";
+
+/* File: ../../portable/menubar.py:266 */
+"Pause All Downloads ($numDownloading)" = "Pauzė visiems atsiuntimams ($numDownloading)";
+
+/* File: ../../portable/menubar.py:267 */
+"Resume All Downloads ($numPaused)" = "Pratęsti visus atsiuntimus ($numPaused)";
+
+/* File: ../../portable/menubar.py:269 */
+"Options..." = "Pasirinkimai...";
+
+/* File: ../../portable/menubar.py:271 */
+"Hide Window" = "Paslėpti langą";
+
+/* File: ../../portable/menubar.py:272 */
+"Show Window" = "Rodyti langą";
+
+/* File: ../../portable/theme.py:137 */
+"Starter Channels" = "Pradedančiojo kanalai";
+
+/* File: ../../portable/theme.py:154 */
+"Example Playlist" = "Pavyzdinis grojaraštis";
+
+/* File: ../../portable/httpclient.py:81 */
 /* Flag: python-format */
-"Removing %s" = "Removing %s";
+"Error: %s" = "Klaida: %s";
 
-/* File: ../../portable/item.py:488 */
-/* Flag: untranslated */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Would you like to delete this folder and all of its videos or just remove its entry from the Library?";
-
-/* File: ../../portable/item.py:494 */
-/* Flag: untranslated */
-"Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
-
-/* File: ../../portable/item.py:514 */
-/* Flag: untranslated */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted.";
-
-/* File: ../../portable/item.py:544 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%d minutes" = "%d minutes";
-
-/* File: ../../portable/item.py:554 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Expires in %s" = "Expires in %s";
-
-/* File: ../../portable/item.py:566 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Will retry in %s" = "Will retry in %s";
-
-/* File: ../../portable/item.py:568 */
-/* Flag: untranslated */
-"Paused" = "Paused";
-
-/* File: ../../portable/item.py:954 */
-/* Flag: untranslated */
-"TORRENT" = "TORRENT";
-
-/* File: ../../portable/item.py:956 */
-/* Flag: untranslated */
-"WEB PAGE" = "WEB PAGE";
-
-/* File: ../../portable/item.py:966 */
-/* Flag: untranslated */
-"Total Down:" = "Total Down:";
-
-/* File: ../../portable/item.py:969 */
-/* Flag: untranslated */
-"Error:" = "Error:";
-
-/* File: ../../portable/item.py:977 */
-/* Flag: untranslated */
-"Down Rate:" = "Down Rate:";
-
-/* File: ../../portable/item.py:978 */
-/* Flag: untranslated */
-"Down Total:" = "Down Total:";
-
-/* File: ../../portable/item.py:980 */
-/* Flag: untranslated */
-"Up Rate:" = "Up Rate:";
-
-/* File: ../../portable/item.py:981 */
-/* Flag: untranslated */
-"Up Total:" = "Up Total:";
-
-/* File: ../../portable/item.py:989 */
-/* Flag: untranslated */
-"Web page:" = "Web page:";
-
-/* File: ../../portable/item.py:989 */
-/* Flag: untranslated */
-"permalink" = "permalink";
-
-/* File: ../../portable/item.py:993 */
-/* Flag: untranslated */
-"File link:" = "File link:";
-
-/* File: ../../portable/item.py:993 */
-/* Flag: untranslated */
-"direct link to file" = "direct link to file";
-
-/* File: ../../portable/item.py:995 */
-/* Flag: untranslated */
-"File type:" = "File type:";
-
-/* File: ../../portable/item.py:1002 */
-/* Flag: untranslated */
-"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
-
-/* File: ../../portable/item.py:1004 */
-/* Flag: untranslated */
-"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
-
-/* File: ../../portable/item.py:1006 */
-/* Flag: untranslated */
-"Filename:" = "Filename:";
-
-/* File: ../../portable/item.py:1013 */
-/* Flag: untranslated */
-"Down Total" = "Down Total";
-
-/* File: ../../portable/item.py:1015 */
-/* Flag: untranslated */
-"Up Total" = "Up Total";
-
-/* File: ../../portable/item.py:1033 */
-/* Flag: untranslated */
-"Item Details" = "Item Details";
-
-/* File: ../../portable/item.py:1040 */
-/* Flag: untranslated */
-"Torrent Details" = "Torrent Details";
-
-/* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
-
-/* File: ../../portable/item.py:1046 */
-/* Flag: untranslated */
-"Download Details" = "Download Details";
-
-/* File: ../../portable/item.py:1263 */
-/* Flag: untranslated */
-"downloading..." = "downloading...";
-
-/* File: ../../portable/item.py:1270 */
-/* File: ../../portable/item.py:1273 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s remaining" = "%s remaining";
-
-/* File: ../../portable/item.py:1282 */
-/* Flag: untranslated */
-"starting up..." = "starting up...";
-
-/* File: ../../portable/item.py:1477 */
-/* Flag: untranslated */
-"Play Just This Video" = "Play Just This Video";
-
-/* File: ../../portable/item.py:1854 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Removing %s items" = "Removing %s items";
-
-/* File: ../../portable/item.py:1856 */
-/* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?";
-
-/* File: ../../portable/item.py:1864 */
-/* Flag: untranslated */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
-
-/* File: ../../portable/folder.py:132 */
-/* File: ../../portable/folder.py:155 */
-/* Flag: untranslated */
-"Rename Channel Folder" = "Rename Channel Folder";
-
-/* File: ../../portable/folder.py:134 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Enter a new name for the channel folder %s";
-
-/* File: ../../portable/folder.py:210 */
-/* File: ../../portable/folder.py:215 */
-/* Flag: untranslated */
-"Rename Playlist Folder" = "Rename Playlist Folder";
-
-/* File: ../../portable/folder.py:217 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Enter a new name for the playlist folder %s";
-
-/* File: ../../portable/folder.py:225 */
-/* Flag: untranslated */
-"Create Channel Folder" = "Create Channel Folder";
-
-/* File: ../../portable/folder.py:239 */
-/* Flag: untranslated */
-"Create Playlist Folder" = "Create Playlist Folder";
-
-/* File: ../../portable/folder.py:240 */
-/* Flag: untranslated */
-"Enter a name for the new playlist folder" = "Enter a name for the new playlist folder";
-
-/* File: ../../portable/httpclient.py:68 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Error: %s" = "Error: %s";
-
-/* File: ../../portable/httpclient.py:83 */
-/* File: ../../portable/httpclient.py:89 */
-/* Flag: untranslated */
-"Can't connect" = "Can't connect";
-
-/* File: ../../portable/httpclient.py:84 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Connection Error: %s" = "Connection Error: %s";
-
-/* File: ../../portable/httpclient.py:90 */
-/* Flag: untranslated */
-"SSL connection error" = "SSL connection error";
-
-/* File: ../../portable/httpclient.py:94 */
-/* Flag: untranslated */
-"HTTP error" = "HTTP error";
+/* File: ../../portable/httpclient.py:96 */
+/* File: ../../portable/httpclient.py:102 */
+"Can't connect" = "Prisijungti nepavyko";
 
 /* File: ../../portable/httpclient.py:97 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Bad Status Line: %s" = "Bad Status Line: %s";
-
-/* File: ../../portable/httpclient.py:100 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Header Line: %s" = "Bad Header Line: %s";
+"Connection Error: %s" = "Prisijungimo klaida: %s";
 
 /* File: ../../portable/httpclient.py:103 */
-/* Flag: untranslated */
+"SSL connection error" = "SSL prisijungimo klaida";
+
+/* File: ../../portable/httpclient.py:107 */
+"HTTP error" = "HTTP klaida";
+
+/* File: ../../portable/httpclient.py:110 */
 /* Flag: python-format */
-"Bad Chunk size: %s" = "Bad Chunk size: %s";
+"Bad Status Line: %s" = "Bloga būsenos eilutė: %s";
 
-/* File: ../../portable/httpclient.py:106 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:113 */
 /* Flag: python-format */
-"Expected CRLF got: %r" = "Expected CRLF got: %r";
+"Bad Header Line: %s" = "Bloga antraštės eilutė: %s";
 
-/* File: ../../portable/httpclient.py:109 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:116 */
 /* Flag: python-format */
-"%s closed connection" = "%s closed connection";
+"Bad Chunk size: %s" = "Blogas Gabalo dydis: %s";
 
-/* File: ../../portable/httpclient.py:115 */
-/* Flag: untranslated */
-"Got 404 status code" = "Got 404 status code";
-
-/* File: ../../portable/httpclient.py:117 */
-/* Flag: untranslated */
+/* File: ../../portable/httpclient.py:119 */
 /* Flag: python-format */
-"Bad Status Code: %s" = "Bad Status Code: %s";
+"Expected CRLF got: %r" = "Tikėtasi CRLF o gauta: %r";
 
-/* File: ../../portable/httpclient.py:121 */
-/* Flag: untranslated */
-"Authorization failed" = "Authorization failed";
+/* File: ../../portable/httpclient.py:122 */
+/* Flag: python-format */
+"%s closed connection" = "%s uždarytas susijungimas";
 
-/* File: ../../portable/httpclient.py:127 */
+/* File: ../../portable/httpclient.py:128 */
+"Got 404 status code" = "Gautas 404 būsenos kodas";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "Blogas būsenos kodas: %s";
+
+/* File: ../../portable/httpclient.py:134 */
+"Authorization failed" = "Patvirtinimas nepavyko";
+
+/* File: ../../portable/httpclient.py:140 */
 /* Flag: untranslated */
 "Pipeline request never started" = "Pipeline request never started";
 
-/* File: ../../portable/httpclient.py:131 */
-/* Flag: untranslated */
-"Timeout" = "Timeout";
+/* File: ../../portable/httpclient.py:144 */
+"Timeout" = "Baigėsi laiko limitas";
 
-/* File: ../../portable/httpclient.py:132 */
+/* File: ../../portable/httpclient.py:145 */
+/* Flag: python-format */
+"Connection to %s timed out" = "Baigėsi laiko limitas jungiantis į %s";
+
+/* File: ../../portable/httpclient.py:149 */
+"Invalid URL" = "Netinkamas URL";
+
+/* File: ../../portable/httpclient.py:150 */
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "„%s“ yra netinkamas URL";
+
+/* File: ../../portable/httpclient.py:156 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "Failas „%s“ neegzistuoja";
+
+/* File: ../../portable/httpclient.py:160 */
+"Read error" = "Skaitymo klaida";
+
+/* File: ../../portable/httpclient.py:161 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "Klaida skaitant iš „%s“";
+
+/* File: ../../portable/httpclient.py:354 */
+"Unknown Error code" = "Nežinomas klaidos kodas";
+
+/* File: ../../portable/httpclient.py:386 */
+"Connection closed" = "Prisijungimas baigtas";
+
+/* File: ../../portable/httpclient.py:811 */
+"Unknown" = "Nežinoma";
+
+/* File: ../../portable/httpclient.py:812 */
+"Internal Error: Not ready to send" = "Vidinė klaida: nepasiruošta išsiųsti";
+
+/* File: ../../portable/extrastrings.py:33 */
+/* File: ../../portable/feed.py:2409 */
+/* File: ../../portable/feed.py:2499 */
+"Search" = "Paieška";
+
+/* File: ../../portable/feed.py:384 */
+"never" = "niekada";
+
+/* File: ../../portable/feed.py:386 */
+/* File: ../../portable/item.py:554 */
+/* Flag: python-format */
+"%d hours" = "%d valandų";
+
+/* File: ../../portable/feed.py:388 */
+/* Flag: python-format */
+"%d day" = "%d diena";
+
+/* File: ../../portable/feed.py:390 */
+/* File: ../../portable/item.py:552 */
+/* Flag: python-format */
+"%d days" = "%d dienų";
+
+/* File: ../../portable/feed.py:392 */
+/* Flag: python-format */
+"%d months" = "%d mėnesių";
+
+/* File: ../../portable/feed.py:826 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Įveskite šio kanalo %s vardą";
+
+/* File: ../../portable/feed.py:923 */
+"Error loading feed" = "Klaida įkeliant srautą";
+
+/* File: ../../portable/feed.py:924 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Nepavyko įkelti srauto ties %s (%s).";
+
+/* File: ../../portable/feed.py:927 */
+"Would you like to keep the feed?" = "Ar norėtumėte palikti šį srautą?";
+
+/* File: ../../portable/feed.py:1040 */
+"Bad content-type" = "Blogas turinio tipas";
+
+/* File: ../../portable/feed.py:1053 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "Kanalas nesuderinamas su $shortAppName!";
+
+/* File: ../../portable/feed.py:1054 */
+/* Flag: untranslated */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
+
+/* File: ../../portable/feed.py:2513 */
+"Local Files" = "Vietiniai failai";
+
+/* File: ../../portable/feed.py:2527 */
+"Playing File" = "Grojantysis failas";
+
+/* File: ../../portable/storedatabase.py:859 */
+/* File: ../../portable/storedatabase.py:1258 */
+/* Flag: python-format */
+"%s database save succeeded" = "%s duomenų bazės išsaugojimas pavyko";
+
+/* File: ../../portable/storedatabase.py:860 */
+/* File: ../../portable/storedatabase.py:1259 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Duomenų bazė buvo sėkmingai išsaugota. Dabar saugu išjungti „Miro“ neprarandant jokių duomenų.";
+
+/* File: ../../portable/storedatabase.py:867 */
+/* File: ../../portable/storedatabase.py:1267 */
+/* Flag: python-format */
+"%s database save failed" = "%s duomenų bazės išsaugojimas nepavyko";
+
+/* File: ../../portable/storedatabase.py:868 */
+/* File: ../../portable/storedatabase.py:1268 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s nepavyko išsaugoti savo duomenų bazės. Diskas pilnas.\nSiūlome ištrinti keletą failų iš pilnojo disko arba ištrinti keletą filmų iš Jūsų kolekcijos.\nPaskutiniai pakeitimai gali būti prarasti.";
+
+/* File: ../../portable/dialogs.py:89 */
+"Ignore" = "Nepaisyti";
+
+/* File: ../../portable/dialogs.py:90 */
+"Submit Crash Report" = "Išsiųsti lūžimo ataskaitą";
+
+/* File: ../../portable/dialogs.py:91 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
+"Migrate" = "Migruoti";
+
+/* File: ../../portable/dialogs.py:92 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
+"Don't Migrate" = "Nemigruoti";
+
+/* File: ../../portable/dialogs.py:94 */
+"Remove Entry" = "Pašalinti įrašą";
+
+/* File: ../../portable/dialogs.py:95 */
+"Delete File" = "Ištrinti failą";
+
+/* File: ../../portable/dialogs.py:96 */
+"Delete Files" = "Ištrinti failus";
+
+/* File: ../../portable/dialogs.py:97 */
+"Keep Videos" = "Palikti video failus";
+
+/* File: ../../portable/dialogs.py:98 */
+"Delete Videos" = "Ištrinti video failus";
+
+/* File: ../../portable/dialogs.py:100 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
+"Create Channel" = "Sukurti kanalą";
+
+/* File: ../../portable/dialogs.py:101 */
+"Add" = "Pridėti";
+
+/* File: ../../portable/dialogs.py:102 */
+"Add Into New Folder" = "Pridėti į naują aplanką";
+
+/* File: ../../portable/dialogs.py:103 */
+"Keep" = "Palikti";
+
+/* File: ../../portable/dialogs.py:105 */
+"Not Now" = "Ne dabar";
+
+/* File: ../../portable/dialogs.py:106 */
+"Close to Tray" = "Užverti į sisteminį skydelį";
+
+/* File: ../../portable/dialogs.py:107 */
+"Launch Miro" = "Paleisti „Miro“";
+
+/* File: ../../portable/dialogs.py:108 */
+"Download Anyway" = "Vistiek atsisiųsti";
+
+/* File: ../../portable/dialogs.py:109 */
+/* Flag: untranslated */
+"Install iHeartMiro" = "Install iHeartMiro";
+
+/* File: ../../portable/dialogs.py:110 */
+/* Flag: untranslated */
+"Don't Install" = "Don't Install";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
+"New Search Channel" = "Naujas paieškos kanalas";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
+"A search channel contains items that match a search term." = "Paieškos kanale yra elementų, kurie atitinka paieškos kriterijų.";
+
+/* File: ../../portable/controller.py:196 */
+/* File: ../../portable/controller.py:210 */
+/* File: ../../portable/controller.py:254 */
+/* File: ../../portable/controller.py:280 */
+/* File: ../../portable/controller.py:300 */
+/* Flag: python-format */
+"Remove %s" = "P_ašalinti %s";
+
+/* File: ../../portable/controller.py:197 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "Ar tikrai norite pašalinti %s gidą?";
+
+/* File: ../../portable/controller.py:211 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "Ar tikrai norite pašalinti %s";
+
+/* File: ../../portable/controller.py:214 */
+/* File: ../../portable/controller.py:259 */
+/* File: ../../portable/controller.py:285 */
+/* File: ../../portable/controller.py:304 */
+/* Flag: python-format */
+"Remove %s channels" = "Pašalinti %s kanalus";
+
+/* File: ../../portable/controller.py:216 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "Ar tikrai norite pašalinti šiuos %s grojaraščius";
+
+/* File: ../../portable/controller.py:255 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Ką norėtumėte daryti su šio kanalo video failais, kuriuos atsisiuntėte?";
+
+/* File: ../../portable/controller.py:260 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Ką norėtumėte daryti su šių kanalų video failais, kuriuos atsisiuntėte?";
+
+/* File: ../../portable/controller.py:281 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Ar tikrai norite pašalinti %s? Bet kokie aktyvūs atsiuntimai bus nutraukti.";
+
+/* File: ../../portable/controller.py:286 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Ar tikrai norite pašalinti šiuos %s kanalus? Bet kokie aktyvūs atsiuntimai bus nutraukti.";
+
+/* File: ../../portable/controller.py:301 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "Ar tikrai norite pašalinti %s?";
+
+/* File: ../../portable/controller.py:305 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "Ar tikrai norite pašalinti šiuos %s kanalus?";
+
+/* File: ../../portable/controller.py:318 */
+/* Flag: python-format */
+"Stop watching %s" = "Sustabdyti %s stebėjimą";
+
+/* File: ../../portable/controller.py:319 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "Ar tikrai norite sustabdyti %s stebėjimą?";
+
+/* File: ../../portable/controller.py:322 */
+/* Flag: python-format */
+"Stop watching %s directories" = "Sustabdyti %s aplankų stebėjimą";
+
+/* File: ../../portable/controller.py:323 */
+/* Flag: python-format */
+"Are you sure you want to stop watching these %s directories?" = "Ar tikrai norite sustabdyti šių %s aplankų stebėjimą?";
+
+/* File: ../../portable/controller.py:497 */
+"Error Saving Video" = "Klaida išsaugojant video";
+
+/* File: ../../portable/controller.py:499 */
+/* Flag: python-format */
+"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "Įvyko klaida išsaugojant %s. Patikrinkite, ar failas nebuvo ištrintas, ir pabandykite dar kartą.";
+
+/* File: ../../portable/singleclick.py:99 */
+"Download already exists" = "Atsiuntimas jau egzistuoja";
+
+/* File: ../../portable/singleclick.py:100 */
+"That URL is already an external download." = "Šis URL jau yra išorinis atsiuntimas.";
+
+/* File: ../../portable/singleclick.py:106 */
+"Miro will begin downloading it now." = "„Miro“ pradės jo atsiuntimą.";
+
+/* File: ../../portable/singleclick.py:108 */
+"It is downloading now." = "Jis yra siunčiamas.";
+
+/* File: ../../portable/singleclick.py:110 */
+"It has already been downloaded." = "Jis jau atsiųstas.";
+
+/* File: ../../portable/singleclick.py:137 */
+"Download Error" = "Klaida besisiunčiant";
+
+/* File: ../../portable/singleclick.py:138 */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "„Miro“ negali atsiųsti failo šiame URL:\n\nURL: %s";
+
+/* File: ../../portable/singleclick.py:146 */
+"File Download" = "Failo atsiuntimas";
+
+/* File: ../../portable/singleclick.py:147 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "Šis failas adresu %s nėra nei garsinis, nei video, nei RSS srautas.";
+
+/* File: ../../portable/singleclick.py:235 */
+"Subscribing to multiple channels" = "Prenumeruojami keli kanalai";
+
+/* File: ../../portable/singleclick.py:236 */
+/* Flag: python-format */
+"Create %d channels?" = "Ar sukurti %d kanalus?";
+
+/* File: ../../portable/singleclick.py:249 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Pridedami %d kanalai į naują aplanką";
+
+/* File: ../../portable/singleclick.py:250 */
+/* File: ../../portable/folder.py:224 */
+"Enter a name for the new channel folder" = "Įveskite naujo kanalo aplanko vardą";
+
+/* File: ../../portable/singleclick.py:253 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "DĖMESIO: Jūs jau užsiprenumeravote %d iš šių kanalų. Šie kanalai išliks ten, kur jie yra šiuo metu.";
+
+/* File: ../../portable/singleclick.py:264 */
+"Subscription error" = "Prenumeratos klaida";
+
+/* File: ../../portable/singleclick.py:274 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Šis $shortAppName kanalo failas yra netinkamo formato: $url. Perspėkite šio failo leidėją.";
+
+/* File: ../../portable/singleclick.py:282 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Šis $shortAppName kanalo failas turi nurodytą netinkamą turinio tipą: $url. Perspėkite šio failo leidėją.";
+
+/* File: ../../portable/singleclick.py:286 */
+"Could not download the $shortAppName channel file: $url." = "Nepavyko atsiųsti $shortAppName kanalo failo: $url.";
+
+/* File: ../../portable/singleclick.py:334 */
+"Invalid Torrent" = "Netinkamas „Torrent“ failas";
+
+/* File: ../../portable/singleclick.py:335 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"Connection to %s timed out" = "Connection to %s timed out";
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]" /* = "„Torrent“ failas %s yra sugadintas ir negali būti atvertas. [Gerai]" */;
 
-/* File: ../../portable/httpclient.py:136 */
+/* File: ../../portable/item.py:497 */
+/* Flag: python-format */
+"Removing %s" = "Šalinama %s";
+
+/* File: ../../portable/item.py:500 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Ar norite ištrinti šį aplanką ir visus jo video failus, ar tik pašalinti jo įrašą bibliotekoje?";
+
+/* File: ../../portable/item.py:506 */
+"Would you like to delete this file or just remove its entry from the Library?" = "Ar norite ištrinti šį failą, ar tik pašalinti jo įrašą bibliotekoje?";
+
+/* File: ../../portable/item.py:526 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Šis elementas yra aplankas. Kai pašalinsite aplanką, visi šiame aplanke esantys elementai taip pat bus ištrinti.";
+
+/* File: ../../portable/item.py:556 */
+/* Flag: python-format */
+"%d minutes" = "%d minučių";
+
+/* File: ../../portable/item.py:566 */
+/* Flag: python-format */
+"Expires in %s" = "Baigia galioti po %s";
+
+/* File: ../../portable/item.py:578 */
+/* Flag: python-format */
+"Will retry in %s" = "Bandoma iš naujo po %s";
+
+/* File: ../../portable/item.py:580 */
+"Paused" = "Pristabdyta";
+
+/* File: ../../portable/item.py:982 */
+"TORRENT" = "TORRENT failas";
+
+/* File: ../../portable/item.py:984 */
+"WEB PAGE" = "Interneto puslapis";
+
+/* File: ../../portable/item.py:994 */
+"Total Down:" = "Iš viso atsiųsta:";
+
+/* File: ../../portable/item.py:997 */
+"Error:" = "Klaida:";
+
+/* File: ../../portable/item.py:1006 */
 /* Flag: untranslated */
-"Invalid URL" = "Invalid URL";
+"Seeders:" = "Seeders:";
 
-/* File: ../../portable/httpclient.py:137 */
+/* File: ../../portable/item.py:1008 */
+/* Flag: untranslated */
+"Leechers:" = "Leechers:";
+
+/* File: ../../portable/item.py:1010 */
+"Down Rate:" = "Atsiuntimo greitis:";
+
+/* File: ../../portable/item.py:1011 */
+"Down Total:" = "Iš viso atsiųsta:";
+
+/* File: ../../portable/item.py:1013 */
+"Up Rate:" = "Išsiuntimo greitis:";
+
+/* File: ../../portable/item.py:1014 */
+"Up Total:" = "Iš viso išsiųsta:";
+
+/* File: ../../portable/item.py:1024 */
+"Web page:" = "Tinklalapis:";
+
+/* File: ../../portable/item.py:1024 */
+/* Flag: untranslated */
+"permalink" = "permalink";
+
+/* File: ../../portable/item.py:1028 */
+"File link:" = "Failo nuoroda:";
+
+/* File: ../../portable/item.py:1028 */
+"direct link to file" = "tiesioginė nuoroda į failą";
+
+/* File: ../../portable/item.py:1030 */
+"File type:" = "Failo tipas:";
+
+/* File: ../../portable/item.py:1037 */
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"License:" = "License:";
+
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"see permalink" = "see permalink";
+
+/* File: ../../portable/item.py:1049 */
+"REVEAL LOCAL FOLDER" = "Parodyti vietinį aplanką";
+
+/* File: ../../portable/item.py:1051 */
+"REVEAL LOCAL FILE" = "Parodyti vietinį failą";
+
+/* File: ../../portable/item.py:1053 */
+"Filename:" = "Failo vardas:";
+
+/* File: ../../portable/item.py:1060 */
+"Down Total" = "Iš viso atsiųsta";
+
+/* File: ../../portable/item.py:1062 */
+"Up Total" = "Iš viso išsiųsta";
+
+/* File: ../../portable/item.py:1080 */
+"Item Details" = "Elemento duomenys";
+
+/* File: ../../portable/item.py:1087 */
+"Torrent Details" = "Torrent failo duomenys";
+
+/* File: ../../portable/item.py:1089 */
+"Torrent Details <i>stopped</i>" = "Torrent failo duomenys <i>sustabdyta</i>";
+
+/* File: ../../portable/item.py:1093 */
+"Download Details" = "Atsiuntimo duomenys";
+
+/* File: ../../portable/item.py:1310 */
+"downloading..." = "atsiunčiama...";
+
+/* File: ../../portable/item.py:1317 */
+/* File: ../../portable/item.py:1320 */
+/* Flag: python-format */
+"%s remaining" = "%s liko";
+
+/* File: ../../portable/item.py:1329 */
+"starting up..." = "pradedama...";
+
+/* File: ../../portable/item.py:1878 */
+/* Flag: python-format */
+"Removing %s items" = "Pašalinami %s elementai(ų)";
+
+/* File: ../../portable/item.py:1880 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Vienas ar daugiau iš šių video failų nebuvo atsiųsti iš kanalo. Ar norėtumėte ištrinti šiuos failus, ar tik pašalinti jų įrašus bibliotekoje?";
+
+/* File: ../../portable/item.py:1888 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Vienas ar daugiau iš šių elementų yra aplankas. Ar norėtumėte ištrinti aplanką? Visi aplanke esantys elementai taip pat bus ištrinti.";
+
+/* File: ../../portable/startup.py:92 */
+/* Flag: untranslated */
+"Unknown Error" = "Unknown Error";
+
+/* File: ../../portable/startup.py:93 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" is not a valid URL";
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
 
-/* File: ../../portable/httpclient.py:143 */
+/* File: ../../portable/startup.py:155 */
+"Database too new" = "Duomenų bazė per nauja";
+
+/* File: ../../portable/startup.py:156 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Jūsų duomenų bazė buvo išsaugota su naujesne $shortAppName versija. Jums reikia atsisiųsti naują $shortAppName versiją ir ją paleisti.";
+
+/* File: ../../portable/startup.py:238 */
 /* Flag: untranslated */
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
+
+/* File: ../../portable/folder.py:144 */
 /* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "The file: \"%s\" doesn't exist";
+"Enter a new name for the channel folder %s" = "Įveskite naują kanalo aplanko vardą %s";
 
-/* File: ../../portable/httpclient.py:147 */
-/* Flag: untranslated */
-"Read error" = "Read error";
-
-/* File: ../../portable/httpclient.py:148 */
-/* Flag: untranslated */
+/* File: ../../portable/folder.py:215 */
 /* Flag: python-format */
-"Error while reading from \"%s\"" = "Error while reading from \"%s\"";
+"Enter a new name for the playlist folder %s" = "Įveskite naują grojaraščio aplanko vardą %s";
 
-/* File: ../../portable/httpclient.py:341 */
-/* Flag: untranslated */
-"Unknown Error code" = "Unknown Error code";
+/* File: ../../portable/folder.py:223 */
+"Create Channel Folder" = "Sukurti kanalo aplanką";
 
-/* File: ../../portable/httpclient.py:373 */
-/* Flag: untranslated */
-"Connection closed" = "Connection closed";
+/* File: ../../portable/folder.py:237 */
+"Create Playlist Folder" = "Sukurti grojaraščio aplanką";
 
-/* File: ../../portable/httpclient.py:798 */
-/* Flag: untranslated */
-"Unknown" = "Unknown";
+/* File: ../../portable/folder.py:238 */
+"Enter a name for the new playlist folder" = "Įveskite naujo grojaraščio aplanko vardą";
 
-/* File: ../../portable/httpclient.py:799 */
+/* File: ../../portable/license.py:68 */
 /* Flag: untranslated */
-"Internal Error: Not ready to send" = "Internal Error: Not ready to send";
-
-/* File: ../../portable/app.py:685 */
-/* Flag: untranslated */
-"Database too new" = "Database too new";
-
-/* File: ../../portable/app.py:686 */
-/* Flag: untranslated */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that.";
-
-/* File: ../../portable/app.py:700 */
-/* Flag: untranslated */
-"Video Directory Missing" = "Video Directory Missing";
-
-/* File: ../../portable/app.py:701 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro.";
-
-/* File: ../../portable/app.py:1038 */
-/* File: ../../portable/app.py:1052 */
-/* File: ../../portable/app.py:1096 */
-/* File: ../../portable/app.py:1122 */
-/* File: ../../portable/app.py:1142 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Remove %s" = "Remove %s";
-
-/* File: ../../portable/app.py:1039 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Are you sure you want to remove the guide %s?";
-
-/* File: ../../portable/app.py:1053 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove %s" = "Are you sure you want to remove %s";
-
-/* File: ../../portable/app.py:1056 */
-/* File: ../../portable/app.py:1101 */
-/* File: ../../portable/app.py:1127 */
-/* File: ../../portable/app.py:1146 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Remove %s channels" = "Remove %s channels";
-
-/* File: ../../portable/app.py:1058 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
-
-/* File: ../../portable/app.py:1097 */
-/* Flag: untranslated */
-"What would you like to do with the videos in this channel that you've downloaded?" = "What would you like to do with the videos in this channel that you've downloaded?";
-
-/* File: ../../portable/app.py:1102 */
-/* Flag: untranslated */
-"What would you like to do with the videos in these channels that you've downloaded?" = "What would you like to do with the videos in these channels that you've downloaded?";
-
-/* File: ../../portable/app.py:1123 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Are you sure you want to remove %s?  Any downloads in progress will be canceled.";
-
-/* File: ../../portable/app.py:1128 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
-
-/* File: ../../portable/app.py:1143 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove %s?" = "Are you sure you want to remove %s?";
-
-/* File: ../../portable/app.py:1147 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?" = "Are you sure you want to remove these %s channels?";
-
-/* File: ../../portable/app.py:1160 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Stop watching %s" = "Stop watching %s";
-
-/* File: ../../portable/app.py:1161 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "Are you sure you want to stop watching %s?";
-
-/* File: ../../portable/app.py:1164 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Stop watching %s directories" = "Stop watching %s directories";
-
-/* File: ../../portable/app.py:1165 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to stop watching these %s directories?" = "Are you sure you want to stop watching these %s directories?";
-
-/* File: ../../portable/app.py:1196 */
-/* Flag: untranslated */
-"Are you sure you want to quit?" = "Are you sure you want to quit?";
-
-/* File: ../../portable/app.py:1198 */
-/* Flag: untranslated */
-"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?";
-
-/* File: ../../portable/app.py:1712 */
-/* Flag: untranslated */
-"Invalid Value" = "Invalid Value";
-
-/* File: ../../portable/app.py:1713 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number.";
-
-/* File: ../../portable/app.py:1839 */
-/* Flag: untranslated */
-"Error Revealing File" = "Error Revealing File";
-
-/* File: ../../portable/app.py:1840 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"The file \"%s\" was deleted from outside Miro." = "The file \"%s\" was deleted from outside Miro.";
-
-/* File: ../../portable/app.py:2011 */
-/* Flag: untranslated */
-" - Invalid URL" = " - Invalid URL";
-
-/* File: ../../portable/app.py:2012 */
-/* Flag: untranslated */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "The address you entered is not a valid URL.\nPlease double check and try again.\n\n";
-
-/* File: ../../portable/app.py:2036 */
-/* Flag: untranslated */
-"$shortAppName - Add Channel" = "$shortAppName - Add Channel";
-
-/* File: ../../portable/app.py:2036 */
-/* Flag: untranslated */
-"Enter the URL of the channel to add" = "Enter the URL of the channel to add";
-
-/* File: ../../portable/app.py:2057 */
-/* Flag: untranslated */
-"$shortAppName - Add Miro Guide" = "$shortAppName - Add Miro Guide";
-
-/* File: ../../portable/app.py:2057 */
-/* Flag: untranslated */
-"Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add";
-
-/* File: ../../portable/app.py:2063 */
-/* Flag: untranslated */
-"$shortAppName - Download Video" = "$shortAppName - Download Video";
-
-/* File: ../../portable/app.py:2063 */
-/* Flag: untranslated */
-"Enter the URL of the video to download" = "Enter the URL of the video to download";
-
-/* File: ../../portable/app.py:2420 */
-/* Flag: untranslated */
-"Starter Channels" = "Starter Channels";
-
-/* File: ../../portable/app.py:2437 */
-/* Flag: untranslated */
-"Example Playlist" = "Example Playlist";
-
-/* File: ../../portable/app.py:2463 */
-/* Flag: untranslated */
-"Custom Channels" = "Custom Channels";
-
-/* File: ../../portable/app.py:2463 */
-/* Flag: untranslated */
-"You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels.";
-
-/* File: ../../portable/app.py:2478 */
-/* Flag: untranslated */
-"Error Changing Movies Directory" = "Error Changing Movies Directory";
-
-/* File: ../../portable/app.py:2479 */
-/* Flag: untranslated */
-"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory.";
-
-/* File: ../../portable/app.py:2508 */
-/* Flag: untranslated */
-"Error Saving Video" = "Error Saving Video";
-
-/* File: ../../portable/app.py:2510 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "An error occured while trying to save %s.  Please check that the file has not been deleted and try again.";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-/* Flag: untranslated */
-"(Changes won't go into effect until you restart Miro)" = "(Changes won't go into effect until you restart Miro)";
+"license page" = "license page";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
-/* Flag: untranslated */
-"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 day\n3 days\n6 days\n10 days\n1 month\nNever";
+"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 diena\n3 dienos\n6 dienos\n10 dienų\n1 mėnuo\nNiekada";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:8 */
-/* Flag: untranslated */
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
 /* Flag: untranslated */
-"<b>Searching for Videos</b>" = "<b>Searching for Videos</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
-/* Flag: untranslated */
-"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Would you like Miro to look for video files on your computer?</b>";
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-/* Flag: untranslated */
-"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Would you like to run Miro when your computer starts up?</b>";
+"<b>Searching for Videos</b>" = "<b>Ieškoma video</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
-/* Flag: untranslated */
-"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Ar norite, kad „Miro“ ieškotų video failų Jūsų kompiuteryje?</b>";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:26 */
-/* Flag: untranslated */
-"By default, videos _expire after" = "By default, videos _expire after";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Ar norite paleisti „Miro“, kai Jūsų kompiuteris įsikraus?</b>";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
-/* Flag: untranslated */
-"C_hannel:" = "C_hannel:";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Suderinimas baigtas!</b>\n\nSuderinimas baigtas -- dabar galite ieškoti kanalų bei juos žiūrėti.\n\n<b>Nelaukite:</b> „Miro“ skirasi nuo video stebėjimo Interneto tinklalapiuose -- leidėjai gali pasiūlyti didelių, aukštos kokybės video. Taigi nesėdėkit laukdami video: pradėkite kelis atsiuntimus ir po kurio laiko grįžkite.\n\n<b>Palikite įjungtą:</b> „Miro“ reguliariai patikrina kanalus, ar nėra naujų video, ir juos atsiunčia fone. Palikus įjungtą programą turėsite naujus video tuomet, kai panorėsite juos peržiūrėti.\n\n<b>Nesijaudinkite dėl disko vietos:</b> Kaip ir „TiVo“, „Miro“ programoje yra riboto galiojimo laiko sistema, leidžianti pašalinti senesnius video failus taip paliekant vietos naujiems. Jūs visada galite pasilikti video failus, pasirinkdami „išsaugoti“ funkciją, ir galite suderinti kanalų nustatymus, kad video failai būtų automatiškai išsaugojami.\n\n<b>Mėgaukitės dideliu vaizdu:</b> Dešiniau grojimo mygtuko esantis mygtukas leis peržiūrėti video pilnu ekranu.\n\n<b>Suraskite video:</b> „Miro“ gide yra šimtai Internetinių TV kanalų, ir visi jie absoliučiai nemokami. Tiesiog spragtelkite „Pridėti“, norėdami žiūrėti kanalą.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
 /* Flag: untranslated */
-"C_hannels" = "C_hannels";
+"Auto download default setting for new channels" = "Auto download default setting for new channels";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
 /* Flag: untranslated */
-"C_reate Channel" = "C_reate Channel";
+"Automatically for_ward ports." = "Automatically for_ward ports.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
-/* Flag: untranslated */
-"Check Channels for _new content" = "Check Channels for _new content";
+"By default, videos _expire after" = "Pagal nutylėjimą, video failų _galiojimas baigiasi po";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
-/* Flag: untranslated */
-"Disk _Space" = "Disk _Space";
+"C_hannel:" = "_Kanalas:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
+"C_hannels" = "_Kanalai";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-/* Flag: untranslated */
-"Don't start a download _if it leaves less than" = "Don't start a download _if it leaves less than";
+"C_reate Channel" = "Suk_urti kanalą";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-/* Flag: untranslated */
-"Download at _most" = "Download at _most";
+"Check Channels for _new content" = "Patikrinti kanalus, ar yra _naujų video";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
-/* Flag: untranslated */
-"Every 30 minutes\nEvery hour\nManually" = "Every 30 minutes\nEvery hour\nManually";
+"Disk _Space" = "_Disko vieta";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
-/* Flag: untranslated */
-"G_B free" = "G_B free";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
-/* Flag: untranslated */
-"Go" = "Go";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
+"Every 30 minutes\nEvery hour\nManually" = "Kas 30 minučių\nKas valandą\nRankiniu būdu";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 /* Flag: untranslated */
-"In This:" = "In This:";
+"G_B" = "G_B";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
+"Go" = "Vykdyti";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
 /* Flag: untranslated */
-"Miro can find all the videos on your computer to help you organize your collection." = "Miro can find all the videos on your computer to help you organize your collection.";
+"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
+"In This:" = "Šiame:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+/* Flag: untranslated */
+"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
 /* Flag: untranslated */
-"Play _videos one after another" = "Play _videos one after another";
+"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
 /* Flag: untranslated */
-"Preferences" = "Preferences";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
-/* Flag: untranslated */
-"Restrict to my full _home folder" = "Restrict to my full _home folder";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-/* Flag: untranslated */
-"S_top after each video" = "S_top after each video";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
-/* Flag: untranslated */
-"S_tore downloaded videos in this folder:" = "S_tore downloaded videos in this folder:";
+"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
-/* Flag: untranslated */
-"Search _Engine:" = "Search _Engine:";
+"Miro can find all the videos on your computer to help you organize your collection." = "Miro gali surasti visus vaizdo įrašus jūsų kompiuteryje kad padėtų organizuoti kolekciją.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
 /* Flag: untranslated */
-"Search _custom folder:" = "Search _custom folder:";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
-/* Flag: untranslated */
-"Select Movies Directory" = "Select Movies Directory";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
-/* Flag: untranslated */
-"Select custom search directory" = "Select custom search directory";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
-/* Flag: untranslated */
-"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "The next few screens will help you set up Miro so that it works best for you.  Here's the first question.";
+"New\nAll\nOff" = "New\nAll\nOff";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-/* Flag: untranslated */
-"To a_void slowdowns, limit upstream to" = "To a_void slowdowns, limit upstream to";
+"Play _videos one after another" = "Rodyti _video vieną po kito";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
-/* Flag: untranslated */
-"Volume:" = "Volume:";
+"Preferences" = "Nustatymai";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
-/* Flag: untranslated */
-"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.";
+"Restrict to my full _home folder" = "Apriboti iki mano viso _namų aplanko";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+"S_top after each video" = "Sus_tabdyti po kiekvieno video";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
-/* Flag: untranslated */
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.";
+"S_tore downloaded videos in this folder:" = "Sau_goti atsiųstus video šiame aplanke:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
-/* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
+"Search _Engine:" = "Paieškos _variklis:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
-/* Flag: untranslated */
-"_Add Folder" = "_Add Folder";
+"Search _custom folder:" = "Ieškoti _pasirinktiniame aplanke:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-/* Flag: untranslated */
-"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
+"Select Movies Directory" = "Pasirinkti filmų aplanką";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
-/* Flag: untranslated */
-"_Bit Torrent uses ports between" = "_Bit Torrent uses ports between";
+"Select custom search directory" = "Pasirinkti norimą ieškojimo aplanką";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
 /* Flag: untranslated */
-"_Downloads" = "_Downloads";
+"Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
-/* Flag: untranslated */
-"_Folders" = "_Folders";
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Keli kiti langai padės Jums suderinti „Miro“ taip, kad būtų patogiausia naudotis. Štai pirmasis klausimas.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
 /* Flag: untranslated */
-"_General" = "_General";
+"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
 /* Flag: untranslated */
-"_KB/s when my computer is active" = "_KB/s when my computer is active";
+"Use _ports:" = "Use _ports:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
 /* Flag: untranslated */
-"_Playback" = "_Playback";
+"Use this renderer to play videos:" = "Use this renderer to play videos:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
-/* Flag: untranslated */
-"_Resume playback of videos from the point where they were stopped" = "_Resume playback of videos from the point where they were stopped";
+"Volume:" = "Garsumas:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
 /* Flag: untranslated */
-"_Search" = "_Search";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
-/* Flag: untranslated */
-"_Search For:" = "_Search For:";
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
 /* Flag: untranslated */
-"_URL" = "_URL";
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
 /* Flag: untranslated */
-"_Warn me when I attempt to quit with downloads in progress" = "_Warn me when I attempt to quit with downloads in progress";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-/* Flag: untranslated */
-"_Watch for new videos in these folders and include them in the Library" = "_Watch for new videos in these folders and include them in the Library";
+"_Add Folder" = "_Pridėti aplanką";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
 /* Flag: untranslated */
-"_and" = "_and";
+"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
+"_Downloads" = "At_siuntimai";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
+"_Folders" = "_Aplankai";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
+"_General" = "_Bendra";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
 /* Flag: untranslated */
-"videos at once" = "videos at once";
+"_KB/s." = "_KB/s.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
+/* Flag: untranslated */
+"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
+"_Playback" = "_Grojimas";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
+"_Resume playback of videos from the point where they were stopped" = "Pratęsti video failų rodymą nuo tos vietos, kur jie buvo sustabdyti";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
+"_Search" = "_Paieška";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
+"_Search For:" = "_Ieškoti";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
+"_URL" = "_URL";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
+"_Warn me when I attempt to quit with downloads in progress" = "Įs_pėti mane, kai bandau išjungti programą esant aktyviems atsiuntimams";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
+"_Watch for new videos in these folders and include them in the Library" = "_Stebėti šiuos aplankus dėl naujų video failų ir įkelti juos į biblioteką";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
+/* Flag: untranslated */
+"xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
-/* Flag: untranslated */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName versija $appVersion ($appRevision); visos teisės saugomos (c) 2005-2007 $publisher. $longAppName ir $longAppName logotipas yra $publisher registruoti prekiniai ženklai.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
-/* Flag: untranslated */
-"About $longAppName" = "About $longAppName";
+"About $longAppName" = "Apie $longAppName";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1 */
-/* Flag: untranslated */
-"Add Channel" = "Add Channel";
+"Add Channel" = "Pridėti kanalą";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2 */
 /* Flag: untranslated */
 "Please enter the URL of the channel you'd like to add." = "Please enter the URL of the channel you'd like to add.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6 */
-/* Flag: untranslated */
-"Copy log to clipboard" = "Copy log to clipboard";
+"Copy log to clipboard" = "Kopijuoti žurnalą į laikinąją saugyklą";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5 */
 /* Flag: untranslated */
@@ -2279,12 +1876,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1 */
-/* Flag: untranslated */
 " " = " ";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2 */
-/* Flag: untranslated */
 "'" = "'";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10 */
@@ -2292,12 +1887,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12 */
-/* Flag: untranslated */
-"Please contact the publishers of" = "Please contact the publishers of";
+"Please contact the publishers of" = "Susisiekite su leidėjais";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13 */
-/* Flag: untranslated */
-"and ask if they can supply a feed in a format that will work with $shortAppName." = "and ask if they can supply a feed in a format that will work with $shortAppName.";
+"and ask if they can supply a feed in a format that will work with $shortAppName." = "ir paklauskite, ar jie gali pateikti srautą tokiu formatu, kuris veiktų su $shortAppName.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1 */
 /* Flag: untranslated */
@@ -2308,184 +1901,158 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1 */
-/* Flag: untranslated */
-"Channel requires authentication" = "Channel requires authentication";
+"Channel requires authentication" = "Kanalas reikalauja prisijungimo patvirtinimo";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
-/* Flag: untranslated */
-"Please enter the username and password given to you by this channel's publisher." = "Please enter the username and password given to you by this channel's publisher.";
+"Please enter the username and password given to you by this channel's publisher." = "Įveskite vartotojo vardą bei slaptažodį, kuriuos Jums suteikė šio kanalo leidėjas.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
-/* Flag: untranslated */
-"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(WARNING: Changes won't go into effect until you restart $longAppName.)";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
+"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(DĖMESIO: pakeitimai įsigalios tik iš naujo paleidus $longAppName.)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
-/* Flag: untranslated */
-"Add Folder..." = "Add Folder...";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
+"Add Folder..." = "Pridėti aplanką…";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
+/* Flag: untranslated */
+"Automatically Forward Ports" = "Automatically Forward Ports";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
 /* Flag: untranslated */
 "Automatically run $longAppName when I login." = "Automatically run $longAppName when I login.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
-/* Flag: untranslated */
-"BitTorrent" = "BitTorrent";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+"By default, videos expire after" = "Pagal nutylėjimą, video galiojimo laikas baigiasi po";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
-/* Flag: untranslated */
-"By default, videos expire after" = "By default, videos expire after";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
-/* Flag: untranslated */
-"Check channels for new content" = "Check channels for new content";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
-/* Flag: untranslated */
-"Close to tray so that downloads can continue." = "Close to tray so that downloads can continue.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
-/* Flag: untranslated */
-"Every 30 minutes" = "Every 30 minutes";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
-/* Flag: untranslated */
-"Every hour" = "Every hour";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
-/* Flag: untranslated */
-"Folder" = "Folder";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
-/* Flag: untranslated */
-"Manually" = "Manually";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
-/* Flag: untranslated */
-"Options" = "Options";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
-/* Flag: untranslated */
-"Play one video, then stop." = "Play one video, then stop.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7 */
-/* Flag: untranslated */
-"Quit Miro completely." = "Quit Miro completely.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
-/* Flag: untranslated */
-"Remember where I stopped watching a video and continue playing from that point." = "Remember where I stopped watching a video and continue playing from that point.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
-/* Flag: untranslated */
-"Show as a Channel" = "Show as a Channel";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
-/* Flag: untranslated */
-"Store downloaded videos in this folder:" = "Store downloaded videos in this folder:";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
-/* Flag: untranslated */
-"To avoid slowdowns, limit upstream bandwith when my computer is active." = "To avoid slowdowns, limit upstream bandwith when my computer is active.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
-/* Flag: untranslated */
-"Upstream limit (KB/s)" = "Upstream limit (KB/s)";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
-/* Flag: untranslated */
-"Use BitTorrent ports between" = "Use BitTorrent ports between";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
-/* Flag: untranslated */
-"WARNING: This setting will not go into effect until you restart $longAppName." = "WARNING: This setting will not go into effect until you restart $longAppName.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10 */
-/* Flag: untranslated */
-"Warn me when I attempt to quit with downloads in progress." = "Warn me when I attempt to quit with downloads in progress.";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
-/* Flag: untranslated */
-"Watch for new videos in these folders and include them in my Library." = "Watch for new videos in these folders and include them in my Library.";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
+"Check channels for new content" = "Patikrinti, ar kanaluose nėra naujų video";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
-/* Flag: untranslated */
-"When I click the red close button:" = "When I click the red close button:";
+"Close to tray so that downloads can continue." = "Užverti į sisteminį skydelį, kad atsiuntimai būtų tęsiami.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+"Every 30 minutes" = "Kas 30 minučių";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
+"Every hour" = "Kas valandą";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
+"Folder" = "Aplankas";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
 /* Flag: untranslated */
-"and" = "and";
+"GB" = "GB";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
+/* Flag: untranslated */
+"Ignore Unencrypted Connections" = "Ignore Unencrypted Connections";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
+/* Flag: untranslated */
+"KB/s" = "KB/s";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
+/* Flag: untranslated */
+"Limit downstream bandwith to:" = "Limit downstream bandwith to:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+"Manually" = "Rankiniu būdu";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+/* Flag: untranslated */
+"Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
+/* Flag: untranslated */
+"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
+"Options" = "Pasirinktys";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
+"Play one video, then stop." = "Rodyti vieną video, tada sustoti.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
+"Quit Miro completely." = "Visiškai išjungti „Miro“.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
+"Remember where I stopped watching a video and continue playing from that point." = "Įsiminti, kur aš sustojau žiūrėti video, ir nuo tos vietos vėliau pratęsti.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+"Show as a Channel" = "Rodyti kaip kanalą";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+"Store downloaded videos in this folder:" = "Saugoti atsiųstus video failus šiame aplanke:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
+/* Flag: untranslated */
+"To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+"WARNING: This setting will not go into effect until you restart $longAppName." = "DĖMESIO: Šiam nustatymui įsigalioti reikės iš naujo paleisti $longAppName.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
+"Warn me when I attempt to quit with downloads in progress." = "Įspėti mane, kai aš bandau išjungti programą esant aktyviems atsiuntimams.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
+"Watch for new videos in these folders and include them in my Library." = "Stebėti, ar nėra naujų video šiuose aplankuose, bei juos pridėti į biblioteką.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+"When I click the red close button:" = "Kai aš paspaudžiu raudoną užvėrimo mygtuką:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
-/* Flag: untranslated */
-"Channel:" = "Channel:";
+"Channel:" = "Kanalas:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6 */
-/* Flag: untranslated */
-"Search Engine:" = "Search Engine:";
+"Search Engine:" = "Paieškos variklis:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2 */
-/* Flag: untranslated */
-"Search For:" = "Search For:";
+"Search For:" = "Ieškoti:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7 */
-/* Flag: untranslated */
 "URL:" = "URL:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33 */
-/* Flag: untranslated */
-"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName can find all the videos on your computer to help you organize your collection.";
+"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName gali surasti visus video failus Jūsų kompiuteryje, taip palaikant tvarką Jūsų kolekcijoje.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45 */
-/* Flag: untranslated */
-"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.";
+"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "$longAppName nuolat tikrina, ar nėra kanaluose naujų video failų, ir juos fone atsiunčia. Palikę programą veikti, Jūsų turėsite naujų video failų tuomet, kai norėsite juos peržiūrėti.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29 */
-/* Flag: untranslated */
-"$shortAppName First Time Setup" = "$shortAppName First Time Setup";
+"$shortAppName First Time Setup" = "$shortAppName pirmasis suderinimas";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39 */
-/* Flag: untranslated */
-"Cancel Search" = "Cancel Search";
+"Cancel Search" = "Nutraukti paiešką";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38 */
-/* Flag: untranslated */
-"Change" = "Change";
+"Change" = "Pakeisti";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46 */
-/* Flag: untranslated */
-"Don't Worry About Disk Space:" = "Don't Worry About Disk Space:";
+"Don't Worry About Disk Space:" = "Nesijaudinkite dėl disko vietos:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50 */
-/* Flag: untranslated */
-"Find Videos:" = "Find Videos:";
+"Find Videos:" = "Suraskite video:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48 */
-/* Flag: untranslated */
-"Go Big:" = "Go Big:";
+"Go Big:" = "Mėgaukitės dideliu vaizdu:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44 */
-/* Flag: untranslated */
-"Leave it On:" = "Leave it On:";
+"Leave it On:" = "Palikite įjungtą:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47 */
 /* Flag: untranslated */
 "Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42 */
-/* Flag: untranslated */
-"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:";
+"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Dabar galite naršyti po kanalų gidą\nir pradėti žiūrėti. Keli patarimai pradedant:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40 */
-/* Flag: untranslated */
-"Reset Search" = "Reset Search";
+"Reset Search" = "Atstatyti paiešką";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35 */
-/* Flag: untranslated */
-"Restrict to all my personal files." = "Restrict to all my personal files.";
+"Restrict to all my personal files." = "Apriboti iki visų mano asmeninių failų.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36 */
-/* Flag: untranslated */
-"Search custom folder:" = "Search custom folder:";
+"Search custom folder:" = "Ieškoti pasirinktiniame aplanke:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
 /* Flag: untranslated */
@@ -2512,13 +2079,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Would you like to run $shortAppName on startup?" = "Would you like to run $shortAppName on startup?";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41 */
-/* Flag: untranslated */
-"You're done!" = "You're done!";
+"You're done!" = "Suderinimas baigtas!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1 */
-/* Flag: untranslated */
-"Release Notes:" = "Release Notes:";
+"Release Notes:" = "Laidos informacija:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1 */
-/* Flag: untranslated */
-"Question" = "Question";
+"Question" = "Klausimas";

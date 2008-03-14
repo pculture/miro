@@ -1,0 +1,104 @@
+{
+    IBClasses = (
+        {CLASS = BeveledBox; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
+        {CLASS = DTVSplitView; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
+        {CLASS = DisplayHostView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FullScreenControlsView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {expireNow = id; tellAFriend = id; }; 
+            CLASS = FullScreenPalette; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                donationLabel = id; 
+                feedLabel = id; 
+                playPauseButton = id; 
+                progressSlider = id; 
+                seekBackwardButton = id; 
+                seekForwardButton = id; 
+                skipBackwardButton = id; 
+                skipForwardButton = id; 
+                timeIndicator = id; 
+                titleLabel = id; 
+                volumeSlider = id; 
+            }; 
+            SUPERCLASS = NSWindow; 
+        }, 
+        {CLASS = FullScreenPaletteView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = FullScreenSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
+        {
+            ACTIONS = {addChannel = id; switchTabs = id; }; 
+            CLASS = MainController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                channelsHostView = id; 
+                mainHostView = id; 
+                searchField = id; 
+                splitView = id; 
+                videoDisplayController = id; 
+                videoInfoHostView = id; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = MetalSlider; LANGUAGE = ObjC; SUPERCLASS = NSSlider; }, 
+        {
+            ACTIONS = {toggleRemainingTimeIndicator = id; }; 
+            CLASS = ProgressDisplayView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {progressSlider = id; remainingTimeIndicator = id; timeIndicator = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = ProgressSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
+        {CLASS = Slider; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = TabButtonCell; LANGUAGE = ObjC; SUPERCLASS = NSButtonCell; }, 
+        {
+            CLASS = VideoAreaView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {videoWindow = NSWindow; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {
+                exitFullScreen = id; 
+                fastBackward = id; 
+                fastForward = id; 
+                muteUnmuteVolume = id; 
+                playFullScreen = id; 
+                playPause = id; 
+                setVolume = id; 
+                skipBackward = id; 
+                skipForward = id; 
+                stop = id; 
+            }; 
+            CLASS = VideoDisplayController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                backwardButton = id; 
+                forwardButton = id; 
+                fullscreenButton = id; 
+                muteButton = id; 
+                playPauseButton = id; 
+                progressDisplayer = id; 
+                rootView = id; 
+                stopButton = id; 
+                videoAreaView = id; 
+                volumeSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {search = id; }; 
+            CLASS = VideoSearchField; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSSearchField; 
+        }, 
+        {
+            ACTIONS = {exitFullScreen = id; }; 
+            CLASS = VideoWindow; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {palette = NSWindow; }; 
+            SUPERCLASS = NSWindow; 
+        }
+    ); 
+    IBVersion = 1; 
+}

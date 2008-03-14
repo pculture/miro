@@ -1,0 +1,2047 @@
+﻿/* SOME DESCRIPTIVE TITLE.
+Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+This file is distributed under the same license as the PACKAGE package.
+FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+ */
+/* Flag: untranslated */
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-14 08:49-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+
+/* File: ../../portable/dialogs.py:85 */
+"Cancel" = "Atcelt";
+
+"OK" = "Labi";
+
+/* File: ../../portable/dialogs.py:84 */
+"Ok" = "Labi";
+
+"$log" = "$log";
+
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Mūsu kļūdu uzskaites sistēma atrodama <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Vienkārši izstāstiet, ko jūs darījāt, pievienojiet žurnalēšanas vai kļūdu paziņojumus, ja tādi ir un atbildiet uz dažiem jautājumiem, lai mēs varētu novērst kļūdu un viss strādātu pareizi.</font>";
+
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Patiesībā, ja jums ir brītiņš laika, vai jūs būtu ar mieru nosūtīt mūsu kļūdu uzskaites sistēmai avārijas ziņojumu? Mums ir nepieciešams pēc iespējas precīzāks apraksts par to ko jūs darījāt avārijas brīdī, kā arī zemāk redzamā loga saturs:";
+
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Neveiksme! $longAppName ir kļuvusi par upuri kaut kādai iekšējai neskaidrībai vai nepareizai apstrādei $when. Mēs atvainojamies par sagādātajām neertībām un lūdzam jūs aizvērt programmu un atvērt no jauna $shortAppName. Tas pārmācīs programmu un tā rezultātā jums ir mazāka iespēja pazaudēt svarīgu informāciju.";
+
+"The fall of $shortAppName??" = "$shortAppName bojājums??";
+
+"About Miro" = "Par Miro";
+
+"Add Channel..." = "Pievienot Kanālu...";
+
+"Add Guide..." = "Pievienot programmu...";
+
+"Bring All to Front" = "Pārcelt visu uz priekšplānu";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:80 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
+"Channels" = "Kanāli";
+
+"Check for New Version" = "Pārbaudīt vai nav pieejama jaunāka versija";
+
+"Clear Menu" = "Attīrīt izvēlni";
+
+"Close Window" = "Aizvērt logu";
+
+"Copy" = "Kopēt";
+
+"Copy Channel URL" = "Kopēt kanāla URL";
+
+"Copy Video URL" = "Kopēt video URL";
+
+"Cut" = "Izgriezt";
+
+/* File: ../../portable/dialogs.py:104 */
+"Delete" = "Izdzēst";
+
+"Donate" = "Ziedot";
+
+"Download Video..." = "Lejupielādēt video...";
+
+"Edit" = "Rediģēt";
+
+"Export Channels (OPML)..." = "Eksportēt kanālus (OPML)...";
+
+"File" = "Fails";
+
+"Full Screen" = "Pa visu ekrānu";
+
+"Help" = "Palīdzība";
+
+"Hide Miro" = "Paslēpt Miro";
+
+"Hide Others" = "Paslēpt citus";
+
+"Import Channels (OPML)..." = "Importēt kanālus (OPML)...";
+
+"Main Window" = "Galvenais logs";
+
+"MainMenu" = "GalvenāIzvēlne";
+
+"Minimize" = "Minimizēt";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+"Miro" = "Miro";
+
+"Miro Help" = "Miro palīdzība";
+
+"New Channel Folder..." = "Jauna kanālu mape...";
+
+"New Playlist Folder..." = "Jauna repertuāru mape...";
+
+"New Playlist..." = "Jauns repertuārs...";
+
+"New Search Channel..." = "JAuns meklēšanas kanāls...";
+
+"Next Video" = "Nākamais video";
+
+"Open Recent" = "Atvērt nesen skatītos";
+
+"Open..." = "Atvērt...";
+
+"Paste" = "Ievietot";
+
+/* File: ../../platform/osx/platform/frontends/html/Application.py:244 */
+"Play Video" = "Atskaņot video";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:84 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
+"Playback" = "Atskaņošana";
+
+"Playlists" = "Repertuāri";
+
+"Preferences..." = "Iestatījumi...";
+
+"Previous Video" = "Iepriekšējais video";
+
+"Quit Miro" = "Aizvērt Miro";
+
+"Remove..." = "Aizvākt...";
+
+"Rename..." = "Pārdēvēt...";
+
+"Report a bug" = "Ziņot par kļūdu";
+
+"Save Video As..." = "Saglabāt video kā...";
+
+"Select All" = "Izvēlēties Visus";
+
+"Send This Channel to a Friend" = "Nosūtīt šo kanālu draugam";
+
+"Services" = "Pakalpojumi";
+
+"Show All" = "Rādīt visus";
+
+"Stop Video" = "Apturēt video";
+
+"Update All Channels" = "Atjaunināt visus kanālus";
+
+"Update Channel" = "Atjaunināt kanālu";
+
+"Window" = "Logs";
+
+"Zoom" = "Palielinājums";
+
+"%channel feed%" = "%channel feed%";
+
+"%channel title%" = "%channel title%";
+
+"%donation label%" = "%donation label%";
+
+"-00:00:00" = "-00:00:00";
+
+"00:00:00" = "00:00:00";
+
+"Box" = "Kaste";
+
+"FullScreen Controls" = "Pilnekrāna kontroles";
+
+/* File: ../../portable/tabs.py:57 */
+"Video Search" = "Video meklēšana";
+
+"VideoWindow" = "VideoLogs";
+
+"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
+
+"Password:\n" = "Parole:\n";
+
+"Username and password required" = "Nepieciešams lietotājvārds un parole";
+
+"Username:\n\n" = "Lietotājvārds:\n\n";
+
+/* Flag: untranslated */
+"(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)";
+
+"(You must restart Miro for this change to take effect)\n" = "(Lai šī izmaiņa stātos spēkā, jums jāpārstartē Miro)\n";
+
+"(movies directory path goes here)" = "(ievadiet šeit video direktorijas ceļu)";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
+/* Flag: untranslated */
+"-" = "-";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
+"1 day" = "1 diena";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
+"1 month" = "1 mēnesis";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
+"10 days" = "10 dienas";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+"3 days" = "3 dienas";
+
+"3 hours" = "3 stundas";
+
+"4" = "4";
+
+"5" = "5";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
+"6 days" = "6 dienas";
+
+"99999" = "99999";
+
+"Add..." = "Pievienot...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
+/* Flag: untranslated */
+"All" = "All";
+
+/* Flag: untranslated */
+"Auto download default setting for new channels:" = "Auto download default setting for new channels:";
+
+/* Flag: untranslated */
+"Automatically forward ports" = "Automatically forward ports";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
+"BitTorrent" = "BitTorrent";
+
+"By default, videos expire after:" = "Pēc noklusējuma video dzēšās pēc:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+"Change..." = "Izmainīt...";
+
+"Check channels for new content:" = "Pārbaudīt kanālus vai tajos nav jauna satura:";
+
+/* Flag: untranslated */
+"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:";
+
+/* Flag: untranslated */
+"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:";
+
+"Folder location" = "Mapes atrašanās vieta";
+
+/* Flag: untranslated */
+"GB\n" = "GB\n";
+
+/* Flag: untranslated */
+"Ignore unencrypted connections" = "Ignore unencrypted connections";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+/* Flag: untranslated */
+"KB/s." = "KB/s.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+/* Flag: untranslated */
+"Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:";
+
+/* Flag: untranslated */
+"Limit downstream to" = "Limit downstream to";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
+"Never" = "Nekad";
+
+/* File: ../../portable/tabs.py:56 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+"New" = "Jauns";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+/* Flag: untranslated */
+"Off" = "Off";
+
+"OtherViews" = "CitiSkati";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+"Play videos one after another." = "Atskaņot vienu video pēc otra.";
+
+"Remember video position." = "Atcerēties noskatīto vietu video.";
+
+/* File: ../../portable/frontends/html/contextmenu.py:99 */
+/* File: ../../portable/frontends/html/contextmenu.py:104 */
+/* File: ../../portable/frontends/html/contextmenu.py:178 */
+/* File: ../../portable/frontends/html/contextmenu.py:184 */
+/* File: ../../portable/frontends/html/contextmenu.py:190 */
+/* File: ../../portable/frontends/html/contextmenu.py:199 */
+/* File: ../../portable/frontends/html/contextmenu.py:233 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
+"Remove" = "Aizvākt";
+
+"Run Miro at startup" = "Palaist Miro ieslēdzot datoru";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591 */
+"Show as Channel" = "Rādīt kā kanālu";
+
+"Stop after each video." = "Pārtraukt pēc katra video.";
+
+/* Flag: untranslated */
+"Stop uploads when this ratio is reached:" = "Stop uploads when this ratio is reached:";
+
+/* Flag: untranslated */
+"Store downloads in this folder:" = "Store downloads in this folder:";
+
+/* Flag: untranslated */
+"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
+/* Flag: untranslated */
+"Use these ports:" = "Use these ports:";
+
+/* File: ../../portable/frontends/html/main.py:319 */
+"Warn me when I attempt to quit with downloads in progress" = "Brīdināt mani, kad mēģinu aizvērt Miro kamēr tiek lejupielādēti kādi faili";
+
+"Watch for new videos in these folders and include them in the Library:" = "Sekot līdzi jauniem video šajās mapēs un rādīt tos bibliotekā:";
+
+"every 30 minutes" = "katras 30 minūtes";
+
+"every hour" = "katru stundu";
+
+"manually" = "manuāli";
+
+"$label$" = "$label$";
+
+"$title$" = "$title$";
+
+"Channel" = "Kanāls";
+
+/* File: ../../portable/dialogs.py:99 */
+"Create" = "Izveidot";
+
+"In this:" = "Šajā:";
+
+"Item1" = "PirmāVienība";
+
+"Search Engine" = "Meklētājā";
+
+"Search for:" = "Meklēt:";
+
+"URL" = "URL";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/startup.py:56 */
+/* Flag: python-format */
+"(parsed %d files - found %d videos)" = "(apskatīti %d faili - atrasti %d video)";
+
+"Back" = "Atpakaļ";
+
+"Browse" = "Pārlūkot";
+
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:121 */
+"Next" = "Nākamais";
+
+/* File: ../../portable/dialogs.py:87 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
+"No" = "Nē";
+
+"Only search my Movies folder." = "Meklēt tikai manā video mapē.";
+
+"Search my entire Home folder." = "Meklēt visā manā mājas mapē.";
+
+"Search this folder:" = "Meklēt šajā mapē:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37 */
+"Searching for Videos" = "Meklēt video";
+
+"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "Miro var atrast visus video uz jūsu datora un palīdzēt jums tos organizēt kolekcijās.\n\nVai vēlaties, lai Miro meklē video jūsu datorā?";
+
+"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "Nākamie pāris jautājumi palīdzēs jums pielāgot Miro tieši jūsu vēlmēm un vajadzībām. Pirmais jautājums ir sekojošs.";
+
+"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Mēs iesakām, lai jūs ļautu Miro atskaņotājam palaisties reizē ar datora ieslēgšanu. Šādā veidā tiks pabeigta nepabeigto video lejupielāde un tajā brīdī, kad jūs gribēsiet skatīties jaunos video, tie visi būs pieejami.\n\n\nVai vēlaties palaist Miro ieslēdzot datoru?";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
+"Welcome to Internet TV!" = "Laipni lūgti Interneta TV!";
+
+"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Esiet sveicināti Interneta TV. Ir daudzas lietas, ko jūs varat darīt ar Miro atskaņotāju: automātiski lejupielādēt video no jūsu iemīļotākajiem kanāliem, skatīties video vienu pēc otra, lejupielādēt torrentus, ieteikt video draugiem un daudzas citas lietas.\n\n";
+
+/* File: ../../portable/dialogs.py:86 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
+"Yes" = "Jā";
+
+"%message%\n%message%" = "%message%\n%message%";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
+"Update Available" = "Peejams atjauninājums";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
+/* Flag: python-format */
+"A new version of %s is available for download." = "Lejupielādei ir pieejama jauna %s versija.";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
+"Error Bombing Item" = "Kļūda bumbojot video";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
+"Error Recommending Item" = "Kļūda iesakot video";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
+"Error Opening Website" = "Kļ ūda atverot mājas lapu";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
+/* Flag: python-format */
+"There was an error opening %s.  Please try again in a few seconds" = "Notikusi kļūda atverot %s.  Lūdzu mēģiniet vēlreiz pēc pāris sekundēm";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
+/* Flag: python-format */
+"Error importing modules:\n%s" = "Kļūda importējot moduļus:\n%s";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
+"Loading window" = "Ielādē logu";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
+"onStartup called twice" = "onStartup izsaukts divreiz";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
+"Spacebar" = "Atstarpes taustinš";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
+"Close to tray?" = "Minimizēt uz sistēmas ikonu joslu?";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Kad jūs uzklikšķināt uz sarkanās aizvēršanas pogas, vai vēlaties lai Miro aizveras vai paslēpjas sistēmas paletē?  Šo iestatījumu jūs vēlāk varēsiet mainīt iestatījumos.";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
+"Download Completed" = "Lejupielāde pabeigta";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
+/* Flag: python-format */
+"Download of video '%s' is finished." = "'%s' video lejupielāde ir pabeigta.";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
+"Download Failed" = "Lejupielāde neizdevās";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
+/* Flag: python-format */
+"Download of video '%s' has failed." = "'%s' video lejupielāde neizdevās.";
+
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
+"Subscribe to Channel" = "Pierakstīties uz kanālu";
+
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
+"Enter the URL of the channel you would like to subscribe to." = "Ievadiet kanāla URL uz kuru vēlaties pierakstīties.";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
+"General" = "Vispārējās Īpašības";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+"Downloads" = "Lejupielāde";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+"Folders" = "Mapes";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
+"Disk Space" = "Diska vieta";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
+"Movies Directory" = "Video mape";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
+/* Flag: python-format */
+"Select a Directory to store %s downloads in." = "Izvēlieties mapi kurā glabāt %s lejupielādes.";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
+"Select" = "Izvēlēties";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
+"Migrate existing movies?" = "Pārcelt esošos video?";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
+/* Flag: python-format */
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Jūs esat izvēlējies jaunu mapi uz kuu lejupielādēt video.  Vai %s vajadzētu pārmigrēt esošos video uz turieni?  (Pašreizējās lejupielādes tiks pāŗceltas uz turieni, kad to lejupielāde tiks pabeigta).";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
+"View this Directory in the Library" = "Aplūkot šo direktoriju bibliotēkā";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
+"Select a Directory to view in the Library." = "Izvēlieties direktoriju, ko rādīt bibliotēkā.";
+
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
+"Finish" = "Pabeigt";
+
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
+"Search!" = "Meklēt!";
+
+/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
+"Pause Video" = "Apturēt video";
+
+/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
+"Unsupported version of Quicktime" = "Neatbalstīta Quicktime versija";
+
+/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
+/* Flag: python-format */
+"To run %s you need the most recent version of Quicktime, which is a free update." = "Lai palaistu %s jums ir nepieciešama jaunākā Quicktime versija, kas ir pieejama kā bezmaksas atjauninājums.";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
+"_Remove..." = "_Aizvākt...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:34 */
+"_Remove Playlist..." = "_Aizvākt repertuāru...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:35 */
+"_Remove Playlists..." = "_Aizvākt repertuārus...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:36 */
+"_Remove Playlist Folder..." = "_Aizvākt repertuāru mapi...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:37 */
+"_Remove Playlist Folders..." = "_Aizvākt repertuāra mapes...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:38 */
+/* File: ../../portable/menubar.py:193 */
+"_Remove Channel..." = "_Aizvākt kanālu...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:39 */
+/* File: ../../portable/menubar.py:194 */
+"_Remove Channels..." = "_Aizvākt kanālus...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:40 */
+/* File: ../../portable/menubar.py:196 */
+"_Remove Channel Folder..." = "_Aizvākt kanālu mapi...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:41 */
+/* File: ../../portable/menubar.py:195 */
+"_Remove Channel Folders..." = "_Aizvākt kanālu mapes...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:42 */
+"_Remove Miro Guide..." = "_Aizvākt Miro programmu...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:43 */
+"_Remove Miro Guides..." = "_Aizvākt Miro programmas...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:44 */
+"_Remove Video..." = "_Aizvākt video...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:45 */
+"_Remove Videos..." = "_Aizvākt video...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:46 */
+"Re_name..." = "_Pārsaukt...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:47 */
+"Re_name Playlist..." = "_Pārsaukt repertuāru...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:48 */
+"Re_name Playlist Folder..." = "_Pārsaukt repertuāru mapi...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:49 */
+/* File: ../../portable/menubar.py:192 */
+"Re_name Channel..." = "_Pārsaukt kanālu...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:50 */
+"Re_name Channel Folder..." = "_Pārsaukt kanālu mapi...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:51 */
+"Re_name Miro Guide..." = "_Pārsaukt Miro programmu...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:52 */
+/* File: ../../portable/menubar.py:198 */
+"_Update Channel..." = "Atja_unināt kanālu...";
+
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:53 */
+/* File: ../../portable/menubar.py:199 */
+"_Update Channels..." = "Atja_unināt kanālus...";
+
+/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
+"Audio" = "Audio";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
+"Settings" = "Iestatījumi";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56 */
+"Hide" = "Slēpt";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58 */
+"Show" = "Parādīt";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59 */
+/* File: ../../portable/menubar.py:273 */
+/* File: ../../portable/dialogs.py:88 */
+"Quit" = "Iziet";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
+"New Channel _Guide..." = "Jauna kanālu pro_gramma...";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
+"Folder Location" = "Mapes atrašanās vieta";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
+"Username:" = "Lietotājvārds:";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
+"Password:" = "Parole:";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416 */
+"Unknown Runtime Error" = "Nezināma darbības laika kļūda";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417 */
+/* Flag: python-format */
+"An unknown error has occurred %s." = "Notikusi nezināma kļūda %s.";
+
+/* File: ../../portable/dl_daemon/download.py:458 */
+"Error" = "Kļūda";
+
+/* File: ../../portable/dl_daemon/download.py:544 */
+/* Flag: python-format */
+"Could not write to %s" = "Nevar ierakstīt %s";
+
+/* File: ../../portable/dl_daemon/download.py:564 */
+/* File: ../../portable/dl_daemon/download.py:769 */
+"Not enough disk space" = "Nav pietiekami daudz brīvās diska vietas";
+
+/* File: ../../portable/dl_daemon/download.py:565 */
+/* File: ../../portable/dl_daemon/download.py:770 */
+/* Flag: python-format */
+"%s MB required to store this video" = "Nepieciešami %s MB, lai saglabātu šo video";
+
+/* File: ../../portable/dl_daemon/download.py:781 */
+"BitTorrent failure" = "BitTorrent kļūda";
+
+/* File: ../../portable/dl_daemon/download.py:782 */
+"BitTorrent failed to startup" = "BitTorrent neizdevās palaisties";
+
+/* File: ../../portable/dl_daemon/download.py:954 */
+"Corrupt Torrent" = "Bojāts torrents";
+
+/* File: ../../portable/dl_daemon/download.py:955 */
+/* Flag: python-format */
+"The torrent file at %s was not valid" = "Torrent fails %s nav derīgs";
+
+/* File: ../../portable/dl_daemon/download.py:980 */
+"Torrent file deleted" = "Torrent fails ir izdzēsts";
+
+/* File: ../../portable/dl_daemon/download.py:981 */
+/* Flag: untranslated */
+"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
+
+/* File: ../../portable/frontends/html/contextmenu.py:103 */
+"Update Channels Now" = "Atjaunināt kanālus";
+
+/* File: ../../portable/frontends/html/contextmenu.py:128 */
+/* Flag: python-format */
+"%d Downloaded Items" = "%d lejupielādētas vienības";
+
+/* File: ../../portable/frontends/html/contextmenu.py:130 */
+/* File: ../../portable/frontends/html/contextmenu.py:211 */
+"Play" = "Atskaņot";
+
+/* File: ../../portable/frontends/html/contextmenu.py:131 */
+/* File: ../../portable/frontends/html/contextmenu.py:214 */
+"Add to new playlist" = "Pievienot jaunam repertuāram";
+
+/* File: ../../portable/frontends/html/contextmenu.py:133 */
+/* File: ../../portable/frontends/html/contextmenu.py:207 */
+"Remove From Playlist" = "Aizvākt no repertuāra";
+
+/* File: ../../portable/frontends/html/contextmenu.py:135 */
+/* File: ../../portable/frontends/html/contextmenu.py:209 */
+"Remove From the Library" = "Aizvākt no bibliotēkas";
+
+/* File: ../../portable/frontends/html/contextmenu.py:141 */
+/* File: ../../portable/frontends/html/contextmenu.py:218 */
+"Mark as Unwatched" = "Atzīmēt kā nenoskatītu";
+
+/* File: ../../portable/frontends/html/contextmenu.py:146 */
+/* File: ../../portable/frontends/html/contextmenu.py:220 */
+"Mark as Watched" = "Atzīmēt kā skatītu";
+
+/* File: ../../portable/frontends/html/contextmenu.py:151 */
+/* Flag: python-format */
+"%d Available Items" = "%d pieejami video";
+
+/* File: ../../portable/frontends/html/contextmenu.py:152 */
+/* File: ../../portable/frontends/html/contextmenu.py:227 */
+/* File: ../../portable/dialogs.py:93 */
+"Download" = "Lejupielādēt";
+
+/* File: ../../portable/frontends/html/contextmenu.py:157 */
+/* Flag: python-format */
+"%d Downloading Items" = "%d video lejupielādējas";
+
+/* File: ../../portable/frontends/html/contextmenu.py:159 */
+/* File: ../../portable/frontends/html/contextmenu.py:225 */
+"Cancel Download" = "Atclt lejupielādi";
+
+/* File: ../../portable/frontends/html/contextmenu.py:161 */
+/* File: ../../portable/frontends/html/contextmenu.py:225 */
+"Pause Download" = "Apturēt lejupielādi";
+
+/* File: ../../portable/frontends/html/contextmenu.py:164 */
+/* File: ../../portable/frontends/html/contextmenu.py:223 */
+"Restart Upload" = "Pārstartēt augšupielādi";
+
+/* File: ../../portable/frontends/html/contextmenu.py:170 */
+"Update Channel Now" = "Atjaunināt kanālu";
+
+/* File: ../../portable/frontends/html/contextmenu.py:172 */
+/* File: ../../portable/frontends/html/contextmenu.py:196 */
+"Copy URL to clipboard" = "Kopēt URL uz starpliktuvi";
+
+/* File: ../../portable/frontends/html/contextmenu.py:173 */
+/* File: ../../portable/feed.py:825 */
+"Rename Channel" = "Pārdēvēt kanālu";
+
+/* File: ../../portable/frontends/html/contextmenu.py:177 */
+"Revert Title to Default" = "Atgriezt nosaukumu uz sākotnējo";
+
+/* File: ../../portable/frontends/html/contextmenu.py:183 */
+/* File: ../../portable/folder.py:142 */
+"Rename Channel Folder" = "Pārsaukt kanālu mapi";
+
+/* File: ../../portable/frontends/html/contextmenu.py:189 */
+/* File: ../../portable/folder.py:213 */
+"Rename Playlist Folder" = "Pārsaukt repertuāru mapi";
+
+/* File: ../../portable/frontends/html/contextmenu.py:213 */
+"Play Just This Video" = "Atskaņot tikai šo video";
+
+/* File: ../../portable/frontends/html/contextmenu.py:232 */
+/* File: ../../portable/playlist.py:218 */
+"Rename Playlist" = "Pārsaukt repertuāru";
+
+/* File: ../../portable/frontends/html/main.py:132 */
+/* File: ../../portable/startup.py:237 */
+"Video Directory Missing" = "Video direktorija nav atrodama";
+
+/* File: ../../portable/frontends/html/main.py:133 */
+/* Flag: untranslated */
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
+
+/* File: ../../portable/frontends/html/main.py:190 */
+/* File: ../../portable/theme.py:126 */
+"Custom Channels" = "Pašizvēlēti kanāli";
+
+/* File: ../../portable/frontends/html/main.py:190 */
+/* File: ../../portable/theme.py:126 */
+"You are running a version of $longAppName with a custom set of channels." = "Jūs izmantojat $longAppName versiju ar pašizvēlētiem kanāliem.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/httpclient.py:139 */
+"Internal Error" = "Iekšēja Kļūda";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro ir saskaries ar iekšēju kļūdu. Jūš varat palīdzēt mums salabot šo problēmu nosūtot kļūdu ziņojumu.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Include entire program database including all video and channel metadata with crash report" = "Iekļaut visu programmas datubāzi ar visu kanālu sarakstu avrijas ziņojumā";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Describe what you were doing that caused this error" = "Aprakstit ko jūs darījāt kad notika kļūda";
+
+/* File: ../../portable/frontends/html/main.py:284 */
+/* Flag: python-format */
+"%s Version Alert" = "%s versijas brīdinājums";
+
+/* File: ../../portable/frontends/html/main.py:285 */
+/* Flag: python-format */
+"A new version of %s is available. Would you like to download it now?" = "Jauna %s versija ir pieejama. Vai vēlaties to tagad lejupielādēt?";
+
+/* File: ../../portable/frontends/html/main.py:290 */
+/* Flag: python-format */
+"%s Version Check" = "%s Versiju pārbaude";
+
+/* File: ../../portable/frontends/html/main.py:291 */
+/* Flag: python-format */
+"%s is up to date." = "%s ir jaunākā versija.";
+
+/* File: ../../portable/frontends/html/main.py:309 */
+"Are you sure you want to quit?" = "Vai jūs tiešām vēlaties iziet?";
+
+/* File: ../../portable/frontends/html/main.py:311 */
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro joprojām aukšupielādē jūsu avārijas ziņojumu. Ja jūs tagad aizvērsiet to šis ziņojums netiks aukšupiekādēts.  Vai vēlaties aizvērt?";
+
+/* File: ../../portable/frontends/html/main.py:340 */
+"Import OPML File" = "Importēt OPML failu";
+
+/* File: ../../portable/frontends/html/main.py:342 */
+"OPML Files" = "OPML faili";
+
+/* File: ../../portable/frontends/html/main.py:347 */
+"Export OPML File" = "Eksportēt OPML failu";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:325 */
+"Invalid Value" = "Nederīga vērtība";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:326 */
+/* Flag: python-format */
+"%s is invalid.  You must enter a non-negative number." = "%s ir nederīga vērītba.  Ievadiet ne-negatīvu skaitli.";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:452 */
+"Error Revealing File" = "Kļūda saņemot failu";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:453 */
+/* Flag: python-format */
+"The file \"%s\" was deleted from outside Miro." = "Fails \"%s\" ir ticis izdzēsts neizmantojot Miro.";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:560 */
+"Error Changing Movies Directory" = "Kļūda mainot video mapes";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:561 */
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "Jums nav tiesību rakstīt izvēlētajā direktorijā.  Miro turpinās izmantot veco video direktoriju.";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:664 */
+" - Invalid URL" = " - Nederīgs URL";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:665 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Jūsu ievadītā adrese nav derīgs URL.\nLūdzu pārbaudiet to un mēģiniet vēlreiz.\n\n";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"$shortAppName - Add Channel" = "$shortAppName - Pievienot kanālu";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"Enter the URL of the channel to add" = "Ievadiet pievienojamā kanāla URL";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"$shortAppName - Add Miro Guide" = "$shortAppName - Pievienot Miro programmu";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"Enter the URL of the Miro Guide to add" = "Ievadiet pievienojamās Miro programmas URL";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"$shortAppName - Download Video" = "$shortAppName - Lejupielādēt video";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"Enter the URL of the video to download" = "Ievadiet lejupielādējamā video URL";
+
+/* File: ../../portable/tabs.py:55 */
+"Library" = "Bibliotēka";
+
+/* File: ../../portable/tabs.py:58 */
+"Downloading" = "Lejupielādē";
+
+/* File: ../../portable/downloader.py:234 */
+"activity" = "aktivitāte";
+
+/* File: ../../portable/downloader.py:268 */
+/* File: ../../portable/httpclient.py:127 */
+/* File: ../../portable/httpclient.py:155 */
+"File not found" = "Fails nav atrasts";
+
+/* File: ../../portable/downloader.py:269 */
+"Flash URL Scraping Error" = "Flash URL apstrādes kļūda";
+
+/* File: ../../portable/downloader.py:445 */
+"starting up" = "palaižas";
+
+/* File: ../../portable/playlist.py:219 */
+/* Flag: python-format */
+"Enter a new name for the playlist %s" = "IEvadiet jauno repertuāra %s nosaukumu";
+
+/* File: ../../portable/playlist.py:241 */
+"Create Playlist" = "Izveidot repertuāru";
+
+/* File: ../../portable/playlist.py:242 */
+"Enter a name for the new playlist" = "Ievadiet jaunā repertuāra nosaukumu";
+
+/* File: ../../portable/opml.py:144 */
+"OPML Import failed" = "OPML imports neizdevās";
+
+/* File: ../../portable/opml.py:145 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "Izvēlētais OPML fails izskatās bojāts. Importēšana tika pārtraukta.";
+
+/* File: ../../portable/opml.py:150 */
+"OPML Import summary" = "OPML importēšanas kopsavilkums";
+
+/* File: ../../portable/util.py:266 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGB";
+
+/* File: ../../portable/util.py:268 */
+/* Flag: python-format */
+"%dGB" = "%dGB";
+
+/* File: ../../portable/util.py:272 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMB";
+
+/* File: ../../portable/util.py:274 */
+/* Flag: python-format */
+"%dMB" = "%dMB";
+
+/* File: ../../portable/util.py:278 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fKB";
+
+/* File: ../../portable/util.py:280 */
+/* Flag: python-format */
+"%dKB" = "%dKB";
+
+/* File: ../../portable/util.py:284 */
+/* Flag: python-format */
+"%1.1fB" = "%1.1fB";
+
+/* File: ../../portable/util.py:286 */
+/* Flag: python-format */
+"%dB" = "%dB";
+
+/* File: ../../portable/iheartmiro.py:82 */
+/* Flag: untranslated */
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.";
+
+/* File: ../../portable/menubar.py:158 */
+"_Open" = "_Atvērt";
+
+/* File: ../../portable/menubar.py:159 */
+"_Download Video" = "_Lejupielādēt video";
+
+/* File: ../../portable/menubar.py:161 */
+"Check _Version" = "Pārbaudīt _versiju";
+
+/* File: ../../portable/menubar.py:163 */
+"_Remove Video" = "_Noņemt video";
+
+/* File: ../../portable/menubar.py:164 */
+"_Remove Videos" = "_Noņemt video";
+
+/* File: ../../portable/menubar.py:165 */
+"Re_name Video" = "Pā_rsaukt video";
+
+/* File: ../../portable/menubar.py:166 */
+"Save Video _As..." = "S_aglabāt video kā...";
+
+/* File: ../../portable/menubar.py:167 */
+"Save Videos _As..." = "S_aglabāt video kā...";
+
+/* File: ../../portable/menubar.py:168 */
+"Copy Video _URL" = "Kopēt video _URL";
+
+/* File: ../../portable/menubar.py:170 */
+"_Options..." = "_Iestatījumi...";
+
+/* File: ../../portable/menubar.py:171 */
+"_Quit" = "_Iziet";
+
+/* File: ../../portable/menubar.py:179 */
+"Cu_t" = "Izgriez_t";
+
+/* File: ../../portable/menubar.py:180 */
+"_Copy" = "_Kopēt";
+
+/* File: ../../portable/menubar.py:181 */
+"_Paste" = "I_evietot";
+
+/* File: ../../portable/menubar.py:182 */
+"Select _All" = "Izvēlēties _visu";
+
+/* File: ../../portable/menubar.py:183 */
+"_Delete" = "Iz_dzēst";
+
+/* File: ../../portable/menubar.py:187 */
+"Add _Channel" = "Pievienot _kanālu";
+
+/* File: ../../portable/menubar.py:188 */
+"New Searc_h Channel..." = "Jauns meklēša_nas kanāls...";
+
+/* File: ../../portable/menubar.py:189 */
+"New _Folder..." = "Jauna _mape...";
+
+/* File: ../../portable/menubar.py:190 */
+"Add Channel _Guide..." = "Pievienot kanālu _sarakstu...";
+
+/* File: ../../portable/menubar.py:200 */
+"Update _All Channels" = "_Atjaunināt visus kanālus";
+
+/* File: ../../portable/menubar.py:202 */
+"_Import Channels (OPML)..." = "_Importēt kanālus (OPML)...";
+
+/* File: ../../portable/menubar.py:203 */
+"E_xport Channels (OPML)..." = "_Exportēt kanālus (OPML)...";
+
+/* File: ../../portable/menubar.py:205 */
+"_Send this channel to a friend" = "No_sūtīt šo kanālu draugam";
+
+/* File: ../../portable/menubar.py:206 */
+"Copy Channel _Link" = "Kopēt kanā_la saiti";
+
+/* File: ../../portable/menubar.py:209 */
+"New _Playlist" = "Jauns re_pertuārs";
+
+/* File: ../../portable/menubar.py:210 */
+"New Playlist Fol_der" = "Jauna repertuāru ma_pe";
+
+/* File: ../../portable/menubar.py:212 */
+"Re_name Playlist" = "Pā_rsaukt repertuāru";
+
+/* File: ../../portable/menubar.py:213 */
+"_Remove Playlist" = "_Noņemt repertuāru";
+
+/* File: ../../portable/menubar.py:214 */
+"_Remove Playlists" = "_Noņemt repertuārus";
+
+/* File: ../../portable/menubar.py:215 */
+"_Remove Playlist Folders" = "_Noņemt repertuāru mapes";
+
+/* File: ../../portable/menubar.py:216 */
+"_Remove Playlist Folder" = "_Noņemt repertuāru mapi";
+
+/* File: ../../portable/menubar.py:226 */
+/* File: ../../portable/menubar.py:227 */
+"_Play" = "_Atskaņot";
+
+/* File: ../../portable/menubar.py:228 */
+/* Flag: untranslated */
+"_Pause" = "_Pause";
+
+/* File: ../../portable/menubar.py:229 */
+"_Stop" = "A_pturēt";
+
+/* File: ../../portable/menubar.py:231 */
+"_Next Video" = "_Nākamais video";
+
+/* File: ../../portable/menubar.py:232 */
+"_Previous Video" = "_Iepriekšējais video";
+
+/* File: ../../portable/menubar.py:234 */
+"Skip _Forward" = "Uz _priekšu";
+
+/* File: ../../portable/menubar.py:235 */
+"Skip _Back" = "_Atpakaļ";
+
+/* File: ../../portable/menubar.py:237 */
+"Volume _Up" = "_Skaļāk";
+
+/* File: ../../portable/menubar.py:238 */
+"Volume _Down" = "_Klusāk";
+
+/* File: ../../portable/menubar.py:240 */
+"_Fullscreen" = "_Pa visu ekrānu";
+
+/* File: ../../portable/menubar.py:244 */
+"_About" = "P_ar";
+
+/* File: ../../portable/menubar.py:245 */
+"_Donate" = "_Ziedot";
+
+/* File: ../../portable/menubar.py:246 */
+/* File: ../../portable/menubar.py:261 */
+"_Help" = "_Palīdzība";
+
+/* File: ../../portable/menubar.py:248 */
+"Report a _Bug" = "Ziņot par _kļūdu";
+
+/* File: ../../portable/menubar.py:252 */
+"_Video" = "_Video";
+
+/* File: ../../portable/menubar.py:254 */
+"_File" = "_Fails";
+
+/* File: ../../portable/menubar.py:258 */
+"_Channels" = "_Kanāli";
+
+/* File: ../../portable/menubar.py:259 */
+"_Playlists" = "_Repertuāri";
+
+/* File: ../../portable/menubar.py:260 */
+"P_layback" = "A_tskaņošana";
+
+/* File: ../../portable/menubar.py:265 */
+"Play Unwatched ($numUnwatched)" = "Atskaņot nenoskatītos ($numUnwatched)";
+
+/* File: ../../portable/menubar.py:266 */
+"Pause All Downloads ($numDownloading)" = "Apturēt visas lejupielādes ($numDownloading)";
+
+/* File: ../../portable/menubar.py:267 */
+"Resume All Downloads ($numPaused)" = "Atsākt visas lejupielādes ($numPaused)";
+
+/* File: ../../portable/menubar.py:269 */
+"Options..." = "Iestatījumi...";
+
+/* File: ../../portable/menubar.py:271 */
+"Hide Window" = "Paslēpt logu";
+
+/* File: ../../portable/menubar.py:272 */
+"Show Window" = "Parādīt logu";
+
+/* File: ../../portable/theme.py:137 */
+"Starter Channels" = "Sākuma kanāli";
+
+/* File: ../../portable/theme.py:154 */
+"Example Playlist" = "Paraug repertuārs";
+
+/* File: ../../portable/httpclient.py:81 */
+/* Flag: python-format */
+"Error: %s" = "Kļūda: %s";
+
+/* File: ../../portable/httpclient.py:96 */
+/* File: ../../portable/httpclient.py:102 */
+"Can't connect" = "Nevar pieslēgties";
+
+/* File: ../../portable/httpclient.py:97 */
+/* Flag: python-format */
+"Connection Error: %s" = "Pieslēgšanās kļūda: %s";
+
+/* File: ../../portable/httpclient.py:103 */
+"SSL connection error" = "SSL pieslēgšanāš kļūda";
+
+/* File: ../../portable/httpclient.py:107 */
+"HTTP error" = "HTTP kļūda";
+
+/* File: ../../portable/httpclient.py:110 */
+/* Flag: python-format */
+"Bad Status Line: %s" = "Slikta statusa rindiņa: %s";
+
+/* File: ../../portable/httpclient.py:113 */
+/* Flag: python-format */
+"Bad Header Line: %s" = "Slikta galvenes rindiņa: %s";
+
+/* File: ../../portable/httpclient.py:116 */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "Slikts bloka izmērs: %s";
+
+/* File: ../../portable/httpclient.py:119 */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "Tiak gaidīts CRLF saņemts: %r";
+
+/* File: ../../portable/httpclient.py:122 */
+/* Flag: python-format */
+"%s closed connection" = "%s aizvēŗa savienojumu";
+
+/* File: ../../portable/httpclient.py:128 */
+"Got 404 status code" = "Saņemts 404 statusa kods";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "Slikts statusa kods: %s";
+
+/* File: ../../portable/httpclient.py:134 */
+"Authorization failed" = "Autorisācija nav izdevusies";
+
+/* File: ../../portable/httpclient.py:140 */
+"Pipeline request never started" = "Cauruļvada pieprasījums nekad nav sākts";
+
+/* File: ../../portable/httpclient.py:144 */
+"Timeout" = "Noildze";
+
+/* File: ../../portable/httpclient.py:145 */
+/* Flag: python-format */
+"Connection to %s timed out" = "Savienojus ar %s ir noildzis";
+
+/* File: ../../portable/httpclient.py:149 */
+"Invalid URL" = "Nepareizs URL";
+
+/* File: ../../portable/httpclient.py:150 */
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "\"%s\" nav derīgs URL";
+
+/* File: ../../portable/httpclient.py:156 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "Fails: \"%s\" neeksistē";
+
+/* File: ../../portable/httpclient.py:160 */
+"Read error" = "Lasīšanas kļūda";
+
+/* File: ../../portable/httpclient.py:161 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "Kļūda lasot failu \"%s\"";
+
+/* File: ../../portable/httpclient.py:354 */
+"Unknown Error code" = "Nezināms kļūdas kods";
+
+/* File: ../../portable/httpclient.py:386 */
+"Connection closed" = "Savienojums aizvērts";
+
+/* File: ../../portable/httpclient.py:811 */
+"Unknown" = "Nezināms";
+
+/* File: ../../portable/httpclient.py:812 */
+"Internal Error: Not ready to send" = "Iekšējā kļūda: Nav gatavs sūtīt";
+
+/* File: ../../portable/extrastrings.py:33 */
+/* File: ../../portable/feed.py:2409 */
+/* File: ../../portable/feed.py:2499 */
+"Search" = "Meklēt";
+
+/* File: ../../portable/feed.py:384 */
+"never" = "nekad";
+
+/* File: ../../portable/feed.py:386 */
+/* File: ../../portable/item.py:554 */
+/* Flag: python-format */
+"%d hours" = "%d stundas";
+
+/* File: ../../portable/feed.py:388 */
+/* Flag: python-format */
+"%d day" = "%d diena";
+
+/* File: ../../portable/feed.py:390 */
+/* File: ../../portable/item.py:552 */
+/* Flag: python-format */
+"%d days" = "%d dienas";
+
+/* File: ../../portable/feed.py:392 */
+/* Flag: python-format */
+"%d months" = "%d mēneši";
+
+/* File: ../../portable/feed.py:826 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Ievadiet jaunu kanāla %s nosaukumu";
+
+/* File: ../../portable/feed.py:923 */
+"Error loading feed" = "Kļūda ielādējot barotni";
+
+/* File: ../../portable/feed.py:924 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Nevar ielādēt barotni %s (%s).";
+
+/* File: ../../portable/feed.py:927 */
+"Would you like to keep the feed?" = "Vai vēlaties saglabāt šo barotni?";
+
+/* File: ../../portable/feed.py:1040 */
+"Bad content-type" = "Slikts satura tips";
+
+/* File: ../../portable/feed.py:1053 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "Kanāls nav savietojams ar $shortAppName!";
+
+/* File: ../../portable/feed.py:1054 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Mēs mēģināsim darīt visu, kas ir mūsu spēkos, lai iegūtu šos failus. Šo video apkopošanai varētu vajadzēt papildus laiku un šo video apraksti var izskatīties jocīgi.  Lūdzu sazinieties ar $url autoriem un lūdziet, lai viņi nodrošina barotni tādā formātā, kas ir savietojams ar $shortAppName.\n\nVai vēlaties tāpat ielādēt šo kanālu?";
+
+/* File: ../../portable/feed.py:2513 */
+"Local Files" = "Lokalais fails";
+
+/* File: ../../portable/feed.py:2527 */
+"Playing File" = "Atskaņo failu";
+
+/* File: ../../portable/storedatabase.py:859 */
+/* File: ../../portable/storedatabase.py:1258 */
+/* Flag: python-format */
+"%s database save succeeded" = "%s datubāzes saglabāšana veiksmīga";
+
+/* File: ../../portable/storedatabase.py:860 */
+/* File: ../../portable/storedatabase.py:1259 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Datubāze ir veiksmīgi saglabāta. Tagad jūs varat droši aizvērt programmu nezaudējot datus.";
+
+/* File: ../../portable/storedatabase.py:867 */
+/* File: ../../portable/storedatabase.py:1267 */
+/* Flag: python-format */
+"%s database save failed" = "%s datubāzes saglabāšana neizdevās";
+
+/* File: ../../portable/storedatabase.py:868 */
+/* File: ../../portable/storedatabase.py:1268 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s nevarēja saglabāt savu datubāzi: Disks ir pilns.\nMēs iesakām izdzēst nevajadzīgos failus no aizpildītā diska vai arī izdzēst dažas filmas no jūsu kolekcijas.\nPretējā gadījumā veiktās izmaiņas var tikt zaudētas.";
+
+/* File: ../../portable/dialogs.py:89 */
+"Ignore" = "Ignorēt";
+
+/* File: ../../portable/dialogs.py:90 */
+"Submit Crash Report" = "Nosūtīt kļūdas ziņojumu";
+
+/* File: ../../portable/dialogs.py:91 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
+"Migrate" = "Migrēt";
+
+/* File: ../../portable/dialogs.py:92 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
+"Don't Migrate" = "Nemigrēt";
+
+/* File: ../../portable/dialogs.py:94 */
+"Remove Entry" = "Aizvākt Ierakstu";
+
+/* File: ../../portable/dialogs.py:95 */
+"Delete File" = "Dzēst failu";
+
+/* File: ../../portable/dialogs.py:96 */
+"Delete Files" = "Dzēst failus";
+
+/* File: ../../portable/dialogs.py:97 */
+"Keep Videos" = "Saglabāt video";
+
+/* File: ../../portable/dialogs.py:98 */
+"Delete Videos" = "Dzēst video";
+
+/* File: ../../portable/dialogs.py:100 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
+"Create Channel" = "Izveidot kanālu";
+
+/* File: ../../portable/dialogs.py:101 */
+"Add" = "Pievienot";
+
+/* File: ../../portable/dialogs.py:102 */
+"Add Into New Folder" = "Pievienot jaunajā mapē";
+
+/* File: ../../portable/dialogs.py:103 */
+"Keep" = "Saglabāt";
+
+/* File: ../../portable/dialogs.py:105 */
+"Not Now" = "Tagad nē";
+
+/* File: ../../portable/dialogs.py:106 */
+"Close to Tray" = "Samazināt uz palodzi";
+
+/* File: ../../portable/dialogs.py:107 */
+"Launch Miro" = "Palaist Miro";
+
+/* File: ../../portable/dialogs.py:108 */
+"Download Anyway" = "Lejupielādēt tāpat";
+
+/* File: ../../portable/dialogs.py:109 */
+/* Flag: untranslated */
+"Install iHeartMiro" = "Install iHeartMiro";
+
+/* File: ../../portable/dialogs.py:110 */
+/* Flag: untranslated */
+"Don't Install" = "Don't Install";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
+"New Search Channel" = "Jauns meklēšanas kanāls";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
+"A search channel contains items that match a search term." = "Meklēšanas kanāls satur tos elementus, kas atbilst meklētajai frāzei.";
+
+/* File: ../../portable/controller.py:196 */
+/* File: ../../portable/controller.py:210 */
+/* File: ../../portable/controller.py:254 */
+/* File: ../../portable/controller.py:280 */
+/* File: ../../portable/controller.py:300 */
+/* Flag: python-format */
+"Remove %s" = "Aizvākt %s";
+
+/* File: ../../portable/controller.py:197 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "Vai tiešām vēlaties aizvākt programmu %s?";
+
+/* File: ../../portable/controller.py:211 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "Vai tiešām vēlaties aizvākt %s";
+
+/* File: ../../portable/controller.py:214 */
+/* File: ../../portable/controller.py:259 */
+/* File: ../../portable/controller.py:285 */
+/* File: ../../portable/controller.py:304 */
+/* Flag: python-format */
+"Remove %s channels" = "Aizvākt %s kanālus";
+
+/* File: ../../portable/controller.py:216 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "Vai tiešām vēlaties aizvākt šos %s repertuārus";
+
+/* File: ../../portable/controller.py:255 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Ko jūs vēlaties darīt ar šī kanāla lejupielādētajiem video?";
+
+/* File: ../../portable/controller.py:260 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Ko jūs vēlaties darīt ar šo kanālu lejupielādētajiem video?";
+
+/* File: ../../portable/controller.py:281 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Vai tiešām vēlaties aizvākt %s?  Nepabeigtās lejupielādes tiks pārtrauktas.";
+
+/* File: ../../portable/controller.py:286 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Vai tiešām vēlaties aizvākt šos %s kanālus?  Nepabeigtās lejupielādes tiks pārtrauktas.";
+
+/* File: ../../portable/controller.py:301 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "Vai tiešām vēlaties aizvākt %s?";
+
+/* File: ../../portable/controller.py:305 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "Vai tiešām vēlaties aizvākt šos %s kanālus?";
+
+/* File: ../../portable/controller.py:318 */
+/* Flag: python-format */
+"Stop watching %s" = "Pārtraukt skatīties %s";
+
+/* File: ../../portable/controller.py:319 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "Vai tiešām vēlaties pārtraukt skatīties %s?";
+
+/* File: ../../portable/controller.py:322 */
+/* Flag: python-format */
+"Stop watching %s directories" = "Pārtraukt skatīties %s direktorijas";
+
+/* File: ../../portable/controller.py:323 */
+/* Flag: python-format */
+"Are you sure you want to stop watching these %s directories?" = "Vai tiešām vēlaties pārtraukt skatīties šīs %s direktorijas?";
+
+/* File: ../../portable/controller.py:497 */
+"Error Saving Video" = "Kļūda saglabājot video";
+
+/* File: ../../portable/controller.py:499 */
+/* Flag: python-format */
+"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "Notikusi kļūda mēģinot saglabāt %s.  Lūdzu pārliecinieties, ka fails nav izdzēsts un mēģiniet vēlreiz.";
+
+/* File: ../../portable/singleclick.py:99 */
+"Download already exists" = "Lejupielāde jau eksistē";
+
+/* File: ../../portable/singleclick.py:100 */
+"That URL is already an external download." = "URL jau ir kā ārējā lejupielāde.";
+
+/* File: ../../portable/singleclick.py:106 */
+"Miro will begin downloading it now." = "Miro sāks to lejupielādēt.";
+
+/* File: ../../portable/singleclick.py:108 */
+"It is downloading now." = "Tas šobrīd lejupielādējas.";
+
+/* File: ../../portable/singleclick.py:110 */
+"It has already been downloaded." = "Tā jau ir lejupielādēta.";
+
+/* File: ../../portable/singleclick.py:137 */
+"Download Error" = "Lejupielādes kļūda";
+
+/* File: ../../portable/singleclick.py:138 */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro nevar lejupielādēt šo failu šajā URL:\n\nURL: %s";
+
+/* File: ../../portable/singleclick.py:146 */
+"File Download" = "Faila lejupielāde";
+
+/* File: ../../portable/singleclick.py:147 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "Fails no %s neizskatās pēc audio, video vai RSS barotnes.";
+
+/* File: ../../portable/singleclick.py:235 */
+"Subscribing to multiple channels" = "Pierakstos uz vairākeim kanāliem";
+
+/* File: ../../portable/singleclick.py:236 */
+/* Flag: python-format */
+"Create %d channels?" = "Izveidot %d kanālus?";
+
+/* File: ../../portable/singleclick.py:249 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Pievienot %d kanālus jaunai mapei";
+
+/* File: ../../portable/singleclick.py:250 */
+/* File: ../../portable/folder.py:224 */
+"Enter a name for the new channel folder" = "IEvadiet jaunās kanālu mapes nosaukumu";
+
+/* File: ../../portable/singleclick.py:253 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "PIEZĪME: Jūs jau esat pierakstījušies uz %d no šiem kanāliem. Šie kanāli paliks tur, kur tie atrodas šobrīd.";
+
+/* File: ../../portable/singleclick.py:264 */
+"Subscription error" = "Pierakstīšanās kļūda";
+
+/* File: ../../portable/singleclick.py:274 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Šim $shortAppName kanālam ir nederīgs formāts: $url. Lūdzu ziņojiet tā autoriem par šo failu.";
+
+/* File: ../../portable/singleclick.py:282 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Šim $shortAppName kanālam ir nederīgs formāta tips: $url. Lūdzu ziņojiet tā autoriem par šo failu.";
+
+/* File: ../../portable/singleclick.py:286 */
+"Could not download the $shortAppName channel file: $url." = "Nevarēja lejupielādēt $shortAppName kanāla failu: $url.";
+
+/* File: ../../portable/singleclick.py:334 */
+"Invalid Torrent" = "Nederīgs torrents";
+
+/* File: ../../portable/singleclick.py:335 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Torrent fails %s izskats bojats un to nevar atvērt. [OK]";
+
+/* File: ../../portable/item.py:497 */
+/* Flag: python-format */
+"Removing %s" = "Noņem %s";
+
+/* File: ../../portable/item.py:500 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Vai vēlaties dzēst šo mapi un visu video, kas ir tajā vai vienkārši vēlaties aizvākt to no savas bibliotēkas?";
+
+/* File: ../../portable/item.py:506 */
+"Would you like to delete this file or just remove its entry from the Library?" = "Vai vēlaties dzēst šo mapi vai vienkārši aizvākt to no bibliotēkas?";
+
+/* File: ../../portable/item.py:526 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Šī ir mape.  Dzēšot mapi viss, kas atrodas tajā iekšā arī tiek dzēsts.";
+
+/* File: ../../portable/item.py:556 */
+/* Flag: python-format */
+"%d minutes" = "%d minūtes";
+
+/* File: ../../portable/item.py:566 */
+/* Flag: python-format */
+"Expires in %s" = "Tiks izdzēsts pēc %s";
+
+/* File: ../../portable/item.py:578 */
+/* Flag: python-format */
+"Will retry in %s" = "Mēģinās vēlreis pēc %s";
+
+/* File: ../../portable/item.py:580 */
+"Paused" = "Apturēts";
+
+/* File: ../../portable/item.py:982 */
+"TORRENT" = "TORRENT";
+
+/* File: ../../portable/item.py:984 */
+"WEB PAGE" = "WEB PAGE";
+
+/* File: ../../portable/item.py:994 */
+"Total Down:" = "Kopā lejupielādēts:";
+
+/* File: ../../portable/item.py:997 */
+"Error:" = "Kļūda:";
+
+/* File: ../../portable/item.py:1006 */
+/* Flag: untranslated */
+"Seeders:" = "Seeders:";
+
+/* File: ../../portable/item.py:1008 */
+/* Flag: untranslated */
+"Leechers:" = "Leechers:";
+
+/* File: ../../portable/item.py:1010 */
+"Down Rate:" = "Lejupielādes ātrums:";
+
+/* File: ../../portable/item.py:1011 */
+"Down Total:" = "Kopā lejupielādēts:";
+
+/* File: ../../portable/item.py:1013 */
+"Up Rate:" = "Augšupielādes ātrums:";
+
+/* File: ../../portable/item.py:1014 */
+"Up Total:" = "Kopā augšupielādēts:";
+
+/* File: ../../portable/item.py:1024 */
+"Web page:" = "Mājas lapa:";
+
+/* File: ../../portable/item.py:1024 */
+"permalink" = "pastāvīgā saite";
+
+/* File: ../../portable/item.py:1028 */
+"File link:" = "Faila saite:";
+
+/* File: ../../portable/item.py:1028 */
+"direct link to file" = "tiešā saite uz failu";
+
+/* File: ../../portable/item.py:1030 */
+"File type:" = "Faila tips:";
+
+/* File: ../../portable/item.py:1037 */
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"License:" = "License:";
+
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"see permalink" = "see permalink";
+
+/* File: ../../portable/item.py:1049 */
+"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
+
+/* File: ../../portable/item.py:1051 */
+"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
+
+/* File: ../../portable/item.py:1053 */
+"Filename:" = "Faila nosaukums:";
+
+/* File: ../../portable/item.py:1060 */
+"Down Total" = "Kopā lejupielādēts";
+
+/* File: ../../portable/item.py:1062 */
+"Up Total" = "Kopā augšupielādēts";
+
+/* File: ../../portable/item.py:1080 */
+"Item Details" = "Papildus informācija";
+
+/* File: ../../portable/item.py:1087 */
+"Torrent Details" = "Torrenta papildus informācija";
+
+/* File: ../../portable/item.py:1089 */
+"Torrent Details <i>stopped</i>" = "Torrenta papildus informācija <i>apturēts</i>";
+
+/* File: ../../portable/item.py:1093 */
+"Download Details" = "Lejupielādes papildus informācija";
+
+/* File: ../../portable/item.py:1310 */
+"downloading..." = "lejupielādē...";
+
+/* File: ../../portable/item.py:1317 */
+/* File: ../../portable/item.py:1320 */
+/* Flag: python-format */
+"%s remaining" = "%s atlicis";
+
+/* File: ../../portable/item.py:1329 */
+"starting up..." = "sāknē...";
+
+/* File: ../../portable/item.py:1878 */
+/* Flag: python-format */
+"Removing %s items" = "Dzēš %s vienības";
+
+/* File: ../../portable/item.py:1880 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Viens vai vairāki no šiem video netika lejupielādēti no kanāla.  Vai vēlaties dzēst šos video vai arī vienkārši aizvākt tos no bibliotēkas?";
+
+/* File: ../../portable/item.py:1888 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Viens vai vairāki no šīm vienībām ir mapes.  Dzešot vai aizvācot mapi, tiks dzēsti vai aizvākti arī visi tajā esošie video.";
+
+/* File: ../../portable/startup.py:92 */
+/* Flag: untranslated */
+"Unknown Error" = "Unknown Error";
+
+/* File: ../../portable/startup.py:93 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
+
+/* File: ../../portable/startup.py:155 */
+"Database too new" = "Datubāze ir pārāk jauna";
+
+/* File: ../../portable/startup.py:156 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Jūsu datubāze ir saglabāta ar jaunāku $shortAppName versiju. Jums jālejupielādē jaunākā $shortAppName versija un jāizmanto tā.";
+
+/* File: ../../portable/startup.py:238 */
+/* Flag: untranslated */
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
+
+/* File: ../../portable/folder.py:144 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "Ievadiet jaunu kanālu mapes %s nosaukumu";
+
+/* File: ../../portable/folder.py:215 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "Ievadiet jaunu lejupielāžu mapes %s nosaukmu";
+
+/* File: ../../portable/folder.py:223 */
+"Create Channel Folder" = "Izveidot kanālu mapi";
+
+/* File: ../../portable/folder.py:237 */
+"Create Playlist Folder" = "Izveidot repartuāru mapi";
+
+/* File: ../../portable/folder.py:238 */
+"Enter a name for the new playlist folder" = "Ievadiet jaunu repertuāru mapes nosaukumu";
+
+/* File: ../../portable/license.py:68 */
+/* Flag: untranslated */
+"license page" = "license page";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
+"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 diena\n3 dienas\n6 dienas\n10 dienas\n1 mēnesis\nNekad";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:8 */
+"<b>BitTorrent</b>" = "<b>BitTorrent</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
+/* Flag: untranslated */
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
+"<b>Searching for Videos</b>" = "<b>Meklē video</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Vai vēlaties, lai Miro meklē video failus jūsu datorā?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Vai vēlaties, lai Miro tiktu palaists katru reizi ieslēdzot datoru?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Viss gatavs!</b>\n\nUzstādīšana ir pabeigta -- tagad jūs varat atrast kādu kanālu un sākt skatīties.\n\n<b>Negaidiet:</b> Miro atšķiras no video skatīšanās mājas lapās -- pieejamie video var būt lieli un labā kvalitātē, tāpēc mājas lapāš jums var nākties ilgi gaidīt, kamēr tie ielādējas. Miro jūs izvēlaties video un tie automātiski lejupielādējas.\n\n<b>Atstājiet to ieslēgtu:</b> Miro regulāri pārbauda kanālus, vai tajos nav jaunu video un ja ir tad, lejupielādē tos fonā.  Atstājot to ieslēgtu jaunie video jums būš pieejami, kad vēlēsieties tos skatīties.\n\n<b>Neuztraucieties par diska vietu:</b> Līdzīgi kā TiVo, arī Miro ir 'noilguma' funkcijas, kas palīdz attīrīt vecos video, lai atbrīvotu vietu jaunajiem.  Turklāt jūs vienmēr varat saglabāt atsevišķus video vai arī iestatīt kanālu tā, lai tas automātiski saglabātu visus video.\n\n<b>Domājiet plaši:</b> Poga pa labi no atskaņošanas pogas parāda video pa visu ekranu.\n\n<b>Meklējiet video:</b> Miro programmā ir simtiem bezmaksas interneta kanālu, kurus jūš varat skatīties. Vienkārši nospiediet 'Pievienot' un sāciet skatīties.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
+/* Flag: untranslated */
+"Auto download default setting for new channels" = "Auto download default setting for new channels";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
+/* Flag: untranslated */
+"Automatically for_ward ports." = "Automatically for_ward ports.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
+"By default, videos _expire after" = "Pēc noklusējuma, video ti_ek dzēsti pēc";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
+"C_hannel:" = "K_anāls:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
+"C_hannels" = "K_anāli";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
+"C_reate Channel" = "I_zveidot kanālu";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
+"Check Channels for _new content" = "Pātvaudīt kanālus vai tajos _nav jaunu video";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
+"Disk _Space" = "Disk _vieta";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
+"Every 30 minutes\nEvery hour\nManually" = "Katras 30 minūtes\nKatru stundu\nPašrocīgi";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
+/* Flag: untranslated */
+"G_B" = "G_B";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
+"Go" = "Pāriet";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+/* Flag: untranslated */
+"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
+"In This:" = "Šajā:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+/* Flag: untranslated */
+"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
+/* Flag: untranslated */
+"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
+/* Flag: untranslated */
+"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
+"Miro can find all the videos on your computer to help you organize your collection." = "Miro var sameklēt visus video jūsu datorā, lai palīdzētu jums organizēt savu kolekciju.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
+/* Flag: untranslated */
+"New\nAll\nOff" = "New\nAll\nOff";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
+"Play _videos one after another" = "Atskaņot _video vienu pēc otra";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
+"Preferences" = "Iestatījumi";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
+"Restrict to my full _home folder" = "Ierobežot līdz manai _mājas mapei";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+"S_top after each video" = "Ap_turēt pēc katra video";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
+"S_tore downloaded videos in this folder:" = "Saglabā_t lejupielādētos video šajā mapē:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
+"Search _Engine:" = "Meklētājs:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
+"Search _custom folder:" = "Meklēt _citā mapē:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
+"Select Movies Directory" = "Izvēlieties filmu mapi";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
+"Select custom search directory" = "Izvēlietis citu meklēšanas mapi";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
+/* Flag: untranslated */
+"Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Nākamie pāris logi palīdzēs jums noskaņot Miro tā, lai tas atbilstu jūsu vēlmēm. Atbildiet lūdzu uz dažiem jautājumiem.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
+/* Flag: untranslated */
+"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
+/* Flag: untranslated */
+"Use _ports:" = "Use _ports:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
+/* Flag: untranslated */
+"Use this renderer to play videos:" = "Use this renderer to play videos:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
+"Volume:" = "Skaļums:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Mēs iesakām, lai jūs ļautu Miro palaisties līdz ar datora ielādi.  Šādā veidā nepabeigtās video lejupielādes tiks pabeigtas un jaunie video jūsu kanālos tiks lejupielādēti un būš pieejami, kad vēlēsieties tos skatīties.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Esiet sveicināti Interneta TV.  Ir daudzas lietas, ko jūs varat darīt ar Miro: automātiski lejupielādēt video no jūsu iemīļotākajiem kanāliem, skatīties jaunos video vienu pēc otra, lejupielādēt torrentus, ieteikt video draugiem un daudz ko citu.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Jūs esat izvēlējies jaunu mapi, kurā lejupielādēt video.  Vai Miro pārcelt esošos video uz šo mapi? (Pašreizējās lejupielādes netiks pārvietotas līdz tās nebūs lejupielādējušās.)";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
+"_Add Folder" = "_Pievienot mapi";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
+"_Automatically run Miro when I log in" = "_Automātiski palaist Miro, kad es ieslēdzu datoru";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
+"_Downloads" = "_Lejupielādes";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
+"_Folders" = "_Mapes";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
+"_General" = "_Vispārīgi";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
+/* Flag: untranslated */
+"_KB/s." = "_KB/s.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
+/* Flag: untranslated */
+"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
+"_Playback" = "_Atskaņošana";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
+"_Resume playback of videos from the point where they were stopped" = "_Atsākt video atskaņošanu tajā punktā, kurā tā tika pārtraukta";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
+"_Search" = "_Meklēt";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
+"_Search For:" = "_Meklēt:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
+"_URL" = "_URL";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
+"_Warn me when I attempt to quit with downloads in progress" = "_Brīdināt mani, ja mēģinu aizvērt Miro ar nepabeigtām lejupielādēm";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
+"_Watch for new videos in these folders and include them in the Library" = "_Sekot līdz jauniem video šajās mapēs un pievienot tos bibliotēkai";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
+/* Flag: untranslated */
+"xine\ngstreamer" = "xine\ngstreamer";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); autortiesības (c) 2005-2007 $publisher.  $longAppName un $longAppName logo ir $publisher preču zīmes.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
+"About $longAppName" = "Par $longAppName";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1 */
+"Add Channel" = "Pievienot kanālu";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2 */
+"Please enter the URL of the channel you'd like to add." = "Lūdzu ievadiet derīgu pievienojamā kanāla URL.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6 */
+"Copy log to clipboard" = "Kopēt žurnalēšanas informāciju uz starpliktuvi";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5 */
+"Open up the bug tracker" = "Atvērt kļūdu apkopošanas rīku";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2 */
+"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "Lūdzu palīdziet mums to salabot. Iekopējiet visu\ninformāciju kļūdu apkopošanas rīkā un pastāstiet mums, ko jūs darījāt pirms\nnotika avārija.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7 */
+"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Pēc tam pārstartējiet $longAppName (pretējā gadījumā jūs varat turpināt saskarties ar kļūdām). Atvainojamies par sagādātajām neērtībām. $longAppName joprojām ir Beta izstrādes stadijā, jūsu palīdzība var noderēt ātrākai kļūdu novēršanai!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1 */
+"You found a bug in $longAppName!" = "Jūs esat atradis kļūdu $longAppName!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1 */
+" " = " ";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2 */
+"'" = "'";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "Taču mēs mēģināsim iegūt arī šos video. Tas var prasīt papildus laiku, lai apkopotu visus video un to apraksti var izskatīties jocīgi.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12 */
+"Please contact the publishers of" = "Lūdzu sazinieties ar";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13 */
+"and ask if they can supply a feed in a format that will work with $shortAppName." = "autoriem un pajautājiet vai viņi varētu nodrošināt savu barotni tādā formātā, kas darbotos ar $shortAppName.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1 */
+"$longAppName" = "$longAppName";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4 */
+"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "Jūs esat izvēlējies jaunu mapi uz kuru lejupielādēt video.  Vai $shortAppName vajadzētu pārcelt esošos video uz turieni? (Pašreizējās lejupielādes netiks paŗvietotas līdz nebūš lejupielādējušās)";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1 */
+"Channel requires authentication" = "Kanālam ir nepieciešama autorizācija";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
+"Please enter the username and password given to you by this channel's publisher." = "Lūdzu ievadiet nepieciešamo lietotājvārdu un paroli.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
+"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(UZMANĪBU: Izmaiņas nestāsies spēkā līdz jūs nepārstartēsiet $longAppName.)";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
+"Add Folder..." = "Pievienot mapi...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
+/* Flag: untranslated */
+"Automatically Forward Ports" = "Automatically Forward Ports";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
+"Automatically run $longAppName when I login." = "Automātiski palaist $longAppName ieslēdzot datoru.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+"By default, videos expire after" = "Pēc noklusējuma video tiek dzēsti pēc";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
+"Check channels for new content" = "Pārbaudīt jaunus video kanālos";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
+"Close to tray so that downloads can continue." = "Aizvērt uz palodzi, lai lejupielādes var turpināties.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+"Every 30 minutes" = "Katras 30 minūtes";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
+"Every hour" = "Katru stundu";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
+"Folder" = "Mape";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
+/* Flag: untranslated */
+"GB" = "GB";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
+/* Flag: untranslated */
+"Ignore Unencrypted Connections" = "Ignore Unencrypted Connections";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
+/* Flag: untranslated */
+"KB/s" = "KB/s";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
+/* Flag: untranslated */
+"Limit downstream bandwith to:" = "Limit downstream bandwith to:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+"Manually" = "Manuāli";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+/* Flag: untranslated */
+"Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
+/* Flag: untranslated */
+"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
+"Options" = "Iestatījumi";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
+"Play one video, then stop." = "Atskaņot vienu video, tad apstāties.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
+"Quit Miro completely." = "Pilnībā aizver Miro.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
+"Remember where I stopped watching a video and continue playing from that point." = "Atcerēties kurā vietā es pārtraucu skatīties video un vēlāk turpināt no šīs vietas.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+"Show as a Channel" = "Rādīt kā kanālu";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+"Store downloaded videos in this folder:" = "Saglabāt lejupielādētos video šajā mapē:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
+/* Flag: untranslated */
+"To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+"WARNING: This setting will not go into effect until you restart $longAppName." = "UZMANĪBU: Šī izmaiņa nestāsies spēkā līdz jūš nepārstartēsiet $longAppName.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
+"Warn me when I attempt to quit with downloads in progress." = "Brīdināt mani, kad mēģinu aizvērt kamēr notiek kāda lejupielāde.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
+"Watch for new videos in these folders and include them in my Library." = "Sekot līdz jauniem video šajās mapēs un iekļaut tos manā bibliotēkā.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+"When I click the red close button:" = "Kad es nospiežu sarkano aizvēršanas pogu:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
+"Channel:" = "Kanāls:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6 */
+"Search Engine:" = "Meklētājs:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2 */
+"Search For:" = "Meklēt:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7 */
+"URL:" = "URL:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33 */
+"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName var atrast visus video jūsu datorā, lai palīdzētu organizēt jūsu kolekciju.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45 */
+"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "$longAppName regulāri pārbauda kanālus vai tajos nav jaunu video un fonā lejupielādē tos.  Atstājot to darboties jaunie video būs lejupielādēti, kad gribēsiet tos skatīties.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29 */
+"$shortAppName First Time Setup" = "$shortAppName pirmā iestatījšana";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39 */
+"Cancel Search" = "Atcelt meklēšanu";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38 */
+"Change" = "Mainīt";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46 */
+"Don't Worry About Disk Space:" = "Neuztraukties par diska vietu:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50 */
+"Find Videos:" = "Meklēt video:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48 */
+"Go Big:" = "Domā plaši:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44 */
+"Leave it On:" = "Atstāj ieslēgtu:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47 */
+"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Līdzīgi kā TiVo $longAppName ir noilguma sistēma, kas palīdz atbrīvoties no vecajiem video, lai jums būtu vieta jauniem. Jūs vienmēr varat saglabāt video izvēloties 'saglabāt' un jūs varat uzstādīt kanāla iestatījumus tā, lai video tiktu automātiski saglabāti.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42 */
+"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Tagad jūš varat pārlūkot kanālu programmu\nun sākt skatīties.  Vēl tikai pāris padomi:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40 */
+"Reset Search" = "Meklēt vēlreiz";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35 */
+"Restrict to all my personal files." = "Ierobežot uz visiem maniem personiskajiem failiem.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36 */
+"Search custom folder:" = "Meklēt citā mapē:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "$shortAppName kanālu programmā ir simtiem interneta TV kanālu; tie visi ir bez maksas pieejami.  Vienkārši klikšķiniet uz 'Pievienot' pogas, lai skatītos kanālu.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49 */
+"The button to the right of the play button shows videos fullscreen." = "Poga pa labi no atskaņosanas pogas parāda video pa visu ekrānu.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30 */
+"The next few screens will help you set up $longAppName so that it works best for you." = "Nākamie pāris logi palīdzēs jums noskaņot $longAppName, lai tas strādātu atbilstoši jūsu vajadzībām.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31 */
+"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "Mēs iesakām, lai jūs uzstādat $longAppName palaišanos līdz ar datora ielādi. Šādi nepabeigtie video tiks pabeigti un fonā tiks lejupielādēti arī jaunie video. Kad gribēsiet tos skatīties tie jau būš pieejami.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34 */
+"Would you like $longAppName to look for video files on your computer?" = "Vai vēlaties lai $longAppName meklē video jūsu datorā?";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32 */
+"Would you like to run $shortAppName on startup?" = "Vai vēlaties palaist $shortAppName ieslēdzot datoru?";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41 */
+"You're done!" = "Viss darīts!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1 */
+"Release Notes:" = "Laidiena piezīmes:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1 */
+"Question" = "Jautājums";

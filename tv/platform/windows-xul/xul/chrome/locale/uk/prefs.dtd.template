@@ -1,0 +1,62 @@
+<!ENTITY prefs.title "Налаштування">
+
+<!ENTITY prefs.run.on.startup "Самостійно запускати $longAppName коли я входжу до системи.">
+<!ENTITY prefs.close_to_tray_start "Коли я натискаю на червону кнопку закриття:">
+<!ENTITY prefs.close_to_tray "Згорнути до іконки, щоб завантаження продовжувались">
+<!ENTITY prefs.no_close_to_tray "Вийти з Miro повністю">
+
+<!ENTITY prefs.general "Загальні">
+<!ENTITY prefs.general.warn_on_quit "Попереджуй про незавершенні завантаження, коли я збираюсь вийти з програми">
+
+<!ENTITY prefs.channels "Канали">
+<!ENTITY prefs.channels.check "Перевірити канали на наявність нових сюжетів">
+<!ENTITY prefs.channels.check.thirty "Що 30 хвилин">
+<!ENTITY prefs.channels.check.sixty "Щогодинни">
+<!ENTITY prefs.channels.check.manually "Власноруч">
+
+<!ENTITY prefs.channels.autodownloaddefault "Автоматично скачувти налаштування за замовчуванням для  нових каналів">
+<!ENTITY prefs.channels.autodownloaddefault.all "Усі">
+<!ENTITY prefs.channels.autodownloaddefault.new "Створити">
+<!ENTITY prefs.channels.autodownloaddefault.off "Вимкнути">
+
+<!ENTITY prefs.playback "Програвання">
+<!ENTITY prefs.playback.remember.pos "Запам'ятовувати де я зупинив перегляд сюжету та поновлювати перегляд з цього місця">
+<!ENTITY prefs.playback.auto.next.video "Програвати відео одне після другого.">
+<!ENTITY prefs.playback.stop.after.each "Показати лише це відео">
+
+<!ENTITY prefs.folder.movies "Папки">
+<!ENTITY prefs.folder.downloads "Зберігати завантажені відео в цій теці">
+<!ENTITY prefs.folder.change "Змінити...">
+
+<!ENTITY prefs.folder.others.caption "Відслідковувати вміст зазначених тек та додавати нові сюжети до моєї Бібліотеки">
+<!ENTITY prefs.folder.others.location "Папка">
+<!ENTITY prefs.folder.others.shown "Відображувати як Канал">
+<!ENTITY prefs.folder.others.add "Додати Папку...">
+<!ENTITY prefs.folder.others.remove "Видалити">
+
+<!ENTITY prefs.downloads "Скачування" >
+<!ENTITY prefs.downloads.max "Максимальна кількість одночасних ручних завантаженнь:">
+<!ENTITY prefs.autodownloads.max "Максимальна кількість автоматичних автозавантаженнь на канал:">
+
+<!ENTITY prefs.disk.space "Дисковий простір">
+<!ENTITY prefs.disk.space.min.part1 "Продовжувати, поки на моєму диску є стільки вільного місця:" >
+<!ENTITY prefs.disk.space.min.part2 "ГБ">
+<!ENTITY prefs.disk.space.warning.restart "УВАГА: Ці налаштування набудуть чинності лише після перезапуску $longAppName.">
+
+<!ENTITY prefs.videos.expire "‚Äì√º‚Äì√¶ ‚Äî√â‚Äì¬∫‚Äì√¶‚Äì¬™‚Äî√°‚Äì‚àû‚ÄìŒ©‚Äì‚àè‚Äî√©, ‚Äì‚â§‚Äì‚àè‚Äì¬ ‚Äì¬µ‚Äì√¶ ‚Äî√â‚Äî√Ö‚Äî√á‚Äì‚àû‚Äî√Ñ‚Äì¬µ‚Äì‚â§‚Äì‚àû‚Äì¬µ‚Äî√á ‚Äî√°‚Äì¬µ‚Äî√Ñ‚Äì¬µ‚Äì‚àë">
+<!ENTITY prefs.videos.expire.one "1 день">
+<!ENTITY prefs.videos.expire.three "3 дні">
+<!ENTITY prefs.videos.expire.six "6 днів">
+<!ENTITY prefs.videos.expire.ten "10 днів">
+<!ENTITY prefs.videos.expire.thirty "1 місяць">
+<!ENTITY prefs.videos.expire.never "Ніколи">
+
+<!ENTITY prefs.torrent "BitTorrent">
+<!ENTITY prefs.torrent.restart.warning "(УВАГА: Зміни стануть чинними лише після перезапуску $longAppName.)">
+<!ENTITY prefs.torrent.limit.upstream "Щоб уникнуи незручностей при роботі з Internet, обмежити канал віддачі до:">
+<!ENTITY prefs.torrent.limit.downstream "Обмежити канал скачування до:">
+<!ENTITY prefs.torrent.limit.kbps "КБ/c">
+<!ENTITY prefs.torrent.use_ports "Використовувати ці порти:">
+<!ENTITY prefs.torrent.use_upnp "Автоматично переадресовувати порти">
+<!ENTITY prefs.torrent.require_encryption "Ігнорувати незашифровані з'єднання">
+<!ENTITY prefs.torrent.uploadratio "Зупинити віддачу torrent коли досягнено співвідношення:">
