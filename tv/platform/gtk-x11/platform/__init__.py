@@ -49,3 +49,6 @@ def python_version():
     while version.count('.') < 3:
         version += '.0'
     return version
+
+def uname():
+    return os.uname()
