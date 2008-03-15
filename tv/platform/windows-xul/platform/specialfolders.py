@@ -72,4 +72,3 @@ nonVideoDirectory = getSpecialFolder('Desktop')
 if baseMoviesDirectory is None:
     baseMoviesDirectory = os.path.join(getSpecialFolder('My Documents'),'My Videos')
 
-
