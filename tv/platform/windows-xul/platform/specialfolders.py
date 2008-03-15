@@ -29,6 +29,7 @@
 """Contains the locations of special windows folders like "My Documents."""
 
 import ctypes
+import os
 
 _specialFolderCSIDLs = {
     'AppData': 0x001a,
@@ -70,5 +71,4 @@ nonVideoDirectory = getSpecialFolder('Desktop')
 # there, we do this hack.
 if baseMoviesDirectory is None:
     baseMoviesDirectory = os.path.join(getSpecialFolder('My Documents'),'My Videos')
-
 
