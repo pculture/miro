@@ -29,6 +29,7 @@
 """Contains the locations of special windows folders like "My Documents."""
 
 import ctypes
+import os
 
 _specialFolderCSIDLs = {
     'AppData': 0x001a,
