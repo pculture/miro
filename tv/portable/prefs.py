@@ -111,8 +111,11 @@ CHANNEL_GUIDE_URL = Pref(key='ChannelGuideURL', default=effectiveChannelGuide,
                          platformSpecific=False)
 CHANNEL_GUIDE_FIRST_TIME_URL = Pref(key='ChannelGuideFirstTimeURL', default=effectiveChannelGuideFirstTime,
                          platformSpecific=False)
-CHANNEL_GUIDE_ALLOWED_URLS = Pref(key='ChannelGuideAllowedURLs', default='',
-                                  platformSpecific=False)
+CHANNEL_GUIDE_ALLOWED_URLS = Pref(key='ChannelGuideAllowedURLs',
+                              default='http://pagead2.googlesyndication.com/ '
+                              'http://www.google.com/ '
+                              'http://www.googleadservices.com',
+                              platformSpecific=False)
 ADDITIONAL_CHANNEL_GUIDES = Pref(key='additionalChannelGuides', default='',
                                   platformSpecific=False)
 VIDEOBOMB_URL     = Pref(key='VideobombURL',    default=effectiveVideobomb,
