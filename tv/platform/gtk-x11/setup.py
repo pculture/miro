@@ -257,9 +257,9 @@ if not "clean" in sys.argv:
     # build a miro script that wraps the miro.real script with an LD_LIBRARY_PATH
     # environment variable to pick up the xpcom we decided to use.
     try:
-        fflib = getCommandOutput("pkg-config --variable=libdir %s" % xpcom)
-        # pluck off the last \n
-        fflib = fflib[:-1]
+        fflib = getCommandOutput("pkg-config --variable=libdir %s" % xpcom).strip()
+
+        # print "Using xpcom: %s and gtkmozembed: %s fflib: %s" % (xpcom, gtkmozembed, fflib)
         f = open(os.path.join(platform_dir, "miro"), "w")
         f.write("#!/bin/sh\nLD_LIBRARY_PATH=%s miro.real \"$@\"\n" % fflib)
         f.close()
