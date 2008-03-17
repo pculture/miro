@@ -109,10 +109,21 @@ class Exporter (object):
         # are issues.
         if isinstance(thefeed.getActualFeed(), feed.RSSFeedImpl):
             feedtype = u'type="rss"'
+            extraArgs = []
+            autoDownload = thefeed.getAutoDownloadMode()
+            if autoDownload != 'new':
+                extraArgs.append('autoDownload=%s' % saxutils.quoteattr(autoDownload))
+            expiryTime = thefeed.expire
+            if expiryTime != 'system':
+                if expiryTime == 'feed':
+                    expiryTime = unicode(thefeed.getExpirationTime())
+                extraArgs.append('expiryTime=%s' % saxutils.quoteattr(expiryTime))
+            extraArgs = u' '.join(extraArgs)
         else:
             feedtype = u'type="mirofeed"'
+            extraArgs = u''
 
-        self.io.write(u'%s<outline %s text=%s xmlUrl=%s />\n' % (spacer, feedtype, saxutils.quoteattr(thefeed.getTitle()), saxutils.quoteattr(thefeed.getURL())))
+        self.io.write(u'%s<outline %s text=%s xmlUrl=%s %s/>\n' % (spacer, feedtype, saxutils.quoteattr(thefeed.getTitle()), saxutils.quoteattr(thefeed.getURL()), extraArgs))
 
 # =============================================================================
 
@@ -168,7 +179,7 @@ class Importer (object):
         except Exception, e:
             print e
             pass
-            
+
     def _handleFeedEntry(self, entry):
         url = entry.getAttribute("xmlUrl")
         f = feed.getFeedByURL(url)
@@ -177,6 +188,23 @@ class Importer (object):
             title = entry.getAttribute("text")
             if title is not None and title != '':
                 f.setTitle(title)
+            autoDownloadMode = entry.getAttribute("autoDownload")
+            if autoDownloadMode is not None and autoDownloadMode in ['all',
+                    'new', 'off']:
+                f.setAutoDownloadMode(autoDownloadMode)
+            expiryTime = entry.getAttribute("expiryTime")
+            if expiryTime is not None and expiryTime != '':
+                if expiryTime == 'system':
+                    f.setExpiration(u'system', 0)
+                elif expiryTime == 'never':
+                    f.setExpiration(u'never', 0)
+                else:
+                    try:
+                        expiryTime = int(expiryTime)
+                    except ValueError:
+                        pass
+                    else:
+                        f.setExpiration('feed', expiryTime)
             if self.currentFolder is not None:
                 f.setFolder(self.currentFolder)
                 f.blink()
