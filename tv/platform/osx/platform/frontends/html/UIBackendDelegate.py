@@ -273,7 +273,7 @@ class UIBackendDelegate:
                 nsitem = NSMenuItem.separatorItem()
             else:
                 nsitem = NSMenuItem.alloc()
-                nsitem.initWithTitle_action_keyEquivalent_(item.label, 'processContextItem:', '')
+                nsitem.initWithTitle_action_keyEquivalent_(item.label.decode('utf8'), 'processContextItem:', '')
                 nsitem.setEnabled_(item.callback is not None)
                 nsitem.setRepresentedObject_(item)
                 nsitem.setTarget_(self.contextItemHandler)
