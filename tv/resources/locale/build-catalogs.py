@@ -67,7 +67,7 @@ langs = (
          ("pa", "Punjabi"),
          ("pl", "Polish"),
          ("pt", "Portuguese"),
-         ("pt_BR", Portuguese_Brazil"),
+         ("pt_BR", "Portuguese_Brazil"),
          ("ro", "Romanian"),
          ("ru", "Russian"),
          ("si", "Sinhalese"),
