@@ -28,13 +28,16 @@
 # statement from all source files in the program, then also delete it here.
 */
 
+#ifndef PCF_USING_XULRUNNER19
 #define MOZILLA_INTERNAL_API
+#endif
+
 #include "DragAndDrop.h"
 #include "XPCOMUtil.h"
 #include <nsICommandManager.h>
 #include <gtkmozembed.h>
 #include <gtkmozembed_internal.h>
-#include <nsEscape.h>
+
 #include <nsIDragService.h>
 #include <nsIDragSession.h>
 #include <nsIDOMEvent.h>
@@ -45,7 +48,12 @@
 #include <nsILocalFile.h>
 #include <nsIComponentRegistrar.h>
 #include <nsIWebBrowser.h>
+
+#ifndef PCF_USING_XULRUNNER19
 #include <nsString.h>
+#else
+#include <nsStringAPI.h>
+#endif
 #include <nsIClipboardDragDropHooks.h>
 #include <nsIDragSession.h>
 #include <nsISupportsPrimitives.h>
@@ -55,6 +63,13 @@
 #include <stdio.h>
 #include <string.h>
 
+#ifdef MOZILLA_INTERNAL_API
+#include <nsEscape.h>
+#else
+#include <nsINetUtil.h>
+#include <nsServiceManagerUtils.h>
+#include <nsComponentManagerUtils.h>
+#endif
 
 PRInt32 stringToDragAction(const nsAString &str) {
     nsCAutoString cstr = NS_ConvertUTF16toUTF8(str);
@@ -452,14 +467,25 @@ public:
                 nsCAutoString utf8Data, escapedData;
                 if(NS_FAILED(rv)) return rv;
                 nsCAutoString url("action:handleURIDrop?data=");
+#ifdef PCF_USING_XULRUNNER19
+                nsCOMPtr<nsINetUtil> netUtil(do_GetService("@mozilla.org/network/util;1", &rv));
+                if(NS_FAILED(rv)) return rv;
+#endif
                 for(int i = 0; i < urlCount; i++) {
                     rv = extractDragData(kURLMime, data, i);
                     if(NS_FAILED(rv)) return rv;
                     utf8Data = NS_ConvertUTF16toUTF8(data);
+
+#ifndef PCF_USING_XULRUNNER19
                     NS_EscapeURL(PromiseFlatCString(utf8Data).get(),
                             utf8Data.Length(), 
                             esc_Query | esc_Forced | esc_AlwaysCopy,
                             escapedData);
+#else
+                    netUtil->EscapeURL(utf8Data,
+                                       nsINetUtil::ESCAPE_URL_QUERY | nsINetUtil::ESCAPE_URL_FORCED,
+                                       escapedData);
+#endif
                     url.Append(escapedData);
                     url.Append("%0A"); // "\n" 
                 }

@@ -32,9 +32,14 @@
 #define XPCOM_UTIL_H
 
 #include <nscore.h>
-#include <nsString.h>
 #include <nsIDOMEvent.h>
 #include <nsIDOMElement.h>
+
+#ifndef PCF_USING_XULRUNNER19
+#include <nsString.h>
+#else
+#include <nsStringAPI.h>
+#endif
 
 /* Walk up the DOM tree, starting with startNode, until an element has
  * attributeName set.  Return that element, or nsnull if nothing was found.

@@ -28,13 +28,15 @@
 # statement from all source files in the program, then also delete it here.
 */
 
+#ifndef PCF_USING_XULRUNNER19
 #define MOZILLA_INTERNAL_API
+#endif
+
 #include "XPCOMUtil.h"
 #include <nsCOMPtr.h>
 #include <nsIDOMEventTarget.h>
 #include <nsIDOMElement.h>
 #include <nsIDOMNode.h>
-#include <nsString.h>
 
 //////////////////////////////////////////////////////////////////////////////
 // XPCOMUtil.cc

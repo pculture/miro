@@ -37,19 +37,30 @@
 // NOTE: we could have code to register the class with XPCOM, but since we
 // only construct it from inside miro, there's no need.
 
+#ifndef PCF_USING_XULRUNNER19
 #define MOZILLA_INTERNAL_API
+#endif
+
 #include "HttpObserver.h"
 #include <nscore.h>
 #include <nsCOMPtr.h>
+
 #ifdef NS_I_SERVICE_MANAGER_UTILS
 #include <nsIServiceManagerUtils.h>
 #else
 #include <nsServiceManagerUtils.h>
 #endif
+
 #include <nsIHttpChannel.h>
 #include <nsIObserver.h>
 #include <nsIObserverService.h>
+
+#ifndef PCF_USING_XULRUNNER19
 #include <nsString.h>
+#else
+#include <nsStringAPI.h>
+#endif
+
 #include <locale.h>
 
 class HttpObserver: public nsIObserver {     
@@ -76,16 +87,37 @@ nsresult HttpObserver::Observe(nsISupports *subject, const char *topic,
 {
     if(strcmp(topic, "http-on-modify-request") == 0) {
         nsresult rv;
+#ifndef PCF_USING_XULRUNNER19
         nsDependentCString locale, currentLanguages;
         nsDependentCString language = nsDependentCString("");
+#else
+        nsDependentCString locale(setlocale(LC_ALL, NULL)), currentLanguages;
+#endif
+
         PRUint32 sep;
         nsCOMPtr<nsIHttpChannel> channel(do_QueryInterface(subject, &rv));
         if(NS_FAILED(rv)) return rv;
         channel->GetRequestHeader(nsDependentCString("Accept-Language"), currentLanguages);
+#ifndef PCF_USING_XULRUNNER19
         locale = nsDependentCString(setlocale(LC_ALL, NULL));
+#endif
         sep = locale.FindChar('.');
+#ifndef PCF_USING_XULRUNNER19
         locale.Left(language, sep);
         language.ReplaceChar('_', '-');
+#else
+        nsDependentCSubstring languageSub = StringHead(locale, sep);
+
+        nsCString language(languageSub);
+        char* cstr = ToNewCString(language);
+        char* i = cstr;
+        while (*i++) {
+            if (*i == '_')
+                *i = '-';
+        }
+        language = cstr;
+        NS_Free(cstr);
+#endif
         channel->SetRequestHeader(nsDependentCString("Accept-Language"),
                 language, false);
         channel->SetRequestHeader(nsDependentCString("Accept-Language"),

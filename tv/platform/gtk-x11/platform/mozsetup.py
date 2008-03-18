@@ -113,5 +113,9 @@ def setupMozillaEnvironment():
     else:
         set_comp_path = None
 
+    compPath = config.get(prefs.SUPPORT_DIRECTORY) + "mozilla/" + "components"
     if set_comp_path:
-        set_comp_path(config.get(prefs.MOZILLA_LIB_PATH))
+        if config.get(prefs.MOZILLA_LIB_PATH):
+            set_comp_path(config.get(prefs.MOZILLA_LIB_PATH))
+    else:
+        set_comp_path(compPath);
