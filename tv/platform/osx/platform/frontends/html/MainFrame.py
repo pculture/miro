@@ -467,6 +467,10 @@ class DisplayHostView (NSView):
         threads.warnIfNotOnMainThread('DisplayHostView.setDisplay')
         self.scheduledDisplay = None
 
+        # Protect against setting the same display twice
+        if self.hostedDisplay == display:
+            return
+
         # Send notification to old display if any
         if self.hostedDisplay is not None:
             self.hostedDisplay.onDeselected(owner)
