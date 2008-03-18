@@ -198,7 +198,7 @@ def BuildHTTPAuth(summary, message, prefillUser = None, prefillPassword = None):
     dialog = gtk.Dialog(summary, None, (), (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, gtk.STOCK_OK, gtk.RESPONSE_OK))
     dialog.set_default_size(425, -1)
     table = gtk.Table()
-    dialog.myvbox.add(table)
+    dialog.vbox.add(table)
     
     label = gtk.Label()
     label.set_line_wrap(True)
