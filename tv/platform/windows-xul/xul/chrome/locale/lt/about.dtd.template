@@ -1,2 +1,2 @@
 <!ENTITY about.title         "Apie $longAppName">
-<!ENTITY about.body          "$longAppName versija $appVersion ($appRevision); visos teisės saugomos (c) 2005-2007 $publisher. $longAppName ir $longAppName logotipas yra $publisher registruoti prekiniai ženklai.">
+<!ENTITY about.body          "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.">

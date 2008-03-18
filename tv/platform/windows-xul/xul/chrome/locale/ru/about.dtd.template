@@ -1,2 +1,2 @@
 <!ENTITY about.title         "О $longAppName">
-<!ENTITY about.body          "$longAppName версия $appVersion ($appRevision); авторские права защищены (c) 2005-2007 $publisher. $longAppName и $longAppName логотипы являются торговыми знаками $publisher.">
+<!ENTITY about.body          "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.">
