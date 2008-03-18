@@ -52,7 +52,6 @@ def activatePsyco():
     if cpu == 'i386':
         try:
             import psyco
-            print "Intel CPU detected, using psyco charge profiler."
             psyco.profile()
         except:
             pass
