@@ -395,6 +395,25 @@ echo ">> Installing..."
 $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 
 # =============================================================================
+# Psyco 
+# =============================================================================
+
+echo "=== Psyco (latest) ============================================================" >>$OUT
+echo "Setting up Psyco"
+
+cd $WORK_DIR
+
+echo ">> Fecthing sources from subversion..."
+svn co http://codespeak.net/svn/psyco/dist/ psyco 1>>$OUT 2>>$OUT
+cd $WORK_DIR/psyco
+
+echo ">> Building..."
+$PYTHON setup.py build 1>>$OUT 2>>$OUT
+
+echo ">> Installing..."
+$PYTHON setup.py install 1>>$OUT 2>>$OUT
+
+# =============================================================================
 # Boost 1.33.1
 # (because boost 1.34.x causes the libtorrent python extension to fail)
 # =============================================================================

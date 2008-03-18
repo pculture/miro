@@ -95,6 +95,15 @@ cd $WORK_DIR/Pyrex-0.9.6.4
 $PYTHON setup.py build
 $PYTHON setup.py install
 
+# Psyco =======================================================================
+
+cd $WORK_DIR
+svn co http://codespeak.net/svn/psyco/dist/ psyco
+cd $WORK_DIR/psyco
+
+$PYTHON setup.py build
+$PYTHON setup.py install
+
 # Boost =======================================================================
 
 cd $WORK_DIR
