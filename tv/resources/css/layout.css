@@ -447,6 +447,9 @@ table.item {
 .cc {
 	width:100%;
 }
+table.more-info .cc,
+table.more-info .cr,
+table.more-info .cl,
 table.item.selected.more-info,
 table.item.selected.more-info .cl,
 table.item.selected.more-info .cr {
