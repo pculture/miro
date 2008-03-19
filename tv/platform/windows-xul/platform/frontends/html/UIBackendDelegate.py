@@ -64,9 +64,9 @@ def getPrefillText(dialog):
 
 def _makeSupportsArrayFromSecondElement(data):
     from miro.platform.xulhelper import makeComp, components
-    arrayAbs = makeComp("@mozilla.org/supports-array;1", components.interfaces.nsISupportsArray, True)
+    arrayAbs = makeComp("@mozilla.org/supports-array;1", components.interfaces.nsISupportsArray, False)
     for datum in data:
-        supportsString = makeComp("@mozilla.org/supports-string;1", components.interfaces.nsISupportsString, True)
+        supportsString = makeComp("@mozilla.org/supports-string;1", components.interfaces.nsISupportsString, False)
         supportsString.data = datum[1]
         arrayAbs.AppendElement(supportsString)
     return arrayAbs
