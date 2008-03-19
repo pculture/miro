@@ -45,7 +45,6 @@ class Display:
 
     def onSelected(self, frame):
         "Called when the Display is shown in the given MainFrame."
-        assert(self.currentFrame == None)
         self.currentFrame = frame
 
     def onDeselected(self, frame):
@@ -53,7 +52,6 @@ class Display:
         MainFrame. This function is called on the Display losing the
         selection before onSelected is called on the Display gaining the
         selection."""
-        assert(self.currentFrame == frame)
         self.currentFrame = None
 
     # The MainFrame wants to know if we're ready to display (eg, if the
