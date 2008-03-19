@@ -352,6 +352,8 @@ class Item(DDBObject):
         self._itemXML = template.fillStaticTemplate('download-item-inner', onlyBody=True, this=self, viewName = self._XMLViewName,templateState='unknown')
         checkU(self._itemXML)
 
+    #FIXME with the sort-bar items- need to have different template called for different views- download-item-inner, download-item-inner-thumbs, download-item-inner-list
+    
     #
     # Returns True iff this item has never been viewed in the interface
     # Note the difference between "viewed" and seen
@@ -1064,11 +1066,11 @@ folder will be deleted.""")
 
     def makeMoreInfoTable(self, title, moreInfoData):
         lines = []
-        lines.append(u'<h3>%s</h3>' % title)
+        #lines.append(u'<h3>%s</h3>' % title)
         lines.append(u'<table cellpadding="0" cellspacing="0">')
         for label, text in moreInfoData:
-            lines.append(u'<tr><td class="label">%s</td>'
-                    u'<td class="value">%s</td></tr>' % (label, text))
+            lines.append(u'<tr><td class="col1">%s</td>'
+                    u'<td><b>%s</b></td></tr>' % (label, text))
         lines.append(u'</table>')
         return u'\n'.join(lines)
 
