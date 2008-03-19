@@ -15,9 +15,9 @@
 <!ENTITY prefs.channels.check.manually "手动">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.all "全部">
 <!ENTITY prefs.channels.autodownloaddefault.new "新添">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "关闭">
 
 <!ENTITY prefs.playback "播放">
 <!ENTITY prefs.playback.remember.pos "记住我停止观看节目的位置，并且下次从这个位置继续播放。">
@@ -39,7 +39,7 @@
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "磁盘空间">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "保留硬盘的最少剩余空间：" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "警告: 这项设置需要重新启动$longAppName后才能生效">
 
@@ -56,7 +56,7 @@
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
+<!ENTITY prefs.torrent.use_ports "使用这些端口：">
+<!ENTITY prefs.torrent.use_upnp "自动转发端口">
 <!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.uploadratio "当达到这个比例后停止种子上传：">

@@ -4,14 +4,14 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-18 10:28-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
-/* File: ../../portable/dialogs.py:77 */
+/* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Anuluj";
 
 "OK" = "OK";
 
-/* File: ../../portable/dialogs.py:76 */
+/* File: ../../portable/dialogs.py:84 */
 "Ok" = "OK";
 
 "$log" = "$log";
@@ -32,8 +32,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Bring All to Front" = "Przesuń wszystko na wierzch";
 
-/* File: ../../platform/osx/frontend/Preferences.py:65 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:80 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
 "Channels" = "Kanały";
 
 "Check for New Version" = "Sprawdź, czy jest nowsza wersja";
@@ -50,7 +50,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Cut" = "Wytnij";
 
-/* File: ../../portable/dialogs.py:96 */
+/* File: ../../portable/dialogs.py:104 */
 "Delete" = "Usuń";
 
 "Donate" = "Wspomóż finansowo";
@@ -79,7 +79,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Minimize" = "Minimalizuj";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
 "Miro" = "Miro";
 
 "Miro Help" = "Pomoc";
@@ -100,11 +100,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Paste" = "Wklej";
 
-/* File: ../../platform/osx/frontend/Application.py:249 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:244 */
 "Play Video" = "Odtwórz";
 
-/* File: ../../platform/osx/frontend/Preferences.py:69 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:84 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
 "Playback" = "Odtwarzanie";
 
 "Playlists" = "Lista odtwarzania";
@@ -155,7 +155,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "FullScreen Controls" = "Przyciski trybu pełnoekranowego";
 
-/* File: ../../portable/tabs.py:46 */
+/* File: ../../portable/tabs.py:57 */
 "Video Search" = "Wyszukiwanie plików wideo";
 
 "VideoWindow" = "Okno odtwarzania";
@@ -168,24 +168,25 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Username:\n\n" = "Nazwa użytkownika:\n\n";
 
-" limit upstream to" = " ogranicz pasmo wysyłania do";
-
-"(You must restart Miro for this change to take effect)" = "(Aby ta zmiana została zastosowana należy ponownie uruchomić Miro)";
+"(You must restart Miro for some of these changes to take effect)" = "(Aby zaszły zmiany należy ponownie uruchomić Miro)";
 
 "(You must restart Miro for this change to take effect)\n" = "(Aby ta zmiana została zastosowana należy ponownie uruchomić Miro)\n";
 
 "(movies directory path goes here)" = "(tu proszę wprowadzić ścieżkę do katalogu z filmami)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-"1 day" = "1 dniu";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
+"-" = "-";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
+"1 day" = "1 dniu";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
 "1 month" = "miesiącu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
 "10 days" = "10 dniach";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
 "3 days" = "3 dniach";
 
 "3 hours" = "3 godziny";
@@ -194,71 +195,96 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "5" = "5";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
 "6 days" = "6 dniach";
 
 "99999" = "99999";
 
 "Add..." = "Dodaj...";
 
-"BitTorrent ports:" = "Porty BitTorrenta:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
+"All" = "Wszystkie";
+
+/* Flag: untranslated */
+"Auto download default setting for new channels:" = "Auto download default setting for new channels:" /* = "Opcja automatycznego pobierania dla nowych kanałów:" */;
+
+"Automatically forward ports" = "Automatycznie przekieruj porty";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
+"BitTorrent" = "BitTorrent";
 
 "By default, videos expire after:" = "Usuwaj wideo po:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
 "Change..." = "Zmień...";
 
 "Check channels for new content:" = "Sprawdź, czy kanały zawierają coś nowego:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-"Don't start a download if it leaves less than" = "Nie zaczynaj pobierania jeśli po zakończeniu pozostanie mniej niż";
+"Don't auto-download more than this many videos per channel at once:" = "Nie pobieraj automatycznie dla jednego kanału więcej wideo niż:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-"Download at most" = "Pobierz najwyżej";
+"Don't download more than this many videos at once:" = "Nie pobieraj za jednym razem więcej wideo niż:";
 
 "Folder location" = "Lokalizacja folderu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-"GB free." = "GB wolnego miejsca na dysku.";
+"GB\n" = "GB\n";
 
-"KB/s when my computer is active." = "KB/s, gdy komputer jest aktywny.";
+"Ignore unencrypted connections" = "Ignoruj nieszyfrowane połączenia";
 
-"Maximum:" = "Maksymalnie:";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+"KB/s." = "KB/s";
 
-"Minimum:" = "Minimalnie:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+"Keep at least this much free space on my drive:" = "Zachowaj co najmniej tyle wolnego miejsca na moim dysku:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+"Limit downstream to" = "Ogranicz prędkość pobierania do:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "Never" = "Nie usuwaj";
+
+/* File: ../../portable/tabs.py:56 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+"New" = "Nowe";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+"Off" = "Wyłączone";
 
 "OtherViews" = "Inne widoki";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
 "Play videos one after another." = "Odtwarzaj wideo jedno za drugim";
 
 "Remember video position." = "Zapamiętaj położenie okna wideo.";
 
-/* File: ../../portable/guide.py:107 */
-/* File: ../../portable/playlist.py:197 */
-/* File: ../../portable/feed.py:795 */
-/* File: ../../portable/menu.py:65 */
-/* File: ../../portable/menu.py:70 */
-/* File: ../../portable/folder.py:156 */
-/* File: ../../portable/folder.py:211 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
+/* File: ../../portable/frontends/html/contextmenu.py:99 */
+/* File: ../../portable/frontends/html/contextmenu.py:104 */
+/* File: ../../portable/frontends/html/contextmenu.py:178 */
+/* File: ../../portable/frontends/html/contextmenu.py:184 */
+/* File: ../../portable/frontends/html/contextmenu.py:190 */
+/* File: ../../portable/frontends/html/contextmenu.py:199 */
+/* File: ../../portable/frontends/html/contextmenu.py:233 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
 "Remove" = "Usuń";
 
 "Run Miro at startup" = "Uruchom Miro podczas uruchamiania systemu";
 
-"Save downloaded videos in this folder:" = "Pobrane wideo zapisz w folderze:";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591 */
 "Show as Channel" = "Pokaż jako kanał";
 
 "Stop after each video." = "Zatrzymaj po każdym wideo.";
 
-"To avoid internet slowdowns:" = "Aby uniknąć spowolnienia połączenia:";
+/* Flag: untranslated */
+"Stop uploads when this ratio is reached:" = "Stop uploads when this ratio is reached:" /* = "Zatrzymaj wysyłanie gdy ratio osiągnie poziom:" */;
 
-/* File: ../../portable/app.py:1206 */
+/* Flag: untranslated */
+"Store downloads in this folder:" = "Store downloads in this folder:" /* = "Przechowuj pobrane pliki w katalogu:" */;
+
+/* Flag: untranslated */
+"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to" /* = "Aby uniknąć spowolnienia sieci ustaw limit wysyłania na:" */;
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
+"Use these ports:" = "Użyj tych portów:";
+
+/* File: ../../portable/frontends/html/main.py:319 */
 "Warn me when I attempt to quit with downloads in progress" = "Ostrzegaj przed zamknięciem programu, gdy trwa pobieranie plików";
 
 "Watch for new videos in these folders and include them in the Library:" = "Monitoruj, czy w tych folderach pojawiły się nowe wideo i dodaj je do biblioteki:";
@@ -269,16 +295,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "manually" = "ręcznie";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
-"videos at once." = "wideo jednocześnie";
-
 "$label$" = "$label$";
 
 "$title$" = "$title$";
 
 "Channel" = "Kanał";
 
-/* File: ../../portable/dialogs.py:91 */
+/* File: ../../portable/dialogs.py:99 */
 "Create" = "Utwórz";
 
 "In this:" = "W:";
@@ -291,8 +314,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "URL" = "Adres URL:";
 
-/* File: ../../platform/windows-xul/frontend_implementation/startup.py:42 */
-/* File: ../../platform/gtk-x11/frontend_implementation/startup.py:48 */
+/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/startup.py:56 */
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(przeanalizowano %d plików - znaleziono %d wideo)";
 
@@ -300,10 +323,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Browse" = "Przeglądaj";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:106 */
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:121 */
 "Next" = "Następne";
 
-/* File: ../../portable/dialogs.py:79 */
+/* File: ../../portable/dialogs.py:87 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "Nie";
 
@@ -322,1226 +345,1263 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Zaleca się, aby Miro uruchamiał się wraz ze startem komputera. W ten sposób, zostanie dokończone przerwane pobieranie i nowe wideo z ustawionych kanałów będą natychmiast dostępne.\n\n\nCzy chcesz, aby Miro był uruchamiany wraz ze startem komputera?";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
 "Welcome to Internet TV!" = "Witaj w telewizji internetowej!";
 
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Witaj w telewizji internetowej! Z Miro możesz zrobić wiele - automatycznie pobierać wideo z ulubionych kanałów, oglądać nowe wideo jedno po drugim, pobierać torrenty, polecać wideo znajomym i wiele wiele więcej.\n\n";
 
-/* File: ../../portable/dialogs.py:78 */
+/* File: ../../portable/dialogs.py:86 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
 "Yes" = "Tak";
 
 "%message%\n%message%" = "%message%\n%message%";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
 "Update Available" = "Jest dostępna aktualizacja";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
 /* Flag: python-format */
 "A new version of %s is available for download." = "Nowa wersja %s jest dostępna do pobrania.";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
 "Error Bombing Item" = "Błąd przy dodawaniu bomby";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
 "Error Recommending Item" = "Błąd przy rekomendacji pozycji";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
 "Error Opening Website" = "Błąd przy otwieraniu strony internetowej";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
 /* Flag: python-format */
 "There was an error opening %s.  Please try again in a few seconds" = "Przy otwieraniu %s wystąpił błąd. Proszę spróbować ponownie za chwilę.";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:62 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
 /* Flag: python-format */
 "Error importing modules:\n%s" = "Błąd przy importowaniu modułów:\n%s";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:66 */
-"Starting up" = "Uruchamianie";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:273 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
 "Loading window" = "Otwieranie okna";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:274 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
 "onStartup called twice" = "onStartup wywołano podwójnie";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:702 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
 "Spacebar" = "Spacja";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:851 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
 "Close to tray?" = "Zminimalizować do obszaru powiadamiania?";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:852 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
 "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Po naciśnięciu czerwonego krzyżyka, Miro powinien zminimalizować się do paska zadań, czy wyłączyć? To zachowanie można później zmienić w opcjach.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:44 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
 "Download Completed" = "Pobieranie zakończone";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:45 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
 /* Flag: python-format */
 "Download of video '%s' is finished." = "Pobieranie wideo \"%s\" zostało zakończone.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:54 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
 "Download Failed" = "Błąd pobierania";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:55 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
 /* Flag: python-format */
 "Download of video '%s' has failed." = "Błąd pobierania pliku wideo \"%s\"";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:278 */
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
 "Subscribe to Channel" = "Subskrybuj kanał";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:279 */
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
 "Enter the URL of the channel you would like to subscribe to." = "Podaj adres URL kanału, który chcesz subskrybować.";
 
-/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:248 */
-"Audio" = "Dźwięk";
-
-/* File: ../../platform/osx/frontend/Preferences.py:64 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
 "General" = "Ogólne";
 
-/* File: ../../platform/osx/frontend/Preferences.py:66 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
 "Downloads" = "Pobrania";
 
-/* File: ../../platform/osx/frontend/Preferences.py:67 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
 "Folders" = "Foldery";
 
-/* File: ../../platform/osx/frontend/Preferences.py:68 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
 "Disk Space" = "Miejsce na dysku";
 
-/* File: ../../platform/osx/frontend/Preferences.py:196 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
 "Movies Directory" = "Folder filmów";
 
-/* File: ../../platform/osx/frontend/Preferences.py:197 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
 /* Flag: python-format */
 "Select a Directory to store %s downloads in." = "Wskaż folder do przechowania %s pobranych plików.";
 
-/* File: ../../platform/osx/frontend/Preferences.py:198 */
-/* File: ../../platform/osx/frontend/Preferences.py:262 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
 "Select" = "Wybierz";
 
-/* File: ../../platform/osx/frontend/Preferences.py:207 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
 "Migrate existing movies?" = "Przenieść istniejące filmy?";
 
-/* File: ../../platform/osx/frontend/Preferences.py:208 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
 /* Flag: python-format */
 "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Wybrano nowy folder do przechowywania pobieranych filmów. Czy %s powinien przenieść tam istniejące pobrania? (Aktualnie pobierane filmy nie zostaną przeniesione dopóki pobieranie nie zostanie zakończone).";
 
-/* File: ../../platform/osx/frontend/Preferences.py:260 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
 "View this Directory in the Library" = "Pokaż tę lokalizację w bibliotece";
 
-/* File: ../../platform/osx/frontend/Preferences.py:261 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
 "Select a Directory to view in the Library." = "Wybierz lokalizację do pokazania w bibliotece.";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:80 */
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
 "Finish" = "Koniec";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:139 */
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
 "Search!" = "Szukaj!";
 
-/* File: ../../platform/osx/frontend/Application.py:246 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
 "Pause Video" = "Zatrzymaj wideo";
 
-/* File: ../../platform/osx/frontend/Application.py:255 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
 "Unsupported version of Quicktime" = "Nieobsługiwana wersja Quicktime'a";
 
-/* File: ../../platform/osx/frontend/Application.py:256 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
 /* Flag: python-format */
 "To run %s you need the most recent version of Quicktime, which is a free update." = "Do odtworzenia %s potrzebna jest najnowsza wersja Quicktime'a.";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:22 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
 "_Remove..." = "_Usuń...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:23 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:34 */
 "_Remove Playlist..." = "_Usuń listę odtwarzania...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:24 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:35 */
 "_Remove Playlists..." = "_Usuń listy odtwarzania...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:25 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:36 */
 "_Remove Playlist Folder..." = "_Usuń folder listy odtwarzania...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:26 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:37 */
 "_Remove Playlist Folders..." = "_Usuń foldery listy odtwarzania...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:27 */
-/* File: ../../portable/menubar.py:179 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:38 */
+/* File: ../../portable/menubar.py:193 */
 "_Remove Channel..." = "_Usuń kanał...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:28 */
-/* File: ../../portable/menubar.py:180 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:39 */
+/* File: ../../portable/menubar.py:194 */
 "_Remove Channels..." = "_Usuń kanały...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:29 */
-/* File: ../../portable/menubar.py:182 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:40 */
+/* File: ../../portable/menubar.py:196 */
 "_Remove Channel Folder..." = "_Usuń folder kanału...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:30 */
-/* File: ../../portable/menubar.py:181 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:41 */
+/* File: ../../portable/menubar.py:195 */
 "_Remove Channel Folders..." = "_Usuń foldery kanału...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:31 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:42 */
 "_Remove Miro Guide..." = "_Usuń przewodnik Miro...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:32 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:43 */
 "_Remove Miro Guides..." = "_Usuń przewodniki Miro...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:33 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:44 */
 "_Remove Video..." = "_Usuń wideo...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:34 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:45 */
 "_Remove Videos..." = "_Usuń wideo...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:35 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:46 */
 "Re_name..." = "Zmień _nazwę...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:36 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:47 */
 "Re_name Playlist..." = "Zmień _nazwę listy odtwarzania...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:37 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:48 */
 "Re_name Playlist Folder..." = "Zmień _nazwę folderu listy odtwarzania...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:38 */
-/* File: ../../portable/menubar.py:178 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:49 */
+/* File: ../../portable/menubar.py:192 */
 "Re_name Channel..." = "Zmień _nazwę kanału...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:39 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:50 */
 "Re_name Channel Folder..." = "Zmień _nazwę folderu kanału...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:40 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:51 */
 "Re_name Miro Guide..." = "Zmień _nazwę przewodnika Miro...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:41 */
-/* File: ../../portable/menubar.py:184 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:52 */
+/* File: ../../portable/menubar.py:198 */
 "_Update Channel..." = "Akt_ualizuj kanał...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:42 */
-/* File: ../../portable/menubar.py:185 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:53 */
+/* File: ../../portable/menubar.py:199 */
 "_Update Channels..." = "Akt_ualizuj kanały...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42 */
+/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
+"Audio" = "Dźwięk";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
 "Settings" = "Ustawienia";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56 */
 "Hide" = "Ukryj";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58 */
 "Show" = "Pokaż";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48 */
-/* File: ../../portable/dialogs.py:80 */
-/* File: ../../portable/menubar.py:257 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59 */
+/* File: ../../portable/menubar.py:273 */
+/* File: ../../portable/dialogs.py:88 */
 "Quit" = "Zakończ";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
 "New Channel _Guide..." = "_Nowy spis kanałów...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
 "Folder Location" = "Lokalizacja katalogu";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
 "Username:" = "Nazwa użytkownika:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
 "Password:" = "Hasło:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416 */
 "Unknown Runtime Error" = "Nieznany błąd uruchomieniowy";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417 */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "Wystąpił nieznany błąd %s.";
 
-/* File: ../../portable/dl_daemon/download.py:359 */
+/* File: ../../portable/dl_daemon/download.py:458 */
 "Error" = "Błąd";
 
-/* File: ../../portable/dl_daemon/download.py:432 */
+/* File: ../../portable/dl_daemon/download.py:544 */
 /* Flag: python-format */
 "Could not write to %s" = "Nie można zapisać do %s";
 
-/* File: ../../portable/dl_daemon/download.py:452 */
+/* File: ../../portable/dl_daemon/download.py:564 */
+/* File: ../../portable/dl_daemon/download.py:769 */
 "Not enough disk space" = "Brak miejsca na dysku";
 
-/* File: ../../portable/dl_daemon/download.py:453 */
+/* File: ../../portable/dl_daemon/download.py:565 */
+/* File: ../../portable/dl_daemon/download.py:770 */
 /* Flag: python-format */
 "%s MB required to store this video" = "Do przechowania wideo jest wymagane %s MB";
 
-/* File: ../../portable/dl_daemon/download.py:672 */
+/* File: ../../portable/dl_daemon/download.py:781 */
 "BitTorrent failure" = "Błąd BitTorrenta";
 
-/* File: ../../portable/dl_daemon/download.py:673 */
+/* File: ../../portable/dl_daemon/download.py:782 */
 "BitTorrent failed to startup" = "BitTorrent uległ awarii przy uruchamianiu";
 
-/* File: ../../portable/dl_daemon/download.py:796 */
+/* File: ../../portable/dl_daemon/download.py:954 */
 "Corrupt Torrent" = "Uszkodzony torrent";
 
-/* File: ../../portable/dl_daemon/download.py:797 */
+/* File: ../../portable/dl_daemon/download.py:955 */
 /* Flag: python-format */
 "The torrent file at %s was not valid" = "Plik torrent pochodzący z %s nie jest poprawny";
 
-/* File: ../../portable/dl_daemon/download.py:822 */
+/* File: ../../portable/dl_daemon/download.py:980 */
 "Torrent file deleted" = "Plik torrent został usunięty";
 
-/* File: ../../portable/dl_daemon/download.py:823 */
-"The torrent file for this item was deleted " = "Plik torrent tego elementu został usunięty ";
+/* File: ../../portable/dl_daemon/download.py:981 */
+"The torrent file for this item was deleted outside of Miro." = "Plik torrent dla tego elementu został usunięty poza Miro.";
 
-/* File: ../../portable/dl_daemon/download.py:824 */
-"outside of Miro." = "poza Miro.";
-
-/* File: ../../portable/tabs.py:44 */
-"Library" = "Biblioteka";
-
-/* File: ../../portable/tabs.py:45 */
-"New" = "Nowe";
-
-/* File: ../../portable/tabs.py:47 */
-"Downloading" = "Pobieranie";
-
-/* File: ../../portable/guide.py:104 */
-/* File: ../../portable/feed.py:789 */
-"Copy URL to clipboard" = "Kopiuj URL do schowka";
-
-/* File: ../../portable/guide.py:154 */
-"Miro Guide" = "Przewodnik Miro";
-
-/* File: ../../portable/extrastrings.py:22 */
-/* File: ../../portable/feed.py:2028 */
-/* File: ../../portable/feed.py:2120 */
-"Search" = "Szukaj";
-
-/* File: ../../portable/downloader.py:215 */
-"activity" = "aktywność";
-
-/* File: ../../portable/downloader.py:251 */
-/* File: ../../portable/httpclient.py:114 */
-/* File: ../../portable/httpclient.py:142 */
-"File not found" = "Nie znaleziono pliku";
-
-/* File: ../../portable/downloader.py:252 */
-"Flash URL Scraping Error" = "Błąd przechwytywania adresu URL flasha";
-
-/* File: ../../portable/downloader.py:427 */
-"starting up" = "uruchamianie";
-
-/* File: ../../portable/playlist.py:196 */
-/* File: ../../portable/playlist.py:201 */
-"Rename Playlist" = "Zmień nazwę listy odtwarzania";
-
-/* File: ../../portable/playlist.py:202 */
-/* Flag: python-format */
-"Enter a new name for the playlist %s" = "Podaj nową nazwę listy odtwarzania %s";
-
-/* File: ../../portable/playlist.py:224 */
-"Create Playlist" = "Utwórz listę odtwarzania";
-
-/* File: ../../portable/playlist.py:225 */
-"Enter a name for the new playlist" = "Podaj nazwę listy odtwarzania";
-
-/* File: ../../portable/feed.py:383 */
-"never" = "nigdy";
-
-/* File: ../../portable/feed.py:385 */
-/* File: ../../portable/item.py:542 */
-/* Flag: python-format */
-"%d hours" = "%d godzin";
-
-/* File: ../../portable/feed.py:387 */
-/* Flag: python-format */
-"%d day" = "%d dzień";
-
-/* File: ../../portable/feed.py:389 */
-/* File: ../../portable/item.py:540 */
-/* Flag: python-format */
-"%d days" = "%d dni";
-
-/* File: ../../portable/feed.py:391 */
-/* Flag: python-format */
-"%d months" = "%d miesięcy";
-
-/* File: ../../portable/feed.py:787 */
-"Update Channel Now" = "Zaktualizuj kanał";
-
-/* File: ../../portable/feed.py:790 */
-/* File: ../../portable/feed.py:799 */
-"Rename Channel" = "Zmień nazwę";
-
-/* File: ../../portable/feed.py:794 */
-"Revert Title to Default" = "Przywróć oryginalną nazwę";
-
-/* File: ../../portable/feed.py:800 */
-/* Flag: python-format */
-"Enter a new name for the channel %s" = "Podaj nową nazwę kanału %s";
-
-/* File: ../../portable/feed.py:887 */
-"Error loading feed" = "Błąd podczas wczytywania zasobu";
-
-/* File: ../../portable/feed.py:888 */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Nie udało się wczytać zasobu z %s (%s)";
-
-/* File: ../../portable/feed.py:891 */
-"Would you like to keep the feed?" = "Zachować zasób?";
-
-/* File: ../../portable/feed.py:1004 */
-"Bad content-type" = "Zły typ zawartości";
-
-/* File: ../../portable/feed.py:1017 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-"Channel is not compatible with $shortAppName!" = "Kanał jest niekompatybilny z $shortAppName!";
-
-/* File: ../../portable/feed.py:1018 */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Spróbujemy dodać pliki, ale może to zająć trochę czasu, a opisy mogą wyglądać dziwnie. Prosimy o skontaktowanie się z wydawcą $url i spytanie, czy zasób może być oferowany w formacie zgodnym z programem $shortAppName.\n\nCzy mimo wszystko chcesz wczytać ten kanał?";
-
-/* File: ../../portable/feed.py:2134 */
-"Local Files" = "Pliki lokalne";
-
-/* File: ../../portable/feed.py:2148 */
-"Playing File" = "Odtwarzany plik";
-
-/* File: ../../portable/menu.py:69 */
+/* File: ../../portable/frontends/html/contextmenu.py:103 */
 "Update Channels Now" = "Uaktualnij kanały";
 
-/* File: ../../portable/menu.py:94 */
+/* File: ../../portable/frontends/html/contextmenu.py:128 */
 /* Flag: python-format */
 "%d Downloaded Items" = "%d Pobranych plików";
 
-/* File: ../../portable/menu.py:96 */
-/* File: ../../portable/item.py:1475 */
+/* File: ../../portable/frontends/html/contextmenu.py:130 */
+/* File: ../../portable/frontends/html/contextmenu.py:211 */
 "Play" = "Odtwórz";
 
-/* File: ../../portable/menu.py:97 */
-/* File: ../../portable/item.py:1478 */
+/* File: ../../portable/frontends/html/contextmenu.py:131 */
+/* File: ../../portable/frontends/html/contextmenu.py:214 */
 "Add to new playlist" = "Dodaj do nowej listy odtwarzania";
 
-/* File: ../../portable/menu.py:99 */
-/* File: ../../portable/item.py:1471 */
+/* File: ../../portable/frontends/html/contextmenu.py:133 */
+/* File: ../../portable/frontends/html/contextmenu.py:207 */
 "Remove From Playlist" = "Usuń z listy odtwarzania";
 
-/* File: ../../portable/menu.py:101 */
-/* File: ../../portable/item.py:1473 */
+/* File: ../../portable/frontends/html/contextmenu.py:135 */
+/* File: ../../portable/frontends/html/contextmenu.py:209 */
 "Remove From the Library" = "Usuń z biblioteki";
 
-/* File: ../../portable/menu.py:107 */
-/* File: ../../portable/item.py:1482 */
+/* File: ../../portable/frontends/html/contextmenu.py:141 */
+/* File: ../../portable/frontends/html/contextmenu.py:218 */
 "Mark as Unwatched" = "Oznacz jako nieobejrzane";
 
-/* File: ../../portable/menu.py:112 */
-/* File: ../../portable/item.py:1484 */
+/* File: ../../portable/frontends/html/contextmenu.py:146 */
+/* File: ../../portable/frontends/html/contextmenu.py:220 */
 "Mark as Watched" = "Oznacz jako obejrzane";
 
-/* File: ../../portable/menu.py:117 */
+/* File: ../../portable/frontends/html/contextmenu.py:151 */
 /* Flag: python-format */
 "%d Available Items" = "Dostępne elementy - %d";
 
-/* File: ../../portable/menu.py:118 */
-/* File: ../../portable/dialogs.py:85 */
-/* File: ../../portable/item.py:1491 */
+/* File: ../../portable/frontends/html/contextmenu.py:152 */
+/* File: ../../portable/frontends/html/contextmenu.py:227 */
+/* File: ../../portable/dialogs.py:93 */
 "Download" = "Pobierz";
 
-/* File: ../../portable/menu.py:123 */
+/* File: ../../portable/frontends/html/contextmenu.py:157 */
 /* Flag: python-format */
 "%d Downloading Items" = "%d Pobieranie elementów";
 
-/* File: ../../portable/menu.py:125 */
-/* File: ../../portable/item.py:1489 */
+/* File: ../../portable/frontends/html/contextmenu.py:159 */
+/* File: ../../portable/frontends/html/contextmenu.py:225 */
 "Cancel Download" = "Przerwij pobieranie";
 
-/* File: ../../portable/menu.py:127 */
-/* File: ../../portable/item.py:1489 */
+/* File: ../../portable/frontends/html/contextmenu.py:161 */
+/* File: ../../portable/frontends/html/contextmenu.py:225 */
 "Pause Download" = "Wstrzymaj pobieranie";
 
-/* File: ../../portable/menu.py:130 */
-/* File: ../../portable/item.py:1487 */
+/* File: ../../portable/frontends/html/contextmenu.py:164 */
+/* File: ../../portable/frontends/html/contextmenu.py:223 */
 "Restart Upload" = "Uruchom ponownie wysyłanie";
 
-/* File: ../../portable/opml.py:49 */
-"Export OPML File" = "Eksportuj plik OPML";
+/* File: ../../portable/frontends/html/contextmenu.py:170 */
+"Update Channel Now" = "Zaktualizuj kanał";
 
-/* File: ../../portable/opml.py:123 */
-"Import OPML File" = "Importuj plik OPML";
+/* File: ../../portable/frontends/html/contextmenu.py:172 */
+/* File: ../../portable/frontends/html/contextmenu.py:196 */
+"Copy URL to clipboard" = "Kopiuj URL do schowka";
 
-/* File: ../../portable/opml.py:125 */
-"OPML Files" = "Pliki OPML";
+/* File: ../../portable/frontends/html/contextmenu.py:173 */
+/* File: ../../portable/feed.py:825 */
+"Rename Channel" = "Zmień nazwę";
 
-/* File: ../../portable/opml.py:145 */
-"OPML Import failed" = "Błąd przy imporcie OPML";
+/* File: ../../portable/frontends/html/contextmenu.py:177 */
+"Revert Title to Default" = "Przywróć oryginalną nazwę";
 
-/* File: ../../portable/opml.py:146 */
-"The selected OPML file appears to be invalid. Import was interrupted." = "Wybrany plik OPML jest niepoprawny. Importowanie zostało przerwane.";
+/* File: ../../portable/frontends/html/contextmenu.py:183 */
+/* File: ../../portable/folder.py:142 */
+"Rename Channel Folder" = "Zmień nazwę folderu kanału";
 
-/* File: ../../portable/opml.py:151 */
-"OPML Import summary" = "Podsumowanie importu OPML";
+/* File: ../../portable/frontends/html/contextmenu.py:189 */
+/* File: ../../portable/folder.py:213 */
+"Rename Playlist Folder" = "Zmień nazwę folderu list odtwarzania";
 
-/* File: ../../portable/autoupdate.py:121 */
+/* File: ../../portable/frontends/html/contextmenu.py:213 */
+"Play Just This Video" = "Odtwórz tylko to wideo";
+
+/* File: ../../portable/frontends/html/contextmenu.py:232 */
+/* File: ../../portable/playlist.py:218 */
+"Rename Playlist" = "Zmień nazwę listy odtwarzania";
+
+/* File: ../../portable/frontends/html/main.py:132 */
+/* File: ../../portable/startup.py:237 */
+"Video Directory Missing" = "Brakuje katalogu dla plików wideo";
+
+/* File: ../../portable/frontends/html/main.py:133 */
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro nie może znaleźć głównego katalogu dla plików wideo. Może się tak dziać gdy jest on na napędzie zewnętrznym, który aktualnie jest odłączony.\n\n    Jeżeli kontynuujesz, katalog dla plików wideo zostanie zresetowany do położenia na tym dysku (spowoduje to utratę części informacji o plikach wideo na dysku zewnętrznym). Możesz również wyjść, podłączyć napęd i ponownie uruchomić Miro.";
+
+/* File: ../../portable/frontends/html/main.py:190 */
+/* File: ../../portable/theme.py:126 */
+"Custom Channels" = "Własne kanały";
+
+/* File: ../../portable/frontends/html/main.py:190 */
+/* File: ../../portable/theme.py:126 */
+"You are running a version of $longAppName with a custom set of channels." = "Jest używana wersja $shortAppName z własnym zestawem kanałów.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/httpclient.py:139 */
+"Internal Error" = "Błąd wewnętrzny";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Wystąpił wewnętrzny błąd w Miro. Można pomóc twórcom rozwiązać ten problem wysyłając raport o błędzie.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Include entire program database including all video and channel metadata with crash report" = "Do raportu proszę dołączyć bazę danych łącznie z metadanymi wszystkich wideo i kanału.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Describe what you were doing that caused this error" = "Proszę również opisać wykonywane czynności, które doprowadziły do błędu";
+
+/* File: ../../portable/frontends/html/main.py:284 */
 /* Flag: python-format */
 "%s Version Alert" = "%s Ostrzeżenie wersji";
 
-/* File: ../../portable/autoupdate.py:122 */
+/* File: ../../portable/frontends/html/main.py:285 */
 /* Flag: python-format */
 "A new version of %s is available. Would you like to download it now?" = "Dostępna jest nowa wersja %s. Czy chcesz ją pobrać teraz?";
 
-/* File: ../../portable/autoupdate.py:128 */
+/* File: ../../portable/frontends/html/main.py:290 */
 /* Flag: python-format */
 "%s Version Check" = "Sprawdzanie wersji %s";
 
-/* File: ../../portable/autoupdate.py:129 */
+/* File: ../../portable/frontends/html/main.py:291 */
 /* Flag: python-format */
 "%s is up to date." = "Jest zainstalowana aktualna wersja %s.";
 
-/* File: ../../portable/util.py:252 */
-/* File: ../../portable/httpclient.py:126 */
-"Internal Error" = "Błąd wewnętrzny";
-
-/* File: ../../portable/util.py:252 */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Wystąpił wewnętrzny błąd w Miro. Można pomóc twórcom rozwiązać ten problem wysyłając raport o błędzie.";
-
-/* File: ../../portable/util.py:252 */
-"Include entire program database including all video and channel metadata with crash report" = "Do raportu proszę dołączyć bazę danych łącznie z metadanymi wszystkich wideo i kanału.";
-
-/* File: ../../portable/util.py:252 */
-"Describe what you were doing that caused this error" = "Proszę również opisać wykonywane czynności, które doprowadziły do błędu";
-
-/* File: ../../portable/util.py:455 */
-/* Flag: python-format */
-"%1.1fGB" = "%1.1fGB";
-
-/* File: ../../portable/util.py:457 */
-/* Flag: python-format */
-"%dGB" = "%dGB";
-
-/* File: ../../portable/util.py:461 */
-/* Flag: python-format */
-"%1.1fMB" = "%1.1fMB";
-
-/* File: ../../portable/util.py:463 */
-/* Flag: python-format */
-"%dMB" = "%dMB";
-
-/* File: ../../portable/util.py:467 */
-/* Flag: python-format */
-"%1.1fKB" = "%1.1fKB";
-
-/* File: ../../portable/util.py:469 */
-/* Flag: python-format */
-"%dKB" = "%dKB";
-
-/* File: ../../portable/util.py:473 */
-/* Flag: python-format */
-"%1.1fB" = "%1.1fB";
-
-/* File: ../../portable/util.py:475 */
-/* Flag: python-format */
-"%dB" = "%dB";
-
-/* File: ../../portable/storedatabase.py:832 */
-/* File: ../../portable/storedatabase.py:1231 */
-/* Flag: python-format */
-"%s database save succeeded" = "Bazę danych %s zapisano poprawnie";
-
-/* File: ../../portable/storedatabase.py:833 */
-/* File: ../../portable/storedatabase.py:1232 */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "Baza danych została poprawnie zapisana. Można teraz wyjść bez utraty danych.";
-
-/* File: ../../portable/storedatabase.py:840 */
-/* File: ../../portable/storedatabase.py:1240 */
-/* Flag: python-format */
-"%s database save failed" = "Błąd zapisu do bazy danych %s";
-
-/* File: ../../portable/storedatabase.py:841 */
-/* File: ../../portable/storedatabase.py:1241 */
-/* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s nie udało się zapisać bazy danych - dysk jest pełny.\nSugerujemy zwolnienie miejsca na dysku poprzez usunięcie zbędnych plików lub usunięcie jakichś filmów ze swojej kolekcji.\nOstatnie zmiany mogą zostać utracone.";
-
-/* File: ../../portable/dialogs.py:81 */
-"Ignore" = "Pomiń";
-
-/* File: ../../portable/dialogs.py:82 */
-"Submit Crash Report" = "Wyślij raport o błędzie";
-
-/* File: ../../portable/dialogs.py:83 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-"Migrate" = "Przenieś";
-
-/* File: ../../portable/dialogs.py:84 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-"Don't Migrate" = "Nie przenoś";
-
-/* File: ../../portable/dialogs.py:86 */
-"Remove Entry" = "Usuń pozycję";
-
-/* File: ../../portable/dialogs.py:87 */
-"Delete File" = "Usuń plik";
-
-/* File: ../../portable/dialogs.py:88 */
-"Delete Files" = "Usuń pliki";
-
-/* File: ../../portable/dialogs.py:89 */
-"Keep Videos" = "Zachowaj wideo";
-
-/* File: ../../portable/dialogs.py:90 */
-"Delete Videos" = "Usuń wideo";
-
-/* File: ../../portable/dialogs.py:92 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-"Create Channel" = "Utwórz kanał";
-
-/* File: ../../portable/dialogs.py:93 */
-"Add" = "Dodaj";
-
-/* File: ../../portable/dialogs.py:94 */
-"Add Into New Folder" = "Dodaj do nowego folderu";
-
-/* File: ../../portable/dialogs.py:95 */
-"Keep" = "Utrzymaj";
-
-/* File: ../../portable/dialogs.py:97 */
-"Not Now" = "Nie teraz";
-
-/* File: ../../portable/dialogs.py:98 */
-"Close to Tray" = "Zminimalizuj do paska zadań";
-
-/* File: ../../portable/dialogs.py:99 */
-"Launch Miro" = "Uruchom Miro";
-
-/* File: ../../portable/dialogs.py:100 */
-"Download Anyway" = "Pobierz mimo wszystko";
-
-/* File: ../../portable/dialogs.py:221 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-"New Search Channel" = "Nowy kanał wyszukiwania";
-
-/* File: ../../portable/dialogs.py:221 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:25 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
-"A search channel contains items that match a search term." = "Kanał wyszukiwania zawiera elementy pasujące do wyszukiwanego zwrotu.";
-
-/* File: ../../portable/singleclick.py:87 */
-"Download already exists" = "Pobierany plik już istnieje";
-
-/* File: ../../portable/singleclick.py:88 */
-"That URL is already an external download." = "Ten URL jest już pobierany zewnętrznie.";
-
-/* File: ../../portable/singleclick.py:94 */
-"Miro will begin downloading it now." = "Miro rozpocznie teraz pobieranie.";
-
-/* File: ../../portable/singleclick.py:96 */
-"It is downloading now." = "To jest właśnie pobierane.";
-
-/* File: ../../portable/singleclick.py:98 */
-"It has already been downloaded." = "To zostało już pobrane.";
-
-/* File: ../../portable/singleclick.py:125 */
-"Download Error" = "Błąd pobierania";
-
-/* File: ../../portable/singleclick.py:126 */
-/* Flag: python-format */
-"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro nie jest w stanie pobrać pliku z tego adresu URL:\n\nURL: %s";
-
-/* File: ../../portable/singleclick.py:134 */
-"File Download" = "Pobieranie pliku";
-
-/* File: ../../portable/singleclick.py:135 */
-/* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "Plik %s nie jest plikiem audio, wideo lub kanałem RSS.";
-
-/* File: ../../portable/singleclick.py:225 */
-"Subscribing to multiple channels" = "Subskrybuj wiele kanałów";
-
-/* File: ../../portable/singleclick.py:226 */
-/* Flag: python-format */
-"Create %d channels?" = "Utworzyć %d kanał/ów?";
-
-/* File: ../../portable/singleclick.py:239 */
-/* Flag: python-format */
-"Adding %d channels to a new folder" = "Dodaje %d kanał/ów do nowego folderu";
-
-/* File: ../../portable/singleclick.py:240 */
-/* File: ../../portable/folder.py:226 */
-"Enter a name for the new channel folder" = "Podaj nazwę nowego folderu kanałów";
-
-/* File: ../../portable/singleclick.py:243 */
-/* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "Uwaga: %d kanał/ów jest już subskrybowanych. Kanały te pozostaną w tym samym miejscu.";
-
-/* File: ../../portable/singleclick.py:254 */
-"Subscription error" = "Błąd subskrypcji";
-
-/* File: ../../portable/singleclick.py:264 */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Ten plik kanału $shortAppName ma nieprawidłowy format $url. Prosimy o powiadomienie wydawcy pliku.";
-
-/* File: ../../portable/singleclick.py:272 */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Ten kanał $shortAppName ma nieprawidłowy typ zawartości $url. Prosimy o powiadomienie wydawcy pliku.";
-
-/* File: ../../portable/singleclick.py:276 */
-"Could not download the $shortAppName channel file: $url." = "Nie udało się pobrać pliku kanału $shortAppName $url.";
-
-/* File: ../../portable/singleclick.py:316 */
-"Invalid Torrent" = "Nieprawidłowy torrent";
-
-/* File: ../../portable/singleclick.py:317 */
-/* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Plik torrenta %s jest uszkodzony i nie da się go otworzyć. [OK]";
-
-/* File: ../../portable/menubar.py:144 */
-"_Open" = "_Otwórz";
-
-/* File: ../../portable/menubar.py:145 */
-"_Download Video" = "_Pobierz wideo";
-
-/* File: ../../portable/menubar.py:147 */
-"Check _Version" = "_Sprawdź wersję";
-
-/* File: ../../portable/menubar.py:149 */
-"_Remove Video" = "_Usuń wideo";
-
-/* File: ../../portable/menubar.py:150 */
-"_Remove Videos" = "Usuń _widea";
-
-/* File: ../../portable/menubar.py:151 */
-"Re_name Video" = "Zmień _nazwę wideo";
-
-/* File: ../../portable/menubar.py:152 */
-"Save Video _As..." = "_Zapisz wideo jako...";
-
-/* File: ../../portable/menubar.py:153 */
-"Save Videos _As..." = "Za_pisz widea jako...";
-
-/* File: ../../portable/menubar.py:154 */
-"Copy Video _URL" = "_Kopiuj adres URL wideo";
-
-/* File: ../../portable/menubar.py:156 */
-"_Options..." = "_Opcje...";
-
-/* File: ../../portable/menubar.py:157 */
-"_Quit" = "Z_akończ";
-
-/* File: ../../portable/menubar.py:165 */
-"Cu_t" = "_Wytnij";
-
-/* File: ../../portable/menubar.py:166 */
-"_Copy" = "_Kopiuj";
-
-/* File: ../../portable/menubar.py:167 */
-"_Paste" = "W_klej";
-
-/* File: ../../portable/menubar.py:168 */
-"Select _All" = "Z_aznacz wszystkie";
-
-/* File: ../../portable/menubar.py:169 */
-"_Delete" = "_Usuń";
-
-/* File: ../../portable/menubar.py:173 */
-"Add _Channel" = "_Dodaj kanał";
-
-/* File: ../../portable/menubar.py:174 */
-"New Searc_h Channel..." = "No_wy kanał wyszukiwania...";
-
-/* File: ../../portable/menubar.py:175 */
-"New _Folder..." = "Nowy _folder...";
-
-/* File: ../../portable/menubar.py:176 */
-"Add Channel _Guide..." = "Dodaj _przewodnik po kanałach...";
-
-/* File: ../../portable/menubar.py:186 */
-"Update _All Channels" = "_Aktualizuj wszystkie kanały";
-
-/* File: ../../portable/menubar.py:188 */
-"_Import Channels (OPML)..." = "_Importuj kanały (OPML)...";
-
-/* File: ../../portable/menubar.py:189 */
-"E_xport Channels (OPML)..." = "_Eksportuj kanały (OPML)...";
-
-/* File: ../../portable/menubar.py:191 */
-"_Send this channel to a friend" = "P_owiadom o tym kanale do przyjaciela";
-
-/* File: ../../portable/menubar.py:192 */
-"Copy Channel _Link" = "_Kopiuj odnośnik do kanału";
-
-/* File: ../../portable/menubar.py:195 */
-"New _Playlist" = "_Nowa lista odtwarzania";
-
-/* File: ../../portable/menubar.py:196 */
-"New Playlist Fol_der" = "Nowy _folder listy odtwarzania";
-
-/* File: ../../portable/menubar.py:198 */
-"Re_name Playlist" = "_Zmień nazwę listy odtwarzania";
-
-/* File: ../../portable/menubar.py:199 */
-"_Remove Playlist" = "_Usuń listę odtwarzania";
-
-/* File: ../../portable/menubar.py:200 */
-"_Remove Playlists" = "_Usuń listy odtwarzania";
-
-/* File: ../../portable/menubar.py:201 */
-"_Remove Playlist Folders" = "Usuń f_oldery list odtwarzania";
-
-/* File: ../../portable/menubar.py:202 */
-"_Remove Playlist Folder" = "U_suń folder list odtwarzania";
-
-/* File: ../../portable/menubar.py:212 */
-"_Play" = "_Odtwórz";
-
-/* File: ../../portable/menubar.py:213 */
-"_Stop" = "_Zatrzymaj";
-
-/* File: ../../portable/menubar.py:215 */
-"_Next Video" = "_Następne wideo";
-
-/* File: ../../portable/menubar.py:216 */
-"_Previous Video" = "_Poprzednie wideo";
-
-/* File: ../../portable/menubar.py:218 */
-"Skip _Forward" = "Przeskocz do przo_du";
-
-/* File: ../../portable/menubar.py:219 */
-"Skip _Back" = "Przeskocz do _tyłu";
-
-/* File: ../../portable/menubar.py:221 */
-"Volume _Up" = "_Rozgłośnij";
-
-/* File: ../../portable/menubar.py:222 */
-"Volume _Down" = "Ś_cisz";
-
-/* File: ../../portable/menubar.py:224 */
-"_Fullscreen" = "Pełny _ekran";
-
-/* File: ../../portable/menubar.py:228 */
-"_About" = "_O programie";
-
-/* File: ../../portable/menubar.py:229 */
-"_Donate" = "_Wspomóż";
-
-/* File: ../../portable/menubar.py:230 */
-/* File: ../../portable/menubar.py:245 */
-"_Help" = "Pomo_c";
-
-/* File: ../../portable/menubar.py:232 */
-"Report a _Bug" = "Zgłoś _błąd";
-
-/* File: ../../portable/menubar.py:236 */
-"_Video" = "_Wideo";
-
-/* File: ../../portable/menubar.py:238 */
-"_File" = "_Plik";
-
-/* File: ../../portable/menubar.py:242 */
-"_Channels" = "_Kanały";
-
-/* File: ../../portable/menubar.py:243 */
-"_Playlists" = "_Lista odtwarzania";
-
-/* File: ../../portable/menubar.py:244 */
-"P_layback" = "_Odtwarzanie";
-
-/* File: ../../portable/menubar.py:249 */
-"Play Unwatched ($numUnwatched)" = "Odtwórz nieobejrzane ($numUnwatched)";
-
-/* File: ../../portable/menubar.py:250 */
-"Pause All Downloads ($numDownloading)" = "Przerwij pobieranie wszystkich ($numDownloading) plików";
-
-/* File: ../../portable/menubar.py:251 */
-"Resume All Downloads ($numPaused)" = "Wznów pobieranie wszystkich ($numPaused) plików";
-
-/* File: ../../portable/menubar.py:253 */
-"Options..." = "Opcje...";
-
-/* File: ../../portable/menubar.py:255 */
-"Hide Window" = "Ukryj okno";
-
-/* File: ../../portable/menubar.py:256 */
-"Show Window" = "Pokaż okno";
-
-/* File: ../../portable/item.py:485 */
-/* Flag: python-format */
-"Removing %s" = "Usuwanie %s";
-
-/* File: ../../portable/item.py:488 */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Chcesz usunąć ten folder razem ze wszystkimi wideo, czy tylko usunąć go z biblioteki?";
-
-/* File: ../../portable/item.py:494 */
-"Would you like to delete this file or just remove its entry from the Library?" = "Czy chcesz usunąć ten plik, czy tylko usunąć wpis z biblioteki?";
-
-/* File: ../../portable/item.py:514 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Ten element jest folderem. Jeśli go usuniesz, wszystko co znajduje się w środku zostanie również usunięte.";
-
-/* File: ../../portable/item.py:544 */
-/* Flag: python-format */
-"%d minutes" = "%d minut";
-
-/* File: ../../portable/item.py:554 */
-/* Flag: python-format */
-"Expires in %s" = "Zostanie usunięte za %s";
-
-/* File: ../../portable/item.py:566 */
-/* Flag: python-format */
-"Will retry in %s" = "Spróbuje ponownie za %s";
-
-/* File: ../../portable/item.py:568 */
-"Paused" = "Wstrzymano";
-
-/* File: ../../portable/item.py:954 */
-"TORRENT" = "Torrent";
-
-/* File: ../../portable/item.py:956 */
-"WEB PAGE" = "Strona internetowa";
-
-/* File: ../../portable/item.py:966 */
-"Total Down:" = "W sumie pobrane:";
-
-/* File: ../../portable/item.py:969 */
-"Error:" = "Błąd:";
-
-/* File: ../../portable/item.py:977 */
-"Down Rate:" = "Szybkość pobierania:";
-
-/* File: ../../portable/item.py:978 */
-"Down Total:" = "W sumie pobrano:";
-
-/* File: ../../portable/item.py:980 */
-"Up Rate:" = "Szybkość wysyłania:";
-
-/* File: ../../portable/item.py:981 */
-"Up Total:" = "W sumie wysłano:";
-
-/* File: ../../portable/item.py:989 */
-"Web page:" = "Strona internetowa:";
-
-/* File: ../../portable/item.py:989 */
-"permalink" = "odnośnik bezpośredni";
-
-/* File: ../../portable/item.py:993 */
-"File link:" = "Odnośnik do pliku:";
-
-/* File: ../../portable/item.py:993 */
-"direct link to file" = "bezpośredni odnośnik do pliku";
-
-/* File: ../../portable/item.py:995 */
-"File type:" = "Typ pliku:";
-
-/* File: ../../portable/item.py:1002 */
-"REVEAL LOCAL FOLDER" = "Pokaż folder lokalny";
-
-/* File: ../../portable/item.py:1004 */
-"REVEAL LOCAL FILE" = "Pokaż plik lokalny";
-
-/* File: ../../portable/item.py:1006 */
-"Filename:" = "Nazwa pliku :";
-
-/* File: ../../portable/item.py:1013 */
-"Down Total" = "W sumie pobrane";
-
-/* File: ../../portable/item.py:1015 */
-"Up Total" = "W sumie wysłane";
-
-/* File: ../../portable/item.py:1033 */
-"Item Details" = "Szczegóły elementu";
-
-/* File: ../../portable/item.py:1040 */
-"Torrent Details" = "Szczegóły torrenta";
-
-/* File: ../../portable/item.py:1042 */
-"Torrent Details <i>stopped</i>" = "Szczegóły torrenta <i>zatrzymane</i>";
-
-/* File: ../../portable/item.py:1046 */
-"Download Details" = "Szczegóły pobierania";
-
-/* File: ../../portable/item.py:1263 */
-"downloading..." = "pobieranie...";
-
-/* File: ../../portable/item.py:1270 */
-/* File: ../../portable/item.py:1273 */
-/* Flag: python-format */
-"%s remaining" = "pozostało %s";
-
-/* File: ../../portable/item.py:1282 */
-"starting up..." = "zaczynam...";
-
-/* File: ../../portable/item.py:1477 */
-"Play Just This Video" = "Odtwórz tylko to wideo";
-
-/* File: ../../portable/item.py:1854 */
-/* Flag: python-format */
-"Removing %s items" = "Usuwanie %s elementów";
-
-/* File: ../../portable/item.py:1856 */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Co najmniej jeden z tych plików nie został pobrany z kanału. Chcesz je usunąć, czy tylko usunąć ich wpisy z biblioteki?";
-
-/* File: ../../portable/item.py:1864 */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Co najmniej jeden z tych elementów jest folderem. Jeśli go usuniesz lub usuniesz folder, wszystkie elementy w tym folderze zostaną również usunięte.";
-
-/* File: ../../portable/folder.py:132 */
-/* File: ../../portable/folder.py:155 */
-"Rename Channel Folder" = "Zmień nazwę folderu kanału";
-
-/* File: ../../portable/folder.py:134 */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Podaj nową nazwę folderu kanału %s";
-
-/* File: ../../portable/folder.py:210 */
-/* File: ../../portable/folder.py:215 */
-"Rename Playlist Folder" = "Zmień nazwę folderu list odtwarzania";
-
-/* File: ../../portable/folder.py:217 */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Podaj nową nazwę folderu list odtwarzania %s";
-
-/* File: ../../portable/folder.py:225 */
-"Create Channel Folder" = "Utwórz folder kanałów";
-
-/* File: ../../portable/folder.py:239 */
-"Create Playlist Folder" = "Utwórz folder list odtwarzania";
-
-/* File: ../../portable/folder.py:240 */
-"Enter a name for the new playlist folder" = "Podaj nazwę nowego folderu list odtwarzania";
-
-/* File: ../../portable/httpclient.py:68 */
-/* Flag: python-format */
-"Error: %s" = "Błąd: %s";
-
-/* File: ../../portable/httpclient.py:83 */
-/* File: ../../portable/httpclient.py:89 */
-"Can't connect" = "Nie można się połączyć";
-
-/* File: ../../portable/httpclient.py:84 */
-/* Flag: python-format */
-"Connection Error: %s" = "Błąd połączenia: %s";
-
-/* File: ../../portable/httpclient.py:90 */
-"SSL connection error" = "Błąd połączenia SSL";
-
-/* File: ../../portable/httpclient.py:94 */
-"HTTP error" = "Błąd HTTP";
-
-/* File: ../../portable/httpclient.py:97 */
-/* Flag: python-format */
-"Bad Status Line: %s" = "Błędna linia statusu: %s";
-
-/* File: ../../portable/httpclient.py:100 */
-/* Flag: python-format */
-"Bad Header Line: %s" = "Błędna linia nagłówka: %s";
-
-/* File: ../../portable/httpclient.py:103 */
-/* Flag: python-format */
-"Bad Chunk size: %s" = "Błędny rozmiar części: %s";
-
-/* File: ../../portable/httpclient.py:106 */
-/* Flag: python-format */
-"Expected CRLF got: %r" = "Oczekiwano końca wiersza - otrzymano: %r";
-
-/* File: ../../portable/httpclient.py:109 */
-/* Flag: python-format */
-"%s closed connection" = "Połączenie zostało zamknięte przez %s";
-
-/* File: ../../portable/httpclient.py:115 */
-"Got 404 status code" = "Otrzymano kod błędu 404";
-
-/* File: ../../portable/httpclient.py:117 */
-/* Flag: python-format */
-"Bad Status Code: %s" = "Błędny kod statusu: %s";
-
-/* File: ../../portable/httpclient.py:121 */
-"Authorization failed" = "Autoryzacja nie powiodła się";
-
-/* File: ../../portable/httpclient.py:127 */
-"Pipeline request never started" = "Żądanie potoku nie rozpoczęło się";
-
-/* File: ../../portable/httpclient.py:131 */
-"Timeout" = "Przekroczony limit czasu";
-
-/* File: ../../portable/httpclient.py:132 */
-/* Flag: python-format */
-"Connection to %s timed out" = "Przekroczono limit czasu połączenia z %s";
-
-/* File: ../../portable/httpclient.py:136 */
-"Invalid URL" = "Nieprawidłowy adres URL";
-
-/* File: ../../portable/httpclient.py:137 */
-/* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" nie jest poprawnym adresem URL";
-
-/* File: ../../portable/httpclient.py:143 */
-/* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "Plik: \"%s\" nie istnieje";
-
-/* File: ../../portable/httpclient.py:147 */
-"Read error" = "Błąd odczytu";
-
-/* File: ../../portable/httpclient.py:148 */
-/* Flag: python-format */
-"Error while reading from \"%s\"" = "Błąd podczas próby odczytu z \"%s\"";
-
-/* File: ../../portable/httpclient.py:341 */
-"Unknown Error code" = "Nieznany kod błędu";
-
-/* File: ../../portable/httpclient.py:373 */
-"Connection closed" = "Połączenie zamknięte";
-
-/* File: ../../portable/httpclient.py:798 */
-"Unknown" = "Brak informacji";
-
-/* File: ../../portable/httpclient.py:799 */
-"Internal Error: Not ready to send" = "Błąd wewnętrzny: niegotowy do wysyłania";
-
-/* File: ../../portable/app.py:685 */
-"Database too new" = "Zbyt nowa baza danych";
-
-/* File: ../../portable/app.py:686 */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Twoja bazę danych została zapisana przy użyciu nowszej wersji $shortAppName. Należy pobrać i użyć najnowszą wersję $shortAppName.";
-
-/* File: ../../portable/app.py:700 */
-"Video Directory Missing" = "Brakuje katalogu dla plików wideo";
-
-/* File: ../../portable/app.py:701 */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro nie może znaleźć głównego katalogu wideo. Może się tak zdarzyć, gdy jest on zlokalizowany na zewnętrznym dysku, który jest obecnie odłączony.\n\nKontynuacja spowoduje zmianę lokalizacji katalogu wideo tak, aby wskazywała na bieżący dysk. Spowoduje to utratę części danych o plikach wideo na dysku zewnętrznym. Można zamknąć program, podłączyć dysk i ponownie uruchomić Miro.";
-
-/* File: ../../portable/app.py:1038 */
-/* File: ../../portable/app.py:1052 */
-/* File: ../../portable/app.py:1096 */
-/* File: ../../portable/app.py:1122 */
-/* File: ../../portable/app.py:1142 */
-/* Flag: python-format */
-"Remove %s" = "Usuń %s";
-
-/* File: ../../portable/app.py:1039 */
-/* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Czy na pewno chcesz usunąć przewodnik %s?";
-
-/* File: ../../portable/app.py:1053 */
-/* Flag: python-format */
-"Are you sure you want to remove %s" = "Czy na pewno chcesz usunąć %s?";
-
-/* File: ../../portable/app.py:1056 */
-/* File: ../../portable/app.py:1101 */
-/* File: ../../portable/app.py:1127 */
-/* File: ../../portable/app.py:1146 */
-/* Flag: python-format */
-"Remove %s channels" = "Usuń %s kanałów";
-
-/* File: ../../portable/app.py:1058 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Czy na pewno chcesz usunąć %s list odtwarzania?";
-
-/* File: ../../portable/app.py:1097 */
-"What would you like to do with the videos in this channel that you've downloaded?" = "Co chcesz zrobić z już pobranymi na tym kanale wideo?";
-
-/* File: ../../portable/app.py:1102 */
-"What would you like to do with the videos in these channels that you've downloaded?" = "Co chcesz zrobić z już pobranymi na tych kanałach wideo?";
-
-/* File: ../../portable/app.py:1123 */
-/* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Czy na pewno chcesz chcesz usunąć %s? Wszystkie trwające operacje pobierania zostaną anulowane.";
-
-/* File: ../../portable/app.py:1128 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Czy na pewno chcesz usunąć %s kanałów? Wszystkie trwające operacje pobierania zostaną anulowane.";
-
-/* File: ../../portable/app.py:1143 */
-/* Flag: python-format */
-"Are you sure you want to remove %s?" = "Czy na pewno chcesz usunąć %s?";
-
-/* File: ../../portable/app.py:1147 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?" = "Czy na pewno chcesz usunąć te %s kanały?";
-
-/* File: ../../portable/app.py:1160 */
-/* Flag: python-format */
-"Stop watching %s" = "Zatrzymaj oglądanie %s";
-
-/* File: ../../portable/app.py:1161 */
-/* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "Czy na pewno chcesz przestać oglądać %s?";
-
-/* File: ../../portable/app.py:1164 */
-/* Flag: python-format */
-"Stop watching %s directories" = "Zatrzymaj oglądanie %s katalogów";
-
-/* File: ../../portable/app.py:1165 */
-/* Flag: python-format */
-"Are you sure you want to stop watching these %s directories?" = "Na pewno chcesz zatrzymać oglądanie tych %s katalogów?";
-
-/* File: ../../portable/app.py:1196 */
+/* File: ../../portable/frontends/html/main.py:309 */
 "Are you sure you want to quit?" = "Czy na pewno chcesz zakończyć działanie programu?";
 
-/* File: ../../portable/app.py:1198 */
+/* File: ../../portable/frontends/html/main.py:311 */
 "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro nadal wysyła raport o błędzie. Jeśli program zostanie teraz zakończony wysyłanie zostanie anulowane. Czy mimo to zakończyć działanie programu?";
 
-/* File: ../../portable/app.py:1712 */
+/* File: ../../portable/frontends/html/main.py:340 */
+"Import OPML File" = "Importuj plik OPML";
+
+/* File: ../../portable/frontends/html/main.py:342 */
+"OPML Files" = "Pliki OPML";
+
+/* File: ../../portable/frontends/html/main.py:347 */
+"Export OPML File" = "Eksportuj plik OPML";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:325 */
 "Invalid Value" = "Niewłaściwa wartość";
 
-/* File: ../../portable/app.py:1713 */
+/* File: ../../portable/frontends/html/templatedisplay.py:326 */
 /* Flag: python-format */
 "%s is invalid.  You must enter a non-negative number." = "%s jest nieprawidłowe. Należy podać liczbę dodatnią.";
 
-/* File: ../../portable/app.py:1839 */
+/* File: ../../portable/frontends/html/templatedisplay.py:452 */
 "Error Revealing File" = "Błąd przy otwieraniu pliku";
 
-/* File: ../../portable/app.py:1840 */
+/* File: ../../portable/frontends/html/templatedisplay.py:453 */
 /* Flag: python-format */
 "The file \"%s\" was deleted from outside Miro." = "Plik \"%s\" został usunięty poza programem Miro.";
 
-/* File: ../../portable/app.py:2011 */
-" - Invalid URL" = " - Nieprawidłowy adres URL";
-
-/* File: ../../portable/app.py:2012 */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Podany adres nie jest poprawnym adresem URL.\nProszę go sprawdzić i spróbować ponownie.\n\n";
-
-/* File: ../../portable/app.py:2036 */
-"$shortAppName - Add Channel" = "$shortAppName - Dodaj kanał";
-
-/* File: ../../portable/app.py:2036 */
-"Enter the URL of the channel to add" = "Podaj adres URL kanału, który chcesz dodać";
-
-/* File: ../../portable/app.py:2057 */
-"$shortAppName - Add Miro Guide" = "$shortAppName - Dodaj przewodnik Miro";
-
-/* File: ../../portable/app.py:2057 */
-"Enter the URL of the Miro Guide to add" = "Podaj adres URL przewodnika Miro, który chcesz dodać";
-
-/* File: ../../portable/app.py:2063 */
-"$shortAppName - Download Video" = "$shortAppName - pobieranie wideo";
-
-/* File: ../../portable/app.py:2063 */
-"Enter the URL of the video to download" = "Podaj adres URL wideo, które chcesz pobrać";
-
-/* File: ../../portable/app.py:2420 */
-"Starter Channels" = "Kanały startowe";
-
-/* File: ../../portable/app.py:2437 */
-"Example Playlist" = "Przykładowa lista odtwarzania";
-
-/* File: ../../portable/app.py:2463 */
-"Custom Channels" = "Własne kanały";
-
-/* File: ../../portable/app.py:2463 */
-"You are running a version of $longAppName with a custom set of channels." = "Jest używana wersja $shortAppName z własnym zestawem kanałów.";
-
-/* File: ../../portable/app.py:2478 */
+/* File: ../../portable/frontends/html/templatedisplay.py:560 */
 "Error Changing Movies Directory" = "Błąd podczas zmieniania katalogu filmów";
 
-/* File: ../../portable/app.py:2479 */
+/* File: ../../portable/frontends/html/templatedisplay.py:561 */
 "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "Nie posiadasz prawa zapisu do wybranego katalogu. Miro do zapisu wideo będzie nadal używał starego katalogu.";
 
-/* File: ../../portable/app.py:2508 */
+/* File: ../../portable/frontends/html/templatedisplay.py:664 */
+" - Invalid URL" = " - Nieprawidłowy adres URL";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:665 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Podany adres nie jest poprawnym adresem URL.\nProszę go sprawdzić i spróbować ponownie.\n\n";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"$shortAppName - Add Channel" = "$shortAppName - Dodaj kanał";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"Enter the URL of the channel to add" = "Podaj adres URL kanału, który chcesz dodać";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"$shortAppName - Add Miro Guide" = "$shortAppName - Dodaj przewodnik Miro";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"Enter the URL of the Miro Guide to add" = "Podaj adres URL przewodnika Miro, który chcesz dodać";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"$shortAppName - Download Video" = "$shortAppName - pobieranie wideo";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"Enter the URL of the video to download" = "Podaj adres URL wideo, które chcesz pobrać";
+
+/* File: ../../portable/tabs.py:55 */
+"Library" = "Biblioteka";
+
+/* File: ../../portable/tabs.py:58 */
+"Downloading" = "Pobieranie";
+
+/* File: ../../portable/downloader.py:234 */
+"activity" = "aktywność";
+
+/* File: ../../portable/downloader.py:268 */
+/* File: ../../portable/httpclient.py:127 */
+/* File: ../../portable/httpclient.py:155 */
+"File not found" = "Nie znaleziono pliku";
+
+/* File: ../../portable/downloader.py:269 */
+"Flash URL Scraping Error" = "Błąd przechwytywania adresu URL flasha";
+
+/* File: ../../portable/downloader.py:445 */
+"starting up" = "uruchamianie";
+
+/* File: ../../portable/playlist.py:219 */
+/* Flag: python-format */
+"Enter a new name for the playlist %s" = "Podaj nową nazwę listy odtwarzania %s";
+
+/* File: ../../portable/playlist.py:241 */
+"Create Playlist" = "Utwórz listę odtwarzania";
+
+/* File: ../../portable/playlist.py:242 */
+"Enter a name for the new playlist" = "Podaj nazwę listy odtwarzania";
+
+/* File: ../../portable/opml.py:144 */
+"OPML Import failed" = "Błąd przy imporcie OPML";
+
+/* File: ../../portable/opml.py:145 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "Wybrany plik OPML jest niepoprawny. Importowanie zostało przerwane.";
+
+/* File: ../../portable/opml.py:150 */
+"OPML Import summary" = "Podsumowanie importu OPML";
+
+/* File: ../../portable/util.py:266 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGB";
+
+/* File: ../../portable/util.py:268 */
+/* Flag: python-format */
+"%dGB" = "%dGB";
+
+/* File: ../../portable/util.py:272 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMB";
+
+/* File: ../../portable/util.py:274 */
+/* Flag: python-format */
+"%dMB" = "%dMB";
+
+/* File: ../../portable/util.py:278 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fKB";
+
+/* File: ../../portable/util.py:280 */
+/* Flag: python-format */
+"%dKB" = "%dKB";
+
+/* File: ../../portable/util.py:284 */
+/* Flag: python-format */
+"%1.1fB" = "%1.1fB";
+
+/* File: ../../portable/util.py:286 */
+/* Flag: python-format */
+"%dB" = "%dB";
+
+/* File: ../../portable/iheartmiro.py:82 */
+/* Flag: untranslated */
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." /* = "Prosty sposób, aby pomóc Miro\n\nMiro jest projektem open source i nie jest tworzony dla korzyści. Potrzebujemy Twojej pomocy aby móc kontynuować pracę.\n\n\"I Heart Miro\" jest prostym dodatkiem do przeglądarki Firefox, który przekazuje opłatę zwrotną do organizacji Miro,  gdy kupujesz na Amazon. Nigdy go nie zauważysz,  nic Ciebie nie kosztuje i możesz w każdej chwili go odinstalować.\n\nJeżeli klikniesz \"Zainstaluj iHeartMiro\" poniżej, Firefox uruchomi się i zapyta \"czy jesteś pewny\". Po prostu kliknij tak. Zabiera to tylko 7 sekund. Dzięki za Twoją pomoc." */;
+
+/* File: ../../portable/menubar.py:158 */
+"_Open" = "_Otwórz";
+
+/* File: ../../portable/menubar.py:159 */
+"_Download Video" = "_Pobierz wideo";
+
+/* File: ../../portable/menubar.py:161 */
+"Check _Version" = "_Sprawdź wersję";
+
+/* File: ../../portable/menubar.py:163 */
+"_Remove Video" = "_Usuń wideo";
+
+/* File: ../../portable/menubar.py:164 */
+"_Remove Videos" = "Usuń _widea";
+
+/* File: ../../portable/menubar.py:165 */
+"Re_name Video" = "Zmień _nazwę wideo";
+
+/* File: ../../portable/menubar.py:166 */
+"Save Video _As..." = "_Zapisz wideo jako...";
+
+/* File: ../../portable/menubar.py:167 */
+"Save Videos _As..." = "Za_pisz widea jako...";
+
+/* File: ../../portable/menubar.py:168 */
+"Copy Video _URL" = "_Kopiuj adres URL wideo";
+
+/* File: ../../portable/menubar.py:170 */
+"_Options..." = "_Opcje...";
+
+/* File: ../../portable/menubar.py:171 */
+"_Quit" = "Z_akończ";
+
+/* File: ../../portable/menubar.py:179 */
+"Cu_t" = "_Wytnij";
+
+/* File: ../../portable/menubar.py:180 */
+"_Copy" = "_Kopiuj";
+
+/* File: ../../portable/menubar.py:181 */
+"_Paste" = "W_klej";
+
+/* File: ../../portable/menubar.py:182 */
+"Select _All" = "Z_aznacz wszystkie";
+
+/* File: ../../portable/menubar.py:183 */
+"_Delete" = "_Usuń";
+
+/* File: ../../portable/menubar.py:187 */
+"Add _Channel" = "_Dodaj kanał";
+
+/* File: ../../portable/menubar.py:188 */
+"New Searc_h Channel..." = "No_wy kanał wyszukiwania...";
+
+/* File: ../../portable/menubar.py:189 */
+"New _Folder..." = "Nowy _folder...";
+
+/* File: ../../portable/menubar.py:190 */
+"Add Channel _Guide..." = "Dodaj _przewodnik po kanałach...";
+
+/* File: ../../portable/menubar.py:200 */
+"Update _All Channels" = "_Aktualizuj wszystkie kanały";
+
+/* File: ../../portable/menubar.py:202 */
+"_Import Channels (OPML)..." = "_Importuj kanały (OPML)...";
+
+/* File: ../../portable/menubar.py:203 */
+"E_xport Channels (OPML)..." = "_Eksportuj kanały (OPML)...";
+
+/* File: ../../portable/menubar.py:205 */
+"_Send this channel to a friend" = "P_owiadom o tym kanale do przyjaciela";
+
+/* File: ../../portable/menubar.py:206 */
+"Copy Channel _Link" = "_Kopiuj odnośnik do kanału";
+
+/* File: ../../portable/menubar.py:209 */
+"New _Playlist" = "_Nowa lista odtwarzania";
+
+/* File: ../../portable/menubar.py:210 */
+"New Playlist Fol_der" = "Nowy _folder listy odtwarzania";
+
+/* File: ../../portable/menubar.py:212 */
+"Re_name Playlist" = "_Zmień nazwę listy odtwarzania";
+
+/* File: ../../portable/menubar.py:213 */
+"_Remove Playlist" = "_Usuń listę odtwarzania";
+
+/* File: ../../portable/menubar.py:214 */
+"_Remove Playlists" = "_Usuń listy odtwarzania";
+
+/* File: ../../portable/menubar.py:215 */
+"_Remove Playlist Folders" = "Usuń f_oldery list odtwarzania";
+
+/* File: ../../portable/menubar.py:216 */
+"_Remove Playlist Folder" = "U_suń folder list odtwarzania";
+
+/* File: ../../portable/menubar.py:226 */
+/* File: ../../portable/menubar.py:227 */
+"_Play" = "_Odtwórz";
+
+/* File: ../../portable/menubar.py:228 */
+"_Pause" = "_Pauza";
+
+/* File: ../../portable/menubar.py:229 */
+"_Stop" = "_Zatrzymaj";
+
+/* File: ../../portable/menubar.py:231 */
+"_Next Video" = "_Następne wideo";
+
+/* File: ../../portable/menubar.py:232 */
+"_Previous Video" = "_Poprzednie wideo";
+
+/* File: ../../portable/menubar.py:234 */
+"Skip _Forward" = "Przeskocz do przo_du";
+
+/* File: ../../portable/menubar.py:235 */
+"Skip _Back" = "Przeskocz do _tyłu";
+
+/* File: ../../portable/menubar.py:237 */
+"Volume _Up" = "_Rozgłośnij";
+
+/* File: ../../portable/menubar.py:238 */
+"Volume _Down" = "Ś_cisz";
+
+/* File: ../../portable/menubar.py:240 */
+"_Fullscreen" = "Pełny _ekran";
+
+/* File: ../../portable/menubar.py:244 */
+"_About" = "_O programie";
+
+/* File: ../../portable/menubar.py:245 */
+"_Donate" = "_Wspomóż";
+
+/* File: ../../portable/menubar.py:246 */
+/* File: ../../portable/menubar.py:261 */
+"_Help" = "Pomo_c";
+
+/* File: ../../portable/menubar.py:248 */
+"Report a _Bug" = "Zgłoś _błąd";
+
+/* File: ../../portable/menubar.py:252 */
+"_Video" = "_Wideo";
+
+/* File: ../../portable/menubar.py:254 */
+"_File" = "_Plik";
+
+/* File: ../../portable/menubar.py:258 */
+"_Channels" = "_Kanały";
+
+/* File: ../../portable/menubar.py:259 */
+"_Playlists" = "_Lista odtwarzania";
+
+/* File: ../../portable/menubar.py:260 */
+"P_layback" = "_Odtwarzanie";
+
+/* File: ../../portable/menubar.py:265 */
+"Play Unwatched ($numUnwatched)" = "Odtwórz nieobejrzane ($numUnwatched)";
+
+/* File: ../../portable/menubar.py:266 */
+"Pause All Downloads ($numDownloading)" = "Przerwij pobieranie wszystkich ($numDownloading) plików";
+
+/* File: ../../portable/menubar.py:267 */
+"Resume All Downloads ($numPaused)" = "Wznów pobieranie wszystkich ($numPaused) plików";
+
+/* File: ../../portable/menubar.py:269 */
+"Options..." = "Opcje...";
+
+/* File: ../../portable/menubar.py:271 */
+"Hide Window" = "Ukryj okno";
+
+/* File: ../../portable/menubar.py:272 */
+"Show Window" = "Pokaż okno";
+
+/* File: ../../portable/theme.py:137 */
+"Starter Channels" = "Kanały startowe";
+
+/* File: ../../portable/theme.py:154 */
+"Example Playlist" = "Przykładowa lista odtwarzania";
+
+/* File: ../../portable/httpclient.py:81 */
+/* Flag: python-format */
+"Error: %s" = "Błąd: %s";
+
+/* File: ../../portable/httpclient.py:96 */
+/* File: ../../portable/httpclient.py:102 */
+"Can't connect" = "Nie można się połączyć";
+
+/* File: ../../portable/httpclient.py:97 */
+/* Flag: python-format */
+"Connection Error: %s" = "Błąd połączenia: %s";
+
+/* File: ../../portable/httpclient.py:103 */
+"SSL connection error" = "Błąd połączenia SSL";
+
+/* File: ../../portable/httpclient.py:107 */
+"HTTP error" = "Błąd HTTP";
+
+/* File: ../../portable/httpclient.py:110 */
+/* Flag: python-format */
+"Bad Status Line: %s" = "Błędna linia statusu: %s";
+
+/* File: ../../portable/httpclient.py:113 */
+/* Flag: python-format */
+"Bad Header Line: %s" = "Błędna linia nagłówka: %s";
+
+/* File: ../../portable/httpclient.py:116 */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "Błędny rozmiar części: %s";
+
+/* File: ../../portable/httpclient.py:119 */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "Oczekiwano końca wiersza - otrzymano: %r";
+
+/* File: ../../portable/httpclient.py:122 */
+/* Flag: python-format */
+"%s closed connection" = "Połączenie zostało zamknięte przez %s";
+
+/* File: ../../portable/httpclient.py:128 */
+"Got 404 status code" = "Otrzymano kod błędu 404";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "Błędny kod statusu: %s";
+
+/* File: ../../portable/httpclient.py:134 */
+"Authorization failed" = "Autoryzacja nie powiodła się";
+
+/* File: ../../portable/httpclient.py:140 */
+"Pipeline request never started" = "Żądanie potoku nie rozpoczęło się";
+
+/* File: ../../portable/httpclient.py:144 */
+"Timeout" = "Przekroczony limit czasu";
+
+/* File: ../../portable/httpclient.py:145 */
+/* Flag: python-format */
+"Connection to %s timed out" = "Przekroczono limit czasu połączenia z %s";
+
+/* File: ../../portable/httpclient.py:149 */
+"Invalid URL" = "Nieprawidłowy adres URL";
+
+/* File: ../../portable/httpclient.py:150 */
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "\"%s\" nie jest poprawnym adresem URL";
+
+/* File: ../../portable/httpclient.py:156 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "Plik: \"%s\" nie istnieje";
+
+/* File: ../../portable/httpclient.py:160 */
+"Read error" = "Błąd odczytu";
+
+/* File: ../../portable/httpclient.py:161 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "Błąd podczas próby odczytu z \"%s\"";
+
+/* File: ../../portable/httpclient.py:354 */
+"Unknown Error code" = "Nieznany kod błędu";
+
+/* File: ../../portable/httpclient.py:386 */
+"Connection closed" = "Połączenie zamknięte";
+
+/* File: ../../portable/httpclient.py:811 */
+"Unknown" = "Brak informacji";
+
+/* File: ../../portable/httpclient.py:812 */
+"Internal Error: Not ready to send" = "Błąd wewnętrzny: niegotowy do wysyłania";
+
+/* File: ../../portable/extrastrings.py:33 */
+/* File: ../../portable/feed.py:2409 */
+/* File: ../../portable/feed.py:2499 */
+"Search" = "Szukaj";
+
+/* File: ../../portable/feed.py:384 */
+"never" = "nigdy";
+
+/* File: ../../portable/feed.py:386 */
+/* File: ../../portable/item.py:554 */
+/* Flag: python-format */
+"%d hours" = "%d godzin";
+
+/* File: ../../portable/feed.py:388 */
+/* Flag: python-format */
+"%d day" = "%d dzień";
+
+/* File: ../../portable/feed.py:390 */
+/* File: ../../portable/item.py:552 */
+/* Flag: python-format */
+"%d days" = "%d dni";
+
+/* File: ../../portable/feed.py:392 */
+/* Flag: python-format */
+"%d months" = "%d miesięcy";
+
+/* File: ../../portable/feed.py:826 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Podaj nową nazwę kanału %s";
+
+/* File: ../../portable/feed.py:923 */
+"Error loading feed" = "Błąd podczas wczytywania zasobu";
+
+/* File: ../../portable/feed.py:924 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Nie udało się wczytać zasobu z %s (%s)";
+
+/* File: ../../portable/feed.py:927 */
+"Would you like to keep the feed?" = "Zachować zasób?";
+
+/* File: ../../portable/feed.py:1040 */
+"Bad content-type" = "Zły typ zawartości";
+
+/* File: ../../portable/feed.py:1053 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "Kanał jest niekompatybilny z $shortAppName!";
+
+/* File: ../../portable/feed.py:1054 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Spróbujemy dodać pliki, ale może to zająć trochę czasu, a opisy mogą wyglądać dziwnie. Prosimy o skontaktowanie się z wydawcą $url i spytanie, czy zasób może być oferowany w formacie zgodnym z programem $shortAppName.\n\nCzy mimo wszystko chcesz wczytać ten kanał?";
+
+/* File: ../../portable/feed.py:2513 */
+"Local Files" = "Pliki lokalne";
+
+/* File: ../../portable/feed.py:2527 */
+"Playing File" = "Odtwarzany plik";
+
+/* File: ../../portable/storedatabase.py:859 */
+/* File: ../../portable/storedatabase.py:1258 */
+/* Flag: python-format */
+"%s database save succeeded" = "Bazę danych %s zapisano poprawnie";
+
+/* File: ../../portable/storedatabase.py:860 */
+/* File: ../../portable/storedatabase.py:1259 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Baza danych została poprawnie zapisana. Można teraz wyjść bez utraty danych.";
+
+/* File: ../../portable/storedatabase.py:867 */
+/* File: ../../portable/storedatabase.py:1267 */
+/* Flag: python-format */
+"%s database save failed" = "Błąd zapisu do bazy danych %s";
+
+/* File: ../../portable/storedatabase.py:868 */
+/* File: ../../portable/storedatabase.py:1268 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s nie udało się zapisać bazy danych - dysk jest pełny.\nSugerujemy zwolnienie miejsca na dysku poprzez usunięcie zbędnych plików lub usunięcie jakichś filmów ze swojej kolekcji.\nOstatnie zmiany mogą zostać utracone.";
+
+/* File: ../../portable/dialogs.py:89 */
+"Ignore" = "Pomiń";
+
+/* File: ../../portable/dialogs.py:90 */
+"Submit Crash Report" = "Wyślij raport o błędzie";
+
+/* File: ../../portable/dialogs.py:91 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
+"Migrate" = "Przenieś";
+
+/* File: ../../portable/dialogs.py:92 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
+"Don't Migrate" = "Nie przenoś";
+
+/* File: ../../portable/dialogs.py:94 */
+"Remove Entry" = "Usuń pozycję";
+
+/* File: ../../portable/dialogs.py:95 */
+"Delete File" = "Usuń plik";
+
+/* File: ../../portable/dialogs.py:96 */
+"Delete Files" = "Usuń pliki";
+
+/* File: ../../portable/dialogs.py:97 */
+"Keep Videos" = "Zachowaj wideo";
+
+/* File: ../../portable/dialogs.py:98 */
+"Delete Videos" = "Usuń wideo";
+
+/* File: ../../portable/dialogs.py:100 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
+"Create Channel" = "Utwórz kanał";
+
+/* File: ../../portable/dialogs.py:101 */
+"Add" = "Dodaj";
+
+/* File: ../../portable/dialogs.py:102 */
+"Add Into New Folder" = "Dodaj do nowego folderu";
+
+/* File: ../../portable/dialogs.py:103 */
+"Keep" = "Utrzymaj";
+
+/* File: ../../portable/dialogs.py:105 */
+"Not Now" = "Nie teraz";
+
+/* File: ../../portable/dialogs.py:106 */
+"Close to Tray" = "Zminimalizuj do paska zadań";
+
+/* File: ../../portable/dialogs.py:107 */
+"Launch Miro" = "Uruchom Miro";
+
+/* File: ../../portable/dialogs.py:108 */
+"Download Anyway" = "Pobierz mimo wszystko";
+
+/* File: ../../portable/dialogs.py:109 */
+"Install iHeartMiro" = "Zainstaluj iHeartMiro";
+
+/* File: ../../portable/dialogs.py:110 */
+"Don't Install" = "Nie instaluj";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
+"New Search Channel" = "Nowy kanał wyszukiwania";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
+"A search channel contains items that match a search term." = "Kanał wyszukiwania zawiera elementy pasujące do wyszukiwanego zwrotu.";
+
+/* File: ../../portable/controller.py:196 */
+/* File: ../../portable/controller.py:210 */
+/* File: ../../portable/controller.py:254 */
+/* File: ../../portable/controller.py:280 */
+/* File: ../../portable/controller.py:300 */
+/* Flag: python-format */
+"Remove %s" = "Usuń %s";
+
+/* File: ../../portable/controller.py:197 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "Czy na pewno chcesz usunąć przewodnik %s?";
+
+/* File: ../../portable/controller.py:211 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "Czy na pewno chcesz usunąć %s?";
+
+/* File: ../../portable/controller.py:214 */
+/* File: ../../portable/controller.py:259 */
+/* File: ../../portable/controller.py:285 */
+/* File: ../../portable/controller.py:304 */
+/* Flag: python-format */
+"Remove %s channels" = "Usuń %s kanałów";
+
+/* File: ../../portable/controller.py:216 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "Czy na pewno chcesz usunąć %s list odtwarzania?";
+
+/* File: ../../portable/controller.py:255 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Co chcesz zrobić z już pobranymi na tym kanale wideo?";
+
+/* File: ../../portable/controller.py:260 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Co chcesz zrobić z już pobranymi na tych kanałach wideo?";
+
+/* File: ../../portable/controller.py:281 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Czy na pewno chcesz chcesz usunąć %s? Wszystkie trwające operacje pobierania zostaną anulowane.";
+
+/* File: ../../portable/controller.py:286 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Czy na pewno chcesz usunąć %s kanałów? Wszystkie trwające operacje pobierania zostaną anulowane.";
+
+/* File: ../../portable/controller.py:301 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "Czy na pewno chcesz usunąć %s?";
+
+/* File: ../../portable/controller.py:305 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "Czy na pewno chcesz usunąć te %s kanały?";
+
+/* File: ../../portable/controller.py:318 */
+/* Flag: python-format */
+"Stop watching %s" = "Zatrzymaj oglądanie %s";
+
+/* File: ../../portable/controller.py:319 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "Czy na pewno chcesz przestać oglądać %s?";
+
+/* File: ../../portable/controller.py:322 */
+/* Flag: python-format */
+"Stop watching %s directories" = "Zatrzymaj oglądanie %s katalogów";
+
+/* File: ../../portable/controller.py:323 */
+/* Flag: python-format */
+"Are you sure you want to stop watching these %s directories?" = "Na pewno chcesz zatrzymać oglądanie tych %s katalogów?";
+
+/* File: ../../portable/controller.py:497 */
 "Error Saving Video" = "Błąd przy zapisywaniu wideo";
 
-/* File: ../../portable/app.py:2510 */
+/* File: ../../portable/controller.py:499 */
 /* Flag: python-format */
 "An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "Wystąpił błąd podczas próby zapisania %s. Proszę sprawdzić, czy plik nie został usunięty, i spróbować ponownie.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-"(Changes won't go into effect until you restart Miro)" = "(Zmiany nie zostaną wprowadzone dopóki nie nastąpi ponowne uruchomienie Miro)";
+/* File: ../../portable/singleclick.py:99 */
+"Download already exists" = "Pobierany plik już istnieje";
+
+/* File: ../../portable/singleclick.py:100 */
+"That URL is already an external download." = "Ten URL jest już pobierany zewnętrznie.";
+
+/* File: ../../portable/singleclick.py:106 */
+"Miro will begin downloading it now." = "Miro rozpocznie teraz pobieranie.";
+
+/* File: ../../portable/singleclick.py:108 */
+"It is downloading now." = "To jest właśnie pobierane.";
+
+/* File: ../../portable/singleclick.py:110 */
+"It has already been downloaded." = "To zostało już pobrane.";
+
+/* File: ../../portable/singleclick.py:137 */
+"Download Error" = "Błąd pobierania";
+
+/* File: ../../portable/singleclick.py:138 */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro nie jest w stanie pobrać pliku z tego adresu URL:\n\nURL: %s";
+
+/* File: ../../portable/singleclick.py:146 */
+"File Download" = "Pobieranie pliku";
+
+/* File: ../../portable/singleclick.py:147 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "Plik %s nie jest plikiem audio, wideo lub kanałem RSS.";
+
+/* File: ../../portable/singleclick.py:235 */
+"Subscribing to multiple channels" = "Subskrybuj wiele kanałów";
+
+/* File: ../../portable/singleclick.py:236 */
+/* Flag: python-format */
+"Create %d channels?" = "Utworzyć %d kanał/ów?";
+
+/* File: ../../portable/singleclick.py:249 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Dodaje %d kanał/ów do nowego folderu";
+
+/* File: ../../portable/singleclick.py:250 */
+/* File: ../../portable/folder.py:224 */
+"Enter a name for the new channel folder" = "Podaj nazwę nowego folderu kanałów";
+
+/* File: ../../portable/singleclick.py:253 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "Uwaga: %d kanał/ów jest już subskrybowanych. Kanały te pozostaną w tym samym miejscu.";
+
+/* File: ../../portable/singleclick.py:264 */
+"Subscription error" = "Błąd subskrypcji";
+
+/* File: ../../portable/singleclick.py:274 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Ten plik kanału $shortAppName ma nieprawidłowy format $url. Prosimy o powiadomienie wydawcy pliku.";
+
+/* File: ../../portable/singleclick.py:282 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Ten kanał $shortAppName ma nieprawidłowy typ zawartości $url. Prosimy o powiadomienie wydawcy pliku.";
+
+/* File: ../../portable/singleclick.py:286 */
+"Could not download the $shortAppName channel file: $url." = "Nie udało się pobrać pliku kanału $shortAppName $url.";
+
+/* File: ../../portable/singleclick.py:334 */
+"Invalid Torrent" = "Nieprawidłowy torrent";
+
+/* File: ../../portable/singleclick.py:335 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Plik torrenta %s jest uszkodzony i nie da się go otworzyć. [OK]";
+
+/* File: ../../portable/item.py:497 */
+/* Flag: python-format */
+"Removing %s" = "Usuwanie %s";
+
+/* File: ../../portable/item.py:500 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Chcesz usunąć ten folder razem ze wszystkimi wideo, czy tylko usunąć go z biblioteki?";
+
+/* File: ../../portable/item.py:506 */
+"Would you like to delete this file or just remove its entry from the Library?" = "Czy chcesz usunąć ten plik, czy tylko usunąć wpis z biblioteki?";
+
+/* File: ../../portable/item.py:526 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Ten element jest folderem. Jeśli go usuniesz, wszystko co znajduje się w środku zostanie również usunięte.";
+
+/* File: ../../portable/item.py:556 */
+/* Flag: python-format */
+"%d minutes" = "%d minut";
+
+/* File: ../../portable/item.py:566 */
+/* Flag: python-format */
+"Expires in %s" = "Zostanie usunięte za %s";
+
+/* File: ../../portable/item.py:578 */
+/* Flag: python-format */
+"Will retry in %s" = "Spróbuje ponownie za %s";
+
+/* File: ../../portable/item.py:580 */
+"Paused" = "Wstrzymano";
+
+/* File: ../../portable/item.py:982 */
+"TORRENT" = "Torrent";
+
+/* File: ../../portable/item.py:984 */
+"WEB PAGE" = "Strona internetowa";
+
+/* File: ../../portable/item.py:994 */
+"Total Down:" = "W sumie pobrane:";
+
+/* File: ../../portable/item.py:997 */
+"Error:" = "Błąd:";
+
+/* File: ../../portable/item.py:1006 */
+/* Flag: untranslated */
+"Seeders:" = "Seeders:" /* = "Źródła:" */;
+
+/* File: ../../portable/item.py:1008 */
+/* Flag: untranslated */
+"Leechers:" = "Leechers:";
+
+/* File: ../../portable/item.py:1010 */
+"Down Rate:" = "Szybkość pobierania:";
+
+/* File: ../../portable/item.py:1011 */
+"Down Total:" = "W sumie pobrano:";
+
+/* File: ../../portable/item.py:1013 */
+"Up Rate:" = "Szybkość wysyłania:";
+
+/* File: ../../portable/item.py:1014 */
+"Up Total:" = "W sumie wysłano:";
+
+/* File: ../../portable/item.py:1024 */
+"Web page:" = "Strona internetowa:";
+
+/* File: ../../portable/item.py:1024 */
+"permalink" = "odnośnik bezpośredni";
+
+/* File: ../../portable/item.py:1028 */
+"File link:" = "Odnośnik do pliku:";
+
+/* File: ../../portable/item.py:1028 */
+"direct link to file" = "bezpośredni odnośnik do pliku";
+
+/* File: ../../portable/item.py:1030 */
+"File type:" = "Typ pliku:";
+
+/* File: ../../portable/item.py:1037 */
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+"License:" = "Licencja:";
+
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"see permalink" = "see permalink" /* = "zobacz odnośnik bezpośredni" */;
+
+/* File: ../../portable/item.py:1049 */
+"REVEAL LOCAL FOLDER" = "Pokaż folder lokalny";
+
+/* File: ../../portable/item.py:1051 */
+"REVEAL LOCAL FILE" = "Pokaż plik lokalny";
+
+/* File: ../../portable/item.py:1053 */
+"Filename:" = "Nazwa pliku :";
+
+/* File: ../../portable/item.py:1060 */
+"Down Total" = "W sumie pobrane";
+
+/* File: ../../portable/item.py:1062 */
+"Up Total" = "W sumie wysłane";
+
+/* File: ../../portable/item.py:1080 */
+"Item Details" = "Szczegóły elementu";
+
+/* File: ../../portable/item.py:1087 */
+"Torrent Details" = "Szczegóły torrenta";
+
+/* File: ../../portable/item.py:1089 */
+"Torrent Details <i>stopped</i>" = "Szczegóły torrenta <i>zatrzymane</i>";
+
+/* File: ../../portable/item.py:1093 */
+"Download Details" = "Szczegóły pobierania";
+
+/* File: ../../portable/item.py:1310 */
+"downloading..." = "pobieranie...";
+
+/* File: ../../portable/item.py:1317 */
+/* File: ../../portable/item.py:1320 */
+/* Flag: python-format */
+"%s remaining" = "pozostało %s";
+
+/* File: ../../portable/item.py:1329 */
+"starting up..." = "zaczynam...";
+
+/* File: ../../portable/item.py:1878 */
+/* Flag: python-format */
+"Removing %s items" = "Usuwanie %s elementów";
+
+/* File: ../../portable/item.py:1880 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Co najmniej jeden z tych plików nie został pobrany z kanału. Chcesz je usunąć, czy tylko usunąć ich wpisy z biblioteki?";
+
+/* File: ../../portable/item.py:1888 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Co najmniej jeden z tych elementów jest folderem. Jeśli go usuniesz lub usuniesz folder, wszystkie elementy w tym folderze zostaną również usunięte.";
+
+/* File: ../../portable/startup.py:92 */
+"Unknown Error" = "Nieznany błąd";
+
+/* File: ../../portable/startup.py:93 */
+/* Flag: python-format */
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "Nieznany błąd powstrzymał Miro przed uruchomieniem. Proszę zgłosić błąd na %s";
+
+/* File: ../../portable/startup.py:155 */
+"Database too new" = "Zbyt nowa baza danych";
+
+/* File: ../../portable/startup.py:156 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Twoja bazę danych została zapisana przy użyciu nowszej wersji $shortAppName. Należy pobrać i użyć najnowszą wersję $shortAppName.";
+
+/* File: ../../portable/startup.py:238 */
+/* Flag: untranslated */
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." /* = "\nMiro nie może znaleźć głównego katalogu dla plików wideo. Może się tak dziać gdy jest on na napędzie zewnętrznym, który aktualnie jest odłączony." */;
+
+/* File: ../../portable/folder.py:144 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "Podaj nową nazwę folderu kanału %s";
+
+/* File: ../../portable/folder.py:215 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "Podaj nową nazwę folderu list odtwarzania %s";
+
+/* File: ../../portable/folder.py:223 */
+"Create Channel Folder" = "Utwórz folder kanałów";
+
+/* File: ../../portable/folder.py:237 */
+"Create Playlist Folder" = "Utwórz folder list odtwarzania";
+
+/* File: ../../portable/folder.py:238 */
+"Enter a name for the new playlist folder" = "Podaj nazwę nowego folderu list odtwarzania";
+
+/* File: ../../portable/license.py:68 */
+/* Flag: untranslated */
+"license page" = "license page" /* = "strona licencji" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 dniu\n3 dniach\n6 dniach\n10 dniach\nmiesiącu\nNie usuwaj";
@@ -1550,149 +1610,177 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-"<b>Searching for Videos</b>" = "<b>Wyszukiwanie wideo</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
-"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Czy chcesz, aby Miro wyszukał pliki wideo na tym komputerze?</b>";
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Zauważ:</b> Jeżeli zmienisz opcje renderowania obrazu wideo, MUSISZ uruchomić Miro ponownie, aby zaszły wprowadzone zmiany.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Czy chcesz, aby Miro uruchamiał się wraz ze startem komputera?</b>";
+"<b>Searching for Videos</b>" = "<b>Wyszukiwanie wideo</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Czy chcesz, aby Miro wyszukał pliki wideo na tym komputerze?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Czy chcesz, aby Miro uruchamiał się wraz ze startem komputera?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
 "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Zakończono!</b>\n\nInstalacja została zakończona -- można teraz poszukać kanałów i rozpocząć oglądanie.\n\n<d>Nie zwlekaj!</b> Oglądanie filmów w Miro jest inne niż oglądanie wideo na stronach internetowych. Wydawcy mogą zaoferować duże, o wysokiej rozdzielczości wideo. Tak więc nie wysiaduj oczekując na filmy. Rozpocznij pobieranie kilku na raz - obejrzysz je później.\n\n<b>Poostaw Miro włączone</b> Program regularnie sprawdza kanały w poszukiwaniu nowych wideo i pobiera je w tle. Pozostawiając go włączonym zawsze będziesz mieć najnowszą wersję danego wideo.\n\n<b>Nie martw się o miejsce na dysku</b> Tak jak TiVo, Miro obsługuje funkcję \"przeterminowania\", która pomaga usuwać starsze wersje plików wideo, aby zrobić miejsce dla nowych. Zawsze możesz zachować wideo na stałe, klikając przycisk \"Zapisz\". Możesz także zmienić ustawienia danego kanału, aby pliki w tym kanale były zapisywane automatycznie.\n\n<b>Powiększ</b> Przycisk po prawej stronie przycisku odtwarzania przełącza wideo w tryb pełnoekranowy.\n\n<b>Znajdź wideo</b> Spis kanałów Miro zawiera setki internetowych kanałów TV. Wszystkie są darmowe. Wystarczy kliknąć \"Dodaj\" , aby oglądać dany kanał.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:26 */
-"By default, videos _expire after" = "_Usuwaj pliki wideo po";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
-"C_hannel:" = "Ka_nał:";
-
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
-"C_hannels" = "_Kanały";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
+"Auto download default setting for new channels" = "Automatycznie pobierz ustawienia domyślne dla nowych kanałów";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-"C_reate Channel" = "Utwó_rz kanał";
+"Automatically for_ward ports." = "Automatycznie prze_kierowuj porty.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
-"Check Channels for _new content" = "Sprawdź, czy kanały zawierają n_owe treści";
+"By default, videos _expire after" = "_Usuwaj pliki wideo po";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
-"Disk _Space" = "Miej_sce na dysku";
+"C_hannel:" = "Ka_nał:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
+"C_hannels" = "_Kanały";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-"Don't start a download _if it leaves less than" = "Nie zaczynaj pobierania jeśli po zakończeniu na dysku pozostanie _mniej niż";
+"C_reate Channel" = "Utwó_rz kanał";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-"Download at _most" = "Pobi_eraj najwyżej";
+"Check Channels for _new content" = "Sprawdź, czy kanały zawierają n_owe treści";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
+"Disk _Space" = "Miej_sce na dysku";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
 "Every 30 minutes\nEvery hour\nManually" = "co 30 minut\nco godzinę\nręcznie";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
-"G_B free" = "G_B wolnego";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
+"G_B" = "G_B";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 "Go" = "Rozpocznij";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+"Ignore Un_encrypted Connections." = "Ignoruj nie_kodowane połączenia.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 "In This:" = "W:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
-"Miro can find all the videos on your computer to help you organize your collection." = "Aby pomóc w uporządkowaniu kolekcji plików wideo na tym komputerze, Miro może je wszystkie wyszukać.";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+"Limit torrent _downstream to:" = "Ogranicz _prędkość pobierania torrenta do:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-"Play _videos one after another" = "Odtwarzaj pliki _wideo jeden po drugim.";
+/* Flag: untranslated */
+"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: " /* = "Maksymalna liczba automatycznych pobierań na kanał w tym samym czasie: " */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-"Preferences" = "Preferencje";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
-"Restrict to my full _home folder" = "Ogranicz do mojego katalogu _domowego";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-"S_top after each video" = "Za_trzymaj po każdym wideo";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
-"S_tore downloaded videos in this folder:" = "Przechowuj pobrane wideo w _katalogu:";
+/* Flag: untranslated */
+"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: " /* = "Maksymalna liczba ręcznie zainicjowanych pobrań: " */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
-"Search _Engine:" = "Wyszukiwarka:";
+"Miro can find all the videos on your computer to help you organize your collection." = "Aby pomóc w uporządkowaniu kolekcji plików wideo na tym komputerze, Miro może je wszystkie wyszukać.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-"Search _custom folder:" = "_Własny katalog wyszukiwania:";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
-"Select Movies Directory" = "Wybierz katalog filmów";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
-"Select custom search directory" = "Wskaż własny katalog wyszukiwania";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
-"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "W następnych kilku oknach można ustawić odtwarzacz Miro tak, aby był jak najbardziej dostosowany do twoich wymagań. Oto pierwsze pytanie.";
+"New\nAll\nOff" = "Nowe\nWszystkie\nWyłączone";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-"To a_void slowdowns, limit upstream to" = "Aby _uniknąć spowolnienia ogranicz pasmo wysyłania do";
+"Play _videos one after another" = "Odtwarzaj pliki _wideo jeden po drugim.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
-"Volume:" = "Głośność:";
+"Preferences" = "Preferencje";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
-"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Zaleca się, aby Miro uruchamiał się podczas uruchamiania komputera. W ten sposób, zostanie dokończone przerwane pobieranie i nowe wideo z ustawionych kanałów będą natychmiast dostępne.";
+"Restrict to my full _home folder" = "Ogranicz do mojego katalogu _domowego";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+"S_top after each video" = "Za_trzymaj po każdym wideo";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Witaj w telewizji internetowej! Z Miro możesz zrobić wiele - automatycznie pobierać wideo z ulubionych kanałów, oglądać nowe wideo jedno po drugim, pobierać torrenty, polecać wideo znajomym i wiele wiele więcej.";
+"S_tore downloaded videos in this folder:" = "Przechowuj pobrane wideo w _katalogu:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Wybrano nowy katalog do przechowywania pobieranych filmów. Czy Miro powinien przenieść do niego istniejące pobrania? (Aktualnie pobierane filmy nie zostaną przeniesione dopóki pobieranie nie zostanie zakończone).";
+"Search _Engine:" = "Wyszukiwarka:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
-"_Add Folder" = "Dod_aj katalog";
+"Search _custom folder:" = "_Własny katalog wyszukiwania:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-"_Automatically run Miro when I log in" = "_Automatycznie uruchamiaj Miro, gdy się zaloguję";
+"Select Movies Directory" = "Wybierz katalog filmów";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
-"_Bit Torrent uses ports between" = "_Bit Torrent używa portów pomiędzy";
+"Select custom search directory" = "Wskaż własny katalog wyszukiwania";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
-"_Downloads" = "_Pobrania";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
+"Stop torrent uploads when this ratio is reached:" = "Zatrzymaj wysyłanie torrenta, kiedy ten współczynnik zostanie osiągnięty:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
-"_Folders" = "_Katalogi";
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "W następnych kilku oknach można ustawić odtwarzacz Miro tak, aby był jak najbardziej dostosowany do twoich wymagań. Oto pierwsze pytanie.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
-"_General" = "_Ogólne";
+"To avoid internet slowdowns, limit _upstream to:" = "Aby uniknąć spowolnienia sieci ustaw limit prędkości wysyłania na:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-"_KB/s when my computer is active" = "_KB/s, gdy komputer jest aktywny";
+"Use _ports:" = "Użyj p_ortów:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
-"_Playback" = "O_dtwarzanie";
+"Use this renderer to play videos:" = "Użyj tego programu renderującego do odtwarzania plików wideo:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
-"_Resume playback of videos from the point where they were stopped" = "_Wznów odtwarzanie wideo od momentu, gdzie zostało przerwane";
+"Volume:" = "Głośność:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
-"_Search" = "_Szukaj";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
-"_Search For:" = "_Szukaj:";
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Zaleca się, aby Miro uruchamiał się podczas uruchamiania komputera. W ten sposób, zostanie dokończone przerwane pobieranie i nowe wideo z ustawionych kanałów będą natychmiast dostępne.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
-"_URL" = "Adres _URL";
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Witaj w telewizji internetowej! Z Miro możesz zrobić wiele - automatycznie pobierać wideo z ulubionych kanałów, oglądać nowe wideo jedno po drugim, pobierać torrenty, polecać wideo znajomym i wiele wiele więcej.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
-"_Warn me when I attempt to quit with downloads in progress" = "_Ostrzegaj przed zamknięciem programu, gdy trwa pobieranie plików";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Wybrano nowy katalog do przechowywania pobieranych filmów. Czy Miro powinien przenieść do niego istniejące pobrania? (Aktualnie pobierane filmy nie zostaną przeniesione dopóki pobieranie nie zostanie zakończone).";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-"_Watch for new videos in these folders and include them in the Library" = "_Monitoruj, czy w tych katalogach pojawiły się nowe wideo i dodaj je do biblioteki";
+"_Add Folder" = "Dod_aj katalog";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
-"_and" = "_i";
+"_Automatically run Miro when I log in" = "_Automatycznie uruchamiaj Miro, gdy się zaloguję";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
-"videos at once" = "wideo na raz";
+"_Downloads" = "_Pobrania";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
+"_Folders" = "_Katalogi";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
+"_General" = "_Ogólne";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
+"_KB/s." = "_KB/s.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
+"_Keep at least this much free space on my drive:" = "Zachowaj przynajmniej tyle miejsca na moim dysku:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
+"_Playback" = "O_dtwarzanie";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
+"_Resume playback of videos from the point where they were stopped" = "_Wznów odtwarzanie wideo od momentu, gdzie zostało przerwane";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
+"_Search" = "_Szukaj";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
+"_Search For:" = "_Szukaj:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
+"_URL" = "Adres _URL";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
+"_Warn me when I attempt to quit with downloads in progress" = "_Ostrzegaj przed zamknięciem programu, gdy trwa pobieranie plików";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
+"_Watch for new videos in these folders and include them in the Library" = "_Monitoruj, czy w tych katalogach pojawiły się nowe wideo i dodaj je do biblioteki";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
+"xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
 "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName wersja $appVersion ($appRevision); prawa autorskie (c) 2005-2007 $publisher. $longAppName i logo $longAppName są znakami handlowymi $publisher.";
@@ -1750,80 +1838,91 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
 "Please enter the username and password given to you by this channel's publisher." = "Proszę wprowadzić nazwę użytkownika i hasło otrzymane od wydawcy tego kanału";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
 "(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(Uwaga! Aby wprowadzone zmiany zostały zastosowane należy uruchomić ponownie $longAppName.)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
 "Add Folder..." = "Dodaj folder...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
+"Automatically Forward Ports" = "Automatycznie przekierowuj porty:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
 "Automatically run $longAppName when I login." = "Automatycznie uruchamiaj $longAppName po zalogowaniu";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
-"BitTorrent" = "BitTorrent";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
 "By default, videos expire after" = "Usuwaj pliki wideo po";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
 "Check channels for new content" = "Sprawdzaj, czy kanały zawierają nowe treści";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
 "Close to tray so that downloads can continue." = "Minimalizuj do obszaru powiadamiania, dzięki czemu pobieranie będzie kontynuowane.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
 "Every 30 minutes" = "co 30 minut";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
 "Every hour" = "co godzinę";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
 "Folder" = "Folder";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
+"GB" = "GB";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
+"Ignore Unencrypted Connections" = "Ignoruj niekodowane połączenia";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
+"KB/s" = "KB/s";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
+"Limit downstream bandwith to:" = "Ogranicz prędkość pobierania do:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Manually" = "ręcznie";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+/* Flag: untranslated */
+"Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:" /* = "Maksymalna liczba kanałów automatycznego pobierania na raz:" */;
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
+/* Flag: untranslated */
+"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:" /* = "Maksymalna jednoczesna liczba ręcznych pobrań:" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
 "Options" = "Opcje";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
 "Play one video, then stop." = "Odtwarzaj tylko jedno wideo";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
 "Quit Miro completely." = "Zamknij Miro";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
 "Remember where I stopped watching a video and continue playing from that point." = "Zapamiętaj miejsce, w którym zostało przerwane oglądanie i przy ponownym uruchomieniu rozpocznij od tego miejsca";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
 "Show as a Channel" = "Pokaż jako kanał";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
 "Store downloaded videos in this folder:" = "Przechowuj pobrane wideo w folderze:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
-"To avoid slowdowns, limit upstream bandwith when my computer is active." = "Aby uniknąć spowolnień, ogranicz pasmo wysyłania, gdy komputer jest aktywny.";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
+"To avoid internet slowdowns, limit upstream bandwith to:" = "Aby uniknąć spowolnienia sieci, ogranicz prędkość wysyłania do:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
-"Upstream limit (KB/s)" = "Limit wysyłania (KB/s)";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
-"Use BitTorrent ports between" = "Użyj portów BitTorrenta pomiędzy";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "Uwaga! Aby zmiana ustawienia została zastosowana należy uruchomić ponownie $longAppName.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
 "Warn me when I attempt to quit with downloads in progress." = "Ostrzegaj przed zamknięciem programu, gdy trwa pobieranie plików";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
 "Watch for new videos in these folders and include them in my Library." = "Monitoruj, czy w tych folderach pojawiły się nowe wideo i dodaj je do biblioteki";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
 "When I click the red close button:" = "Po naciśnięciu czerwonego przycisku zamykania programu:";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
-"and" = "i";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
 "Channel:" = "Kanał:";

@@ -4,14 +4,14 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-18 10:28-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
-/* File: ../../portable/dialogs.py:77 */
+/* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Peruuta";
 
 "OK" = "OK";
 
-/* File: ../../portable/dialogs.py:76 */
+/* File: ../../portable/dialogs.py:84 */
 "Ok" = "OK";
 
 "$log" = "$log";
@@ -32,8 +32,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Bring All to Front" = "Tuo kaikki eteen";
 
-/* File: ../../platform/osx/frontend/Preferences.py:65 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:80 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
 "Channels" = "Kanavat";
 
 "Check for New Version" = "Tarkista uusin versio";
@@ -50,7 +50,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Cut" = "Leikkaa";
 
-/* File: ../../portable/dialogs.py:96 */
+/* File: ../../portable/dialogs.py:104 */
 "Delete" = "Poista";
 
 "Donate" = "Lahjoita";
@@ -79,7 +79,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Minimize" = "Pienennä";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
 "Miro" = "Miro";
 
 "Miro Help" = "Apua Miroon";
@@ -100,11 +100,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Paste" = "Liitä";
 
-/* File: ../../platform/osx/frontend/Application.py:249 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:244 */
 "Play Video" = "Toista video";
 
-/* File: ../../platform/osx/frontend/Preferences.py:69 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:84 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
 "Playback" = "Toisto";
 
 "Playlists" = "Soittoluettelo";
@@ -155,7 +155,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "FullScreen Controls" = "Kokoruudun säätimet";
 
-/* File: ../../portable/tabs.py:46 */
+/* File: ../../portable/tabs.py:57 */
 "Video Search" = "Videohaku";
 
 "VideoWindow" = "Videoikkuna";
@@ -168,24 +168,27 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Username:\n\n" = "Käyttäjänimi:\n\n";
 
-" limit upstream to" = " rajoita lähetysnopeus";
-
-"(You must restart Miro for this change to take effect)" = "(Sinun pitää uudelleenkäynnistää Miro, jotta asetukset tulevat voimaan)";
+/* Flag: untranslated */
+"(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)";
 
 "(You must restart Miro for this change to take effect)\n" = "(Sinun täytyy käynnistää Miro uudelleen, jotta tämä muutos tulee voimaan)\n";
 
 "(movies directory path goes here)" = "(videoiden kohdekansio tulee tähän)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-"1 day" = "1 päivä";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
+/* Flag: untranslated */
+"-" = "-";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
+"1 day" = "1 päivä";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
 "1 month" = "1 kuukausi";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
 "10 days" = "10 päivää";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
 "3 days" = "3 päivää";
 
 "3 hours" = "3 tuntia";
@@ -194,71 +197,107 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "5" = "5";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
 "6 days" = "6 päivää";
 
 "99999" = "99999";
 
 "Add..." = "Lisää..";
 
-"BitTorrent ports:" = "BitTorrent-portit:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
+/* Flag: untranslated */
+"All" = "All";
+
+/* Flag: untranslated */
+"Auto download default setting for new channels:" = "Auto download default setting for new channels:";
+
+/* Flag: untranslated */
+"Automatically forward ports" = "Automatically forward ports";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
+"BitTorrent" = "BitTorrent";
 
 "By default, videos expire after:" = "Oletuksena videoiden vanhenemisaika on:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
 "Change..." = "Muuta...";
 
 "Check channels for new content:" = "Tarkista kanavat uuden sisällön varalta:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-"Don't start a download if it leaves less than" = "Älä aloita latausta, jos sen jälkeen jää vähemmän vapaata tilaa, kuin:";
+/* Flag: untranslated */
+"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-"Download at most" = "Lataa enimmillään";
+/* Flag: untranslated */
+"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:";
 
 "Folder location" = "Hakemiston sijainti";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-"GB free." = "Gt.";
+/* Flag: untranslated */
+"GB\n" = "GB\n";
 
-"KB/s when my computer is active." = "Kt/s kun tietokoneeni on käytössä.";
+/* Flag: untranslated */
+"Ignore unencrypted connections" = "Ignore unencrypted connections";
 
-"Maximum:" = "Enintään:";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+/* Flag: untranslated */
+"KB/s." = "KB/s.";
 
-"Minimum:" = "Vähintään:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+/* Flag: untranslated */
+"Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+/* Flag: untranslated */
+"Limit downstream to" = "Limit downstream to";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "Never" = "Ei koskaan";
+
+/* File: ../../portable/tabs.py:56 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+"New" = "Uusi";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+/* Flag: untranslated */
+"Off" = "Off";
 
 "OtherViews" = "MuutNäkymät";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
 "Play videos one after another." = "Soita videot sarjassa.";
 
 "Remember video position." = "Muista videon toistokohta.";
 
-/* File: ../../portable/guide.py:107 */
-/* File: ../../portable/playlist.py:197 */
-/* File: ../../portable/feed.py:795 */
-/* File: ../../portable/menu.py:65 */
-/* File: ../../portable/menu.py:70 */
-/* File: ../../portable/folder.py:156 */
-/* File: ../../portable/folder.py:211 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
+/* File: ../../portable/frontends/html/contextmenu.py:99 */
+/* File: ../../portable/frontends/html/contextmenu.py:104 */
+/* File: ../../portable/frontends/html/contextmenu.py:178 */
+/* File: ../../portable/frontends/html/contextmenu.py:184 */
+/* File: ../../portable/frontends/html/contextmenu.py:190 */
+/* File: ../../portable/frontends/html/contextmenu.py:199 */
+/* File: ../../portable/frontends/html/contextmenu.py:233 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
 "Remove" = "Poista";
 
 "Run Miro at startup" = "Käynnistä Miro järjestelmän mukana";
 
-"Save downloaded videos in this folder:" = "Tallenna ladatut videot tähän kansioon:";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591 */
 "Show as Channel" = "Näytä kanavana";
 
 "Stop after each video." = "Pysäytä soitto jokaisen jälkeen.";
 
-"To avoid internet slowdowns:" = "Välttääksesi yhteyden hidastumista:";
+/* Flag: untranslated */
+"Stop uploads when this ratio is reached:" = "Stop uploads when this ratio is reached:";
 
-/* File: ../../portable/app.py:1206 */
+/* Flag: untranslated */
+"Store downloads in this folder:" = "Store downloads in this folder:";
+
+/* Flag: untranslated */
+"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
+/* Flag: untranslated */
+"Use these ports:" = "Use these ports:";
+
+/* File: ../../portable/frontends/html/main.py:319 */
 "Warn me when I attempt to quit with downloads in progress" = "Varoita minua jos yritän sulkea ohjelman vaikka latauksia on käynnissä";
 
 "Watch for new videos in these folders and include them in the Library:" = "Tarkkaile näitä kansioita ja lisää uudet videot Kirjastooni:";
@@ -269,16 +308,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "manually" = "käsin";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
-"videos at once." = "videota kerrallaan.";
-
 "$label$" = "$label$";
 
 "$title$" = "$title$";
 
 "Channel" = "Kanava";
 
-/* File: ../../portable/dialogs.py:91 */
+/* File: ../../portable/dialogs.py:99 */
 "Create" = "Luo";
 
 "In this:" = "tässä:";
@@ -291,8 +327,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "URL" = "Osoite";
 
-/* File: ../../platform/windows-xul/frontend_implementation/startup.py:42 */
-/* File: ../../platform/gtk-x11/frontend_implementation/startup.py:48 */
+/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/startup.py:56 */
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(jäsennetty %d tiedostoa - löydetty %d videota)";
 
@@ -300,10 +336,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Browse" = "Selaa";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:106 */
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:121 */
 "Next" = "Seuraava";
 
-/* File: ../../portable/dialogs.py:79 */
+/* File: ../../portable/dialogs.py:87 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "Ei";
 
@@ -322,1226 +358,1271 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Suosittelemme, että sallit Miron käynnistyvän tietokoneesi käynnistyksen yhteydessä. Näin kesken jääneet videoiden lataukset voidaan suorittaa loppuun ja kanavillasi olevat uudet videot ladataan valmiiksi sinulle.\n\n\nHaluatko Miron käynnistyvän, kun käynnistät tietokoneesi?";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
 "Welcome to Internet TV!" = "Tervetuloa Internet-TV:n pariin!";
 
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Tervetuloa Internet TV:n pariin. Miro Playeristä on moneksi: lataa lempikanavasi videot automaattisesti, katso uudet videot putkeen, lataa torrentteja, suosittele videoita ystäville, ja huimasti muuta.\n\n";
 
-/* File: ../../portable/dialogs.py:78 */
+/* File: ../../portable/dialogs.py:86 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
 "Yes" = "Kyllä";
 
 "%message%\n%message%" = "%message%\n%message%";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
 "Update Available" = "Päivitys saatavilla";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
 /* Flag: python-format */
 "A new version of %s is available for download." = "Uusi versio ohjelmasta %s on valmis ladattavaksi.";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
 "Error Bombing Item" = "Virhe suositeltaessa kohdetta Bomb-palveluun";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
 "Error Recommending Item" = "Virhe suositeltaessa kohdetta";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
 "Error Opening Website" = "Virhe avattaessa sivustoa";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
 /* Flag: python-format */
 "There was an error opening %s.  Please try again in a few seconds" = "Tapahtui virhe avattaessa kohdetta %s. Yritä uudelleen muutaman sekunnin kuluttua.";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:62 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
 /* Flag: python-format */
 "Error importing modules:\n%s" = "Moduulien tuonti epäonnistui:\n%s";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:66 */
-"Starting up" = "Käynnistyy";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:273 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
 "Loading window" = "Ladataan ikkunaa";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:274 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
 "onStartup called twice" = "onStartup kutsuttu kahdesti.";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:702 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
 "Spacebar" = "Välilyönti";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:851 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
 "Close to tray?" = "Suljetaanko järjestelmäpalkkiin?";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:852 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
 "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Kun klikkaat punaista sulkemisnappulaa, haluatko Miron sulkeutuvan järjestelmäpalkkiin vai sulkeutuvan kokonaan? Voit vaihtaa tämän toiminnon myöhemmin Asetuksista.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:44 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
 "Download Completed" = "Lataus valmis";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:45 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
 /* Flag: python-format */
 "Download of video '%s' is finished." = "Videon '%s' lataus on valmis.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:54 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
 "Download Failed" = "Lataus epäonnistui";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:55 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
 /* Flag: python-format */
 "Download of video '%s' has failed." = "Videon '%s' lataaminen epäonnistui.";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:278 */
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
 "Subscribe to Channel" = "Hanki kanava";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:279 */
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
 "Enter the URL of the channel you would like to subscribe to." = "Anna haluamasi kanavan osoite.";
 
-/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:248 */
-"Audio" = "Audio";
-
-/* File: ../../platform/osx/frontend/Preferences.py:64 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
 "General" = "Yleiset";
 
-/* File: ../../platform/osx/frontend/Preferences.py:66 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
 "Downloads" = "Lataukset";
 
-/* File: ../../platform/osx/frontend/Preferences.py:67 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
 "Folders" = "Kansiot";
 
-/* File: ../../platform/osx/frontend/Preferences.py:68 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
 "Disk Space" = "Levytila";
 
-/* File: ../../platform/osx/frontend/Preferences.py:196 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
 "Movies Directory" = "Elokuvakansio";
 
-/* File: ../../platform/osx/frontend/Preferences.py:197 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
 /* Flag: python-format */
 "Select a Directory to store %s downloads in." = "Valitse kansio, johon %s lataukset tallennetaan.";
 
-/* File: ../../platform/osx/frontend/Preferences.py:198 */
-/* File: ../../platform/osx/frontend/Preferences.py:262 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
 "Select" = "Valitse";
 
-/* File: ../../platform/osx/frontend/Preferences.py:207 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
 "Migrate existing movies?" = "Siirretäänkö olemassa olevat videot?";
 
-/* File: ../../platform/osx/frontend/Preferences.py:208 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
 /* Flag: python-format */
 "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Olet valinnut uuden kansion ladattaville elokuville. Haluatko, että %s siirtää vanhatkin latauksen sinne? (Kesken olevat lataukset siirretään vasta latausten valmistuttua).";
 
-/* File: ../../platform/osx/frontend/Preferences.py:260 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
 "View this Directory in the Library" = "Näytä tämä kansio Kirjastossa";
 
-/* File: ../../platform/osx/frontend/Preferences.py:261 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
 "Select a Directory to view in the Library." = "Valitse Kirjastossa näytettävä kansio.";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:80 */
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
 "Finish" = "Valmis";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:139 */
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
 "Search!" = "Etsi!";
 
-/* File: ../../platform/osx/frontend/Application.py:246 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
 "Pause Video" = "Keskeytä video";
 
-/* File: ../../platform/osx/frontend/Application.py:255 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
 "Unsupported version of Quicktime" = "Ei-tuettu versio Quicktimesta";
 
-/* File: ../../platform/osx/frontend/Application.py:256 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
 /* Flag: python-format */
 "To run %s you need the most recent version of Quicktime, which is a free update." = "Ajaaksesi %s :n tarvitset uusimman version Quicktimesta. Päivittäminen on ilmaista.";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:22 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
 "_Remove..." = "_Poista...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:23 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:34 */
 "_Remove Playlist..." = "Poist_a soittolista...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:24 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:35 */
 "_Remove Playlists..." = "Poist_a soittolistat...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:25 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:36 */
 "_Remove Playlist Folder..." = "Poist_a soittolistakansio...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:26 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:37 */
 "_Remove Playlist Folders..." = "Poist_a soittolistakansiot...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:27 */
-/* File: ../../portable/menubar.py:179 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:38 */
+/* File: ../../portable/menubar.py:193 */
 "_Remove Channel..." = "Po_ista kanava...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:28 */
-/* File: ../../portable/menubar.py:180 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:39 */
+/* File: ../../portable/menubar.py:194 */
 "_Remove Channels..." = "Po_ista kanavat...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:29 */
-/* File: ../../portable/menubar.py:182 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:40 */
+/* File: ../../portable/menubar.py:196 */
 "_Remove Channel Folder..." = "Poista _kanavakansion...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:30 */
-/* File: ../../portable/menubar.py:181 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:41 */
+/* File: ../../portable/menubar.py:195 */
 "_Remove Channel Folders..." = "Poista _kanavakansiot...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:31 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:42 */
 "_Remove Miro Guide..." = "_Poista Miro-opas...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:32 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:43 */
 "_Remove Miro Guides..." = "_Poista Miro-oppaat...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:33 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:44 */
 "_Remove Video..." = "_Poista video...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:34 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:45 */
 "_Remove Videos..." = "_Poista videot...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:35 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:46 */
 "Re_name..." = "_Nimeä uudelleen...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:36 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:47 */
 "Re_name Playlist..." = "_Nimeä soittolista uudelleen...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:37 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:48 */
 "Re_name Playlist Folder..." = "_Nimeä soittolistakansio uudelleen...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:38 */
-/* File: ../../portable/menubar.py:178 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:49 */
+/* File: ../../portable/menubar.py:192 */
 "Re_name Channel..." = "_Nimeä kanava uudelleen...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:39 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:50 */
 "Re_name Channel Folder..." = "_Nimeä kanavakansio uudelleen...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:40 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:51 */
 "Re_name Miro Guide..." = "Ni_meä Miro-oppaat uudelleen...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:41 */
-/* File: ../../portable/menubar.py:184 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:52 */
+/* File: ../../portable/menubar.py:198 */
 "_Update Channel..." = "_Päivitä kanava...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:42 */
-/* File: ../../portable/menubar.py:185 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:53 */
+/* File: ../../portable/menubar.py:199 */
 "_Update Channels..." = "Päivitä kanavat...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42 */
+/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
+"Audio" = "Audio";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
 "Settings" = "Asetukset";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56 */
 "Hide" = "Piilota";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58 */
 "Show" = "Näytä";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48 */
-/* File: ../../portable/dialogs.py:80 */
-/* File: ../../portable/menubar.py:257 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59 */
+/* File: ../../portable/menubar.py:273 */
+/* File: ../../portable/dialogs.py:88 */
 "Quit" = "Lopeta";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
 "New Channel _Guide..." = "Uusi kanavaopas...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
 "Folder Location" = "Hakemiston sijainti";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
 "Username:" = "Käyttäjätunnus:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
 "Password:" = "Salasana:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416 */
 "Unknown Runtime Error" = "Tuntematon ajonaikainen virhe";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417 */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "Tuntematon virhe tapahtui %s.";
 
-/* File: ../../portable/dl_daemon/download.py:359 */
+/* File: ../../portable/dl_daemon/download.py:458 */
 "Error" = "Virhe";
 
-/* File: ../../portable/dl_daemon/download.py:432 */
+/* File: ../../portable/dl_daemon/download.py:544 */
 /* Flag: python-format */
 "Could not write to %s" = "Ei voinut kirjoittaa kohteeseen %s";
 
-/* File: ../../portable/dl_daemon/download.py:452 */
+/* File: ../../portable/dl_daemon/download.py:564 */
+/* File: ../../portable/dl_daemon/download.py:769 */
 "Not enough disk space" = "Levytilaa ei ole riittävästi";
 
-/* File: ../../portable/dl_daemon/download.py:453 */
+/* File: ../../portable/dl_daemon/download.py:565 */
+/* File: ../../portable/dl_daemon/download.py:770 */
 /* Flag: python-format */
 "%s MB required to store this video" = "Videon tallentaminen vaatii %s Mt vapaata levytilaa";
 
-/* File: ../../portable/dl_daemon/download.py:672 */
+/* File: ../../portable/dl_daemon/download.py:781 */
 "BitTorrent failure" = "BitTorrent-virhe";
 
-/* File: ../../portable/dl_daemon/download.py:673 */
+/* File: ../../portable/dl_daemon/download.py:782 */
 "BitTorrent failed to startup" = "BitTorrentin käynnistys epäonnistui";
 
-/* File: ../../portable/dl_daemon/download.py:796 */
+/* File: ../../portable/dl_daemon/download.py:954 */
 "Corrupt Torrent" = "Torrent-tiedosto on vaurioitunut";
 
-/* File: ../../portable/dl_daemon/download.py:797 */
+/* File: ../../portable/dl_daemon/download.py:955 */
 /* Flag: python-format */
 "The torrent file at %s was not valid" = "Torrent-tiedosto osoitteessa %s ei ole kelvollinen";
 
-/* File: ../../portable/dl_daemon/download.py:822 */
+/* File: ../../portable/dl_daemon/download.py:980 */
 "Torrent file deleted" = "Torrent-tiedosto poistettiin";
 
-/* File: ../../portable/dl_daemon/download.py:823 */
-"The torrent file for this item was deleted " = "Tämän kohteen torrent-tiedosto on poistettu ";
+/* File: ../../portable/dl_daemon/download.py:981 */
+/* Flag: untranslated */
+"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
 
-/* File: ../../portable/dl_daemon/download.py:824 */
-"outside of Miro." = "Miron ulkopuolella.";
-
-/* File: ../../portable/tabs.py:44 */
-"Library" = "Kirjasto";
-
-/* File: ../../portable/tabs.py:45 */
-"New" = "Uusi";
-
-/* File: ../../portable/tabs.py:47 */
-"Downloading" = "Ladataan";
-
-/* File: ../../portable/guide.py:104 */
-/* File: ../../portable/feed.py:789 */
-"Copy URL to clipboard" = "Kopioi URL leikepöydälle";
-
-/* File: ../../portable/guide.py:154 */
-"Miro Guide" = "Miro-opas";
-
-/* File: ../../portable/extrastrings.py:22 */
-/* File: ../../portable/feed.py:2028 */
-/* File: ../../portable/feed.py:2120 */
-"Search" = "Etsi";
-
-/* File: ../../portable/downloader.py:215 */
-"activity" = "Aktiivisuus";
-
-/* File: ../../portable/downloader.py:251 */
-/* File: ../../portable/httpclient.py:114 */
-/* File: ../../portable/httpclient.py:142 */
-"File not found" = "Tiedostoa ei löytynyt";
-
-/* File: ../../portable/downloader.py:252 */
-"Flash URL Scraping Error" = "Flash URL Scraping -virhe";
-
-/* File: ../../portable/downloader.py:427 */
-"starting up" = "käynnistetään";
-
-/* File: ../../portable/playlist.py:196 */
-/* File: ../../portable/playlist.py:201 */
-"Rename Playlist" = "Nimeä soittolista uudelleen";
-
-/* File: ../../portable/playlist.py:202 */
-/* Flag: python-format */
-"Enter a new name for the playlist %s" = "Kirjoita soittolistan %s uusi nimi";
-
-/* File: ../../portable/playlist.py:224 */
-"Create Playlist" = "Luo soittolista";
-
-/* File: ../../portable/playlist.py:225 */
-"Enter a name for the new playlist" = "Kirjoita uuden soittolistan nimi";
-
-/* File: ../../portable/feed.py:383 */
-"never" = "ei koskaan";
-
-/* File: ../../portable/feed.py:385 */
-/* File: ../../portable/item.py:542 */
-/* Flag: python-format */
-"%d hours" = "%d tunnissa";
-
-/* File: ../../portable/feed.py:387 */
-/* Flag: python-format */
-"%d day" = "%d päivä";
-
-/* File: ../../portable/feed.py:389 */
-/* File: ../../portable/item.py:540 */
-/* Flag: python-format */
-"%d days" = "%d päivässä";
-
-/* File: ../../portable/feed.py:391 */
-/* Flag: python-format */
-"%d months" = "%d kuukausi";
-
-/* File: ../../portable/feed.py:787 */
-"Update Channel Now" = "Päivitä kanava nyt";
-
-/* File: ../../portable/feed.py:790 */
-/* File: ../../portable/feed.py:799 */
-"Rename Channel" = "Nimeä kanava uudelleen";
-
-/* File: ../../portable/feed.py:794 */
-"Revert Title to Default" = "Palauta otsikko oletukseksi";
-
-/* File: ../../portable/feed.py:800 */
-/* Flag: python-format */
-"Enter a new name for the channel %s" = "Kirjoita kanavan %s uusi nimi";
-
-/* File: ../../portable/feed.py:887 */
-"Error loading feed" = "Virhe ladattaessa syötettä";
-
-/* File: ../../portable/feed.py:888 */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Ei voitu ladata syötettä osoitteesta %s (%s).";
-
-/* File: ../../portable/feed.py:891 */
-"Would you like to keep the feed?" = "Haluaisitko säilyttää syötteen?";
-
-/* File: ../../portable/feed.py:1004 */
-"Bad content-type" = "Väärä sisältötyyppi";
-
-/* File: ../../portable/feed.py:1017 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-"Channel is not compatible with $shortAppName!" = "Kanava ei ole $shortAppName-yhteensopiva!";
-
-/* File: ../../portable/feed.py:1018 */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Yritämme kuitenkin parhaamme tiedostojen nappaamisessa. Videoiden listaaminen voi kestää tavallista kauemmin ja kuvaukset saattavat näyttää oudoilta. Ota yhteyttä osoitteen $url julkaisijaan ja kysy, jos he voivat tarjota syötteen, joka on yhteensopiva ohjelman $shortAppName kanssa.";
-
-/* File: ../../portable/feed.py:2134 */
-"Local Files" = "Paikalliset tiedostot";
-
-/* File: ../../portable/feed.py:2148 */
-"Playing File" = "Videon toisto";
-
-/* File: ../../portable/menu.py:69 */
+/* File: ../../portable/frontends/html/contextmenu.py:103 */
 "Update Channels Now" = "Päivitä kanavat nyt";
 
-/* File: ../../portable/menu.py:94 */
+/* File: ../../portable/frontends/html/contextmenu.py:128 */
 /* Flag: python-format */
 "%d Downloaded Items" = "%d ladattua tiedostoa";
 
-/* File: ../../portable/menu.py:96 */
-/* File: ../../portable/item.py:1475 */
+/* File: ../../portable/frontends/html/contextmenu.py:130 */
+/* File: ../../portable/frontends/html/contextmenu.py:211 */
 "Play" = "Toista";
 
-/* File: ../../portable/menu.py:97 */
-/* File: ../../portable/item.py:1478 */
+/* File: ../../portable/frontends/html/contextmenu.py:131 */
+/* File: ../../portable/frontends/html/contextmenu.py:214 */
 "Add to new playlist" = "Lisää uuteen soittolistaan";
 
-/* File: ../../portable/menu.py:99 */
-/* File: ../../portable/item.py:1471 */
+/* File: ../../portable/frontends/html/contextmenu.py:133 */
+/* File: ../../portable/frontends/html/contextmenu.py:207 */
 "Remove From Playlist" = "Poista soittolistalta";
 
-/* File: ../../portable/menu.py:101 */
-/* File: ../../portable/item.py:1473 */
+/* File: ../../portable/frontends/html/contextmenu.py:135 */
+/* File: ../../portable/frontends/html/contextmenu.py:209 */
 "Remove From the Library" = "Poista Kirjastosta";
 
-/* File: ../../portable/menu.py:107 */
-/* File: ../../portable/item.py:1482 */
+/* File: ../../portable/frontends/html/contextmenu.py:141 */
+/* File: ../../portable/frontends/html/contextmenu.py:218 */
 "Mark as Unwatched" = "Merkitse katsomattomaksi";
 
-/* File: ../../portable/menu.py:112 */
-/* File: ../../portable/item.py:1484 */
+/* File: ../../portable/frontends/html/contextmenu.py:146 */
+/* File: ../../portable/frontends/html/contextmenu.py:220 */
 "Mark as Watched" = "Merkitse tarkkailtavaksi";
 
-/* File: ../../portable/menu.py:117 */
+/* File: ../../portable/frontends/html/contextmenu.py:151 */
 /* Flag: python-format */
 "%d Available Items" = "%d tiedostoa saatavilla";
 
-/* File: ../../portable/menu.py:118 */
-/* File: ../../portable/dialogs.py:85 */
-/* File: ../../portable/item.py:1491 */
+/* File: ../../portable/frontends/html/contextmenu.py:152 */
+/* File: ../../portable/frontends/html/contextmenu.py:227 */
+/* File: ../../portable/dialogs.py:93 */
 "Download" = "Lataa";
 
-/* File: ../../portable/menu.py:123 */
+/* File: ../../portable/frontends/html/contextmenu.py:157 */
 /* Flag: python-format */
 "%d Downloading Items" = "%d latautuvaa tiedostoa";
 
-/* File: ../../portable/menu.py:125 */
-/* File: ../../portable/item.py:1489 */
+/* File: ../../portable/frontends/html/contextmenu.py:159 */
+/* File: ../../portable/frontends/html/contextmenu.py:225 */
 "Cancel Download" = "Peruuta lataaminen";
 
-/* File: ../../portable/menu.py:127 */
-/* File: ../../portable/item.py:1489 */
+/* File: ../../portable/frontends/html/contextmenu.py:161 */
+/* File: ../../portable/frontends/html/contextmenu.py:225 */
 "Pause Download" = "Keskeytä lataus";
 
-/* File: ../../portable/menu.py:130 */
-/* File: ../../portable/item.py:1487 */
+/* File: ../../portable/frontends/html/contextmenu.py:164 */
+/* File: ../../portable/frontends/html/contextmenu.py:223 */
 "Restart Upload" = "Aloita lataus uudestaan";
 
-/* File: ../../portable/opml.py:49 */
-"Export OPML File" = "Vie OPML-tiedosto";
+/* File: ../../portable/frontends/html/contextmenu.py:170 */
+"Update Channel Now" = "Päivitä kanava nyt";
 
-/* File: ../../portable/opml.py:123 */
-"Import OPML File" = "Tuo OPML-tiedosto";
+/* File: ../../portable/frontends/html/contextmenu.py:172 */
+/* File: ../../portable/frontends/html/contextmenu.py:196 */
+"Copy URL to clipboard" = "Kopioi URL leikepöydälle";
 
-/* File: ../../portable/opml.py:125 */
-"OPML Files" = "OPML-tiedostot";
+/* File: ../../portable/frontends/html/contextmenu.py:173 */
+/* File: ../../portable/feed.py:825 */
+"Rename Channel" = "Nimeä kanava uudelleen";
 
-/* File: ../../portable/opml.py:145 */
-"OPML Import failed" = "OPML-tuonti epäonnistui";
+/* File: ../../portable/frontends/html/contextmenu.py:177 */
+"Revert Title to Default" = "Palauta otsikko oletukseksi";
 
-/* File: ../../portable/opml.py:146 */
-"The selected OPML file appears to be invalid. Import was interrupted." = "Valittu OPML-tiedosto näyttäisi olevan virheellinen. Tuonti keskeytetty.";
+/* File: ../../portable/frontends/html/contextmenu.py:183 */
+/* File: ../../portable/folder.py:142 */
+"Rename Channel Folder" = "Nimeä kanavakansio uudelleen";
 
-/* File: ../../portable/opml.py:151 */
-"OPML Import summary" = "OPML-tuonnin yhteenveto";
+/* File: ../../portable/frontends/html/contextmenu.py:189 */
+/* File: ../../portable/folder.py:213 */
+"Rename Playlist Folder" = "Nimeä soittolistakansio uudelleen";
 
-/* File: ../../portable/autoupdate.py:121 */
+/* File: ../../portable/frontends/html/contextmenu.py:213 */
+"Play Just This Video" = "Toista vain tämä video";
+
+/* File: ../../portable/frontends/html/contextmenu.py:232 */
+/* File: ../../portable/playlist.py:218 */
+"Rename Playlist" = "Nimeä soittolista uudelleen";
+
+/* File: ../../portable/frontends/html/main.py:132 */
+/* File: ../../portable/startup.py:237 */
+"Video Directory Missing" = "Videokansio puuttuu";
+
+/* File: ../../portable/frontends/html/main.py:133 */
+/* Flag: untranslated */
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
+
+/* File: ../../portable/frontends/html/main.py:190 */
+/* File: ../../portable/theme.py:126 */
+"Custom Channels" = "Valinnaiset kanavat";
+
+/* File: ../../portable/frontends/html/main.py:190 */
+/* File: ../../portable/theme.py:126 */
+"You are running a version of $longAppName with a custom set of channels." = "Sinulla on $longAppName :n versio, jossa on mukautettu kanavavalikoima";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/httpclient.py:139 */
+"Internal Error" = "Sisäinen virhe";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro törmäsi sisäiseen virheeseen. Voit auttaa meitä virheenkorjauksessa lähettämällä virheraportin.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Include entire program database including all video and channel metadata with crash report" = "Sisällytä koko ohjelman tietokanta, mukaan lukien kaikkien videoiden ohjelmatiedot, virheraportissa";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Describe what you were doing that caused this error" = "Kuvaile, mitä olit tekemässä, kun virhe ilmeni";
+
+/* File: ../../portable/frontends/html/main.py:284 */
 /* Flag: python-format */
 "%s Version Alert" = "%s - Versio-ilmoitus";
 
-/* File: ../../portable/autoupdate.py:122 */
+/* File: ../../portable/frontends/html/main.py:285 */
 /* Flag: python-format */
 "A new version of %s is available. Would you like to download it now?" = "Ohjelmasta %s on saatavilla uusi versio. Haluatko ladata sen nyt?";
 
-/* File: ../../portable/autoupdate.py:128 */
+/* File: ../../portable/frontends/html/main.py:290 */
 /* Flag: python-format */
 "%s Version Check" = "%s - Version tarkastus";
 
-/* File: ../../portable/autoupdate.py:129 */
+/* File: ../../portable/frontends/html/main.py:291 */
 /* Flag: python-format */
 "%s is up to date." = "%s on ajan tasalla.";
 
-/* File: ../../portable/util.py:252 */
-/* File: ../../portable/httpclient.py:126 */
-"Internal Error" = "Sisäinen virhe";
-
-/* File: ../../portable/util.py:252 */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro törmäsi sisäiseen virheeseen. Voit auttaa meitä virheenkorjauksessa lähettämällä virheraportin.";
-
-/* File: ../../portable/util.py:252 */
-"Include entire program database including all video and channel metadata with crash report" = "Sisällytä koko ohjelman tietokanta, mukaan lukien kaikkien videoiden ohjelmatiedot, virheraportissa";
-
-/* File: ../../portable/util.py:252 */
-"Describe what you were doing that caused this error" = "Kuvaile, mitä olit tekemässä, kun virhe ilmeni";
-
-/* File: ../../portable/util.py:455 */
-/* Flag: python-format */
-"%1.1fGB" = "%1.1fGt";
-
-/* File: ../../portable/util.py:457 */
-/* Flag: python-format */
-"%dGB" = "%dGB";
-
-/* File: ../../portable/util.py:461 */
-/* Flag: python-format */
-"%1.1fMB" = "%1.1fMt";
-
-/* File: ../../portable/util.py:463 */
-/* Flag: python-format */
-"%dMB" = "%dMB";
-
-/* File: ../../portable/util.py:467 */
-/* Flag: python-format */
-"%1.1fKB" = "%1.1fkt";
-
-/* File: ../../portable/util.py:469 */
-/* Flag: python-format */
-"%dKB" = "%dKB";
-
-/* File: ../../portable/util.py:473 */
-/* Flag: python-format */
-"%1.1fB" = "%1.1fB";
-
-/* File: ../../portable/util.py:475 */
-/* Flag: python-format */
-"%dB" = "%dB";
-
-/* File: ../../portable/storedatabase.py:832 */
-/* File: ../../portable/storedatabase.py:1231 */
-/* Flag: python-format */
-"%s database save succeeded" = "%s tietokannan tallennus onnistui";
-
-/* File: ../../portable/storedatabase.py:833 */
-/* File: ../../portable/storedatabase.py:1232 */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "Tietokanta on tallennettu onnistuneesti. Ohjelman voi nyt sammuttaa turvallisesti.";
-
-/* File: ../../portable/storedatabase.py:840 */
-/* File: ../../portable/storedatabase.py:1240 */
-/* Flag: python-format */
-"%s database save failed" = "%s tietokannan tallennus epäonnistui";
-
-/* File: ../../portable/storedatabase.py:841 */
-/* File: ../../portable/storedatabase.py:1241 */
-/* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s ei onnistunut tallentamaan tietokantaansa: Levy täynnä.\n\nSuosittelemme joko poistamaan tietostoja täydeltä levyltä tai elokuvia kokoelmastasi.\n\nViimeaikaiset muutokset on saatettu menettää.";
-
-/* File: ../../portable/dialogs.py:81 */
-"Ignore" = "Älä huomioi";
-
-/* File: ../../portable/dialogs.py:82 */
-"Submit Crash Report" = "Lähetä virheraportti";
-
-/* File: ../../portable/dialogs.py:83 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-"Migrate" = "Siirrä tiedot";
-
-/* File: ../../portable/dialogs.py:84 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-"Don't Migrate" = "Älä siirrä tietoja";
-
-/* File: ../../portable/dialogs.py:86 */
-"Remove Entry" = "Poista kokoelmasta";
-
-/* File: ../../portable/dialogs.py:87 */
-"Delete File" = "Poista tiedosto";
-
-/* File: ../../portable/dialogs.py:88 */
-"Delete Files" = "Poista tiedostot";
-
-/* File: ../../portable/dialogs.py:89 */
-"Keep Videos" = "Säilytä videot";
-
-/* File: ../../portable/dialogs.py:90 */
-"Delete Videos" = "Poista videot";
-
-/* File: ../../portable/dialogs.py:92 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-"Create Channel" = "Luo kanava";
-
-/* File: ../../portable/dialogs.py:93 */
-"Add" = "Lisää";
-
-/* File: ../../portable/dialogs.py:94 */
-"Add Into New Folder" = "Lisää uuteen kansioon";
-
-/* File: ../../portable/dialogs.py:95 */
-"Keep" = "Säilytä";
-
-/* File: ../../portable/dialogs.py:97 */
-"Not Now" = "Ei nyt";
-
-/* File: ../../portable/dialogs.py:98 */
-"Close to Tray" = "Sulje järjestelmäpalkkiin";
-
-/* File: ../../portable/dialogs.py:99 */
-"Launch Miro" = "Käynnistä Miro";
-
-/* File: ../../portable/dialogs.py:100 */
-"Download Anyway" = "Lataa silti";
-
-/* File: ../../portable/dialogs.py:221 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-"New Search Channel" = "Uusi hakukanava";
-
-/* File: ../../portable/dialogs.py:221 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:25 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
-"A search channel contains items that match a search term." = "Hakukanavalla on kohteita, jotka vastaavat hakutermiä.";
-
-/* File: ../../portable/singleclick.py:87 */
-"Download already exists" = "Lataus on jo olemassa";
-
-/* File: ../../portable/singleclick.py:88 */
-"That URL is already an external download." = "Kohde on jo ulkoisena latauksena.";
-
-/* File: ../../portable/singleclick.py:94 */
-"Miro will begin downloading it now." = "Miro aloittaa nyt latauksen.";
-
-/* File: ../../portable/singleclick.py:96 */
-"It is downloading now." = "Lataus on jo käynnissä.";
-
-/* File: ../../portable/singleclick.py:98 */
-"It has already been downloaded." = "Kohde on jo ladattu.";
-
-/* File: ../../portable/singleclick.py:125 */
-"Download Error" = "Latausvirhe";
-
-/* File: ../../portable/singleclick.py:126 */
-/* Flag: python-format */
-"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro ei pysty lataamaan tiedostoa osoitteessa:\n\n%s";
-
-/* File: ../../portable/singleclick.py:134 */
-"File Download" = "Tiedoston lataus";
-
-/* File: ../../portable/singleclick.py:135 */
-/* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "Tiedosto osoitteessa %s ei näytä olevan ääni- tai videotiedosto, eikä RSS-syöte.";
-
-/* File: ../../portable/singleclick.py:225 */
-"Subscribing to multiple channels" = "Tilataan useita kanavia";
-
-/* File: ../../portable/singleclick.py:226 */
-/* Flag: python-format */
-"Create %d channels?" = "Luodaanko %d kanavaa?";
-
-/* File: ../../portable/singleclick.py:239 */
-/* Flag: python-format */
-"Adding %d channels to a new folder" = "Lisätään %d kanavaa uuteen kansioon";
-
-/* File: ../../portable/singleclick.py:240 */
-/* File: ../../portable/folder.py:226 */
-"Enter a name for the new channel folder" = "Kirjoita uuden kanavakansion nimi";
-
-/* File: ../../portable/singleclick.py:243 */
-/* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "HUOMIO: Olet jo tilannut %d näistä kanavista. Nämä kanavat pysyvät nykyisessä sijainnissaan.";
-
-/* File: ../../portable/singleclick.py:254 */
-"Subscription error" = "Tilausvirhe";
-
-/* File: ../../portable/singleclick.py:264 */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Tämä $shortAppName-kanavatiedosto on väärässä muodossa: $url. Ilmoita asiasta tiedoston julkaisijalle.";
-
-/* File: ../../portable/singleclick.py:272 */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Tämä $shortAppName-kanavatiedosto on väärää sisältötyyppiä: $url. Ilmoita asiasta tiedoston julkaisijalle.";
-
-/* File: ../../portable/singleclick.py:276 */
-"Could not download the $shortAppName channel file: $url." = "$shortAppName-kanavatiedoston lataus epäonnistui: $url.";
-
-/* File: ../../portable/singleclick.py:316 */
-"Invalid Torrent" = "Virheellinen torrent-tiedosto";
-
-/* File: ../../portable/singleclick.py:317 */
-/* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Torrent-tiedosto %s on ilmeisesti vahingoittunut, eikä sitä voida avata. [OK]";
-
-/* File: ../../portable/menubar.py:144 */
-"_Open" = "_Avaa";
-
-/* File: ../../portable/menubar.py:145 */
-"_Download Video" = "_Lataa video";
-
-/* File: ../../portable/menubar.py:147 */
-"Check _Version" = "Tarkista _versio";
-
-/* File: ../../portable/menubar.py:149 */
-"_Remove Video" = "_Poista video";
-
-/* File: ../../portable/menubar.py:150 */
-"_Remove Videos" = "_Poista videot";
-
-/* File: ../../portable/menubar.py:151 */
-"Re_name Video" = "Ni_meä video uudelleen";
-
-/* File: ../../portable/menubar.py:152 */
-"Save Video _As..." = "Tallenna _video nimellä...";
-
-/* File: ../../portable/menubar.py:153 */
-"Save Videos _As..." = "Tallenna video _nimellä...";
-
-/* File: ../../portable/menubar.py:154 */
-"Copy Video _URL" = "Kopioi videon _URL";
-
-/* File: ../../portable/menubar.py:156 */
-"_Options..." = "_Asetukset...";
-
-/* File: ../../portable/menubar.py:157 */
-"_Quit" = "_Lopeta";
-
-/* File: ../../portable/menubar.py:165 */
-"Cu_t" = "L_eikkaa";
-
-/* File: ../../portable/menubar.py:166 */
-"_Copy" = "_Kopioi";
-
-/* File: ../../portable/menubar.py:167 */
-"_Paste" = "_Liitä";
-
-/* File: ../../portable/menubar.py:168 */
-"Select _All" = "Valitse _kaikki";
-
-/* File: ../../portable/menubar.py:169 */
-"_Delete" = "_Poista";
-
-/* File: ../../portable/menubar.py:173 */
-"Add _Channel" = "Lisää _kanava";
-
-/* File: ../../portable/menubar.py:174 */
-"New Searc_h Channel..." = "Uusi etsintäkanava...";
-
-/* File: ../../portable/menubar.py:175 */
-"New _Folder..." = "Uusi _kansio...";
-
-/* File: ../../portable/menubar.py:176 */
-"Add Channel _Guide..." = "Lisää kanava_opas";
-
-/* File: ../../portable/menubar.py:186 */
-"Update _All Channels" = "Päivitä _kaikki kanavat";
-
-/* File: ../../portable/menubar.py:188 */
-"_Import Channels (OPML)..." = "_Tuo kanavia (OPML)...";
-
-/* File: ../../portable/menubar.py:189 */
-"E_xport Channels (OPML)..." = "V_ie kanavia (OPML)...";
-
-/* File: ../../portable/menubar.py:191 */
-"_Send this channel to a friend" = "_Lähetä kanava kaverille";
-
-/* File: ../../portable/menubar.py:192 */
-"Copy Channel _Link" = "Kopioi kanavan _osoite";
-
-/* File: ../../portable/menubar.py:195 */
-"New _Playlist" = "Uusi _soittolista";
-
-/* File: ../../portable/menubar.py:196 */
-"New Playlist Fol_der" = "Uusi soittolista_kansio";
-
-/* File: ../../portable/menubar.py:198 */
-"Re_name Playlist" = "Ni_meä soittolista uudelleen";
-
-/* File: ../../portable/menubar.py:199 */
-"_Remove Playlist" = "P_oista soittolista";
-
-/* File: ../../portable/menubar.py:200 */
-"_Remove Playlists" = "_Poista soittolistoja";
-
-/* File: ../../portable/menubar.py:201 */
-"_Remove Playlist Folders" = "_Poista soittolistakansiot";
-
-/* File: ../../portable/menubar.py:202 */
-"_Remove Playlist Folder" = "_Poista soittolistakansio";
-
-/* File: ../../portable/menubar.py:212 */
-"_Play" = "_Toista";
-
-/* File: ../../portable/menubar.py:213 */
-"_Stop" = "_Pysäytä";
-
-/* File: ../../portable/menubar.py:215 */
-"_Next Video" = "_Seuraava video";
-
-/* File: ../../portable/menubar.py:216 */
-"_Previous Video" = "_Edellinen video";
-
-/* File: ../../portable/menubar.py:218 */
-"Skip _Forward" = "Siirry _seuraavaan";
-
-/* File: ../../portable/menubar.py:219 */
-"Skip _Back" = "Siirry _edelliseen";
-
-/* File: ../../portable/menubar.py:221 */
-"Volume _Up" = "_Kovemmalle";
-
-/* File: ../../portable/menubar.py:222 */
-"Volume _Down" = "_Hiljemmalle";
-
-/* File: ../../portable/menubar.py:224 */
-"_Fullscreen" = "_Kokoruutu";
-
-/* File: ../../portable/menubar.py:228 */
-"_About" = "_Tietoja";
-
-/* File: ../../portable/menubar.py:229 */
-"_Donate" = "Lahjoita";
-
-/* File: ../../portable/menubar.py:230 */
-/* File: ../../portable/menubar.py:245 */
-"_Help" = "_Ohje";
-
-/* File: ../../portable/menubar.py:232 */
-"Report a _Bug" = "Ilmoita _bugi";
-
-/* File: ../../portable/menubar.py:236 */
-"_Video" = "_Video";
-
-/* File: ../../portable/menubar.py:238 */
-"_File" = "_Tiedosto";
-
-/* File: ../../portable/menubar.py:242 */
-"_Channels" = "_Kanavat";
-
-/* File: ../../portable/menubar.py:243 */
-"_Playlists" = "Soi_ttolistat";
-
-/* File: ../../portable/menubar.py:244 */
-"P_layback" = "Toisto";
-
-/* File: ../../portable/menubar.py:249 */
-"Play Unwatched ($numUnwatched)" = "Toista katsomattomat ($numUnwatched)";
-
-/* File: ../../portable/menubar.py:250 */
-"Pause All Downloads ($numDownloading)" = "Pysäytä kaikki lataukset ($numDownloading)";
-
-/* File: ../../portable/menubar.py:251 */
-"Resume All Downloads ($numPaused)" = "Jatka kaikkien lataamista ($numPaused)";
-
-/* File: ../../portable/menubar.py:253 */
-"Options..." = "Asetukset...";
-
-/* File: ../../portable/menubar.py:255 */
-"Hide Window" = "Piilota ikkuna";
-
-/* File: ../../portable/menubar.py:256 */
-"Show Window" = "Näytä ikkuna";
-
-/* File: ../../portable/item.py:485 */
-/* Flag: python-format */
-"Removing %s" = "Poistetaan %s";
-
-/* File: ../../portable/item.py:488 */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Halutko poistaa tämän kansion videoineen koneeltasi vai poistaa sen vain Kirjasto-näkymästä?";
-
-/* File: ../../portable/item.py:494 */
-"Would you like to delete this file or just remove its entry from the Library?" = "Haluatko poistaa tämän tiedoston koneeltasi vai poistaa sen vain Kirjasto-näkymästä?";
-
-/* File: ../../portable/item.py:514 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Tämä kohde on kansio. Kun poistat kansion, kyseisen kansion sisältö poistetaan samalla.";
-
-/* File: ../../portable/item.py:544 */
-/* Flag: python-format */
-"%d minutes" = "%d minuutissa";
-
-/* File: ../../portable/item.py:554 */
-/* Flag: python-format */
-"Expires in %s" = "Vanhentuu %s";
-
-/* File: ../../portable/item.py:566 */
-/* Flag: python-format */
-"Will retry in %s" = "Yritetään uudelleen %s kuluttua";
-
-/* File: ../../portable/item.py:568 */
-"Paused" = "Pysäytetty";
-
-/* File: ../../portable/item.py:954 */
-"TORRENT" = "TORRENT";
-
-/* File: ../../portable/item.py:956 */
-"WEB PAGE" = "WWW-SIVU";
-
-/* File: ../../portable/item.py:966 */
-"Total Down:" = "Lataukset yhteensä:";
-
-/* File: ../../portable/item.py:969 */
-"Error:" = "Virhe:";
-
-/* File: ../../portable/item.py:977 */
-"Down Rate:" = "Latausnopeus:";
-
-/* File: ../../portable/item.py:978 */
-"Down Total:" = "Lataukset yhteensä:";
-
-/* File: ../../portable/item.py:980 */
-"Up Rate:" = "Lähetysnopeus:";
-
-/* File: ../../portable/item.py:981 */
-"Up Total:" = "Lähetykset yhteensä:";
-
-/* File: ../../portable/item.py:989 */
-"Web page:" = "Nettisivu:";
-
-/* File: ../../portable/item.py:989 */
-"permalink" = "permalink";
-
-/* File: ../../portable/item.py:993 */
-"File link:" = "Tiedostolinkki:";
-
-/* File: ../../portable/item.py:993 */
-"direct link to file" = "suora linkki tiedostoon";
-
-/* File: ../../portable/item.py:995 */
-"File type:" = "Tiedostotyyppi:";
-
-/* File: ../../portable/item.py:1002 */
-"REVEAL LOCAL FOLDER" = "NÄYTÄ PAIKALLINEN KANSIO";
-
-/* File: ../../portable/item.py:1004 */
-"REVEAL LOCAL FILE" = "NÄYTÄ PAIKALLINEN TIEDOSTO";
-
-/* File: ../../portable/item.py:1006 */
-"Filename:" = "Tiedoston nimi:";
-
-/* File: ../../portable/item.py:1013 */
-"Down Total" = "Kokonaislatausnopeus";
-
-/* File: ../../portable/item.py:1015 */
-"Up Total" = "Kokonaislähetysnopeus";
-
-/* File: ../../portable/item.py:1033 */
-"Item Details" = "Kohteen tiedot";
-
-/* File: ../../portable/item.py:1040 */
-"Torrent Details" = "Torrentin tiedot";
-
-/* File: ../../portable/item.py:1042 */
-"Torrent Details <i>stopped</i>" = "Torrentin tiedot <i>pysäytetty</i>";
-
-/* File: ../../portable/item.py:1046 */
-"Download Details" = "Lataustiedot";
-
-/* File: ../../portable/item.py:1263 */
-"downloading..." = "ladataan...";
-
-/* File: ../../portable/item.py:1270 */
-/* File: ../../portable/item.py:1273 */
-/* Flag: python-format */
-"%s remaining" = "%s jäljellä";
-
-/* File: ../../portable/item.py:1282 */
-"starting up..." = "käynnistetään...";
-
-/* File: ../../portable/item.py:1477 */
-"Play Just This Video" = "Toista vain tämä video";
-
-/* File: ../../portable/item.py:1854 */
-/* Flag: python-format */
-"Removing %s items" = "Poistetaan %s kohdetta";
-
-/* File: ../../portable/item.py:1856 */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Yhtä tai useampaa videoista ei ladattu kanavalta. Haluatko poistaa ne koneeltasi vai poistaa ne vain Kirjasto-näkymästä?";
-
-/* File: ../../portable/item.py:1864 */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Yksi tai useampi näistä on hakemisto. Kun poistat hakemiston, poistuvat samalla myös kaikki kansion sisällä olevat tiedostot.";
-
-/* File: ../../portable/folder.py:132 */
-/* File: ../../portable/folder.py:155 */
-"Rename Channel Folder" = "Nimeä kanavakansio uudelleen";
-
-/* File: ../../portable/folder.py:134 */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Kirjoita kanavakansion %s uusi nimi";
-
-/* File: ../../portable/folder.py:210 */
-/* File: ../../portable/folder.py:215 */
-"Rename Playlist Folder" = "Nimeä soittolistakansio uudelleen";
-
-/* File: ../../portable/folder.py:217 */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Kirjoita soittolistakansion %s uusi nimi";
-
-/* File: ../../portable/folder.py:225 */
-"Create Channel Folder" = "Luo kanavakansio";
-
-/* File: ../../portable/folder.py:239 */
-"Create Playlist Folder" = "Luo soittolistakansio";
-
-/* File: ../../portable/folder.py:240 */
-"Enter a name for the new playlist folder" = "Kirjoita uuden soittolistakansion nimi";
-
-/* File: ../../portable/httpclient.py:68 */
-/* Flag: python-format */
-"Error: %s" = "Virhe: %s";
-
-/* File: ../../portable/httpclient.py:83 */
-/* File: ../../portable/httpclient.py:89 */
-"Can't connect" = "Yhteydenmuodostus epäonnistui";
-
-/* File: ../../portable/httpclient.py:84 */
-/* Flag: python-format */
-"Connection Error: %s" = "Yhteysvirhe: %s";
-
-/* File: ../../portable/httpclient.py:90 */
-"SSL connection error" = "SSL-yhteysvirhe";
-
-/* File: ../../portable/httpclient.py:94 */
-"HTTP error" = "HTTP-virhe";
-
-/* File: ../../portable/httpclient.py:97 */
-/* Flag: python-format */
-"Bad Status Line: %s" = "Epäkelpo Status-rivi: %s";
-
-/* File: ../../portable/httpclient.py:100 */
-/* Flag: python-format */
-"Bad Header Line: %s" = "Virheellinen otsakerivi: %s";
-
-/* File: ../../portable/httpclient.py:103 */
-/* Flag: python-format */
-"Bad Chunk size: %s" = "Virheellinen lohkokoko: %s";
-
-/* File: ../../portable/httpclient.py:106 */
-/* Flag: python-format */
-"Expected CRLF got: %r" = "Odotettiin CRLF, vastaanotettiin: %r";
-
-/* File: ../../portable/httpclient.py:109 */
-/* Flag: python-format */
-"%s closed connection" = "%s sulki yhteyden";
-
-/* File: ../../portable/httpclient.py:115 */
-"Got 404 status code" = "Vastaanotettiin 404-virheilmoitus";
-
-/* File: ../../portable/httpclient.py:117 */
-/* Flag: python-format */
-"Bad Status Code: %s" = "Virheellinen tilakoodi: %s";
-
-/* File: ../../portable/httpclient.py:121 */
-"Authorization failed" = "Varmennus epäonnistui";
-
-/* File: ../../portable/httpclient.py:127 */
-"Pipeline request never started" = "Pipeline-pyyntö ei ikinä toteutunut";
-
-/* File: ../../portable/httpclient.py:131 */
-"Timeout" = "Aikakatkaisu tapahtui";
-
-/* File: ../../portable/httpclient.py:132 */
-/* Flag: python-format */
-"Connection to %s timed out" = "Yhteys %s aikakatkaistiin";
-
-/* File: ../../portable/httpclient.py:136 */
-"Invalid URL" = "Virheellinen URL";
-
-/* File: ../../portable/httpclient.py:137 */
-/* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" on virheellinen osoite";
-
-/* File: ../../portable/httpclient.py:143 */
-/* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "Tiedostoa \"%s\" ei ole olemassa";
-
-/* File: ../../portable/httpclient.py:147 */
-"Read error" = "Lukuvirhe";
-
-/* File: ../../portable/httpclient.py:148 */
-/* Flag: python-format */
-"Error while reading from \"%s\"" = "Virhe luettaessa \"%s\"";
-
-/* File: ../../portable/httpclient.py:341 */
-"Unknown Error code" = "Tuntematon virhe";
-
-/* File: ../../portable/httpclient.py:373 */
-"Connection closed" = "Yhteys suljettu";
-
-/* File: ../../portable/httpclient.py:798 */
-"Unknown" = "Tuntematon";
-
-/* File: ../../portable/httpclient.py:799 */
-"Internal Error: Not ready to send" = "Sisäinen virhe: Ei valmis lähettämään";
-
-/* File: ../../portable/app.py:685 */
-"Database too new" = "Tietokanta on liian uusi";
-
-/* File: ../../portable/app.py:686 */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Tietokantasi on luotu uudemmalla versiolla ohjelmasta $shortAppName. Sinun täytyy ladata ohjelman $shortAppName uusin versio.";
-
-/* File: ../../portable/app.py:700 */
-"Video Directory Missing" = "Videokansio puuttuu";
-
-/* File: ../../portable/app.py:701 */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nMiro ei löydä oletukseksi asetettua videokansiotasi.  Se saattaa olla ulkoisella levyllä, joka ei ole nyt yhteydessä koneeseesi.\n\nJos jatkat, oletuskansioksi asetetaan kohde käytössä olevalta levyltä (tämä johtaa joidenkin ulkoisen levyn videoiden tietojen katoamiseen). Voit myös lopettaa, kiinnittää ulkoisen levyn ja käynnistää Miron uudelleen.";
-
-/* File: ../../portable/app.py:1038 */
-/* File: ../../portable/app.py:1052 */
-/* File: ../../portable/app.py:1096 */
-/* File: ../../portable/app.py:1122 */
-/* File: ../../portable/app.py:1142 */
-/* Flag: python-format */
-"Remove %s" = "Poista %s";
-
-/* File: ../../portable/app.py:1039 */
-/* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Haluatko varmasti poistaa oppaan %s?";
-
-/* File: ../../portable/app.py:1053 */
-/* Flag: python-format */
-"Are you sure you want to remove %s" = "Poistetaanko %s";
-
-/* File: ../../portable/app.py:1056 */
-/* File: ../../portable/app.py:1101 */
-/* File: ../../portable/app.py:1127 */
-/* File: ../../portable/app.py:1146 */
-/* Flag: python-format */
-"Remove %s channels" = "Poista %s kanavaa";
-
-/* File: ../../portable/app.py:1058 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Poistetaanko nämä %s soittolistaa";
-
-/* File: ../../portable/app.py:1097 */
-"What would you like to do with the videos in this channel that you've downloaded?" = "Mitä tehdään tältä kanavalta ladatuille videoille?";
-
-/* File: ../../portable/app.py:1102 */
-"What would you like to do with the videos in these channels that you've downloaded?" = "Mitä tehdään näiltä kanavilta ladatuille videoille?";
-
-/* File: ../../portable/app.py:1123 */
-/* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Poistetaanko %s? Kaikki kesken jääneet lataukset peruutetaan.";
-
-/* File: ../../portable/app.py:1128 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Poistetaanko nämä %s kanavaa? Kaikki kesken jääneet lataukset peruutetaan.";
-
-/* File: ../../portable/app.py:1143 */
-/* Flag: python-format */
-"Are you sure you want to remove %s?" = "Oletko varma, että haluat poistaa %s :n?";
-
-/* File: ../../portable/app.py:1147 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?" = "Oletko varma, että haluat poistaa nämä %s kanavaa?";
-
-/* File: ../../portable/app.py:1160 */
-/* Flag: python-format */
-"Stop watching %s" = "Lopeta %s :n katsominen";
-
-/* File: ../../portable/app.py:1161 */
-/* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "Oletko varma, että haluat lopettaa %s :n katsomisen?";
-
-/* File: ../../portable/app.py:1164 */
-/* Flag: python-format */
-"Stop watching %s directories" = "Lopeta %s -hakemiston katsominen";
-
-/* File: ../../portable/app.py:1165 */
-/* Flag: python-format */
-"Are you sure you want to stop watching these %s directories?" = "Oletko varma, että haluat lopettaa näiden %s :n hakemiston katsomisen?";
-
-/* File: ../../portable/app.py:1196 */
+/* File: ../../portable/frontends/html/main.py:309 */
 "Are you sure you want to quit?" = "Lopetaanko varmasti?";
 
-/* File: ../../portable/app.py:1198 */
+/* File: ../../portable/frontends/html/main.py:311 */
 "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro lähettää yhä kaatumisraporttiasi. Jos lopetat nyt, niin lähettäminen perutaan. Lopetetaanko silti?";
 
-/* File: ../../portable/app.py:1712 */
+/* File: ../../portable/frontends/html/main.py:340 */
+"Import OPML File" = "Tuo OPML-tiedosto";
+
+/* File: ../../portable/frontends/html/main.py:342 */
+"OPML Files" = "OPML-tiedostot";
+
+/* File: ../../portable/frontends/html/main.py:347 */
+"Export OPML File" = "Vie OPML-tiedosto";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:325 */
 "Invalid Value" = "Virheellinen arvo";
 
-/* File: ../../portable/app.py:1713 */
+/* File: ../../portable/frontends/html/templatedisplay.py:326 */
 /* Flag: python-format */
 "%s is invalid.  You must enter a non-negative number." = "%s on virheellinen arvo. Kirjoita ei-negatiivinen luku.";
 
-/* File: ../../portable/app.py:1839 */
+/* File: ../../portable/frontends/html/templatedisplay.py:452 */
 "Error Revealing File" = "Virhe tiedoston näyttämisessä";
 
-/* File: ../../portable/app.py:1840 */
+/* File: ../../portable/frontends/html/templatedisplay.py:453 */
 /* Flag: python-format */
 "The file \"%s\" was deleted from outside Miro." = "Tiedosto \"%s\" on poistettu Miron ulkopuolelta.";
 
-/* File: ../../portable/app.py:2011 */
-" - Invalid URL" = " - virheellinen osoite";
-
-/* File: ../../portable/app.py:2012 */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Annettu osoite ei ole oikean muotoinen.\nTarkista osoite ja yritä uudelleen.\n\n";
-
-/* File: ../../portable/app.py:2036 */
-"$shortAppName - Add Channel" = "$shortAppName - Lisää kanava";
-
-/* File: ../../portable/app.py:2036 */
-"Enter the URL of the channel to add" = "Kirjoita lisättävän kanavan osoite";
-
-/* File: ../../portable/app.py:2057 */
-"$shortAppName - Add Miro Guide" = "$shortAppName - Lisää Miro-opas";
-
-/* File: ../../portable/app.py:2057 */
-"Enter the URL of the Miro Guide to add" = "Anna lisättävän Miro-oppaan osoite";
-
-/* File: ../../portable/app.py:2063 */
-"$shortAppName - Download Video" = "$shortAppName - Lataa video";
-
-/* File: ../../portable/app.py:2063 */
-"Enter the URL of the video to download" = "Kirjoita ladattavan videon URL";
-
-/* File: ../../portable/app.py:2420 */
-"Starter Channels" = "Aloituskanavat";
-
-/* File: ../../portable/app.py:2437 */
-"Example Playlist" = "Esimerkki soittolista";
-
-/* File: ../../portable/app.py:2463 */
-"Custom Channels" = "Valinnaiset kanavat";
-
-/* File: ../../portable/app.py:2463 */
-"You are running a version of $longAppName with a custom set of channels." = "Sinulla on $longAppName :n versio, jossa on mukautettu kanavavalikoima";
-
-/* File: ../../portable/app.py:2478 */
+/* File: ../../portable/frontends/html/templatedisplay.py:560 */
 "Error Changing Movies Directory" = "Virhe elokuvahakemistoa vaihdettaessa";
 
-/* File: ../../portable/app.py:2479 */
+/* File: ../../portable/frontends/html/templatedisplay.py:561 */
 "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "Sinulla ei ole kirjoitusoikeuksia valitsemaasi hakemistoon. Miro jatkaa vanhan videohakemiston käyttämistä.";
 
-/* File: ../../portable/app.py:2508 */
+/* File: ../../portable/frontends/html/templatedisplay.py:664 */
+" - Invalid URL" = " - virheellinen osoite";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:665 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Annettu osoite ei ole oikean muotoinen.\nTarkista osoite ja yritä uudelleen.\n\n";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"$shortAppName - Add Channel" = "$shortAppName - Lisää kanava";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"Enter the URL of the channel to add" = "Kirjoita lisättävän kanavan osoite";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"$shortAppName - Add Miro Guide" = "$shortAppName - Lisää Miro-opas";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"Enter the URL of the Miro Guide to add" = "Anna lisättävän Miro-oppaan osoite";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"$shortAppName - Download Video" = "$shortAppName - Lataa video";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"Enter the URL of the video to download" = "Kirjoita ladattavan videon URL";
+
+/* File: ../../portable/tabs.py:55 */
+"Library" = "Kirjasto";
+
+/* File: ../../portable/tabs.py:58 */
+"Downloading" = "Ladataan";
+
+/* File: ../../portable/downloader.py:234 */
+"activity" = "Aktiivisuus";
+
+/* File: ../../portable/downloader.py:268 */
+/* File: ../../portable/httpclient.py:127 */
+/* File: ../../portable/httpclient.py:155 */
+"File not found" = "Tiedostoa ei löytynyt";
+
+/* File: ../../portable/downloader.py:269 */
+"Flash URL Scraping Error" = "Flash URL Scraping -virhe";
+
+/* File: ../../portable/downloader.py:445 */
+"starting up" = "käynnistetään";
+
+/* File: ../../portable/playlist.py:219 */
+/* Flag: python-format */
+"Enter a new name for the playlist %s" = "Kirjoita soittolistan %s uusi nimi";
+
+/* File: ../../portable/playlist.py:241 */
+"Create Playlist" = "Luo soittolista";
+
+/* File: ../../portable/playlist.py:242 */
+"Enter a name for the new playlist" = "Kirjoita uuden soittolistan nimi";
+
+/* File: ../../portable/opml.py:144 */
+"OPML Import failed" = "OPML-tuonti epäonnistui";
+
+/* File: ../../portable/opml.py:145 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "Valittu OPML-tiedosto näyttäisi olevan virheellinen. Tuonti keskeytetty.";
+
+/* File: ../../portable/opml.py:150 */
+"OPML Import summary" = "OPML-tuonnin yhteenveto";
+
+/* File: ../../portable/util.py:266 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGt";
+
+/* File: ../../portable/util.py:268 */
+/* Flag: python-format */
+"%dGB" = "%dGB";
+
+/* File: ../../portable/util.py:272 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMt";
+
+/* File: ../../portable/util.py:274 */
+/* Flag: python-format */
+"%dMB" = "%dMB";
+
+/* File: ../../portable/util.py:278 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fkt";
+
+/* File: ../../portable/util.py:280 */
+/* Flag: python-format */
+"%dKB" = "%dKB";
+
+/* File: ../../portable/util.py:284 */
+/* Flag: python-format */
+"%1.1fB" = "%1.1fB";
+
+/* File: ../../portable/util.py:286 */
+/* Flag: python-format */
+"%dB" = "%dB";
+
+/* File: ../../portable/iheartmiro.py:82 */
+/* Flag: untranslated */
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.";
+
+/* File: ../../portable/menubar.py:158 */
+"_Open" = "_Avaa";
+
+/* File: ../../portable/menubar.py:159 */
+"_Download Video" = "_Lataa video";
+
+/* File: ../../portable/menubar.py:161 */
+"Check _Version" = "Tarkista _versio";
+
+/* File: ../../portable/menubar.py:163 */
+"_Remove Video" = "_Poista video";
+
+/* File: ../../portable/menubar.py:164 */
+"_Remove Videos" = "_Poista videot";
+
+/* File: ../../portable/menubar.py:165 */
+"Re_name Video" = "Ni_meä video uudelleen";
+
+/* File: ../../portable/menubar.py:166 */
+"Save Video _As..." = "Tallenna _video nimellä...";
+
+/* File: ../../portable/menubar.py:167 */
+"Save Videos _As..." = "Tallenna video _nimellä...";
+
+/* File: ../../portable/menubar.py:168 */
+"Copy Video _URL" = "Kopioi videon _URL";
+
+/* File: ../../portable/menubar.py:170 */
+"_Options..." = "_Asetukset...";
+
+/* File: ../../portable/menubar.py:171 */
+"_Quit" = "_Lopeta";
+
+/* File: ../../portable/menubar.py:179 */
+"Cu_t" = "L_eikkaa";
+
+/* File: ../../portable/menubar.py:180 */
+"_Copy" = "_Kopioi";
+
+/* File: ../../portable/menubar.py:181 */
+"_Paste" = "_Liitä";
+
+/* File: ../../portable/menubar.py:182 */
+"Select _All" = "Valitse _kaikki";
+
+/* File: ../../portable/menubar.py:183 */
+"_Delete" = "_Poista";
+
+/* File: ../../portable/menubar.py:187 */
+"Add _Channel" = "Lisää _kanava";
+
+/* File: ../../portable/menubar.py:188 */
+"New Searc_h Channel..." = "Uusi etsintäkanava...";
+
+/* File: ../../portable/menubar.py:189 */
+"New _Folder..." = "Uusi _kansio...";
+
+/* File: ../../portable/menubar.py:190 */
+"Add Channel _Guide..." = "Lisää kanava_opas";
+
+/* File: ../../portable/menubar.py:200 */
+"Update _All Channels" = "Päivitä _kaikki kanavat";
+
+/* File: ../../portable/menubar.py:202 */
+"_Import Channels (OPML)..." = "_Tuo kanavia (OPML)...";
+
+/* File: ../../portable/menubar.py:203 */
+"E_xport Channels (OPML)..." = "V_ie kanavia (OPML)...";
+
+/* File: ../../portable/menubar.py:205 */
+"_Send this channel to a friend" = "_Lähetä kanava kaverille";
+
+/* File: ../../portable/menubar.py:206 */
+"Copy Channel _Link" = "Kopioi kanavan _osoite";
+
+/* File: ../../portable/menubar.py:209 */
+"New _Playlist" = "Uusi _soittolista";
+
+/* File: ../../portable/menubar.py:210 */
+"New Playlist Fol_der" = "Uusi soittolista_kansio";
+
+/* File: ../../portable/menubar.py:212 */
+"Re_name Playlist" = "Ni_meä soittolista uudelleen";
+
+/* File: ../../portable/menubar.py:213 */
+"_Remove Playlist" = "P_oista soittolista";
+
+/* File: ../../portable/menubar.py:214 */
+"_Remove Playlists" = "_Poista soittolistoja";
+
+/* File: ../../portable/menubar.py:215 */
+"_Remove Playlist Folders" = "_Poista soittolistakansiot";
+
+/* File: ../../portable/menubar.py:216 */
+"_Remove Playlist Folder" = "_Poista soittolistakansio";
+
+/* File: ../../portable/menubar.py:226 */
+/* File: ../../portable/menubar.py:227 */
+"_Play" = "_Toista";
+
+/* File: ../../portable/menubar.py:228 */
+/* Flag: untranslated */
+"_Pause" = "_Pause";
+
+/* File: ../../portable/menubar.py:229 */
+"_Stop" = "_Pysäytä";
+
+/* File: ../../portable/menubar.py:231 */
+"_Next Video" = "_Seuraava video";
+
+/* File: ../../portable/menubar.py:232 */
+"_Previous Video" = "_Edellinen video";
+
+/* File: ../../portable/menubar.py:234 */
+"Skip _Forward" = "Siirry _seuraavaan";
+
+/* File: ../../portable/menubar.py:235 */
+"Skip _Back" = "Siirry _edelliseen";
+
+/* File: ../../portable/menubar.py:237 */
+"Volume _Up" = "_Kovemmalle";
+
+/* File: ../../portable/menubar.py:238 */
+"Volume _Down" = "_Hiljemmalle";
+
+/* File: ../../portable/menubar.py:240 */
+"_Fullscreen" = "_Kokoruutu";
+
+/* File: ../../portable/menubar.py:244 */
+"_About" = "_Tietoja";
+
+/* File: ../../portable/menubar.py:245 */
+"_Donate" = "Lahjoita";
+
+/* File: ../../portable/menubar.py:246 */
+/* File: ../../portable/menubar.py:261 */
+"_Help" = "_Ohje";
+
+/* File: ../../portable/menubar.py:248 */
+"Report a _Bug" = "Ilmoita _bugi";
+
+/* File: ../../portable/menubar.py:252 */
+"_Video" = "_Video";
+
+/* File: ../../portable/menubar.py:254 */
+"_File" = "_Tiedosto";
+
+/* File: ../../portable/menubar.py:258 */
+"_Channels" = "_Kanavat";
+
+/* File: ../../portable/menubar.py:259 */
+"_Playlists" = "Soi_ttolistat";
+
+/* File: ../../portable/menubar.py:260 */
+"P_layback" = "Toisto";
+
+/* File: ../../portable/menubar.py:265 */
+"Play Unwatched ($numUnwatched)" = "Toista katsomattomat ($numUnwatched)";
+
+/* File: ../../portable/menubar.py:266 */
+"Pause All Downloads ($numDownloading)" = "Pysäytä kaikki lataukset ($numDownloading)";
+
+/* File: ../../portable/menubar.py:267 */
+"Resume All Downloads ($numPaused)" = "Jatka kaikkien lataamista ($numPaused)";
+
+/* File: ../../portable/menubar.py:269 */
+"Options..." = "Asetukset...";
+
+/* File: ../../portable/menubar.py:271 */
+"Hide Window" = "Piilota ikkuna";
+
+/* File: ../../portable/menubar.py:272 */
+"Show Window" = "Näytä ikkuna";
+
+/* File: ../../portable/theme.py:137 */
+"Starter Channels" = "Aloituskanavat";
+
+/* File: ../../portable/theme.py:154 */
+"Example Playlist" = "Esimerkki soittolista";
+
+/* File: ../../portable/httpclient.py:81 */
+/* Flag: python-format */
+"Error: %s" = "Virhe: %s";
+
+/* File: ../../portable/httpclient.py:96 */
+/* File: ../../portable/httpclient.py:102 */
+"Can't connect" = "Yhteydenmuodostus epäonnistui";
+
+/* File: ../../portable/httpclient.py:97 */
+/* Flag: python-format */
+"Connection Error: %s" = "Yhteysvirhe: %s";
+
+/* File: ../../portable/httpclient.py:103 */
+"SSL connection error" = "SSL-yhteysvirhe";
+
+/* File: ../../portable/httpclient.py:107 */
+"HTTP error" = "HTTP-virhe";
+
+/* File: ../../portable/httpclient.py:110 */
+/* Flag: python-format */
+"Bad Status Line: %s" = "Epäkelpo Status-rivi: %s";
+
+/* File: ../../portable/httpclient.py:113 */
+/* Flag: python-format */
+"Bad Header Line: %s" = "Virheellinen otsakerivi: %s";
+
+/* File: ../../portable/httpclient.py:116 */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "Virheellinen lohkokoko: %s";
+
+/* File: ../../portable/httpclient.py:119 */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "Odotettiin CRLF, vastaanotettiin: %r";
+
+/* File: ../../portable/httpclient.py:122 */
+/* Flag: python-format */
+"%s closed connection" = "%s sulki yhteyden";
+
+/* File: ../../portable/httpclient.py:128 */
+"Got 404 status code" = "Vastaanotettiin 404-virheilmoitus";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "Virheellinen tilakoodi: %s";
+
+/* File: ../../portable/httpclient.py:134 */
+"Authorization failed" = "Varmennus epäonnistui";
+
+/* File: ../../portable/httpclient.py:140 */
+"Pipeline request never started" = "Pipeline-pyyntö ei ikinä toteutunut";
+
+/* File: ../../portable/httpclient.py:144 */
+"Timeout" = "Aikakatkaisu tapahtui";
+
+/* File: ../../portable/httpclient.py:145 */
+/* Flag: python-format */
+"Connection to %s timed out" = "Yhteys %s aikakatkaistiin";
+
+/* File: ../../portable/httpclient.py:149 */
+"Invalid URL" = "Virheellinen URL";
+
+/* File: ../../portable/httpclient.py:150 */
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "\"%s\" on virheellinen osoite";
+
+/* File: ../../portable/httpclient.py:156 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "Tiedostoa \"%s\" ei ole olemassa";
+
+/* File: ../../portable/httpclient.py:160 */
+"Read error" = "Lukuvirhe";
+
+/* File: ../../portable/httpclient.py:161 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "Virhe luettaessa \"%s\"";
+
+/* File: ../../portable/httpclient.py:354 */
+"Unknown Error code" = "Tuntematon virhe";
+
+/* File: ../../portable/httpclient.py:386 */
+"Connection closed" = "Yhteys suljettu";
+
+/* File: ../../portable/httpclient.py:811 */
+"Unknown" = "Tuntematon";
+
+/* File: ../../portable/httpclient.py:812 */
+"Internal Error: Not ready to send" = "Sisäinen virhe: Ei valmis lähettämään";
+
+/* File: ../../portable/extrastrings.py:33 */
+/* File: ../../portable/feed.py:2409 */
+/* File: ../../portable/feed.py:2499 */
+"Search" = "Etsi";
+
+/* File: ../../portable/feed.py:384 */
+"never" = "ei koskaan";
+
+/* File: ../../portable/feed.py:386 */
+/* File: ../../portable/item.py:554 */
+/* Flag: python-format */
+"%d hours" = "%d tunnissa";
+
+/* File: ../../portable/feed.py:388 */
+/* Flag: python-format */
+"%d day" = "%d päivä";
+
+/* File: ../../portable/feed.py:390 */
+/* File: ../../portable/item.py:552 */
+/* Flag: python-format */
+"%d days" = "%d päivässä";
+
+/* File: ../../portable/feed.py:392 */
+/* Flag: python-format */
+"%d months" = "%d kuukausi";
+
+/* File: ../../portable/feed.py:826 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Kirjoita kanavan %s uusi nimi";
+
+/* File: ../../portable/feed.py:923 */
+"Error loading feed" = "Virhe ladattaessa syötettä";
+
+/* File: ../../portable/feed.py:924 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Ei voitu ladata syötettä osoitteesta %s (%s).";
+
+/* File: ../../portable/feed.py:927 */
+"Would you like to keep the feed?" = "Haluaisitko säilyttää syötteen?";
+
+/* File: ../../portable/feed.py:1040 */
+"Bad content-type" = "Väärä sisältötyyppi";
+
+/* File: ../../portable/feed.py:1053 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "Kanava ei ole $shortAppName-yhteensopiva!";
+
+/* File: ../../portable/feed.py:1054 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Yritämme kuitenkin parhaamme tiedostojen nappaamisessa. Videoiden listaaminen voi kestää tavallista kauemmin ja kuvaukset saattavat näyttää oudoilta. Ota yhteyttä osoitteen $url julkaisijaan ja kysy, jos he voivat tarjota syötteen, joka on yhteensopiva ohjelman $shortAppName kanssa.";
+
+/* File: ../../portable/feed.py:2513 */
+"Local Files" = "Paikalliset tiedostot";
+
+/* File: ../../portable/feed.py:2527 */
+"Playing File" = "Videon toisto";
+
+/* File: ../../portable/storedatabase.py:859 */
+/* File: ../../portable/storedatabase.py:1258 */
+/* Flag: python-format */
+"%s database save succeeded" = "%s tietokannan tallennus onnistui";
+
+/* File: ../../portable/storedatabase.py:860 */
+/* File: ../../portable/storedatabase.py:1259 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Tietokanta on tallennettu onnistuneesti. Ohjelman voi nyt sammuttaa turvallisesti.";
+
+/* File: ../../portable/storedatabase.py:867 */
+/* File: ../../portable/storedatabase.py:1267 */
+/* Flag: python-format */
+"%s database save failed" = "%s tietokannan tallennus epäonnistui";
+
+/* File: ../../portable/storedatabase.py:868 */
+/* File: ../../portable/storedatabase.py:1268 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s ei onnistunut tallentamaan tietokantaansa: Levy täynnä.\n\nSuosittelemme joko poistamaan tietostoja täydeltä levyltä tai elokuvia kokoelmastasi.\n\nViimeaikaiset muutokset on saatettu menettää.";
+
+/* File: ../../portable/dialogs.py:89 */
+"Ignore" = "Älä huomioi";
+
+/* File: ../../portable/dialogs.py:90 */
+"Submit Crash Report" = "Lähetä virheraportti";
+
+/* File: ../../portable/dialogs.py:91 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
+"Migrate" = "Siirrä tiedot";
+
+/* File: ../../portable/dialogs.py:92 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
+"Don't Migrate" = "Älä siirrä tietoja";
+
+/* File: ../../portable/dialogs.py:94 */
+"Remove Entry" = "Poista kokoelmasta";
+
+/* File: ../../portable/dialogs.py:95 */
+"Delete File" = "Poista tiedosto";
+
+/* File: ../../portable/dialogs.py:96 */
+"Delete Files" = "Poista tiedostot";
+
+/* File: ../../portable/dialogs.py:97 */
+"Keep Videos" = "Säilytä videot";
+
+/* File: ../../portable/dialogs.py:98 */
+"Delete Videos" = "Poista videot";
+
+/* File: ../../portable/dialogs.py:100 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
+"Create Channel" = "Luo kanava";
+
+/* File: ../../portable/dialogs.py:101 */
+"Add" = "Lisää";
+
+/* File: ../../portable/dialogs.py:102 */
+"Add Into New Folder" = "Lisää uuteen kansioon";
+
+/* File: ../../portable/dialogs.py:103 */
+"Keep" = "Säilytä";
+
+/* File: ../../portable/dialogs.py:105 */
+"Not Now" = "Ei nyt";
+
+/* File: ../../portable/dialogs.py:106 */
+"Close to Tray" = "Sulje järjestelmäpalkkiin";
+
+/* File: ../../portable/dialogs.py:107 */
+"Launch Miro" = "Käynnistä Miro";
+
+/* File: ../../portable/dialogs.py:108 */
+"Download Anyway" = "Lataa silti";
+
+/* File: ../../portable/dialogs.py:109 */
+/* Flag: untranslated */
+"Install iHeartMiro" = "Install iHeartMiro";
+
+/* File: ../../portable/dialogs.py:110 */
+/* Flag: untranslated */
+"Don't Install" = "Don't Install";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
+"New Search Channel" = "Uusi hakukanava";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
+"A search channel contains items that match a search term." = "Hakukanavalla on kohteita, jotka vastaavat hakutermiä.";
+
+/* File: ../../portable/controller.py:196 */
+/* File: ../../portable/controller.py:210 */
+/* File: ../../portable/controller.py:254 */
+/* File: ../../portable/controller.py:280 */
+/* File: ../../portable/controller.py:300 */
+/* Flag: python-format */
+"Remove %s" = "Poista %s";
+
+/* File: ../../portable/controller.py:197 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "Haluatko varmasti poistaa oppaan %s?";
+
+/* File: ../../portable/controller.py:211 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "Poistetaanko %s";
+
+/* File: ../../portable/controller.py:214 */
+/* File: ../../portable/controller.py:259 */
+/* File: ../../portable/controller.py:285 */
+/* File: ../../portable/controller.py:304 */
+/* Flag: python-format */
+"Remove %s channels" = "Poista %s kanavaa";
+
+/* File: ../../portable/controller.py:216 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "Poistetaanko nämä %s soittolistaa";
+
+/* File: ../../portable/controller.py:255 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Mitä tehdään tältä kanavalta ladatuille videoille?";
+
+/* File: ../../portable/controller.py:260 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Mitä tehdään näiltä kanavilta ladatuille videoille?";
+
+/* File: ../../portable/controller.py:281 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Poistetaanko %s? Kaikki kesken jääneet lataukset peruutetaan.";
+
+/* File: ../../portable/controller.py:286 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Poistetaanko nämä %s kanavaa? Kaikki kesken jääneet lataukset peruutetaan.";
+
+/* File: ../../portable/controller.py:301 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "Oletko varma, että haluat poistaa %s :n?";
+
+/* File: ../../portable/controller.py:305 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "Oletko varma, että haluat poistaa nämä %s kanavaa?";
+
+/* File: ../../portable/controller.py:318 */
+/* Flag: python-format */
+"Stop watching %s" = "Lopeta %s :n katsominen";
+
+/* File: ../../portable/controller.py:319 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "Oletko varma, että haluat lopettaa %s :n katsomisen?";
+
+/* File: ../../portable/controller.py:322 */
+/* Flag: python-format */
+"Stop watching %s directories" = "Lopeta %s -hakemiston katsominen";
+
+/* File: ../../portable/controller.py:323 */
+/* Flag: python-format */
+"Are you sure you want to stop watching these %s directories?" = "Oletko varma, että haluat lopettaa näiden %s :n hakemiston katsomisen?";
+
+/* File: ../../portable/controller.py:497 */
 "Error Saving Video" = "Virhe videota tallennettaessa";
 
-/* File: ../../portable/app.py:2510 */
+/* File: ../../portable/controller.py:499 */
 /* Flag: python-format */
 "An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "On tapahtunut virhe tallennettaessa %s. Tarkista, ettei tiedostoa ole poistettu ja yritä uudelleen.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-"(Changes won't go into effect until you restart Miro)" = "(Muutokset eivät tule voimaan, ennen kuin käynnistät Miron uudelleen.)";
+/* File: ../../portable/singleclick.py:99 */
+"Download already exists" = "Lataus on jo olemassa";
+
+/* File: ../../portable/singleclick.py:100 */
+"That URL is already an external download." = "Kohde on jo ulkoisena latauksena.";
+
+/* File: ../../portable/singleclick.py:106 */
+"Miro will begin downloading it now." = "Miro aloittaa nyt latauksen.";
+
+/* File: ../../portable/singleclick.py:108 */
+"It is downloading now." = "Lataus on jo käynnissä.";
+
+/* File: ../../portable/singleclick.py:110 */
+"It has already been downloaded." = "Kohde on jo ladattu.";
+
+/* File: ../../portable/singleclick.py:137 */
+"Download Error" = "Latausvirhe";
+
+/* File: ../../portable/singleclick.py:138 */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro ei pysty lataamaan tiedostoa osoitteessa:\n\n%s";
+
+/* File: ../../portable/singleclick.py:146 */
+"File Download" = "Tiedoston lataus";
+
+/* File: ../../portable/singleclick.py:147 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "Tiedosto osoitteessa %s ei näytä olevan ääni- tai videotiedosto, eikä RSS-syöte.";
+
+/* File: ../../portable/singleclick.py:235 */
+"Subscribing to multiple channels" = "Tilataan useita kanavia";
+
+/* File: ../../portable/singleclick.py:236 */
+/* Flag: python-format */
+"Create %d channels?" = "Luodaanko %d kanavaa?";
+
+/* File: ../../portable/singleclick.py:249 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Lisätään %d kanavaa uuteen kansioon";
+
+/* File: ../../portable/singleclick.py:250 */
+/* File: ../../portable/folder.py:224 */
+"Enter a name for the new channel folder" = "Kirjoita uuden kanavakansion nimi";
+
+/* File: ../../portable/singleclick.py:253 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "HUOMIO: Olet jo tilannut %d näistä kanavista. Nämä kanavat pysyvät nykyisessä sijainnissaan.";
+
+/* File: ../../portable/singleclick.py:264 */
+"Subscription error" = "Tilausvirhe";
+
+/* File: ../../portable/singleclick.py:274 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Tämä $shortAppName-kanavatiedosto on väärässä muodossa: $url. Ilmoita asiasta tiedoston julkaisijalle.";
+
+/* File: ../../portable/singleclick.py:282 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Tämä $shortAppName-kanavatiedosto on väärää sisältötyyppiä: $url. Ilmoita asiasta tiedoston julkaisijalle.";
+
+/* File: ../../portable/singleclick.py:286 */
+"Could not download the $shortAppName channel file: $url." = "$shortAppName-kanavatiedoston lataus epäonnistui: $url.";
+
+/* File: ../../portable/singleclick.py:334 */
+"Invalid Torrent" = "Virheellinen torrent-tiedosto";
+
+/* File: ../../portable/singleclick.py:335 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Torrent-tiedosto %s on ilmeisesti vahingoittunut, eikä sitä voida avata. [OK]";
+
+/* File: ../../portable/item.py:497 */
+/* Flag: python-format */
+"Removing %s" = "Poistetaan %s";
+
+/* File: ../../portable/item.py:500 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Halutko poistaa tämän kansion videoineen koneeltasi vai poistaa sen vain Kirjasto-näkymästä?";
+
+/* File: ../../portable/item.py:506 */
+"Would you like to delete this file or just remove its entry from the Library?" = "Haluatko poistaa tämän tiedoston koneeltasi vai poistaa sen vain Kirjasto-näkymästä?";
+
+/* File: ../../portable/item.py:526 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Tämä kohde on kansio. Kun poistat kansion, kyseisen kansion sisältö poistetaan samalla.";
+
+/* File: ../../portable/item.py:556 */
+/* Flag: python-format */
+"%d minutes" = "%d minuutissa";
+
+/* File: ../../portable/item.py:566 */
+/* Flag: python-format */
+"Expires in %s" = "Vanhentuu %s";
+
+/* File: ../../portable/item.py:578 */
+/* Flag: python-format */
+"Will retry in %s" = "Yritetään uudelleen %s kuluttua";
+
+/* File: ../../portable/item.py:580 */
+"Paused" = "Pysäytetty";
+
+/* File: ../../portable/item.py:982 */
+"TORRENT" = "TORRENT";
+
+/* File: ../../portable/item.py:984 */
+"WEB PAGE" = "WWW-SIVU";
+
+/* File: ../../portable/item.py:994 */
+"Total Down:" = "Lataukset yhteensä:";
+
+/* File: ../../portable/item.py:997 */
+"Error:" = "Virhe:";
+
+/* File: ../../portable/item.py:1006 */
+/* Flag: untranslated */
+"Seeders:" = "Seeders:";
+
+/* File: ../../portable/item.py:1008 */
+/* Flag: untranslated */
+"Leechers:" = "Leechers:";
+
+/* File: ../../portable/item.py:1010 */
+"Down Rate:" = "Latausnopeus:";
+
+/* File: ../../portable/item.py:1011 */
+"Down Total:" = "Lataukset yhteensä:";
+
+/* File: ../../portable/item.py:1013 */
+"Up Rate:" = "Lähetysnopeus:";
+
+/* File: ../../portable/item.py:1014 */
+"Up Total:" = "Lähetykset yhteensä:";
+
+/* File: ../../portable/item.py:1024 */
+"Web page:" = "Nettisivu:";
+
+/* File: ../../portable/item.py:1024 */
+"permalink" = "permalink";
+
+/* File: ../../portable/item.py:1028 */
+"File link:" = "Tiedostolinkki:";
+
+/* File: ../../portable/item.py:1028 */
+"direct link to file" = "suora linkki tiedostoon";
+
+/* File: ../../portable/item.py:1030 */
+"File type:" = "Tiedostotyyppi:";
+
+/* File: ../../portable/item.py:1037 */
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"License:" = "License:";
+
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"see permalink" = "see permalink";
+
+/* File: ../../portable/item.py:1049 */
+"REVEAL LOCAL FOLDER" = "NÄYTÄ PAIKALLINEN KANSIO";
+
+/* File: ../../portable/item.py:1051 */
+"REVEAL LOCAL FILE" = "NÄYTÄ PAIKALLINEN TIEDOSTO";
+
+/* File: ../../portable/item.py:1053 */
+"Filename:" = "Tiedoston nimi:";
+
+/* File: ../../portable/item.py:1060 */
+"Down Total" = "Kokonaislatausnopeus";
+
+/* File: ../../portable/item.py:1062 */
+"Up Total" = "Kokonaislähetysnopeus";
+
+/* File: ../../portable/item.py:1080 */
+"Item Details" = "Kohteen tiedot";
+
+/* File: ../../portable/item.py:1087 */
+"Torrent Details" = "Torrentin tiedot";
+
+/* File: ../../portable/item.py:1089 */
+"Torrent Details <i>stopped</i>" = "Torrentin tiedot <i>pysäytetty</i>";
+
+/* File: ../../portable/item.py:1093 */
+"Download Details" = "Lataustiedot";
+
+/* File: ../../portable/item.py:1310 */
+"downloading..." = "ladataan...";
+
+/* File: ../../portable/item.py:1317 */
+/* File: ../../portable/item.py:1320 */
+/* Flag: python-format */
+"%s remaining" = "%s jäljellä";
+
+/* File: ../../portable/item.py:1329 */
+"starting up..." = "käynnistetään...";
+
+/* File: ../../portable/item.py:1878 */
+/* Flag: python-format */
+"Removing %s items" = "Poistetaan %s kohdetta";
+
+/* File: ../../portable/item.py:1880 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Yhtä tai useampaa videoista ei ladattu kanavalta. Haluatko poistaa ne koneeltasi vai poistaa ne vain Kirjasto-näkymästä?";
+
+/* File: ../../portable/item.py:1888 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Yksi tai useampi näistä on hakemisto. Kun poistat hakemiston, poistuvat samalla myös kaikki kansion sisällä olevat tiedostot.";
+
+/* File: ../../portable/startup.py:92 */
+/* Flag: untranslated */
+"Unknown Error" = "Unknown Error";
+
+/* File: ../../portable/startup.py:93 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
+
+/* File: ../../portable/startup.py:155 */
+"Database too new" = "Tietokanta on liian uusi";
+
+/* File: ../../portable/startup.py:156 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Tietokantasi on luotu uudemmalla versiolla ohjelmasta $shortAppName. Sinun täytyy ladata ohjelman $shortAppName uusin versio.";
+
+/* File: ../../portable/startup.py:238 */
+/* Flag: untranslated */
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
+
+/* File: ../../portable/folder.py:144 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "Kirjoita kanavakansion %s uusi nimi";
+
+/* File: ../../portable/folder.py:215 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "Kirjoita soittolistakansion %s uusi nimi";
+
+/* File: ../../portable/folder.py:223 */
+"Create Channel Folder" = "Luo kanavakansio";
+
+/* File: ../../portable/folder.py:237 */
+"Create Playlist Folder" = "Luo soittolistakansio";
+
+/* File: ../../portable/folder.py:238 */
+"Enter a name for the new playlist folder" = "Kirjoita uuden soittolistakansion nimi";
+
+/* File: ../../portable/license.py:68 */
+/* Flag: untranslated */
+"license page" = "license page";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 päivä\n3 päivää\n6 päivää\n10 päivää\n1 kuukausi\nEi ikinä";
@@ -1550,149 +1631,191 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-"<b>Searching for Videos</b>" = "<b>Etsitään videoita</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
-"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Haluaisitko Miron etsivän videotiedostoja tietokoneeltasi?</b>";
+/* Flag: untranslated */
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Haluaisitko käynnistää Miron tietokoneen käynnistyksen yhteydessä?</b>";
+"<b>Searching for Videos</b>" = "<b>Etsitään videoita</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Haluaisitko Miron etsivän videotiedostoja tietokoneeltasi?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Haluaisitko käynnistää Miron tietokoneen käynnistyksen yhteydessä?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
 "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Valmista on!</b>\n\nAsetukset on tehty - nyt voit etsiä kanavia ja aloittaa katsomisen.\n\n<b>Älä odottele:</b> Miro on erilainen kuin nettisivuilla olevat videot - julkaisijat voivat tarjota isoja, korkealaatuisia videoita. Älä siis turhaan odottele videoita: käynnistä muutama lataus ja katso ne myöhemmin.\n\n<b>Jätä se päälle:</b> Miro tarkistaa säännöllisin väliajoin kanavat uusien videoiden varalta ja lataa ne taustalla. Jättämällä sen päälle näet uudet videot silloin kun haluat.\n\n<b>Älä huolehdi kiintolevytilasta:</b> Edistyneen kiintolevytallentimen tavoin Mirossa on \"vanhenemisjärjestelmä\", joka poistaa vanhat videot ja tekee tilaa uusille. Voit tallentaa videot pysyvästi klikkaamalla \"tallenna\" ja voit valita kanavan asetuksista, että videot tallennetaan aina pysyvästi.\n\n<b>Ajattele isosti:</b> Toistonapin oikealla puolella oleva nappi näyttää videot kokoruudussa.\n\n<b>Löydä videoita:</b> Miron ohjelmaoppassa on satoja Internet-televisiokanavia ja ne ovat kaikki ilmaisia. Klikkaa vain \"Lisää\" katsoaksesi kanavaa.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:26 */
-"By default, videos _expire after" = "Oletuksena videot _vanhenevat ajassa";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
-"C_hannel:" = "_Kanava:";
-
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
-"C_hannels" = "K_anavat";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
+/* Flag: untranslated */
+"Auto download default setting for new channels" = "Auto download default setting for new channels";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-"C_reate Channel" = "L_uo kanava";
+/* Flag: untranslated */
+"Automatically for_ward ports." = "Automatically for_ward ports.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
-"Check Channels for _new content" = "Tarkista kanavien _uusi sisältö";
+"By default, videos _expire after" = "Oletuksena videot _vanhenevat ajassa";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
-"Disk _Space" = "_Levytila";
+"C_hannel:" = "_Kanava:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
+"C_hannels" = "K_anavat";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-"Don't start a download _if it leaves less than" = "Älä aloita latausta _jos tilaa jää vähemmän kuin";
+"C_reate Channel" = "L_uo kanava";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-"Download at _most" = "Lataa _enimmillään";
+"Check Channels for _new content" = "Tarkista kanavien _uusi sisältö";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
+"Disk _Space" = "_Levytila";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
 "Every 30 minutes\nEvery hour\nManually" = "Joka 30. minuutti\nJoka tunti\nKäsin";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
-"G_B free" = "G_t vapaana";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
+/* Flag: untranslated */
+"G_B" = "G_B";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 "Go" = "Siirry";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+/* Flag: untranslated */
+"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 "In This:" = "Tässä:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
-"Miro can find all the videos on your computer to help you organize your collection." = "Miro voi etsiä kaikki tietokoneellasi olevat videot ja näin auttaa sinua organisoimaan kokoelmasi.";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+/* Flag: untranslated */
+"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-"Play _videos one after another" = "Toista _videot peräkkäin";
+/* Flag: untranslated */
+"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-"Preferences" = "Asetukset";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
-"Restrict to my full _home folder" = "Rajoita _kotikansiooni";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-"S_top after each video" = "_Pysäytä jokaisen videon jälkeen";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
-"S_tore downloaded videos in this folder:" = "T_allenna ladatut videot tähän kansioon:";
+/* Flag: untranslated */
+"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
-"Search _Engine:" = "Hakukone:";
+"Miro can find all the videos on your computer to help you organize your collection." = "Miro voi etsiä kaikki tietokoneellasi olevat videot ja näin auttaa sinua organisoimaan kokoelmasi.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-"Search _custom folder:" = "Etsi _valinnaisesta kansiosta:";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
-"Select Movies Directory" = "Valitse videokansio";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
-"Select custom search directory" = "Valitse etsintähakemisto";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
-"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Seuraavat pari sivua auttavat sinua Miron asetusten kanssa jotta se toimisi sinulle parhaalla mahdollisella tavalla. Tässä on ensimmäinen kysymys.";
+/* Flag: untranslated */
+"New\nAll\nOff" = "New\nAll\nOff";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-"To a_void slowdowns, limit upstream to" = "Hidastumisen _välttämiseksi rajoita lähetysnopeutta";
+"Play _videos one after another" = "Toista _videot peräkkäin";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
-"Volume:" = "Äänenvoimakkuus:";
+"Preferences" = "Asetukset";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
-"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Suosittelemme, että annat Miron käynnistyä aina kun käynnistät tietokoneesi. Tällä tavoin videot, jotka eivät ole vielä latautuneet voidaan ladata loppuun ja ne ovat valmiina katsottavaksi kanavilta silloin kun haluat.";
+"Restrict to my full _home folder" = "Rajoita _kotikansiooni";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+"S_top after each video" = "_Pysäytä jokaisen videon jälkeen";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Tervetuloa Internet-Televisioon. Mirolla voi tehdä monia eri asioita: ladata videoita suosikkikanavilta, katsoa videoita yksi toisensa jälkeen, ladata torrentteja, suositella videoita ystäville ja paljon muuta.";
+"S_tore downloaded videos in this folder:" = "T_allenna ladatut videot tähän kansioon:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Olet muuttanut elokuvien latauskansiota. Haluatko, että Miro siirtää lataamasi elokuvat uuteen kansioon? (Parhaillaan latautumassa olevia elokuvia ei siirretä ennen kuin lataus on valmis.)";
+"Search _Engine:" = "Hakukone:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
-"_Add Folder" = "_Lisää kansio";
+"Search _custom folder:" = "Etsi _valinnaisesta kansiosta:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-"_Automatically run Miro when I log in" = "Käynnistä Miro _automaattisesti kun kirjaudun sisään";
+"Select Movies Directory" = "Valitse videokansio";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
-"_Bit Torrent uses ports between" = "_BitTorrent käyttää portteja väliltä";
+"Select custom search directory" = "Valitse etsintähakemisto";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
-"_Downloads" = "_Lataukset";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
+/* Flag: untranslated */
+"Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
-"_Folders" = "_Kansiot";
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Seuraavat pari sivua auttavat sinua Miron asetusten kanssa jotta se toimisi sinulle parhaalla mahdollisella tavalla. Tässä on ensimmäinen kysymys.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
-"_General" = "_Yleistä";
+/* Flag: untranslated */
+"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-"_KB/s when my computer is active" = "_kt/s kun tietokoneeni on aktiivinen";
+/* Flag: untranslated */
+"Use _ports:" = "Use _ports:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
-"_Playback" = "_Toisto";
+/* Flag: untranslated */
+"Use this renderer to play videos:" = "Use this renderer to play videos:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
-"_Resume playback of videos from the point where they were stopped" = "_Jatka videon toistoa kohdasta, johon se jäi pysäytettäessä";
+"Volume:" = "Äänenvoimakkuus:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
-"_Search" = "_Etsi";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
-"_Search For:" = "E_tsi termiä:";
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Suosittelemme, että annat Miron käynnistyä aina kun käynnistät tietokoneesi. Tällä tavoin videot, jotka eivät ole vielä latautuneet voidaan ladata loppuun ja ne ovat valmiina katsottavaksi kanavilta silloin kun haluat.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
-"_URL" = "_URL";
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Tervetuloa Internet-Televisioon. Mirolla voi tehdä monia eri asioita: ladata videoita suosikkikanavilta, katsoa videoita yksi toisensa jälkeen, ladata torrentteja, suositella videoita ystäville ja paljon muuta.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
-"_Warn me when I attempt to quit with downloads in progress" = "_Varoita, kun yritän sammuttaa ohjelman ja latauksia on kesken";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Olet muuttanut elokuvien latauskansiota. Haluatko, että Miro siirtää lataamasi elokuvat uuteen kansioon? (Parhaillaan latautumassa olevia elokuvia ei siirretä ennen kuin lataus on valmis.)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-"_Watch for new videos in these folders and include them in the Library" = "_Tarkkaile uusia videoita näissä kansioissa ja lisää ne kirjastoon";
+"_Add Folder" = "_Lisää kansio";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
-"_and" = "_ja";
+"_Automatically run Miro when I log in" = "Käynnistä Miro _automaattisesti kun kirjaudun sisään";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
-"videos at once" = "videot kerralla";
+"_Downloads" = "_Lataukset";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
+"_Folders" = "_Kansiot";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
+"_General" = "_Yleistä";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
+/* Flag: untranslated */
+"_KB/s." = "_KB/s.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
+/* Flag: untranslated */
+"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
+"_Playback" = "_Toisto";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
+"_Resume playback of videos from the point where they were stopped" = "_Jatka videon toistoa kohdasta, johon se jäi pysäytettäessä";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
+"_Search" = "_Etsi";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
+"_Search For:" = "E_tsi termiä:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
+"_URL" = "_URL";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
+"_Warn me when I attempt to quit with downloads in progress" = "_Varoita, kun yritän sammuttaa ohjelman ja latauksia on kesken";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
+"_Watch for new videos in these folders and include them in the Library" = "_Tarkkaile uusia videoita näissä kansioissa ja lisää ne kirjastoon";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
+/* Flag: untranslated */
+"xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
 "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName versio $appVersion ($appRevision); copyright (c) 2005-2007 $publisher. $longAppName ja $longAppName -logo ovat $publisher :in tuotemerkkejä.";
@@ -1750,80 +1873,97 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
 "Please enter the username and password given to you by this channel's publisher." = "Syötä tämän kanavan julkaisijalta saamasi käyttäjänimi ja salasana.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
 "(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(VAROITUS: Muutokset tulevat voimaan vasta, kun käynnistät $longAppName :n uudestaan.)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
 "Add Folder..." = "Luo kansio...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
+/* Flag: untranslated */
+"Automatically Forward Ports" = "Automatically Forward Ports";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
 "Automatically run $longAppName when I login." = "Käynnistä $longAppName automaattisesti kun kirjaudun sisään.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
-"BitTorrent" = "BitTorrent";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
 "By default, videos expire after" = "Oletusarvona videoiden vanhenemisaika on";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
 "Check channels for new content" = "Tarkista kanavien uusi sisältö";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
 "Close to tray so that downloads can continue." = "Sulje ilmoitusalueelle jotta lataukset voivat jatkua.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
 "Every 30 minutes" = "30:n minuutin välein";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
 "Every hour" = "Tunnin välein";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
 "Folder" = "Kansio";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
+/* Flag: untranslated */
+"GB" = "GB";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
+/* Flag: untranslated */
+"Ignore Unencrypted Connections" = "Ignore Unencrypted Connections";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
+/* Flag: untranslated */
+"KB/s" = "KB/s";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
+/* Flag: untranslated */
+"Limit downstream bandwith to:" = "Limit downstream bandwith to:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Manually" = "Manuaalisesti";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+/* Flag: untranslated */
+"Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
+/* Flag: untranslated */
+"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
 "Options" = "Asetukset";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
 "Play one video, then stop." = "Toista yksi video ja pysähdy.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
 "Quit Miro completely." = "Sammuta Miro kokonaan.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
 "Remember where I stopped watching a video and continue playing from that point." = "Muista mihin kohtaan jäin videon katsomisessa ja jatka toistamista samasta kohdasta.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
 "Show as a Channel" = "Näytä kanavana";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
 "Store downloaded videos in this folder:" = "Tallenna ladatut videot tähän kansioon:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
-"To avoid slowdowns, limit upstream bandwith when my computer is active." = "Hidastumisen välttämiseksi rajoita lähetysnopeutta, kun tietokoneeni on aktiivinen.";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
+/* Flag: untranslated */
+"To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
-"Upstream limit (KB/s)" = "Lähetysraja (kt/s)";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
-"Use BitTorrent ports between" = "Käytä BitTorrent-portteja väliltä";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "VAROITUS: Tämä asetus tulee voimaan vasta, kun käynnistät $longAppName :n uudestaan.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
 "Warn me when I attempt to quit with downloads in progress." = "Varoita minua, kun yritän sammuttaa ohjelman ja latauksia on vielä kesken.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
 "Watch for new videos in these folders and include them in my Library." = "Tarkkaile uusia videoita näissä kansioissa ja lisää ne kirjastooni.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
 "When I click the red close button:" = "Kun klikkaan punaista sulje-nappia:";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
-"and" = "ja";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
 "Channel:" = "Kanava:";

@@ -14,10 +14,10 @@
 <!ENTITY prefs.channels.check.sixty "co godzinę">
 <!ENTITY prefs.channels.check.manually "ręcznie">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault "Automatycznie pobierz ustawienia domyślne dla nowych kanałów">
+<!ENTITY prefs.channels.autodownloaddefault.all "Wszystkie">
 <!ENTITY prefs.channels.autodownloaddefault.new "Nowe">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Wyłączone">
 
 <!ENTITY prefs.playback "Odtwarzanie">
 <!ENTITY prefs.playback.remember.pos "Zapamiętaj miejsce, w którym zostało przerwane oglądanie i przy ponownym uruchomieniu rozpocznij od tego miejsca">
@@ -39,7 +39,7 @@
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Miejsce na dysku">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Zachowaj co najmniej tyle wolnego miejsca na moim dysku:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "Uwaga! Aby zmiana ustawienia została zastosowana należy uruchomić ponownie $longAppName.">
 
@@ -53,10 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(Uwaga! Aby wprowadzone zmiany zostały zastosowane należy uruchomić ponownie $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "Aby uniknąć spowolnienia sieci, ogranicz prędkość wysyłania do:">
+<!ENTITY prefs.torrent.limit.downstream "Ogranicz prędkość pobierania do:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_ports "Użyj tych portów:">
+<!ENTITY prefs.torrent.use_upnp "Automatycznie przekierowuj porty:">
+<!ENTITY prefs.torrent.require_encryption "Ignoruj niekodowane połączenia">
+<!ENTITY prefs.torrent.uploadratio "Zatrzymaj wysyłanie torrenta, kiedy ten współczynnik zostanie osiągnięty:">

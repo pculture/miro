@@ -14,7 +14,7 @@
 <!ENTITY prefs.channels.check.sixty "Ogni ora">
 <!ENTITY prefs.channels.check.manually "Manualmente">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault "Scarica automaticamente le impostazioni di default per i nuovi canali">
 <!ENTITY prefs.channels.autodownloaddefault.all "All">
 <!ENTITY prefs.channels.autodownloaddefault.new "Nuovo">
 <!ENTITY prefs.channels.autodownloaddefault.off "Off">
@@ -39,7 +39,7 @@
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Spazio su disco">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "tieni almeno questo spazio libero sul mio disco" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ATTENZIONE: questa impostazione sarà attiva al prossimo riavvio di $longAppName.">
 
@@ -56,7 +56,7 @@
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_ports "usa queste porte:">
+<!ENTITY prefs.torrent.use_upnp "Reindirizza automaticamente le Porte">
+<!ENTITY prefs.torrent.require_encryption "Ignora Connessioni Non Sicure">
+<!ENTITY prefs.torrent.uploadratio "Arresta il caricamento dei torrent quando questa percentuale viene raggiunta:">
