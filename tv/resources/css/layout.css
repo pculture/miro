@@ -238,10 +238,14 @@ ul#view_style li a {
     position: relative;
     height: 17px;
     padding-top: 4px;
-    padding-left: 122px;
+/*    padding-left: 122px;*/
 }
 
-
+#views-bar {
+  padding-top:2px;
+  position:relative;
+  height:28px;
+}
 
 .video-stats div {
     float: left;
@@ -258,7 +262,20 @@ a.sort-button {
     width: 315px;
     float: right;
 }
-
+.sort-buttons-left {
+  float:left;
+  width:86px;
+  height:21px;
+  overflow:hidden;
+  margin-left:6px;
+}
+.sort-buttons-left ul,
+.sort-buttons-left ul li {
+  display:inline;
+}
+.sort-buttons-left ul li {
+  float:left;
+}
 .details-link {
     padding-top: 1px;
     float: right;

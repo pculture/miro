@@ -12,8 +12,34 @@ section = kargs['section']
 		]]></t:execOnLoad>
 </head>
 <body>
-	<div class="sort-bar">
-		<div class="sort-buttons">
+	<div id="views-bar">
+			<div class="sort-buttons-left">
+			    <!-- #FIXME 
+			        needs actual methods to set/get view mode
+		        <ul class="***getViewStyle()">
+			        <li onlclick="return eventURL('action:setViewStyle?which=thumbs');">
+			            <a href="#"><img src="resource:images/view-style_thumbs.png" alt="thumbs view" /></a>
+			        </li>
+			        <li onlclick="return eventURL('action:setViewStyle?which=hybrid');">
+			            <a href="#"><img src="resource:images/view-style_hybrid.png" alt="hybrid view" /></a>
+			        </li>
+			        <li onlclick="return eventURL('action:setViewStyle?which=list');">
+			            <a href="#"><img src="resource:images/view-style_list.png" alt="list view" /></a>
+			        </li>
+			    </ul> -->
+			    <ul>
+			        <li>
+			            <a href="#"><img src="resource:images/view-style_thumbs.png" alt="thumbs view" /></a>
+			        </li>
+			        <li>
+			            <a href="#"><img src="resource:images/view-style_hybrid.png" alt="hybrid view" /></a>
+			        </li>
+			        <li>
+			            <a href="#"><img src="resource:images/view-style_list.png" alt="list view" /></a>
+			        </li>
+			    </ul>
+			    
+			</div>
 			<div class="sort-buttons-right">
 				<span id="sort-by-label" i18n:translate="">Sort By:</span>
 
@@ -53,7 +79,6 @@ section = kargs['section']
 				</table>
 			</div>
 			<div class="clear" />
-		</div>
 	</div>
 </body>
 </html>
