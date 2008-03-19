@@ -15,9 +15,9 @@
 <!ENTITY prefs.channels.check.manually "Manuálisan">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.all "Minden">
 <!ENTITY prefs.channels.autodownloaddefault.new "Új...">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Ki">
 
 <!ENTITY prefs.playback "Lejátszás">
 <!ENTITY prefs.playback.remember.pos "Emlékezzen hol tartott a lejátszás, és onnan fojtassa legközelebb.">
@@ -56,7 +56,7 @@
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_ports "Ezen portok használata:">
 <!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.require_encryption "Titkosítatlan kapcsolatok figyelmen kívül hagyása">
+<!ENTITY prefs.torrent.uploadratio "Torrent feltöltések megállítása ha az arány:">

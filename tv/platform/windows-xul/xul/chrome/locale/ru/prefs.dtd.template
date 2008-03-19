@@ -17,7 +17,7 @@
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
 <!ENTITY prefs.channels.autodownloaddefault.all "All">
 <!ENTITY prefs.channels.autodownloaddefault.new "Новый">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Выключено">
 
 <!ENTITY prefs.playback "Воспроизведение">
 <!ENTITY prefs.playback.remember.pos "Запомнить, где я остановил просмотр видео и продолжить воспроизведение с этого момента.">
@@ -39,8 +39,8 @@
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Дисковое пространство">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
-<!ENTITY prefs.disk.space.min.part2 "GB">
+<!ENTITY prefs.disk.space.min.part1 "Оставлять как минимум столько свободного места на диске:" >
+<!ENTITY prefs.disk.space.min.part2 "Гб">
 <!ENTITY prefs.disk.space.warning.restart "ВНИМАНИЕ: Этот параметр не вступит в силу до перезапуска $longAppName.">
 
 <!ENTITY prefs.videos.expire "По умолчанию, видео устаревает через">
@@ -56,7 +56,7 @@
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_ports "Использовать порты:">
 <!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
 <!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
 <!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

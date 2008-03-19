@@ -17,7 +17,7 @@
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
 <!ENTITY prefs.channels.autodownloaddefault.all "All">
 <!ENTITY prefs.channels.autodownloaddefault.new "Ny">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Av">
 
 <!ENTITY prefs.playback "Uppspelning">
 <!ENTITY prefs.playback.remember.pos "Kom ihåg var jag slutade att titta på en video och fortsätt spela upp ifrån den punkten">
@@ -35,11 +35,11 @@
 <!ENTITY prefs.folder.others.remove "Ta bort">
 
 <!ENTITY prefs.downloads "Nedladdningar" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.downloads.max "Maximalt antal av manuella nedladdningar samtidigt">
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Diskutrymme">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Se till att så här mycket ledigt utrymme finns på enheten:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "VARNING: Denna inställning ger ingen effekt innan du startar om $longAppName.">
 
@@ -56,7 +56,7 @@
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_ports "Använd dessa portar:">
+<!ENTITY prefs.torrent.use_upnp "Framåtbefordra portar automatiskt">
+<!ENTITY prefs.torrent.require_encryption "Ignorera okrypterade anslutningar">
+<!ENTITY prefs.torrent.uploadratio "Sluta ladda upp Torrent när denna utdelningsproportionen nås:">

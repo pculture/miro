@@ -14,10 +14,10 @@
 <!ENTITY prefs.channels.check.sixty "Vsako uro_24 urna">
 <!ENTITY prefs.channels.check.manually "Ročno">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault "Samodejno prenesi privzete nastavitve za nove kanale.">
+<!ENTITY prefs.channels.autodownloaddefault.all "Vse">
 <!ENTITY prefs.channels.autodownloaddefault.new "New">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Izključeno">
 
 <!ENTITY prefs.playback "Predvajanje">
 <!ENTITY prefs.playback.remember.pos "Zapomni si, kje sem končal s pregledovanjem posnetka in nadaljuj predvajanje na tem mestu.">
@@ -35,11 +35,11 @@
 <!ENTITY prefs.folder.others.remove "Odstrani">
 
 <!ENTITY prefs.downloads "Prenosi" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
-<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+<!ENTITY prefs.downloads.max "Največje število ročno dodanih sočasnih prenosov:">
+<!ENTITY prefs.autodownloads.max "Največje številokanalnih sočasnih samodejnih prenosov:">
 
 <!ENTITY prefs.disk.space "Prostor na disku">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Ohrani vsaj toliko prostora na pogonu:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "Opozorilo: Nastavitve bodo uporabljene ob naslednjem zagonu $longAppName.">
 
@@ -53,10 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(Opozorilo: Spremembe ne bodo uveljavljene do ponovnega zagona programa $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "Omejitev hitrosti pošiljanja na:">
+<!ENTITY prefs.torrent.limit.downstream "Omejitev hitrosti prenosa na:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_ports "Uporabi vrata:">
+<!ENTITY prefs.torrent.use_upnp "Samodejno posreduj vrata">
+<!ENTITY prefs.torrent.require_encryption "Prezri nešifrirane povezave">
+<!ENTITY prefs.torrent.uploadratio "Ustavi pošiljanje ob razmerju:">

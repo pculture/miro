@@ -15,9 +15,9 @@
 <!ENTITY prefs.channels.check.manually "Manuelt">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.all "Alt">
 <!ENTITY prefs.channels.autodownloaddefault.new "Nye">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Av">
 
 <!ENTITY prefs.playback "Avspilling">
 <!ENTITY prefs.playback.remember.pos "Husk hvor jeg sluttet å se en video og fortsett avspilling fra det stedet.">
