@@ -63,13 +63,13 @@ def getPrefillText(dialog):
     return ''
 
 def _makeSupportsArrayFromSecondElement(data):
-    from xulhelper import makeComp
-    arrayAbs = makeComp("@mozilla.org/supports-array;1",components.interfaces.nsISupportsArray)
+    from miro.platform.xulhelper import makeComp, components
+    arrayAbs = makeComp("@mozilla.org/supports-array;1", components.interfaces.nsISupportsArray, False)
     for datum in data:
-        supportsString = makeComp("@mozilla.org/supports-string;1",components.interfaces.nsISupportsString)
+        supportsString = makeComp("@mozilla.org/supports-string;1", components.interfaces.nsISupportsString, False)
         supportsString.data = datum[1]
-        array.AppendElement(supportsString)
-    return array
+        arrayAbs.AppendElement(supportsString)
+    return arrayAbs
 
 class UpdateAvailableDialog(dialogs.Dialog):
     """Give the user a choice of 2 options (Yes/No, Ok/Cancel,
