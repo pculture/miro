@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-03-02 16:54+0000\n"
-"Last-Translator: Alexandre Sapata Carbonell <alexandrenescau@gmail.com>\n"
+"PO-Revision-Date: 2008-03-15 23:21+0000\n"
+"Last-Translator: Perfect spawn <pspawn@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
+"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "Save this video"
@@ -1414,7 +1414,7 @@ msgstr "Adicionar..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "All"
-msgstr ""
+msgstr "Tudo"
 
 #, fuzzy
 msgid "Auto download default setting for new channels:"
@@ -1438,10 +1438,10 @@ msgid "Check channels for new content:"
 msgstr "Verificar atualizações nos canais:"
 
 msgid "Don't auto-download more than this many videos per channel at once:"
-msgstr ""
+msgstr "Não auto-baixar mais do que isso muitos vídeos por canal de uma vez:"
 
 msgid "Don't download more than this many videos at once:"
-msgstr ""
+msgstr "Não baixe mais do que esta quantidade de vídeos ao mesmo tempo:"
 
 msgid "Folder location"
 msgstr "Localização da Pasta"
@@ -1462,7 +1462,7 @@ msgid "Keep at least this much free space on my drive:"
 msgstr "Manter ao menos isto de espaço livre no meu disco:"
 
 msgid "Limit downstream to"
-msgstr ""
+msgstr "Limitar velocidade de download para"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Never"
@@ -1515,7 +1515,7 @@ msgid "Store downloads in this folder:"
 msgstr "Armazenar downloads nesta pasta:"
 
 msgid "To avoid internet slowdowns, limit upstream to"
-msgstr ""
+msgstr "Para evitar lentidão na internet, limite a montante de"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
 msgid "Use these ports:"
@@ -2149,6 +2149,14 @@ msgid ""
 "    drive (this will cause you to lose some details about the videos on the  "
 "   external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
+"\n"
+"    Miro não pôde encontrar seu diretório primário de vídeo. Pode ser porque "
+"o diretório está localizado em um drive externo que está atualmente "
+"desconectado.\n"
+"\n"
+"    Se você continuar, o diretório de vídeo vai ser redefinido para um local "
+"neste drive (isto fará você perder alguns dos dados sobre os vídeos no drive "
+"externo). Você também pode sair, reconectar o drive e abrir o Miro novamente."
 
 #: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
 msgid "Custom Channels"
@@ -3450,6 +3458,9 @@ msgid ""
 "<b>Note:</b> If you change the renderer used to play videos, you MUST \n"
 "restart Miro for the changes to take effect."
 msgstr ""
+"<b>Nota:</b> Se você mudar o renderizados usado para exibir os vídeos, você "
+"PRECISA \n"
+"reiniciar o Miro para que as mudanças tenham efeito."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Searching for Videos</b>"
@@ -3526,7 +3537,7 @@ msgstr "Configuração Auto-download padrão para novos canais"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "Automatically for_ward ports."
-msgstr ""
+msgstr "Redirecionar portas automaticamente."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "By default, videos _expire after"
@@ -3572,7 +3583,7 @@ msgstr "Ir"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
 msgid "Ignore Un_encrypted Connections."
-msgstr ""
+msgstr "Ignorar conexões não encriptadas."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:43
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
@@ -3581,17 +3592,17 @@ msgstr "Neste:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:45
 msgid "Limit torrent _downstream to:"
-msgstr ""
+msgstr "limitar velocidade de download do torrent para"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 #, fuzzy
 msgid "Maximum number of channel auto-downloads at a time: "
-msgstr "Número máximo de canais auto-download no momento: "
+msgstr "Número máximo de canais de auto-download simultâneos: "
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 #, fuzzy
 msgid "Maximum number of manual downloads at a time: "
-msgstr "Número máximo de downloads manuais no momento: "
+msgstr "Número máximo de downloads manuais simultâneos: "
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid ""
@@ -3609,8 +3620,8 @@ msgid ""
 "Off"
 msgstr ""
 "Novo\n"
-"Tudo\n"
-"Desligar"
+"Todos\n"
+"Desligado"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "Play _videos one after another"
@@ -3663,15 +3674,15 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "To avoid internet slowdowns, limit _upstream to:"
-msgstr ""
+msgstr "Para evitar lentidão na internet, limite _upload para:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "Use _ports:"
-msgstr ""
+msgstr "Usar _portas:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "Use this renderer to play videos:"
-msgstr ""
+msgstr "Usar este renderizador para exibir vídeos:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "Volume:"
@@ -3735,7 +3746,7 @@ msgstr "_KB/s."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:81
 msgid "_Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "_Manter ao menos este espaço livre no meu drive:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_Playback"
@@ -3943,7 +3954,7 @@ msgstr "KB/s"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
 msgid "Limit downstream bandwith to:"
-msgstr ""
+msgstr "Limitar banda de download para:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Manually"
@@ -3951,11 +3962,11 @@ msgstr "Manualmente"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "Maximum number of channel auto-downloads at a time:"
-msgstr ""
+msgstr "Número máximo de canais de auto-download simultâneos:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
 msgid "Maximum number of manual downloads at a time:"
-msgstr ""
+msgstr "Número máximo de downloads manuais ao mesmo tempo:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
@@ -3987,7 +3998,7 @@ msgstr "Guardar vídeos baixados nesta pasta:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
 msgid "To avoid internet slowdowns, limit upstream bandwith to:"
-msgstr ""
+msgstr "Para evitar lentidão na internet, limite banda de upload para:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid ""

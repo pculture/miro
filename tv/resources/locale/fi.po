@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2007-12-12 15:46+0000\n"
-"Last-Translator: veepee <Unknown>\n"
+"PO-Revision-Date: 2008-03-19 15:10+0000\n"
+"Last-Translator: klikklak <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
+"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -291,6 +291,8 @@ msgstr ""
 
 msgid "(You must restart Miro for some of these changes to take effect)"
 msgstr ""
+"(Sinun täytyy käynnistää Miro uudelleen, jotta kaikki muutokset tulevat "
+"voimaan)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr ""
@@ -301,7 +303,7 @@ msgstr "(videoiden kohdekansio tulee tähän)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 day"
@@ -339,11 +341,13 @@ msgid "Add..."
 msgstr "Lisää.."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+#, fuzzy
 msgid "All"
-msgstr ""
+msgstr "Kaikki"
 
+#, fuzzy
 msgid "Auto download default setting for new channels:"
-msgstr ""
+msgstr "Lataa automaattisesti oletusasetukset uusille kanaville"
 
 msgid "Automatically forward ports"
 msgstr ""
@@ -362,11 +366,13 @@ msgstr "Muuta..."
 msgid "Check channels for new content:"
 msgstr "Tarkista kanavat uuden sisällön varalta:"
 
+#, fuzzy
 msgid "Don't auto-download more than this many videos per channel at once:"
-msgstr ""
+msgstr "Älä lataa tätä enempää videoita yhdellä kanavalla kerralla:"
 
+#, fuzzy
 msgid "Don't download more than this many videos at once:"
-msgstr ""
+msgstr "Älä lataa tätä enempää videoita kerralla:"
 
 msgid "Folder location"
 msgstr "Hakemiston sijainti"
@@ -375,7 +381,7 @@ msgid "GB\n"
 msgstr ""
 
 msgid "Ignore unencrypted connections"
-msgstr ""
+msgstr "Estä salaamattomat yhteydet"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid "KB/s."
@@ -383,10 +389,10 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Säilytä vähintään näin paljon vapaata levytilaa kovalevyllä"
 
 msgid "Limit downstream to"
-msgstr ""
+msgstr "Rajoita saapuvaa nopeutta"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Never"
@@ -433,17 +439,18 @@ msgid "Stop after each video."
 msgstr "Pysäytä soitto jokaisen jälkeen."
 
 msgid "Stop uploads when this ratio is reached:"
-msgstr ""
+msgstr "Lopeta lähettäminen kun tämä jakosuhde on saavutettu"
 
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "Talleta ladatut tiedostot tähän kansioon"
 
 msgid "To avoid internet slowdowns, limit upstream to"
 msgstr ""
+"Rajoita lähetysnopeus tähän, että vältettäisiin internetin hidastuminen"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
 msgid "Use these ports:"
-msgstr ""
+msgstr "Käytä näitä portteja"
 
 #: ../../portable/frontends/html/main.py:319
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -951,7 +958,7 @@ msgstr "Torrent-tiedosto poistettiin"
 
 #: ../../portable/dl_daemon/download.py:981
 msgid "The torrent file for this item was deleted outside of Miro."
-msgstr ""
+msgstr "Tähän viittaava torrent tiedosto poistettiin Miron ulkopuolella"
 
 #: ../../portable/frontends/html/contextmenu.py:103
 msgid "Update Channels Now"
@@ -1884,7 +1891,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:110
 msgid "Don't Install"
-msgstr ""
+msgstr "Älä asenna"
 
 #: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
@@ -2167,11 +2174,11 @@ msgstr "Virhe:"
 
 #: ../../portable/item.py:1006
 msgid "Seeders:"
-msgstr ""
+msgstr "Lähteitä:"
 
 #: ../../portable/item.py:1008
 msgid "Leechers:"
-msgstr ""
+msgstr "Lataajia:"
 
 #: ../../portable/item.py:1010
 msgid "Down Rate:"
@@ -2212,7 +2219,7 @@ msgstr "Tiedostotyyppi:"
 #: ../../portable/item.py:1037 ../../portable/item.py:1040
 #: ../../portable/item.py:1042
 msgid "License:"
-msgstr ""
+msgstr "Lisenssi:"
 
 #: ../../portable/item.py:1040 ../../portable/item.py:1042
 msgid "see permalink"
@@ -2290,13 +2297,14 @@ msgstr ""
 
 #: ../../portable/startup.py:92
 msgid "Unknown Error"
-msgstr ""
+msgstr "Tuntematon virhe"
 
 #: ../../portable/startup.py:93
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "An unkown error prevented Miro from startup.  Please file a bug report at %s"
 msgstr ""
+"Tuntematon virhe esti Miroa käynnistymästä.  Anna bugireportti osoitteessa %s"
 
 #: ../../portable/startup.py:155
 msgid "Database too new"
@@ -2316,6 +2324,9 @@ msgid ""
 "Miro can't find your primary video directory.  This may be because it's "
 "located on an external drive that is currently disconnected."
 msgstr ""
+"\n"
+"Miro ei löydä pääasiallista video hakemistoasi. Tämä voi johtua siitä, että "
+"se on ulkoisella levyllä joka on nyt irroitettu."
 
 #: ../../portable/folder.py:144
 #, python-format
@@ -2341,7 +2352,7 @@ msgstr "Kirjoita uuden soittolistakansion nimi"
 
 #: ../../portable/license.py:68
 msgid "license page"
-msgstr ""
+msgstr "Lisenssisivu"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -2498,11 +2509,11 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Maximum number of channel auto-downloads at a time: "
-msgstr ""
+msgstr "Maksimimäärä latauksia kanavalla kerralla: "
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Maximum number of manual downloads at a time: "
-msgstr ""
+msgstr "Maksimimäärä käsin valittuja latauksia kerralla: "
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid ""
@@ -2558,7 +2569,7 @@ msgstr "Valitse etsintähakemisto"
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr ""
+msgstr "Lopeta torrentin lähetys kun tämä jakosuhde on saavutettu"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid ""

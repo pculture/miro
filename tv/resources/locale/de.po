@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-01-30 09:21+0000\n"
-"Last-Translator: moadin <Unknown>\n"
+"PO-Revision-Date: 2008-03-17 00:36+0000\n"
+"Last-Translator: 2step <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
+"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -32,7 +32,6 @@ msgstr "Ok"
 msgid "$log"
 msgstr "$log"
 
-#, fuzzy
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
@@ -207,7 +206,7 @@ msgid "Remove..."
 msgstr "Entfernen..."
 
 msgid "Rename..."
-msgstr "Umbenennen..."
+msgstr "Umbenennen ..."
 
 msgid "Report a bug"
 msgstr "Einen Fehler melden"
@@ -292,6 +291,7 @@ msgstr ""
 
 msgid "(You must restart Miro for some of these changes to take effect)"
 msgstr ""
+"(Einige der Änderungen treten erst nach einem Neustart von Miro in Kraft)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr "Sie müssen Miro neustarten damit dise Änderung übernommen wird\n"
@@ -301,7 +301,7 @@ msgstr "(Pfad für Videoordner hier angeben)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 day"
@@ -340,13 +340,13 @@ msgstr "Hinzufügen …"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 msgid "Auto download default setting for new channels:"
-msgstr ""
+msgstr "Standardeinstellung automatischer Downloads für neue Channels:"
 
 msgid "Automatically forward ports"
-msgstr ""
+msgstr "Ports automatisch übermitteln"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "BitTorrent"
@@ -363,30 +363,30 @@ msgid "Check channels for new content:"
 msgstr "Kanäle auf neuen Inhalt überprüfen:"
 
 msgid "Don't auto-download more than this many videos per channel at once:"
-msgstr ""
+msgstr "Maximale Anzahl gleichzeitig heruntergeladener Videos je Channel:"
 
 msgid "Don't download more than this many videos at once:"
-msgstr ""
+msgstr "Maximale Gesamtanzahl gleichzeitig heruntergeladener Videos:"
 
 msgid "Folder location"
 msgstr "Speicherort des Ordners"
 
 msgid "GB\n"
-msgstr ""
+msgstr "GB\n"
 
 msgid "Ignore unencrypted connections"
-msgstr ""
+msgstr "Ignoriere unverschlüsselte Verbindungen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid "KB/s."
-msgstr ""
+msgstr "KB/s."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Minimal freizuhaltender Speicher auf dem Laufwerk:"
 
 msgid "Limit downstream to"
-msgstr ""
+msgstr "Maximale Download-Geschwindigkeit"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Never"
@@ -399,7 +399,7 @@ msgstr "neu"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "Off"
-msgstr ""
+msgstr "Aus"
 
 msgid "OtherViews"
 msgstr "AndereAnsichten"
@@ -433,17 +433,19 @@ msgid "Stop after each video."
 msgstr "Nach jedem Video anhalten."
 
 msgid "Stop uploads when this ratio is reached:"
-msgstr ""
+msgstr "Bis zu folgender Ratio selbst hochladen:"
 
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "Verzeichnis für Downloads:"
 
 msgid "To avoid internet slowdowns, limit upstream to"
 msgstr ""
+"Um eine Beeinträchtigung der Internetgeschwindigkeit zu vermeiden, den "
+"Upload begrenzen auf"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
 msgid "Use these ports:"
-msgstr ""
+msgstr "Folgende Ports verwenden:"
 
 #: ../../portable/frontends/html/main.py:319
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -949,6 +951,7 @@ msgstr "Torrentdatei gelöscht"
 #: ../../portable/dl_daemon/download.py:981
 msgid "The torrent file for this item was deleted outside of Miro."
 msgstr ""
+"Die torrent-Datei für diesen Eintrag wurde außerhalb von Miro gelöscht."
 
 #: ../../portable/frontends/html/contextmenu.py:103
 msgid "Update Channels Now"
@@ -1070,6 +1073,15 @@ msgid ""
 "    drive (this will cause you to lose some details about the videos on the  "
 "   external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
+"\n"
+"    Miro kann ihr Zielverzeichnis für die Videos nicht finden. Falls es sich "
+"auf einer externen Festplatte befindet, könnte diese nicht angeschlossen "
+"sein.\n"
+"\n"
+"    Wenn sie fortfahren, wird ein neues Zielverzeichnis auf diesem Laufwerk "
+"eingerichtet (dies führt zu einem Verlust von Informationen zu den Videos "
+"auf der externen Festplatte). Ferner können Sie abbrechen, die Festplatte "
+"anschließen, und Miro neustarten."
 
 #: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
 msgid "Custom Channels"
@@ -1349,6 +1361,19 @@ msgid ""
 "ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks "
 "for your help."
 msgstr ""
+"Ein einfacher Weg Miro zu unterstützen\n"
+"\n"
+"Miro ist ein Open-Source-Projekt und programmiert von Freiwilligen. Um "
+"unsere Arbeit fortzusetzen, brauchen wir Ihre Hilfe.\n"
+"\n"
+"\"I Heart Miro\" ist eine einfache Firefoxerweiterung, über die die Miro "
+"Organisation eine Provision von Amazon erhält, wenn Sie dort einkaufen. Es "
+"wird sie nicht stören, Sie nichts kosten und Sie können es jederzeit einfach "
+"deinstallieren.\n"
+"\n"
+"Wenn Sie untern auf \"Install iHeartMiro\" klicken, wird Firefox starten und "
+"Sie fragen, ob es ok ist. Einfach bejahen und fertig! Es dauert nur 7 "
+"Sekunden. Vielen Dank für Ihre Hilfe."
 
 #: ../../portable/menubar.py:158
 msgid "_Open"
@@ -1484,7 +1509,7 @@ msgstr "Wiederg_abe"
 
 #: ../../portable/menubar.py:228
 msgid "_Pause"
-msgstr ""
+msgstr "_Anhalten"
 
 #: ../../portable/menubar.py:229
 msgid "_Stop"
@@ -1882,11 +1907,11 @@ msgstr "Trotzdem herunterlade"
 
 #: ../../portable/dialogs.py:109
 msgid "Install iHeartMiro"
-msgstr ""
+msgstr "Installiere iHeartMiro"
 
 #: ../../portable/dialogs.py:110
 msgid "Don't Install"
-msgstr ""
+msgstr "Nicht installieren"
 
 #: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
@@ -2177,7 +2202,7 @@ msgstr "Seeder:"
 
 #: ../../portable/item.py:1008
 msgid "Leechers:"
-msgstr ""
+msgstr "Leecher:"
 
 #: ../../portable/item.py:1010
 msgid "Down Rate:"
@@ -2218,11 +2243,11 @@ msgstr "Dateityp:"
 #: ../../portable/item.py:1037 ../../portable/item.py:1040
 #: ../../portable/item.py:1042
 msgid "License:"
-msgstr ""
+msgstr "Lizenz:"
 
 #: ../../portable/item.py:1040 ../../portable/item.py:1042
 msgid "see permalink"
-msgstr ""
+msgstr "siehe Permalink"
 
 #: ../../portable/item.py:1049
 msgid "REVEAL LOCAL FOLDER"
@@ -2298,13 +2323,15 @@ msgstr ""
 
 #: ../../portable/startup.py:92
 msgid "Unknown Error"
-msgstr ""
+msgstr "Unbekannter Fehler"
 
 #: ../../portable/startup.py:93
 #, python-format
 msgid ""
 "An unkown error prevented Miro from startup.  Please file a bug report at %s"
 msgstr ""
+"Ein unbekannter Fehler verhindert den Start von Miro. Bitte hinterlegen Sie "
+"eine Fehlermeldung bei %s"
 
 #: ../../portable/startup.py:155
 msgid "Database too new"
@@ -2324,6 +2351,10 @@ msgid ""
 "Miro can't find your primary video directory.  This may be because it's "
 "located on an external drive that is currently disconnected."
 msgstr ""
+"\n"
+"Miro kann Ihr Zielverzeichnis für Videos nicht finden. Dies könnte sein, "
+"weil es sich auf einer externen Festplatte befindet, welche momentan nicht "
+"angeschlossen ist."
 
 #: ../../portable/folder.py:144
 #, python-format
@@ -2350,7 +2381,7 @@ msgstr "Geben Sie einen neuen Namen für den Ordner der Wiedergabeliste ein."
 
 #: ../../portable/license.py:68
 msgid "license page"
-msgstr ""
+msgstr "Lizenzseite"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -2377,6 +2408,9 @@ msgid ""
 "<b>Note:</b> If you change the renderer used to play videos, you MUST \n"
 "restart Miro for the changes to take effect."
 msgstr ""
+"<b>Notiz:</b> Wenn Sie den Renderer zum Abspielen der Videos wechseln, "
+"MÜSSEN sie \n"
+"Miro neustarten, damit die Änderung wirksam wird."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Searching for Videos</b>"
@@ -2448,11 +2482,11 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Auto download default setting for new channels"
-msgstr ""
+msgstr "Standardeinstellung für automatische Downloads neuer Channels"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "Automatically for_ward ports."
-msgstr ""
+msgstr "Ports autoatisch übermittelt."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "By default, videos _expire after"
@@ -2490,7 +2524,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:40
 msgid "G_B"
-msgstr ""
+msgstr "G_B"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid "Go"
@@ -2498,7 +2532,7 @@ msgstr "Weiter"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
 msgid "Ignore Un_encrypted Connections."
-msgstr ""
+msgstr "Ignoriere unv_erschlüsselte Verbindungen."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:43
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
@@ -2507,15 +2541,15 @@ msgstr "In diesem:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:45
 msgid "Limit torrent _downstream to:"
-msgstr ""
+msgstr "Torrent-Datenstrom limitieren auf:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Maximum number of channel auto-downloads at a time: "
-msgstr ""
+msgstr "Maximale Anzahl gleichzeitiger automatischer Downloads: "
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Maximum number of manual downloads at a time: "
-msgstr ""
+msgstr "Maximale Anzahl gleichzeitiger manueller Downloads: "
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid ""
@@ -2531,6 +2565,9 @@ msgid ""
 "All\n"
 "Off"
 msgstr ""
+"Neue\n"
+"Alle\n"
+"Aus"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "Play _videos one after another"
@@ -2571,7 +2608,7 @@ msgstr "Eigenes Suchverzeichnis auswählen"
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr ""
+msgstr "Torrent Upload stoppen, sobald folgende Ratio erreicht ist:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid ""
@@ -2584,14 +2621,16 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "To avoid internet slowdowns, limit _upstream to:"
 msgstr ""
+"Um Geschwindigkeitseinbrüche beim Internet zu vermeiden, Upload limitieren "
+"auf:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "Use _ports:"
-msgstr ""
+msgstr "Verwende _Ports:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "Use this renderer to play videos:"
-msgstr ""
+msgstr "Verwende diesen Renderer zur Videowiedergabe:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "Volume:"
@@ -2650,11 +2689,11 @@ msgstr "_Allgemein"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:80
 msgid "_KB/s."
-msgstr ""
+msgstr "_KB/s."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:81
 msgid "_Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Folgenden Speicherplatz auf dem Laufwerk mindestens freilassen:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_Playback"
@@ -2694,6 +2733,8 @@ msgid ""
 "xine\n"
 "gstreamer"
 msgstr ""
+"xine\n"
+"gstreamer"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
@@ -2818,7 +2859,7 @@ msgstr "Verzeichnis hinzufügen..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
 msgid "Automatically Forward Ports"
-msgstr ""
+msgstr "Ports automatisch übermitteln"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3
 msgid "Automatically run $longAppName when I login."
@@ -2852,19 +2893,19 @@ msgstr "Verzeichnis"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
 msgid "Ignore Unencrypted Connections"
-msgstr ""
+msgstr "Ignoriere unverschlüsselte Verbindungen"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
 msgid "KB/s"
-msgstr ""
+msgstr "KB/s"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
 msgid "Limit downstream bandwith to:"
-msgstr ""
+msgstr "Maximale Download-Rate:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Manually"
@@ -2872,11 +2913,11 @@ msgstr "Manuell"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "Maximum number of channel auto-downloads at a time:"
-msgstr ""
+msgstr "Maximale Anzahl gleichzeitiger automatischer Downloads:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
 msgid "Maximum number of manual downloads at a time:"
-msgstr ""
+msgstr "Maximale Anzahl gleichzeitiger manueller Downloads:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
@@ -2909,6 +2950,8 @@ msgstr "Speichere heruntergeladene Videos in diesem Verzeichnis:"
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
 msgid "To avoid internet slowdowns, limit upstream bandwith to:"
 msgstr ""
+"Um Geschwindigkeitseinbrüche beim Internet zu vermeiden, Upload limitieren "
+"auf:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid ""

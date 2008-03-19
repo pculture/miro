@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2007-11-17 16:42+0000\n"
-"Last-Translator: trebere.com <Unknown>\n"
+"PO-Revision-Date: 2008-03-14 18:55+0000\n"
+"Last-Translator: gariko.jaso <Unknown>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
+"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -291,7 +291,7 @@ msgstr "(bideoen direktorioaren bidea jarri behar da hemen)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 day"
@@ -330,7 +330,7 @@ msgstr "Gehi..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "All"
-msgstr ""
+msgstr "Guztiak"
 
 msgid "Auto download default setting for new channels:"
 msgstr ""
@@ -340,7 +340,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
 
 msgid "By default, videos expire after:"
 msgstr "Ez bada zehazten, bideoen iraungitze (kaduzitate) denbora:"
@@ -369,7 +369,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid "KB/s."
-msgstr ""
+msgstr "KB/s."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "Keep at least this much free space on my drive:"
@@ -1110,7 +1110,7 @@ msgstr ""
 #: ../../portable/frontends/html/main.py:291
 #, python-format
 msgid "%s is up to date."
-msgstr ""
+msgstr "%s eguneratuta dago."
 
 #: ../../portable/frontends/html/main.py:309
 msgid "Are you sure you want to quit?"
@@ -1143,7 +1143,7 @@ msgstr "OPML Fitxategia Exportatu"
 
 #: ../../portable/frontends/html/templatedisplay.py:325
 msgid "Invalid Value"
-msgstr ""
+msgstr "Balio okerra"
 
 #: ../../portable/frontends/html/templatedisplay.py:326
 #, python-format
@@ -1379,27 +1379,27 @@ msgstr "_Irten"
 
 #: ../../portable/menubar.py:179
 msgid "Cu_t"
-msgstr ""
+msgstr "_Ebaki"
 
 #: ../../portable/menubar.py:180
 msgid "_Copy"
-msgstr ""
+msgstr "_Kopiatu"
 
 #: ../../portable/menubar.py:181
 msgid "_Paste"
-msgstr ""
+msgstr "_Itsatsi"
 
 #: ../../portable/menubar.py:182
 msgid "Select _All"
-msgstr ""
+msgstr "Hautatu _dena"
 
 #: ../../portable/menubar.py:183
 msgid "_Delete"
-msgstr ""
+msgstr "E_zabatu"
 
 #: ../../portable/menubar.py:187
 msgid "Add _Channel"
-msgstr ""
+msgstr "_Gehitu kanala"
 
 #: ../../portable/menubar.py:188
 msgid "New Searc_h Channel..."
@@ -1407,7 +1407,7 @@ msgstr "_Kanal bilaketa berria..."
 
 #: ../../portable/menubar.py:189
 msgid "New _Folder..."
-msgstr ""
+msgstr "_Karpeta berria..."
 
 #: ../../portable/menubar.py:190
 msgid "Add Channel _Guide..."
@@ -1467,11 +1467,11 @@ msgstr "_Erreproduzitu"
 
 #: ../../portable/menubar.py:228
 msgid "_Pause"
-msgstr ""
+msgstr "_Pausatu"
 
 #: ../../portable/menubar.py:229
 msgid "_Stop"
-msgstr ""
+msgstr "_Gelditu"
 
 #: ../../portable/menubar.py:231
 msgid "_Next Video"
@@ -1483,19 +1483,19 @@ msgstr "_Aurreko Bideoa"
 
 #: ../../portable/menubar.py:234
 msgid "Skip _Forward"
-msgstr ""
+msgstr "Saltatu a_urrera"
 
 #: ../../portable/menubar.py:235
 msgid "Skip _Back"
-msgstr ""
+msgstr "Saltatu a_tzera"
 
 #: ../../portable/menubar.py:237
 msgid "Volume _Up"
-msgstr ""
+msgstr "_Igo bolumena"
 
 #: ../../portable/menubar.py:238
 msgid "Volume _Down"
-msgstr ""
+msgstr "_Jaitsi bolumena"
 
 #: ../../portable/menubar.py:240
 msgid "_Fullscreen"
@@ -1503,7 +1503,7 @@ msgstr "_Pantaila osoa"
 
 #: ../../portable/menubar.py:244
 msgid "_About"
-msgstr ""
+msgstr "_Honi buruz"
 
 #: ../../portable/menubar.py:245
 msgid "_Donate"
@@ -1523,7 +1523,7 @@ msgstr "_Bideo"
 
 #: ../../portable/menubar.py:254
 msgid "_File"
-msgstr ""
+msgstr "_Fitxategia"
 
 #: ../../portable/menubar.py:258
 msgid "_Channels"
@@ -1551,15 +1551,15 @@ msgstr ""
 
 #: ../../portable/menubar.py:269
 msgid "Options..."
-msgstr ""
+msgstr "Hobespenak..."
 
 #: ../../portable/menubar.py:271
 msgid "Hide Window"
-msgstr ""
+msgstr "Leihoa ezkutatu"
 
 #: ../../portable/menubar.py:272
 msgid "Show Window"
-msgstr ""
+msgstr "Leihoa erakutsi"
 
 #: ../../portable/theme.py:137
 msgid "Starter Channels"
@@ -1567,7 +1567,7 @@ msgstr ""
 
 #: ../../portable/theme.py:154
 msgid "Example Playlist"
-msgstr ""
+msgstr "Adibidezko zerrenda"
 
 #: ../../portable/httpclient.py:81
 #, python-format
@@ -1649,16 +1649,16 @@ msgstr "URL Baliogabea"
 #: ../../portable/httpclient.py:150
 #, python-format
 msgid "\"%s\" is not a valid URL"
-msgstr ""
+msgstr "\"%s\" ez da baliozko URLa"
 
 #: ../../portable/httpclient.py:156
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "\"%s\" fitxategia ez da existitzen"
 
 #: ../../portable/httpclient.py:160
 msgid "Read error"
-msgstr ""
+msgstr "Irakurketa errorea"
 
 #: ../../portable/httpclient.py:161
 #, python-format
@@ -1789,7 +1789,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:89
 msgid "Ignore"
-msgstr ""
+msgstr "Ez ikusi egin"
 
 #: ../../portable/dialogs.py:90
 msgid "Submit Crash Report"
@@ -1864,11 +1864,11 @@ msgstr "Edonola Deskargatu"
 
 #: ../../portable/dialogs.py:109
 msgid "Install iHeartMiro"
-msgstr ""
+msgstr "iHeartMiro instalatu"
 
 #: ../../portable/dialogs.py:110
 msgid "Don't Install"
-msgstr ""
+msgstr "Ez instalatu"
 
 #: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
@@ -1897,7 +1897,7 @@ msgstr "Ziur zaude %s gida ezabatu nahi duzula?"
 #: ../../portable/controller.py:211
 #, python-format
 msgid "Are you sure you want to remove %s"
-msgstr "Zihur %s ezabatu nahi duzula?"
+msgstr "Ziur %s ezabatu nahi duzula?"
 
 #: ../../portable/controller.py:214 ../../portable/controller.py:259
 #: ../../portable/controller.py:285 ../../portable/controller.py:304
@@ -1908,7 +1908,7 @@ msgstr "Ezabatu %s kanal"
 #: ../../portable/controller.py:216
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
+msgstr "Ziur zaude %s zerrenda hauek kendu nahi dituzula"
 
 #: ../../portable/controller.py:255
 msgid ""
@@ -1928,7 +1928,7 @@ msgid ""
 "Are you sure you want to remove %s?  Any downloads in progress will be "
 "canceled."
 msgstr ""
-"Zihur %s ezabatu nahi duzula? Bukatu gabeko jeitsierak ezeztatuak izango dira"
+"Ziur %s ezabatu nahi duzula? Bukatu gabeko jeitsierak ezeztatuak izango dira"
 
 #: ../../portable/controller.py:286
 #, python-format
@@ -1940,7 +1940,7 @@ msgstr ""
 #: ../../portable/controller.py:301
 #, python-format
 msgid "Are you sure you want to remove %s?"
-msgstr ""
+msgstr "Ziur al zaude %s kendu nahi duzula?"
 
 #: ../../portable/controller.py:305
 #, python-format
@@ -2125,7 +2125,7 @@ msgstr "TORRENT"
 
 #: ../../portable/item.py:984
 msgid "WEB PAGE"
-msgstr "WEB ORRIA"
+msgstr "WEB GUNEA"
 
 #: ../../portable/item.py:994
 msgid "Total Down:"

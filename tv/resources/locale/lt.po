@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-02-22 22:28+0000\n"
-"Last-Translator: Vincas Dargis <Unknown>\n"
+"PO-Revision-Date: 2008-03-19 10:26+0000\n"
+"Last-Translator: squich <Unknown>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
+"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
 msgid "Cancel"
-msgstr "Atsisakyti"
+msgstr "Atšaukti"
 
 msgid "OK"
 msgstr "Gerai"
@@ -97,7 +97,7 @@ msgstr "Iškirpti"
 
 #: ../../portable/dialogs.py:104
 msgid "Delete"
-msgstr "Ištrinti"
+msgstr "Pašalinti"
 
 msgid "Donate"
 msgstr "Paaukoti"
@@ -106,7 +106,7 @@ msgid "Download Video..."
 msgstr "Atsisiųsti video..."
 
 msgid "Edit"
-msgstr "Redaguoti"
+msgstr "Keisti"
 
 msgid "Export Channels (OPML)..."
 msgstr "Eksportuoti kanalus (OPML)..."
