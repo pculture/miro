@@ -8,7 +8,7 @@
 <!ENTITY prefs.general "کلی">
 <!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
 
-<!ENTITY prefs.channels "کانال ها">
+<!ENTITY prefs.channels "کانال‌ها">
 <!ENTITY prefs.channels.check "Check channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">

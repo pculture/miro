@@ -4,15 +4,15 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-18 10:28-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 14:32-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
-/* File: ../../portable/dialogs.py:77 */
+/* File: ../../portable/dialogs.py:85 */
 /* Flag: python-format */
 "Cancel" = "Prekliči";
 
 "OK" = "OK";
 
-/* File: ../../portable/dialogs.py:76 */
+/* File: ../../portable/dialogs.py:84 */
 "Ok" = "V redu";
 
 "$log" = "$log";
@@ -33,8 +33,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Bring All to Front" = "Vse na vrh";
 
-/* File: ../../platform/osx/frontend/Preferences.py:65 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:80 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
 "Channels" = "Kanali";
 
 "Check for New Version" = "Preveri za posodobitev";
@@ -51,7 +51,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Cut" = "Izreži";
 
-/* File: ../../portable/dialogs.py:96 */
+/* File: ../../portable/dialogs.py:104 */
 "Delete" = "Izbriši";
 
 "Donate" = "Donacije";
@@ -80,7 +80,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Minimize" = "Pomanjšaj";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
 "Miro" = "Miro";
 
 "Miro Help" = "Pomoči o programu";
@@ -101,11 +101,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Paste" = "Prilepi";
 
-/* File: ../../platform/osx/frontend/Application.py:249 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:244 */
 "Play Video" = "Predvajaj posnetek";
 
-/* File: ../../platform/osx/frontend/Preferences.py:69 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:84 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
 "Playback" = "Predvajanje";
 
 "Playlists" = "Seznami predvajanja";
@@ -156,7 +156,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "FullScreen Controls" = "Nadzor celozaslonskega načina";
 
-/* File: ../../portable/tabs.py:46 */
+/* File: ../../portable/tabs.py:57 */
 "Video Search" = "Iskanje posnetkov";
 
 "VideoWindow" = "Okno posnetka";
@@ -169,24 +169,25 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Username:\n\n" = "Uporabniško ime:\n\n";
 
-" limit upstream to" = " omeji pretok navzgor na";
-
-"(You must restart Miro for this change to take effect)" = "(Program osveži spremembe ob naslednjem zagonu)";
+"(You must restart Miro for some of these changes to take effect)" = "(Program Miro morate ponovno zagnati, preden bodo spremembe uporabljene)";
 
 "(You must restart Miro for this change to take effect)\n" = "(Program osveži spremembe ob naslednjem zagonu)\n";
 
 "(movies directory path goes here)" = "(pot do mape s filmi)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-"1 day" = "1 dan";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
+"-" = "-";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
+"1 day" = "1 dan";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
 "1 month" = "1 mesec";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
 "10 days" = "10 dni";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
 "3 days" = "3 dni";
 
 "3 hours" = "3 ure";
@@ -195,71 +196,92 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "5" = "5";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
 "6 days" = "6 dni";
 
 "99999" = "99999";
 
 "Add..." = "Dodaj ...";
 
-"BitTorrent ports:" = "BitTorrent vrata:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
+"All" = "Vse";
+
+"Auto download default setting for new channels:" = "Samodejni prenos privzetih nastavitev za nove kanale:";
+
+"Automatically forward ports" = "Samodejno posredovanje vrat";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
+"BitTorrent" = "BitTorrent";
 
 "By default, videos expire after:" = "Posnetki naj privzeto pretečejo po:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
 "Change..." = "Spremeni ...";
 
 "Check channels for new content:" = "Preveri novo vsebino na kanalih:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-"Don't start a download if it leaves less than" = "Ne prični prenosa, če bo ostalo manj kot";
+"Don't auto-download more than this many videos per channel at once:" = "Ne prenesi samodejno več kot toliko posnetkov očasno prekokanala:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-"Download at most" = "Prenos pri največ";
+"Don't download more than this many videos at once:" = "Ne prenesi več kot toliko posnetkov očasno prekokanala:";
 
 "Folder location" = "Pot do mape";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-"GB free." = "GB prostora.";
+"GB\n" = "GB\n";
 
-"KB/s when my computer is active." = "KB/s kadar je računalnik dejaven.";
+"Ignore unencrypted connections" = "Prezri nešifrirane povezave";
 
-"Maximum:" = "Največ:";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+"KB/s." = "KB/s.";
 
-"Minimum:" = "Najmanj:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+"Keep at least this much free space on my drive:" = "Ohrani vsaj toliko prostora na pogonu:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+"Limit downstream to" = "Omejitev prenosa na";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "Never" = "Nikoli";
+
+/* File: ../../portable/tabs.py:56 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+"New" = "New";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+"Off" = "Izključeno";
 
 "OtherViews" = "Drugi pogledi";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
 "Play videos one after another." = "Predvajaj posnetke enega za drugim.";
 
 "Remember video position." = "Zapomni si lego okna posnetka.";
 
-/* File: ../../portable/guide.py:107 */
-/* File: ../../portable/playlist.py:197 */
-/* File: ../../portable/feed.py:795 */
-/* File: ../../portable/menu.py:65 */
-/* File: ../../portable/menu.py:70 */
-/* File: ../../portable/folder.py:156 */
-/* File: ../../portable/folder.py:211 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
+/* File: ../../portable/frontends/html/contextmenu.py:99 */
+/* File: ../../portable/frontends/html/contextmenu.py:104 */
+/* File: ../../portable/frontends/html/contextmenu.py:178 */
+/* File: ../../portable/frontends/html/contextmenu.py:184 */
+/* File: ../../portable/frontends/html/contextmenu.py:190 */
+/* File: ../../portable/frontends/html/contextmenu.py:199 */
+/* File: ../../portable/frontends/html/contextmenu.py:233 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
 "Remove" = "Odstrani";
 
 "Run Miro at startup" = "Zagon programa ob prijavi";
 
-"Save downloaded videos in this folder:" = "Shrani sprejete posnetke v mapo:";
-
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591 */
 "Show as Channel" = "Prikaži kot kanal";
 
 "Stop after each video." = "Zaustavi po koncu vsakega posnetka.";
 
-"To avoid internet slowdowns:" = "V izogib upočasnitvam interneta:";
+"Stop uploads when this ratio is reached:" = "Ustavi pošiljanje kadar je doseženo razmerje:";
 
-/* File: ../../portable/app.py:1206 */
+"Store downloads in this folder:" = "Shranjevanje posnetkov v mapi:";
+
+"To avoid internet slowdowns, limit upstream to" = "Omejitev pošiljanja podatkov na:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
+"Use these ports:" = "Uporabi vrata:";
+
+/* File: ../../portable/frontends/html/main.py:319 */
 "Warn me when I attempt to quit with downloads in progress" = "Izpiši opozorilo ob izhodu iz programa, kadar prenos še poteka";
 
 "Watch for new videos in these folders and include them in the Library:" = "Sledi spremembam in samodejno vključi posnetke iz map v zbirko:";
@@ -270,16 +292,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "manually" = "ročno";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
-"videos at once." = "posnetkov sočasno.";
-
 "$label$" = "$oznaka$";
 
 "$title$" = "$naslov$";
 
 "Channel" = "Kanal";
 
-/* File: ../../portable/dialogs.py:91 */
+/* File: ../../portable/dialogs.py:99 */
 "Create" = "Ustvari";
 
 "In this:" = "V tem:";
@@ -292,8 +311,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "URL" = "URL";
 
-/* File: ../../platform/windows-xul/frontend_implementation/startup.py:42 */
-/* File: ../../platform/gtk-x11/frontend_implementation/startup.py:48 */
+/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/startup.py:56 */
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(rezčlenjenih %d datotek - najdenih %d posnetkov)";
 
@@ -301,10 +320,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Browse" = "Brskanje";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:106 */
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:121 */
 "Next" = "Naprej";
 
-/* File: ../../portable/dialogs.py:79 */
+/* File: ../../portable/dialogs.py:87 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "Ne";
 
@@ -323,1226 +342,1261 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Priporočljivo je, da omogočite predvajalniku samodejen zagon ob zagonu računalnika. Na ta način se lahko posnetki, ki jih v prejšnji seji ni bilo mogoče prenesti do konca, prenesejo in so vam na voljo, ko boste imeli čas za ogled.\n\n\nAli želite zagnati program ob zagonu računalnika?";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
 "Welcome to Internet TV!" = "Dobrodošli na spletno TV!";
 
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Dobrodošli v spletni TV. S predvajalnikom Miro lahko naredite veliko: samodejno prenesete posnetke iz najljubših kanalov, si ogledate posnetke v določenem vrstnem redu, prenesete torrent datoteke, priporočite posnetke prijateljem in še veliko več.\n\n";
 
-/* File: ../../portable/dialogs.py:78 */
+/* File: ../../portable/dialogs.py:86 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
 "Yes" = "Da";
 
 "%message%\n%message%" = "%sporočilo%\n%sporočilo%";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
 "Update Available" = "Na voljo je posodobitev";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
 /* Flag: python-format */
 "A new version of %s is available for download." = "Za prenos je na voljo nova različica %s.";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
 "Error Bombing Item" = "Napaka pri bombardiranju predmeta";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
 "Error Recommending Item" = "Napaka pri priporočanju predmeta";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
 "Error Opening Website" = "Napaka pri odpiranju spletne strani";
 
-/* File: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
 /* Flag: python-format */
 "There was an error opening %s.  Please try again in a few seconds" = "Napaka pri odpiranju %s. Poizkusite ponovno čez nekaj sekund";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:62 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
 /* Flag: python-format */
 "Error importing modules:\n%s" = "Napaka med uvozom enot:\n%s";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:66 */
-"Starting up" = "Zaganjanje";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:273 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
 "Loading window" = "Nalagam okno";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:274 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
 "onStartup called twice" = "onStartup poklican ponovno";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:702 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
 "Spacebar" = "Preslednica";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:851 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
 "Close to tray?" = "Pomanjšam v sistemski pladenj?";
 
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:852 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
 "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Ali naj se ob kliku na rdeči gumb za izhod iz programa Miro pomanjša v opravilno vrstico ali izklopi? Nastavitev lahko spremenite med možnostmi programa.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:44 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
 "Download Completed" = "Prenos končan";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:45 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
 /* Flag: python-format */
 "Download of video '%s' is finished." = "Prenos posnetka '%s' je končan.";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:54 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
 "Download Failed" = "Neuspešen prenos";
 
-/* File: ../../platform/osx/frontend/GrowlNotifier.py:55 */
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
 /* Flag: python-format */
 "Download of video '%s' has failed." = "Neuspešen prenos posnetka '%s'.";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:278 */
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
 "Subscribe to Channel" = "Naročilo na kanal";
 
-/* File: ../../platform/osx/frontend/MainFrame.py:279 */
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
 "Enter the URL of the channel you would like to subscribe to." = "Vnesite naslov URL za kanal na katerega se želite naročiti.";
 
-/* File: ../../platform/osx/frontend/QuicktimeRenderer.py:248 */
-"Audio" = "Zvok";
-
-/* File: ../../platform/osx/frontend/Preferences.py:64 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
 "General" = "Splošno";
 
-/* File: ../../platform/osx/frontend/Preferences.py:66 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
 "Downloads" = "Prenosi";
 
-/* File: ../../platform/osx/frontend/Preferences.py:67 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
 "Folders" = "Mape";
 
-/* File: ../../platform/osx/frontend/Preferences.py:68 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
 "Disk Space" = "Prostor na disku";
 
-/* File: ../../platform/osx/frontend/Preferences.py:196 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
 "Movies Directory" = "Mapa s filmi";
 
-/* File: ../../platform/osx/frontend/Preferences.py:197 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
 /* Flag: python-format */
 "Select a Directory to store %s downloads in." = "Izberite mapo za shranjevanje prenosov %s.";
 
-/* File: ../../platform/osx/frontend/Preferences.py:198 */
-/* File: ../../platform/osx/frontend/Preferences.py:262 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
 "Select" = "Izberi";
 
-/* File: ../../platform/osx/frontend/Preferences.py:207 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
 "Migrate existing movies?" = "Preselim obstoječe posnetke?";
 
-/* File: ../../platform/osx/frontend/Preferences.py:208 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
 /* Flag: python-format */
 "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Izbrali ste novo mapo za prenesene posnetke. Ali naj %s prestavi obstoječe posnetke v to mapo?  (Trenutno dejavni prenosi ne bodo prestavljeni dokler se prenos ne konča).";
 
-/* File: ../../platform/osx/frontend/Preferences.py:260 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
 "View this Directory in the Library" = "Prikaži mapo v zbirki";
 
-/* File: ../../platform/osx/frontend/Preferences.py:261 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
 "Select a Directory to view in the Library." = "Izbor mape za prikaz v zbirki";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:80 */
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
 "Finish" = "Končaj";
 
-/* File: ../../platform/osx/frontend/StartupPanel.py:139 */
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
 "Search!" = "Iskanje!";
 
-/* File: ../../platform/osx/frontend/Application.py:246 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
 "Pause Video" = "Zaustavi predvajanje";
 
-/* File: ../../platform/osx/frontend/Application.py:255 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
 "Unsupported version of Quicktime" = "Nepodprta različica Quicktime";
 
-/* File: ../../platform/osx/frontend/Application.py:256 */
+/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
 /* Flag: python-format */
 "To run %s you need the most recent version of Quicktime, which is a free update." = "Za predvajanje %s potrebujete najnovejšo različico Quicktime gonilnikov, ki jih lahko posodobite brezplačno.";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:22 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
 "_Remove..." = "Od_strani ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:23 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:34 */
 "_Remove Playlist..." = "_Odstrani seznam predvajanja ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:24 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:35 */
 "_Remove Playlists..." = "_Odstrani sezname predvajanja ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:25 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:36 */
 "_Remove Playlist Folder..." = "_Odstrani mapo seznamov predvajanja ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:26 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:37 */
 "_Remove Playlist Folders..." = "_Odstrani mapo seznamov predvajanja ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:27 */
-/* File: ../../portable/menubar.py:179 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:38 */
+/* File: ../../portable/menubar.py:193 */
 "_Remove Channel..." = "_Odstrani kanal ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:28 */
-/* File: ../../portable/menubar.py:180 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:39 */
+/* File: ../../portable/menubar.py:194 */
 "_Remove Channels..." = "_Odstrani kanale ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:29 */
-/* File: ../../portable/menubar.py:182 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:40 */
+/* File: ../../portable/menubar.py:196 */
 "_Remove Channel Folder..." = "_Odstrani mapo kanalov ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:30 */
-/* File: ../../portable/menubar.py:181 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:41 */
+/* File: ../../portable/menubar.py:195 */
 "_Remove Channel Folders..." = "_Odstrani mapo kanalov ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:31 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:42 */
 "_Remove Miro Guide..." = "_Odstrani vodnika Miro ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:32 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:43 */
 "_Remove Miro Guides..." = "_Odstrani vodnike Miro ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:33 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:44 */
 "_Remove Video..." = "_Odstrani posnetek ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:34 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:45 */
 "_Remove Videos..." = "_Odstrani posnetke ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:35 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:46 */
 "Re_name..." = "Preime_nuj ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:36 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:47 */
 "Re_name Playlist..." = "_Preimenuj seznam predvajanja ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:37 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:48 */
 "Re_name Playlist Folder..." = "_Preimenuj mapo seznama predvajanja ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:38 */
-/* File: ../../portable/menubar.py:178 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:49 */
+/* File: ../../portable/menubar.py:192 */
 "Re_name Channel..." = "_Preimenuj kanal ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:39 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:50 */
 "Re_name Channel Folder..." = "_Preimenuj mapo kanalov ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:40 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:51 */
 "Re_name Miro Guide..." = "_Preimenuj vodnike Miro ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:41 */
-/* File: ../../portable/menubar.py:184 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:52 */
+/* File: ../../portable/menubar.py:198 */
 "_Update Channel..." = "_Posodobi kanal ...";
 
-/* File: ../../platform/osx/frontend/UIStrings.py:42 */
-/* File: ../../portable/menubar.py:185 */
+/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:53 */
+/* File: ../../portable/menubar.py:199 */
 "_Update Channels..." = "Posodobi kanale ...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42 */
+/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
+"Audio" = "Zvok";
+
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
 "Settings" = "Nastavitve";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56 */
 "Hide" = "Skrij";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58 */
 "Show" = "Prikaži";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48 */
-/* File: ../../portable/dialogs.py:80 */
-/* File: ../../portable/menubar.py:257 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59 */
+/* File: ../../portable/menubar.py:273 */
+/* File: ../../portable/dialogs.py:88 */
 "Quit" = "Izhod";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
 "New Channel _Guide..." = "Nov _vodnik kanala ...";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
 "Folder Location" = "Pot do mape";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
 "Username:" = "Uporabniško ime:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
 "Password:" = "Geslo:";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416 */
 "Unknown Runtime Error" = "Neznana napaka izvajanja";
 
-/* File: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417 */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "Prišlo je do neznane napake %s.";
 
-/* File: ../../portable/dl_daemon/download.py:359 */
+/* File: ../../portable/dl_daemon/download.py:458 */
 "Error" = "Napaka";
 
-/* File: ../../portable/dl_daemon/download.py:432 */
+/* File: ../../portable/dl_daemon/download.py:544 */
 /* Flag: python-format */
 "Could not write to %s" = "Ni mogoče pisati v %s";
 
-/* File: ../../portable/dl_daemon/download.py:452 */
+/* File: ../../portable/dl_daemon/download.py:564 */
+/* File: ../../portable/dl_daemon/download.py:769 */
 "Not enough disk space" = "Ni dovolj prostora na disku";
 
-/* File: ../../portable/dl_daemon/download.py:453 */
+/* File: ../../portable/dl_daemon/download.py:565 */
+/* File: ../../portable/dl_daemon/download.py:770 */
 /* Flag: python-format */
 "%s MB required to store this video" = "%s MB prostora potrebuje posnetek";
 
-/* File: ../../portable/dl_daemon/download.py:672 */
+/* File: ../../portable/dl_daemon/download.py:781 */
 "BitTorrent failure" = "BitTorrent napaka";
 
-/* File: ../../portable/dl_daemon/download.py:673 */
+/* File: ../../portable/dl_daemon/download.py:782 */
 "BitTorrent failed to startup" = "Napaka programa BitTorrent ob zagonu";
 
-/* File: ../../portable/dl_daemon/download.py:796 */
+/* File: ../../portable/dl_daemon/download.py:954 */
 "Corrupt Torrent" = "Pokvarjena torrent datoteka";
 
-/* File: ../../portable/dl_daemon/download.py:797 */
+/* File: ../../portable/dl_daemon/download.py:955 */
 /* Flag: python-format */
 "The torrent file at %s was not valid" = "Torrent datoteka na %s ni veljavna";
 
-/* File: ../../portable/dl_daemon/download.py:822 */
+/* File: ../../portable/dl_daemon/download.py:980 */
 "Torrent file deleted" = "Datoteka torrent je izbrisana";
 
-/* File: ../../portable/dl_daemon/download.py:823 */
-"The torrent file for this item was deleted " = "Datoteka torrent za ta predmet je bila izbrisana ";
+/* File: ../../portable/dl_daemon/download.py:981 */
+"The torrent file for this item was deleted outside of Miro." = "Torrent datoteka za izbrani predmet je bila izbrisana izven programa Miro.";
 
-/* File: ../../portable/dl_daemon/download.py:824 */
-"outside of Miro." = "izven programa Miro";
-
-/* File: ../../portable/tabs.py:44 */
-"Library" = "Zbirka";
-
-/* File: ../../portable/tabs.py:45 */
-"New" = "New";
-
-/* File: ../../portable/tabs.py:47 */
-"Downloading" = "Sprejemanje";
-
-/* File: ../../portable/guide.py:104 */
-/* File: ../../portable/feed.py:789 */
-"Copy URL to clipboard" = "_Kopiraj URL v odložišče";
-
-/* File: ../../portable/guide.py:154 */
-"Miro Guide" = "Vodnik Miro";
-
-/* File: ../../portable/extrastrings.py:22 */
-/* File: ../../portable/feed.py:2028 */
-/* File: ../../portable/feed.py:2120 */
-"Search" = "Iskanje";
-
-/* File: ../../portable/downloader.py:215 */
-"activity" = "dejavnost";
-
-/* File: ../../portable/downloader.py:251 */
-/* File: ../../portable/httpclient.py:114 */
-/* File: ../../portable/httpclient.py:142 */
-"File not found" = "Datoteke ni mogoče najti";
-
-/* File: ../../portable/downloader.py:252 */
-"Flash URL Scraping Error" = "Napaka Flash URL praskanja";
-
-/* File: ../../portable/downloader.py:427 */
-"starting up" = "zaganjanje";
-
-/* File: ../../portable/playlist.py:196 */
-/* File: ../../portable/playlist.py:201 */
-"Rename Playlist" = "Preimenuj seznam predvajanja";
-
-/* File: ../../portable/playlist.py:202 */
-/* Flag: python-format */
-"Enter a new name for the playlist %s" = "Vnesite novo ime za seznam predvajanja %s";
-
-/* File: ../../portable/playlist.py:224 */
-"Create Playlist" = "Ustvari seznam predvajanja";
-
-/* File: ../../portable/playlist.py:225 */
-"Enter a name for the new playlist" = "Vnesite ime za nov seznam predvajanja";
-
-/* File: ../../portable/feed.py:383 */
-"never" = "nikoli";
-
-/* File: ../../portable/feed.py:385 */
-/* File: ../../portable/item.py:542 */
-/* Flag: python-format */
-"%d hours" = "%d ur";
-
-/* File: ../../portable/feed.py:387 */
-/* Flag: python-format */
-"%d day" = "%d dni";
-
-/* File: ../../portable/feed.py:389 */
-/* File: ../../portable/item.py:540 */
-/* Flag: python-format */
-"%d days" = "%d dni";
-
-/* File: ../../portable/feed.py:391 */
-/* Flag: python-format */
-"%d months" = "%d mesecev";
-
-/* File: ../../portable/feed.py:787 */
-"Update Channel Now" = "Posodobi kanal";
-
-/* File: ../../portable/feed.py:790 */
-/* File: ../../portable/feed.py:799 */
-"Rename Channel" = "Preimenuj kanal";
-
-/* File: ../../portable/feed.py:794 */
-"Revert Title to Default" = "Povrni naslov na privzeto vrednost";
-
-/* File: ../../portable/feed.py:800 */
-/* Flag: python-format */
-"Enter a new name for the channel %s" = "Vnesite ime za kanal %s";
-
-/* File: ../../portable/feed.py:887 */
-"Error loading feed" = "Napaka ob nalaganju vira";
-
-/* File: ../../portable/feed.py:888 */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Ni mogoče naložiti vira iz %s (%s).";
-
-/* File: ../../portable/feed.py:891 */
-"Would you like to keep the feed?" = "Želite ohraniti vir?";
-
-/* File: ../../portable/feed.py:1004 */
-"Bad content-type" = "Napačna vrsta vsebine";
-
-/* File: ../../portable/feed.py:1017 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-"Channel is not compatible with $shortAppName!" = "Kanal ni združljiv z $shortAppName!";
-
-/* File: ../../portable/feed.py:1018 */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Kljub vsemu bo program poskušal pravilno prenesti datoteke. Postopek bo morda počasnejši in prikaza opisov morda ne bo mogoče enostavno prebrati.  Prosim, stopite v stik z odgovornimi na $url in vprašajte, če lahko ponudijo tudi vir o obliki, ki bo deloval s programom $shortAppName.\n\nAli želite kljub vsemu naložiti kanal?";
-
-/* File: ../../portable/feed.py:2134 */
-"Local Files" = "Krajevne datoteke";
-
-/* File: ../../portable/feed.py:2148 */
-"Playing File" = "Predvajanje datoteke";
-
-/* File: ../../portable/menu.py:69 */
+/* File: ../../portable/frontends/html/contextmenu.py:103 */
 "Update Channels Now" = "Posodobi kanale";
 
-/* File: ../../portable/menu.py:94 */
+/* File: ../../portable/frontends/html/contextmenu.py:128 */
 /* Flag: python-format */
 "%d Downloaded Items" = "%d sprejetih predmetov";
 
-/* File: ../../portable/menu.py:96 */
-/* File: ../../portable/item.py:1475 */
+/* File: ../../portable/frontends/html/contextmenu.py:130 */
+/* File: ../../portable/frontends/html/contextmenu.py:211 */
 "Play" = "Predvajanje";
 
-/* File: ../../portable/menu.py:97 */
-/* File: ../../portable/item.py:1478 */
+/* File: ../../portable/frontends/html/contextmenu.py:131 */
+/* File: ../../portable/frontends/html/contextmenu.py:214 */
 "Add to new playlist" = "Dodajanje v nov seznam predvajanja";
 
-/* File: ../../portable/menu.py:99 */
-/* File: ../../portable/item.py:1471 */
+/* File: ../../portable/frontends/html/contextmenu.py:133 */
+/* File: ../../portable/frontends/html/contextmenu.py:207 */
 "Remove From Playlist" = "Odstrani s _seznama";
 
-/* File: ../../portable/menu.py:101 */
-/* File: ../../portable/item.py:1473 */
+/* File: ../../portable/frontends/html/contextmenu.py:135 */
+/* File: ../../portable/frontends/html/contextmenu.py:209 */
 "Remove From the Library" = "Odstrani iz zbirke";
 
-/* File: ../../portable/menu.py:107 */
-/* File: ../../portable/item.py:1482 */
+/* File: ../../portable/frontends/html/contextmenu.py:141 */
+/* File: ../../portable/frontends/html/contextmenu.py:218 */
 "Mark as Unwatched" = "Označi kot novo";
 
-/* File: ../../portable/menu.py:112 */
-/* File: ../../portable/item.py:1484 */
+/* File: ../../portable/frontends/html/contextmenu.py:146 */
+/* File: ../../portable/frontends/html/contextmenu.py:220 */
 "Mark as Watched" = "označi kot Ogledano";
 
-/* File: ../../portable/menu.py:117 */
+/* File: ../../portable/frontends/html/contextmenu.py:151 */
 /* Flag: python-format */
 "%d Available Items" = "%d predmetov na voljo";
 
-/* File: ../../portable/menu.py:118 */
-/* File: ../../portable/dialogs.py:85 */
-/* File: ../../portable/item.py:1491 */
+/* File: ../../portable/frontends/html/contextmenu.py:152 */
+/* File: ../../portable/frontends/html/contextmenu.py:227 */
+/* File: ../../portable/dialogs.py:93 */
 "Download" = "Sprejemanje";
 
-/* File: ../../portable/menu.py:123 */
+/* File: ../../portable/frontends/html/contextmenu.py:157 */
 /* Flag: python-format */
 "%d Downloading Items" = "%d sprejemanih predmetov";
 
-/* File: ../../portable/menu.py:125 */
-/* File: ../../portable/item.py:1489 */
+/* File: ../../portable/frontends/html/contextmenu.py:159 */
+/* File: ../../portable/frontends/html/contextmenu.py:225 */
 "Cancel Download" = "Preklic prenosa";
 
-/* File: ../../portable/menu.py:127 */
-/* File: ../../portable/item.py:1489 */
+/* File: ../../portable/frontends/html/contextmenu.py:161 */
+/* File: ../../portable/frontends/html/contextmenu.py:225 */
 "Pause Download" = "Zaustavitev prenosa:";
 
-/* File: ../../portable/menu.py:130 */
-/* File: ../../portable/item.py:1487 */
+/* File: ../../portable/frontends/html/contextmenu.py:164 */
+/* File: ../../portable/frontends/html/contextmenu.py:223 */
 "Restart Upload" = "Ponovni zagon prenosa";
 
-/* File: ../../portable/opml.py:49 */
-"Export OPML File" = "Izvoz OPML datoteko";
+/* File: ../../portable/frontends/html/contextmenu.py:170 */
+"Update Channel Now" = "Posodobi kanal";
 
-/* File: ../../portable/opml.py:123 */
-"Import OPML File" = "Uvoz OPML datoteke";
+/* File: ../../portable/frontends/html/contextmenu.py:172 */
+/* File: ../../portable/frontends/html/contextmenu.py:196 */
+"Copy URL to clipboard" = "_Kopiraj URL v odložišče";
 
-/* File: ../../portable/opml.py:125 */
-"OPML Files" = "OPML datoteke";
+/* File: ../../portable/frontends/html/contextmenu.py:173 */
+/* File: ../../portable/feed.py:825 */
+"Rename Channel" = "Preimenuj kanal";
 
-/* File: ../../portable/opml.py:145 */
-"OPML Import failed" = "Uvoz OPML ni uspel";
+/* File: ../../portable/frontends/html/contextmenu.py:177 */
+"Revert Title to Default" = "Povrni naslov na privzeto vrednost";
 
-/* File: ../../portable/opml.py:146 */
-"The selected OPML file appears to be invalid. Import was interrupted." = "Izbrana datoteka OPML je videti neveljavna. Uvoz je prekinjen.";
+/* File: ../../portable/frontends/html/contextmenu.py:183 */
+/* File: ../../portable/folder.py:142 */
+"Rename Channel Folder" = "Preimenuj mapo s kanali";
 
-/* File: ../../portable/opml.py:151 */
-"OPML Import summary" = "Povzetek OPML uvoza";
+/* File: ../../portable/frontends/html/contextmenu.py:189 */
+/* File: ../../portable/folder.py:213 */
+"Rename Playlist Folder" = "Preimenuj mapo s seznami predvajanja";
 
-/* File: ../../portable/autoupdate.py:121 */
+/* File: ../../portable/frontends/html/contextmenu.py:213 */
+"Play Just This Video" = "Predvajaj le ta posnetek";
+
+/* File: ../../portable/frontends/html/contextmenu.py:232 */
+/* File: ../../portable/playlist.py:218 */
+"Rename Playlist" = "Preimenuj seznam predvajanja";
+
+/* File: ../../portable/frontends/html/main.py:132 */
+/* File: ../../portable/startup.py:237 */
+"Video Directory Missing" = "Manjkajoča mapa posnetkov";
+
+/* File: ../../portable/frontends/html/main.py:133 */
+/* Flag: untranslated */
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
+
+/* File: ../../portable/frontends/html/main.py:190 */
+/* File: ../../portable/theme.py:126 */
+"Custom Channels" = "Kanali po meri";
+
+/* File: ../../portable/frontends/html/main.py:190 */
+/* File: ../../portable/theme.py:126 */
+"You are running a version of $longAppName with a custom set of channels." = "Uporabljate različico programa $longAppName s prirejeno zbirko kanalov.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/httpclient.py:139 */
+"Internal Error" = "Notranja napaka";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Prišlo je do notranje napake v programu Miro. Lahko pomagate slediti težavi in jo odpraviti s tem, da  pošljete poročilo o napaki.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Include entire program database including all video and channel metadata with crash report" = "Vstavi celotno programsko podatkovno zbirko z vsemi posnetki in podatki kanalov skupaj s poročilom o napaki.";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Describe what you were doing that caused this error" = "Opišite, kaj ste naredili, da je prišlo do napake.";
+
+/* File: ../../portable/frontends/html/main.py:284 */
 /* Flag: python-format */
 "%s Version Alert" = "%s opozorilo različice";
 
-/* File: ../../portable/autoupdate.py:122 */
+/* File: ../../portable/frontends/html/main.py:285 */
 /* Flag: python-format */
 "A new version of %s is available. Would you like to download it now?" = "Na voljo je nova različica %s. Jo želite prenesti?";
 
-/* File: ../../portable/autoupdate.py:128 */
+/* File: ../../portable/frontends/html/main.py:290 */
 /* Flag: python-format */
 "%s Version Check" = "%s preverjanje različice";
 
-/* File: ../../portable/autoupdate.py:129 */
+/* File: ../../portable/frontends/html/main.py:291 */
 /* Flag: python-format */
 "%s is up to date." = "%s je posodobljen.";
 
-/* File: ../../portable/util.py:252 */
-/* File: ../../portable/httpclient.py:126 */
-"Internal Error" = "Notranja napaka";
-
-/* File: ../../portable/util.py:252 */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Prišlo je do notranje napake v programu Miro. Lahko pomagate slediti težavi in jo odpraviti s tem, da  pošljete poročilo o napaki.";
-
-/* File: ../../portable/util.py:252 */
-"Include entire program database including all video and channel metadata with crash report" = "Vstavi celotno programsko podatkovno zbirko z vsemi posnetki in podatki kanalov skupaj s poročilom o napaki.";
-
-/* File: ../../portable/util.py:252 */
-"Describe what you were doing that caused this error" = "Opišite, kaj ste naredili, da je prišlo do napake.";
-
-/* File: ../../portable/util.py:455 */
-/* Flag: python-format */
-"%1.1fGB" = "%1.1fGB";
-
-/* File: ../../portable/util.py:457 */
-/* Flag: python-format */
-"%dGB" = "%dGB";
-
-/* File: ../../portable/util.py:461 */
-/* Flag: python-format */
-"%1.1fMB" = "%1.1fMB";
-
-/* File: ../../portable/util.py:463 */
-/* Flag: python-format */
-"%dMB" = "%dMB";
-
-/* File: ../../portable/util.py:467 */
-/* Flag: python-format */
-"%1.1fKB" = "%1.1fKB";
-
-/* File: ../../portable/util.py:469 */
-/* Flag: python-format */
-"%dKB" = "%dKB";
-
-/* File: ../../portable/util.py:473 */
-/* Flag: python-format */
-"%1.1fB" = "%1.1fB";
-
-/* File: ../../portable/util.py:475 */
-/* Flag: python-format */
-"%dB" = "%dB";
-
-/* File: ../../portable/storedatabase.py:832 */
-/* File: ../../portable/storedatabase.py:1231 */
-/* Flag: python-format */
-"%s database save succeeded" = "%s uspešno shranjena podatkovna zbirka";
-
-/* File: ../../portable/storedatabase.py:833 */
-/* File: ../../portable/storedatabase.py:1232 */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "Podatkovna zbirka je bila uspešno shranjena. Zdaj lahko varno končate delo.";
-
-/* File: ../../portable/storedatabase.py:840 */
-/* File: ../../portable/storedatabase.py:1240 */
-/* Flag: python-format */
-"%s database save failed" = "Napaka pri shranjevanju podatkovne zbirke %s";
-
-/* File: ../../portable/storedatabase.py:841 */
-/* File: ../../portable/storedatabase.py:1241 */
-/* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s ne more shraniti podatkov: disk je poln.\nZbrišite kakšno datoteko z diska ali pa kakšen film iz svoje zbirke.\nZadnje spremembe se lahko izgubijo.";
-
-/* File: ../../portable/dialogs.py:81 */
-"Ignore" = "Prezri";
-
-/* File: ../../portable/dialogs.py:82 */
-"Submit Crash Report" = "Pošlji poročilo o hrošču";
-
-/* File: ../../portable/dialogs.py:83 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-"Migrate" = "Preselitev";
-
-/* File: ../../portable/dialogs.py:84 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-"Don't Migrate" = "Brez preselitve";
-
-/* File: ../../portable/dialogs.py:86 */
-"Remove Entry" = "Odstrani zapis";
-
-/* File: ../../portable/dialogs.py:87 */
-"Delete File" = "Izbriši datoteko";
-
-/* File: ../../portable/dialogs.py:88 */
-"Delete Files" = "Izbriši datoteke";
-
-/* File: ../../portable/dialogs.py:89 */
-"Keep Videos" = "Shrani posnetke";
-
-/* File: ../../portable/dialogs.py:90 */
-"Delete Videos" = "Izbriši posnetke";
-
-/* File: ../../portable/dialogs.py:92 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-"Create Channel" = "Ustvari kanal";
-
-/* File: ../../portable/dialogs.py:93 */
-"Add" = "Dodaj";
-
-/* File: ../../portable/dialogs.py:94 */
-"Add Into New Folder" = "Dodaj v novo mapo";
-
-/* File: ../../portable/dialogs.py:95 */
-"Keep" = "Ohrani";
-
-/* File: ../../portable/dialogs.py:97 */
-"Not Now" = "Ne takoj";
-
-/* File: ../../portable/dialogs.py:98 */
-"Close to Tray" = "Pomanjšaj v pladenj";
-
-/* File: ../../portable/dialogs.py:99 */
-"Launch Miro" = "Zaženi program Miro";
-
-/* File: ../../portable/dialogs.py:100 */
-"Download Anyway" = "Vseeno prenesi";
-
-/* File: ../../portable/dialogs.py:221 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-"New Search Channel" = "Dodaj kanal iskanja";
-
-/* File: ../../portable/dialogs.py:221 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:25 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
-"A search channel contains items that match a search term." = "Iskalni kanali vsebujejo predmete, ki sovpadajo z iskanimi pojmi.";
-
-/* File: ../../portable/singleclick.py:87 */
-"Download already exists" = "Prenos že obstaja.";
-
-/* File: ../../portable/singleclick.py:88 */
-"That URL is already an external download." = "naslov URL je že dodan kot zunanji prenos.";
-
-/* File: ../../portable/singleclick.py:94 */
-"Miro will begin downloading it now." = "Predvajalnik Miro bo začel s prenosi.";
-
-/* File: ../../portable/singleclick.py:96 */
-"It is downloading now." = "Se prenaša.";
-
-/* File: ../../portable/singleclick.py:98 */
-"It has already been downloaded." = "Je že preneseno.";
-
-/* File: ../../portable/singleclick.py:125 */
-"Download Error" = "Napaka pri prenosu";
-
-/* File: ../../portable/singleclick.py:126 */
-/* Flag: python-format */
-"Miro is not able to download a file at this URL:\n\nURL: %s" = "Ni mogoče prenesti datoteke iz naslova URL:\n\nURL: %s";
-
-/* File: ../../portable/singleclick.py:134 */
-"File Download" = "Prenos datoteke";
-
-/* File: ../../portable/singleclick.py:135 */
-/* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "Datoteka na %s ni videti kot zvočni ali slikovni posnetek oziroma kot RSS vir.";
-
-/* File: ../../portable/singleclick.py:225 */
-"Subscribing to multiple channels" = "Naročanje na več kanalov";
-
-/* File: ../../portable/singleclick.py:226 */
-/* Flag: python-format */
-"Create %d channels?" = "Ustvarim %d kanalov?";
-
-/* File: ../../portable/singleclick.py:239 */
-/* Flag: python-format */
-"Adding %d channels to a new folder" = "Dodajanje %d kanalov v novo mapo";
-
-/* File: ../../portable/singleclick.py:240 */
-/* File: ../../portable/folder.py:226 */
-"Enter a name for the new channel folder" = "Vnesi novo ime za mapo kanala";
-
-/* File: ../../portable/singleclick.py:243 */
-/* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "Opomba: Na %d kanalov ste že naročeni. Ti kanali bodo ostali tam, kjer trenutno so.";
-
-/* File: ../../portable/singleclick.py:254 */
-"Subscription error" = "Napaka pri naročanju";
-
-/* File: ../../portable/singleclick.py:264 */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Kanal programa $shortAppName je v neveljavni obliki: $url. Prosim, obvestite izdajatelja datoteke.";
-
-/* File: ../../portable/singleclick.py:272 */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Kanal programa $shortAppName ima neveljavno vsebino: $url. Prosim, obvestite izdajatelja datoteke.";
-
-/* File: ../../portable/singleclick.py:276 */
-"Could not download the $shortAppName channel file: $url." = "Ni mogoče prenesti datoteko kanala za program $shortAppName: $url.";
-
-/* File: ../../portable/singleclick.py:316 */
-"Invalid Torrent" = "Neveljaven torrent";
-
-/* File: ../../portable/singleclick.py:317 */
-/* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Datoteka torrent %s je videti pokvarjena in je ni mogoče odpreti. [OK]";
-
-/* File: ../../portable/menubar.py:144 */
-"_Open" = "_Odpri";
-
-/* File: ../../portable/menubar.py:145 */
-"_Download Video" = "_Prenesi posnetek";
-
-/* File: ../../portable/menubar.py:147 */
-"Check _Version" = "Preveri različico";
-
-/* File: ../../portable/menubar.py:149 */
-"_Remove Video" = "_Odstrani posnetek";
-
-/* File: ../../portable/menubar.py:150 */
-"_Remove Videos" = "_Odstrani posnetke";
-
-/* File: ../../portable/menubar.py:151 */
-"Re_name Video" = "Preimenuj posnetek";
-
-/* File: ../../portable/menubar.py:152 */
-"Save Video _As..." = "Shrani posnetek _kot...";
-
-/* File: ../../portable/menubar.py:153 */
-"Save Videos _As..." = "Shrani posnetke _kot...";
-
-/* File: ../../portable/menubar.py:154 */
-"Copy Video _URL" = "Kopiraj povezavo _URL posnetka";
-
-/* File: ../../portable/menubar.py:156 */
-"_Options..." = "_Možnosti ...";
-
-/* File: ../../portable/menubar.py:157 */
-"_Quit" = "I_zhod";
-
-/* File: ../../portable/menubar.py:165 */
-"Cu_t" = "I_zreži";
-
-/* File: ../../portable/menubar.py:166 */
-"_Copy" = "_Kopiraj";
-
-/* File: ../../portable/menubar.py:167 */
-"_Paste" = "_Prilepi";
-
-/* File: ../../portable/menubar.py:168 */
-"Select _All" = "Izberi _vse";
-
-/* File: ../../portable/menubar.py:169 */
-"_Delete" = "_Zbriši";
-
-/* File: ../../portable/menubar.py:173 */
-"Add _Channel" = "Dodaj _kanal";
-
-/* File: ../../portable/menubar.py:174 */
-"New Searc_h Channel..." = "Nov iskalni kanal ...";
-
-/* File: ../../portable/menubar.py:175 */
-"New _Folder..." = "_Nova mapa ...";
-
-/* File: ../../portable/menubar.py:176 */
-"Add Channel _Guide..." = "Dodaj vodnik kanala ...";
-
-/* File: ../../portable/menubar.py:186 */
-"Update _All Channels" = "Posodobi _vse kanale";
-
-/* File: ../../portable/menubar.py:188 */
-"_Import Channels (OPML)..." = "Uvozi kanale (OPML) ...";
-
-/* File: ../../portable/menubar.py:189 */
-"E_xport Channels (OPML)..." = "I_zvoz kanalov (OPML) ...";
-
-/* File: ../../portable/menubar.py:191 */
-"_Send this channel to a friend" = "_Pošlji kanal prijatelju";
-
-/* File: ../../portable/menubar.py:192 */
-"Copy Channel _Link" = "Kopiraj _povezavo kanala";
-
-/* File: ../../portable/menubar.py:195 */
-"New _Playlist" = "Nov seznam predvajanja";
-
-/* File: ../../portable/menubar.py:196 */
-"New Playlist Fol_der" = "Nova mapa seznamov predvajanja";
-
-/* File: ../../portable/menubar.py:198 */
-"Re_name Playlist" = "Preime_nuj seznam predvajanja";
-
-/* File: ../../portable/menubar.py:199 */
-"_Remove Playlist" = "_Odstrani seznam predvajanja";
-
-/* File: ../../portable/menubar.py:200 */
-"_Remove Playlists" = "_Odstrani sezname predvajanja";
-
-/* File: ../../portable/menubar.py:201 */
-"_Remove Playlist Folders" = "Odstrani mape seznamov predvajanja";
-
-/* File: ../../portable/menubar.py:202 */
-"_Remove Playlist Folder" = "_Odstrani mapo seznamov predvajanja";
-
-/* File: ../../portable/menubar.py:212 */
-"_Play" = "_Predvajaj";
-
-/* File: ../../portable/menubar.py:213 */
-"_Stop" = "U_stavi";
-
-/* File: ../../portable/menubar.py:215 */
-"_Next Video" = "_Naslednji posnetek";
-
-/* File: ../../portable/menubar.py:216 */
-"_Previous Video" = "_Predhodni posnetek";
-
-/* File: ../../portable/menubar.py:218 */
-"Skip _Forward" = "Preskoči na_prej";
-
-/* File: ../../portable/menubar.py:219 */
-"Skip _Back" = "Preskoči na_zaj";
-
-/* File: ../../portable/menubar.py:221 */
-"Volume _Up" = "Po_večaj glasnost";
-
-/* File: ../../portable/menubar.py:222 */
-"Volume _Down" = "Po_manjšaj glasnost";
-
-/* File: ../../portable/menubar.py:224 */
-"_Fullscreen" = "_Celozaslonski način";
-
-/* File: ../../portable/menubar.py:228 */
-"_About" = "_O programu";
-
-/* File: ../../portable/menubar.py:229 */
-"_Donate" = "_Donacije";
-
-/* File: ../../portable/menubar.py:230 */
-/* File: ../../portable/menubar.py:245 */
-"_Help" = "_Pomoč";
-
-/* File: ../../portable/menubar.py:232 */
-"Report a _Bug" = "Pošlji poročilo o _hrošču";
-
-/* File: ../../portable/menubar.py:236 */
-"_Video" = "_Posnetki";
-
-/* File: ../../portable/menubar.py:238 */
-"_File" = "_Datoteka";
-
-/* File: ../../portable/menubar.py:242 */
-"_Channels" = "_Kanali";
-
-/* File: ../../portable/menubar.py:243 */
-"_Playlists" = "_Seznami predvajanja";
-
-/* File: ../../portable/menubar.py:244 */
-"P_layback" = "P_redvajanje";
-
-/* File: ../../portable/menubar.py:249 */
-"Play Unwatched ($numUnwatched)" = "Predvajaj nepregledane ($numUnwatched)";
-
-/* File: ../../portable/menubar.py:250 */
-"Pause All Downloads ($numDownloading)" = "Zaustavi vse prenose ($numDownloading)";
-
-/* File: ../../portable/menubar.py:251 */
-"Resume All Downloads ($numPaused)" = "Ponovno začni s prenosi ($numPaused)";
-
-/* File: ../../portable/menubar.py:253 */
-"Options..." = "Možnosti ...";
-
-/* File: ../../portable/menubar.py:255 */
-"Hide Window" = "Skrij okno";
-
-/* File: ../../portable/menubar.py:256 */
-"Show Window" = "Prikaži okno";
-
-/* File: ../../portable/item.py:485 */
-/* Flag: python-format */
-"Removing %s" = "Odstranjevanje %s";
-
-/* File: ../../portable/item.py:488 */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Ali želite izbrisati mapo in vse posnetke v njej ali samo odstraniti vnos iz zbirke?";
-
-/* File: ../../portable/item.py:494 */
-"Would you like to delete this file or just remove its entry from the Library?" = "Ali želite izbrisati to datoteko ali jo samo odstraniti iz zbirke?";
-
-/* File: ../../portable/item.py:514 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Predmet je mapa. Ko odstranite mapo, odstranite tudi vse predmete znotraj mape.";
-
-/* File: ../../portable/item.py:544 */
-/* Flag: python-format */
-"%d minutes" = "%d minut";
-
-/* File: ../../portable/item.py:554 */
-/* Flag: python-format */
-"Expires in %s" = "Preteče v %s";
-
-/* File: ../../portable/item.py:566 */
-/* Flag: python-format */
-"Will retry in %s" = "Poskus znova čez %s";
-
-/* File: ../../portable/item.py:568 */
-"Paused" = "Zaustavljen";
-
-/* File: ../../portable/item.py:954 */
-"TORRENT" = "TORRENT";
-
-/* File: ../../portable/item.py:956 */
-"WEB PAGE" = "Spletna stran";
-
-/* File: ../../portable/item.py:966 */
-"Total Down:" = "Skupno sprejeto:";
-
-/* File: ../../portable/item.py:969 */
-"Error:" = "Napaka:";
-
-/* File: ../../portable/item.py:977 */
-"Down Rate:" = "Hitrost sprejemanja:";
-
-/* File: ../../portable/item.py:978 */
-"Down Total:" = "Skupno sprejeto:";
-
-/* File: ../../portable/item.py:980 */
-"Up Rate:" = "Hitrost pošiljanja:";
-
-/* File: ../../portable/item.py:981 */
-"Up Total:" = "Poslano skupaj:";
-
-/* File: ../../portable/item.py:989 */
-"Web page:" = "Spletna stran:";
-
-/* File: ../../portable/item.py:989 */
-"permalink" = "trajna povezava";
-
-/* File: ../../portable/item.py:993 */
-"File link:" = "Povezava datoteke:";
-
-/* File: ../../portable/item.py:993 */
-"direct link to file" = "neposredna povezava z datoteko";
-
-/* File: ../../portable/item.py:995 */
-"File type:" = "Vrsta datoteke:";
-
-/* File: ../../portable/item.py:1002 */
-"REVEAL LOCAL FOLDER" = "PRIKAŽI LOKALNO MAPO";
-
-/* File: ../../portable/item.py:1004 */
-"REVEAL LOCAL FILE" = "PRIKAŽI LOKALNO DATOTEKO";
-
-/* File: ../../portable/item.py:1006 */
-"Filename:" = "Ime datoteke:";
-
-/* File: ../../portable/item.py:1013 */
-"Down Total" = "Skupaj sprejeto";
-
-/* File: ../../portable/item.py:1015 */
-"Up Total" = "Skupaj poslano";
-
-/* File: ../../portable/item.py:1033 */
-"Item Details" = "Podrobnosti predmeta";
-
-/* File: ../../portable/item.py:1040 */
-"Torrent Details" = "Podrobnosti torrent datoteke";
-
-/* File: ../../portable/item.py:1042 */
-"Torrent Details <i>stopped</i>" = "Podrobnosti Torrent povezave <i>zaustavljeno</i>";
-
-/* File: ../../portable/item.py:1046 */
-"Download Details" = "Podrobnosti prenosa";
-
-/* File: ../../portable/item.py:1263 */
-"downloading..." = "prenašanje ...";
-
-/* File: ../../portable/item.py:1270 */
-/* File: ../../portable/item.py:1273 */
-/* Flag: python-format */
-"%s remaining" = "%s preostalo";
-
-/* File: ../../portable/item.py:1282 */
-"starting up..." = "zaganjanje ...";
-
-/* File: ../../portable/item.py:1477 */
-"Play Just This Video" = "Predvajaj le ta posnetek";
-
-/* File: ../../portable/item.py:1854 */
-/* Flag: python-format */
-"Removing %s items" = "Odstranjevanje %s predmetov";
-
-/* File: ../../portable/item.py:1856 */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Določenih posnetkov ni bilo mogoče prenesti preko kanala. Ali želite izbrisati nepopolne datoteke ali samo odstraniti iz zbirke?";
-
-/* File: ../../portable/item.py:1864 */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Nekateri izmed izbranih predmetov so mape. Odstranjeni bodo tudi vsi predmeti znotraj map.";
-
-/* File: ../../portable/folder.py:132 */
-/* File: ../../portable/folder.py:155 */
-"Rename Channel Folder" = "Preimenuj mapo s kanali";
-
-/* File: ../../portable/folder.py:134 */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Vnesi novo ime za mapo s kanali %s";
-
-/* File: ../../portable/folder.py:210 */
-/* File: ../../portable/folder.py:215 */
-"Rename Playlist Folder" = "Preimenuj mapo s seznami predvajanja";
-
-/* File: ../../portable/folder.py:217 */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Vnesi novo ime za mapo s seznami predvajanja %s";
-
-/* File: ../../portable/folder.py:225 */
-"Create Channel Folder" = "Ustvari mapo kanalov";
-
-/* File: ../../portable/folder.py:239 */
-"Create Playlist Folder" = "Ustvari mapo s seznami predvajanja";
-
-/* File: ../../portable/folder.py:240 */
-"Enter a name for the new playlist folder" = "Vnesi novo ime za novo mapo s seznami predvajanja";
-
-/* File: ../../portable/httpclient.py:68 */
-/* Flag: python-format */
-"Error: %s" = "Napaka: %s";
-
-/* File: ../../portable/httpclient.py:83 */
-/* File: ../../portable/httpclient.py:89 */
-"Can't connect" = "Ni se mogoče povezati";
-
-/* File: ../../portable/httpclient.py:84 */
-/* Flag: python-format */
-"Connection Error: %s" = "Napaka povezave: %s";
-
-/* File: ../../portable/httpclient.py:90 */
-"SSL connection error" = "SSL napaka povezave";
-
-/* File: ../../portable/httpclient.py:94 */
-"HTTP error" = "Napaka HTTP";
-
-/* File: ../../portable/httpclient.py:97 */
-/* Flag: python-format */
-"Bad Status Line: %s" = "Napačna vrstica stanja: %s";
-
-/* File: ../../portable/httpclient.py:100 */
-/* Flag: python-format */
-"Bad Header Line: %s" = "Napačna vrstica glave: %s";
-
-/* File: ../../portable/httpclient.py:103 */
-/* Flag: python-format */
-"Bad Chunk size: %s" = "Napačna velikost dela prenosa: %s";
-
-/* File: ../../portable/httpclient.py:106 */
-/* Flag: python-format */
-"Expected CRLF got: %r" = "Pričakovano CRLF dobljeno: %r";
-
-/* File: ../../portable/httpclient.py:109 */
-/* Flag: python-format */
-"%s closed connection" = "%s je zaprl povezavo";
-
-/* File: ../../portable/httpclient.py:115 */
-"Got 404 status code" = "Stanja kode 404";
-
-/* File: ../../portable/httpclient.py:117 */
-/* Flag: python-format */
-"Bad Status Code: %s" = "Neveljavno stanje kode: %s";
-
-/* File: ../../portable/httpclient.py:121 */
-"Authorization failed" = "Napaka pri overitvi";
-
-/* File: ../../portable/httpclient.py:127 */
-"Pipeline request never started" = "Zahteva cevovoda ni bila nikoli začeta";
-
-/* File: ../../portable/httpclient.py:131 */
-"Timeout" = "Zakasnitev";
-
-/* File: ../../portable/httpclient.py:132 */
-/* Flag: python-format */
-"Connection to %s timed out" = "Povezava z %s je časovno potekla";
-
-/* File: ../../portable/httpclient.py:136 */
-"Invalid URL" = "Neveljaven URL";
-
-/* File: ../../portable/httpclient.py:137 */
-/* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" ni veljaven naslov URL";
-
-/* File: ../../portable/httpclient.py:143 */
-/* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "Datoteka: \"%s\" ne obstaja";
-
-/* File: ../../portable/httpclient.py:147 */
-"Read error" = "Napaka med branjem";
-
-/* File: ../../portable/httpclient.py:148 */
-/* Flag: python-format */
-"Error while reading from \"%s\"" = "Napaka med branjem iz \"%s\"";
-
-/* File: ../../portable/httpclient.py:341 */
-"Unknown Error code" = "Neznana napaka kode.";
-
-/* File: ../../portable/httpclient.py:373 */
-"Connection closed" = "Povezava zaprta";
-
-/* File: ../../portable/httpclient.py:798 */
-"Unknown" = "Neznano";
-
-/* File: ../../portable/httpclient.py:799 */
-"Internal Error: Not ready to send" = "Napaka: ni pripravljeno za pošiljanje";
-
-/* File: ../../portable/app.py:685 */
-"Database too new" = "Podatkovna zbirka je preveč nova";
-
-/* File: ../../portable/app.py:686 */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Uporabljate podatkovno zbirko, ki je bila shranjena z novejšo različico programa $shortAppName. Naložiti morate novejšo različico za pregledovanje vsebine zbirke.";
-
-/* File: ../../portable/app.py:700 */
-"Video Directory Missing" = "Manjkajoča mapa posnetkov";
-
-/* File: ../../portable/app.py:701 */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.\n\nIf you continue, the video directory will be reset to a location on this drive (this will cause you to lose some details about the videos on the external drive).  You can also quit, connect the drive, and relaunch Miro." = "\nProgram Miro ne najde mape s posnetki. Do napake je lahko prišlo, če je mapa na zunanjem pogonu, ki trenutno ni povezan v sistem.\n\nČe boste nadaljevali, bo mapa s posnetki ustvarjena na trenutno dejavnem disku (s tem boste izgubili podatke p posnetkih na zunanjem pogonu). Lahko tudi zapustite program, povežete zunanji pogon in ponovno zaženete program Miro.";
-
-/* File: ../../portable/app.py:1038 */
-/* File: ../../portable/app.py:1052 */
-/* File: ../../portable/app.py:1096 */
-/* File: ../../portable/app.py:1122 */
-/* File: ../../portable/app.py:1142 */
-/* Flag: python-format */
-"Remove %s" = "Odstrani %s";
-
-/* File: ../../portable/app.py:1039 */
-/* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Ste prepričani, da želite odstraniti vodnik %s?";
-
-/* File: ../../portable/app.py:1053 */
-/* Flag: python-format */
-"Are you sure you want to remove %s" = "Res želite odstraniti %s";
-
-/* File: ../../portable/app.py:1056 */
-/* File: ../../portable/app.py:1101 */
-/* File: ../../portable/app.py:1127 */
-/* File: ../../portable/app.py:1146 */
-/* Flag: python-format */
-"Remove %s channels" = "Odstrani %s kanalov";
-
-/* File: ../../portable/app.py:1058 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Ali zares želite odstraniti %s seznamov predvajanja";
-
-/* File: ../../portable/app.py:1097 */
-"What would you like to do with the videos in this channel that you've downloaded?" = "Kaj želite storiti s posnetki, znotraj kanala, ki ste jih prenesli?";
-
-/* File: ../../portable/app.py:1102 */
-"What would you like to do with the videos in these channels that you've downloaded?" = "Kaj želite storiti s posnetki, znotraj kanalov, ki ste jih prenesli?";
-
-/* File: ../../portable/app.py:1123 */
-/* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Ali zares želite odstraniti %s? Dejavni prenosi bodo preklicani.";
-
-/* File: ../../portable/app.py:1128 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Ali zares želite odstraniti teh %s kanalov? Dejavni prenosi bodo preklicani.";
-
-/* File: ../../portable/app.py:1143 */
-/* Flag: python-format */
-"Are you sure you want to remove %s?" = "Res želite odstraniti %s?";
-
-/* File: ../../portable/app.py:1147 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?" = "Ali zares želite odstraniti %s kanalov?";
-
-/* File: ../../portable/app.py:1160 */
-/* Flag: python-format */
-"Stop watching %s" = "Prenehaj opazovati %s";
-
-/* File: ../../portable/app.py:1161 */
-/* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "Ali zares želite prenehati z ogledom %s?";
-
-/* File: ../../portable/app.py:1164 */
-/* Flag: python-format */
-"Stop watching %s directories" = "Prekini z ogledom %s map";
-
-/* File: ../../portable/app.py:1165 */
-/* Flag: python-format */
-"Are you sure you want to stop watching these %s directories?" = "Ali zares želite prenehati z ogledi %s map?";
-
-/* File: ../../portable/app.py:1196 */
+/* File: ../../portable/frontends/html/main.py:309 */
 "Are you sure you want to quit?" = "Ali ste prepričani, da želite zapustiti program?";
 
-/* File: ../../portable/app.py:1198 */
+/* File: ../../portable/frontends/html/main.py:311 */
 "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Še vedno poteka postopek pošiljanja poročila o napaki. Če zapustite program, poročilo ne bo poslano. Naj se program zapre?";
 
-/* File: ../../portable/app.py:1712 */
+/* File: ../../portable/frontends/html/main.py:340 */
+"Import OPML File" = "Uvoz OPML datoteke";
+
+/* File: ../../portable/frontends/html/main.py:342 */
+"OPML Files" = "OPML datoteke";
+
+/* File: ../../portable/frontends/html/main.py:347 */
+"Export OPML File" = "Izvoz OPML datoteko";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:325 */
 "Invalid Value" = "Neveljavna vrednost";
 
-/* File: ../../portable/app.py:1713 */
+/* File: ../../portable/frontends/html/templatedisplay.py:326 */
 /* Flag: python-format */
 "%s is invalid.  You must enter a non-negative number." = "%s ni veljaven. Vnesti morate pozitivno število.";
 
-/* File: ../../portable/app.py:1839 */
+/* File: ../../portable/frontends/html/templatedisplay.py:452 */
 "Error Revealing File" = "Napaka med odkrivanjem datoteke";
 
-/* File: ../../portable/app.py:1840 */
+/* File: ../../portable/frontends/html/templatedisplay.py:453 */
 /* Flag: python-format */
 "The file \"%s\" was deleted from outside Miro." = "Datoteka \"%s\" je bila izbrisana izven programa Miro.";
 
-/* File: ../../portable/app.py:2011 */
-" - Invalid URL" = " - Neveljaven URL";
-
-/* File: ../../portable/app.py:2012 */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Naslov, ki ste ga vnesli, ni veljaven.\nProsim, še enkrat preverite naslov in poskusite znova.\n\n";
-
-/* File: ../../portable/app.py:2036 */
-"$shortAppName - Add Channel" = "$shortAppName - Dodaj kanal";
-
-/* File: ../../portable/app.py:2036 */
-"Enter the URL of the channel to add" = "Vnesite naslov URL novega kanala";
-
-/* File: ../../portable/app.py:2057 */
-"$shortAppName - Add Miro Guide" = "$shortAppName - Dodaj  vodnik Miro";
-
-/* File: ../../portable/app.py:2057 */
-"Enter the URL of the Miro Guide to add" = "Vnesite naslov URL vodnika Miro, ki ga želite dodati";
-
-/* File: ../../portable/app.py:2063 */
-"$shortAppName - Download Video" = "$shortAppName - Prenos posnetka";
-
-/* File: ../../portable/app.py:2063 */
-"Enter the URL of the video to download" = "Vnesite naslov URL za prenos videa";
-
-/* File: ../../portable/app.py:2420 */
-"Starter Channels" = "Začetni kanali";
-
-/* File: ../../portable/app.py:2437 */
-"Example Playlist" = "Primer seznama predvajanja";
-
-/* File: ../../portable/app.py:2463 */
-"Custom Channels" = "Kanali po meri";
-
-/* File: ../../portable/app.py:2463 */
-"You are running a version of $longAppName with a custom set of channels." = "Uporabljate različico programa $longAppName s prirejeno zbirko kanalov.";
-
-/* File: ../../portable/app.py:2478 */
+/* File: ../../portable/frontends/html/templatedisplay.py:560 */
 "Error Changing Movies Directory" = "Napaka med menjanjem mape filmov";
 
-/* File: ../../portable/app.py:2479 */
+/* File: ../../portable/frontends/html/templatedisplay.py:561 */
 "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "Nimate dovoljenj za pisanje v mapo, ki ste jo izbrali. Program Miro bo še naprej uporabljal staro mapo filmov.";
 
-/* File: ../../portable/app.py:2508 */
+/* File: ../../portable/frontends/html/templatedisplay.py:664 */
+" - Invalid URL" = " - Neveljaven URL";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:665 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Naslov, ki ste ga vnesli, ni veljaven.\nProsim, še enkrat preverite naslov in poskusite znova.\n\n";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"$shortAppName - Add Channel" = "$shortAppName - Dodaj kanal";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"Enter the URL of the channel to add" = "Vnesite naslov URL novega kanala";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"$shortAppName - Add Miro Guide" = "$shortAppName - Dodaj  vodnik Miro";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"Enter the URL of the Miro Guide to add" = "Vnesite naslov URL vodnika Miro, ki ga želite dodati";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"$shortAppName - Download Video" = "$shortAppName - Prenos posnetka";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"Enter the URL of the video to download" = "Vnesite naslov URL za prenos videa";
+
+/* File: ../../portable/tabs.py:55 */
+"Library" = "Zbirka";
+
+/* File: ../../portable/tabs.py:58 */
+"Downloading" = "Sprejemanje";
+
+/* File: ../../portable/downloader.py:234 */
+"activity" = "dejavnost";
+
+/* File: ../../portable/downloader.py:268 */
+/* File: ../../portable/httpclient.py:127 */
+/* File: ../../portable/httpclient.py:155 */
+"File not found" = "Datoteke ni mogoče najti";
+
+/* File: ../../portable/downloader.py:269 */
+"Flash URL Scraping Error" = "Napaka Flash URL praskanja";
+
+/* File: ../../portable/downloader.py:445 */
+"starting up" = "zaganjanje";
+
+/* File: ../../portable/playlist.py:219 */
+/* Flag: python-format */
+"Enter a new name for the playlist %s" = "Vnesite novo ime za seznam predvajanja %s";
+
+/* File: ../../portable/playlist.py:241 */
+"Create Playlist" = "Ustvari seznam predvajanja";
+
+/* File: ../../portable/playlist.py:242 */
+"Enter a name for the new playlist" = "Vnesite ime za nov seznam predvajanja";
+
+/* File: ../../portable/opml.py:144 */
+"OPML Import failed" = "Uvoz OPML ni uspel";
+
+/* File: ../../portable/opml.py:145 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "Izbrana datoteka OPML je videti neveljavna. Uvoz je prekinjen.";
+
+/* File: ../../portable/opml.py:150 */
+"OPML Import summary" = "Povzetek OPML uvoza";
+
+/* File: ../../portable/util.py:266 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGB";
+
+/* File: ../../portable/util.py:268 */
+/* Flag: python-format */
+"%dGB" = "%dGB";
+
+/* File: ../../portable/util.py:272 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMB";
+
+/* File: ../../portable/util.py:274 */
+/* Flag: python-format */
+"%dMB" = "%dMB";
+
+/* File: ../../portable/util.py:278 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fKB";
+
+/* File: ../../portable/util.py:280 */
+/* Flag: python-format */
+"%dKB" = "%dKB";
+
+/* File: ../../portable/util.py:284 */
+/* Flag: python-format */
+"%1.1fB" = "%1.1fB";
+
+/* File: ../../portable/util.py:286 */
+/* Flag: python-format */
+"%dB" = "%dB";
+
+/* File: ../../portable/iheartmiro.py:82 */
+/* Flag: untranslated */
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.";
+
+/* File: ../../portable/menubar.py:158 */
+"_Open" = "_Odpri";
+
+/* File: ../../portable/menubar.py:159 */
+"_Download Video" = "_Prenesi posnetek";
+
+/* File: ../../portable/menubar.py:161 */
+"Check _Version" = "Preveri različico";
+
+/* File: ../../portable/menubar.py:163 */
+"_Remove Video" = "_Odstrani posnetek";
+
+/* File: ../../portable/menubar.py:164 */
+"_Remove Videos" = "_Odstrani posnetke";
+
+/* File: ../../portable/menubar.py:165 */
+"Re_name Video" = "Preimenuj posnetek";
+
+/* File: ../../portable/menubar.py:166 */
+"Save Video _As..." = "Shrani posnetek _kot...";
+
+/* File: ../../portable/menubar.py:167 */
+"Save Videos _As..." = "Shrani posnetke _kot...";
+
+/* File: ../../portable/menubar.py:168 */
+"Copy Video _URL" = "Kopiraj povezavo _URL posnetka";
+
+/* File: ../../portable/menubar.py:170 */
+"_Options..." = "_Možnosti ...";
+
+/* File: ../../portable/menubar.py:171 */
+"_Quit" = "I_zhod";
+
+/* File: ../../portable/menubar.py:179 */
+"Cu_t" = "I_zreži";
+
+/* File: ../../portable/menubar.py:180 */
+"_Copy" = "_Kopiraj";
+
+/* File: ../../portable/menubar.py:181 */
+"_Paste" = "_Prilepi";
+
+/* File: ../../portable/menubar.py:182 */
+"Select _All" = "Izberi _vse";
+
+/* File: ../../portable/menubar.py:183 */
+"_Delete" = "_Zbriši";
+
+/* File: ../../portable/menubar.py:187 */
+"Add _Channel" = "Dodaj _kanal";
+
+/* File: ../../portable/menubar.py:188 */
+"New Searc_h Channel..." = "Nov iskalni kanal ...";
+
+/* File: ../../portable/menubar.py:189 */
+"New _Folder..." = "_Nova mapa ...";
+
+/* File: ../../portable/menubar.py:190 */
+"Add Channel _Guide..." = "Dodaj vodnik kanala ...";
+
+/* File: ../../portable/menubar.py:200 */
+"Update _All Channels" = "Posodobi _vse kanale";
+
+/* File: ../../portable/menubar.py:202 */
+"_Import Channels (OPML)..." = "Uvozi kanale (OPML) ...";
+
+/* File: ../../portable/menubar.py:203 */
+"E_xport Channels (OPML)..." = "I_zvoz kanalov (OPML) ...";
+
+/* File: ../../portable/menubar.py:205 */
+"_Send this channel to a friend" = "_Pošlji kanal prijatelju";
+
+/* File: ../../portable/menubar.py:206 */
+"Copy Channel _Link" = "Kopiraj _povezavo kanala";
+
+/* File: ../../portable/menubar.py:209 */
+"New _Playlist" = "Nov seznam predvajanja";
+
+/* File: ../../portable/menubar.py:210 */
+"New Playlist Fol_der" = "Nova mapa seznamov predvajanja";
+
+/* File: ../../portable/menubar.py:212 */
+"Re_name Playlist" = "Preime_nuj seznam predvajanja";
+
+/* File: ../../portable/menubar.py:213 */
+"_Remove Playlist" = "_Odstrani seznam predvajanja";
+
+/* File: ../../portable/menubar.py:214 */
+"_Remove Playlists" = "_Odstrani sezname predvajanja";
+
+/* File: ../../portable/menubar.py:215 */
+"_Remove Playlist Folders" = "Odstrani mape seznamov predvajanja";
+
+/* File: ../../portable/menubar.py:216 */
+"_Remove Playlist Folder" = "_Odstrani mapo seznamov predvajanja";
+
+/* File: ../../portable/menubar.py:226 */
+/* File: ../../portable/menubar.py:227 */
+"_Play" = "_Predvajaj";
+
+/* File: ../../portable/menubar.py:228 */
+/* Flag: untranslated */
+"_Pause" = "_Pause";
+
+/* File: ../../portable/menubar.py:229 */
+"_Stop" = "U_stavi";
+
+/* File: ../../portable/menubar.py:231 */
+"_Next Video" = "_Naslednji posnetek";
+
+/* File: ../../portable/menubar.py:232 */
+"_Previous Video" = "_Predhodni posnetek";
+
+/* File: ../../portable/menubar.py:234 */
+"Skip _Forward" = "Preskoči na_prej";
+
+/* File: ../../portable/menubar.py:235 */
+"Skip _Back" = "Preskoči na_zaj";
+
+/* File: ../../portable/menubar.py:237 */
+"Volume _Up" = "Po_večaj glasnost";
+
+/* File: ../../portable/menubar.py:238 */
+"Volume _Down" = "Po_manjšaj glasnost";
+
+/* File: ../../portable/menubar.py:240 */
+"_Fullscreen" = "_Celozaslonski način";
+
+/* File: ../../portable/menubar.py:244 */
+"_About" = "_O programu";
+
+/* File: ../../portable/menubar.py:245 */
+"_Donate" = "_Donacije";
+
+/* File: ../../portable/menubar.py:246 */
+/* File: ../../portable/menubar.py:261 */
+"_Help" = "_Pomoč";
+
+/* File: ../../portable/menubar.py:248 */
+"Report a _Bug" = "Pošlji poročilo o _hrošču";
+
+/* File: ../../portable/menubar.py:252 */
+"_Video" = "_Posnetki";
+
+/* File: ../../portable/menubar.py:254 */
+"_File" = "_Datoteka";
+
+/* File: ../../portable/menubar.py:258 */
+"_Channels" = "_Kanali";
+
+/* File: ../../portable/menubar.py:259 */
+"_Playlists" = "_Seznami predvajanja";
+
+/* File: ../../portable/menubar.py:260 */
+"P_layback" = "P_redvajanje";
+
+/* File: ../../portable/menubar.py:265 */
+"Play Unwatched ($numUnwatched)" = "Predvajaj nepregledane ($numUnwatched)";
+
+/* File: ../../portable/menubar.py:266 */
+"Pause All Downloads ($numDownloading)" = "Zaustavi vse prenose ($numDownloading)";
+
+/* File: ../../portable/menubar.py:267 */
+"Resume All Downloads ($numPaused)" = "Ponovno začni s prenosi ($numPaused)";
+
+/* File: ../../portable/menubar.py:269 */
+"Options..." = "Možnosti ...";
+
+/* File: ../../portable/menubar.py:271 */
+"Hide Window" = "Skrij okno";
+
+/* File: ../../portable/menubar.py:272 */
+"Show Window" = "Prikaži okno";
+
+/* File: ../../portable/theme.py:137 */
+"Starter Channels" = "Začetni kanali";
+
+/* File: ../../portable/theme.py:154 */
+"Example Playlist" = "Primer seznama predvajanja";
+
+/* File: ../../portable/httpclient.py:81 */
+/* Flag: python-format */
+"Error: %s" = "Napaka: %s";
+
+/* File: ../../portable/httpclient.py:96 */
+/* File: ../../portable/httpclient.py:102 */
+"Can't connect" = "Ni se mogoče povezati";
+
+/* File: ../../portable/httpclient.py:97 */
+/* Flag: python-format */
+"Connection Error: %s" = "Napaka povezave: %s";
+
+/* File: ../../portable/httpclient.py:103 */
+"SSL connection error" = "SSL napaka povezave";
+
+/* File: ../../portable/httpclient.py:107 */
+"HTTP error" = "Napaka HTTP";
+
+/* File: ../../portable/httpclient.py:110 */
+/* Flag: python-format */
+"Bad Status Line: %s" = "Napačna vrstica stanja: %s";
+
+/* File: ../../portable/httpclient.py:113 */
+/* Flag: python-format */
+"Bad Header Line: %s" = "Napačna vrstica glave: %s";
+
+/* File: ../../portable/httpclient.py:116 */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "Napačna velikost dela prenosa: %s";
+
+/* File: ../../portable/httpclient.py:119 */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "Pričakovano CRLF dobljeno: %r";
+
+/* File: ../../portable/httpclient.py:122 */
+/* Flag: python-format */
+"%s closed connection" = "%s je zaprl povezavo";
+
+/* File: ../../portable/httpclient.py:128 */
+"Got 404 status code" = "Stanja kode 404";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "Neveljavno stanje kode: %s";
+
+/* File: ../../portable/httpclient.py:134 */
+"Authorization failed" = "Napaka pri overitvi";
+
+/* File: ../../portable/httpclient.py:140 */
+"Pipeline request never started" = "Zahteva cevovoda ni bila nikoli začeta";
+
+/* File: ../../portable/httpclient.py:144 */
+"Timeout" = "Zakasnitev";
+
+/* File: ../../portable/httpclient.py:145 */
+/* Flag: python-format */
+"Connection to %s timed out" = "Povezava z %s je časovno potekla";
+
+/* File: ../../portable/httpclient.py:149 */
+"Invalid URL" = "Neveljaven URL";
+
+/* File: ../../portable/httpclient.py:150 */
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "\"%s\" ni veljaven naslov URL";
+
+/* File: ../../portable/httpclient.py:156 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "Datoteka: \"%s\" ne obstaja";
+
+/* File: ../../portable/httpclient.py:160 */
+"Read error" = "Napaka med branjem";
+
+/* File: ../../portable/httpclient.py:161 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "Napaka med branjem iz \"%s\"";
+
+/* File: ../../portable/httpclient.py:354 */
+"Unknown Error code" = "Neznana napaka kode.";
+
+/* File: ../../portable/httpclient.py:386 */
+"Connection closed" = "Povezava zaprta";
+
+/* File: ../../portable/httpclient.py:811 */
+"Unknown" = "Neznano";
+
+/* File: ../../portable/httpclient.py:812 */
+"Internal Error: Not ready to send" = "Napaka: ni pripravljeno za pošiljanje";
+
+/* File: ../../portable/extrastrings.py:33 */
+/* File: ../../portable/feed.py:2409 */
+/* File: ../../portable/feed.py:2499 */
+"Search" = "Iskanje";
+
+/* File: ../../portable/feed.py:384 */
+"never" = "nikoli";
+
+/* File: ../../portable/feed.py:386 */
+/* File: ../../portable/item.py:554 */
+/* Flag: python-format */
+"%d hours" = "%d ur";
+
+/* File: ../../portable/feed.py:388 */
+/* Flag: python-format */
+"%d day" = "%d dni";
+
+/* File: ../../portable/feed.py:390 */
+/* File: ../../portable/item.py:552 */
+/* Flag: python-format */
+"%d days" = "%d dni";
+
+/* File: ../../portable/feed.py:392 */
+/* Flag: python-format */
+"%d months" = "%d mesecev";
+
+/* File: ../../portable/feed.py:826 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Vnesite ime za kanal %s";
+
+/* File: ../../portable/feed.py:923 */
+"Error loading feed" = "Napaka ob nalaganju vira";
+
+/* File: ../../portable/feed.py:924 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Ni mogoče naložiti vira iz %s (%s).";
+
+/* File: ../../portable/feed.py:927 */
+"Would you like to keep the feed?" = "Želite ohraniti vir?";
+
+/* File: ../../portable/feed.py:1040 */
+"Bad content-type" = "Napačna vrsta vsebine";
+
+/* File: ../../portable/feed.py:1053 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "Kanal ni združljiv z $shortAppName!";
+
+/* File: ../../portable/feed.py:1054 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Kljub vsemu bo program poskušal pravilno prenesti datoteke. Postopek bo morda počasnejši in prikaza opisov morda ne bo mogoče enostavno prebrati.  Prosim, stopite v stik z odgovornimi na $url in vprašajte, če lahko ponudijo tudi vir o obliki, ki bo deloval s programom $shortAppName.\n\nAli želite kljub vsemu naložiti kanal?";
+
+/* File: ../../portable/feed.py:2513 */
+"Local Files" = "Krajevne datoteke";
+
+/* File: ../../portable/feed.py:2527 */
+"Playing File" = "Predvajanje datoteke";
+
+/* File: ../../portable/storedatabase.py:859 */
+/* File: ../../portable/storedatabase.py:1258 */
+/* Flag: python-format */
+"%s database save succeeded" = "%s uspešno shranjena podatkovna zbirka";
+
+/* File: ../../portable/storedatabase.py:860 */
+/* File: ../../portable/storedatabase.py:1259 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Podatkovna zbirka je bila uspešno shranjena. Zdaj lahko varno končate delo.";
+
+/* File: ../../portable/storedatabase.py:867 */
+/* File: ../../portable/storedatabase.py:1267 */
+/* Flag: python-format */
+"%s database save failed" = "Napaka pri shranjevanju podatkovne zbirke %s";
+
+/* File: ../../portable/storedatabase.py:868 */
+/* File: ../../portable/storedatabase.py:1268 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s ne more shraniti podatkov: disk je poln.\nZbrišite kakšno datoteko z diska ali pa kakšen film iz svoje zbirke.\nZadnje spremembe se lahko izgubijo.";
+
+/* File: ../../portable/dialogs.py:89 */
+"Ignore" = "Prezri";
+
+/* File: ../../portable/dialogs.py:90 */
+"Submit Crash Report" = "Pošlji poročilo o hrošču";
+
+/* File: ../../portable/dialogs.py:91 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
+"Migrate" = "Preselitev";
+
+/* File: ../../portable/dialogs.py:92 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
+"Don't Migrate" = "Brez preselitve";
+
+/* File: ../../portable/dialogs.py:94 */
+"Remove Entry" = "Odstrani zapis";
+
+/* File: ../../portable/dialogs.py:95 */
+"Delete File" = "Izbriši datoteko";
+
+/* File: ../../portable/dialogs.py:96 */
+"Delete Files" = "Izbriši datoteke";
+
+/* File: ../../portable/dialogs.py:97 */
+"Keep Videos" = "Shrani posnetke";
+
+/* File: ../../portable/dialogs.py:98 */
+"Delete Videos" = "Izbriši posnetke";
+
+/* File: ../../portable/dialogs.py:100 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
+"Create Channel" = "Ustvari kanal";
+
+/* File: ../../portable/dialogs.py:101 */
+"Add" = "Dodaj";
+
+/* File: ../../portable/dialogs.py:102 */
+"Add Into New Folder" = "Dodaj v novo mapo";
+
+/* File: ../../portable/dialogs.py:103 */
+"Keep" = "Ohrani";
+
+/* File: ../../portable/dialogs.py:105 */
+"Not Now" = "Ne takoj";
+
+/* File: ../../portable/dialogs.py:106 */
+"Close to Tray" = "Pomanjšaj v pladenj";
+
+/* File: ../../portable/dialogs.py:107 */
+"Launch Miro" = "Zaženi program Miro";
+
+/* File: ../../portable/dialogs.py:108 */
+"Download Anyway" = "Vseeno prenesi";
+
+/* File: ../../portable/dialogs.py:109 */
+"Install iHeartMiro" = "Namesti iHeartMiro";
+
+/* File: ../../portable/dialogs.py:110 */
+"Don't Install" = "Ne namesti";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
+"New Search Channel" = "Dodaj kanal iskanja";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
+"A search channel contains items that match a search term." = "Iskalni kanali vsebujejo predmete, ki sovpadajo z iskanimi pojmi.";
+
+/* File: ../../portable/controller.py:196 */
+/* File: ../../portable/controller.py:210 */
+/* File: ../../portable/controller.py:254 */
+/* File: ../../portable/controller.py:280 */
+/* File: ../../portable/controller.py:300 */
+/* Flag: python-format */
+"Remove %s" = "Odstrani %s";
+
+/* File: ../../portable/controller.py:197 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "Ste prepričani, da želite odstraniti vodnik %s?";
+
+/* File: ../../portable/controller.py:211 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "Res želite odstraniti %s";
+
+/* File: ../../portable/controller.py:214 */
+/* File: ../../portable/controller.py:259 */
+/* File: ../../portable/controller.py:285 */
+/* File: ../../portable/controller.py:304 */
+/* Flag: python-format */
+"Remove %s channels" = "Odstrani %s kanalov";
+
+/* File: ../../portable/controller.py:216 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "Ali zares želite odstraniti %s seznamov predvajanja";
+
+/* File: ../../portable/controller.py:255 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Kaj želite storiti s posnetki, znotraj kanala, ki ste jih prenesli?";
+
+/* File: ../../portable/controller.py:260 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Kaj želite storiti s posnetki, znotraj kanalov, ki ste jih prenesli?";
+
+/* File: ../../portable/controller.py:281 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Ali zares želite odstraniti %s? Dejavni prenosi bodo preklicani.";
+
+/* File: ../../portable/controller.py:286 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Ali zares želite odstraniti teh %s kanalov? Dejavni prenosi bodo preklicani.";
+
+/* File: ../../portable/controller.py:301 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "Res želite odstraniti %s?";
+
+/* File: ../../portable/controller.py:305 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "Ali zares želite odstraniti %s kanalov?";
+
+/* File: ../../portable/controller.py:318 */
+/* Flag: python-format */
+"Stop watching %s" = "Prenehaj opazovati %s";
+
+/* File: ../../portable/controller.py:319 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "Ali zares želite prenehati z ogledom %s?";
+
+/* File: ../../portable/controller.py:322 */
+/* Flag: python-format */
+"Stop watching %s directories" = "Prekini z ogledom %s map";
+
+/* File: ../../portable/controller.py:323 */
+/* Flag: python-format */
+"Are you sure you want to stop watching these %s directories?" = "Ali zares želite prenehati z ogledi %s map?";
+
+/* File: ../../portable/controller.py:497 */
 "Error Saving Video" = "Napaka pri shranjevanju posnetka";
 
-/* File: ../../portable/app.py:2510 */
+/* File: ../../portable/controller.py:499 */
 /* Flag: python-format */
 "An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "Prišlo je do napake med shranjevanjem %s. Prosim, preverite, da datoteka še obstaja in poskusite znova.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-"(Changes won't go into effect until you restart Miro)" = "(Spremembe ne bodo uveljavljene do ponovnega zagona programa)";
+/* File: ../../portable/singleclick.py:99 */
+"Download already exists" = "Prenos že obstaja.";
+
+/* File: ../../portable/singleclick.py:100 */
+"That URL is already an external download." = "naslov URL je že dodan kot zunanji prenos.";
+
+/* File: ../../portable/singleclick.py:106 */
+"Miro will begin downloading it now." = "Predvajalnik Miro bo začel s prenosi.";
+
+/* File: ../../portable/singleclick.py:108 */
+"It is downloading now." = "Se prenaša.";
+
+/* File: ../../portable/singleclick.py:110 */
+"It has already been downloaded." = "Je že preneseno.";
+
+/* File: ../../portable/singleclick.py:137 */
+"Download Error" = "Napaka pri prenosu";
+
+/* File: ../../portable/singleclick.py:138 */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Ni mogoče prenesti datoteke iz naslova URL:\n\nURL: %s";
+
+/* File: ../../portable/singleclick.py:146 */
+"File Download" = "Prenos datoteke";
+
+/* File: ../../portable/singleclick.py:147 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "Datoteka na %s ni videti kot zvočni ali slikovni posnetek oziroma kot RSS vir.";
+
+/* File: ../../portable/singleclick.py:235 */
+"Subscribing to multiple channels" = "Naročanje na več kanalov";
+
+/* File: ../../portable/singleclick.py:236 */
+/* Flag: python-format */
+"Create %d channels?" = "Ustvarim %d kanalov?";
+
+/* File: ../../portable/singleclick.py:249 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Dodajanje %d kanalov v novo mapo";
+
+/* File: ../../portable/singleclick.py:250 */
+/* File: ../../portable/folder.py:224 */
+"Enter a name for the new channel folder" = "Vnesi novo ime za mapo kanala";
+
+/* File: ../../portable/singleclick.py:253 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "Opomba: Na %d kanalov ste že naročeni. Ti kanali bodo ostali tam, kjer trenutno so.";
+
+/* File: ../../portable/singleclick.py:264 */
+"Subscription error" = "Napaka pri naročanju";
+
+/* File: ../../portable/singleclick.py:274 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Kanal programa $shortAppName je v neveljavni obliki: $url. Prosim, obvestite izdajatelja datoteke.";
+
+/* File: ../../portable/singleclick.py:282 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Kanal programa $shortAppName ima neveljavno vsebino: $url. Prosim, obvestite izdajatelja datoteke.";
+
+/* File: ../../portable/singleclick.py:286 */
+"Could not download the $shortAppName channel file: $url." = "Ni mogoče prenesti datoteko kanala za program $shortAppName: $url.";
+
+/* File: ../../portable/singleclick.py:334 */
+"Invalid Torrent" = "Neveljaven torrent";
+
+/* File: ../../portable/singleclick.py:335 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Datoteka torrent %s je videti pokvarjena in je ni mogoče odpreti. [OK]";
+
+/* File: ../../portable/item.py:497 */
+/* Flag: python-format */
+"Removing %s" = "Odstranjevanje %s";
+
+/* File: ../../portable/item.py:500 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Ali želite izbrisati mapo in vse posnetke v njej ali samo odstraniti vnos iz zbirke?";
+
+/* File: ../../portable/item.py:506 */
+"Would you like to delete this file or just remove its entry from the Library?" = "Ali želite izbrisati to datoteko ali jo samo odstraniti iz zbirke?";
+
+/* File: ../../portable/item.py:526 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Predmet je mapa. Ko odstranite mapo, odstranite tudi vse predmete znotraj mape.";
+
+/* File: ../../portable/item.py:556 */
+/* Flag: python-format */
+"%d minutes" = "%d minut";
+
+/* File: ../../portable/item.py:566 */
+/* Flag: python-format */
+"Expires in %s" = "Preteče v %s";
+
+/* File: ../../portable/item.py:578 */
+/* Flag: python-format */
+"Will retry in %s" = "Poskus znova čez %s";
+
+/* File: ../../portable/item.py:580 */
+"Paused" = "Zaustavljen";
+
+/* File: ../../portable/item.py:982 */
+"TORRENT" = "TORRENT";
+
+/* File: ../../portable/item.py:984 */
+"WEB PAGE" = "Spletna stran";
+
+/* File: ../../portable/item.py:994 */
+"Total Down:" = "Skupno sprejeto:";
+
+/* File: ../../portable/item.py:997 */
+"Error:" = "Napaka:";
+
+/* File: ../../portable/item.py:1006 */
+"Seeders:" = "Sejalci:";
+
+/* File: ../../portable/item.py:1008 */
+"Leechers:" = "Odjemalci";
+
+/* File: ../../portable/item.py:1010 */
+"Down Rate:" = "Hitrost sprejemanja:";
+
+/* File: ../../portable/item.py:1011 */
+"Down Total:" = "Skupno sprejeto:";
+
+/* File: ../../portable/item.py:1013 */
+"Up Rate:" = "Hitrost pošiljanja:";
+
+/* File: ../../portable/item.py:1014 */
+"Up Total:" = "Poslano skupaj:";
+
+/* File: ../../portable/item.py:1024 */
+"Web page:" = "Spletna stran:";
+
+/* File: ../../portable/item.py:1024 */
+"permalink" = "trajna povezava";
+
+/* File: ../../portable/item.py:1028 */
+"File link:" = "Povezava datoteke:";
+
+/* File: ../../portable/item.py:1028 */
+"direct link to file" = "neposredna povezava z datoteko";
+
+/* File: ../../portable/item.py:1030 */
+"File type:" = "Vrsta datoteke:";
+
+/* File: ../../portable/item.py:1037 */
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+"License:" = "Licenca:";
+
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+"see permalink" = "ogled trajne povezave";
+
+/* File: ../../portable/item.py:1049 */
+"REVEAL LOCAL FOLDER" = "PRIKAŽI LOKALNO MAPO";
+
+/* File: ../../portable/item.py:1051 */
+"REVEAL LOCAL FILE" = "PRIKAŽI LOKALNO DATOTEKO";
+
+/* File: ../../portable/item.py:1053 */
+"Filename:" = "Ime datoteke:";
+
+/* File: ../../portable/item.py:1060 */
+"Down Total" = "Skupaj sprejeto";
+
+/* File: ../../portable/item.py:1062 */
+"Up Total" = "Skupaj poslano";
+
+/* File: ../../portable/item.py:1080 */
+"Item Details" = "Podrobnosti predmeta";
+
+/* File: ../../portable/item.py:1087 */
+"Torrent Details" = "Podrobnosti torrent datoteke";
+
+/* File: ../../portable/item.py:1089 */
+"Torrent Details <i>stopped</i>" = "Podrobnosti Torrent povezave <i>zaustavljeno</i>";
+
+/* File: ../../portable/item.py:1093 */
+"Download Details" = "Podrobnosti prenosa";
+
+/* File: ../../portable/item.py:1310 */
+"downloading..." = "prenašanje ...";
+
+/* File: ../../portable/item.py:1317 */
+/* File: ../../portable/item.py:1320 */
+/* Flag: python-format */
+"%s remaining" = "%s preostalo";
+
+/* File: ../../portable/item.py:1329 */
+"starting up..." = "zaganjanje ...";
+
+/* File: ../../portable/item.py:1878 */
+/* Flag: python-format */
+"Removing %s items" = "Odstranjevanje %s predmetov";
+
+/* File: ../../portable/item.py:1880 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Določenih posnetkov ni bilo mogoče prenesti preko kanala. Ali želite izbrisati nepopolne datoteke ali samo odstraniti iz zbirke?";
+
+/* File: ../../portable/item.py:1888 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Nekateri izmed izbranih predmetov so mape. Odstranjeni bodo tudi vsi predmeti znotraj map.";
+
+/* File: ../../portable/startup.py:92 */
+"Unknown Error" = "Neznana napaka";
+
+/* File: ../../portable/startup.py:93 */
+/* Flag: python-format */
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "Prišlo je do napake, ki onemgoča zagon programa Miro.  Prosim, pošljite poročilo o napaki na %s";
+
+/* File: ../../portable/startup.py:155 */
+"Database too new" = "Podatkovna zbirka je preveč nova";
+
+/* File: ../../portable/startup.py:156 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Uporabljate podatkovno zbirko, ki je bila shranjena z novejšo različico programa $shortAppName. Naložiti morate novejšo različico za pregledovanje vsebine zbirke.";
+
+/* File: ../../portable/startup.py:238 */
+/* Flag: untranslated */
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
+
+/* File: ../../portable/folder.py:144 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "Vnesi novo ime za mapo s kanali %s";
+
+/* File: ../../portable/folder.py:215 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "Vnesi novo ime za mapo s seznami predvajanja %s";
+
+/* File: ../../portable/folder.py:223 */
+"Create Channel Folder" = "Ustvari mapo kanalov";
+
+/* File: ../../portable/folder.py:237 */
+"Create Playlist Folder" = "Ustvari mapo s seznami predvajanja";
+
+/* File: ../../portable/folder.py:238 */
+"Enter a name for the new playlist folder" = "Vnesi novo ime za novo mapo s seznami predvajanja";
+
+/* File: ../../portable/license.py:68 */
+"license page" = "stran licence";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 dan\n3 dni\n6 dni\n10 dni\n1 mesec\nNikoli";
@@ -1551,149 +1605,176 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-"<b>Searching for Videos</b>" = "<b>Iskanje posnetkov</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:10 */
-"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Ali želite, da program poišče posnetke, ki so že na vašem računalniku?</b>";
+/* Flag: untranslated */
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Ali želite, da se program zažene ob zagonu sistema?</b>";
+"<b>Searching for Videos</b>" = "<b>Iskanje posnetkov</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Ali želite, da program poišče posnetke, ki so že na vašem računalniku?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Ali želite, da se program zažene ob zagonu sistema?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
 "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Končali ste!</b>\n\nNastavitev je končana -- sedaj lahko poiščete kanale in začnete z ogledi.\n\n<b>Ne čakajte:</b> pregledovanje s predvajalnik Miro se razlikuje od pregledovanja spletnih posnetkov -- ponudniki omogočajo velike visoko kakovostne posnetke. Ne čakajte na posnetke: pričnite s prenosi.\n\n<b>Pustite predvajalnik dejaven:</b> predvajalnik redno preveri kanale za nove posnetke in jih prenaša v ozadju. Če program pustite delovati, boste imeli vedno nove posnetke pripravljene za ogled.\n\n<b>Ne skrbite za prostor na disku:</b> Kot TiVo tudi Miro ponuja možnost 'preteka' posnetkov, ki omogoči enostavno čiščenje starejših posnetkov. Posnetek pa lahko tudi ohranite, če ga enostavno shranite ali pa shranjujete kar vse posnetke, ki prihajajo iz določenega kanala.\n\n<b>Povečaj:</b> Gumb na desni strani od gumba predvajanja, prikaže posnetek v celozaslonskem načinu.\n\n<b>Poišči posnetke:</b> Vodnik programov Miro vsebuje na stotine spletnih TV kanalov in vsi so brezplačni. Kliknite 'Dodaj' in si kanal oglejte.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:26 */
-"By default, videos _expire after" = "Posnetki naj privzeto _pretečejo po:";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
-"C_hannel:" = "_Kanal:";
-
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
-"C_hannels" = "_Kanali";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
+"Auto download default setting for new channels" = "Samodejno prenesi privzete nastavitve za nove kanale.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-"C_reate Channel" = "_Ustvari kanal";
+"Automatically for_ward ports." = "Samodejno posreduj vrata";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
-"Check Channels for _new content" = "Preveri kanale za _novo vsebino";
+"By default, videos _expire after" = "Posnetki naj privzeto _pretečejo po:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
-"Disk _Space" = "Prostor na disku";
+"C_hannel:" = "_Kanal:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
+"C_hannels" = "_Kanali";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-"Don't start a download _if it leaves less than" = "Ne prični prenosa, _če bo ostalo manj kot";
+"C_reate Channel" = "_Ustvari kanal";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-"Download at _most" = "Prenos pri _največ";
+"Check Channels for _new content" = "Preveri kanale za _novo vsebino";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
+"Disk _Space" = "Prostor na disku";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
 "Every 30 minutes\nEvery hour\nManually" = "Vsakih 30 minut\nVsako uro\nRočno";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
-"G_B free" = "G_B prosto";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
+"G_B" = "G_B";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 "Go" = "Pojdi";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+"Ignore Un_encrypted Connections." = "Prezri _nešifrirane povezave.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 "In This:" = "V tem:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
-"Miro can find all the videos on your computer to help you organize your collection." = "Program Miro lahko poišče vse posnetke na disku in pomaga pri razvrščanju.";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+"Limit torrent _downstream to:" = "Omejitev prenosa _torrent datotek na:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-"Play _videos one after another" = "Predvajaj _posnetke zaporedno";
+"Maximum number of channel auto-downloads at a time: " = "Največje število sočasnih samodejnih prenosov: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-"Preferences" = "Lastnosti";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
-"Restrict to my full _home folder" = "Omejitev na _domačo mapo";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-"S_top after each video" = "_Zaustavi po koncu vsakega posnetka";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
-"S_tore downloaded videos in this folder:" = "S_hrani prenesene posnetke v mapo:";
+"Maximum number of manual downloads at a time: " = "Največje število ročno dodanih sočasnih prenosov: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
-"Search _Engine:" = "_Iskalnik:";
+"Miro can find all the videos on your computer to help you organize your collection." = "Program Miro lahko poišče vse posnetke na disku in pomaga pri razvrščanju.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-"Search _custom folder:" = "Preišči _izbrano mapo:";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
-"Select Movies Directory" = "Izbor mape s filmi";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
-"Select custom search directory" = "Izberite iskanje po meri";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
-"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Naslednjih nekaj pogovornih oken je namenjenih nastavitvam in prilagajanju predvajalnika Miro. Tu je prvo vprašanje.";
+"New\nAll\nOff" = "Novo\nVse\nBrez";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-"To a_void slowdowns, limit upstream to" = "V izogib upočasnitvam, omeji hitrost pošiljanja na";
+"Play _videos one after another" = "Predvajaj _posnetke zaporedno";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
-"Volume:" = "Glasnost:";
+"Preferences" = "Lastnosti";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
-"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Priporočljivo je, da omogočite predvajalniku Miro samodejen zagon ob zagonu računalnika. Na ta način se lahko posnetki, ki jih v prejšnji seji ni bilo mogoče prenesti do konca, prenesejo in so vam na voljo, ko boste imeli čas za ogled.";
+"Restrict to my full _home folder" = "Omejitev na _domačo mapo";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+"S_top after each video" = "_Zaustavi po koncu vsakega posnetka";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Dobrodošli v spletni TV. S predvajalnikom Miro lahko naredite veliko: samodejno prenesete posnetke iz najljubših kanalov, si ogledate posnetke v določenem vrstnem redu, prenesete torrent datoteke, priporočite posnetke prijateljem in še veliko več.";
+"S_tore downloaded videos in this folder:" = "S_hrani prenesene posnetke v mapo:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Izbrali ste novo mapo za prenesene posnetke. Ali naj program Miro prestavi obstoječe posnetke v to mapo?  (Trenutno dejavni prenosi ne bodo prestavljeni dokler se prenos ne konča).";
+"Search _Engine:" = "_Iskalnik:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
-"_Add Folder" = "_Dodaj mapo";
+"Search _custom folder:" = "Preišči _izbrano mapo:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-"_Automatically run Miro when I log in" = "_Ob prijavi samodejno zaženi program Miro";
+"Select Movies Directory" = "Izbor mape s filmi";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
-"_Bit Torrent uses ports between" = "_BitTorrent uporablja vrata med";
+"Select custom search directory" = "Izberite iskanje po meri";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
-"_Downloads" = "_Prenosi";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
+"Stop torrent uploads when this ratio is reached:" = "Ustavi pošiljanje ob razmerju:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
-"_Folders" = "_Mape";
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Naslednjih nekaj pogovornih oken je namenjenih nastavitvam in prilagajanju predvajalnika Miro. Tu je prvo vprašanje.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
-"_General" = "_Splošno";
+"To avoid internet slowdowns, limit _upstream to:" = "Omejitev pošiljanja na:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-"_KB/s when my computer is active" = "_KB/s kadar je računalnik dejaven";
+"Use _ports:" = "Uporabi _vrata:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
-"_Playback" = "_Predvajanje";
+"Use this renderer to play videos:" = "Uporabi za preoblikovanje predvajanja posnetkov:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
-"_Resume playback of videos from the point where they were stopped" = "_Nadaljuj predvajanje posnetkov na točki, kjer so bili ustavljeni.";
+"Volume:" = "Glasnost:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
-"_Search" = "I_skanje";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
-"_Search For:" = "_Poišči:";
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Priporočljivo je, da omogočite predvajalniku Miro samodejen zagon ob zagonu računalnika. Na ta način se lahko posnetki, ki jih v prejšnji seji ni bilo mogoče prenesti do konca, prenesejo in so vam na voljo, ko boste imeli čas za ogled.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
-"_URL" = "_URL";
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Dobrodošli v spletni TV. S predvajalnikom Miro lahko naredite veliko: samodejno prenesete posnetke iz najljubših kanalov, si ogledate posnetke v določenem vrstnem redu, prenesete torrent datoteke, priporočite posnetke prijateljem in še veliko več.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
-"_Warn me when I attempt to quit with downloads in progress" = "_Izpiši opozorilo ob izhodu iz programa, kadar prenos še poteka";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Izbrali ste novo mapo za prenesene posnetke. Ali naj program Miro prestavi obstoječe posnetke v to mapo?  (Trenutno dejavni prenosi ne bodo prestavljeni dokler se prenos ne konča).";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-"_Watch for new videos in these folders and include them in the Library" = "_Sledi spremembam in samodejno vključi posnetke iz map v zbirko.";
+"_Add Folder" = "_Dodaj mapo";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
-"_and" = "_ in";
+"_Automatically run Miro when I log in" = "_Ob prijavi samodejno zaženi program Miro";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
-"videos at once" = "posnetkov sočasno";
+"_Downloads" = "_Prenosi";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
+"_Folders" = "_Mape";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
+"_General" = "_Splošno";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
+"_KB/s." = "_KB/s.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
+"_Keep at least this much free space on my drive:" = "_Ohrani vsaj toliko prostora na pogonu:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
+"_Playback" = "_Predvajanje";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
+"_Resume playback of videos from the point where they were stopped" = "_Nadaljuj predvajanje posnetkov na točki, kjer so bili ustavljeni.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
+"_Search" = "I_skanje";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
+"_Search For:" = "_Poišči:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
+"_URL" = "_URL";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
+"_Warn me when I attempt to quit with downloads in progress" = "_Izpiši opozorilo ob izhodu iz programa, kadar prenos še poteka";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
+"_Watch for new videos in these folders and include them in the Library" = "_Sledi spremembam in samodejno vključi posnetke iz map v zbirko.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
+"xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
 "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName različica $appVersion ($appRevision); avtorstvo (c) 2005-2007 $publisher.  $longAppName in njegov logotip $longAppName sta zaščitna znaka $publisher.";
@@ -1751,80 +1832,89 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
 "Please enter the username and password given to you by this channel's publisher." = "Prosimo vnesite uporabniško ime in geslo, ki vam ga je posredoval založnik tega kanala.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
 "(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(Opozorilo: Spremembe ne bodo uveljavljene do ponovnega zagona programa $longAppName.)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
 "Add Folder..." = "Dodaj mapo ...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
+"Automatically Forward Ports" = "Samodejno posreduj vrata";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
 "Automatically run $longAppName when I login." = "Samodejni zagon $longAppName ob prijavi.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
-"BitTorrent" = "BitTorrent";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
 "By default, videos expire after" = "Privzeto bodo posnetki pretekli po";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
 "Check channels for new content" = "Preveri novo vsebino na kanalih";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
 "Close to tray so that downloads can continue." = "Pomanjšaj na pladenj, da se prenos lahko nadaljuje.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
 "Every 30 minutes" = "vsakih 30 minut";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
 "Every hour" = "Vsako uro_24 urna";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
 "Folder" = "Mapa";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
+"GB" = "GB";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
+"Ignore Unencrypted Connections" = "Prezri nešifrirane povezave";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
+"KB/s" = "KB/s";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
+"Limit downstream bandwith to:" = "Omejitev hitrosti prenosa na:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Manually" = "Ročno";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+"Maximum number of channel auto-downloads at a time:" = "Največje številokanalnih sočasnih samodejnih prenosov:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
+"Maximum number of manual downloads at a time:" = "Največje število ročno dodanih sočasnih prenosov:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
 "Options" = "Možnosti";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
 "Play one video, then stop." = "Predvajaj en posnetek, potem ustavi.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
 "Quit Miro completely." = "Zapusti program Miro.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
 "Remember where I stopped watching a video and continue playing from that point." = "Zapomni si, kje sem končal s pregledovanjem posnetka in nadaljuj predvajanje na tem mestu.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
 "Show as a Channel" = "Prikaži kot kanal";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
 "Store downloaded videos in this folder:" = "Shrani prenesene posnetke v mapi:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
-"To avoid slowdowns, limit upstream bandwith when my computer is active." = "V izogib upočasnitvam, omeji hitrost pošiljanja, kadar je računalnik dejaven.";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
+"To avoid internet slowdowns, limit upstream bandwith to:" = "Omejitev hitrosti pošiljanja na:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
-"Upstream limit (KB/s)" = "Omejitev pošiljanja (KB/s)";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
-"Use BitTorrent ports between" = "Za BitTorrent uporabi vrata med:";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "Opozorilo: Nastavitve bodo uporabljene ob naslednjem zagonu $longAppName.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
 "Warn me when I attempt to quit with downloads in progress." = "Izpiši opozorilo ob poskusu prekinitve dejavnih prenosov.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
 "Watch for new videos in these folders and include them in my Library." = "Nove posnetke teh map vključi v zbirko posnetkov.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
 "When I click the red close button:" = "Ko pritisnem rdeči gumb za izklop:";
-
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
-"and" = "in";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
 "Channel:" = "Kanal:";

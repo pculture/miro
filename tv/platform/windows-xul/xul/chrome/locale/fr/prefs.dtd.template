@@ -14,10 +14,10 @@
 <!ENTITY prefs.channels.check.sixty "Toutes les heures">
 <!ENTITY prefs.channels.check.manually "Manuellement">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault "Télécharger automatiquement les paramètres par défaut pour les nouvelles chaînes">
+<!ENTITY prefs.channels.autodownloaddefault.all "Tout">
 <!ENTITY prefs.channels.autodownloaddefault.new "Nouveau">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Désactivé">
 
 <!ENTITY prefs.playback "Lecture">
 <!ENTITY prefs.playback.remember.pos "Se souvenir de l'endroit où la vidéo a été arrêtée et redémarrer à partir de là.">
@@ -35,8 +35,8 @@
 <!ENTITY prefs.folder.others.remove "Supprimer">
 
 <!ENTITY prefs.downloads "Téléchargements" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
-<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+<!ENTITY prefs.downloads.max "Nombre maximum de téléchargements manuels simultanés:">
+<!ENTITY prefs.autodownloads.max "Nombre maximum de canaux d'auto-téléchargement simultanés:">
 
 <!ENTITY prefs.disk.space "Espace disque">
 <!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
@@ -57,6 +57,6 @@
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
 <!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_upnp "Rediriger Automatiquement les Ports">
+<!ENTITY prefs.torrent.require_encryption "Ignorer les connexions non cryptées">
+<!ENTITY prefs.torrent.uploadratio "Arrêter l'envoi des torrents quand ce quota est atteint :">

@@ -14,10 +14,10 @@
 <!ENTITY prefs.channels.check.sixty "Cada hora">
 <!ENTITY prefs.channels.check.manually "Manualmente">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault "Configuraciones predeterminadas de auto descarga para nuevos canales">
+<!ENTITY prefs.channels.autodownloaddefault.all "Todo">
 <!ENTITY prefs.channels.autodownloaddefault.new "Nuevo">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Desactivado">
 
 <!ENTITY prefs.playback "Reproducir">
 <!ENTITY prefs.playback.remember.pos "Recordar la posición en la que se pausó la reproducción y continuar desde ese punto.">
@@ -35,11 +35,11 @@
 <!ENTITY prefs.folder.others.remove "Eliminar">
 
 <!ENTITY prefs.downloads "Descargas" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
-<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+<!ENTITY prefs.downloads.max "Número máximo de descargas manuales a la vez:">
+<!ENTITY prefs.autodownloads.max "Número máximo de auto-descargas de canal a la vez:">
 
 <!ENTITY prefs.disk.space "Espacio en disco">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Mantener por lo menos este espacio libre en mi disco:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "Atención: Este ajuste no funcionara hasta que reinicie $longAppName.">
 
@@ -53,10 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(Cuidado: Los cambios no funcionaran hasta que reinicies $longAppName)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "Para evitar ralentización de internet, limitar el ancho de banda de subida a:">
+<!ENTITY prefs.torrent.limit.downstream "Limitar el ancho de banda de escarga a:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_ports "Usar estos puertos:">
+<!ENTITY prefs.torrent.use_upnp "Redirigir Puertos Automáticamente">
+<!ENTITY prefs.torrent.require_encryption "Ignorar Conexiones Sin Encriptar">
+<!ENTITY prefs.torrent.uploadratio "Detener subidas del torrent cuando el ratio alcanza:">

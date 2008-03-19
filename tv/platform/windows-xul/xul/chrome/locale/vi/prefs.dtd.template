@@ -15,9 +15,9 @@
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
-<!ENTITY prefs.channels.autodownloaddefault.new "New">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.all "Tất cả">
+<!ENTITY prefs.channels.autodownloaddefault.new "Tạo mới">
+<!ENTITY prefs.channels.autodownloaddefault.off "Tắt">
 
 <!ENTITY prefs.playback "Phát lại">
 <!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
@@ -32,7 +32,7 @@
 <!ENTITY prefs.folder.others.location "Folder">
 <!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Add Folder...">
-<!ENTITY prefs.folder.others.remove "Remove">
+<!ENTITY prefs.folder.others.remove "Loại bỏ">
 
 <!ENTITY prefs.downloads "Downloads" >
 <!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">

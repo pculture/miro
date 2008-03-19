@@ -14,10 +14,10 @@
 <!ENTITY prefs.channels.check.sixty "Elk uur">
 <!ENTITY prefs.channels.check.manually "Handmatig">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault "Download de instellingen voor nieuwe kanalen automatisch">
+<!ENTITY prefs.channels.autodownloaddefault.all "Allemaal">
 <!ENTITY prefs.channels.autodownloaddefault.new "Nieuw">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Uitzetten">
 
 <!ENTITY prefs.playback "Weergave">
 <!ENTITY prefs.playback.remember.pos "Onthoud afspeelpositie video's.">
@@ -35,11 +35,11 @@
 <!ENTITY prefs.folder.others.remove "Verwijderen">
 
 <!ENTITY prefs.downloads "Downloads" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
-<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+<!ENTITY prefs.downloads.max "Maximum aantal manuele downloads tegelijk:">
+<!ENTITY prefs.autodownloads.max "Maximum aantal autmatische downloads van kanalen tegelijk:">
 
 <!ENTITY prefs.disk.space "Vrije Ruimte">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Hou tenminste zoveel vrije ruimte op mijn harde schijf:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "NB: De wijzigingen in $longAppName gaan in wanneer u deze opnieuw opent.">
 
@@ -53,10 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "Om traag internet te voorkomen, limiteer de upstreem tot:">
+<!ENTITY prefs.torrent.limit.downstream "Limiteer de downstream bandbreedte tot:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
 <!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_upnp "Stuur poorten automatisch door">
+<!ENTITY prefs.torrent.require_encryption "Negeer niet geëncrypteerde connecties">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads wanneer de volgende verhouding is bereikt:">

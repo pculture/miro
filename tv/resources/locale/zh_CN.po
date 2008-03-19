@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2007-10-25 09:42-0400\n"
-"PO-Revision-Date: 2008-02-26 06:38+0000\n"
-"Last-Translator: Richie <richie_glq@hotmail.com>\n"
+"POT-Creation-Date: 2008-02-29 12:40-0500\n"
+"PO-Revision-Date: 2008-03-12 00:42+0000\n"
+"Last-Translator: Andy Chan <kempson.chen@gmail.com>\n"
 "Language-Team: Chinese (China) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
+"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "Save this video"
@@ -161,6 +161,9 @@ msgstr ""
 #~ msgid "Democracy Player"
 #~ msgstr "Democracy播放器"
 
+#~ msgid "Don't start a download if it leaves less than"
+#~ msgstr "不要启动下载低于"
+
 #~ msgid "GB free"
 #~ msgstr "G字节空余空间"
 
@@ -216,8 +219,17 @@ msgstr ""
 #~ msgid "Remove Channel..."
 #~ msgstr "移除频道..."
 
+#~ msgid " limit upstream to"
+#~ msgstr " 上传上限是"
+
 #~ msgid "(You must restart Democracy for this change to take effect)\n"
 #~ msgstr "（此次修改在重新运行本软件后生效）\n"
+
+#~ msgid "GB free."
+#~ msgstr "千兆的剩余空间。"
+
+#~ msgid "KB/s when my computer is active."
+#~ msgstr "千字节/每秒(当我的电脑处于活跃状态时)"
 
 #~ msgid "Run Democracy at startup"
 #~ msgstr "在电脑启动时自动运行democracy软件"
@@ -268,6 +280,9 @@ msgstr ""
 #~ msgstr ""
 #~ "导入Democracy模块时发生错误：\n"
 #~ "%s"
+
+#~ msgid "Starting up"
+#~ msgstr "正在启动"
 
 #~ msgid "${count} Downloads in Progress"
 #~ msgstr "正有${count}个下载"
@@ -339,6 +354,15 @@ msgstr ""
 
 #~ msgid "New Channel Guide..."
 #~ msgstr "新建频道导航..."
+
+#~ msgid "BitTorrent ports:"
+#~ msgstr "BT端口"
+
+#~ msgid "Maximum:"
+#~ msgstr "最大："
+
+#~ msgid "Minimum:"
+#~ msgstr "最小："
 
 #~ msgid "_Copy Video URL"
 #~ msgstr "拷贝视频地址(_C)"
@@ -426,6 +450,9 @@ msgstr ""
 
 #~ msgid "Update Channels..."
 #~ msgstr "更新多个频道..."
+
+#~ msgid "The torrent file for this item was deleted "
+#~ msgstr "它的BitTorrent种子被删除了 "
 
 #~ msgid "outside of democracy."
 #~ msgstr "在democracy之外。"
@@ -517,6 +544,21 @@ msgstr ""
 #~ "Democracy Player can find all the videos on your computer to help you "
 #~ "organize your collection."
 #~ msgstr "Democracy播放器可以在您的电脑里找到所有视频来帮助您组织管理您的收藏。"
+
+#~ msgid "and"
+#~ msgstr "和"
+
+#~ msgid "Download at most"
+#~ msgstr "一次最多下载"
+
+#~ msgid "Save downloaded videos in this folder:"
+#~ msgstr "保存下载的视频到这个文件夹："
+
+#~ msgid "To avoid internet slowdowns:"
+#~ msgstr "为了避免互联网速度问题："
+
+#~ msgid "videos at once."
+#~ msgstr "个视频"
 
 #~ msgid "Results for \"${query}\""
 #~ msgstr "\"${query}\"的结果"
@@ -810,14 +852,14 @@ msgstr ""
 #~ msgid "V"
 #~ msgstr "V"
 
-#: ../../portable/dialogs.py:77
+#: ../../portable/dialogs.py:85
 msgid "Cancel"
 msgstr "取消"
 
 msgid "OK"
 msgstr "確定"
 
-#: ../../portable/dialogs.py:76
+#: ../../portable/dialogs.py:84
 msgid "Ok"
 msgstr "好的"
 
@@ -868,8 +910,8 @@ msgstr "加入节目介绍"
 msgid "Bring All to Front"
 msgstr "提取全部到最前面"
 
-#: ../../platform/osx/frontend/Preferences.py:65
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
+#: ../../platform/osx/platform/frontends/html/Preferences.py:80
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "Channels"
 msgstr "频道"
 
@@ -894,7 +936,7 @@ msgstr "复制视频地址"
 msgid "Cut"
 msgstr "剪切"
 
-#: ../../portable/dialogs.py:96
+#: ../../portable/dialogs.py:104
 msgid "Delete"
 msgstr "删除"
 
@@ -937,7 +979,7 @@ msgstr "主菜单"
 msgid "Minimize"
 msgstr "最小化"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "Miro"
 msgstr "Miro"
 
@@ -968,12 +1010,12 @@ msgstr "打开..."
 msgid "Paste"
 msgstr "粘贴"
 
-#: ../../platform/osx/frontend/Application.py:249
+#: ../../platform/osx/platform/frontends/html/Application.py:244
 msgid "Play Video"
 msgstr "播放视频"
 
-#: ../../platform/osx/frontend/Preferences.py:69
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+#: ../../platform/osx/platform/frontends/html/Preferences.py:84
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Playback"
 msgstr "播放"
 
@@ -1049,7 +1091,7 @@ msgstr "方框"
 msgid "FullScreen Controls"
 msgstr "全屏控制"
 
-#: ../../portable/tabs.py:46
+#: ../../portable/tabs.py:57
 msgid "Video Search"
 msgstr "视频搜索"
 
@@ -1074,11 +1116,8 @@ msgstr ""
 "用户名\n"
 "\n"
 
-msgid " limit upstream to"
-msgstr " 上传上限是"
-
-msgid "(You must restart Miro for this change to take effect)"
-msgstr "您必须重新启动Miro以便此更改生效"
+msgid "(You must restart Miro for some of these changes to take effect)"
+msgstr "（你必须重启Miro以使某些设置生效）"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr "您必须重启Miro才能使更改生效\n"
@@ -1086,19 +1125,23 @@ msgstr "您必须重启Miro才能使更改生效\n"
 msgid "(movies directory path goes here)"
 msgstr "(视频文件的文件夹置于此)"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:1
+msgid "-"
+msgstr "-"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 day"
 msgstr "一天"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid "1 month"
 msgstr "一个月"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "10 days"
 msgstr "十天"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "3 days"
 msgstr "三天"
 
@@ -1111,7 +1154,7 @@ msgstr "4"
 msgid "5"
 msgstr "5"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
 msgid "6 days"
 msgstr "6天"
 
@@ -1121,82 +1164,114 @@ msgstr "99999"
 msgid "Add..."
 msgstr "添加……"
 
-msgid "BitTorrent ports:"
-msgstr "BT端口"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+msgid "All"
+msgstr "全部"
+
+msgid "Auto download default setting for new channels:"
+msgstr ""
+
+msgid "Automatically forward ports"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
+msgid "BitTorrent"
+msgstr "BitTorrent"
 
 msgid "By default, videos expire after:"
 msgstr "视频预设有效期至"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Change..."
 msgstr "更改…"
 
 msgid "Check channels for new content:"
 msgstr "检查该频道是否添加新内容"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
-msgid "Don't start a download if it leaves less than"
-msgstr "不要启动下载低于"
+msgid "Don't auto-download more than this many videos per channel at once:"
+msgstr "每个频道同时下载的视频数："
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
-msgid "Download at most"
-msgstr "一次最多下载"
+msgid "Don't download more than this many videos at once:"
+msgstr "同时下载的视频数:"
 
 msgid "Folder location"
 msgstr "文件夹位置"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
-msgid "GB free."
-msgstr "千兆的剩余空间。"
+msgid "GB\n"
+msgstr "GB\n"
 
-msgid "KB/s when my computer is active."
-msgstr "千字节/每秒(当我的电脑处于活跃状态时)"
+msgid "Ignore unencrypted connections"
+msgstr "忽略未加密链接"
 
-msgid "Maximum:"
-msgstr "最大："
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
+msgid "KB/s."
+msgstr "KB/s."
 
-msgid "Minimum:"
-msgstr "最小："
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
+msgid "Keep at least this much free space on my drive:"
+msgstr "保留硬盘的最少剩余空间："
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
+msgid "Limit downstream to"
+msgstr "限制下载速度至"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Never"
 msgstr "从不"
+
+#: ../../portable/tabs.py:56
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+msgid "New"
+msgstr "新添"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
+msgid "Off"
+msgstr "关闭"
 
 msgid "OtherViews"
 msgstr "其它视图"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Play videos one after another."
 msgstr "连续播放视频"
 
 msgid "Remember video position."
 msgstr "记住影片位置"
 
-#: ../../portable/guide.py:107 ../../portable/playlist.py:197
-#: ../../portable/feed.py:795 ../../portable/menu.py:65
-#: ../../portable/menu.py:70 ../../portable/folder.py:156
-#: ../../portable/folder.py:211
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
+#: ../../portable/frontends/html/contextmenu.py:99
+#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:178
+#: ../../portable/frontends/html/contextmenu.py:184
+#: ../../portable/frontends/html/contextmenu.py:190
+#: ../../portable/frontends/html/contextmenu.py:199
+#: ../../portable/frontends/html/contextmenu.py:233
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Remove"
 msgstr "移除"
 
 msgid "Run Miro at startup"
 msgstr "启动时运行Miro"
 
-msgid "Save downloaded videos in this folder:"
-msgstr "保存下载的视频到这个文件夹："
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
 msgid "Show as Channel"
 msgstr "作为频道显示"
 
 msgid "Stop after each video."
 msgstr "每个视频播放完后停止"
 
-msgid "To avoid internet slowdowns:"
-msgstr "为了避免互联网速度问题："
+msgid "Stop uploads when this ratio is reached:"
+msgstr "当达到这个比例后停止下载："
 
-#: ../../portable/app.py:1206
+msgid "Store downloads in this folder:"
+msgstr "保存下载文件到："
+
+msgid "To avoid internet slowdowns, limit upstream to"
+msgstr "避免网速变慢，限制上传至"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
+msgid "Use these ports:"
+msgstr "使用这些端口："
+
+#: ../../portable/frontends/html/main.py:319
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "当尝试退出时，如还有下载任务正在执行请提醒我。"
 
@@ -1213,10 +1288,6 @@ msgstr "每小时"
 msgid "manually"
 msgstr "手动"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
-msgid "videos at once."
-msgstr "个视频"
-
 msgid "$label$"
 msgstr "$标签$"
 
@@ -1226,7 +1297,7 @@ msgstr "$主题$"
 msgid "Channel"
 msgstr "频道"
 
-#: ../../portable/dialogs.py:91
+#: ../../portable/dialogs.py:99
 msgid "Create"
 msgstr "创建"
 
@@ -1245,8 +1316,8 @@ msgstr "寻找："
 msgid "URL"
 msgstr "网址"
 
-#: ../../platform/windows-xul/frontend_implementation/startup.py:42
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:48
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "（已分析组合%d文件─找到%d视频文件）"
@@ -1257,11 +1328,11 @@ msgstr "上一步"
 msgid "Browse"
 msgstr "浏览"
 
-#: ../../platform/osx/frontend/StartupPanel.py:106
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:121
 msgid "Next"
 msgstr "下一步"
 
-#: ../../portable/dialogs.py:79
+#: ../../portable/dialogs.py:87
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
 msgid "No"
 msgstr "不"
@@ -1308,7 +1379,7 @@ msgstr ""
 "\n"
 "您希望开机时启动Miro吗？"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "Welcome to Internet TV!"
 msgstr "欢迎来到互联网电视！"
 
@@ -1323,7 +1394,7 @@ msgstr ""
 "及更多的。\n"
 "\n"
 
-#: ../../portable/dialogs.py:78
+#: ../../portable/dialogs.py:86
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
 msgid "Yes"
 msgstr "确定"
@@ -1335,41 +1406,41 @@ msgstr ""
 "%消息％\n"
 "％消息％"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
 msgid "Update Available"
 msgstr "有可用的更新"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
 #, python-format
 msgid "A new version of %s is available for download."
 msgstr "%s的新版本已经可以下载"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
 msgid "Error Bombing Item"
 msgstr "Bombing该项时出错"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
 msgid "Error Recommending Item"
 msgstr "推荐该项时发生错误"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
 msgid "Error Opening Website"
 msgstr "打开网站时发生错误"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr "打开%s时发生错误。请几秒钟后重试看看"
 
-#: ../../platform/windows-xul/frontend_implementation/startup.py:50
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:76
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:174
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
 msgstr[0] "发现%d个视频"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:62
+#: ../../platform/windows-xul/xul/components/pybridge.py:79
 #, python-format
 msgid ""
 "Error importing modules:\n"
@@ -1378,103 +1449,95 @@ msgstr ""
 "载入错误模块:\n"
 "%s"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:66
-msgid "Starting up"
-msgstr "正在启动"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:273
+#: ../../platform/windows-xul/xul/components/pybridge.py:254
 msgid "Loading window"
 msgstr "正在装载窗口"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:274
+#: ../../platform/windows-xul/xul/components/pybridge.py:255
 msgid "onStartup called twice"
 msgstr "onStartup被调用了两次"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:702
+#: ../../platform/windows-xul/xul/components/pybridge.py:739
 msgid "Spacebar"
 msgstr "空格键"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:851
+#: ../../platform/windows-xul/xul/components/pybridge.py:887
 msgid "Close to tray?"
 msgstr "最小化到系统托盘？"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:852
+#: ../../platform/windows-xul/xul/components/pybridge.py:888
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr "当您点击红色按钮时，您是希望Miro最小化到系统托盘还是退出？您可以稍后在选项里更改这个设定。"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:44
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
 msgid "Download Completed"
 msgstr "下载完成"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:45
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "影片'%s'下载完成"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:54
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
 msgid "Download Failed"
 msgstr "下载失败"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:55
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
 #, python-format
 msgid "Download of video '%s' has failed."
 msgstr "下载视频\"%s\"失败"
 
-#: ../../platform/osx/frontend/MainFrame.py:278
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
 msgid "Subscribe to Channel"
 msgstr "订阅频道"
 
-#: ../../platform/osx/frontend/MainFrame.py:279
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
 msgid "Enter the URL of the channel you would like to subscribe to."
 msgstr "输入您想要订阅频道的网络地址"
 
-#: ../../platform/osx/frontend/QuicktimeRenderer.py:248
-msgid "Audio"
-msgstr "声音"
-
-#: ../../platform/osx/frontend/Preferences.py:64
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
+#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
 msgid "General"
 msgstr "主选项"
 
-#: ../../platform/osx/frontend/Preferences.py:66
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
+#: ../../platform/osx/platform/frontends/html/Preferences.py:81
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Downloads"
 msgstr "下载"
 
-#: ../../platform/osx/frontend/Preferences.py:67
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
+#: ../../platform/osx/platform/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Folders"
 msgstr "文件夹"
 
-#: ../../platform/osx/frontend/Preferences.py:68
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+#: ../../platform/osx/platform/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid "Disk Space"
 msgstr "磁盘空间"
 
-#: ../../platform/osx/frontend/Preferences.py:196
+#: ../../platform/osx/platform/frontends/html/Preferences.py:251
 msgid "Movies Directory"
 msgstr "影片目录"
 
-#: ../../platform/osx/frontend/Preferences.py:197
+#: ../../platform/osx/platform/frontends/html/Preferences.py:252
 #, python-format
 msgid "Select a Directory to store %s downloads in."
 msgstr "选择下载 %s 后存放的目录"
 
-#: ../../platform/osx/frontend/Preferences.py:198
-#: ../../platform/osx/frontend/Preferences.py:262
+#: ../../platform/osx/platform/frontends/html/Preferences.py:253
+#: ../../platform/osx/platform/frontends/html/Preferences.py:362
 msgid "Select"
 msgstr "选择(&L)"
 
-#: ../../platform/osx/frontend/Preferences.py:207
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/osx/platform/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
 msgstr "转移已存在的电影？"
 
-#: ../../platform/osx/frontend/Preferences.py:208
+#: ../../platform/osx/platform/frontends/html/Preferences.py:263
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
@@ -1482,335 +1545,1008 @@ msgid ""
 "until they finish)."
 msgstr "您已经选择了一个新的下载视频的存放目录。要 %s 移动当前的下载文件到那里吗？（在下载完成前，当前正在下载的视频不会被移动）"
 
-#: ../../platform/osx/frontend/Preferences.py:260
+#: ../../platform/osx/platform/frontends/html/Preferences.py:360
 msgid "View this Directory in the Library"
 msgstr "浏览库中的目录"
 
-#: ../../platform/osx/frontend/Preferences.py:261
+#: ../../platform/osx/platform/frontends/html/Preferences.py:361
 msgid "Select a Directory to view in the Library."
 msgstr "在媒体库中选择一个目录观看"
 
-#: ../../platform/osx/frontend/StartupPanel.py:80
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
 msgid "Finish"
 msgstr "完成"
 
-#: ../../platform/osx/frontend/StartupPanel.py:139
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
 msgid "Search!"
 msgstr "搜索！"
 
-#: ../../platform/osx/frontend/Application.py:246
+#: ../../platform/osx/platform/frontends/html/Application.py:241
 msgid "Pause Video"
 msgstr "暂停视频"
 
-#: ../../platform/osx/frontend/Application.py:255
+#: ../../platform/osx/platform/frontends/html/Application.py:250
 msgid "Unsupported version of Quicktime"
 msgstr "不支持的Quicktime版本"
 
-#: ../../platform/osx/frontend/Application.py:256
+#: ../../platform/osx/platform/frontends/html/Application.py:251
 #, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
 msgstr "您需要可免费下载的最新版本Quicktime来运行 %s"
 
-#: ../../platform/osx/frontend/UIStrings.py:22
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
 msgstr "删除...(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:23
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:34
 msgid "_Remove Playlist..."
 msgstr "删除播放列表(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:24
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:35
 msgid "_Remove Playlists..."
 msgstr "删除多个播放列表...(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:25
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:36
 msgid "_Remove Playlist Folder..."
 msgstr "删除播放列表夹...(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:26
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:37
 msgid "_Remove Playlist Folders..."
 msgstr "删除多个播放列表夹...(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:27 ../../portable/menubar.py:179
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:38
+#: ../../portable/menubar.py:193
 msgid "_Remove Channel..."
 msgstr "删除频道...(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:28 ../../portable/menubar.py:180
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:39
+#: ../../portable/menubar.py:194
 msgid "_Remove Channels..."
 msgstr "删除多个频道...(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:29 ../../portable/menubar.py:182
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:40
+#: ../../portable/menubar.py:196
 msgid "_Remove Channel Folder..."
 msgstr "删除频道夹...(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:30 ../../portable/menubar.py:181
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:41
+#: ../../portable/menubar.py:195
 msgid "_Remove Channel Folders..."
 msgstr "删除多个频道夹...(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:31
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:42
 msgid "_Remove Miro Guide..."
 msgstr "_移除Miro指南..."
 
-#: ../../platform/osx/frontend/UIStrings.py:32
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:43
 msgid "_Remove Miro Guides..."
 msgstr "_移除Miro指南..."
 
-#: ../../platform/osx/frontend/UIStrings.py:33
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:44
 msgid "_Remove Video..."
 msgstr "删除视频...(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:34
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:45
 msgid "_Remove Videos..."
 msgstr "删除多个视频...(_R)"
 
-#: ../../platform/osx/frontend/UIStrings.py:35
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:46
 msgid "Re_name..."
 msgstr "重命名(_N)"
 
-#: ../../platform/osx/frontend/UIStrings.py:36
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:47
 msgid "Re_name Playlist..."
 msgstr "重命名播放列表(_N)"
 
-#: ../../platform/osx/frontend/UIStrings.py:37
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:48
 msgid "Re_name Playlist Folder..."
 msgstr "重命名播放列表夹(_N)"
 
-#: ../../platform/osx/frontend/UIStrings.py:38 ../../portable/menubar.py:178
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:49
+#: ../../portable/menubar.py:192
 msgid "Re_name Channel..."
 msgstr "重命名频道(_N)"
 
-#: ../../platform/osx/frontend/UIStrings.py:39
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:50
 msgid "Re_name Channel Folder..."
 msgstr "重命名频道夹(_N)"
 
-#: ../../platform/osx/frontend/UIStrings.py:40
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:51
 msgid "Re_name Miro Guide..."
 msgstr "重命名Miro指南"
 
-#: ../../platform/osx/frontend/UIStrings.py:41 ../../portable/menubar.py:184
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:52
+#: ../../portable/menubar.py:198
 msgid "_Update Channel..."
 msgstr "更新频道...(_U)"
 
-#: ../../platform/osx/frontend/UIStrings.py:42 ../../portable/menubar.py:185
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:53
+#: ../../portable/menubar.py:199
 msgid "_Update Channels..."
 msgstr "更新多个频道...(_U)"
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42
+#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+msgid "Audio"
+msgstr "声音"
+
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
 msgstr "设定"
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56
 msgid "Hide"
 msgstr "隐藏"
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58
 msgid "Show"
 msgstr "显示"
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48
-#: ../../portable/dialogs.py:80 ../../portable/menubar.py:257
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59
+#: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
 msgid "Quit"
 msgstr "退出"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
 msgid "New Channel _Guide..."
 msgstr "新建频道导航(_G)"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
 msgid "Folder Location"
 msgstr "文件夹位置"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
 msgid "Username:"
 msgstr "用户名"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
 msgid "Password:"
 msgstr "密码"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416
 msgid "Unknown Runtime Error"
 msgstr "未知的运行时错误"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417
 #, python-format
 msgid "An unknown error has occurred %s."
 msgstr "发生了未知错误%s。"
 
-#: ../../portable/dl_daemon/download.py:359
+#: ../../portable/dl_daemon/download.py:458
 msgid "Error"
 msgstr "出错"
 
-#: ../../portable/dl_daemon/download.py:432
+#: ../../portable/dl_daemon/download.py:544
 #, python-format
 msgid "Could not write to %s"
 msgstr "不能写入 %s"
 
-#: ../../portable/dl_daemon/download.py:452
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:769
 msgid "Not enough disk space"
 msgstr "可用磁盘空间不足"
 
-#: ../../portable/dl_daemon/download.py:453
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:770
 #, python-format
 msgid "%s MB required to store this video"
 msgstr "需要%s MB保存这个视频"
 
-#: ../../portable/dl_daemon/download.py:672
+#: ../../portable/dl_daemon/download.py:781
 msgid "BitTorrent failure"
 msgstr "BT下载错误"
 
-#: ../../portable/dl_daemon/download.py:673
+#: ../../portable/dl_daemon/download.py:782
 msgid "BitTorrent failed to startup"
 msgstr "BT启动失败"
 
-#: ../../portable/dl_daemon/download.py:796
+#: ../../portable/dl_daemon/download.py:954
 msgid "Corrupt Torrent"
 msgstr "错误的BitTorrent种子"
 
-#: ../../portable/dl_daemon/download.py:797
+#: ../../portable/dl_daemon/download.py:955
 #, python-format
 msgid "The torrent file at %s was not valid"
 msgstr "%s的BitTorrent种子文件非法"
 
-#: ../../portable/dl_daemon/download.py:822
+#: ../../portable/dl_daemon/download.py:980
 msgid "Torrent file deleted"
 msgstr "BitTorrent种子被删除了"
 
-#: ../../portable/dl_daemon/download.py:823
-msgid "The torrent file for this item was deleted "
-msgstr "它的BitTorrent种子被删除了 "
+#: ../../portable/dl_daemon/download.py:981
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr "这个项目的种子在Miro外被删除了。"
 
-#: ../../portable/dl_daemon/download.py:824
-msgid "outside of Miro."
-msgstr "Miro之外"
+#: ../../portable/frontends/html/contextmenu.py:103
+msgid "Update Channels Now"
+msgstr "现在更新频道"
 
-#: ../../portable/tabs.py:44
-msgid "Library"
-msgstr "媒体库"
+#: ../../portable/frontends/html/contextmenu.py:128
+#, python-format
+msgid "%d Downloaded Items"
+msgstr "下载了%d项"
 
-#: ../../portable/tabs.py:45
-msgid "New"
-msgstr "新添"
+#: ../../portable/frontends/html/contextmenu.py:130
+#: ../../portable/frontends/html/contextmenu.py:211
+msgid "Play"
+msgstr "播放"
 
-#: ../../portable/tabs.py:47
-msgid "Downloading"
-msgstr "下载中"
+#: ../../portable/frontends/html/contextmenu.py:131
+#: ../../portable/frontends/html/contextmenu.py:214
+msgid "Add to new playlist"
+msgstr "添加到新的播放列表"
 
-#: ../../portable/guide.py:104 ../../portable/feed.py:789
+#: ../../portable/frontends/html/contextmenu.py:133
+#: ../../portable/frontends/html/contextmenu.py:207
+msgid "Remove From Playlist"
+msgstr "从播放列表中移除"
+
+#: ../../portable/frontends/html/contextmenu.py:135
+#: ../../portable/frontends/html/contextmenu.py:209
+msgid "Remove From the Library"
+msgstr "从媒体库中移除"
+
+#: ../../portable/frontends/html/contextmenu.py:141
+#: ../../portable/frontends/html/contextmenu.py:218
+msgid "Mark as Unwatched"
+msgstr "标记为未观看"
+
+#: ../../portable/frontends/html/contextmenu.py:146
+#: ../../portable/frontends/html/contextmenu.py:220
+msgid "Mark as Watched"
+msgstr "标记为已观看过的"
+
+#: ../../portable/frontends/html/contextmenu.py:151
+#, python-format
+msgid "%d Available Items"
+msgstr "%d项可用"
+
+#: ../../portable/frontends/html/contextmenu.py:152
+#: ../../portable/frontends/html/contextmenu.py:227
+#: ../../portable/dialogs.py:93
+msgid "Download"
+msgstr "下载"
+
+#: ../../portable/frontends/html/contextmenu.py:157
+#, python-format
+msgid "%d Downloading Items"
+msgstr "%d项下载中"
+
+#: ../../portable/frontends/html/contextmenu.py:159
+#: ../../portable/frontends/html/contextmenu.py:225
+msgid "Cancel Download"
+msgstr "取消下载"
+
+#: ../../portable/frontends/html/contextmenu.py:161
+#: ../../portable/frontends/html/contextmenu.py:225
+msgid "Pause Download"
+msgstr "暂停下载"
+
+#: ../../portable/frontends/html/contextmenu.py:164
+#: ../../portable/frontends/html/contextmenu.py:223
+msgid "Restart Upload"
+msgstr "重新开始上传"
+
+#: ../../portable/frontends/html/contextmenu.py:170
+msgid "Update Channel Now"
+msgstr "现在更新频道"
+
+#: ../../portable/frontends/html/contextmenu.py:172
+#: ../../portable/frontends/html/contextmenu.py:196
 msgid "Copy URL to clipboard"
 msgstr "复制网络地址到剪切板"
 
-#: ../../portable/guide.py:154
-msgid "Miro Guide"
-msgstr "Miro 配置向导"
+#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
+msgid "Rename Channel"
+msgstr "重命名频道"
 
-#: ../../portable/extrastrings.py:22 ../../portable/feed.py:2028
-#: ../../portable/feed.py:2120
-msgid "Search"
-msgstr "搜索"
+#: ../../portable/frontends/html/contextmenu.py:177
+msgid "Revert Title to Default"
+msgstr "恢复标题到默认值"
 
-#: ../../portable/downloader.py:215
-msgid "activity"
-msgstr "活跃度"
+#: ../../portable/frontends/html/contextmenu.py:183
+#: ../../portable/folder.py:142
+msgid "Rename Channel Folder"
+msgstr "重命名频道夹"
 
-#: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
-#: ../../portable/httpclient.py:142
-msgid "File not found"
-msgstr "没有找到文件"
+#: ../../portable/frontends/html/contextmenu.py:189
+#: ../../portable/folder.py:213
+msgid "Rename Playlist Folder"
+msgstr "重命名播放列表夹"
 
-#: ../../portable/downloader.py:252
-msgid "Flash URL Scraping Error"
-msgstr "Flash链接失效"
+#: ../../portable/frontends/html/contextmenu.py:213
+msgid "Play Just This Video"
+msgstr "只播放这个视频"
 
-#: ../../portable/downloader.py:427
-msgid "starting up"
-msgstr "正在启动"
-
-#: ../../portable/playlist.py:196 ../../portable/playlist.py:201
+#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../portable/playlist.py:218
 msgid "Rename Playlist"
 msgstr "重命名播放列表"
 
-#: ../../portable/playlist.py:202
+#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
+msgid "Video Directory Missing"
+msgstr "节目文件夹丢失"
+
+#: ../../portable/frontends/html/main.py:133
+msgid ""
+"\n"
+"    Miro can't find your primary video directory.  This may be because it's  "
+"   located on an external drive that is currently disconnected.\n"
+"\n"
+"    If you continue, the video directory will be reset to a location on this "
+"    drive (this will cause you to lose some details about the videos on the  "
+"   external drive).  You can also quit, connect the drive, and relaunch Miro."
+msgstr ""
+
+#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
+msgid "Custom Channels"
+msgstr "自定义频道"
+
+#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr "您正在运行带有常用频道的 $longAppName 版本"
+
+#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
+msgid "Internal Error"
+msgstr "内部错误"
+
+#: ../../portable/frontends/html/main.py:269
+msgid ""
+"Miro has encountered an internal error. You can help us track down this "
+"problem and fix it by submitting an error report."
+msgstr "Miro遇到内部错误。您可以通过提交错误报告来帮助我们来查找这个问题并且修复它"
+
+#: ../../portable/frontends/html/main.py:269
+msgid ""
+"Include entire program database including all video and channel metadata "
+"with crash report"
+msgstr "在崩溃报告里面包括整个程序所有节目和频道数据库的描述文件"
+
+#: ../../portable/frontends/html/main.py:269
+msgid "Describe what you were doing that caused this error"
+msgstr "请描述造成这个错误时您正在做什么"
+
+#: ../../portable/frontends/html/main.py:284
+#, python-format
+msgid "%s Version Alert"
+msgstr "%s 版本更新提示"
+
+#: ../../portable/frontends/html/main.py:285
+#, python-format
+msgid "A new version of %s is available. Would you like to download it now?"
+msgstr "%s 有一个新版本可用。您想现在下载它吗？"
+
+#: ../../portable/frontends/html/main.py:290
+#, python-format
+msgid "%s Version Check"
+msgstr "%s 版本检查"
+
+#: ../../portable/frontends/html/main.py:291
+#, python-format
+msgid "%s is up to date."
+msgstr "%s 已更新"
+
+#: ../../portable/frontends/html/main.py:309
+msgid "Are you sure you want to quit?"
+msgstr "您确定要退出吗？"
+
+#: ../../portable/frontends/html/main.py:311
+msgid ""
+"Miro is still uploading your crash report. If you quit now the upload will "
+"be canceled.  Quit Anyway?"
+msgstr "Miro正在上传您的崩溃报告。如果您现在退出的话上传将被取消。仍然要退出吗？"
+
+#: ../../portable/frontends/html/main.py:316
+#, python-format
+msgid "You have %d download still in progress.  Quit Anyway?"
+msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
+msgstr[0] "您还有%d的下载正在进行。您仍然要退出吗？"
+
+#: ../../portable/frontends/html/main.py:340
+msgid "Import OPML File"
+msgstr "导入 OPML 文档"
+
+#: ../../portable/frontends/html/main.py:342
+msgid "OPML Files"
+msgstr "OPML 文档"
+
+#: ../../portable/frontends/html/main.py:347
+msgid "Export OPML File"
+msgstr "导出OPML文件"
+
+#: ../../portable/frontends/html/templatedisplay.py:325
+msgid "Invalid Value"
+msgstr "无效值"
+
+#: ../../portable/frontends/html/templatedisplay.py:326
+#, python-format
+msgid "%s is invalid.  You must enter a non-negative number."
+msgstr "无效的%s。您必须输入非负的数字。"
+
+#: ../../portable/frontends/html/templatedisplay.py:452
+msgid "Error Revealing File"
+msgstr "显示文件出错"
+
+#: ../../portable/frontends/html/templatedisplay.py:453
+#, python-format
+msgid "The file \"%s\" was deleted from outside Miro."
+msgstr "文件\"%s\" 已被删除"
+
+#: ../../portable/frontends/html/templatedisplay.py:560
+msgid "Error Changing Movies Directory"
+msgstr "改变节目目录出错"
+
+#: ../../portable/frontends/html/templatedisplay.py:561
+msgid ""
+"You don't have permission to write to the directory you selected.  Miro will "
+"continue to use the old videos directory."
+msgstr "您没有权限来写入当前您选择的文件夹，Miro将继续使用老的文件夹。"
+
+#: ../../portable/frontends/html/templatedisplay.py:664
+msgid " - Invalid URL"
+msgstr " - 无效的网络地址"
+
+#: ../../portable/frontends/html/templatedisplay.py:665
+msgid ""
+"The address you entered is not a valid URL.\n"
+"Please double check and try again.\n"
+"\n"
+msgstr ""
+"您填入的地址是无效的网络地址。\n"
+"请仔细检查后再试。\n"
+"\n"
+
+#: ../../portable/frontends/html/templatedisplay.py:691
+msgid "$shortAppName - Add Channel"
+msgstr "$shortAppName - 添加频道"
+
+#: ../../portable/frontends/html/templatedisplay.py:691
+msgid "Enter the URL of the channel to add"
+msgstr "输入要添加的频道网络地址"
+
+#: ../../portable/frontends/html/templatedisplay.py:712
+msgid "$shortAppName - Add Miro Guide"
+msgstr "$shortAppName - 添加Miro节目表"
+
+#: ../../portable/frontends/html/templatedisplay.py:712
+msgid "Enter the URL of the Miro Guide to add"
+msgstr "输入Miro节目表的网络地址来添加"
+
+#: ../../portable/frontends/html/templatedisplay.py:718
+msgid "$shortAppName - Download Video"
+msgstr "$shortAppName - 下载节目"
+
+#: ../../portable/frontends/html/templatedisplay.py:718
+msgid "Enter the URL of the video to download"
+msgstr "输入节目的链接来下载"
+
+#: ../../portable/tabs.py:55
+msgid "Library"
+msgstr "媒体库"
+
+#: ../../portable/tabs.py:58
+msgid "Downloading"
+msgstr "下载中"
+
+#: ../../portable/downloader.py:234
+msgid "activity"
+msgstr "活跃度"
+
+#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
+#: ../../portable/httpclient.py:155
+msgid "File not found"
+msgstr "没有找到文件"
+
+#: ../../portable/downloader.py:269
+msgid "Flash URL Scraping Error"
+msgstr "Flash链接失效"
+
+#: ../../portable/downloader.py:445
+msgid "starting up"
+msgstr "正在启动"
+
+#: ../../portable/playlist.py:219
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr "输入播放列表%s的新名字"
 
-#: ../../portable/playlist.py:224
+#: ../../portable/playlist.py:241
 msgid "Create Playlist"
 msgstr "创建播放列表"
 
-#: ../../portable/playlist.py:225
+#: ../../portable/playlist.py:242
 msgid "Enter a name for the new playlist"
 msgstr "输入新播放列表的名字"
 
-#: ../../portable/feed.py:383
+#: ../../portable/opml.py:144
+msgid "OPML Import failed"
+msgstr "OPML 输入错误"
+
+#: ../../portable/opml.py:145
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr "选择的OPML文件无效。输入中断了。"
+
+#: ../../portable/opml.py:150
+msgid "OPML Import summary"
+msgstr "OPML输入总结"
+
+#: ../../portable/opml.py:151
+#, python-format
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "成功输入%d ."
+
+#: ../../portable/opml.py:154
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] "跳过%d输入仍然还在。"
+
+#: ../../portable/util.py:266
+#, python-format
+msgid "%1.1fGB"
+msgstr "%1.1fG字节"
+
+#: ../../portable/util.py:268
+#, python-format
+msgid "%dGB"
+msgstr "%dGB"
+
+#: ../../portable/util.py:272
+#, python-format
+msgid "%1.1fMB"
+msgstr "%1.1f兆字节"
+
+#: ../../portable/util.py:274
+#, python-format
+msgid "%dMB"
+msgstr "%dMB"
+
+#: ../../portable/util.py:278
+#, python-format
+msgid "%1.1fKB"
+msgstr "%1.1f千字节"
+
+#: ../../portable/util.py:280
+#, python-format
+msgid "%dKB"
+msgstr "%dKB"
+
+#: ../../portable/util.py:284
+#, python-format
+msgid "%1.1fB"
+msgstr "%1.1fB"
+
+#: ../../portable/util.py:286
+#, python-format
+msgid "%dB"
+msgstr "%dB 分贝"
+
+#: ../../portable/iheartmiro.py:82
+msgid ""
+"An Effortless Way to Help Miro\n"
+"\n"
+"Miro is open-source and built by a non-profit.  We need your help to "
+"continue our work.\n"
+"\n"
+"I Heart Miro is a simple Firefox extension that gives a referral fee to the "
+"Miro organization when you shop at Amazon.  You'll never notice it, it "
+"doesn't cost you a thing, and it's easy to uninstall at any time.\n"
+"\n"
+"If you click 'Install iHeartMiro' below, Firefox will launch and ask if it's "
+"ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks "
+"for your help."
+msgstr ""
+
+#: ../../portable/menubar.py:158
+msgid "_Open"
+msgstr "打开(_O)"
+
+#: ../../portable/menubar.py:159
+msgid "_Download Video"
+msgstr "下载视频(_D)"
+
+#: ../../portable/menubar.py:161
+msgid "Check _Version"
+msgstr "检查版本(_V)"
+
+#: ../../portable/menubar.py:163
+msgid "_Remove Video"
+msgstr "删除视频(_R)"
+
+#: ../../portable/menubar.py:164
+msgid "_Remove Videos"
+msgstr "_删除节目"
+
+#: ../../portable/menubar.py:165
+msgid "Re_name Video"
+msgstr "给节目改名"
+
+#: ../../portable/menubar.py:166
+msgid "Save Video _As..."
+msgstr "保存视频为...(_A)"
+
+#: ../../portable/menubar.py:167
+msgid "Save Videos _As..."
+msgstr "将节目保存_为..."
+
+#: ../../portable/menubar.py:168
+msgid "Copy Video _URL"
+msgstr "拷贝节目_链接"
+
+#: ../../portable/menubar.py:170
+msgid "_Options..."
+msgstr "_选项"
+
+#: ../../portable/menubar.py:171
+msgid "_Quit"
+msgstr "退出(_Q)"
+
+#: ../../portable/menubar.py:179
+msgid "Cu_t"
+msgstr "剪切(_t)"
+
+#: ../../portable/menubar.py:180
+msgid "_Copy"
+msgstr "剪切(_C)"
+
+#: ../../portable/menubar.py:181
+msgid "_Paste"
+msgstr "粘贴 (_P)"
+
+#: ../../portable/menubar.py:182
+msgid "Select _All"
+msgstr "全选(_A)"
+
+#: ../../portable/menubar.py:183
+msgid "_Delete"
+msgstr "删除"
+
+#: ../../portable/menubar.py:187
+msgid "Add _Channel"
+msgstr "添加频道"
+
+#: ../../portable/menubar.py:188
+msgid "New Searc_h Channel..."
+msgstr "新建搜索频道(_H)"
+
+#: ../../portable/menubar.py:189
+msgid "New _Folder..."
+msgstr "新建目录(_F)..."
+
+#: ../../portable/menubar.py:190
+msgid "Add Channel _Guide..."
+msgstr "添加频道_指南(_G)..."
+
+#: ../../portable/menubar.py:200
+msgid "Update _All Channels"
+msgstr "更新所有频道"
+
+#: ../../portable/menubar.py:202
+msgid "_Import Channels (OPML)..."
+msgstr "_输入频道（OPML）"
+
+#: ../../portable/menubar.py:203
+msgid "E_xport Channels (OPML)..."
+msgstr "导出频道（OPML）...(E)"
+
+#: ../../portable/menubar.py:205
+msgid "_Send this channel to a friend"
+msgstr "把该频道发送给朋友(_S)"
+
+#: ../../portable/menubar.py:206
+msgid "Copy Channel _Link"
+msgstr "复制频道链接地址(_L)"
+
+#: ../../portable/menubar.py:209
+msgid "New _Playlist"
+msgstr "新建播放列表"
+
+#: ../../portable/menubar.py:210
+msgid "New Playlist Fol_der"
+msgstr "新建播放列表文件夹"
+
+#: ../../portable/menubar.py:212
+msgid "Re_name Playlist"
+msgstr "重命名播放列表(_N)"
+
+#: ../../portable/menubar.py:213
+msgid "_Remove Playlist"
+msgstr "删除播放列表(_R)"
+
+#: ../../portable/menubar.py:214
+msgid "_Remove Playlists"
+msgstr "删除播放列"
+
+#: ../../portable/menubar.py:215
+msgid "_Remove Playlist Folders"
+msgstr "删除播放列表文件夹"
+
+#: ../../portable/menubar.py:216
+msgid "_Remove Playlist Folder"
+msgstr "删除播放列表文件夹"
+
+#: ../../portable/menubar.py:226 ../../portable/menubar.py:227
+msgid "_Play"
+msgstr "播放(_P)"
+
+#: ../../portable/menubar.py:228
+msgid "_Pause"
+msgstr "暂停(_P)"
+
+#: ../../portable/menubar.py:229
+msgid "_Stop"
+msgstr "停止(_S)"
+
+#: ../../portable/menubar.py:231
+msgid "_Next Video"
+msgstr "下一个视频(_N)"
+
+#: ../../portable/menubar.py:232
+msgid "_Previous Video"
+msgstr "上一个视频(_P)"
+
+#: ../../portable/menubar.py:234
+msgid "Skip _Forward"
+msgstr "快进(_F)"
+
+#: ../../portable/menubar.py:235
+msgid "Skip _Back"
+msgstr "快退(_B)"
+
+#: ../../portable/menubar.py:237
+msgid "Volume _Up"
+msgstr "音量增大(_U)"
+
+#: ../../portable/menubar.py:238
+msgid "Volume _Down"
+msgstr "音量减小(_D)"
+
+#: ../../portable/menubar.py:240
+msgid "_Fullscreen"
+msgstr "全屏(_F)"
+
+#: ../../portable/menubar.py:244
+msgid "_About"
+msgstr "关于(_A)"
+
+#: ../../portable/menubar.py:245
+msgid "_Donate"
+msgstr "捐赠(_D)"
+
+#: ../../portable/menubar.py:246 ../../portable/menubar.py:261
+msgid "_Help"
+msgstr "帮助(_H)"
+
+#: ../../portable/menubar.py:248
+msgid "Report a _Bug"
+msgstr "报告一个 _错误"
+
+#: ../../portable/menubar.py:252
+msgid "_Video"
+msgstr "视频(_V)"
+
+#: ../../portable/menubar.py:254
+msgid "_File"
+msgstr "_文件"
+
+#: ../../portable/menubar.py:258
+msgid "_Channels"
+msgstr "频道(_C)"
+
+#: ../../portable/menubar.py:259
+msgid "_Playlists"
+msgstr "播放列表(_P)"
+
+#: ../../portable/menubar.py:260
+msgid "P_layback"
+msgstr "播放(_L)"
+
+#: ../../portable/menubar.py:265
+msgid "Play Unwatched ($numUnwatched)"
+msgstr "播放未观看的($numUnwatched)"
+
+#: ../../portable/menubar.py:266
+msgid "Pause All Downloads ($numDownloading)"
+msgstr "暂停所有下载($numDownloading)"
+
+#: ../../portable/menubar.py:267
+msgid "Resume All Downloads ($numPaused)"
+msgstr "恢复所有下载($numPaused)"
+
+#: ../../portable/menubar.py:269
+msgid "Options..."
+msgstr "选项..."
+
+#: ../../portable/menubar.py:271
+msgid "Hide Window"
+msgstr "隐藏窗口"
+
+#: ../../portable/menubar.py:272
+msgid "Show Window"
+msgstr "显示窗口"
+
+#: ../../portable/theme.py:137
+msgid "Starter Channels"
+msgstr "初始频道"
+
+#: ../../portable/theme.py:154
+msgid "Example Playlist"
+msgstr "播放列表例子"
+
+#: ../../portable/httpclient.py:81
+#, python-format
+msgid "Error: %s"
+msgstr "错误: %s"
+
+#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
+msgid "Can't connect"
+msgstr "无法连接"
+
+#: ../../portable/httpclient.py:97
+#, python-format
+msgid "Connection Error: %s"
+msgstr "连接错误：%s"
+
+#: ../../portable/httpclient.py:103
+msgid "SSL connection error"
+msgstr "SSL(加密套接字协议层)连接错误"
+
+#: ../../portable/httpclient.py:107
+msgid "HTTP error"
+msgstr "HTTP 错误"
+
+#: ../../portable/httpclient.py:110
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "错误的状态行：%s"
+
+#: ../../portable/httpclient.py:113
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "错误的Header行：%s"
+
+#: ../../portable/httpclient.py:116
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr "错误的块尺寸：%s"
+
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr "预期回车加接新行，结果是：%r"
+
+#: ../../portable/httpclient.py:122
+#, python-format
+msgid "%s closed connection"
+msgstr "%s 关闭的连接"
+
+#: ../../portable/httpclient.py:128
+msgid "Got 404 status code"
+msgstr "网络请求时收到表示\"没有找到\"的404代码"
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "错误的状态代码：%s"
+
+#: ../../portable/httpclient.py:134
+msgid "Authorization failed"
+msgstr "验证(授权)失败"
+
+#: ../../portable/httpclient.py:140
+msgid "Pipeline request never started"
+msgstr "管道请求没有启动"
+
+#: ../../portable/httpclient.py:144
+msgid "Timeout"
+msgstr "超时"
+
+#: ../../portable/httpclient.py:145
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "连接%s超时"
+
+#: ../../portable/httpclient.py:149
+msgid "Invalid URL"
+msgstr "错误的网址"
+
+#: ../../portable/httpclient.py:150
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr "\"%s\" 不是一个有效的 URL"
+
+#: ../../portable/httpclient.py:156
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr "文件 \"%s\" 不存在"
+
+#: ../../portable/httpclient.py:160
+msgid "Read error"
+msgstr "读取错误"
+
+#: ../../portable/httpclient.py:161
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr "读取\"%s\"时出现错误"
+
+#: ../../portable/httpclient.py:354
+msgid "Unknown Error code"
+msgstr "未知错误代码"
+
+#: ../../portable/httpclient.py:386
+msgid "Connection closed"
+msgstr "连接已关闭"
+
+#: ../../portable/httpclient.py:811
+msgid "Unknown"
+msgstr "不明"
+
+#: ../../portable/httpclient.py:812
+msgid "Internal Error: Not ready to send"
+msgstr "内部错误：发送没有准备好"
+
+#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
+#: ../../portable/feed.py:2499
+msgid "Search"
+msgstr "搜索"
+
+#: ../../portable/feed.py:384
 msgid "never"
 msgstr "从不"
 
-#: ../../portable/feed.py:385 ../../portable/item.py:542
+#: ../../portable/feed.py:386 ../../portable/item.py:554
 #, python-format
 msgid "%d hours"
 msgstr "%d 小时"
 
-#: ../../portable/feed.py:387
+#: ../../portable/feed.py:388
 #, python-format
 msgid "%d day"
 msgstr "%d 天"
 
-#: ../../portable/feed.py:389 ../../portable/item.py:540
+#: ../../portable/feed.py:390 ../../portable/item.py:552
 #, python-format
 msgid "%d days"
 msgstr "%d 天"
 
-#: ../../portable/feed.py:391
+#: ../../portable/feed.py:392
 #, python-format
 msgid "%d months"
 msgstr "%d 月"
 
-#: ../../portable/feed.py:787
-msgid "Update Channel Now"
-msgstr "现在更新频道"
-
-#: ../../portable/feed.py:790 ../../portable/feed.py:799
-msgid "Rename Channel"
-msgstr "重命名频道"
-
-#: ../../portable/feed.py:794
-msgid "Revert Title to Default"
-msgstr "恢复标题到默认值"
-
-#: ../../portable/feed.py:800
+#: ../../portable/feed.py:826
 #, python-format
 msgid "Enter a new name for the channel %s"
 msgstr "为频道\"%s\"输入新名字"
 
-#: ../../portable/feed.py:887
+#: ../../portable/feed.py:923
 msgid "Error loading feed"
 msgstr "装载feed(供稿)时发生错误"
 
-#: ../../portable/feed.py:888
+#: ../../portable/feed.py:924
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
 msgstr "无法装载feed(供稿)在%s (%s)。"
 
-#: ../../portable/feed.py:891
+#: ../../portable/feed.py:927
 msgid "Would you like to keep the feed?"
 msgstr "您想保留该feed(供稿)吗？"
 
-#: ../../portable/feed.py:1004
+#: ../../portable/feed.py:1040
 msgid "Bad content-type"
 msgstr "无效的content-type(内容类型)"
 
-#: ../../portable/feed.py:1017
+#: ../../portable/feed.py:1053
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
 msgstr "频道与$shortAppName!（短程序名）不兼容。"
 
-#: ../../portable/feed.py:1018
+#: ../../portable/feed.py:1054
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny.  Please contact the publishers of "
@@ -1824,207 +2560,31 @@ msgstr ""
 "\n"
 "您不论如何都想载入这个频道？"
 
-#: ../../portable/feed.py:2134
+#: ../../portable/feed.py:2513
 msgid "Local Files"
 msgstr "本地文件"
 
-#: ../../portable/feed.py:2148
+#: ../../portable/feed.py:2527
 msgid "Playing File"
 msgstr "播放文件"
 
-#: ../../portable/menu.py:69
-msgid "Update Channels Now"
-msgstr "现在更新频道"
-
-#: ../../portable/menu.py:94
-#, python-format
-msgid "%d Downloaded Items"
-msgstr "下载了%d项"
-
-#: ../../portable/menu.py:96 ../../portable/item.py:1475
-msgid "Play"
-msgstr "播放"
-
-#: ../../portable/menu.py:97 ../../portable/item.py:1478
-msgid "Add to new playlist"
-msgstr "添加到新的播放列表"
-
-#: ../../portable/menu.py:99 ../../portable/item.py:1471
-msgid "Remove From Playlist"
-msgstr "从播放列表中移除"
-
-#: ../../portable/menu.py:101 ../../portable/item.py:1473
-msgid "Remove From the Library"
-msgstr "从媒体库中移除"
-
-#: ../../portable/menu.py:107 ../../portable/item.py:1482
-msgid "Mark as Unwatched"
-msgstr "标记为未观看"
-
-#: ../../portable/menu.py:112 ../../portable/item.py:1484
-msgid "Mark as Watched"
-msgstr "标记为已观看过的"
-
-#: ../../portable/menu.py:117
-#, python-format
-msgid "%d Available Items"
-msgstr "%d项可用"
-
-#: ../../portable/menu.py:118 ../../portable/dialogs.py:85
-#: ../../portable/item.py:1491
-msgid "Download"
-msgstr "下载"
-
-#: ../../portable/menu.py:123
-#, python-format
-msgid "%d Downloading Items"
-msgstr "%d项下载中"
-
-#: ../../portable/menu.py:125 ../../portable/item.py:1489
-msgid "Cancel Download"
-msgstr "取消下载"
-
-#: ../../portable/menu.py:127 ../../portable/item.py:1489
-msgid "Pause Download"
-msgstr "暂停下载"
-
-#: ../../portable/menu.py:130 ../../portable/item.py:1487
-msgid "Restart Upload"
-msgstr "重新开始上传"
-
-#: ../../portable/opml.py:49
-msgid "Export OPML File"
-msgstr "导出OPML文件"
-
-#: ../../portable/opml.py:123
-msgid "Import OPML File"
-msgstr "导入 OPML 文档"
-
-#: ../../portable/opml.py:125
-msgid "OPML Files"
-msgstr "OPML 文档"
-
-#: ../../portable/opml.py:145
-msgid "OPML Import failed"
-msgstr "OPML 输入错误"
-
-#: ../../portable/opml.py:146
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr "选择的OPML文件无效。输入中断了。"
-
-#: ../../portable/opml.py:151
-msgid "OPML Import summary"
-msgstr "OPML输入总结"
-
-#: ../../portable/opml.py:152
-#, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] "成功输入%d ."
-
-#: ../../portable/opml.py:155
-#, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] "跳过%d输入仍然还在。"
-
-#: ../../portable/autoupdate.py:121
-#, python-format
-msgid "%s Version Alert"
-msgstr "%s 版本更新提示"
-
-#: ../../portable/autoupdate.py:122
-#, python-format
-msgid "A new version of %s is available. Would you like to download it now?"
-msgstr "%s 有一个新版本可用。您想现在下载它吗？"
-
-#: ../../portable/autoupdate.py:128
-#, python-format
-msgid "%s Version Check"
-msgstr "%s 版本检查"
-
-#: ../../portable/autoupdate.py:129
-#, python-format
-msgid "%s is up to date."
-msgstr "%s 已更新"
-
-#: ../../portable/util.py:252 ../../portable/httpclient.py:126
-msgid "Internal Error"
-msgstr "内部错误"
-
-#: ../../portable/util.py:252
-msgid ""
-"Miro has encountered an internal error. You can help us track down this "
-"problem and fix it by submitting an error report."
-msgstr "Miro遇到内部错误。您可以通过提交错误报告来帮助我们来查找这个问题并且修复它"
-
-#: ../../portable/util.py:252
-msgid ""
-"Include entire program database including all video and channel metadata "
-"with crash report"
-msgstr "在崩溃报告里面包括整个程序所有节目和频道数据库的描述文件"
-
-#: ../../portable/util.py:252
-msgid "Describe what you were doing that caused this error"
-msgstr "请描述造成这个错误时您正在做什么"
-
-#: ../../portable/util.py:455
-#, python-format
-msgid "%1.1fGB"
-msgstr "%1.1fG字节"
-
-#: ../../portable/util.py:457
-#, python-format
-msgid "%dGB"
-msgstr "%dGB"
-
-#: ../../portable/util.py:461
-#, python-format
-msgid "%1.1fMB"
-msgstr "%1.1f兆字节"
-
-#: ../../portable/util.py:463
-#, python-format
-msgid "%dMB"
-msgstr "%dMB"
-
-#: ../../portable/util.py:467
-#, python-format
-msgid "%1.1fKB"
-msgstr "%1.1f千字节"
-
-#: ../../portable/util.py:469
-#, python-format
-msgid "%dKB"
-msgstr "%dKB"
-
-#: ../../portable/util.py:473
-#, python-format
-msgid "%1.1fB"
-msgstr "%1.1fB"
-
-#: ../../portable/util.py:475
-#, python-format
-msgid "%dB"
-msgstr "%dB 分贝"
-
-#: ../../portable/storedatabase.py:832 ../../portable/storedatabase.py:1231
+#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
 #, python-format
 msgid "%s database save succeeded"
 msgstr "%s数据库保存成功"
 
-#: ../../portable/storedatabase.py:833 ../../portable/storedatabase.py:1232
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr "数据库保存成功。可以安全的退出了(不会丢失数据)。"
 
-#: ../../portable/storedatabase.py:840 ../../portable/storedatabase.py:1240
+#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
 #, python-format
 msgid "%s database save failed"
 msgstr "%s数据库保存失败"
 
-#: ../../portable/storedatabase.py:841 ../../portable/storedatabase.py:1241
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
 #, python-format
 msgid ""
 "%s was unable to save its database: Disk Full.\n"
@@ -2037,112 +2597,215 @@ msgstr ""
 "from your collection.\n"
 "Recent changes may be lost."
 
-#: ../../portable/dialogs.py:81
+#: ../../portable/dialogs.py:89
 msgid "Ignore"
 msgstr "忽略"
 
-#: ../../portable/dialogs.py:82
+#: ../../portable/dialogs.py:90
 msgid "Submit Crash Report"
 msgstr "提交程序崩溃报告"
 
-#: ../../portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr "迁移"
 
-#: ../../portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr "不要迁移"
 
-#: ../../portable/dialogs.py:86
+#: ../../portable/dialogs.py:94
 msgid "Remove Entry"
 msgstr "移除条目"
 
-#: ../../portable/dialogs.py:87
+#: ../../portable/dialogs.py:95
 msgid "Delete File"
 msgstr "删除文件"
 
-#: ../../portable/dialogs.py:88
+#: ../../portable/dialogs.py:96
 msgid "Delete Files"
 msgstr "删除文件"
 
-#: ../../portable/dialogs.py:89
+#: ../../portable/dialogs.py:97
 msgid "Keep Videos"
 msgstr "保留视频"
 
-#: ../../portable/dialogs.py:90
+#: ../../portable/dialogs.py:98
 msgid "Delete Videos"
 msgstr "删除视频"
 
-#: ../../portable/dialogs.py:92
+#: ../../portable/dialogs.py:100
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
 msgid "Create Channel"
 msgstr "新建频道"
 
-#: ../../portable/dialogs.py:93
+#: ../../portable/dialogs.py:101
 msgid "Add"
 msgstr "添加"
 
-#: ../../portable/dialogs.py:94
+#: ../../portable/dialogs.py:102
 msgid "Add Into New Folder"
 msgstr "添加进新文件夹"
 
-#: ../../portable/dialogs.py:95
+#: ../../portable/dialogs.py:103
 msgid "Keep"
 msgstr "保留"
 
-#: ../../portable/dialogs.py:97
+#: ../../portable/dialogs.py:105
 msgid "Not Now"
 msgstr "不是现在"
 
-#: ../../portable/dialogs.py:98
+#: ../../portable/dialogs.py:106
 msgid "Close to Tray"
 msgstr "最小化到系统托盘"
 
-#: ../../portable/dialogs.py:99
+#: ../../portable/dialogs.py:107
 msgid "Launch Miro"
 msgstr "启动Miro"
 
-#: ../../portable/dialogs.py:100
+#: ../../portable/dialogs.py:108
 msgid "Download Anyway"
 msgstr "仍然下载"
 
-#: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../portable/dialogs.py:109
+msgid "Install iHeartMiro"
+msgstr "安装 iHeartMiro"
+
+#: ../../portable/dialogs.py:110
+msgid "Don't Install"
+msgstr "不要安装"
+
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
 msgstr "新建搜索频道"
 
-#: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:25
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr "一个搜索频道包含了匹配搜索词语的搜索结果。"
 
-#: ../../portable/singleclick.py:87
+#: ../../portable/controller.py:196 ../../portable/controller.py:210
+#: ../../portable/controller.py:254 ../../portable/controller.py:280
+#: ../../portable/controller.py:300
+#, python-format
+msgid "Remove %s"
+msgstr "移除%s"
+
+#: ../../portable/controller.py:197
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr "您确定要移除向导%s吗？"
+
+#: ../../portable/controller.py:211
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr "您确定要移除%s吗？"
+
+#: ../../portable/controller.py:214 ../../portable/controller.py:259
+#: ../../portable/controller.py:285 ../../portable/controller.py:304
+#, python-format
+msgid "Remove %s channels"
+msgstr "移除%s频道"
+
+#: ../../portable/controller.py:216
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr "您确定要移除%s这些播放列表吗？"
+
+#: ../../portable/controller.py:255
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr "对于这个频道的下载完成的视频您想怎样处理？"
+
+#: ../../portable/controller.py:260
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr "对于这些频道的下载完成的视频您想怎样处理？"
+
+#: ../../portable/controller.py:281
+#, python-format
+msgid ""
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
+msgstr "您确定要删除%s吗？它的任何下载将被取消。"
+
+#: ../../portable/controller.py:286
+#, python-format
+msgid ""
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
+msgstr "您确定要删除这些%s吗？它的任何下载将被取消。"
+
+#: ../../portable/controller.py:301
+#, python-format
+msgid "Are you sure you want to remove %s?"
+msgstr "您真的想要删除 %s 吗？"
+
+#: ../../portable/controller.py:305
+#, python-format
+msgid "Are you sure you want to remove these %s channels?"
+msgstr "您真的想要删除这%s个频道吗？"
+
+#: ../../portable/controller.py:318
+#, python-format
+msgid "Stop watching %s"
+msgstr "停止观看 %s"
+
+#: ../../portable/controller.py:319
+#, python-format
+msgid "Are you sure you want to stop watching %s?"
+msgstr "您真的想要停止观看 %s吗？"
+
+#: ../../portable/controller.py:322
+#, python-format
+msgid "Stop watching %s directories"
+msgstr "停止观看%s文件夹"
+
+#: ../../portable/controller.py:323
+#, python-format
+msgid "Are you sure you want to stop watching these %s directories?"
+msgstr "您确信要停止观看这些%s文件夹吗？"
+
+#: ../../portable/controller.py:497
+msgid "Error Saving Video"
+msgstr "保存视频错误"
+
+#: ../../portable/controller.py:499
+#, python-format
+msgid ""
+"An error occured while trying to save %s.  Please check that the file has "
+"not been deleted and try again."
+msgstr "保存 %s 时出现错误.请确认文件未被删除后再试一次."
+
+#: ../../portable/singleclick.py:99
 msgid "Download already exists"
 msgstr "下载已经存在"
 
-#: ../../portable/singleclick.py:88
+#: ../../portable/singleclick.py:100
 msgid "That URL is already an external download."
 msgstr "这个额外链接已经被下载"
 
-#: ../../portable/singleclick.py:94
+#: ../../portable/singleclick.py:106
 msgid "Miro will begin downloading it now."
 msgstr "Miro将要开始下载"
 
-#: ../../portable/singleclick.py:96
+#: ../../portable/singleclick.py:108
 msgid "It is downloading now."
 msgstr "正在下载"
 
-#: ../../portable/singleclick.py:98
+#: ../../portable/singleclick.py:110
 msgid "It has already been downloaded."
 msgstr "应景下载"
 
-#: ../../portable/singleclick.py:125
+#: ../../portable/singleclick.py:137
 msgid "Download Error"
 msgstr "下载错误"
 
-#: ../../portable/singleclick.py:126
+#: ../../portable/singleclick.py:138
 #, python-format
 msgid ""
 "Miro is not able to download a file at this URL:\n"
@@ -2152,824 +2815,297 @@ msgstr ""
 "Miro 无法从此地址下载文件:\n"
 "URL:%s"
 
-#: ../../portable/singleclick.py:134
+#: ../../portable/singleclick.py:146
 msgid "File Download"
 msgstr "下载文档"
 
-#: ../../portable/singleclick.py:135
+#: ../../portable/singleclick.py:147
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
 msgstr "在 %s 的文件不显示为音频,视频或RSS频道."
 
-#: ../../portable/singleclick.py:225
+#: ../../portable/singleclick.py:235
 msgid "Subscribing to multiple channels"
 msgstr "订阅多个频道"
 
-#: ../../portable/singleclick.py:226
+#: ../../portable/singleclick.py:236
 #, python-format
 msgid "Create %d channels?"
 msgstr "创建%d个频道？"
 
-#: ../../portable/singleclick.py:239
+#: ../../portable/singleclick.py:249
 #, python-format
 msgid "Adding %d channels to a new folder"
 msgstr "添加%d个频道到新夹子中"
 
-#: ../../portable/singleclick.py:240 ../../portable/folder.py:226
+#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
 msgid "Enter a name for the new channel folder"
 msgstr "为频道夹输入新名字"
 
-#: ../../portable/singleclick.py:243
+#: ../../portable/singleclick.py:253
 #, python-format
 msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
 "will stay where they currently are."
 msgstr "注意：您早已订阅了这些频道中的%d个。这些频道将原地不动。"
 
-#: ../../portable/singleclick.py:254
+#: ../../portable/singleclick.py:264
 msgid "Subscription error"
 msgstr "订阅出错"
 
-#: ../../portable/singleclick.py:264
+#: ../../portable/singleclick.py:274
 msgid ""
 "This $shortAppName channel file has an invalid format: $url. Please notify "
 "the publisher of this file."
 msgstr "这个$shortAppName频道文件有一个不健康的格式：$url。请通知此文件的发布者。"
 
-#: ../../portable/singleclick.py:272
+#: ../../portable/singleclick.py:282
 msgid ""
 "This $shortAppName channel file has the wrong content type: $url. Please "
 "notify the publisher of this file."
 msgstr "这个$shortAppName频道的内容类型错误：$url。请提醒文件发布者。"
 
-#: ../../portable/singleclick.py:276
+#: ../../portable/singleclick.py:286
 msgid "Could not download the $shortAppName channel file: $url."
 msgstr "无法下载频道 $shortAppName 的文件：$url"
 
-#: ../../portable/singleclick.py:316
+#: ../../portable/singleclick.py:334
 msgid "Invalid Torrent"
 msgstr "无效的BitTorrent种子文件"
 
-#: ../../portable/singleclick.py:317
+#: ../../portable/singleclick.py:335
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
 msgstr "这个BitTorrent种子文件%s看起来是坏的，不能打开。[确定]"
 
-#: ../../portable/menubar.py:144
-msgid "_Open"
-msgstr "打开(_O)"
-
-#: ../../portable/menubar.py:145
-msgid "_Download Video"
-msgstr "下载视频(_D)"
-
-#: ../../portable/menubar.py:147
-msgid "Check _Version"
-msgstr "检查版本(_V)"
-
-#: ../../portable/menubar.py:149
-msgid "_Remove Video"
-msgstr "删除视频(_R)"
-
-#: ../../portable/menubar.py:150
-msgid "_Remove Videos"
-msgstr "_删除节目"
-
-#: ../../portable/menubar.py:151
-msgid "Re_name Video"
-msgstr "给节目改名"
-
-#: ../../portable/menubar.py:152
-msgid "Save Video _As..."
-msgstr "保存视频为...(_A)"
-
-#: ../../portable/menubar.py:153
-msgid "Save Videos _As..."
-msgstr "将节目保存_为..."
-
-#: ../../portable/menubar.py:154
-msgid "Copy Video _URL"
-msgstr "拷贝节目_链接"
-
-#: ../../portable/menubar.py:156
-msgid "_Options..."
-msgstr "_选项"
-
-#: ../../portable/menubar.py:157
-msgid "_Quit"
-msgstr "退出(_Q)"
-
-#: ../../portable/menubar.py:165
-msgid "Cu_t"
-msgstr "剪切(_t)"
-
-#: ../../portable/menubar.py:166
-msgid "_Copy"
-msgstr "剪切(_C)"
-
-#: ../../portable/menubar.py:167
-msgid "_Paste"
-msgstr "粘贴 (_P)"
-
-#: ../../portable/menubar.py:168
-msgid "Select _All"
-msgstr "全选(_A)"
-
-#: ../../portable/menubar.py:169
-msgid "_Delete"
-msgstr "删除"
-
-#: ../../portable/menubar.py:173
-msgid "Add _Channel"
-msgstr "添加频道"
-
-#: ../../portable/menubar.py:174
-msgid "New Searc_h Channel..."
-msgstr "新建搜索频道(_H)"
-
-#: ../../portable/menubar.py:175
-msgid "New _Folder..."
-msgstr "新建目录(_F)..."
-
-#: ../../portable/menubar.py:176
-msgid "Add Channel _Guide..."
-msgstr "添加频道_指南(_G)..."
-
-#: ../../portable/menubar.py:186
-msgid "Update _All Channels"
-msgstr "更新所有频道"
-
-#: ../../portable/menubar.py:188
-msgid "_Import Channels (OPML)..."
-msgstr "_输入频道（OPML）"
-
-#: ../../portable/menubar.py:189
-msgid "E_xport Channels (OPML)..."
-msgstr "导出频道（OPML）...(E)"
-
-#: ../../portable/menubar.py:191
-msgid "_Send this channel to a friend"
-msgstr "把该频道发送给朋友(_S)"
-
-#: ../../portable/menubar.py:192
-msgid "Copy Channel _Link"
-msgstr "复制频道链接地址(_L)"
-
-#: ../../portable/menubar.py:195
-msgid "New _Playlist"
-msgstr "新建播放列表"
-
-#: ../../portable/menubar.py:196
-msgid "New Playlist Fol_der"
-msgstr "新建播放列表文件夹"
-
-#: ../../portable/menubar.py:198
-msgid "Re_name Playlist"
-msgstr "重命名播放列表(_N)"
-
-#: ../../portable/menubar.py:199
-msgid "_Remove Playlist"
-msgstr "删除播放列表(_R)"
-
-#: ../../portable/menubar.py:200
-msgid "_Remove Playlists"
-msgstr "删除播放列"
-
-#: ../../portable/menubar.py:201
-msgid "_Remove Playlist Folders"
-msgstr "删除播放列表文件夹"
-
-#: ../../portable/menubar.py:202
-msgid "_Remove Playlist Folder"
-msgstr "删除播放列表文件夹"
-
-#: ../../portable/menubar.py:212
-msgid "_Play"
-msgstr "播放(_P)"
-
-#: ../../portable/menubar.py:213
-msgid "_Stop"
-msgstr "停止(_S)"
-
-#: ../../portable/menubar.py:215
-msgid "_Next Video"
-msgstr "下一个视频(_N)"
-
-#: ../../portable/menubar.py:216
-msgid "_Previous Video"
-msgstr "上一个视频(_P)"
-
-#: ../../portable/menubar.py:218
-msgid "Skip _Forward"
-msgstr "快进(_F)"
-
-#: ../../portable/menubar.py:219
-msgid "Skip _Back"
-msgstr "快退(_B)"
-
-#: ../../portable/menubar.py:221
-msgid "Volume _Up"
-msgstr "音量增大(_U)"
-
-#: ../../portable/menubar.py:222
-msgid "Volume _Down"
-msgstr "音量减小(_D)"
-
-#: ../../portable/menubar.py:224
-msgid "_Fullscreen"
-msgstr "全屏(_F)"
-
-#: ../../portable/menubar.py:228
-msgid "_About"
-msgstr "关于(_A)"
-
-#: ../../portable/menubar.py:229
-msgid "_Donate"
-msgstr "捐赠(_D)"
-
-#: ../../portable/menubar.py:230 ../../portable/menubar.py:245
-msgid "_Help"
-msgstr "帮助(_H)"
-
-#: ../../portable/menubar.py:232
-msgid "Report a _Bug"
-msgstr "报告一个 _错误"
-
-#: ../../portable/menubar.py:236
-msgid "_Video"
-msgstr "视频(_V)"
-
-#: ../../portable/menubar.py:238
-msgid "_File"
-msgstr "_文件"
-
-#: ../../portable/menubar.py:242
-msgid "_Channels"
-msgstr "频道(_C)"
-
-#: ../../portable/menubar.py:243
-msgid "_Playlists"
-msgstr "播放列表(_P)"
-
-#: ../../portable/menubar.py:244
-msgid "P_layback"
-msgstr "播放(_L)"
-
-#: ../../portable/menubar.py:249
-msgid "Play Unwatched ($numUnwatched)"
-msgstr "播放未观看的($numUnwatched)"
-
-#: ../../portable/menubar.py:250
-msgid "Pause All Downloads ($numDownloading)"
-msgstr "暂停所有下载($numDownloading)"
-
-#: ../../portable/menubar.py:251
-msgid "Resume All Downloads ($numPaused)"
-msgstr "恢复所有下载($numPaused)"
-
-#: ../../portable/menubar.py:253
-msgid "Options..."
-msgstr "选项..."
-
-#: ../../portable/menubar.py:255
-msgid "Hide Window"
-msgstr "隐藏窗口"
-
-#: ../../portable/menubar.py:256
-msgid "Show Window"
-msgstr "显示窗口"
-
-#: ../../portable/item.py:485
+#: ../../portable/item.py:497
 #, python-format
 msgid "Removing %s"
 msgstr "正在删除 %s"
 
-#: ../../portable/item.py:488
+#: ../../portable/item.py:500
 msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from the Library?"
 msgstr "您是想删除这个文件夹及其中的所有视频还是只是从媒体库中删除这一条目？"
 
-#: ../../portable/item.py:494
+#: ../../portable/item.py:506
 msgid ""
 "Would you like to delete this file or just remove its entry from the Library?"
 msgstr "您要删除这个文件还是仅从节目库中删除连接"
 
-#: ../../portable/item.py:514
+#: ../../portable/item.py:526
 msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
 msgstr "该项是文件夹。当您移除一个文件夹时，它里面的任何子项都会被删除。"
 
-#: ../../portable/item.py:544
+#: ../../portable/item.py:556
 #, python-format
 msgid "%d minutes"
 msgstr "%d 分钟"
 
-#: ../../portable/item.py:554
+#: ../../portable/item.py:566
 #, python-format
 msgid "Expires in %s"
 msgstr "%s后过期"
 
-#: ../../portable/item.py:566
+#: ../../portable/item.py:578
 #, python-format
 msgid "Will retry in %s"
 msgstr "%s 秒后将重试"
 
-#: ../../portable/item.py:568
+#: ../../portable/item.py:580
 msgid "Paused"
 msgstr "已暂停"
 
-#: ../../portable/item.py:954
+#: ../../portable/item.py:982
 msgid "TORRENT"
 msgstr "BitTorrent种子"
 
-#: ../../portable/item.py:956
+#: ../../portable/item.py:984
 msgid "WEB PAGE"
 msgstr "网页"
 
-#: ../../portable/item.py:966
+#: ../../portable/item.py:994
 msgid "Total Down:"
 msgstr "总共下载："
 
-#: ../../portable/item.py:969
+#: ../../portable/item.py:997
 msgid "Error:"
 msgstr "错误："
 
-#: ../../portable/item.py:977
+#: ../../portable/item.py:1006
+msgid "Seeders:"
+msgstr "种子："
+
+#: ../../portable/item.py:1008
+msgid "Leechers:"
+msgstr "吸血客户端："
+
+#: ../../portable/item.py:1010
 msgid "Down Rate:"
 msgstr "下载速率："
 
-#: ../../portable/item.py:978
+#: ../../portable/item.py:1011
 msgid "Down Total:"
 msgstr "总共下载："
 
-#: ../../portable/item.py:980
+#: ../../portable/item.py:1013
 msgid "Up Rate:"
 msgstr "上传比率："
 
-#: ../../portable/item.py:981
+#: ../../portable/item.py:1014
 msgid "Up Total:"
 msgstr "总共上传："
 
-#: ../../portable/item.py:989
+#: ../../portable/item.py:1024
 msgid "Web page:"
 msgstr "网页："
 
-#: ../../portable/item.py:989
+#: ../../portable/item.py:1024
 msgid "permalink"
 msgstr "固定链接"
 
-#: ../../portable/item.py:993
+#: ../../portable/item.py:1028
 msgid "File link:"
 msgstr "文件链接"
 
-#: ../../portable/item.py:993
+#: ../../portable/item.py:1028
 msgid "direct link to file"
 msgstr "直接链接到文件"
 
-#: ../../portable/item.py:995
+#: ../../portable/item.py:1030
 msgid "File type:"
 msgstr "文件类型："
 
-#: ../../portable/item.py:1002
+#: ../../portable/item.py:1037 ../../portable/item.py:1040
+#: ../../portable/item.py:1042
+msgid "License:"
+msgstr "许可："
+
+#: ../../portable/item.py:1040 ../../portable/item.py:1042
+msgid "see permalink"
+msgstr "查看固定链接"
+
+#: ../../portable/item.py:1049
 msgid "REVEAL LOCAL FOLDER"
 msgstr "显示本地文件夹"
 
-#: ../../portable/item.py:1004
+#: ../../portable/item.py:1051
 msgid "REVEAL LOCAL FILE"
 msgstr "显示本地文件"
 
-#: ../../portable/item.py:1006
+#: ../../portable/item.py:1053
 msgid "Filename:"
 msgstr "文件名"
 
-#: ../../portable/item.py:1013
+#: ../../portable/item.py:1060
 msgid "Down Total"
 msgstr "总共下载"
 
-#: ../../portable/item.py:1015
+#: ../../portable/item.py:1062
 msgid "Up Total"
 msgstr "总共上传"
 
-#: ../../portable/item.py:1033
+#: ../../portable/item.py:1080
 msgid "Item Details"
 msgstr "项目细节"
 
-#: ../../portable/item.py:1040
+#: ../../portable/item.py:1087
 msgid "Torrent Details"
 msgstr "Torrent细节"
 
-#: ../../portable/item.py:1042
+#: ../../portable/item.py:1089
 msgid "Torrent Details <i>stopped</i>"
 msgstr "BT下载详细情况 <i>已停止</i>"
 
-#: ../../portable/item.py:1046
+#: ../../portable/item.py:1093
 msgid "Download Details"
 msgstr "下载详情"
 
-#: ../../portable/item.py:1263
+#: ../../portable/item.py:1310
 msgid "downloading..."
 msgstr "下载中..."
 
-#: ../../portable/item.py:1270 ../../portable/item.py:1273
+#: ../../portable/item.py:1317 ../../portable/item.py:1320
 #, python-format
 msgid "%s remaining"
 msgstr "%s 剩余时间"
 
-#: ../../portable/item.py:1282
+#: ../../portable/item.py:1329
 msgid "starting up..."
 msgstr "启动中..."
 
-#: ../../portable/item.py:1477
-msgid "Play Just This Video"
-msgstr "只播放这个视频"
-
-#: ../../portable/item.py:1854
+#: ../../portable/item.py:1878
 #, python-format
 msgid "Removing %s items"
 msgstr "正在移除%s条目"
 
-#: ../../portable/item.py:1856
+#: ../../portable/item.py:1880
 msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from the Library?"
 msgstr "没有从此频道下载视频。 您愿意从媒体库删除这些项目或只是移除这些项目记录吗?"
 
-#: ../../portable/item.py:1864
+#: ../../portable/item.py:1888
 msgid ""
 "One or more of these items is a folder.  When you remove or delete a folder, "
 "any items inside that folder will also be removed or deleted."
 msgstr "这些条目中一个或多个是文件夹。当您移除或删除文件夹时，文件夹中的条目也将被移除或删除。"
 
-#: ../../portable/folder.py:132 ../../portable/folder.py:155
-msgid "Rename Channel Folder"
-msgstr "重命名频道夹"
+#: ../../portable/startup.py:92
+msgid "Unknown Error"
+msgstr "未知错误"
 
-#: ../../portable/folder.py:134
+#: ../../portable/startup.py:93
 #, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "为频道夹\"%s\"输入新名字"
+msgid ""
+"An unkown error prevented Miro from startup.  Please file a bug report at %s"
+msgstr ""
 
-#: ../../portable/folder.py:210 ../../portable/folder.py:215
-msgid "Rename Playlist Folder"
-msgstr "重命名播放列表夹"
-
-#: ../../portable/folder.py:217
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "为播放列表夹\"%s\"输入新名字"
-
-#: ../../portable/folder.py:225
-msgid "Create Channel Folder"
-msgstr "创建频道夹"
-
-#: ../../portable/folder.py:239
-msgid "Create Playlist Folder"
-msgstr "创建播放列表夹"
-
-#: ../../portable/folder.py:240
-msgid "Enter a name for the new playlist folder"
-msgstr "为播放列表夹输入新名字"
-
-#: ../../portable/httpclient.py:68
-#, python-format
-msgid "Error: %s"
-msgstr "错误: %s"
-
-#: ../../portable/httpclient.py:83 ../../portable/httpclient.py:89
-msgid "Can't connect"
-msgstr "无法连接"
-
-#: ../../portable/httpclient.py:84
-#, python-format
-msgid "Connection Error: %s"
-msgstr "连接错误：%s"
-
-#: ../../portable/httpclient.py:90
-msgid "SSL connection error"
-msgstr "SSL(加密套接字协议层)连接错误"
-
-#: ../../portable/httpclient.py:94
-msgid "HTTP error"
-msgstr "HTTP 错误"
-
-#: ../../portable/httpclient.py:97
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr "错误的状态行：%s"
-
-#: ../../portable/httpclient.py:100
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr "错误的Header行：%s"
-
-#: ../../portable/httpclient.py:103
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "错误的块尺寸：%s"
-
-#: ../../portable/httpclient.py:106
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr "预期回车加接新行，结果是：%r"
-
-#: ../../portable/httpclient.py:109
-#, python-format
-msgid "%s closed connection"
-msgstr "%s 关闭的连接"
-
-#: ../../portable/httpclient.py:115
-msgid "Got 404 status code"
-msgstr "网络请求时收到表示\"没有找到\"的404代码"
-
-#: ../../portable/httpclient.py:117
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "错误的状态代码：%s"
-
-#: ../../portable/httpclient.py:121
-msgid "Authorization failed"
-msgstr "验证(授权)失败"
-
-#: ../../portable/httpclient.py:127
-msgid "Pipeline request never started"
-msgstr "管道请求没有启动"
-
-#: ../../portable/httpclient.py:131
-msgid "Timeout"
-msgstr "超时"
-
-#: ../../portable/httpclient.py:132
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "连接%s超时"
-
-#: ../../portable/httpclient.py:136
-msgid "Invalid URL"
-msgstr "错误的网址"
-
-#: ../../portable/httpclient.py:137
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr "\"%s\" 不是一个有效的 URL"
-
-#: ../../portable/httpclient.py:143
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr "文件 \"%s\" 不存在"
-
-#: ../../portable/httpclient.py:147
-msgid "Read error"
-msgstr "读取错误"
-
-#: ../../portable/httpclient.py:148
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr "读取\"%s\"时出现错误"
-
-#: ../../portable/httpclient.py:341
-msgid "Unknown Error code"
-msgstr "未知错误代码"
-
-#: ../../portable/httpclient.py:373
-msgid "Connection closed"
-msgstr "连接已关闭"
-
-#: ../../portable/httpclient.py:798
-msgid "Unknown"
-msgstr "不明"
-
-#: ../../portable/httpclient.py:799
-msgid "Internal Error: Not ready to send"
-msgstr "内部错误：发送没有准备好"
-
-#: ../../portable/app.py:685
+#: ../../portable/startup.py:155
 msgid "Database too new"
 msgstr "数据库太新了"
 
-#: ../../portable/app.py:686
+#: ../../portable/startup.py:156
 msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr "您的数据库被更新版本的 $shortAppName 保存而得。因此，您必须下载最新版本的$shortAppName运行，方可使用。"
 
-#: ../../portable/app.py:700
-msgid "Video Directory Missing"
-msgstr "节目文件夹丢失"
-
-#: ../../portable/app.py:701
+#: ../../portable/startup.py:238
 msgid ""
 "\n"
 "Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected.\n"
-"\n"
-"If you continue, the video directory will be reset to a location on this "
-"drive (this will cause you to lose some details about the videos on the "
-"external drive).  You can also quit, connect the drive, and relaunch Miro."
+"located on an external drive that is currently disconnected."
 msgstr ""
-"\n"
-"Miro 没法找到您的初始的视频目录。这可能是因为该目录在一个未连接到计算机的外部驱动器上。\n"
-"\n"
-"如果您继续，视频目录将被重设到一个本地的驱动器上（这样将导致您丢失一些保存于外部驱动器上的视频详情）。"
 
-#: ../../portable/app.py:1038 ../../portable/app.py:1052
-#: ../../portable/app.py:1096 ../../portable/app.py:1122
-#: ../../portable/app.py:1142
+#: ../../portable/folder.py:144
 #, python-format
-msgid "Remove %s"
-msgstr "移除%s"
+msgid "Enter a new name for the channel folder %s"
+msgstr "为频道夹\"%s\"输入新名字"
 
-#: ../../portable/app.py:1039
+#: ../../portable/folder.py:215
 #, python-format
-msgid "Are you sure you want to remove the guide %s?"
-msgstr "您确定要移除向导%s吗？"
+msgid "Enter a new name for the playlist folder %s"
+msgstr "为播放列表夹\"%s\"输入新名字"
 
-#: ../../portable/app.py:1053
-#, python-format
-msgid "Are you sure you want to remove %s"
-msgstr "您确定要移除%s吗？"
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "创建频道夹"
 
-#: ../../portable/app.py:1056 ../../portable/app.py:1101
-#: ../../portable/app.py:1127 ../../portable/app.py:1146
-#, python-format
-msgid "Remove %s channels"
-msgstr "移除%s频道"
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "创建播放列表夹"
 
-#: ../../portable/app.py:1058
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr "您确定要移除%s这些播放列表吗？"
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "为播放列表夹输入新名字"
 
-#: ../../portable/app.py:1097
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr "对于这个频道的下载完成的视频您想怎样处理？"
-
-#: ../../portable/app.py:1102
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr "对于这些频道的下载完成的视频您想怎样处理？"
-
-#: ../../portable/app.py:1123
-#, python-format
-msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
-msgstr "您确定要删除%s吗？它的任何下载将被取消。"
-
-#: ../../portable/app.py:1128
-#, python-format
-msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
-msgstr "您确定要删除这些%s吗？它的任何下载将被取消。"
-
-#: ../../portable/app.py:1143
-#, python-format
-msgid "Are you sure you want to remove %s?"
-msgstr "您真的想要删除 %s 吗？"
-
-#: ../../portable/app.py:1147
-#, python-format
-msgid "Are you sure you want to remove these %s channels?"
-msgstr "您真的想要删除这%s个频道吗？"
-
-#: ../../portable/app.py:1160
-#, python-format
-msgid "Stop watching %s"
-msgstr "停止观看 %s"
-
-#: ../../portable/app.py:1161
-#, python-format
-msgid "Are you sure you want to stop watching %s?"
-msgstr "您真的想要停止观看 %s吗？"
-
-#: ../../portable/app.py:1164
-#, python-format
-msgid "Stop watching %s directories"
-msgstr "停止观看%s文件夹"
-
-#: ../../portable/app.py:1165
-#, python-format
-msgid "Are you sure you want to stop watching these %s directories?"
-msgstr "您确信要停止观看这些%s文件夹吗？"
-
-#: ../../portable/app.py:1196
-msgid "Are you sure you want to quit?"
-msgstr "您确定要退出吗？"
-
-#: ../../portable/app.py:1198
-msgid ""
-"Miro is still uploading your crash report. If you quit now the upload will "
-"be canceled.  Quit Anyway?"
-msgstr "Miro正在上传您的崩溃报告。如果您现在退出的话上传将被取消。仍然要退出吗？"
-
-#: ../../portable/app.py:1203
-#, python-format
-msgid "You have %d download still in progress.  Quit Anyway?"
-msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] "您还有%d的下载正在进行。您仍然要退出吗？"
-
-#: ../../portable/app.py:1712
-msgid "Invalid Value"
-msgstr "无效值"
-
-#: ../../portable/app.py:1713
-#, python-format
-msgid "%s is invalid.  You must enter a non-negative number."
-msgstr "无效的%s。您必须输入非负的数字。"
-
-#: ../../portable/app.py:1839
-msgid "Error Revealing File"
-msgstr "显示文件出错"
-
-#: ../../portable/app.py:1840
-#, python-format
-msgid "The file \"%s\" was deleted from outside Miro."
-msgstr "文件\"%s\" 已被删除"
-
-#: ../../portable/app.py:2011
-msgid " - Invalid URL"
-msgstr " - 无效的网络地址"
-
-#: ../../portable/app.py:2012
-msgid ""
-"The address you entered is not a valid URL.\n"
-"Please double check and try again.\n"
-"\n"
-msgstr ""
-"您填入的地址是无效的网络地址。\n"
-"请仔细检查后再试。\n"
-"\n"
-
-#: ../../portable/app.py:2036
-msgid "$shortAppName - Add Channel"
-msgstr "$shortAppName - 添加频道"
-
-#: ../../portable/app.py:2036
-msgid "Enter the URL of the channel to add"
-msgstr "输入要添加的频道网络地址"
-
-#: ../../portable/app.py:2057
-msgid "$shortAppName - Add Miro Guide"
-msgstr "$shortAppName - 添加Miro节目表"
-
-#: ../../portable/app.py:2057
-msgid "Enter the URL of the Miro Guide to add"
-msgstr "输入Miro节目表的网络地址来添加"
-
-#: ../../portable/app.py:2063
-msgid "$shortAppName - Download Video"
-msgstr "$shortAppName - 下载节目"
-
-#: ../../portable/app.py:2063
-msgid "Enter the URL of the video to download"
-msgstr "输入节目的链接来下载"
-
-#: ../../portable/app.py:2420
-msgid "Starter Channels"
-msgstr "初始频道"
-
-#: ../../portable/app.py:2437
-msgid "Example Playlist"
-msgstr "播放列表例子"
-
-#: ../../portable/app.py:2463
-msgid "Custom Channels"
-msgstr "自定义频道"
-
-#: ../../portable/app.py:2463
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr "您正在运行带有常用频道的 $longAppName 版本"
-
-#: ../../portable/app.py:2478
-msgid "Error Changing Movies Directory"
-msgstr "改变节目目录出错"
-
-#: ../../portable/app.py:2479
-msgid ""
-"You don't have permission to write to the directory you selected.  Miro will "
-"continue to use the old videos directory."
-msgstr "您没有权限来写入当前您选择的文件夹，Miro将继续使用老的文件夹。"
-
-#: ../../portable/app.py:2508
-msgid "Error Saving Video"
-msgstr "保存视频错误"
-
-#: ../../portable/app.py:2510
-#, python-format
-msgid ""
-"An error occured while trying to save %s.  Please check that the file has "
-"not been deleted and try again."
-msgstr "保存 %s 时出现错误.请确认文件未被删除后再试一次."
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:1
-msgid "(Changes won't go into effect until you restart Miro)"
-msgstr "(变更需要重启Miro后才能生效)"
+#: ../../portable/license.py:68
+msgid "license page"
+msgstr "许可证页面"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -2992,18 +3128,24 @@ msgid "<b>BitTorrent</b>"
 msgstr "<b>BitTorrent</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
+msgid ""
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \n"
+"restart Miro for the changes to take effect."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Searching for Videos</b>"
 msgstr "<b>搜索视频</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:10
+#: ../../platform/gtk-x11/glade/miro.glade.h:12
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
 msgstr "<b>您愿意让Miro在您的计算机中查找视频文件吗? </b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:11
+#: ../../platform/gtk-x11/glade/miro.glade.h:13
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
 msgstr "<b>您愿意在您电脑启动时运行Miro吗?</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:12
+#: ../../platform/gtk-x11/glade/miro.glade.h:14
 msgid ""
 "<b>You're done!</b>\n"
 "\n"
@@ -3048,39 +3190,40 @@ msgstr ""
 "<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
 "of them are free. Just click 'ADD' to watch a channel."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:26
+#: ../../platform/gtk-x11/glade/miro.glade.h:28
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
+msgid "Auto download default setting for new channels"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:29
+msgid "Automatically for_ward ports."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "By default, videos _expire after"
 msgstr "默认设置，节目_之后过期"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:27
+#: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "C_hannel:"
 msgstr "频道(_C)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:28
+#: ../../platform/gtk-x11/glade/miro.glade.h:32
 msgid "C_hannels"
 msgstr "频道(C_)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:29
+#: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "C_reate Channel"
 msgstr "创建频道(_C)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:30
+#: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Check Channels for _new content"
 msgstr "检查频道的_新内容"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "Disk _Space"
 msgstr "磁盘 _空间"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:33
-msgid "Don't start a download _if it leaves less than"
-msgstr "如果只剩下... 请不要开始下载(_i)"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:34
-msgid "Download at _most"
-msgstr "_最多下载"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:35
+#: ../../platform/gtk-x11/glade/miro.glade.h:37
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
@@ -3090,83 +3233,119 @@ msgstr ""
 "每小时\n"
 "手动"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:38
-msgid "G_B free"
-msgstr "G_B 空余"
+#: ../../platform/gtk-x11/glade/miro.glade.h:40
+msgid "G_B"
+msgstr "G_B"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:39
+#: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid "Go"
 msgstr "开始"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/gtk-x11/glade/miro.glade.h:42
+msgid "Ignore Un_encrypted Connections."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:43
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr "这样："
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:45
+msgid "Limit torrent _downstream to:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
+msgid "Maximum number of channel auto-downloads at a time: "
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
+msgid "Maximum number of manual downloads at a time: "
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr "Miro能够找到您的计算机上所有的视频以便帮助您管理您的收藏。"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
+#: ../../platform/gtk-x11/glade/miro.glade.h:52
+msgid ""
+"New\n"
+"All\n"
+"Off"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid "Play _videos one after another"
 msgstr "一个一个播放_节目"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
+#: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Preferences"
 msgstr "配置"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../../platform/gtk-x11/glade/miro.glade.h:58
 msgid "Restrict to my full _home folder"
 msgstr "限制在我的个人文件夹(_h)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
+#: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "S_top after each video"
 msgstr "每播放一个视频后停止"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid "S_tore downloaded videos in this folder:"
 msgstr "将已下载的视频保存到这个目录："
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid "Search _Engine:"
 msgstr "搜索引擎(_E)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "Search _custom folder:"
 msgstr "搜索自定义文件夹(_c)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:53
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "Select Movies Directory"
 msgstr "选择影视目录"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:54
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "Select custom search directory"
 msgstr "选择自定义搜索目录"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:55
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
+msgid "Stop torrent uploads when this ratio is reached:"
+msgstr "当达到这个比例后停止种子上传："
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr "下面的几个屏幕将帮助您设置Miro使之最好地为您工作。这是第一个问题。"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
-msgid "To a_void slowdowns, limit upstream to"
-msgstr "避免(_v)降低速度，限制上传速度到"
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
+msgid "To avoid internet slowdowns, limit _upstream to:"
+msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
+msgid "Use _ports:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
+msgid "Use this renderer to play videos:"
+msgstr "使用这个渲染器播放视频:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "Volume:"
 msgstr "卷标："
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
+#: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr "我们建议您允许计算机启动时运行Miro。这样的话,那些未完成下载的视频就能够继续下载."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
 "download videos from your favorite channels, watch new videos one after the "
@@ -3174,77 +3353,77 @@ msgid ""
 msgstr ""
 "欢迎使用Internet TV。您可以用Miro做很多事：从您最爱的频道自动下载视频，一个接一个观看新鲜的视频，下载种子，向朋友推荐视频，等等。"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr "您已经选择了一个新的新的下载文件夹.需要现在就把已下载的文件迁移到这里吗?(正在下载的文件在完成前不会被迁移)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid "_Add Folder"
 msgstr "添加文件夹(_A)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid "_Automatically run Miro when I log in"
 msgstr "当我登录时自动运行Miro"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
-msgid "_Bit Torrent uses ports between"
-msgstr "_BT使用端口"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "_Downloads"
 msgstr "_下载"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 msgid "_Folders"
 msgstr "_文件夹"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 msgid "_General"
 msgstr "_常规"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
-msgid "_KB/s when my computer is active"
-msgstr "电脑使用时_KB/s"
+#: ../../platform/gtk-x11/glade/miro.glade.h:80
+msgid "_KB/s."
+msgstr "_KB/s."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/gtk-x11/glade/miro.glade.h:81
+msgid "_Keep at least this much free space on my drive:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_Playback"
 msgstr "_播放"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
+#: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr "从停止处继续播放视频"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:71
+#: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_Search"
 msgstr "搜索(_S)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
+#: ../../platform/gtk-x11/glade/miro.glade.h:85
 msgid "_Search For:"
 msgstr "查找(_S)："
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:86
 msgid "_URL"
 msgstr "网络地址(_U)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:87
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr "退出时如果有下载请提醒我"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
+#: ../../platform/gtk-x11/glade/miro.glade.h:88
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr "监视这些目录中的新视频并将它们加入媒体库"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
-msgid "_and"
-msgstr "_并且"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
-msgid "videos at once"
-msgstr "节目同时"
+#: ../../platform/gtk-x11/glade/miro.glade.h:89
+msgid ""
+"xine\n"
+"gstreamer"
+msgstr ""
+"xine\n"
+"gstreamer"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
@@ -3345,110 +3524,121 @@ msgid ""
 "publisher."
 msgstr "请输入这个频道发布者给您的用户名和密码。"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
 msgstr "(警告：更改直到您重启 $longAppName 后才会生效。)"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Add Folder..."
 msgstr "添加文件夹..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
+msgid "Automatically Forward Ports"
+msgstr "自动转发端口"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3
 msgid "Automatically run $longAppName when I login."
 msgstr "当我登陆时，自动运行 $longAppName"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
-msgid "BitTorrent"
-msgstr "BitTorrent"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid "By default, videos expire after"
 msgstr "默认地，视频在这之后过期"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
 msgid "Check channels for new content"
 msgstr "查找频道的新内容"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "Close to tray so that downloads can continue."
 msgstr "最小化到托盘以便继续下载"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Every 30 minutes"
 msgstr "每30分钟"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every hour"
 msgstr "每小时"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
 msgid "Folder"
 msgstr "文件夹"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
+msgid "GB"
+msgstr "GB"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
+msgid "Ignore Unencrypted Connections"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
+msgid "KB/s"
+msgstr "KB/s"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
+msgid "Limit downstream bandwith to:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Manually"
 msgstr "手动"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
+msgid "Maximum number of channel auto-downloads at a time:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
+msgid "Maximum number of manual downloads at a time:"
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
 msgstr "选项"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid "Play one video, then stop."
 msgstr "播放一个节目，然后停止。"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Quit Miro completely."
 msgstr "完全退出Miro"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
 msgstr "记住我停止观看节目的位置，并且下次从这个位置继续播放。"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Show as a Channel"
 msgstr "作为一个频道显示"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Store downloaded videos in this folder:"
 msgstr "在这个文件夹保存下载的节目："
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
-msgid ""
-"To avoid slowdowns, limit upstream bandwith when my computer is active."
-msgstr "当电脑活动时,为了避免降低下载速度,限制上传带宽."
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
+msgid "To avoid internet slowdowns, limit upstream bandwith to:"
+msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
-msgid "Upstream limit (KB/s)"
-msgstr "限制上传速度 (KB/s)"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
-msgid "Use BitTorrent ports between"
-msgstr "使用一下BT端口"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr "警告: 这项设置需要重新启动$longAppName后才能生效"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "Warn me when I attempt to quit with downloads in progress."
 msgstr "当退出时有下载任务运行请提醒我"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Watch for new videos in these folders and include them in my Library."
 msgstr "监视这些文件夹内的新节目并且把它们加入我的节目库中"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "When I click the red close button:"
 msgstr "当我点击红色的关闭按钮"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
-msgid "and"
-msgstr "和"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"

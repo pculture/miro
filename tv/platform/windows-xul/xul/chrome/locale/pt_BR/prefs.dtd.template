@@ -14,10 +14,10 @@
 <!ENTITY prefs.channels.check.sixty "A cada hora">
 <!ENTITY prefs.channels.check.manually "Manualmente">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault "Configuração Auto-download padrão para novos canais">
 <!ENTITY prefs.channels.autodownloaddefault.all "All">
 <!ENTITY prefs.channels.autodownloaddefault.new "Novo">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Desligado">
 
 <!ENTITY prefs.playback "Reprodução">
 <!ENTITY prefs.playback.remember.pos "Lembrar onde eu parei de assistir o vídeo e continuar tocando à partir deste ponto.">
@@ -56,7 +56,7 @@
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_ports "Usar estas portas:">
+<!ENTITY prefs.torrent.use_upnp "Portas automaticamente encaminhadas">
+<!ENTITY prefs.torrent.require_encryption "Ignorar conexões não-encriptadas">
+<!ENTITY prefs.torrent.uploadratio "Parar Upload de torrent quando este ratio for alcançado">

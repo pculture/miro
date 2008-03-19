@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2007-10-25 09:42-0400\n"
+"POT-Creation-Date: 2008-02-29 12:40-0500\n"
 "PO-Revision-Date: 2008-02-27 15:54+0000\n"
 "Last-Translator: Vi <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2008-02-28 18:16+0000\n"
+"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "Open various files"
@@ -58,6 +58,9 @@ msgstr ""
 #~ msgid "Democracy Player"
 #~ msgstr "přehrávač Democracy"
 
+#~ msgid "Don't start a download if it leaves less than"
+#~ msgstr "Nezačínat stahování pokud by zůstalo méně než"
+
 #~ msgid "GB free"
 #~ msgstr "GB volných"
 
@@ -76,6 +79,9 @@ msgstr ""
 
 #~ msgid "Remove Channel..."
 #~ msgstr "Odstranit kanál..."
+
+#~ msgid "GB free."
+#~ msgstr "GB volných."
 
 #~ msgid ""
 #~ "Democracy Player can find all the videos on your computer to help you "
@@ -96,6 +102,9 @@ msgstr ""
 #~ msgstr ""
 #~ "Dalších pár obrazovek vám pomůže nastavit přehravač Democracy tak, aby Vám "
 #~ "fungoval co nejlépe. Tady máme první otázku."
+
+#~ msgid "Starting up"
+#~ msgstr "Začínám"
 
 #~ msgid "${count} Downloads in Progress"
 #~ msgstr "Probíhá stahování: ${count}"
@@ -121,6 +130,12 @@ msgstr ""
 #, python-format
 #~ msgid "Could not download the Democracy channel file: %s."
 #~ msgstr "Stáhnutí souboru kanálu Democracy selhalo: %s."
+
+#~ msgid "Maximum:"
+#~ msgstr "Maximum:"
+
+#~ msgid "Minimum:"
+#~ msgstr "Minimum:"
 
 #~ msgid "Remove Channels..."
 #~ msgstr "Odstranit kanály..."
@@ -181,14 +196,17 @@ msgstr ""
 #~ "Dalších pár obrazovek vám pomůže nastavit přehravač Democracy tak, aby Vám "
 #~ "fungoval co nejlépe. Tady máme první otázku."
 
-#: ../../portable/dialogs.py:77
+#~ msgid "and"
+#~ msgstr "a"
+
+#: ../../portable/dialogs.py:85
 msgid "Cancel"
 msgstr "Storno"
 
 msgid "OK"
 msgstr "Ok"
 
-#: ../../portable/dialogs.py:76
+#: ../../portable/dialogs.py:84
 msgid "Ok"
 msgstr "Budiž"
 
@@ -245,8 +263,8 @@ msgstr "Přidat průvodce..."
 msgid "Bring All to Front"
 msgstr "Přenést vše do popředí"
 
-#: ../../platform/osx/frontend/Preferences.py:65
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
+#: ../../platform/osx/platform/frontends/html/Preferences.py:80
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "Channels"
 msgstr "Kanály"
 
@@ -271,7 +289,7 @@ msgstr "Zkopírovat URL videa"
 msgid "Cut"
 msgstr "Vyjmout"
 
-#: ../../portable/dialogs.py:96
+#: ../../portable/dialogs.py:104
 msgid "Delete"
 msgstr "Odebrat"
 
@@ -315,7 +333,7 @@ msgstr "Hlavní nabídka"
 msgid "Minimize"
 msgstr "Minimalizovat"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
 #, fuzzy
 msgid "Miro"
 msgstr "Miro"
@@ -348,12 +366,12 @@ msgstr "Otevřít..."
 msgid "Paste"
 msgstr "Vložit"
 
-#: ../../platform/osx/frontend/Application.py:249
+#: ../../platform/osx/platform/frontends/html/Application.py:244
 msgid "Play Video"
 msgstr "Přehrát video"
 
-#: ../../platform/osx/frontend/Preferences.py:69
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+#: ../../platform/osx/platform/frontends/html/Preferences.py:84
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Playback"
 msgstr "Přehrát"
 
@@ -431,7 +449,7 @@ msgstr "Schránka"
 msgid "FullScreen Controls"
 msgstr "Ovladače celoobrazovkového režimu"
 
-#: ../../portable/tabs.py:46
+#: ../../portable/tabs.py:57
 msgid "Video Search"
 msgstr "Vyzhledej video"
 
@@ -458,11 +476,8 @@ msgstr ""
 "Uživatelské jméno:\n"
 "\n"
 
-msgid " limit upstream to"
-msgstr " omezit odchozí tok na"
-
-msgid "(You must restart Miro for this change to take effect)"
-msgstr "(Musíte znovu spustit Miro, aby se změny projevily)"
+msgid "(You must restart Miro for some of these changes to take effect)"
+msgstr ""
 
 #, fuzzy
 msgid "(You must restart Miro for this change to take effect)\n"
@@ -471,19 +486,23 @@ msgstr "(Aby se změna projevila, musíte restartovat Miro)\n"
 msgid "(movies directory path goes here)"
 msgstr "(cesta ke složce s filmy)"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:1
+msgid "-"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 day"
 msgstr "1 den"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid "1 month"
 msgstr "1 měsíc"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "10 days"
 msgstr "10 dní"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "3 days"
 msgstr "3 dny"
 
@@ -496,7 +515,7 @@ msgstr "4"
 msgid "5"
 msgstr "5"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
 msgid "6 days"
 msgstr "6 dní"
 
@@ -506,62 +525,88 @@ msgstr "99999"
 msgid "Add..."
 msgstr "Přidat..."
 
-msgid "BitTorrent ports:"
-msgstr "Porty BitTorrent:"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+msgid "All"
+msgstr ""
+
+msgid "Auto download default setting for new channels:"
+msgstr ""
+
+msgid "Automatically forward ports"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
+msgid "BitTorrent"
+msgstr "BitTorrent"
 
 msgid "By default, videos expire after:"
 msgstr "Standartně vyprší video po:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Change..."
 msgstr "Změnit..."
 
 msgid "Check channels for new content:"
 msgstr "Zkontroluj kanály pro nový obsah:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
-msgid "Don't start a download if it leaves less than"
-msgstr "Nezačínat stahování pokud by zůstalo méně než"
+msgid "Don't auto-download more than this many videos per channel at once:"
+msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
-msgid "Download at most"
-msgstr "Stahovat nejvýše"
+msgid "Don't download more than this many videos at once:"
+msgstr ""
 
 msgid "Folder location"
 msgstr "Adresa složky"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
-msgid "GB free."
-msgstr "GB volných."
+msgid "GB\n"
+msgstr ""
 
-msgid "KB/s when my computer is active."
-msgstr "KB/s ve chvílích, kdy svůj počítač využívám."
+msgid "Ignore unencrypted connections"
+msgstr ""
 
-msgid "Maximum:"
-msgstr "Maximum:"
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
+msgid "KB/s."
+msgstr ""
 
-msgid "Minimum:"
-msgstr "Minimum:"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
+msgid "Keep at least this much free space on my drive:"
+msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
+msgid "Limit downstream to"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Never"
 msgstr "Nikdy"
+
+#: ../../portable/tabs.py:56
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+#, fuzzy
+msgid "New"
+msgstr "Nové"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
+msgid "Off"
+msgstr ""
 
 msgid "OtherViews"
 msgstr "Ostatní pohledy"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Play videos one after another."
 msgstr "Přehrávat videa jedno po druhém."
 
 msgid "Remember video position."
 msgstr "Zapamatovat si pozici videa."
 
-#: ../../portable/guide.py:107 ../../portable/playlist.py:197
-#: ../../portable/feed.py:795 ../../portable/menu.py:65
-#: ../../portable/menu.py:70 ../../portable/folder.py:156
-#: ../../portable/folder.py:211
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
+#: ../../portable/frontends/html/contextmenu.py:99
+#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:178
+#: ../../portable/frontends/html/contextmenu.py:184
+#: ../../portable/frontends/html/contextmenu.py:190
+#: ../../portable/frontends/html/contextmenu.py:199
+#: ../../portable/frontends/html/contextmenu.py:233
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Remove"
 msgstr "Odstranit"
 
@@ -569,20 +614,27 @@ msgstr "Odstranit"
 msgid "Run Miro at startup"
 msgstr "Spouštět Miro při startu počítače"
 
-msgid "Save downloaded videos in this folder:"
-msgstr "Ukládat stažená videa do této složky:"
-
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:573
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
 msgid "Show as Channel"
 msgstr "Zobrazit jako kanál"
 
 msgid "Stop after each video."
 msgstr "Zastav přehrávání po každém videu."
 
-msgid "To avoid internet slowdowns:"
-msgstr "Aby se předšlo zpomalení internetu:"
+msgid "Stop uploads when this ratio is reached:"
+msgstr ""
 
-#: ../../portable/app.py:1206
+msgid "Store downloads in this folder:"
+msgstr ""
+
+msgid "To avoid internet slowdowns, limit upstream to"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
+msgid "Use these ports:"
+msgstr ""
+
+#: ../../portable/frontends/html/main.py:319
 #, fuzzy
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Upozorni mě při ukončení, pokud nebude dokončeno stahování"
@@ -601,10 +653,6 @@ msgstr "každou hodinu"
 msgid "manually"
 msgstr "ručně"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
-msgid "videos at once."
-msgstr "videí najednou."
-
 msgid "$label$"
 msgstr "$label$"
 
@@ -614,7 +662,7 @@ msgstr "$title$"
 msgid "Channel"
 msgstr "Kanál"
 
-#: ../../portable/dialogs.py:91
+#: ../../portable/dialogs.py:99
 msgid "Create"
 msgstr "Vytvořit"
 
@@ -633,8 +681,8 @@ msgstr "Vyhledat:"
 msgid "URL"
 msgstr "URL"
 
-#: ../../platform/windows-xul/frontend_implementation/startup.py:42
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:48
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "(pročteno souborů: %d; nalezeno videí: %d)"
@@ -645,11 +693,11 @@ msgstr "Zpět"
 msgid "Browse"
 msgstr "Procházet"
 
-#: ../../platform/osx/frontend/StartupPanel.py:106
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:121
 msgid "Next"
 msgstr "Další"
 
-#: ../../portable/dialogs.py:79
+#: ../../portable/dialogs.py:87
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
 msgid "No"
 msgstr "Ne"
@@ -705,7 +753,7 @@ msgstr ""
 "\n"
 "Chcete spouštět Miro během spouštění počítače?"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "Welcome to Internet TV!"
 msgstr "Vítejte do internetové televize!"
 
@@ -722,7 +770,7 @@ msgstr ""
 "druhém, stahovat torrenty, doporučit videa přátelům - a mnoho dalšího.\n"
 "\n"
 
-#: ../../portable/dialogs.py:78
+#: ../../portable/dialogs.py:86
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
 msgid "Yes"
 msgstr "Ano"
@@ -734,35 +782,35 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:78
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
 msgid "Update Available"
 msgstr "Je dostupná aktualizace"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:79
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
 #, python-format
 msgid "A new version of %s is available for download."
 msgstr "Nová verze %s je dostupná ke stažení."
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:240
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
 msgid "Error Bombing Item"
 msgstr "Chyba při zasílání 'bomby'"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:242
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
 msgid "Error Recommending Item"
 msgstr "Chyba při doporučování položky"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:244
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
 msgid "Error Opening Website"
 msgstr "Chyba při otevírání stránky"
 
-#: ../../platform/windows-xul/frontend_implementation/UIBackendDelegate.py:248
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr "Nastala chyba s otevíráním %s. Zkuste to znovu za několik vteřin"
 
-#: ../../platform/windows-xul/frontend_implementation/startup.py:50
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:76
-#: ../../platform/gtk-x11/frontend_implementation/startup.py:174
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
@@ -770,7 +818,7 @@ msgstr[0] "nalezeno %d video"
 msgstr[1] "nalezeny %d videa"
 msgstr[2] "nalezeno %d videí"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:62
+#: ../../platform/windows-xul/xul/components/pybridge.py:79
 #, python-format
 msgid ""
 "Error importing modules:\n"
@@ -779,29 +827,25 @@ msgstr ""
 "Chyba při importování modulů:\n"
 "%s"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:66
-msgid "Starting up"
-msgstr "Začínám"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:273
+#: ../../platform/windows-xul/xul/components/pybridge.py:254
 msgid "Loading window"
 msgstr "Načítám okno"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:274
+#: ../../platform/windows-xul/xul/components/pybridge.py:255
 msgid "onStartup called twice"
 msgstr "onStartup bylo voláno dvakrát"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:702
+#: ../../platform/windows-xul/xul/components/pybridge.py:739
 #, fuzzy
 msgid "Spacebar"
 msgstr "Mezerník"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:851
+#: ../../platform/windows-xul/xul/components/pybridge.py:887
 #, fuzzy
 msgid "Close to tray?"
 msgstr "Minimalizovat?"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:852
+#: ../../platform/windows-xul/xul/components/pybridge.py:888
 #, fuzzy
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
@@ -811,77 +855,73 @@ msgstr ""
 "minimalizován na lištu nebo aby byl ukončen? Toto nastavení můžete později "
 "změnit v nabídce možnosti."
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:44
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
 msgid "Download Completed"
 msgstr "Stahování dokončeno"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:45
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "Stahování videa '%s' je dokončeno."
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:54
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
 msgid "Download Failed"
 msgstr "Stahování selhalo"
 
-#: ../../platform/osx/frontend/GrowlNotifier.py:55
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
 #, python-format
 msgid "Download of video '%s' has failed."
 msgstr "Stahování videa '%s' selhalo."
 
-#: ../../platform/osx/frontend/MainFrame.py:278
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
 msgid "Subscribe to Channel"
 msgstr "Odebírat kanál"
 
-#: ../../platform/osx/frontend/MainFrame.py:279
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
 msgid "Enter the URL of the channel you would like to subscribe to."
 msgstr "Vložte adresu kanálu, který chcete odebírat."
 
-#: ../../platform/osx/frontend/QuicktimeRenderer.py:248
-msgid "Audio"
-msgstr "Audio"
-
-#: ../../platform/osx/frontend/Preferences.py:64
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
+#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
 msgid "General"
 msgstr "Obecné"
 
-#: ../../platform/osx/frontend/Preferences.py:66
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
+#: ../../platform/osx/platform/frontends/html/Preferences.py:81
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Downloads"
 msgstr "Stažené soubory"
 
-#: ../../platform/osx/frontend/Preferences.py:67
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
+#: ../../platform/osx/platform/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Folders"
 msgstr "Složky"
 
-#: ../../platform/osx/frontend/Preferences.py:68
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+#: ../../platform/osx/platform/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid "Disk Space"
 msgstr "Místo na disku"
 
-#: ../../platform/osx/frontend/Preferences.py:196
+#: ../../platform/osx/platform/frontends/html/Preferences.py:251
 msgid "Movies Directory"
 msgstr "Složka filmů"
 
-#: ../../platform/osx/frontend/Preferences.py:197
+#: ../../platform/osx/platform/frontends/html/Preferences.py:252
 #, fuzzy, python-format
 msgid "Select a Directory to store %s downloads in."
 msgstr "Vyberte adresář pro uložení %s stažení."
 
-#: ../../platform/osx/frontend/Preferences.py:198
-#: ../../platform/osx/frontend/Preferences.py:262
+#: ../../platform/osx/platform/frontends/html/Preferences.py:253
+#: ../../platform/osx/platform/frontends/html/Preferences.py:362
 msgid "Select"
 msgstr "Vyber"
 
-#: ../../platform/osx/frontend/Preferences.py:207
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/osx/platform/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
 msgstr "Přesunout existující filmy?"
 
-#: ../../platform/osx/frontend/Preferences.py:208
+#: ../../platform/osx/platform/frontends/html/Preferences.py:263
 #, fuzzy, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
@@ -892,32 +932,32 @@ msgstr ""
 "ukončená stažení? (Právě stahované filmy se nepřenesou, dokud neskončí "
 "jejich stahování)"
 
-#: ../../platform/osx/frontend/Preferences.py:260
+#: ../../platform/osx/platform/frontends/html/Preferences.py:360
 #, fuzzy
 msgid "View this Directory in the Library"
 msgstr "Zobrait tento adresář ve videotéce"
 
-#: ../../platform/osx/frontend/Preferences.py:261
+#: ../../platform/osx/platform/frontends/html/Preferences.py:361
 msgid "Select a Directory to view in the Library."
 msgstr "Vyberte adresář pro zobraení ve videotéce."
 
-#: ../../platform/osx/frontend/StartupPanel.py:80
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
 msgid "Finish"
 msgstr "Dokončit"
 
-#: ../../platform/osx/frontend/StartupPanel.py:139
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
 msgid "Search!"
 msgstr "Vyhledat!"
 
-#: ../../platform/osx/frontend/Application.py:246
+#: ../../platform/osx/platform/frontends/html/Application.py:241
 msgid "Pause Video"
 msgstr "Pozastavit video"
 
-#: ../../platform/osx/frontend/Application.py:255
+#: ../../platform/osx/platform/frontends/html/Application.py:250
 msgid "Unsupported version of Quicktime"
 msgstr "Nepodporovaná verze přehrávače Quicktime"
 
-#: ../../platform/osx/frontend/Application.py:256
+#: ../../platform/osx/platform/frontends/html/Application.py:251
 #, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
@@ -926,313 +966,1014 @@ msgstr ""
 "Ke spuštění %s potřebujete nejnovější verzi přehrávače Quicktime, tato "
 "aktualizace je zdarma ke stažení."
 
-#: ../../platform/osx/frontend/UIStrings.py:22
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
 msgstr "_Odstranit..."
 
-#: ../../platform/osx/frontend/UIStrings.py:23
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:34
 msgid "_Remove Playlist..."
 msgstr "_Odstranit seznam skladeb..."
 
-#: ../../platform/osx/frontend/UIStrings.py:24
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:35
 msgid "_Remove Playlists..."
 msgstr "_Odstranit seznamy skladeb..."
 
-#: ../../platform/osx/frontend/UIStrings.py:25
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:36
 msgid "_Remove Playlist Folder..."
 msgstr "_Odstranit složku seznamu skladeb..."
 
-#: ../../platform/osx/frontend/UIStrings.py:26
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:37
 msgid "_Remove Playlist Folders..."
 msgstr "_Odstranit složky seznamů skladeb..."
 
-#: ../../platform/osx/frontend/UIStrings.py:27 ../../portable/menubar.py:179
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:38
+#: ../../portable/menubar.py:193
 msgid "_Remove Channel..."
 msgstr "_Odstranit kanál..."
 
-#: ../../platform/osx/frontend/UIStrings.py:28 ../../portable/menubar.py:180
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:39
+#: ../../portable/menubar.py:194
 msgid "_Remove Channels..."
 msgstr "_Odstranit kanály..."
 
-#: ../../platform/osx/frontend/UIStrings.py:29 ../../portable/menubar.py:182
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:40
+#: ../../portable/menubar.py:196
 msgid "_Remove Channel Folder..."
 msgstr "_Odstranit složku kanálu..."
 
-#: ../../platform/osx/frontend/UIStrings.py:30 ../../portable/menubar.py:181
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:41
+#: ../../portable/menubar.py:195
 msgid "_Remove Channel Folders..."
 msgstr "_Odstranit složky kanálů..."
 
-#: ../../platform/osx/frontend/UIStrings.py:31
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:42
 #, fuzzy
 msgid "_Remove Miro Guide..."
 msgstr "_Odstranit průvodce..."
 
-#: ../../platform/osx/frontend/UIStrings.py:32
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:43
 #, fuzzy
 msgid "_Remove Miro Guides..."
 msgstr "_Odstranit průvodce..."
 
-#: ../../platform/osx/frontend/UIStrings.py:33
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:44
 msgid "_Remove Video..."
 msgstr "_Odstranit video..."
 
-#: ../../platform/osx/frontend/UIStrings.py:34
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:45
 msgid "_Remove Videos..."
 msgstr "_Odstranit videa..."
 
-#: ../../platform/osx/frontend/UIStrings.py:35
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:46
 msgid "Re_name..."
 msgstr "Přejme_novat..."
 
-#: ../../platform/osx/frontend/UIStrings.py:36
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:47
 msgid "Re_name Playlist..."
 msgstr "Přejme_novat seznam skladeb..."
 
-#: ../../platform/osx/frontend/UIStrings.py:37
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:48
 msgid "Re_name Playlist Folder..."
 msgstr "Přejme_novat složku seznamu skladeb..."
 
-#: ../../platform/osx/frontend/UIStrings.py:38 ../../portable/menubar.py:178
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:49
+#: ../../portable/menubar.py:192
 msgid "Re_name Channel..."
 msgstr "Přejme_novat kanál..."
 
-#: ../../platform/osx/frontend/UIStrings.py:39
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:50
 msgid "Re_name Channel Folder..."
 msgstr "Přejme_novat složku kanálu..."
 
-#: ../../platform/osx/frontend/UIStrings.py:40
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:51
 #, fuzzy
 msgid "Re_name Miro Guide..."
 msgstr "Pře_jmenovat průvodce..."
 
-#: ../../platform/osx/frontend/UIStrings.py:41 ../../portable/menubar.py:184
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:52
+#: ../../portable/menubar.py:198
 msgid "_Update Channel..."
 msgstr "Akt_ualizovat kanál..."
 
-#: ../../platform/osx/frontend/UIStrings.py:42 ../../portable/menubar.py:185
+#: ../../platform/osx/platform/frontends/html/UIStrings.py:53
+#: ../../portable/menubar.py:199
 msgid "_Update Channels..."
 msgstr "Akt_ualizovat kanály..."
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:42
+#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+msgid "Audio"
+msgstr "Audio"
+
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
 msgstr "Nastavení"
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:45
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56
 msgid "Hide"
 msgstr "Skrýt"
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:47
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58
 msgid "Show"
 msgstr "Zobrazit"
 
-#: ../../platform/gtk-x11/frontend_implementation/trayicon.py:48
-#: ../../portable/dialogs.py:80 ../../portable/menubar.py:257
+#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59
+#: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
 msgid "Quit"
 msgstr "Zavřít"
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:324
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
 msgid "New Channel _Guide..."
 msgstr "Nový _Průvodce kanálem..."
 
-#: ../../platform/gtk-x11/frontend_implementation/callbackhandler.py:564
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
 msgid "Folder Location"
 msgstr "Adresa složky"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:202
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
 msgid "Username:"
 msgstr "Uživatelské jméno:"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:213
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
 msgid "Password:"
 msgstr "Heslo:"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:416
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416
 msgid "Unknown Runtime Error"
 msgstr "Neznámá chyba za chodu"
 
-#: ../../platform/gtk-x11/frontend_implementation/UIBackendDelegate.py:417
+#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417
 #, python-format
 msgid "An unknown error has occurred %s."
 msgstr "Stala se neznámá chyba %s."
 
-#: ../../portable/dl_daemon/download.py:359
+#: ../../portable/dl_daemon/download.py:458
 msgid "Error"
 msgstr "Chyba"
 
-#: ../../portable/dl_daemon/download.py:432
+#: ../../portable/dl_daemon/download.py:544
 #, python-format
 msgid "Could not write to %s"
 msgstr "Nešlo psát do %s"
 
-#: ../../portable/dl_daemon/download.py:452
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:769
 msgid "Not enough disk space"
 msgstr "Nedostatek místa na disku"
 
-#: ../../portable/dl_daemon/download.py:453
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:770
 #, python-format
 msgid "%s MB required to store this video"
 msgstr "Toto video potřebuje %s MB"
 
-#: ../../portable/dl_daemon/download.py:672
+#: ../../portable/dl_daemon/download.py:781
 #, fuzzy
 msgid "BitTorrent failure"
 msgstr "BitTorrent selhal"
 
-#: ../../portable/dl_daemon/download.py:673
+#: ../../portable/dl_daemon/download.py:782
 #, fuzzy
 msgid "BitTorrent failed to startup"
 msgstr "Nepodařilo se spustit BitTorrent"
 
-#: ../../portable/dl_daemon/download.py:796
+#: ../../portable/dl_daemon/download.py:954
 msgid "Corrupt Torrent"
 msgstr "Porušený Torrent"
 
-#: ../../portable/dl_daemon/download.py:797
+#: ../../portable/dl_daemon/download.py:955
 #, python-format
 msgid "The torrent file at %s was not valid"
 msgstr "Soubor torrentu není v %s validní"
 
-#: ../../portable/dl_daemon/download.py:822
+#: ../../portable/dl_daemon/download.py:980
 msgid "Torrent file deleted"
 msgstr "Soubor Torrentu smazán"
 
-#: ../../portable/dl_daemon/download.py:823
-msgid "The torrent file for this item was deleted "
-msgstr "Soubor torrentu pro tuto položku byl smazán "
+#: ../../portable/dl_daemon/download.py:981
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr ""
 
-#: ../../portable/dl_daemon/download.py:824
+#: ../../portable/frontends/html/contextmenu.py:103
+msgid "Update Channels Now"
+msgstr "Aktualizovat kanály"
+
+#: ../../portable/frontends/html/contextmenu.py:128
+#, python-format
+msgid "%d Downloaded Items"
+msgstr "Staženo položek: %d"
+
+#: ../../portable/frontends/html/contextmenu.py:130
+#: ../../portable/frontends/html/contextmenu.py:211
+msgid "Play"
+msgstr "Přehrávat"
+
+#: ../../portable/frontends/html/contextmenu.py:131
+#: ../../portable/frontends/html/contextmenu.py:214
+msgid "Add to new playlist"
+msgstr "Přidat do nového seznamu skladeb"
+
+#: ../../portable/frontends/html/contextmenu.py:133
+#: ../../portable/frontends/html/contextmenu.py:207
+msgid "Remove From Playlist"
+msgstr "Odstranit ze seznamu skladeb"
+
+#: ../../portable/frontends/html/contextmenu.py:135
+#: ../../portable/frontends/html/contextmenu.py:209
 #, fuzzy
-msgid "outside of Miro."
-msgstr "mimo Miro."
+msgid "Remove From the Library"
+msgstr "Odstranit z videotéky"
 
-#: ../../portable/tabs.py:44
+#: ../../portable/frontends/html/contextmenu.py:141
+#: ../../portable/frontends/html/contextmenu.py:218
+msgid "Mark as Unwatched"
+msgstr "Označit jako neshlédnuté"
+
+#: ../../portable/frontends/html/contextmenu.py:146
+#: ../../portable/frontends/html/contextmenu.py:220
+#, fuzzy
+msgid "Mark as Watched"
+msgstr "Označ jako shlédnuté"
+
+#: ../../portable/frontends/html/contextmenu.py:151
+#, python-format
+msgid "%d Available Items"
+msgstr "Položek k dispozici: %d"
+
+#: ../../portable/frontends/html/contextmenu.py:152
+#: ../../portable/frontends/html/contextmenu.py:227
+#: ../../portable/dialogs.py:93
+msgid "Download"
+msgstr "Stáhnout"
+
+#: ../../portable/frontends/html/contextmenu.py:157
+#, python-format
+msgid "%d Downloading Items"
+msgstr "Stahováno položek: %d"
+
+#: ../../portable/frontends/html/contextmenu.py:159
+#: ../../portable/frontends/html/contextmenu.py:225
+msgid "Cancel Download"
+msgstr "Stornovat stahování"
+
+#: ../../portable/frontends/html/contextmenu.py:161
+#: ../../portable/frontends/html/contextmenu.py:225
+msgid "Pause Download"
+msgstr "Pozastavit stahování"
+
+#: ../../portable/frontends/html/contextmenu.py:164
+#: ../../portable/frontends/html/contextmenu.py:223
+msgid "Restart Upload"
+msgstr "Restartovat odesílání"
+
+#: ../../portable/frontends/html/contextmenu.py:170
+msgid "Update Channel Now"
+msgstr "Aktualizovat kanál"
+
+#: ../../portable/frontends/html/contextmenu.py:172
+#: ../../portable/frontends/html/contextmenu.py:196
+msgid "Copy URL to clipboard"
+msgstr "Zkopírovat URL do schránky"
+
+#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
+msgid "Rename Channel"
+msgstr "Přejmenovat kanál"
+
+#: ../../portable/frontends/html/contextmenu.py:177
+msgid "Revert Title to Default"
+msgstr "Vrátit se k implicitnímu jménu"
+
+#: ../../portable/frontends/html/contextmenu.py:183
+#: ../../portable/folder.py:142
+msgid "Rename Channel Folder"
+msgstr "Přejmenovat složku kanálů"
+
+#: ../../portable/frontends/html/contextmenu.py:189
+#: ../../portable/folder.py:213
+msgid "Rename Playlist Folder"
+msgstr "Přejmenovat složku seznamu skladeb"
+
+#: ../../portable/frontends/html/contextmenu.py:213
+msgid "Play Just This Video"
+msgstr "Přehrát pouze toto video"
+
+#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../portable/playlist.py:218
+msgid "Rename Playlist"
+msgstr "Přejmenovat seznam skladeb"
+
+#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
+#, fuzzy
+msgid "Video Directory Missing"
+msgstr "Chybí video adresář"
+
+#: ../../portable/frontends/html/main.py:133
+msgid ""
+"\n"
+"    Miro can't find your primary video directory.  This may be because it's  "
+"   located on an external drive that is currently disconnected.\n"
+"\n"
+"    If you continue, the video directory will be reset to a location on this "
+"    drive (this will cause you to lose some details about the videos on the  "
+"   external drive).  You can also quit, connect the drive, and relaunch Miro."
+msgstr ""
+
+#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
+msgid "Custom Channels"
+msgstr "Vybrané kanály"
+
+#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr "Máte spuštěnu novější verzi $shortAppName s vybranou sadou kanálů."
+
+#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
+msgid "Internal Error"
+msgstr "Vnitřní chyba"
+
+#: ../../portable/frontends/html/main.py:269
+msgid ""
+"Miro has encountered an internal error. You can help us track down this "
+"problem and fix it by submitting an error report."
+msgstr ""
+"Miro zaznamenal vnitřní chybu. Můžete nám pomoci rozpoznat a opravit chybu "
+"tím, že odešlete zprávu o chybě."
+
+#: ../../portable/frontends/html/main.py:269
+#, fuzzy
+msgid ""
+"Include entire program database including all video and channel metadata "
+"with crash report"
+msgstr ""
+"Do zprávy o chybě přidat celou databázi včetně všech videí a metadat kanálů"
+
+#: ../../portable/frontends/html/main.py:269
+msgid "Describe what you were doing that caused this error"
+msgstr "Popište co jste dělali, když problém vznikl"
+
+#: ../../portable/frontends/html/main.py:284
+#, python-format
+msgid "%s Version Alert"
+msgstr "Varování verze %s"
+
+#: ../../portable/frontends/html/main.py:285
+#, python-format
+msgid "A new version of %s is available. Would you like to download it now?"
+msgstr "Je dostupná nová verze %s. Chcete ji stáhnout nyní?"
+
+#: ../../portable/frontends/html/main.py:290
+#, python-format
+msgid "%s Version Check"
+msgstr "Kontrola verze %s"
+
+#: ../../portable/frontends/html/main.py:291
+#, python-format
+msgid "%s is up to date."
+msgstr "%s je aktuální."
+
+#: ../../portable/frontends/html/main.py:309
+msgid "Are you sure you want to quit?"
+msgstr "Skutečně to chcete zavřít aplikaci?"
+
+#: ../../portable/frontends/html/main.py:311
+#, fuzzy
+msgid ""
+"Miro is still uploading your crash report. If you quit now the upload will "
+"be canceled.  Quit Anyway?"
+msgstr ""
+"Miro stále odesílá zprávu o chybě. Pokud skončíte nyní, odeslání zprávy bude "
+"zrušeno. Přesto ukončit?"
+
+#: ../../portable/frontends/html/main.py:316
+#, fuzzy, python-format
+msgid "You have %d download still in progress.  Quit Anyway?"
+msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
+msgstr[0] "Stále probíhá %d stahování. Přesto ukončit?"
+msgstr[1] "Stále probíhá %d stahování. Přesto ukončit?"
+msgstr[2] "Stále probíhá %d stahování. Přesto ukončit?"
+
+#: ../../portable/frontends/html/main.py:340
+msgid "Import OPML File"
+msgstr "Importovat OPML soubor"
+
+#: ../../portable/frontends/html/main.py:342
+msgid "OPML Files"
+msgstr "OPML soubory"
+
+#: ../../portable/frontends/html/main.py:347
+msgid "Export OPML File"
+msgstr "Export OPML souboru"
+
+#: ../../portable/frontends/html/templatedisplay.py:325
+msgid "Invalid Value"
+msgstr "Neplatná hodnota"
+
+#: ../../portable/frontends/html/templatedisplay.py:326
+#, python-format
+msgid "%s is invalid.  You must enter a non-negative number."
+msgstr "Hodnota %s je neplatná. Číslo nesmí být negativní."
+
+#: ../../portable/frontends/html/templatedisplay.py:452
+msgid "Error Revealing File"
+msgstr ""
+
+#: ../../portable/frontends/html/templatedisplay.py:453
+#, fuzzy, python-format
+msgid "The file \"%s\" was deleted from outside Miro."
+msgstr "Soubor \"%s\" byl smazán odjinud než z Miro."
+
+#: ../../portable/frontends/html/templatedisplay.py:560
+#, fuzzy
+msgid "Error Changing Movies Directory"
+msgstr "Chyba při změně adresáře pro filmy"
+
+#: ../../portable/frontends/html/templatedisplay.py:561
+#, fuzzy
+msgid ""
+"You don't have permission to write to the directory you selected.  Miro will "
+"continue to use the old videos directory."
+msgstr ""
+"Nemáte právo zápisu do zvolené adresáře. Miro bude používat původní adresář."
+
+#: ../../portable/frontends/html/templatedisplay.py:664
+msgid " - Invalid URL"
+msgstr " - neplatné URL"
+
+#: ../../portable/frontends/html/templatedisplay.py:665
+msgid ""
+"The address you entered is not a valid URL.\n"
+"Please double check and try again.\n"
+"\n"
+msgstr ""
+"Vložená adresa není platnyým URL\n"
+"Prosím zkontrolujte a vložte znovu\n"
+"\n"
+
+#: ../../portable/frontends/html/templatedisplay.py:691
+msgid "$shortAppName - Add Channel"
+msgstr "$shortAppName - přidej kanál"
+
+#: ../../portable/frontends/html/templatedisplay.py:691
+msgid "Enter the URL of the channel to add"
+msgstr "Vložte URL přidávaného kanálu"
+
+#: ../../portable/frontends/html/templatedisplay.py:712
+msgid "$shortAppName - Add Miro Guide"
+msgstr "$shortAppName - Přidat přůvodce"
+
+#: ../../portable/frontends/html/templatedisplay.py:712
+#, fuzzy
+msgid "Enter the URL of the Miro Guide to add"
+msgstr "Zadejte adresu nového průvodce"
+
+#: ../../portable/frontends/html/templatedisplay.py:718
+#, fuzzy
+msgid "$shortAppName - Download Video"
+msgstr "$shortAppName - Stahování videa"
+
+#: ../../portable/frontends/html/templatedisplay.py:718
+#, fuzzy
+msgid "Enter the URL of the video to download"
+msgstr "Zadejte URL videa ke stažení"
+
+#: ../../portable/tabs.py:55
 #, fuzzy
 msgid "Library"
 msgstr "Videotéka"
 
-#: ../../portable/tabs.py:45
-#, fuzzy
-msgid "New"
-msgstr "Nové"
-
-#: ../../portable/tabs.py:47
+#: ../../portable/tabs.py:58
 msgid "Downloading"
 msgstr "Stahuji"
 
-#: ../../portable/guide.py:104 ../../portable/feed.py:789
-msgid "Copy URL to clipboard"
-msgstr "Zkopírovat URL do schránky"
-
-#: ../../portable/guide.py:154
-#, fuzzy
-msgid "Miro Guide"
-msgstr "Průvodce"
-
-#: ../../portable/extrastrings.py:22 ../../portable/feed.py:2028
-#: ../../portable/feed.py:2120
-msgid "Search"
-msgstr "Hledat"
-
-#: ../../portable/downloader.py:215
+#: ../../portable/downloader.py:234
 msgid "activity"
 msgstr "aktivita"
 
-#: ../../portable/downloader.py:251 ../../portable/httpclient.py:114
-#: ../../portable/httpclient.py:142
+#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
+#: ../../portable/httpclient.py:155
 msgid "File not found"
 msgstr "Soubor nebyl nalezen"
 
-#: ../../portable/downloader.py:252
+#: ../../portable/downloader.py:269
 msgid "Flash URL Scraping Error"
 msgstr "Flash URL Scraping Error"
 
-#: ../../portable/downloader.py:427
+#: ../../portable/downloader.py:445
 msgid "starting up"
 msgstr "startuji"
 
-#: ../../portable/playlist.py:196 ../../portable/playlist.py:201
-msgid "Rename Playlist"
-msgstr "Přejmenovat seznam skladeb"
-
-#: ../../portable/playlist.py:202
+#: ../../portable/playlist.py:219
 #, python-format
 msgid "Enter a new name for the playlist %s"
 msgstr "Vložte nové jméno pro seznam skladeb %s"
 
-#: ../../portable/playlist.py:224
+#: ../../portable/playlist.py:241
 msgid "Create Playlist"
 msgstr "Vytvořit seznam skladeb"
 
-#: ../../portable/playlist.py:225
+#: ../../portable/playlist.py:242
 msgid "Enter a name for the new playlist"
 msgstr "Vložte jméno pro nový seznam skladeb"
 
-#: ../../portable/feed.py:383
+#: ../../portable/opml.py:144
+#, fuzzy
+msgid "OPML Import failed"
+msgstr "Selhal import OPML"
+
+#: ../../portable/opml.py:145
+#, fuzzy
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr "Zdá se, že vybraný OPML soubor není platný. Import byl přerušen."
+
+#: ../../portable/opml.py:150
+#, fuzzy
+msgid "OPML Import summary"
+msgstr "Shrnutí importu OPML"
+
+#: ../../portable/opml.py:151
+#, python-format
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "Úspěšně naimportován %d proud."
+msgstr[1] "Úspěšně naimportován %d proudy."
+msgstr[2] "Úspěšně naimportován %d proudů."
+
+#: ../../portable/opml.py:154
+#, fuzzy, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] "Přeskočený %d proud je již přítomen."
+msgstr[1] "Přeskočené %d proudy jsou již přítomné."
+msgstr[2] "Přeskočený %d proudů je již přítomno."
+
+#: ../../portable/util.py:266
+#, python-format
+msgid "%1.1fGB"
+msgstr "%1.1fGB"
+
+#: ../../portable/util.py:268
+#, python-format
+msgid "%dGB"
+msgstr "%dGB"
+
+#: ../../portable/util.py:272
+#, python-format
+msgid "%1.1fMB"
+msgstr "%1.1fMB"
+
+#: ../../portable/util.py:274
+#, python-format
+msgid "%dMB"
+msgstr "%dMB"
+
+#: ../../portable/util.py:278
+#, python-format
+msgid "%1.1fKB"
+msgstr "%1.1fKB"
+
+#: ../../portable/util.py:280
+#, python-format
+msgid "%dKB"
+msgstr "%dKB"
+
+#: ../../portable/util.py:284
+#, python-format
+msgid "%1.1fB"
+msgstr "%1.1fB"
+
+#: ../../portable/util.py:286
+#, python-format
+msgid "%dB"
+msgstr "%dB"
+
+#: ../../portable/iheartmiro.py:82
+msgid ""
+"An Effortless Way to Help Miro\n"
+"\n"
+"Miro is open-source and built by a non-profit.  We need your help to "
+"continue our work.\n"
+"\n"
+"I Heart Miro is a simple Firefox extension that gives a referral fee to the "
+"Miro organization when you shop at Amazon.  You'll never notice it, it "
+"doesn't cost you a thing, and it's easy to uninstall at any time.\n"
+"\n"
+"If you click 'Install iHeartMiro' below, Firefox will launch and ask if it's "
+"ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks "
+"for your help."
+msgstr ""
+
+#: ../../portable/menubar.py:158
+msgid "_Open"
+msgstr "_Otevřít"
+
+#: ../../portable/menubar.py:159
+msgid "_Download Video"
+msgstr "_Stáhni video"
+
+#: ../../portable/menubar.py:161
+msgid "Check _Version"
+msgstr "Zkontrolovat _verzi"
+
+#: ../../portable/menubar.py:163
+msgid "_Remove Video"
+msgstr "_Odstranit video"
+
+#: ../../portable/menubar.py:164
+msgid "_Remove Videos"
+msgstr "_Odstranit videa"
+
+#: ../../portable/menubar.py:165
+msgid "Re_name Video"
+msgstr "Přejme_novat video"
+
+#: ../../portable/menubar.py:166
+msgid "Save Video _As..."
+msgstr "Uložit video j_ako"
+
+#: ../../portable/menubar.py:167
+msgid "Save Videos _As..."
+msgstr "Uložit vide_a jako..."
+
+#: ../../portable/menubar.py:168
+msgid "Copy Video _URL"
+msgstr "Zkopíruj adresu filmu"
+
+#: ../../portable/menubar.py:170
+msgid "_Options..."
+msgstr "_Možnosti..."
+
+#: ../../portable/menubar.py:171
+msgid "_Quit"
+msgstr "_Zavřít"
+
+#: ../../portable/menubar.py:179
+msgid "Cu_t"
+msgstr "_Vyjmout"
+
+#: ../../portable/menubar.py:180
+msgid "_Copy"
+msgstr "_Kopírovat"
+
+#: ../../portable/menubar.py:181
+msgid "_Paste"
+msgstr "Vlož_it"
+
+#: ../../portable/menubar.py:182
+msgid "Select _All"
+msgstr "Vybr_at  vše"
+
+#: ../../portable/menubar.py:183
+msgid "_Delete"
+msgstr "O_dstranit"
+
+#: ../../portable/menubar.py:187
+msgid "Add _Channel"
+msgstr "Přidat _kanál"
+
+#: ../../portable/menubar.py:188
+msgid "New Searc_h Channel..."
+msgstr "Přidej nový _vyhledávací kanál"
+
+#: ../../portable/menubar.py:189
+msgid "New _Folder..."
+msgstr "Nová _složka..."
+
+#: ../../portable/menubar.py:190
+#, fuzzy
+msgid "Add Channel _Guide..."
+msgstr "Přidat prův_odce kanály..."
+
+#: ../../portable/menubar.py:200
+msgid "Update _All Channels"
+msgstr "_Aktualizovat všechny kanály"
+
+#: ../../portable/menubar.py:202
+msgid "_Import Channels (OPML)..."
+msgstr "_Importuj kanály (OPML)"
+
+#: ../../portable/menubar.py:203
+msgid "E_xport Channels (OPML)..."
+msgstr "E_xportuj kanály (OPML)"
+
+#: ../../portable/menubar.py:205
+msgid "_Send this channel to a friend"
+msgstr "_Zaslat odkaz na kanál příteli"
+
+#: ../../portable/menubar.py:206
+msgid "Copy Channel _Link"
+msgstr "Kopíruj _odkaz na kanál"
+
+#: ../../portable/menubar.py:209
+msgid "New _Playlist"
+msgstr "Nový _seznam skladeb"
+
+#: ../../portable/menubar.py:210
+msgid "New Playlist Fol_der"
+msgstr "Nová složka seznamu skla_deb"
+
+#: ../../portable/menubar.py:212
+msgid "Re_name Playlist"
+msgstr "Přejme_novat seznam skladeb"
+
+#: ../../portable/menubar.py:213
+msgid "_Remove Playlist"
+msgstr "_Odstranit seznam skladeb"
+
+#: ../../portable/menubar.py:214
+msgid "_Remove Playlists"
+msgstr "Odst_ranit seznamy skladeb"
+
+#: ../../portable/menubar.py:215
+msgid "_Remove Playlist Folders"
+msgstr "Odst_ranit složky seznamů skladeb"
+
+#: ../../portable/menubar.py:216
+msgid "_Remove Playlist Folder"
+msgstr "Odst_ranit složku seznamu skladeb"
+
+#: ../../portable/menubar.py:226 ../../portable/menubar.py:227
+msgid "_Play"
+msgstr "_Přehrát"
+
+#: ../../portable/menubar.py:228
+msgid "_Pause"
+msgstr ""
+
+#: ../../portable/menubar.py:229
+msgid "_Stop"
+msgstr "Za_stavit"
+
+#: ../../portable/menubar.py:231
+msgid "_Next Video"
+msgstr "_Následující video"
+
+#: ../../portable/menubar.py:232
+msgid "_Previous Video"
+msgstr "_Předchozí video"
+
+#: ../../portable/menubar.py:234
+msgid "Skip _Forward"
+msgstr "Přeskočit _vpřed"
+
+#: ../../portable/menubar.py:235
+msgid "Skip _Back"
+msgstr "Přeskočit v_zad"
+
+#: ../../portable/menubar.py:237
+msgid "Volume _Up"
+msgstr "Z_výšit hlasitost"
+
+#: ../../portable/menubar.py:238
+msgid "Volume _Down"
+msgstr "S_nížit hlasitost"
+
+#: ../../portable/menubar.py:240
+msgid "_Fullscreen"
+msgstr "_Přes celou obrazovku"
+
+#: ../../portable/menubar.py:244
+msgid "_About"
+msgstr "_O programu"
+
+#: ../../portable/menubar.py:245
+msgid "_Donate"
+msgstr "_Přispěj"
+
+#: ../../portable/menubar.py:246 ../../portable/menubar.py:261
+msgid "_Help"
+msgstr "Nápověd_a"
+
+#: ../../portable/menubar.py:248
+#, fuzzy
+msgid "Report a _Bug"
+msgstr "Ohlásit z_ávadu"
+
+#: ../../portable/menubar.py:252
+msgid "_Video"
+msgstr "_Video"
+
+#: ../../portable/menubar.py:254
+#, fuzzy
+msgid "_File"
+msgstr "_Soubor"
+
+#: ../../portable/menubar.py:258
+msgid "_Channels"
+msgstr "_Kanály"
+
+#: ../../portable/menubar.py:259
+msgid "_Playlists"
+msgstr "_Seznamy skladeb"
+
+#: ../../portable/menubar.py:260
+msgid "P_layback"
+msgstr "Pře_hrát"
+
+#: ../../portable/menubar.py:265
+#, fuzzy
+msgid "Play Unwatched ($numUnwatched)"
+msgstr "Přehrát nepřehrané ($numUnwatched)"
+
+#: ../../portable/menubar.py:266
+msgid "Pause All Downloads ($numDownloading)"
+msgstr "Přerušit všechna stahování ($numDownloading)"
+
+#: ../../portable/menubar.py:267
+#, fuzzy
+msgid "Resume All Downloads ($numPaused)"
+msgstr "Obnovit všechna stahování ($numPaused)"
+
+#: ../../portable/menubar.py:269
+msgid "Options..."
+msgstr "Možnosti..."
+
+#: ../../portable/menubar.py:271
+msgid "Hide Window"
+msgstr "Skryj okno"
+
+#: ../../portable/menubar.py:272
+msgid "Show Window"
+msgstr "Zobraz okno"
+
+#: ../../portable/theme.py:137
+#, fuzzy
+msgid "Starter Channels"
+msgstr "Počáteční kanál"
+
+#: ../../portable/theme.py:154
+msgid "Example Playlist"
+msgstr "Ukázkový seznam skladeb"
+
+#: ../../portable/httpclient.py:81
+#, python-format
+msgid "Error: %s"
+msgstr "Chyba: %s"
+
+#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
+msgid "Can't connect"
+msgstr "Spojení nenavázáno"
+
+#: ../../portable/httpclient.py:97
+#, python-format
+msgid "Connection Error: %s"
+msgstr "Chyba spojení: %s"
+
+#: ../../portable/httpclient.py:103
+msgid "SSL connection error"
+msgstr "Chyba spojení SSL"
+
+#: ../../portable/httpclient.py:107
+msgid "HTTP error"
+msgstr "Chyba HTTP"
+
+#: ../../portable/httpclient.py:110
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "Chybný řádek výpisu stavu: %s"
+
+#: ../../portable/httpclient.py:113
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "Chybný řádek hlavičky: %s"
+
+#: ../../portable/httpclient.py:116
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr "Špatná velikost dávky: %s"
+
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr "Očekáván CRLF, obdržen: %r"
+
+#: ../../portable/httpclient.py:122
+#, python-format
+msgid "%s closed connection"
+msgstr "%s zavřených spojení"
+
+#: ../../portable/httpclient.py:128
+msgid "Got 404 status code"
+msgstr "Stránka nenalezena (stav 404)"
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "Špatný stavový kód: %s"
+
+#: ../../portable/httpclient.py:134
+msgid "Authorization failed"
+msgstr "Selhala autorizace"
+
+#: ../../portable/httpclient.py:140
+msgid "Pipeline request never started"
+msgstr "Nezačala žádost potrubí"
+
+#: ../../portable/httpclient.py:144
+msgid "Timeout"
+msgstr "Vypršení času"
+
+#: ../../portable/httpclient.py:145
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "Vypršel čas spojení %s"
+
+#: ../../portable/httpclient.py:149
+msgid "Invalid URL"
+msgstr "Neplatné URL"
+
+#: ../../portable/httpclient.py:150
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr "\"%s\" není platnou URL"
+
+#: ../../portable/httpclient.py:156
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr "Soubor: \"%s\" neexistuje"
+
+#: ../../portable/httpclient.py:160
+msgid "Read error"
+msgstr "Chyba při čtení"
+
+#: ../../portable/httpclient.py:161
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr "Chyba při čtení z \"%s\""
+
+#: ../../portable/httpclient.py:354
+msgid "Unknown Error code"
+msgstr "Neznámý chybový kód"
+
+#: ../../portable/httpclient.py:386
+msgid "Connection closed"
+msgstr "Spojení ukončeno"
+
+#: ../../portable/httpclient.py:811
+msgid "Unknown"
+msgstr "Neznámý"
+
+#: ../../portable/httpclient.py:812
+msgid "Internal Error: Not ready to send"
+msgstr "Vnitřní chyba: nepřipraven k odesílání"
+
+#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
+#: ../../portable/feed.py:2499
+msgid "Search"
+msgstr "Hledat"
+
+#: ../../portable/feed.py:384
 msgid "never"
 msgstr "nikdy"
 
-#: ../../portable/feed.py:385 ../../portable/item.py:542
+#: ../../portable/feed.py:386 ../../portable/item.py:554
 #, python-format
 msgid "%d hours"
 msgstr "%d hodin"
 
-#: ../../portable/feed.py:387
+#: ../../portable/feed.py:388
 #, python-format
 msgid "%d day"
 msgstr "%d den"
 
-#: ../../portable/feed.py:389 ../../portable/item.py:540
+#: ../../portable/feed.py:390 ../../portable/item.py:552
 #, python-format
 msgid "%d days"
 msgstr "%d dní"
 
-#: ../../portable/feed.py:391
+#: ../../portable/feed.py:392
 #, python-format
 msgid "%d months"
 msgstr "%d měsíců"
 
-#: ../../portable/feed.py:787
-msgid "Update Channel Now"
-msgstr "Aktualizovat kanál"
-
-#: ../../portable/feed.py:790 ../../portable/feed.py:799
-msgid "Rename Channel"
-msgstr "Přejmenovat kanál"
-
-#: ../../portable/feed.py:794
-msgid "Revert Title to Default"
-msgstr "Vrátit se k implicitnímu jménu"
-
-#: ../../portable/feed.py:800
+#: ../../portable/feed.py:826
 #, python-format
 msgid "Enter a new name for the channel %s"
 msgstr "Vložte nové jméno pro kanál %s"
 
-#: ../../portable/feed.py:887
+#: ../../portable/feed.py:923
 msgid "Error loading feed"
 msgstr "Chyba při načítání proudu"
 
-#: ../../portable/feed.py:888
+#: ../../portable/feed.py:924
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
 msgstr "Nemohu stáhnout proud na %s (%s)."
 
-#: ../../portable/feed.py:891
+#: ../../portable/feed.py:927
 msgid "Would you like to keep the feed?"
 msgstr "Chcete ponechat tento proud?"
 
-#: ../../portable/feed.py:1004
+#: ../../portable/feed.py:1040
 msgid "Bad content-type"
 msgstr "Špatný typ obsahu"
 
-#: ../../portable/feed.py:1017
+#: ../../portable/feed.py:1053
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
 msgstr "Kanál není kompagibiln"
 
-#: ../../portable/feed.py:1018
+#: ../../portable/feed.py:1054
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny.  Please contact the publishers of "
@@ -1248,221 +1989,32 @@ msgstr ""
 "\n"
 "Chcete přesto tento kanál stáhnout?"
 
-#: ../../portable/feed.py:2134
+#: ../../portable/feed.py:2513
 msgid "Local Files"
 msgstr "Místní soubory"
 
-#: ../../portable/feed.py:2148
+#: ../../portable/feed.py:2527
 msgid "Playing File"
 msgstr "Přehrávám soubor"
 
-#: ../../portable/menu.py:69
-msgid "Update Channels Now"
-msgstr "Aktualizovat kanály"
-
-#: ../../portable/menu.py:94
-#, python-format
-msgid "%d Downloaded Items"
-msgstr "Staženo položek: %d"
-
-#: ../../portable/menu.py:96 ../../portable/item.py:1475
-msgid "Play"
-msgstr "Přehrávat"
-
-#: ../../portable/menu.py:97 ../../portable/item.py:1478
-msgid "Add to new playlist"
-msgstr "Přidat do nového seznamu skladeb"
-
-#: ../../portable/menu.py:99 ../../portable/item.py:1471
-msgid "Remove From Playlist"
-msgstr "Odstranit ze seznamu skladeb"
-
-#: ../../portable/menu.py:101 ../../portable/item.py:1473
-#, fuzzy
-msgid "Remove From the Library"
-msgstr "Odstranit z videotéky"
-
-#: ../../portable/menu.py:107 ../../portable/item.py:1482
-msgid "Mark as Unwatched"
-msgstr "Označit jako neshlédnuté"
-
-#: ../../portable/menu.py:112 ../../portable/item.py:1484
-#, fuzzy
-msgid "Mark as Watched"
-msgstr "Označ jako shlédnuté"
-
-#: ../../portable/menu.py:117
-#, python-format
-msgid "%d Available Items"
-msgstr "Položek k dispozici: %d"
-
-#: ../../portable/menu.py:118 ../../portable/dialogs.py:85
-#: ../../portable/item.py:1491
-msgid "Download"
-msgstr "Stáhnout"
-
-#: ../../portable/menu.py:123
-#, python-format
-msgid "%d Downloading Items"
-msgstr "Stahováno položek: %d"
-
-#: ../../portable/menu.py:125 ../../portable/item.py:1489
-msgid "Cancel Download"
-msgstr "Stornovat stahování"
-
-#: ../../portable/menu.py:127 ../../portable/item.py:1489
-msgid "Pause Download"
-msgstr "Pozastavit stahování"
-
-#: ../../portable/menu.py:130 ../../portable/item.py:1487
-msgid "Restart Upload"
-msgstr "Restartovat odesílání"
-
-#: ../../portable/opml.py:49
-msgid "Export OPML File"
-msgstr "Export OPML souboru"
-
-#: ../../portable/opml.py:123
-msgid "Import OPML File"
-msgstr "Importovat OPML soubor"
-
-#: ../../portable/opml.py:125
-msgid "OPML Files"
-msgstr "OPML soubory"
-
-#: ../../portable/opml.py:145
-#, fuzzy
-msgid "OPML Import failed"
-msgstr "Selhal import OPML"
-
-#: ../../portable/opml.py:146
-#, fuzzy
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr "Zdá se, že vybraný OPML soubor není platný. Import byl přerušen."
-
-#: ../../portable/opml.py:151
-#, fuzzy
-msgid "OPML Import summary"
-msgstr "Shrnutí importu OPML"
-
-#: ../../portable/opml.py:152
-#, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] "Úspěšně naimportován %d proud."
-msgstr[1] "Úspěšně naimportován %d proudy."
-msgstr[2] "Úspěšně naimportován %d proudů."
-
-#: ../../portable/opml.py:155
-#, fuzzy, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] "Přeskočený %d proud je již přítomen."
-msgstr[1] "Přeskočené %d proudy jsou již přítomné."
-msgstr[2] "Přeskočený %d proudů je již přítomno."
-
-#: ../../portable/autoupdate.py:121
-#, python-format
-msgid "%s Version Alert"
-msgstr "Varování verze %s"
-
-#: ../../portable/autoupdate.py:122
-#, python-format
-msgid "A new version of %s is available. Would you like to download it now?"
-msgstr "Je dostupná nová verze %s. Chcete ji stáhnout nyní?"
-
-#: ../../portable/autoupdate.py:128
-#, python-format
-msgid "%s Version Check"
-msgstr "Kontrola verze %s"
-
-#: ../../portable/autoupdate.py:129
-#, python-format
-msgid "%s is up to date."
-msgstr "%s je aktuální."
-
-#: ../../portable/util.py:252 ../../portable/httpclient.py:126
-msgid "Internal Error"
-msgstr "Vnitřní chyba"
-
-#: ../../portable/util.py:252
-msgid ""
-"Miro has encountered an internal error. You can help us track down this "
-"problem and fix it by submitting an error report."
-msgstr ""
-"Miro zaznamenal vnitřní chybu. Můžete nám pomoci rozpoznat a opravit chybu "
-"tím, že odešlete zprávu o chybě."
-
-#: ../../portable/util.py:252
-#, fuzzy
-msgid ""
-"Include entire program database including all video and channel metadata "
-"with crash report"
-msgstr ""
-"Do zprávy o chybě přidat celou databázi včetně všech videí a metadat kanálů"
-
-#: ../../portable/util.py:252
-msgid "Describe what you were doing that caused this error"
-msgstr "Popište co jste dělali, když problém vznikl"
-
-#: ../../portable/util.py:455
-#, python-format
-msgid "%1.1fGB"
-msgstr "%1.1fGB"
-
-#: ../../portable/util.py:457
-#, python-format
-msgid "%dGB"
-msgstr "%dGB"
-
-#: ../../portable/util.py:461
-#, python-format
-msgid "%1.1fMB"
-msgstr "%1.1fMB"
-
-#: ../../portable/util.py:463
-#, python-format
-msgid "%dMB"
-msgstr "%dMB"
-
-#: ../../portable/util.py:467
-#, python-format
-msgid "%1.1fKB"
-msgstr "%1.1fKB"
-
-#: ../../portable/util.py:469
-#, python-format
-msgid "%dKB"
-msgstr "%dKB"
-
-#: ../../portable/util.py:473
-#, python-format
-msgid "%1.1fB"
-msgstr "%1.1fB"
-
-#: ../../portable/util.py:475
-#, python-format
-msgid "%dB"
-msgstr "%dB"
-
-#: ../../portable/storedatabase.py:832 ../../portable/storedatabase.py:1231
+#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
 #, python-format
 msgid "%s database save succeeded"
 msgstr "Uspěšné uložení databáze %s"
 
-#: ../../portable/storedatabase.py:833 ../../portable/storedatabase.py:1232
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
 "Databáze byla úspěšně uložena. Nyní je možno bezpečně odejít z programu."
 
-#: ../../portable/storedatabase.py:840 ../../portable/storedatabase.py:1240
+#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
 #, python-format
 msgid "%s database save failed"
 msgstr "Uložení databáze %s selhalo"
 
-#: ../../portable/storedatabase.py:841 ../../portable/storedatabase.py:1241
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
 #, python-format
 msgid ""
 "%s was unable to save its database: Disk Full.\n"
@@ -1475,118 +2027,225 @@ msgstr ""
 "některé filmy z vaší sbírky.\n"
 "Poslední změny mohou být ztraceny."
 
-#: ../../portable/dialogs.py:81
+#: ../../portable/dialogs.py:89
 msgid "Ignore"
 msgstr "Ignoruj"
 
-#: ../../portable/dialogs.py:82
+#: ../../portable/dialogs.py:90
 msgid "Submit Crash Report"
 msgstr "Odešli zprávu o chybě"
 
-#: ../../portable/dialogs.py:83 ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr "Migrovat"
 
-#: ../../portable/dialogs.py:84 ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr "Nemigrovat"
 
-#: ../../portable/dialogs.py:86
+#: ../../portable/dialogs.py:94
 msgid "Remove Entry"
 msgstr "Odstranit položku"
 
-#: ../../portable/dialogs.py:87
+#: ../../portable/dialogs.py:95
 msgid "Delete File"
 msgstr "Smazat soubor"
 
-#: ../../portable/dialogs.py:88
+#: ../../portable/dialogs.py:96
 msgid "Delete Files"
 msgstr "Smazat soubory"
 
-#: ../../portable/dialogs.py:89
+#: ../../portable/dialogs.py:97
 msgid "Keep Videos"
 msgstr "Nechat videa"
 
-#: ../../portable/dialogs.py:90
+#: ../../portable/dialogs.py:98
 msgid "Delete Videos"
 msgstr "Smazat videa"
 
-#: ../../portable/dialogs.py:92
+#: ../../portable/dialogs.py:100
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
 msgid "Create Channel"
 msgstr "Vytvořit kanál"
 
-#: ../../portable/dialogs.py:93
+#: ../../portable/dialogs.py:101
 msgid "Add"
 msgstr "Přidat"
 
-#: ../../portable/dialogs.py:94
+#: ../../portable/dialogs.py:102
 msgid "Add Into New Folder"
 msgstr "Přidat do nové složky"
 
-#: ../../portable/dialogs.py:95
+#: ../../portable/dialogs.py:103
 msgid "Keep"
 msgstr "Nechat"
 
-#: ../../portable/dialogs.py:97
+#: ../../portable/dialogs.py:105
 msgid "Not Now"
 msgstr "Nyní ne"
 
-#: ../../portable/dialogs.py:98
+#: ../../portable/dialogs.py:106
 #, fuzzy
 msgid "Close to Tray"
 msgstr "Minimalizovat"
 
-#: ../../portable/dialogs.py:99
+#: ../../portable/dialogs.py:107
 msgid "Launch Miro"
 msgstr "Spusť Miro"
 
-#: ../../portable/dialogs.py:100
+#: ../../portable/dialogs.py:108
 msgid "Download Anyway"
 msgstr "Přesto stáhnout"
 
-#: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../portable/dialogs.py:109
+msgid "Install iHeartMiro"
+msgstr ""
+
+#: ../../portable/dialogs.py:110
+msgid "Don't Install"
+msgstr ""
+
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
 msgstr "Nový vyhledávací kanál"
 
-#: ../../portable/dialogs.py:221 ../../platform/gtk-x11/glade/miro.glade.h:25
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr "Vyhledávací kanál obsahuje položky podle klíčového slova."
 
-#: ../../portable/singleclick.py:87
+#: ../../portable/controller.py:196 ../../portable/controller.py:210
+#: ../../portable/controller.py:254 ../../portable/controller.py:280
+#: ../../portable/controller.py:300
+#, python-format
+msgid "Remove %s"
+msgstr "Odstranit %s"
+
+#: ../../portable/controller.py:197
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr "Skutečně chcete odstranit průvodce %s?"
+
+#: ../../portable/controller.py:211
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr "Chcete opravdu odstranit %s"
+
+#: ../../portable/controller.py:214 ../../portable/controller.py:259
+#: ../../portable/controller.py:285 ../../portable/controller.py:304
+#, python-format
+msgid "Remove %s channels"
+msgstr "Odstranit kanálů: %s"
+
+#: ../../portable/controller.py:216
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr "Skutečně chcete odstranit tyto %s eznamy skladeb"
+
+#: ../../portable/controller.py:255
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr "Co chcete udělat s videi v tomto kanálu, které jste právě stáhli?"
+
+#: ../../portable/controller.py:260
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr "Co chcete udělat s videi v tomto kanálu, které jste právě stáhli?"
+
+#: ../../portable/controller.py:281
+#, python-format
+msgid ""
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
+msgstr "Chcete opravdu odstranit %s? Případné stahování bude stornováno."
+
+#: ../../portable/controller.py:286
+#, python-format
+msgid ""
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
+msgstr ""
+"Chcete opravdu odstranit tyto kanály (%s)? Případné stahování bude "
+"stornováno."
+
+#: ../../portable/controller.py:301
+#, python-format
+msgid "Are you sure you want to remove %s?"
+msgstr "Skutečně chcete odstranit %s?"
+
+#: ../../portable/controller.py:305
+#, python-format
+msgid "Are you sure you want to remove these %s channels?"
+msgstr "Skutečně chcete odstranit tyto %s kanály?"
+
+#: ../../portable/controller.py:318
+#, python-format
+msgid "Stop watching %s"
+msgstr "Přeruš sledování %s"
+
+#: ../../portable/controller.py:319
+#, python-format
+msgid "Are you sure you want to stop watching %s?"
+msgstr "Skutečně chcete přerušit sledování %s?"
+
+#: ../../portable/controller.py:322
+#, python-format
+msgid "Stop watching %s directories"
+msgstr "Přeruš sledování složek %s"
+
+#: ../../portable/controller.py:323
+#, python-format
+msgid "Are you sure you want to stop watching these %s directories?"
+msgstr "Skutečně chcete přerušit sledování těchto %s složek?"
+
+#: ../../portable/controller.py:497
+msgid "Error Saving Video"
+msgstr "Chyba při ukládání videa"
+
+#: ../../portable/controller.py:499
+#, fuzzy, python-format
+msgid ""
+"An error occured while trying to save %s.  Please check that the file has "
+"not been deleted and try again."
+msgstr ""
+"Nastala chyba při pokusu o uložení %s. Prosím, zkontroluje, že soubor nebyl "
+"smazán a zkuste to znovu."
+
+#: ../../portable/singleclick.py:99
 #, fuzzy
 msgid "Download already exists"
 msgstr "Stahování už existuje"
 
-#: ../../portable/singleclick.py:88
+#: ../../portable/singleclick.py:100
 msgid "That URL is already an external download."
 msgstr ""
 
-#: ../../portable/singleclick.py:94
+#: ../../portable/singleclick.py:106
 #, fuzzy
 msgid "Miro will begin downloading it now."
 msgstr "Miro nyní začne stahovat."
 
-#: ../../portable/singleclick.py:96
+#: ../../portable/singleclick.py:108
 #, fuzzy
 msgid "It is downloading now."
 msgstr "Právě se stahuje."
 
-#: ../../portable/singleclick.py:98
+#: ../../portable/singleclick.py:110
 #, fuzzy
 msgid "It has already been downloaded."
 msgstr "Již byl stažen."
 
-#: ../../portable/singleclick.py:125
+#: ../../portable/singleclick.py:137
 #, fuzzy
 msgid "Download Error"
 msgstr "Chyba při stahování"
 
-#: ../../portable/singleclick.py:126
+#: ../../portable/singleclick.py:138
 #, fuzzy, python-format
 msgid ""
 "Miro is not able to download a file at this URL:\n"
@@ -1597,35 +2256,35 @@ msgstr ""
 "\n"
 "URL: %s"
 
-#: ../../portable/singleclick.py:134
+#: ../../portable/singleclick.py:146
 #, fuzzy
 msgid "File Download"
 msgstr "Stažení souboru"
 
-#: ../../portable/singleclick.py:135
+#: ../../portable/singleclick.py:147
 #, fuzzy, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
 msgstr "Soubor na %s nevypadá jako audio, video nebo RSS kanál."
 
-#: ../../portable/singleclick.py:225
+#: ../../portable/singleclick.py:235
 msgid "Subscribing to multiple channels"
 msgstr "Odebírat více kanálů"
 
-#: ../../portable/singleclick.py:226
+#: ../../portable/singleclick.py:236
 #, python-format
 msgid "Create %d channels?"
 msgstr "Vytvořit %d kanálů?"
 
-#: ../../portable/singleclick.py:239
+#: ../../portable/singleclick.py:249
 #, python-format
 msgid "Adding %d channels to a new folder"
 msgstr "Do nové složky přidávám kanálů: %d"
 
-#: ../../portable/singleclick.py:240 ../../portable/folder.py:226
+#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
 msgid "Enter a name for the new channel folder"
 msgstr "Vložte jméno pro novou složku kanálů"
 
-#: ../../portable/singleclick.py:243
+#: ../../portable/singleclick.py:253
 #, python-format
 msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
@@ -1634,11 +2293,11 @@ msgstr ""
 "Upozornění: Některé z těchto kanálů (%d) už sledujete, takže je nechám tam "
 "kde už jsou."
 
-#: ../../portable/singleclick.py:254
+#: ../../portable/singleclick.py:264
 msgid "Subscription error"
 msgstr "Chyba při odebírání"
 
-#: ../../portable/singleclick.py:264
+#: ../../portable/singleclick.py:274
 msgid ""
 "This $shortAppName channel file has an invalid format: $url. Please notify "
 "the publisher of this file."
@@ -1646,7 +2305,7 @@ msgstr ""
 "Tento $shortAppName soubor kanálu nemá platný formát: $url. Prosíme, "
 "informujte vydavatele tohoto souboru."
 
-#: ../../portable/singleclick.py:272
+#: ../../portable/singleclick.py:282
 msgid ""
 "This $shortAppName channel file has the wrong content type: $url. Please "
 "notify the publisher of this file."
@@ -1654,255 +2313,26 @@ msgstr ""
 "Tento $shortAppName soubor kanálu má špatný typ obsahu: $url. Prosíme, "
 "informujte vydavatele tohoto souboru."
 
-#: ../../portable/singleclick.py:276
+#: ../../portable/singleclick.py:286
 msgid "Could not download the $shortAppName channel file: $url."
 msgstr "Nemohu stáhnout soubor $shortAppName kanálu: $url"
 
-#: ../../portable/singleclick.py:316
+#: ../../portable/singleclick.py:334
 msgid "Invalid Torrent"
 msgstr "Chybný Torrent"
 
-#: ../../portable/singleclick.py:317
+#: ../../portable/singleclick.py:335
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
 msgstr ""
 "Soubor Torrentu %s vypadá, že je porušený a nemůže být proto otevřen. [OK]"
 
-#: ../../portable/menubar.py:144
-msgid "_Open"
-msgstr "_Otevřít"
-
-#: ../../portable/menubar.py:145
-msgid "_Download Video"
-msgstr "_Stáhni video"
-
-#: ../../portable/menubar.py:147
-msgid "Check _Version"
-msgstr "Zkontrolovat _verzi"
-
-#: ../../portable/menubar.py:149
-msgid "_Remove Video"
-msgstr "_Odstranit video"
-
-#: ../../portable/menubar.py:150
-msgid "_Remove Videos"
-msgstr "_Odstranit videa"
-
-#: ../../portable/menubar.py:151
-msgid "Re_name Video"
-msgstr "Přejme_novat video"
-
-#: ../../portable/menubar.py:152
-msgid "Save Video _As..."
-msgstr "Uložit video j_ako"
-
-#: ../../portable/menubar.py:153
-msgid "Save Videos _As..."
-msgstr "Uložit vide_a jako..."
-
-#: ../../portable/menubar.py:154
-msgid "Copy Video _URL"
-msgstr "Zkopíruj adresu filmu"
-
-#: ../../portable/menubar.py:156
-msgid "_Options..."
-msgstr "_Možnosti..."
-
-#: ../../portable/menubar.py:157
-msgid "_Quit"
-msgstr "_Zavřít"
-
-#: ../../portable/menubar.py:165
-msgid "Cu_t"
-msgstr "_Vyjmout"
-
-#: ../../portable/menubar.py:166
-msgid "_Copy"
-msgstr "_Kopírovat"
-
-#: ../../portable/menubar.py:167
-msgid "_Paste"
-msgstr "Vlož_it"
-
-#: ../../portable/menubar.py:168
-msgid "Select _All"
-msgstr "Vybr_at  vše"
-
-#: ../../portable/menubar.py:169
-msgid "_Delete"
-msgstr "O_dstranit"
-
-#: ../../portable/menubar.py:173
-msgid "Add _Channel"
-msgstr "Přidat _kanál"
-
-#: ../../portable/menubar.py:174
-msgid "New Searc_h Channel..."
-msgstr "Přidej nový _vyhledávací kanál"
-
-#: ../../portable/menubar.py:175
-msgid "New _Folder..."
-msgstr "Nová _složka..."
-
-#: ../../portable/menubar.py:176
-#, fuzzy
-msgid "Add Channel _Guide..."
-msgstr "Přidat prův_odce kanály..."
-
-#: ../../portable/menubar.py:186
-msgid "Update _All Channels"
-msgstr "_Aktualizovat všechny kanály"
-
-#: ../../portable/menubar.py:188
-msgid "_Import Channels (OPML)..."
-msgstr "_Importuj kanály (OPML)"
-
-#: ../../portable/menubar.py:189
-msgid "E_xport Channels (OPML)..."
-msgstr "E_xportuj kanály (OPML)"
-
-#: ../../portable/menubar.py:191
-msgid "_Send this channel to a friend"
-msgstr "_Zaslat odkaz na kanál příteli"
-
-#: ../../portable/menubar.py:192
-msgid "Copy Channel _Link"
-msgstr "Kopíruj _odkaz na kanál"
-
-#: ../../portable/menubar.py:195
-msgid "New _Playlist"
-msgstr "Nový _seznam skladeb"
-
-#: ../../portable/menubar.py:196
-msgid "New Playlist Fol_der"
-msgstr "Nová složka seznamu skla_deb"
-
-#: ../../portable/menubar.py:198
-msgid "Re_name Playlist"
-msgstr "Přejme_novat seznam skladeb"
-
-#: ../../portable/menubar.py:199
-msgid "_Remove Playlist"
-msgstr "_Odstranit seznam skladeb"
-
-#: ../../portable/menubar.py:200
-msgid "_Remove Playlists"
-msgstr "Odst_ranit seznamy skladeb"
-
-#: ../../portable/menubar.py:201
-msgid "_Remove Playlist Folders"
-msgstr "Odst_ranit složky seznamů skladeb"
-
-#: ../../portable/menubar.py:202
-msgid "_Remove Playlist Folder"
-msgstr "Odst_ranit složku seznamu skladeb"
-
-#: ../../portable/menubar.py:212
-msgid "_Play"
-msgstr "_Přehrát"
-
-#: ../../portable/menubar.py:213
-msgid "_Stop"
-msgstr "Za_stavit"
-
-#: ../../portable/menubar.py:215
-msgid "_Next Video"
-msgstr "_Následující video"
-
-#: ../../portable/menubar.py:216
-msgid "_Previous Video"
-msgstr "_Předchozí video"
-
-#: ../../portable/menubar.py:218
-msgid "Skip _Forward"
-msgstr "Přeskočit _vpřed"
-
-#: ../../portable/menubar.py:219
-msgid "Skip _Back"
-msgstr "Přeskočit v_zad"
-
-#: ../../portable/menubar.py:221
-msgid "Volume _Up"
-msgstr "Z_výšit hlasitost"
-
-#: ../../portable/menubar.py:222
-msgid "Volume _Down"
-msgstr "S_nížit hlasitost"
-
-#: ../../portable/menubar.py:224
-msgid "_Fullscreen"
-msgstr "_Přes celou obrazovku"
-
-#: ../../portable/menubar.py:228
-msgid "_About"
-msgstr "_O programu"
-
-#: ../../portable/menubar.py:229
-msgid "_Donate"
-msgstr "_Přispěj"
-
-#: ../../portable/menubar.py:230 ../../portable/menubar.py:245
-msgid "_Help"
-msgstr "Nápověd_a"
-
-#: ../../portable/menubar.py:232
-#, fuzzy
-msgid "Report a _Bug"
-msgstr "Ohlásit z_ávadu"
-
-#: ../../portable/menubar.py:236
-msgid "_Video"
-msgstr "_Video"
-
-#: ../../portable/menubar.py:238
-#, fuzzy
-msgid "_File"
-msgstr "_Soubor"
-
-#: ../../portable/menubar.py:242
-msgid "_Channels"
-msgstr "_Kanály"
-
-#: ../../portable/menubar.py:243
-msgid "_Playlists"
-msgstr "_Seznamy skladeb"
-
-#: ../../portable/menubar.py:244
-msgid "P_layback"
-msgstr "Pře_hrát"
-
-#: ../../portable/menubar.py:249
-#, fuzzy
-msgid "Play Unwatched ($numUnwatched)"
-msgstr "Přehrát nepřehrané ($numUnwatched)"
-
-#: ../../portable/menubar.py:250
-msgid "Pause All Downloads ($numDownloading)"
-msgstr "Přerušit všechna stahování ($numDownloading)"
-
-#: ../../portable/menubar.py:251
-#, fuzzy
-msgid "Resume All Downloads ($numPaused)"
-msgstr "Obnovit všechna stahování ($numPaused)"
-
-#: ../../portable/menubar.py:253
-msgid "Options..."
-msgstr "Možnosti..."
-
-#: ../../portable/menubar.py:255
-msgid "Hide Window"
-msgstr "Skryj okno"
-
-#: ../../portable/menubar.py:256
-msgid "Show Window"
-msgstr "Zobraz okno"
-
-#: ../../portable/item.py:485
+#: ../../portable/item.py:497
 #, python-format
 msgid "Removing %s"
 msgstr "Odstraňuji %s"
 
-#: ../../portable/item.py:488
+#: ../../portable/item.py:500
 #, fuzzy
 msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
@@ -1911,12 +2341,12 @@ msgstr ""
 "Chcete smazat tuto složku a veškerá videa v ní obsažená, nebo jen odstranit "
 "její záznam z videotéky?"
 
-#: ../../portable/item.py:494
+#: ../../portable/item.py:506
 msgid ""
 "Would you like to delete this file or just remove its entry from the Library?"
 msgstr "Chcete tento soubor smazat nebo jen odstranit záznam z Knihovny?"
 
-#: ../../portable/item.py:514
+#: ../../portable/item.py:526
 msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
@@ -1924,137 +2354,150 @@ msgstr ""
 "Tato položka je složka. Pokud odstraníte složku, veškeré položky uvnitř této "
 "složky budou smazány."
 
-#: ../../portable/item.py:544
+#: ../../portable/item.py:556
 #, python-format
 msgid "%d minutes"
 msgstr "%d minut"
 
-#: ../../portable/item.py:554
+#: ../../portable/item.py:566
 #, python-format
 msgid "Expires in %s"
 msgstr "Vyprší za %s"
 
-#: ../../portable/item.py:566
+#: ../../portable/item.py:578
 #, python-format
 msgid "Will retry in %s"
 msgstr "Bude opakován za %s"
 
-#: ../../portable/item.py:568
+#: ../../portable/item.py:580
 msgid "Paused"
 msgstr "Zastaveno"
 
-#: ../../portable/item.py:954
+#: ../../portable/item.py:982
 msgid "TORRENT"
 msgstr "TORRENT"
 
-#: ../../portable/item.py:956
+#: ../../portable/item.py:984
 msgid "WEB PAGE"
 msgstr "WEBOVÁ STRÁNKA"
 
-#: ../../portable/item.py:966
+#: ../../portable/item.py:994
 msgid "Total Down:"
 msgstr "Celkem stahováno:"
 
-#: ../../portable/item.py:969
+#: ../../portable/item.py:997
 msgid "Error:"
 msgstr "Chyba:"
 
-#: ../../portable/item.py:977
+#: ../../portable/item.py:1006
+msgid "Seeders:"
+msgstr "Sdílející:"
+
+#: ../../portable/item.py:1008
+msgid "Leechers:"
+msgstr ""
+
+#: ../../portable/item.py:1010
 msgid "Down Rate:"
 msgstr "Hodnocení (stahování):"
 
-#: ../../portable/item.py:978
+#: ../../portable/item.py:1011
 msgid "Down Total:"
 msgstr "Celkem stahováno:"
 
-#: ../../portable/item.py:980
+#: ../../portable/item.py:1013
 msgid "Up Rate:"
 msgstr "Hodnocení (odesílání):"
 
-#: ../../portable/item.py:981
+#: ../../portable/item.py:1014
 msgid "Up Total:"
 msgstr "Celkem odesíláno:"
 
-#: ../../portable/item.py:989
+#: ../../portable/item.py:1024
 msgid "Web page:"
 msgstr "Webové stránky:"
 
-#: ../../portable/item.py:989
+#: ../../portable/item.py:1024
 msgid "permalink"
 msgstr "stálý odkaz"
 
-#: ../../portable/item.py:993
+#: ../../portable/item.py:1028
 msgid "File link:"
 msgstr "Odkaz na soubor:"
 
-#: ../../portable/item.py:993
+#: ../../portable/item.py:1028
 msgid "direct link to file"
 msgstr "přímý odkaz na soubor"
 
-#: ../../portable/item.py:995
+#: ../../portable/item.py:1030
 msgid "File type:"
 msgstr "Typ souboru:"
 
-#: ../../portable/item.py:1002
+#: ../../portable/item.py:1037 ../../portable/item.py:1040
+#: ../../portable/item.py:1042
+msgid "License:"
+msgstr ""
+
+#: ../../portable/item.py:1040 ../../portable/item.py:1042
+msgid "see permalink"
+msgstr ""
+
+#: ../../portable/item.py:1049
 msgid "REVEAL LOCAL FOLDER"
 msgstr "ZOBRAZ MÍSTNÍ SLOŽKU"
 
-#: ../../portable/item.py:1004
+#: ../../portable/item.py:1051
 msgid "REVEAL LOCAL FILE"
 msgstr "ZOBRAZ MÍSTNÍ SOUBOR"
 
-#: ../../portable/item.py:1006
+#: ../../portable/item.py:1053
 msgid "Filename:"
 msgstr "Název souboru:"
 
-#: ../../portable/item.py:1013
+#: ../../portable/item.py:1060
 msgid "Down Total"
 msgstr "Celkem staženo"
 
-#: ../../portable/item.py:1015
+#: ../../portable/item.py:1062
 msgid "Up Total"
 msgstr "Celkem odesláno"
 
-#: ../../portable/item.py:1033
+#: ../../portable/item.py:1080
 msgid "Item Details"
 msgstr "Detaily"
 
-#: ../../portable/item.py:1040
+#: ../../portable/item.py:1087
 msgid "Torrent Details"
 msgstr "Detaily Torrentu"
 
-#: ../../portable/item.py:1042
+#: ../../portable/item.py:1089
 #, fuzzy
 msgid "Torrent Details <i>stopped</i>"
 msgstr "Podrobnosti Torrent <i>stopped</i>"
 
-#: ../../portable/item.py:1046
+#: ../../portable/item.py:1093
 msgid "Download Details"
 msgstr "Detaily stahování"
 
-#: ../../portable/item.py:1263
+#: ../../portable/item.py:1310
 msgid "downloading..."
 msgstr "stahuji..."
 
-#: ../../portable/item.py:1270 ../../portable/item.py:1273
+#: ../../portable/item.py:1317 ../../portable/item.py:1320
 #, python-format
 msgid "%s remaining"
 msgstr "zbývá %s"
 
-#: ../../portable/item.py:1282
+#: ../../portable/item.py:1329
 msgid "starting up..."
 msgstr "začínám..."
 
-#: ../../portable/item.py:1477
-msgid "Play Just This Video"
-msgstr "Přehrát pouze toto video"
-
-#: ../../portable/item.py:1854
+#: ../../portable/item.py:1878
 #, python-format
 msgid "Removing %s items"
 msgstr "Odstraňuji položek: %s"
 
-#: ../../portable/item.py:1856
+#: ../../portable/item.py:1880
 #, fuzzy
 msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
@@ -2063,7 +2506,7 @@ msgstr ""
 "Jedno či více videí nebyly staženy z kanálu. Přejte si smazat tyto položky "
 "nebo pouze odstranit jejich záznamy z videotéky?"
 
-#: ../../portable/item.py:1864
+#: ../../portable/item.py:1888
 msgid ""
 "One or more of these items is a folder.  When you remove or delete a folder, "
 "any items inside that folder will also be removed or deleted."
@@ -2071,153 +2514,21 @@ msgstr ""
 "Jedna nebo více těchto položek jsou složky. Pokud odstraníte nebo smažete "
 "složku, všechny položky uvnitř ní budou také odstraněny či smazány."
 
-#: ../../portable/folder.py:132 ../../portable/folder.py:155
-msgid "Rename Channel Folder"
-msgstr "Přejmenovat složku kanálů"
+#: ../../portable/startup.py:92
+msgid "Unknown Error"
+msgstr ""
 
-#: ../../portable/folder.py:134
+#: ../../portable/startup.py:93
 #, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "Vložte nové jméno pro složku kanálů %s"
+msgid ""
+"An unkown error prevented Miro from startup.  Please file a bug report at %s"
+msgstr ""
 
-#: ../../portable/folder.py:210 ../../portable/folder.py:215
-msgid "Rename Playlist Folder"
-msgstr "Přejmenovat složku seznamu skladeb"
-
-#: ../../portable/folder.py:217
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "Zadejte nové jméno pro služku seznamu skladeb %s"
-
-#: ../../portable/folder.py:225
-msgid "Create Channel Folder"
-msgstr "Vytvořit složku kanálů"
-
-#: ../../portable/folder.py:239
-msgid "Create Playlist Folder"
-msgstr "Vytvořit složku seznamu skladeb"
-
-#: ../../portable/folder.py:240
-msgid "Enter a name for the new playlist folder"
-msgstr "Vložte jméno pro složku nového seznamu skladeb"
-
-#: ../../portable/httpclient.py:68
-#, python-format
-msgid "Error: %s"
-msgstr "Chyba: %s"
-
-#: ../../portable/httpclient.py:83 ../../portable/httpclient.py:89
-msgid "Can't connect"
-msgstr "Spojení nenavázáno"
-
-#: ../../portable/httpclient.py:84
-#, python-format
-msgid "Connection Error: %s"
-msgstr "Chyba spojení: %s"
-
-#: ../../portable/httpclient.py:90
-msgid "SSL connection error"
-msgstr "Chyba spojení SSL"
-
-#: ../../portable/httpclient.py:94
-msgid "HTTP error"
-msgstr "Chyba HTTP"
-
-#: ../../portable/httpclient.py:97
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr "Chybný řádek výpisu stavu: %s"
-
-#: ../../portable/httpclient.py:100
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr "Chybný řádek hlavičky: %s"
-
-#: ../../portable/httpclient.py:103
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "Špatná velikost dávky: %s"
-
-#: ../../portable/httpclient.py:106
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr "Očekáván CRLF, obdržen: %r"
-
-#: ../../portable/httpclient.py:109
-#, python-format
-msgid "%s closed connection"
-msgstr "%s zavřených spojení"
-
-#: ../../portable/httpclient.py:115
-msgid "Got 404 status code"
-msgstr "Stránka nenalezena (stav 404)"
-
-#: ../../portable/httpclient.py:117
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "Špatný stavový kód: %s"
-
-#: ../../portable/httpclient.py:121
-msgid "Authorization failed"
-msgstr "Selhala autorizace"
-
-#: ../../portable/httpclient.py:127
-msgid "Pipeline request never started"
-msgstr "Nezačala žádost potrubí"
-
-#: ../../portable/httpclient.py:131
-msgid "Timeout"
-msgstr "Vypršení času"
-
-#: ../../portable/httpclient.py:132
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "Vypršel čas spojení %s"
-
-#: ../../portable/httpclient.py:136
-msgid "Invalid URL"
-msgstr "Neplatné URL"
-
-#: ../../portable/httpclient.py:137
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr "\"%s\" není platnou URL"
-
-#: ../../portable/httpclient.py:143
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr "Soubor: \"%s\" neexistuje"
-
-#: ../../portable/httpclient.py:147
-msgid "Read error"
-msgstr "Chyba při čtení"
-
-#: ../../portable/httpclient.py:148
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr "Chyba při čtení z \"%s\""
-
-#: ../../portable/httpclient.py:341
-msgid "Unknown Error code"
-msgstr "Neznámý chybový kód"
-
-#: ../../portable/httpclient.py:373
-msgid "Connection closed"
-msgstr "Spojení ukončeno"
-
-#: ../../portable/httpclient.py:798
-msgid "Unknown"
-msgstr "Neznámý"
-
-#: ../../portable/httpclient.py:799
-msgid "Internal Error: Not ready to send"
-msgstr "Vnitřní chyba: nepřipraven k odesílání"
-
-#: ../../portable/app.py:685
+#: ../../portable/startup.py:155
 msgid "Database too new"
 msgstr "Futurizmus"
 
-#: ../../portable/app.py:686
+#: ../../portable/startup.py:156
 msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
@@ -2225,244 +2536,38 @@ msgstr ""
 "Vaše databáze byla uložena s novější verzí $shortAppName. Musíte stáhnout "
 "poslední verzi $shortAppName a tu spustit."
 
-#: ../../portable/app.py:700
-#, fuzzy
-msgid "Video Directory Missing"
-msgstr "Chybí video adresář"
-
-#: ../../portable/app.py:701
-#, fuzzy
+#: ../../portable/startup.py:238
 msgid ""
 "\n"
 "Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected.\n"
-"\n"
-"If you continue, the video directory will be reset to a location on this "
-"drive (this will cause you to lose some details about the videos on the "
-"external drive).  You can also quit, connect the drive, and relaunch Miro."
-msgstr ""
-"\n"
-"Miro nemůže najít základní video adresář.  Může to být proto, že je umístěn "
-"na externím disku, který právě není připojen.\n"
-"\n"
-"Pokud budete pokračovat, video adresář bude nastaven na místo na tomto disku "
-"(to způsobí, že přijdete o některé podrobnosti o videích na externím disku). "
-"Také můžete ukončit program, připojit disk a znovu spustit Miro."
-
-#: ../../portable/app.py:1038 ../../portable/app.py:1052
-#: ../../portable/app.py:1096 ../../portable/app.py:1122
-#: ../../portable/app.py:1142
-#, python-format
-msgid "Remove %s"
-msgstr "Odstranit %s"
-
-#: ../../portable/app.py:1039
-#, python-format
-msgid "Are you sure you want to remove the guide %s?"
-msgstr "Skutečně chcete odstranit průvodce %s?"
-
-#: ../../portable/app.py:1053
-#, python-format
-msgid "Are you sure you want to remove %s"
-msgstr "Chcete opravdu odstranit %s"
-
-#: ../../portable/app.py:1056 ../../portable/app.py:1101
-#: ../../portable/app.py:1127 ../../portable/app.py:1146
-#, python-format
-msgid "Remove %s channels"
-msgstr "Odstranit kanálů: %s"
-
-#: ../../portable/app.py:1058
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr "Skutečně chcete odstranit tyto %s eznamy skladeb"
-
-#: ../../portable/app.py:1097
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr "Co chcete udělat s videi v tomto kanálu, které jste právě stáhli?"
-
-#: ../../portable/app.py:1102
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr "Co chcete udělat s videi v tomto kanálu, které jste právě stáhli?"
-
-#: ../../portable/app.py:1123
-#, python-format
-msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
-msgstr "Chcete opravdu odstranit %s? Případné stahování bude stornováno."
-
-#: ../../portable/app.py:1128
-#, python-format
-msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
-msgstr ""
-"Chcete opravdu odstranit tyto kanály (%s)? Případné stahování bude "
-"stornováno."
-
-#: ../../portable/app.py:1143
-#, python-format
-msgid "Are you sure you want to remove %s?"
-msgstr "Skutečně chcete odstranit %s?"
-
-#: ../../portable/app.py:1147
-#, python-format
-msgid "Are you sure you want to remove these %s channels?"
-msgstr "Skutečně chcete odstranit tyto %s kanály?"
-
-#: ../../portable/app.py:1160
-#, python-format
-msgid "Stop watching %s"
-msgstr "Přeruš sledování %s"
-
-#: ../../portable/app.py:1161
-#, python-format
-msgid "Are you sure you want to stop watching %s?"
-msgstr "Skutečně chcete přerušit sledování %s?"
-
-#: ../../portable/app.py:1164
-#, python-format
-msgid "Stop watching %s directories"
-msgstr "Přeruš sledování složek %s"
-
-#: ../../portable/app.py:1165
-#, python-format
-msgid "Are you sure you want to stop watching these %s directories?"
-msgstr "Skutečně chcete přerušit sledování těchto %s složek?"
-
-#: ../../portable/app.py:1196
-msgid "Are you sure you want to quit?"
-msgstr "Skutečně to chcete zavřít aplikaci?"
-
-#: ../../portable/app.py:1198
-#, fuzzy
-msgid ""
-"Miro is still uploading your crash report. If you quit now the upload will "
-"be canceled.  Quit Anyway?"
-msgstr ""
-"Miro stále odesílá zprávu o chybě. Pokud skončíte nyní, odeslání zprávy bude "
-"zrušeno. Přesto ukončit?"
-
-#: ../../portable/app.py:1203
-#, fuzzy, python-format
-msgid "You have %d download still in progress.  Quit Anyway?"
-msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] "Stále probíhá %d stahování. Přesto ukončit?"
-msgstr[1] "Stále probíhá %d stahování. Přesto ukončit?"
-msgstr[2] "Stále probíhá %d stahování. Přesto ukončit?"
-
-#: ../../portable/app.py:1712
-msgid "Invalid Value"
-msgstr "Neplatná hodnota"
-
-#: ../../portable/app.py:1713
-#, python-format
-msgid "%s is invalid.  You must enter a non-negative number."
-msgstr "Hodnota %s je neplatná. Číslo nesmí být negativní."
-
-#: ../../portable/app.py:1839
-msgid "Error Revealing File"
+"located on an external drive that is currently disconnected."
 msgstr ""
 
-#: ../../portable/app.py:1840
-#, fuzzy, python-format
-msgid "The file \"%s\" was deleted from outside Miro."
-msgstr "Soubor \"%s\" byl smazán odjinud než z Miro."
+#: ../../portable/folder.py:144
+#, python-format
+msgid "Enter a new name for the channel folder %s"
+msgstr "Vložte nové jméno pro složku kanálů %s"
 
-#: ../../portable/app.py:2011
-msgid " - Invalid URL"
-msgstr " - neplatné URL"
+#: ../../portable/folder.py:215
+#, python-format
+msgid "Enter a new name for the playlist folder %s"
+msgstr "Zadejte nové jméno pro služku seznamu skladeb %s"
 
-#: ../../portable/app.py:2012
-msgid ""
-"The address you entered is not a valid URL.\n"
-"Please double check and try again.\n"
-"\n"
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "Vytvořit složku kanálů"
+
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "Vytvořit složku seznamu skladeb"
+
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "Vložte jméno pro složku nového seznamu skladeb"
+
+#: ../../portable/license.py:68
+msgid "license page"
 msgstr ""
-"Vložená adresa není platnyým URL\n"
-"Prosím zkontrolujte a vložte znovu\n"
-"\n"
-
-#: ../../portable/app.py:2036
-msgid "$shortAppName - Add Channel"
-msgstr "$shortAppName - přidej kanál"
-
-#: ../../portable/app.py:2036
-msgid "Enter the URL of the channel to add"
-msgstr "Vložte URL přidávaného kanálu"
-
-#: ../../portable/app.py:2057
-msgid "$shortAppName - Add Miro Guide"
-msgstr "$shortAppName - Přidat přůvodce"
-
-#: ../../portable/app.py:2057
-#, fuzzy
-msgid "Enter the URL of the Miro Guide to add"
-msgstr "Zadejte adresu nového průvodce"
-
-#: ../../portable/app.py:2063
-#, fuzzy
-msgid "$shortAppName - Download Video"
-msgstr "$shortAppName - Stahování videa"
-
-#: ../../portable/app.py:2063
-#, fuzzy
-msgid "Enter the URL of the video to download"
-msgstr "Zadejte URL videa ke stažení"
-
-#: ../../portable/app.py:2420
-#, fuzzy
-msgid "Starter Channels"
-msgstr "Počáteční kanál"
-
-#: ../../portable/app.py:2437
-msgid "Example Playlist"
-msgstr "Ukázkový seznam skladeb"
-
-#: ../../portable/app.py:2463
-msgid "Custom Channels"
-msgstr "Vybrané kanály"
-
-#: ../../portable/app.py:2463
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr "Máte spuštěnu novější verzi $shortAppName s vybranou sadou kanálů."
-
-#: ../../portable/app.py:2478
-#, fuzzy
-msgid "Error Changing Movies Directory"
-msgstr "Chyba při změně adresáře pro filmy"
-
-#: ../../portable/app.py:2479
-#, fuzzy
-msgid ""
-"You don't have permission to write to the directory you selected.  Miro will "
-"continue to use the old videos directory."
-msgstr ""
-"Nemáte právo zápisu do zvolené adresáře. Miro bude používat původní adresář."
-
-#: ../../portable/app.py:2508
-msgid "Error Saving Video"
-msgstr "Chyba při ukládání videa"
-
-#: ../../portable/app.py:2510
-#, fuzzy, python-format
-msgid ""
-"An error occured while trying to save %s.  Please check that the file has "
-"not been deleted and try again."
-msgstr ""
-"Nastala chyba při pokusu o uložení %s. Prosím, zkontroluje, že soubor nebyl "
-"smazán a zkuste to znovu."
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:1
-#, fuzzy
-msgid "(Changes won't go into effect until you restart Miro)"
-msgstr "(Změny se neprojeví dokud nerestartujete Miro)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -2485,20 +2590,26 @@ msgid "<b>BitTorrent</b>"
 msgstr "<b>BitTorrent</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
+msgid ""
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \n"
+"restart Miro for the changes to take effect."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Searching for Videos</b>"
 msgstr "<b>Vyhledávám videa</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:10
+#: ../../platform/gtk-x11/glade/miro.glade.h:12
 #, fuzzy
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
 msgstr "<b>Přejete si, aby Miro vyhledal videa na vašem počítači?</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:11
+#: ../../platform/gtk-x11/glade/miro.glade.h:13
 #, fuzzy
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
 msgstr "<b>Přejete si, aby se spouštěl Miro při startu vašeho počítače?</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:12
+#: ../../platform/gtk-x11/glade/miro.glade.h:14
 msgid ""
 "<b>You're done!</b>\n"
 "\n"
@@ -2547,41 +2658,41 @@ msgstr ""
 "<b>Najdi videa:</b> Průvodce Miro ví o stovkách internetových TV kanálů, "
 "které jsou zdarma. Stačí klepnout na 'Přidat' a sledovat kanál."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:26
+#: ../../platform/gtk-x11/glade/miro.glade.h:28
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
+msgid "Auto download default setting for new channels"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:29
+msgid "Automatically for_ward ports."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:30
 #, fuzzy
 msgid "By default, videos _expire after"
 msgstr "Implicitně vyprší platnost videa po"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:27
+#: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "C_hannel:"
 msgstr "Ka_nál:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:28
+#: ../../platform/gtk-x11/glade/miro.glade.h:32
 msgid "C_hannels"
 msgstr "Ka_nály"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:29
+#: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "C_reate Channel"
 msgstr "Vyt_vořit kanál"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:30
+#: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "Check Channels for _new content"
 msgstr "Zkontroluj _nový obsah kanálů"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "Disk _Space"
 msgstr "Mí_sto na disku"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:33
-msgid "Don't start a download _if it leaves less than"
-msgstr "N_ezačínat stahování pokud je na méně než"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:34
-#, fuzzy
-msgid "Download at _most"
-msgstr "Stáhni nane_jvýš"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:35
+#: ../../platform/gtk-x11/glade/miro.glade.h:37
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
@@ -2591,21 +2702,36 @@ msgstr ""
 "Každou hodinu\n"
 "Ručně"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:38
-#, fuzzy
-msgid "G_B free"
-msgstr "G_B volných"
+#: ../../platform/gtk-x11/glade/miro.glade.h:40
+msgid "G_B"
+msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:39
+#: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid "Go"
 msgstr "Jdi"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/gtk-x11/glade/miro.glade.h:42
+msgid "Ignore Un_encrypted Connections."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:43
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr "V:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:45
+msgid "Limit torrent _downstream to:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
+msgid "Maximum number of channel auto-downloads at a time: "
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
+msgid "Maximum number of manual downloads at a time: "
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
@@ -2613,45 +2739,57 @@ msgstr ""
 "Miro dokáže nalézt veškerá videa na vašem počítači, aby vám pomohl se "
 "správou vaší sbírky."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
+#: ../../platform/gtk-x11/glade/miro.glade.h:52
+msgid ""
+"New\n"
+"All\n"
+"Off"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:56
 #, fuzzy
 msgid "Play _videos one after another"
 msgstr "Přehraj _videa jedno po druhém"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
+#: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Preferences"
 msgstr "Nastaveni"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../../platform/gtk-x11/glade/miro.glade.h:58
 msgid "Restrict to my full _home folder"
 msgstr "Omez na celou moji _domovskou složku"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
+#: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "S_top after each video"
 msgstr "Zas_tav po každém videu"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
 #, fuzzy
 msgid "S_tore downloaded videos in this folder:"
 msgstr "_Ulož nahraná videa do tohoto adresáře:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid "Search _Engine:"
 msgstr "Vyhl_edávač"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "Search _custom folder:"
 msgstr "Vyhledej _složku:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:53
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "Select Movies Directory"
 msgstr "Vyber složkus s filmy"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:54
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "Select custom search directory"
 msgstr "Vyberte složku k vyhledávání"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:55
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
+msgid "Stop torrent uploads when this ratio is reached:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
 #, fuzzy
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
@@ -2660,16 +2798,23 @@ msgstr ""
 "Několik následujících kroků vám pomůže nastavit váš přehrávač Miro tak, aby "
 "vám co nejlépe sloužil. Přejděme k první otázce."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
-#, fuzzy
-msgid "To a_void slowdowns, limit upstream to"
-msgstr "Aby se zabránilo zpomalení, omez odchozí tok na"
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
+msgid "To avoid internet slowdowns, limit _upstream to:"
+msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
+msgid "Use _ports:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
+msgid "Use this renderer to play videos:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "Volume:"
 msgstr "Hlasitost:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
+#: ../../platform/gtk-x11/glade/miro.glade.h:71
 #, fuzzy
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
@@ -2680,7 +2825,7 @@ msgstr ""
 "počítače. Tímto způsobem je zajištěno, že neukončená stahování videí se "
 "mohou dokončit a nová videa ve vašich kanálech budou připravena ke shlédnutí."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
 #, fuzzy
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
@@ -2692,7 +2837,7 @@ msgstr ""
 "jedno po druhém, stahovat torrenty, doporučovat videa přátelům a mnoho "
 "dalších věcí."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
 #, fuzzy
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
@@ -2703,79 +2848,75 @@ msgstr ""
 "přenést dokončená stahování? (Právě stahovaná videa se nepřenesou, dokud "
 "nebude jejich stahování dokončeno)."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid "_Add Folder"
 msgstr "_Přidat složku"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 #, fuzzy
 msgid "_Automatically run Miro when I log in"
 msgstr "_Automaticky spusť Miro, když se přihlásím"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
-msgid "_Bit Torrent uses ports between"
-msgstr "_Bit Torrent používá porty mezi"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 #, fuzzy
 msgid "_Downloads"
 msgstr "_Stahování"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 #, fuzzy
 msgid "_Folders"
 msgstr "_Adresáře"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 #, fuzzy
 msgid "_General"
 msgstr "_Obecně"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
-#, fuzzy
-msgid "_KB/s when my computer is active"
-msgstr "_KB/s, když je počítač aktivní"
+#: ../../platform/gtk-x11/glade/miro.glade.h:80
+msgid "_KB/s."
+msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/gtk-x11/glade/miro.glade.h:81
+msgid "_Keep at least this much free space on my drive:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:82
 #, fuzzy
 msgid "_Playback"
 msgstr "_Přehrávání"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
+#: ../../platform/gtk-x11/glade/miro.glade.h:83
 #, fuzzy
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr "Pok_račuj v přehrávání videí z místa, kde byla zastavena"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:71
+#: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_Search"
 msgstr "_Hledat"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
+#: ../../platform/gtk-x11/glade/miro.glade.h:85
 msgid "_Search For:"
 msgstr "_Vyhledat:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:86
 msgid "_URL"
 msgstr "_Adresa"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:87
 #, fuzzy
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr "Upozorni mě, když se pokusím skončit, ale bude probíhat stahování"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
+#: ../../platform/gtk-x11/glade/miro.glade.h:88
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr "_Sleduj tento adresář a nová videa přidej do videotéky"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
-#, fuzzy
-msgid "_and"
-msgstr "_a"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
-msgid "videos at once"
-msgstr "videí naráz"
+#: ../../platform/gtk-x11/glade/miro.glade.h:89
+msgid ""
+"xine\n"
+"gstreamer"
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 #, fuzzy
@@ -2889,72 +3030,96 @@ msgstr ""
 "Vložte, prosím, uživatelské jméno a heslo, které vám přidělil vydavatel "
 "tohoto kanálu."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
 msgstr ""
 "(VAROVÁNÍ: Změny se neprojeví dokud $longAppName neukončíte a znovu "
 "nespustíte.)"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Add Folder..."
 msgstr "Přidat složku..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
+msgid "Automatically Forward Ports"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3
 #, fuzzy
 msgid "Automatically run $longAppName when I login."
 msgstr "Samočinně spusť $longAppName při přihlášení."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
-msgid "BitTorrent"
-msgstr "BitTorrent"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid "By default, videos expire after"
 msgstr "Implicitně videa vyprší po"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
 #, fuzzy
 msgid "Check channels for new content"
 msgstr "Zkontroluj nový obsah kanálů"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
 msgid "Close to tray so that downloads can continue."
 msgstr "Minimalizovat, aby se npřerušila stahování."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Every 30 minutes"
 msgstr "Každých 30 minut"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every hour"
 msgstr "Každou hodinu"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
 #, fuzzy
 msgid "Folder"
 msgstr "Adresář"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
+msgid "GB"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
+msgid "Ignore Unencrypted Connections"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
+msgid "KB/s"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
+msgid "Limit downstream bandwith to:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Manually"
 msgstr "Ručně"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
+msgid "Maximum number of channel auto-downloads at a time:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
+msgid "Maximum number of manual downloads at a time:"
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 #, fuzzy
 msgid "Options"
 msgstr "Možnosti"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 #, fuzzy
 msgid "Play one video, then stop."
 msgstr "Přehraj jen jedno video."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:7
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 #, fuzzy
 msgid "Quit Miro completely."
 msgstr "Úplně ukonči Miro."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
 #, fuzzy
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
@@ -2963,56 +3128,39 @@ msgstr ""
 "Pamatuj si, kde jsem skončil se sledováním videa a pokračuj v přehrávání od "
 "tohoto místa."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 #, fuzzy
 msgid "Show as a Channel"
 msgstr "Zobraz jako kanál"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
 msgid "Store downloaded videos in this folder:"
 msgstr "Uládat stažená videa do této složky:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
-#, fuzzy
-msgid ""
-"To avoid slowdowns, limit upstream bandwith when my computer is active."
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
+msgid "To avoid internet slowdowns, limit upstream bandwith to:"
 msgstr ""
-"Aby se předešlo zpomalení, omez odchozí tok dat, pokud je počítač aktivní."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
-#, fuzzy
-msgid "Upstream limit (KB/s)"
-msgstr "Omezení odchozího toku (KB/s)"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
-#, fuzzy
-msgid "Use BitTorrent ports between"
-msgstr "Použijte BitTorrent porty mezi"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr ""
 "(VAROVÁNÍ: Toto nastavení se neprojeví dokud $longAppName neukončíte a znovu "
 "nespustíte.)"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:10
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "Warn me when I attempt to quit with downloads in progress."
 msgstr "Upozorni mě, když se pokusím skončit, ale bude probíhat stahování."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 #, fuzzy
 msgid "Watch for new videos in these folders and include them in my Library."
 msgstr "Sleduj tento adresář a nová videa přidej do knihovny"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 #, fuzzy
 msgid "When I click the red close button:"
 msgstr "Když klepnu na červené ukončovací tlačítko:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
-msgid "and"
-msgstr "a"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
