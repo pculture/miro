@@ -39,7 +39,7 @@
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Levytila">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Säilytä vähintään näin paljon vapaata levytilaa kovalevyllä" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "VAROITUS: Tämä asetus tulee voimaan vasta, kun käynnistät $longAppName :n uudestaan.">
 
@@ -56,7 +56,7 @@
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_ports "Käytä näitä portteja">
 <!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
 <!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.uploadratio "Lopeta torrentin lähetys kun tämä jakosuhde on saavutettu">

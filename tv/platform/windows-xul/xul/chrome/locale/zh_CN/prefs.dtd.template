@@ -14,7 +14,7 @@
 <!ENTITY prefs.channels.check.sixty "每小时">
 <!ENTITY prefs.channels.check.manually "手动">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault "按默认设定自动下载新频道内容">
 <!ENTITY prefs.channels.autodownloaddefault.all "全部">
 <!ENTITY prefs.channels.autodownloaddefault.new "新添">
 <!ENTITY prefs.channels.autodownloaddefault.off "关闭">
@@ -35,8 +35,8 @@
 <!ENTITY prefs.folder.others.remove "移除">
 
 <!ENTITY prefs.downloads "下载" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
-<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+<!ENTITY prefs.downloads.max "同时手动下载数目：">
+<!ENTITY prefs.autodownloads.max "同时自动下载频道数目：">
 
 <!ENTITY prefs.disk.space "磁盘空间">
 <!ENTITY prefs.disk.space.min.part1 "保留硬盘的最少剩余空间：" >
@@ -53,10 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(警告：更改直到您重启 $longAppName 后才会生效。)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "为了避免网络减慢，上传带宽限制为：">
+<!ENTITY prefs.torrent.limit.downstream "下载带宽限制为：">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
 <!ENTITY prefs.torrent.use_ports "使用这些端口：">
 <!ENTITY prefs.torrent.use_upnp "自动转发端口">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.require_encryption "忽略未加密连接">
 <!ENTITY prefs.torrent.uploadratio "当达到这个比例后停止种子上传：">

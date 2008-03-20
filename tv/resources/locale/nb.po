@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-03-06 22:55+0000\n"
-"Last-Translator: Joakim <Unknown>\n"
+"PO-Revision-Date: 2008-03-18 08:42+0000\n"
+"Last-Translator: Per Holje <per@holje.net>\n"
 "Language-Team: Norwegian Bokmål <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
+"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "_Save Video..."
@@ -1327,7 +1327,7 @@ msgstr ""
 "\n"
 
 msgid "(You must restart Miro for some of these changes to take effect)"
-msgstr ""
+msgstr "(Du må starte Miro på nytt før alle endringene trer i kraft.)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr "(Du må starte Miro på nytt for at denne endringen skal tas i bruk)\n"
@@ -1379,10 +1379,10 @@ msgid "All"
 msgstr "Alt"
 
 msgid "Auto download default setting for new channels:"
-msgstr ""
+msgstr "Standardinnstillinger for nye kanaler"
 
 msgid "Automatically forward ports"
-msgstr ""
+msgstr "Videresend porter automatisk"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "BitTorrent"
@@ -1399,10 +1399,10 @@ msgid "Check channels for new content:"
 msgstr "Sjekk kanaler for nytt innhold:"
 
 msgid "Don't auto-download more than this many videos per channel at once:"
-msgstr ""
+msgstr "Ikke last ned automatisk mer enn så mange filmer samtidig per kanal:"
 
 msgid "Don't download more than this many videos at once:"
-msgstr ""
+msgstr "Ikke last ned mer enn så mange filmer samtidig:"
 
 msgid "Folder location"
 msgstr "Mappeplassering"
@@ -1411,7 +1411,7 @@ msgid "GB\n"
 msgstr "GB\n"
 
 msgid "Ignore unencrypted connections"
-msgstr ""
+msgstr "Ignorer ukrypterte forbindelser"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid "KB/s."
@@ -1419,10 +1419,10 @@ msgstr "KB/s."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Ha alltid minst så mye ledig plass igjen på disken:"
 
 msgid "Limit downstream to"
-msgstr ""
+msgstr "Avgrens nedlasting til"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Never"
@@ -1469,17 +1469,17 @@ msgid "Stop after each video."
 msgstr "Stopp etter hver film"
 
 msgid "Stop uploads when this ratio is reached:"
-msgstr ""
+msgstr "Stopp opplastinger når dette forholdet er nådd:"
 
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "Lagre nedlastinger i denne mappen:"
 
 msgid "To avoid internet slowdowns, limit upstream to"
-msgstr ""
+msgstr "For å unngå treghet på nettlinjen, avgrens opplasting til"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
 msgid "Use these ports:"
-msgstr ""
+msgstr "Bruk disse portene:"
 
 #: ../../portable/frontends/html/main.py:319
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -1981,7 +1981,7 @@ msgstr "Torrent-fil slettet"
 
 #: ../../portable/dl_daemon/download.py:981
 msgid "The torrent file for this item was deleted outside of Miro."
-msgstr ""
+msgstr "Torrent-filen ble slettet utenfor Miro."
 
 #: ../../portable/frontends/html/contextmenu.py:103
 msgid "Update Channels Now"
@@ -2103,6 +2103,14 @@ msgid ""
 "    drive (this will cause you to lose some details about the videos on the  "
 "   external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
+"\n"
+"    Miro finner ikke hovedkatalogen for videofiler. Dette kan være fordi den "
+"ligger på en ekstern harddisk som ikke er koblet til.\n"
+"\n"
+"    Hvis du fortsetter, vil videokatalogen nullstilt til en plassering på "
+"denne stasjonen. Dette vil føre til at du mister noen detaljer om videoene "
+"på den eksterne stasjonen. Du kan også avslutte, koble til den eksterne "
+"stasjonen, og starte Miro på nytt."
 
 #: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
 msgid "Custom Channels"

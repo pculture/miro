@@ -15,7 +15,7 @@
 <!ENTITY prefs.channels.check.manually "Manualmente">
 
 <!ENTITY prefs.channels.autodownloaddefault "Configuração Auto-download padrão para novos canais">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.all "Tudo">
 <!ENTITY prefs.channels.autodownloaddefault.new "Novo">
 <!ENTITY prefs.channels.autodownloaddefault.off "Desligado">
 
@@ -35,8 +35,8 @@
 <!ENTITY prefs.folder.others.remove "Remover">
 
 <!ENTITY prefs.downloads "Recebimentos" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
-<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+<!ENTITY prefs.downloads.max "Número máximo de downloads manuais ao mesmo tempo:">
+<!ENTITY prefs.autodownloads.max "Número máximo de canais de auto-download simultâneos:">
 
 <!ENTITY prefs.disk.space "Espaço em Disco">
 <!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
@@ -53,8 +53,8 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ATENÇÃO: as alterações apenas terão efeito após o re-inicio do $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "Para evitar lentidão na internet, limite banda de upload para:">
+<!ENTITY prefs.torrent.limit.downstream "Limitar banda de download para:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
 <!ENTITY prefs.torrent.use_ports "Usar estas portas:">
 <!ENTITY prefs.torrent.use_upnp "Portas automaticamente encaminhadas">

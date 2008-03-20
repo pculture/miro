@@ -16,6 +16,7 @@ for dtd in glob.glob ("../../platform/windows-xul/xul/chrome/locale/en-US/*.dtd.
 
 
 # Let's use xgettext for this since it supports string tables.
+# The languages in the come from the top of the .po files.
 langs = (
          ("ar", "Arabic"),
          ("bg", "Bulgarian"),
@@ -64,6 +65,7 @@ langs = (
          ("ne", "Nepali"),
          ("nl", "Dutch"),
          ("nn", "Norwegian_Nynorsk"),
+         ("oc", "Occitan"),
          ("pa", "Punjabi"),
          ("pl", "Polish"),
          ("pt", "Portuguese"),
@@ -89,8 +91,10 @@ langs = (
          )
 for lang in langs:
     try:
-        os.makedirs ("../../platform/osx/Resources/%s.lproj" % (lang[1],))
-    except:
+        os.makedirs("../../platform/osx/Resources/%s.lproj" % lang[1])
+        print "Created new directory: %s" % lang[1]
+    except Exception, e:
         pass
+
     # The perl statement removes po entries that have plurals in them since xgettext gives an error on those when writing a stringtable.
     os.system ( "cat %s.po | perl -e '$/=\"\"; while (<>) {print if !/msgid_plural/;}' | xgettext --force -o ../../platform/osx/Resources/%s.lproj/translated.strings --stringtable-output - -L PO" % (lang[0], lang[1]))

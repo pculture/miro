@@ -2,12 +2,12 @@
 <!ENTITY rsaquo              "'">
 
 <!ENTITY canscrape.title     "Kanaal is niet compatibel met $shortAppName!">
-<!ENTITY canscrape.body      "We zullen echter ons best doesn om de bestanden te detecteren. Dit kan langer duren, en beschrijvingen zien er mogelijk raar uit.">
+<!ENTITY canscrape.body      "We zullen echter ons best doesn om de bestanden alsnog te detecteren. Dit kan langer duren, en beschrijvingen zien er mogelijk raar uit.">
 
 <!ENTITY canscrape.prefix    "Neem aub contact op met de uitgevers van">
 <!ENTITY canscrape.suffix    "en verzoek ze een feed-formaat te hanteren welke compatibel is met $shortAppName.">
 <!ENTITY canscrape.title     "Kanaal is niet compatibel met $shortAppName!">
-<!ENTITY canscrape.body      "We zullen echter ons best doesn om de bestanden te detecteren. Dit kan langer duren, en beschrijvingen zien er mogelijk raar uit.">
+<!ENTITY canscrape.body      "We zullen echter ons best doesn om de bestanden alsnog te detecteren. Dit kan langer duren, en beschrijvingen zien er mogelijk raar uit.">
 
 <!ENTITY canscrape.prefix    "Neem aub contact op met de uitgevers van">
 <!ENTITY canscrape.suffix    "en verzoek ze een feed-formaat te hanteren welke compatibel is met $shortAppName.">

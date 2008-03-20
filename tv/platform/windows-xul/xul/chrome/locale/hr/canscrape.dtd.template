@@ -1,13 +1,13 @@
-<!ENTITY nbsp                " ">
+<!ENTITY nbsp                "Tino Tresin ">
 <!ENTITY rsaquo              "'">
 
-<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
-<!ENTITY canscrape.body      "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.">
+<!ENTITY canscrape.title     "Ovaj kanal nije kompatibilan sa $shortAppName!">
+<!ENTITY canscrape.body      "Napravit ćemo sve da bi došli do datoteka. To može uzeti dosta vremena da bi prikazalo videa, i njihove informacije vam mogu biti smješna.">
 
-<!ENTITY canscrape.prefix    "Please contact the publishers of">
+<!ENTITY canscrape.prefix    "Molim kontaktirajte izdavače od">
 <!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
-<!ENTITY canscrape.title     "Channel is not compatible with $shortAppName!">
-<!ENTITY canscrape.body      "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.">
+<!ENTITY canscrape.title     "Ovaj kanal nije kompatibilan sa $shortAppName!">
+<!ENTITY canscrape.body      "Napravit ćemo sve da bi došli do datoteka. To može uzeti dosta vremena da bi prikazalo videa, i njihove informacije vam mogu biti smješna.">
 
-<!ENTITY canscrape.prefix    "Please contact the publishers of">
+<!ENTITY canscrape.prefix    "Molim kontaktirajte izdavače od">
 <!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">

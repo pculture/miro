@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 21:59-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Abbrechen";
@@ -16,8 +16,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "$log" = "$log";
 
-/* Flag: untranslated */
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" /* = "<font face=\"Lucida Grande\" size=\"-1\">Unsere Fehlerverwaltung findest du hier: <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Teile uns bitte mit, was du vor dem Erscheinen der Fehlermeldung gemacht hast, kopiere obige Logmeldung und beantworte einige kurze Fragen. Wir machen uns danach umgehend an die Arbeit!</font>" */;
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Unsere Fehlerverwaltung findest du hier: <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Teile uns bitte mit, was du vor dem Erscheinen der Fehlermeldung gemacht hast, kopiere obige Logmeldung und beantworte einige kurze Fragen. Wir machen uns danach umgehend an die Arbeit!</font>";
 
 "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Hast du vielleicht einen Moment Zeit, uns einen Fehlerbericht einzureichen? Gib bitte zumindest eine kurze und möglichst exakte Beschreibung an, wie es zu der Fehlermeldung kam und was dir sonst noch auf dem Herzen liegt:";
 
@@ -118,7 +117,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Remove..." = "Entfernen...";
 
-"Rename..." = "Umbenennen...";
+"Rename..." = "Umbenennen ...";
 
 "Report a bug" = "Einen Fehler melden";
 
@@ -169,15 +168,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Username:\n\n" = "Benutzername:\n\n";
 
-/* Flag: untranslated */
-"(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)";
+"(You must restart Miro for some of these changes to take effect)" = "(Einige der Änderungen treten erst nach einem Neustart von Miro in Kraft)";
 
 "(You must restart Miro for this change to take effect)\n" = "Sie müssen Miro neustarten damit dise Änderung übernommen wird\n";
 
 "(movies directory path goes here)" = "(Pfad für Videoordner hier angeben)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-/* Flag: untranslated */
 "-" = "-";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
@@ -206,14 +203,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Add..." = "Hinzufügen …";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-/* Flag: untranslated */
-"All" = "All";
+"All" = "Alle";
 
-/* Flag: untranslated */
-"Auto download default setting for new channels:" = "Auto download default setting for new channels:";
+"Auto download default setting for new channels:" = "Standardeinstellung automatischer Downloads für neue Channels:";
 
-/* Flag: untranslated */
-"Automatically forward ports" = "Automatically forward ports";
+"Automatically forward ports" = "Ports automatisch übermitteln";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
 "BitTorrent" = "BitTorrent";
@@ -225,30 +219,23 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Check channels for new content:" = "Kanäle auf neuen Inhalt überprüfen:";
 
-/* Flag: untranslated */
-"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:";
+"Don't auto-download more than this many videos per channel at once:" = "Maximale Anzahl gleichzeitig heruntergeladener Videos je Channel:";
 
-/* Flag: untranslated */
-"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:";
+"Don't download more than this many videos at once:" = "Maximale Gesamtanzahl gleichzeitig heruntergeladener Videos:";
 
 "Folder location" = "Speicherort des Ordners";
 
-/* Flag: untranslated */
 "GB\n" = "GB\n";
 
-/* Flag: untranslated */
-"Ignore unencrypted connections" = "Ignore unencrypted connections";
+"Ignore unencrypted connections" = "Ignoriere unverschlüsselte Verbindungen";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
-/* Flag: untranslated */
 "KB/s." = "KB/s.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
-/* Flag: untranslated */
-"Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:";
+"Keep at least this much free space on my drive:" = "Minimal freizuhaltender Speicher auf dem Laufwerk:";
 
-/* Flag: untranslated */
-"Limit downstream to" = "Limit downstream to";
+"Limit downstream to" = "Maximale Download-Geschwindigkeit";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "Never" = "Niemals";
@@ -258,8 +245,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "New" = "neu";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
-/* Flag: untranslated */
-"Off" = "Off";
+"Off" = "Aus";
 
 "OtherViews" = "AndereAnsichten";
 
@@ -285,18 +271,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Stop after each video." = "Nach jedem Video anhalten.";
 
-/* Flag: untranslated */
-"Stop uploads when this ratio is reached:" = "Stop uploads when this ratio is reached:";
+"Stop uploads when this ratio is reached:" = "Bis zu folgender Ratio selbst hochladen:";
 
-/* Flag: untranslated */
-"Store downloads in this folder:" = "Store downloads in this folder:";
+"Store downloads in this folder:" = "Verzeichnis für Downloads:";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to";
+"To avoid internet slowdowns, limit upstream to" = "Um eine Beeinträchtigung der Internetgeschwindigkeit zu vermeiden, den Upload begrenzen auf";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
-/* Flag: untranslated */
-"Use these ports:" = "Use these ports:";
+"Use these ports:" = "Folgende Ports verwenden:";
 
 /* File: ../../portable/frontends/html/main.py:319 */
 "Warn me when I attempt to quit with downloads in progress" = "Warnen, wenn ich versuche Miro zu beenden während noch heruntergeladen wird.";
@@ -628,8 +610,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Torrent file deleted" = "Torrentdatei gelöscht";
 
 /* File: ../../portable/dl_daemon/download.py:981 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
+"The torrent file for this item was deleted outside of Miro." = "Die torrent-Datei für diesen Eintrag wurde außerhalb von Miro gelöscht.";
 
 /* File: ../../portable/frontends/html/contextmenu.py:103 */
 "Update Channels Now" = "Kanäle jetzt aktualisieren";
@@ -721,8 +702,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Video Directory Missing" = "Das Videoverzeichnis ist nicht auffindbar.";
 
 /* File: ../../portable/frontends/html/main.py:133 */
-/* Flag: untranslated */
-"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro kann ihr Zielverzeichnis für die Videos nicht finden. Falls es sich auf einer externen Festplatte befindet, könnte diese nicht angeschlossen sein.\n\n    Wenn sie fortfahren, wird ein neues Zielverzeichnis auf diesem Laufwerk eingerichtet (dies führt zu einem Verlust von Informationen zu den Videos auf der externen Festplatte). Ferner können Sie abbrechen, die Festplatte anschließen, und Miro neustarten.";
 
 /* File: ../../portable/frontends/html/main.py:190 */
 /* File: ../../portable/theme.py:126 */
@@ -892,8 +872,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%dB" = "%dB";
 
 /* File: ../../portable/iheartmiro.py:82 */
-/* Flag: untranslated */
-"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.";
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "Ein einfacher Weg Miro zu unterstützen\n\nMiro ist ein Open-Source-Projekt und programmiert von Freiwilligen. Um unsere Arbeit fortzusetzen, brauchen wir Ihre Hilfe.\n\n\"I Heart Miro\" ist eine einfache Firefoxerweiterung, über die die Miro Organisation eine Provision von Amazon erhält, wenn Sie dort einkaufen. Es wird sie nicht stören, Sie nichts kosten und Sie können es jederzeit einfach deinstallieren.\n\nWenn Sie untern auf \"Install iHeartMiro\" klicken, wird Firefox starten und Sie fragen, ob es ok ist. Einfach bejahen und fertig! Es dauert nur 7 Sekunden. Vielen Dank für Ihre Hilfe.";
 
 /* File: ../../portable/menubar.py:158 */
 "_Open" = "_Öffnen...";
@@ -996,8 +975,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Play" = "Wiederg_abe";
 
 /* File: ../../portable/menubar.py:228 */
-/* Flag: untranslated */
-"_Pause" = "_Pause";
+"_Pause" = "_Anhalten";
 
 /* File: ../../portable/menubar.py:229 */
 "_Stop" = "_Stop";
@@ -1295,12 +1273,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Download Anyway" = "Trotzdem herunterlade";
 
 /* File: ../../portable/dialogs.py:109 */
-/* Flag: untranslated */
-"Install iHeartMiro" = "Install iHeartMiro";
+"Install iHeartMiro" = "Installiere iHeartMiro";
 
 /* File: ../../portable/dialogs.py:110 */
-/* Flag: untranslated */
-"Don't Install" = "Don't Install";
+"Don't Install" = "Nicht installieren";
 
 /* File: ../../portable/dialogs.py:231 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
@@ -1495,8 +1471,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Seeders:" = "Seeder:";
 
 /* File: ../../portable/item.py:1008 */
-/* Flag: untranslated */
-"Leechers:" = "Leechers:";
+"Leechers:" = "Leecher:";
 
 /* File: ../../portable/item.py:1010 */
 "Down Rate:" = "Download-Rate:";
@@ -1528,13 +1503,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/item.py:1037 */
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"License:" = "License:";
+"License:" = "Lizenz:";
 
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"see permalink" = "see permalink";
+"see permalink" = "siehe Permalink";
 
 /* File: ../../portable/item.py:1049 */
 "REVEAL LOCAL FOLDER" = "LOKALEN ORDNER ANZEIGEN";
@@ -1585,13 +1558,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Ein oder mehrere dieser Elemente sind Ordner. Wenn Sie einen Ordner entfernen bzw. löschen, werden auch alle darin enthaltenen Dateien entfernt oder gelöscht.";
 
 /* File: ../../portable/startup.py:92 */
-/* Flag: untranslated */
-"Unknown Error" = "Unknown Error";
+"Unknown Error" = "Unbekannter Fehler";
 
 /* File: ../../portable/startup.py:93 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "Ein unbekannter Fehler verhindert den Start von Miro. Bitte hinterlegen Sie eine Fehlermeldung bei %s";
 
 /* File: ../../portable/startup.py:155 */
 "Database too new" = "Datenbank zu neu";
@@ -1600,8 +1571,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Ihre Datenbank wurde mit einer neueren Version von $shortAppName gesichert. Sie müssen die neuste Version von $shortAppName verwerden.";
 
 /* File: ../../portable/startup.py:238 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro kann Ihr Zielverzeichnis für Videos nicht finden. Dies könnte sein, weil es sich auf einer externen Festplatte befindet, welche momentan nicht angeschlossen ist.";
 
 /* File: ../../portable/folder.py:144 */
 /* Flag: python-format */
@@ -1621,8 +1591,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Enter a name for the new playlist folder" = "Geben Sie einen neuen Namen für den Ordner der Wiedergabeliste ein.";
 
 /* File: ../../portable/license.py:68 */
-/* Flag: untranslated */
-"license page" = "license page";
+"license page" = "Lizenzseite";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 Tag\n3 Tage\n6 Tage\n10 Tage\n1 Monat\nNiemals";
@@ -1631,8 +1600,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-/* Flag: untranslated */
-"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect.";
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Notiz:</b> Wenn Sie den Renderer zum Abspielen der Videos wechseln, MÜSSEN sie \nMiro neustarten, damit die Änderung wirksam wird.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
 "<b>Searching for Videos</b>" = "<b>Suche nach Videos</b>";
@@ -1648,12 +1616,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
-/* Flag: untranslated */
-"Auto download default setting for new channels" = "Auto download default setting for new channels";
+"Auto download default setting for new channels" = "Standardeinstellung für automatische Downloads neuer Channels";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-/* Flag: untranslated */
-"Automatically for_ward ports." = "Automatically for_ward ports.";
+"Automatically for_ward ports." = "Ports autoatisch übermittelt.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
 "By default, videos _expire after" = "Standardmäßig werden Videos gelöscht nach";
@@ -1677,38 +1643,32 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Every 30 minutes\nEvery hour\nManually" = "Aller 30 Minuten\nJede Stunde\nManuell";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
-/* Flag: untranslated */
 "G_B" = "G_B";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 "Go" = "Weiter";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
-/* Flag: untranslated */
-"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+"Ignore Un_encrypted Connections." = "Ignoriere unv_erschlüsselte Verbindungen.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 "In This:" = "In diesem:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-/* Flag: untranslated */
-"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
+"Limit torrent _downstream to:" = "Torrent-Datenstrom limitieren auf:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
+"Maximum number of channel auto-downloads at a time: " = "Maximale Anzahl gleichzeitiger automatischer Downloads: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-/* Flag: untranslated */
-"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
+"Maximum number of manual downloads at a time: " = "Maximale Anzahl gleichzeitiger manueller Downloads: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
 "Miro can find all the videos on your computer to help you organize your collection." = "Miro kann alle Videos auf ihrem Computer finden und ihnen so helfen, Ihre Medienbibliothek zu füllen.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-/* Flag: untranslated */
-"New\nAll\nOff" = "New\nAll\nOff";
+"New\nAll\nOff" = "Neue\nAlle\nAus";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
 "Play _videos one after another" = "Spiele _Videos eins nach dem anderen";
@@ -1739,23 +1699,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
-/* Flag: untranslated */
-"Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
+"Stop torrent uploads when this ratio is reached:" = "Torrent Upload stoppen, sobald folgende Ratio erreicht ist:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Auf den folgenden Assistenten-Seiten können Sie Miro Ihren persönlichen Vorlieben entsprechend anpassen. Hier ist die erste Frage.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
+"To avoid internet slowdowns, limit _upstream to:" = "Um Geschwindigkeitseinbrüche beim Internet zu vermeiden, Upload limitieren auf:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-/* Flag: untranslated */
-"Use _ports:" = "Use _ports:";
+"Use _ports:" = "Verwende _Ports:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
-/* Flag: untranslated */
-"Use this renderer to play videos:" = "Use this renderer to play videos:";
+"Use this renderer to play videos:" = "Verwende diesen Renderer zur Videowiedergabe:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
 "Volume:" = "Lautstärke:";
@@ -1785,12 +1741,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_General" = "_Allgemein";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
-/* Flag: untranslated */
 "_KB/s." = "_KB/s.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
-/* Flag: untranslated */
-"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+"_Keep at least this much free space on my drive:" = "Folgenden Speicherplatz auf dem Laufwerk mindestens freilassen:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
 "_Playback" = "_Abspielen";
@@ -1814,7 +1768,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Watch for new videos in these folders and include them in the Library" = "_Überprüfe auf neue Videos in diesen Verzeichnissen und füge sie zur Bibliothek hinzu";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
-/* Flag: untranslated */
 "xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
@@ -1880,8 +1833,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Add Folder..." = "Verzeichnis hinzufügen...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
-/* Flag: untranslated */
-"Automatically Forward Ports" = "Automatically Forward Ports";
+"Automatically Forward Ports" = "Ports automatisch übermitteln";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
 "Automatically run $longAppName when I login." = "$longAppName automatisch starten, wenn ich mich anmelde";
@@ -1905,31 +1857,25 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Folder" = "Verzeichnis";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-/* Flag: untranslated */
 "GB" = "GB";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
-/* Flag: untranslated */
-"Ignore Unencrypted Connections" = "Ignore Unencrypted Connections";
+"Ignore Unencrypted Connections" = "Ignoriere unverschlüsselte Verbindungen";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
-/* Flag: untranslated */
 "KB/s" = "KB/s";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
-/* Flag: untranslated */
-"Limit downstream bandwith to:" = "Limit downstream bandwith to:";
+"Limit downstream bandwith to:" = "Maximale Download-Rate:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Manually" = "Manuell";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:";
+"Maximum number of channel auto-downloads at a time:" = "Maximale Anzahl gleichzeitiger automatischer Downloads:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-/* Flag: untranslated */
-"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:";
+"Maximum number of manual downloads at a time:" = "Maximale Anzahl gleichzeitiger manueller Downloads:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
 "Options" = "Einstellungen";
@@ -1950,8 +1896,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Store downloaded videos in this folder:" = "Speichere heruntergeladene Videos in diesem Verzeichnis:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:";
+"To avoid internet slowdowns, limit upstream bandwith to:" = "Um Geschwindigkeitseinbrüche beim Internet zu vermeiden, Upload limitieren auf:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "ACHTUNG: Diese Einstellung wird erst nach einen Neustart von $longAppName wirksam.";

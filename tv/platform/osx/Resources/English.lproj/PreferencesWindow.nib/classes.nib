@@ -46,6 +46,7 @@
                 limitUpstreamField = id; 
                 maxAutoDownloadsField = id; 
                 maxDownloadsField = id; 
+                maxAutoDownloadsField = id; 
                 moviesDirectoryField = id; 
                 nonEncryptedCnxButton = id; 
                 stopAtRatioCheckbox = id; 

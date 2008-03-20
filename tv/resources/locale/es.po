@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-03-04 20:36+0000\n"
-"Last-Translator: Dante Díaz <dante@ubuntu-pe.org>\n"
+"PO-Revision-Date: 2008-03-14 18:09+0000\n"
+"Last-Translator: Locoxella <locoxella@yahoo.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
+"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -23,7 +23,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 msgid "OK"
-msgstr "Aceptar"
+msgstr "ACEPTAR"
 
 #: ../../portable/dialogs.py:84
 msgid "Ok"
@@ -40,9 +40,9 @@ msgid ""
 msgstr ""
 "<font face=\"Lucida Grande\" size=\"-1\">Nuestro gestor de errores se "
 "encuentra en <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Por favor, "
-"díganos lo que estaba haciendo cuando ocurrió el problema, Copie el mensaje "
+"díganos lo que estaba haciendo cuando ocurrió el problema. Copie el mensaje "
 "de la caja de registro de arriba, conteste unas cuantas preguntas, y nos "
-"pondremos en seguida a trabajar.</font>"
+"pondremos a trabajar en ello enseguida.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -53,7 +53,8 @@ msgstr ""
 "Si tiene un momento, ¿podría enviar un informe del problema a nuestro "
 "sistema de seguimiento de errores? Como mínimo, necesitaríamos una "
 "descripción de lo que estaba haciendo en ese momento (tan precisa como le "
-"sea posible) más la frase aparentemente sin sentido de la caja de abajo:"
+"sea posible) junto con la frase aparentemente carente de sentido de la caja "
+"de abajo:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -86,13 +87,13 @@ msgid "Channels"
 msgstr "Canales"
 
 msgid "Check for New Version"
-msgstr "Comprobar si hay una versión más reciente"
+msgstr "Comprobar si hay una versión nueva"
 
 msgid "Clear Menu"
 msgstr "Limpiar menú"
 
 msgid "Close Window"
-msgstr "Cerrar ventana"
+msgstr "Cerrar Ventana"
 
 msgid "Copy"
 msgstr "Copiar"
@@ -101,7 +102,7 @@ msgid "Copy Channel URL"
 msgstr "Copia la URL del canal"
 
 msgid "Copy Video URL"
-msgstr "Copiar la URL del vídeo"
+msgstr "Copiar la URL del Video"
 
 msgid "Cut"
 msgstr "Cortar"
@@ -114,7 +115,7 @@ msgid "Donate"
 msgstr "Donar"
 
 msgid "Download Video..."
-msgstr "Descargar vídeo..."
+msgstr "Descargar video..."
 
 msgid "Edit"
 msgstr "Editar"
@@ -182,12 +183,12 @@ msgstr "Pegar"
 
 #: ../../platform/osx/platform/frontends/html/Application.py:244
 msgid "Play Video"
-msgstr "Reproducir vídeo"
+msgstr "Reproducir video"
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:84
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Playback"
-msgstr "Reproducir"
+msgstr "Reproducción"
 
 msgid "Playlists"
 msgstr "Listas de reproducción"
@@ -196,7 +197,7 @@ msgid "Preferences..."
 msgstr "Preferencias..."
 
 msgid "Previous Video"
-msgstr "Vídeo anterior"
+msgstr "Video anterior"
 
 msgid "Quit Miro"
 msgstr "Cerrar Miro"
@@ -211,7 +212,7 @@ msgid "Report a bug"
 msgstr "Informar de un fallo"
 
 msgid "Save Video As..."
-msgstr "Guardar vídeo como..."
+msgstr "Guardar video como..."
 
 msgid "Select All"
 msgstr "Seleccionar todo"
@@ -226,7 +227,7 @@ msgid "Show All"
 msgstr "Mostrar todo"
 
 msgid "Stop Video"
-msgstr "Detener vídeo"
+msgstr "Detener video"
 
 msgid "Update All Channels"
 msgstr "Actualizar todos los canales"
