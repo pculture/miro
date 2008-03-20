@@ -1216,9 +1216,9 @@ msgstr ""
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] "Vaše skidanje je u tijeku. Da li  želite napustiti ?"
-msgstr[1] "Vaše skidanje je u tijeku. Da li želite napustiti ?"
-msgstr[2] "Vaše skidanje je u tijeku. Da li želite napustiti ?"
+msgstr[0] "Vaše %d skidanje je u tijeku. Da li  želite napustiti ?"
+msgstr[1] "Vaše %d skidanje je u tijeku. Da li želite napustiti ?"
+msgstr[2] "Vaše %d skidanje je u tijeku. Da li želite napustiti ?"
 
 #: ../../portable/frontends/html/main.py:340
 #, fuzzy
