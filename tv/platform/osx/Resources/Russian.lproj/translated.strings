@@ -4,11 +4,11 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 19:56-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: untranslated */
-"Cancel" = "Cancel" /* = "Отмена" */;
+"Cancel" = "Cancel" /* = "Отменить" */;
 
 "OK" = "Ок";
 
@@ -205,8 +205,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Add..." = "Добавить...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-/* Flag: untranslated */
-"All" = "All";
+"All" = "Все";
 
 "Auto download default setting for new channels:" = "Автоматически загружать настройки по умолчанию для новых каналов:";
 
@@ -277,14 +276,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Stop after each video." = "Останавливаться после каждого видео-файла.";
 
-/* Flag: untranslated */
-"Stop uploads when this ratio is reached:" = "Stop uploads when this ratio is reached:";
+"Stop uploads when this ratio is reached:" = "Остановить раздачу при достижении следующего соотношения:";
 
 /* Flag: untranslated */
 "Store downloads in this folder:" = "Store downloads in this folder:" /* = "Сохранять загрузки в этой папке:" */;
 
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to";
+"To avoid internet slowdowns, limit upstream to" = "Для предотвращения скорости работы в интернет, ограничить раздачу до";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
 "Use these ports:" = "Использовать порты:";
@@ -619,8 +616,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Torrent file deleted" = "Torrent-файл удален";
 
 /* File: ../../portable/dl_daemon/download.py:981 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
+"The torrent file for this item was deleted outside of Miro." = "Торрент файл для этого элемента был удален вне Miro.";
 
 /* File: ../../portable/frontends/html/contextmenu.py:103 */
 "Update Channels Now" = "Обновить каналы";
@@ -712,8 +708,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Video Directory Missing" = "Видео каталог отсутствует";
 
 /* File: ../../portable/frontends/html/main.py:133 */
-/* Flag: untranslated */
-"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro не может найти вашей основной папки с видео. Причиной этого может быть то, что она находится на диске который был отключен.\n    Если продолжить, то папка будет пересоздана, но заодно будет потеряна некоторая служебная информация о хранившихся роликах. Вы можете выйти из Miro, подключить диск и перезапустить Miro";
 
 /* File: ../../portable/frontends/html/main.py:190 */
 /* File: ../../portable/theme.py:126 */
@@ -1486,8 +1481,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Seeders:" = "Seeders:" /* = "Источники:" */;
 
 /* File: ../../portable/item.py:1008 */
-/* Flag: untranslated */
-"Leechers:" = "Leechers:";
+"Leechers:" = "Личеры:";
 
 /* File: ../../portable/item.py:1010 */
 "Down Rate:" = "Скорость скачивания:";
@@ -1578,9 +1572,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Unknown Error" = "Неизвестная ошибка";
 
 /* File: ../../portable/startup.py:93 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "Неизвестная ошибка не дает Miro запуститься. Пожалуйста заполните карточку сообщения об ошибке по адресу %s";
 
 /* File: ../../portable/startup.py:155 */
 "Database too new" = "Слишком новая версия базы данных";
@@ -1637,12 +1630,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
-/* Flag: untranslated */
-"Auto download default setting for new channels" = "Auto download default setting for new channels";
+"Auto download default setting for new channels" = "Автоматически скачивать настройки для новых каналов";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-/* Flag: untranslated */
-"Automatically for_ward ports." = "Automatically for_ward ports.";
+"Automatically for_ward ports." = "Автоматическ_и перенаправлять порты";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
 "By default, videos _expire after" = "По умолчанию, видео устаревает после";
@@ -1666,15 +1657,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Every 30 minutes\nEvery hour\nManually" = "Каждые 30 минут\nКаждый час\nВручную";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
-/* Flag: untranslated */
 "G_B" = "G_B";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 "Go" = "Go";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
-/* Flag: untranslated */
-"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+"Ignore Un_encrypted Connections." = "Игнорироват_ь Незашифрованные Соединения.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
@@ -1728,8 +1717,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
-/* Flag: untranslated */
-"Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
+"Stop torrent uploads when this ratio is reached:" = "Остановить раздачу когда соотношение достигнет:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Следующие несколько картинок помогут вам настроить Miro так, чтобы лучше работать с ним. Вот первый вопрос.";
@@ -1869,8 +1857,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Add Folder..." = "Добавить папку";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
-/* Flag: untranslated */
-"Automatically Forward Ports" = "Automatically Forward Ports";
+"Automatically Forward Ports" = "Автоматически Перенаправлять Порты";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
 "Automatically run $longAppName when I login." = "Автоматически запустить $longAppName, когда я вхожу в систему.";
@@ -1897,8 +1884,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "GB" = "Гб";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
-/* Flag: untranslated */
-"Ignore Unencrypted Connections" = "Ignore Unencrypted Connections";
+"Ignore Unencrypted Connections" = "Игнорировать Незашифрованные Соединения.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
 /* Flag: untranslated */
@@ -1912,12 +1898,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Manually" = "Вручную";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:";
+"Maximum number of channel auto-downloads at a time:" = "Максимальное число каналов которые можно автоматически скачивать одновременно:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-/* Flag: untranslated */
-"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:";
+"Maximum number of manual downloads at a time:" = "Максимальное число загрузок вручную одновременно:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
 "Options" = "Параметры";
@@ -1938,8 +1922,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Store downloaded videos in this folder:" = "Хранить загруженные видео в этой папке:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:";
+"To avoid internet slowdowns, limit upstream bandwith to:" = "Для избежания падения скорости работы в интернет ограничить скорость раздачи до:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "ВНИМАНИЕ: Этот параметр не вступит в силу до перезапуска $longAppName.";
@@ -1987,8 +1970,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Find Videos:" = "Найти видео:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48 */
-/* Flag: untranslated */
-"Go Big:" = "Go Big:";
+"Go Big:" = "Смотирте во весь экран:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44 */
 "Leave it On:" = "Оставляйте Democracy включенным:";

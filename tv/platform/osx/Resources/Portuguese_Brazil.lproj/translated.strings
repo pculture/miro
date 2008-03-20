@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 19:56-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: python-format */
@@ -204,8 +204,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Add..." = "Adicionar...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-/* Flag: untranslated */
-"All" = "All";
+"All" = "Tudo";
 
 /* Flag: untranslated */
 "Auto download default setting for new channels:" = "Auto download default setting for new channels:" /* = "Configuração de Auto-download padrão para novos canais:" */;
@@ -222,11 +221,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Check channels for new content:" = "Verificar atualizações nos canais:";
 
-/* Flag: untranslated */
-"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:";
+"Don't auto-download more than this many videos per channel at once:" = "Não auto-baixar mais do que isso muitos vídeos por canal de uma vez:";
 
-/* Flag: untranslated */
-"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:";
+"Don't download more than this many videos at once:" = "Não baixe mais do que esta quantidade de vídeos ao mesmo tempo:";
 
 "Folder location" = "Localização da Pasta";
 
@@ -241,8 +238,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:" /* = "Manter ao menos isto de espaço livre no meu disco:" */;
 
-/* Flag: untranslated */
-"Limit downstream to" = "Limit downstream to";
+"Limit downstream to" = "Limitar velocidade de download para";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "Never" = "Nunca";
@@ -282,8 +278,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Store downloads in this folder:" = "Armazenar downloads nesta pasta:";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to";
+"To avoid internet slowdowns, limit upstream to" = "Para evitar lentidão na internet, limite a montante de";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
 "Use these ports:" = "Usar estas portas:";
@@ -710,8 +705,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Video Directory Missing" = "Diretório de Vídeo Errado";
 
 /* File: ../../portable/frontends/html/main.py:133 */
-/* Flag: untranslated */
-"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro não pôde encontrar seu diretório primário de vídeo. Pode ser porque o diretório está localizado em um drive externo que está atualmente desconectado.\n\n    Se você continuar, o diretório de vídeo vai ser redefinido para um local neste drive (isto fará você perder alguns dos dados sobre os vídeos no drive externo). Você também pode sair, reconectar o drive e abrir o Miro novamente.";
 
 /* File: ../../portable/frontends/html/main.py:190 */
 /* File: ../../portable/theme.py:126 */
@@ -1611,8 +1605,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-/* Flag: untranslated */
-"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect.";
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Nota:</b> Se você mudar o renderizados usado para exibir os vídeos, você PRECISA \nreiniciar o Miro para que as mudanças tenham efeito.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
 "<b>Searching for Videos</b>" = "<b>Pesquisando Vídeos</b>";
@@ -1631,8 +1624,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Auto download default setting for new channels" = "Configuração Auto-download padrão para novos canais";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-/* Flag: untranslated */
-"Automatically for_ward ports." = "Automatically for_ward ports.";
+"Automatically for_ward ports." = "Redirecionar portas automaticamente.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
 "By default, videos _expire after" = "Por padrão, os vídeos _expire depois de";
@@ -1662,31 +1654,29 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Go" = "Ir";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
-/* Flag: untranslated */
-"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+"Ignore Un_encrypted Connections." = "Ignorar conexões não encriptadas.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 "In This:" = "Neste:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-/* Flag: untranslated */
-"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
+"Limit torrent _downstream to:" = "limitar velocidade de download do torrent para";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
 /* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: " /* = "Número máximo de canais auto-download no momento: " */;
+"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: " /* = "Número máximo de canais de auto-download simultâneos: " */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
 /* Flag: untranslated */
-"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: " /* = "Número máximo de downloads manuais no momento: " */;
+"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: " /* = "Número máximo de downloads manuais simultâneos: " */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
 "Miro can find all the videos on your computer to help you organize your collection." = "Miro pode encontrar todos os seus vídeos em seu computador para lhe ajudar a manter sua coleção organizada.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
 /* Flag: untranslated */
-"New\nAll\nOff" = "New\nAll\nOff" /* = "Novo\nTudo\nDesligar" */;
+"New\nAll\nOff" = "New\nAll\nOff" /* = "Novo\nTodos\nDesligado" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
 "Play _videos one after another" = "Reproduzir vídeos um depois do outro";
@@ -1723,16 +1713,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "As próximas telas irão lhe auxiliar a ajustar o Miro para ele funcione da melhor forma para você. Aqui está a primeira questão.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
+"To avoid internet slowdowns, limit _upstream to:" = "Para evitar lentidão na internet, limite _upload para:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-/* Flag: untranslated */
-"Use _ports:" = "Use _ports:";
+"Use _ports:" = "Usar _portas:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
-/* Flag: untranslated */
-"Use this renderer to play videos:" = "Use this renderer to play videos:";
+"Use this renderer to play videos:" = "Usar este renderizador para exibir vídeos:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
 "Volume:" = "Volume:";
@@ -1765,8 +1752,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_KB/s." = "_KB/s.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
-/* Flag: untranslated */
-"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+"_Keep at least this much free space on my drive:" = "_Manter ao menos este espaço livre no meu drive:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
 "_Playback" = "_Playback";
@@ -1888,19 +1874,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "KB/s" = "KB/s";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
-/* Flag: untranslated */
-"Limit downstream bandwith to:" = "Limit downstream bandwith to:";
+"Limit downstream bandwith to:" = "Limitar banda de download para:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Manually" = "Manualmente";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:";
+"Maximum number of channel auto-downloads at a time:" = "Número máximo de canais de auto-download simultâneos:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-/* Flag: untranslated */
-"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:";
+"Maximum number of manual downloads at a time:" = "Número máximo de downloads manuais ao mesmo tempo:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
 "Options" = "Opções";
@@ -1921,8 +1904,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Store downloaded videos in this folder:" = "Guardar vídeos baixados nesta pasta:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:";
+"To avoid internet slowdowns, limit upstream bandwith to:" = "Para evitar lentidão na internet, limite banda de upload para:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "ATENÇÃO: Esta alteração terá efeito somente após o re-inicio do $longAppName.";

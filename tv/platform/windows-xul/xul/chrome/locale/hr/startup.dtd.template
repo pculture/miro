@@ -1,53 +1,53 @@
-<!ENTITY nbsp				" ">
+<!ENTITY nbsp				"Tino Tresin ">
 <!ENTITY rsaquo				"'">
 
-<!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
-<!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.title			"Konfiguracija za prvo izbacivanje $shortAppName">
+<!ENTITY startup.description		"Ovih nekoliko prozora koje dolaze će vam pomoći kao mjerilo $longAppName tako da što bolje funkcionira za vas.">
+<!ENTITY startup.autostart.description	"Preporučujemo  da vam bude uključen $longAppName pri otvaranju vašeg kompjutora. Nepotpuna videa će moći nastaviti skidanja i nova videa će biti skinuta u pozadini, spremna za gledanje kad to želite.">
+<!ENTITY startup.autostart.question	"Želite li ubaciti $shortAppName pri uključivanju kompjutora ?">
+<!ENTITY startup.search.description	"$longAppName može potražiti sva postojeća videa u vašem kompjutoru tako da vam pomogne u organiziranju vaše kolekcije.">
+<!ENTITY startup.search.question        "Želite li da $longAppName pretraži vaše video datoteke na vašem kompjutoru ?">
+<!ENTITY startup.search.restrict	"Ograničiti povjerljive osobne datoteke">
+<!ENTITY startup.search.custom          "Potraži personaliziranu mapu:">
 <!ENTITY startup.search.searching	"Searching for Videos">
-<!ENTITY startup.change	                "Change">
-<!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.change	                "Izmijeni">
+<!ENTITY startup.cancel	                "Prekinuti potražnju">
+<!ENTITY startup.undo	                "Ponovitii potražnju">
+<!ENTITY startup.done1			"Gotovo je!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done3.heading		"Ostavi vezu:">
+<!ENTITY startup.done3.text		"$longAppName neprestano prati kanale u potrazi novih videa u pozadini. U međuvremenu, kad budete imali vremena imati ćete nova videa za gledanje.">
+<!ENTITY startup.done4.heading		"Ne brinuti se slobodnog mjesta za disk:">
+<!ENTITY startup.done4.text		"Kao TIVo, $longAppName ima jedan sistem koji automatski briše stara videa da bi ostavilo više mjesta za nova. Vi i dalje možete sačuvati video po želji klikom na ''Spasi'' i možete izabrati omiljene kanale da biste automatski sačuvali videa.">
+<!ENTITY startup.done5.heading		"Otići u Big:">
+<!ENTITY startup.done5.text		"Tipka koja se nalazi na desno od tipke <čitanje> povečava video na velikom ekranu">
+<!ENTITY startup.done6.heading		"Potražiti videa:">
+<!ENTITY startup.done6.text		"Vodič $shortAppName nudi stotine besplatnih kanala. Klikni na ''ADD'' za gledanje kanala.">
 <!ENTITY startup.answer.yes		"Da">
 <!ENTITY startup.answer.no		"No">
-<!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
-<!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
-<!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.title			"Konfiguracija za prvo izbacivanje $shortAppName">
+<!ENTITY startup.description		"Ovih nekoliko prozora koje dolaze će vam pomoći kao mjerilo $longAppName tako da što bolje funkcionira za vas.">
+<!ENTITY startup.autostart.description	"Preporučujemo  da vam bude uključen $longAppName pri otvaranju vašeg kompjutora. Nepotpuna videa će moći nastaviti skidanja i nova videa će biti skinuta u pozadini, spremna za gledanje kad to želite.">
+<!ENTITY startup.autostart.question	"Želite li ubaciti $shortAppName pri uključivanju kompjutora ?">
+<!ENTITY startup.search.description	"$longAppName može potražiti sva postojeća videa u vašem kompjutoru tako da vam pomogne u organiziranju vaše kolekcije.">
+<!ENTITY startup.search.question        "Želite li da $longAppName pretraži vaše video datoteke na vašem kompjutoru ?">
+<!ENTITY startup.search.restrict	"Ograničiti povjerljive osobne datoteke">
+<!ENTITY startup.search.custom          "Potraži personaliziranu mapu:">
 <!ENTITY startup.search.searching	"Searching for Videos">
-<!ENTITY startup.change	                "Change">
-<!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.change	                "Izmijeni">
+<!ENTITY startup.cancel	                "Prekinuti potražnju">
+<!ENTITY startup.undo	                "Ponovitii potražnju">
+<!ENTITY startup.done1			"Gotovo je!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
-<!ENTITY startup.done3.heading		"Leave it On:">
-<!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
-<!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
-<!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done3.heading		"Ostavi vezu:">
+<!ENTITY startup.done3.text		"$longAppName neprestano prati kanale u potrazi novih videa u pozadini. U međuvremenu, kad budete imali vremena imati ćete nova videa za gledanje.">
+<!ENTITY startup.done4.heading		"Ne brinuti se slobodnog mjesta za disk:">
+<!ENTITY startup.done4.text		"Kao TIVo, $longAppName ima jedan sistem koji automatski briše stara videa da bi ostavilo više mjesta za nova. Vi i dalje možete sačuvati video po želji klikom na ''Spasi'' i možete izabrati omiljene kanale da biste automatski sačuvali videa.">
+<!ENTITY startup.done5.heading		"Otići u Big:">
+<!ENTITY startup.done5.text		"Tipka koja se nalazi na desno od tipke <čitanje> povečava video na velikom ekranu">
+<!ENTITY startup.done6.heading		"Potražiti videa:">
+<!ENTITY startup.done6.text		"Vodič $shortAppName nudi stotine besplatnih kanala. Klikni na ''ADD'' za gledanje kanala.">
 <!ENTITY startup.answer.yes		"Da">
 <!ENTITY startup.answer.no		"No">

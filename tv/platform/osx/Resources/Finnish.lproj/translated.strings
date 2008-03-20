@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 19:56-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Peruuta";
@@ -168,15 +168,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Username:\n\n" = "Käyttäjänimi:\n\n";
 
-/* Flag: untranslated */
-"(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)";
+"(You must restart Miro for some of these changes to take effect)" = "(Sinun täytyy käynnistää Miro uudelleen, jotta kaikki muutokset tulevat voimaan)";
 
 "(You must restart Miro for this change to take effect)\n" = "(Sinun täytyy käynnistää Miro uudelleen, jotta tämä muutos tulee voimaan)\n";
 
 "(movies directory path goes here)" = "(videoiden kohdekansio tulee tähän)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-/* Flag: untranslated */
 "-" = "-";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
@@ -206,10 +204,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
 /* Flag: untranslated */
-"All" = "All";
+"All" = "All" /* = "Kaikki" */;
 
 /* Flag: untranslated */
-"Auto download default setting for new channels:" = "Auto download default setting for new channels:";
+"Auto download default setting for new channels:" = "Auto download default setting for new channels:" /* = "Lataa automaattisesti oletusasetukset uusille kanaville" */;
 
 /* Flag: untranslated */
 "Automatically forward ports" = "Automatically forward ports";
@@ -225,29 +223,26 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Check channels for new content:" = "Tarkista kanavat uuden sisällön varalta:";
 
 /* Flag: untranslated */
-"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:";
+"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:" /* = "Älä lataa tätä enempää videoita yhdellä kanavalla kerralla:" */;
 
 /* Flag: untranslated */
-"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:";
+"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:" /* = "Älä lataa tätä enempää videoita kerralla:" */;
 
 "Folder location" = "Hakemiston sijainti";
 
 /* Flag: untranslated */
 "GB\n" = "GB\n";
 
-/* Flag: untranslated */
-"Ignore unencrypted connections" = "Ignore unencrypted connections";
+"Ignore unencrypted connections" = "Estä salaamattomat yhteydet";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
 /* Flag: untranslated */
 "KB/s." = "KB/s.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
-/* Flag: untranslated */
-"Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:";
+"Keep at least this much free space on my drive:" = "Säilytä vähintään näin paljon vapaata levytilaa kovalevyllä";
 
-/* Flag: untranslated */
-"Limit downstream to" = "Limit downstream to";
+"Limit downstream to" = "Rajoita saapuvaa nopeutta";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "Never" = "Ei koskaan";
@@ -284,18 +279,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Stop after each video." = "Pysäytä soitto jokaisen jälkeen.";
 
-/* Flag: untranslated */
-"Stop uploads when this ratio is reached:" = "Stop uploads when this ratio is reached:";
+"Stop uploads when this ratio is reached:" = "Lopeta lähettäminen kun tämä jakosuhde on saavutettu";
 
-/* Flag: untranslated */
-"Store downloads in this folder:" = "Store downloads in this folder:";
+"Store downloads in this folder:" = "Talleta ladatut tiedostot tähän kansioon";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to";
+"To avoid internet slowdowns, limit upstream to" = "Rajoita lähetysnopeus tähän, että vältettäisiin internetin hidastuminen";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
-/* Flag: untranslated */
-"Use these ports:" = "Use these ports:";
+"Use these ports:" = "Käytä näitä portteja";
 
 /* File: ../../portable/frontends/html/main.py:319 */
 "Warn me when I attempt to quit with downloads in progress" = "Varoita minua jos yritän sulkea ohjelman vaikka latauksia on käynnissä";
@@ -627,8 +618,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Torrent file deleted" = "Torrent-tiedosto poistettiin";
 
 /* File: ../../portable/dl_daemon/download.py:981 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
+"The torrent file for this item was deleted outside of Miro." = "Tähän viittaava torrent tiedosto poistettiin Miron ulkopuolella";
 
 /* File: ../../portable/frontends/html/contextmenu.py:103 */
 "Update Channels Now" = "Päivitä kanavat nyt";
@@ -1298,8 +1288,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Install iHeartMiro" = "Install iHeartMiro";
 
 /* File: ../../portable/dialogs.py:110 */
-/* Flag: untranslated */
-"Don't Install" = "Don't Install";
+"Don't Install" = "Älä asenna";
 
 /* File: ../../portable/dialogs.py:231 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
@@ -1491,12 +1480,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Error:" = "Virhe:";
 
 /* File: ../../portable/item.py:1006 */
-/* Flag: untranslated */
-"Seeders:" = "Seeders:";
+"Seeders:" = "Lähteitä:";
 
 /* File: ../../portable/item.py:1008 */
-/* Flag: untranslated */
-"Leechers:" = "Leechers:";
+"Leechers:" = "Lataajia:";
 
 /* File: ../../portable/item.py:1010 */
 "Down Rate:" = "Latausnopeus:";
@@ -1528,8 +1515,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/item.py:1037 */
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"License:" = "License:";
+"License:" = "Lisenssi:";
 
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
@@ -1585,13 +1571,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Yksi tai useampi näistä on hakemisto. Kun poistat hakemiston, poistuvat samalla myös kaikki kansion sisällä olevat tiedostot.";
 
 /* File: ../../portable/startup.py:92 */
-/* Flag: untranslated */
-"Unknown Error" = "Unknown Error";
+"Unknown Error" = "Tuntematon virhe";
 
 /* File: ../../portable/startup.py:93 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s" /* = "Tuntematon virhe esti Miroa käynnistymästä.  Anna bugireportti osoitteessa %s" */;
 
 /* File: ../../portable/startup.py:155 */
 "Database too new" = "Tietokanta on liian uusi";
@@ -1600,8 +1585,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Tietokantasi on luotu uudemmalla versiolla ohjelmasta $shortAppName. Sinun täytyy ladata ohjelman $shortAppName uusin versio.";
 
 /* File: ../../portable/startup.py:238 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro ei löydä pääasiallista video hakemistoasi. Tämä voi johtua siitä, että se on ulkoisella levyllä joka on nyt irroitettu.";
 
 /* File: ../../portable/folder.py:144 */
 /* Flag: python-format */
@@ -1621,8 +1605,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Enter a name for the new playlist folder" = "Kirjoita uuden soittolistakansion nimi";
 
 /* File: ../../portable/license.py:68 */
-/* Flag: untranslated */
-"license page" = "license page";
+"license page" = "Lisenssisivu";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 päivä\n3 päivää\n6 päivää\n10 päivää\n1 kuukausi\nEi ikinä";
@@ -1696,12 +1679,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Limit torrent _downstream to:" = "Limit torrent _downstream to:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
+"Maximum number of channel auto-downloads at a time: " = "Maksimimäärä latauksia kanavalla kerralla: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-/* Flag: untranslated */
-"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
+"Maximum number of manual downloads at a time: " = "Maksimimäärä käsin valittuja latauksia kerralla: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
 "Miro can find all the videos on your computer to help you organize your collection." = "Miro voi etsiä kaikki tietokoneellasi olevat videot ja näin auttaa sinua organisoimaan kokoelmasi.";
@@ -1739,8 +1720,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
-/* Flag: untranslated */
-"Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
+"Stop torrent uploads when this ratio is reached:" = "Lopeta torrentin lähetys kun tämä jakosuhde on saavutettu";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Seuraavat pari sivua auttavat sinua Miron asetusten kanssa jotta se toimisi sinulle parhaalla mahdollisella tavalla. Tässä on ensimmäinen kysymys.";

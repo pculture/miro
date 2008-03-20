@@ -35,7 +35,7 @@
 <!ENTITY prefs.folder.others.remove "Remover">
 
 <!ENTITY prefs.downloads "Descargas" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
+<!ENTITY prefs.downloads.max "Número máximo de descargas manuais de cada vez:">
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Espaço ocupado em disco">

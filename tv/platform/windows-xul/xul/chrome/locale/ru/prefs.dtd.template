@@ -14,8 +14,8 @@
 <!ENTITY prefs.channels.check.sixty "Каждый час">
 <!ENTITY prefs.channels.check.manually "Вручную">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault "Автоматически скачивать настройки для новых каналов">
+<!ENTITY prefs.channels.autodownloaddefault.all "Все">
 <!ENTITY prefs.channels.autodownloaddefault.new "Новый">
 <!ENTITY prefs.channels.autodownloaddefault.off "Выключено">
 
@@ -35,8 +35,8 @@
 <!ENTITY prefs.folder.others.remove "Удалить">
 
 <!ENTITY prefs.downloads "Загрузки" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
-<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+<!ENTITY prefs.downloads.max "Максимальное число загрузок вручную одновременно:">
+<!ENTITY prefs.autodownloads.max "Максимальное число каналов которые можно автоматически скачивать одновременно:">
 
 <!ENTITY prefs.disk.space "Дисковое пространство">
 <!ENTITY prefs.disk.space.min.part1 "Оставлять как минимум столько свободного места на диске:" >
@@ -53,10 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ВНИМАНИЕ: Изменения не будут действовать до перезапуска $ longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "Для избежания падения скорости работы в интернет ограничить скорость раздачи до:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
 <!ENTITY prefs.torrent.use_ports "Использовать порты:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_upnp "Автоматически Перенаправлять Порты">
+<!ENTITY prefs.torrent.require_encryption "Игнорировать Незашифрованные Соединения.">
+<!ENTITY prefs.torrent.uploadratio "Остановить раздачу когда соотношение достигнет:">

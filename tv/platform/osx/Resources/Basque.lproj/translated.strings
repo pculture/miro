@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 19:56-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Utzi";
@@ -178,7 +178,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "(movies directory path goes here)" = "(bideoen direktorioaren bidea jarri behar da hemen)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-/* Flag: untranslated */
 "-" = "-";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
@@ -207,8 +206,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Add..." = "Gehi...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-/* Flag: untranslated */
-"All" = "All";
+"All" = "Guztiak";
 
 /* Flag: untranslated */
 "Auto download default setting for new channels:" = "Auto download default setting for new channels:";
@@ -217,7 +215,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Automatically forward ports" = "Automatically forward ports";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
-/* Flag: untranslated */
 "BitTorrent" = "BitTorrent";
 
 "By default, videos expire after:" = "Ez bada zehazten, bideoen iraungitze (kaduzitate) denbora:";
@@ -242,7 +239,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Ignore unencrypted connections" = "Ignore unencrypted connections";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
-/* Flag: untranslated */
 "KB/s." = "KB/s.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
@@ -804,9 +800,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%s Version Check" = "%s Version Check";
 
 /* File: ../../portable/frontends/html/main.py:291 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s is up to date." = "%s is up to date.";
+"%s is up to date." = "%s eguneratuta dago.";
 
 /* File: ../../portable/frontends/html/main.py:309 */
 "Are you sure you want to quit?" = "Ziur zaude irten nahi duzula?";
@@ -825,8 +820,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Export OPML File" = "OPML Fitxategia Exportatu";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:325 */
-/* Flag: untranslated */
-"Invalid Value" = "Invalid Value";
+"Invalid Value" = "Balio okerra";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:326 */
 /* Flag: untranslated */
@@ -994,35 +988,28 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Quit" = "_Irten";
 
 /* File: ../../portable/menubar.py:179 */
-/* Flag: untranslated */
-"Cu_t" = "Cu_t";
+"Cu_t" = "_Ebaki";
 
 /* File: ../../portable/menubar.py:180 */
-/* Flag: untranslated */
-"_Copy" = "_Copy";
+"_Copy" = "_Kopiatu";
 
 /* File: ../../portable/menubar.py:181 */
-/* Flag: untranslated */
-"_Paste" = "_Paste";
+"_Paste" = "_Itsatsi";
 
 /* File: ../../portable/menubar.py:182 */
-/* Flag: untranslated */
-"Select _All" = "Select _All";
+"Select _All" = "Hautatu _dena";
 
 /* File: ../../portable/menubar.py:183 */
-/* Flag: untranslated */
-"_Delete" = "_Delete";
+"_Delete" = "E_zabatu";
 
 /* File: ../../portable/menubar.py:187 */
-/* Flag: untranslated */
-"Add _Channel" = "Add _Channel";
+"Add _Channel" = "_Gehitu kanala";
 
 /* File: ../../portable/menubar.py:188 */
 "New Searc_h Channel..." = "_Kanal bilaketa berria...";
 
 /* File: ../../portable/menubar.py:189 */
-/* Flag: untranslated */
-"New _Folder..." = "New _Folder...";
+"New _Folder..." = "_Karpeta berria...";
 
 /* File: ../../portable/menubar.py:190 */
 "Add Channel _Guide..." = "Kanal Gida Sartu...";
@@ -1068,12 +1055,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Play" = "_Erreproduzitu";
 
 /* File: ../../portable/menubar.py:228 */
-/* Flag: untranslated */
-"_Pause" = "_Pause";
+"_Pause" = "_Pausatu";
 
 /* File: ../../portable/menubar.py:229 */
-/* Flag: untranslated */
-"_Stop" = "_Stop";
+"_Stop" = "_Gelditu";
 
 /* File: ../../portable/menubar.py:231 */
 "_Next Video" = "_Hurrengo Bideoa";
@@ -1082,27 +1067,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Previous Video" = "_Aurreko Bideoa";
 
 /* File: ../../portable/menubar.py:234 */
-/* Flag: untranslated */
-"Skip _Forward" = "Skip _Forward";
+"Skip _Forward" = "Saltatu a_urrera";
 
 /* File: ../../portable/menubar.py:235 */
-/* Flag: untranslated */
-"Skip _Back" = "Skip _Back";
+"Skip _Back" = "Saltatu a_tzera";
 
 /* File: ../../portable/menubar.py:237 */
-/* Flag: untranslated */
-"Volume _Up" = "Volume _Up";
+"Volume _Up" = "_Igo bolumena";
 
 /* File: ../../portable/menubar.py:238 */
-/* Flag: untranslated */
-"Volume _Down" = "Volume _Down";
+"Volume _Down" = "_Jaitsi bolumena";
 
 /* File: ../../portable/menubar.py:240 */
 "_Fullscreen" = "_Pantaila osoa";
 
 /* File: ../../portable/menubar.py:244 */
-/* Flag: untranslated */
-"_About" = "_About";
+"_About" = "_Honi buruz";
 
 /* File: ../../portable/menubar.py:245 */
 "_Donate" = "_Dirulaguntza";
@@ -1119,8 +1099,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Video" = "_Bideo";
 
 /* File: ../../portable/menubar.py:254 */
-/* Flag: untranslated */
-"_File" = "_File";
+"_File" = "_Fitxategia";
 
 /* File: ../../portable/menubar.py:258 */
 "_Channels" = "_Kanalak";
@@ -1144,24 +1123,20 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Resume All Downloads ($numPaused)" = "Resume All Downloads ($numPaused)";
 
 /* File: ../../portable/menubar.py:269 */
-/* Flag: untranslated */
-"Options..." = "Options...";
+"Options..." = "Hobespenak...";
 
 /* File: ../../portable/menubar.py:271 */
-/* Flag: untranslated */
-"Hide Window" = "Hide Window";
+"Hide Window" = "Leihoa ezkutatu";
 
 /* File: ../../portable/menubar.py:272 */
-/* Flag: untranslated */
-"Show Window" = "Show Window";
+"Show Window" = "Leihoa erakutsi";
 
 /* File: ../../portable/theme.py:137 */
 /* Flag: untranslated */
 "Starter Channels" = "Starter Channels";
 
 /* File: ../../portable/theme.py:154 */
-/* Flag: untranslated */
-"Example Playlist" = "Example Playlist";
+"Example Playlist" = "Adibidezko zerrenda";
 
 /* File: ../../portable/httpclient.py:81 */
 /* Flag: python-format */
@@ -1231,18 +1206,15 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Invalid URL" = "URL Baliogabea";
 
 /* File: ../../portable/httpclient.py:150 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" is not a valid URL";
+"\"%s\" is not a valid URL" = "\"%s\" ez da baliozko URLa";
 
 /* File: ../../portable/httpclient.py:156 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "The file: \"%s\" doesn't exist";
+"The file: \"%s\" doesn't exist" = "\"%s\" fitxategia ez da existitzen";
 
 /* File: ../../portable/httpclient.py:160 */
-/* Flag: untranslated */
-"Read error" = "Read error";
+"Read error" = "Irakurketa errorea";
 
 /* File: ../../portable/httpclient.py:161 */
 /* Flag: untranslated */
@@ -1347,8 +1319,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "Ezin izan da %s gorde:Diskoa beteta dago\nBetetako diskotik fitxategiak edo zure bildumako bideo batzuk ezabatzea gomendatzen da.\nAzken aldaketak galdu daitezke";
 
 /* File: ../../portable/dialogs.py:89 */
-/* Flag: untranslated */
-"Ignore" = "Ignore";
+"Ignore" = "Ez ikusi egin";
 
 /* File: ../../portable/dialogs.py:90 */
 /* Flag: untranslated */
@@ -1409,12 +1380,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Download Anyway" = "Download Anyway" /* = "Edonola Deskargatu" */;
 
 /* File: ../../portable/dialogs.py:109 */
-/* Flag: untranslated */
-"Install iHeartMiro" = "Install iHeartMiro";
+"Install iHeartMiro" = "iHeartMiro instalatu";
 
 /* File: ../../portable/dialogs.py:110 */
-/* Flag: untranslated */
-"Don't Install" = "Don't Install";
+"Don't Install" = "Ez instalatu";
 
 /* File: ../../portable/dialogs.py:231 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
@@ -1441,7 +1410,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/controller.py:211 */
 /* Flag: python-format */
-"Are you sure you want to remove %s" = "Zihur %s ezabatu nahi duzula?";
+"Are you sure you want to remove %s" = "Ziur %s ezabatu nahi duzula?";
 
 /* File: ../../portable/controller.py:214 */
 /* File: ../../portable/controller.py:259 */
@@ -1451,9 +1420,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Remove %s channels" = "Ezabatu %s kanal";
 
 /* File: ../../portable/controller.py:216 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
+"Are you sure you want to remove these %s playlists" = "Ziur zaude %s zerrenda hauek kendu nahi dituzula";
 
 /* File: ../../portable/controller.py:255 */
 "What would you like to do with the videos in this channel that you've downloaded?" = "Zer egin nahi duzu jeitsi duzun kanaleko bideoekin?";
@@ -1463,7 +1431,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/controller.py:281 */
 /* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Zihur %s ezabatu nahi duzula? Bukatu gabeko jeitsierak ezeztatuak izango dira";
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Ziur %s ezabatu nahi duzula? Bukatu gabeko jeitsierak ezeztatuak izango dira";
 
 /* File: ../../portable/controller.py:286 */
 /* Flag: untranslated */
@@ -1471,9 +1439,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
 
 /* File: ../../portable/controller.py:301 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove %s?" = "Are you sure you want to remove %s?";
+"Are you sure you want to remove %s?" = "Ziur al zaude %s kendu nahi duzula?";
 
 /* File: ../../portable/controller.py:305 */
 /* Flag: untranslated */
@@ -1624,7 +1591,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "TORRENT" = "TORRENT";
 
 /* File: ../../portable/item.py:984 */
-"WEB PAGE" = "WEB ORRIA";
+"WEB PAGE" = "WEB GUNEA";
 
 /* File: ../../portable/item.py:994 */
 /* Flag: untranslated */

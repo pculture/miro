@@ -19,7 +19,7 @@
 <!ENTITY prefs.channels.autodownloaddefault.new "Nuevo">
 <!ENTITY prefs.channels.autodownloaddefault.off "Desactivado">
 
-<!ENTITY prefs.playback "Reproducir">
+<!ENTITY prefs.playback "Reproducción">
 <!ENTITY prefs.playback.remember.pos "Recordar la posición en la que se pausó la reproducción y continuar desde ese punto.">
 <!ENTITY prefs.playback.auto.next.video "Reproducir vídeos uno tras otro.">
 <!ENTITY prefs.playback.stop.after.each "Reproducir un vídeo y detenerse.">
