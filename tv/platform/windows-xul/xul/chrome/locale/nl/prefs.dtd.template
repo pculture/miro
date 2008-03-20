@@ -3,47 +3,47 @@
 <!ENTITY prefs.run.on.startup "Open $longAppName automatisch na het inloggen.">
 <!ENTITY prefs.close_to_tray_start "Wanneer ik het Miro venster sluit:">
 <!ENTITY prefs.close_to_tray "Minimaliseer naar systeemvak en blijf downloaden.">
-<!ENTITY prefs.no_close_to_tray "Stop Miro volledig.">
+<!ENTITY prefs.no_close_to_tray "Stop Miro volledig">
 
 <!ENTITY prefs.general "Algemeen">
 <!ENTITY prefs.general.warn_on_quit "Waarschuw mij indien ik Miro stop terwijl er downloads actief zijn.">
 
 <!ENTITY prefs.channels "Kanalen">
-<!ENTITY prefs.channels.check "Werk kanalen bij">
-<!ENTITY prefs.channels.check.thirty "Elke 30 minuten">
+<!ENTITY prefs.channels.check "Werk kanalen automatisch bij">
+<!ENTITY prefs.channels.check.thirty "Elke half uur">
 <!ENTITY prefs.channels.check.sixty "Elk uur">
 <!ENTITY prefs.channels.check.manually "Handmatig">
 
-<!ENTITY prefs.channels.autodownloaddefault "Download de instellingen voor nieuwe kanalen automatisch">
-<!ENTITY prefs.channels.autodownloaddefault.all "Allemaal">
-<!ENTITY prefs.channels.autodownloaddefault.new "Nieuw">
-<!ENTITY prefs.channels.autodownloaddefault.off "Uitzetten">
+<!ENTITY prefs.channels.autodownloaddefault "Automatische downloads van nieuwe kanalen:">
+<!ENTITY prefs.channels.autodownloaddefault.all "Alle">
+<!ENTITY prefs.channels.autodownloaddefault.new "Nieuwe">
+<!ENTITY prefs.channels.autodownloaddefault.off "Uit">
 
 <!ENTITY prefs.playback "Weergave">
-<!ENTITY prefs.playback.remember.pos "Onthoud afspeelpositie video's.">
-<!ENTITY prefs.playback.auto.next.video "Video's na elkaar afspelen.">
+<!ENTITY prefs.playback.remember.pos "Onthoud afspeelpositie video's">
+<!ENTITY prefs.playback.auto.next.video "Video's achtereen afspelen">
 <!ENTITY prefs.playback.stop.after.each "Stop na elke video.">
 
 <!ENTITY prefs.folder.movies "Mappen">
 <!ENTITY prefs.folder.downloads "Locatie gedownloade video's:">
-<!ENTITY prefs.folder.change "Wijzigen...">
+<!ENTITY prefs.folder.change "Wijzig...">
 
-<!ENTITY prefs.folder.others.caption "Monitor locaties voor nieuwe video's en voeg toe aan Bibliotheek.">
+<!ENTITY prefs.folder.others.caption "Monitor locaties voor nieuwe video's en voeg toe aan bibliotheek.">
 <!ENTITY prefs.folder.others.location "Map">
 <!ENTITY prefs.folder.others.shown "Toon als kanaal">
-<!ENTITY prefs.folder.others.add "Voeg Map Toe...">
-<!ENTITY prefs.folder.others.remove "Verwijderen">
+<!ENTITY prefs.folder.others.add "Nieuwe map...">
+<!ENTITY prefs.folder.others.remove "Verwijder">
 
 <!ENTITY prefs.downloads "Downloads" >
-<!ENTITY prefs.downloads.max "Maximum aantal manuele downloads tegelijk:">
-<!ENTITY prefs.autodownloads.max "Maximum aantal autmatische downloads van kanalen tegelijk:">
+<!ENTITY prefs.downloads.max "Beperk het aantal gelijktijdige handmatige downloads tot:">
+<!ENTITY prefs.autodownloads.max "Beperk het aantal gelijktijdige automatische downloads tot:">
 
-<!ENTITY prefs.disk.space "Vrije Ruimte">
-<!ENTITY prefs.disk.space.min.part1 "Hou tenminste zoveel vrije ruimte op mijn harde schijf:" >
+<!ENTITY prefs.disk.space "Vrije ruimte">
+<!ENTITY prefs.disk.space.min.part1 "Behoud ten alle tijde vrije ruimte, minstens:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "NB: De wijzigingen in $longAppName gaan in wanneer u deze opnieuw opent.">
 
-<!ENTITY prefs.videos.expire "Standaard vervallen video's na">
+<!ENTITY prefs.videos.expire "Verwijder bekeken video's automatisch na:">
 <!ENTITY prefs.videos.expire.one "1 dag">
 <!ENTITY prefs.videos.expire.three "3 dagen">
 <!ENTITY prefs.videos.expire.six "6 dagen">
@@ -51,12 +51,12 @@
 <!ENTITY prefs.videos.expire.thirty "1 maand">
 <!ENTITY prefs.videos.expire.never "Nooit">
 
-<!ENTITY prefs.torrent "BitTorrent">
+<!ENTITY prefs.torrent "Torrents">
 <!ENTITY prefs.torrent.restart.warning "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">
-<!ENTITY prefs.torrent.limit.upstream "Om traag internet te voorkomen, limiteer de upstreem tot:">
-<!ENTITY prefs.torrent.limit.downstream "Limiteer de downstream bandbreedte tot:">
+<!ENTITY prefs.torrent.limit.upstream "Voorkom traag internet, beperk uploadsnelheid tot:">
+<!ENTITY prefs.torrent.limit.downstream "Beperk downloadsnelheid tot:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Stuur poorten automatisch door">
-<!ENTITY prefs.torrent.require_encryption "Negeer niet geëncrypteerde connecties">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads wanneer de volgende verhouding is bereikt:">
+<!ENTITY prefs.torrent.use_ports "Gebruik de poorten:">
+<!ENTITY prefs.torrent.use_upnp "Stel poorten automatisch in">
+<!ENTITY prefs.torrent.require_encryption "Negeer onversleutelde verbindingen">
+<!ENTITY prefs.torrent.uploadratio "Stop seeden bij het bereiken van ratio:">

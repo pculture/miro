@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 19:56-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Odustani";
@@ -263,7 +263,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Don't download more than this many videos at once:" = "Don't download more than this many videos at once:" /* = "ne skidati odjednom vise od jednog videa" */;
 
-"Folder location" = "Mjesto za dossier";
+"Folder location" = "Mjesto za mapu";
 
 "GB\n" = "GB\n";
 
@@ -322,7 +322,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Stop uploads when this ratio is reached:" = "Stop uploads when this ratio is reached:";
 
 /* Flag: untranslated */
-"Store downloads in this folder:" = "Store downloads in this folder:" /* = "Sacuvati skidanja u ovaj dossier" */;
+"Store downloads in this folder:" = "Store downloads in this folder:" /* = "Sačuvati skidanja u mapu" */;
 
 /* Flag: untranslated */
 "To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to" /* = "Da bi se izbjeglo gubljenje brzine na internet, limitiraj gomilanje podataka" */;
@@ -335,7 +335,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress" /* = "Upozoriti me ako zelim napustiti kad su u tijeku skidanja" */;
 
 /* Flag: untranslated */
-"Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:" /* = "Pronadji novi video u dossier i ubaciti u knjižnicu" */;
+"Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:" /* = "Pronađi novi video u mapu i ubaci u knjižnicu" */;
 
 "every 30 minutes" = "Svakih 30 minuta";
 
@@ -347,7 +347,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "$label$" = "$label$";
 
 /* Flag: untranslated */
-"$title$" = "$title$";
+"$title$" = "$title$" /* = "$title$" */;
 
 "Channel" = "Kanal";
 
@@ -386,10 +386,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "No" = "No" /* = "Ne" */;
 
 /* Flag: untranslated */
-"Only search my Movies folder." = "Only search my Movies folder." /* = "Potraziti samo u memoriji mojih videa" */;
+"Only search my Movies folder." = "Only search my Movies folder." /* = "Potražiti samo u mapi mojih videa" */;
 
 /* Flag: untranslated */
-"Search my entire Home folder." = "Search my entire Home folder." /* = "Potražiti u kucna datoteka" */;
+"Search my entire Home folder." = "Search my entire Home folder." /* = "Potražiti u kućnu datoteku" */;
 
 "Search this folder:" = "Tražiti u ovu datoteku";
 
@@ -429,20 +429,18 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
 /* Flag: untranslated */
-"Error Bombing Item" = "Error Bombing Item";
+"Error Bombing Item" = "Error Bombing Item" /* = "Greška prilikom glasovanja na ovom članku" */;
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
 /* Flag: untranslated */
-"Error Recommending Item" = "Error Recommending Item";
+"Error Recommending Item" = "Error Recommending Item" /* = "Greška prilikom preporuke na ovom članku" */;
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
-/* Flag: untranslated */
-"Error Opening Website" = "Error Opening Website";
+"Error Opening Website" = "Greška prilikom otvaranja web stanice";
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "There was an error opening %s.  Please try again in a few seconds";
+"There was an error opening %s.  Please try again in a few seconds" = "Greška prilikom otvaranja %s. Molimo ponovite za nekoliko sekundi";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
 /* Flag: untranslated */
@@ -451,392 +449,337 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
 /* Flag: untranslated */
-"Loading window" = "Loading window";
+"Loading window" = "Loading window" /* = "Skidanje windowa" */;
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
 /* Flag: untranslated */
-"onStartup called twice" = "onStartup called twice";
+"onStartup called twice" = "onStartup called twice" /* = "onStartup je nazvan dva puta" */;
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
-/* Flag: untranslated */
-"Spacebar" = "Spacebar";
+"Spacebar" = "Razmaknica";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
 /* Flag: untranslated */
-"Close to tray?" = "Close to tray?";
+"Close to tray?" = "Close to tray?" /* = "Minimizirati stranicu ?" */;
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
 /* Flag: untranslated */
-"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options.";
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." /* = "Kad kliknete na crvenu tipku za zatvaranje, želite li minimizirati Miro na stranu ili želite napustiti stranicu ? Možete promjeniti kasnije ovu stavku u opcijama" */;
 
 /* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
-/* Flag: untranslated */
-"Download Completed" = "Download Completed";
+"Download Completed" = "Skidanje završeno";
 
 /* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Download of video '%s' is finished." = "Download of video '%s' is finished.";
+"Download of video '%s' is finished." = "Skidanje sa videa '%s' je završeno";
 
 /* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
-/* Flag: untranslated */
-"Download Failed" = "Download Failed";
+"Download Failed" = "Prekinuto skidanje";
 
 /* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Download of video '%s' has failed." = "Download of video '%s' has failed.";
+"Download of video '%s' has failed." = "Skidanje sa videa '%s' je prekinuto.";
 
 /* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
-/* Flag: untranslated */
-"Subscribe to Channel" = "Subscribe to Channel";
+"Subscribe to Channel" = "Pretplatiti se na kanal";
 
 /* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
 /* Flag: untranslated */
-"Enter the URL of the channel you would like to subscribe to." = "Enter the URL of the channel you would like to subscribe to.";
+"Enter the URL of the channel you would like to subscribe to." = "Enter the URL of the channel you would like to subscribe to." /* = "Uđite na internet adresu programa na kojem se želite pretplatiti" */;
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
-/* Flag: untranslated */
-"General" = "General";
+"General" = "Općenito";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
-/* Flag: untranslated */
-"Downloads" = "Downloads";
+"Downloads" = "Skidanja";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
-/* Flag: untranslated */
-"Folders" = "Folders";
+"Folders" = "Mape";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
 /* Flag: untranslated */
-"Disk Space" = "Disk Space";
+"Disk Space" = "Disk Space" /* = "Prostor za disk" */;
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
-/* Flag: untranslated */
-"Movies Directory" = "Movies Directory";
+"Movies Directory" = "Mapa za filmove";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"Select a Directory to store %s downloads in." = "Select a Directory to store %s downloads in.";
+"Select a Directory to store %s downloads in." = "Select a Directory to store %s downloads in." /* = "Izabrati mapu za skladištenje skidanja sa %s" */;
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
-/* Flag: untranslated */
-"Select" = "Select";
+"Select" = "Odaberi";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
 /* Flag: untranslated */
-"Migrate existing movies?" = "Migrate existing movies?";
+"Migrate existing movies?" = "Migrate existing movies?" /* = "Premjestiti postojeca videa ?" */;
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish).";
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Izabrali ste novu mapu za skidanje filmova.%s da li mora premjestiti  vasa dosadašnja skidanja na ovo mjestu ? (Dosad postojeća skidanja neće biti premještena prije nego budu završena).";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
 /* Flag: untranslated */
-"View this Directory in the Library" = "View this Directory in the Library";
+"View this Directory in the Library" = "View this Directory in the Library" /* = "Vidi ovu mapu u knjižnici" */;
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
-/* Flag: untranslated */
-"Select a Directory to view in the Library." = "Select a Directory to view in the Library.";
+"Select a Directory to view in the Library." = "Izabrati mapu koja je u knjižnici.";
 
 /* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
-/* Flag: untranslated */
-"Finish" = "Finish";
+"Finish" = "Završetak";
 
 /* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
-/* Flag: untranslated */
-"Search!" = "Search!";
+"Search!" = "Pronađite!";
 
 /* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
-/* Flag: untranslated */
-"Pause Video" = "Pause Video";
+"Pause Video" = "Pauza";
 
 /* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
 /* Flag: untranslated */
-"Unsupported version of Quicktime" = "Unsupported version of Quicktime";
+"Unsupported version of Quicktime" = "Unsupported version of Quicktime" /* = "Verzija Quicktime neprihvačena" */;
 
 /* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "To run %s you need the most recent version of Quicktime, which is a free update.";
+"To run %s you need the most recent version of Quicktime, which is a free update." = "To run %s you need the most recent version of Quicktime, which is a free update." /* = "Za stavljanje u upotrebu %s, potrebna vam je najnovija verzija Quicktime, njezina uporaba je besplatna." */;
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
-/* Flag: untranslated */
-"_Remove..." = "_Remove...";
+"_Remove..." = "_Ukloni...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:34 */
 /* Flag: untranslated */
-"_Remove Playlist..." = "_Remove Playlist...";
+"_Remove Playlist..." = "_Remove Playlist..." /* = "_Izbacite Playlistu..." */;
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:35 */
 /* Flag: untranslated */
-"_Remove Playlists..." = "_Remove Playlists...";
+"_Remove Playlists..." = "_Remove Playlists..." /* = "_Izbacite Playliste..." */;
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:36 */
 /* Flag: untranslated */
-"_Remove Playlist Folder..." = "_Remove Playlist Folder...";
+"_Remove Playlist Folder..." = "_Remove Playlist Folder..." /* = "_Izbacite mapu za playlistu..." */;
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:37 */
 /* Flag: untranslated */
-"_Remove Playlist Folders..." = "_Remove Playlist Folders...";
+"_Remove Playlist Folders..." = "_Remove Playlist Folders..." /* = "_Izbacite mape za playlistu..." */;
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:38 */
 /* File: ../../portable/menubar.py:193 */
-/* Flag: untranslated */
-"_Remove Channel..." = "_Remove Channel...";
+"_Remove Channel..." = "_Izbrišite kanal...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:39 */
 /* File: ../../portable/menubar.py:194 */
-/* Flag: untranslated */
-"_Remove Channels..." = "_Remove Channels...";
+"_Remove Channels..." = "_Izbrišite kanale...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:40 */
 /* File: ../../portable/menubar.py:196 */
-/* Flag: untranslated */
-"_Remove Channel Folder..." = "_Remove Channel Folder...";
+"_Remove Channel Folder..." = "_Izbrišite mapu za kanale...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:41 */
 /* File: ../../portable/menubar.py:195 */
-/* Flag: untranslated */
-"_Remove Channel Folders..." = "_Remove Channel Folders...";
+"_Remove Channel Folders..." = "_Izbrišite mape za kanale...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:42 */
-/* Flag: untranslated */
-"_Remove Miro Guide..." = "_Remove Miro Guide...";
+"_Remove Miro Guide..." = "_Izbrišite Miro Guide...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:43 */
-/* Flag: untranslated */
-"_Remove Miro Guides..." = "_Remove Miro Guides...";
+"_Remove Miro Guides..." = "_Izbrišite ove Miro Guide...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:44 */
-/* Flag: untranslated */
-"_Remove Video..." = "_Remove Video...";
+"_Remove Video..." = "_Izbrišite video...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:45 */
-/* Flag: untranslated */
-"_Remove Videos..." = "_Remove Videos...";
+"_Remove Videos..." = "_Izbrišite videa...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:46 */
-/* Flag: untranslated */
-"Re_name..." = "Re_name...";
+"Re_name..." = "Pre_imenovati...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:47 */
 /* Flag: untranslated */
-"Re_name Playlist..." = "Re_name Playlist...";
+"Re_name Playlist..." = "Re_name Playlist..." /* = "Pre_imenovati igranu listu..." */;
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:48 */
-/* Flag: untranslated */
-"Re_name Playlist Folder..." = "Re_name Playlist Folder...";
+"Re_name Playlist Folder..." = "Pre_imenovati mapu igranih lista...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:49 */
 /* File: ../../portable/menubar.py:192 */
-/* Flag: untranslated */
-"Re_name Channel..." = "Re_name Channel...";
+"Re_name Channel..." = "Pre_imenovati kanal...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:50 */
-/* Flag: untranslated */
-"Re_name Channel Folder..." = "Re_name Channel Folder...";
+"Re_name Channel Folder..." = "Pre_imenovati mapu za kanale...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:51 */
-/* Flag: untranslated */
-"Re_name Miro Guide..." = "Re_name Miro Guide...";
+"Re_name Miro Guide..." = "Pre_imenovati Miro Guide...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:52 */
 /* File: ../../portable/menubar.py:198 */
-/* Flag: untranslated */
-"_Update Channel..." = "_Update Channel...";
+"_Update Channel..." = "_Vratiti kanal...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:53 */
 /* File: ../../portable/menubar.py:199 */
-/* Flag: untranslated */
-"_Update Channels..." = "_Update Channels...";
+"_Update Channels..." = "_Vratiti kanale...";
 
 /* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
-/* Flag: untranslated */
-"Audio" = "Audio";
+"Audio" = "Zvuk";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
-/* Flag: untranslated */
-"Settings" = "Settings";
+"Settings" = "Postavke";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56 */
-/* Flag: untranslated */
-"Hide" = "Hide";
+"Hide" = "Sakrij";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58 */
-/* Flag: untranslated */
-"Show" = "Show";
+"Show" = "Prikaži";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59 */
 /* File: ../../portable/menubar.py:273 */
 /* File: ../../portable/dialogs.py:88 */
-/* Flag: untranslated */
-"Quit" = "Quit";
+"Quit" = "Izađi";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
-/* Flag: untranslated */
-"New Channel _Guide..." = "New Channel _Guide...";
+"New Channel _Guide..." = "Novi _vodič kanala...";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
-/* Flag: untranslated */
-"Folder Location" = "Folder Location";
+"Folder Location" = "Mjesto mape";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
-/* Flag: untranslated */
-"Username:" = "Username:";
+"Username:" = "Korisničko ime:";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
-/* Flag: untranslated */
-"Password:" = "Password:";
+"Password:" = "Lozinka";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416 */
-/* Flag: untranslated */
-"Unknown Runtime Error" = "Unknown Runtime Error";
+"Unknown Runtime Error" = "Nepoznata greška u izvršenju";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"An unknown error has occurred %s." = "An unknown error has occurred %s.";
+"An unknown error has occurred %s." = "Nepoznata greška je u %s.";
 
 /* File: ../../portable/dl_daemon/download.py:458 */
-/* Flag: untranslated */
-"Error" = "Error";
+"Error" = "Greška";
 
 /* File: ../../portable/dl_daemon/download.py:544 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Could not write to %s" = "Could not write to %s";
+"Could not write to %s" = "Nemoguće pisati u %s";
 
 /* File: ../../portable/dl_daemon/download.py:564 */
 /* File: ../../portable/dl_daemon/download.py:769 */
-/* Flag: untranslated */
-"Not enough disk space" = "Not enough disk space";
+"Not enough disk space" = "Nedovoljno prostora na disku";
 
 /* File: ../../portable/dl_daemon/download.py:565 */
 /* File: ../../portable/dl_daemon/download.py:770 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s MB required to store this video" = "%s MB required to store this video";
+"%s MB required to store this video" = "%s MB su vraćeni za sačuvati ovaj video";
 
 /* File: ../../portable/dl_daemon/download.py:781 */
 /* Flag: untranslated */
-"BitTorrent failure" = "BitTorrent failure";
+"BitTorrent failure" = "BitTorrent failure" /* = "Greška BitTorrent" */;
 
 /* File: ../../portable/dl_daemon/download.py:782 */
-/* Flag: untranslated */
-"BitTorrent failed to startup" = "BitTorrent failed to startup";
+"BitTorrent failed to startup" = "Pogreška na pokretanju BitTorrent";
 
 /* File: ../../portable/dl_daemon/download.py:954 */
-/* Flag: untranslated */
-"Corrupt Torrent" = "Corrupt Torrent";
+"Corrupt Torrent" = "Prekinut Torrent";
 
 /* File: ../../portable/dl_daemon/download.py:955 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"The torrent file at %s was not valid" = "The torrent file at %s was not valid";
+"The torrent file at %s was not valid" = "The torrent file at %s was not valid" /* = "Datoteka torrent u %s ne vrijedi" */;
 
 /* File: ../../portable/dl_daemon/download.py:980 */
 /* Flag: untranslated */
-"Torrent file deleted" = "Torrent file deleted";
+"Torrent file deleted" = "Torrent file deleted" /* = "Izbrisana datoteka torrent" */;
 
 /* File: ../../portable/dl_daemon/download.py:981 */
 /* Flag: untranslated */
-"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
+"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro." /* = "Datoteka torrent za ovaj dokument je izbrisan izvan Miro-a." */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:103 */
 /* Flag: untranslated */
-"Update Channels Now" = "Update Channels Now";
+"Update Channels Now" = "Update Channels Now" /* = "Vrati sad kanale" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:128 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"%d Downloaded Items" = "%d Downloaded Items";
+"%d Downloaded Items" = "%d Downloaded Items" /* = "%d skidanog programa." */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:130 */
 /* File: ../../portable/frontends/html/contextmenu.py:211 */
-/* Flag: untranslated */
-"Play" = "Play";
+"Play" = "Pokreni";
 
 /* File: ../../portable/frontends/html/contextmenu.py:131 */
 /* File: ../../portable/frontends/html/contextmenu.py:214 */
 /* Flag: untranslated */
-"Add to new playlist" = "Add to new playlist";
+"Add to new playlist" = "Add to new playlist" /* = "Dodati za novu playlistu" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:133 */
 /* File: ../../portable/frontends/html/contextmenu.py:207 */
 /* Flag: untranslated */
-"Remove From Playlist" = "Remove From Playlist";
+"Remove From Playlist" = "Remove From Playlist" /* = "Izbaciti iz playliste" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:135 */
 /* File: ../../portable/frontends/html/contextmenu.py:209 */
-/* Flag: untranslated */
-"Remove From the Library" = "Remove From the Library";
+"Remove From the Library" = "Izbaciti iz knjižnice";
 
 /* File: ../../portable/frontends/html/contextmenu.py:141 */
 /* File: ../../portable/frontends/html/contextmenu.py:218 */
 /* Flag: untranslated */
-"Mark as Unwatched" = "Mark as Unwatched";
+"Mark as Unwatched" = "Mark as Unwatched" /* = "Obilježiti kao nepromatran" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:146 */
 /* File: ../../portable/frontends/html/contextmenu.py:220 */
 /* Flag: untranslated */
-"Mark as Watched" = "Mark as Watched";
+"Mark as Watched" = "Mark as Watched" /* = "Obilježen kao viđen" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:151 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"%d Available Items" = "%d Available Items";
+"%d Available Items" = "%d Available Items" /* = "%d dostupnog materijala" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:152 */
 /* File: ../../portable/frontends/html/contextmenu.py:227 */
 /* File: ../../portable/dialogs.py:93 */
-/* Flag: untranslated */
-"Download" = "Download";
+"Download" = "Preuzmi";
 
 /* File: ../../portable/frontends/html/contextmenu.py:157 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"%d Downloading Items" = "%d Downloading Items";
+"%d Downloading Items" = "%d Downloading Items" /* = "%d element za skidanje" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:159 */
 /* File: ../../portable/frontends/html/contextmenu.py:225 */
-/* Flag: untranslated */
-"Cancel Download" = "Cancel Download";
+"Cancel Download" = "Prekini skidanje";
 
 /* File: ../../portable/frontends/html/contextmenu.py:161 */
 /* File: ../../portable/frontends/html/contextmenu.py:225 */
-/* Flag: untranslated */
-"Pause Download" = "Pause Download";
+"Pause Download" = "Prekinuti skidanje";
 
 /* File: ../../portable/frontends/html/contextmenu.py:164 */
 /* File: ../../portable/frontends/html/contextmenu.py:223 */
 /* Flag: untranslated */
-"Restart Upload" = "Restart Upload";
+"Restart Upload" = "Restart Upload" /* = "Pokrenuti dokumenti" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:170 */
 /* Flag: untranslated */
-"Update Channel Now" = "Update Channel Now";
+"Update Channel Now" = "Update Channel Now" /* = "Vratiti kanal" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:172 */
 /* File: ../../portable/frontends/html/contextmenu.py:196 */
 /* Flag: untranslated */
-"Copy URL to clipboard" = "Copy URL to clipboard";
+"Copy URL to clipboard" = "Copy URL to clipboard" /* = "Kopirati internet adresu na papiru" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:173 */
 /* File: ../../portable/feed.py:825 */
-/* Flag: untranslated */
-"Rename Channel" = "Rename Channel";
+"Rename Channel" = "Podigni Kanal";
 
 /* File: ../../portable/frontends/html/contextmenu.py:177 */
 /* Flag: untranslated */
@@ -844,602 +787,499 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/frontends/html/contextmenu.py:183 */
 /* File: ../../portable/folder.py:142 */
-/* Flag: untranslated */
-"Rename Channel Folder" = "Rename Channel Folder";
+"Rename Channel Folder" = "Preimenovati mape kanala";
 
 /* File: ../../portable/frontends/html/contextmenu.py:189 */
 /* File: ../../portable/folder.py:213 */
 /* Flag: untranslated */
-"Rename Playlist Folder" = "Rename Playlist Folder";
+"Rename Playlist Folder" = "Rename Playlist Folder" /* = "Preimenovati mapu playliste" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:213 */
 /* Flag: untranslated */
-"Play Just This Video" = "Play Just This Video";
+"Play Just This Video" = "Play Just This Video" /* = "Čitati samo ovaj video" */;
 
 /* File: ../../portable/frontends/html/contextmenu.py:232 */
 /* File: ../../portable/playlist.py:218 */
-/* Flag: untranslated */
-"Rename Playlist" = "Rename Playlist";
+"Rename Playlist" = "Preimenovati playlistu";
 
 /* File: ../../portable/frontends/html/main.py:132 */
 /* File: ../../portable/startup.py:237 */
 /* Flag: untranslated */
-"Video Directory Missing" = "Video Directory Missing";
+"Video Directory Missing" = "Video Directory Missing" /* = "Mapa za videa koja nedostaju" */;
 
 /* File: ../../portable/frontends/html/main.py:133 */
 /* Flag: untranslated */
-"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." /* = "\n    Miro ne pronalazi vašu mapu za video. Ova mapa se možda nalazi na vanjskom drivu koji je trenutno isključen.\nAko nastavljate, izgubit ćete pojedini detalji na video koji su na vanskom drivu. Možete napustiti Miro, spojiti driver ponovo uključiti Miro." */;
 
 /* File: ../../portable/frontends/html/main.py:190 */
 /* File: ../../portable/theme.py:126 */
 /* Flag: untranslated */
-"Custom Channels" = "Custom Channels";
+"Custom Channels" = "Custom Channels" /* = "Osobni kanali" */;
 
 /* File: ../../portable/frontends/html/main.py:190 */
 /* File: ../../portable/theme.py:126 */
 /* Flag: untranslated */
-"You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels.";
+"You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels." /* = "Vi imate verziju $longAppname sa listom osobnih kanala" */;
 
 /* File: ../../portable/frontends/html/main.py:269 */
 /* File: ../../portable/httpclient.py:139 */
-/* Flag: untranslated */
-"Internal Error" = "Internal Error";
+"Internal Error" = "Interna greška";
+
+/* File: ../../portable/frontends/html/main.py:269 */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro je pronašao jednu unutarnju grešku. Vi nam možete pomoći u pronalasku problema i ispraviti ga tako da pošaljete izvještaj greške.";
 
 /* File: ../../portable/frontends/html/main.py:269 */
 /* Flag: untranslated */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report.";
+"Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report" /* = "Uključiti cijelu bazu podataka programa kao i meta podaci kanala i videa u izvještaju greške." */;
 
 /* File: ../../portable/frontends/html/main.py:269 */
-/* Flag: untranslated */
-"Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-/* Flag: untranslated */
-"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
+"Describe what you were doing that caused this error" = "Opišite što ste radili i tko je napravio pogrešku.";
 
 /* File: ../../portable/frontends/html/main.py:284 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s Version Alert" = "%s Version Alert";
+"%s Version Alert" = "Nova verzija %s";
 
 /* File: ../../portable/frontends/html/main.py:285 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"A new version of %s is available. Would you like to download it now?" = "A new version of %s is available. Would you like to download it now?";
+"A new version of %s is available. Would you like to download it now?" = "Nova verzija od %s je dostupna. Da li želite skidati odmah?";
 
 /* File: ../../portable/frontends/html/main.py:290 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s Version Check" = "%s Version Check";
+"%s Version Check" = "Provjera verzije %s";
 
 /* File: ../../portable/frontends/html/main.py:291 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s is up to date." = "%s is up to date.";
+"%s is up to date." = "%s je spreman za uporabu";
 
 /* File: ../../portable/frontends/html/main.py:309 */
-/* Flag: untranslated */
-"Are you sure you want to quit?" = "Are you sure you want to quit?";
+"Are you sure you want to quit?" = "Jesi li siguran da želiš odustati?";
 
 /* File: ../../portable/frontends/html/main.py:311 */
-/* Flag: untranslated */
-"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?";
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro sprema slanje vašeg izvještaja pogrešaka. Ako sad odustanete, izvještaj će biti otkazan. Da li ipak želite napustiti ?";
 
 /* File: ../../portable/frontends/html/main.py:340 */
 /* Flag: untranslated */
-"Import OPML File" = "Import OPML File";
+"Import OPML File" = "Import OPML File" /* = "Uvesti dokumenti OPML" */;
 
 /* File: ../../portable/frontends/html/main.py:342 */
 /* Flag: untranslated */
-"OPML Files" = "OPML Files";
+"OPML Files" = "OPML Files" /* = "Dokument OPML" */;
 
 /* File: ../../portable/frontends/html/main.py:347 */
 /* Flag: untranslated */
-"Export OPML File" = "Export OPML File";
+"Export OPML File" = "Export OPML File" /* = "Izvoziti OPML dokument" */;
 
 /* File: ../../portable/frontends/html/templatedisplay.py:325 */
-/* Flag: untranslated */
-"Invalid Value" = "Invalid Value";
+"Invalid Value" = "Neispravna vrijednost.";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:326 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number.";
+"%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number." /* = "%s je neispravna. Morate uvoditi ne-negativan broj" */;
 
 /* File: ../../portable/frontends/html/templatedisplay.py:452 */
 /* Flag: untranslated */
-"Error Revealing File" = "Error Revealing File";
+"Error Revealing File" = "Error Revealing File" /* = "Pogreška prilikom štampanja dokumenta" */;
 
 /* File: ../../portable/frontends/html/templatedisplay.py:453 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"The file \"%s\" was deleted from outside Miro." = "The file \"%s\" was deleted from outside Miro.";
+"The file \"%s\" was deleted from outside Miro." = "The file \"%s\" was deleted from outside Miro." /* = "Dokument \"%s je izbrisan preko druge aplikacije od Miro-a." */;
 
 /* File: ../../portable/frontends/html/templatedisplay.py:560 */
-/* Flag: untranslated */
-"Error Changing Movies Directory" = "Error Changing Movies Directory";
+"Error Changing Movies Directory" = "Greška prilikom mjenjanja mape videa.";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:561 */
 /* Flag: untranslated */
-"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory.";
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." /* = "Nemate pravo pisati u mapi koju ste izabrali. Miro će nastaviti koristiti staru mapu videa." */;
 
 /* File: ../../portable/frontends/html/templatedisplay.py:664 */
-/* Flag: untranslated */
-" - Invalid URL" = " - Invalid URL";
+" - Invalid URL" = " Internet adresa nevažeća";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:665 */
 /* Flag: untranslated */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "The address you entered is not a valid URL.\nPlease double check and try again.\n\n";
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "The address you entered is not a valid URL.\nPlease double check and try again.\n\n" /* = "Adresu koju ste unijeli nije važeča internet adresa;\nMolimo provjerite i pokušajte ponovo.\n\n" */;
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"$shortAppName - Add Channel" = "$shortAppName- Dodajte jedan kanal";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:691 */
 /* Flag: untranslated */
-"$shortAppName - Add Channel" = "$shortAppName - Add Channel";
+"Enter the URL of the channel to add" = "Enter the URL of the channel to add" /* = "Uči u internet adresu kanala koja se dodaje" */;
 
-/* File: ../../portable/frontends/html/templatedisplay.py:691 */
-/* Flag: untranslated */
-"Enter the URL of the channel to add" = "Enter the URL of the channel to add";
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"$shortAppName - Add Miro Guide" = "$shortAppName- dodajte Miro Guide";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:712 */
 /* Flag: untranslated */
-"$shortAppName - Add Miro Guide" = "$shortAppName - Add Miro Guide";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:712 */
-/* Flag: untranslated */
-"Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add";
+"Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add" /* = "Uđite u internet adresu Miro Guide koji se pridodaje" */;
 
 /* File: ../../portable/frontends/html/templatedisplay.py:718 */
 /* Flag: untranslated */
-"$shortAppName - Download Video" = "$shortAppName - Download Video";
+"$shortAppName - Download Video" = "$shortAppName - Download Video" /* = "$shortAppName- skidanje videa" */;
 
 /* File: ../../portable/frontends/html/templatedisplay.py:718 */
 /* Flag: untranslated */
-"Enter the URL of the video to download" = "Enter the URL of the video to download";
+"Enter the URL of the video to download" = "Enter the URL of the video to download" /* = "Uđite na internet adresu videa koji se skida" */;
 
 /* File: ../../portable/tabs.py:55 */
 /* Flag: untranslated */
-"Library" = "Library";
+"Library" = "Library" /* = "Knjižnica" */;
 
 /* File: ../../portable/tabs.py:58 */
-/* Flag: untranslated */
-"Downloading" = "Downloading";
+"Downloading" = "Preuzimanje";
 
 /* File: ../../portable/downloader.py:234 */
-/* Flag: untranslated */
-"activity" = "activity";
+"activity" = "Aktivnost";
 
 /* File: ../../portable/downloader.py:268 */
 /* File: ../../portable/httpclient.py:127 */
 /* File: ../../portable/httpclient.py:155 */
-/* Flag: untranslated */
-"File not found" = "File not found";
+"File not found" = "Datoteka nije pronađena";
 
 /* File: ../../portable/downloader.py:269 */
 /* Flag: untranslated */
-"Flash URL Scraping Error" = "Flash URL Scraping Error";
+"Flash URL Scraping Error" = "Flash URL Scraping Error" /* = "Greška na preuzimanju URL flash" */;
 
 /* File: ../../portable/downloader.py:445 */
 /* Flag: untranslated */
-"starting up" = "starting up";
+"starting up" = "starting up" /* = "Početak" */;
 
 /* File: ../../portable/playlist.py:219 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s";
+"Enter a new name for the playlist %s" = "Enter a new name for the playlist %s" /* = "Unesi novo ime na playlisti %s" */;
 
 /* File: ../../portable/playlist.py:241 */
-/* Flag: untranslated */
-"Create Playlist" = "Create Playlist";
+"Create Playlist" = "Kreiraj playlistu";
 
 /* File: ../../portable/playlist.py:242 */
-/* Flag: untranslated */
-"Enter a name for the new playlist" = "Enter a name for the new playlist";
+"Enter a name for the new playlist" = "Unesi ime za novu playlistu";
 
 /* File: ../../portable/opml.py:144 */
-/* Flag: untranslated */
-"OPML Import failed" = "OPML Import failed";
+"OPML Import failed" = "Greška prilikom unosa na datoteku OPML";
 
 /* File: ../../portable/opml.py:145 */
-/* Flag: untranslated */
-"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
+"The selected OPML file appears to be invalid. Import was interrupted." = "Izabrana OPML datoteka je nevažeča. Unos je prekinut";
 
 /* File: ../../portable/opml.py:150 */
-/* Flag: untranslated */
-"OPML Import summary" = "OPML Import summary";
+"OPML Import summary" = "Izvještaj unosa OPML datoteke";
 
 /* File: ../../portable/util.py:266 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%1.1fGB" = "%1.1fGB";
 
 /* File: ../../portable/util.py:268 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%dGB" = "%dGB";
 
 /* File: ../../portable/util.py:272 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%1.1fMB" = "%1.1fMB";
 
 /* File: ../../portable/util.py:274 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%dMB" = "%dMB";
 
 /* File: ../../portable/util.py:278 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%1.1fKB" = "%1.1fKB";
 
 /* File: ../../portable/util.py:280 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%dKB" = "%dKB";
 
 /* File: ../../portable/util.py:284 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%1.1fB" = "%1.1fB";
 
 /* File: ../../portable/util.py:286 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%dB" = "%dB";
 
 /* File: ../../portable/iheartmiro.py:82 */
-/* Flag: untranslated */
-"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.";
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "Pomozite projektu Miro brz napora.\n\nMiro je projekt open-source koji se razvija preko neprofitabilne organizacije. Potrebna nam je vaša pomoć za nastavak poboljšanja našeg proizvoda.\n\n'I Heart Miro' je proširenje Firefoxa koji omogućuje Miro organizaciji da dobije postotak od prodaje kad kupujete preko Amazon. To nećete primjetiti jer vas to ništa ne košta i jednostavno je isključititi kad to želite.\n\nAko kliknete na 'Instaler iHeartMiro', Firefox će se uključititi i pitat će vas da potvrdite. Kliknite 'DA' i to je sve! I to za svega 7 sekundi... I hvala vam na vašoj pomoći!";
 
 /* File: ../../portable/menubar.py:158 */
-/* Flag: untranslated */
-"_Open" = "_Open";
+"_Open" = "_Otvori";
 
 /* File: ../../portable/menubar.py:159 */
-/* Flag: untranslated */
-"_Download Video" = "_Download Video";
+"_Download Video" = "_Skidaj video";
 
 /* File: ../../portable/menubar.py:161 */
-/* Flag: untranslated */
-"Check _Version" = "Check _Version";
+"Check _Version" = "Provjeriti _Verziju";
 
 /* File: ../../portable/menubar.py:163 */
-/* Flag: untranslated */
-"_Remove Video" = "_Remove Video";
+"_Remove Video" = "_Izbrisati video";
 
 /* File: ../../portable/menubar.py:164 */
-/* Flag: untranslated */
-"_Remove Videos" = "_Remove Videos";
+"_Remove Videos" = "-Izbrisati videa";
 
 /* File: ../../portable/menubar.py:165 */
-/* Flag: untranslated */
-"Re_name Video" = "Re_name Video";
+"Re_name Video" = "Preimenuj video";
 
 /* File: ../../portable/menubar.py:166 */
-/* Flag: untranslated */
-"Save Video _As..." = "Save Video _As...";
+"Save Video _As..." = "Snimiti video _pod...";
 
 /* File: ../../portable/menubar.py:167 */
-/* Flag: untranslated */
-"Save Videos _As..." = "Save Videos _As...";
+"Save Videos _As..." = "Snimiti video pod...";
 
 /* File: ../../portable/menubar.py:168 */
 /* Flag: untranslated */
-"Copy Video _URL" = "Copy Video _URL";
+"Copy Video _URL" = "Copy Video _URL" /* = "Kopirati URL videa" */;
 
 /* File: ../../portable/menubar.py:170 */
-/* Flag: untranslated */
-"_Options..." = "_Options...";
+"_Options..." = "_Postavke...";
 
 /* File: ../../portable/menubar.py:171 */
-/* Flag: untranslated */
-"_Quit" = "_Quit";
+"_Quit" = "_Izađi";
 
 /* File: ../../portable/menubar.py:179 */
-/* Flag: untranslated */
-"Cu_t" = "Cu_t";
+"Cu_t" = "Izreži";
 
 /* File: ../../portable/menubar.py:180 */
-/* Flag: untranslated */
-"_Copy" = "_Copy";
+"_Copy" = "_Kopiraj";
 
 /* File: ../../portable/menubar.py:181 */
-/* Flag: untranslated */
-"_Paste" = "_Paste";
+"_Paste" = "-Umetni";
 
 /* File: ../../portable/menubar.py:182 */
-/* Flag: untranslated */
-"Select _All" = "Select _All";
+"Select _All" = "Označi _Sve";
 
 /* File: ../../portable/menubar.py:183 */
-/* Flag: untranslated */
-"_Delete" = "_Delete";
+"_Delete" = "_Obriši";
 
 /* File: ../../portable/menubar.py:187 */
-/* Flag: untranslated */
-"Add _Channel" = "Add _Channel";
+"Add _Channel" = "Dodati _kanal";
 
 /* File: ../../portable/menubar.py:188 */
 /* Flag: untranslated */
-"New Searc_h Channel..." = "New Searc_h Channel...";
+"New Searc_h Channel..." = "New Searc_h Channel..." /* = "Novi kanal za pronači" */;
 
 /* File: ../../portable/menubar.py:189 */
-/* Flag: untranslated */
-"New _Folder..." = "New _Folder...";
+"New _Folder..." = "Nova mapa";
 
 /* File: ../../portable/menubar.py:190 */
-/* Flag: untranslated */
-"Add Channel _Guide..." = "Add Channel _Guide...";
+"Add Channel _Guide..." = "Dodajte _Vodič za kanale...";
 
 /* File: ../../portable/menubar.py:200 */
-/* Flag: untranslated */
-"Update _All Channels" = "Update _All Channels";
+"Update _All Channels" = "Staviti na početak svi _kanali";
 
 /* File: ../../portable/menubar.py:202 */
-/* Flag: untranslated */
-"_Import Channels (OPML)..." = "_Import Channels (OPML)...";
+"_Import Channels (OPML)..." = "_Uvoditi kanale (OPML)";
 
 /* File: ../../portable/menubar.py:203 */
-/* Flag: untranslated */
-"E_xport Channels (OPML)..." = "E_xport Channels (OPML)...";
+"E_xport Channels (OPML)..." = "I_zvoziti kanali (OPML)";
 
 /* File: ../../portable/menubar.py:205 */
-/* Flag: untranslated */
-"_Send this channel to a friend" = "_Send this channel to a friend";
+"_Send this channel to a friend" = "_Poslati ovaj kanal jednom prijatelju";
 
 /* File: ../../portable/menubar.py:206 */
-/* Flag: untranslated */
-"Copy Channel _Link" = "Copy Channel _Link";
+"Copy Channel _Link" = "Kopirati kanal link";
 
 /* File: ../../portable/menubar.py:209 */
 /* Flag: untranslated */
-"New _Playlist" = "New _Playlist";
+"New _Playlist" = "New _Playlist" /* = "Nova playlista" */;
 
 /* File: ../../portable/menubar.py:210 */
-/* Flag: untranslated */
-"New Playlist Fol_der" = "New Playlist Fol_der";
+"New Playlist Fol_der" = "Nova mapa playliste";
 
 /* File: ../../portable/menubar.py:212 */
-/* Flag: untranslated */
-"Re_name Playlist" = "Re_name Playlist";
+"Re_name Playlist" = "Pre_imenovati playlistu";
 
 /* File: ../../portable/menubar.py:213 */
-/* Flag: untranslated */
-"_Remove Playlist" = "_Remove Playlist";
+"_Remove Playlist" = "_Izbrisati playlistu";
 
 /* File: ../../portable/menubar.py:214 */
-/* Flag: untranslated */
-"_Remove Playlists" = "_Remove Playlists";
+"_Remove Playlists" = "_Izbrisati playliste";
 
 /* File: ../../portable/menubar.py:215 */
-/* Flag: untranslated */
-"_Remove Playlist Folders" = "_Remove Playlist Folders";
+"_Remove Playlist Folders" = "Izbrisati mape za playliste";
 
 /* File: ../../portable/menubar.py:216 */
-/* Flag: untranslated */
-"_Remove Playlist Folder" = "_Remove Playlist Folder";
+"_Remove Playlist Folder" = "_Izbrisati mapu playliste";
 
 /* File: ../../portable/menubar.py:226 */
 /* File: ../../portable/menubar.py:227 */
-/* Flag: untranslated */
-"_Play" = "_Play";
+"_Play" = "Učitaj";
 
 /* File: ../../portable/menubar.py:228 */
-/* Flag: untranslated */
-"_Pause" = "_Pause";
+"_Pause" = "_Pauza";
 
 /* File: ../../portable/menubar.py:229 */
-/* Flag: untranslated */
-"_Stop" = "_Stop";
+"_Stop" = "_Zaustavi";
 
 /* File: ../../portable/menubar.py:231 */
-/* Flag: untranslated */
-"_Next Video" = "_Next Video";
+"_Next Video" = "_Sljedeći video";
 
 /* File: ../../portable/menubar.py:232 */
-/* Flag: untranslated */
-"_Previous Video" = "_Previous Video";
+"_Previous Video" = "Prethodni video";
 
 /* File: ../../portable/menubar.py:234 */
 /* Flag: untranslated */
-"Skip _Forward" = "Skip _Forward";
+"Skip _Forward" = "Skip _Forward" /* = "Brzo _preskakanje" */;
 
 /* File: ../../portable/menubar.py:235 */
-/* Flag: untranslated */
-"Skip _Back" = "Skip _Back";
+"Skip _Back" = "Brzi _povratak";
 
 /* File: ../../portable/menubar.py:237 */
-/* Flag: untranslated */
-"Volume _Up" = "Volume _Up";
+"Volume _Up" = "Pojačati zvuk";
 
 /* File: ../../portable/menubar.py:238 */
-/* Flag: untranslated */
-"Volume _Down" = "Volume _Down";
+"Volume _Down" = "Smanjiti zvuk";
 
 /* File: ../../portable/menubar.py:240 */
-/* Flag: untranslated */
-"_Fullscreen" = "_Fullscreen";
+"_Fullscreen" = "_Cijeli zaslon";
 
 /* File: ../../portable/menubar.py:244 */
 /* Flag: untranslated */
-"_About" = "_About";
+"_About" = "_About" /* = "_U vezi sa..." */;
 
 /* File: ../../portable/menubar.py:245 */
-/* Flag: untranslated */
-"_Donate" = "_Donate";
+"_Donate" = "_Donirati";
 
 /* File: ../../portable/menubar.py:246 */
 /* File: ../../portable/menubar.py:261 */
-/* Flag: untranslated */
-"_Help" = "_Help";
+"_Help" = "_Pomoć";
 
 /* File: ../../portable/menubar.py:248 */
-/* Flag: untranslated */
-"Report a _Bug" = "Report a _Bug";
+"Report a _Bug" = "Prijaviti grešku";
 
 /* File: ../../portable/menubar.py:252 */
-/* Flag: untranslated */
 "_Video" = "_Video";
 
 /* File: ../../portable/menubar.py:254 */
-/* Flag: untranslated */
-"_File" = "_File";
+"_File" = "_Datoteka";
 
 /* File: ../../portable/menubar.py:258 */
-/* Flag: untranslated */
-"_Channels" = "_Channels";
+"_Channels" = "_Kanali";
 
 /* File: ../../portable/menubar.py:259 */
-/* Flag: untranslated */
-"_Playlists" = "_Playlists";
+"_Playlists" = "_Playliste";
 
 /* File: ../../portable/menubar.py:260 */
 /* Flag: untranslated */
-"P_layback" = "P_layback";
+"P_layback" = "P_layback" /* = "Č_itanje" */;
 
 /* File: ../../portable/menubar.py:265 */
-/* Flag: untranslated */
-"Play Unwatched ($numUnwatched)" = "Play Unwatched ($numUnwatched)";
+"Play Unwatched ($numUnwatched)" = "Čitanje";
 
 /* File: ../../portable/menubar.py:266 */
-/* Flag: untranslated */
-"Pause All Downloads ($numDownloading)" = "Pause All Downloads ($numDownloading)";
+"Pause All Downloads ($numDownloading)" = "Zaustaviti sva skidanja";
 
 /* File: ../../portable/menubar.py:267 */
 /* Flag: untranslated */
-"Resume All Downloads ($numPaused)" = "Resume All Downloads ($numPaused)";
+"Resume All Downloads ($numPaused)" = "Resume All Downloads ($numPaused)" /* = "Preuzeti sva skidanja" */;
 
 /* File: ../../portable/menubar.py:269 */
-/* Flag: untranslated */
-"Options..." = "Options...";
+"Options..." = "Postavke...";
 
 /* File: ../../portable/menubar.py:271 */
 /* Flag: untranslated */
-"Hide Window" = "Hide Window";
+"Hide Window" = "Hide Window" /* = "Sakriti prozor" */;
 
 /* File: ../../portable/menubar.py:272 */
-/* Flag: untranslated */
-"Show Window" = "Show Window";
+"Show Window" = "Otkriti prozor";
 
 /* File: ../../portable/theme.py:137 */
-/* Flag: untranslated */
-"Starter Channels" = "Starter Channels";
+"Starter Channels" = "Pokrenuti kanale";
 
 /* File: ../../portable/theme.py:154 */
 /* Flag: untranslated */
-"Example Playlist" = "Example Playlist";
+"Example Playlist" = "Example Playlist" /* = "Primjer playliste" */;
 
 /* File: ../../portable/httpclient.py:81 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Error: %s" = "Error: %s";
+"Error: %s" = "Greška: %s";
 
 /* File: ../../portable/httpclient.py:96 */
 /* File: ../../portable/httpclient.py:102 */
-/* Flag: untranslated */
-"Can't connect" = "Can't connect";
+"Can't connect" = "Ne može se povezati";
 
 /* File: ../../portable/httpclient.py:97 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Connection Error: %s" = "Connection Error: %s";
+"Connection Error: %s" = "Greška u vezi: %s";
 
 /* File: ../../portable/httpclient.py:103 */
-/* Flag: untranslated */
-"SSL connection error" = "SSL connection error";
+"SSL connection error" = "Pogreška veze SSL";
 
 /* File: ../../portable/httpclient.py:107 */
-/* Flag: untranslated */
-"HTTP error" = "HTTP error";
+"HTTP error" = "Pogreška HTTP";
 
 /* File: ../../portable/httpclient.py:110 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Bad Status Line: %s" = "Bad Status Line: %s";
+"Bad Status Line: %s" = "Loše stanje veze: %s";
 
 /* File: ../../portable/httpclient.py:113 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Bad Header Line: %s" = "Bad Header Line: %s";
+"Bad Header Line: %s" = "Loš predvodnik: %s";
 
 /* File: ../../portable/httpclient.py:116 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Bad Chunk size: %s" = "Bad Chunk size: %s";
+"Bad Chunk size: %s" = "Loš komad: %s";
 
 /* File: ../../portable/httpclient.py:119 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Expected CRLF got: %r" = "Expected CRLF got: %r";
+"Expected CRLF got: %r" = "Očekivani CRLF: %r";
 
 /* File: ../../portable/httpclient.py:122 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s closed connection" = "%s closed connection";
+"%s closed connection" = "%s je prekinuo vezu";
 
 /* File: ../../portable/httpclient.py:128 */
-/* Flag: untranslated */
-"Got 404 status code" = "Got 404 status code";
+"Got 404 status code" = "Izvještaj greške 404 je primljen";
 
 /* File: ../../portable/httpclient.py:130 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"Bad Status Code: %s" = "Bad Status Code: %s";
+"Bad Status Code: %s" = "Bad Status Code: %s" /* = "Loš izvještaj: %s" */;
 
 /* File: ../../portable/httpclient.py:134 */
-/* Flag: untranslated */
-"Authorization failed" = "Authorization failed";
+"Authorization failed" = "Odbijena dozvola";
 
 /* File: ../../portable/httpclient.py:140 */
 /* Flag: untranslated */
-"Pipeline request never started" = "Pipeline request never started";
+"Pipeline request never started" = "Pipeline request never started" /* = "Povjerljiva veza nikad nije započela" */;
 
 /* File: ../../portable/httpclient.py:144 */
-/* Flag: untranslated */
-"Timeout" = "Timeout";
+"Timeout" = "Prekoračenje vremena";
 
 /* File: ../../portable/httpclient.py:145 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Connection to %s timed out" = "Connection to %s timed out";
+"Connection to %s timed out" = "Ograničeno vrijeme povezivanja u %s je prošlo";
 
 /* File: ../../portable/httpclient.py:149 */
-/* Flag: untranslated */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Neispravan URL";
 
 /* File: ../../portable/httpclient.py:150 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" is not a valid URL";
+"\"%s\" is not a valid URL" = "''%s je neispravan URL";
 
 /* File: ../../portable/httpclient.py:156 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "The file: \"%s\" doesn't exist";
+"The file: \"%s\" doesn't exist" = "Datoteka: \"%s\" ne postoji";
 
 /* File: ../../portable/httpclient.py:160 */
 /* Flag: untranslated */
-"Read error" = "Read error";
+"Read error" = "Read error" /* = "Greška pri čitanju" */;
 
 /* File: ../../portable/httpclient.py:161 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Error while reading from \"%s\"" = "Error while reading from \"%s\"";
+"Error while reading from \"%s\"" = "Greška prilikom čitanja od \"%s\"";
 
 /* File: ../../portable/httpclient.py:354 */
-/* Flag: untranslated */
-"Unknown Error code" = "Unknown Error code";
+"Unknown Error code" = "Nepoznati kod greške";
 
 /* File: ../../portable/httpclient.py:386 */
 /* Flag: untranslated */
-"Connection closed" = "Connection closed";
+"Connection closed" = "Connection closed" /* = "Veza je zatvorena" */;
 
 /* File: ../../portable/httpclient.py:811 */
 /* Flag: untranslated */
-"Unknown" = "Unknown";
+"Unknown" = "Unknown" /* = "Nepoznato" */;
 
 /* File: ../../portable/httpclient.py:812 */
-/* Flag: untranslated */
-"Internal Error: Not ready to send" = "Internal Error: Not ready to send";
+"Internal Error: Not ready to send" = "Unutarnja greška: Nije spremno za poslati";
 
 /* File: ../../portable/extrastrings.py:33 */
 /* File: ../../portable/feed.py:2409 */
@@ -1447,1104 +1287,874 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Search" = "Pretraživanje";
 
 /* File: ../../portable/feed.py:384 */
-/* Flag: untranslated */
-"never" = "never";
+"never" = "nikada";
 
 /* File: ../../portable/feed.py:386 */
 /* File: ../../portable/item.py:554 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d hours" = "%d hours";
+"%d hours" = "%d sati";
 
 /* File: ../../portable/feed.py:388 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d day" = "%d day";
+"%d day" = "%d dan";
 
 /* File: ../../portable/feed.py:390 */
 /* File: ../../portable/item.py:552 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d days" = "%d days";
+"%d days" = "%d dani";
 
 /* File: ../../portable/feed.py:392 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d months" = "%d months";
+"%d months" = "%d mjeseci";
 
 /* File: ../../portable/feed.py:826 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the channel %s" = "Enter a new name for the channel %s";
+"Enter a new name for the channel %s" = "Stavite novo ime za kanal %s";
 
 /* File: ../../portable/feed.py:923 */
 /* Flag: untranslated */
-"Error loading feed" = "Error loading feed";
+"Error loading feed" = "Error loading feed" /* = "Greška prilikom mjenjanja kabela" */;
 
 /* File: ../../portable/feed.py:924 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s).";
+"Couldn't load the feed at %s (%s)." = "Punjenje napajanje %s (%s) je nemoguće";
 
 /* File: ../../portable/feed.py:927 */
-/* Flag: untranslated */
-"Would you like to keep the feed?" = "Would you like to keep the feed?";
+"Would you like to keep the feed?" = "Želite li zadržati napajanje ?";
 
 /* File: ../../portable/feed.py:1040 */
-/* Flag: untranslated */
-"Bad content-type" = "Bad content-type";
+"Bad content-type" = "Loša vrsta sadržaja";
 
 /* File: ../../portable/feed.py:1053 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-/* Flag: untranslated */
-"Channel is not compatible with $shortAppName!" = "Channel is not compatible with $shortAppName!";
+"Channel is not compatible with $shortAppName!" = "Ovaj kanal nije kompatibilan sa $shortAppName!";
 
 /* File: ../../portable/feed.py:1054 */
 /* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" /* = "Napravit ćemo sve da dobijemo datoteku. To može potrajati za prolistati sva videa, i njihov opis može biti ćudan. Molim vas, kontaktirajte izdavače '$url' i pitajte ih da li oni mogu uključiti kompatibilni format sa $shortAppName.\nDa li ipak želite napuniti ovaj kanal ?" */;
 
 /* File: ../../portable/feed.py:2513 */
-/* Flag: untranslated */
-"Local Files" = "Local Files";
+"Local Files" = "Lokalne datoteke";
 
 /* File: ../../portable/feed.py:2527 */
-/* Flag: untranslated */
-"Playing File" = "Playing File";
+"Playing File" = "Čitanje u tijeku";
 
 /* File: ../../portable/storedatabase.py:859 */
 /* File: ../../portable/storedatabase.py:1258 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s database save succeeded" = "%s database save succeeded";
+"%s database save succeeded" = "Sačuvati bazu podataka od %s uspješno";
 
 /* File: ../../portable/storedatabase.py:860 */
 /* File: ../../portable/storedatabase.py:1259 */
-/* Flag: untranslated */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "The database has been successfully saved. It is now safe to quit without losing any data.";
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Baza podataka je uspješno sačuvana. Sad je moguće napustiti bez gubljenja podataka.";
 
 /* File: ../../portable/storedatabase.py:867 */
 /* File: ../../portable/storedatabase.py:1267 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s database save failed" = "%s database save failed";
+"%s database save failed" = "Neuspješno sačuvanje baza podataka od %s";
 
 /* File: ../../portable/storedatabase.py:868 */
 /* File: ../../portable/storedatabase.py:1268 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.";
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s je nemoguće sa spasi bazu podataka: disk je pun.\nPreporučujemo da izbrišete neke datoteke sa punog diska da jednostavno izbrišete neke filmove iz vaše kolekcije.\nNedavne promjene mogu biti izgubljena";
 
 /* File: ../../portable/dialogs.py:89 */
-/* Flag: untranslated */
-"Ignore" = "Ignore";
+"Ignore" = "Ignoriraj";
 
 /* File: ../../portable/dialogs.py:90 */
-/* Flag: untranslated */
-"Submit Crash Report" = "Submit Crash Report";
+"Submit Crash Report" = "Poslati izvještaj greške";
 
 /* File: ../../portable/dialogs.py:91 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-/* Flag: untranslated */
-"Migrate" = "Migrate";
+"Migrate" = "Premjestiti";
 
 /* File: ../../portable/dialogs.py:92 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-/* Flag: untranslated */
-"Don't Migrate" = "Don't Migrate";
+"Don't Migrate" = "Ne premjestiti";
 
 /* File: ../../portable/dialogs.py:94 */
 /* Flag: untranslated */
-"Remove Entry" = "Remove Entry";
+"Remove Entry" = "Remove Entry" /* = "Obriši unos" */;
 
 /* File: ../../portable/dialogs.py:95 */
-/* Flag: untranslated */
-"Delete File" = "Delete File";
+"Delete File" = "Izbriši datoteku";
 
 /* File: ../../portable/dialogs.py:96 */
-/* Flag: untranslated */
-"Delete Files" = "Delete Files";
+"Delete Files" = "Brisanje datoteka";
 
 /* File: ../../portable/dialogs.py:97 */
-/* Flag: untranslated */
-"Keep Videos" = "Keep Videos";
+"Keep Videos" = "Sačuvati videa";
 
 /* File: ../../portable/dialogs.py:98 */
-/* Flag: untranslated */
-"Delete Videos" = "Delete Videos";
+"Delete Videos" = "Izbrisati videa";
 
 /* File: ../../portable/dialogs.py:100 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-/* Flag: untranslated */
-"Create Channel" = "Create Channel";
+"Create Channel" = "Kreirati kanal";
 
 /* File: ../../portable/dialogs.py:101 */
-/* Flag: untranslated */
-"Add" = "Add";
+"Add" = "Dodati";
 
 /* File: ../../portable/dialogs.py:102 */
-/* Flag: untranslated */
-"Add Into New Folder" = "Add Into New Folder";
+"Add Into New Folder" = "Dodati u novu mapu";
 
 /* File: ../../portable/dialogs.py:103 */
-/* Flag: untranslated */
-"Keep" = "Keep";
+"Keep" = "Zadrži";
 
 /* File: ../../portable/dialogs.py:105 */
-/* Flag: untranslated */
-"Not Now" = "Not Now";
+"Not Now" = "Ne sada";
 
 /* File: ../../portable/dialogs.py:106 */
-/* Flag: untranslated */
-"Close to Tray" = "Close to Tray";
+"Close to Tray" = "Minimiziraj na stranu";
 
 /* File: ../../portable/dialogs.py:107 */
-/* Flag: untranslated */
-"Launch Miro" = "Launch Miro";
+"Launch Miro" = "Ubaci Miro";
 
 /* File: ../../portable/dialogs.py:108 */
-/* Flag: untranslated */
-"Download Anyway" = "Download Anyway";
+"Download Anyway" = "Ipak puniti";
 
 /* File: ../../portable/dialogs.py:109 */
-/* Flag: untranslated */
-"Install iHeartMiro" = "Install iHeartMiro";
+"Install iHeartMiro" = "Instaliraj iHeartMiro";
 
 /* File: ../../portable/dialogs.py:110 */
-/* Flag: untranslated */
-"Don't Install" = "Don't Install";
+"Don't Install" = "Ne instalirati";
 
 /* File: ../../portable/dialogs.py:231 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-/* Flag: untranslated */
-"New Search Channel" = "New Search Channel";
+"New Search Channel" = "Novi kanal za potražiti";
 
 /* File: ../../portable/dialogs.py:231 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
 /* Flag: untranslated */
-"A search channel contains items that match a search term." = "A search channel contains items that match a search term.";
+"A search channel contains items that match a search term." = "A search channel contains items that match a search term." /* = "Jedan kanal za potražiti sadržava elemente koje odgovaraju članu za potražiti" */;
 
 /* File: ../../portable/controller.py:196 */
 /* File: ../../portable/controller.py:210 */
 /* File: ../../portable/controller.py:254 */
 /* File: ../../portable/controller.py:280 */
 /* File: ../../portable/controller.py:300 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Remove %s" = "Remove %s";
+"Remove %s" = "Izbrisati %s";
 
 /* File: ../../portable/controller.py:197 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Are you sure you want to remove the guide %s?";
+"Are you sure you want to remove the guide %s?" = "Da li ste sigurni da želite izbrisati vodič %s ?";
 
 /* File: ../../portable/controller.py:211 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove %s" = "Are you sure you want to remove %s";
+"Are you sure you want to remove %s" = "Da li ste sigurni da želite izbrisati %s";
 
 /* File: ../../portable/controller.py:214 */
 /* File: ../../portable/controller.py:259 */
 /* File: ../../portable/controller.py:285 */
 /* File: ../../portable/controller.py:304 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Remove %s channels" = "Remove %s channels";
+"Remove %s channels" = "Izbrisati %s kanali";
 
 /* File: ../../portable/controller.py:216 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
+"Are you sure you want to remove these %s playlists" = "Da li ste sigurni da želite izbrisati ove %s playliste";
 
 /* File: ../../portable/controller.py:255 */
-/* Flag: untranslated */
-"What would you like to do with the videos in this channel that you've downloaded?" = "What would you like to do with the videos in this channel that you've downloaded?";
+"What would you like to do with the videos in this channel that you've downloaded?" = "Što želite napraviti sa videama na kanalu s kojeg ste skidali ?";
 
 /* File: ../../portable/controller.py:260 */
-/* Flag: untranslated */
-"What would you like to do with the videos in these channels that you've downloaded?" = "What would you like to do with the videos in these channels that you've downloaded?";
+"What would you like to do with the videos in these channels that you've downloaded?" = "Što želite napraviti sa videama na kanalima s kojih ste skidali ?";
 
 /* File: ../../portable/controller.py:281 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Are you sure you want to remove %s?  Any downloads in progress will be canceled.";
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Da li ste sigurni da želite izbrisati %s ? Sva skidanja koja su u tijeku će biti prekinuta.";
 
 /* File: ../../portable/controller.py:286 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Da li ste sigurni da želite izbrisati ove %s kanali ? Sva skidanja u tijeku će biti prekinute.";
 
 /* File: ../../portable/controller.py:301 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove %s?" = "Are you sure you want to remove %s?";
+"Are you sure you want to remove %s?" = "Da li ste sigurni da želite izbrisati %s ?";
 
 /* File: ../../portable/controller.py:305 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to remove these %s channels?" = "Are you sure you want to remove these %s channels?";
+"Are you sure you want to remove these %s channels?" = "Da li ste sigurni da želite izbrisati ove %s kanali ?";
 
 /* File: ../../portable/controller.py:318 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Stop watching %s" = "Stop watching %s";
+"Stop watching %s" = "Prekinuti gledanje %s";
 
 /* File: ../../portable/controller.py:319 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "Are you sure you want to stop watching %s?";
+"Are you sure you want to stop watching %s?" = "Da li ste sigurni da želite prekinuti gledati %s ?";
 
 /* File: ../../portable/controller.py:322 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Stop watching %s directories" = "Stop watching %s directories";
+"Stop watching %s directories" = "Prekinuti gledanje mape %s";
 
 /* File: ../../portable/controller.py:323 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Are you sure you want to stop watching these %s directories?" = "Are you sure you want to stop watching these %s directories?";
+"Are you sure you want to stop watching these %s directories?" = "Da li ste sigurni da želite prekinuti nadgledati mape %s ?";
 
 /* File: ../../portable/controller.py:497 */
 /* Flag: untranslated */
-"Error Saving Video" = "Error Saving Video";
+"Error Saving Video" = "Error Saving Video" /* = "Pogreška prilikom sačuvanja videa" */;
 
 /* File: ../../portable/controller.py:499 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "An error occured while trying to save %s.  Please check that the file has not been deleted and try again.";
+"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "Jedna greška je nastala prilikom sačuvanja %s. Molimo provjerite da datoteka nije izbrisana i ponovite sačuvanje.";
 
 /* File: ../../portable/singleclick.py:99 */
 /* Flag: untranslated */
-"Download already exists" = "Download already exists";
+"Download already exists" = "Download already exists" /* = "Skinuto već postoji" */;
 
 /* File: ../../portable/singleclick.py:100 */
 /* Flag: untranslated */
-"That URL is already an external download." = "That URL is already an external download.";
+"That URL is already an external download." = "That URL is already an external download." /* = "Ovaj URL je već skinuto izvana" */;
 
 /* File: ../../portable/singleclick.py:106 */
-/* Flag: untranslated */
-"Miro will begin downloading it now." = "Miro will begin downloading it now.";
+"Miro will begin downloading it now." = "Miro će početi skidanje";
 
 /* File: ../../portable/singleclick.py:108 */
-/* Flag: untranslated */
-"It is downloading now." = "It is downloading now.";
+"It is downloading now." = "Skidanje u tijeku";
 
 /* File: ../../portable/singleclick.py:110 */
-/* Flag: untranslated */
-"It has already been downloaded." = "It has already been downloaded.";
+"It has already been downloaded." = "Skidanje je završeno";
 
 /* File: ../../portable/singleclick.py:137 */
-/* Flag: untranslated */
-"Download Error" = "Download Error";
+"Download Error" = "Pogreška tijekom preuzimanja";
 
 /* File: ../../portable/singleclick.py:138 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro is not able to download a file at this URL:\n\nURL: %s";
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro nije spreman preuzeti skidanje s datoteke na URL:\nURL:%s";
 
 /* File: ../../portable/singleclick.py:146 */
-/* Flag: untranslated */
-"File Download" = "File Download";
+"File Download" = "Skidanje datoteke";
 
 /* File: ../../portable/singleclick.py:147 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "This file at %s does not appear to be audio, video, or an RSS feed.";
+"This file at %s does not appear to be audio, video, or an RSS feed." = "This file at %s does not appear to be audio, video, or an RSS feed." /* = "Lokalizirana datoteka u %s nije audio, video niti je napajan RSS." */;
 
 /* File: ../../portable/singleclick.py:235 */
-/* Flag: untranslated */
-"Subscribing to multiple channels" = "Subscribing to multiple channels";
+"Subscribing to multiple channels" = "Pocrtati za više kanala";
 
 /* File: ../../portable/singleclick.py:236 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Create %d channels?" = "Create %d channels?";
+"Create %d channels?" = "Kreirati %d kanale ?";
 
 /* File: ../../portable/singleclick.py:249 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Adding %d channels to a new folder" = "Adding %d channels to a new folder";
+"Adding %d channels to a new folder" = "Pridodati %d kanali na novu mapu";
 
 /* File: ../../portable/singleclick.py:250 */
 /* File: ../../portable/folder.py:224 */
-/* Flag: untranslated */
-"Enter a name for the new channel folder" = "Enter a name for the new channel folder";
+"Enter a name for the new channel folder" = "Upisati novo ime za grupu kanala";
 
 /* File: ../../portable/singleclick.py:253 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTA:Već ste upisani na %d ovih kanala. Ovi kanali će ostati ovdje gdje su sada skladišteni.";
 
 /* File: ../../portable/singleclick.py:264 */
-/* Flag: untranslated */
-"Subscription error" = "Subscription error";
+"Subscription error" = "Pogreška pri preplati";
 
 /* File: ../../portable/singleclick.py:274 */
-/* Flag: untranslated */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.";
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Ovaj kanal $shortAppName je u pogrešnom formatu: $url. Molim da upozorite odgovornu osobu na ovaj site.";
 
 /* File: ../../portable/singleclick.py:282 */
-/* Flag: untranslated */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.";
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Ovaj kanal $shortAppName ima loš 'content-type': $url. Molim upozorite odgovornu osobu na ovaj site.";
 
 /* File: ../../portable/singleclick.py:286 */
-/* Flag: untranslated */
-"Could not download the $shortAppName channel file: $url." = "Could not download the $shortAppName channel file: $url.";
+"Could not download the $shortAppName channel file: $url." = "Nemoguće je vratiti kanal $shortAppName: $url.";
 
 /* File: ../../portable/singleclick.py:334 */
-/* Flag: untranslated */
-"Invalid Torrent" = "Invalid Torrent";
+"Invalid Torrent" = "Nevažeči Torrent";
 
 /* File: ../../portable/singleclick.py:335 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]";
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Datoteka Torrent %s izgleda prekinuta i ne može se otvoriti. (OK)";
 
 /* File: ../../portable/item.py:497 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Removing %s" = "Removing %s";
+"Removing %s" = "Brisanje %s";
 
 /* File: ../../portable/item.py:500 */
 /* Flag: untranslated */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Would you like to delete this folder and all of its videos or just remove its entry from the Library?";
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Would you like to delete this folder and all of its videos or just remove its entry from the Library?" /* = "Želite li izbrisati ovu mapu kao i sva videa koja sadržava ili samo izbaciti iz knjižnice ?" */;
 
 /* File: ../../portable/item.py:506 */
-/* Flag: untranslated */
-"Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
+"Would you like to delete this file or just remove its entry from the Library?" = "Želite li izbrisati ovu datoteku ili samo izbaciti iz knjižnice ?";
 
 /* File: ../../portable/item.py:526 */
 /* Flag: untranslated */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted.";
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted." /* = "Ovaj element je mapa. Kad budete brisali ovu datoteku, svi sadržani elementi će biti izbrisani." */;
 
 /* File: ../../portable/item.py:556 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%d minutes" = "%d minutes";
+"%d minutes" = "%d minute";
 
 /* File: ../../portable/item.py:566 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Expires in %s" = "Expires in %s";
+"Expires in %s" = "Istječe u %s";
 
 /* File: ../../portable/item.py:578 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Will retry in %s" = "Will retry in %s";
+"Will retry in %s" = "Ponovit će u %s";
 
 /* File: ../../portable/item.py:580 */
-/* Flag: untranslated */
-"Paused" = "Paused";
+"Paused" = "Zaustavljeno";
 
 /* File: ../../portable/item.py:982 */
-/* Flag: untranslated */
 "TORRENT" = "TORRENT";
 
 /* File: ../../portable/item.py:984 */
-/* Flag: untranslated */
-"WEB PAGE" = "WEB PAGE";
+"WEB PAGE" = "WEB stranica";
 
 /* File: ../../portable/item.py:994 */
-/* Flag: untranslated */
-"Total Down:" = "Total Down:";
+"Total Down:" = "Ukupni ulaz";
 
 /* File: ../../portable/item.py:997 */
-/* Flag: untranslated */
-"Error:" = "Error:";
+"Error:" = "Greška";
 
 /* File: ../../portable/item.py:1006 */
-/* Flag: untranslated */
-"Seeders:" = "Seeders:";
+"Seeders:" = "Klijenti";
 
 /* File: ../../portable/item.py:1008 */
 /* Flag: untranslated */
-"Leechers:" = "Leechers:";
+"Leechers:" = "Leechers:" /* = "Leechers" */;
 
 /* File: ../../portable/item.py:1010 */
-/* Flag: untranslated */
-"Down Rate:" = "Down Rate:";
+"Down Rate:" = "Brzina primanja";
 
 /* File: ../../portable/item.py:1011 */
-/* Flag: untranslated */
-"Down Total:" = "Down Total:";
+"Down Total:" = "Primljeni iznos";
 
 /* File: ../../portable/item.py:1013 */
-/* Flag: untranslated */
-"Up Rate:" = "Up Rate:";
+"Up Rate:" = "Brzina primanja";
 
 /* File: ../../portable/item.py:1014 */
-/* Flag: untranslated */
-"Up Total:" = "Up Total:";
+"Up Total:" = "Poslani iznos";
 
 /* File: ../../portable/item.py:1024 */
-/* Flag: untranslated */
-"Web page:" = "Web page:";
+"Web page:" = "Web-stranica:";
 
 /* File: ../../portable/item.py:1024 */
-/* Flag: untranslated */
-"permalink" = "permalink";
+"permalink" = "Neprestana veza";
 
 /* File: ../../portable/item.py:1028 */
-/* Flag: untranslated */
-"File link:" = "File link:";
+"File link:" = "Povezana datoteka";
 
 /* File: ../../portable/item.py:1028 */
-/* Flag: untranslated */
-"direct link to file" = "direct link to file";
+"direct link to file" = "Direktna veza prema datoteci";
 
 /* File: ../../portable/item.py:1030 */
-/* Flag: untranslated */
-"File type:" = "File type:";
+"File type:" = "Vrsta datoteke:";
 
 /* File: ../../portable/item.py:1037 */
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"License:" = "License:";
+"License:" = "Licenca:";
 
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"see permalink" = "see permalink";
+"see permalink" = "Viditi neprestana veza";
 
 /* File: ../../portable/item.py:1049 */
-/* Flag: untranslated */
-"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
+"REVEAL LOCAL FOLDER" = "POKAZATI LOKALNU MAPU";
 
 /* File: ../../portable/item.py:1051 */
-/* Flag: untranslated */
-"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
+"REVEAL LOCAL FILE" = "POKAZATI LOKALNU DATOTEKU";
 
 /* File: ../../portable/item.py:1053 */
-/* Flag: untranslated */
-"Filename:" = "Filename:";
+"Filename:" = "Ime datoteke:";
 
 /* File: ../../portable/item.py:1060 */
-/* Flag: untranslated */
-"Down Total" = "Down Total";
+"Down Total" = "Primljeni iznos";
 
 /* File: ../../portable/item.py:1062 */
-/* Flag: untranslated */
-"Up Total" = "Up Total";
+"Up Total" = "Poslani iznos";
 
 /* File: ../../portable/item.py:1080 */
 /* Flag: untranslated */
-"Item Details" = "Item Details";
+"Item Details" = "Item Details" /* = "Detalj pojedine točke" */;
 
 /* File: ../../portable/item.py:1087 */
-/* Flag: untranslated */
-"Torrent Details" = "Torrent Details";
+"Torrent Details" = "Detalj Torrenta";
 
 /* File: ../../portable/item.py:1089 */
-/* Flag: untranslated */
-"Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
+"Torrent Details <i>stopped</i>" = "Detalj Torrenta <i>prekinuti<i>";
 
 /* File: ../../portable/item.py:1093 */
-/* Flag: untranslated */
-"Download Details" = "Download Details";
+"Download Details" = "Detalji skidanja";
 
 /* File: ../../portable/item.py:1310 */
-/* Flag: untranslated */
-"downloading..." = "downloading...";
+"downloading..." = "U tijeku skidanje...";
 
 /* File: ../../portable/item.py:1317 */
 /* File: ../../portable/item.py:1320 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"%s remaining" = "%s remaining";
+"%s remaining" = "%s preostalo";
 
 /* File: ../../portable/item.py:1329 */
-/* Flag: untranslated */
-"starting up..." = "starting up...";
+"starting up..." = "Započeti...";
 
 /* File: ../../portable/item.py:1878 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Removing %s items" = "Removing %s items";
+"Removing %s items" = "Izbrisati %s elementi";
 
 /* File: ../../portable/item.py:1880 */
-/* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?";
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Jedna ili više od ovih videa nisu bili skinuti sa kanala. Da li ih želite izbrisati ili samo staviti u knjižnicu ?";
 
 /* File: ../../portable/item.py:1888 */
-/* Flag: untranslated */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Jedan ili više od ovih elemenata je mapa. Kad ih vadite ili izbrišete mapu, svi elementi sadržani u ovu mapu će biti izbačeni ili izbrisani.";
 
 /* File: ../../portable/startup.py:92 */
-/* Flag: untranslated */
-"Unknown Error" = "Unknown Error";
+"Unknown Error" = "Nepoznata greška";
 
 /* File: ../../portable/startup.py:93 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "Nepoznata greška je zaustavila Miro-a da počne. Molimo da ispunite izvještaj greške na %s";
 
 /* File: ../../portable/startup.py:155 */
 /* Flag: untranslated */
-"Database too new" = "Database too new";
+"Database too new" = "Database too new" /* = "Baza podataka previše nova" */;
 
 /* File: ../../portable/startup.py:156 */
-/* Flag: untranslated */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that.";
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Imate bazu podataka snimljenu $shortAppName novije verzije. Morate imati noviju verziju od $shortAppName da bi mogli učitati !";
 
 /* File: ../../portable/startup.py:238 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro ne pronalazi vašu video mapu. Ova mapa se možda nalazi na vanjskom drivu koji je trenutno isključen.";
 
 /* File: ../../portable/folder.py:144 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Enter a new name for the channel folder %s";
+"Enter a new name for the channel folder %s" = "Stavi novo ime za grupu kanala %s";
 
 /* File: ../../portable/folder.py:215 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Enter a new name for the playlist folder %s";
+"Enter a new name for the playlist folder %s" = "Stavi novo ime za playlistu %s";
 
 /* File: ../../portable/folder.py:223 */
-/* Flag: untranslated */
-"Create Channel Folder" = "Create Channel Folder";
+"Create Channel Folder" = "Kreirati grupu kanala";
 
 /* File: ../../portable/folder.py:237 */
-/* Flag: untranslated */
-"Create Playlist Folder" = "Create Playlist Folder";
+"Create Playlist Folder" = "Kreirati mapu za playlistu";
 
 /* File: ../../portable/folder.py:238 */
-/* Flag: untranslated */
-"Enter a name for the new playlist folder" = "Enter a name for the new playlist folder";
+"Enter a name for the new playlist folder" = "Stavite ime za novu mapu playliste";
 
 /* File: ../../portable/license.py:68 */
-/* Flag: untranslated */
-"license page" = "license page";
+"license page" = "Stranicu licence";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
-/* Flag: untranslated */
-"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 day\n3 days\n6 days\n10 days\n1 month\nNever";
+"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 dan\n3 dana\n6 dana\n10 dana\n1 mjesec\nNikad";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:8 */
-/* Flag: untranslated */
-"<b>BitTorrent</b>" = "<b>BitTorrent</b>";
+"<b>BitTorrent</b>" = "<b>BitTorrent<b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-/* Flag: untranslated */
-"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect.";
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Nota(nbsp):<b> If mjenjate motor povrata upotrijebljen za čitanje videa, vi MORATE\npokrenuti Miro da bi promjene bile uključene.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-/* Flag: untranslated */
-"<b>Searching for Videos</b>" = "<b>Searching for Videos</b>";
+"<b>Searching for Videos</b>" = "<b>Potražnja videa u tijeku <b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
-/* Flag: untranslated */
-"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Would you like Miro to look for video files on your computer?</b>";
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Želite li da Miro potraži video isječke koji su na vašem kompjutoru ?<b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
-/* Flag: untranslated */
-"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Would you like to run Miro when your computer starts up?</b>";
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Želite li da Miro automatski uključi kompjutor ?<b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
-/* Flag: untranslated */
-"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Vi ste završili !<b>\nInstalacija je gotova- Sad možete pronaći nekoliko kanala i gledati ih.\n<b>Ne čekajte:<Ne koristite Miro kad gledate video na web sajtovima-Široka videa visoke definicije su uključeni od dobavljača. Ne čekajte sjedeći očekujuči video : započnite skidanja i vratite se kasnije.\n<b>Ne napuštajte Miro:<b>Aplikacija neprestano provjerava dolazak novih videa na svakom kanalu i skida ih u pozadini. Sačuvajte aplikaciju da bude aktivna tako da možete pogledati nova videa čim budete spremni za to.\n<b>Veličina vašeg hard diska nije problem:<b>Kao inteligentni magnetoskop, Miro nudi jedan sistem koji ostavlja prostora za nova videa istodobno briše stara. Vi možete i dalje sačuvati video ako kliknete na ''snimiti'' tako da možete automatski sačuvati isječke.\n<b>Prelazite na veliki ekran:<b>Miro Guide sadržava stotine web kanala na internetu, sve besplatne. Samo kliknete na ''dodaj'' da biste mogli gledati.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
 /* Flag: untranslated */
-"Auto download default setting for new channels" = "Auto download default setting for new channels";
+"Auto download default setting for new channels" = "Auto download default setting for new channels" /* = "Automatsko skidanje parametara preko novih kanala" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-/* Flag: untranslated */
-"Automatically for_ward ports." = "Automatically for_ward ports.";
+"Automatically for_ward ports." = "Automatski pre_usmjeriti ports";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
 /* Flag: untranslated */
-"By default, videos _expire after" = "By default, videos _expire after";
+"By default, videos _expire after" = "By default, videos _expire after" /* = "Greškom videa _istječe poslije" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
-/* Flag: untranslated */
-"C_hannel:" = "C_hannel:";
+"C_hannel:" = "K_anal";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
-/* Flag: untranslated */
-"C_hannels" = "C_hannels";
+"C_hannels" = "K_anali";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-/* Flag: untranslated */
-"C_reate Channel" = "C_reate Channel";
+"C_reate Channel" = "K_reirati jedan kanal";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-/* Flag: untranslated */
-"Check Channels for _new content" = "Check Channels for _new content";
+"Check Channels for _new content" = "Pripremiti kanale spremne za punjenje";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
-/* Flag: untranslated */
-"Disk _Space" = "Disk _Space";
+"Disk _Space" = "M_jesto za disk";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
-/* Flag: untranslated */
-"Every 30 minutes\nEvery hour\nManually" = "Every 30 minutes\nEvery hour\nManually";
+"Every 30 minutes\nEvery hour\nManually" = "Svakih 30 minuta\nSvaki sat\nmanualno";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
-/* Flag: untranslated */
 "G_B" = "G_B";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
-/* Flag: untranslated */
-"Go" = "Go";
+"Go" = "Kreni";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
-/* Flag: untranslated */
-"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+"Ignore Un_encrypted Connections." = "Ignorirati nekodirane veze _es";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
-/* Flag: untranslated */
-"In This:" = "In This:";
+"In This:" = "U ovome:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-/* Flag: untranslated */
-"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
+"Limit torrent _downstream to:" = "Ograničiti priljev skidanja iz torrentsa u (nbsp):";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
+"Maximum number of channel auto-downloads at a time: " = "Maksimalni broj automatskog simultanog skidanja kanala (nbsp): ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-/* Flag: untranslated */
-"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
+"Maximum number of manual downloads at a time: " = "Maksimalni broj ručnog simultanog skidanja (nbsp): ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
-/* Flag: untranslated */
-"Miro can find all the videos on your computer to help you organize your collection." = "Miro can find all the videos on your computer to help you organize your collection.";
+"Miro can find all the videos on your computer to help you organize your collection." = "Miro može pronači sva prisutna videa u vašem kompjutoru da možete organizirati vašu zbirku";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-/* Flag: untranslated */
-"New\nAll\nOff" = "New\nAll\nOff";
+"New\nAll\nOff" = "Novo\nSve\nIsključeno";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-/* Flag: untranslated */
-"Play _videos one after another" = "Play _videos one after another";
+"Play _videos one after another" = "Čitanje u tijeku";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
-/* Flag: untranslated */
-"Preferences" = "Preferences";
+"Preferences" = "Postavke";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
 /* Flag: untranslated */
-"Restrict to my full _home folder" = "Restrict to my full _home folder";
+"Restrict to my full _home folder" = "Restrict to my full _home folder" /* = "Ograničiti na moju mapu _osobnu" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
-/* Flag: untranslated */
-"S_top after each video" = "S_top after each video";
+"S_top after each video" = "Zaustaviti poslije svakog videa";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
-/* Flag: untranslated */
-"S_tore downloaded videos in this folder:" = "S_tore downloaded videos in this folder:";
+"S_tore downloaded videos in this folder:" = "Presnimiti skinuta videa u mapu:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
 /* Flag: untranslated */
-"Search _Engine:" = "Search _Engine:";
+"Search _Engine:" = "Search _Engine:" /* = "_Motor potražnje" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
 /* Flag: untranslated */
-"Search _custom folder:" = "Search _custom folder:";
+"Search _custom folder:" = "Search _custom folder:" /* = "Potražiti _običajnu mapu" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-/* Flag: untranslated */
-"Select Movies Directory" = "Select Movies Directory";
+"Select Movies Directory" = "Izabrati mape filmova";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
-/* Flag: untranslated */
-"Select custom search directory" = "Select custom search directory";
+"Select custom search directory" = "Izabrati mape za osobna pretraživanja";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
-/* Flag: untranslated */
-"Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
+"Stop torrent uploads when this ratio is reached:" = "Zaustaviti slanje torrentsa kad je kvota ispunjena (nbsp):";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
-/* Flag: untranslated */
-"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "The next few screens will help you set up Miro so that it works best for you.  Here's the first question.";
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Sljedeće stranice će vam omogućiti da predstavimo Miro za što bolju upotrebu. Evo prvog pitanja.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
 /* Flag: untranslated */
-"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
+"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:" /* = "Za izbjegavanje sporog rada na internetu, limitirajte priljev na:" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-/* Flag: untranslated */
-"Use _ports:" = "Use _ports:";
+"Use _ports:" = "Koristi _ports (nbsp):";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
 /* Flag: untranslated */
-"Use this renderer to play videos:" = "Use this renderer to play videos:";
+"Use this renderer to play videos:" = "Use this renderer to play videos:" /* = "Koristi izvještaj za čitanje videa (nbsp):" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
-/* Flag: untranslated */
-"Volume:" = "Volume:";
+"Volume:" = "Glasnoća:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
-/* Flag: untranslated */
-"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.";
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Preporučeno je da dozvolite Miro-u da se automatski uključi prilikom uključivanja kompjutora. Tom prilikom , skidanja videa koja su nepotpuna mogu se završiti i bit će dostupni novi programi s vaših kanala kad god to želite pogledati.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
-/* Flag: untranslated */
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.";
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Dobrodošli na televiziji preko interneta. Vi možete napraviti mnogo stvari preko Miro-a: automatski skidati programe s vaših omiljenih kanala, gledati filmove jedan za drugim, skidati torrentse, preporučiti razna videa svojim prijateljima i još mnogo toga.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
-/* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Izabrali ste novu mapu za vaša skidanja. Da li Miro treba prebaciti vaša prethodna skidanja ovdje ? (filmovi koji su u tijeku skidanja neće biti premještena prije kraja skidanja.)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-/* Flag: untranslated */
-"_Add Folder" = "_Add Folder";
+"_Add Folder" = "_Napravi mapu";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
-/* Flag: untranslated */
-"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
+"_Automatically run Miro when I log in" = "Automatski ubaciti Miro pri uključivanju";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
-/* Flag: untranslated */
-"_Downloads" = "_Downloads";
+"_Downloads" = "_Skidanja";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
-/* Flag: untranslated */
-"_Folders" = "_Folders";
+"_Folders" = "_Mape";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
-/* Flag: untranslated */
-"_General" = "_General";
+"_General" = "_Općenito";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
-/* Flag: untranslated */
-"_KB/s." = "_KB/s.";
+"_KB/s." = "_Kb/s.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
-/* Flag: untranslated */
-"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+"_Keep at least this much free space on my drive:" = "_Sačuvati najmanje ovo slobodno mjesto na moj disk (nbsp):";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
-/* Flag: untranslated */
 "_Playback" = "_Playback";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
-/* Flag: untranslated */
-"_Resume playback of videos from the point where they were stopped" = "_Resume playback of videos from the point where they were stopped";
+"_Resume playback of videos from the point where they were stopped" = "_Ponovite čitanje videa s one točke gdje je bila zaustavljena";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
-/* Flag: untranslated */
-"_Search" = "_Search";
+"_Search" = "_Pretraži";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
-/* Flag: untranslated */
-"_Search For:" = "_Search For:";
+"_Search For:" = "_Pretražiti:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
-/* Flag: untranslated */
 "_URL" = "_URL";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
-/* Flag: untranslated */
-"_Warn me when I attempt to quit with downloads in progress" = "_Warn me when I attempt to quit with downloads in progress";
+"_Warn me when I attempt to quit with downloads in progress" = "Upozoriti me kad želim napustiti kad su skidanja u tijeku";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
-/* Flag: untranslated */
-"_Watch for new videos in these folders and include them in the Library" = "_Watch for new videos in these folders and include them in the Library";
+"_Watch for new videos in these folders and include them in the Library" = "_Pogledati nova videa u ovu mapu, i ubaciti ih u knjižnicu";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
-/* Flag: untranslated */
 "xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
-/* Flag: untranslated */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision);copyright (c) 2005-2007 $publisher. $longAppName i logo $longAppName su zaštičene marke preko $publisher.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
-/* Flag: untranslated */
-"About $longAppName" = "About $longAppName";
+"About $longAppName" = "U vezi sa $longAppName";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1 */
-/* Flag: untranslated */
-"Add Channel" = "Add Channel";
+"Add Channel" = "Dodaj kanal";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2 */
-/* Flag: untranslated */
-"Please enter the URL of the channel you'd like to add." = "Please enter the URL of the channel you'd like to add.";
+"Please enter the URL of the channel you'd like to add." = "Molim upišite URL adresu kanala koji želite dodati";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6 */
 /* Flag: untranslated */
-"Copy log to clipboard" = "Copy log to clipboard";
+"Copy log to clipboard" = "Copy log to clipboard" /* = "Kopiraj poruke na presse papiru" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5 */
 /* Flag: untranslated */
-"Open up the bug tracker" = "Open up the bug tracker";
+"Open up the bug tracker" = "Open up the bug tracker" /* = "Otvori izvještaj grešaka" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2 */
 /* Flag: untranslated */
-"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred.";
+"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." /* = "Hvala na pomoći u vezi rješenja problema. Kopiraj/zaljipi sve\ninformacije u našem izvještaju grešaka i recite nam\nšto ste radili kad je problem nastao." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7 */
-/* Flag: untranslated */
-"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!";
+"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Nakon toga, pokreni $longAppName (da bi se ubuduće izbjeglo takve pogreške). Oprostite na smetnjama, $longAppName je i dalje u beta verziji, ali mi ćemo ubrzo rješiti sve nastale probleme !";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1 */
-/* Flag: untranslated */
-"You found a bug in $longAppName!" = "You found a bug in $longAppName!";
+"You found a bug in $longAppName!" = "Našli ste pogrešku u $longAppName !";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1 */
-/* Flag: untranslated */
-" " = " ";
+" " = "Tino Tresin ";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2 */
-/* Flag: untranslated */
 "'" = "'";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10 */
-/* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.";
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "Napravit ćemo sve da bi došli do datoteka. To može uzeti dosta vremena da bi prikazalo videa, i njihove informacije vam mogu biti smješna.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12 */
-/* Flag: untranslated */
-"Please contact the publishers of" = "Please contact the publishers of";
+"Please contact the publishers of" = "Molim kontaktirajte izdavače od";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13 */
 /* Flag: untranslated */
-"and ask if they can supply a feed in a format that will work with $shortAppName." = "and ask if they can supply a feed in a format that will work with $shortAppName.";
+"and ask if they can supply a feed in a format that will work with $shortAppName." = "and ask if they can supply a feed in a format that will work with $shortAppName." /* = "i pitajte ih mogu li oni isporučiti priljevi u formatu koji podržava $shortAppName." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1 */
-/* Flag: untranslated */
 "$longAppName" = "$longAppName";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4 */
-/* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)";
+"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "Izabrali ste novu mapu da bi skinuli filmove. Da li $shortAppName mora premjestiti skidanja koja su u tijeku ? (filmovi koji su u fazi skidanja neće biti premješteni prije nego budu završeni)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1 */
 /* Flag: untranslated */
-"Channel requires authentication" = "Channel requires authentication";
+"Channel requires authentication" = "Channel requires authentication" /* = "Kanal traži autentičnost" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
-/* Flag: untranslated */
-"Please enter the username and password given to you by this channel's publisher." = "Please enter the username and password given to you by this channel's publisher.";
+"Please enter the username and password given to you by this channel's publisher." = "Molim ukucajte korisničko ime i lozinku koji su vam ustupljeni preko ovog kanala.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
-/* Flag: untranslated */
-"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(WARNING: Changes won't go into effect until you restart $longAppName.)";
+"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(POZOR:Nastale promjene će biti u toku tek kad se ponovo uključi $longAppName.)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-/* Flag: untranslated */
-"Add Folder..." = "Add Folder...";
+"Add Folder..." = "Dodaj mapu...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
-/* Flag: untranslated */
-"Automatically Forward Ports" = "Automatically Forward Ports";
+"Automatically Forward Ports" = "Automatski usmjeriti Ports";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
-/* Flag: untranslated */
-"Automatically run $longAppName when I login." = "Automatically run $longAppName when I login.";
+"Automatically run $longAppName when I login." = "Automatski ubaciti $longAppName na početak.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
-/* Flag: untranslated */
-"By default, videos expire after" = "By default, videos expire after";
+"By default, videos expire after" = "Greškom, videa istječu poslije";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
-/* Flag: untranslated */
-"Check channels for new content" = "Check channels for new content";
+"Check channels for new content" = "Postaviti kanale na početak zbog novog sadržaja";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
-/* Flag: untranslated */
-"Close to tray so that downloads can continue." = "Close to tray so that downloads can continue.";
+"Close to tray so that downloads can continue." = "Minimiziraj na stranu tako da se skidanja mogu nesmetano nastaviti.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
-/* Flag: untranslated */
-"Every 30 minutes" = "Every 30 minutes";
+"Every 30 minutes" = "Svakih 30 minuta";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
-/* Flag: untranslated */
-"Every hour" = "Every hour";
+"Every hour" = "Svaki sat";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
-/* Flag: untranslated */
-"Folder" = "Folder";
+"Folder" = "Mapa";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-/* Flag: untranslated */
 "GB" = "GB";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
-/* Flag: untranslated */
-"Ignore Unencrypted Connections" = "Ignore Unencrypted Connections";
+"Ignore Unencrypted Connections" = "Ignoriraj nekodirane veze";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
-/* Flag: untranslated */
 "KB/s" = "KB/s";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
 /* Flag: untranslated */
-"Limit downstream bandwith to:" = "Limit downstream bandwith to:";
+"Limit downstream bandwith to:" = "Limit downstream bandwith to:" /* = "Limitiraj priljev na:" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
-/* Flag: untranslated */
-"Manually" = "Manually";
+"Manually" = "Ručno";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:";
+"Maximum number of channel auto-downloads at a time:" = "Maksimalni broj kanala simultano automatsko skidanje:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
 /* Flag: untranslated */
-"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:";
+"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:" /* = "Maksimalni broj kanala simultano ručnih skidanja:" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
-/* Flag: untranslated */
-"Options" = "Options";
+"Options" = "Postavke";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
-/* Flag: untranslated */
-"Play one video, then stop." = "Play one video, then stop.";
+"Play one video, then stop." = "Čitati video pa zaustavi";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
-/* Flag: untranslated */
-"Quit Miro completely." = "Quit Miro completely.";
+"Quit Miro completely." = "Napusti Miro definitivno";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
-/* Flag: untranslated */
-"Remember where I stopped watching a video and continue playing from that point." = "Remember where I stopped watching a video and continue playing from that point.";
+"Remember where I stopped watching a video and continue playing from that point." = "Sjetiti se  mjesta gdje se zaustavilo video i započeti iz tog mjesta.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
-/* Flag: untranslated */
-"Show as a Channel" = "Show as a Channel";
+"Show as a Channel" = "Pokazati kao kanal";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
-/* Flag: untranslated */
-"Store downloaded videos in this folder:" = "Store downloaded videos in this folder:";
+"Store downloaded videos in this folder:" = "Presnimiti skinuta videa u ovu mapu:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:";
+"To avoid internet slowdowns, limit upstream bandwith to:" = "Da bi izbjegli spori rad interneta, limitiraj priljev na:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
-/* Flag: untranslated */
-"WARNING: This setting will not go into effect until you restart $longAppName." = "WARNING: This setting will not go into effect until you restart $longAppName.";
+"WARNING: This setting will not go into effect until you restart $longAppName." = "POZOR:Ova postavka neće biti u funkciji ako ponovo ne pokrenete $longAppName.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
-/* Flag: untranslated */
-"Warn me when I attempt to quit with downloads in progress." = "Warn me when I attempt to quit with downloads in progress.";
+"Warn me when I attempt to quit with downloads in progress." = "Upozoriti me kad su skidanja u tijeku prilikom zatvaranja.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
-/* Flag: untranslated */
-"Watch for new videos in these folders and include them in my Library." = "Watch for new videos in these folders and include them in my Library.";
+"Watch for new videos in these folders and include them in my Library." = "Provjeriti nova videa u ovu mapu i pridodati ih u knjižnicu.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
-/* Flag: untranslated */
-"When I click the red close button:" = "When I click the red close button:";
+"When I click the red close button:" = "Kad kliknem na crvenu tipku za zatvaranje:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
-/* Flag: untranslated */
-"Channel:" = "Channel:";
+"Channel:" = "Kanal:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6 */
-/* Flag: untranslated */
-"Search Engine:" = "Search Engine:";
+"Search Engine:" = "Tražilica:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2 */
-/* Flag: untranslated */
-"Search For:" = "Search For:";
+"Search For:" = "Potraži:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7 */
-/* Flag: untranslated */
 "URL:" = "URL:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33 */
-/* Flag: untranslated */
-"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName can find all the videos on your computer to help you organize your collection.";
+"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName može potražiti sva postojeća videa u vašem kompjutoru tako da vam pomogne u organiziranju vaše kolekcije.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45 */
-/* Flag: untranslated */
-"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.";
+"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "$longAppName neprestano prati kanale u potrazi novih videa u pozadini. U međuvremenu, kad budete imali vremena imati ćete nova videa za gledanje.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29 */
-/* Flag: untranslated */
-"$shortAppName First Time Setup" = "$shortAppName First Time Setup";
+"$shortAppName First Time Setup" = "Konfiguracija za prvo izbacivanje $shortAppName";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39 */
-/* Flag: untranslated */
-"Cancel Search" = "Cancel Search";
+"Cancel Search" = "Prekinuti potražnju";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38 */
-/* Flag: untranslated */
-"Change" = "Change";
+"Change" = "Izmijeni";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46 */
-/* Flag: untranslated */
-"Don't Worry About Disk Space:" = "Don't Worry About Disk Space:";
+"Don't Worry About Disk Space:" = "Ne brinuti se slobodnog mjesta za disk:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50 */
-/* Flag: untranslated */
-"Find Videos:" = "Find Videos:";
+"Find Videos:" = "Potražiti videa:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48 */
-/* Flag: untranslated */
-"Go Big:" = "Go Big:";
+"Go Big:" = "Otići u Big:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44 */
-/* Flag: untranslated */
-"Leave it On:" = "Leave it On:";
+"Leave it On:" = "Ostavi vezu:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47 */
-/* Flag: untranslated */
-"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.";
+"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Kao TIVo, $longAppName ima jedan sistem koji automatski briše stara videa da bi ostavilo više mjesta za nova. Vi i dalje možete sačuvati video po želji klikom na ''Spasi'' i možete izabrati omiljene kanale da biste automatski sačuvali videa.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42 */
-/* Flag: untranslated */
-"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:";
+"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Možete tražiti vodičem kanala\ni započeti gledanje. Evo nekoliko savjeta za dobar početak:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40 */
-/* Flag: untranslated */
-"Reset Search" = "Reset Search";
+"Reset Search" = "Ponovitii potražnju";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35 */
-/* Flag: untranslated */
-"Restrict to all my personal files." = "Restrict to all my personal files.";
+"Restrict to all my personal files." = "Ograničiti povjerljive osobne datoteke";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36 */
-/* Flag: untranslated */
-"Search custom folder:" = "Search custom folder:";
+"Search custom folder:" = "Potraži personaliziranu mapu:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
-/* Flag: untranslated */
-"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.";
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "Vodič $shortAppName nudi stotine besplatnih kanala. Klikni na ''ADD'' za gledanje kanala.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49 */
-/* Flag: untranslated */
-"The button to the right of the play button shows videos fullscreen." = "The button to the right of the play button shows videos fullscreen.";
+"The button to the right of the play button shows videos fullscreen." = "Tipka koja se nalazi na desno od tipke <čitanje> povečava video na velikom ekranu";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30 */
-/* Flag: untranslated */
-"The next few screens will help you set up $longAppName so that it works best for you." = "The next few screens will help you set up $longAppName so that it works best for you.";
+"The next few screens will help you set up $longAppName so that it works best for you." = "Ovih nekoliko prozora koje dolaze će vam pomoći kao mjerilo $longAppName tako da što bolje funkcionira za vas.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31 */
-/* Flag: untranslated */
-"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.";
+"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "Preporučujemo  da vam bude uključen $longAppName pri otvaranju vašeg kompjutora. Nepotpuna videa će moći nastaviti skidanja i nova videa će biti skinuta u pozadini, spremna za gledanje kad to želite.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34 */
-/* Flag: untranslated */
-"Would you like $longAppName to look for video files on your computer?" = "Would you like $longAppName to look for video files on your computer?";
+"Would you like $longAppName to look for video files on your computer?" = "Želite li da $longAppName pretraži vaše video datoteke na vašem kompjutoru ?";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32 */
-/* Flag: untranslated */
-"Would you like to run $shortAppName on startup?" = "Would you like to run $shortAppName on startup?";
+"Would you like to run $shortAppName on startup?" = "Želite li ubaciti $shortAppName pri uključivanju kompjutora ?";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41 */
-/* Flag: untranslated */
-"You're done!" = "You're done!";
+"You're done!" = "Gotovo je!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1 */
 /* Flag: untranslated */
-"Release Notes:" = "Release Notes:";
+"Release Notes:" = "Release Notes:" /* = "Pribilješka:" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1 */
-/* Flag: untranslated */
-"Question" = "Question";
+"Question" = "Upitnik";

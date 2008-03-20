@@ -4,11 +4,11 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 19:56-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: python-format */
-"Cancel" = "Annuleren";
+"Cancel" = "Annuleer";
 
 "OK" = "OK";
 
@@ -27,11 +27,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "About Miro" = "Over Miro";
 
-"Add Channel..." = "Kanaal toevoegen...";
+"Add Channel..." = "Nieuw kanaal...";
 
-"Add Guide..." = "Kanaalgids toevoegen...";
+"Add Guide..." = "Nieuwe kanaalgids...";
 
-"Bring All to Front" = "Alles op Voorgrond";
+"Bring All to Front" = "Alles op voorgrond";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:80 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
@@ -41,38 +41,38 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Clear Menu" = "Menu leegmaken";
 
-"Close Window" = "Venster sluiten";
+"Close Window" = "Sluit venster";
 
-"Copy" = "Kopiëren";
+"Copy" = "Kopieer";
 
-"Copy Channel URL" = "Kopieer URL Kanaal";
+"Copy Channel URL" = "Kopieer URL kanaal";
 
-"Copy Video URL" = "Video URL kopiëren";
+"Copy Video URL" = "Kopieer URL video";
 
-"Cut" = "Knippen";
+"Cut" = "Knip";
 
 /* File: ../../portable/dialogs.py:104 */
-"Delete" = "Verwijderen";
+"Delete" = "Verwijder";
 
-"Donate" = "Maak een Donatie";
+"Donate" = "Maak een donatie";
 
-"Download Video..." = "Download Video...";
+"Download Video..." = "Download video...";
 
-"Edit" = "Bewerken";
+"Edit" = "Wijzig";
 
-"Export Channels (OPML)..." = "Exporteer Kanalen (OPML)...";
+"Export Channels (OPML)..." = "Exporteer kanalen (OPML)...";
 
-"File" = "Bestand";
+"File" = "Archief";
 
-"Full Screen" = "Volledig scherm";
+"Full Screen" = "Schermvullend";
 
 "Help" = "Help";
 
 "Hide Miro" = "Verberg Miro";
 
-"Hide Others" = "Verberg Andere";
+"Hide Others" = "Verberg andere";
 
-"Import Channels (OPML)..." = "Importeer Kanalen (OPML)...";
+"Import Channels (OPML)..." = "Importeer kanalen (OPML)...";
 
 "Main Window" = "Hoofdvenster";
 
@@ -85,24 +85,24 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Miro Help" = "Miro Help";
 
-"New Channel Folder..." = "Nieuwe Kanaalmap...";
+"New Channel Folder..." = "Nieuwe kanaalmap...";
 
-"New Playlist Folder..." = "Nieuwe Afspeellijstmap...";
+"New Playlist Folder..." = "Nieuwe afspeellijstmap...";
 
-"New Playlist..." = "Nieuwe Afspeellijst...";
+"New Playlist..." = "Nieuwe afspeellijst...";
 
-"New Search Channel..." = "Nieuw Zoekkanaal...";
+"New Search Channel..." = "Nieuw zoekkanaal...";
 
-"Next Video" = "Volgende Video";
+"Next Video" = "Volgende video";
 
-"Open Recent" = "Open Recente Bestanden";
+"Open Recent" = "Open recente bestanden";
 
-"Open..." = "Open Bestand...";
+"Open..." = "Open bestand...";
 
-"Paste" = "Plakken";
+"Paste" = "Plak";
 
 /* File: ../../platform/osx/platform/frontends/html/Application.py:244 */
-"Play Video" = "Video Afspelen";
+"Play Video" = "Speel video af";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:84 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
@@ -112,31 +112,31 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Preferences..." = "Voorkeuren...";
 
-"Previous Video" = "Vorige Video";
+"Previous Video" = "Vorige video";
 
-"Quit Miro" = "Miro Afsluiten";
+"Quit Miro" = "Stop Miro";
 
-"Remove..." = "Verwijderen...";
+"Remove..." = "Verwijder...";
 
-"Rename..." = "Hernoemen...";
+"Rename..." = "Hernoem...";
 
-"Report a bug" = "Fout Rapporteren";
+"Report a bug" = "Meld een probleem";
 
-"Save Video As..." = "Video opslaan als...";
+"Save Video As..." = "Bewaar video als...";
 
-"Select All" = "Alles selecteren";
+"Select All" = "Selecteer alles";
 
-"Send This Channel to a Friend" = "Stuur dit Kanaal naar een Vriend";
+"Send This Channel to a Friend" = "Stuur dit kanaal naar een vriend";
 
-"Services" = "Diensten";
+"Services" = "Voorzieningen";
 
-"Show All" = "Alles weergeven";
+"Show All" = "Toon alles";
 
-"Stop Video" = "Stop Video";
+"Stop Video" = "Stop video";
 
-"Update All Channels" = "Werk Alle Kanalen Bij";
+"Update All Channels" = "Werk alle kanalen bij";
 
-"Update Channel" = "Werk Kanaal Bij";
+"Update Channel" = "Werk kanaal bij";
 
 "Window" = "Venster";
 
@@ -152,16 +152,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "00:00:00" = "00:00:00";
 
-"Box" = "Kader";
+"Box" = "Box";
 
-"FullScreen Controls" = "Volledig Scherm Bediening";
+"FullScreen Controls" = "FullScreen Controls";
 
 /* File: ../../portable/tabs.py:57 */
-"Video Search" = "Zoek Video's";
+"Video Search" = "Zoek video's";
 
-"VideoWindow" = "VideoVenster";
+"VideoWindow" = "VideoWindow";
 
-"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Locatie http://foo.bar.com/baz vereist een gebruikersnaam en wachtwoord voor \"text supplied by server\"\n";
+"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n";
 
 "Password:\n" = "Wachtwoord:\n";
 
@@ -169,12 +169,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Username:\n\n" = "Gebruikersnaam:\n\n";
 
-/* Flag: untranslated */
-"(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)" /* = "U moet Miro herstarten om enkele van deze wijzigingen van kracht te maken" */;
+"(You must restart Miro for some of these changes to take effect)" = "(Enkele wijzigingen gaan pas in nadat u Miro herstart)";
 
-"(You must restart Miro for this change to take effect)\n" = "(Deze wijziging heeft pas effect als u Miro herstart)\n";
+"(You must restart Miro for this change to take effect)\n" = "(Deze wijziging gaat pas in nadat u Miro herstart)\n";
 
-"(movies directory path goes here)" = "(locatie van de videomap gaat hier)";
+"(movies directory path goes here)" = "(movies directory path goes here)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
 "-" = "-";
@@ -205,58 +204,56 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Add..." = "Voeg toe...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-"All" = "Allemaal";
+"All" = "Alle";
 
-"Auto download default setting for new channels:" = "Download de instellingen voor nieuwe kanalen automatisch:";
+"Auto download default setting for new channels:" = "Automatische downloads van nieuwe kanalen:";
 
-/* Flag: untranslated */
-"Automatically forward ports" = "Automatically forward ports" /* = "Automatisch de poort forwarden" */;
+"Automatically forward ports" = "Stel poorten automatisch in";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
-"BitTorrent" = "BitTorrent";
+"BitTorrent" = "Torrents";
 
-"By default, videos expire after:" = "Standaard verlopen video's na:";
+"By default, videos expire after:" = "Verwijder bekeken video's automatisch na:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
-"Change..." = "Wijzigen...";
+"Change..." = "Wijzig...";
 
 "Check channels for new content:" = "Controleer kanalen op nieuwe inhoud:";
 
-"Don't auto-download more than this many videos per channel at once:" = "Download niet meer dan dit aantal video's per kanaal automatisch:";
+"Don't auto-download more than this many videos per channel at once:" = "Beperk het aantal gelijktijdige automatische downloads tot:";
 
-/* Flag: untranslated */
-"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:" /* = "Niet meer dan deze hoeveelheid video's in één keer downloaden:" */;
+"Don't download more than this many videos at once:" = "Beperk het aantal gelijktijdige handmatige downloads tot:";
 
-"Folder location" = "Maplocatie";
+"Folder location" = "Locatie map";
 
 "GB\n" = "GB\n";
 
-"Ignore unencrypted connections" = "Onversleutelde verbindingen negeren";
+"Ignore unencrypted connections" = "Negeer onversleutelde verbindingen";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
 "KB/s." = "KB/s";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
-"Keep at least this much free space on my drive:" = "Hou tenminste zoveel vrije ruimte op mijn harde schijf:";
+"Keep at least this much free space on my drive:" = "Behoud ten alle tijde vrije ruimte, minstens:";
 
-"Limit downstream to" = "Downstream limiteren tot:";
+"Limit downstream to" = "Beperk downloadsnelheid tot:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "Never" = "Nooit";
 
 /* File: ../../portable/tabs.py:56 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
-"New" = "Nieuw";
+"New" = "Nieuwe";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
-"Off" = "Uitzetten";
+"Off" = "Uit";
 
-"OtherViews" = "AndereWeergaven";
+"OtherViews" = "OtherViews";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
-"Play videos one after another." = "Video's na elkaar afspelen.";
+"Play videos one after another." = "Video's achtereen afspelen";
 
-"Remember video position." = "Onthoud afspeelpositie video's.";
+"Remember video position." = "Onthoud afspeelpositie video's";
 
 /* File: ../../portable/frontends/html/contextmenu.py:99 */
 /* File: ../../portable/frontends/html/contextmenu.py:104 */
@@ -266,30 +263,28 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/frontends/html/contextmenu.py:199 */
 /* File: ../../portable/frontends/html/contextmenu.py:233 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
-"Remove" = "Verwijderen";
+"Remove" = "Verwijder";
 
 "Run Miro at startup" = "Open Miro na inloggen";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591 */
-"Show as Channel" = "Toon als Kanaal";
+"Show as Channel" = "kanaal";
 
-"Stop after each video." = "Na elke video stoppen.";
+"Stop after each video." = "Stop na elke video";
 
-"Stop uploads when this ratio is reached:" = "Uploads stoppen als deze ratio is bereikt";
+"Stop uploads when this ratio is reached:" = "Stop met uploaden na het bereiken van een ratio van:";
 
-"Store downloads in this folder:" = "Downloads opslaan in:";
+"Store downloads in this folder:" = "Locatie gedownloade bestanden:";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to" /* = "Om vertragingen van de internetverbinding te voorkomen, limiteer upstream tot:" */;
+"To avoid internet slowdowns, limit upstream to" = "Voorkom traag internet, beperk uploadsnelheid tot:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
-/* Flag: untranslated */
-"Use these ports:" = "Use these ports:" /* = "Gebruik deze poorten:" */;
+"Use these ports:" = "Gebruik de poorten:";
 
 /* File: ../../portable/frontends/html/main.py:319 */
-"Warn me when I attempt to quit with downloads in progress" = "Waarschuw mij als ik stop terwijl er downloads actief zijn";
+"Warn me when I attempt to quit with downloads in progress" = "Waarschuw mij indien ik Miro stop terwijl er downloads actief zijn.";
 
-"Watch for new videos in these folders and include them in the Library:" = "Monitor deze locaties voor nieuwe video's en voeg toe aan de Bibliotheek";
+"Watch for new videos in these folders and include them in the Library:" = "Monitor locaties voor nieuwe video's en voeg toe aan bibliotheek";
 
 "every 30 minutes" = "elke 30 minuten";
 
@@ -304,7 +299,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Channel" = "Kanaal";
 
 /* File: ../../portable/dialogs.py:99 */
-"Create" = "Aanmaken";
+"Create" = "Maak aan";
 
 "In this:" = "Hierin:";
 
@@ -323,7 +318,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Back" = "Vorige";
 
-"Browse" = "Bladeren";
+"Browse" = "Blader";
 
 /* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:121 */
 "Next" = "Volgende";
@@ -332,14 +327,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "Nee";
 
-"Only search my Movies folder." = "Zoek enkel in mijn Video's.";
+"Only search my Movies folder." = "Zoek enkel in mijn video's";
 
-"Search my entire Home folder." = "Zoek in al mijn Persoonlijke mappen.";
+"Search my entire Home folder." = "Zoek in al mijn persoonlijke mappen";
 
 "Search this folder:" = "Zoek in deze map:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37 */
-"Searching for Videos" = "Zoeken naar Video's";
+"Searching for Videos" = "Zoeken naar video's";
 
 "The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "Miro kan alle video's op up computer vinden en u helpen bij het organiseren van uw collectie.\n\n\nWilt u dat Miro zoekt naar Video's op uw computer?";
 
@@ -359,20 +354,20 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%message%\n%message%" = "%message%\n%message%";
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
-"Update Available" = "Update Beschikbaar";
+"Update Available" = "Update beschikbaar";
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
 /* Flag: python-format */
 "A new version of %s is available for download." = "Een nieuwere versie van %s is beschikbaar.";
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
-"Error Bombing Item" = "Probleem Bij het Bomben Van Item";
+"Error Bombing Item" = "Probleem videobomben item";
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
-"Error Recommending Item" = "Probleem Bij Het Aanbevelen Van Item";
+"Error Recommending Item" = "Probleem aanbevelen item";
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
-"Error Opening Website" = "Probleem Bij Het Openen Van Website";
+"Error Opening Website" = "Probleem openen webpagina";
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
 /* Flag: python-format */
@@ -389,7 +384,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "onStartup called twice" = "onStartup called twice";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
-"Spacebar" = "Spatiebalk";
+"Spacebar" = "Spacebar";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
 "Close to tray?" = "Minimaliseren naar het systeemvak?";
@@ -398,21 +393,21 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Wanneer u het Miro venster sluit, wilt u Miro volledig stopppen, of wilt u het minimaliseren naar het systeemvak? U kunt dit achteraf wijzigen.";
 
 /* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
-"Download Completed" = "Download Voltooid";
+"Download Completed" = "Download voltooid";
 
 /* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
 /* Flag: python-format */
 "Download of video '%s' is finished." = "Download van de video '%s' voltooid.";
 
 /* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
-"Download Failed" = "Download Mislukt";
+"Download Failed" = "Download mislukt";
 
 /* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
 /* Flag: python-format */
 "Download of video '%s' has failed." = "Download van de video '%s' mislukt.";
 
 /* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
-"Subscribe to Channel" = "Abonneer op Kanaal";
+"Subscribe to Channel" = "Abonneer op kanaal";
 
 /* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
 "Enter the URL of the channel you would like to subscribe to." = "Geef de URL van het kanaal waarop u zich wilt abonneren op.";
@@ -431,10 +426,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
-"Disk Space" = "Vrije Ruimte";
+"Disk Space" = "Vrije ruimte";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
-"Movies Directory" = "Locatie map Video's";
+"Movies Directory" = "Locatie map video's";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
 /* Flag: python-format */
@@ -454,96 +449,96 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "U heeft de locatie voor gedownloade video's gewijzigd. Wilt u dat %s uw reeds voltooide downloads overzet naar deze? (Downloads die nog bezig zijn zullen achteraf overgezet worden.)";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
-"View this Directory in the Library" = "Toon deze Map in de Bibliotheek";
+"View this Directory in the Library" = "Toon deze map in de bibliotheek";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
-"Select a Directory to view in the Library." = "Selecteer een in de Bibliotheek te tonen Map.";
+"Select a Directory to view in the Library." = "Selecteer een in de bibliotheek te tonen map.";
 
 /* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
-"Finish" = "Volttoid";
+"Finish" = "Voltooid";
 
 /* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
 "Search!" = "Zoek!";
 
 /* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
-"Pause Video" = "Pauzeer Video";
+"Pause Video" = "Pauzeer video";
 
 /* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
-"Unsupported version of Quicktime" = "Deze versie van Quicktime wordt niet ondersteund.";
+"Unsupported version of Quicktime" = "Deze versie van QuickTime wordt niet ondersteund.";
 
 /* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
 /* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "De nieuwste versie van Quicktime, welke een gratis update is, is vereist om %s te gebruiken.";
+"To run %s you need the most recent version of Quicktime, which is a free update." = "De nieuwste versie van QuickTime, welke gratis is, is vereist om %s te gebruiken.";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
 "_Remove..." = "Ve_rwijder...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:34 */
-"_Remove Playlist..." = "Ve_rwijder Afspeellijst...";
+"_Remove Playlist..." = "Ve_rwijder afspeellijst...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:35 */
-"_Remove Playlists..." = "Ve_rwijder Afspeellijsten...";
+"_Remove Playlists..." = "Ve_rwijder afspeellijsten...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:36 */
-"_Remove Playlist Folder..." = "Ve_rwijder Afspeellijstmap...";
+"_Remove Playlist Folder..." = "Ve_rwijder afspeellijstmap...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:37 */
-"_Remove Playlist Folders..." = "Ve_rwijder Afspeellijstmappen...";
+"_Remove Playlist Folders..." = "Ve_rwijder afspeellijstmappen...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:38 */
 /* File: ../../portable/menubar.py:193 */
-"_Remove Channel..." = "Ve_rwijder Kanaal...";
+"_Remove Channel..." = "Ve_rwijder kanaal...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:39 */
 /* File: ../../portable/menubar.py:194 */
-"_Remove Channels..." = "Ve_rwijder Kanalen...";
+"_Remove Channels..." = "Ve_rwijder kanalen...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:40 */
 /* File: ../../portable/menubar.py:196 */
-"_Remove Channel Folder..." = "Ve_rwijder Kanaalmap...";
+"_Remove Channel Folder..." = "Ve_rwijder kanaalmap...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:41 */
 /* File: ../../portable/menubar.py:195 */
-"_Remove Channel Folders..." = "Ve_rwijder Kanaalmappen...";
+"_Remove Channel Folders..." = "Ve_rwijder kanaalmappen...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:42 */
-"_Remove Miro Guide..." = "Ve_rwijder Kanaalgids...";
+"_Remove Miro Guide..." = "Ve_rwijder kanaalgids...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:43 */
-"_Remove Miro Guides..." = "Ve_rwijder Kanaalgidsen...";
+"_Remove Miro Guides..." = "Ve_rwijder kanaalgidsen...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:44 */
-"_Remove Video..." = "Ve_rwijder Video...";
+"_Remove Video..." = "Ve_rwijder video...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:45 */
-"_Remove Videos..." = "Ve_rwijder Video's...";
+"_Remove Videos..." = "Ve_rwijder video's...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:46 */
 "Re_name..." = "_Hernoem...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:47 */
-"Re_name Playlist..." = "_Hernoem Afspeellijst...";
+"Re_name Playlist..." = "_Hernoem afspeellijst...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:48 */
-"Re_name Playlist Folder..." = "_Hernoem Afspeellijstmap...";
+"Re_name Playlist Folder..." = "_Hernoem afspeellijstmap...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:49 */
 /* File: ../../portable/menubar.py:192 */
-"Re_name Channel..." = "_Hernoem Kanaal...";
+"Re_name Channel..." = "_Hernoem kanaal...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:50 */
-"Re_name Channel Folder..." = "_Hernoem Kanaalmap...";
+"Re_name Channel Folder..." = "_Hernoem kanaalmap...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:51 */
-"Re_name Miro Guide..." = "_Hernoem Kanaalgids...";
+"Re_name Miro Guide..." = "_Hernoem kanaalgids...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:52 */
 /* File: ../../portable/menubar.py:198 */
-"_Update Channel..." = "_Werk Kanaal Bij...";
+"_Update Channel..." = "_Werk kanaal bij...";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:53 */
 /* File: ../../portable/menubar.py:199 */
-"_Update Channels..." = "_Werk Kanalen Bij...";
+"_Update Channels..." = "_Werk kanalen bij...";
 
 /* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
 "Audio" = "Audio";
@@ -563,10 +558,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Quit" = "Stop";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
-"New Channel _Guide..." = "Nieuwe Kanaal_gids...";
+"New Channel _Guide..." = "Nieuwe kanaal_gids...";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
-"Folder Location" = "Locatie Map";
+"Folder Location" = "Locatie map";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
@@ -600,17 +595,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%s MB required to store this video" = "%s MB vrije ruimte vereist om video te bewaren";
 
 /* File: ../../portable/dl_daemon/download.py:781 */
-"BitTorrent failure" = "BitTorrent fout";
+"BitTorrent failure" = "Torrentprobleem";
 
 /* File: ../../portable/dl_daemon/download.py:782 */
-"BitTorrent failed to startup" = "BitTorrent kon niet opstarten";
+"BitTorrent failed to startup" = "Torrent kon niet opstarten";
 
 /* File: ../../portable/dl_daemon/download.py:954 */
-"Corrupt Torrent" = "Beschadigde Torrent";
+"Corrupt Torrent" = "Beschadigde torrent";
 
 /* File: ../../portable/dl_daemon/download.py:955 */
 /* Flag: python-format */
-"The torrent file at %s was not valid" = "Ongeldige Torrent in %s";
+"The torrent file at %s was not valid" = "Ongeldige torrent in %s";
 
 /* File: ../../portable/dl_daemon/download.py:980 */
 "Torrent file deleted" = "Torrent verwijderd";
@@ -619,11 +614,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The torrent file for this item was deleted outside of Miro." = "Het torrent bestand voor dit item was verwijderd buiten miro";
 
 /* File: ../../portable/frontends/html/contextmenu.py:103 */
-"Update Channels Now" = "Werk Kanalen Nu Bij";
+"Update Channels Now" = "Werk kanalen nu bij";
 
 /* File: ../../portable/frontends/html/contextmenu.py:128 */
 /* Flag: python-format */
-"%d Downloaded Items" = "%d Items Gedownload";
+"%d Downloaded Items" = "%d items gedownload";
 
 /* File: ../../portable/frontends/html/contextmenu.py:130 */
 /* File: ../../portable/frontends/html/contextmenu.py:211 */
@@ -635,23 +630,23 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/frontends/html/contextmenu.py:133 */
 /* File: ../../portable/frontends/html/contextmenu.py:207 */
-"Remove From Playlist" = "Verwijder Uit Afspeellijst";
+"Remove From Playlist" = "Verwijder Uit afspeellijst";
 
 /* File: ../../portable/frontends/html/contextmenu.py:135 */
 /* File: ../../portable/frontends/html/contextmenu.py:209 */
-"Remove From the Library" = "Verwijder Uit de Bibliotheek";
+"Remove From the Library" = "Verwijder uit bibliotheek";
 
 /* File: ../../portable/frontends/html/contextmenu.py:141 */
 /* File: ../../portable/frontends/html/contextmenu.py:218 */
-"Mark as Unwatched" = "Markeer als Onbekeken";
+"Mark as Unwatched" = "Markeer als onbekeken";
 
 /* File: ../../portable/frontends/html/contextmenu.py:146 */
 /* File: ../../portable/frontends/html/contextmenu.py:220 */
-"Mark as Watched" = "Markeer als gezien";
+"Mark as Watched" = "Markeer als bekeken";
 
 /* File: ../../portable/frontends/html/contextmenu.py:151 */
 /* Flag: python-format */
-"%d Available Items" = "%d Beschikbare Items";
+"%d Available Items" = "%d beschikbare items";
 
 /* File: ../../portable/frontends/html/contextmenu.py:152 */
 /* File: ../../portable/frontends/html/contextmenu.py:227 */
@@ -660,22 +655,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/frontends/html/contextmenu.py:157 */
 /* Flag: python-format */
-"%d Downloading Items" = "%d Downloads Bezig";
+"%d Downloading Items" = "%d downloads bezig";
 
 /* File: ../../portable/frontends/html/contextmenu.py:159 */
 /* File: ../../portable/frontends/html/contextmenu.py:225 */
-"Cancel Download" = "Annuleer Download";
+"Cancel Download" = "Annuleer download";
 
 /* File: ../../portable/frontends/html/contextmenu.py:161 */
 /* File: ../../portable/frontends/html/contextmenu.py:225 */
-"Pause Download" = "Pauzeer Download";
+"Pause Download" = "Pauzeer download";
 
 /* File: ../../portable/frontends/html/contextmenu.py:164 */
 /* File: ../../portable/frontends/html/contextmenu.py:223 */
-"Restart Upload" = "Hervat Upload";
+"Restart Upload" = "Hervat upload";
 
 /* File: ../../portable/frontends/html/contextmenu.py:170 */
-"Update Channel Now" = "Werk Kanaal Nu Bij";
+"Update Channel Now" = "Werk kanaal nu bij";
 
 /* File: ../../portable/frontends/html/contextmenu.py:172 */
 /* File: ../../portable/frontends/html/contextmenu.py:196 */
@@ -683,36 +678,36 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/frontends/html/contextmenu.py:173 */
 /* File: ../../portable/feed.py:825 */
-"Rename Channel" = "Hernoem Kanaal";
+"Rename Channel" = "Hernoem kanaal";
 
 /* File: ../../portable/frontends/html/contextmenu.py:177 */
-"Revert Title to Default" = "Herstel de Originele Naam";
+"Revert Title to Default" = "Herstel de originele naam";
 
 /* File: ../../portable/frontends/html/contextmenu.py:183 */
 /* File: ../../portable/folder.py:142 */
-"Rename Channel Folder" = "Hernoem Kanaalmap";
+"Rename Channel Folder" = "Hernoem kanaalmap";
 
 /* File: ../../portable/frontends/html/contextmenu.py:189 */
 /* File: ../../portable/folder.py:213 */
-"Rename Playlist Folder" = "Hernoem Afspeellijstmap";
+"Rename Playlist Folder" = "Hernoem afspeellijstmap";
 
 /* File: ../../portable/frontends/html/contextmenu.py:213 */
-"Play Just This Video" = "Enkel Deze Video Afspelen";
+"Play Just This Video" = "Speel enkel deze video af";
 
 /* File: ../../portable/frontends/html/contextmenu.py:232 */
 /* File: ../../portable/playlist.py:218 */
-"Rename Playlist" = "Hernoem Afspeellijst";
+"Rename Playlist" = "Hernoem afspeellijst";
 
 /* File: ../../portable/frontends/html/main.py:132 */
 /* File: ../../portable/startup.py:237 */
-"Video Directory Missing" = "Map met Video's Ontbreekt";
+"Video Directory Missing" = "Map met video's ontbreekt";
 
 /* File: ../../portable/frontends/html/main.py:133 */
-"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro kan uw primaire videomap niet vinden. Dit kan worden veroorzaakt door een externe schijf die momenteel niet aangesloten is.\n\n    Als u doorgaat zal uw videomap worden heringesteld naar een locatie op deze schijf (dit zal wat dataverlies veroorzaken over de video's op de externe schijf). U kunt ook afsluiten, de schijf opnieuw aansluiten en Miro herstarten.";
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro kan uw gedownloade video's niet lokaliseren. Dit is mogelijk het gevolg van een externe harde schijf die nu niet aangesloten is.\n\n    Als u doorgaat, wordt de locatie voor gedownloade bestanden gereset naar een locatie op deze schijf. Dit zal wat dataverlies veroorzaken over de video's op deze externe schijf! U kunt beter stoppen, de externe schijf opnieuw aansluiten, en Miro herstarten.";
 
 /* File: ../../portable/frontends/html/main.py:190 */
 /* File: ../../portable/theme.py:126 */
-"Custom Channels" = "Aangepaste Kanalen";
+"Custom Channels" = "Aangepaste kanalen";
 
 /* File: ../../portable/frontends/html/main.py:190 */
 /* File: ../../portable/theme.py:126 */
@@ -720,7 +715,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/frontends/html/main.py:269 */
 /* File: ../../portable/httpclient.py:139 */
-"Internal Error" = "Intern Probleem";
+"Internal Error" = "Intern probleem";
 
 /* File: ../../portable/frontends/html/main.py:269 */
 "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Er trad een intern probleem op in Miro. U kunt ons dit probleem helpen opsporen en verhelpen door een probleemrapport te versturen.";
@@ -733,7 +728,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/frontends/html/main.py:284 */
 /* Flag: python-format */
-"%s Version Alert" = "%s Version Alert";
+"%s Version Alert" = "%s versie mededeling";
 
 /* File: ../../portable/frontends/html/main.py:285 */
 /* Flag: python-format */
@@ -741,7 +736,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/frontends/html/main.py:290 */
 /* Flag: python-format */
-"%s Version Check" = "%s Versie Controle";
+"%s Version Check" = "%s versie controle";
 
 /* File: ../../portable/frontends/html/main.py:291 */
 /* Flag: python-format */
@@ -754,16 +749,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro is bezig het probleemrapport te versturen. Als u nu stopt, mislukt de verzending. Wilt u toch afsluiten?";
 
 /* File: ../../portable/frontends/html/main.py:340 */
-"Import OPML File" = "Importeer OPML Bestand";
+"Import OPML File" = "Importeer OPML bestand";
 
 /* File: ../../portable/frontends/html/main.py:342 */
-"OPML Files" = "OPML Bestanden";
+"OPML Files" = "OPML bestanden";
 
 /* File: ../../portable/frontends/html/main.py:347 */
-"Export OPML File" = "Exporteer OPML Bestand";
+"Export OPML File" = "Exporteer OPML bestand";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:325 */
-"Invalid Value" = "Ongeldige Waarde";
+"Invalid Value" = "Ongeldige waarde";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:326 */
 /* Flag: python-format */
@@ -777,10 +772,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The file \"%s\" was deleted from outside Miro." = "Het bestand \"%s\" is buiten Miro om gewist.";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:560 */
-"Error Changing Movies Directory" = "Probleem Wijziging Locatie Video's";
+"Error Changing Movies Directory" = "Probleem wijziging locatie video's";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:561 */
-"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "U heeft geen toestemming om naar deze locatie te schrijven. Miro zal de oude locatie voor video's blijven gebruiken.";
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "U heeft onvoldoende rechten om deze locatie te gebruiken. Miro zal de oude locatie voor video's blijven gebruiken.";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:664 */
 " - Invalid URL" = " - Ongeldige URL";
@@ -789,19 +784,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Het opgegeven adres is een ongeldige URL.\nKijk deze nogmaals na en probeer het opnieuw.\n\n";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:691 */
-"$shortAppName - Add Channel" = "$shortAppName - Nieuw Kanaal";
+"$shortAppName - Add Channel" = "$shortAppName - Nieuw kanaal";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:691 */
 "Enter the URL of the channel to add" = "Geef de URL van het nieuwe kanaal op";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:712 */
-"$shortAppName - Add Miro Guide" = "$shortAppName - Nieuwe Kanaalgids";
+"$shortAppName - Add Miro Guide" = "$shortAppName - Nieuwe kanaalgids";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:712 */
-"Enter the URL of the Miro Guide to add" = "Geef de URL van de nieuwe Kanaalgids op";
+"Enter the URL of the Miro Guide to add" = "Geef de URL van de nieuwe kanaalgids op";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:718 */
-"$shortAppName - Download Video" = "$shortAppName - Download Video";
+"$shortAppName - Download Video" = "$shortAppName - Download video";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:718 */
 "Enter the URL of the video to download" = "Geef de URL van de te downloaden video op.";
@@ -821,7 +816,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "File not found" = "Bestand niet gevonden";
 
 /* File: ../../portable/downloader.py:269 */
-"Flash URL Scraping Error" = "Probleem Detectie Flash URL";
+"Flash URL Scraping Error" = "Probleem detectie Flash URL";
 
 /* File: ../../portable/downloader.py:445 */
 "starting up" = "opstarten";
@@ -831,7 +826,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Enter a new name for the playlist %s" = "Geef een naam op voor de afspeellijst %s";
 
 /* File: ../../portable/playlist.py:241 */
-"Create Playlist" = "Nieuwe Afspeellijst";
+"Create Playlist" = "Nieuwe afspeellijst";
 
 /* File: ../../portable/playlist.py:242 */
 "Enter a name for the new playlist" = "Geef een naam op voor de nieuwe afspeellijst";
@@ -843,7 +838,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The selected OPML file appears to be invalid. Import was interrupted." = "Het gekozen OPML bestand blijkt ongeldig te zijn. Import onderbroken.";
 
 /* File: ../../portable/opml.py:150 */
-"OPML Import summary" = "OPML Importrapport";
+"OPML Import summary" = "OPML importrapport";
 
 /* File: ../../portable/util.py:266 */
 /* Flag: python-format */
@@ -878,34 +873,34 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%dB" = "%dB";
 
 /* File: ../../portable/iheartmiro.py:82 */
-"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "Een makkelijke manier om Miro te helpen\n\nMiro is open-source en gemaakt door een winstvrije organisatie. We hebben jou hulp nodig om ons werk verder te kunnen zetten.\n\nI Heart Miro is een eenvoudige Firefox extensie die een bedrag betaald aan de organisatie van Miro wanneer u producten koop bij Amazon. Je zal het niet merken, het kost je niets en het is eenvoudig te verwijderen.\n\nWanneer u op 'Install iHeartMiro' klikt zal Firefox starten en vragen om bevestiging, klik op ja en u bent klaar. Het duurt zo'n 7 seconden, bedankt voor uw steun.";
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "Een moeiteloze manier om Miro te helpen\n\nMiro is open-source en wordt ontwikkeld door een niet-winstgedreven organisatie. Wij hebben uw hulp nodig om ons werk verder te zetten.\n\nI Heart Miro is een simpele Firefox extensie waarmee u Miro kunt helpen sponsoren. Dit kost u niets -volledig voor rekening van Amazon-, u merkt hier niets van, en u kunt de extensie ten alle tijde eenvoudig verwijderen.\n\nNadat u op 'Install iHeartMiro' klikt zal Firefox opstarten en u vragen om uw bevestiging. Klik simpelweg op Ja. Dat is alles, de ganse installatie duurt slechts een 7-tal seconden! Alvast bedankt voor uw steun.";
 
 /* File: ../../portable/menubar.py:158 */
 "_Open" = "_Open";
 
 /* File: ../../portable/menubar.py:159 */
-"_Download Video" = "_Download Video";
+"_Download Video" = "_Download video";
 
 /* File: ../../portable/menubar.py:161 */
-"Check _Version" = "Controleer _Versie";
+"Check _Version" = "Controleer _versie";
 
 /* File: ../../portable/menubar.py:163 */
-"_Remove Video" = "Ve_rwijder Video";
+"_Remove Video" = "Ve_rwijder video";
 
 /* File: ../../portable/menubar.py:164 */
-"_Remove Videos" = "Ve_rwijder Video's";
+"_Remove Videos" = "Ve_rwijder video's";
 
 /* File: ../../portable/menubar.py:165 */
-"Re_name Video" = "_Hernoem Video";
+"Re_name Video" = "_Hernoem video";
 
 /* File: ../../portable/menubar.py:166 */
-"Save Video _As..." = "Bewaar Video Al_s...";
+"Save Video _As..." = "Bewaar video al_s...";
 
 /* File: ../../portable/menubar.py:167 */
-"Save Videos _As..." = "Bewaar Video's Al_s...";
+"Save Videos _As..." = "Bewaar video's al_s...";
 
 /* File: ../../portable/menubar.py:168 */
-"Copy Video _URL" = "Kopieer _URL Video";
+"Copy Video _URL" = "Kopieer _URL video";
 
 /* File: ../../portable/menubar.py:170 */
 "_Options..." = "_Voorkeuren...";
@@ -923,58 +918,58 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Paste" = "_Plak";
 
 /* File: ../../portable/menubar.py:182 */
-"Select _All" = "Selecteer _Alles";
+"Select _All" = "Selecteer _alles";
 
 /* File: ../../portable/menubar.py:183 */
 "_Delete" = "Ve_rwijder";
 
 /* File: ../../portable/menubar.py:187 */
-"Add _Channel" = "Nieuw_Kanaal";
+"Add _Channel" = "Nieuw _kanaal";
 
 /* File: ../../portable/menubar.py:188 */
-"New Searc_h Channel..." = "Nieuw _Zoekkanaal...";
+"New Searc_h Channel..." = "Nieuw _zoekkanaal...";
 
 /* File: ../../portable/menubar.py:189 */
-"New _Folder..." = "Nieuwe _Map...";
+"New _Folder..." = "Nieuwe _map...";
 
 /* File: ../../portable/menubar.py:190 */
-"Add Channel _Guide..." = "Nieuwe _Kanaalgids...";
+"Add Channel _Guide..." = "Nieuwe _kanaalgids...";
 
 /* File: ../../portable/menubar.py:200 */
-"Update _All Channels" = "Werk _Alle Kanalen Bij";
+"Update _All Channels" = "Werk _alle kanalen bij";
 
 /* File: ../../portable/menubar.py:202 */
-"_Import Channels (OPML)..." = "_Importeer Kanalen (OPML)...";
+"_Import Channels (OPML)..." = "_Importeer kanalen (OPML)...";
 
 /* File: ../../portable/menubar.py:203 */
-"E_xport Channels (OPML)..." = "E_xporteer Kanalen (OPML)...";
+"E_xport Channels (OPML)..." = "E_xporteer kanalen (OPML)...";
 
 /* File: ../../portable/menubar.py:205 */
 "_Send this channel to a friend" = "_Verstuur dit kanaal naar een vriend";
 
 /* File: ../../portable/menubar.py:206 */
-"Copy Channel _Link" = "Kopieer _Adres Kanaal";
+"Copy Channel _Link" = "Kopieer _URL Kanaal";
 
 /* File: ../../portable/menubar.py:209 */
-"New _Playlist" = "Nieuwe Afs_peellijst";
+"New _Playlist" = "Nieuwe afs_peellijst";
 
 /* File: ../../portable/menubar.py:210 */
-"New Playlist Fol_der" = "Nieuwe Afspeellijst_map";
+"New Playlist Fol_der" = "Nieuwe afspeellijst_map";
 
 /* File: ../../portable/menubar.py:212 */
-"Re_name Playlist" = "Her_noem Afspeellijst";
+"Re_name Playlist" = "Her_noem afspeellijst";
 
 /* File: ../../portable/menubar.py:213 */
-"_Remove Playlist" = "Ve_rwijder Afspeellijst";
+"_Remove Playlist" = "Ve_rwijder afspeellijst";
 
 /* File: ../../portable/menubar.py:214 */
-"_Remove Playlists" = "Ve_rwijder Afspeellijsten";
+"_Remove Playlists" = "Ve_rwijder afspeellijsten";
 
 /* File: ../../portable/menubar.py:215 */
-"_Remove Playlist Folders" = "Ve_rwijder Afspeellijstmappen";
+"_Remove Playlist Folders" = "Ve_rwijder afspeellijstmappen";
 
 /* File: ../../portable/menubar.py:216 */
-"_Remove Playlist Folder" = "Ve_rwijder Afspeellijstmap";
+"_Remove Playlist Folder" = "Ve_rwijder afspeellijstmap";
 
 /* File: ../../portable/menubar.py:226 */
 /* File: ../../portable/menubar.py:227 */
@@ -987,22 +982,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Stop" = "_Stop";
 
 /* File: ../../portable/menubar.py:231 */
-"_Next Video" = "Volge_nde Video";
+"_Next Video" = "Volge_nde video";
 
 /* File: ../../portable/menubar.py:232 */
-"_Previous Video" = "V_orige Video";
+"_Previous Video" = "V_orige video";
 
 /* File: ../../portable/menubar.py:234 */
-"Skip _Forward" = "Spoel _Vooruit";
+"Skip _Forward" = "Spoel _vooruit";
 
 /* File: ../../portable/menubar.py:235 */
-"Skip _Back" = "Spoel A_chteruit";
+"Skip _Back" = "Spoel a_chteruit";
 
 /* File: ../../portable/menubar.py:237 */
-"Volume _Up" = "Vol_ume Omhoog";
+"Volume _Up" = "Vol_ume omhoog";
 
 /* File: ../../portable/menubar.py:238 */
-"Volume _Down" = "Volume Om_laag";
+"Volume _Down" = "Volume om_laag";
 
 /* File: ../../portable/menubar.py:240 */
 "_Fullscreen" = "_Schermvullend";
@@ -1018,13 +1013,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Help" = "_Help";
 
 /* File: ../../portable/menubar.py:248 */
-"Report a _Bug" = "_Rapporteer een Probleem";
+"Report a _Bug" = "_Meld een probleem";
 
 /* File: ../../portable/menubar.py:252 */
 "_Video" = "_Video";
 
 /* File: ../../portable/menubar.py:254 */
-"_File" = "_Bestand";
+"_File" = "_Archief";
 
 /* File: ../../portable/menubar.py:258 */
 "_Channels" = "_Kanalen";
@@ -1036,25 +1031,25 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "P_layback" = "_Weergave";
 
 /* File: ../../portable/menubar.py:265 */
-"Play Unwatched ($numUnwatched)" = "Speel Nieuwe Af ($numUnwatched)";
+"Play Unwatched ($numUnwatched)" = "Speel nieuwe af ($numUnwatched)";
 
 /* File: ../../portable/menubar.py:266 */
-"Pause All Downloads ($numDownloading)" = "Pauzeer Alle Downloads ($numDownloading)";
+"Pause All Downloads ($numDownloading)" = "Pauzeer alle downloads ($numDownloading)";
 
 /* File: ../../portable/menubar.py:267 */
-"Resume All Downloads ($numPaused)" = "Hervat Alle Downloads ($numPaused)";
+"Resume All Downloads ($numPaused)" = "Hervat alle downloads ($numPaused)";
 
 /* File: ../../portable/menubar.py:269 */
 "Options..." = "Voorkeuren...";
 
 /* File: ../../portable/menubar.py:271 */
-"Hide Window" = "Verberg Venster";
+"Hide Window" = "Verberg venster";
 
 /* File: ../../portable/menubar.py:272 */
-"Show Window" = "Toon Venster";
+"Show Window" = "Toon venster";
 
 /* File: ../../portable/theme.py:137 */
-"Starter Channels" = "Standaard Kanalen";
+"Starter Channels" = "Starterskanalen";
 
 /* File: ../../portable/theme.py:154 */
 "Example Playlist" = "Afspeellijstvoorbeeld";
@@ -1079,15 +1074,15 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/httpclient.py:110 */
 /* Flag: python-format */
-"Bad Status Line: %s" = "Slechte Statusregel: %s";
+"Bad Status Line: %s" = "Slechte statusregel: %s";
 
 /* File: ../../portable/httpclient.py:113 */
 /* Flag: python-format */
-"Bad Header Line: %s" = "Slechte Headerregel: %s";
+"Bad Header Line: %s" = "Slechte headerregel: %s";
 
 /* File: ../../portable/httpclient.py:116 */
 /* Flag: python-format */
-"Bad Chunk size: %s" = "Slechte Stukgrootte: %s";
+"Bad Chunk size: %s" = "Slechte stukgrootte: %s";
 
 /* File: ../../portable/httpclient.py:119 */
 /* Flag: python-format */
@@ -1198,7 +1193,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "We zullen echter ons best doen om de media alsnog the detecteren. Dit kan langer duren, en beschrijvingen kunnen raar weergegeven worden. Contacteer aub de uitgevers van $url en verzoek ze een formaat te hanteren welke beter met $shortAppName werkt.\n\nWilt u dit kanaal alsnog toevoegen?";
 
 /* File: ../../portable/feed.py:2513 */
-"Local Files" = "Lokale Bestanden";
+"Local Files" = "Lokale bestanden";
 
 /* File: ../../portable/feed.py:2527 */
 "Playing File" = "Bestand wordt afgespeeld";
@@ -1210,7 +1205,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/storedatabase.py:860 */
 /* File: ../../portable/storedatabase.py:1259 */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "De database is succesvol bewaard. U kunt het programma nu veilig afsluiten zonder dataverlies.";
+"The database has been successfully saved. It is now safe to quit without losing any data." = "De database is succesvol bewaard. U kunt de applicatie nu veilig stoppen zonder dataverlies.";
 
 /* File: ../../portable/storedatabase.py:867 */
 /* File: ../../portable/storedatabase.py:1267 */
@@ -1220,74 +1215,74 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/storedatabase.py:868 */
 /* File: ../../portable/storedatabase.py:1268 */
 /* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s kon de database niet succesvol bewaren: Onvoldoende Vrije Ruimte.\nVerwijder bestanden van de volle harde schijf of verwijder simpelweg enkele video's uit uw bibliotheek. \nRecente wijzigingen gaan mogelijk verloren.";
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s kon de database niet succesvol bewaren: geen vrije ruimte.\nVerwijder bestanden van de volle harde schijf of verwijder simpelweg enkele video's uit uw bibliotheek. \nRecente wijzigingen gaan mogelijk verloren.";
 
 /* File: ../../portable/dialogs.py:89 */
 "Ignore" = "Negeer";
 
 /* File: ../../portable/dialogs.py:90 */
-"Submit Crash Report" = "Verzend Crashrapport";
+"Submit Crash Report" = "Verzend foutenrapport";
 
 /* File: ../../portable/dialogs.py:91 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-"Migrate" = "Zet Over";
+"Migrate" = "Zet over";
 
 /* File: ../../portable/dialogs.py:92 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-"Don't Migrate" = "Zet Niet Over";
+"Don't Migrate" = "Zet niet over";
 
 /* File: ../../portable/dialogs.py:94 */
-"Remove Entry" = "Verwijder Item";
+"Remove Entry" = "Verwijder item";
 
 /* File: ../../portable/dialogs.py:95 */
-"Delete File" = "Verwijder Bestand";
+"Delete File" = "Verwijder bestand";
 
 /* File: ../../portable/dialogs.py:96 */
-"Delete Files" = "Verwijder Bestanden";
+"Delete Files" = "Verwijder bestanden";
 
 /* File: ../../portable/dialogs.py:97 */
-"Keep Videos" = "Bewaar Video's";
+"Keep Videos" = "Bewaar video's";
 
 /* File: ../../portable/dialogs.py:98 */
-"Delete Videos" = "Verwijder Video's";
+"Delete Videos" = "Verwijder video's";
 
 /* File: ../../portable/dialogs.py:100 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-"Create Channel" = "Nieuw Kanaal";
+"Create Channel" = "Nieuw kanaal";
 
 /* File: ../../portable/dialogs.py:101 */
-"Add" = "Voeg Toe";
+"Add" = "Voeg toe";
 
 /* File: ../../portable/dialogs.py:102 */
-"Add Into New Folder" = "Voeg Toe In Nieuwe Map";
+"Add Into New Folder" = "Voeg toe in nieuwe map";
 
 /* File: ../../portable/dialogs.py:103 */
 "Keep" = "Bewaar";
 
 /* File: ../../portable/dialogs.py:105 */
-"Not Now" = "Niet Nu";
+"Not Now" = "Niet nu";
 
 /* File: ../../portable/dialogs.py:106 */
-"Close to Tray" = "Sluit naar Systeemvak";
+"Close to Tray" = "Sluit naar systeemvak";
 
 /* File: ../../portable/dialogs.py:107 */
 "Launch Miro" = "Start Miro";
 
 /* File: ../../portable/dialogs.py:108 */
-"Download Anyway" = "Download Toch";
+"Download Anyway" = "Download toch";
 
 /* File: ../../portable/dialogs.py:109 */
 "Install iHeartMiro" = "Installeer iHeartMiro";
 
 /* File: ../../portable/dialogs.py:110 */
-"Don't Install" = "Niet installeren";
+"Don't Install" = "Annuleer";
 
 /* File: ../../portable/dialogs.py:231 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-"New Search Channel" = "Nieuw Zoekkanaal";
+"New Search Channel" = "Nieuw zoekkanaal";
 
 /* File: ../../portable/dialogs.py:231 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
@@ -1360,7 +1355,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Are you sure you want to stop watching these %s directories?" = "Weet u zeker dat u wilt stoppen met het monitoren van deze %s mappen?";
 
 /* File: ../../portable/controller.py:497 */
-"Error Saving Video" = "Probleem Opslaan Video";
+"Error Saving Video" = "Probleem opslaan video";
 
 /* File: ../../portable/controller.py:499 */
 /* Flag: python-format */
@@ -1382,14 +1377,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "It has already been downloaded." = "Het is reeds gedownload.";
 
 /* File: ../../portable/singleclick.py:137 */
-"Download Error" = "Probleem Downloaden";
+"Download Error" = "Probleem downloaden";
 
 /* File: ../../portable/singleclick.py:138 */
 /* Flag: python-format */
 "Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro kan geen bestand downloaden via deze URL:\n\nURL: %s";
 
 /* File: ../../portable/singleclick.py:146 */
-"File Download" = "Download Bestand";
+"File Download" = "Download bestand";
 
 /* File: ../../portable/singleclick.py:147 */
 /* Flag: python-format */
@@ -1427,7 +1422,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Could not download the $shortAppName channel file: $url." = "Download van het bestand voor het $shortAppName kanaal mislukt: $url.";
 
 /* File: ../../portable/singleclick.py:334 */
-"Invalid Torrent" = "Ongeldige Torrent";
+"Invalid Torrent" = "Ongeldige torrent";
 
 /* File: ../../portable/singleclick.py:335 */
 /* Flag: python-format */
@@ -1438,10 +1433,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Removing %s" = "Verwijderen %s";
 
 /* File: ../../portable/item.py:500 */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Wilt u de geselecteerde map en alle video's erin definitief verwijderen of wilt u ze laten staan en enkel uit de Bibliotheek verwijderen?";
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Wilt u de geselecteerde map en alle video's erin definitief verwijderen of wilt u ze laten staan en enkel uit de bibliotheek verwijderen?";
 
 /* File: ../../portable/item.py:506 */
-"Would you like to delete this file or just remove its entry from the Library?" = "Wilt u het geselecteerde bestand definitief verwijderen of wilt u net laten staan en enkel uit de Bibliotheek verwijderen?";
+"Would you like to delete this file or just remove its entry from the Library?" = "Wilt u het geselecteerde bestand definitief verwijderen of wilt u het laten staan en enkel uit de bibliotheek verwijderen?";
 
 /* File: ../../portable/item.py:526 */
 "This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Dit item is een map. Wanneer je een map verwijderd, worden ook de items in deze map verwijderd.";
@@ -1468,7 +1463,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "WEB PAGE" = "WEBPAGINA";
 
 /* File: ../../portable/item.py:994 */
-"Total Down:" = "Totaal Gedownload:";
+"Total Down:" = "Gedownload:";
 
 /* File: ../../portable/item.py:997 */
 "Error:" = "Probleem:";
@@ -1483,13 +1478,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Down Rate:" = "Downloadsnelheid:";
 
 /* File: ../../portable/item.py:1011 */
-"Down Total:" = "Totaal Gedownload:";
+"Down Total:" = "Gedownload:";
 
 /* File: ../../portable/item.py:1013 */
 "Up Rate:" = "Uploadsnelheid:";
 
 /* File: ../../portable/item.py:1014 */
-"Up Total:" = "Totaal Geupload:";
+"Up Total:" = "Geupload:";
 
 /* File: ../../portable/item.py:1024 */
 "Web page:" = "Webpagina:";
@@ -1498,13 +1493,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "permalink" = "permalink";
 
 /* File: ../../portable/item.py:1028 */
-"File link:" = "Adres bestand:";
+"File link:" = "Adres:";
 
 /* File: ../../portable/item.py:1028 */
 "direct link to file" = "gekoppeld bestand";
 
 /* File: ../../portable/item.py:1030 */
-"File type:" = "Type bestand:";
+"File type:" = "Extensie:";
 
 /* File: ../../portable/item.py:1037 */
 /* File: ../../portable/item.py:1040 */
@@ -1513,7 +1508,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
-"see permalink" = "bekijk de permalink";
+"see permalink" = "zie permalink";
 
 /* File: ../../portable/item.py:1049 */
 "REVEAL LOCAL FOLDER" = "TOON LOKALE MAP";
@@ -1525,22 +1520,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Filename:" = "Naam bestand:";
 
 /* File: ../../portable/item.py:1060 */
-"Down Total" = "Totaal Gedownload";
+"Down Total" = "Gedownload";
 
 /* File: ../../portable/item.py:1062 */
-"Up Total" = "Totaal Geupload";
+"Up Total" = "Geupload";
 
 /* File: ../../portable/item.py:1080 */
-"Item Details" = "Toon Filminfo";
+"Item Details" = "Info";
 
 /* File: ../../portable/item.py:1087 */
-"Torrent Details" = "Toon Torrentinfo";
+"Torrent Details" = "Torrentinfo";
 
 /* File: ../../portable/item.py:1089 */
-"Torrent Details <i>stopped</i>" = "Torrent Details <i>gestopt</i>";
+"Torrent Details <i>stopped</i>" = "Torrent <i>gestopt</i>";
 
 /* File: ../../portable/item.py:1093 */
-"Download Details" = "Toon Downloadinfo";
+"Download Details" = "Downloadinfo";
 
 /* File: ../../portable/item.py:1310 */
 "downloading..." = "downloaden...";
@@ -1564,7 +1559,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Een of meer van deze items is een map. Als u deze map wist of verwijdert, dan worden alle items erin eveneens gewist of verwijderd.";
 
 /* File: ../../portable/startup.py:92 */
-"Unknown Error" = "Onbekende Fout";
+"Unknown Error" = "Onbekende fout";
 
 /* File: ../../portable/startup.py:93 */
 /* Flag: python-format */
@@ -1577,8 +1572,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "U heeft een database welke opgeslagen is geweest met een nieuwere versie van $shortAppName. U moet de nieuwste versie van $shortAppName downloaden en deze gebruiken.";
 
 /* File: ../../portable/startup.py:238 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." /* = "\nMiro kan uw primaire videomap niet vinden. Dit kan worden veroorzaakt door een externe schijf die momenteel niet aangesloten is." */;
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro kan uw gedownloade video's niet lokaliseren. Dit is mogelijk het gevolg van een externe harde schijf die nu niet aangesloten is.";
 
 /* File: ../../portable/folder.py:144 */
 /* Flag: python-format */
@@ -1589,28 +1583,28 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Enter a new name for the playlist folder %s" = "Geef een nieuwe naam op voor de afspeellijstmap %s";
 
 /* File: ../../portable/folder.py:223 */
-"Create Channel Folder" = "Nieuwe Kanaalmap";
+"Create Channel Folder" = "Nieuwe kanaalmap";
 
 /* File: ../../portable/folder.py:237 */
-"Create Playlist Folder" = "Nieuwe Afspeellijstmap";
+"Create Playlist Folder" = "Nieuwe afspeellijstmap";
 
 /* File: ../../portable/folder.py:238 */
 "Enter a name for the new playlist folder" = "Geef een naam op voor de nieuwe afspeellijstmap";
 
 /* File: ../../portable/license.py:68 */
-"license page" = "licensie pagina";
+"license page" = "licentie pagina";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 dag\n3 dagen\n6 dagen\n10 dagen\n1 maand\nNooit";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:8 */
-"<b>BitTorrent</b>" = "<b>BitTorrent</b>";
+"<b>BitTorrent</b>" = "<b>Torrents</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Nota:</b> Als u de renderer voor het afspelen van viedo verandert, Moet u\nMiro herstarten voor de veranderingen effect hebben";
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>NB:</b> Indien u de renderer voor het afspelen van video's wijzigt, gaat \ndeze wijziging pas in nadat u Miro HERSTART.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-"<b>Searching for Videos</b>" = "<b>Zoeken naar Video's</b>";
+"<b>Searching for Videos</b>" = "<b>Zoeken naar video's</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
 "<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Wilt u dat Miro zoekt naar video's op uw computer?</b>";
@@ -1619,17 +1613,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Wilt u Miro openen na het inloggen op uw computer?</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
-"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>U bent klaar!</b>\n\nU heeft Miro ingesteld - ontdek meteen enkele kanalen en begin uw kijkervaring.\n\n<b>Wacht Niet Langer:</b> Miro biedt u een compleet andere ervaring dan video's op webpagina's - uitgevers kunnen u grote video's van een hoge kwaliteit aanbieden. Rust niet op uw lauweren: start nu enkele downloads en check deze achteraf. \n\n<b>Laat het Aanstaan:</b> Miro werkt regelmatig uw abonnementen op kanalen bij en download nieuwe video's automatisch in de achtergrond. Deze video's zullen automatisch voor u klaargezet worden voor uw kijkplezier.\n\n<b>Geen Zorgen Over Vrije Ruimte:</b> Net zoals de befaamde Amerikaanse TiVo's, biedt Miro u een manier om automatisch oude video's te verwijderen en plaats te maken voor nieuwere. U kunt uiteraard ook video's definitief bijhouden door een enkele klik op 'bewaar' of u kunt uw voorkeuren simpelweg per kanaal opgeven zodat dit geheel automatisch gebeurt.\n\n<b>Bekijk Het Groot:</b> De knop rechts van de afspeelknop start het afspelen van video's schermvullend.\n\n<b>Ontdek Video's:</b> De Miro Kanaalgids bevat meer dan duizend gratis kanalen waarop u zich kunt abonneren. Klik simpelweg op 'VOEG TOE' om een kanaal te bekijken.";
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>U bent klaar!</b>\n\nU heeft Miro ingesteld - ontdek meteen enkele kanalen en begin uw kijkervaring.\n\n<b>Wacht Niet Langer:</b> Miro biedt u een compleet andere ervaring dan video's op webpagina's - uitgevers kunnen u grote video's van een hoge kwaliteit aanbieden. Rust niet op uw lauweren: start nu enkele downloads en check deze achteraf. \n\n<b>Laat het Aanstaan:</b> Miro werkt regelmatig uw abonnementen op kanalen bij en download nieuwe video's automatisch in de achtergrond. Deze video's zullen automatisch voor u klaargezet worden voor uw kijkplezier.\n\n<b>Geen Zorgen Over Vrije Ruimte:</b> Net zoals de befaamde Amerikaanse TiVo's, biedt Miro u een manier om automatisch oude video's te verwijderen en plaats te maken voor nieuwere. U kunt uiteraard ook video's definitief bijhouden door een enkele klik op 'bewaar' of u kunt uw voorkeuren simpelweg per kanaal opgeven zodat dit geheel automatisch gebeurt.\n\n<b>Bekijk Het Groot:</b> De knop rechts van de afspeelknop start het afspelen van video's schermvullend.\n\n<b>Ontdek Video's:</b> De Miro Kanaalgids bevat meer dan duizend gratis kanalen waarop u zich kunt abonneren. Klik simpelweg op 'ABONNEER' om een kanaal te bekijken.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
-"Auto download default setting for new channels" = "Download de instellingen voor nieuwe kanalen automatisch";
+"Auto download default setting for new channels" = "Automatische downloads van nieuwe kanalen:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-"Automatically for_ward ports." = "Stuur poorten automatisch door";
+"Automatically for_ward ports." = "Stel poorten _automatisch in";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
-"By default, videos _expire after" = "Standaard _vervallen videos na";
+"By default, videos _expire after" = "Verwijder bekeken video's automatisch _na:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
 "C_hannel:" = "_Kanaal:";
@@ -1638,16 +1632,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "C_hannels" = "_Kanalen";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-"C_reate Channel" = "_Nieuw Kanaal";
+"C_reate Channel" = "_Nieuw kanaal";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-"Check Channels for _new content" = "Werk Kanalen bij";
+"Check Channels for _new content" = "We_rk kanalen bij";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
-"Disk _Space" = "Vrije _Schijfruimte";
+"Disk _Space" = "Vrije _ruimte";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
-"Every 30 minutes\nEvery hour\nManually" = "Elke 30 minuten\nElk uur\nHandmatig";
+"Every 30 minutes\nEvery hour\nManually" = "Elk half uur\nElk uur\nHandmatig";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
 "G_B" = "G_B";
@@ -1656,29 +1650,29 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Go" = "Ga";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
-"Ignore Un_encrypted Connections." = "Negeer niet geëncrypteerde connecties";
+"Ignore Un_encrypted Connections." = "Negeer onversleutelde verbindingen";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
-"In This:" = "In Deze:";
+"In This:" = "In deze:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-"Limit torrent _downstream to:" = "Limiteer torrent_download tot:";
+"Limit torrent _downstream to:" = "Beperk downloadsnelheid tot:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-"Maximum number of channel auto-downloads at a time: " = "Maximum aantal automatische downloads tegelijk: ";
+"Maximum number of channel auto-downloads at a time: " = "Beperk het aantal gelijktijdige automatische downloads tot: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-"Maximum number of manual downloads at a time: " = "Maximum aantal manuele downloads tegelijk: ";
+"Maximum number of manual downloads at a time: " = "Beperk het aantal gelijktijdige handmatige downloads tot: ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
 "Miro can find all the videos on your computer to help you organize your collection." = "Miro kan alle video's op uw computer vinden en u helpen bij het organiseren van uw collectie.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-"New\nAll\nOff" = "Nieuw\nAlle\nAf";
+"New\nAll\nOff" = "Nieuwe\nAlle\nGeen";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-"Play _videos one after another" = "Video's na elkaar afspelen";
+"Play _videos one after another" = "Speel video's _achtereen af";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
 "Preferences" = "Voorkeuren";
@@ -1690,7 +1684,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "S_top after each video" = "S_top na elke video";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
-"S_tore downloaded videos in this folder:" = "Locatie gedownloade video's:";
+"S_tore downloaded videos in this folder:" = "Locatie _gedownloade video's:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
 "Search _Engine:" = "Zoe_kmachine:";
@@ -1699,26 +1693,26 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Search _custom folder:" = "Zoek in _andere map:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-"Select Movies Directory" = "Geef Locatie Video's Op";
+"Select Movies Directory" = "Geef locatie video's op";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
 "Select custom search directory" = "Geef een andere zoeklocatie op";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
-"Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads wanneer de volgende verhouding is bereikt:";
+"Stop torrent uploads when this ratio is reached:" = "Stop seeden bij het bereiken van ratio:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "De volgende vensters zullen u assisteren bij het optimaal instellen van Miro voor uw gebruik. Hier is de eerste vraag.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
-"To avoid internet slowdowns, limit _upstream to:" = "Om internetproblemen te voorkomen, limiteer de upstream tot:";
+"To avoid internet slowdowns, limit _upstream to:" = "Voorkom traag internet, beperk uploadsnelheid tot:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-"Use _ports:" = "Gebruik _poorten:";
+"Use _ports:" = "Gebruik de _poorten:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
-"Use this renderer to play videos:" = "Gebruik de volgende renderer om video af te spelen:";
+"Use this renderer to play videos:" = "Gebruik deze renderer voor video's:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
 "Volume:" = "Volume:";
@@ -1730,10 +1724,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welkom bij Internet TV. U kunt vanalles doen met Miro: automatisch video's van uw favoriete kanalen downloaden, nieuwe video's achtereen afspelen, torrents downloaden, vrienden video's aanraden, en nog veel meer.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "U heeft de locatie voor nieuwe video's gewijzigd. Wilt u dat Miro uw reeds voltooide downloads overzet? (Downloads die nog bezig zijn zullen achteraf overgezet worden.)";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "U heeft de locatie voor nieuwe video's gewijzigd. Wilt u dat Miro de reeds voltooide downloads overzet? (Downloads die nog bezig zijn zullen achteraf overgezet worden.)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-"_Add Folder" = "Voeg _Map Toe";
+"_Add Folder" = "Voeg _map toe";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
 "_Automatically run Miro when I log in" = "Open Miro _automatisch na inloggen";
@@ -1751,13 +1745,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_KB/s." = "_KB/s";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
-"_Keep at least this much free space on my drive:" = "Hou minimaal deze ruimte vrij op mijn harde schijf:";
+"_Keep at least this much free space on my drive:" = "_Behoud ten alle tijde vrije ruimte, minstens";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
 "_Playback" = "_Weergave";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
-"_Resume playback of videos from the point where they were stopped" = "Onthoud afspeelpositie video's";
+"_Resume playback of videos from the point where they were stopped" = "_Onthoud afspeelpositie video's";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
 "_Search" = "Zoe_k";
@@ -1769,22 +1763,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_URL" = "_URL";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
-"_Warn me when I attempt to quit with downloads in progress" = "_Waarschuw mij alvorens te stoppen terwijl er nog downloads actief zijn.";
+"_Warn me when I attempt to quit with downloads in progress" = "_Waarschuw mij indien ik Miro stop terwijl er downloads actief zijn.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
-"_Watch for new videos in these folders and include them in the Library" = "_Monitor locaties voor nieuwe video's en voeg toe aan Bibliotheek.";
+"_Watch for new videos in these folders and include them in the Library" = "_Monitor locaties voor nieuwe video's en voeg toe aan bibliotheek.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
-"xine\ngstreamer" = "Xine\ngstreamer";
+"xine\ngstreamer" = "xine\nGStreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName versie $appVersion ($appRevision); auteursrecht (c) 2005-2007 $publisher.  $longAppName en het $longAppName logo zijn geregistreerde handelsmerken van $publisher.";
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName versie $appVersion ($appRevision); auteursrecht (c) 2005-2008 $publisher.  $longAppName en het $longAppName logo zijn geregistreerde handelsmerken van $publisher.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
 "About $longAppName" = "Over $longAppName";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1 */
-"Add Channel" = "Nieuw Kanaal";
+"Add Channel" = "Nieuw kanaal";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2 */
 "Please enter the URL of the channel you'd like to add." = "Geef de URL van het toe te voegen kanaal op.";
@@ -1813,7 +1807,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "'" = "'";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10 */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "We zullen echter ons best doesn om de bestanden te detecteren. Dit kan langer duren, en beschrijvingen zien er mogelijk raar uit.";
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "We zullen echter ons best doesn om de bestanden alsnog te detecteren. Dit kan langer duren, en beschrijvingen zien er mogelijk raar uit.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12 */
 "Please contact the publishers of" = "Neem aub contact op met de uitgevers van";
@@ -1825,7 +1819,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "$longAppName" = "$longAppName";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4 */
-"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "U heeft de locatie voor nieuwe downloads gewijzigd. Wilt u dat $shortAppName uw reeds gedownloade bestanden verplaatst naar deze nieuwe locatie? (Downloads die nog bezig zijn, zullen achteraf verplaatst worden.)";
+"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "U heeft de locatie voor nieuwe downloads gewijzigd. Wilt u dat $shortAppName uw reeds gedownloade bestanden verplaatst naar deze nieuwe locatie? (Downloads die nog bezig zijn, zullen achteraf overgezet worden.)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1 */
 "Channel requires authentication" = "Kanaal vereist authenticatie";
@@ -1837,25 +1831,25 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-"Add Folder..." = "Voeg Map Toe...";
+"Add Folder..." = "Nieuwe map...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
-"Automatically Forward Ports" = "Stuur poorten automatisch door";
+"Automatically Forward Ports" = "Stel poorten automatisch in";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
 "Automatically run $longAppName when I login." = "Open $longAppName automatisch na het inloggen.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
-"By default, videos expire after" = "Standaard vervallen video's na";
+"By default, videos expire after" = "Verwijder bekeken video's automatisch na:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
-"Check channels for new content" = "Werk kanalen bij";
+"Check channels for new content" = "Werk kanalen automatisch bij";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
 "Close to tray so that downloads can continue." = "Minimaliseer naar systeemvak en blijf downloaden.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
-"Every 30 minutes" = "Elke 30 minuten";
+"Every 30 minutes" = "Elke half uur";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
 "Every hour" = "Elk uur";
@@ -1867,22 +1861,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "GB" = "GB";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
-"Ignore Unencrypted Connections" = "Negeer niet geëncrypteerde connecties";
+"Ignore Unencrypted Connections" = "Negeer onversleutelde verbindingen";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
 "KB/s" = "KB/s";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
-"Limit downstream bandwith to:" = "Limiteer de downstream bandbreedte tot:";
+"Limit downstream bandwith to:" = "Beperk downloadsnelheid tot:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Manually" = "Handmatig";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-"Maximum number of channel auto-downloads at a time:" = "Maximum aantal autmatische downloads van kanalen tegelijk:";
+"Maximum number of channel auto-downloads at a time:" = "Beperk het aantal gelijktijdige automatische downloads tot:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-"Maximum number of manual downloads at a time:" = "Maximum aantal manuele downloads tegelijk:";
+"Maximum number of manual downloads at a time:" = "Beperk het aantal gelijktijdige handmatige downloads tot:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
 "Options" = "Voorkeuren";
@@ -1891,10 +1885,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Play one video, then stop." = "Stop na elke video.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
-"Quit Miro completely." = "Stop Miro volledig.";
+"Quit Miro completely." = "Stop Miro volledig";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
-"Remember where I stopped watching a video and continue playing from that point." = "Onthoud afspeelpositie video's.";
+"Remember where I stopped watching a video and continue playing from that point." = "Onthoud afspeelpositie video's";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
 "Show as a Channel" = "Toon als kanaal";
@@ -1903,7 +1897,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Store downloaded videos in this folder:" = "Locatie gedownloade video's:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
-"To avoid internet slowdowns, limit upstream bandwith to:" = "Om traag internet te voorkomen, limiteer de upstreem tot:";
+"To avoid internet slowdowns, limit upstream bandwith to:" = "Voorkom traag internet, beperk uploadsnelheid tot:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "NB: De wijzigingen in $longAppName gaan in wanneer u deze opnieuw opent.";
@@ -1912,7 +1906,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Warn me when I attempt to quit with downloads in progress." = "Waarschuw mij indien ik Miro stop terwijl er downloads actief zijn.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
-"Watch for new videos in these folders and include them in my Library." = "Monitor locaties voor nieuwe video's en voeg toe aan Bibliotheek.";
+"Watch for new videos in these folders and include them in my Library." = "Monitor locaties voor nieuwe video's en voeg toe aan bibliotheek.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
 "When I click the red close button:" = "Wanneer ik het Miro venster sluit:";
@@ -1936,34 +1930,34 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "$longAppName werkt regelmatig uw abonnementen bij en download video's in de achtergrond. Dit betekent dat er steeds nieuwe video's klaar zullen staan voor u.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29 */
-"$shortAppName First Time Setup" = "Nieuwe Installatie $shortAppName";
+"$shortAppName First Time Setup" = "Nieuwe installatie $shortAppName";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39 */
-"Cancel Search" = "Annuleer Zoekopdracht";
+"Cancel Search" = "Annuleer zoekopdracht";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38 */
 "Change" = "Wijzig";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46 */
-"Don't Worry About Disk Space:" = "Geen Zorgen Over Vrije Ruimte:";
+"Don't Worry About Disk Space:" = "Geen zorgen over vrije ruimte:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50 */
 "Find Videos:" = "Zoek video's:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48 */
-"Go Big:" = "Bekijk Het Groot:";
+"Go Big:" = "Bekijk het groot:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44 */
-"Leave it On:" = "Laat het Aanstaan:";
+"Leave it On:" = "Laat het aanstaan:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47 */
 "Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Net zoals de Amerikaanse TiVo's, bevat $longAppName een systeem welke u helpt ruimte vrij the maken voor nieuwe video's door oudere automatisch te verwijderen. U kunt uiteraard ook altijd een video permanent bewaren door simpelweg op 'BEWAAR' te klikken en u kunt eveneens per kanaal aan te geven dat u de video's van deze altijd wilt bewaren.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42 */
-"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Ontdek nu de Miro Kanaalgids en\nbekijk video's. Enkele starterstips:";
+"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Ontdek nu de Miro kanaalgids en\nbekijk video's. Enkele starterstips:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40 */
-"Reset Search" = "Wis Zoekopdracht";
+"Reset Search" = "Wis zoekopdracht";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35 */
 "Restrict to all my personal files." = "Beperk tot al mijn persoonlijke bestanden.";
@@ -1972,16 +1966,16 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Search custom folder:" = "Zoek in andere map:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
-"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "De $shortAppName Kanaalgids bevat duizenden internet TV kanalen, allemaal gratis. Klik op 'Toevoegen' om een kanaal te bekijken.";
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "De $shortAppName kanaalgids bevat duizenden internet TV kanalen, allemaal gratis. Klik op 'Toevoegen' om een kanaal te bekijken.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49 */
 "The button to the right of the play button shows videos fullscreen." = "De knop rechts van de afspeelknop speelt video's schermvullend af.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30 */
-"The next few screens will help you set up $longAppName so that it works best for you." = "De volgende vragen zullen u helpen bij het instellen van $longAppName naar uw voorkeuren.";
+"The next few screens will help you set up $longAppName so that it works best for you." = "De volgende vensters zullen u assisteren bij het optimaal instellen van $longAppName voor uw gebruik.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31 */
-"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "Het is aan te raden om $longAppName automatisch te openen na inloggen. Bestaande downloads kunnen zo voortgezet worden, en nieuwe downloads zullen in de achtergrond gestart worden, en klaarstaan voor wanneer u deze wenst te bekijken.";
+"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "Het is aan te raden om $longAppName automatisch te openen na het inloggen. Bestaande downloads kunnen zo voortgezet worden, en nieuwe downloads zullen in de achtergrond gestart worden, en klaarstaan voor wanneer u deze wenst te bekijken.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34 */
 "Would you like $longAppName to look for video files on your computer?" = "Wilt u dat $longAppName zoekt naar video's op uw computer?";
@@ -1993,7 +1987,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "You're done!" = "U bent klaar!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1 */
-"Release Notes:" = "Meer Informatie:";
+"Release Notes:" = "Meer informatie:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1 */
 "Question" = "Vraag";

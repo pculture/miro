@@ -65,6 +65,7 @@ langs = (
          ("ne", "Nepali"),
          ("nl", "Dutch"),
          ("nn", "Norwegian_Nynorsk"),
+         ("oc", "Occitan"),
          ("pa", "Punjabi"),
          ("pl", "Polish"),
          ("pt", "Portuguese"),

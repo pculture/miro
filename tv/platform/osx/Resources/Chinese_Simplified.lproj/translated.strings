@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 19:56-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: python-format */
@@ -13,7 +13,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "OK" = "確定";
 
 /* File: ../../portable/dialogs.py:84 */
-"Ok" = "好的";
+"Ok" = "确定";
 
 "$log" = "$log";
 
@@ -206,11 +206,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
 "All" = "全部";
 
-/* Flag: untranslated */
-"Auto download default setting for new channels:" = "Auto download default setting for new channels:";
+"Auto download default setting for new channels:" = "按默认设定自动下载新频道内容";
 
-/* Flag: untranslated */
-"Automatically forward ports" = "Automatically forward ports";
+"Automatically forward ports" = "自动转发端口";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
 "BitTorrent" = "BitTorrent";
@@ -705,8 +703,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Video Directory Missing" = "节目文件夹丢失";
 
 /* File: ../../portable/frontends/html/main.py:133 */
-/* Flag: untranslated */
-"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro无法找到存放内容的主目录。可能因为主目录在未连接的外接硬盘上。\n    如果继续，会在本地硬盘上建立新的目录（这可能导致外接硬盘上内容丢失）。你也可以退出Miro，连接外接硬盘，重新开启Miro。";
 
 /* File: ../../portable/frontends/html/main.py:190 */
 /* File: ../../portable/theme.py:126 */
@@ -876,8 +873,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%dB" = "%dB 分贝";
 
 /* File: ../../portable/iheartmiro.py:82 */
-/* Flag: untranslated */
-"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.";
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "简单帮助Miro的方法\n\nMiro是开源和不盈利的。我们需要你的帮助继续我们的工作。\n\nI Heart Miro是一个Firefox的扩展，当你在Amozon购买商品的时候，会给Miro组织一定的费用。你感觉不到它的存在，也不会带给你任何花费，而且你可以很容易的卸载。\n\n如果你点击下面的“安装iHearMiro”，Firefox会启动，询问是否继续。点击是，完成。它只要花费你7秒钟。谢谢你的帮助。";
 
 /* File: ../../portable/menubar.py:158 */
 "_Open" = "打开(_O)";
@@ -1566,9 +1562,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Unknown Error" = "未知错误";
 
 /* File: ../../portable/startup.py:93 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "Miro启动时遇到未知错误。请在%s填写错误报告。";
 
 /* File: ../../portable/startup.py:155 */
 "Database too new" = "数据库太新了";
@@ -1577,8 +1572,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "您的数据库被更新版本的 $shortAppName 保存而得。因此，您必须下载最新版本的$shortAppName运行，方可使用。";
 
 /* File: ../../portable/startup.py:238 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
+"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMrio找不到你的内容主目录，可能是因为你的主目录在未连接的外接硬盘上。";
 
 /* File: ../../portable/folder.py:144 */
 /* Flag: python-format */
@@ -1607,8 +1601,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-/* Flag: untranslated */
-"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect.";
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>注意:</b>如果你的改变无法播放视频，你必须 \n重新启动Miro，使改变生效。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
 "<b>Searching for Videos</b>" = "<b>搜索视频</b>";
@@ -1624,12 +1617,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
-/* Flag: untranslated */
-"Auto download default setting for new channels" = "Auto download default setting for new channels";
+"Auto download default setting for new channels" = "按默认设定自动下载新频道内容";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-/* Flag: untranslated */
-"Automatically for_ward ports." = "Automatically for_ward ports.";
+"Automatically for_ward ports." = "自动转发端口";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
 "By default, videos _expire after" = "默认设置，节目_之后过期";
@@ -1659,31 +1650,26 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Go" = "开始";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
-/* Flag: untranslated */
-"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+"Ignore Un_encrypted Connections." = "忽略未加密的连接。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 "In This:" = "这样：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-/* Flag: untranslated */
-"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
+"Limit torrent _downstream to:" = "限制BT下载速度：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
+"Maximum number of channel auto-downloads at a time: " = "同时下载最大的频道数目： ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-/* Flag: untranslated */
-"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
+"Maximum number of manual downloads at a time: " = "同时手动下载的最大数目： ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
 "Miro can find all the videos on your computer to help you organize your collection." = "Miro能够找到您的计算机上所有的视频以便帮助您管理您的收藏。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-/* Flag: untranslated */
-"New\nAll\nOff" = "New\nAll\nOff";
+"New\nAll\nOff" = "新的\n所有\n关闭";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
 "Play _videos one after another" = "一个一个播放_节目";
@@ -1720,12 +1706,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "下面的几个屏幕将帮助您设置Miro使之最好地为您工作。这是第一个问题。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
+"To avoid internet slowdowns, limit _upstream to:" = "为了避免网速下降，上传速度限制为：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-/* Flag: untranslated */
-"Use _ports:" = "Use _ports:";
+"Use _ports:" = "使用端口：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
 "Use this renderer to play videos:" = "使用这个渲染器播放视频:";
@@ -1761,8 +1745,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_KB/s." = "_KB/s.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
-/* Flag: untranslated */
-"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+"_Keep at least this much free space on my drive:" = "在我的硬盘上至少保留的空闲空间：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
 "_Playback" = "_播放";
@@ -1878,26 +1861,22 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "GB" = "GB";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
-/* Flag: untranslated */
-"Ignore Unencrypted Connections" = "Ignore Unencrypted Connections";
+"Ignore Unencrypted Connections" = "忽略未加密连接";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
 "KB/s" = "KB/s";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
-/* Flag: untranslated */
-"Limit downstream bandwith to:" = "Limit downstream bandwith to:";
+"Limit downstream bandwith to:" = "下载带宽限制为：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Manually" = "手动";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:";
+"Maximum number of channel auto-downloads at a time:" = "同时自动下载频道数目：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
-/* Flag: untranslated */
-"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:";
+"Maximum number of manual downloads at a time:" = "同时手动下载数目：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
 "Options" = "选项";
@@ -1918,8 +1897,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Store downloaded videos in this folder:" = "在这个文件夹保存下载的节目：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:";
+"To avoid internet slowdowns, limit upstream bandwith to:" = "为了避免网络减慢，上传带宽限制为：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "警告: 这项设置需要重新启动$longAppName后才能生效";

@@ -15,7 +15,7 @@
 <!ENTITY prefs.channels.check.manually "Manually">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.all "Guztiak">
 <!ENTITY prefs.channels.autodownloaddefault.new "Berria">
 <!ENTITY prefs.channels.autodownloaddefault.off "Off">
 

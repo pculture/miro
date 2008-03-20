@@ -4,21 +4,21 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 15:13-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 19:56-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Cancelar";
 
-"OK" = "Aceptar";
+"OK" = "ACEPTAR";
 
 /* File: ../../portable/dialogs.py:84 */
 "Ok" = "Aceptar";
 
 "$log" = "$log";
 
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Nuestro gestor de errores se encuentra en <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Por favor, díganos lo que estaba haciendo cuando ocurrió el problema, Copie el mensaje de la caja de registro de arriba, conteste unas cuantas preguntas, y nos pondremos en seguida a trabajar.</font>";
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Nuestro gestor de errores se encuentra en <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Por favor, díganos lo que estaba haciendo cuando ocurrió el problema. Copie el mensaje de la caja de registro de arriba, conteste unas cuantas preguntas, y nos pondremos a trabajar en ello enseguida.</font>";
 
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Si tiene un momento, ¿podría enviar un informe del problema a nuestro sistema de seguimiento de errores? Como mínimo, necesitaríamos una descripción de lo que estaba haciendo en ese momento (tan precisa como le sea posible) más la frase aparentemente sin sentido de la caja de abajo:";
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Si tiene un momento, ¿podría enviar un informe del problema a nuestro sistema de seguimiento de errores? Como mínimo, necesitaríamos una descripción de lo que estaba haciendo en ese momento (tan precisa como le sea posible) junto con la frase aparentemente carente de sentido de la caja de abajo:";
 
 "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "$longAppName provocó un error $when. Le pedimos disculpas y sugerimos que reinicie $shortAppName. Esto reducirá la posibilidad de perder sus preferencias o suscripciones de canales.";
 
@@ -36,17 +36,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
 "Channels" = "Canales";
 
-"Check for New Version" = "Comprobar si hay una versión más reciente";
+"Check for New Version" = "Comprobar si hay una versión nueva";
 
 "Clear Menu" = "Limpiar menú";
 
-"Close Window" = "Cerrar ventana";
+"Close Window" = "Cerrar Ventana";
 
 "Copy" = "Copiar";
 
 "Copy Channel URL" = "Copia la URL del canal";
 
-"Copy Video URL" = "Copiar la URL del vídeo";
+"Copy Video URL" = "Copiar la URL del Video";
 
 "Cut" = "Cortar";
 
@@ -55,7 +55,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Donate" = "Donar";
 
-"Download Video..." = "Descargar vídeo...";
+"Download Video..." = "Descargar video...";
 
 "Edit" = "Editar";
 
@@ -101,17 +101,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Paste" = "Pegar";
 
 /* File: ../../platform/osx/platform/frontends/html/Application.py:244 */
-"Play Video" = "Reproducir vídeo";
+"Play Video" = "Reproducir video";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:84 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
-"Playback" = "Reproducir";
+"Playback" = "Reproducción";
 
 "Playlists" = "Listas de reproducción";
 
 "Preferences..." = "Preferencias...";
 
-"Previous Video" = "Vídeo anterior";
+"Previous Video" = "Video anterior";
 
 "Quit Miro" = "Cerrar Miro";
 
@@ -121,7 +121,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Report a bug" = "Informar de un fallo";
 
-"Save Video As..." = "Guardar vídeo como...";
+"Save Video As..." = "Guardar video como...";
 
 "Select All" = "Seleccionar todo";
 
@@ -131,7 +131,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Show All" = "Mostrar todo";
 
-"Stop Video" = "Detener vídeo";
+"Stop Video" = "Detener video";
 
 "Update All Channels" = "Actualizar todos los canales";
 
