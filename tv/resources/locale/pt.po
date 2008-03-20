@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-03-09 17:21+0000\n"
-"Last-Translator: Tiago Silva <Unknown>\n"
+"PO-Revision-Date: 2008-03-15 19:37+0000\n"
+"Last-Translator: morphos <morphos2@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-12 15:16+0000\n"
+"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "Save this video"
@@ -1135,7 +1135,7 @@ msgid "Channels"
 msgstr "Canais"
 
 msgid "Check for New Version"
-msgstr "Verificar Nova Versão"
+msgstr "Verificar actualizações e novas versões"
 
 msgid "Clear Menu"
 msgstr "Limpar Menu"
@@ -1335,11 +1335,14 @@ msgstr ""
 "Nome de Utilizador:\n"
 "\n"
 
+#, fuzzy
 msgid "(You must restart Miro for some of these changes to take effect)"
 msgstr ""
+"(Deverá reiniciar o Miro para que algumas destas alterações tenham efeito)"
 
+#, fuzzy
 msgid "(You must restart Miro for this change to take effect)\n"
-msgstr "(Tem de reiniciar o Miro para esta alteração ser realizada)\n"
+msgstr "(Tem que reiniciar o Miro para que esta alteração tenha efeito)\n"
 
 msgid "(movies directory path goes here)"
 msgstr "(o caminho para a directoria dos filmes entra aqui)"
@@ -1419,8 +1422,9 @@ msgstr "Localização da Pasta"
 msgid "GB\n"
 msgstr "GB\n"
 
+#, fuzzy
 msgid "Ignore unencrypted connections"
-msgstr ""
+msgstr "Ignorar ligações não encriptadas"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid "KB/s."
@@ -1480,8 +1484,9 @@ msgstr "Parar depois de cada video."
 msgid "Stop uploads when this ratio is reached:"
 msgstr ""
 
+#, fuzzy
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "Guardar ficheiros descarregados na seguinte pasta:"
 
 msgid "To avoid internet slowdowns, limit upstream to"
 msgstr ""
@@ -1995,8 +2000,9 @@ msgid "Torrent file deleted"
 msgstr "Ficheiro torrent apagado"
 
 #: ../../portable/dl_daemon/download.py:981
+#, fuzzy
 msgid "The torrent file for this item was deleted outside of Miro."
-msgstr ""
+msgstr "O ficheiro torrent para este item foi apagado fora do Miro."
 
 #: ../../portable/frontends/html/contextmenu.py:103
 msgid "Update Channels Now"
@@ -2530,7 +2536,7 @@ msgstr "Re_produzir"
 
 #: ../../portable/menubar.py:228
 msgid "_Pause"
-msgstr ""
+msgstr "_Pausa"
 
 #: ../../portable/menubar.py:229
 msgid "_Stop"
@@ -3486,8 +3492,9 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:28
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
+#, fuzzy
 msgid "Auto download default setting for new channels"
-msgstr ""
+msgstr "Descarga automática de definições padrão para novos canais"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 msgid "Automatically for_ward ports."
@@ -3914,7 +3921,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
 msgid "Maximum number of manual downloads at a time:"
-msgstr ""
+msgstr "Número máximo de descargas manuais de cada vez:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
