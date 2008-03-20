@@ -1,2 +1,2 @@
-<!ENTITY about.title         "‚Äì√ª $longAppName">
-<!ENTITY about.body          "$longAppName версія $appVersion ($appRevision); права інтелектуальної власності (c) 2005-2007 $publisher.  $longAppName та $longAppName є зареєстрованими торговими марками $publisher.">
+<!ENTITY about.title         "‚Äì√ª $longAppName"> 
+<!ENTITY about.body          "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher."> 
