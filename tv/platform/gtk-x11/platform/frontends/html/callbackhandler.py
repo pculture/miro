@@ -284,16 +284,16 @@ class CallbackHandler(object):
 
         actionGroups["VideoSelected"].add_actions ([
             ('SaveVideo', gtk.STOCK_SAVE, menubar.getLabel('SaveVideo'), menubar.getShortcut('SaveVideo').GTKString(), None, self.on_save_video_activate),
-            ('CopyVideoURL', None, menubar.getLabel('CopyVideoURL'), menubar.getShortcut('CopyVideoURL').GTKString(), None, self.on_copy_video_link_activate),
+            ('CopyVideoURL', gtk.STOCK_COPY, menubar.getLabel('CopyVideoURL'), menubar.getShortcut('CopyVideoURL').GTKString(), None, self.on_copy_video_link_activate),
             ])
         actionGroups["VideosSelected"].add_actions ([
-            ('RemoveVideos', None, menubar.getLabel('RemoveVideos'), menubar.getShortcut('RemoveVideos').GTKString(), None, self.on_remove_video_activate),
+            ('RemoveVideos', gtk.STOCK_REMOVE, menubar.getLabel('RemoveVideos'), menubar.getShortcut('RemoveVideos').GTKString(), None, self.on_remove_video_activate),
             ])
         actionGroups["VideoPlaying"].add_actions ([
             ('Fullscreen', fullscreen, menubar.getLabel('Fullscreen'), menubar.getShortcut('Fullscreen').GTKString(), None, self.on_fullscreen_button_clicked),
-            ('StopVideo', None, menubar.getLabel('StopVideo'), menubar.getShortcut('StopVideo').GTKString(), None, self.on_stop_activate),
-            ('NextVideo', None, menubar.getLabel('NextVideo'), menubar.getShortcut('NextVideo').GTKString(), None, self.on_next_button_clicked),
-            ('PreviousVideo', None, menubar.getLabel('PreviousVideo'), menubar.getShortcut('PreviousVideo').GTKString(), None, self.on_previous_button_clicked),
+            ('StopVideo', gtk.STOCK_MEDIA_STOP, menubar.getLabel('StopVideo'), menubar.getShortcut('StopVideo').GTKString(), None, self.on_stop_activate),
+            ('NextVideo', gtk.STOCK_MEDIA_NEXT, menubar.getLabel('NextVideo'), menubar.getShortcut('NextVideo').GTKString(), None, self.on_next_button_clicked),
+            ('PreviousVideo', gtk.STOCK_MEDIA_PREVIOUS, menubar.getLabel('PreviousVideo'), menubar.getShortcut('PreviousVideo').GTKString(), None, self.on_previous_button_clicked),
             ])
         actionGroups["VideoPlayable"].add_actions ([
             ('PlayPauseVideo', gtk.STOCK_MEDIA_PLAY, menubar.getLabel('PlayPauseVideo'),menubar.getShortcut('PlayPauseVideo').GTKString(), None, self.on_play_pause_button_clicked),
@@ -342,6 +342,9 @@ class CallbackHandler(object):
             ('ReportBug', None, menubar.getLabel('ReportBug'), menubar.getShortcut('ReportBug').GTKString(), None, self.on_report_bug_clicked),
             ('About', gtk.STOCK_ABOUT, menubar.getLabel('About'), menubar.getShortcut('About').GTKString(), None, self.on_about_clicked),
             ('Donate', None, menubar.getLabel('Donate'), menubar.getShortcut('Donate').GTKString(), None, self.on_donate_clicked),
+
+            ('Translate', gtk.STOCK_EDIT, menubar.getLabel('Translate'), menubar.getShortcut('Tranlsate').GTKString(), None, self.on_translate_clicked),
+            ('Planet', None, menubar.getLabel('Planet'), menubar.getShortcut('Planet').GTKString(), None, self.on_planet_clicked),
 
             ('Delete', None, menubar.getLabel('Delete'), menubar.getShortcut('Delete').GTKString(), None, self.on_delete),
             ('Backspace', None, menubar.getLabel('Backspace'), menubar.getShortcut('Backspace').GTKString(), None, self.on_delete),
@@ -648,6 +651,12 @@ class CallbackHandler(object):
 
     def on_donate_clicked(self, event = None):
         app.delegate.openExternalURL(config.get(prefs.DONATE_URL))
+
+    def on_translate_clicked(self, event = None):
+        app.delegate.openExternalURL(config.get(prefs.TRANSLATE_URL))
+
+    def on_planet_clicked(self, event = None):
+        app.delegate.openExternalURL(config.get(prefs.PLANET_URL))
 
     def on_delete(self, event = None):
         eventloop.addUrgentCall(app.controller.removeCurrentSelection, 

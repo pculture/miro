@@ -246,6 +246,8 @@ HelpItems = [
     MenuItem(_("_Help"), "Help", (Key(F1),)),
     Separator(),
     MenuItem(_("Report a _Bug"), "ReportBug", ()),
+    MenuItem(_("_Translate"), "Translate", ()),
+    MenuItem(_("_Planet"), "Planet", ()),
 ]
 
 if platform == "gtk-x11":
