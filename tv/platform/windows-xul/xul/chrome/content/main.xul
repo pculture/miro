@@ -190,6 +190,8 @@ add more menu elements later -NN -->
 
 <command id="About" oncommand="window.openDialog('chrome://dtv/content/about.xul','aboutdialog','chrome,dependent,centerscreen');" />
 <command id="Donate" oncommand="pybridge.openDonatePage();" />
+<command id="Translate" oncommand="pybridge.openTranslatePage();" />
+<command id="Planet" oncommand="pybridge.openPlanetPage();" />
 <command id="Help" oncommand="pybridge.showHelp();" />
 <command id="ReportBug" oncommand="pybridge.reportBug();" />
 

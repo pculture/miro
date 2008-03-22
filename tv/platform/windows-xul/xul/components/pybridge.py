@@ -669,6 +669,12 @@ class PyBridge:
     def openDonatePage(self):
         app.delegate.openExternalURL(config.get(prefs.DONATE_URL))
 
+    def openTranslatePage(self):
+        app.delegate.openExternalURL(config.get(prefs.TRANSLATE_URL))
+
+    def openPlanetPage(self):
+        app.delegate.openExternalURL(config.get(prefs.PLANET_URL))
+
     def openBugTracker(self):
         # This call could be coming as a result of a startup error, so we
         # have to assume as little as possible here.  It's possible the error
