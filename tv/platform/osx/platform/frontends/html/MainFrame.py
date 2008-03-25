@@ -368,6 +368,14 @@ class MainController (NSWindowController):
         reportURL = NSURL.URLWithString_(config.get(prefs.BUG_REPORT_URL))
         NSWorkspace.sharedWorkspace().openURL_(reportURL)
 
+    def goToTranslationSite_(self, sender):
+        translateURL = NSURL.URLWithString_(config.get(prefs.TRANSLATE_URL))
+        NSWorkspace.sharedWorkspace().openURL_(translateURL)
+
+    def goToPlanetSite_(self, sender):
+        translateURL = NSURL.URLWithString_(config.get(prefs.PLANET_URL))
+        NSWorkspace.sharedWorkspace().openURL_(translateURL)
+
     ### Menu items validation ###
 
     def validateMenuItem_(self, item):
@@ -433,7 +441,7 @@ class MainController (NSWindowController):
             return display is app.htmlapp.videoDisplay
         elif action == 'showHelp:':
             return True
-        elif action == 'reportBug:':
+        elif action in ('reportBug:', 'goToTranslationSite:', 'goToPlanetSite:'):
             return True
         return False
 

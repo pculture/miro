@@ -30,6 +30,8 @@
                 createPlaylistFolder = id; 
                 createSearchChannel = id; 
                 deleteSelected = id; 
+                goToPlanetSite = id; 
+                goToTranslationSite = id; 
                 nextVideo = id; 
                 playPause = id; 
                 previousVideo = id; 

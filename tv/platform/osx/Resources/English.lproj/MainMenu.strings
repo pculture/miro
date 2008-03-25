@@ -106,6 +106,9 @@
 /* NSMenuItem : <title:Paste> (oid:171) */
 "Paste" = "Paste";
 
+/* NSMenuItem : <title:Planet Miro> (oid:372) */
+"Planet Miro" = "Planet Miro";
+
 /* NSMenuItem : <title:Play Video> (oid:217) */
 "Play Video" = "Play Video";
 
@@ -150,6 +153,9 @@
 
 /* NSMenuItem : <title:Stop Video> (oid:272) */
 "Stop Video" = "Stop Video";
+
+/* NSMenuItem : <title:Translate> (oid:370) */
+"Translate" = "Translate";
 
 /* NSMenuItem : <title:Update All Channels> (oid:235) */
 "Update All Channels" = "Update All Channels";
