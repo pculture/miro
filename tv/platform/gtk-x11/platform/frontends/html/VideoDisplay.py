@@ -90,9 +90,9 @@ class VideoDisplay (VideoDisplayBase):
             self.add_renderer(r + "renderer")
         except:
             try:
-                logging.error ("initRenderers: error detected...  trying to add gstrenderer")
+                logging.error ("initRenderers: error detected...  trying to add gstreamerrenderer")
                 # try to add the xine renderer if the preferences aren't right
-                self.add_renderer("gstrenderer")
+                self.add_renderer("gstreamerrenderer")
             except:
                 logging.error ("initRenderers: no valid renderer has been loaded")
 

@@ -77,7 +77,7 @@ XINE_VIZ                    = Pref( key="xineViz",               default=u"goom"
 
 # Only used on platforms where we have multiple renderers (like GTKX11).
 # This is a comma-delimited list of renderers.
-USE_RENDERER                = Pref( key="useRenderer",           default=u"gst",platformSpecific=False )
+USE_RENDERER                = Pref( key="useRenderer",           default=u"gstreamer",platformSpecific=False )
 
 # These can be safely ignored on non-GTK systems
 USE_XINE_XV_HACK  = Pref(key="UseXineXVHack", default=True, platformSpecific=False)
