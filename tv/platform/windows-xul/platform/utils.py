@@ -265,16 +265,6 @@ def launchDownloadDaemon(oldpid, env):
         os.environ[key] = value
     os.environ['DEMOCRACY_DOWNLOADER_LOG'] = \
             config.get(prefs.DOWNLOADER_LOG_PATHNAME)
-    try:
-        path = os.environ['PATH']
-    except KeyError:
-        path = []
-    else:
-        path = path.split(';')
-    cwd = os.path.abspath(os.getcwd())
-    if cwd not in path:
-        path.append(cwd)
-        os.environ['PATH'] = ';'.join(path)
     # Start the downloader.  We use the subprocess module to turn off the
     # console.  One slightly awkward thing is that the current process
     # might not have a valid stdin/stdout/stderr, so we create a pipe to
@@ -282,7 +272,7 @@ def launchDownloadDaemon(oldpid, env):
 
     # Note that we use "Miro" instead of the app name here, so custom
     # versions will work
-    downloaderPath = os.path.join(resources.resourceRoot(), "..",
+    downloaderPath = os.path.join(resources.appRoot(), 
             'xulrunner', 'python', "Miro_Downloader.exe")
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW

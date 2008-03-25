@@ -51,8 +51,11 @@ ext_modules=[
 
 templateVars = util.readSimpleConfigFile(os.path.join(root, 'resources', 'app.config'))
 
+wrapper_module = os.path.join(core_setup.platform_dir, 'platform',
+        'downloaderwrapper.py')
+
 setup(
-    console=[{"dest_base":("%s_Downloader"%templateVars['shortAppName']),"script":os.path.join(root, 'portable', 'dl_daemon', 'Democracy_Downloader.py')}],
+    console=[{"dest_base":("%s_Downloader"%templateVars['shortAppName']),"script": wrapper_module}],
     ext_modules=ext_modules,
     packages = [
         'miro',

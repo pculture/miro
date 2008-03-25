@@ -537,7 +537,7 @@ class bdist_xul_dumb(Command):
         os.remove(os.path.join(self.xulrunnerOut, "xulrunner-stub.exe"))
         
         # Finally, build the download daemon
-        self.buildDownloadDaemon(self.dist_dir)
+        self.buildDownloadDaemon()
         self.moveDLLs()
         
     def computePythonManifest(self, path=None, scripts=[], packages=[],
@@ -674,7 +674,7 @@ class bdist_xul_dumb(Command):
     # find_dependend_dlls()
 
 
-    def buildDownloadDaemon(self, baseDir):
+    def buildDownloadDaemon(self):
         print "building download daemon"
         os.system("%s setup_daemon.py py2exe --dist-dir %s" % 
                 (PYTHON_BINARY, self.xul_dist_dir))
