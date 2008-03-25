@@ -60,7 +60,7 @@ matchingItems.unlink()
 </div>
 <!-- / TITLE BAR -->
 
-<div id="main-container">
+<div id="main-container" class="new">
     <div t:updateForView="matchingItems">
         <div t:hideIf="matchingItems.len() == 0">
             <t:executeTemplate filename="static-tab-sort-bar" 

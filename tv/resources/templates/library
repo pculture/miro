@@ -58,7 +58,7 @@ matchingItems.unlink()
 </div>
 <!-- / TITLE BAR -->
 
-<div id="main-container">
+<div id="main-container" class="library">
 
     <!-- SORT BAR ************************************************************* -->
     <div t:updateForView="matchingItems">
@@ -72,14 +72,6 @@ matchingItems.unlink()
     <div id="main-unwatched">
 	<!-- VIDEOS ************************************************** -->
         <div t:repeatForView="matchingItems" t:repeatTemplate='download-item' t:containerDiv="true" />
-	    <!-- #FIXME 
-	        so idea here is to have the view style stored in a variable (see sort bar)- default to be the hybrid view- which then determines the templates to be rendered-
-	        
-	    <div t:showIf="getViewStyle == 'thumbs'" t:repeatForView="matchingItems" t:repeatTemplate='download-item-thumbs' t:containerDiv="true" />
-	    <div t:showIf="getViewStyle == 'hybrid'" t:repeatForView="matchingItems" t:repeatTemplate='download-item' t:containerDiv="true" />
-        <div t:showIf="getViewStyle == 'list'" t:repeatForView="matchingItems" t:repeatTemplate='download-item-list' t:containerDiv="true" />
-	    
-	    -->
 	<!-- / VIDEOS -->
     </div>
 	

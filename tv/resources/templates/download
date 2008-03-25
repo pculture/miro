@@ -130,7 +130,7 @@ allPausedDownloads.unlink()
 	</div>	<!-- end download-info -->
 </div> <!-- end sub-titlebar -->
 
-<div id="main-container">
+<div id="main-container" class="download">
 	<div t:hideIf="allNormalDownloads.len() == 0" t:updateHideOnView="allNormalDownloads" class="main-channelbar downloading-channelbar no-arrow">
 		<span i18n:translate="">Channel Downloads</span>
 	</div>
