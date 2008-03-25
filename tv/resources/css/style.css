@@ -83,7 +83,7 @@ a.remove-channel {
     }
 
 /* views bar --------------------- */
-#views-bar {
+#views-bar, .sort-buttons {
 	background: url('../images/views-bar-bg.png') repeat-x left top;
 	}
 /* Used for scraping indicator on channel page */
@@ -97,7 +97,7 @@ a.remove-channel {
 /* SORT BUTTONS AND VIDEO STATS -- THEY ARE GROUPED TOGETHER IN THE CSS SINCE THEY NEED TO LINE UP WITH EACH OTHER */
 
 .static-tab-sort .sort-buttons {
-    background-color: #333;
+    background-color: #666;
 }
 .available-sort .sort-buttons {
 /*    background-color: #5faeff;	*/
@@ -168,10 +168,10 @@ a.remove-channel {
 
 /* The N more videos oval */
 .main-notification {    
-    background: url('../images/main-notification-bg.png') no-repeat left top;
+/*    background: url('../images/main-notification-bg.png') no-repeat left top;*/
     }
 .main-notification-right {  
-    background: url('../images/main-notification-right.png') no-repeat right top;
+/*    background: url('../images/main-notification-right.png') no-repeat right top;*/
     }
 
 /* Used in playlist and playlist-folder */
@@ -183,7 +183,7 @@ a.remove-channel {
 /* used in search view */
 
 .search-results-bar {
-    background: #056de1;
+    background: #fff;
     }
 
 

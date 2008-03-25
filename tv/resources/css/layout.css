@@ -232,15 +232,24 @@ ul#view_style li a {
      */
 }
 
+/* temp cleanups for missing content */
+#main-container.library,
+#main-container.new,
+#main-container.search {
+  top:61px;
+}
+#main-container.download {
+  top:88px;
+}
 
 /* SORT BUTTONS AND VIDEO STATS -- THEY ARE GROUPED TOGETHER IN THE CSS SINCE THEY NEED TO LINE UP WITH EACH OTHER */
 .sort-buttons {
+    min-width:775px;
     position: relative;
     height: 17px;
-    padding-top: 4px;
-/*    padding-left: 122px;*/
+    padding:3px 35px 3px 0px;
+    margin-bottom:5px;
 }
-
 #views-bar {
   padding-top:2px;
   position:relative;
@@ -255,12 +264,15 @@ ul#view_style li a {
 
 a.sort-button {
     display: block;
-    float: left;
-}
-
-.sort-buttons-right {
-    width: 315px;
     float: right;
+}
+a.sort-button {
+  margin-left:18px;
+}
+.sort-buttons-right {
+/*    width: 315px;
+    float: right;*/
+    
 }
 .sort-buttons-left {
   float:left;
