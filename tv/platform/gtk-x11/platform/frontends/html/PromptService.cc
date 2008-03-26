@@ -38,6 +38,11 @@
 #include <nsIPromptService.h>
 #include <nsIGenericFactory.h>
 #include <nsIComponentRegistrar.h>
+
+#ifdef PCF_USING_XULRUNNER19
+#include <nsComponentManagerUtils.h>
+#endif
+
 #include <nsCOMPtr.h>
 #include <nsEmbedString.h>
 #include <nsStringAPI.h>
@@ -172,9 +177,16 @@ nsresult installPromptService()
     NS_ENSURE_SUCCESS(rv, rv);
 
     nsCOMPtr<nsIGenericFactory> componentFactory;
+#ifndef PCF_USING_XULRUNNER19
     rv = NS_NewGenericFactory(getter_AddRefs(componentFactory),
            &componentInfo);
+#else
+    componentFactory = do_CreateInstance ("@mozilla.org/generic-factory;1", &rv);
+#endif
     NS_ASSERTION(NS_SUCCEEDED(rv), "Unable to construct factory for component");
+#ifdef PCF_USING_XULRUNNER19
+    componentFactory->SetComponentInfo(&componentInfo);
+#endif
     
     rv = cr->RegisterFactory(componentInfo.mCID, componentInfo.mDescription,
             componentInfo.mContractID, componentFactory);

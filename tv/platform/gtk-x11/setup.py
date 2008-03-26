@@ -241,7 +241,13 @@ try:
     packages = getCommandOutput("pkg-config --list-all")
 except RuntimeError, error:
     sys.exit("Package config error:\n%s" % (error,))
-if re.search("^xulrunner-xpcom", packages, re.MULTILINE):
+
+xulrunner19 = False
+if re.search("^libxul", packages, re.MULTILINE):
+    xulrunner19 = True
+    xpcom = 'libxul'
+    gtkmozembed = 'libxul'
+elif re.search("^xulrunner-xpcom", packages, re.MULTILINE):
     xpcom = 'xulrunner-xpcom'
     gtkmozembed = 'xulrunner-gtkmozembed'
 elif re.search("^mozilla-xpcom", packages, re.MULTILINE):
@@ -251,7 +257,7 @@ elif re.search("^firefox-xpcom", packages, re.MULTILINE):
     xpcom = 'firefox-xpcom'
     gtkmozembed = 'firefox-gtkmozembed'
 else:
-    sys.exit("Can't find xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
+    sys.exit("Can't find libxul, xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
 
 if not "clean" in sys.argv:
     # build a miro script that wraps the miro.real script with an LD_LIBRARY_PATH
@@ -261,13 +267,16 @@ if not "clean" in sys.argv:
         # pluck off the last \n
         fflib = fflib[:-1]
         f = open(os.path.join(platform_dir, "miro"), "w")
-        f.write("#!/bin/sh\nLD_LIBRARY_PATH=%s miro.real \"$@\"\n" % fflib)
+        if fflib:
+            f.write("#!/bin/sh\nLD_LIBRARY_PATH=%s miro.real \"$@\"\n" % fflib)
+        else:
+            f.write("#!/bin/sh\nmiro.real \"$@\"\n")
         f.close()
     except RuntimeError, error:
         sys.exit("Package config error:\n%s" % (error,))
 
 mozilla_browser_options = parsePkgConfig("pkg-config" , 
-        "gtk+-2.0 glib-2.0 pygtk-2.0 %s %s" % (gtkmozembed, xpcom))
+        "gtk+-2.0 glib-2.0 pygtk-2.0 --define-variable=includetype=unstable %s %s" % (gtkmozembed, xpcom))
 mozilla_lib_path = parsePkgConfig('pkg-config', 
         '%s' % gtkmozembed)['library_dirs']
 # Find the base mozilla directory, and add the subdirs we need.
@@ -284,12 +293,20 @@ for dir in xpcom_includes['include_dirs']:
         # base include directory
         mozIncludeBase = dir
         break
+
+# xulrunner 1.9 has a different directory structure where all the headers are
+# in the same directory.
 if mozIncludeBase is None:
-    raise ValueError("Can't find mozilla include base directory")
-for subdir in ['dom', 'gfx', 'widget', 'commandhandler', 'uriloader',
-            'webbrwsr', 'necko', 'windowwatcher']:
-    path = os.path.join(mozIncludeBase, subdir)
-    mozilla_browser_options['include_dirs'].append(path)
+    if xulrunner19 == True:
+        mozilla_browser_options['include_dirs'].append(dir)
+    else:
+        raise ValueError("Can't find mozilla include base directory")
+
+else:
+    for subdir in ['dom', 'gfx', 'widget', 'commandhandler', 'uriloader',
+                   'webbrwsr', 'necko', 'windowwatcher']:
+        path = os.path.join(mozIncludeBase, subdir)
+        mozilla_browser_options['include_dirs'].append(path)
 
 
 nsI = True
@@ -303,6 +320,11 @@ for dir in mozilla_browser_options['include_dirs']:
 
 if nsI:
     mozilla_browser_options['extra_compile_args'].append('-DNS_I_SERVICE_MANAGER_UTILS=1')
+
+# FIXME - WBG
+# do a xulrunner 1.9 check here and if not, then define PCF_USING_XULRUNNER19
+if xulrunner19:
+    mozilla_browser_options['extra_compile_args'].append('-DPCF_USING_XULRUNNER19=1')
 
 mozilla_browser_ext = Extension("miro.platform.MozillaBrowser",
         [ os.path.join(platform_html_frontend_dir,'MozillaBrowser.pyx'),

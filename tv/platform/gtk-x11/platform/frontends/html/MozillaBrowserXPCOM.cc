@@ -28,7 +28,10 @@
 # statement from all source files in the program, then also delete it here.
 */
 
+#ifndef PCF_USING_XULRUNNER19
 #define MOZILLA_INTERNAL_API
+#endif
+
 #include "MozillaBrowserXPCOM.h"
 #include "XPCOMUtil.h"
 #include <gtkmozembed.h>
@@ -48,7 +51,11 @@
 #include <nsIDOMWindow.h>
 #include <nsIURIContentListener.h>
 #include <nsIWebBrowser.h>
-#include <nsString.h>
+
+#ifdef PCF_USING_XULRUNNER19
+#include <nsMemory.h>
+#endif
+
 #include <stdio.h>
 
 //////////////////////////////////////////////////////////////////////////////
@@ -314,7 +321,8 @@ char* getContextMenu(void* domEvent)
     nsString value;
     result = element->GetAttribute(contextMenuString, value);
     if(NS_FAILED(result)) return NULL;
-    return ToNewCString(value);
+    nsCString cvalue = NS_ConvertUTF16toUTF8(value);
+    return ToNewCString(cvalue);
 }
 
 void freeString(char* str)
