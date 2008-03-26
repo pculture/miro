@@ -217,11 +217,6 @@ class HTMLDisplayImpl:
                 except:
                     pass
 
-            try:
-                self.onInitialLoadFinished()
-            except:
-                pass
-
     # Call func() once the document has finished loading. If the
     # document has already finished loading, call it right away. But
     # in either case, the call is executed on the main thread, by
