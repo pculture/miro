@@ -235,9 +235,10 @@ def moviesDirectoryGone():
 
 def defaultMoviesGoneHandler():
     summary = _("Video Directory Missing")
-    description = _("""
-Miro can't find your primary video directory.  This may be because it's \
-located on an external drive that is currently disconnected.""")
+    description = Template(_("""
+Miro can't find your primary video directory $moviesDirectory.  This may be because it's \
+located on an external drive that is currently disconnected.  Please, connect the drive \
+or create the directory, then start Miro again.""")).substitute(moviesDirectory = config.get(prefs.MOVIES_DIRECTORY))
     signals.system.startupFailure(summary, description)
 moviesGoneHandler =  defaultMoviesGoneHandler
 
