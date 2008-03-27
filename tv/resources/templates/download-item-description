@@ -92,9 +92,11 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 					
 
 		<div class="main-video-bottom">
-			<div class="channel-title">
+			<!--
+			  <div class="channel-title">
 				<span t:replace="this.getChannelTitle()" />
 			</div>
+		-->
 			<div class="donate-html noselect">
 				<span t:replaceMarkup="this.getPaymentHTML()" />
 			</div>

@@ -9,34 +9,17 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 </head>
 <body>
 	<div class="main-video-details">
-		<table class="video-stats">
-			<colgroup width="165">
-				<col class="col1" />
-				<col />
-			</colgroup>
-			<tr>
-				<td class="col1">Category:</td>
-				<!-- not-implemented	<td t:replace="this.getCategory()" />			-->
-				<td />
-			</tr>
-			<tr>  
-				<td class="col1">Date:</td>
-				<td><b t:replace="this.getReleaseDate()" /></td>
-			</tr>
-			<tr>
-				<td class="col1">Length:</td>
-				<td><b t:replace="this.getDuration()" /></td>
-			</tr>
-			<tr>	
-				<td class="col1">Size:</td>
-				<td><b t:replace="this.getSizeForDisplay()" /></td>
-			</tr>
-			<tr>
-				<td colspan="2" t:showIf="this.showMoreInfo">
-					<div t:replaceMarkup="this.getMoreInfo()" />
-				</td>
-			</tr>
-		</table>
+		<dl class="video-stats">
+      <dt t:showIf="this.getReleaseDate() != ''" class="col1">Date:</dt>
+			<dd t:showIf="this.getReleaseDate() != ''"><b t:replace="this.getReleaseDate()" /></dd>
+      <dt t:showIf="this.getDuration() != ''" class="col1">Length:</dt>
+			<dd t:showIf="this.getDuration() != ''"><b t:replace="this.getDuration()" /></dd>
+      <dt t:showIf="this.getSizeForDisplay() != ''" class="col1">Size:</dt>
+			<dd t:showIf="this.getSizeForDisplay() != ''"><b t:replace="this.getSizeForDisplay()" /></dd>
+      <span t:showIf="this.showMoreInfo">
+				<span t:replaceMarkup="this.getMoreInfo()" />
+      </span>  
+    </dl>
 	</div>	<!-- // end details -->
 	<div class="main-video-status">
 		<div t:hideIf="this.looksLikeTorrent()" class="download-button">

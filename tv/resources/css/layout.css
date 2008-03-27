@@ -181,7 +181,7 @@ ul#view_style li a {
     }
 */
 .download-rates {
-    margin: 10px 0px 0px 0px;
+    margin: 10px 0px 20px 0px;
 }
 
 /* Search page components */
@@ -239,7 +239,7 @@ ul#view_style li a {
   top:61px;
 }
 #main-container.download {
-  top:88px;
+  top:117px;
 }
 
 /* SORT BUTTONS AND VIDEO STATS -- THEY ARE GROUPED TOGETHER IN THE CSS SINCE THEY NEED TO LINE UP WITH EACH OTHER */
@@ -475,7 +475,11 @@ table.select-box {
 	-moz-user-select: none;
 }
 table#auto-download-menu.select-box {
+	position:absolute;
+	top:-20px;
+  left:10px;
 	width:200px;
+	z-index:20;
 }
 table#sort-by-menu.select-box {
 	width:75px;
@@ -600,7 +604,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 .main-video-desc {
 	float:left;
-	padding:0 185px 0 16px;
+	padding:0 24px 0 16px;
 	margin-left:8px;
 	width:auto;
 	height:105px;
@@ -629,6 +633,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video.selected.more-info .main-video-desc-desc {
     height: auto;
+    padding-bottom:10px;
 }
 
 .donate-html {
@@ -670,64 +675,38 @@ an element is dragged, the drag-highlight class is added to it */
 	display:block;
 }
 .item-links {
-    position: absolute;
-    bottom: 4px;
+  position: absolute;
+  bottom: 4px;
 }
 
 .main-video-details {
-		position:absolute;
-		right:20px;
-		top:2px;
-    width: 145px;
-    height: 75px;
+  float:right;
+  width: 165px;
+  height: 75px;
 }
-
-.more-info .main-video-details {
+dl.video-stats {
+	width:150px;
+}
+.more-info .main-video-details,
+.more-info dl.video-stats {
     height: auto;
+    white-space:nowrap;
 }
-col.col1 {
-/*	width:50px;*/
-	padding-right:16px;
+.more-info dl.video-stats {
+  padding-bottom:50px;
 }
-table.video-stats {
-	width:100%;
+dl.video-stats dt {
+  white-space: nowrap;
+  float: left;
+  clear: left;
+  position: relative;
+  width:60px;
 }
-table.video-stats td {
-	white-space:nowrap;
-	padding:1px 0;
-}
-.more-info table.video-stats td {
-	padding:0;
-}
-
-/* hack to hide h3 from auto generated table in item.py */
-.more-info-details h3 {
-    display:none;
-}
-.more-info-details table {
-    width: 100%;
-    margin: 0px;
-}
-.more-info-details td {
-    vertical-align: top;
-}
-.more-info-details .label {
-    width: 50px;
-    margin-right: 18px;
-}
-
-
 .share-menu {
     position: absolute;
     top: 46px;
     z-index: 10;
 }
-
-/*.share-menu img {
-    vertical-align: -3px;
-    margin-right: 3px;
-}*/
-
 .download-button {
 		position:absolute;
 		right:85px;
@@ -764,11 +743,11 @@ table.video-stats td {
 .main-video-status-progress {
 	top:-4px;
 	position: absolute;
-	right: 37px;
+	right: 39px;
 }
 .progress-strings {
 	white-space:nowrap;
-	margin-left:3px;
+	margin-left:4px;
 }
 .progress-strings .downloading,
 .progress-strings .paused, 

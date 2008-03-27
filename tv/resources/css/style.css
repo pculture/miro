@@ -212,20 +212,32 @@ table.item.selected .tr {
 .cl {
 	background-image: url('../images/item-cl.png');
 }
-table.item.selected .cl {
+table.item.selected .cl,
+table.item.selected.more-info .cl {
 	background-image: url('../images/item-cl-selected.png');	
+}
+table.item.more-info .cl {
+	background-image: url('../images/item-cl-more-info.png');	
 }
 .cc {
 	background-image: url('../images/item-cc.png');
 }
-table.item.selected .cc {
+table.item.selected .cc,
+table.item.selected.more-info .cc {
 	background-image: url('../images/item-cc-selected.png');	
+}
+table.item.more-info .cc {
+	background-image: url('../images/item-cc-more-info.png');	
 }
 .cr {
 	background-image: url('../images/item-cr.png');
 }
-table.item.selected .cr {
+table.item.selected .cr,
+table.item.selected.more-info .cr {
 	background-image: url('../images/item-cr-selected.png');	
+}
+table.item.more-info .cr {
+	background-image: url('../images/item-cr-more-info.png');	
 }
 .bl {
 	background-image: url('../images/item-bl.png');		

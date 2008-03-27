@@ -358,12 +358,14 @@ body.gray-background {
     color: #666666;
     text-decoration: underline;
 }
-table.video-stats {
+
+dl.video-stats,
+dl.video-stats dd a {
 	font-size:11px;
 	color:#444;
 }
 
-table.video-stats td.col1 {
+dl.video-stats dt.col1 {
 	color:#98948f;
 }
 /*.round-button-content {
