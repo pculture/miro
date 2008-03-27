@@ -182,12 +182,11 @@ class Item(DDBObject):
 
         videos = set()
         filename_root = self.getFilename()
-        if os.path.isdir(filename_root):
-            for (dirpath, dirnames, filenames) in os.walk(filename_root):
-                for name in filenames:
-                    filename = os.path.join (dirpath, name)
-                    if filetypes.isVideoFilename(filename) or filetypes.isAudioFilename(filename):
-                        videos.add(filename)
+        if fileutil.isdir(filename_root):
+            files = fileutil.miro_allfiles()
+            for filename in files:
+                if filetypes.isVideoFilename(filename) or filetypes.isAudioFilename(filename):
+                    videos.add(filename)
         return videos
 
     def findNewChildren(self):
@@ -209,7 +208,7 @@ class Item(DDBObject):
         for video in videos:
             assert video.startswith(filename_root)
             offsetPath = video[len(filename_root):]
-            if offsetPath[0] == '/':
+            while offsetPath[0] == '/' or offsetPath[0] == '\\':
                 offsetPath = offsetPath[1:]
             FileItem (video, parent_id=self.id, offsetPath=offsetPath)
         if videos:
@@ -224,14 +223,14 @@ class Item(DDBObject):
         if not isinstance (self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
             return False
         filename_root = self.getFilename()
-        if os.path.isdir(filename_root):
+        if fileutil.isdir(filename_root):
             videos = self.findChildVideos()
             if len(videos) > 1:
                 self.isContainerItem = True
                 for video in videos:
                     assert video.startswith(filename_root)
                     offsetPath = video[len(filename_root):]
-                    if offsetPath[0] == '/':
+                    while offsetPath[0] in ('/', '\\'):
                         offsetPath = offsetPath[1:]
                     FileItem (video, parent_id=self.id, offsetPath=offsetPath)
             elif len(videos) == 1:
@@ -239,7 +238,7 @@ class Item(DDBObject):
                 for video in videos:
                     assert video.startswith(filename_root)
                     self.videoFilename = video[len(filename_root):]
-                    if self.videoFilename[0] in ('/', '\\'):
+                    while self.videoFilename[0] in ('/', '\\'):
                         self.videoFilename = self.videoFilename[1:]
                     self.isVideo = True
             else:
@@ -479,7 +478,7 @@ class Item(DDBObject):
         self.duration = None
         if self.screenshot:
             try:
-                os.remove(self.screenshot)
+                fileutil.remove(self.screenshot)
             except:
                 pass
         # This should be done even if screenshot = ""
@@ -861,10 +860,10 @@ folder will be deleted.""")
             width, height = Item.SMALL_ICON_SIZE
         if self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(width, height)
-            return resources.absoluteUrl(path)
+            return resources.absoluteUrl(fileutil.expand_filename(path))
         elif self.screenshot:
             path = self.getResizedScreenshot(width, height)
-            return resources.absoluteUrl(path)
+            return resources.absoluteUrl(fileutil.expand_filename(path))
         elif self.isContainerItem:
             return resources.url(u"images/container-icon.png")
         else:
@@ -1235,9 +1234,9 @@ folder will be deleted.""")
     # HTTP content-length
     # RSS enclosure tag value.
     def _getSize(self):
-        fname = self.getFilename()
         if self.isDownloaded():
             try:
+                fname = self.getFilename()
                 return util.getsize(fname)
             except OSError:
                 return 0
@@ -1655,10 +1654,10 @@ folder will be deleted.""")
                 self.signalChange(needsSave=False)
         self.splitItem()
         # This must come after reconnecting the downloader
-        if self.isContainerItem is not None and not os.path.exists(self.getFilename()):
+        if self.isContainerItem is not None and not fileutil.exists(self.getFilename()):
             self.executeExpire()
             return
-        if self.screenshot and not os.path.exists(self.screenshot):
+        if self.screenshot and not fileutil.exists(self.screenshot):
             self.screenshot = None
             self.signalChange()
         if self.duration is None or self.screenshot is None:
@@ -1671,17 +1670,17 @@ folder will be deleted.""")
     # to:   /path/to/movies/foobar.mp4
     def fixIncorrectTorrentSubdir(self):
         filenamePath = self.getFilename()
-        if (os.path.isdir(filenamePath)):
+        if (fileutil.isdir(filenamePath)):
             enclosedFile = os.path.join(filenamePath, os.path.basename(filenamePath))
-            if (os.path.exists(enclosedFile)):
+            if (fileutil.exists(enclosedFile)):
                 logging.info("Migrating incorrect torrent download: %s" % enclosedFile)
                 try:
                     temp = filenamePath + ".tmp"
-                    shutil.move(enclosedFile, temp)
-                    for turd in os.listdir(filenamePath):
+                    fileutil.move(enclosedFile, temp)
+                    for turd in os.listdir(fileutil.expand_filename(filenamePath)):
                         os.remove(turd)
-                    os.rmdir(filenamePath)
-                    os.rename(temp, filenamePath)
+                    fileutil.rmdir(filenamePath)
+                    fileutil.rename(temp, filenamePath)
                 except:
                     pass
                 self.videoFilename = FilenameType("")
@@ -1793,7 +1792,7 @@ class FileItem(Item):
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()
-        if not os.path.exists (self.filename):
+        if not fileutil.exists (self.filename):
             # item whose file has been deleted outside of DP
             self.remove()
         elif self.feed_id is None: 
@@ -1814,10 +1813,10 @@ class FileItem(Item):
                 dler = self.getParent().downloader
                 if dler:
                     dler.stop(False)
-            if os.path.isfile(self.filename):
-                os.remove(self.filename)
-            elif os.path.isdir(self.filename):
-                shutil.rmtree(self.filename)
+            if fileutil.isfile(self.filename):
+                fileutil.remove(self.filename)
+            elif fileutil.isdir(self.filename):
+                fileutil.rmtree(self.filename)
         except:
             logging.warn("WARNING: error deleting files:\n%s",
                     traceback.format_exc())
@@ -1825,7 +1824,7 @@ class FileItem(Item):
     def getDownloadedTime(self):
         self.confirmDBThread()
         try:
-            return datetime.fromtimestamp(os.path.getctime(self.filename))
+            return datetime.fromtimestamp(fileutil.getctime(self.filename))
         except:
             return datetime.min
 
@@ -1843,7 +1842,7 @@ class FileItem(Item):
     def updateReleaseDate(self):
         # This should be called whenever we get a new entry
         try:
-            self.releaseDateObj = datetime.fromtimestamp(os.path.getmtime(self.filename))
+            self.releaseDateObj = datetime.fromtimestamp(fileutil.getmtime(self.filename))
         except:
             self.releaseDateObj = datetime.min
 
@@ -1867,13 +1866,13 @@ filename was %s""", stringify(self.filename))
         newFilename = os.path.join(newDir, self.shortFilename)
         if self.filename == newFilename:
             return
-        if os.path.exists(self.filename):
+        if fileutil.exists(self.filename):
             newFilename = nextFreeFilename(newFilename)
             def callback():
                 self.filename = newFilename
                 self.signalChange()
             fileutil.migrate_file(self.filename, newFilename, callback)
-        elif os.path.exists(newFilename):
+        elif fileutil.exists(newFilename):
             self.filename = newFilename
             self.signalChange()
         self.migrateChildren(newDir)

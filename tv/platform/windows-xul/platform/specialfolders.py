@@ -30,6 +30,7 @@
 
 import ctypes
 import os
+from miro import u3info
 
 _specialFolderCSIDLs = {
     'AppData': 0x001a,
@@ -65,10 +66,14 @@ def getSpecialFolder(name):
 
 commonAppDataDirectory = getSpecialFolder("Common AppData")
 appDataDirectory = getSpecialFolder('AppData')
-baseMoviesDirectory = getSpecialFolder('My Videos')
-nonVideoDirectory = getSpecialFolder('Desktop')
-# The "My Videos" folder isn't guaranteed to be listed. If it isn't
-# there, we do this hack.
-if baseMoviesDirectory is None:
-    baseMoviesDirectory = os.path.join(getSpecialFolder('My Documents'),'My Videos')
+if u3info.u3_active:
+    baseMoviesDirectory = u3info.device_document_prefix + '\\' + "Videos"
+    nonVideoDirectory = u3info.device_document_prefix
+else:
+    baseMoviesDirectory = getSpecialFolder('My Videos')
+    nonVideoDirectory = getSpecialFolder('Desktop')
+    # The "My Videos" folder isn't guaranteed to be listed. If it isn't
+    # there, we do this hack.
+    if baseMoviesDirectory is None:
+        baseMoviesDirectory = os.path.join(getSpecialFolder('My Documents'),'My Videos')
 

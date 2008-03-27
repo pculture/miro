@@ -35,7 +35,69 @@ import logging
 import os
 import shutil
 
-from miro import eventloop
+from miro import u3info
+
+def makedirs(path):
+    path = expand_filename(path)
+    return os.makedirs(path)
+
+def isfile(path):
+    path = expand_filename(path)
+    return os.path.isfile(path)
+
+def isdir(path):
+    path = expand_filename(path)
+    return os.path.isdir(path)
+
+def isabs(path):
+    path = expand_filename(path)
+    return os.path.isabs(path)
+
+def getctime(path):
+    path = expand_filename(path)
+    return os.path.getctime(path)
+
+def getmtime(path):
+    path = expand_filename(path)
+    return os.path.getmtime(path)
+
+def exists(path):
+    path = expand_filename(path)
+    return os.path.exists(path)
+
+def remove(path):
+    path = expand_filename(path)
+    return os.remove(path)
+
+def rmtree(path):
+    path = expand_filename(path)
+    return shutil.rmtree(path)
+
+def listdir(path):
+    path = expand_filename(path)
+    return os.listdir(path)
+
+def open_file(path, *args, **kwargs):
+    path = expand_filename(path)
+    return file(path, *args, **kwargs)
+
+def access(path, *args, **kwargs):
+    path = expand_filename(path)
+    return os.access(path, *args, **kwargs)
+
+def move(path):
+    path = expand_filename(path)
+    shutil.move (path)
+
+def rmdir(path):
+    path = expand_filename(path)
+    os.rmdir (path)
+
+def rename(src, dest):
+    src = expand_filename(src)
+    dest = expand_filename(dest)
+    os.rename (src, dest)
+
 
 def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
     """Try to migrate a file, if this works, callback is called.  If we fail
@@ -43,6 +105,10 @@ def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
     default every 10 seconds, stopping after 60 seconds).  This probably only
     makes a difference on Windows.
     """
+    import eventloop
+
+    source = expand_filename(source)
+    dest = expand_filename(dest)
 
     try:
         shutil.move(source, dest)
@@ -87,6 +153,8 @@ def delete(path, retry_after=10, retry_for=60):
     difference on Windows.
     """
 
+    import eventloop
+    path = expand_filename(path)
     try:
         if os.path.isfile(path):
             os.remove (path)
@@ -116,11 +184,12 @@ def miro_listdir(directory):
 
     files = []
     directories = []
-    directory = os.path.abspath(os.path.normcase(directory))
-    if directory in deletes_in_progress:
+    expanded_directory = expand_filename(directory)
+    expanded_directory = os.path.abspath(os.path.normcase(expanded_directory))
+    if expanded_directory in deletes_in_progress:
         return
     try:
-        listing = os.listdir(directory)
+        listing = os.listdir(expanded_directory)
     except OSError:
         return [], []
     for name in listing:
@@ -128,11 +197,12 @@ def miro_listdir(directory):
             # thumbs.db is a windows file that speeds up thumbnails.  We know
             # it's not a movie file.
             continue
+        expanded_path = os.path.join(expanded_directory, os.path.normcase(name))
         path = os.path.join(directory, os.path.normcase(name))
-        if path in deletes_in_progress:
+        if expanded_path in deletes_in_progress:
             continue
         try:
-            if os.path.isdir(path):
+            if os.path.isdir(expanded_path):
                 directories.append(path)
             else:
                 files.append(path)
@@ -150,11 +220,12 @@ def miro_allfiles(directory):
     """
 
     files = []
-    directory = os.path.abspath(os.path.normcase(directory))
-    if directory in deletes_in_progress:
+    expanded_directory = expand_filename(directory)
+    expanded_directory = os.path.abspath(os.path.normcase(expanded_directory))
+    if expanded_directory in deletes_in_progress:
         return
     try:
-        listing = os.listdir(directory)
+        listing = os.listdir(expanded_directory)
     except OSError:
         return [], []
     for name in listing:
@@ -163,13 +234,54 @@ def miro_allfiles(directory):
             # it's not a movie file.
             continue
         path = os.path.join(directory, os.path.normcase(name))
-        if path in deletes_in_progress:
+        expanded_path = os.path.join(expanded_directory, os.path.normcase(name))
+        if expanded_path in deletes_in_progress:
             continue
         try:
-            if os.path.isdir(path):
+            if os.path.isdir(expanded_path):
                 files.extend(miro_allfiles(path))
             else:
                 files.append(path)
         except OSError:
             pass
     return files
+
+def expand_filename(filename):
+    if not filename:
+        return filename
+    if u3info.u3_active:
+        if filename.startswith(u3info.app_data_prefix):
+            filename = filename[len(u3info.app_data_prefix):]
+            while len(filename) > 0 and filename[0] in ['/', '\\']:
+                filename = filename[1:]
+            if len(filename) == 0:
+                return u3info.app_data_path
+            return os.path.join (u3info.app_data_path, filename)
+        if filename.startswith(u3info.device_document_prefix):
+            filename = filename[len(u3info.device_document_prefix):]
+            while len(filename) > 0 and filename[0] in ['/', '\\']:
+                filename = filename[1:]
+            if len(filename) == 0:
+                return u3info.device_document_path
+            return os.path.join (u3info.device_document_path, filename)
+    return filename
+
+def collapse_filename(filename):
+    if not filename:
+        return filename
+    if u3info.u3_active:
+        if filename.startswith(u3info.app_data_path):
+            filename = filename[len(u3info.app_data_path):]
+            while len(filename) > 0 and filename[0] in ['/', '\\']:
+                filename = filename[1:]
+            if len(filename) == 0:
+                return u3info.app_data_prefix
+            return u3info.app_data_prefix + '\\' + filename
+        if filename.startswith(u3info.device_document_path):
+            filename = filename[len(u3info.device_document_path):]
+            while len(filename) > 0 and filename[0] in ['/', '\\']:
+                filename = filename[1:]
+            if len(filename) == 0:
+                return u3info.device_document_prefix
+            return u3info.device_document_prefix + '\\' + filename
+    return filename

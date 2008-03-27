@@ -309,9 +309,9 @@ class RemoteDownloader(DDBObject):
             logging.warn("Error deleting downloaded file: %s\n%s" % 
                     (toUni(filename), traceback.format_exc()))
 
-        parent = os.path.join(filename, os.path.pardir)
+        parent = os.path.join(fileutil.expand_filename(filename), os.path.pardir)
         parent = os.path.normpath(parent)
-        moviesDir = config.get(prefs.MOVIES_DIRECTORY)
+        moviesDir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
         if (os.path.exists(parent) and os.path.exists(moviesDir) and
             not samefile(parent, moviesDir) and
             len(os.listdir(parent)) == 0):
@@ -368,12 +368,12 @@ URL was %s""" % self.url
 WARNING: can't migrate download because we don't have a filename!
 URL was %s""" % self.url
                 return
-            if os.path.exists(filename):
+            if fileutil.exists(filename):
                 if 'channelName' in self.status and self.status['channelName'] is not None:
                     channelName = filterDirectoryName(self.status['channelName'])
                     directory = os.path.join (directory, channelName)
                 try:
-                    os.makedirs(directory)
+                    fileutil.makedirs(directory)
                 except:
                     pass
                 newfilename = os.path.join(directory, shortFilename)
@@ -570,27 +570,27 @@ URL was %s""" % self.url
 def cleanupIncompleteDownloads():
     downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
             'Incomplete Downloads')
-    if not os.path.exists(downloadDir):
+    if not fileutil.exists(downloadDir):
         return
 
     filesInUse = set()
     views.remoteDownloads.confirmDBThread()
     for downloader in views.remoteDownloads:
-        if downloader.getState() in ('downloading', 'paused', 'offline'):
+        if downloader.getState() in ('downloading', 'paused', 'offline', 'uploading', 'finished'):
             filename = downloader.getFilename()
             if len(filename) > 0:
-                if not os.path.isabs(filename):
+                if not fileutil.isabs(filename):
                     filename = os.path.join(downloadDir, filename)
                 filesInUse.add(filename)
 
-    for f in os.listdir(downloadDir):
+    for f in fileutil.listdir(downloadDir):
         f = os.path.join(downloadDir, f)
         if f not in filesInUse:
             try:
-                if os.path.isfile(f):
-                    os.remove (f)
-                elif os.path.isdir(f):
-                    shutil.rmtree (f)
+                if fileutil.isfile(f):
+                    fileutil.remove (f)
+                elif fileutil.isdir(f):
+                    fileutil.rmtree (f)
             except:
                 # FIXME - maybe a permissions error?
                 pass

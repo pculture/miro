@@ -513,6 +513,8 @@ class bdist_xul_dumb(Command):
         shutil.copy2("iHeartMiro-installer-page.ini", self.dist_dir)
         shutil.copy2("miro-installer.ico", self.dist_dir)
         shutil.copy2("miro-install-image.bmp", self.dist_dir)
+        shutil.copy2("miro.u3i", self.dist_dir)
+        shutil.copy2("U3Action.exe", self.dist_dir)
 #        copyTreeExceptSvn(os.path.join(platform_dir, "iHeartMiro"), os.path.join(self.dist_dir, "iHeartMiro"))
 
 
@@ -978,16 +980,32 @@ class bdist_xul (bdist_xul_dumb):
         self.zipfile = zip.ZipFile(os.path.join (self.dist_dir, "%s-Contents-%s.zip" % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('appVersion'),)), 'w', zip.ZIP_DEFLATED)
         self.addFile (nsisVars['CONFIG_EXECUTABLE'])
         self.addFile (nsisVars['CONFIG_ICON'])
+        self.addFile (nsisVars['CONFIG_MOVIE_DATA_EXECUTABLE'])
+        self.addFile ("moviedata_util.py")
         self.addFile ("application.ini")
+        self.addGlob ("*.dll")
 
         self.addDirectory ("chrome")
         self.addDirectory ("components")
         self.addDirectory ("defaults")
         self.addDirectory ("resources")
         self.addDirectory ("vlc-plugins")
+        self.addDirectory ("plugins")
         self.addDirectory ("xulrunner")
+        self.addDirectory ("imagemagick")
 
         self.zipfile.close()
+
+    def addGlob(self, wildcard):
+        wildcard = os.path.join (self.dist_dir, wildcard)
+        length = len(self.dist_dir)
+        for filename in glob.iglob(wildcard):
+            if filename[:length] == (self.dist_dir):
+                filename = filename[length:]
+                while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+                    filename = filename[1:]
+            print "Compressing %s" % (filename,)
+            self.zipfile.write (os.path.join (self.dist_dir, filename), filename)
 
     def addFile(self, filename):
         length = len(self.dist_dir)
@@ -1002,6 +1020,76 @@ class bdist_xul (bdist_xul_dumb):
         for root, dirs, files in os.walk (os.path.join (self.dist_dir, dirname)):
             for name in files:
                 self.addFile (os.path.join (root, name))
+
+class bdist_u3 (bdist_xul_dumb):
+    def run(self):
+        bdist_xul_dumb.run(self)
+
+        log.info("building u3p")
+
+        self.zipfile = zip.ZipFile(os.path.join (self.dist_dir, "%s-%s.u3p" % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('appVersion'),)), 'w', zip.ZIP_DEFLATED)
+
+        self.addDirectFile ("miro.u3i", "manifest\\manifest.u3i")
+        self.addDirectFile ("Miro.ico", "manifest\\Miro.ico")
+        self.addDirectFile ("U3Action.exe", "host\\U3Action.exe")
+
+        self.addFile ("%s.exe" % (self.getTemplateVariable('shortAppName'),))
+        self.addFile ("%s.ico" % (self.getTemplateVariable('shortAppName'),))
+        self.addFile ("%s_MovieData.exe" % (self.getTemplateVariable('shortAppName')))
+        self.addFile ("moviedata_util.py")
+        self.addFile ("application.ini")
+        self.addGlob ("*.dll")
+
+        self.addDirectory ("chrome")
+        self.addDirectory ("components")
+        self.addDirectory ("defaults")
+        self.addDirectory ("resources")
+        self.addDirectory ("vlc-plugins")
+        self.addDirectory ("plugins")
+        self.addDirectory ("xulrunner")
+        self.addDirectory ("imagemagick")
+
+        self.zipfile.close()
+
+    def addDirectFile(self, filename, path):
+        print "Compressing %s as %s" % (filename, path)
+        self.zipfile.write (os.path.join (self.dist_dir, filename), path)
+
+    def addGlob(self, wildcard, src = None, dest = None):
+        import glob
+        if src is None:
+            src = self.dist_dir
+        if dest is None:
+            dest = "device/"
+        length = len(src)
+        wildcard = os.path.join (src, wildcard)
+        for filename in glob.iglob(wildcard):
+            if filename[:length] == (src):
+                filename = filename[length:]
+                while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+                    filename = filename[1:]
+            print "Compressing %s" % (filename,)
+            self.zipfile.write (os.path.join (src, filename), os.path.join (dest, filename))
+
+    def addFile(self, filename, src = None, dest = None):
+        if src is None:
+            src = self.dist_dir
+        if dest is None:
+            dest = "device/"
+        length = len(src)
+        if filename[:length] == (src):
+            filename = filename[length:]
+            while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+                filename = filename[1:]
+        print "Compressing %s" % (filename,)
+        self.zipfile.write (os.path.join (src, filename), os.path.join (dest, filename))
+
+    def addDirectory (self, dirname, src = None, dest = None):
+        if src is None:
+            src = self.dist_dir
+        for root, dirs, files in os.walk (os.path.join (src, dirname)):
+            for name in files:
+                self.addFile (os.path.join (root, name), src, dest)
 
 def copyTreeExceptSvn(src, dest, filterOut=None):
     """Copy the contents of the given source directory into the given
@@ -1054,6 +1142,7 @@ if __name__ == "__main__":
             'runxul': runxul,
             'bdist_xul_dumb': bdist_xul_dumb,
             'bdist_xul': bdist_xul,
+            'bdist_u3': bdist_u3,
             'clean': clean,
             }
     )

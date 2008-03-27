@@ -36,6 +36,7 @@ from miro.util import unicodify, call_command
 from miro.platform.utils import unicodeToFilename
 from miro import config
 from miro import prefs
+from miro import fileutil
 import time
 import random
 from miro import imageresize
@@ -47,15 +48,15 @@ def clearOrphans():
     knownIcons = set()
     for item in views.items:
         if item.iconCache and item.iconCache.filename:
-            knownIcons.add(os.path.normcase(item.iconCache.filename))
+            knownIcons.add(os.path.normcase(fileutil.expand_filename(item.iconCache.filename)))
             for resized in item.iconCache.resized_filenames.values():
-                knownIcons.add(os.path.normcase(resized))
+                knownIcons.add(os.path.normcase(fileutil.expand_filename(resized)))
     for feed in views.feeds:
         if feed.iconCache and feed.iconCache.filename:
-            knownIcons.add(os.path.normcase(feed.iconCache.filename))
+            knownIcons.add(os.path.normcase(fileutil.expand_filename(feed.iconCache.filename)))
             for resized in feed.iconCache.resized_filenames.values():
-                knownIcons.add(os.path.normcase(resized))
-    cachedir = config.get(prefs.ICON_CACHE_DIRECTORY)
+                knownIcons.add(os.path.normcase(fileutil.expand_filename(resized)))
+    cachedir = fileutil.expand_filename(config.get(prefs.ICON_CACHE_DIRECTORY))
     if os.path.isdir(cachedir):
         existingFiles = [os.path.normcase(os.path.join(cachedir, f)) 
                 for f in os.listdir(cachedir)]
@@ -80,7 +81,7 @@ class IconCacheUpdater:
     def requestUpdate (self, item, is_vital = False):
         if is_vital:
             item.dbItem.confirmDBThread()
-            if item.filename and os.access (item.filename, os.R_OK) \
+            if item.filename and fileutil.access (item.filename, os.R_OK) \
                    and item.url == item.dbItem.getThumbnailURL():
                 is_vital = False
         if self.runningCount < RUNNING_MAX:
@@ -159,7 +160,7 @@ class IconCache:
 
     def _removeFile(self, filename):
         try:
-            os.remove (filename)
+            fileutil.remove (filename)
         except:
             pass
 
@@ -209,13 +210,13 @@ class IconCache:
 
             # We have to update it, and if we can't write to the file, we
             # should pick a new filename.
-            if (self.filename and not os.access (self.filename, os.R_OK | os.W_OK)):
+            if (self.filename and not fileutil.access (self.filename, os.R_OK | os.W_OK)):
                 self.filename = None
                 seedsSave = True
 
             cachedir = config.get(prefs.ICON_CACHE_DIRECTORY)
             try:
-                os.makedirs (cachedir)
+                fileutil.makedirs (cachedir)
             except:
                 pass
 
@@ -227,7 +228,7 @@ class IconCache:
                     tmp_filename = os.path.join(cachedir, info["filename"]) + ".part"
 
                 tmp_filename = nextFreeFilename (tmp_filename)
-                output = file (tmp_filename, 'wb')
+                output = fileutil.open_file (tmp_filename, 'wb')
                 output.write(info["body"])
                 output.close()
             except IOError:
@@ -251,7 +252,7 @@ class IconCache:
             needsSave = True
 
             try:
-                os.rename (tmp_filename, self.filename)
+                fileutil.rename (tmp_filename, self.filename)
             except:
                 self.filename = None
                 needsSave = True
@@ -316,7 +317,7 @@ class IconCache:
             return
 
         # Last try, get the icon from HTTP.
-        if (url == self.url and self.filename and os.access (self.filename, os.R_OK)):
+        if (url == self.url and self.filename and fileutil.access (self.filename, os.R_OK)):
             httpclient.grabURL (url, lambda info: self.updateIconCache(url, info), lambda error: self.errorCallback(url, error), etag=self.etag, modified=self.modified)
         else:
             httpclient.grabURL (url, lambda info: self.updateIconCache(url, info), lambda error: self.errorCallback(url, error))
@@ -337,7 +338,7 @@ class IconCache:
 
     def isValid(self):
         self.dbItem.confirmDBThread()
-        return self.filename and os.path.exists(self.filename)
+        return self.filename and fileutil.exists(self.filename)
 
     def getFilename(self):
         self.dbItem.confirmDBThread()

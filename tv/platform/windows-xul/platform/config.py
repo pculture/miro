@@ -35,6 +35,8 @@ import tempfile
 from miro import app
 from miro import prefs
 from miro import util
+from miro import u3info
+from miro import fileutil
 from miro.platform import proxyfind
 from miro.platform import resources
 from miro.platform import specialfolders
@@ -44,39 +46,42 @@ proxy_info = proxyfind.get_proxy_info()
 def _getMoviesDirectory():
     path = os.path.join(specialfolders.baseMoviesDirectory, app.configfile['shortAppName'])
     try:
-        os.makedirs(os.path.join(path, 'Incomplete Downloads'))
+        fileutil.makedirs(os.path.join(path, 'Incomplete Downloads'))
     except:
         pass
     return path
 
 def _getSupportDirectory():
-    # We don't get the publisher and long app name from the config so
-    # changing the app name doesn't change the support directory
-    path = os.path.join(specialfolders.appDataDirectory,
-                        u'Participatory Culture Foundation',
-                        u'Miro',
-                        u'Support')
+    if u3info.u3_active:
+        path = u3info.app_data_prefix
+    else:
+        # We don't get the publisher and long app name from the config so
+        # changing the app name doesn't change the support directory
+        path = os.path.join(specialfolders.appDataDirectory,
+                            u'Participatory Culture Foundation',
+                            u'Miro',
+                            u'Support')
     try:
-        os.makedirs(path)
+        fileutil.makedirs(path)
     except:
         pass
     return path
 
 def _getConfigFile():
-    return os.path.join(_getSupportDirectory(), "preferences.bin")
+    return fileutil.expand_filename(os.path.join(_getSupportDirectory(), "preferences.bin"))
 
 def load():
-    try:
-        file = _getConfigFile()
-        if os.path.exists(file):
-            return cPickle.load(open(file))
+#    try:
+        filename = _getConfigFile()
+        if os.path.exists(filename):
+            return cPickle.load(open(filename))
         else:
             return {}
-    except:
-        import traceback
-        print "Error loading perferences. Resetting prefs."
-        traceback.print_exc()
-        return {}
+#    except:
+#        import traceback
+#        print "Error loading preferences. Resetting prefs."
+#        traceback.print_exc()
+#        return {}
 
 def save(data):
     file = _getConfigFile()
@@ -93,11 +98,11 @@ def get(descriptor):
         return resources.path("locale")
 
     elif descriptor == prefs.SUPPORT_DIRECTORY:
-        return _getSupportDirectory()
+        return fileutil.expand_filename(_getSupportDirectory())
 
     elif descriptor == prefs.ICON_CACHE_DIRECTORY:
         return os.path.join(_getSupportDirectory(), 'icon-cache')
-    
+
     elif descriptor == prefs.DB_PATHNAME:
         path = get(prefs.SUPPORT_DIRECTORY)
         return os.path.join(path, 'tvdump')
@@ -111,11 +116,19 @@ def get(descriptor):
         return os.path.join(path, 'sqlitedb')
 
     elif descriptor == prefs.LOG_PATHNAME:
-        return os.path.join(tempfile.gettempdir(), 
+        if u3info.u3_active:
+            directory = u3info.app_data_path
+        else:
+            directory = tempfile.gettempdir()
+        return os.path.join(directory, 
                 ('%s.log' % app.configfile['shortAppName']))
 
     elif descriptor == prefs.DOWNLOADER_LOG_PATHNAME:
-        return os.path.join(tempfile.gettempdir(),
+        if u3info.u3_active:
+            directory = u3info.app_data_path
+        else:
+            directory = tempfile.gettempdir()
+        return os.path.join(directory,
             ('%s-downloader.log' % app.configfile['shortAppName']))
 
     elif descriptor == prefs.RUN_AT_STARTUP:

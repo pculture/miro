@@ -43,6 +43,7 @@ import sys
 import urllib
 from miro.util import (returnsUnicode, returnsBinary, checkU, checkB, call_command,
         AutoflushingStream)
+from miro import fileutil
 
 localeInitialized = False
 FilenameType = unicode
@@ -61,7 +62,7 @@ def getLongPathName(path):
 
 def getAvailableBytesForMovies():
     # TODO: windows implementation
-    moviesDir = config.get(prefs.MOVIES_DIRECTORY)
+    moviesDir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
     freeSpace = ctypes.c_ulonglong(0)
     availableSpace = ctypes.c_ulonglong(0)
     totalSpace = ctypes.c_ulonglong(0)

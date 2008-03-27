@@ -35,6 +35,7 @@ from miro import app
 from miro import util
 from miro import config
 from miro import prefs
+from miro import fileutil
 from miro.download_utils import nextFreeFilename
 from miro.frontends.html.displaybase import VideoDisplayBase
 from miro.frontends.html.playbackcontroller import PlaybackControllerBase
@@ -53,7 +54,7 @@ class PlaybackController (PlaybackControllerBase):
         # now play this item externally
         moviePath = ""
         try:
-            moviePath = os.path.normpath(item.getVideoFilename())
+            moviePath = os.path.normpath(fileutil.expand_filename(item.getVideoFilename()))
             os.startfile(moviePath)
         except:
             print "DTV: movie %s could not be externally opened" % moviePath
@@ -154,7 +155,7 @@ class VLCRenderer:
 
     @lockAndPlay
     def selectFile(self, filename):
-        url = util.absolutePathToFileURL(filename)
+        url = util.absolutePathToFileURL(fileutil.expand_filename(filename))
         return app.vlcRenderer.selectURL(url)
     def setVolume(self, volume): 
         return app.vlcRenderer.setVolume(volume)

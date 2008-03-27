@@ -36,6 +36,7 @@ from miro import eventloop
 from miro import item
 from miro import prefs
 from miro import signals
+from miro import fileutil
 
 class PlaybackControllerBase:
     
@@ -102,7 +103,7 @@ class PlaybackControllerBase:
             if self.currentItem:
                 self.currentItem.onViewedCancel()
             self.currentItem = None
-            while not os.path.exists(anItem.getVideoFilename()):
+            while not fileutil.exists(anItem.getVideoFilename()):
                 logging.info ("movie file '%s' is missing, skipping to next",
                               anItem.getVideoFilename())
                 eventloop.addIdle(self.removeItem, "Remove deleted item", args=(anItem.item,))

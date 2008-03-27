@@ -50,6 +50,7 @@ from miro import database
 from miro import databaseupgrade
 from miro import downloader
 from miro import eventloop
+from miro import fileutil
 from miro import iconcache
 from miro import indexes
 from miro import item
@@ -213,7 +214,7 @@ def setupTabs():
         tabs.TabOrder(u'playlist')
 
 def moviesDirectoryGone():
-    movies_dir = config.get(prefs.MOVIES_DIRECTORY)
+    movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
     if not movies_dir.endswith(os.path.sep):
         movies_dir += os.path.sep
     try:

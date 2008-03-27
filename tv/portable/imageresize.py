@@ -33,6 +33,7 @@ import os
 import traceback
 
 from miro.platform.utils import resizeImage
+from miro import fileutil
 
 def _resizedKey(width, height):
     return u'%sx%s' % (width, height)
@@ -57,7 +58,7 @@ def multiResizeImage(source_filename, sizes):
     for width, height in sizes:
         resizedPath = _makeResizedPath(source_filename, width, height)
         try:
-            resizeImage(source_filename, resizedPath, width, height)
+            resizeImage(fileutil.expand_filename(source_filename), fileutil.expand_filename(resizedPath), width, height)
         except:
             logging.warn("Error resizing %s to %sx%s:\n%s", source_filename,
                     width, height, traceback.format_exc())
@@ -77,8 +78,8 @@ def removeResizedFiles(resized_filenames):
 
     for filename in resized_filenames.values():
         try:
-            if (os.path.exists(filename)):
-                os.remove (filename)
+            if (fileutil.exists(filename)):
+                fileutil.remove (filename)
         except:
             logging.warn("Error deleted resized image: %s\n%s", filename,
                     traceback.format_exc())

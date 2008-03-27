@@ -43,6 +43,7 @@ import urllib
 import socket
 import logging
 from miro import filetypes
+from miro import fileutil
 import tempfile
 import threading
 import traceback
@@ -525,6 +526,7 @@ def getsize(path):
     If it's a directory return the total size of all the files it contains.
     """
 
+    path = fileutil.expand_filename(path)
     if os.path.isdir(path):
         size = 0
         for (dirpath, dirnames, filenames) in os.walk(path):
