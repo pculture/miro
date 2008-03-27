@@ -322,7 +322,6 @@ table.select-box a:hover {
 .main-video .dnd-reorder-line {
 	background: #0752d7;
 }
-
 .main-video-desc.noselect.newly-downloaded {
 	background: url('../images/status-icon_newly-downloaded.png') no-repeat left 6px;
 }
@@ -331,6 +330,9 @@ table.select-box a:hover {
 }
 .main-video-details-expiring {
 	background:url('../images/status_expires.png') no-repeat left top;
+}
+.main-video-details-pending-auto {
+  background:url('../images/status_pending-auto.png') no-repeat left top;
 }
 .video-state.newly-downloaded {
     background: url('../images/status_newly-download.png') no-repeat left top;

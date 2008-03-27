@@ -39,43 +39,30 @@ containedChildren = kargs['containedChildren']
             
             
             <div class="button-zone-two">
+              
+              <a class="button gray" href="#" onclick="return eventURL('action:mergeToFolder');">
+  									<span i18n:translate="">Put Into a New Folder</span>
+  						</a>
+  						
+  						<a class="button gray" href="#" onclick="return eventURL('action:removeCurrentFeed');">
+  									<span i18n:translate="">Delete</span>
+  						</a>
 
             
-            <div class="gray-button-wrap">
-            <div class="gray-button-bg" onclick="return eventURL('action:mergeToFolder');" >
-                <div class="gray-button-left" />
-                <div class="gray-button-right" />
-                <div class="gray-button-content">Put Into a New Folder</div>
-            </div>
-            </div>
+        	  </div>
          
-         
-            <div class="gray-button-wrap">
-		   	<div class="gray-button-bg" onclick="return eventURL('action:removeCurrentFeed');" >
-        	    <div class="gray-button-left" />
-            	<div class="gray-button-right" />
-	    		<div class="gray-button-content">Delete</div>
-        	</div>
-        	</div>
-        	
-        	</div>
-         
-		</span>
+		    </span>
 
 
         <span t:showIf="selectedFolders > 0">
 
             <div class="button-zone-one">
 
-            <div class="gray-button-wrap">
-		   	<div class="gray-button-bg" onclick="return eventURL('action:removeCurrentFeed');" >
-        	    <div class="gray-button-left" />
-            	<div class="gray-button-right" />
-	    		<div class="gray-button-content">Delete All</div>
-        	</div>
-        	</div>
+              <a class="button gray" href="#" onclick="return eventURL('action:removeCurrentFeed');">
+  									<span i18n:translate="">Delete All</span>
+  						</a>
 
-			</div>
+			      </div>
 
 		</span>
 
