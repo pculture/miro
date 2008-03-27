@@ -35,7 +35,7 @@ import sys
 import string
 import subprocess
 import zipfile as zip
-from glob import glob
+from glob import glob, iglob
 from xml.sax.saxutils import escape
 from distutils import sysconfig 
 
@@ -999,7 +999,7 @@ class bdist_xul (bdist_xul_dumb):
     def addGlob(self, wildcard):
         wildcard = os.path.join (self.dist_dir, wildcard)
         length = len(self.dist_dir)
-        for filename in glob.iglob(wildcard):
+        for filename in iglob(wildcard):
             if filename[:length] == (self.dist_dir):
                 filename = filename[length:]
                 while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
@@ -1063,7 +1063,7 @@ class bdist_u3 (bdist_xul_dumb):
             dest = "device/"
         length = len(src)
         wildcard = os.path.join (src, wildcard)
-        for filename in glob.iglob(wildcard):
+        for filename in iglob(wildcard):
             if filename[:length] == (src):
                 filename = filename[length:]
                 while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
