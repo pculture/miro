@@ -689,16 +689,9 @@ class bdist_xul_dumb(Command):
             # main xulrunner binary for XULRunner to find it, but it
             # also needs to be in the python directory for the
             # downloader to find it. See #9648
-            if basename.lower() in ('python25.dll', 'python24.dll'):
-                dest = os.path.join(self.dist_dir, 'xulrunner', basename)
-                shutil.copy(dll, dest)
-                continue
             dest = os.path.join(self.dist_dir, basename)
             if not os.path.exists(dest):
-                shutil.move(dll, dest)
-            else:
-                # maybe we should check that they're the same here?
-                os.remove(dll)
+                shutil.copy(dll, dest)
 
     def buildMovieDataUtil(self):
         print "building movie data utility"
