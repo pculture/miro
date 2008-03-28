@@ -7,10 +7,7 @@ Standards-Version: 3.7.2
 
 Package: miro
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2, python-gnome2, python-gnome2-extras (>= 2.14.0-2), python-glade2, imagemagick, libxine1-plugins, libxine1 (<< 1.1.8), libxine1 (>= 1.1.7), miro-data (>= 1.2)
-Suggests: ttf-bitstream-vera
-Conflicts: democracyplayer (<< 0.9.8)
-Replaces: democracyplayer
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2, python-gnome2, python-gnome2-extras (>= 2.14.0-2), python-glade2, imagemagick, libxine1-plugins, libxine1, miro-data (>= 1.2.2)
 Description: GTK+ based RSS video aggregator
  Miro is a platform for Internet television and video.
  It allows you to download and watch videos from RSS feeds (including
@@ -18,8 +15,6 @@ Description: GTK+ based RSS video aggregator
 
 Package: miro-data
 Architecture: all
-Conflicts: democracyplayer-data (<< 0.9.8)
-Replaces: democracyplayer-data
 Description: GTK+ based RSS video aggregator data files
  Miro is a platform for Internet television and video.
  It allows you to download and watch videos from RSS feeds (including
