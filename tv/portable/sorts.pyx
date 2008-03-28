@@ -113,7 +113,7 @@ class ItemSort:
         elif self.sortBy == 'size':
             return x[1].getSize() < y[1].getSize()
         elif self.sortBy == 'name':
-            return x[1].getTitle() < y[1].getTitle()
+            return x[1].getTitle().lower() < y[1].getTitle().lower()
         elif self.sortBy == 'duration':
             return x[1].getDurationValue() < y[1].getDurationValue()
 
