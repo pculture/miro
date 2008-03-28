@@ -51,8 +51,8 @@ ext_modules=[
 
 templateVars = util.readSimpleConfigFile(os.path.join(root, 'resources', 'app.config'))
 
-wrapper_module = os.path.join(core_setup.platform_dir, 'platform',
-        'downloaderwrapper.py')
+wrapper_module = os.path.join(core_setup.portable_dir, 'dl_daemon',
+        'Democracy_Downloader.py')
 
 setup(
     console=[{"dest_base":("%s_Downloader"%templateVars['shortAppName']),"script": wrapper_module}],
