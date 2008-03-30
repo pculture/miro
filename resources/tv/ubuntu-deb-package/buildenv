@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get install debhelper fakeroot cdbs pbuilder lintian linda
+apt-get install debhelper fakeroot cdbs pbuilder lintian
 
 mkdir ./pbuilder/
 
