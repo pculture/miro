@@ -585,7 +585,6 @@ class Feed(DDBObject):
         if initiallyAutoDownloadable == None:
             mode = config.get(prefs.CHANNEL_AUTO_DEFAULT)
             # note that this is somewhat duplicated in setAutoDownloadMode
-            logging.info ("wbg: setting autodownload stuff initially to %s" % mode)
             if mode == u'all':
                 self.getEverything = True
                 self.autoDownloadable = True
