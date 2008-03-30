@@ -1,5 +1,6 @@
 miro (1.2.2-0pcf1) hardy; urgency=low
 
-  * First Hardy release.  This release is unsupported.
+  * First Hardy release.
+  * Setting gstreamer as default--it seems to work better.
 
  -- Will Guaraldi <will.guaraldi@pculture.org>  Fri, 28 Mar 2008 14:15:52 -0400

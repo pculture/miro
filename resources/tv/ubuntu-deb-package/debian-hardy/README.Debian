@@ -1,13 +1,15 @@
-Miro for Debian
----------------
+Miro for Ubuntu Hardy
+---------------------
 
- * The default Miro Player movies directory in Debian
-   is ~/.miro/Movies instead of ~/Movies/Miro .
+ * The default movies directory in Ubuntu Hardy is 
+   ~/.miro/Movies instead of ~/Movies/Miro .
 
- * Also, the non-video directory in Debian is ~/.miro/Nonvideo
-   instead of ~/Desktop .
+ * The the non-video directory in Ubuntu Hardy is 
+   ~/.miro/Nonvideo instead of ~/Desktop .
 
  * The autoupdate feature, which checks for new versions of Miro, 
-   has been disabled in the Debian package.
+   has been disabled in the Ubuntu Hardy package.
 
- -- Uwe Hermann <uwe@debian.org>, Mon, 11 Sep 2006 08:49:05 +0200
+ * The default renderer in Ubuntu Hardy is gstreamer instead of xine.
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>, Sun, 30 Mar 2008 15:42:06 -0400
