@@ -8,7 +8,9 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />        
 </head>
 <body>
-		<img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
+		<div class="tnail">
+		  <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
 		<a t:showIf="this.isPlayable()" class="play" href="#" title="Play '***this.getTitle()***'" onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');">Play</a>
+    </div>
 </body>
 </html>

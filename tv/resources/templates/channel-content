@@ -51,7 +51,7 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 
 				<div t:showIf="not isFolder" i18n:translate="">
 					<div t:showIf="feed.inlineSearchTerm is None">
-						<span i18n:translate="">Not Downloaded</span>
+						<span i18n:translate="">Full Channel</span>
 						<span i18n:translate="" class="light-text"><span i18n:name="len" t:replace="notDeleted.len()" /> 
 						Videos</span>
 						<span class="light-text"><span i18n:name="len2" t:replace="allDownloadingItems.len()" />

@@ -195,18 +195,18 @@ table.select-box a {
 
 /* SORT BUTTONS AND VIDEO STATS -- THEY ARE GROUPED TOGETHER IN THE CSS SINCE THEY NEED TO LINE UP WITH EACH OTHER */
 .sort-buttons {
-    font-size: 11px;
+    font-size: 10px;
     color: #113;
+}
+a.sort-button {
+  color:#fff;
+  text-decoration:none;
 }
 
 
 .main-video-details {
     color:  #222;
     font-size: 10px;
-}
-a.sort-button {
-  color:#fff;
-  text-decoration:none;
 }
 #main-container.library a.sort-button {
     color: #fff;
@@ -310,8 +310,8 @@ body.gray-background {
 
 .main-video-desc h1 {
     font-size: 15px;
-		font-weight: bold;
-    color: #4f4f4f;
+		font-weight: normal;
+    color: #444;
     text-decoration: none;
 }
 
@@ -320,7 +320,7 @@ body.gray-background {
 }
 
 .main-video-desc-desc {
-    color: #98948f;
+    color: #777470;
 }
 .main-video-bottom { 
     background-font-size: 12px;

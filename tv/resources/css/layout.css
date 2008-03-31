@@ -183,7 +183,6 @@ ul#view_style li a {
 .download-rates {
     margin: 10px 0px 20px 0px;
 }
-
 /* Search page components */
 #engine-search {
   position: absolute;
@@ -239,15 +238,15 @@ ul#view_style li a {
   top:61px;
 }
 #main-container.download {
-  top:117px;
+  top:88px;
 }
 
 /* SORT BUTTONS AND VIDEO STATS -- THEY ARE GROUPED TOGETHER IN THE CSS SINCE THEY NEED TO LINE UP WITH EACH OTHER */
 .sort-buttons {
-    min-width:775px;
+    min-width:803px;
     position: relative;
-    height: 17px;
-    padding:3px 35px 3px 0px;
+    height: 18px;
+    padding:6px 32px 4px 0;
     margin-bottom:5px;
 }
 #views-bar {
@@ -319,6 +318,7 @@ a.sort-button.descending img.down-arrow {
     display: block;
     overflow: hidden;
     padding-top: 4px;
+    padding-left:15px;
     }
 
 .main-channelbar.no-arrow {
@@ -580,6 +580,7 @@ an element is dragged, the drag-highlight class is added to it */
 	float:left;
 	width: 154px;
   height: 105px;
+  display:block;
 }
 .more-info .main-video-tnail {
     width: 252px;
@@ -589,6 +590,7 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video a.play {
 	display:none;
 }
+.tnail:hover a.play,
 .main-video.selected a.play {
 	position:absolute;
 	display:block;
@@ -604,7 +606,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 .main-video-desc {
 	float:left;
-	padding:0 24px 0 16px;
+	padding:0 36px 0 16px;
 	margin-left:8px;
 	width:auto;
 	height:105px;
@@ -623,6 +625,7 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-desc-desc {
+    cursor:pointer;
    	height: 100px;
     overflow: hidden;
 }
@@ -681,6 +684,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video-details {
   float:right;
+  margin-top:2px;
   width: 165px;
   height: 75px;
 }
@@ -815,174 +819,3 @@ a.button.gray span {
 a.button.select span {
 	padding:0 25px 0 0;
 }
-
-/*.round-button-left {
-    display: block;
-    padding-left: 7px;
-}
-
-.round-button-right {
-    padding-right: 7px;
-}
-
-.round-button-content {
-    height: 11px;
-    padding: 3px 0px;
-    }
-
-
-.round-button-left.delete, .round-button-left.save {
-    width: 54px;
-}
-
-.round-button-left.stop-seeding {
-    position: absolute;
-    top: 47px;
-    right: 95px;
-    display: none;
-}
-
-body#download .round-button-left.stop-seeding {
-    display: block;
-}
-.round-button-left.black {
-    width: 100px;
-    padding:0 0 0px 13px;
-}
-
-.round-button-right.black {
-    padding:0 13px 0px 0;
-}
-
-
-a.round-button-left.black {
-    display:block;
-		float:right	;
-}
-
-
-.saved-note {
-    margin-top: 7px;
-    }
-
-.video-state {
-    height: 20px;
-    margin: 0 0 5px 0;
-    position: absolute;
-    top: 15px;
-    right: 0px;
-    }
-
-.video-state-left {
-    height: 18px;
-}
-
-.video-state-right {
-    height: 18px;
-}
-
-.video-state-mid {
-    margin: 0px 5px;
-    padding: 0px 4px 3px 4px;
-    }
-
-.small-button {
-    margin: 0px 3px;
-    padding: 3px 3px;
-    height: 17px;
-}
-
-a.small-button-left {
-    display: block;
-    }
-
-a.small-button-left:hover {
-    text-decoration: underline;
-}
-
-.white-button-middle {
-    height: 20px;
-    margin: 0px 13px;
-    padding-top: 3px;
-    }
-
-.white-button-left.save-search-searchpage {
-    float: left;
-    margin-left: 8px;
-    margin-top: 2px;
-}
-
-.white-button-left.save-search-channel {
-    position: absolute;
-    top: 65px;
-    left: 230px;
-    margin-right: 0px;
-}
-
-.share-box {
-    position: absolute;
-    top: 26px;
-    left: 2px;
-}
-
-.share-box .select-box-mid {
-    margin-right: 21px;
-}
-.main-video-hitbox {
-    position: absolute;
-    left: 6px;
-    top: 4px;
-    width: 108px;
-    height: 81px;
-}
-
-.more-info .main-video-hitbox {
-    width: 226px;
-    height: 170px;
-}
-
-.main-video-hitbox a, .main-video-hitbox span {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.main-video-hitbox .download-pending-icon {
-    display: block;
-    position: absolute;
-    bottom: 7px;
-    right: 7px;
-    width: 15px;
-    height: 15px;
-}
-
-.main-video-hitbox .inprogress-arrows {
-    display: block;
-    position: absolute;
-    bottom: 3px;
-    right: 5px;
-    width: 19px;
-    height: 19px;
-}
-
-
-.main-video-details-expiring {
-    position: absolute;
-    top: 24px;
-    right: 80px;
-    width: 100px;
-    }
-
-.main-video-details-pending-auto, .main-video-details-failed-download {
-    position: absolute;
-    top: 48px;
-    right: 20px;
-    width: 200px;
-    overflow: hidden;
-}
-
-.video-state.downloading, .video-state.paused {
-    width: 130px;
-    padding-top: 4px;
-    padding-left: 5px;
-}*/
