@@ -148,6 +148,12 @@ a.button.blue.saved span {
 	color:#eee;
 	cursor:default;
 }
+a.button.gray.done span {
+  color:#fefefe;
+	text-shadow:#000 1px 1px 1px;
+	text-decoration:none;
+	
+}
 
 /* Download page titlebar components */
 /*#downloads-global-actions {

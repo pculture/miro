@@ -405,6 +405,12 @@ a.button.gray:hover span,
 a.button.gray span:hover {
 	background-position:right -20px;
 }
+a.button.gray.done {
+  background-image: url('../images/button-done_left.png');
+}
+a.button.gray.done span {
+  background-image: url('../images/button-done_right.png');
+}
 a.button.select {
 	background-image: url('../images/button-select-left.png');
 }
