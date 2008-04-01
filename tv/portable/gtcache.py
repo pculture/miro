@@ -42,7 +42,15 @@ def init():
     _gtcache = {}
     if not miro.platform.utils.localeInitialized:
         raise Exception, "locale not initialized"
-    locale.setlocale(locale.LC_ALL, '')
+
+    # try to set the locale to the platform default, but if that fails
+    # log a message and set it to C.
+    try:
+        locale.setlocale(locale.LC_ALL, '')
+    except locale.Error, e:
+        import logging
+	logging.warn("gtcache.init: setlocale failed.  setting locale to 'C'")
+        locale.setlocale(locale.LC_ALL, 'C')
 
     _gt.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
     _gt.textdomain("miro")
