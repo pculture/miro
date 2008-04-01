@@ -81,8 +81,8 @@ class Item(DDBObject):
     associated with it.
     """
 
-    SMALL_ICON_SIZE = (108, 81)
-    BIG_ICON_SIZE = (226, 170)
+    SMALL_ICON_SIZE = (154, 105)
+    BIG_ICON_SIZE = (252, 190)
     ICON_CACHE_SIZES = [SMALL_ICON_SIZE, BIG_ICON_SIZE]
 
     def __init__(self, entry, linkNumber = 0, feed_id=None, parent_id=None):
