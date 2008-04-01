@@ -285,6 +285,7 @@ tab lists.
 a.feeditem div.name {
 	padding: 3px;
 	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .tab-list-end {
