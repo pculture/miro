@@ -1,6 +1,6 @@
 {
     IBClasses = (
-        {CLASS = BeveledBox; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
+        {CLASS = ChromeProgressSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
         {CLASS = DTVSplitView; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
         {CLASS = DisplayHostView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
@@ -48,9 +48,8 @@
             OUTLETS = {progressSlider = id; remainingTimeIndicator = id; timeIndicator = id; }; 
             SUPERCLASS = NSView; 
         }, 
-        {CLASS = ProgressSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
+        {CLASS = RootView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = Slider; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {CLASS = TabButtonCell; LANGUAGE = ObjC; SUPERCLASS = NSButtonCell; }, 
         {
             CLASS = VideoAreaView; 
             LANGUAGE = ObjC; 

@@ -1,0 +1,59 @@
+/* NSTextField ((parsed %d files - found %d videos)) : <title:(parsed %d files - found %d videos)> (oid:94) */
+"(parsed %d files - found %d videos)" = "(parsed %d files - found %d videos)";
+
+/* NSButton (Back) : <title:Back> (oid:19) */
+"Back" = "Back";
+
+/* NSBox (Box) : <title:Box> (oid:84) */
+"Box" = "Box";
+
+/* NSButton (Browse) : <title:Browse> (oid:78) */
+"Browse" = "Browse";
+
+/* NSButton (Cancel) : <title:Cancel> (oid:95) */
+"Cancel" = "Cancel";
+
+/* NSButton (Next) : <title:Next> (oid:18) */
+"Next" = "Next";
+
+/* NSButtonCell (No) : <title:No> (oid:87) */
+"No" = "No";
+
+/* NSButtonCell (Only search my Movies folder.) : <title:Only search my Movies folder.> (oid:73) */
+"Only search my Movies folder." = "Only search my Movies folder.";
+
+/* NSButtonCell (Search my entire Home folder.) : <title:Search my entire Home folder.> (oid:74) */
+"Search my entire Home folder." = "Search my entire Home folder.";
+
+/* NSButtonCell (Search this folder:) : <title:Search this folder:> (oid:75) */
+"Search this folder:" = "Search this folder:";
+
+/* NSTextField (Searching for Videos) : <title:Searching for Videos> (oid:93) */
+"Searching for Videos" = "Searching for Videos";
+
+/* NSTextField (The Miro Player can find all the videos on your computer to help you organize your collection.   Would you like Miro to look for video files on your computer?) : <title:The Miro Player can find all the videos on your computer to help you organize your collection.
+
+
+Would you like Miro to look for video files on your computer?> (oid:45) */
+"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?";
+
+/* NSTextField (The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question.) : <title:The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question.> (oid:90) */
+"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question.";
+
+/* NSTextField (We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.   Would you like to run Miro when your computer starts up?) : <title:We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.
+
+
+Would you like to run Miro when your computer starts up?> (oid:83) */
+"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?";
+
+/* NSPanel (Welcome to Internet TV!) : <title:Welcome to Internet TV!> (oid:5) */
+"Welcome to Internet TV!" = "Welcome to Internet TV!";
+
+/* NSTextField (Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.  ) : <title:Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.
+
+> (oid:22) */
+"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n";
+
+/* NSButtonCell (Yes) : <title:Yes> (oid:88) */
+"Yes" = "Yes";
+

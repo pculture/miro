@@ -1,0 +1,30 @@
+/* NSTextField (%channel feed%) : <title:%channel feed%> (oid:255) */
+"%channel feed%" = "%channel feed%";
+
+/* NSTextField (%channel title%) : <title:%channel title%> (oid:241) */
+"%channel title%" = "%channel title%";
+
+/* NSTextField (%donation label%) : <title:%donation label%> (oid:256) */
+"%donation label%" = "%donation label%";
+
+/* NSButton (-00:00:00) : <title:-00:00:00> (oid:311) */
+"-00:00:00" = "-00:00:00";
+
+/* NSTextField (00:00:00) : <title:00:00:00> (oid:265) */
+"00:00:00" = "00:00:00";
+
+/* NSTextField (0:00:00) : <title:0:00:00> (oid:280) */
+"0:00:00" = "0:00:00";
+
+/* FullScreenPalette (FullScreen Controls) : <title:FullScreen Controls> (oid:237) */
+"FullScreen Controls" = "FullScreen Controls";
+
+/* NSWindow (Miro) : <title:Miro> (oid:7) */
+"Miro" = "Miro";
+
+/* VideoSearchField (0) : <title:Video Search> (oid:289) */
+"Video Search" = "Video Search";
+
+/* VideoWindow (VideoWindow) : <title:VideoWindow> (oid:242) */
+"VideoWindow" = "VideoWindow";
+
