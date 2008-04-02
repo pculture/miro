@@ -311,8 +311,8 @@ class Minimize:
         Minimize.minimizers[self.trayIconWindow] = self
 
         # By default, everything uses the XULRunner icon
-        # Use the Democracy icon instead
-        self.iconloc = ctypes.c_wchar_p(resources.path("..\\%s.ico")%config.get(prefs.SHORT_APP_NAME))
+        # Use the Miro icon instead
+        self.iconloc = ctypes.c_wchar_p(resources.path("..\\Miro.ico"))
         self.hIcon = ctypes.windll.user32.LoadImageW(0, self.iconloc, IMAGE_ICON, 0, 0, LR_LOADFROMFILE)
 
         self.minimized = []
