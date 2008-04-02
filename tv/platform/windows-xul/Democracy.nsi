@@ -219,6 +219,7 @@ FunctionEnd
 
 ; Finish page
 !define MUI_FINISHPAGE_RUN
+!define MUI_FINISHPAGE_TITLE_3LINES
 !define MUI_FINISHPAGE_RUN_TEXT "Run $APP_NAME"
 !define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
 !define MUI_FINISHPAGE_LINK \
