@@ -183,7 +183,7 @@ class Item(DDBObject):
         videos = set()
         filename_root = self.getFilename()
         if fileutil.isdir(filename_root):
-            files = fileutil.miro_allfiles()
+            files = fileutil.miro_allfiles(filename_root)
             for filename in files:
                 if filetypes.isVideoFilename(filename) or filetypes.isAudioFilename(filename):
                     videos.add(filename)
