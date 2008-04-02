@@ -113,7 +113,6 @@ class MainController (NSWindowController):
         self.frame.videoInfoDisplay = self.videoInfoHostView
         self.frame.videoInfoDisplay.backgroundColor = NSColor.blackColor()
         self.restoreLayout()
-        self.updateWindowTexture()
         self.window().setTitle_(config.get(prefs.LONG_APP_NAME))
         self.showWindow_(nil)
 
@@ -158,30 +157,6 @@ class MainController (NSWindowController):
         config.set(prefs.LEFT_VIEW_SIZE, leftFrame)
         config.set(prefs.RIGHT_VIEW_SIZE, rightFrame)
         config.save()
-
-    def updateWindowTexture(self):
-        bgTexture = NSImage.alloc().initWithSize_(self.window().frame().size)
-        bgTexture.lockFocus()
-                
-        topImage = NSImage.imageNamed_(u'wtexture_top')
-        topColor = NSColor.colorWithPatternImage_(topImage)
-        topColor.set()
-        NSGraphicsContext.currentContext().setPatternPhase_(bgTexture.size())
-        NSRectFill(((0, bgTexture.size().height - topImage.size().height), (bgTexture.size().width, topImage.size().height)))
-        
-        bottomImage = NSImage.imageNamed_(u'wtexture_bottom')
-        bottomColor = NSColor.colorWithPatternImage_(bottomImage)
-        bottomColor.set()
-        NSGraphicsContext.currentContext().setPatternPhase_(bottomImage.size())
-        NSRectFill(((0, 0), (bgTexture.size().width, bottomImage.size().height)))
-
-        bgColor = NSColor.colorWithCalibratedWhite_alpha_(195.0/255.0, 1.0)
-        bgColor.set()
-        NSRectFill(((0, bottomImage.size().height), (bgTexture.size().width, bgTexture.size().height -  bottomImage.size().height - topImage.size().height)))
-        
-        bgTexture.unlockFocus()
-        
-        self.window().setBackgroundColor_(NSColor.colorWithPatternImage_(bgTexture))
     
     ### Switching displays ###
 
@@ -214,11 +189,6 @@ class MainController (NSWindowController):
 
     def getDisplaySizeHint(self, area):
         return area.frame()
-
-    ### Window resize handler
-
-    def windowDidResize_(self, notification):
-        self.updateWindowTexture()
 
     ### Size constraints on splitview ###
 
@@ -452,6 +422,40 @@ class MainController (NSWindowController):
 
 ###############################################################################
 
+class RootView (NSView):
+    
+    def awakeFromNib(self):
+        self.texture = NSImage.imageNamed_("wtexture.png")
+        self.textureHeight = self.texture.size().height
+        self.textureColor = NSColor.colorWithPatternImage_(self.texture)
+        self.separatorColor = NSColor.colorWithDeviceWhite_alpha_(170.0/255.0, 1.0)
+        self.highlightColorLeft = NSColor.colorWithDeviceWhite_alpha_(212.0/255.0, 1.0)
+        self.highlightColorTop = NSColor.colorWithDeviceWhite_alpha_(218.0/255.0, 1.0)
+
+    def isOpaque(self):
+        return YES
+
+    def drawRect_(self, rect):
+        self.textureColor.set()
+        NSRectFill(rect)
+        
+        p1 = NSPoint(0.5, 0)
+        p2 = NSPoint(0.5, self.textureHeight + 0.5)
+        self.highlightColorLeft.set()
+        NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
+        
+        p1 = NSPoint(0, self.textureHeight + 0.5)
+        p2 = NSPoint(self.bounds().size.width, self.textureHeight + 0.5)
+        self.highlightColorTop.set()
+        NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
+
+        p1.y += 1.0
+        p2.y += 1.0
+        self.separatorColor.set()
+        NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
+
+###############################################################################
+
 class DisplayHostView (NSView):
     
     def initWithFrame_(self, frame):
@@ -521,20 +525,17 @@ class DisplayHostView (NSView):
 class DTVSplitView (NSSplitView):
     
     def awakeFromNib(self):
-        self.background = NSImage.imageNamed_(u'splitview_divider_background')
-        self.backgroundRect = ((0,0), self.background.size())
-        self.dimple = NSImage.imageNamed_(u'splitview_divider_dimple')
-        
+        self.color = NSColor.colorWithDeviceWhite_alpha_(148.0/255.0, 1.0)
+
     def dividerThickness(self):
-        return 10.0
+        return 1.0
         
     def drawDividerInRect_(self, rect):
-        dividerOrigin = (rect.origin.x, 12)
-        dividerSize = (rect.size.width, rect.size.height - 58 - 12)
-        dividerRect = (dividerOrigin, dividerSize)
-        self.background.drawInRect_fromRect_operation_fraction_(dividerRect, self.backgroundRect, NSCompositeSourceOver, 1.0)
-        dimplePosition = (rect.origin.x, (dividerSize[1] - self.dimple.size().height) / 2)
-        self.dimple.compositeToPoint_operation_(dimplePosition, NSCompositeSourceOver)
+        p1 = rect.origin
+        p1.x += 0.5
+        p2 = NSPoint(p1.x, rect.size.height)
+        self.color.set()
+        NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
 
 ###############################################################################
 
@@ -549,11 +550,8 @@ class ProgressDisplayView (NSView):
         self.progressSlider.sliderWasDragged = self.progressSliderWasDragged
         self.progressSlider.sliderWasReleased = self.progressSliderWasReleased
         self.backgroundLeft = NSImage.imageNamed_(u"display_left" )
-        self.backgroundLeftWidth = self.backgroundLeft.size().width
         self.backgroundRight = NSImage.imageNamed_(u"display_right" )
-        self.backgroundRightWidth = self.backgroundRight.size().width
         self.backgroundCenter = NSImage.imageNamed_(u"display_center" )
-        self.backgroundCenterWidth = self.backgroundCenter.size().width
         self.renderer = None
         self.updateTimer = nil
         self.wasPlaying = False
@@ -600,18 +598,7 @@ class ProgressDisplayView (NSView):
         self.remainingTimeIndicator.setAttributedTitle_(title)
 
     def drawRect_(self, rect):
-        self.backgroundLeft.compositeToPoint_operation_( (0,0), NSCompositeSourceOver )
-        x = self.bounds().size.width - self.backgroundRightWidth
-        self.backgroundRight.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
-        emptyWidth = self.bounds().size.width - (self.backgroundRightWidth + self.backgroundLeftWidth)
-        emptyRect = ((self.backgroundLeftWidth, 0), (emptyWidth, self.bounds().size.height))
-        NSGraphicsContext.currentContext().saveGraphicsState()
-        NSBezierPath.clipRect_(emptyRect)
-        tiles = math.ceil(emptyWidth / float(self.backgroundCenterWidth))
-        for i in range(0, int(tiles)):
-            x = self.backgroundLeftWidth + (i * self.backgroundCenterWidth)
-            self.backgroundCenter.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
-        NSGraphicsContext.currentContext().restoreGraphicsState()
+        drawThreePartsWidget(self.backgroundLeft, self.backgroundCenter, self.backgroundRight, self.bounds())
 
     def toggleRemainingTimeIndicator_(self, sender):
         self.displayRemaining = not self.displayRemaining
@@ -669,8 +656,11 @@ class Slider (NSView):
         pass
 
     def drawCursor(self):
-        x = (self.bounds().size.width - self.cursor.size().width) * self.value
+        x = self.getCursorPosition()
         self.cursor.compositeToPoint_operation_((abs(x)+0.5, 0), NSCompositeSourceOver)
+
+    def getCursorPosition(self):
+        return (self.bounds().size.width - self.cursor.size().width) * self.value
 
     def mouseDown_(self, event):
         if self.showCursor:
@@ -708,12 +698,34 @@ class Slider (NSView):
 
 ###############################################################################
 
+class ChromeProgressSlider (Slider):
+
+    def initWithFrame_(self, frame):
+        self = super(ChromeProgressSlider, self).initWithFrame_(frame)
+        self.cursor = NSImage.imageNamed_(u'playback_cursor')
+        self.trackLeft = NSImage.imageNamed_(u'playback_track_left')
+        self.trackCenter = NSImage.imageNamed_(u'playback_track_center')
+        self.trackRight = NSImage.imageNamed_(u'playback_track_right')
+        self.trackProgressLeft = NSImage.imageNamed_(u'playback_track_progress_left')
+        self.trackProgressCenter = NSImage.imageNamed_(u'playback_track_progress_center')
+        self.trackProgressRight = NSImage.imageNamed_(u'playback_track_progress_right')
+        return self
+    
+    def drawTrack(self):
+        drawThreePartsWidget(self.trackLeft, self.trackCenter, self.trackRight, self.bounds())
+        progressBounds = self.bounds()
+        cursorPos = self.getCursorPosition()
+        progressBounds.size.width = cursorPos + (self.cursor.size().width / 2.0)
+        drawThreePartsWidget(self.trackProgressLeft, self.trackProgressCenter, self.trackProgressRight, progressBounds)
+        
+###############################################################################
+
 class ProgressSlider (Slider):
     
     def initWithFrame_(self, frame):
         self = super(ProgressSlider, self).initWithFrame_(frame)
-        self.grooveContourColor = NSColor.colorWithCalibratedWhite_alpha_( 0.1, 0.3 )
-        self.grooveFillColor = NSColor.colorWithCalibratedWhite_alpha_( 0.5, 0.3 )
+        self.grooveContourColor = NSColor.colorWithDeviceWhite_alpha_( 0.1, 0.3 )
+        self.grooveFillColor = NSColor.colorWithDeviceWhite_alpha_( 0.5, 0.3 )
         self.cursor = NSImage.alloc().initWithSize_((10,10))
         self.cursor.lockFocus()
         path = NSBezierPath.bezierPath()
@@ -722,7 +734,7 @@ class ProgressSlider (Slider):
         path.lineToPoint_((8, 4.5))
         path.lineToPoint_((4, 1))
         path.closePath()
-        NSColor.colorWithCalibratedWhite_alpha_( 51/255.0, 1.0 ).set()
+        NSColor.colorWithDeviceWhite_alpha_( 51/255.0, 1.0 ).set()
         path.fill()
         self.cursor.unlockFocus()
         return self
@@ -757,9 +769,18 @@ class MetalSliderCell (NSSliderCell):
 
     def init(self):
         self = super(MetalSliderCell, self).init()
+        self.track = NSImage.imageNamed_(u'volume_track')
+        self.trackSize = self.track.size()
         self.knob = NSImage.imageNamed_(u'volume_knob')
         self.knobSize = self.knob.size()
         return self
+
+    def drawBarInside_flipped_(self, rect, flipped):
+        location = NSPoint(rect.origin.x, 2 + (rect.size.height - self.trackSize.height) / 2)
+        if self.isEnabled():
+            self.track.compositeToPoint_operation_(location, NSCompositeSourceOver)
+        else:
+            self.track.dissolveToPoint_fraction_(location, 0.5)
 
     def knobRectFlipped_(self, flipped):
         value = self.floatValue()
@@ -852,6 +873,33 @@ class VideoSearchFieldCell (NSSearchFieldCell):
         x = searchButtonBounds.origin.x + searchButtonBounds.size.width + 2
         width = bounds.size.width - x - cancelButtonBounds.size.width
         return ((x, 3.0), (width, 16.0))
+
+###############################################################################
+
+def drawThreePartsWidget(left, center, right, bounds):
+    NSGraphicsContext.currentContext().saveGraphicsState()
+    NSBezierPath.clipRect_(bounds)
+
+    leftWidth = left.size().width
+    centerWidth = center.size().width
+    rightWidth = right.size().width
+    
+    left.compositeToPoint_operation_( (0,0), NSCompositeSourceOver )
+    if bounds.size.width > leftWidth:
+        x = bounds.size.width - rightWidth
+        right.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
+        if bounds.size.width > leftWidth + centerWidth:
+            emptyWidth = bounds.size.width - (rightWidth + leftWidth)
+            emptyRect = ((leftWidth, 0), (emptyWidth, bounds.size.height))
+            NSGraphicsContext.currentContext().saveGraphicsState()
+            NSBezierPath.clipRect_(emptyRect)
+            tiles = math.ceil(emptyWidth / float(centerWidth))
+            for i in range(0, int(tiles)):
+                x = leftWidth + (i * centerWidth)
+                center.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
+            NSGraphicsContext.currentContext().restoreGraphicsState()
+
+    NSGraphicsContext.currentContext().restoreGraphicsState()
 
 ###############################################################################
 

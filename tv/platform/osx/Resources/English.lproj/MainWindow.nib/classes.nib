@@ -1,104 +1,281 @@
-{
-    IBClasses = (
-        {CLASS = BeveledBox; LANGUAGE = ObjC; SUPERCLASS = NSBox; }, 
-        {CLASS = DTVSplitView; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
-        {CLASS = DisplayHostView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = FullScreenControlsView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {
-            ACTIONS = {expireNow = id; tellAFriend = id; }; 
-            CLASS = FullScreenPalette; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                donationLabel = id; 
-                feedLabel = id; 
-                playPauseButton = id; 
-                progressSlider = id; 
-                seekBackwardButton = id; 
-                seekForwardButton = id; 
-                skipBackwardButton = id; 
-                skipForwardButton = id; 
-                timeIndicator = id; 
-                titleLabel = id; 
-                volumeSlider = id; 
-            }; 
-            SUPERCLASS = NSWindow; 
-        }, 
-        {CLASS = FullScreenPaletteView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {CLASS = FullScreenSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
-        {
-            ACTIONS = {addChannel = id; switchTabs = id; }; 
-            CLASS = MainController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                channelsHostView = id; 
-                mainHostView = id; 
-                searchField = id; 
-                splitView = id; 
-                videoDisplayController = id; 
-                videoInfoHostView = id; 
-            }; 
-            SUPERCLASS = NSWindowController; 
-        }, 
-        {CLASS = MetalSlider; LANGUAGE = ObjC; SUPERCLASS = NSSlider; }, 
-        {
-            ACTIONS = {toggleRemainingTimeIndicator = id; }; 
-            CLASS = ProgressDisplayView; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {progressSlider = id; remainingTimeIndicator = id; timeIndicator = id; }; 
-            SUPERCLASS = NSView; 
-        }, 
-        {CLASS = ProgressSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
-        {CLASS = Slider; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {CLASS = TabButtonCell; LANGUAGE = ObjC; SUPERCLASS = NSButtonCell; }, 
-        {
-            CLASS = VideoAreaView; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {videoWindow = NSWindow; }; 
-            SUPERCLASS = NSView; 
-        }, 
-        {
-            ACTIONS = {
-                exitFullScreen = id; 
-                fastBackward = id; 
-                fastForward = id; 
-                muteUnmuteVolume = id; 
-                playFullScreen = id; 
-                playPause = id; 
-                setVolume = id; 
-                skipBackward = id; 
-                skipForward = id; 
-                stop = id; 
-            }; 
-            CLASS = VideoDisplayController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                backwardButton = id; 
-                forwardButton = id; 
-                fullscreenButton = id; 
-                muteButton = id; 
-                playPauseButton = id; 
-                progressDisplayer = id; 
-                rootView = id; 
-                stopButton = id; 
-                videoAreaView = id; 
-                volumeSlider = id; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {search = id; }; 
-            CLASS = VideoSearchField; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSSearchField; 
-        }, 
-        {
-            ACTIONS = {exitFullScreen = id; }; 
-            CLASS = VideoWindow; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {palette = NSWindow; }; 
-            SUPERCLASS = NSWindow; 
-        }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>search</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>VideoSearchField</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSSearchField</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>RootView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FullScreenControlsView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>Slider</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>exitFullScreen</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>VideoWindow</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>palette</key>
+				<string>NSWindow</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindow</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>toggleRemainingTimeIndicator</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>ProgressDisplayView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>progressSlider</key>
+				<string>id</string>
+				<key>remainingTimeIndicator</key>
+				<string>id</string>
+				<key>timeIndicator</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>MetalSlider</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSSlider</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FullScreenPaletteView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>DisplayHostView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>addChannel</key>
+				<string>id</string>
+				<key>switchTabs</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>MainController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>channelsHostView</key>
+				<string>id</string>
+				<key>mainHostView</key>
+				<string>id</string>
+				<key>searchField</key>
+				<string>id</string>
+				<key>splitView</key>
+				<string>id</string>
+				<key>videoDisplayController</key>
+				<string>id</string>
+				<key>videoInfoHostView</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindowController</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>ChromeProgressSlider</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>Slider</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>exitFullScreen</key>
+				<string>id</string>
+				<key>fastBackward</key>
+				<string>id</string>
+				<key>fastForward</key>
+				<string>id</string>
+				<key>muteUnmuteVolume</key>
+				<string>id</string>
+				<key>playFullScreen</key>
+				<string>id</string>
+				<key>playPause</key>
+				<string>id</string>
+				<key>setVolume</key>
+				<string>id</string>
+				<key>skipBackward</key>
+				<string>id</string>
+				<key>skipForward</key>
+				<string>id</string>
+				<key>stop</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>VideoDisplayController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>backwardButton</key>
+				<string>id</string>
+				<key>forwardButton</key>
+				<string>id</string>
+				<key>fullscreenButton</key>
+				<string>id</string>
+				<key>muteButton</key>
+				<string>id</string>
+				<key>playPauseButton</key>
+				<string>id</string>
+				<key>progressDisplayer</key>
+				<string>id</string>
+				<key>rootView</key>
+				<string>id</string>
+				<key>stopButton</key>
+				<string>id</string>
+				<key>videoAreaView</key>
+				<string>id</string>
+				<key>volumeSlider</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FullScreenSlider</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>Slider</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>VideoAreaView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>videoWindow</key>
+				<string>NSWindow</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>expireNow</key>
+				<string>id</string>
+				<key>tellAFriend</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>FullScreenPalette</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>donationLabel</key>
+				<string>id</string>
+				<key>feedLabel</key>
+				<string>id</string>
+				<key>playPauseButton</key>
+				<string>id</string>
+				<key>progressSlider</key>
+				<string>id</string>
+				<key>seekBackwardButton</key>
+				<string>id</string>
+				<key>seekForwardButton</key>
+				<string>id</string>
+				<key>skipBackwardButton</key>
+				<string>id</string>
+				<key>skipForwardButton</key>
+				<string>id</string>
+				<key>timeIndicator</key>
+				<string>id</string>
+				<key>titleLabel</key>
+				<string>id</string>
+				<key>volumeSlider</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindow</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>DTVSplitView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSSplitView</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>

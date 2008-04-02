@@ -262,7 +262,7 @@ class VideoDisplayController (NSObject):
 
     def updatePlayPauseButton(self, prefix):
         self.playPauseButton.setImage_(NSImage.imageNamed_(u'%s' % prefix))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'%s_blue' % prefix))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'%s_active' % prefix))
 
     def playPause_(self, sender):
         eventloop.addUrgentCall(lambda:app.htmlapp.playbackController.playPause(), "Play Video")
