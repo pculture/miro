@@ -954,6 +954,11 @@ class Feed(DDBObject):
 
         if not self.idExists():
             return
+        if info['updated-url'] != self.origURL: # we got redirected
+            f = getFeedByURL(info['updated-url'])
+            if f is not None: # already have this feed, so delete us
+                self.remove()
+                return
         self.download = None
         modified = unicodify(info.get('last-modified'))
         etag = unicodify(info.get('etag'))
