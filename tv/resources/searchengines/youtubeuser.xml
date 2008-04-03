@@ -1,0 +1,6 @@
+<searchengine>
+   <id>youtubeuser</id>
+   <displayname>YouTube User</displayname>
+   <url>http://gdata.youtube.com/feeds/api/users/%s/uploads?alt=rss</url>
+   <sort>0</sort>
+</searchengine>
