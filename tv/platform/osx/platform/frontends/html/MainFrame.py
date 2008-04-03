@@ -197,11 +197,11 @@ class MainController (NSWindowController):
 
     # How far left can the user move the slider?
     def splitView_constrainMinCoordinate_ofSubviewAt_(self, sender, proposedMin, offset):
-        return proposedMin + self.minimumTabListWidth
+        return max(proposedMin, self.minimumTabListWidth)
 
     # How far right can the user move the slider?
     def splitView_constrainMaxCoordinate_ofSubviewAt_(self, sender, proposedMax, offset):
-        return proposedMax - self.minimumContentWidth
+        return min(proposedMax, self.minimumContentWidth)
 
     # The window was resized; compute new positions of the splitview
     # children. Rule: resizing the window doesn't change the size of
@@ -454,6 +454,79 @@ class RootView (NSView):
         self.separatorColor.set()
         NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
 
+###############################################################################
+
+class PlacardView (NSView):
+
+    splitView = IBOutlet("splitView")
+
+    def awakeFromNib(self):
+        self.background = NSImage.imageNamed_("left_bar_background.png")
+        self.backgroundColor = NSColor.colorWithPatternImage_(self.background)
+        self.dragHandle = NSImage.imageNamed_("left_bar_drag_handle.png")
+        self.separatorColor = NSColor.colorWithDeviceRed_green_blue_alpha_(188.0/255.0, 196.0/255.0, 215.0/255.0, 1.0)
+        self.inDragArea = False
+        self.dragOffset = 0.0
+
+    def isOpaque(self):
+        return YES
+
+    def getDragHandlePosition(self):
+        return NSPoint(self.frame().size.width - self.dragHandle.size().width ,0)
+
+    def getDragHandleFrame(self):
+        return NSRect(self.getDragHandlePosition(), self.dragHandle.size())
+
+    def drawRect_(self, rect):
+        self.backgroundColor.set()
+        NSGraphicsContext.currentContext().setPatternPhase_((0,2))
+        NSRectFill(rect)
+
+        self.dragHandle.compositeToPoint_operation_(self.getDragHandlePosition(), NSCompositeSourceOver)
+
+        self.separatorColor.set()
+        NSBezierPath.strokeLineFromPoint_toPoint_((0,21.5), (rect.size.width, 21.5))
+
+    def resetCursorRects(self):
+        self.addCursorRect_cursor_(self.getDragHandleFrame(), NSCursor.resizeLeftRightCursor())
+
+    def mouseDown_(self, event):
+        clickLocation = self.convertPoint_fromView_(event.locationInWindow(), nil)
+        self.inDragArea = NSPointInRect(clickLocation, self.getDragHandleFrame())
+
+        if not self.inDragArea:
+            return
+
+    	clickLocation = self.convertPoint_fromView_(event.locationInWindow(), self.superview())
+    	self.dragOffset = NSWidth(self.superview().frame()) - clickLocation.x;
+    
+    def mouseDragged_(self, event):
+        if not self.inDragArea:
+            return
+        
+        NSNotificationCenter.defaultCenter().postNotificationName_object_(NSSplitViewWillResizeSubviewsNotification, self.splitView)
+
+        clickLocation = self.convertPoint_fromView_(event.locationInWindow(), self.superview())
+        newFrame = self.superview().frame()
+        newFrame.size.width = clickLocation.x + self.dragOffset
+
+        delegate = self.splitView.delegate()
+        if delegate is not None:
+            if delegate.respondsToSelector_('splitView:constrainSplitPosition:ofSubviewAt:'):
+                neww = delegate.splitView_constrainSplitPosition_ofSubviewAt_(self.splitView, newFrame, 0)
+                newFrame.size.width = neww
+            if delegate.respondsToSelector_('splitView:constrainMinCoordinate:ofSubviewAt:'):
+                minw = delegate.splitView_constrainMinCoordinate_ofSubviewAt_(self.splitView, 0, 0)
+                newFrame.size.width = max(minw, newFrame.size.width)
+            if delegate.respondsToSelector_('splitView:constrainMaxCoordinate:ofSubviewAt:'):
+                maxw = delegate.splitView_constrainMaxCoordinate_ofSubviewAt_(self.splitView, self.window().frame().size.width, 0)
+                newFrame.size.width = min(maxw, newFrame.size.width)
+
+        self.superview().setFrame_(newFrame)
+        self.splitView.adjustSubviews()
+
+        NSNotificationCenter.defaultCenter().postNotificationName_object_(NSSplitViewDidResizeSubviewsNotification, self.splitView)
+    
 ###############################################################################
 
 class DisplayHostView (NSView):

@@ -35,19 +35,24 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>Slider</string>
+			<string>PlacardView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>splitView</key>
+				<string>id</string>
+			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>FirstResponder</string>
+			<string>Slider</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>NSObject</string>
+			<string>NSView</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
@@ -66,6 +71,14 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSWindow</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
 		</dict>
 		<dict>
 			<key>ACTIONS</key>
