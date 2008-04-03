@@ -78,6 +78,7 @@ try:
 except ImportError:
     import bsddb3.db
 
+# FIXME - why do we prefer pysqlite2 over sqlite3?
 try:
     from pysqlite2 import dbapi2 as sql
 except ImportError:
@@ -990,11 +991,12 @@ class LiveStorage:
 
     def openDatabase(self):
         logging.info("Connecting to %s" % self.dbPath)
-        try:
-            os.makedirs(os.path.normpath(os.path.join(self.dbPath,os.path.pardir)))
-        except:
-            pass
-        self.conn = sql.connect(self.dbPath, isolation_level=None)
+        if not os.path.isdir(os.path.dirname(self.dbPath)):
+            os.makedirs(os.path.dirname(self.dbPath))
+
+        # have to convert this from a unicode to a utf-8 encoded string because 
+        # otherwise sql.connect fails if there are non-ascii characters
+        self.conn = sql.connect(self.dbPath.encode("utf-8"), isolation_level=None)
         self.closed = False
         self.cursor = self.conn.cursor()
 
@@ -1096,7 +1098,9 @@ class LiveStorage:
                 traceback.print_exc()
         finally:
             if not self.closed:
-                self.conn = sql.connect(self.dbPath, isolation_level=None)
+                # have to convert this from a unicode to a utf-8 encoded string because 
+                # otherwise sql.connect fails if there are non-ascii characters
+                self.conn = sql.connect(self.dbPath.encode("utf-8"), isolation_level=None)
                 self.cursor = self.conn.cursor()
         return None
 
