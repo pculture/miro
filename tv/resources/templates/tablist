@@ -53,6 +53,7 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	dragdestdata="playlist-START"
 	drageffectplaylist="move" 
 	drageffectplaylistfolder="move" >
+  <h2>CHANNELS</h2>
     <ul class="tab-list second">
       <li t:repeatForView="feedTabs" 
 	class="***this.getState()***"
@@ -80,6 +81,7 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	drageffectchannelfolder="move" >
 	<div class="dnd-reorder-indicator show-on-top circle" />
 	<div class="dnd-reorder-indicator show-on-top line" />
+      <h2>PLAYLISTS</h2>
       <ul class="tab-list third">
       <li t:repeatForView="playlistTabs" 
 	class="***this.getState()***"

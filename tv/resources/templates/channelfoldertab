@@ -24,10 +24,10 @@
     dragicon="channel-tnail-***this.objID()***">
 <img class="expanded-triangle" t:hideIf="this.obj.getExpanded()"
     onmousedown="return eventURL('action:toggleExpand?id=' + ***this.objID()***);" 
-    src="resource:images/tab-arrow-up.png" alt="expanded" />
+    src="resource:images/sidebar-triangle_right.png" alt="expanded" />
 <img class="expanded-triangle" t:showIf="this.obj.getExpanded()"
     onmousedown="return eventURL('action:toggleExpand?id=' + ***this.objID()***);" 
-    src="resource:images/tab-arrow-down.png" alt="unexpanded" />
+    src="resource:images/sidebar-triangle_down.png" alt="unexpanded" />
 <div t:showIf="this.obj.showA()" class="bubble-left blue ***this.obj.showU() and 'second' or ''***">
  <div class="bubble-right blue">
   <div class="number-count blue" t:replace="this.obj.numAvailable()" />

@@ -24,10 +24,10 @@
 	dragicon="playlist-tnail-***this.objID()***">
 <img class="expanded-triangle" t:hideIf="this.obj.getExpanded()"
     onmousedown="return eventURL('action:toggleExpand?id=' + ***this.objID()***);" 
-    src="resource:images/tab-arrow-up.png" alt="expanded" />
+    src="resource:images/sidebar-triangle_right.png" alt="expanded" />
 <img class="expanded-triangle" t:showIf="this.obj.getExpanded()"
     onmousedown="return eventURL('action:toggleExpand?id=' + ***this.objID()***);" 
-    src="resource:images/tab-arrow-down.png" alt="unexpanded" />
+    src="resource:images/sidebar-triangle_down.png" alt="unexpanded" />
 <img id="playlist-tnail-***this.objID()***" class="icon" src="resource:images/folder-icon-tablist.png" /><div class="name" t:replace="this.obj.getTitle()" />
 </a>
 </div>
