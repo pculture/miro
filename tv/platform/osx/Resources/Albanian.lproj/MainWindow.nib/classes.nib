@@ -42,6 +42,12 @@
         }, 
         {CLASS = MetalSlider; LANGUAGE = ObjC; SUPERCLASS = NSSlider; }, 
         {
+            CLASS = PlacardView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {splitView = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
             ACTIONS = {toggleRemainingTimeIndicator = id; }; 
             CLASS = ProgressDisplayView; 
             LANGUAGE = ObjC; 
