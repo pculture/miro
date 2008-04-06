@@ -196,8 +196,14 @@ def filenameToUnicode(filename, path = None):
     return filename
 
 # Takes filename given by the OS and turn it into a FilenameType
+# where FilenameType is unicode.
 def osFilenameToFilenameType(filename):
-    return FilenameType(filename)
+    # the filesystem encoding for Windows is "mbcs" so we have to
+    # use that for decoding--can't use the default utf8
+    try:
+        return filename.decode(sys.getfilesystemencoding())
+    except UnicodeDecodeError, ude:
+        return filename.decode("utf-8")
 
 # Takes an array of filenames given by the OS and turn them into a FilenameTypes
 def osFilenamesToFilenameTypes(filenames):
@@ -272,8 +278,12 @@ def launchDownloadDaemon(oldpid, env):
 
     # Note that we use "Miro" instead of the app name here, so custom
     # versions will work
-    downloaderPath = os.path.join(resources.appRoot(), 
-            'xulrunner', 'python', "Miro_Downloader.exe")
+
+    # Note that the application filename has to be in double-quotes otherwise
+    # it kicks up "%1 is not a valid Win32 application" errors on some Windows
+    # machines.  Why it only happens on some is a mystery of the universe.
+    # Bug #9274.
+    downloaderPath = '"%s"' % os.path.join(resources.appRoot(), 'xulrunner', 'python', "Miro_Downloader.exe")
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,
