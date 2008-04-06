@@ -197,8 +197,14 @@ def filenameToUnicode(filename, path = None):
     return filename
 
 # Takes filename given by the OS and turn it into a FilenameType
+# where FilenameType is unicode.
 def osFilenameToFilenameType(filename):
-    return FilenameType(filename)
+    # the filesystem encoding for Windows is "mbcs" so we have to
+    # use that for decoding--can't use the default utf8
+    try:
+        return filename.decode(sys.getfilesystemencoding())
+    except UnicodeDecodeError, ude:
+        return filename.decode("utf-8")
 
 # Takes an array of filenames given by the OS and turn them into a FilenameTypes
 def osFilenamesToFilenameTypes(filenames):
