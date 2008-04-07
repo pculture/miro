@@ -742,7 +742,7 @@ class PyBridge:
                             keyElement.setAttribute("keycode", XULKey(shortcut))
                         if XULKey(shortcut) == 'VK_SPACE':
                             # spacebar doesn't get display text for some reason
-                            keyElement.setAttribute('keytext', _('Spacebar'))
+                            keyElement.setAttribute('keytext', _('Spacebar').decode("utf-8"))
                         if len(shortcut.modifiers) > 0:
                             keyElement.setAttribute("modifiers", XULModifier(shortcut))
                         keyElement.setAttribute("command", item.action)
