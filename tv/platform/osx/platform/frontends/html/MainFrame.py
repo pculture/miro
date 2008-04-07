@@ -158,6 +158,12 @@ class MainController (NSWindowController):
         config.set(prefs.RIGHT_VIEW_SIZE, rightFrame)
         config.save()
     
+    def windowDidResignMain_(self, notification):
+        self.window().display()
+
+    def windowDidBecomeMain_(self, notification):
+        self.window().display()
+    
     ### Switching displays ###
 
     @threads.onMainThread
@@ -425,35 +431,55 @@ class MainController (NSWindowController):
 class RootView (NSView):
     
     def awakeFromNib(self):
-        self.texture = NSImage.imageNamed_("wtexture.png")
-        self.textureHeight = self.texture.size().height
-        self.textureColor = NSColor.colorWithPatternImage_(self.texture)
+        texture = NSImage.imageNamed_("wtexture.png")
+        self.textureHeight = texture.size().height
+        self.textureColor = NSColor.colorWithPatternImage_(texture)
         self.separatorColor = NSColor.colorWithDeviceWhite_alpha_(170.0/255.0, 1.0)
         self.highlightColorLeft = NSColor.colorWithDeviceWhite_alpha_(212.0/255.0, 1.0)
         self.highlightColorTop = NSColor.colorWithDeviceWhite_alpha_(218.0/255.0, 1.0)
+
+        textureInactive = NSImage.imageNamed_("wtexture_inactive.png")
+        self.textureHeightInactive = textureInactive.size().height
+        self.textureColorInactive = NSColor.colorWithPatternImage_(textureInactive)
+        self.separatorColorInactive = NSColor.colorWithDeviceWhite_alpha_(170.0/255.0, 1.0)
+        self.highlightColorLeftInactive = NSColor.colorWithDeviceWhite_alpha_(212.0/255.0, 1.0)
+        self.highlightColorTopInactive = NSColor.colorWithDeviceWhite_alpha_(239.0/255.0, 1.0)
 
     def isOpaque(self):
         return YES
 
     def drawRect_(self, rect):
-        self.textureColor.set()
+        if self.window().isMainWindow():
+            textureColor = self.textureColor
+            textureHeight = self.textureHeight
+            highlightColorLeft = self.highlightColorLeft
+            highlightColorTop = self.highlightColorTop
+            separatorColor = self.separatorColor
+        else:
+            textureColor = self.textureColorInactive
+            textureHeight = self.textureHeightInactive
+            highlightColorLeft = self.highlightColorLeftInactive
+            highlightColorTop = self.highlightColorTopInactive
+            separatorColor = self.separatorColorInactive
+
+        textureColor.set()
         NSRectFill(rect)
-        
+    
         p1 = NSPoint(0.5, 0)
-        p2 = NSPoint(0.5, self.textureHeight + 0.5)
-        self.highlightColorLeft.set()
+        p2 = NSPoint(0.5, textureHeight + 0.5)
+        highlightColorLeft.set()
         NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
-        
-        p1 = NSPoint(0, self.textureHeight + 0.5)
-        p2 = NSPoint(self.bounds().size.width, self.textureHeight + 0.5)
-        self.highlightColorTop.set()
+    
+        p1 = NSPoint(0, textureHeight + 0.5)
+        p2 = NSPoint(self.bounds().size.width, textureHeight + 0.5)
+        highlightColorTop.set()
         NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
 
         p1.y += 1.0
         p2.y += 1.0
-        self.separatorColor.set()
+        separatorColor.set()
         NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
-
+            
 ###############################################################################
 
 class PlacardView (NSView):
