@@ -8,7 +8,7 @@
 <!ENTITY prefs.general "Allgemein">
 <!ENTITY prefs.general.warn_on_quit "Warnen wenn ich versuche Miro zu beenden während noch heruntergeladen wird.">
 
-<!ENTITY prefs.channels "Tonspuren">
+<!ENTITY prefs.channels "Kanäle">
 <!ENTITY prefs.channels.check "Überprüfe Kanäle auf neuen Inhalt">
 <!ENTITY prefs.channels.check.thirty "Alle 30 Minuten">
 <!ENTITY prefs.channels.check.sixty "Jede Stunde">

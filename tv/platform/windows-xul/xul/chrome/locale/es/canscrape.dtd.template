@@ -4,10 +4,10 @@
 <!ENTITY canscrape.title     "El canal no es compatible con $shortAppName">
 <!ENTITY canscrape.body      "No obstante, intentaremos obtener los archivos. Es posible que se tarde cierto tiempo en generar la lista de vídeos y las descripciones aparezcan erróneas.">
 
-<!ENTITY canscrape.prefix    "Por favor, contacte con los responsables de">
-<!ENTITY canscrape.suffix    "y preguntele si pueden proporcionar una fuente en un formato que funcione con $shortAppName.">
+<!ENTITY canscrape.prefix    "Por favor, contacte a los resposables de">
+<!ENTITY canscrape.suffix    "y pregunte si pueden proporcionar una fuente en un formato que funcione con $shortAppName.">
 <!ENTITY canscrape.title     "El canal no es compatible con $shortAppName">
 <!ENTITY canscrape.body      "No obstante, intentaremos obtener los archivos. Es posible que se tarde cierto tiempo en generar la lista de vídeos y las descripciones aparezcan erróneas.">
 
-<!ENTITY canscrape.prefix    "Por favor, contacte con los responsables de">
-<!ENTITY canscrape.suffix    "y preguntele si pueden proporcionar una fuente en un formato que funcione con $shortAppName.">
+<!ENTITY canscrape.prefix    "Por favor, contacte a los resposables de">
+<!ENTITY canscrape.suffix    "y pregunte si pueden proporcionar una fuente en un formato que funcione con $shortAppName.">

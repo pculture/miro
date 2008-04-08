@@ -36,7 +36,7 @@
 
 <!ENTITY prefs.downloads "Descargas" >
 <!ENTITY prefs.downloads.max "Número máximo de descargas manuales a la vez:">
-<!ENTITY prefs.autodownloads.max "Número máximo de auto-descargas de canal a la vez:">
+<!ENTITY prefs.autodownloads.max "Número máximo de descargas automáticas simultaneas:">
 
 <!ENTITY prefs.disk.space "Espacio en disco">
 <!ENTITY prefs.disk.space.min.part1 "Mantener por lo menos este espacio libre en mi disco:" >

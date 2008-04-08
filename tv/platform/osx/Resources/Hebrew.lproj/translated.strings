@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-20 09:51-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 13:34-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: untranslated */
@@ -80,7 +80,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Minimize" = "מזער";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
 "Miro" = "מירו";
 
 "Miro Help" = "עזרה למירו";
@@ -177,7 +177,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "(movies directory path goes here)" = "(כתובת תיקיית הסרטים פה)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-/* Flag: untranslated */
 "-" = "-";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
@@ -206,8 +205,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Add..." = "הוסף...‏";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-/* Flag: untranslated */
-"All" = "All";
+"All" = "הכל";
 
 /* Flag: untranslated */
 "Auto download default setting for new channels:" = "Auto download default setting for new channels:";
@@ -239,7 +237,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Ignore unencrypted connections" = "Ignore unencrypted connections";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
 /* Flag: untranslated */
 "KB/s." = "KB/s.";
 
@@ -268,19 +266,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Remember video position." = "זכור מיקום וידיאו.";
 
-/* File: ../../portable/frontends/html/contextmenu.py:99 */
-/* File: ../../portable/frontends/html/contextmenu.py:104 */
+/* File: ../../portable/frontends/html/contextmenu.py:100 */
+/* File: ../../portable/frontends/html/contextmenu.py:105 */
 /* File: ../../portable/frontends/html/contextmenu.py:178 */
 /* File: ../../portable/frontends/html/contextmenu.py:184 */
 /* File: ../../portable/frontends/html/contextmenu.py:190 */
 /* File: ../../portable/frontends/html/contextmenu.py:199 */
-/* File: ../../portable/frontends/html/contextmenu.py:233 */
+/* File: ../../portable/frontends/html/contextmenu.py:232 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
 "Remove" = "הסר";
 
 "Run Miro at startup" = "הרץ את מירו בזמן הפעלת המחשב";
 
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:592 */
 "Show as Channel" = "הצג כערוץ";
 
 "Stop after each video." = "עצור לאחר כל וידאו";
@@ -298,7 +296,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Use these ports:" = "Use these ports:";
 
-/* File: ../../portable/frontends/html/main.py:319 */
+/* File: ../../portable/frontends/html/main.py:321 */
 "Warn me when I attempt to quit with downloads in progress" = "הזהר אותי כשאני מנסה לצאת מהתוכנה בשעה שההורדות עדיין פעילות";
 
 "Watch for new videos in these folders and include them in the Library:" = "חפש קליפים חדשים בתיקיות הללו והוסף אותם לספרייה";
@@ -328,8 +326,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "URL" = "כתובת אינטרנט (‏‪URL‬‏)‏";
 
-/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
 /* File: ../../platform/gtk-x11/platform/frontends/html/startup.py:56 */
+/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(נותחו %d קבצים - נמצאו %d  קבצי וידאו)";
 
@@ -359,7 +357,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "אנחנו ממליצים שתאפשר לנגן המירו לעלות יחד עם הפעלת המחשב. כך, קבצי וידאו שעדיין לא סיימו לדרת יוכלו לסיים וקבצי וידאו חדשים בערוצים שלך יהיו מוכנים לצפייה.\n\n\nהאם תרצה להפעיל את מירו יחד עם הפעלת המחשב?";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
 "Welcome to Internet TV!" = "ברוכים הבאים לטלוויזית אינטרנט!";
 
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "ברוכים הבאים לטלוויזיית אינטרנט. ישנם דברים רבים שתוכלו לעשות עם נגן המירו: להוריד אוטומטית קבצי וידאו מהערוצים המועדפים עליך, לצפות בקבצי וידאו אחד אחרי השני, להוריד טורנטים, להמליץ על קבצי וידאו לחברים, ועוד המון.\n\n";
@@ -370,122 +368,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "%message%\n%message%" = "%message%\n%message%";
 
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
-"Update Available" = "עדכון זמין";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
-/* Flag: python-format */
-"A new version of %s is available for download." = "גרסה חדשה של %s זמינה להורדה.";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
-"Error Bombing Item" = "טעות בזמן הפצצת חפץ";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
-"Error Recommending Item" = "שגיאה בהמלצה על הפריט";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
-"Error Opening Website" = "שגיאה בפתיחת האתר";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
-/* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "התרחשה שגיאה בפתיחת %s. אנא נסו שוב בעוד מספר שניות";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
-/* Flag: python-format */
-"Error importing modules:\n%s" = "שגיאה בייבוא מודולים:\n%s";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
-"Loading window" = "טוען חלון";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
-"onStartup called twice" = "onStartup נכשל פעמיים";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
-"Spacebar" = "ריווח";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
-"Close to tray?" = "סגירה לשורת משימות?";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
-"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "כשאתם לוחצים על כפתור הסגירה האדום, תירצו שמירו ייסגר למגש המערכת או ייסגר? אתם יכולים לשנות את ההגדרה הזו מאוחר יותר בהגדרות.";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
-"Download Completed" = "ההורדה הושלמה";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
-/* Flag: python-format */
-"Download of video '%s' is finished." = "ההורדה של הוידאו '%s'  הושלמה.";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
-"Download Failed" = "הורדה נכשלה";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
-/* Flag: python-format */
-"Download of video '%s' has failed." = "ההורדה של הוידאו '%s'  ניכשלה.";
-
-/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
-"Subscribe to Channel" = "הוסף את הערוץ";
-
-/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
-"Enter the URL of the channel you would like to subscribe to." = "הקלידו את כתובת הערוץ שאתם רוצים להצטרף אליו.";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
-"General" = "כללי";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
-"Downloads" = "הורדות";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
-"Folders" = "תיקיות";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
-"Disk Space" = "מקום בכונן";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
-"Movies Directory" = "תיקיית סרטים";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
-/* Flag: python-format */
-"Select a Directory to store %s downloads in." = "בחרו בתיקייה לאחסון בתוכה %s הורדות.";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
-"Select" = "בחירה";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
-"Migrate existing movies?" = "העברת סרטים קיימים?";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
-/* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "בחרתם בתיקייה חדשה  להורדת סרטים. האם %s יעביר את כל ההורדות הקיימות לשם? (סרטים שכרגע יורדים לא יועברו על שלא יסתיימו).";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
-"View this Directory in the Library" = "צפייה בתיקייה הזאת בתוך הספרייה";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
-"Select a Directory to view in the Library." = "בחירת תיקייה לצפייה בספרייה";
-
-/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
-"Finish" = "סיום";
-
-/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
-"Search!" = "חפש!";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
-"Pause Video" = "השהיית הוידאו";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
-"Unsupported version of Quicktime" = "גרסה לא ניתמכת של Quicktime";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
-/* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "כדי להריץ את %s אתם צריכים את הגרסה החדשה ביותר של Quicktime, שהיא עדכון חינם.";
+/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
+"Audio" = "קול";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
 "_Remove..." = "_הסר...";
@@ -557,8 +441,83 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/menubar.py:199 */
 "_Update Channels..." = "_עידכון ערוצים...";
 
-/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
-"Audio" = "קול";
+/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
+"Pause Video" = "השהיית הוידאו";
+
+/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
+"Unsupported version of Quicktime" = "גרסה לא ניתמכת של Quicktime";
+
+/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
+/* Flag: python-format */
+"To run %s you need the most recent version of Quicktime, which is a free update." = "כדי להריץ את %s אתם צריכים את הגרסה החדשה ביותר של Quicktime, שהיא עדכון חינם.";
+
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
+"Subscribe to Channel" = "הוסף את הערוץ";
+
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
+"Enter the URL of the channel you would like to subscribe to." = "הקלידו את כתובת הערוץ שאתם רוצים להצטרף אליו.";
+
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
+"Finish" = "סיום";
+
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
+"Search!" = "חפש!";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
+"Download Completed" = "ההורדה הושלמה";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
+/* Flag: python-format */
+"Download of video '%s' is finished." = "ההורדה של הוידאו '%s'  הושלמה.";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
+"Download Failed" = "הורדה נכשלה";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
+/* Flag: python-format */
+"Download of video '%s' has failed." = "ההורדה של הוידאו '%s'  ניכשלה.";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
+"General" = "כללי";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+"Downloads" = "הורדות";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+"Folders" = "תיקיות";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
+"Disk Space" = "מקום בכונן";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
+"Movies Directory" = "תיקיית סרטים";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
+/* Flag: python-format */
+"Select a Directory to store %s downloads in." = "בחרו בתיקייה לאחסון בתוכה %s הורדות.";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
+"Select" = "בחירה";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
+"Migrate existing movies?" = "העברת סרטים קיימים?";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
+/* Flag: python-format */
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "בחרתם בתיקייה חדשה  להורדת סרטים. האם %s יעביר את כל ההורדות הקיימות לשם? (סרטים שכרגע יורדים לא יועברו על שלא יסתיימו).";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
+"View this Directory in the Library" = "צפייה בתיקייה הזאת בתוך הספרייה";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
+"Select a Directory to view in the Library." = "בחירת תיקייה לצפייה בספרייה";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
 "Settings" = "הגדרות";
@@ -573,12 +532,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/menubar.py:273 */
 /* File: ../../portable/dialogs.py:88 */
 "Quit" = "יציאה";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
-"New Channel _Guide..." = "מדריך ערוצים חדש...";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
-"Folder Location" = "מיקום תיקייה";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
@@ -595,43 +548,518 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: python-format */
 "An unknown error has occurred %s." = "שגיאה לא ידועה ארעה: %s";
 
-/* File: ../../portable/dl_daemon/download.py:458 */
-"Error" = "בעיה";
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
+"New Channel _Guide..." = "מדריך ערוצים חדש...";
 
-/* File: ../../portable/dl_daemon/download.py:544 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:583 */
+"Folder Location" = "מיקום תיקייה";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
+"Update Available" = "עדכון זמין";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
 /* Flag: python-format */
-"Could not write to %s" = "לא ניתן לכתוב ל-%s";
+"A new version of %s is available for download." = "גרסה חדשה של %s זמינה להורדה.";
 
-/* File: ../../portable/dl_daemon/download.py:564 */
-/* File: ../../portable/dl_daemon/download.py:769 */
-"Not enough disk space" = "אין מספיק מקום בדיסק";
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
+"Error Bombing Item" = "טעות בזמן הפצצת חפץ";
 
-/* File: ../../portable/dl_daemon/download.py:565 */
-/* File: ../../portable/dl_daemon/download.py:770 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
+"Error Recommending Item" = "שגיאה בהמלצה על הפריט";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
+"Error Opening Website" = "שגיאה בפתיחת האתר";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
 /* Flag: python-format */
-"%s MB required to store this video" = "%s MB נידרש כדי לאחסן את הווידאו";
+"There was an error opening %s.  Please try again in a few seconds" = "התרחשה שגיאה בפתיחת %s. אנא נסו שוב בעוד מספר שניות";
 
-/* File: ../../portable/dl_daemon/download.py:781 */
-"BitTorrent failure" = "כישלון ביטורנט";
-
-/* File: ../../portable/dl_daemon/download.py:782 */
-"BitTorrent failed to startup" = "ביטורנט נכשל לעלות";
-
-/* File: ../../portable/dl_daemon/download.py:954 */
-"Corrupt Torrent" = "טורנט פגום";
-
-/* File: ../../portable/dl_daemon/download.py:955 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
 /* Flag: python-format */
-"The torrent file at %s was not valid" = "קובץ הטורנט ב-%s לא תקין";
+"Error importing modules:\n%s" = "שגיאה בייבוא מודולים:\n%s";
 
-/* File: ../../portable/dl_daemon/download.py:980 */
-"Torrent file deleted" = "קובץ שטף נמחק";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
+"Loading window" = "טוען חלון";
 
-/* File: ../../portable/dl_daemon/download.py:981 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
+"onStartup called twice" = "onStartup נכשל פעמיים";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
+"Spacebar" = "ריווח";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
+"Close to tray?" = "סגירה לשורת משימות?";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "כשאתם לוחצים על כפתור הסגירה האדום, תירצו שמירו ייסגר למגש המערכת או ייסגר? אתם יכולים לשנות את ההגדרה הזו מאוחר יותר בהגדרות.";
+
+/* File: ../../portable/item.py:497 */
+/* Flag: python-format */
+"Removing %s" = "מסיר את %s";
+
+/* File: ../../portable/item.py:500 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "אתם רוצים למחוק את התיקייה הזו וכל קטעי הווידאו שנמצאים בא או רק למחוק את הרשומה בספריה?";
+
+/* File: ../../portable/item.py:506 */
+"Would you like to delete this file or just remove its entry from the Library?" = "האם אתה מעוניין למחוק את הקובץ או רק להסיר את הכניסה שלו מהספריה?";
+
+/* File: ../../portable/item.py:526 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "הפריט הזה הוא תיקייה. כשתסירו את התיקייה, כל הפריטים בתוך התיקייה הזו ימחקו.";
+
+/* File: ../../portable/item.py:552 */
+/* File: ../../portable/feed.py:390 */
+/* Flag: python-format */
+"%d days" = "%d ימים";
+
+/* File: ../../portable/item.py:554 */
+/* File: ../../portable/feed.py:386 */
+/* Flag: python-format */
+"%d hours" = "%d שעות";
+
+/* File: ../../portable/item.py:556 */
+/* Flag: python-format */
+"%d minutes" = "%d דקות";
+
+/* File: ../../portable/item.py:566 */
+/* Flag: python-format */
+"Expires in %s" = "פג תוקף ב-%s";
+
+/* File: ../../portable/item.py:578 */
+/* Flag: python-format */
+"Will retry in %s" = "ינסה לחדש בתוך %s";
+
+/* File: ../../portable/item.py:580 */
+"Paused" = "הושהה";
+
+/* File: ../../portable/item.py:982 */
+"TORRENT" = "טורנט";
+
+/* File: ../../portable/item.py:984 */
+"WEB PAGE" = "דף אינטרנט";
+
+/* File: ../../portable/item.py:994 */
+"Total Down:" = "סה\"כ הורדה:";
+
+/* File: ../../portable/item.py:997 */
+"Error:" = "שגיאה:";
+
+/* File: ../../portable/item.py:1006 */
+"Seeders:" = "מפיצים:";
+
+/* File: ../../portable/item.py:1008 */
 /* Flag: untranslated */
-"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
+"Leechers:" = "Leechers:";
 
-/* File: ../../portable/frontends/html/contextmenu.py:103 */
+/* File: ../../portable/item.py:1010 */
+"Down Rate:" = "קצב הורדה:";
+
+/* File: ../../portable/item.py:1011 */
+"Down Total:" = "סה\"כ הורדה:";
+
+/* File: ../../portable/item.py:1013 */
+"Up Rate:" = "קצב העלאה:";
+
+/* File: ../../portable/item.py:1014 */
+"Up Total:" = "סה\"כ הועלאה:";
+
+/* File: ../../portable/item.py:1024 */
+"Web page:" = "אתר אינטרנט:";
+
+/* File: ../../portable/item.py:1024 */
+"permalink" = "קישור תמידי (פרמאלינק)";
+
+/* File: ../../portable/item.py:1028 */
+"File link:" = "לינק קובץ:";
+
+/* File: ../../portable/item.py:1028 */
+"direct link to file" = "קישור ישיר לקובץ";
+
+/* File: ../../portable/item.py:1030 */
+"File type:" = "סוג קובץ:";
+
+/* File: ../../portable/item.py:1037 */
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"License:" = "License:";
+
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"see permalink" = "see permalink";
+
+/* File: ../../portable/item.py:1049 */
+"REVEAL LOCAL FOLDER" = "חשיפת תיקייה מקומית";
+
+/* File: ../../portable/item.py:1051 */
+"REVEAL LOCAL FILE" = "חשיפת קובץ מקומי";
+
+/* File: ../../portable/item.py:1053 */
+"Filename:" = "שם הקובץ:";
+
+/* File: ../../portable/item.py:1060 */
+"Down Total" = "סה\"כ ירד";
+
+/* File: ../../portable/item.py:1062 */
+"Up Total" = "סה\"כ העלאה";
+
+/* File: ../../portable/item.py:1080 */
+"Item Details" = "נתוני הפריט";
+
+/* File: ../../portable/item.py:1087 */
+"Torrent Details" = "פרטי הטורנט";
+
+/* File: ../../portable/item.py:1089 */
+"Torrent Details <i>stopped</i>" = "פרטי טורנט <i>stopped</i>";
+
+/* File: ../../portable/item.py:1093 */
+"Download Details" = "פרטי ההורדה";
+
+/* File: ../../portable/item.py:1310 */
+"downloading..." = "מוריד ...";
+
+/* File: ../../portable/item.py:1317 */
+/* File: ../../portable/item.py:1320 */
+/* Flag: python-format */
+"%s remaining" = "%s נותרו";
+
+/* File: ../../portable/item.py:1329 */
+"starting up..." = "מתחיל ...";
+
+/* File: ../../portable/item.py:1901 */
+/* Flag: python-format */
+"Removing %s items" = "הסרת %s פריטים";
+
+/* File: ../../portable/item.py:1903 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "אחד או יותר מסרטי הוידאו לא הורד מערוץ. האם תרצה למחוק את הפריטים האלו או רק למחוק את הכניסות שלהם מהסיפריה?";
+
+/* File: ../../portable/item.py:1911 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "יש בתיקייה הזאת פריט אחד או יותר. כשתסירו או תימחקו תיקייה, כל הפריטים בתוך אותה תיקייה יוסרו או ימחקו.";
+
+/* File: ../../portable/startup.py:92 */
+/* Flag: untranslated */
+"Unknown Error" = "Unknown Error";
+
+/* File: ../../portable/startup.py:93 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
+
+/* File: ../../portable/startup.py:155 */
+"Database too new" = "מסד נתונים חדש מידי";
+
+/* File: ../../portable/startup.py:156 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "יש לכם מסד נתונים שנשמר עם גרסה חדשה יותר של $shortAppName. עליכם להוריד את הגרסה העדכנית של $shortAppName ולהריץ את זה.";
+
+/* File: ../../portable/startup.py:237 */
+/* File: ../../portable/frontends/html/main.py:134 */
+"Video Directory Missing" = "תיקיית וידאו נעדרת";
+
+/* File: ../../portable/startup.py:238 */
+/* Flag: untranslated */
+"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again.";
+
+/* File: ../../portable/feed.py:384 */
+"never" = "אף פעם";
+
+/* File: ../../portable/feed.py:388 */
+/* Flag: python-format */
+"%d day" = "%d יום";
+
+/* File: ../../portable/feed.py:392 */
+/* Flag: python-format */
+"%d months" = "%d חודשים";
+
+/* File: ../../portable/feed.py:825 */
+/* File: ../../portable/frontends/html/contextmenu.py:173 */
+"Rename Channel" = "שינוי שם ערוץ";
+
+/* File: ../../portable/feed.py:826 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "הכניסו של חדש לערוץ %s";
+
+/* File: ../../portable/feed.py:923 */
+"Error loading feed" = "שגיאה בטעינת הערוץ";
+
+/* File: ../../portable/feed.py:924 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "לא ניתן לקרוא את הערוץ ב-%s (%s).";
+
+/* File: ../../portable/feed.py:927 */
+"Would you like to keep the feed?" = "תירצו לשמור את הערוץ?";
+
+/* File: ../../portable/feed.py:1045 */
+"Bad content-type" = "סוג תוכן לא טוב";
+
+/* File: ../../portable/feed.py:1058 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "הערוץ לא תואם עם $shortAppName!";
+
+/* File: ../../portable/feed.py:1059 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "אבל נעשה את המיטב כדי לספק את הקבצים. יצירת רשימה של קבצי וידאו יכולה לקחת יותר זמן, ותיאורים יכולים להיראות מצחיק. אנא צרו קשר עם המפיצים של $url ותשאלו אם הם יכולים לספק ערוץ בפורמט שיעבוד עם $shortAppName.\n\nאתם רוצים לנסות לטעון את הערוץ בכל זאת?";
+
+/* File: ../../portable/feed.py:2382 */
+/* File: ../../portable/feed.py:2472 */
+/* File: ../../portable/extrastrings.py:33 */
+"Search" = "חיפוש";
+
+/* File: ../../portable/feed.py:2486 */
+"Local Files" = "קבצים מקומיים";
+
+/* File: ../../portable/feed.py:2500 */
+"Playing File" = "מנגן קובץ";
+
+/* File: ../../portable/storedatabase.py:859 */
+/* File: ../../portable/storedatabase.py:1258 */
+/* Flag: python-format */
+"%s database save succeeded" = "%s שמירת מסד הנתונים הצליחה";
+
+/* File: ../../portable/storedatabase.py:860 */
+/* File: ../../portable/storedatabase.py:1259 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "מסד הנתונים נשמר בהצלחה , עכשיו בטוח לצאת בלי לאבד שום מידע";
+
+/* File: ../../portable/storedatabase.py:867 */
+/* File: ../../portable/storedatabase.py:1267 */
+/* Flag: python-format */
+"%s database save failed" = "%s שמירת מסד הנתונים לא הצליחה";
+
+/* File: ../../portable/storedatabase.py:868 */
+/* File: ../../portable/storedatabase.py:1268 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s לא הצליח לשמור את המסד נתונים שלו: הכונן מלה.\nאנו מציעים למחוק קבצים מהכונן או פשוט למחוק כמה סרטים מהאוסף שלכם.\nשינויים שבוצעו לא מיזמן עלולים ללכת לאיבוד.";
+
+/* File: ../../portable/tabs.py:55 */
+"Library" = "ספרייה";
+
+/* File: ../../portable/tabs.py:58 */
+"Downloading" = "מוריד";
+
+/* File: ../../portable/httpclient.py:81 */
+/* Flag: python-format */
+"Error: %s" = "שגיאה: %s";
+
+/* File: ../../portable/httpclient.py:96 */
+/* File: ../../portable/httpclient.py:102 */
+"Can't connect" = "לא יכל להתחבר";
+
+/* File: ../../portable/httpclient.py:97 */
+/* Flag: python-format */
+"Connection Error: %s" = "שיאת חיבור :%s";
+
+/* File: ../../portable/httpclient.py:103 */
+"SSL connection error" = "שגיאת חיבור SSL";
+
+/* File: ../../portable/httpclient.py:107 */
+"HTTP error" = "שגיאת HTTP";
+
+/* File: ../../portable/httpclient.py:110 */
+/* Flag: python-format */
+"Bad Status Line: %s" = "שורת סטטוס לא טובה: %s";
+
+/* File: ../../portable/httpclient.py:113 */
+/* Flag: python-format */
+"Bad Header Line: %s" = "שורת כותרת שגויה: %s";
+
+/* File: ../../portable/httpclient.py:116 */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "גודל נתח שגוי: %s";
+
+/* File: ../../portable/httpclient.py:119 */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "צפוי תו CRLF התקבל %r";
+
+/* File: ../../portable/httpclient.py:122 */
+/* Flag: python-format */
+"%s closed connection" = "%s החיבור ניסגר";
+
+/* File: ../../portable/httpclient.py:127 */
+/* File: ../../portable/httpclient.py:155 */
+/* File: ../../portable/downloader.py:268 */
+"File not found" = "קובץ לא נמצא";
+
+/* File: ../../portable/httpclient.py:128 */
+"Got 404 status code" = "יש 404 סטטוס קוד";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "קוד סטטוס שגוי: %s";
+
+/* File: ../../portable/httpclient.py:134 */
+"Authorization failed" = "סנכרון נכשל";
+
+/* File: ../../portable/httpclient.py:139 */
+/* File: ../../portable/frontends/html/main.py:271 */
+"Internal Error" = "בעיה פנימית";
+
+/* File: ../../portable/httpclient.py:140 */
+"Pipeline request never started" = "בקשת פייפליין לעולם לא התחילה";
+
+/* File: ../../portable/httpclient.py:144 */
+"Timeout" = "פסק זמן";
+
+/* File: ../../portable/httpclient.py:145 */
+/* Flag: python-format */
+"Connection to %s timed out" = "פג התוקף החיבור ל-%s";
+
+/* File: ../../portable/httpclient.py:149 */
+"Invalid URL" = "כתובת אינטרנט לא תקינה";
+
+/* File: ../../portable/httpclient.py:150 */
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "\"%s\" אינה כתובת אינטרנט תקינה";
+
+/* File: ../../portable/httpclient.py:156 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "הקובץ: \"%s\" אינו קיים";
+
+/* File: ../../portable/httpclient.py:160 */
+"Read error" = "שגיאה בקריאה";
+
+/* File: ../../portable/httpclient.py:161 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "שגיאה בזמן קריאה מ- \"%s\"";
+
+/* File: ../../portable/httpclient.py:354 */
+"Unknown Error code" = "קוד שגיאה לא ידוע";
+
+/* File: ../../portable/httpclient.py:386 */
+"Connection closed" = "חיבור נסגר";
+
+/* File: ../../portable/httpclient.py:811 */
+"Unknown" = "לא יודע";
+
+/* File: ../../portable/httpclient.py:812 */
+"Internal Error: Not ready to send" = "בעיה פנימית לא מוכן לשליחה";
+
+/* File: ../../portable/theme.py:127 */
+/* File: ../../portable/frontends/html/main.py:192 */
+"Custom Channels" = "ערוצים מותאמים אישית";
+
+/* File: ../../portable/theme.py:127 */
+/* File: ../../portable/frontends/html/main.py:192 */
+"You are running a version of $longAppName with a custom set of channels." = "אתה מריץ גרסה של $longAppName עם אוסף ערוצים מותאם אישית.";
+
+/* File: ../../portable/theme.py:138 */
+"Starter Channels" = "ערוצי התחלה";
+
+/* File: ../../portable/theme.py:154 */
+"Example Playlist" = "רשימת השמעה לדוגמה";
+
+/* File: ../../portable/downloader.py:234 */
+"activity" = "פעילות";
+
+/* File: ../../portable/downloader.py:269 */
+"Flash URL Scraping Error" = "שגיאת גירוד כתובת פלאש";
+
+/* File: ../../portable/downloader.py:445 */
+"starting up" = "מתחיל";
+
+/* File: ../../portable/license.py:68 */
+/* Flag: untranslated */
+"license page" = "license page";
+
+/* File: ../../portable/singleclick.py:99 */
+"Download already exists" = "ההורדה קיימת";
+
+/* File: ../../portable/singleclick.py:100 */
+"That URL is already an external download." = "כתובת הרשת היא כבר הורדה חיצונית";
+
+/* File: ../../portable/singleclick.py:106 */
+"Miro will begin downloading it now." = "מירו יתחיל להוריד זאת עכשיו.";
+
+/* File: ../../portable/singleclick.py:108 */
+"It is downloading now." = "זה יורד עכשיו.";
+
+/* File: ../../portable/singleclick.py:110 */
+"It has already been downloaded." = "זה כבר ירד בעבר.";
+
+/* File: ../../portable/singleclick.py:137 */
+"Download Error" = "שגיאת הורדה.";
+
+/* File: ../../portable/singleclick.py:138 */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "כתובת %s";
+
+/* File: ../../portable/singleclick.py:146 */
+"File Download" = "הורדת קובץ";
+
+/* File: ../../portable/singleclick.py:147 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "הקובץ ב %s כנראה אינו שמע, וידאו, או הזנת RSS";
+
+/* File: ../../portable/singleclick.py:235 */
+"Subscribing to multiple channels" = "מינוי לערוצים מרובים";
+
+/* File: ../../portable/singleclick.py:236 */
+/* Flag: python-format */
+"Create %d channels?" = "יצירת %d ערוצים";
+
+/* File: ../../portable/singleclick.py:249 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "הוספת %d ערוצים לתיקייה חדשה";
+
+/* File: ../../portable/singleclick.py:250 */
+/* File: ../../portable/folder.py:224 */
+"Enter a name for the new channel folder" = "הכנס את השם לתקיית הערוץ החדשה";
+
+/* File: ../../portable/singleclick.py:253 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "הערה: אתם כבר רשומים ב-%d מהערוצים האלו. הערוצים האלו יישארו איפה שהם כרגע נמצאים.";
+
+/* File: ../../portable/singleclick.py:264 */
+"Subscription error" = "שגיאה בהצטרפות";
+
+/* File: ../../portable/singleclick.py:274 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "לקובץ הערוץ $shortAppName יש מבנה לא תקף: $url. בבקשה הודע למפרסם על הקובץ הזה.";
+
+/* File: ../../portable/singleclick.py:282 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "לקובץ ערוץ %shortAppName  יש סוג תוכן לא נכון: %url. בבקשה הודע למפרסם הקובץ.";
+
+/* File: ../../portable/singleclick.py:286 */
+"Could not download the $shortAppName channel file: $url." = "הורדת קובץ ערוץ ה$shortAppName לא הצליחה:$url";
+
+/* File: ../../portable/singleclick.py:334 */
+"Invalid Torrent" = "טורנט לא תקין";
+
+/* File: ../../portable/singleclick.py:335 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "קובץ הטורנט %s ככל הנראה פגום ולא ניתן לגשת אליו. [OK]";
+
+/* File: ../../portable/folder.py:142 */
+/* File: ../../portable/frontends/html/contextmenu.py:183 */
+"Rename Channel Folder" = "שנה את שם תקיית הערוץ";
+
+/* File: ../../portable/folder.py:144 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "הכניסו שם חדש עבור תיקיית הערוץ %s";
+
+/* File: ../../portable/folder.py:213 */
+/* File: ../../portable/frontends/html/contextmenu.py:189 */
+"Rename Playlist Folder" = "שנה את שם תקיית רשימת ההשמעה";
+
+/* File: ../../portable/folder.py:215 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "הכניסו שם חדש עבור תיקיית רשימת ההשמעה %s";
+
+/* File: ../../portable/folder.py:223 */
+"Create Channel Folder" = "צור תקיית ערוץ";
+
+/* File: ../../portable/folder.py:237 */
+"Create Playlist Folder" = "יצירת תקיית רשימת השמעה";
+
+/* File: ../../portable/folder.py:238 */
+"Enter a name for the new playlist folder" = "הכניסו שם עבור תיקיית רשימת ההשמעה החדשה";
+
+/* File: ../../portable/opml.py:144 */
+"OPML Import failed" = "יבוא OPML נכשל";
+
+/* File: ../../portable/opml.py:145 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "קובץ ה-OPML שנבחר נמצא לא תקף. היבוא נקטע.";
+
+/* File: ../../portable/opml.py:150 */
+"OPML Import summary" = "סיכום יבוא OPML";
+
+/* File: ../../portable/frontends/html/contextmenu.py:104 */
 "Update Channels Now" = "עדכון הערוצים עכשיו";
 
 /* File: ../../portable/frontends/html/contextmenu.py:128 */
@@ -639,27 +1067,27 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Downloaded Items" = "%d פריטים שהורדו";
 
 /* File: ../../portable/frontends/html/contextmenu.py:130 */
-/* File: ../../portable/frontends/html/contextmenu.py:211 */
+/* File: ../../portable/frontends/html/contextmenu.py:210 */
 "Play" = "נגן";
 
 /* File: ../../portable/frontends/html/contextmenu.py:131 */
-/* File: ../../portable/frontends/html/contextmenu.py:214 */
+/* File: ../../portable/frontends/html/contextmenu.py:213 */
 "Add to new playlist" = "הוסף לרשימת ההשמעה";
 
 /* File: ../../portable/frontends/html/contextmenu.py:133 */
-/* File: ../../portable/frontends/html/contextmenu.py:207 */
+/* File: ../../portable/frontends/html/contextmenu.py:206 */
 "Remove From Playlist" = "הסר מרשימת ההשמעה";
 
 /* File: ../../portable/frontends/html/contextmenu.py:135 */
-/* File: ../../portable/frontends/html/contextmenu.py:209 */
+/* File: ../../portable/frontends/html/contextmenu.py:208 */
 "Remove From the Library" = "הסרה מהספירה";
 
 /* File: ../../portable/frontends/html/contextmenu.py:141 */
-/* File: ../../portable/frontends/html/contextmenu.py:218 */
+/* File: ../../portable/frontends/html/contextmenu.py:217 */
 "Mark as Unwatched" = "סימון כלא ניצפה";
 
 /* File: ../../portable/frontends/html/contextmenu.py:146 */
-/* File: ../../portable/frontends/html/contextmenu.py:220 */
+/* File: ../../portable/frontends/html/contextmenu.py:219 */
 "Mark as Watched" = "סמן כנצפה";
 
 /* File: ../../portable/frontends/html/contextmenu.py:151 */
@@ -667,7 +1095,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Available Items" = "%d פריטים זמינים";
 
 /* File: ../../portable/frontends/html/contextmenu.py:152 */
-/* File: ../../portable/frontends/html/contextmenu.py:227 */
+/* File: ../../portable/frontends/html/contextmenu.py:226 */
 /* File: ../../portable/dialogs.py:93 */
 "Download" = "הורד";
 
@@ -676,15 +1104,15 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Downloading Items" = "%d מוריד פריטים";
 
 /* File: ../../portable/frontends/html/contextmenu.py:159 */
-/* File: ../../portable/frontends/html/contextmenu.py:225 */
+/* File: ../../portable/frontends/html/contextmenu.py:224 */
 "Cancel Download" = "ביטול הורדה";
 
 /* File: ../../portable/frontends/html/contextmenu.py:161 */
-/* File: ../../portable/frontends/html/contextmenu.py:225 */
+/* File: ../../portable/frontends/html/contextmenu.py:224 */
 "Pause Download" = "ההיית הורדה";
 
 /* File: ../../portable/frontends/html/contextmenu.py:164 */
-/* File: ../../portable/frontends/html/contextmenu.py:223 */
+/* File: ../../portable/frontends/html/contextmenu.py:222 */
 "Restart Upload" = "הפעל מחדש העלאה";
 
 /* File: ../../portable/frontends/html/contextmenu.py:170 */
@@ -694,86 +1122,58 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/frontends/html/contextmenu.py:196 */
 "Copy URL to clipboard" = "העתק את הכתובת ללוח גזירות";
 
-/* File: ../../portable/frontends/html/contextmenu.py:173 */
-/* File: ../../portable/feed.py:825 */
-"Rename Channel" = "שינוי שם ערוץ";
-
 /* File: ../../portable/frontends/html/contextmenu.py:177 */
 "Revert Title to Default" = "החזרת הכותרת לברירת המחדל";
 
-/* File: ../../portable/frontends/html/contextmenu.py:183 */
-/* File: ../../portable/folder.py:142 */
-"Rename Channel Folder" = "שנה את שם תקיית הערוץ";
-
-/* File: ../../portable/frontends/html/contextmenu.py:189 */
-/* File: ../../portable/folder.py:213 */
-"Rename Playlist Folder" = "שנה את שם תקיית רשימת ההשמעה";
-
-/* File: ../../portable/frontends/html/contextmenu.py:213 */
+/* File: ../../portable/frontends/html/contextmenu.py:212 */
 "Play Just This Video" = "נגן רק את הווידיאו הזה";
 
-/* File: ../../portable/frontends/html/contextmenu.py:232 */
+/* File: ../../portable/frontends/html/contextmenu.py:231 */
 /* File: ../../portable/playlist.py:218 */
 "Rename Playlist" = "שינוי שם לרשימת השמעה";
 
-/* File: ../../portable/frontends/html/main.py:132 */
-/* File: ../../portable/startup.py:237 */
-"Video Directory Missing" = "תיקיית וידאו נעדרת";
-
-/* File: ../../portable/frontends/html/main.py:133 */
+/* File: ../../portable/frontends/html/main.py:135 */
 /* Flag: untranslated */
 "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
 
-/* File: ../../portable/frontends/html/main.py:190 */
-/* File: ../../portable/theme.py:126 */
-"Custom Channels" = "ערוצים מותאמים אישית";
-
-/* File: ../../portable/frontends/html/main.py:190 */
-/* File: ../../portable/theme.py:126 */
-"You are running a version of $longAppName with a custom set of channels." = "אתה מריץ גרסה של $longAppName עם אוסף ערוצים מותאם אישית.";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-/* File: ../../portable/httpclient.py:139 */
-"Internal Error" = "בעיה פנימית";
-
-/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/frontends/html/main.py:271 */
 "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "מירו נתקל בשגיאה פנימית. תוכל לעזור לנו למצוא את הבעיה ולתקן אותה על ידי שליחת דוח שגיאה.";
 
-/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/frontends/html/main.py:271 */
 "Include entire program database including all video and channel metadata with crash report" = "כלול את כל מסד הנתונים של התוכנה כולל מטא-נתונים של וידאו וערוצים בדוח התרסקות";
 
-/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/frontends/html/main.py:271 */
 "Describe what you were doing that caused this error" = "תאר מה עשית שגרם לשגיאה זו";
 
-/* File: ../../portable/frontends/html/main.py:284 */
+/* File: ../../portable/frontends/html/main.py:286 */
 /* Flag: python-format */
 "%s Version Alert" = "%s התראת גרסה";
 
-/* File: ../../portable/frontends/html/main.py:285 */
+/* File: ../../portable/frontends/html/main.py:287 */
 /* Flag: python-format */
 "A new version of %s is available. Would you like to download it now?" = "גרסה חדשה של %s זמינה. אתם רוצים להוריד אותה עכשיו?";
 
-/* File: ../../portable/frontends/html/main.py:290 */
+/* File: ../../portable/frontends/html/main.py:292 */
 /* Flag: python-format */
 "%s Version Check" = "%s בדיקת גרסה";
 
-/* File: ../../portable/frontends/html/main.py:291 */
+/* File: ../../portable/frontends/html/main.py:293 */
 /* Flag: python-format */
 "%s is up to date." = "%s מעודכן.";
 
-/* File: ../../portable/frontends/html/main.py:309 */
+/* File: ../../portable/frontends/html/main.py:311 */
 "Are you sure you want to quit?" = "האם אתה בטוח שאתה רוצה לצאת?";
 
-/* File: ../../portable/frontends/html/main.py:311 */
+/* File: ../../portable/frontends/html/main.py:313 */
 "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "מירו עדיין מעלה את דוח ההתרסקות שלך. אם תצא עכשיו ההעלאה תתבטל. לצאת בכל זאת?";
 
-/* File: ../../portable/frontends/html/main.py:340 */
+/* File: ../../portable/frontends/html/main.py:342 */
 "Import OPML File" = "יבא קובץ OPML";
 
-/* File: ../../portable/frontends/html/main.py:342 */
+/* File: ../../portable/frontends/html/main.py:344 */
 "OPML Files" = "קבצי OPML";
 
-/* File: ../../portable/frontends/html/main.py:347 */
+/* File: ../../portable/frontends/html/main.py:349 */
 "Export OPML File" = "יצא קובץ OPML";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:325 */
@@ -820,26 +1220,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/frontends/html/templatedisplay.py:718 */
 "Enter the URL of the video to download" = "הכנס כתובת אינטרנט של וידאו להורדה";
 
-/* File: ../../portable/tabs.py:55 */
-"Library" = "ספרייה";
-
-/* File: ../../portable/tabs.py:58 */
-"Downloading" = "מוריד";
-
-/* File: ../../portable/downloader.py:234 */
-"activity" = "פעילות";
-
-/* File: ../../portable/downloader.py:268 */
-/* File: ../../portable/httpclient.py:127 */
-/* File: ../../portable/httpclient.py:155 */
-"File not found" = "קובץ לא נמצא";
-
-/* File: ../../portable/downloader.py:269 */
-"Flash URL Scraping Error" = "שגיאת גירוד כתובת פלאש";
-
-/* File: ../../portable/downloader.py:445 */
-"starting up" = "מתחיל";
-
 /* File: ../../portable/playlist.py:219 */
 /* Flag: python-format */
 "Enter a new name for the playlist %s" = "הכניסו שם חדש עבור רשימת ההשמעה %s";
@@ -849,15 +1229,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/playlist.py:242 */
 "Enter a name for the new playlist" = "הכניסו שם עבור רשימת ההשמעה החדשה";
-
-/* File: ../../portable/opml.py:144 */
-"OPML Import failed" = "יבוא OPML נכשל";
-
-/* File: ../../portable/opml.py:145 */
-"The selected OPML file appears to be invalid. Import was interrupted." = "קובץ ה-OPML שנבחר נמצא לא תקף. היבוא נקטע.";
-
-/* File: ../../portable/opml.py:150 */
-"OPML Import summary" = "סיכום יבוא OPML";
 
 /* File: ../../portable/util.py:266 */
 /* Flag: python-format */
@@ -890,6 +1261,42 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/util.py:286 */
 /* Flag: python-format */
 "%dB" = "%dB";
+
+/* File: ../../portable/dl_daemon/download.py:458 */
+"Error" = "בעיה";
+
+/* File: ../../portable/dl_daemon/download.py:544 */
+/* Flag: python-format */
+"Could not write to %s" = "לא ניתן לכתוב ל-%s";
+
+/* File: ../../portable/dl_daemon/download.py:564 */
+/* File: ../../portable/dl_daemon/download.py:769 */
+"Not enough disk space" = "אין מספיק מקום בדיסק";
+
+/* File: ../../portable/dl_daemon/download.py:565 */
+/* File: ../../portable/dl_daemon/download.py:770 */
+/* Flag: python-format */
+"%s MB required to store this video" = "%s MB נידרש כדי לאחסן את הווידאו";
+
+/* File: ../../portable/dl_daemon/download.py:781 */
+"BitTorrent failure" = "כישלון ביטורנט";
+
+/* File: ../../portable/dl_daemon/download.py:782 */
+"BitTorrent failed to startup" = "ביטורנט נכשל לעלות";
+
+/* File: ../../portable/dl_daemon/download.py:954 */
+"Corrupt Torrent" = "טורנט פגום";
+
+/* File: ../../portable/dl_daemon/download.py:955 */
+/* Flag: python-format */
+"The torrent file at %s was not valid" = "קובץ הטורנט ב-%s לא תקין";
+
+/* File: ../../portable/dl_daemon/download.py:980 */
+"Torrent file deleted" = "קובץ שטף נמחק";
+
+/* File: ../../portable/dl_daemon/download.py:981 */
+/* Flag: untranslated */
+"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
 
 /* File: ../../portable/iheartmiro.py:82 */
 /* Flag: untranslated */
@@ -1069,175 +1476,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/menubar.py:272 */
 "Show Window" = "הצגצ חלון";
 
-/* File: ../../portable/theme.py:137 */
-"Starter Channels" = "ערוצי התחלה";
-
-/* File: ../../portable/theme.py:154 */
-"Example Playlist" = "רשימת השמעה לדוגמה";
-
-/* File: ../../portable/httpclient.py:81 */
-/* Flag: python-format */
-"Error: %s" = "שגיאה: %s";
-
-/* File: ../../portable/httpclient.py:96 */
-/* File: ../../portable/httpclient.py:102 */
-"Can't connect" = "לא יכל להתחבר";
-
-/* File: ../../portable/httpclient.py:97 */
-/* Flag: python-format */
-"Connection Error: %s" = "שיאת חיבור :%s";
-
-/* File: ../../portable/httpclient.py:103 */
-"SSL connection error" = "שגיאת חיבור SSL";
-
-/* File: ../../portable/httpclient.py:107 */
-"HTTP error" = "שגיאת HTTP";
-
-/* File: ../../portable/httpclient.py:110 */
-/* Flag: python-format */
-"Bad Status Line: %s" = "שורת סטטוס לא טובה: %s";
-
-/* File: ../../portable/httpclient.py:113 */
-/* Flag: python-format */
-"Bad Header Line: %s" = "שורת כותרת שגויה: %s";
-
-/* File: ../../portable/httpclient.py:116 */
-/* Flag: python-format */
-"Bad Chunk size: %s" = "גודל נתח שגוי: %s";
-
-/* File: ../../portable/httpclient.py:119 */
-/* Flag: python-format */
-"Expected CRLF got: %r" = "צפוי תו CRLF התקבל %r";
-
-/* File: ../../portable/httpclient.py:122 */
-/* Flag: python-format */
-"%s closed connection" = "%s החיבור ניסגר";
-
-/* File: ../../portable/httpclient.py:128 */
-"Got 404 status code" = "יש 404 סטטוס קוד";
-
-/* File: ../../portable/httpclient.py:130 */
-/* Flag: python-format */
-"Bad Status Code: %s" = "קוד סטטוס שגוי: %s";
-
-/* File: ../../portable/httpclient.py:134 */
-"Authorization failed" = "סנכרון נכשל";
-
-/* File: ../../portable/httpclient.py:140 */
-"Pipeline request never started" = "בקשת פייפליין לעולם לא התחילה";
-
-/* File: ../../portable/httpclient.py:144 */
-"Timeout" = "פסק זמן";
-
-/* File: ../../portable/httpclient.py:145 */
-/* Flag: python-format */
-"Connection to %s timed out" = "פג התוקף החיבור ל-%s";
-
-/* File: ../../portable/httpclient.py:149 */
-"Invalid URL" = "כתובת אינטרנט לא תקינה";
-
-/* File: ../../portable/httpclient.py:150 */
-/* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" אינה כתובת אינטרנט תקינה";
-
-/* File: ../../portable/httpclient.py:156 */
-/* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "הקובץ: \"%s\" אינו קיים";
-
-/* File: ../../portable/httpclient.py:160 */
-"Read error" = "שגיאה בקריאה";
-
-/* File: ../../portable/httpclient.py:161 */
-/* Flag: python-format */
-"Error while reading from \"%s\"" = "שגיאה בזמן קריאה מ- \"%s\"";
-
-/* File: ../../portable/httpclient.py:354 */
-"Unknown Error code" = "קוד שגיאה לא ידוע";
-
-/* File: ../../portable/httpclient.py:386 */
-"Connection closed" = "חיבור נסגר";
-
-/* File: ../../portable/httpclient.py:811 */
-"Unknown" = "לא יודע";
-
-/* File: ../../portable/httpclient.py:812 */
-"Internal Error: Not ready to send" = "בעיה פנימית לא מוכן לשליחה";
-
-/* File: ../../portable/extrastrings.py:33 */
-/* File: ../../portable/feed.py:2409 */
-/* File: ../../portable/feed.py:2499 */
-"Search" = "חיפוש";
-
-/* File: ../../portable/feed.py:384 */
-"never" = "אף פעם";
-
-/* File: ../../portable/feed.py:386 */
-/* File: ../../portable/item.py:554 */
-/* Flag: python-format */
-"%d hours" = "%d שעות";
-
-/* File: ../../portable/feed.py:388 */
-/* Flag: python-format */
-"%d day" = "%d יום";
-
-/* File: ../../portable/feed.py:390 */
-/* File: ../../portable/item.py:552 */
-/* Flag: python-format */
-"%d days" = "%d ימים";
-
-/* File: ../../portable/feed.py:392 */
-/* Flag: python-format */
-"%d months" = "%d חודשים";
-
-/* File: ../../portable/feed.py:826 */
-/* Flag: python-format */
-"Enter a new name for the channel %s" = "הכניסו של חדש לערוץ %s";
-
-/* File: ../../portable/feed.py:923 */
-"Error loading feed" = "שגיאה בטעינת הערוץ";
-
-/* File: ../../portable/feed.py:924 */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "לא ניתן לקרוא את הערוץ ב-%s (%s).";
-
-/* File: ../../portable/feed.py:927 */
-"Would you like to keep the feed?" = "תירצו לשמור את הערוץ?";
-
-/* File: ../../portable/feed.py:1040 */
-"Bad content-type" = "סוג תוכן לא טוב";
-
-/* File: ../../portable/feed.py:1053 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-"Channel is not compatible with $shortAppName!" = "הערוץ לא תואם עם $shortAppName!";
-
-/* File: ../../portable/feed.py:1054 */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "אבל נעשה את המיטב כדי לספק את הקבצים. יצירת רשימה של קבצי וידאו יכולה לקחת יותר זמן, ותיאורים יכולים להיראות מצחיק. אנא צרו קשר עם המפיצים של $url ותשאלו אם הם יכולים לספק ערוץ בפורמט שיעבוד עם $shortAppName.\n\nאתם רוצים לנסות לטעון את הערוץ בכל זאת?";
-
-/* File: ../../portable/feed.py:2513 */
-"Local Files" = "קבצים מקומיים";
-
-/* File: ../../portable/feed.py:2527 */
-"Playing File" = "מנגן קובץ";
-
-/* File: ../../portable/storedatabase.py:859 */
-/* File: ../../portable/storedatabase.py:1258 */
-/* Flag: python-format */
-"%s database save succeeded" = "%s שמירת מסד הנתונים הצליחה";
-
-/* File: ../../portable/storedatabase.py:860 */
-/* File: ../../portable/storedatabase.py:1259 */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "מסד הנתונים נשמר בהצלחה , עכשיו בטוח לצאת בלי לאבד שום מידע";
-
-/* File: ../../portable/storedatabase.py:867 */
-/* File: ../../portable/storedatabase.py:1267 */
-/* Flag: python-format */
-"%s database save failed" = "%s שמירת מסד הנתונים לא הצליחה";
-
-/* File: ../../portable/storedatabase.py:868 */
-/* File: ../../portable/storedatabase.py:1268 */
-/* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s לא הצליח לשמור את המסד נתונים שלו: הכונן מלה.\nאנו מציעים למחוק קבצים מהכונן או פשוט למחוק כמה סרטים מהאוסף שלכם.\nשינויים שבוצעו לא מיזמן עלולים ללכת לאיבוד.";
-
 /* File: ../../portable/dialogs.py:89 */
 "Ignore" = "התעלם";
 
@@ -1245,12 +1483,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Submit Crash Report" = "מסור דוח התרסקות";
 
 /* File: ../../portable/dialogs.py:91 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
 "Migrate" = "הגירה";
 
 /* File: ../../portable/dialogs.py:92 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
 "Don't Migrate" = "לא להגר";
 
@@ -1303,12 +1541,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Don't Install" = "Don't Install";
 
 /* File: ../../portable/dialogs.py:231 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
 "New Search Channel" = "חיפוש חדש בערוץ";
 
 /* File: ../../portable/dialogs.py:231 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
 "A search channel contains items that match a search term." = "חיפוש בערוץ מכיל פריט שלא מתאים לתנאים";
 
@@ -1384,246 +1622,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: python-format */
 "An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "קרתה שגיאה בניסיון לשמור את %s. בדוק בבקשה שהקובץ לא נמחק ונסה שוב.";
 
-/* File: ../../portable/singleclick.py:99 */
-"Download already exists" = "ההורדה קיימת";
-
-/* File: ../../portable/singleclick.py:100 */
-"That URL is already an external download." = "כתובת הרשת היא כבר הורדה חיצונית";
-
-/* File: ../../portable/singleclick.py:106 */
-"Miro will begin downloading it now." = "מירו יתחיל להוריד זאת עכשיו.";
-
-/* File: ../../portable/singleclick.py:108 */
-"It is downloading now." = "זה יורד עכשיו.";
-
-/* File: ../../portable/singleclick.py:110 */
-"It has already been downloaded." = "זה כבר ירד בעבר.";
-
-/* File: ../../portable/singleclick.py:137 */
-"Download Error" = "שגיאת הורדה.";
-
-/* File: ../../portable/singleclick.py:138 */
-/* Flag: python-format */
-"Miro is not able to download a file at this URL:\n\nURL: %s" = "כתובת %s";
-
-/* File: ../../portable/singleclick.py:146 */
-"File Download" = "הורדת קובץ";
-
-/* File: ../../portable/singleclick.py:147 */
-/* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "הקובץ ב %s כנראה אינו שמע, וידאו, או הזנת RSS";
-
-/* File: ../../portable/singleclick.py:235 */
-"Subscribing to multiple channels" = "מינוי לערוצים מרובים";
-
-/* File: ../../portable/singleclick.py:236 */
-/* Flag: python-format */
-"Create %d channels?" = "יצירת %d ערוצים";
-
-/* File: ../../portable/singleclick.py:249 */
-/* Flag: python-format */
-"Adding %d channels to a new folder" = "הוספת %d ערוצים לתיקייה חדשה";
-
-/* File: ../../portable/singleclick.py:250 */
-/* File: ../../portable/folder.py:224 */
-"Enter a name for the new channel folder" = "הכנס את השם לתקיית הערוץ החדשה";
-
-/* File: ../../portable/singleclick.py:253 */
-/* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "הערה: אתם כבר רשומים ב-%d מהערוצים האלו. הערוצים האלו יישארו איפה שהם כרגע נמצאים.";
-
-/* File: ../../portable/singleclick.py:264 */
-"Subscription error" = "שגיאה בהצטרפות";
-
-/* File: ../../portable/singleclick.py:274 */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "לקובץ הערוץ $shortAppName יש מבנה לא תקף: $url. בבקשה הודע למפרסם על הקובץ הזה.";
-
-/* File: ../../portable/singleclick.py:282 */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "לקובץ ערוץ %shortAppName  יש סוג תוכן לא נכון: %url. בבקשה הודע למפרסם הקובץ.";
-
-/* File: ../../portable/singleclick.py:286 */
-"Could not download the $shortAppName channel file: $url." = "הורדת קובץ ערוץ ה$shortAppName לא הצליחה:$url";
-
-/* File: ../../portable/singleclick.py:334 */
-"Invalid Torrent" = "טורנט לא תקין";
-
-/* File: ../../portable/singleclick.py:335 */
-/* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "קובץ הטורנט %s ככל הנראה פגום ולא ניתן לגשת אליו. [OK]";
-
-/* File: ../../portable/item.py:497 */
-/* Flag: python-format */
-"Removing %s" = "מסיר את %s";
-
-/* File: ../../portable/item.py:500 */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "אתם רוצים למחוק את התיקייה הזו וכל קטעי הווידאו שנמצאים בא או רק למחוק את הרשומה בספריה?";
-
-/* File: ../../portable/item.py:506 */
-"Would you like to delete this file or just remove its entry from the Library?" = "האם אתה מעוניין למחוק את הקובץ או רק להסיר את הכניסה שלו מהספריה?";
-
-/* File: ../../portable/item.py:526 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "הפריט הזה הוא תיקייה. כשתסירו את התיקייה, כל הפריטים בתוך התיקייה הזו ימחקו.";
-
-/* File: ../../portable/item.py:556 */
-/* Flag: python-format */
-"%d minutes" = "%d דקות";
-
-/* File: ../../portable/item.py:566 */
-/* Flag: python-format */
-"Expires in %s" = "פג תוקף ב-%s";
-
-/* File: ../../portable/item.py:578 */
-/* Flag: python-format */
-"Will retry in %s" = "ינסה לחדש בתוך %s";
-
-/* File: ../../portable/item.py:580 */
-"Paused" = "הושהה";
-
-/* File: ../../portable/item.py:982 */
-"TORRENT" = "טורנט";
-
-/* File: ../../portable/item.py:984 */
-"WEB PAGE" = "דף אינטרנט";
-
-/* File: ../../portable/item.py:994 */
-"Total Down:" = "סה\"כ הורדה:";
-
-/* File: ../../portable/item.py:997 */
-"Error:" = "שגיאה:";
-
-/* File: ../../portable/item.py:1006 */
-"Seeders:" = "מפיצים:";
-
-/* File: ../../portable/item.py:1008 */
-/* Flag: untranslated */
-"Leechers:" = "Leechers:";
-
-/* File: ../../portable/item.py:1010 */
-"Down Rate:" = "קצב הורדה:";
-
-/* File: ../../portable/item.py:1011 */
-"Down Total:" = "סה\"כ הורדה:";
-
-/* File: ../../portable/item.py:1013 */
-"Up Rate:" = "קצב העלאה:";
-
-/* File: ../../portable/item.py:1014 */
-"Up Total:" = "סה\"כ הועלאה:";
-
-/* File: ../../portable/item.py:1024 */
-"Web page:" = "אתר אינטרנט:";
-
-/* File: ../../portable/item.py:1024 */
-"permalink" = "קישור תמידי (פרמאלינק)";
-
-/* File: ../../portable/item.py:1028 */
-"File link:" = "לינק קובץ:";
-
-/* File: ../../portable/item.py:1028 */
-"direct link to file" = "קישור ישיר לקובץ";
-
-/* File: ../../portable/item.py:1030 */
-"File type:" = "סוג קובץ:";
-
-/* File: ../../portable/item.py:1037 */
-/* File: ../../portable/item.py:1040 */
-/* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"License:" = "License:";
-
-/* File: ../../portable/item.py:1040 */
-/* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"see permalink" = "see permalink";
-
-/* File: ../../portable/item.py:1049 */
-"REVEAL LOCAL FOLDER" = "חשיפת תיקייה מקומית";
-
-/* File: ../../portable/item.py:1051 */
-"REVEAL LOCAL FILE" = "חשיפת קובץ מקומי";
-
-/* File: ../../portable/item.py:1053 */
-"Filename:" = "שם הקובץ:";
-
-/* File: ../../portable/item.py:1060 */
-"Down Total" = "סה\"כ ירד";
-
-/* File: ../../portable/item.py:1062 */
-"Up Total" = "סה\"כ העלאה";
-
-/* File: ../../portable/item.py:1080 */
-"Item Details" = "נתוני הפריט";
-
-/* File: ../../portable/item.py:1087 */
-"Torrent Details" = "פרטי הטורנט";
-
-/* File: ../../portable/item.py:1089 */
-"Torrent Details <i>stopped</i>" = "פרטי טורנט <i>stopped</i>";
-
-/* File: ../../portable/item.py:1093 */
-"Download Details" = "פרטי ההורדה";
-
-/* File: ../../portable/item.py:1310 */
-"downloading..." = "מוריד ...";
-
-/* File: ../../portable/item.py:1317 */
-/* File: ../../portable/item.py:1320 */
-/* Flag: python-format */
-"%s remaining" = "%s נותרו";
-
-/* File: ../../portable/item.py:1329 */
-"starting up..." = "מתחיל ...";
-
-/* File: ../../portable/item.py:1878 */
-/* Flag: python-format */
-"Removing %s items" = "הסרת %s פריטים";
-
-/* File: ../../portable/item.py:1880 */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "אחד או יותר מסרטי הוידאו לא הורד מערוץ. האם תרצה למחוק את הפריטים האלו או רק למחוק את הכניסות שלהם מהסיפריה?";
-
-/* File: ../../portable/item.py:1888 */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "יש בתיקייה הזאת פריט אחד או יותר. כשתסירו או תימחקו תיקייה, כל הפריטים בתוך אותה תיקייה יוסרו או ימחקו.";
-
-/* File: ../../portable/startup.py:92 */
-/* Flag: untranslated */
-"Unknown Error" = "Unknown Error";
-
-/* File: ../../portable/startup.py:93 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
-
-/* File: ../../portable/startup.py:155 */
-"Database too new" = "מסד נתונים חדש מידי";
-
-/* File: ../../portable/startup.py:156 */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "יש לכם מסד נתונים שנשמר עם גרסה חדשה יותר של $shortAppName. עליכם להוריד את הגרסה העדכנית של $shortAppName ולהריץ את זה.";
-
-/* File: ../../portable/startup.py:238 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
-
-/* File: ../../portable/folder.py:144 */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "הכניסו שם חדש עבור תיקיית הערוץ %s";
-
-/* File: ../../portable/folder.py:215 */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "הכניסו שם חדש עבור תיקיית רשימת ההשמעה %s";
-
-/* File: ../../portable/folder.py:223 */
-"Create Channel Folder" = "צור תקיית ערוץ";
-
-/* File: ../../portable/folder.py:237 */
-"Create Playlist Folder" = "יצירת תקיית רשימת השמעה";
-
-/* File: ../../portable/folder.py:238 */
-"Enter a name for the new playlist folder" = "הכניסו שם עבור תיקיית רשימת ההשמעה החדשה";
-
-/* File: ../../portable/license.py:68 */
-/* Flag: untranslated */
-"license page" = "license page";
-
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "יום 1\n3 ימים\n6 ימים\n10 ימים\nחודש\nלעולם לא";
 
@@ -1646,179 +1644,192 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
 "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>סיימתם!</b>\n\nההתקנה הושלמה -- עכשיו אתם יכולים לחפש ערוצים ולהתחיל לצפות.\n\n<b>אל תחכו:</b> מירו שונה מצפייה בווידאו על דפי אינטרנט -- המפיצים יכולים להציע קטעי וידאו גדולים ואיכותיים. אז אם תשבו ותחכו לווידאו: התחילו כמה הורדו וחיזרו מאוחר יותר לצפות. \n\n<b>השאירו אותו פעיל:</b> מירו באופן קבוע בודק את הערוצים עבור קטעי וידאו חדשים ומבצע הורדת ברקע. כשתשאירו אותו פועל תוכלו לצפות בקטעי וידאו חדשים כשתהיו מוכנים לצפות בהם.\n\n<b>אל תדאגו בקשר למקום פנוי:</b> כמו TiVo, נכללת כאן מערכת של 'תאריך תפוגה' שעוזרת לפנות קטעי וידאו ישנים כדי לפנות מקום לקטעי וידאו חדשים. תמיד אפשר לשמור את קטעי הווידאו לתמיד על ידי לחיצה על שמור ואתם יכולים לשנות את הגדרות ערוץ כדי לשמור וידאו אוטומטית.\n\n<b>מסך מלא:</b>הכפתור בצד ימין מראה את הווידאו במסך מלא.\n\n<b>חיפוש וידאו:</b> למדריך מירו יש מאות ערוצי טלוויזיית אינטרנט, כולם בחינם. רק לחצו על 'הוספה' כדי לצפות בערוץ.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
+/* Flag: untranslated */
+"<b>xine</b>" = "<b>xine</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
 /* Flag: untranslated */
 "Auto download default setting for new channels" = "Auto download default setting for new channels";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
 /* Flag: untranslated */
 "Automatically for_ward ports." = "Automatically for_ward ports.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
 "By default, videos _expire after" = "כברירת מחדל, _פג-תוקף קבצי וידאו אחרי";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
 "C_hannel:" = "ערוץ:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
 "C_hannels" = "ע_רוצים";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
 "C_reate Channel" = "יצירת ערוץ";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
 "Check Channels for _new content" = "בדוק ערוצים ל_תוכן חדש";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
 "Disk _Space" = "_מקום בדיסק";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
 "Every 30 minutes\nEvery hour\nManually" = "כל 30 דקות\nכל שעה\nידנית";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 /* Flag: untranslated */
 "G_B" = "G_B";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
 "Go" = "עבור";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
 /* Flag: untranslated */
 "Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 "In This:" = "בתוך זה:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
 /* Flag: untranslated */
 "Limit torrent _downstream to:" = "Limit torrent _downstream to:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
 /* Flag: untranslated */
 "Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
 /* Flag: untranslated */
 "Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
 "Miro can find all the videos on your computer to help you organize your collection." = "מירו יכול למצוא את כל קבצי הווידאו במחשב שלכם כדי לעזור בארגון האוסף שלכם.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
 /* Flag: untranslated */
 "New\nAll\nOff" = "New\nAll\nOff";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
 "Play _videos one after another" = "נגן _קבצי וידאו אחד אחרי השני";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
 "Preferences" = "מאפיינים";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
 "Restrict to my full _home folder" = "הגבלה לתיקיית הבית שלי במלואה";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
 "S_top after each video" = "ע_צור לאחר כל וידאו";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
 "S_tore downloaded videos in this folder:" = "ש_מור קבצי וידאו שירדו בתיקיה זו:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
 "Search _Engine:" = "מנוע חיפוש:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
 "Search _custom folder:" = "חיפוש בתוך התיקייה:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
 "Select Movies Directory" = "בחירת תיקיית סרטים";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
 "Select custom search directory" = "בחירת תקיית חיפוש";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
 /* Flag: untranslated */
 "Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
-"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "המסכים הבאים יעזרו לכם להגדיר את מירו כך שזה יעבוד בצורה הטובה ביותר עבורכם. השאלה הראשונה.";
-
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "המסכים הבאים יעזרו לכם להגדיר את מירו כך שזה יעבוד בצורה הטובה ביותר עבורכם. השאלה הראשונה.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
 /* Flag: untranslated */
-"Use _ports:" = "Use _ports:";
+"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
 /* Flag: untranslated */
-"Use this renderer to play videos:" = "Use this renderer to play videos:";
+"Use _ports:" = "Use _ports:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
-"Volume:" = "עוצמת קול:";
+/* Flag: untranslated */
+"Use this for video when listening to audio:" = "Use this for video when listening to audio:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
-"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "אנו ממליצים לאפשר למירו לעלות עם עליית המחשב. בדרך זו, קטעי וידאו שעדיין לא הסתיימו יוכלו להסתיים וקטעי וידאו חדשים בערוץ שלכם יהיו זמינים לפייה מתי שתרצו.";
+/* Flag: untranslated */
+"Use this renderer to play videos:" = "Use this renderer to play videos:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
+"Volume:" = "עוצמת קול:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "ברוכים הבאים לטלוויזיית האינטרנט. יש דברים רבים שאתם יכולים לעשות עם מירו: להוריד אוטומטית קטעי וידאו מהערוצים המועדפים עליכם, צפייה בקטעי וידאו אחד אחרי השני, הורדת טורנטים, המלצת וידאו לחברים ועוד הרבה.";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "בחרתם בתיקייה חדשת להורדת סרטים. הם מירו צריך להעביר את כל ההורדות הקיימות לשם? (הורדות שכרגע פעילות לא יועברו עד שהם לא יסתיימו.)";
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "אנו ממליצים לאפשר למירו לעלות עם עליית המחשב. בדרך זו, קטעי וידאו שעדיין לא הסתיימו יוכלו להסתיים וקטעי וידאו חדשים בערוץ שלכם יהיו זמינים לפייה מתי שתרצו.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-"_Add Folder" = "_הוסף תיקייה";
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "ברוכים הבאים לטלוויזיית האינטרנט. יש דברים רבים שאתם יכולים לעשות עם מירו: להוריד אוטומטית קטעי וידאו מהערוצים המועדפים עליכם, צפייה בקטעי וידאו אחד אחרי השני, הורדת טורנטים, המלצת וידאו לחברים ועוד הרבה.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
-"_Automatically run Miro when I log in" = "_אוטומטית הפעל את מירו כאשר אני מתחבר למערכת";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "בחרתם בתיקייה חדשת להורדת סרטים. הם מירו צריך להעביר את כל ההורדות הקיימות לשם? (הורדות שכרגע פעילות לא יועברו עד שהם לא יסתיימו.)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
-"_Downloads" = "_הורדות";
+"_Add Folder" = "_הוסף תיקייה";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
-"_Folders" = "_תיקיות";
+"_Automatically run Miro when I log in" = "_אוטומטית הפעל את מירו כאשר אני מתחבר למערכת";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
-"_General" = "_כללי";
+"_Downloads" = "_הורדות";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
+"_Folders" = "_תיקיות";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
+"_General" = "_כללי";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
 /* Flag: untranslated */
 "_KB/s." = "_KB/s.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
 /* Flag: untranslated */
 "_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
 "_Playback" = "_ניגון";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
 "_Resume playback of videos from the point where they were stopped" = "_המשך ניגון של קבצי וידאו היכן שנעצרו";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
 "_Search" = "_חיפוש";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
 "_Search For:" = "_חפש את:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
 "_URL" = "_כתובת";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
 "_Warn me when I attempt to quit with downloads in progress" = "_הזהר אותי כשאני מנסה לצאת ויש הורדות ברקע";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:90 */
 "_Watch for new videos in these folders and include them in the Library" = "_חפש קבצי וידאו חדשים בתיקיות האלה והוסף אותם לספריה";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:91 */
+/* Flag: untranslated */
+"goom\noscope\nfftscope\nfftgraph\nnone" = "goom\noscope\nfftscope\nfftgraph\nnone";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:96 */
 /* Flag: untranslated */
 "xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName גרסה $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName והלוגו של $longAppName  הם סימנים רשומים של $publisher.";
+/* Flag: untranslated */
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
 "About $longAppName" = "אודות $longAppName";

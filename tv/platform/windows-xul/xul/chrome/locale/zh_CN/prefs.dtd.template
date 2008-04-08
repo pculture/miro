@@ -19,7 +19,7 @@
 <!ENTITY prefs.channels.autodownloaddefault.new "新添">
 <!ENTITY prefs.channels.autodownloaddefault.off "关闭">
 
-<!ENTITY prefs.playback "播放">
+<!ENTITY prefs.playback "回放">
 <!ENTITY prefs.playback.remember.pos "记住我停止观看节目的位置，并且下次从这个位置继续播放。">
 <!ENTITY prefs.playback.auto.next.video "连续播放视频">
 <!ENTITY prefs.playback.stop.after.each "播放一个节目，然后停止。">

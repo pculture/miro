@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-20 09:51-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 13:34-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Отказ";
@@ -79,7 +79,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Minimize" = "Минимизиране";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
 "Miro" = "Miro";
 
 "Miro Help" = "Помощ за Miro";
@@ -239,7 +239,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Ignore unencrypted connections" = "Ignore unencrypted connections";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
 /* Flag: untranslated */
 "KB/s." = "KB/s.";
 
@@ -268,19 +268,19 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Remember video position." = "Запомняне мястото във филма.";
 
-/* File: ../../portable/frontends/html/contextmenu.py:99 */
-/* File: ../../portable/frontends/html/contextmenu.py:104 */
+/* File: ../../portable/frontends/html/contextmenu.py:100 */
+/* File: ../../portable/frontends/html/contextmenu.py:105 */
 /* File: ../../portable/frontends/html/contextmenu.py:178 */
 /* File: ../../portable/frontends/html/contextmenu.py:184 */
 /* File: ../../portable/frontends/html/contextmenu.py:190 */
 /* File: ../../portable/frontends/html/contextmenu.py:199 */
-/* File: ../../portable/frontends/html/contextmenu.py:233 */
+/* File: ../../portable/frontends/html/contextmenu.py:232 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
 "Remove" = "Премахване";
 
 "Run Miro at startup" = "Стартиране на Miro при зареждане на системата";
 
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:592 */
 "Show as Channel" = "Показване като канал";
 
 "Stop after each video." = "Спиране след всеки филм.";
@@ -298,7 +298,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Use these ports:" = "Use these ports:";
 
-/* File: ../../portable/frontends/html/main.py:319 */
+/* File: ../../portable/frontends/html/main.py:321 */
 "Warn me when I attempt to quit with downloads in progress" = "Предупреждаване при опит за спиране на програмата при продължаващо изтегляне";
 
 "Watch for new videos in these folders and include them in the Library:" = "Следене за нови филмие в следните папки и добавяне към видеотеката:";
@@ -328,8 +328,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "URL" = "URL";
 
-/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
 /* File: ../../platform/gtk-x11/platform/frontends/html/startup.py:56 */
+/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(прегледани са %d файла - намерени са %d филма)";
 
@@ -359,7 +359,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Препоръчваме ви да позволите на програмата да се стартира при зареждане на системата. По този начин филмите, които не са били изтеглени, както и новите филми в каналите ви са готови, когато поискате да ги гледате.\n\n\nИскате ли програмата да се стартира при зареждане на системата?";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
 "Welcome to Internet TV!" = "Добре дошли в интернет-телевизията!";
 
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Добре дошли в интернет-телевизията! Благодарение на Miro, можете да правите толкова много неща: автоматично изтегляне на филми от вашите канали, гледане на нови и нови филми, изтегляне на торенти, препоръчване на филми на приятели, както и още много други неща.\n\n";
@@ -370,124 +370,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "%message%\n%message%" = "%съобщение%\n%съобщение%";
 
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
-"Update Available" = "Налични са обновявания";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
-/* Flag: python-format */
-"A new version of %s is available for download." = "Нова версия на %s е достъпна за изтегляне.";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
-/* Flag: untranslated */
-"Error Bombing Item" = "Error Bombing Item";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
-"Error Recommending Item" = "Грешка при препоръчването";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
-"Error Opening Website" = "Грешка при зареждане на интернет-страницата";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
-/* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "Грешка при отваряне на %s. Опитайте пак след малко.";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
-/* Flag: python-format */
-"Error importing modules:\n%s" = "Грешка при внасяне на приставките:\n%s";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
-"Loading window" = "Зареждане на прозореца";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
-"onStartup called twice" = "onStartup е извикано два пъти";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
-"Spacebar" = "Интервал";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
-"Close to tray?" = "Да се затваря ли в системния панел?";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
-"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Когато натиснете червения бутон за затваряне, искате ли програмата да се спре или само да се свие в системния панел? Това може да се промени и по късно от менюто \"Настройки\".";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
-"Download Completed" = "Изтеглянето приключи";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
-/* Flag: python-format */
-"Download of video '%s' is finished." = "Изтеглянето на филма '%s' приключи.";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
-"Download Failed" = "Изтеглянето се провали";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
-/* Flag: python-format */
-"Download of video '%s' has failed." = "Изтеглянето на филма '%s' се провали.";
-
-/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
-"Subscribe to Channel" = "Записване за канала";
-
-/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
-"Enter the URL of the channel you would like to subscribe to." = "Въведете URL-адреса на канала, за който искате да се запишете.";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
-"General" = "Общи";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
-"Downloads" = "Изтегляния";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
-"Folders" = "Папки";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
-"Disk Space" = "Дисково пространство";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
-"Movies Directory" = "Папка с филми";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Select a Directory to store %s downloads in." = "Select a Directory to store %s downloads in.";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
-"Select" = "Избиране";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
-"Migrate existing movies?" = "Да се прехвърлят ли съществуващите филми?";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
-/* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Избрахте нова папка, в която да записвате филмите. Искате ли %s да премести изтеглените вече файлове там? (Текущите изтегляния няма да бъдат преместени, докато не приключат).";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
-"View this Directory in the Library" = "Преглед на тази папка във видеотеката";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
-"Select a Directory to view in the Library." = "Изберете папка за преглед от видеотеката.";
-
-/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
-"Finish" = "Край";
-
-/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
-"Search!" = "Търсене";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
-"Pause Video" = "Пауза на филма";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
-"Unsupported version of Quicktime" = "Тази версия на Quicktime не се поддържа";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
-/* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "За да заредите %s е нужна най-новата версия на Quicktime, която може да се обнови безплатно.";
+/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
+"Audio" = "Звук";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
 "_Remove..." = "_Премахване...";
@@ -559,8 +443,84 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/menubar.py:199 */
 "_Update Channels..." = "_Обновяване на каналите...";
 
-/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
-"Audio" = "Звук";
+/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
+"Pause Video" = "Пауза на филма";
+
+/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
+"Unsupported version of Quicktime" = "Тази версия на Quicktime не се поддържа";
+
+/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
+/* Flag: python-format */
+"To run %s you need the most recent version of Quicktime, which is a free update." = "За да заредите %s е нужна най-новата версия на Quicktime, която може да се обнови безплатно.";
+
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
+"Subscribe to Channel" = "Записване за канала";
+
+/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
+"Enter the URL of the channel you would like to subscribe to." = "Въведете URL-адреса на канала, за който искате да се запишете.";
+
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
+"Finish" = "Край";
+
+/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
+"Search!" = "Търсене";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
+"Download Completed" = "Изтеглянето приключи";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
+/* Flag: python-format */
+"Download of video '%s' is finished." = "Изтеглянето на филма '%s' приключи.";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
+"Download Failed" = "Изтеглянето се провали";
+
+/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
+/* Flag: python-format */
+"Download of video '%s' has failed." = "Изтеглянето на филма '%s' се провали.";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
+"General" = "Общи";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+"Downloads" = "Изтегляния";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+"Folders" = "Папки";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
+"Disk Space" = "Дисково пространство";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
+"Movies Directory" = "Папка с филми";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Select a Directory to store %s downloads in." = "Select a Directory to store %s downloads in.";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
+"Select" = "Избиране";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
+"Migrate existing movies?" = "Да се прехвърлят ли съществуващите филми?";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
+/* Flag: python-format */
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Избрахте нова папка, в която да записвате филмите. Искате ли %s да премести изтеглените вече файлове там? (Текущите изтегляния няма да бъдат преместени, докато не приключат).";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
+"View this Directory in the Library" = "Преглед на тази папка във видеотеката";
+
+/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
+"Select a Directory to view in the Library." = "Изберете папка за преглед от видеотеката.";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
 "Settings" = "Настройки";
@@ -575,12 +535,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/menubar.py:273 */
 /* File: ../../portable/dialogs.py:88 */
 "Quit" = "Спиране на програмата";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
-"New Channel _Guide..." = "Нов _портал за канали..";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
-"Folder Location" = "Местоположение на папката";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
@@ -597,43 +551,547 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: python-format */
 "An unknown error has occurred %s." = "Появи се неизвестна грешка %s.";
 
-/* File: ../../portable/dl_daemon/download.py:458 */
-"Error" = "Грешка";
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
+"New Channel _Guide..." = "Нов _портал за канали..";
 
-/* File: ../../portable/dl_daemon/download.py:544 */
+/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:583 */
+"Folder Location" = "Местоположение на папката";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
+"Update Available" = "Налични са обновявания";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
 /* Flag: python-format */
-"Could not write to %s" = "Не може да се пише в %s";
+"A new version of %s is available for download." = "Нова версия на %s е достъпна за изтегляне.";
 
-/* File: ../../portable/dl_daemon/download.py:564 */
-/* File: ../../portable/dl_daemon/download.py:769 */
-"Not enough disk space" = "Няма достатъчно дисково пространство";
-
-/* File: ../../portable/dl_daemon/download.py:565 */
-/* File: ../../portable/dl_daemon/download.py:770 */
-/* Flag: python-format */
-"%s MB required to store this video" = "%s MB са нужни за запазване на филма";
-
-/* File: ../../portable/dl_daemon/download.py:781 */
-"BitTorrent failure" = "Грешка в BitRorrent";
-
-/* File: ../../portable/dl_daemon/download.py:782 */
-"BitTorrent failed to startup" = "Грешка при зареждане на BitTorrent";
-
-/* File: ../../portable/dl_daemon/download.py:954 */
-"Corrupt Torrent" = "Повреден торент";
-
-/* File: ../../portable/dl_daemon/download.py:955 */
-/* Flag: python-format */
-"The torrent file at %s was not valid" = "Торент-файлът %s не е правилен";
-
-/* File: ../../portable/dl_daemon/download.py:980 */
-"Torrent file deleted" = "Торрент-файлът е изтрит";
-
-/* File: ../../portable/dl_daemon/download.py:981 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
 /* Flag: untranslated */
-"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
+"Error Bombing Item" = "Error Bombing Item";
 
-/* File: ../../portable/frontends/html/contextmenu.py:103 */
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
+"Error Recommending Item" = "Грешка при препоръчването";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
+"Error Opening Website" = "Грешка при зареждане на интернет-страницата";
+
+/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
+/* Flag: python-format */
+"There was an error opening %s.  Please try again in a few seconds" = "Грешка при отваряне на %s. Опитайте пак след малко.";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
+/* Flag: python-format */
+"Error importing modules:\n%s" = "Грешка при внасяне на приставките:\n%s";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
+"Loading window" = "Зареждане на прозореца";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
+"onStartup called twice" = "onStartup е извикано два пъти";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
+"Spacebar" = "Интервал";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
+"Close to tray?" = "Да се затваря ли в системния панел?";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Когато натиснете червения бутон за затваряне, искате ли програмата да се спре или само да се свие в системния панел? Това може да се промени и по късно от менюто \"Настройки\".";
+
+/* File: ../../portable/item.py:497 */
+/* Flag: python-format */
+"Removing %s" = "Премахване на %s";
+
+/* File: ../../portable/item.py:500 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Искате да изтриете тази папка и всички филми в нея или само да премахнете записа й от видеотеката?";
+
+/* File: ../../portable/item.py:506 */
+"Would you like to delete this file or just remove its entry from the Library?" = "Искате да изтриете този файл или само да премахнете записа му от видеотеката?";
+
+/* File: ../../portable/item.py:526 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Този запис е папка. Когато премахнете папка, всички записи в нея се изтриват също.";
+
+/* File: ../../portable/item.py:552 */
+/* File: ../../portable/feed.py:390 */
+/* Flag: python-format */
+"%d days" = "%d дни";
+
+/* File: ../../portable/item.py:554 */
+/* File: ../../portable/feed.py:386 */
+/* Flag: python-format */
+"%d hours" = "%d часа";
+
+/* File: ../../portable/item.py:556 */
+/* Flag: python-format */
+"%d minutes" = "%d минути";
+
+/* File: ../../portable/item.py:566 */
+/* Flag: python-format */
+"Expires in %s" = "Изтича след %s";
+
+/* File: ../../portable/item.py:578 */
+/* Flag: python-format */
+"Will retry in %s" = "Повторен опит след %s";
+
+/* File: ../../portable/item.py:580 */
+"Paused" = "На пауза";
+
+/* File: ../../portable/item.py:982 */
+/* Flag: untranslated */
+"TORRENT" = "TORRENT";
+
+/* File: ../../portable/item.py:984 */
+/* Flag: untranslated */
+"WEB PAGE" = "WEB PAGE";
+
+/* File: ../../portable/item.py:994 */
+"Total Down:" = "Общо изтеглено:";
+
+/* File: ../../portable/item.py:997 */
+"Error:" = "Грешка:";
+
+/* File: ../../portable/item.py:1006 */
+/* Flag: untranslated */
+"Seeders:" = "Seeders:";
+
+/* File: ../../portable/item.py:1008 */
+/* Flag: untranslated */
+"Leechers:" = "Leechers:";
+
+/* File: ../../portable/item.py:1010 */
+/* Flag: untranslated */
+"Down Rate:" = "Down Rate:";
+
+/* File: ../../portable/item.py:1011 */
+"Down Total:" = "Общо изтеглено:";
+
+/* File: ../../portable/item.py:1013 */
+/* Flag: untranslated */
+"Up Rate:" = "Up Rate:";
+
+/* File: ../../portable/item.py:1014 */
+"Up Total:" = "Общо качено:";
+
+/* File: ../../portable/item.py:1024 */
+"Web page:" = "Интернет-страница:";
+
+/* File: ../../portable/item.py:1024 */
+/* Flag: untranslated */
+"permalink" = "permalink";
+
+/* File: ../../portable/item.py:1028 */
+"File link:" = "Връзка към файла:";
+
+/* File: ../../portable/item.py:1028 */
+"direct link to file" = "пряка връзка към файла";
+
+/* File: ../../portable/item.py:1030 */
+"File type:" = "Вид на файла:";
+
+/* File: ../../portable/item.py:1037 */
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"License:" = "License:";
+
+/* File: ../../portable/item.py:1040 */
+/* File: ../../portable/item.py:1042 */
+/* Flag: untranslated */
+"see permalink" = "see permalink";
+
+/* File: ../../portable/item.py:1049 */
+/* Flag: untranslated */
+"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
+
+/* File: ../../portable/item.py:1051 */
+/* Flag: untranslated */
+"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
+
+/* File: ../../portable/item.py:1053 */
+"Filename:" = "Име нафайла:";
+
+/* File: ../../portable/item.py:1060 */
+"Down Total" = "Общо изтеглено";
+
+/* File: ../../portable/item.py:1062 */
+"Up Total" = "Общо качено";
+
+/* File: ../../portable/item.py:1080 */
+"Item Details" = "Данни за записа";
+
+/* File: ../../portable/item.py:1087 */
+"Torrent Details" = "Подробности за торента";
+
+/* File: ../../portable/item.py:1089 */
+"Torrent Details <i>stopped</i>" = "Подробности за торента - <i>спряно</i>";
+
+/* File: ../../portable/item.py:1093 */
+"Download Details" = "Данни за изтеглянето";
+
+/* File: ../../portable/item.py:1310 */
+"downloading..." = "изтегляне...";
+
+/* File: ../../portable/item.py:1317 */
+/* File: ../../portable/item.py:1320 */
+/* Flag: python-format */
+"%s remaining" = "остават %s";
+
+/* File: ../../portable/item.py:1329 */
+"starting up..." = "започване...";
+
+/* File: ../../portable/item.py:1901 */
+/* Flag: python-format */
+"Removing %s items" = "Премахване на %s записа";
+
+/* File: ../../portable/item.py:1903 */
+/* Flag: untranslated */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?";
+
+/* File: ../../portable/item.py:1911 */
+/* Flag: untranslated */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
+
+/* File: ../../portable/startup.py:92 */
+/* Flag: untranslated */
+"Unknown Error" = "Unknown Error";
+
+/* File: ../../portable/startup.py:93 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
+
+/* File: ../../portable/startup.py:155 */
+"Database too new" = "Базата от данни е твърде нова";
+
+/* File: ../../portable/startup.py:156 */
+/* Flag: untranslated */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that.";
+
+/* File: ../../portable/startup.py:237 */
+/* File: ../../portable/frontends/html/main.py:134 */
+"Video Directory Missing" = "Липсва папка за филми";
+
+/* File: ../../portable/startup.py:238 */
+/* Flag: untranslated */
+"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again.";
+
+/* File: ../../portable/feed.py:384 */
+"never" = "никога";
+
+/* File: ../../portable/feed.py:388 */
+/* Flag: python-format */
+"%d day" = "%d ден";
+
+/* File: ../../portable/feed.py:392 */
+/* Flag: python-format */
+"%d months" = "%d месеца";
+
+/* File: ../../portable/feed.py:825 */
+/* File: ../../portable/frontends/html/contextmenu.py:173 */
+"Rename Channel" = "Преименуване на канала";
+
+/* File: ../../portable/feed.py:826 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Въвеете ново име за канала %s";
+
+/* File: ../../portable/feed.py:923 */
+"Error loading feed" = "Грешка при зареждане на емисията";
+
+/* File: ../../portable/feed.py:924 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Грешка при зареждане на емисията от %s (%s).";
+
+/* File: ../../portable/feed.py:927 */
+"Would you like to keep the feed?" = "Искате ли да запазите емисията?";
+
+/* File: ../../portable/feed.py:1045 */
+/* Flag: untranslated */
+"Bad content-type" = "Bad content-type";
+
+/* File: ../../portable/feed.py:1058 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "Каналът не е съвместим с $shortAppName!";
+
+/* File: ../../portable/feed.py:1059 */
+/* Flag: untranslated */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
+
+/* File: ../../portable/feed.py:2382 */
+/* File: ../../portable/feed.py:2472 */
+/* File: ../../portable/extrastrings.py:33 */
+"Search" = "Търсене";
+
+/* File: ../../portable/feed.py:2486 */
+"Local Files" = "Локални файлове";
+
+/* File: ../../portable/feed.py:2500 */
+"Playing File" = "Изпълнение на файл";
+
+/* File: ../../portable/storedatabase.py:859 */
+/* File: ../../portable/storedatabase.py:1258 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%s database save succeeded" = "%s database save succeeded";
+
+/* File: ../../portable/storedatabase.py:860 */
+/* File: ../../portable/storedatabase.py:1259 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Базата от данни е успешно записана. Сега може спокойно да спрете програмата, без опасност от загуба на данни.";
+
+/* File: ../../portable/storedatabase.py:867 */
+/* File: ../../portable/storedatabase.py:1267 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%s database save failed" = "%s database save failed";
+
+/* File: ../../portable/storedatabase.py:868 */
+/* File: ../../portable/storedatabase.py:1268 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.";
+
+/* File: ../../portable/tabs.py:55 */
+"Library" = "Видеотека";
+
+/* File: ../../portable/tabs.py:58 */
+"Downloading" = "Изтегляне";
+
+/* File: ../../portable/httpclient.py:81 */
+/* Flag: python-format */
+"Error: %s" = "Грешка: %s";
+
+/* File: ../../portable/httpclient.py:96 */
+/* File: ../../portable/httpclient.py:102 */
+"Can't connect" = "Грешка при свързване";
+
+/* File: ../../portable/httpclient.py:97 */
+/* Flag: python-format */
+"Connection Error: %s" = "Грешка при свързване: %s";
+
+/* File: ../../portable/httpclient.py:103 */
+"SSL connection error" = "Грешка при свързване по SSL";
+
+/* File: ../../portable/httpclient.py:107 */
+"HTTP error" = "Грешка в HTTP";
+
+/* File: ../../portable/httpclient.py:110 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Bad Status Line: %s" = "Bad Status Line: %s";
+
+/* File: ../../portable/httpclient.py:113 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Bad Header Line: %s" = "Bad Header Line: %s";
+
+/* File: ../../portable/httpclient.py:116 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "Bad Chunk size: %s";
+
+/* File: ../../portable/httpclient.py:119 */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "Очаквано CRLF, получено: %r";
+
+/* File: ../../portable/httpclient.py:122 */
+/* Flag: python-format */
+"%s closed connection" = "%s прекрати връзката";
+
+/* File: ../../portable/httpclient.py:127 */
+/* File: ../../portable/httpclient.py:155 */
+/* File: ../../portable/downloader.py:268 */
+"File not found" = "Файлът не е намерен";
+
+/* File: ../../portable/httpclient.py:128 */
+"Got 404 status code" = "Получен е код на грешка 404";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "Неправилен код за състояние: %s";
+
+/* File: ../../portable/httpclient.py:134 */
+"Authorization failed" = "Грешка при автентикацията";
+
+/* File: ../../portable/httpclient.py:139 */
+/* File: ../../portable/frontends/html/main.py:271 */
+"Internal Error" = "Вътрешна грешка";
+
+/* File: ../../portable/httpclient.py:140 */
+/* Flag: untranslated */
+"Pipeline request never started" = "Pipeline request never started";
+
+/* File: ../../portable/httpclient.py:144 */
+/* Flag: untranslated */
+"Timeout" = "Timeout";
+
+/* File: ../../portable/httpclient.py:145 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Connection to %s timed out" = "Connection to %s timed out";
+
+/* File: ../../portable/httpclient.py:149 */
+"Invalid URL" = "Неправилен URL-адрес";
+
+/* File: ../../portable/httpclient.py:150 */
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "\"%s\" не е правилен URL-адрес";
+
+/* File: ../../portable/httpclient.py:156 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "Файлът \"%s\" не съществува";
+
+/* File: ../../portable/httpclient.py:160 */
+"Read error" = "Грешка при четене";
+
+/* File: ../../portable/httpclient.py:161 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "Грешка при четене от \"%s\"";
+
+/* File: ../../portable/httpclient.py:354 */
+"Unknown Error code" = "Неизвестен код на грешка";
+
+/* File: ../../portable/httpclient.py:386 */
+"Connection closed" = "Връзката е прекъсната";
+
+/* File: ../../portable/httpclient.py:811 */
+"Unknown" = "Непознато";
+
+/* File: ../../portable/httpclient.py:812 */
+/* Flag: untranslated */
+"Internal Error: Not ready to send" = "Internal Error: Not ready to send";
+
+/* File: ../../portable/theme.py:127 */
+/* File: ../../portable/frontends/html/main.py:192 */
+"Custom Channels" = "Потребителски канал";
+
+/* File: ../../portable/theme.py:127 */
+/* File: ../../portable/frontends/html/main.py:192 */
+"You are running a version of $longAppName with a custom set of channels." = "Ползвате версия на $longAppName с набор от първоначални канали.";
+
+/* File: ../../portable/theme.py:138 */
+"Starter Channels" = "Първоначални канали";
+
+/* File: ../../portable/theme.py:154 */
+"Example Playlist" = "Примерен списък";
+
+/* File: ../../portable/downloader.py:234 */
+"activity" = "дейност";
+
+/* File: ../../portable/downloader.py:269 */
+/* Flag: untranslated */
+"Flash URL Scraping Error" = "Flash URL Scraping Error";
+
+/* File: ../../portable/downloader.py:445 */
+"starting up" = "зареждане";
+
+/* File: ../../portable/license.py:68 */
+/* Flag: untranslated */
+"license page" = "license page";
+
+/* File: ../../portable/singleclick.py:99 */
+"Download already exists" = "Файлът вече съществува";
+
+/* File: ../../portable/singleclick.py:100 */
+"That URL is already an external download." = "Този URL-адрес вече е даден за изтегляне.";
+
+/* File: ../../portable/singleclick.py:106 */
+"Miro will begin downloading it now." = "Програмата ще започне изтеглянето сега.";
+
+/* File: ../../portable/singleclick.py:108 */
+"It is downloading now." = "Изтегля се в момента.";
+
+/* File: ../../portable/singleclick.py:110 */
+"It has already been downloaded." = "Вече е изтеглено.";
+
+/* File: ../../portable/singleclick.py:137 */
+"Download Error" = "Грешка при изтегляне";
+
+/* File: ../../portable/singleclick.py:138 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro is not able to download a file at this URL:\n\nURL: %s";
+
+/* File: ../../portable/singleclick.py:146 */
+"File Download" = "Изтегляне на файл";
+
+/* File: ../../portable/singleclick.py:147 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "Файлът на %s изглежда не е нито звуков, нито видео, нито емисия.";
+
+/* File: ../../portable/singleclick.py:235 */
+"Subscribing to multiple channels" = "Записване за множество канали";
+
+/* File: ../../portable/singleclick.py:236 */
+/* Flag: python-format */
+"Create %d channels?" = "Да се създадат ли %d канала?";
+
+/* File: ../../portable/singleclick.py:249 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Добавяне на %d канала към нова папка";
+
+/* File: ../../portable/singleclick.py:250 */
+/* File: ../../portable/folder.py:224 */
+"Enter a name for the new channel folder" = "Въведете име за новата папка за канали";
+
+/* File: ../../portable/singleclick.py:253 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
+
+/* File: ../../portable/singleclick.py:264 */
+"Subscription error" = "Грешка при записване";
+
+/* File: ../../portable/singleclick.py:274 */
+/* Flag: untranslated */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.";
+
+/* File: ../../portable/singleclick.py:282 */
+/* Flag: untranslated */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.";
+
+/* File: ../../portable/singleclick.py:286 */
+"Could not download the $shortAppName channel file: $url." = "Грешка при изтегляне на файла с канали за $shortAppName $url.";
+
+/* File: ../../portable/singleclick.py:334 */
+"Invalid Torrent" = "Неправилен торент-файл";
+
+/* File: ../../portable/singleclick.py:335 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Торент-файлът %s изглежда е повреден и не може да бъде отворен. [OK]";
+
+/* File: ../../portable/folder.py:142 */
+/* File: ../../portable/frontends/html/contextmenu.py:183 */
+"Rename Channel Folder" = "Преименуване на папката за канали";
+
+/* File: ../../portable/folder.py:144 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "Въведете ново име за папката с канали %s";
+
+/* File: ../../portable/folder.py:213 */
+/* File: ../../portable/frontends/html/contextmenu.py:189 */
+"Rename Playlist Folder" = "Преименуване на папката за списъци";
+
+/* File: ../../portable/folder.py:215 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "Въведете ново име за папката със списъци %s";
+
+/* File: ../../portable/folder.py:223 */
+"Create Channel Folder" = "Създаване на папка за канали";
+
+/* File: ../../portable/folder.py:237 */
+"Create Playlist Folder" = "Създаване на папка за списъци";
+
+/* File: ../../portable/folder.py:238 */
+"Enter a name for the new playlist folder" = "Въведете име за новата папка със списъци";
+
+/* File: ../../portable/opml.py:144 */
+"OPML Import failed" = "Грешка при внасянето от OPML";
+
+/* File: ../../portable/opml.py:145 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "Избраният OPML файл изглежда невалиден. Вмъкването бе прекъснато.";
+
+/* File: ../../portable/opml.py:150 */
+"OPML Import summary" = "Отчет от OPML вмъкване";
+
+/* File: ../../portable/frontends/html/contextmenu.py:104 */
 "Update Channels Now" = "Обновяване на каналите сега";
 
 /* File: ../../portable/frontends/html/contextmenu.py:128 */
@@ -641,27 +1099,27 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Downloaded Items" = "%d изтеглени файла";
 
 /* File: ../../portable/frontends/html/contextmenu.py:130 */
-/* File: ../../portable/frontends/html/contextmenu.py:211 */
+/* File: ../../portable/frontends/html/contextmenu.py:210 */
 "Play" = "Изпълнение";
 
 /* File: ../../portable/frontends/html/contextmenu.py:131 */
-/* File: ../../portable/frontends/html/contextmenu.py:214 */
+/* File: ../../portable/frontends/html/contextmenu.py:213 */
 "Add to new playlist" = "Добавяне към нов списък";
 
 /* File: ../../portable/frontends/html/contextmenu.py:133 */
-/* File: ../../portable/frontends/html/contextmenu.py:207 */
+/* File: ../../portable/frontends/html/contextmenu.py:206 */
 "Remove From Playlist" = "Премахване от списъка";
 
 /* File: ../../portable/frontends/html/contextmenu.py:135 */
-/* File: ../../portable/frontends/html/contextmenu.py:209 */
+/* File: ../../portable/frontends/html/contextmenu.py:208 */
 "Remove From the Library" = "Премахване от видеотеката";
 
 /* File: ../../portable/frontends/html/contextmenu.py:141 */
-/* File: ../../portable/frontends/html/contextmenu.py:218 */
+/* File: ../../portable/frontends/html/contextmenu.py:217 */
 "Mark as Unwatched" = "Отбелязване като негледано";
 
 /* File: ../../portable/frontends/html/contextmenu.py:146 */
-/* File: ../../portable/frontends/html/contextmenu.py:220 */
+/* File: ../../portable/frontends/html/contextmenu.py:219 */
 "Mark as Watched" = "Отбелязване като гледано";
 
 /* File: ../../portable/frontends/html/contextmenu.py:151 */
@@ -669,7 +1127,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Available Items" = "%d налични файла";
 
 /* File: ../../portable/frontends/html/contextmenu.py:152 */
-/* File: ../../portable/frontends/html/contextmenu.py:227 */
+/* File: ../../portable/frontends/html/contextmenu.py:226 */
 /* File: ../../portable/dialogs.py:93 */
 "Download" = "Изтегляне";
 
@@ -678,15 +1136,15 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%d Downloading Items" = "%d изтегляни файла";
 
 /* File: ../../portable/frontends/html/contextmenu.py:159 */
-/* File: ../../portable/frontends/html/contextmenu.py:225 */
+/* File: ../../portable/frontends/html/contextmenu.py:224 */
 "Cancel Download" = "Отмяна на изтеглянето";
 
 /* File: ../../portable/frontends/html/contextmenu.py:161 */
-/* File: ../../portable/frontends/html/contextmenu.py:225 */
+/* File: ../../portable/frontends/html/contextmenu.py:224 */
 "Pause Download" = "Изтеглянето на пауза";
 
 /* File: ../../portable/frontends/html/contextmenu.py:164 */
-/* File: ../../portable/frontends/html/contextmenu.py:223 */
+/* File: ../../portable/frontends/html/contextmenu.py:222 */
 "Restart Upload" = "Рестартиране на качването";
 
 /* File: ../../portable/frontends/html/contextmenu.py:170 */
@@ -696,88 +1154,60 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/frontends/html/contextmenu.py:196 */
 "Copy URL to clipboard" = "Копиране на адреса в системния буфер";
 
-/* File: ../../portable/frontends/html/contextmenu.py:173 */
-/* File: ../../portable/feed.py:825 */
-"Rename Channel" = "Преименуване на канала";
-
 /* File: ../../portable/frontends/html/contextmenu.py:177 */
 "Revert Title to Default" = "Връщане на подразбиращото се заглавие";
 
-/* File: ../../portable/frontends/html/contextmenu.py:183 */
-/* File: ../../portable/folder.py:142 */
-"Rename Channel Folder" = "Преименуване на папката за канали";
-
-/* File: ../../portable/frontends/html/contextmenu.py:189 */
-/* File: ../../portable/folder.py:213 */
-"Rename Playlist Folder" = "Преименуване на папката за списъци";
-
-/* File: ../../portable/frontends/html/contextmenu.py:213 */
+/* File: ../../portable/frontends/html/contextmenu.py:212 */
 "Play Just This Video" = "Изпълнение само на този филм";
 
-/* File: ../../portable/frontends/html/contextmenu.py:232 */
+/* File: ../../portable/frontends/html/contextmenu.py:231 */
 /* File: ../../portable/playlist.py:218 */
 "Rename Playlist" = "Преименуване на списъка";
 
-/* File: ../../portable/frontends/html/main.py:132 */
-/* File: ../../portable/startup.py:237 */
-"Video Directory Missing" = "Липсва папка за филми";
-
-/* File: ../../portable/frontends/html/main.py:133 */
+/* File: ../../portable/frontends/html/main.py:135 */
 /* Flag: untranslated */
 "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
 
-/* File: ../../portable/frontends/html/main.py:190 */
-/* File: ../../portable/theme.py:126 */
-"Custom Channels" = "Потребителски канал";
-
-/* File: ../../portable/frontends/html/main.py:190 */
-/* File: ../../portable/theme.py:126 */
-"You are running a version of $longAppName with a custom set of channels." = "Ползвате версия на $longAppName с набор от първоначални канали.";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-/* File: ../../portable/httpclient.py:139 */
-"Internal Error" = "Вътрешна грешка";
-
-/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/frontends/html/main.py:271 */
 "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Програмата се натъкна на вътрешна грешка. Можете да ни помогнете да проследим причината за проблема и да го отстраним, като ни изпратите доклад за грешката.";
 
-/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/frontends/html/main.py:271 */
 /* Flag: untranslated */
 "Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
 
-/* File: ../../portable/frontends/html/main.py:269 */
+/* File: ../../portable/frontends/html/main.py:271 */
 "Describe what you were doing that caused this error" = "Опишете действията си, които са довели до грешката";
 
-/* File: ../../portable/frontends/html/main.py:284 */
+/* File: ../../portable/frontends/html/main.py:286 */
 /* Flag: python-format */
 "%s Version Alert" = "%s има по-нова версия";
 
-/* File: ../../portable/frontends/html/main.py:285 */
+/* File: ../../portable/frontends/html/main.py:287 */
 /* Flag: python-format */
 "A new version of %s is available. Would you like to download it now?" = "Има нова версия на %s. Искате ли да я изтеглите сега?";
 
-/* File: ../../portable/frontends/html/main.py:290 */
+/* File: ../../portable/frontends/html/main.py:292 */
 /* Flag: python-format */
 "%s Version Check" = "Проверка на версията на %s";
 
-/* File: ../../portable/frontends/html/main.py:291 */
+/* File: ../../portable/frontends/html/main.py:293 */
 /* Flag: python-format */
 "%s is up to date." = "%s е с най-нова версия.";
 
-/* File: ../../portable/frontends/html/main.py:309 */
+/* File: ../../portable/frontends/html/main.py:311 */
 "Are you sure you want to quit?" = "Наистина ли искате да спрете програмата?";
 
-/* File: ../../portable/frontends/html/main.py:311 */
+/* File: ../../portable/frontends/html/main.py:313 */
 /* Flag: untranslated */
 "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?";
 
-/* File: ../../portable/frontends/html/main.py:340 */
+/* File: ../../portable/frontends/html/main.py:342 */
 "Import OPML File" = "Внасяне от OPML-файл";
 
-/* File: ../../portable/frontends/html/main.py:342 */
+/* File: ../../portable/frontends/html/main.py:344 */
 "OPML Files" = "OPML-файлове";
 
-/* File: ../../portable/frontends/html/main.py:347 */
+/* File: ../../portable/frontends/html/main.py:349 */
 "Export OPML File" = "Изнасяне в OPML-файл";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:325 */
@@ -825,27 +1255,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/frontends/html/templatedisplay.py:718 */
 "Enter the URL of the video to download" = "Въведете URL-адреса на филма за изтегляне";
 
-/* File: ../../portable/tabs.py:55 */
-"Library" = "Видеотека";
-
-/* File: ../../portable/tabs.py:58 */
-"Downloading" = "Изтегляне";
-
-/* File: ../../portable/downloader.py:234 */
-"activity" = "дейност";
-
-/* File: ../../portable/downloader.py:268 */
-/* File: ../../portable/httpclient.py:127 */
-/* File: ../../portable/httpclient.py:155 */
-"File not found" = "Файлът не е намерен";
-
-/* File: ../../portable/downloader.py:269 */
-/* Flag: untranslated */
-"Flash URL Scraping Error" = "Flash URL Scraping Error";
-
-/* File: ../../portable/downloader.py:445 */
-"starting up" = "зареждане";
-
 /* File: ../../portable/playlist.py:219 */
 /* Flag: python-format */
 "Enter a new name for the playlist %s" = "Въведете ново име за списъка %s";
@@ -855,15 +1264,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/playlist.py:242 */
 "Enter a name for the new playlist" = "Въведете име за новия списък";
-
-/* File: ../../portable/opml.py:144 */
-"OPML Import failed" = "Грешка при внасянето от OPML";
-
-/* File: ../../portable/opml.py:145 */
-"The selected OPML file appears to be invalid. Import was interrupted." = "Избраният OPML файл изглежда невалиден. Вмъкването бе прекъснато.";
-
-/* File: ../../portable/opml.py:150 */
-"OPML Import summary" = "Отчет от OPML вмъкване";
 
 /* File: ../../portable/util.py:266 */
 /* Flag: untranslated */
@@ -900,6 +1300,42 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/util.py:286 */
 /* Flag: python-format */
 "%dB" = "%dB";
+
+/* File: ../../portable/dl_daemon/download.py:458 */
+"Error" = "Грешка";
+
+/* File: ../../portable/dl_daemon/download.py:544 */
+/* Flag: python-format */
+"Could not write to %s" = "Не може да се пише в %s";
+
+/* File: ../../portable/dl_daemon/download.py:564 */
+/* File: ../../portable/dl_daemon/download.py:769 */
+"Not enough disk space" = "Няма достатъчно дисково пространство";
+
+/* File: ../../portable/dl_daemon/download.py:565 */
+/* File: ../../portable/dl_daemon/download.py:770 */
+/* Flag: python-format */
+"%s MB required to store this video" = "%s MB са нужни за запазване на филма";
+
+/* File: ../../portable/dl_daemon/download.py:781 */
+"BitTorrent failure" = "Грешка в BitRorrent";
+
+/* File: ../../portable/dl_daemon/download.py:782 */
+"BitTorrent failed to startup" = "Грешка при зареждане на BitTorrent";
+
+/* File: ../../portable/dl_daemon/download.py:954 */
+"Corrupt Torrent" = "Повреден торент";
+
+/* File: ../../portable/dl_daemon/download.py:955 */
+/* Flag: python-format */
+"The torrent file at %s was not valid" = "Торент-файлът %s не е правилен";
+
+/* File: ../../portable/dl_daemon/download.py:980 */
+"Torrent file deleted" = "Торрент-файлът е изтрит";
+
+/* File: ../../portable/dl_daemon/download.py:981 */
+/* Flag: untranslated */
+"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
 
 /* File: ../../portable/iheartmiro.py:82 */
 /* Flag: untranslated */
@@ -1083,187 +1519,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/menubar.py:272 */
 "Show Window" = "Показване на прозореца";
 
-/* File: ../../portable/theme.py:137 */
-"Starter Channels" = "Първоначални канали";
-
-/* File: ../../portable/theme.py:154 */
-"Example Playlist" = "Примерен списък";
-
-/* File: ../../portable/httpclient.py:81 */
-/* Flag: python-format */
-"Error: %s" = "Грешка: %s";
-
-/* File: ../../portable/httpclient.py:96 */
-/* File: ../../portable/httpclient.py:102 */
-"Can't connect" = "Грешка при свързване";
-
-/* File: ../../portable/httpclient.py:97 */
-/* Flag: python-format */
-"Connection Error: %s" = "Грешка при свързване: %s";
-
-/* File: ../../portable/httpclient.py:103 */
-"SSL connection error" = "Грешка при свързване по SSL";
-
-/* File: ../../portable/httpclient.py:107 */
-"HTTP error" = "Грешка в HTTP";
-
-/* File: ../../portable/httpclient.py:110 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Status Line: %s" = "Bad Status Line: %s";
-
-/* File: ../../portable/httpclient.py:113 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Header Line: %s" = "Bad Header Line: %s";
-
-/* File: ../../portable/httpclient.py:116 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Chunk size: %s" = "Bad Chunk size: %s";
-
-/* File: ../../portable/httpclient.py:119 */
-/* Flag: python-format */
-"Expected CRLF got: %r" = "Очаквано CRLF, получено: %r";
-
-/* File: ../../portable/httpclient.py:122 */
-/* Flag: python-format */
-"%s closed connection" = "%s прекрати връзката";
-
-/* File: ../../portable/httpclient.py:128 */
-"Got 404 status code" = "Получен е код на грешка 404";
-
-/* File: ../../portable/httpclient.py:130 */
-/* Flag: python-format */
-"Bad Status Code: %s" = "Неправилен код за състояние: %s";
-
-/* File: ../../portable/httpclient.py:134 */
-"Authorization failed" = "Грешка при автентикацията";
-
-/* File: ../../portable/httpclient.py:140 */
-/* Flag: untranslated */
-"Pipeline request never started" = "Pipeline request never started";
-
-/* File: ../../portable/httpclient.py:144 */
-/* Flag: untranslated */
-"Timeout" = "Timeout";
-
-/* File: ../../portable/httpclient.py:145 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Connection to %s timed out" = "Connection to %s timed out";
-
-/* File: ../../portable/httpclient.py:149 */
-"Invalid URL" = "Неправилен URL-адрес";
-
-/* File: ../../portable/httpclient.py:150 */
-/* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" не е правилен URL-адрес";
-
-/* File: ../../portable/httpclient.py:156 */
-/* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "Файлът \"%s\" не съществува";
-
-/* File: ../../portable/httpclient.py:160 */
-"Read error" = "Грешка при четене";
-
-/* File: ../../portable/httpclient.py:161 */
-/* Flag: python-format */
-"Error while reading from \"%s\"" = "Грешка при четене от \"%s\"";
-
-/* File: ../../portable/httpclient.py:354 */
-"Unknown Error code" = "Неизвестен код на грешка";
-
-/* File: ../../portable/httpclient.py:386 */
-"Connection closed" = "Връзката е прекъсната";
-
-/* File: ../../portable/httpclient.py:811 */
-"Unknown" = "Непознато";
-
-/* File: ../../portable/httpclient.py:812 */
-/* Flag: untranslated */
-"Internal Error: Not ready to send" = "Internal Error: Not ready to send";
-
-/* File: ../../portable/extrastrings.py:33 */
-/* File: ../../portable/feed.py:2409 */
-/* File: ../../portable/feed.py:2499 */
-"Search" = "Търсене";
-
-/* File: ../../portable/feed.py:384 */
-"never" = "никога";
-
-/* File: ../../portable/feed.py:386 */
-/* File: ../../portable/item.py:554 */
-/* Flag: python-format */
-"%d hours" = "%d часа";
-
-/* File: ../../portable/feed.py:388 */
-/* Flag: python-format */
-"%d day" = "%d ден";
-
-/* File: ../../portable/feed.py:390 */
-/* File: ../../portable/item.py:552 */
-/* Flag: python-format */
-"%d days" = "%d дни";
-
-/* File: ../../portable/feed.py:392 */
-/* Flag: python-format */
-"%d months" = "%d месеца";
-
-/* File: ../../portable/feed.py:826 */
-/* Flag: python-format */
-"Enter a new name for the channel %s" = "Въвеете ново име за канала %s";
-
-/* File: ../../portable/feed.py:923 */
-"Error loading feed" = "Грешка при зареждане на емисията";
-
-/* File: ../../portable/feed.py:924 */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Грешка при зареждане на емисията от %s (%s).";
-
-/* File: ../../portable/feed.py:927 */
-"Would you like to keep the feed?" = "Искате ли да запазите емисията?";
-
-/* File: ../../portable/feed.py:1040 */
-/* Flag: untranslated */
-"Bad content-type" = "Bad content-type";
-
-/* File: ../../portable/feed.py:1053 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-"Channel is not compatible with $shortAppName!" = "Каналът не е съвместим с $shortAppName!";
-
-/* File: ../../portable/feed.py:1054 */
-/* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
-
-/* File: ../../portable/feed.py:2513 */
-"Local Files" = "Локални файлове";
-
-/* File: ../../portable/feed.py:2527 */
-"Playing File" = "Изпълнение на файл";
-
-/* File: ../../portable/storedatabase.py:859 */
-/* File: ../../portable/storedatabase.py:1258 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s database save succeeded" = "%s database save succeeded";
-
-/* File: ../../portable/storedatabase.py:860 */
-/* File: ../../portable/storedatabase.py:1259 */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "Базата от данни е успешно записана. Сега може спокойно да спрете програмата, без опасност от загуба на данни.";
-
-/* File: ../../portable/storedatabase.py:867 */
-/* File: ../../portable/storedatabase.py:1267 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s database save failed" = "%s database save failed";
-
-/* File: ../../portable/storedatabase.py:868 */
-/* File: ../../portable/storedatabase.py:1268 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.";
-
 /* File: ../../portable/dialogs.py:89 */
 "Ignore" = "Пренебрегване";
 
@@ -1271,12 +1526,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Submit Crash Report" = "Изпращане на доклад за грешка";
 
 /* File: ../../portable/dialogs.py:91 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
 "Migrate" = "Мигриране";
 
 /* File: ../../portable/dialogs.py:92 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
 "Don't Migrate" = "Без мигриране";
 
@@ -1329,12 +1584,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Don't Install" = "Don't Install";
 
 /* File: ../../portable/dialogs.py:231 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
 "New Search Channel" = "Нов канал за търсене";
 
 /* File: ../../portable/dialogs.py:231 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
 "A search channel contains items that match a search term." = "Каналът за търсене съдържа записи, отговарящи на даденото търсене.";
 
@@ -1413,261 +1668,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: python-format */
 "An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "An error occured while trying to save %s.  Please check that the file has not been deleted and try again.";
 
-/* File: ../../portable/singleclick.py:99 */
-"Download already exists" = "Файлът вече съществува";
-
-/* File: ../../portable/singleclick.py:100 */
-"That URL is already an external download." = "Този URL-адрес вече е даден за изтегляне.";
-
-/* File: ../../portable/singleclick.py:106 */
-"Miro will begin downloading it now." = "Програмата ще започне изтеглянето сега.";
-
-/* File: ../../portable/singleclick.py:108 */
-"It is downloading now." = "Изтегля се в момента.";
-
-/* File: ../../portable/singleclick.py:110 */
-"It has already been downloaded." = "Вече е изтеглено.";
-
-/* File: ../../portable/singleclick.py:137 */
-"Download Error" = "Грешка при изтегляне";
-
-/* File: ../../portable/singleclick.py:138 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro is not able to download a file at this URL:\n\nURL: %s";
-
-/* File: ../../portable/singleclick.py:146 */
-"File Download" = "Изтегляне на файл";
-
-/* File: ../../portable/singleclick.py:147 */
-/* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "Файлът на %s изглежда не е нито звуков, нито видео, нито емисия.";
-
-/* File: ../../portable/singleclick.py:235 */
-"Subscribing to multiple channels" = "Записване за множество канали";
-
-/* File: ../../portable/singleclick.py:236 */
-/* Flag: python-format */
-"Create %d channels?" = "Да се създадат ли %d канала?";
-
-/* File: ../../portable/singleclick.py:249 */
-/* Flag: python-format */
-"Adding %d channels to a new folder" = "Добавяне на %d канала към нова папка";
-
-/* File: ../../portable/singleclick.py:250 */
-/* File: ../../portable/folder.py:224 */
-"Enter a name for the new channel folder" = "Въведете име за новата папка за канали";
-
-/* File: ../../portable/singleclick.py:253 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
-
-/* File: ../../portable/singleclick.py:264 */
-"Subscription error" = "Грешка при записване";
-
-/* File: ../../portable/singleclick.py:274 */
-/* Flag: untranslated */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.";
-
-/* File: ../../portable/singleclick.py:282 */
-/* Flag: untranslated */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.";
-
-/* File: ../../portable/singleclick.py:286 */
-"Could not download the $shortAppName channel file: $url." = "Грешка при изтегляне на файла с канали за $shortAppName $url.";
-
-/* File: ../../portable/singleclick.py:334 */
-"Invalid Torrent" = "Неправилен торент-файл";
-
-/* File: ../../portable/singleclick.py:335 */
-/* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Торент-файлът %s изглежда е повреден и не може да бъде отворен. [OK]";
-
-/* File: ../../portable/item.py:497 */
-/* Flag: python-format */
-"Removing %s" = "Премахване на %s";
-
-/* File: ../../portable/item.py:500 */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Искате да изтриете тази папка и всички филми в нея или само да премахнете записа й от видеотеката?";
-
-/* File: ../../portable/item.py:506 */
-"Would you like to delete this file or just remove its entry from the Library?" = "Искате да изтриете този файл или само да премахнете записа му от видеотеката?";
-
-/* File: ../../portable/item.py:526 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Този запис е папка. Когато премахнете папка, всички записи в нея се изтриват също.";
-
-/* File: ../../portable/item.py:556 */
-/* Flag: python-format */
-"%d minutes" = "%d минути";
-
-/* File: ../../portable/item.py:566 */
-/* Flag: python-format */
-"Expires in %s" = "Изтича след %s";
-
-/* File: ../../portable/item.py:578 */
-/* Flag: python-format */
-"Will retry in %s" = "Повторен опит след %s";
-
-/* File: ../../portable/item.py:580 */
-"Paused" = "На пауза";
-
-/* File: ../../portable/item.py:982 */
-/* Flag: untranslated */
-"TORRENT" = "TORRENT";
-
-/* File: ../../portable/item.py:984 */
-/* Flag: untranslated */
-"WEB PAGE" = "WEB PAGE";
-
-/* File: ../../portable/item.py:994 */
-"Total Down:" = "Общо изтеглено:";
-
-/* File: ../../portable/item.py:997 */
-"Error:" = "Грешка:";
-
-/* File: ../../portable/item.py:1006 */
-/* Flag: untranslated */
-"Seeders:" = "Seeders:";
-
-/* File: ../../portable/item.py:1008 */
-/* Flag: untranslated */
-"Leechers:" = "Leechers:";
-
-/* File: ../../portable/item.py:1010 */
-/* Flag: untranslated */
-"Down Rate:" = "Down Rate:";
-
-/* File: ../../portable/item.py:1011 */
-"Down Total:" = "Общо изтеглено:";
-
-/* File: ../../portable/item.py:1013 */
-/* Flag: untranslated */
-"Up Rate:" = "Up Rate:";
-
-/* File: ../../portable/item.py:1014 */
-"Up Total:" = "Общо качено:";
-
-/* File: ../../portable/item.py:1024 */
-"Web page:" = "Интернет-страница:";
-
-/* File: ../../portable/item.py:1024 */
-/* Flag: untranslated */
-"permalink" = "permalink";
-
-/* File: ../../portable/item.py:1028 */
-"File link:" = "Връзка към файла:";
-
-/* File: ../../portable/item.py:1028 */
-"direct link to file" = "пряка връзка към файла";
-
-/* File: ../../portable/item.py:1030 */
-"File type:" = "Вид на файла:";
-
-/* File: ../../portable/item.py:1037 */
-/* File: ../../portable/item.py:1040 */
-/* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"License:" = "License:";
-
-/* File: ../../portable/item.py:1040 */
-/* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"see permalink" = "see permalink";
-
-/* File: ../../portable/item.py:1049 */
-/* Flag: untranslated */
-"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
-
-/* File: ../../portable/item.py:1051 */
-/* Flag: untranslated */
-"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
-
-/* File: ../../portable/item.py:1053 */
-"Filename:" = "Име нафайла:";
-
-/* File: ../../portable/item.py:1060 */
-"Down Total" = "Общо изтеглено";
-
-/* File: ../../portable/item.py:1062 */
-"Up Total" = "Общо качено";
-
-/* File: ../../portable/item.py:1080 */
-"Item Details" = "Данни за записа";
-
-/* File: ../../portable/item.py:1087 */
-"Torrent Details" = "Подробности за торента";
-
-/* File: ../../portable/item.py:1089 */
-"Torrent Details <i>stopped</i>" = "Подробности за торента - <i>спряно</i>";
-
-/* File: ../../portable/item.py:1093 */
-"Download Details" = "Данни за изтеглянето";
-
-/* File: ../../portable/item.py:1310 */
-"downloading..." = "изтегляне...";
-
-/* File: ../../portable/item.py:1317 */
-/* File: ../../portable/item.py:1320 */
-/* Flag: python-format */
-"%s remaining" = "остават %s";
-
-/* File: ../../portable/item.py:1329 */
-"starting up..." = "започване...";
-
-/* File: ../../portable/item.py:1878 */
-/* Flag: python-format */
-"Removing %s items" = "Премахване на %s записа";
-
-/* File: ../../portable/item.py:1880 */
-/* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?";
-
-/* File: ../../portable/item.py:1888 */
-/* Flag: untranslated */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
-
-/* File: ../../portable/startup.py:92 */
-/* Flag: untranslated */
-"Unknown Error" = "Unknown Error";
-
-/* File: ../../portable/startup.py:93 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
-
-/* File: ../../portable/startup.py:155 */
-"Database too new" = "Базата от данни е твърде нова";
-
-/* File: ../../portable/startup.py:156 */
-/* Flag: untranslated */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that.";
-
-/* File: ../../portable/startup.py:238 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
-
-/* File: ../../portable/folder.py:144 */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Въведете ново име за папката с канали %s";
-
-/* File: ../../portable/folder.py:215 */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Въведете ново име за папката със списъци %s";
-
-/* File: ../../portable/folder.py:223 */
-"Create Channel Folder" = "Създаване на папка за канали";
-
-/* File: ../../portable/folder.py:237 */
-"Create Playlist Folder" = "Създаване на папка за списъци";
-
-/* File: ../../portable/folder.py:238 */
-"Enter a name for the new playlist folder" = "Въведете име за новата папка със списъци";
-
-/* File: ../../portable/license.py:68 */
-/* Flag: untranslated */
-"license page" = "license page";
-
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 ден\n3 дни\n6 дни\n10 дни\n1 месец\nНикога";
 
@@ -1691,192 +1691,204 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
+/* Flag: untranslated */
+"<b>xine</b>" = "<b>xine</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
 /* Flag: untranslated */
 "Auto download default setting for new channels" = "Auto download default setting for new channels";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
 /* Flag: untranslated */
 "Automatically for_ward ports." = "Automatically for_ward ports.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
 "By default, videos _expire after" = "По подразбиране филмите са _валидни";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
 "C_hannel:" = "_Канал:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
 "C_hannels" = "_Канали";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
 "C_reate Channel" = "_Създаване на канал";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
 "Check Channels for _new content" = "Проверка на каналите за _ново съдържание";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
 "Disk _Space" = "Дисково _пространство";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
 "Every 30 minutes\nEvery hour\nManually" = "Всеки 30 минути\nВсеки час\nРъчно";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
-/* Flag: untranslated */
-"G_B" = "G_B";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 /* Flag: untranslated */
-"Go" = "Go";
+"G_B" = "G_B";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
 /* Flag: untranslated */
-"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+"Go" = "Go";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
+/* Flag: untranslated */
+"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 /* Flag: untranslated */
 "In This:" = "In This:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
 /* Flag: untranslated */
 "Limit torrent _downstream to:" = "Limit torrent _downstream to:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
 /* Flag: untranslated */
 "Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
 /* Flag: untranslated */
 "Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
 /* Flag: untranslated */
 "Miro can find all the videos on your computer to help you organize your collection." = "Miro can find all the videos on your computer to help you organize your collection.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
 /* Flag: untranslated */
 "New\nAll\nOff" = "New\nAll\nOff";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
 "Play _videos one after another" = "Изпълнение на _филмите един след друг";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
 "Preferences" = "Предпочитания";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
 /* Flag: untranslated */
 "Restrict to my full _home folder" = "Restrict to my full _home folder";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
 "S_top after each video" = "_Спиране след всеки филм";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
 "S_tore downloaded videos in this folder:" = "Запазване на _изтеглените филми в тази папка:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
 "Search _Engine:" = "_Търсачка:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
 /* Flag: untranslated */
 "Search _custom folder:" = "Search _custom folder:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
 "Select Movies Directory" = "Избор на папка за филми";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
 /* Flag: untranslated */
 "Select custom search directory" = "Select custom search directory";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
 /* Flag: untranslated */
 "Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
 /* Flag: untranslated */
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "The next few screens will help you set up Miro so that it works best for you.  Here's the first question.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
 /* Flag: untranslated */
 "To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
 /* Flag: untranslated */
 "Use _ports:" = "Use _ports:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
-/* Flag: untranslated */
-"Use this renderer to play videos:" = "Use this renderer to play videos:";
-
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
-"Volume:" = "Сила на звука:";
+/* Flag: untranslated */
+"Use this for video when listening to audio:" = "Use this for video when listening to audio:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
 /* Flag: untranslated */
-"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.";
+"Use this renderer to play videos:" = "Use this renderer to play videos:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
+"Volume:" = "Сила на звука:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
 /* Flag: untranslated */
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
-/* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-"_Add Folder" = "_Добавяне на папка";
+/* Flag: untranslated */
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
 /* Flag: untranslated */
-"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
-"_Downloads" = "_Изтегляния";
+"_Add Folder" = "_Добавяне на папка";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
-"_Folders" = "_Папки";
+/* Flag: untranslated */
+"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
-"_General" = "_Общи";
+"_Downloads" = "_Изтегляния";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
+"_Folders" = "_Папки";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
+"_General" = "_Общи";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
 /* Flag: untranslated */
 "_KB/s." = "_KB/s.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
 /* Flag: untranslated */
 "_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
 "_Playback" = "_Изпълнение";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
 "_Resume playback of videos from the point where they were stopped" = "_Продължаване на изпълнението от мястото, където е било спряно";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
 "_Search" = "_Търсене";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
 "_Search For:" = "_Търсене за:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
 "_URL" = "_URL-адрес";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
 /* Flag: untranslated */
 "_Warn me when I attempt to quit with downloads in progress" = "_Warn me when I attempt to quit with downloads in progress";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:90 */
 "_Watch for new videos in these folders and include them in the Library" = "_Наблюдение за нови филми в тези папки и добавяне към видеотеката";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:91 */
+/* Flag: untranslated */
+"goom\noscope\nfftscope\nfftgraph\nnone" = "goom\noscope\nfftscope\nfftgraph\nnone";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:96 */
 /* Flag: untranslated */
 "xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
 /* Flag: untranslated */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
 "About $longAppName" = "Относно $longAppName";

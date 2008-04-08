@@ -39,7 +39,7 @@
 <!ENTITY prefs.autodownloads.max "Número máximo de canais de auto-download simultâneos:">
 
 <!ENTITY prefs.disk.space "Espaço em Disco">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Manter ao menos isto de espaço livre no meu disco:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ATENÇÃO: Esta alteração terá efeito somente após o re-inicio do $longAppName.">
 

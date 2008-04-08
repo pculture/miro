@@ -15,7 +15,7 @@
 <!ENTITY prefs.channels.check.manually "手動">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.all "全て">
 <!ENTITY prefs.channels.autodownloaddefault.new "新しい">
 <!ENTITY prefs.channels.autodownloaddefault.off "Off">
 

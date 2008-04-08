@@ -15,7 +15,7 @@
 <!ENTITY prefs.channels.check.manually "ידנית">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.all "הכל">
 <!ENTITY prefs.channels.autodownloaddefault.new "חדש">
 <!ENTITY prefs.channels.autodownloaddefault.off "Off">
 

@@ -14,10 +14,10 @@
 <!ENTITY prefs.channels.check.sixty "Hver time">
 <!ENTITY prefs.channels.check.manually "Manuelt">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault "Automatisk download som standard indstilling for nye kanaler">
 <!ENTITY prefs.channels.autodownloaddefault.all "All">
 <!ENTITY prefs.channels.autodownloaddefault.new "Ny">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Fra">
 
 <!ENTITY prefs.playback "Afspil">
 <!ENTITY prefs.playback.remember.pos "Husk hvor jeg stoppede visningen og fortsæt derfra.">
@@ -35,11 +35,11 @@
 <!ENTITY prefs.folder.others.remove "Fjern">
 
 <!ENTITY prefs.downloads "Downloads" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
-<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+<!ENTITY prefs.downloads.max "Maksimalt antal af manuelle downloads på en gang:">
+<!ENTITY prefs.autodownloads.max "Maksimalt antal af kanal autodownloads på en gang:">
 
 <!ENTITY prefs.disk.space "Diskplads">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Bevar mindst så meget fri plads på mit drev:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ADVARSEL: Denne ændring kræver at genstarter $longAppName.">
 
@@ -53,10 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "ADVARSEL: Ændringer effektueres først når du har genstartet $longAppName).">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "For at undgå langsomt internet, begræns upload til:">
+<!ENTITY prefs.torrent.limit.downstream "Begrens download båndbredde til:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
-<!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
+<!ENTITY prefs.torrent.use_ports "Brug disse porte:">
+<!ENTITY prefs.torrent.use_upnp "Videresend automatisk porte">
+<!ENTITY prefs.torrent.require_encryption "Ignorer uenkrypterede forbindelser">
+<!ENTITY prefs.torrent.uploadratio "Stop torrent downloads når denne ratio nås:">

@@ -15,9 +15,9 @@
 <!ENTITY prefs.channels.check.manually "يدوياً">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.all "الجميع">
 <!ENTITY prefs.channels.autodownloaddefault.new "جديد">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "إطفاﺀ">
 
 <!ENTITY prefs.playback "إعادة التشغيل">
 <!ENTITY prefs.playback.remember.pos "تذكّر أين وقفت من مشاهدة المرئية والإستمرار من تلك النقطة.">
@@ -40,7 +40,7 @@
 
 <!ENTITY prefs.disk.space "مساحة القرص">
 <!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
-<!ENTITY prefs.disk.space.min.part2 "GB">
+<!ENTITY prefs.disk.space.min.part2 "غيغابايت">
 <!ENTITY prefs.disk.space.warning.restart "تحذير: هذا الإعداد لن يكون مفعّل حتى تعيد تشغيل $longAppName.">
 
 <!ENTITY prefs.videos.expire "تنتهي المرئيات إفتراضياً بعد">
@@ -56,7 +56,7 @@
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_ports "استخدم هذه المنافذ:">
 <!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
 <!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
 <!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

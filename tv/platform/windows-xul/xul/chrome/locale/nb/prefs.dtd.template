@@ -14,7 +14,7 @@
 <!ENTITY prefs.channels.check.sixty "Hver time">
 <!ENTITY prefs.channels.check.manually "Manuelt">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault "Standard for automatisk nedlastning for nye kanaler">
 <!ENTITY prefs.channels.autodownloaddefault.all "Alt">
 <!ENTITY prefs.channels.autodownloaddefault.new "Nye">
 <!ENTITY prefs.channels.autodownloaddefault.off "Av">
@@ -35,8 +35,8 @@
 <!ENTITY prefs.folder.others.remove "Fjern">
 
 <!ENTITY prefs.downloads "Nedlastinger" >
-<!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
-<!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
+<!ENTITY prefs.downloads.max "Maksimalt antall manuelle samtidige nedlastninger:">
+<!ENTITY prefs.autodownloads.max "Maksimalt antall kanaler som samtidig kan auto-nedlastes:">
 
 <!ENTITY prefs.disk.space "Ledig diskplass">
 <!ENTITY prefs.disk.space.min.part1 "Ha alltid minst så mye ledig plass igjen på disken:" >
@@ -53,10 +53,10 @@
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ADVARSEL: Endringer tas ikke i bruk før $longAppName startes på nytt.)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "For å forhindre treghet over internett, begrens opplastningsstrømmen til:">
+<!ENTITY prefs.torrent.limit.downstream "Begrens nedlastningen båndbredden til:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
 <!ENTITY prefs.torrent.use_ports "Bruk disse portene:">
-<!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
-<!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
+<!ENTITY prefs.torrent.use_upnp "Automatiske vidresendings porter">
+<!ENTITY prefs.torrent.require_encryption "Overse ukrypterte tilkoblinger">
 <!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

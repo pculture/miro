@@ -14,10 +14,10 @@
 <!ENTITY prefs.channels.check.sixty "Tunnin välein">
 <!ENTITY prefs.channels.check.manually "Manuaalisesti">
 
-<!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
+<!ENTITY prefs.channels.autodownloaddefault "Lataa oletusasetukset uusille kanaville automaattisesti.">
 <!ENTITY prefs.channels.autodownloaddefault.all "All">
 <!ENTITY prefs.channels.autodownloaddefault.new "Uusi">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Pois päältä">
 
 <!ENTITY prefs.playback "Toisto">
 <!ENTITY prefs.playback.remember.pos "Muista mihin kohtaan jäin videon katsomisessa ja jatka toistamista samasta kohdasta.">
@@ -40,7 +40,7 @@
 
 <!ENTITY prefs.disk.space "Levytila">
 <!ENTITY prefs.disk.space.min.part1 "Säilytä vähintään näin paljon vapaata levytilaa kovalevyllä" >
-<!ENTITY prefs.disk.space.min.part2 "GB">
+<!ENTITY prefs.disk.space.min.part2 "Gt">
 <!ENTITY prefs.disk.space.warning.restart "VAROITUS: Tämä asetus tulee voimaan vasta, kun käynnistät $longAppName :n uudestaan.">
 
 <!ENTITY prefs.videos.expire "Oletusarvona videoiden vanhenemisaika on">
@@ -55,7 +55,7 @@
 <!ENTITY prefs.torrent.restart.warning "(VAROITUS: Muutokset tulevat voimaan vasta, kun käynnistät $longAppName :n uudestaan.)">
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
-<!ENTITY prefs.torrent.limit.kbps "KB/s">
+<!ENTITY prefs.torrent.limit.kbps "Kt/s">
 <!ENTITY prefs.torrent.use_ports "Käytä näitä portteja">
 <!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
 <!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">

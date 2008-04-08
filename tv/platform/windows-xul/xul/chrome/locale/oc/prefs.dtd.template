@@ -16,15 +16,15 @@
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
 <!ENTITY prefs.channels.autodownloaddefault.all "Tot">
-<!ENTITY prefs.channels.autodownloaddefault.new "New">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.new "Novèl">
+<!ENTITY prefs.channels.autodownloaddefault.off "Desactivat">
 
 <!ENTITY prefs.playback "Lectura">
 <!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
-<!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
+<!ENTITY prefs.playback.auto.next.video "Legir las vidèos unas en seguida de las autras">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
-<!ENTITY prefs.folder.movies "Folders">
+<!ENTITY prefs.folder.movies "Dorsièrs">
 <!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
 <!ENTITY prefs.folder.change "Modificar...">
 
@@ -32,14 +32,14 @@
 <!ENTITY prefs.folder.others.location "Folder">
 <!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Add Folder...">
-<!ENTITY prefs.folder.others.remove "Remove">
+<!ENTITY prefs.folder.others.remove "Suprimir">
 
-<!ENTITY prefs.downloads "Downloads" >
+<!ENTITY prefs.downloads "Telecargaments" >
 <!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
-<!ENTITY prefs.disk.space "Disk Space">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space "Espaci disc">
+<!ENTITY prefs.disk.space.min.part1 "Conservar al mens aqueste espaci liure sus mon disc:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
 
@@ -49,14 +49,14 @@
 <!ENTITY prefs.videos.expire.six "6 jorns">
 <!ENTITY prefs.videos.expire.ten "10 jorns">
 <!ENTITY prefs.videos.expire.thirty "1 mes">
-<!ENTITY prefs.videos.expire.never "Never">
+<!ENTITY prefs.videos.expire.never "Jamai">
 
 <!ENTITY prefs.torrent "Paramètres BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_ports "Utilizar los pòrts seguents :">
 <!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
 <!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
 <!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">
