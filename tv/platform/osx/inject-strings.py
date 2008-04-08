@@ -46,6 +46,7 @@ for lproj in glob("Resources/*.lproj"):
     if lang == "English":
         continue
     if os.path.exists ("Resources/%s.lproj/translated.strings" % (lang)):
+        print "working on %s ..." % lang
         for nib in nibs:
             name = os.path.basename (nib)[:-4]
             exists = os.path.exists ("Resources/%s.lproj/%s.nib" % (lang, name))
