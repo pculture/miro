@@ -464,7 +464,7 @@ msgstr "預設影片保存期限:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Change..."
-msgstr "變更(&H)..."
+msgstr "變更..."
 
 msgid "Check channels for new content:"
 msgstr "檢查各頻道是否有新內容:"
