@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-03-14 18:55+0000\n"
-"Last-Translator: gariko.jaso <Unknown>\n"
+"POT-Creation-Date: 2008-04-02 15:46-0400\n"
+"PO-Revision-Date: 2008-03-21 20:13+0000\n"
+"Last-Translator: benat mendi <arrietaarambarri@hotmail.com>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
+"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -103,7 +103,7 @@ msgid "Delete"
 msgstr "Ezabatu"
 
 msgid "Donate"
-msgstr "Diru laguntza egin"
+msgstr "Eman"
 
 msgid "Download Video..."
 msgstr "Bideoa deskargatu..."
@@ -141,7 +141,7 @@ msgstr "MenuNagusia"
 msgid "Minimize"
 msgstr "Txikitu"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Miro"
 msgstr "Miro"
 
@@ -367,7 +367,7 @@ msgstr ""
 msgid "Ignore unencrypted connections"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:45
 msgid "KB/s."
 msgstr "KB/s."
 
@@ -401,13 +401,13 @@ msgstr "Bideoak bata bestearen atzetik jo"
 msgid "Remember video position."
 msgstr "Gogoratu bideoaren puntua."
 
-#: ../../portable/frontends/html/contextmenu.py:99
-#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:100
+#: ../../portable/frontends/html/contextmenu.py:105
 #: ../../portable/frontends/html/contextmenu.py:178
 #: ../../portable/frontends/html/contextmenu.py:184
 #: ../../portable/frontends/html/contextmenu.py:190
 #: ../../portable/frontends/html/contextmenu.py:199
-#: ../../portable/frontends/html/contextmenu.py:233
+#: ../../portable/frontends/html/contextmenu.py:232
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Remove"
 msgstr "Ezabatu"
@@ -415,7 +415,7 @@ msgstr "Ezabatu"
 msgid "Run Miro at startup"
 msgstr "Miro exekutatu sistema abiaraztean"
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:592
 msgid "Show as Channel"
 msgstr "Erakutsi kanal moduan"
 
@@ -435,7 +435,7 @@ msgstr ""
 msgid "Use these ports:"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:319
+#: ../../portable/frontends/html/main.py:321
 #, fuzzy
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Deskargak martxan daudela atera nahi badut ni abisatu"
@@ -483,8 +483,8 @@ msgstr "Bilatu:"
 msgid "URL"
 msgstr "URLa"
 
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
 #: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "%d artxibo analizatu dira - %d bideo aurkitu dira"
@@ -545,7 +545,7 @@ msgid ""
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "Welcome to Internet TV!"
 msgstr "Ongi Etorri Internet TVra!"
 
@@ -569,187 +569,10 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
-msgid "Update Available"
-msgstr "Eguneratzea eskuragarri"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
-#, python-format
-msgid "A new version of %s is available for download."
-msgstr "%s aplikazioaren bertsio berri bat eskuragarri dago."
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
-msgid "Error Bombing Item"
-msgstr ""
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
-msgid "Error Recommending Item"
-msgstr "Akatsa gertatu da bideo bat gomendatzean"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
-msgid "Error Opening Website"
-msgstr "Akatsa gertatu da webgunea zabaltzean"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
-#, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr ""
-"%s irekitzerakoan arazo bat egon da. Mesedez, zaiatu berriz pixkat beranduago"
-
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
-#, python-format
-msgid "%d video found"
-msgid_plural "%d videos found"
-msgstr[0] "Bideo %d aurkitu da"
-msgstr[1] "%d bideo aurkitu dira"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:79
-#, python-format
-msgid ""
-"Error importing modules:\n"
-"%s"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:254
-msgid "Loading window"
-msgstr "Leihoa kargatzen"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:255
-msgid "onStartup called twice"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:739
+#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
 #, fuzzy
-msgid "Spacebar"
-msgstr "Espazio barra"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:887
-#, fuzzy
-msgid "Close to tray?"
-msgstr "Azpira jetsi?"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:888
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
-#, fuzzy
-msgid "Download Completed"
-msgstr "Deskarga Osaturik"
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
-#, python-format
-msgid "Download of video '%s' is finished."
-msgstr "'%s' bideoaren deskarga amaituta."
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
-#, fuzzy
-msgid "Download Failed"
-msgstr "Deskargak Huts Egin Du"
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
-#, fuzzy, python-format
-msgid "Download of video '%s' has failed."
-msgstr "Bideoaren '%s'k huts egin du."
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
-#, fuzzy
-msgid "Subscribe to Channel"
-msgstr "Kanala Harpidetu"
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
-#, fuzzy
-msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "Harpidetu nahi duzun kanalaren URLa sartu."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:79
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
-msgid "General"
-msgstr "Orokorra"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:81
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
-#, fuzzy
-msgid "Downloads"
-msgstr "Deskargak"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:82
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
-msgid "Folders"
-msgstr "Karpetak"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:83
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
-#, fuzzy
-msgid "Disk Space"
-msgstr "Espazioa Diskoan"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:251
-#, fuzzy
-msgid "Movies Directory"
-msgstr "Filmen Direktorioa"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:252
-#, python-format
-msgid "Select a Directory to store %s downloads in."
-msgstr "Jeitsitako bideoak karpeta honetan gorde: %s"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:253
-#: ../../platform/osx/platform/frontends/html/Preferences.py:362
-msgid "Select"
-msgstr "Hautatu"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:262
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
-msgid "Migrate existing movies?"
-msgstr "Migratu dauden filma guztiak?"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:263
-#, python-format
-msgid ""
-"You've selected a new folder to download movies to.  Should %s migrate your "
-"existing downloads there?  (Currently dowloading movies will not be moved "
-"until they finish)."
-msgstr ""
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:360
-#, fuzzy
-msgid "View this Directory in the Library"
-msgstr "Biltegian erakutsi Direktorio hau"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:361
-msgid "Select a Directory to view in the Library."
-msgstr ""
-
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
-msgid "Finish"
-msgstr "Amaituta"
-
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
-msgid "Search!"
-msgstr "Bilatu!"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:241
-msgid "Pause Video"
-msgstr "Pausatu bideoa"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:250
-msgid "Unsupported version of Quicktime"
-msgstr "Ezin da suportatu Quicktime bertsioa"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:251
-#, fuzzy, python-format
-msgid ""
-"To run %s you need the most recent version of Quicktime, which is a free "
-"update."
-msgstr ""
-"Quicktime-en bertsio berriena behar duzu %s abian jartzeko, dohaninik den "
-"eguneraketa."
+msgid "Audio"
+msgstr "Entzutekoa"
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
@@ -842,10 +665,129 @@ msgstr "_Kanala Eguneratu..."
 msgid "_Update Channels..."
 msgstr "_Kanalak Eguneratu"
 
-#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+#: ../../platform/osx/platform/frontends/html/Application.py:241
+msgid "Pause Video"
+msgstr "Pausatu bideoa"
+
+#: ../../platform/osx/platform/frontends/html/Application.py:250
+msgid "Unsupported version of Quicktime"
+msgstr "Ezin da suportatu Quicktime bertsioa"
+
+#: ../../platform/osx/platform/frontends/html/Application.py:251
+#, fuzzy, python-format
+msgid ""
+"To run %s you need the most recent version of Quicktime, which is a free "
+"update."
+msgstr ""
+"Quicktime-en bertsio berriena behar duzu %s abian jartzeko, dohaninik den "
+"eguneraketa."
+
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
 #, fuzzy
-msgid "Audio"
-msgstr "Entzutekoa"
+msgid "Subscribe to Channel"
+msgstr "Kanala Harpidetu"
+
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
+#, fuzzy
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr "Harpidetu nahi duzun kanalaren URLa sartu."
+
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
+msgid "Finish"
+msgstr "Amaituta"
+
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
+msgid "Search!"
+msgstr "Bilatu!"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
+#, fuzzy
+msgid "Download Completed"
+msgstr "Deskarga Osaturik"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "'%s' bideoaren deskarga amaituta."
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
+#, fuzzy
+msgid "Download Failed"
+msgstr "Deskargak Huts Egin Du"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
+#, fuzzy, python-format
+msgid "Download of video '%s' has failed."
+msgstr "Bideoaren '%s'k huts egin du."
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
+msgid "General"
+msgstr "Orokorra"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:81
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+#, fuzzy
+msgid "Downloads"
+msgstr "Deskargak"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+msgid "Folders"
+msgstr "Karpetak"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
+#, fuzzy
+msgid "Disk Space"
+msgstr "Espazioa Diskoan"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:251
+#, fuzzy
+msgid "Movies Directory"
+msgstr "Filmen Direktorioa"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:252
+#, python-format
+msgid "Select a Directory to store %s downloads in."
+msgstr "Jeitsitako bideoak karpeta honetan gorde: %s"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:253
+#: ../../platform/osx/platform/frontends/html/Preferences.py:362
+msgid "Select"
+msgstr "Hautatu"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
+msgid "Migrate existing movies?"
+msgstr "Migratu dauden filma guztiak?"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:263
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %s migrate your "
+"existing downloads there?  (Currently dowloading movies will not be moved "
+"until they finish)."
+msgstr ""
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:360
+#, fuzzy
+msgid "View this Directory in the Library"
+msgstr "Biltegian erakutsi Direktorio hau"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:361
+msgid "Select a Directory to view in the Library."
+msgstr ""
+
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
+#, python-format
+msgid "%d video found"
+msgid_plural "%d videos found"
+msgstr[0] "Bideo %d aurkitu da"
+msgstr[1] "%d bideo aurkitu dira"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
@@ -866,15 +808,6 @@ msgstr "Agertarazi"
 msgid "Quit"
 msgstr "Irten"
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
-msgid "New Channel _Guide..."
-msgstr "_Kanal gida berria..."
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
-#, fuzzy
-msgid "Folder Location"
-msgstr "Karpetaren Kokapena"
-
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
 msgid "Username:"
@@ -894,53 +827,716 @@ msgstr "Prozesu Errore Ezezaguna"
 msgid "An unknown error has occurred %s."
 msgstr "Errore ezezaguna gertatu da %s."
 
-#: ../../portable/dl_daemon/download.py:458
-msgid "Error"
-msgstr "Errorea"
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
+msgid "New Channel _Guide..."
+msgstr "_Kanal gida berria..."
 
-#: ../../portable/dl_daemon/download.py:544
-#, python-format
-msgid "Could not write to %s"
-msgstr "Ezin izan da idatzi hemen: %s"
-
-#: ../../portable/dl_daemon/download.py:564
-#: ../../portable/dl_daemon/download.py:769
-msgid "Not enough disk space"
-msgstr "Ez dago lekurik diskoan"
-
-#: ../../portable/dl_daemon/download.py:565
-#: ../../portable/dl_daemon/download.py:770
-#, python-format
-msgid "%s MB required to store this video"
-msgstr "%s MB behar dira bideo hau gordetzeko"
-
-#: ../../portable/dl_daemon/download.py:781
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:583
 #, fuzzy
-msgid "BitTorrent failure"
-msgstr "BitTorrenten hutsegitea"
+msgid "Folder Location"
+msgstr "Karpetaren Kokapena"
 
-#: ../../portable/dl_daemon/download.py:782
-msgid "BitTorrent failed to startup"
-msgstr "Abiatzean BitTorrent-en hutsegitea"
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
+msgid "Update Available"
+msgstr "Eguneratzea eskuragarri"
 
-#: ../../portable/dl_daemon/download.py:954
-msgid "Corrupt Torrent"
-msgstr "Torrent Usteldua"
-
-#: ../../portable/dl_daemon/download.py:955
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
 #, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "%s torrent fitxategia baliogabea da"
+msgid "A new version of %s is available for download."
+msgstr "%s aplikazioaren bertsio berri bat eskuragarri dago."
 
-#: ../../portable/dl_daemon/download.py:980
-msgid "Torrent file deleted"
-msgstr "Torrent fitxategia ezabatua"
-
-#: ../../portable/dl_daemon/download.py:981
-msgid "The torrent file for this item was deleted outside of Miro."
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
+msgid "Error Bombing Item"
 msgstr ""
 
-#: ../../portable/frontends/html/contextmenu.py:103
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
+msgid "Error Recommending Item"
+msgstr "Akatsa gertatu da bideo bat gomendatzean"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
+msgid "Error Opening Website"
+msgstr "Akatsa gertatu da webgunea zabaltzean"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
+#, python-format
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr ""
+"%s irekitzerakoan arazo bat egon da. Mesedez, zaiatu berriz pixkat beranduago"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:79
+#, python-format
+msgid ""
+"Error importing modules:\n"
+"%s"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:254
+msgid "Loading window"
+msgstr "Leihoa kargatzen"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:255
+msgid "onStartup called twice"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:739
+#, fuzzy
+msgid "Spacebar"
+msgstr "Espazio barra"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:887
+#, fuzzy
+msgid "Close to tray?"
+msgstr "Azpira jetsi?"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:888
+msgid ""
+"When you click the red close button, would you like Miro to close to the "
+"system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+
+#: ../../portable/item.py:497
+#, python-format
+msgid "Removing %s"
+msgstr "%s Ezabatzen"
+
+#: ../../portable/item.py:500
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr ""
+
+#: ../../portable/item.py:506
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
+msgstr ""
+
+#: ../../portable/item.py:526
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+"Hau karpeta bat da. Karpeta bat ezabatzean, barruan egon daitezkeen "
+"elementuak ere ezabatuko dira."
+
+#: ../../portable/item.py:552 ../../portable/feed.py:390
+#, python-format
+msgid "%d days"
+msgstr "%d egun"
+
+#: ../../portable/item.py:554 ../../portable/feed.py:386
+#, python-format
+msgid "%d hours"
+msgstr "%d ordu"
+
+#: ../../portable/item.py:556
+#, python-format
+msgid "%d minutes"
+msgstr "%d minutu"
+
+#: ../../portable/item.py:566
+#, python-format
+msgid "Expires in %s"
+msgstr "Iraungitze epea: %s"
+
+#: ../../portable/item.py:578
+#, python-format
+msgid "Will retry in %s"
+msgstr ""
+
+#: ../../portable/item.py:580
+msgid "Paused"
+msgstr ""
+
+#: ../../portable/item.py:982
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../../portable/item.py:984
+msgid "WEB PAGE"
+msgstr "WEB GUNEA"
+
+#: ../../portable/item.py:994
+msgid "Total Down:"
+msgstr ""
+
+#: ../../portable/item.py:997
+msgid "Error:"
+msgstr ""
+
+#: ../../portable/item.py:1006
+msgid "Seeders:"
+msgstr ""
+
+#: ../../portable/item.py:1008
+msgid "Leechers:"
+msgstr ""
+
+#: ../../portable/item.py:1010
+msgid "Down Rate:"
+msgstr ""
+
+#: ../../portable/item.py:1011
+msgid "Down Total:"
+msgstr ""
+
+#: ../../portable/item.py:1013
+msgid "Up Rate:"
+msgstr ""
+
+#: ../../portable/item.py:1014
+msgid "Up Total:"
+msgstr ""
+
+#: ../../portable/item.py:1024
+msgid "Web page:"
+msgstr ""
+
+#: ../../portable/item.py:1024
+msgid "permalink"
+msgstr ""
+
+#: ../../portable/item.py:1028
+msgid "File link:"
+msgstr ""
+
+#: ../../portable/item.py:1028
+msgid "direct link to file"
+msgstr ""
+
+#: ../../portable/item.py:1030
+msgid "File type:"
+msgstr ""
+
+#: ../../portable/item.py:1037 ../../portable/item.py:1040
+#: ../../portable/item.py:1042
+msgid "License:"
+msgstr ""
+
+#: ../../portable/item.py:1040 ../../portable/item.py:1042
+msgid "see permalink"
+msgstr ""
+
+#: ../../portable/item.py:1049
+msgid "REVEAL LOCAL FOLDER"
+msgstr ""
+
+#: ../../portable/item.py:1051
+msgid "REVEAL LOCAL FILE"
+msgstr ""
+
+#: ../../portable/item.py:1053
+msgid "Filename:"
+msgstr ""
+
+#: ../../portable/item.py:1060
+msgid "Down Total"
+msgstr ""
+
+#: ../../portable/item.py:1062
+msgid "Up Total"
+msgstr ""
+
+#: ../../portable/item.py:1080
+msgid "Item Details"
+msgstr ""
+
+#: ../../portable/item.py:1087
+msgid "Torrent Details"
+msgstr ""
+
+#: ../../portable/item.py:1089
+msgid "Torrent Details <i>stopped</i>"
+msgstr ""
+
+#: ../../portable/item.py:1093
+msgid "Download Details"
+msgstr ""
+
+#: ../../portable/item.py:1310
+msgid "downloading..."
+msgstr "deskargatzen..."
+
+#: ../../portable/item.py:1317 ../../portable/item.py:1320
+#, python-format
+msgid "%s remaining"
+msgstr "%s falta da"
+
+#: ../../portable/item.py:1329
+msgid "starting up..."
+msgstr "abiarazten..."
+
+#: ../../portable/item.py:1901
+#, python-format
+msgid "Removing %s items"
+msgstr "%s elementu ezabatzen ari da"
+
+#: ../../portable/item.py:1903
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+
+#: ../../portable/item.py:1911
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+
+#: ../../portable/startup.py:92
+msgid "Unknown Error"
+msgstr ""
+
+#: ../../portable/startup.py:93
+#, python-format
+msgid ""
+"An unkown error prevented Miro from startup.  Please file a bug report at %s"
+msgstr ""
+
+#: ../../portable/startup.py:155
+msgid "Database too new"
+msgstr "Datubase berriegia"
+
+#: ../../portable/startup.py:156
+msgid ""
+"You have a database that was saved with a newer version of $shortAppName. "
+"You must download the latest version of $shortAppName and run that."
+msgstr ""
+
+#: ../../portable/startup.py:237 ../../portable/frontends/html/main.py:134
+msgid "Video Directory Missing"
+msgstr ""
+
+#: ../../portable/startup.py:238
+msgid ""
+"\n"
+"Miro can't find your primary video directory $moviesDirectory.  This may be "
+"because it's located on an external drive that is currently disconnected.  "
+"Please, connect the drive or create the directory, then start Miro again."
+msgstr ""
+
+#: ../../portable/feed.py:384
+msgid "never"
+msgstr "inoiz"
+
+#: ../../portable/feed.py:388
+#, python-format
+msgid "%d day"
+msgstr "%d egun"
+
+#: ../../portable/feed.py:392
+#, python-format
+msgid "%d months"
+msgstr "%d hilabete"
+
+#: ../../portable/feed.py:825 ../../portable/frontends/html/contextmenu.py:173
+msgid "Rename Channel"
+msgstr "Kanalaren izena aldatu"
+
+#: ../../portable/feed.py:826
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr "Sartu %s kanalarentzat izen berri bat"
+
+#: ../../portable/feed.py:923
+#, fuzzy
+msgid "Error loading feed"
+msgstr "Jarioa kargatzean hutsegitea"
+
+#: ../../portable/feed.py:924
+#, python-format
+msgid "Couldn't load the feed at %s (%s)."
+msgstr ""
+
+#: ../../portable/feed.py:927
+msgid "Would you like to keep the feed?"
+msgstr ""
+
+#: ../../portable/feed.py:1045
+msgid "Bad content-type"
+msgstr ""
+
+#: ../../portable/feed.py:1058
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+#, fuzzy
+msgid "Channel is not compatible with $shortAppName!"
+msgstr "Kanala ez da $shortAppName-(re)kin bateragarria!"
+
+#: ../../portable/feed.py:1059
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+
+#: ../../portable/feed.py:2382 ../../portable/feed.py:2472
+#: ../../portable/extrastrings.py:33
+msgid "Search"
+msgstr "Bilatu"
+
+#: ../../portable/feed.py:2486
+#, fuzzy
+msgid "Local Files"
+msgstr "Lekuko Fitxategiak"
+
+#: ../../portable/feed.py:2500
+msgid "Playing File"
+msgstr "Fitxategia erreproduzitzen"
+
+#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
+#, python-format
+msgid "%s database save succeeded"
+msgstr ""
+
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr "Datubasea ongi gorde da. Programa itxi dezakezu daturik galdu gabe."
+
+#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
+#, python-format
+msgid "%s database save failed"
+msgstr "%s datubaseak huts egin du"
+
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
+#, python-format
+msgid ""
+"%s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"Ezin izan da %s gorde:Diskoa beteta dago\n"
+"Betetako diskotik fitxategiak edo zure bildumako bideo batzuk ezabatzea "
+"gomendatzen da.\n"
+"Azken aldaketak galdu daitezke"
+
+#: ../../portable/tabs.py:55
+#, fuzzy
+msgid "Library"
+msgstr "Biltegia"
+
+#: ../../portable/tabs.py:58
+msgid "Downloading"
+msgstr "Deskargatzen"
+
+#: ../../portable/httpclient.py:81
+#, python-format
+msgid "Error: %s"
+msgstr "Errorea: %s"
+
+#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
+msgid "Can't connect"
+msgstr "Ezin konektatu"
+
+#: ../../portable/httpclient.py:97
+#, python-format
+msgid "Connection Error: %s"
+msgstr "Konektatzean errorea: %s"
+
+#: ../../portable/httpclient.py:103
+msgid "SSL connection error"
+msgstr ""
+
+#: ../../portable/httpclient.py:107
+msgid "HTTP error"
+msgstr "HTTP errorea"
+
+#: ../../portable/httpclient.py:110
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr ""
+
+#: ../../portable/httpclient.py:113
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr ""
+
+#: ../../portable/httpclient.py:116
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr ""
+
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr ""
+
+#: ../../portable/httpclient.py:122
+#, python-format
+msgid "%s closed connection"
+msgstr "%s : konexioa itxi du"
+
+#: ../../portable/httpclient.py:127 ../../portable/httpclient.py:155
+#: ../../portable/downloader.py:268
+msgid "File not found"
+msgstr "Fitxategia ez da aurkitu"
+
+#: ../../portable/httpclient.py:128
+msgid "Got 404 status code"
+msgstr "404 estatu kodea daukat"
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "Estatus kode okerra: %s"
+
+#: ../../portable/httpclient.py:134
+msgid "Authorization failed"
+msgstr "Baimenak huts egin du"
+
+#: ../../portable/httpclient.py:139 ../../portable/frontends/html/main.py:271
+msgid "Internal Error"
+msgstr "Barneko errorea"
+
+#: ../../portable/httpclient.py:140
+msgid "Pipeline request never started"
+msgstr ""
+
+#: ../../portable/httpclient.py:144
+msgid "Timeout"
+msgstr "Denbora-muga"
+
+#: ../../portable/httpclient.py:145
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "%s helbidera egindako loturak denbora-muga gainditu du"
+
+#: ../../portable/httpclient.py:149
+msgid "Invalid URL"
+msgstr "URL Baliogabea"
+
+#: ../../portable/httpclient.py:150
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr "\"%s\" ez da baliozko URLa"
+
+#: ../../portable/httpclient.py:156
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr "\"%s\" fitxategia ez da existitzen"
+
+#: ../../portable/httpclient.py:160
+msgid "Read error"
+msgstr "Irakurketa errorea"
+
+#: ../../portable/httpclient.py:161
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr ""
+
+#: ../../portable/httpclient.py:354
+msgid "Unknown Error code"
+msgstr ""
+
+#: ../../portable/httpclient.py:386
+msgid "Connection closed"
+msgstr "Konexioa itxi da"
+
+#: ../../portable/httpclient.py:811
+msgid "Unknown"
+msgstr "Ezezaguna"
+
+#: ../../portable/httpclient.py:812
+msgid "Internal Error: Not ready to send"
+msgstr ""
+
+#: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
+msgid "Custom Channels"
+msgstr "Kanal pertsonalizatuak"
+
+#: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr ""
+
+#: ../../portable/theme.py:138
+msgid "Starter Channels"
+msgstr ""
+
+#: ../../portable/theme.py:154
+msgid "Example Playlist"
+msgstr "Adibidezko zerrenda"
+
+#: ../../portable/downloader.py:234
+#, fuzzy
+msgid "activity"
+msgstr "jarduera"
+
+#: ../../portable/downloader.py:269
+msgid "Flash URL Scraping Error"
+msgstr ""
+
+#: ../../portable/downloader.py:445
+msgid "starting up"
+msgstr "hasieratzen"
+
+#: ../../portable/license.py:68
+msgid "license page"
+msgstr ""
+
+#: ../../portable/singleclick.py:99
+msgid "Download already exists"
+msgstr "Deskarga jadanik existitzen da"
+
+#: ../../portable/singleclick.py:100
+#, fuzzy
+msgid "That URL is already an external download."
+msgstr "URLa hori kanpoko deskarga bat da dagoeneko."
+
+#: ../../portable/singleclick.py:106
+msgid "Miro will begin downloading it now."
+msgstr ""
+
+#: ../../portable/singleclick.py:108
+#, fuzzy
+msgid "It is downloading now."
+msgstr "Orain deskargatzen ari da."
+
+#: ../../portable/singleclick.py:110
+#, fuzzy
+msgid "It has already been downloaded."
+msgstr "Deskargatuta dago dagoeneko."
+
+#: ../../portable/singleclick.py:137
+msgid "Download Error"
+msgstr "Deskarga Errorea"
+
+#: ../../portable/singleclick.py:138
+#, python-format
+msgid ""
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %s"
+msgstr ""
+
+#: ../../portable/singleclick.py:146
+msgid "File Download"
+msgstr "Fitxategia Deskargatu"
+
+#: ../../portable/singleclick.py:147
+#, python-format
+msgid "This file at %s does not appear to be audio, video, or an RSS feed."
+msgstr ""
+
+#: ../../portable/singleclick.py:235
+msgid "Subscribing to multiple channels"
+msgstr ""
+
+#: ../../portable/singleclick.py:236
+#, python-format
+msgid "Create %d channels?"
+msgstr "%d kanal sortu?"
+
+#: ../../portable/singleclick.py:249
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr "%d kanal karpeta berri batera eransten"
+
+#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
+msgid "Enter a name for the new channel folder"
+msgstr "Kanalaren karpetarako izen bat tekleatu"
+
+#: ../../portable/singleclick.py:253
+#, python-format
+msgid ""
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
+msgstr ""
+
+#: ../../portable/singleclick.py:264
+msgid "Subscription error"
+msgstr "Errorea harpidetzean"
+
+#: ../../portable/singleclick.py:274
+msgid ""
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
+msgstr ""
+
+#: ../../portable/singleclick.py:282
+msgid ""
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
+msgstr ""
+
+#: ../../portable/singleclick.py:286
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr ""
+
+#: ../../portable/singleclick.py:334
+msgid "Invalid Torrent"
+msgstr "Torrent baliogabea"
+
+#: ../../portable/singleclick.py:335
+#, python-format
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr ""
+
+#: ../../portable/folder.py:142
+#: ../../portable/frontends/html/contextmenu.py:183
+msgid "Rename Channel Folder"
+msgstr "Kanalen karpetaren izena aldatu"
+
+#: ../../portable/folder.py:144
+#, python-format
+msgid "Enter a new name for the channel folder %s"
+msgstr "Sartu %s kanalen karpetarentzat izen berria"
+
+#: ../../portable/folder.py:213
+#: ../../portable/frontends/html/contextmenu.py:189
+msgid "Rename Playlist Folder"
+msgstr "Zerrenden Karpetaren izena aldatu"
+
+#: ../../portable/folder.py:215
+#, python-format
+msgid "Enter a new name for the playlist folder %s"
+msgstr "%s zerrenden karpetarentzat izen berri bat sartu"
+
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "Kanalen Karpeta Sortu"
+
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "Zerrenden Karpeta Sortu"
+
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "Idatzi zerrenden karpeta berriaren izena"
+
+#: ../../portable/opml.py:144
+msgid "OPML Import failed"
+msgstr "OPML Inportazio hutsegitea"
+
+#: ../../portable/opml.py:145
+#, fuzzy
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr "Hautatutako OPML fitxategia okerra dirudi. Inportazioa eten da."
+
+#: ../../portable/opml.py:150
+#, fuzzy
+msgid "OPML Import summary"
+msgstr "OPML Inportazio laburpena"
+
+#: ../../portable/opml.py:151
+#, python-format
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/opml.py:154
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/html/contextmenu.py:104
 msgid "Update Channels Now"
 msgstr "Kanalak Eguneratu Orain"
 
@@ -950,32 +1546,32 @@ msgid "%d Downloaded Items"
 msgstr "%d objetu jeitsita"
 
 #: ../../portable/frontends/html/contextmenu.py:130
-#: ../../portable/frontends/html/contextmenu.py:211
+#: ../../portable/frontends/html/contextmenu.py:210
 msgid "Play"
 msgstr "Jo"
 
 #: ../../portable/frontends/html/contextmenu.py:131
-#: ../../portable/frontends/html/contextmenu.py:214
+#: ../../portable/frontends/html/contextmenu.py:213
 msgid "Add to new playlist"
 msgstr "Erreprodukzio zerrenda berrira sartu"
 
 #: ../../portable/frontends/html/contextmenu.py:133
-#: ../../portable/frontends/html/contextmenu.py:207
+#: ../../portable/frontends/html/contextmenu.py:206
 msgid "Remove From Playlist"
 msgstr "Zerrendatik Ezabatu"
 
 #: ../../portable/frontends/html/contextmenu.py:135
-#: ../../portable/frontends/html/contextmenu.py:209
+#: ../../portable/frontends/html/contextmenu.py:208
 msgid "Remove From the Library"
 msgstr "Liburutegitik ezabatu"
 
 #: ../../portable/frontends/html/contextmenu.py:141
-#: ../../portable/frontends/html/contextmenu.py:218
+#: ../../portable/frontends/html/contextmenu.py:217
 msgid "Mark as Unwatched"
 msgstr "Ez-ikusia bezala markatu"
 
 #: ../../portable/frontends/html/contextmenu.py:146
-#: ../../portable/frontends/html/contextmenu.py:220
+#: ../../portable/frontends/html/contextmenu.py:219
 msgid "Mark as Watched"
 msgstr "Ikusita moduan markatu"
 
@@ -985,7 +1581,7 @@ msgid "%d Available Items"
 msgstr "%d Ale Erabilgarri"
 
 #: ../../portable/frontends/html/contextmenu.py:152
-#: ../../portable/frontends/html/contextmenu.py:227
+#: ../../portable/frontends/html/contextmenu.py:226
 #: ../../portable/dialogs.py:93
 msgid "Download"
 msgstr "Deskargatu"
@@ -996,17 +1592,17 @@ msgid "%d Downloading Items"
 msgstr "%d objetu jeisten"
 
 #: ../../portable/frontends/html/contextmenu.py:159
-#: ../../portable/frontends/html/contextmenu.py:225
+#: ../../portable/frontends/html/contextmenu.py:224
 msgid "Cancel Download"
 msgstr "Deskarga Utzi"
 
 #: ../../portable/frontends/html/contextmenu.py:161
-#: ../../portable/frontends/html/contextmenu.py:225
+#: ../../portable/frontends/html/contextmenu.py:224
 msgid "Pause Download"
 msgstr "Deskarga Gelditu"
 
 #: ../../portable/frontends/html/contextmenu.py:164
-#: ../../portable/frontends/html/contextmenu.py:223
+#: ../../portable/frontends/html/contextmenu.py:222
 msgid "Restart Upload"
 msgstr "Igoera Berrabiarazi"
 
@@ -1019,38 +1615,20 @@ msgstr "Kanala eguneratu orain"
 msgid "Copy URL to clipboard"
 msgstr "Kopiatu URLa arbelera"
 
-#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
-msgid "Rename Channel"
-msgstr "Kanalaren izena aldatu"
-
 #: ../../portable/frontends/html/contextmenu.py:177
 msgid "Revert Title to Default"
 msgstr "Itzuli izenburua balio lehenetsira"
 
-#: ../../portable/frontends/html/contextmenu.py:183
-#: ../../portable/folder.py:142
-msgid "Rename Channel Folder"
-msgstr "Kanalen karpetaren izena aldatu"
-
-#: ../../portable/frontends/html/contextmenu.py:189
-#: ../../portable/folder.py:213
-msgid "Rename Playlist Folder"
-msgstr "Zerrenden Karpetaren izena aldatu"
-
-#: ../../portable/frontends/html/contextmenu.py:213
+#: ../../portable/frontends/html/contextmenu.py:212
 msgid "Play Just This Video"
 msgstr "Erreproduzitu bideo hau orain"
 
-#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../portable/frontends/html/contextmenu.py:231
 #: ../../portable/playlist.py:218
 msgid "Rename Playlist"
 msgstr "Zerrendaren izena aldatu"
 
-#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
-msgid "Video Directory Missing"
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:133
+#: ../../portable/frontends/html/main.py:135
 msgid ""
 "\n"
 "    Miro can't find your primary video directory.  This may be because it's  "
@@ -1061,83 +1639,70 @@ msgid ""
 "   external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid "Custom Channels"
-msgstr "Kanal pertsonalizatuak"
-
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
-msgid "Internal Error"
-msgstr "Barneko errorea"
-
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 #, fuzzy
 msgid "Describe what you were doing that caused this error"
 msgstr "Errorea gauzatu denean egiten hari zinena deskribatu"
 
-#: ../../portable/frontends/html/main.py:284
+#: ../../portable/frontends/html/main.py:286
 #, python-format
 msgid "%s Version Alert"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:285
+#: ../../portable/frontends/html/main.py:287
 #, fuzzy, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
 msgstr ""
 "%s-(r)en bertsio berria erabilgarria dago. Orain deskargatu nahi duzu?"
 
-#: ../../portable/frontends/html/main.py:290
+#: ../../portable/frontends/html/main.py:292
 #, python-format
 msgid "%s Version Check"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:291
+#: ../../portable/frontends/html/main.py:293
 #, python-format
 msgid "%s is up to date."
 msgstr "%s eguneratuta dago."
 
-#: ../../portable/frontends/html/main.py:309
+#: ../../portable/frontends/html/main.py:311
 msgid "Are you sure you want to quit?"
 msgstr "Ziur zaude irten nahi duzula?"
 
-#: ../../portable/frontends/html/main.py:311
+#: ../../portable/frontends/html/main.py:313
 msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:316
+#: ../../portable/frontends/html/main.py:318
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/html/main.py:340
+#: ../../portable/frontends/html/main.py:342
 msgid "Import OPML File"
 msgstr "OPML Fitxategia Inportatu"
 
-#: ../../portable/frontends/html/main.py:342
+#: ../../portable/frontends/html/main.py:344
 msgid "OPML Files"
 msgstr "OPML Fitxategia"
 
-#: ../../portable/frontends/html/main.py:347
+#: ../../portable/frontends/html/main.py:349
 msgid "Export OPML File"
 msgstr "OPML Fitxategia Exportatu"
 
@@ -1207,33 +1772,6 @@ msgstr ""
 msgid "Enter the URL of the video to download"
 msgstr ""
 
-#: ../../portable/tabs.py:55
-#, fuzzy
-msgid "Library"
-msgstr "Biltegia"
-
-#: ../../portable/tabs.py:58
-msgid "Downloading"
-msgstr "Deskargatzen"
-
-#: ../../portable/downloader.py:234
-#, fuzzy
-msgid "activity"
-msgstr "jarduera"
-
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
-#: ../../portable/httpclient.py:155
-msgid "File not found"
-msgstr "Fitxategia ez da aurkitu"
-
-#: ../../portable/downloader.py:269
-msgid "Flash URL Scraping Error"
-msgstr ""
-
-#: ../../portable/downloader.py:445
-msgid "starting up"
-msgstr "hasieratzen"
-
 #: ../../portable/playlist.py:219
 #, python-format
 msgid "Enter a new name for the playlist %s"
@@ -1246,34 +1784,6 @@ msgstr "Erreprodukzio zerrenda sortu"
 #: ../../portable/playlist.py:242
 msgid "Enter a name for the new playlist"
 msgstr "Erreprodukzio zerrendarako izen berria sartu"
-
-#: ../../portable/opml.py:144
-msgid "OPML Import failed"
-msgstr "OPML Inportazio hutsegitea"
-
-#: ../../portable/opml.py:145
-#, fuzzy
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr "Hautatutako OPML fitxategia okerra dirudi. Inportazioa eten da."
-
-#: ../../portable/opml.py:150
-#, fuzzy
-msgid "OPML Import summary"
-msgstr "OPML Inportazio laburpena"
-
-#: ../../portable/opml.py:151
-#, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/opml.py:154
-#, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/util.py:266
 #, python-format
@@ -1316,6 +1826,52 @@ msgid "%dB"
 msgstr ""
 "Copy text   \t\n"
 "%dB"
+
+#: ../../portable/dl_daemon/download.py:458
+msgid "Error"
+msgstr "Errorea"
+
+#: ../../portable/dl_daemon/download.py:544
+#, python-format
+msgid "Could not write to %s"
+msgstr "Ezin izan da idatzi hemen: %s"
+
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:769
+msgid "Not enough disk space"
+msgstr "Ez dago lekurik diskoan"
+
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:770
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "%s MB behar dira bideo hau gordetzeko"
+
+#: ../../portable/dl_daemon/download.py:781
+#, fuzzy
+msgid "BitTorrent failure"
+msgstr "BitTorrenten hutsegitea"
+
+#: ../../portable/dl_daemon/download.py:782
+msgid "BitTorrent failed to startup"
+msgstr "Abiatzean BitTorrent-en hutsegitea"
+
+#: ../../portable/dl_daemon/download.py:954
+msgid "Corrupt Torrent"
+msgstr "Torrent Usteldua"
+
+#: ../../portable/dl_daemon/download.py:955
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "%s torrent fitxategia baliogabea da"
+
+#: ../../portable/dl_daemon/download.py:980
+msgid "Torrent file deleted"
+msgstr "Torrent fitxategia ezabatua"
+
+#: ../../portable/dl_daemon/download.py:981
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr ""
 
 #: ../../portable/iheartmiro.py:82
 msgid ""
@@ -1561,232 +2117,6 @@ msgstr "Leihoa ezkutatu"
 msgid "Show Window"
 msgstr "Leihoa erakutsi"
 
-#: ../../portable/theme.py:137
-msgid "Starter Channels"
-msgstr ""
-
-#: ../../portable/theme.py:154
-msgid "Example Playlist"
-msgstr "Adibidezko zerrenda"
-
-#: ../../portable/httpclient.py:81
-#, python-format
-msgid "Error: %s"
-msgstr "Errorea: %s"
-
-#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
-msgid "Can't connect"
-msgstr "Ezin konektatu"
-
-#: ../../portable/httpclient.py:97
-#, python-format
-msgid "Connection Error: %s"
-msgstr "Konektatzean errorea: %s"
-
-#: ../../portable/httpclient.py:103
-msgid "SSL connection error"
-msgstr ""
-
-#: ../../portable/httpclient.py:107
-msgid "HTTP error"
-msgstr "HTTP errorea"
-
-#: ../../portable/httpclient.py:110
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:113
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:116
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr ""
-
-#: ../../portable/httpclient.py:122
-#, python-format
-msgid "%s closed connection"
-msgstr "%s : konexioa itxi du"
-
-#: ../../portable/httpclient.py:128
-msgid "Got 404 status code"
-msgstr "404 estatu kodea daukat"
-
-#: ../../portable/httpclient.py:130
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "Estatus kode okerra: %s"
-
-#: ../../portable/httpclient.py:134
-msgid "Authorization failed"
-msgstr "Baimenak huts egin du"
-
-#: ../../portable/httpclient.py:140
-msgid "Pipeline request never started"
-msgstr ""
-
-#: ../../portable/httpclient.py:144
-msgid "Timeout"
-msgstr "Denbora-muga"
-
-#: ../../portable/httpclient.py:145
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "%s helbidera egindako loturak denbora-muga gainditu du"
-
-#: ../../portable/httpclient.py:149
-msgid "Invalid URL"
-msgstr "URL Baliogabea"
-
-#: ../../portable/httpclient.py:150
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr "\"%s\" ez da baliozko URLa"
-
-#: ../../portable/httpclient.py:156
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr "\"%s\" fitxategia ez da existitzen"
-
-#: ../../portable/httpclient.py:160
-msgid "Read error"
-msgstr "Irakurketa errorea"
-
-#: ../../portable/httpclient.py:161
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr ""
-
-#: ../../portable/httpclient.py:354
-msgid "Unknown Error code"
-msgstr ""
-
-#: ../../portable/httpclient.py:386
-msgid "Connection closed"
-msgstr "Konexioa itxi da"
-
-#: ../../portable/httpclient.py:811
-msgid "Unknown"
-msgstr "Ezezaguna"
-
-#: ../../portable/httpclient.py:812
-msgid "Internal Error: Not ready to send"
-msgstr ""
-
-#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
-#: ../../portable/feed.py:2499
-msgid "Search"
-msgstr "Bilatu"
-
-#: ../../portable/feed.py:384
-msgid "never"
-msgstr "inoiz"
-
-#: ../../portable/feed.py:386 ../../portable/item.py:554
-#, python-format
-msgid "%d hours"
-msgstr "%d ordu"
-
-#: ../../portable/feed.py:388
-#, python-format
-msgid "%d day"
-msgstr "%d egun"
-
-#: ../../portable/feed.py:390 ../../portable/item.py:552
-#, python-format
-msgid "%d days"
-msgstr "%d egun"
-
-#: ../../portable/feed.py:392
-#, python-format
-msgid "%d months"
-msgstr "%d hilabete"
-
-#: ../../portable/feed.py:826
-#, python-format
-msgid "Enter a new name for the channel %s"
-msgstr "Sartu %s kanalarentzat izen berri bat"
-
-#: ../../portable/feed.py:923
-#, fuzzy
-msgid "Error loading feed"
-msgstr "Jarioa kargatzean hutsegitea"
-
-#: ../../portable/feed.py:924
-#, python-format
-msgid "Couldn't load the feed at %s (%s)."
-msgstr ""
-
-#: ../../portable/feed.py:927
-msgid "Would you like to keep the feed?"
-msgstr ""
-
-#: ../../portable/feed.py:1040
-msgid "Bad content-type"
-msgstr ""
-
-#: ../../portable/feed.py:1053
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
-#, fuzzy
-msgid "Channel is not compatible with $shortAppName!"
-msgstr "Kanala ez da $shortAppName-(re)kin bateragarria!"
-
-#: ../../portable/feed.py:1054
-msgid ""
-"But we'll try our best to grab the files. It may take extra time to list the "
-"videos, and descriptions may look funny.  Please contact the publishers of "
-"$url and ask if they can supply a feed in a format that will work with "
-"$shortAppName.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-
-#: ../../portable/feed.py:2513
-#, fuzzy
-msgid "Local Files"
-msgstr "Lekuko Fitxategiak"
-
-#: ../../portable/feed.py:2527
-msgid "Playing File"
-msgstr "Fitxategia erreproduzitzen"
-
-#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
-#, python-format
-msgid "%s database save succeeded"
-msgstr ""
-
-#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr "Datubasea ongi gorde da. Programa itxi dezakezu daturik galdu gabe."
-
-#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
-#, python-format
-msgid "%s database save failed"
-msgstr "%s datubaseak huts egin du"
-
-#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
-#, python-format
-msgid ""
-"%s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"Ezin izan da %s gorde:Diskoa beteta dago\n"
-"Betetako diskotik fitxategiak edo zure bildumako bideo batzuk ezabatzea "
-"gomendatzen da.\n"
-"Azken aldaketak galdu daitezke"
-
 #: ../../portable/dialogs.py:89
 msgid "Ignore"
 msgstr "Ez ikusi egin"
@@ -1795,12 +2125,12 @@ msgstr "Ez ikusi egin"
 msgid "Submit Crash Report"
 msgstr ""
 
-#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr "Migratu"
 
-#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:37
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr "Ez Migratu"
@@ -1870,13 +2200,13 @@ msgstr "iHeartMiro instalatu"
 msgid "Don't Install"
 msgstr "Ez instalatu"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:56
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 #, fuzzy
 msgid "New Search Channel"
 msgstr "Bilaketa Kanal Berria"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:28
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr ""
@@ -1978,335 +2308,6 @@ msgid ""
 "not been deleted and try again."
 msgstr ""
 
-#: ../../portable/singleclick.py:99
-msgid "Download already exists"
-msgstr "Deskarga jadanik existitzen da"
-
-#: ../../portable/singleclick.py:100
-#, fuzzy
-msgid "That URL is already an external download."
-msgstr "URLa hori kanpoko deskarga bat da dagoeneko."
-
-#: ../../portable/singleclick.py:106
-msgid "Miro will begin downloading it now."
-msgstr ""
-
-#: ../../portable/singleclick.py:108
-#, fuzzy
-msgid "It is downloading now."
-msgstr "Orain deskargatzen ari da."
-
-#: ../../portable/singleclick.py:110
-#, fuzzy
-msgid "It has already been downloaded."
-msgstr "Deskargatuta dago dagoeneko."
-
-#: ../../portable/singleclick.py:137
-msgid "Download Error"
-msgstr "Deskarga Errorea"
-
-#: ../../portable/singleclick.py:138
-#, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %s"
-msgstr ""
-
-#: ../../portable/singleclick.py:146
-msgid "File Download"
-msgstr "Fitxategia Deskargatu"
-
-#: ../../portable/singleclick.py:147
-#, python-format
-msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
-
-#: ../../portable/singleclick.py:235
-msgid "Subscribing to multiple channels"
-msgstr ""
-
-#: ../../portable/singleclick.py:236
-#, python-format
-msgid "Create %d channels?"
-msgstr "%d kanal sortu?"
-
-#: ../../portable/singleclick.py:249
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "%d kanal karpeta berri batera eransten"
-
-#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
-msgid "Enter a name for the new channel folder"
-msgstr "Kanalaren karpetarako izen bat tekleatu"
-
-#: ../../portable/singleclick.py:253
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
-msgstr ""
-
-#: ../../portable/singleclick.py:264
-msgid "Subscription error"
-msgstr "Errorea harpidetzean"
-
-#: ../../portable/singleclick.py:274
-msgid ""
-"This $shortAppName channel file has an invalid format: $url. Please notify "
-"the publisher of this file."
-msgstr ""
-
-#: ../../portable/singleclick.py:282
-msgid ""
-"This $shortAppName channel file has the wrong content type: $url. Please "
-"notify the publisher of this file."
-msgstr ""
-
-#: ../../portable/singleclick.py:286
-msgid "Could not download the $shortAppName channel file: $url."
-msgstr ""
-
-#: ../../portable/singleclick.py:334
-msgid "Invalid Torrent"
-msgstr "Torrent baliogabea"
-
-#: ../../portable/singleclick.py:335
-#, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr ""
-
-#: ../../portable/item.py:497
-#, python-format
-msgid "Removing %s"
-msgstr "%s Ezabatzen"
-
-#: ../../portable/item.py:500
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
-
-#: ../../portable/item.py:506
-msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
-msgstr ""
-
-#: ../../portable/item.py:526
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
-"Hau karpeta bat da. Karpeta bat ezabatzean, barruan egon daitezkeen "
-"elementuak ere ezabatuko dira."
-
-#: ../../portable/item.py:556
-#, python-format
-msgid "%d minutes"
-msgstr "%d minutu"
-
-#: ../../portable/item.py:566
-#, python-format
-msgid "Expires in %s"
-msgstr "Iraungitze epea: %s"
-
-#: ../../portable/item.py:578
-#, python-format
-msgid "Will retry in %s"
-msgstr ""
-
-#: ../../portable/item.py:580
-msgid "Paused"
-msgstr ""
-
-#: ../../portable/item.py:982
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../../portable/item.py:984
-msgid "WEB PAGE"
-msgstr "WEB GUNEA"
-
-#: ../../portable/item.py:994
-msgid "Total Down:"
-msgstr ""
-
-#: ../../portable/item.py:997
-msgid "Error:"
-msgstr ""
-
-#: ../../portable/item.py:1006
-msgid "Seeders:"
-msgstr ""
-
-#: ../../portable/item.py:1008
-msgid "Leechers:"
-msgstr ""
-
-#: ../../portable/item.py:1010
-msgid "Down Rate:"
-msgstr ""
-
-#: ../../portable/item.py:1011
-msgid "Down Total:"
-msgstr ""
-
-#: ../../portable/item.py:1013
-msgid "Up Rate:"
-msgstr ""
-
-#: ../../portable/item.py:1014
-msgid "Up Total:"
-msgstr ""
-
-#: ../../portable/item.py:1024
-msgid "Web page:"
-msgstr ""
-
-#: ../../portable/item.py:1024
-msgid "permalink"
-msgstr ""
-
-#: ../../portable/item.py:1028
-msgid "File link:"
-msgstr ""
-
-#: ../../portable/item.py:1028
-msgid "direct link to file"
-msgstr ""
-
-#: ../../portable/item.py:1030
-msgid "File type:"
-msgstr ""
-
-#: ../../portable/item.py:1037 ../../portable/item.py:1040
-#: ../../portable/item.py:1042
-msgid "License:"
-msgstr ""
-
-#: ../../portable/item.py:1040 ../../portable/item.py:1042
-msgid "see permalink"
-msgstr ""
-
-#: ../../portable/item.py:1049
-msgid "REVEAL LOCAL FOLDER"
-msgstr ""
-
-#: ../../portable/item.py:1051
-msgid "REVEAL LOCAL FILE"
-msgstr ""
-
-#: ../../portable/item.py:1053
-msgid "Filename:"
-msgstr ""
-
-#: ../../portable/item.py:1060
-msgid "Down Total"
-msgstr ""
-
-#: ../../portable/item.py:1062
-msgid "Up Total"
-msgstr ""
-
-#: ../../portable/item.py:1080
-msgid "Item Details"
-msgstr ""
-
-#: ../../portable/item.py:1087
-msgid "Torrent Details"
-msgstr ""
-
-#: ../../portable/item.py:1089
-msgid "Torrent Details <i>stopped</i>"
-msgstr ""
-
-#: ../../portable/item.py:1093
-msgid "Download Details"
-msgstr ""
-
-#: ../../portable/item.py:1310
-msgid "downloading..."
-msgstr "deskargatzen..."
-
-#: ../../portable/item.py:1317 ../../portable/item.py:1320
-#, python-format
-msgid "%s remaining"
-msgstr "%s falta da"
-
-#: ../../portable/item.py:1329
-msgid "starting up..."
-msgstr "abiarazten..."
-
-#: ../../portable/item.py:1878
-#, python-format
-msgid "Removing %s items"
-msgstr "%s elementu ezabatzen ari da"
-
-#: ../../portable/item.py:1880
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
-
-#: ../../portable/item.py:1888
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
-msgstr ""
-
-#: ../../portable/startup.py:92
-msgid "Unknown Error"
-msgstr ""
-
-#: ../../portable/startup.py:93
-#, python-format
-msgid ""
-"An unkown error prevented Miro from startup.  Please file a bug report at %s"
-msgstr ""
-
-#: ../../portable/startup.py:155
-msgid "Database too new"
-msgstr "Datubase berriegia"
-
-#: ../../portable/startup.py:156
-msgid ""
-"You have a database that was saved with a newer version of $shortAppName. "
-"You must download the latest version of $shortAppName and run that."
-msgstr ""
-
-#: ../../portable/startup.py:238
-msgid ""
-"\n"
-"Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected."
-msgstr ""
-
-#: ../../portable/folder.py:144
-#, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "Sartu %s kanalen karpetarentzat izen berria"
-
-#: ../../portable/folder.py:215
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "%s zerrenden karpetarentzat izen berri bat sartu"
-
-#: ../../portable/folder.py:223
-msgid "Create Channel Folder"
-msgstr "Kanalen Karpeta Sortu"
-
-#: ../../portable/folder.py:237
-msgid "Create Playlist Folder"
-msgstr "Zerrenden Karpeta Sortu"
-
-#: ../../portable/folder.py:238
-msgid "Enter a name for the new playlist folder"
-msgstr "Idatzi zerrenden karpeta berriaren izena"
-
-#: ../../portable/license.py:68
-msgid "license page"
-msgstr ""
-
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
 "1 day\n"
@@ -2371,40 +2372,44 @@ msgid ""
 "of them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:28
+#: ../../platform/gtk-x11/glade/miro.glade.h:27
+msgid "<b>xine</b>"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Auto download default setting for new channels"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:29
+#: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Automatically for_ward ports."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:30
+#: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "By default, videos _expire after"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/gtk-x11/glade/miro.glade.h:32
 msgid "C_hannel:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "C_hannels"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:33
+#: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "C_reate Channel"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:34
+#: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "Check Channels for _new content"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:35
+#: ../../platform/gtk-x11/glade/miro.glade.h:36
 msgid "Disk _Space"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:37
+#: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
@@ -2414,190 +2419,203 @@ msgstr ""
 "Orduro\n"
 "Nire esku"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid "G_B"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../platform/gtk-x11/glade/miro.glade.h:42
 msgid "Go"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Ignore Un_encrypted Connections."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Limit torrent _downstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Maximum number of channel auto-downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
+#: ../../platform/gtk-x11/glade/miro.glade.h:48
 msgid "Maximum number of manual downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
+#: ../../platform/gtk-x11/glade/miro.glade.h:52
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid ""
 "New\n"
 "All\n"
 "Off"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
+#: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Play _videos one after another"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
+#: ../../platform/gtk-x11/glade/miro.glade.h:58
 msgid "Preferences"
 msgstr "Xehetasunak"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
+#: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Restrict to my full _home folder"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid "S_top after each video"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid "S_tore downloaded videos in this folder:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "Search _Engine:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "Search _custom folder:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "Select Movies Directory"
 msgstr "Filme Direktorioa Hautatu"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "Select custom search directory"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "To avoid internet slowdowns, limit _upstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "Use _ports:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
+msgid "Use this for video when listening to audio:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "Use this renderer to play videos:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "Volume:"
 msgstr "Bolumena:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:71
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
 "download videos from your favorite channels, watch new videos one after the "
 "other, download torrents, recommend videos to friends, and lots more."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "_Add Folder"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 msgid "_Automatically run Miro when I log in"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 msgid "_Downloads"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:78
+#: ../../platform/gtk-x11/glade/miro.glade.h:80
 msgid "_Folders"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:79
+#: ../../platform/gtk-x11/glade/miro.glade.h:81
 msgid "_General"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:80
+#: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_KB/s."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:81
+#: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Keep at least this much free space on my drive:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:82
+#: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_Playback"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:83
+#: ../../platform/gtk-x11/glade/miro.glade.h:85
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:84
+#: ../../platform/gtk-x11/glade/miro.glade.h:86
 msgid "_Search"
 msgstr "_Bilatu"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:85
+#: ../../platform/gtk-x11/glade/miro.glade.h:87
 msgid "_Search For:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:86
+#: ../../platform/gtk-x11/glade/miro.glade.h:88
 msgid "_URL"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:87
+#: ../../platform/gtk-x11/glade/miro.glade.h:89
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:88
+#: ../../platform/gtk-x11/glade/miro.glade.h:90
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:89
+#: ../../platform/gtk-x11/glade/miro.glade.h:91
+msgid ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:96
 msgid ""
 "xine\n"
 "gstreamer"
@@ -2605,7 +2623,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""

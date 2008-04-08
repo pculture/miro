@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-02-29 12:40-0500\n"
+"POT-Creation-Date: 2008-04-02 15:46-0400\n"
 "PO-Revision-Date: 2007-07-20 07:30+0000\n"
 "Last-Translator: moZes <Unknown>\n"
 "Language-Team: Frisian <fy@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
+"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -149,7 +149,7 @@ msgstr "HaadMenu"
 msgid "Minimize"
 msgstr "Minimalisearje"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Miro"
 msgstr "Miro"
 
@@ -375,7 +375,7 @@ msgstr ""
 msgid "Ignore unencrypted connections"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:45
 msgid "KB/s."
 msgstr ""
 
@@ -409,13 +409,13 @@ msgstr "Spylje fideos efter inoar."
 msgid "Remember video position."
 msgstr "Unthâld fideo posysje."
 
-#: ../../portable/frontends/html/contextmenu.py:99
-#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:100
+#: ../../portable/frontends/html/contextmenu.py:105
 #: ../../portable/frontends/html/contextmenu.py:178
 #: ../../portable/frontends/html/contextmenu.py:184
 #: ../../portable/frontends/html/contextmenu.py:190
 #: ../../portable/frontends/html/contextmenu.py:199
-#: ../../portable/frontends/html/contextmenu.py:233
+#: ../../portable/frontends/html/contextmenu.py:232
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Remove"
 msgstr "Fuortsmite"
@@ -423,7 +423,7 @@ msgstr "Fuortsmite"
 msgid "Run Miro at startup"
 msgstr "Start Miro by it opstarten"
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:592
 msgid "Show as Channel"
 msgstr "Toan as Kanaal"
 
@@ -443,7 +443,7 @@ msgstr ""
 msgid "Use these ports:"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:319
+#: ../../portable/frontends/html/main.py:321
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 
@@ -488,8 +488,8 @@ msgstr "Sykje nei:"
 msgid "URL"
 msgstr "URL"
 
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
 #: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "(ferwurke %d bestannen - fûn %d fideos)"
@@ -557,7 +557,7 @@ msgstr ""
 "\n"
 "Wolle jo Miro starte as jo kompjûter opstart?"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "Welcome to Internet TV!"
 msgstr "Wolkom by Ynternet TV!"
 
@@ -585,186 +585,9 @@ msgstr ""
 "%berjocht%\n"
 "%berjocht%"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
-msgid "Update Available"
-msgstr "Fernijing Beskikber"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
-#, python-format
-msgid "A new version of %s is available for download."
-msgstr "Der is in nij ferzje fan %s beskiber om yn te laden."
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
-msgid "Error Bombing Item"
-msgstr "Flater Bombing Underdiel"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
-msgid "Error Recommending Item"
-msgstr "Flater mei Oanrikkemandearjen Underdiel"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
-msgid "Error Opening Website"
-msgstr "Flater mei Iepenjen fan Webstee"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
-#, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr ""
-"Der wie in flater mei it iepenjen fan %s. Probearje it oer in pear sekonden "
-"nochris"
-
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
-#, python-format
-msgid "%d video found"
-msgid_plural "%d videos found"
-msgstr[0] "%d fideo fûn"
-msgstr[1] "%d fideos fûn"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:79
-#, python-format
-msgid ""
-"Error importing modules:\n"
-"%s"
-msgstr ""
-"Flater mei ymportearjen modules:\n"
-"%s"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:254
-msgid "Loading window"
-msgstr "Skerm lade"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:255
-msgid "onStartup called twice"
-msgstr "onStartup twa kear oanroppe"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:739
-msgid "Spacebar"
-msgstr "Spaasjebalke"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:887
-msgid "Close to tray?"
-msgstr "Slute nei it systeemfak?"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:888
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"As jo klikke op de reade slútknop, wolle jo dan dat Miro slút nei it "
-"systeemfak of ôfslutet?  Jo kinne dizze ynstelling letter noch wizigje yn de "
-"Opsjes."
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
-msgid "Download Completed"
-msgstr "Ynladen Dien"
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
-#, python-format
-msgid "Download of video '%s' is finished."
-msgstr "Ynladen fan fideo '%s' is dien."
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
-msgid "Download Failed"
-msgstr "Ynladen Mislearre"
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
-#, python-format
-msgid "Download of video '%s' has failed."
-msgstr "Ynladen fan fideo '%s' is mislearre."
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
-msgid "Subscribe to Channel"
-msgstr "Ynskriuwe by Kanaal"
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
-msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "Fol de URL yn fan it kanaal wer't jo by ynskriuwe wolle."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:79
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
-msgid "General"
-msgstr "Algemien"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:81
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
-msgid "Downloads"
-msgstr "Ynladen Bestannen"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:82
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
-msgid "Folders"
-msgstr "Mappen"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:83
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
-msgid "Disk Space"
-msgstr "Skiifromte"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:251
-msgid "Movies Directory"
-msgstr "Filmsmappen"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:252
-#, python-format
-msgid "Select a Directory to store %s downloads in."
-msgstr "Selektearje in Map om %s ynladen bestanne yn te bewarjen."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:253
-#: ../../platform/osx/platform/frontends/html/Preferences.py:362
-msgid "Select"
-msgstr "Selektearje"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:262
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
-msgid "Migrate existing movies?"
-msgstr "Migrearje besteande films?"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:263
-#, python-format
-msgid ""
-"You've selected a new folder to download movies to.  Should %s migrate your "
-"existing downloads there?  (Currently dowloading movies will not be moved "
-"until they finish)."
-msgstr ""
-"Jo hawwe in nije map selektearre om films nei yn te laden.  Moat %s jo "
-"besteande ynladen bestaannen dernei ta ferpleatse?  (Aktuele ynlaadaksjes "
-"sille net ferpleatst wurde oant se klear binne)."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:360
-msgid "View this Directory in the Library"
-msgstr "Toan dize Map yn de Bibleteek"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:361
-msgid "Select a Directory to view in the Library."
-msgstr "Selektearje in Map om te besjen tn de Bibleteek."
-
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
-msgid "Finish"
-msgstr ""
-
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
-msgid "Search!"
-msgstr "Sykje!"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:241
-msgid "Pause Video"
-msgstr "Pausearje Fideo"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:250
-msgid "Unsupported version of Quicktime"
-msgstr "Net stipe ferzje fan Quicktime"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:251
-#, python-format
-msgid ""
-"To run %s you need the most recent version of Quicktime, which is a free "
-"update."
-msgstr ""
-"Om %s te starten moatte jo de meast resinte ferzje fan Quicktime hawwe, wat "
-"in fergese fernijing is."
+#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+msgid "Audio"
+msgstr "Lûd"
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
@@ -857,9 +680,124 @@ msgstr "_Fernij Kanaal..."
 msgid "_Update Channels..."
 msgstr "_Fernij Kanalen..."
 
-#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
-msgid "Audio"
-msgstr "Lûd"
+#: ../../platform/osx/platform/frontends/html/Application.py:241
+msgid "Pause Video"
+msgstr "Pausearje Fideo"
+
+#: ../../platform/osx/platform/frontends/html/Application.py:250
+msgid "Unsupported version of Quicktime"
+msgstr "Net stipe ferzje fan Quicktime"
+
+#: ../../platform/osx/platform/frontends/html/Application.py:251
+#, python-format
+msgid ""
+"To run %s you need the most recent version of Quicktime, which is a free "
+"update."
+msgstr ""
+"Om %s te starten moatte jo de meast resinte ferzje fan Quicktime hawwe, wat "
+"in fergese fernijing is."
+
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
+msgid "Subscribe to Channel"
+msgstr "Ynskriuwe by Kanaal"
+
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr "Fol de URL yn fan it kanaal wer't jo by ynskriuwe wolle."
+
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
+msgid "Finish"
+msgstr ""
+
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
+msgid "Search!"
+msgstr "Sykje!"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
+msgid "Download Completed"
+msgstr "Ynladen Dien"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "Ynladen fan fideo '%s' is dien."
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
+msgid "Download Failed"
+msgstr "Ynladen Mislearre"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
+#, python-format
+msgid "Download of video '%s' has failed."
+msgstr "Ynladen fan fideo '%s' is mislearre."
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
+msgid "General"
+msgstr "Algemien"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:81
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+msgid "Downloads"
+msgstr "Ynladen Bestannen"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+msgid "Folders"
+msgstr "Mappen"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
+msgid "Disk Space"
+msgstr "Skiifromte"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:251
+msgid "Movies Directory"
+msgstr "Filmsmappen"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:252
+#, python-format
+msgid "Select a Directory to store %s downloads in."
+msgstr "Selektearje in Map om %s ynladen bestanne yn te bewarjen."
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:253
+#: ../../platform/osx/platform/frontends/html/Preferences.py:362
+msgid "Select"
+msgstr "Selektearje"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
+msgid "Migrate existing movies?"
+msgstr "Migrearje besteande films?"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:263
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %s migrate your "
+"existing downloads there?  (Currently dowloading movies will not be moved "
+"until they finish)."
+msgstr ""
+"Jo hawwe in nije map selektearre om films nei yn te laden.  Moat %s jo "
+"besteande ynladen bestaannen dernei ta ferpleatse?  (Aktuele ynlaadaksjes "
+"sille net ferpleatst wurde oant se klear binne)."
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:360
+msgid "View this Directory in the Library"
+msgstr "Toan dize Map yn de Bibleteek"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:361
+msgid "Select a Directory to view in the Library."
+msgstr "Selektearje in Map om te besjen tn de Bibleteek."
+
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
+#, python-format
+msgid "%d video found"
+msgid_plural "%d videos found"
+msgstr[0] "%d fideo fûn"
+msgstr[1] "%d fideos fûn"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
@@ -877,14 +815,6 @@ msgstr "Toane"
 #: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
 msgid "Quit"
 msgstr "Ofslute"
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
-msgid "New Channel _Guide..."
-msgstr "Nije Kanaal_Gids..."
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
-msgid "Folder Location"
-msgstr "Maplokaasje"
 
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
@@ -905,52 +835,731 @@ msgstr "Unbekende Programma Flater"
 msgid "An unknown error has occurred %s."
 msgstr "Der is in ûnbekende flater bard %s."
 
-#: ../../portable/dl_daemon/download.py:458
-msgid "Error"
-msgstr "Flater"
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
+msgid "New Channel _Guide..."
+msgstr "Nije Kanaal_Gids..."
 
-#: ../../portable/dl_daemon/download.py:544
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:583
+msgid "Folder Location"
+msgstr "Maplokaasje"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
+msgid "Update Available"
+msgstr "Fernijing Beskikber"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
 #, python-format
-msgid "Could not write to %s"
-msgstr "Koe net skriuwe nei %s"
+msgid "A new version of %s is available for download."
+msgstr "Der is in nij ferzje fan %s beskiber om yn te laden."
 
-#: ../../portable/dl_daemon/download.py:564
-#: ../../portable/dl_daemon/download.py:769
-msgid "Not enough disk space"
-msgstr "Net genôch skiifromte"
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
+msgid "Error Bombing Item"
+msgstr "Flater Bombing Underdiel"
 
-#: ../../portable/dl_daemon/download.py:565
-#: ../../portable/dl_daemon/download.py:770
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
+msgid "Error Recommending Item"
+msgstr "Flater mei Oanrikkemandearjen Underdiel"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
+msgid "Error Opening Website"
+msgstr "Flater mei Iepenjen fan Webstee"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
 #, python-format
-msgid "%s MB required to store this video"
-msgstr "%s MB nedich om dizze fideo te bewarjen"
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr ""
+"Der wie in flater mei it iepenjen fan %s. Probearje it oer in pear sekonden "
+"nochris"
 
-#: ../../portable/dl_daemon/download.py:781
-msgid "BitTorrent failure"
+#: ../../platform/windows-xul/xul/components/pybridge.py:79
+#, python-format
+msgid ""
+"Error importing modules:\n"
+"%s"
+msgstr ""
+"Flater mei ymportearjen modules:\n"
+"%s"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:254
+msgid "Loading window"
+msgstr "Skerm lade"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:255
+msgid "onStartup called twice"
+msgstr "onStartup twa kear oanroppe"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:739
+msgid "Spacebar"
+msgstr "Spaasjebalke"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:887
+msgid "Close to tray?"
+msgstr "Slute nei it systeemfak?"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:888
+msgid ""
+"When you click the red close button, would you like Miro to close to the "
+"system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"As jo klikke op de reade slútknop, wolle jo dan dat Miro slút nei it "
+"systeemfak of ôfslutet?  Jo kinne dizze ynstelling letter noch wizigje yn de "
+"Opsjes."
+
+#: ../../portable/item.py:497
+#, python-format
+msgid "Removing %s"
+msgstr "Smit %s fuort"
+
+#: ../../portable/item.py:500
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr ""
+"Wolle jo dizze map fuortsmite en alle fideos dy't der yn steane of allinnich "
+"de fermelding yn de Bibleteek?"
+
+#: ../../portable/item.py:506
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:782
-msgid "BitTorrent failed to startup"
+#: ../../portable/item.py:526
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
 msgstr ""
+"Dit ûnderdiel is in map.  As jo in map fuortsmite, wurde alle ûnderdielen yn "
+"die map ek fuortsmiten."
 
-#: ../../portable/dl_daemon/download.py:954
-msgid "Corrupt Torrent"
-msgstr "Korrupte Torrent"
-
-#: ../../portable/dl_daemon/download.py:955
+#: ../../portable/item.py:552 ../../portable/feed.py:390
 #, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "It torrent bestân by %s wie net korrekt"
+msgid "%d days"
+msgstr "%d dagen"
 
-#: ../../portable/dl_daemon/download.py:980
-msgid "Torrent file deleted"
-msgstr "Torrent bestân fuortsmiten"
+#: ../../portable/item.py:554 ../../portable/feed.py:386
+#, python-format
+msgid "%d hours"
+msgstr "%d oeren"
 
-#: ../../portable/dl_daemon/download.py:981
-msgid "The torrent file for this item was deleted outside of Miro."
+#: ../../portable/item.py:556
+#, python-format
+msgid "%d minutes"
+msgstr "%d minuten"
+
+#: ../../portable/item.py:566
+#, python-format
+msgid "Expires in %s"
+msgstr "Ferrint yn %s"
+
+#: ../../portable/item.py:578
+#, python-format
+msgid "Will retry in %s"
+msgstr "Sil op 'e nij probearje yn %s"
+
+#: ../../portable/item.py:580
+msgid "Paused"
+msgstr "Pausearre"
+
+#: ../../portable/item.py:982
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../../portable/item.py:984
+msgid "WEB PAGE"
+msgstr "WEBSTEE"
+
+#: ../../portable/item.py:994
+msgid "Total Down:"
+msgstr "Totaal Yn:"
+
+#: ../../portable/item.py:997
+msgid "Error:"
 msgstr ""
 
-#: ../../portable/frontends/html/contextmenu.py:103
+#: ../../portable/item.py:1006
+msgid "Seeders:"
+msgstr "Seeders:"
+
+#: ../../portable/item.py:1008
+msgid "Leechers:"
+msgstr ""
+
+#: ../../portable/item.py:1010
+msgid "Down Rate:"
+msgstr "Ynlaad Werdearring:"
+
+#: ../../portable/item.py:1011
+msgid "Down Total:"
+msgstr "Yn Totaal:"
+
+#: ../../portable/item.py:1013
+msgid "Up Rate:"
+msgstr "Pp Werdearring:"
+
+#: ../../portable/item.py:1014
+msgid "Up Total:"
+msgstr "Op Totaal:"
+
+#: ../../portable/item.py:1024
+msgid "Web page:"
+msgstr "Webstee:"
+
+#: ../../portable/item.py:1024
+msgid "permalink"
+msgstr "permakeppeling"
+
+#: ../../portable/item.py:1028
+msgid "File link:"
+msgstr "Bestânskeppeling:"
+
+#: ../../portable/item.py:1028
+msgid "direct link to file"
+msgstr "direkte keppeling nei bestân"
+
+#: ../../portable/item.py:1030
+msgid "File type:"
+msgstr "Bestânstype"
+
+#: ../../portable/item.py:1037 ../../portable/item.py:1040
+#: ../../portable/item.py:1042
+msgid "License:"
+msgstr ""
+
+#: ../../portable/item.py:1040 ../../portable/item.py:1042
+msgid "see permalink"
+msgstr ""
+
+#: ../../portable/item.py:1049
+msgid "REVEAL LOCAL FOLDER"
+msgstr "LIT LOKALE MAP SJEN"
+
+#: ../../portable/item.py:1051
+msgid "REVEAL LOCAL FILE"
+msgstr "LIT LOKAAL BESTAN SJEN"
+
+#: ../../portable/item.py:1053
+msgid "Filename:"
+msgstr "Bestânsnamme"
+
+#: ../../portable/item.py:1060
+msgid "Down Total"
+msgstr "Ynlaad Totaal"
+
+#: ../../portable/item.py:1062
+msgid "Up Total"
+msgstr "Op Totaal"
+
+#: ../../portable/item.py:1080
+msgid "Item Details"
+msgstr "Item Details"
+
+#: ../../portable/item.py:1087
+msgid "Torrent Details"
+msgstr "Torrent Details"
+
+#: ../../portable/item.py:1089
+msgid "Torrent Details <i>stopped</i>"
+msgstr ""
+
+#: ../../portable/item.py:1093
+msgid "Download Details"
+msgstr "Ynlaad Details"
+
+#: ../../portable/item.py:1310
+msgid "downloading..."
+msgstr "ynlade..."
+
+#: ../../portable/item.py:1317 ../../portable/item.py:1320
+#, python-format
+msgid "%s remaining"
+msgstr "%s te gean"
+
+#: ../../portable/item.py:1329
+msgid "starting up..."
+msgstr "dwaande mei opstarten..."
+
+#: ../../portable/item.py:1901
+#, python-format
+msgid "Removing %s items"
+msgstr "Smit %s items fuort"
+
+#: ../../portable/item.py:1903
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+"Ien of mear fan dizze fideos wie net ynladen fan in kanaall.  Wolle jo dizze "
+"fuortsmite of allinnich de fermelding yn de Bibleteek?"
+
+#: ../../portable/item.py:1911
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"Ien of mear fan dizze ûnderdielen is in map. As jo in map fuortsmite, sille "
+"alle ûnderdielen yn die map ek fuortsmiten wurde."
+
+#: ../../portable/startup.py:92
+msgid "Unknown Error"
+msgstr ""
+
+#: ../../portable/startup.py:93
+#, python-format
+msgid ""
+"An unkown error prevented Miro from startup.  Please file a bug report at %s"
+msgstr ""
+
+#: ../../portable/startup.py:155
+msgid "Database too new"
+msgstr "Database te nij"
+
+#: ../../portable/startup.py:156
+msgid ""
+"You have a database that was saved with a newer version of $shortAppName. "
+"You must download the latest version of $shortAppName and run that."
+msgstr ""
+"Jo hawwe in database dy't bewarre wie mei in nijere ferzje fan "
+"$shortAppName. Jo moatte de lêste ferzje tnlade fan $shortAppName en die "
+"gebrûke."
+
+#: ../../portable/startup.py:237 ../../portable/frontends/html/main.py:134
+msgid "Video Directory Missing"
+msgstr ""
+
+#: ../../portable/startup.py:238
+msgid ""
+"\n"
+"Miro can't find your primary video directory $moviesDirectory.  This may be "
+"because it's located on an external drive that is currently disconnected.  "
+"Please, connect the drive or create the directory, then start Miro again."
+msgstr ""
+
+#: ../../portable/feed.py:384
+msgid "never"
+msgstr "noait"
+
+#: ../../portable/feed.py:388
+#, python-format
+msgid "%d day"
+msgstr "%d dei"
+
+#: ../../portable/feed.py:392
+#, python-format
+msgid "%d months"
+msgstr "%d moannen"
+
+#: ../../portable/feed.py:825 ../../portable/frontends/html/contextmenu.py:173
+msgid "Rename Channel"
+msgstr "Werneam Kanaal"
+
+#: ../../portable/feed.py:826
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr "Jou in nije namme foar it kanaal %s"
+
+#: ../../portable/feed.py:923
+msgid "Error loading feed"
+msgstr "Flater by it laden fan feed"
+
+#: ../../portable/feed.py:924
+#, python-format
+msgid "Couldn't load the feed at %s (%s)."
+msgstr "Koe de feed net lade op %s (%s)."
+
+#: ../../portable/feed.py:927
+msgid "Would you like to keep the feed?"
+msgstr "Wolle jo de feed bewarje?"
+
+#: ../../portable/feed.py:1045
+msgid "Bad content-type"
+msgstr "Ferkeard ynhâld-type"
+
+#: ../../portable/feed.py:1058
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+msgid "Channel is not compatible with $shortAppName!"
+msgstr "Kanaal is net kompatible mei $shortAppName!"
+
+#: ../../portable/feed.py:1059
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"Mar wy dogge ús bêst om de bestannen te krijen. It kin ekstra tiid nimme om "
+"de fideos te sammmeljen, en de omskriuwings kinne der frjemd útsjen.  Nim "
+"kontakt op mei de publisearders fan $url en freegje oft se in feed jaan "
+"kinne dy't wol wurket yn $shortAppName.\n"
+"\n"
+"Wolle jo it toch probearje?"
+
+#: ../../portable/feed.py:2382 ../../portable/feed.py:2472
+#: ../../portable/extrastrings.py:33
+msgid "Search"
+msgstr "Sykje"
+
+#: ../../portable/feed.py:2486
+msgid "Local Files"
+msgstr ""
+
+#: ../../portable/feed.py:2500
+msgid "Playing File"
+msgstr ""
+
+#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
+#, python-format
+msgid "%s database save succeeded"
+msgstr "%s database bewarjen slagge"
+
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr "De database is súksesfol bewarre. It is no feilich om ôf te sluten."
+
+#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
+#, python-format
+msgid "%s database save failed"
+msgstr "%s database bewarje mislearre"
+
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
+#, python-format
+msgid ""
+"%s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"%s wie net yn steat om de database te bewarjen: Skiif Fol.\n"
+"Wy stelle foar om bestannen fuort te smiten fan de skiif of ienfâldich films "
+"út Myn Kolleksje fourt te smiten.\n"
+"Resint wizigings kinne ferlern wurde."
+
+#: ../../portable/tabs.py:55
+msgid "Library"
+msgstr "Bibleteek"
+
+#: ../../portable/tabs.py:58
+msgid "Downloading"
+msgstr "Dwaande mei ynladen"
+
+#: ../../portable/httpclient.py:81
+#, python-format
+msgid "Error: %s"
+msgstr "Flater: %s"
+
+#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
+msgid "Can't connect"
+msgstr "Kin gjin ferbining krije"
+
+#: ../../portable/httpclient.py:97
+#, python-format
+msgid "Connection Error: %s"
+msgstr "Ferbiningsflater: %s"
+
+#: ../../portable/httpclient.py:103
+msgid "SSL connection error"
+msgstr "SSL ferbiningsflater"
+
+#: ../../portable/httpclient.py:107
+msgid "HTTP error"
+msgstr "HTTP flater"
+
+#: ../../portable/httpclient.py:110
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "Foute Steat Rigel: %s"
+
+#: ../../portable/httpclient.py:113
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "Foute Haadrigel: %s"
+
+#: ../../portable/httpclient.py:116
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr "Foute Ofmjitting Chunk: %s"
+
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr "Ferwachte CRLF krigen: %r"
+
+#: ../../portable/httpclient.py:122
+#, python-format
+msgid "%s closed connection"
+msgstr "%s slút ferbining"
+
+#: ../../portable/httpclient.py:127 ../../portable/httpclient.py:155
+#: ../../portable/downloader.py:268
+msgid "File not found"
+msgstr "Bestân net fûn"
+
+#: ../../portable/httpclient.py:128
+msgid "Got 404 status code"
+msgstr "Krige 404 steatkoade"
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "Foute Steatkoade: %s"
+
+#: ../../portable/httpclient.py:134
+msgid "Authorization failed"
+msgstr "Autorisaasje mislearre"
+
+#: ../../portable/httpclient.py:139 ../../portable/frontends/html/main.py:271
+msgid "Internal Error"
+msgstr "Ynterne flater"
+
+#: ../../portable/httpclient.py:140
+msgid "Pipeline request never started"
+msgstr "Pipeline fersyk net starte"
+
+#: ../../portable/httpclient.py:144
+msgid "Timeout"
+msgstr "Tiid ferstrutsen"
+
+#: ../../portable/httpclient.py:145
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "Ferbining nei %s ferrûn"
+
+#: ../../portable/httpclient.py:149
+msgid "Invalid URL"
+msgstr "Ferkeard foarme URL"
+
+#: ../../portable/httpclient.py:150
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr ""
+
+#: ../../portable/httpclient.py:156
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr ""
+
+#: ../../portable/httpclient.py:160
+msgid "Read error"
+msgstr ""
+
+#: ../../portable/httpclient.py:161
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr ""
+
+#: ../../portable/httpclient.py:354
+msgid "Unknown Error code"
+msgstr ""
+
+#: ../../portable/httpclient.py:386
+msgid "Connection closed"
+msgstr "Ferbining sluten"
+
+#: ../../portable/httpclient.py:811
+msgid "Unknown"
+msgstr "Unbekend"
+
+#: ../../portable/httpclient.py:812
+msgid "Internal Error: Not ready to send"
+msgstr "Ynterne Flater: Net klear om te stjoeren"
+
+#: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
+msgid "Custom Channels"
+msgstr "Eigen Kanalen"
+
+#: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr "Jo brûke in ferzje fan $longAppName  mei in eigen groep fan kanalen."
+
+#: ../../portable/theme.py:138
+msgid "Starter Channels"
+msgstr ""
+
+#: ../../portable/theme.py:154
+msgid "Example Playlist"
+msgstr "Foarbyl Ofspyllist"
+
+#: ../../portable/downloader.py:234
+msgid "activity"
+msgstr "aktiviteit"
+
+#: ../../portable/downloader.py:269
+msgid "Flash URL Scraping Error"
+msgstr "Flash URL Scraping Flater"
+
+#: ../../portable/downloader.py:445
+msgid "starting up"
+msgstr "dwaande mei opstarten"
+
+#: ../../portable/license.py:68
+msgid "license page"
+msgstr ""
+
+#: ../../portable/singleclick.py:99
+msgid "Download already exists"
+msgstr ""
+
+#: ../../portable/singleclick.py:100
+msgid "That URL is already an external download."
+msgstr ""
+
+#: ../../portable/singleclick.py:106
+msgid "Miro will begin downloading it now."
+msgstr ""
+
+#: ../../portable/singleclick.py:108
+msgid "It is downloading now."
+msgstr ""
+
+#: ../../portable/singleclick.py:110
+msgid "It has already been downloaded."
+msgstr ""
+
+#: ../../portable/singleclick.py:137
+msgid "Download Error"
+msgstr ""
+
+#: ../../portable/singleclick.py:138
+#, python-format
+msgid ""
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %s"
+msgstr ""
+
+#: ../../portable/singleclick.py:146
+msgid "File Download"
+msgstr ""
+
+#: ../../portable/singleclick.py:147
+#, python-format
+msgid "This file at %s does not appear to be audio, video, or an RSS feed."
+msgstr ""
+
+#: ../../portable/singleclick.py:235
+msgid "Subscribing to multiple channels"
+msgstr "Ynskriuwe by ferskate kanalen"
+
+#: ../../portable/singleclick.py:236
+#, python-format
+msgid "Create %d channels?"
+msgstr "%d kanalen meitsje?"
+
+#: ../../portable/singleclick.py:249
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr "Foecht %d kanalen ta oan nij map"
+
+#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
+msgid "Enter a name for the new channel folder"
+msgstr "Jou in namme foar de nije kanaalmap"
+
+#: ../../portable/singleclick.py:253
+#, python-format
+msgid ""
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
+msgstr ""
+"LET OP: Jo binne al ynskreaun by %d fan dizze kanalen.  Dizze kanalen sille "
+"wêr't se no binne."
+
+#: ../../portable/singleclick.py:264
+msgid "Subscription error"
+msgstr "Ynskriuw flater"
+
+#: ../../portable/singleclick.py:274
+msgid ""
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
+msgstr ""
+"Dit $shortAppName kanaal bestân hat in fout formaat: $url. Meld dit "
+"asjebleaft oan de publisearder fan dit bestân."
+
+#: ../../portable/singleclick.py:282
+msgid ""
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
+msgstr ""
+"Dit $shortAppName kanaalbestân hat it ferkearde ynhâldtype: $url. Meld dit "
+"asjebleaft oan de publisearder fan dit bestân."
+
+#: ../../portable/singleclick.py:286
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr "Koe net it $shortAppName kanaalbestân ynlade: $url."
+
+#: ../../portable/singleclick.py:334
+msgid "Invalid Torrent"
+msgstr "Foute Torrent"
+
+#: ../../portable/singleclick.py:335
+#, python-format
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr ""
+"It torrent bestân %s liket korrupt te wêzen en kin net iepene wurde. [OK]"
+
+#: ../../portable/folder.py:142
+#: ../../portable/frontends/html/contextmenu.py:183
+msgid "Rename Channel Folder"
+msgstr "Werneam Kanaalmap"
+
+#: ../../portable/folder.py:144
+#, python-format
+msgid "Enter a new name for the channel folder %s"
+msgstr "Jou in nije namme foar de kanaalmap %s"
+
+#: ../../portable/folder.py:213
+#: ../../portable/frontends/html/contextmenu.py:189
+msgid "Rename Playlist Folder"
+msgstr "Werneam Ofspyllistmap"
+
+#: ../../portable/folder.py:215
+#, python-format
+msgid "Enter a new name for the playlist folder %s"
+msgstr "Jou in nije namme foar de ôfspyllistmap %s"
+
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "Meitsje Kanaalmap"
+
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "Meitsje Ofspyllistmap"
+
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "Jou in namme foar de nije ôfspyllistmap"
+
+#: ../../portable/opml.py:144
+msgid "OPML Import failed"
+msgstr ""
+
+#: ../../portable/opml.py:145
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr ""
+
+#: ../../portable/opml.py:150
+msgid "OPML Import summary"
+msgstr ""
+
+#: ../../portable/opml.py:151
+#, python-format
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/opml.py:154
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/html/contextmenu.py:104
 msgid "Update Channels Now"
 msgstr "Fernij Kanalen No"
 
@@ -960,32 +1569,32 @@ msgid "%d Downloaded Items"
 msgstr "%d Ynladen Underdielen"
 
 #: ../../portable/frontends/html/contextmenu.py:130
-#: ../../portable/frontends/html/contextmenu.py:211
+#: ../../portable/frontends/html/contextmenu.py:210
 msgid "Play"
 msgstr "Ofspylje"
 
 #: ../../portable/frontends/html/contextmenu.py:131
-#: ../../portable/frontends/html/contextmenu.py:214
+#: ../../portable/frontends/html/contextmenu.py:213
 msgid "Add to new playlist"
 msgstr "Foach ta oan nij ôfspyllist"
 
 #: ../../portable/frontends/html/contextmenu.py:133
-#: ../../portable/frontends/html/contextmenu.py:207
+#: ../../portable/frontends/html/contextmenu.py:206
 msgid "Remove From Playlist"
 msgstr "Helje Ut Ofspyllist"
 
 #: ../../portable/frontends/html/contextmenu.py:135
-#: ../../portable/frontends/html/contextmenu.py:209
+#: ../../portable/frontends/html/contextmenu.py:208
 msgid "Remove From the Library"
 msgstr "Helje út de Bibleteek"
 
 #: ../../portable/frontends/html/contextmenu.py:141
-#: ../../portable/frontends/html/contextmenu.py:218
+#: ../../portable/frontends/html/contextmenu.py:217
 msgid "Mark as Unwatched"
 msgstr "Markearje as Net sjoen"
 
 #: ../../portable/frontends/html/contextmenu.py:146
-#: ../../portable/frontends/html/contextmenu.py:220
+#: ../../portable/frontends/html/contextmenu.py:219
 msgid "Mark as Watched"
 msgstr ""
 
@@ -995,7 +1604,7 @@ msgid "%d Available Items"
 msgstr "%d Beskikbere Underdielen"
 
 #: ../../portable/frontends/html/contextmenu.py:152
-#: ../../portable/frontends/html/contextmenu.py:227
+#: ../../portable/frontends/html/contextmenu.py:226
 #: ../../portable/dialogs.py:93
 msgid "Download"
 msgstr "Ynlade"
@@ -1006,17 +1615,17 @@ msgid "%d Downloading Items"
 msgstr "%d Ynladen Underdielen"
 
 #: ../../portable/frontends/html/contextmenu.py:159
-#: ../../portable/frontends/html/contextmenu.py:225
+#: ../../portable/frontends/html/contextmenu.py:224
 msgid "Cancel Download"
 msgstr "Stop Ynlaad"
 
 #: ../../portable/frontends/html/contextmenu.py:161
-#: ../../portable/frontends/html/contextmenu.py:225
+#: ../../portable/frontends/html/contextmenu.py:224
 msgid "Pause Download"
 msgstr "Pausearje Ynlaad"
 
 #: ../../portable/frontends/html/contextmenu.py:164
-#: ../../portable/frontends/html/contextmenu.py:223
+#: ../../portable/frontends/html/contextmenu.py:222
 msgid "Restart Upload"
 msgstr "Werstart Oplaad"
 
@@ -1029,38 +1638,20 @@ msgstr "Fernij Kanaal No"
 msgid "Copy URL to clipboard"
 msgstr "Kopiearje URL nei klamboerd"
 
-#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
-msgid "Rename Channel"
-msgstr "Werneam Kanaal"
-
 #: ../../portable/frontends/html/contextmenu.py:177
 msgid "Revert Title to Default"
 msgstr "Set Titel Tebek nei Standert"
 
-#: ../../portable/frontends/html/contextmenu.py:183
-#: ../../portable/folder.py:142
-msgid "Rename Channel Folder"
-msgstr "Werneam Kanaalmap"
-
-#: ../../portable/frontends/html/contextmenu.py:189
-#: ../../portable/folder.py:213
-msgid "Rename Playlist Folder"
-msgstr "Werneam Ofspyllistmap"
-
-#: ../../portable/frontends/html/contextmenu.py:213
+#: ../../portable/frontends/html/contextmenu.py:212
 msgid "Play Just This Video"
 msgstr "Spylje Allinnich Dizze Fideo"
 
-#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../portable/frontends/html/contextmenu.py:231
 #: ../../portable/playlist.py:218
 msgid "Rename Playlist"
 msgstr "Werneam Ofspyllist"
 
-#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
-msgid "Video Directory Missing"
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:133
+#: ../../portable/frontends/html/main.py:135
 msgid ""
 "\n"
 "    Miro can't find your primary video directory.  This may be because it's  "
@@ -1071,81 +1662,68 @@ msgid ""
 "   external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid "Custom Channels"
-msgstr "Eigen Kanalen"
-
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr "Jo brûke in ferzje fan $longAppName  mei in eigen groep fan kanalen."
-
-#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
-msgid "Internal Error"
-msgstr "Ynterne flater"
-
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid "Describe what you were doing that caused this error"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:284
+#: ../../portable/frontends/html/main.py:286
 #, python-format
 msgid "%s Version Alert"
 msgstr "%s Ferzje Alarm"
 
-#: ../../portable/frontends/html/main.py:285
+#: ../../portable/frontends/html/main.py:287
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
 msgstr "In nije ferzje fan %s is beskikber. Wolle jo dizze no ynlade?"
 
-#: ../../portable/frontends/html/main.py:290
+#: ../../portable/frontends/html/main.py:292
 #, python-format
 msgid "%s Version Check"
 msgstr "%s Ferzjekontrôle"
 
-#: ../../portable/frontends/html/main.py:291
+#: ../../portable/frontends/html/main.py:293
 #, python-format
 msgid "%s is up to date."
 msgstr "%s is by de tiid."
 
-#: ../../portable/frontends/html/main.py:309
+#: ../../portable/frontends/html/main.py:311
 msgid "Are you sure you want to quit?"
 msgstr "Witte jo seker dat jo ôfslute wolle?"
 
-#: ../../portable/frontends/html/main.py:311
+#: ../../portable/frontends/html/main.py:313
 msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:316
+#: ../../portable/frontends/html/main.py:318
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/html/main.py:340
+#: ../../portable/frontends/html/main.py:342
 msgid "Import OPML File"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:342
+#: ../../portable/frontends/html/main.py:344
 msgid "OPML Files"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:347
+#: ../../portable/frontends/html/main.py:349
 msgid "Export OPML File"
 msgstr ""
 
@@ -1215,31 +1793,6 @@ msgstr ""
 msgid "Enter the URL of the video to download"
 msgstr ""
 
-#: ../../portable/tabs.py:55
-msgid "Library"
-msgstr "Bibleteek"
-
-#: ../../portable/tabs.py:58
-msgid "Downloading"
-msgstr "Dwaande mei ynladen"
-
-#: ../../portable/downloader.py:234
-msgid "activity"
-msgstr "aktiviteit"
-
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
-#: ../../portable/httpclient.py:155
-msgid "File not found"
-msgstr "Bestân net fûn"
-
-#: ../../portable/downloader.py:269
-msgid "Flash URL Scraping Error"
-msgstr "Flash URL Scraping Flater"
-
-#: ../../portable/downloader.py:445
-msgid "starting up"
-msgstr "dwaande mei opstarten"
-
 #: ../../portable/playlist.py:219
 #, python-format
 msgid "Enter a new name for the playlist %s"
@@ -1252,32 +1805,6 @@ msgstr "Meitsje Ofspyllist"
 #: ../../portable/playlist.py:242
 msgid "Enter a name for the new playlist"
 msgstr "Jou in namme foar de nije ôfspyllist"
-
-#: ../../portable/opml.py:144
-msgid "OPML Import failed"
-msgstr ""
-
-#: ../../portable/opml.py:145
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
-
-#: ../../portable/opml.py:150
-msgid "OPML Import summary"
-msgstr ""
-
-#: ../../portable/opml.py:151
-#, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/opml.py:154
-#, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../../portable/util.py:266
 #, python-format
@@ -1318,6 +1845,51 @@ msgstr "%1.1fB"
 #, python-format
 msgid "%dB"
 msgstr "%dB"
+
+#: ../../portable/dl_daemon/download.py:458
+msgid "Error"
+msgstr "Flater"
+
+#: ../../portable/dl_daemon/download.py:544
+#, python-format
+msgid "Could not write to %s"
+msgstr "Koe net skriuwe nei %s"
+
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:769
+msgid "Not enough disk space"
+msgstr "Net genôch skiifromte"
+
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:770
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "%s MB nedich om dizze fideo te bewarjen"
+
+#: ../../portable/dl_daemon/download.py:781
+msgid "BitTorrent failure"
+msgstr ""
+
+#: ../../portable/dl_daemon/download.py:782
+msgid "BitTorrent failed to startup"
+msgstr ""
+
+#: ../../portable/dl_daemon/download.py:954
+msgid "Corrupt Torrent"
+msgstr "Korrupte Torrent"
+
+#: ../../portable/dl_daemon/download.py:955
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "It torrent bestân by %s wie net korrekt"
+
+#: ../../portable/dl_daemon/download.py:980
+msgid "Torrent file deleted"
+msgstr "Torrent bestân fuortsmiten"
+
+#: ../../portable/dl_daemon/download.py:981
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr ""
 
 #: ../../portable/iheartmiro.py:82
 msgid ""
@@ -1563,235 +2135,6 @@ msgstr ""
 msgid "Show Window"
 msgstr ""
 
-#: ../../portable/theme.py:137
-msgid "Starter Channels"
-msgstr ""
-
-#: ../../portable/theme.py:154
-msgid "Example Playlist"
-msgstr "Foarbyl Ofspyllist"
-
-#: ../../portable/httpclient.py:81
-#, python-format
-msgid "Error: %s"
-msgstr "Flater: %s"
-
-#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
-msgid "Can't connect"
-msgstr "Kin gjin ferbining krije"
-
-#: ../../portable/httpclient.py:97
-#, python-format
-msgid "Connection Error: %s"
-msgstr "Ferbiningsflater: %s"
-
-#: ../../portable/httpclient.py:103
-msgid "SSL connection error"
-msgstr "SSL ferbiningsflater"
-
-#: ../../portable/httpclient.py:107
-msgid "HTTP error"
-msgstr "HTTP flater"
-
-#: ../../portable/httpclient.py:110
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr "Foute Steat Rigel: %s"
-
-#: ../../portable/httpclient.py:113
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr "Foute Haadrigel: %s"
-
-#: ../../portable/httpclient.py:116
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "Foute Ofmjitting Chunk: %s"
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr "Ferwachte CRLF krigen: %r"
-
-#: ../../portable/httpclient.py:122
-#, python-format
-msgid "%s closed connection"
-msgstr "%s slút ferbining"
-
-#: ../../portable/httpclient.py:128
-msgid "Got 404 status code"
-msgstr "Krige 404 steatkoade"
-
-#: ../../portable/httpclient.py:130
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "Foute Steatkoade: %s"
-
-#: ../../portable/httpclient.py:134
-msgid "Authorization failed"
-msgstr "Autorisaasje mislearre"
-
-#: ../../portable/httpclient.py:140
-msgid "Pipeline request never started"
-msgstr "Pipeline fersyk net starte"
-
-#: ../../portable/httpclient.py:144
-msgid "Timeout"
-msgstr "Tiid ferstrutsen"
-
-#: ../../portable/httpclient.py:145
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "Ferbining nei %s ferrûn"
-
-#: ../../portable/httpclient.py:149
-msgid "Invalid URL"
-msgstr "Ferkeard foarme URL"
-
-#: ../../portable/httpclient.py:150
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr ""
-
-#: ../../portable/httpclient.py:156
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr ""
-
-#: ../../portable/httpclient.py:160
-msgid "Read error"
-msgstr ""
-
-#: ../../portable/httpclient.py:161
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr ""
-
-#: ../../portable/httpclient.py:354
-msgid "Unknown Error code"
-msgstr ""
-
-#: ../../portable/httpclient.py:386
-msgid "Connection closed"
-msgstr "Ferbining sluten"
-
-#: ../../portable/httpclient.py:811
-msgid "Unknown"
-msgstr "Unbekend"
-
-#: ../../portable/httpclient.py:812
-msgid "Internal Error: Not ready to send"
-msgstr "Ynterne Flater: Net klear om te stjoeren"
-
-#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
-#: ../../portable/feed.py:2499
-msgid "Search"
-msgstr "Sykje"
-
-#: ../../portable/feed.py:384
-msgid "never"
-msgstr "noait"
-
-#: ../../portable/feed.py:386 ../../portable/item.py:554
-#, python-format
-msgid "%d hours"
-msgstr "%d oeren"
-
-#: ../../portable/feed.py:388
-#, python-format
-msgid "%d day"
-msgstr "%d dei"
-
-#: ../../portable/feed.py:390 ../../portable/item.py:552
-#, python-format
-msgid "%d days"
-msgstr "%d dagen"
-
-#: ../../portable/feed.py:392
-#, python-format
-msgid "%d months"
-msgstr "%d moannen"
-
-#: ../../portable/feed.py:826
-#, python-format
-msgid "Enter a new name for the channel %s"
-msgstr "Jou in nije namme foar it kanaal %s"
-
-#: ../../portable/feed.py:923
-msgid "Error loading feed"
-msgstr "Flater by it laden fan feed"
-
-#: ../../portable/feed.py:924
-#, python-format
-msgid "Couldn't load the feed at %s (%s)."
-msgstr "Koe de feed net lade op %s (%s)."
-
-#: ../../portable/feed.py:927
-msgid "Would you like to keep the feed?"
-msgstr "Wolle jo de feed bewarje?"
-
-#: ../../portable/feed.py:1040
-msgid "Bad content-type"
-msgstr "Ferkeard ynhâld-type"
-
-#: ../../portable/feed.py:1053
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
-msgid "Channel is not compatible with $shortAppName!"
-msgstr "Kanaal is net kompatible mei $shortAppName!"
-
-#: ../../portable/feed.py:1054
-msgid ""
-"But we'll try our best to grab the files. It may take extra time to list the "
-"videos, and descriptions may look funny.  Please contact the publishers of "
-"$url and ask if they can supply a feed in a format that will work with "
-"$shortAppName.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-"Mar wy dogge ús bêst om de bestannen te krijen. It kin ekstra tiid nimme om "
-"de fideos te sammmeljen, en de omskriuwings kinne der frjemd útsjen.  Nim "
-"kontakt op mei de publisearders fan $url en freegje oft se in feed jaan "
-"kinne dy't wol wurket yn $shortAppName.\n"
-"\n"
-"Wolle jo it toch probearje?"
-
-#: ../../portable/feed.py:2513
-msgid "Local Files"
-msgstr ""
-
-#: ../../portable/feed.py:2527
-msgid "Playing File"
-msgstr ""
-
-#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
-#, python-format
-msgid "%s database save succeeded"
-msgstr "%s database bewarjen slagge"
-
-#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr "De database is súksesfol bewarre. It is no feilich om ôf te sluten."
-
-#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
-#, python-format
-msgid "%s database save failed"
-msgstr "%s database bewarje mislearre"
-
-#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
-#, python-format
-msgid ""
-"%s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%s wie net yn steat om de database te bewarjen: Skiif Fol.\n"
-"Wy stelle foar om bestannen fuort te smiten fan de skiif of ienfâldich films "
-"út Myn Kolleksje fourt te smiten.\n"
-"Resint wizigings kinne ferlern wurde."
-
 #: ../../portable/dialogs.py:89
 msgid "Ignore"
 msgstr ""
@@ -1800,12 +2143,12 @@ msgstr ""
 msgid "Submit Crash Report"
 msgstr ""
 
-#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr "Migrearje"
 
-#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:37
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr "Net Migrearje"
@@ -1871,12 +2214,12 @@ msgstr ""
 msgid "Don't Install"
 msgstr ""
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:56
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
 msgstr "Nij Sykkanaal"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:28
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr "In sykkanaal hat ûnderdielen gelyk oan in sykterm"
@@ -1982,348 +2325,6 @@ msgid ""
 "not been deleted and try again."
 msgstr ""
 
-#: ../../portable/singleclick.py:99
-msgid "Download already exists"
-msgstr ""
-
-#: ../../portable/singleclick.py:100
-msgid "That URL is already an external download."
-msgstr ""
-
-#: ../../portable/singleclick.py:106
-msgid "Miro will begin downloading it now."
-msgstr ""
-
-#: ../../portable/singleclick.py:108
-msgid "It is downloading now."
-msgstr ""
-
-#: ../../portable/singleclick.py:110
-msgid "It has already been downloaded."
-msgstr ""
-
-#: ../../portable/singleclick.py:137
-msgid "Download Error"
-msgstr ""
-
-#: ../../portable/singleclick.py:138
-#, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %s"
-msgstr ""
-
-#: ../../portable/singleclick.py:146
-msgid "File Download"
-msgstr ""
-
-#: ../../portable/singleclick.py:147
-#, python-format
-msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
-
-#: ../../portable/singleclick.py:235
-msgid "Subscribing to multiple channels"
-msgstr "Ynskriuwe by ferskate kanalen"
-
-#: ../../portable/singleclick.py:236
-#, python-format
-msgid "Create %d channels?"
-msgstr "%d kanalen meitsje?"
-
-#: ../../portable/singleclick.py:249
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "Foecht %d kanalen ta oan nij map"
-
-#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
-msgid "Enter a name for the new channel folder"
-msgstr "Jou in namme foar de nije kanaalmap"
-
-#: ../../portable/singleclick.py:253
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
-msgstr ""
-"LET OP: Jo binne al ynskreaun by %d fan dizze kanalen.  Dizze kanalen sille "
-"wêr't se no binne."
-
-#: ../../portable/singleclick.py:264
-msgid "Subscription error"
-msgstr "Ynskriuw flater"
-
-#: ../../portable/singleclick.py:274
-msgid ""
-"This $shortAppName channel file has an invalid format: $url. Please notify "
-"the publisher of this file."
-msgstr ""
-"Dit $shortAppName kanaal bestân hat in fout formaat: $url. Meld dit "
-"asjebleaft oan de publisearder fan dit bestân."
-
-#: ../../portable/singleclick.py:282
-msgid ""
-"This $shortAppName channel file has the wrong content type: $url. Please "
-"notify the publisher of this file."
-msgstr ""
-"Dit $shortAppName kanaalbestân hat it ferkearde ynhâldtype: $url. Meld dit "
-"asjebleaft oan de publisearder fan dit bestân."
-
-#: ../../portable/singleclick.py:286
-msgid "Could not download the $shortAppName channel file: $url."
-msgstr "Koe net it $shortAppName kanaalbestân ynlade: $url."
-
-#: ../../portable/singleclick.py:334
-msgid "Invalid Torrent"
-msgstr "Foute Torrent"
-
-#: ../../portable/singleclick.py:335
-#, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr ""
-"It torrent bestân %s liket korrupt te wêzen en kin net iepene wurde. [OK]"
-
-#: ../../portable/item.py:497
-#, python-format
-msgid "Removing %s"
-msgstr "Smit %s fuort"
-
-#: ../../portable/item.py:500
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
-"Wolle jo dizze map fuortsmite en alle fideos dy't der yn steane of allinnich "
-"de fermelding yn de Bibleteek?"
-
-#: ../../portable/item.py:506
-msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
-msgstr ""
-
-#: ../../portable/item.py:526
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
-"Dit ûnderdiel is in map.  As jo in map fuortsmite, wurde alle ûnderdielen yn "
-"die map ek fuortsmiten."
-
-#: ../../portable/item.py:556
-#, python-format
-msgid "%d minutes"
-msgstr "%d minuten"
-
-#: ../../portable/item.py:566
-#, python-format
-msgid "Expires in %s"
-msgstr "Ferrint yn %s"
-
-#: ../../portable/item.py:578
-#, python-format
-msgid "Will retry in %s"
-msgstr "Sil op 'e nij probearje yn %s"
-
-#: ../../portable/item.py:580
-msgid "Paused"
-msgstr "Pausearre"
-
-#: ../../portable/item.py:982
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../../portable/item.py:984
-msgid "WEB PAGE"
-msgstr "WEBSTEE"
-
-#: ../../portable/item.py:994
-msgid "Total Down:"
-msgstr "Totaal Yn:"
-
-#: ../../portable/item.py:997
-msgid "Error:"
-msgstr ""
-
-#: ../../portable/item.py:1006
-msgid "Seeders:"
-msgstr "Seeders:"
-
-#: ../../portable/item.py:1008
-msgid "Leechers:"
-msgstr ""
-
-#: ../../portable/item.py:1010
-msgid "Down Rate:"
-msgstr "Ynlaad Werdearring:"
-
-#: ../../portable/item.py:1011
-msgid "Down Total:"
-msgstr "Yn Totaal:"
-
-#: ../../portable/item.py:1013
-msgid "Up Rate:"
-msgstr "Pp Werdearring:"
-
-#: ../../portable/item.py:1014
-msgid "Up Total:"
-msgstr "Op Totaal:"
-
-#: ../../portable/item.py:1024
-msgid "Web page:"
-msgstr "Webstee:"
-
-#: ../../portable/item.py:1024
-msgid "permalink"
-msgstr "permakeppeling"
-
-#: ../../portable/item.py:1028
-msgid "File link:"
-msgstr "Bestânskeppeling:"
-
-#: ../../portable/item.py:1028
-msgid "direct link to file"
-msgstr "direkte keppeling nei bestân"
-
-#: ../../portable/item.py:1030
-msgid "File type:"
-msgstr "Bestânstype"
-
-#: ../../portable/item.py:1037 ../../portable/item.py:1040
-#: ../../portable/item.py:1042
-msgid "License:"
-msgstr ""
-
-#: ../../portable/item.py:1040 ../../portable/item.py:1042
-msgid "see permalink"
-msgstr ""
-
-#: ../../portable/item.py:1049
-msgid "REVEAL LOCAL FOLDER"
-msgstr "LIT LOKALE MAP SJEN"
-
-#: ../../portable/item.py:1051
-msgid "REVEAL LOCAL FILE"
-msgstr "LIT LOKAAL BESTAN SJEN"
-
-#: ../../portable/item.py:1053
-msgid "Filename:"
-msgstr "Bestânsnamme"
-
-#: ../../portable/item.py:1060
-msgid "Down Total"
-msgstr "Ynlaad Totaal"
-
-#: ../../portable/item.py:1062
-msgid "Up Total"
-msgstr "Op Totaal"
-
-#: ../../portable/item.py:1080
-msgid "Item Details"
-msgstr "Item Details"
-
-#: ../../portable/item.py:1087
-msgid "Torrent Details"
-msgstr "Torrent Details"
-
-#: ../../portable/item.py:1089
-msgid "Torrent Details <i>stopped</i>"
-msgstr ""
-
-#: ../../portable/item.py:1093
-msgid "Download Details"
-msgstr "Ynlaad Details"
-
-#: ../../portable/item.py:1310
-msgid "downloading..."
-msgstr "ynlade..."
-
-#: ../../portable/item.py:1317 ../../portable/item.py:1320
-#, python-format
-msgid "%s remaining"
-msgstr "%s te gean"
-
-#: ../../portable/item.py:1329
-msgid "starting up..."
-msgstr "dwaande mei opstarten..."
-
-#: ../../portable/item.py:1878
-#, python-format
-msgid "Removing %s items"
-msgstr "Smit %s items fuort"
-
-#: ../../portable/item.py:1880
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
-"Ien of mear fan dizze fideos wie net ynladen fan in kanaall.  Wolle jo dizze "
-"fuortsmite of allinnich de fermelding yn de Bibleteek?"
-
-#: ../../portable/item.py:1888
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
-msgstr ""
-"Ien of mear fan dizze ûnderdielen is in map. As jo in map fuortsmite, sille "
-"alle ûnderdielen yn die map ek fuortsmiten wurde."
-
-#: ../../portable/startup.py:92
-msgid "Unknown Error"
-msgstr ""
-
-#: ../../portable/startup.py:93
-#, python-format
-msgid ""
-"An unkown error prevented Miro from startup.  Please file a bug report at %s"
-msgstr ""
-
-#: ../../portable/startup.py:155
-msgid "Database too new"
-msgstr "Database te nij"
-
-#: ../../portable/startup.py:156
-msgid ""
-"You have a database that was saved with a newer version of $shortAppName. "
-"You must download the latest version of $shortAppName and run that."
-msgstr ""
-"Jo hawwe in database dy't bewarre wie mei in nijere ferzje fan "
-"$shortAppName. Jo moatte de lêste ferzje tnlade fan $shortAppName en die "
-"gebrûke."
-
-#: ../../portable/startup.py:238
-msgid ""
-"\n"
-"Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected."
-msgstr ""
-
-#: ../../portable/folder.py:144
-#, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "Jou in nije namme foar de kanaalmap %s"
-
-#: ../../portable/folder.py:215
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "Jou in nije namme foar de ôfspyllistmap %s"
-
-#: ../../portable/folder.py:223
-msgid "Create Channel Folder"
-msgstr "Meitsje Kanaalmap"
-
-#: ../../portable/folder.py:237
-msgid "Create Playlist Folder"
-msgstr "Meitsje Ofspyllistmap"
-
-#: ../../portable/folder.py:238
-msgid "Enter a name for the new playlist folder"
-msgstr "Jou in namme foar de nije ôfspyllistmap"
-
-#: ../../portable/license.py:68
-msgid "license page"
-msgstr ""
-
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
 "1 day\n"
@@ -2412,40 +2413,44 @@ msgstr ""
 "<b>Fin Fideos:</b> De Miro Gids hat hunderten ynternet TV kanalen, se binne "
 "allegear fergees.  Klik gewoan op 'TAFOEGJE' om in kanaal te besjen."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:28
+#: ../../platform/gtk-x11/glade/miro.glade.h:27
+msgid "<b>xine</b>"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Auto download default setting for new channels"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:29
+#: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Automatically for_ward ports."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:30
+#: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "By default, videos _expire after"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/gtk-x11/glade/miro.glade.h:32
 msgid "C_hannel:"
 msgstr "K_anaal"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "C_hannels"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:33
+#: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "C_reate Channel"
 msgstr "M_eitsje Kanaal"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:34
+#: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "Check Channels for _new content"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:35
+#: ../../platform/gtk-x11/glade/miro.glade.h:36
 msgid "Disk _Space"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:37
+#: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
@@ -2455,36 +2460,36 @@ msgstr ""
 "Elk oer\n"
 "Hânmjittich"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid "G_B"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../platform/gtk-x11/glade/miro.glade.h:42
 msgid "Go"
 msgstr "Gean"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Ignore Un_encrypted Connections."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr "Hjir Yn:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Limit torrent _downstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Maximum number of channel auto-downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
+#: ../../platform/gtk-x11/glade/miro.glade.h:48
 msgid "Maximum number of manual downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
+#: ../../platform/gtk-x11/glade/miro.glade.h:52
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
@@ -2492,55 +2497,55 @@ msgstr ""
 "Miro kin alle fideos fine op jo kompjûter om jo te helpen jo kolleksje te "
 "organisearjen."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid ""
 "New\n"
 "All\n"
 "Off"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
+#: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Play _videos one after another"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
+#: ../../platform/gtk-x11/glade/miro.glade.h:58
 msgid "Preferences"
 msgstr "Foarkarren"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
+#: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Restrict to my full _home folder"
 msgstr "Behein oant myn folle _thúsmap"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid "S_top after each video"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid "S_tore downloaded videos in this folder:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "Search _Engine:"
 msgstr "Syk _Masine:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "Search _custom folder:"
 msgstr "Syk _eigen map:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "Select Movies Directory"
 msgstr "Selektearje Filmsmap"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "Select custom search directory"
 msgstr "Selektearje eigen sykmap"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
@@ -2548,23 +2553,27 @@ msgstr ""
 "De folgjende skermen sille jo helpe Miro yn testellen sa dat it wurkt sa as "
 "jo dat wolle.  Hjir is de earste fraach."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "To avoid internet slowdowns, limit _upstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "Use _ports:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
+msgid "Use this for video when listening to audio:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "Use this renderer to play videos:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "Volume:"
 msgstr "Volume:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:71
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
 "This way, videos that haven't finished downloading can finish and new videos "
@@ -2575,7 +2584,7 @@ msgstr ""
 "fierder gean en nije fideos op jo kanalen sille klear wêze as jo se besjen "
 "wolle."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
 "download videos from your favorite channels, watch new videos one after the "
@@ -2585,7 +2594,7 @@ msgstr ""
 "automatysk fideos ynlade fan jo favorite kanalen, nije fideos efter inoar "
 "besjen, torrents ynlade, fideos oan freonen trochjaan, en folle mear."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there?  (Currently dowloading movies will not be "
@@ -2595,64 +2604,73 @@ msgstr ""
 "beateande ynladen bestannen hjir nei ta migrearje?  (Aktuele ynlaadaksjes "
 "sille net ferpleatst wurde oant se klear binne.)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "_Add Folder"
 msgstr "_Foech Map ta"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 msgid "_Automatically run Miro when I log in"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 msgid "_Downloads"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:78
+#: ../../platform/gtk-x11/glade/miro.glade.h:80
 msgid "_Folders"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:79
+#: ../../platform/gtk-x11/glade/miro.glade.h:81
 msgid "_General"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:80
+#: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_KB/s."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:81
+#: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Keep at least this much free space on my drive:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:82
+#: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_Playback"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:83
+#: ../../platform/gtk-x11/glade/miro.glade.h:85
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:84
+#: ../../platform/gtk-x11/glade/miro.glade.h:86
 msgid "_Search"
 msgstr "_Sykje"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:85
+#: ../../platform/gtk-x11/glade/miro.glade.h:87
 msgid "_Search For:"
 msgstr "_Sykje nei:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:86
+#: ../../platform/gtk-x11/glade/miro.glade.h:88
 msgid "_URL"
 msgstr "_URL"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:87
+#: ../../platform/gtk-x11/glade/miro.glade.h:89
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:88
+#: ../../platform/gtk-x11/glade/miro.glade.h:90
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:89
+#: ../../platform/gtk-x11/glade/miro.glade.h:91
+msgid ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:96
 msgid ""
 "xine\n"
 "gstreamer"
@@ -2660,13 +2678,10 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
-"$longAppName ferzje $appVersion ($appRevision); copyright (c) 2005-2007 "
-"$publisher.  $longAppName en de $longAppName logo binne hannelsmerken fan "
-"$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"

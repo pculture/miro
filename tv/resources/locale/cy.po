@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-02-29 12:40-0500\n"
+"POT-Creation-Date: 2008-04-02 15:46-0400\n"
 "PO-Revision-Date: 2008-01-23 22:53+0000\n"
 "Last-Translator: Huw Jones <Unknown>\n"
 "Language-Team: Welsh <cy@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 || n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
+"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -154,7 +154,7 @@ msgstr "Prif Ddewislen"
 msgid "Minimize"
 msgstr "Lleihau"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Miro"
 msgstr "Miro"
 
@@ -380,7 +380,7 @@ msgstr ""
 msgid "Ignore unencrypted connections"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:45
 msgid "KB/s."
 msgstr ""
 
@@ -414,13 +414,13 @@ msgstr "Chwarae Fideos ar ôl eu gilydd."
 msgid "Remember video position."
 msgstr "Cofio lleoldiad fideo."
 
-#: ../../portable/frontends/html/contextmenu.py:99
-#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:100
+#: ../../portable/frontends/html/contextmenu.py:105
 #: ../../portable/frontends/html/contextmenu.py:178
 #: ../../portable/frontends/html/contextmenu.py:184
 #: ../../portable/frontends/html/contextmenu.py:190
 #: ../../portable/frontends/html/contextmenu.py:199
-#: ../../portable/frontends/html/contextmenu.py:233
+#: ../../portable/frontends/html/contextmenu.py:232
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Remove"
 msgstr "Tynnu"
@@ -428,7 +428,7 @@ msgstr "Tynnu"
 msgid "Run Miro at startup"
 msgstr "Rhedeg Miro wrth ddechrau"
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:592
 msgid "Show as Channel"
 msgstr "Dangos fel Sianel"
 
@@ -448,7 +448,7 @@ msgstr ""
 msgid "Use these ports:"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:319
+#: ../../portable/frontends/html/main.py:321
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Rhybuddio fi pan dwi'n ceisio gadael tra bod llwytho ar y gweill"
 
@@ -493,8 +493,8 @@ msgstr "Chwilio am:"
 msgid "URL"
 msgstr "URL"
 
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
 #: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr ""
@@ -563,7 +563,7 @@ msgstr ""
 "\n"
 "Wyt eisiau rhedeg Miro pan mae dy gyfrifiadur yn dechrau?"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "Welcome to Internet TV!"
 msgstr "Croeso i deledu'r we!"
 
@@ -593,186 +593,9 @@ msgstr ""
 "%neges%\n"
 "%neges%"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
-msgid "Update Available"
-msgstr "Fersiwn newydd Ar Gael"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
-#, fuzzy, python-format
-msgid "A new version of %s is available for download."
-msgstr "Mae fersiwn newydd o %s ar gael i lawr lwytho"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
-#, fuzzy
-msgid "Error Bombing Item"
-msgstr "Gwall bomio'r eitem"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
-msgid "Error Recommending Item"
-msgstr "Gwall wrth awgrymu eitem"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
-#, fuzzy
-msgid "Error Opening Website"
-msgstr "Gwall wrth agor gwefan"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
-#, fuzzy, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr "Roedd gwall wrth agor %s. Ceisiwch eto mewn ychydig eiliadau."
-
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
-#, python-format
-msgid "%d video found"
-msgid_plural "%d videos found"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:79
-#, python-format
-msgid ""
-"Error importing modules:\n"
-"%s"
-msgstr ""
-"Gwall mewnforio modiwlau\n"
-"%s"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:254
-msgid "Loading window"
-msgstr "Llwytho ffenestr"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:255
-msgid "onStartup called twice"
-msgstr "Galwyd onStartup ddwywaith"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:739
-msgid "Spacebar"
-msgstr "Spacebar"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:887
-msgid "Close to tray?"
-msgstr "Cau i'r trei?"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:888
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"Pryd rwyt ti'n clicio ar y botwm coch, wyt eisiau i Miro cau i drei'r system "
-"neu cau lawr? Ti'n gallu newid y dewis yma wedyn yn yr Opsiynau."
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
-msgid "Download Completed"
-msgstr "Llwytho i lawr wedi gorffen"
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
-#, python-format
-msgid "Download of video '%s' is finished."
-msgstr ""
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
-msgid "Download Failed"
-msgstr "Llwytho i lawr wedi methu"
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
-#, python-format
-msgid "Download of video '%s' has failed."
-msgstr ""
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
-msgid "Subscribe to Channel"
-msgstr "Tanysgrifio i Sianel"
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
-msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "Rhoi'r URL am y sianel ti eisiau tanysgrifio iddi"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:79
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
-msgid "General"
-msgstr "Cyffredinol"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:81
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
-msgid "Downloads"
-msgstr "Llwythiadau i lawr"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:82
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
-msgid "Folders"
-msgstr "Ffolder"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:83
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
-msgid "Disk Space"
-msgstr "Lle ar y Ddisg"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:251
-msgid "Movies Directory"
-msgstr "Ffolder Ffilmiau"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:252
-#, python-format
-msgid "Select a Directory to store %s downloads in."
-msgstr "Dewis Ffolder ffilmiau i gadw %s llwythiadau i lawr"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:253
-#: ../../platform/osx/platform/frontends/html/Preferences.py:362
-msgid "Select"
-msgstr "Dewis"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:262
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
-#, fuzzy
-msgid "Migrate existing movies?"
-msgstr "Symud ffilmiau wedi'u cadw?"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:263
-#, python-format
-msgid ""
-"You've selected a new folder to download movies to.  Should %s migrate your "
-"existing downloads there?  (Currently dowloading movies will not be moved "
-"until they finish)."
-msgstr ""
-"Ti wedi dewis ffolder newydd i lwytho ffilmiau iddo. Dylet ti %s symud y "
-"ffilmiau sydd wedi'u cadw yn hefyd? (Ffilmiau sy wrthi'n llwytho i lawr ddim "
-"i'w symud tan eu tan  iddyn nhw orffen."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:360
-msgid "View this Directory in the Library"
-msgstr "Gweld y ffolder yma yn y Llyfrgell"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:361
-msgid "Select a Directory to view in the Library."
-msgstr "Dewis ffolder i weld yn y Llyfrgell"
-
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
-msgid "Finish"
-msgstr "Gorffen"
-
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
-msgid "Search!"
-msgstr "Chwilio!"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:241
-msgid "Pause Video"
-msgstr "Oedi Fideo"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:250
-msgid "Unsupported version of Quicktime"
-msgstr "Dim yn cefnogi'r fersiwn yma o Quicktime"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:251
-#, python-format
-msgid ""
-"To run %s you need the most recent version of Quicktime, which is a free "
-"update."
-msgstr ""
-"I redeg %s mae angen y fersiwn mwyaf diweddar o Quicktime, sydd ar gael am "
-"ddim."
+#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+msgid "Audio"
+msgstr "Sain"
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
@@ -865,9 +688,125 @@ msgstr ""
 msgid "_Update Channels..."
 msgstr ""
 
-#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
-msgid "Audio"
-msgstr "Sain"
+#: ../../platform/osx/platform/frontends/html/Application.py:241
+msgid "Pause Video"
+msgstr "Oedi Fideo"
+
+#: ../../platform/osx/platform/frontends/html/Application.py:250
+msgid "Unsupported version of Quicktime"
+msgstr "Dim yn cefnogi'r fersiwn yma o Quicktime"
+
+#: ../../platform/osx/platform/frontends/html/Application.py:251
+#, python-format
+msgid ""
+"To run %s you need the most recent version of Quicktime, which is a free "
+"update."
+msgstr ""
+"I redeg %s mae angen y fersiwn mwyaf diweddar o Quicktime, sydd ar gael am "
+"ddim."
+
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
+msgid "Subscribe to Channel"
+msgstr "Tanysgrifio i Sianel"
+
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr "Rhoi'r URL am y sianel ti eisiau tanysgrifio iddi"
+
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
+msgid "Finish"
+msgstr "Gorffen"
+
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
+msgid "Search!"
+msgstr "Chwilio!"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
+msgid "Download Completed"
+msgstr "Llwytho i lawr wedi gorffen"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr ""
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
+msgid "Download Failed"
+msgstr "Llwytho i lawr wedi methu"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
+#, python-format
+msgid "Download of video '%s' has failed."
+msgstr ""
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
+msgid "General"
+msgstr "Cyffredinol"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:81
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+msgid "Downloads"
+msgstr "Llwythiadau i lawr"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+msgid "Folders"
+msgstr "Ffolder"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
+msgid "Disk Space"
+msgstr "Lle ar y Ddisg"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:251
+msgid "Movies Directory"
+msgstr "Ffolder Ffilmiau"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:252
+#, python-format
+msgid "Select a Directory to store %s downloads in."
+msgstr "Dewis Ffolder ffilmiau i gadw %s llwythiadau i lawr"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:253
+#: ../../platform/osx/platform/frontends/html/Preferences.py:362
+msgid "Select"
+msgstr "Dewis"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
+#, fuzzy
+msgid "Migrate existing movies?"
+msgstr "Symud ffilmiau wedi'u cadw?"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:263
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %s migrate your "
+"existing downloads there?  (Currently dowloading movies will not be moved "
+"until they finish)."
+msgstr ""
+"Ti wedi dewis ffolder newydd i lwytho ffilmiau iddo. Dylet ti %s symud y "
+"ffilmiau sydd wedi'u cadw yn hefyd? (Ffilmiau sy wrthi'n llwytho i lawr ddim "
+"i'w symud tan eu tan  iddyn nhw orffen."
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:360
+msgid "View this Directory in the Library"
+msgstr "Gweld y ffolder yma yn y Llyfrgell"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:361
+msgid "Select a Directory to view in the Library."
+msgstr "Dewis ffolder i weld yn y Llyfrgell"
+
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
+#, python-format
+msgid "%d video found"
+msgid_plural "%d videos found"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
@@ -884,14 +823,6 @@ msgstr ""
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59
 #: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
 msgid "Quit"
-msgstr ""
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
-msgid "New Channel _Guide..."
-msgstr ""
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
-msgid "Folder Location"
 msgstr ""
 
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
@@ -916,52 +847,743 @@ msgstr "Gwall Anhysbys"
 msgid "An unknown error has occurred %s."
 msgstr "Roedd gwall anhysbys %s"
 
-#: ../../portable/dl_daemon/download.py:458
-msgid "Error"
-msgstr "Gwall"
-
-#: ../../portable/dl_daemon/download.py:544
-#, python-format
-msgid "Could not write to %s"
-msgstr "Methu ysgrifennu i %s"
-
-#: ../../portable/dl_daemon/download.py:564
-#: ../../portable/dl_daemon/download.py:769
-msgid "Not enough disk space"
-msgstr "Dim digon o le ar ddisg"
-
-#: ../../portable/dl_daemon/download.py:565
-#: ../../portable/dl_daemon/download.py:770
-#, python-format
-msgid "%s MB required to store this video"
-msgstr "Mae angen %s MB i gadw'r fideo yma"
-
-#: ../../portable/dl_daemon/download.py:781
-msgid "BitTorrent failure"
-msgstr "Methiant BitTorrent"
-
-#: ../../portable/dl_daemon/download.py:782
-msgid "BitTorrent failed to startup"
-msgstr "BitTorrent wedi methu wrth ddechrau"
-
-#: ../../portable/dl_daemon/download.py:954
-msgid "Corrupt Torrent"
-msgstr "Torrent wedi llygru"
-
-#: ../../portable/dl_daemon/download.py:955
-#, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "Ffeil Torrent yn %s dim yn iawn"
-
-#: ../../portable/dl_daemon/download.py:980
-msgid "Torrent file deleted"
-msgstr "Wedi dileu ffeil Torrent"
-
-#: ../../portable/dl_daemon/download.py:981
-msgid "The torrent file for this item was deleted outside of Miro."
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
+msgid "New Channel _Guide..."
 msgstr ""
 
-#: ../../portable/frontends/html/contextmenu.py:103
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:583
+msgid "Folder Location"
+msgstr ""
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
+msgid "Update Available"
+msgstr "Fersiwn newydd Ar Gael"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
+#, fuzzy, python-format
+msgid "A new version of %s is available for download."
+msgstr "Mae fersiwn newydd o %s ar gael i lawr lwytho"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
+#, fuzzy
+msgid "Error Bombing Item"
+msgstr "Gwall bomio'r eitem"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
+msgid "Error Recommending Item"
+msgstr "Gwall wrth awgrymu eitem"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
+#, fuzzy
+msgid "Error Opening Website"
+msgstr "Gwall wrth agor gwefan"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
+#, fuzzy, python-format
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr "Roedd gwall wrth agor %s. Ceisiwch eto mewn ychydig eiliadau."
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:79
+#, python-format
+msgid ""
+"Error importing modules:\n"
+"%s"
+msgstr ""
+"Gwall mewnforio modiwlau\n"
+"%s"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:254
+msgid "Loading window"
+msgstr "Llwytho ffenestr"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:255
+msgid "onStartup called twice"
+msgstr "Galwyd onStartup ddwywaith"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:739
+msgid "Spacebar"
+msgstr "Spacebar"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:887
+msgid "Close to tray?"
+msgstr "Cau i'r trei?"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:888
+msgid ""
+"When you click the red close button, would you like Miro to close to the "
+"system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"Pryd rwyt ti'n clicio ar y botwm coch, wyt eisiau i Miro cau i drei'r system "
+"neu cau lawr? Ti'n gallu newid y dewis yma wedyn yn yr Opsiynau."
+
+#: ../../portable/item.py:497
+#, python-format
+msgid "Removing %s"
+msgstr "Dileu%s"
+
+#: ../../portable/item.py:500
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr ""
+"Wyt eisiau dileu'r ffolder yma a'i fideos i gyd neu dim ond dileu ei enw o'r "
+"Llyfrgell?"
+
+#: ../../portable/item.py:506
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
+msgstr "Wyt eisiau dileu y ffeil yma neu dim ond dileu ei enw o'r Llyfrgell?"
+
+#: ../../portable/item.py:526
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+"Mae'r eitem yma'n ffolder. Pryd ti'n dielu ffolder. mae unrhywbeth ynddi yn "
+"mynd i gael ei ddileu."
+
+#: ../../portable/item.py:552 ../../portable/feed.py:390
+#, python-format
+msgid "%d days"
+msgstr "%d diwrnod"
+
+#: ../../portable/item.py:554 ../../portable/feed.py:386
+#, python-format
+msgid "%d hours"
+msgstr "%d awr"
+
+#: ../../portable/item.py:556
+#, python-format
+msgid "%d minutes"
+msgstr "%d munudau"
+
+#: ../../portable/item.py:566
+#, python-format
+msgid "Expires in %s"
+msgstr "Dod i ben yn %s"
+
+#: ../../portable/item.py:578
+#, python-format
+msgid "Will retry in %s"
+msgstr "Yn mynd i ail-drio yn %s"
+
+#: ../../portable/item.py:580
+msgid "Paused"
+msgstr "Wedi Oedi"
+
+#: ../../portable/item.py:982
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../../portable/item.py:984
+msgid "WEB PAGE"
+msgstr "TUDALEN  WE"
+
+#: ../../portable/item.py:994
+msgid "Total Down:"
+msgstr "Cyfanswm i lawr"
+
+#: ../../portable/item.py:997
+msgid "Error:"
+msgstr "Gwall:"
+
+#: ../../portable/item.py:1006
+msgid "Seeders:"
+msgstr ""
+
+#: ../../portable/item.py:1008
+msgid "Leechers:"
+msgstr ""
+
+#: ../../portable/item.py:1010
+msgid "Down Rate:"
+msgstr "Graddfa i lawr:"
+
+#: ../../portable/item.py:1011
+msgid "Down Total:"
+msgstr "Cyfanswm i Lawr:"
+
+#: ../../portable/item.py:1013
+msgid "Up Rate:"
+msgstr "Cyfanswm i fyny:"
+
+#: ../../portable/item.py:1014
+msgid "Up Total:"
+msgstr "Cyfanswm i fyny:"
+
+#: ../../portable/item.py:1024
+msgid "Web page:"
+msgstr "Tudalen We"
+
+#: ../../portable/item.py:1024
+msgid "permalink"
+msgstr "permalink"
+
+#: ../../portable/item.py:1028
+msgid "File link:"
+msgstr "Linc Ffeil:"
+
+#: ../../portable/item.py:1028
+msgid "direct link to file"
+msgstr "linc uniongyrchol i ffeil"
+
+#: ../../portable/item.py:1030
+msgid "File type:"
+msgstr "Math Ffeil:"
+
+#: ../../portable/item.py:1037 ../../portable/item.py:1040
+#: ../../portable/item.py:1042
+msgid "License:"
+msgstr ""
+
+#: ../../portable/item.py:1040 ../../portable/item.py:1042
+msgid "see permalink"
+msgstr ""
+
+#: ../../portable/item.py:1049
+msgid "REVEAL LOCAL FOLDER"
+msgstr "DANGOS FFOLDER LLEOL"
+
+#: ../../portable/item.py:1051
+msgid "REVEAL LOCAL FILE"
+msgstr "DANGOS FFEIL LEOL"
+
+#: ../../portable/item.py:1053
+msgid "Filename:"
+msgstr "Enw ffeil:"
+
+#: ../../portable/item.py:1060
+msgid "Down Total"
+msgstr "Cyfanswm i lawr"
+
+#: ../../portable/item.py:1062
+msgid "Up Total"
+msgstr "Cyfamswm i fyny"
+
+#: ../../portable/item.py:1080
+msgid "Item Details"
+msgstr "Manylion Eitem"
+
+#: ../../portable/item.py:1087
+msgid "Torrent Details"
+msgstr "Manylion Torrent"
+
+#: ../../portable/item.py:1089
+msgid "Torrent Details <i>stopped</i>"
+msgstr "Manylion Torrent <i>wedi stopio</i>"
+
+#: ../../portable/item.py:1093
+msgid "Download Details"
+msgstr "Manylion llwytho i lawr"
+
+#: ../../portable/item.py:1310
+msgid "downloading..."
+msgstr "llwytho i fyny..."
+
+#: ../../portable/item.py:1317 ../../portable/item.py:1320
+#, python-format
+msgid "%s remaining"
+msgstr "%s ar ôl"
+
+#: ../../portable/item.py:1329
+msgid "starting up..."
+msgstr "Yn dechrau..."
+
+#: ../../portable/item.py:1901
+#, python-format
+msgid "Removing %s items"
+msgstr "Dileu %s eitem"
+
+#: ../../portable/item.py:1903
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+"Mae un neu fwy o'r fideos heb eu llwytho i lawr o sianel. Wyt eisiau dileu'r "
+"rhain neu dim ond dileu'r enwau o'r Llyfrgell?"
+
+#: ../../portable/item.py:1911
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"Mae un neu mwy o'r eitemau yma yn ffolder. Pryd ti'n tynnu neu dileu "
+"ffolder, mae un rhywbeth tu mewn y ffolder yn mynd i gael ei dynnu neu dileu "
+"hefyd."
+
+#: ../../portable/startup.py:92
+msgid "Unknown Error"
+msgstr ""
+
+#: ../../portable/startup.py:93
+#, python-format
+msgid ""
+"An unkown error prevented Miro from startup.  Please file a bug report at %s"
+msgstr ""
+
+#: ../../portable/startup.py:155
+msgid "Database too new"
+msgstr "Cronfa data rhy newydd"
+
+#: ../../portable/startup.py:156
+msgid ""
+"You have a database that was saved with a newer version of $shortAppName. "
+"You must download the latest version of $shortAppName and run that."
+msgstr ""
+"Mae gyda ti gronfa data sydd wedi cadw gyda fersiwn mwy diweddar "
+"o$shortAppName. Rhaid llwytho i lawr y fersiwn diweddara $shortAppName i'w "
+"redeg"
+
+#: ../../portable/startup.py:237 ../../portable/frontends/html/main.py:134
+msgid "Video Directory Missing"
+msgstr "Ffolder Fideo ar Goll"
+
+#: ../../portable/startup.py:238
+msgid ""
+"\n"
+"Miro can't find your primary video directory $moviesDirectory.  This may be "
+"because it's located on an external drive that is currently disconnected.  "
+"Please, connect the drive or create the directory, then start Miro again."
+msgstr ""
+
+#: ../../portable/feed.py:384
+msgid "never"
+msgstr "byth"
+
+#: ../../portable/feed.py:388
+#, python-format
+msgid "%d day"
+msgstr "%d diwrnod"
+
+#: ../../portable/feed.py:392
+#, python-format
+msgid "%d months"
+msgstr "%d mis"
+
+#: ../../portable/feed.py:825 ../../portable/frontends/html/contextmenu.py:173
+msgid "Rename Channel"
+msgstr "Ail Enwi Sianel"
+
+#: ../../portable/feed.py:826
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr "Rhoi enw newydd am y sianel %s"
+
+#: ../../portable/feed.py:923
+msgid "Error loading feed"
+msgstr "Gwall  llwytho ffynhonnell"
+
+#: ../../portable/feed.py:924
+#, python-format
+msgid "Couldn't load the feed at %s (%s)."
+msgstr "Methu llwytho'r ffynhonnell yn%s (%s)."
+
+#: ../../portable/feed.py:927
+msgid "Would you like to keep the feed?"
+msgstr "Eisiau cadw'r ffynhonnell?"
+
+#: ../../portable/feed.py:1045
+msgid "Bad content-type"
+msgstr "Math-cynnwys drwg"
+
+#: ../../portable/feed.py:1058
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+msgid "Channel is not compatible with $shortAppName!"
+msgstr "Sianel ddim yn gweithio gyda $shortAppName!"
+
+#: ../../portable/feed.py:1059
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"Ond geisiwn ein gorau i gael gafael a'r ffeils. Efallai fydd hi'n cymryd "
+"amser i restri'r holl fideos. ac efallai bydd y disgrifiadau'n edrych yn "
+"rhyfedd. Cofia gysylltu â'r cyhoeddwyr o $url a gofyn os maen nhw'n gallu "
+"darparu ffynhonnell mewn fformat sydd yn gweithio gyda $shortAppName.\n"
+"\n"
+"Wyt ti dal eisiau llwytho'r sianel yma?"
+
+#: ../../portable/feed.py:2382 ../../portable/feed.py:2472
+#: ../../portable/extrastrings.py:33
+msgid "Search"
+msgstr "Chwilio"
+
+#: ../../portable/feed.py:2486
+msgid "Local Files"
+msgstr "Ffeils Lleol"
+
+#: ../../portable/feed.py:2500
+msgid "Playing File"
+msgstr "Chwarae Ffeil"
+
+#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
+#, python-format
+msgid "%s database save succeeded"
+msgstr "%s cronfa ddata wedi cadw'n iawn"
+
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr ""
+"Mae'r cronfa ddata wedi ei chadw'n iawn. Mae'n saff i gau heb golli unrhyw "
+"data."
+
+#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
+#, python-format
+msgid "%s database save failed"
+msgstr "Cadw cronfa ddata %s wedi methu"
+
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
+#, python-format
+msgid ""
+"%s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"%s oedd yn methu cadw ei gronfa ddata. Disg yn Llawn\n"
+"Rydan ni'n argymell dileu ffeils o'r disg sy'n llawn neu ddileu ychydig o "
+"ffilmiau o dy gasgliad\n"
+"Efallai bydd newidiadau diweddar wedi colli"
+
+#: ../../portable/tabs.py:55
+msgid "Library"
+msgstr "Llyfrgell"
+
+#: ../../portable/tabs.py:58
+msgid "Downloading"
+msgstr "Yn Llwytho i Lawr"
+
+#: ../../portable/httpclient.py:81
+#, python-format
+msgid "Error: %s"
+msgstr "Gwall: %s"
+
+#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
+msgid "Can't connect"
+msgstr "Methu cysylltu"
+
+#: ../../portable/httpclient.py:97
+#, python-format
+msgid "Connection Error: %s"
+msgstr "Gwall Cysylltu: %s"
+
+#: ../../portable/httpclient.py:103
+msgid "SSL connection error"
+msgstr "Gwall cysylltu SSL"
+
+#: ../../portable/httpclient.py:107
+msgid "HTTP error"
+msgstr "Gwall HTTP"
+
+#: ../../portable/httpclient.py:110
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "Llinell Statws Drwg: %s"
+
+#: ../../portable/httpclient.py:113
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "Penawd Llinell Drwg: %s"
+
+#: ../../portable/httpclient.py:116
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr "Maint Darn Drwg: %s"
+
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr ""
+
+#: ../../portable/httpclient.py:122
+#, python-format
+msgid "%s closed connection"
+msgstr "%s wedi cau cysylltiad"
+
+#: ../../portable/httpclient.py:127 ../../portable/httpclient.py:155
+#: ../../portable/downloader.py:268
+msgid "File not found"
+msgstr "Heb ffeindio ffeil"
+
+#: ../../portable/httpclient.py:128
+msgid "Got 404 status code"
+msgstr ""
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "Cod Statws Drwg: %s"
+
+#: ../../portable/httpclient.py:134
+msgid "Authorization failed"
+msgstr "Awrdurdodi wedi methu"
+
+#: ../../portable/httpclient.py:139 ../../portable/frontends/html/main.py:271
+msgid "Internal Error"
+msgstr "Gwall Mewnol"
+
+#: ../../portable/httpclient.py:140
+msgid "Pipeline request never started"
+msgstr "Cais Pipeline heb gychwyn"
+
+#: ../../portable/httpclient.py:144
+msgid "Timeout"
+msgstr "Amseri allan"
+
+#: ../../portable/httpclient.py:145
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "Cysylltiad i %s wedi amseri allan"
+
+#: ../../portable/httpclient.py:149
+msgid "Invalid URL"
+msgstr "URL Annilys"
+
+#: ../../portable/httpclient.py:150
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr "\"%s\" dim yn URL dilys"
+
+#: ../../portable/httpclient.py:156
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr "Mae'r ffeil \"%s\" ddim yn bod"
+
+#: ../../portable/httpclient.py:160
+msgid "Read error"
+msgstr "Gwall darllen"
+
+#: ../../portable/httpclient.py:161
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr "Gwall wrth darllen o \"%s\""
+
+#: ../../portable/httpclient.py:354
+msgid "Unknown Error code"
+msgstr "Gwall Côd Anhysbys"
+
+#: ../../portable/httpclient.py:386
+msgid "Connection closed"
+msgstr "Cysylltiad Wedi Cau"
+
+#: ../../portable/httpclient.py:811
+msgid "Unknown"
+msgstr "Anhysbys"
+
+#: ../../portable/httpclient.py:812
+msgid "Internal Error: Not ready to send"
+msgstr "Gwall mewnol: Dim yn barod i yrru"
+
+#: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
+msgid "Custom Channels"
+msgstr ""
+
+#: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr ""
+
+#: ../../portable/theme.py:138
+msgid "Starter Channels"
+msgstr ""
+
+#: ../../portable/theme.py:154
+msgid "Example Playlist"
+msgstr ""
+
+#: ../../portable/downloader.py:234
+msgid "activity"
+msgstr ""
+
+#: ../../portable/downloader.py:269
+msgid "Flash URL Scraping Error"
+msgstr "Gwall Flash URL Scraping"
+
+#: ../../portable/downloader.py:445
+msgid "starting up"
+msgstr "Yn dechrau"
+
+#: ../../portable/license.py:68
+msgid "license page"
+msgstr ""
+
+#: ../../portable/singleclick.py:99
+msgid "Download already exists"
+msgstr "Llwytho i lawr yno'n barod"
+
+#: ../../portable/singleclick.py:100
+#, fuzzy
+msgid "That URL is already an external download."
+msgstr "Mae'r URL yn barod yn llwytho i lawr allanol"
+
+#: ../../portable/singleclick.py:106
+msgid "Miro will begin downloading it now."
+msgstr "Mae Miro yn mynd i'w lwytho i lawr nawr."
+
+#: ../../portable/singleclick.py:108
+msgid "It is downloading now."
+msgstr "Llwytho i lawr yn awr."
+
+#: ../../portable/singleclick.py:110
+msgid "It has already been downloaded."
+msgstr "Wedi'i lwytho i lawr yn barod."
+
+#: ../../portable/singleclick.py:137
+msgid "Download Error"
+msgstr "Gwall llwytho i lawr"
+
+#: ../../portable/singleclick.py:138
+#, python-format
+msgid ""
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %s"
+msgstr ""
+"Mae Mirio yn methu llwytho i lawr ffeil gyda'r URL:\n"
+"\n"
+"URL: %s"
+
+#: ../../portable/singleclick.py:146
+msgid "File Download"
+msgstr "Ffeil wedi llwytho i lawr"
+
+#: ../../portable/singleclick.py:147
+#, python-format
+msgid "This file at %s does not appear to be audio, video, or an RSS feed."
+msgstr "Nid yw'r ffeil yn %s yn edrych fel sain, video, neu ffynhonnell RSS"
+
+#: ../../portable/singleclick.py:235
+msgid "Subscribing to multiple channels"
+msgstr "Tanysgrifio i sawl sianel"
+
+#: ../../portable/singleclick.py:236
+#, python-format
+msgid "Create %d channels?"
+msgstr "Creu %d Sianel?"
+
+#: ../../portable/singleclick.py:249
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr "Adio %d sianel i ffolder newydd"
+
+#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
+msgid "Enter a name for the new channel folder"
+msgstr "Rho enw am ffolder y sianel newydd"
+
+#: ../../portable/singleclick.py:253
+#, python-format
+msgid ""
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
+msgstr ""
+"SYLW: Ti wedi tanysgrifio i %d o'r sianeli yma. Mae'r sianeli yma yn mynd i "
+"aros ble maen nhw nawr."
+
+#: ../../portable/singleclick.py:264
+msgid "Subscription error"
+msgstr "Gwall Tanysgrifo"
+
+#: ../../portable/singleclick.py:274
+msgid ""
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
+msgstr ""
+"Mae gan ffeil y sianel $shortAppName fformat anghywir: $url. Dweud wrth y "
+"cyhoeddwr am y ffeil."
+
+#: ../../portable/singleclick.py:282
+msgid ""
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
+msgstr ""
+"Mae'r gan ffeil y sianel $shortAppName yma y cynnwys anghywir: $url. Dweud "
+"wrth y cyhoeddwr am y ffeil."
+
+#: ../../portable/singleclick.py:286
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr "Methu llwytho i lawr ffeil y sianel $shortAppName : $url."
+
+#: ../../portable/singleclick.py:334
+msgid "Invalid Torrent"
+msgstr "Torrent Annilys"
+
+#: ../../portable/singleclick.py:335
+#, python-format
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr ""
+"Mae'r ffeil torrent %s yn edrych fel ei fod wedi llygru ac yn methu cael ei "
+"agor [IAWN["
+
+#: ../../portable/folder.py:142
+#: ../../portable/frontends/html/contextmenu.py:183
+msgid "Rename Channel Folder"
+msgstr "Ail enwi ffolder y sianel."
+
+#: ../../portable/folder.py:144
+#, python-format
+msgid "Enter a new name for the channel folder %s"
+msgstr "Rho enw newydd am sianel y ffolder%s"
+
+#: ../../portable/folder.py:213
+#: ../../portable/frontends/html/contextmenu.py:189
+msgid "Rename Playlist Folder"
+msgstr "Ail Enwi Ffolder Rhestr Chwarae"
+
+#: ../../portable/folder.py:215
+#, python-format
+msgid "Enter a new name for the playlist folder %s"
+msgstr "Rho enw newydd am ffolder y rhestr chwarae%s"
+
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "Creu Ffolder Sianel"
+
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "Creu Ffolder Rhestr Chwarae"
+
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "Rho enw newydd am ffolder y rhestr chwarae"
+
+#: ../../portable/opml.py:144
+msgid "OPML Import failed"
+msgstr "Mewnforio OPML wedi methu"
+
+#: ../../portable/opml.py:145
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr ""
+"Mae'r ffeil OPML wedi dewis yn edrych yn annilys. Mewnforio wedi atal."
+
+#: ../../portable/opml.py:150
+msgid "OPML Import summary"
+msgstr "Crynodeb mewnforio OPML"
+
+#: ../../portable/opml.py:151
+#, python-format
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "%d ffynhonnell wedi mewnforio'n iawn"
+msgstr[1] "%d ffynhonnell wedi mewnforio'n iawn"
+msgstr[2] "%d ffynhonnell wedi mewnforio'n iawn"
+msgstr[3] "%d ffynhonnell wedi mewnforio'n iawn"
+
+#: ../../portable/opml.py:154
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] "Wedi neidio %d ffynhonnell yno yn barod."
+msgstr[1] "Wedi neidio %d ffynhonnell yno yn barod."
+msgstr[2] "Wedi neidio %d ffynhonnell yno yn barod."
+msgstr[3] "Wedi neidio %d ffynhonnell yno yn barod."
+
+#: ../../portable/frontends/html/contextmenu.py:104
 msgid "Update Channels Now"
 msgstr "Diweddaru Sianeli Nawr"
 
@@ -971,32 +1593,32 @@ msgid "%d Downloaded Items"
 msgstr "%d Eitem wedi llwytho i lawr"
 
 #: ../../portable/frontends/html/contextmenu.py:130
-#: ../../portable/frontends/html/contextmenu.py:211
+#: ../../portable/frontends/html/contextmenu.py:210
 msgid "Play"
 msgstr "Chwarae"
 
 #: ../../portable/frontends/html/contextmenu.py:131
-#: ../../portable/frontends/html/contextmenu.py:214
+#: ../../portable/frontends/html/contextmenu.py:213
 msgid "Add to new playlist"
 msgstr "Adio i'r rhestr chwarae"
 
 #: ../../portable/frontends/html/contextmenu.py:133
-#: ../../portable/frontends/html/contextmenu.py:207
+#: ../../portable/frontends/html/contextmenu.py:206
 msgid "Remove From Playlist"
 msgstr "Dileu o'r rhestr chwarae"
 
 #: ../../portable/frontends/html/contextmenu.py:135
-#: ../../portable/frontends/html/contextmenu.py:209
+#: ../../portable/frontends/html/contextmenu.py:208
 msgid "Remove From the Library"
 msgstr "Dileu o'r Llyfrgell"
 
 #: ../../portable/frontends/html/contextmenu.py:141
-#: ../../portable/frontends/html/contextmenu.py:218
+#: ../../portable/frontends/html/contextmenu.py:217
 msgid "Mark as Unwatched"
 msgstr "Marcio fel Heb ei Weld"
 
 #: ../../portable/frontends/html/contextmenu.py:146
-#: ../../portable/frontends/html/contextmenu.py:220
+#: ../../portable/frontends/html/contextmenu.py:219
 msgid "Mark as Watched"
 msgstr "Marcio fel Wedi Gweld"
 
@@ -1006,7 +1628,7 @@ msgid "%d Available Items"
 msgstr "%d eitem ar gael"
 
 #: ../../portable/frontends/html/contextmenu.py:152
-#: ../../portable/frontends/html/contextmenu.py:227
+#: ../../portable/frontends/html/contextmenu.py:226
 #: ../../portable/dialogs.py:93
 msgid "Download"
 msgstr "Llwytho i lawr"
@@ -1017,17 +1639,17 @@ msgid "%d Downloading Items"
 msgstr "%d yn Llwytho i lawr"
 
 #: ../../portable/frontends/html/contextmenu.py:159
-#: ../../portable/frontends/html/contextmenu.py:225
+#: ../../portable/frontends/html/contextmenu.py:224
 msgid "Cancel Download"
 msgstr "Canslo Llwytho i Lawr"
 
 #: ../../portable/frontends/html/contextmenu.py:161
-#: ../../portable/frontends/html/contextmenu.py:225
+#: ../../portable/frontends/html/contextmenu.py:224
 msgid "Pause Download"
 msgstr "Oedi'r Llwytho i Lawr"
 
 #: ../../portable/frontends/html/contextmenu.py:164
-#: ../../portable/frontends/html/contextmenu.py:223
+#: ../../portable/frontends/html/contextmenu.py:222
 msgid "Restart Upload"
 msgstr "Ail ddechrau llwytho fyny"
 
@@ -1040,38 +1662,20 @@ msgstr "Diweddaru Sianel Nawr"
 msgid "Copy URL to clipboard"
 msgstr "Copio URL i glipfwrdd"
 
-#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
-msgid "Rename Channel"
-msgstr "Ail Enwi Sianel"
-
 #: ../../portable/frontends/html/contextmenu.py:177
 msgid "Revert Title to Default"
 msgstr "Mynd Nôl i'r Teitl Gwreiddiol"
 
-#: ../../portable/frontends/html/contextmenu.py:183
-#: ../../portable/folder.py:142
-msgid "Rename Channel Folder"
-msgstr "Ail enwi ffolder y sianel."
-
-#: ../../portable/frontends/html/contextmenu.py:189
-#: ../../portable/folder.py:213
-msgid "Rename Playlist Folder"
-msgstr "Ail Enwi Ffolder Rhestr Chwarae"
-
-#: ../../portable/frontends/html/contextmenu.py:213
+#: ../../portable/frontends/html/contextmenu.py:212
 msgid "Play Just This Video"
 msgstr "Chwarae y Fideo Yma'n Unig"
 
-#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../portable/frontends/html/contextmenu.py:231
 #: ../../portable/playlist.py:218
 msgid "Rename Playlist"
 msgstr "Ail enwi'r Rhestr Chwarae"
 
-#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
-msgid "Video Directory Missing"
-msgstr "Ffolder Fideo ar Goll"
-
-#: ../../portable/frontends/html/main.py:133
+#: ../../portable/frontends/html/main.py:135
 msgid ""
 "\n"
 "    Miro can't find your primary video directory.  This may be because it's  "
@@ -1082,20 +1686,7 @@ msgid ""
 "   external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid "Custom Channels"
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
-msgid "Internal Error"
-msgstr "Gwall Mewnol"
-
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
@@ -1103,7 +1694,7 @@ msgstr ""
 "Mae Miro wedi dod ar draws gwall mewnol. Ti'n gallu helpu i ddatrys y "
 "broblem a'i chywiro trwy anfon adroddiad gwall."
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
@@ -1111,56 +1702,56 @@ msgstr ""
 "Cynnwys bas-data cyflawn gyda'r holl fideos a metadata sianeli gyda'r "
 "adroddiad gwall"
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid "Describe what you were doing that caused this error"
 msgstr "Disgrifiad o beth oeddet ti'n gwneud i achosi'r gwall"
 
-#: ../../portable/frontends/html/main.py:284
+#: ../../portable/frontends/html/main.py:286
 #, python-format
 msgid "%s Version Alert"
 msgstr "%s Rhybudd Fersiwn"
 
-#: ../../portable/frontends/html/main.py:285
+#: ../../portable/frontends/html/main.py:287
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
 msgstr "Mae fersiwn newydd o%s ar gael. Eisiau llwytho i lawr?"
 
-#: ../../portable/frontends/html/main.py:290
+#: ../../portable/frontends/html/main.py:292
 #, fuzzy, python-format
 msgid "%s Version Check"
 msgstr "%s Gwiro Fersiwn"
 
-#: ../../portable/frontends/html/main.py:291
+#: ../../portable/frontends/html/main.py:293
 #, python-format
 msgid "%s is up to date."
 msgstr "%s yn gyfoes"
 
-#: ../../portable/frontends/html/main.py:309
+#: ../../portable/frontends/html/main.py:311
 msgid "Are you sure you want to quit?"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:311
+#: ../../portable/frontends/html/main.py:313
 msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:316
+#: ../../portable/frontends/html/main.py:318
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/html/main.py:340
+#: ../../portable/frontends/html/main.py:342
 msgid "Import OPML File"
 msgstr "Mewnforio Ffeil OPML"
 
-#: ../../portable/frontends/html/main.py:342
+#: ../../portable/frontends/html/main.py:344
 msgid "OPML Files"
 msgstr "Ffeils OPML"
 
-#: ../../portable/frontends/html/main.py:347
+#: ../../portable/frontends/html/main.py:349
 msgid "Export OPML File"
 msgstr "Allforio Ffeil OPML"
 
@@ -1227,31 +1818,6 @@ msgstr ""
 msgid "Enter the URL of the video to download"
 msgstr ""
 
-#: ../../portable/tabs.py:55
-msgid "Library"
-msgstr "Llyfrgell"
-
-#: ../../portable/tabs.py:58
-msgid "Downloading"
-msgstr "Yn Llwytho i Lawr"
-
-#: ../../portable/downloader.py:234
-msgid "activity"
-msgstr ""
-
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
-#: ../../portable/httpclient.py:155
-msgid "File not found"
-msgstr "Heb ffeindio ffeil"
-
-#: ../../portable/downloader.py:269
-msgid "Flash URL Scraping Error"
-msgstr "Gwall Flash URL Scraping"
-
-#: ../../portable/downloader.py:445
-msgid "starting up"
-msgstr "Yn dechrau"
-
 #: ../../portable/playlist.py:219
 #, python-format
 msgid "Enter a new name for the playlist %s"
@@ -1264,37 +1830,6 @@ msgstr "Creu Rhestr Chwarae"
 #: ../../portable/playlist.py:242
 msgid "Enter a name for the new playlist"
 msgstr "Rhoi enw i'r rhestr chwarae newydd"
-
-#: ../../portable/opml.py:144
-msgid "OPML Import failed"
-msgstr "Mewnforio OPML wedi methu"
-
-#: ../../portable/opml.py:145
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
-"Mae'r ffeil OPML wedi dewis yn edrych yn annilys. Mewnforio wedi atal."
-
-#: ../../portable/opml.py:150
-msgid "OPML Import summary"
-msgstr "Crynodeb mewnforio OPML"
-
-#: ../../portable/opml.py:151
-#, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] "%d ffynhonnell wedi mewnforio'n iawn"
-msgstr[1] "%d ffynhonnell wedi mewnforio'n iawn"
-msgstr[2] "%d ffynhonnell wedi mewnforio'n iawn"
-msgstr[3] "%d ffynhonnell wedi mewnforio'n iawn"
-
-#: ../../portable/opml.py:154
-#, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] "Wedi neidio %d ffynhonnell yno yn barod."
-msgstr[1] "Wedi neidio %d ffynhonnell yno yn barod."
-msgstr[2] "Wedi neidio %d ffynhonnell yno yn barod."
-msgstr[3] "Wedi neidio %d ffynhonnell yno yn barod."
 
 #: ../../portable/util.py:266
 #, python-format
@@ -1335,6 +1870,51 @@ msgstr "%1.1fB"
 #, python-format
 msgid "%dB"
 msgstr "%dB"
+
+#: ../../portable/dl_daemon/download.py:458
+msgid "Error"
+msgstr "Gwall"
+
+#: ../../portable/dl_daemon/download.py:544
+#, python-format
+msgid "Could not write to %s"
+msgstr "Methu ysgrifennu i %s"
+
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:769
+msgid "Not enough disk space"
+msgstr "Dim digon o le ar ddisg"
+
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:770
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "Mae angen %s MB i gadw'r fideo yma"
+
+#: ../../portable/dl_daemon/download.py:781
+msgid "BitTorrent failure"
+msgstr "Methiant BitTorrent"
+
+#: ../../portable/dl_daemon/download.py:782
+msgid "BitTorrent failed to startup"
+msgstr "BitTorrent wedi methu wrth ddechrau"
+
+#: ../../portable/dl_daemon/download.py:954
+msgid "Corrupt Torrent"
+msgstr "Torrent wedi llygru"
+
+#: ../../portable/dl_daemon/download.py:955
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "Ffeil Torrent yn %s dim yn iawn"
+
+#: ../../portable/dl_daemon/download.py:980
+msgid "Torrent file deleted"
+msgstr "Wedi dileu ffeil Torrent"
+
+#: ../../portable/dl_daemon/download.py:981
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr ""
 
 #: ../../portable/iheartmiro.py:82
 msgid ""
@@ -1582,237 +2162,6 @@ msgstr "Cuddio Ffenestr"
 msgid "Show Window"
 msgstr "Dangos Ffenestr"
 
-#: ../../portable/theme.py:137
-msgid "Starter Channels"
-msgstr ""
-
-#: ../../portable/theme.py:154
-msgid "Example Playlist"
-msgstr ""
-
-#: ../../portable/httpclient.py:81
-#, python-format
-msgid "Error: %s"
-msgstr "Gwall: %s"
-
-#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
-msgid "Can't connect"
-msgstr "Methu cysylltu"
-
-#: ../../portable/httpclient.py:97
-#, python-format
-msgid "Connection Error: %s"
-msgstr "Gwall Cysylltu: %s"
-
-#: ../../portable/httpclient.py:103
-msgid "SSL connection error"
-msgstr "Gwall cysylltu SSL"
-
-#: ../../portable/httpclient.py:107
-msgid "HTTP error"
-msgstr "Gwall HTTP"
-
-#: ../../portable/httpclient.py:110
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr "Llinell Statws Drwg: %s"
-
-#: ../../portable/httpclient.py:113
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr "Penawd Llinell Drwg: %s"
-
-#: ../../portable/httpclient.py:116
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "Maint Darn Drwg: %s"
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr ""
-
-#: ../../portable/httpclient.py:122
-#, python-format
-msgid "%s closed connection"
-msgstr "%s wedi cau cysylltiad"
-
-#: ../../portable/httpclient.py:128
-msgid "Got 404 status code"
-msgstr ""
-
-#: ../../portable/httpclient.py:130
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "Cod Statws Drwg: %s"
-
-#: ../../portable/httpclient.py:134
-msgid "Authorization failed"
-msgstr "Awrdurdodi wedi methu"
-
-#: ../../portable/httpclient.py:140
-msgid "Pipeline request never started"
-msgstr "Cais Pipeline heb gychwyn"
-
-#: ../../portable/httpclient.py:144
-msgid "Timeout"
-msgstr "Amseri allan"
-
-#: ../../portable/httpclient.py:145
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "Cysylltiad i %s wedi amseri allan"
-
-#: ../../portable/httpclient.py:149
-msgid "Invalid URL"
-msgstr "URL Annilys"
-
-#: ../../portable/httpclient.py:150
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr "\"%s\" dim yn URL dilys"
-
-#: ../../portable/httpclient.py:156
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr "Mae'r ffeil \"%s\" ddim yn bod"
-
-#: ../../portable/httpclient.py:160
-msgid "Read error"
-msgstr "Gwall darllen"
-
-#: ../../portable/httpclient.py:161
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr "Gwall wrth darllen o \"%s\""
-
-#: ../../portable/httpclient.py:354
-msgid "Unknown Error code"
-msgstr "Gwall Côd Anhysbys"
-
-#: ../../portable/httpclient.py:386
-msgid "Connection closed"
-msgstr "Cysylltiad Wedi Cau"
-
-#: ../../portable/httpclient.py:811
-msgid "Unknown"
-msgstr "Anhysbys"
-
-#: ../../portable/httpclient.py:812
-msgid "Internal Error: Not ready to send"
-msgstr "Gwall mewnol: Dim yn barod i yrru"
-
-#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
-#: ../../portable/feed.py:2499
-msgid "Search"
-msgstr "Chwilio"
-
-#: ../../portable/feed.py:384
-msgid "never"
-msgstr "byth"
-
-#: ../../portable/feed.py:386 ../../portable/item.py:554
-#, python-format
-msgid "%d hours"
-msgstr "%d awr"
-
-#: ../../portable/feed.py:388
-#, python-format
-msgid "%d day"
-msgstr "%d diwrnod"
-
-#: ../../portable/feed.py:390 ../../portable/item.py:552
-#, python-format
-msgid "%d days"
-msgstr "%d diwrnod"
-
-#: ../../portable/feed.py:392
-#, python-format
-msgid "%d months"
-msgstr "%d mis"
-
-#: ../../portable/feed.py:826
-#, python-format
-msgid "Enter a new name for the channel %s"
-msgstr "Rhoi enw newydd am y sianel %s"
-
-#: ../../portable/feed.py:923
-msgid "Error loading feed"
-msgstr "Gwall  llwytho ffynhonnell"
-
-#: ../../portable/feed.py:924
-#, python-format
-msgid "Couldn't load the feed at %s (%s)."
-msgstr "Methu llwytho'r ffynhonnell yn%s (%s)."
-
-#: ../../portable/feed.py:927
-msgid "Would you like to keep the feed?"
-msgstr "Eisiau cadw'r ffynhonnell?"
-
-#: ../../portable/feed.py:1040
-msgid "Bad content-type"
-msgstr "Math-cynnwys drwg"
-
-#: ../../portable/feed.py:1053
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
-msgid "Channel is not compatible with $shortAppName!"
-msgstr "Sianel ddim yn gweithio gyda $shortAppName!"
-
-#: ../../portable/feed.py:1054
-msgid ""
-"But we'll try our best to grab the files. It may take extra time to list the "
-"videos, and descriptions may look funny.  Please contact the publishers of "
-"$url and ask if they can supply a feed in a format that will work with "
-"$shortAppName.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-"Ond geisiwn ein gorau i gael gafael a'r ffeils. Efallai fydd hi'n cymryd "
-"amser i restri'r holl fideos. ac efallai bydd y disgrifiadau'n edrych yn "
-"rhyfedd. Cofia gysylltu â'r cyhoeddwyr o $url a gofyn os maen nhw'n gallu "
-"darparu ffynhonnell mewn fformat sydd yn gweithio gyda $shortAppName.\n"
-"\n"
-"Wyt ti dal eisiau llwytho'r sianel yma?"
-
-#: ../../portable/feed.py:2513
-msgid "Local Files"
-msgstr "Ffeils Lleol"
-
-#: ../../portable/feed.py:2527
-msgid "Playing File"
-msgstr "Chwarae Ffeil"
-
-#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
-#, python-format
-msgid "%s database save succeeded"
-msgstr "%s cronfa ddata wedi cadw'n iawn"
-
-#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr ""
-"Mae'r cronfa ddata wedi ei chadw'n iawn. Mae'n saff i gau heb golli unrhyw "
-"data."
-
-#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
-#, python-format
-msgid "%s database save failed"
-msgstr "Cadw cronfa ddata %s wedi methu"
-
-#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
-#, python-format
-msgid ""
-"%s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%s oedd yn methu cadw ei gronfa ddata. Disg yn Llawn\n"
-"Rydan ni'n argymell dileu ffeils o'r disg sy'n llawn neu ddileu ychydig o "
-"ffilmiau o dy gasgliad\n"
-"Efallai bydd newidiadau diweddar wedi colli"
-
 #: ../../portable/dialogs.py:89
 msgid "Ignore"
 msgstr "Anwybyddu"
@@ -1821,13 +2170,13 @@ msgstr "Anwybyddu"
 msgid "Submit Crash Report"
 msgstr "Anfon adroddiad gwall"
 
-#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 #, fuzzy
 msgid "Migrate"
 msgstr "Mudo"
 
-#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:37
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 #, fuzzy
 msgid "Don't Migrate"
@@ -1894,13 +2243,13 @@ msgstr ""
 msgid "Don't Install"
 msgstr ""
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:56
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 #, fuzzy
 msgid "New Search Channel"
 msgstr "Sianel Chwilio Newydd"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:28
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr "Mae sianel chwilio yn cynnwys eitemau sy'n gyfateb a'r gair chwilio"
@@ -2005,354 +2354,6 @@ msgid ""
 "not been deleted and try again."
 msgstr ""
 
-#: ../../portable/singleclick.py:99
-msgid "Download already exists"
-msgstr "Llwytho i lawr yno'n barod"
-
-#: ../../portable/singleclick.py:100
-#, fuzzy
-msgid "That URL is already an external download."
-msgstr "Mae'r URL yn barod yn llwytho i lawr allanol"
-
-#: ../../portable/singleclick.py:106
-msgid "Miro will begin downloading it now."
-msgstr "Mae Miro yn mynd i'w lwytho i lawr nawr."
-
-#: ../../portable/singleclick.py:108
-msgid "It is downloading now."
-msgstr "Llwytho i lawr yn awr."
-
-#: ../../portable/singleclick.py:110
-msgid "It has already been downloaded."
-msgstr "Wedi'i lwytho i lawr yn barod."
-
-#: ../../portable/singleclick.py:137
-msgid "Download Error"
-msgstr "Gwall llwytho i lawr"
-
-#: ../../portable/singleclick.py:138
-#, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %s"
-msgstr ""
-"Mae Mirio yn methu llwytho i lawr ffeil gyda'r URL:\n"
-"\n"
-"URL: %s"
-
-#: ../../portable/singleclick.py:146
-msgid "File Download"
-msgstr "Ffeil wedi llwytho i lawr"
-
-#: ../../portable/singleclick.py:147
-#, python-format
-msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr "Nid yw'r ffeil yn %s yn edrych fel sain, video, neu ffynhonnell RSS"
-
-#: ../../portable/singleclick.py:235
-msgid "Subscribing to multiple channels"
-msgstr "Tanysgrifio i sawl sianel"
-
-#: ../../portable/singleclick.py:236
-#, python-format
-msgid "Create %d channels?"
-msgstr "Creu %d Sianel?"
-
-#: ../../portable/singleclick.py:249
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "Adio %d sianel i ffolder newydd"
-
-#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
-msgid "Enter a name for the new channel folder"
-msgstr "Rho enw am ffolder y sianel newydd"
-
-#: ../../portable/singleclick.py:253
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
-msgstr ""
-"SYLW: Ti wedi tanysgrifio i %d o'r sianeli yma. Mae'r sianeli yma yn mynd i "
-"aros ble maen nhw nawr."
-
-#: ../../portable/singleclick.py:264
-msgid "Subscription error"
-msgstr "Gwall Tanysgrifo"
-
-#: ../../portable/singleclick.py:274
-msgid ""
-"This $shortAppName channel file has an invalid format: $url. Please notify "
-"the publisher of this file."
-msgstr ""
-"Mae gan ffeil y sianel $shortAppName fformat anghywir: $url. Dweud wrth y "
-"cyhoeddwr am y ffeil."
-
-#: ../../portable/singleclick.py:282
-msgid ""
-"This $shortAppName channel file has the wrong content type: $url. Please "
-"notify the publisher of this file."
-msgstr ""
-"Mae'r gan ffeil y sianel $shortAppName yma y cynnwys anghywir: $url. Dweud "
-"wrth y cyhoeddwr am y ffeil."
-
-#: ../../portable/singleclick.py:286
-msgid "Could not download the $shortAppName channel file: $url."
-msgstr "Methu llwytho i lawr ffeil y sianel $shortAppName : $url."
-
-#: ../../portable/singleclick.py:334
-msgid "Invalid Torrent"
-msgstr "Torrent Annilys"
-
-#: ../../portable/singleclick.py:335
-#, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr ""
-"Mae'r ffeil torrent %s yn edrych fel ei fod wedi llygru ac yn methu cael ei "
-"agor [IAWN["
-
-#: ../../portable/item.py:497
-#, python-format
-msgid "Removing %s"
-msgstr "Dileu%s"
-
-#: ../../portable/item.py:500
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
-"Wyt eisiau dileu'r ffolder yma a'i fideos i gyd neu dim ond dileu ei enw o'r "
-"Llyfrgell?"
-
-#: ../../portable/item.py:506
-msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
-msgstr "Wyt eisiau dileu y ffeil yma neu dim ond dileu ei enw o'r Llyfrgell?"
-
-#: ../../portable/item.py:526
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
-"Mae'r eitem yma'n ffolder. Pryd ti'n dielu ffolder. mae unrhywbeth ynddi yn "
-"mynd i gael ei ddileu."
-
-#: ../../portable/item.py:556
-#, python-format
-msgid "%d minutes"
-msgstr "%d munudau"
-
-#: ../../portable/item.py:566
-#, python-format
-msgid "Expires in %s"
-msgstr "Dod i ben yn %s"
-
-#: ../../portable/item.py:578
-#, python-format
-msgid "Will retry in %s"
-msgstr "Yn mynd i ail-drio yn %s"
-
-#: ../../portable/item.py:580
-msgid "Paused"
-msgstr "Wedi Oedi"
-
-#: ../../portable/item.py:982
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../../portable/item.py:984
-msgid "WEB PAGE"
-msgstr "TUDALEN  WE"
-
-#: ../../portable/item.py:994
-msgid "Total Down:"
-msgstr "Cyfanswm i lawr"
-
-#: ../../portable/item.py:997
-msgid "Error:"
-msgstr "Gwall:"
-
-#: ../../portable/item.py:1006
-msgid "Seeders:"
-msgstr ""
-
-#: ../../portable/item.py:1008
-msgid "Leechers:"
-msgstr ""
-
-#: ../../portable/item.py:1010
-msgid "Down Rate:"
-msgstr "Graddfa i lawr:"
-
-#: ../../portable/item.py:1011
-msgid "Down Total:"
-msgstr "Cyfanswm i Lawr:"
-
-#: ../../portable/item.py:1013
-msgid "Up Rate:"
-msgstr "Cyfanswm i fyny:"
-
-#: ../../portable/item.py:1014
-msgid "Up Total:"
-msgstr "Cyfanswm i fyny:"
-
-#: ../../portable/item.py:1024
-msgid "Web page:"
-msgstr "Tudalen We"
-
-#: ../../portable/item.py:1024
-msgid "permalink"
-msgstr "permalink"
-
-#: ../../portable/item.py:1028
-msgid "File link:"
-msgstr "Linc Ffeil:"
-
-#: ../../portable/item.py:1028
-msgid "direct link to file"
-msgstr "linc uniongyrchol i ffeil"
-
-#: ../../portable/item.py:1030
-msgid "File type:"
-msgstr "Math Ffeil:"
-
-#: ../../portable/item.py:1037 ../../portable/item.py:1040
-#: ../../portable/item.py:1042
-msgid "License:"
-msgstr ""
-
-#: ../../portable/item.py:1040 ../../portable/item.py:1042
-msgid "see permalink"
-msgstr ""
-
-#: ../../portable/item.py:1049
-msgid "REVEAL LOCAL FOLDER"
-msgstr "DANGOS FFOLDER LLEOL"
-
-#: ../../portable/item.py:1051
-msgid "REVEAL LOCAL FILE"
-msgstr "DANGOS FFEIL LEOL"
-
-#: ../../portable/item.py:1053
-msgid "Filename:"
-msgstr "Enw ffeil:"
-
-#: ../../portable/item.py:1060
-msgid "Down Total"
-msgstr "Cyfanswm i lawr"
-
-#: ../../portable/item.py:1062
-msgid "Up Total"
-msgstr "Cyfamswm i fyny"
-
-#: ../../portable/item.py:1080
-msgid "Item Details"
-msgstr "Manylion Eitem"
-
-#: ../../portable/item.py:1087
-msgid "Torrent Details"
-msgstr "Manylion Torrent"
-
-#: ../../portable/item.py:1089
-msgid "Torrent Details <i>stopped</i>"
-msgstr "Manylion Torrent <i>wedi stopio</i>"
-
-#: ../../portable/item.py:1093
-msgid "Download Details"
-msgstr "Manylion llwytho i lawr"
-
-#: ../../portable/item.py:1310
-msgid "downloading..."
-msgstr "llwytho i fyny..."
-
-#: ../../portable/item.py:1317 ../../portable/item.py:1320
-#, python-format
-msgid "%s remaining"
-msgstr "%s ar ôl"
-
-#: ../../portable/item.py:1329
-msgid "starting up..."
-msgstr "Yn dechrau..."
-
-#: ../../portable/item.py:1878
-#, python-format
-msgid "Removing %s items"
-msgstr "Dileu %s eitem"
-
-#: ../../portable/item.py:1880
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
-"Mae un neu fwy o'r fideos heb eu llwytho i lawr o sianel. Wyt eisiau dileu'r "
-"rhain neu dim ond dileu'r enwau o'r Llyfrgell?"
-
-#: ../../portable/item.py:1888
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
-msgstr ""
-"Mae un neu mwy o'r eitemau yma yn ffolder. Pryd ti'n tynnu neu dileu "
-"ffolder, mae un rhywbeth tu mewn y ffolder yn mynd i gael ei dynnu neu dileu "
-"hefyd."
-
-#: ../../portable/startup.py:92
-msgid "Unknown Error"
-msgstr ""
-
-#: ../../portable/startup.py:93
-#, python-format
-msgid ""
-"An unkown error prevented Miro from startup.  Please file a bug report at %s"
-msgstr ""
-
-#: ../../portable/startup.py:155
-msgid "Database too new"
-msgstr "Cronfa data rhy newydd"
-
-#: ../../portable/startup.py:156
-msgid ""
-"You have a database that was saved with a newer version of $shortAppName. "
-"You must download the latest version of $shortAppName and run that."
-msgstr ""
-"Mae gyda ti gronfa data sydd wedi cadw gyda fersiwn mwy diweddar "
-"o$shortAppName. Rhaid llwytho i lawr y fersiwn diweddara $shortAppName i'w "
-"redeg"
-
-#: ../../portable/startup.py:238
-msgid ""
-"\n"
-"Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected."
-msgstr ""
-
-#: ../../portable/folder.py:144
-#, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "Rho enw newydd am sianel y ffolder%s"
-
-#: ../../portable/folder.py:215
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "Rho enw newydd am ffolder y rhestr chwarae%s"
-
-#: ../../portable/folder.py:223
-msgid "Create Channel Folder"
-msgstr "Creu Ffolder Sianel"
-
-#: ../../portable/folder.py:237
-msgid "Create Playlist Folder"
-msgstr "Creu Ffolder Rhestr Chwarae"
-
-#: ../../portable/folder.py:238
-msgid "Enter a name for the new playlist folder"
-msgstr "Rho enw newydd am ffolder y rhestr chwarae"
-
-#: ../../portable/license.py:68
-msgid "license page"
-msgstr ""
-
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
 "1 day\n"
@@ -2411,230 +2412,247 @@ msgid ""
 "of them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:28
+#: ../../platform/gtk-x11/glade/miro.glade.h:27
+msgid "<b>xine</b>"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Auto download default setting for new channels"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:29
+#: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Automatically for_ward ports."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:30
+#: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "By default, videos _expire after"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/gtk-x11/glade/miro.glade.h:32
 msgid "C_hannel:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "C_hannels"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:33
+#: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "C_reate Channel"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:34
+#: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "Check Channels for _new content"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:35
+#: ../../platform/gtk-x11/glade/miro.glade.h:36
 msgid "Disk _Space"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:37
+#: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
 "Manually"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid "G_B"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../platform/gtk-x11/glade/miro.glade.h:42
 msgid "Go"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Ignore Un_encrypted Connections."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Limit torrent _downstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Maximum number of channel auto-downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
+#: ../../platform/gtk-x11/glade/miro.glade.h:48
 msgid "Maximum number of manual downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
+#: ../../platform/gtk-x11/glade/miro.glade.h:52
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid ""
 "New\n"
 "All\n"
 "Off"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
+#: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Play _videos one after another"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
+#: ../../platform/gtk-x11/glade/miro.glade.h:58
 msgid "Preferences"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
+#: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Restrict to my full _home folder"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid "S_top after each video"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid "S_tore downloaded videos in this folder:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "Search _Engine:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "Search _custom folder:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "Select Movies Directory"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "Select custom search directory"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "To avoid internet slowdowns, limit _upstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "Use _ports:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
-msgid "Use this renderer to play videos:"
-msgstr ""
-
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
-msgid "Volume:"
+msgid "Use this for video when listening to audio:"
 msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
+msgid "Use this renderer to play videos:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
+msgid "Volume:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
 "download videos from your favorite channels, watch new videos one after the "
 "other, download torrents, recommend videos to friends, and lots more."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "_Add Folder"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 msgid "_Automatically run Miro when I log in"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 msgid "_Downloads"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:78
+#: ../../platform/gtk-x11/glade/miro.glade.h:80
 msgid "_Folders"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:79
+#: ../../platform/gtk-x11/glade/miro.glade.h:81
 msgid "_General"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:80
+#: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_KB/s."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:81
+#: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Keep at least this much free space on my drive:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:82
+#: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_Playback"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:83
+#: ../../platform/gtk-x11/glade/miro.glade.h:85
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:84
+#: ../../platform/gtk-x11/glade/miro.glade.h:86
 msgid "_Search"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:85
+#: ../../platform/gtk-x11/glade/miro.glade.h:87
 msgid "_Search For:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:86
+#: ../../platform/gtk-x11/glade/miro.glade.h:88
 msgid "_URL"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:87
+#: ../../platform/gtk-x11/glade/miro.glade.h:89
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:88
+#: ../../platform/gtk-x11/glade/miro.glade.h:90
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:89
+#: ../../platform/gtk-x11/glade/miro.glade.h:91
+msgid ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:96
 msgid ""
 "xine\n"
 "gstreamer"
@@ -2642,7 +2660,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""

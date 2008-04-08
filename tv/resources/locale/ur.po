@@ -1,45 +1,36 @@
-# Icelandic translation for democracy
-# Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
+# Urdu translation for democracy
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2007-12-18 00:02+0000\n"
-"Last-Translator: Björgvin Ragnarsson <nifgraup@hotmail.com>\n"
-"Language-Team: Icelandic <is@li.org>\n"
+"PO-Revision-Date: 2008-03-30 10:50+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Urdu <ur@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-08 14:45+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#~ msgid "About Democracy"
-#~ msgstr "Um Democracy"
-
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Democracy Hjálp"
 
 #: ../../portable/dialogs.py:85
 msgid "Cancel"
-msgstr "Hætta við"
+msgstr ""
 
 msgid "OK"
-msgstr "Í lagi"
+msgstr ""
 
 #: ../../portable/dialogs.py:84
 msgid "Ok"
-msgstr "Í lagi"
+msgstr ""
 
 msgid "$log"
-msgstr "$log"
+msgstr ""
 
 msgid ""
 "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
@@ -48,17 +39,12 @@ msgid ""
 "questions, and we'll get right to work.</font>"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
 "report to our bug-tracking system? At a minimum, what we'd need is "
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Ef þú hefur smá stund, hvernig væri að senda villulýsingu í verkbeiðnakerfið "
-"okkar?  Í minnsta lagi þurfum við að fá lýsingu á því sem þú varst að gera --"
-" eins nákvæmt og þú getur -- og að auki allt yndislega ruglið úr kassanum "
-"hér fyrir neðan:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -71,21 +57,21 @@ msgid "The fall of $shortAppName??"
 msgstr ""
 
 msgid "About Miro"
-msgstr "Um Miro"
+msgstr ""
 
 msgid "Add Channel..."
-msgstr "Bæta við rás"
+msgstr ""
 
 msgid "Add Guide..."
 msgstr ""
 
 msgid "Bring All to Front"
-msgstr "Færa allt fram"
+msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:80
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "Channels"
-msgstr "Rásir"
+msgstr ""
 
 msgid "Check for New Version"
 msgstr ""
@@ -94,26 +80,26 @@ msgid "Clear Menu"
 msgstr ""
 
 msgid "Close Window"
-msgstr "Loka glugga"
+msgstr ""
 
 msgid "Copy"
-msgstr "Afrita"
+msgstr ""
 
 msgid "Copy Channel URL"
-msgstr "Afrita slóð rásar"
+msgstr ""
 
 msgid "Copy Video URL"
 msgstr ""
 
 msgid "Cut"
-msgstr "Klippa"
+msgstr ""
 
 #: ../../portable/dialogs.py:104
 msgid "Delete"
-msgstr "Eyða"
+msgstr ""
 
 msgid "Donate"
-msgstr "Gefa"
+msgstr ""
 
 msgid "Download Video..."
 msgstr ""
@@ -125,41 +111,41 @@ msgid "Export Channels (OPML)..."
 msgstr ""
 
 msgid "File"
-msgstr "Skrá"
+msgstr ""
 
 msgid "Full Screen"
-msgstr "Fullan skjá"
+msgstr ""
 
 msgid "Help"
-msgstr "Hjálp"
+msgstr ""
 
 msgid "Hide Miro"
-msgstr "Fela Miro"
+msgstr ""
 
 msgid "Hide Others"
-msgstr "Fela annað"
+msgstr ""
 
 msgid "Import Channels (OPML)..."
 msgstr ""
 
 msgid "Main Window"
-msgstr "Aðalgluggi"
+msgstr ""
 
 msgid "MainMenu"
 msgstr ""
 
 msgid "Minimize"
-msgstr "Lágmarka"
+msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Miro"
-msgstr "Miro"
+msgstr ""
 
 msgid "Miro Help"
-msgstr "Miro hjálp"
+msgstr ""
 
 msgid "New Channel Folder..."
-msgstr "Ný rása mappa"
+msgstr ""
 
 msgid "New Playlist Folder..."
 msgstr ""
@@ -171,16 +157,16 @@ msgid "New Search Channel..."
 msgstr ""
 
 msgid "Next Video"
-msgstr "Næsta mynd"
+msgstr ""
 
 msgid "Open Recent"
-msgstr "Opna nýlegt"
+msgstr ""
 
 msgid "Open..."
-msgstr "Opna..."
+msgstr ""
 
 msgid "Paste"
-msgstr "Líma"
+msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/Application.py:244
 msgid "Play Video"
@@ -198,16 +184,16 @@ msgid "Preferences..."
 msgstr ""
 
 msgid "Previous Video"
-msgstr "Fyrri mynd"
+msgstr ""
 
 msgid "Quit Miro"
-msgstr "Loka Miro"
+msgstr ""
 
 msgid "Remove..."
 msgstr ""
 
 msgid "Rename..."
-msgstr "Endurnefna..."
+msgstr ""
 
 msgid "Report a bug"
 msgstr ""
@@ -216,28 +202,28 @@ msgid "Save Video As..."
 msgstr ""
 
 msgid "Select All"
-msgstr "Velja allt"
+msgstr ""
 
 msgid "Send This Channel to a Friend"
-msgstr "Sendu rásina til vinar"
+msgstr ""
 
 msgid "Services"
-msgstr "Þjónustur"
+msgstr ""
 
 msgid "Show All"
-msgstr "Sýna allt"
+msgstr ""
 
 msgid "Stop Video"
 msgstr ""
 
 msgid "Update All Channels"
-msgstr "Uppfæra allar rásir"
+msgstr ""
 
 msgid "Update Channel"
-msgstr "Uppfæra rás"
+msgstr ""
 
 msgid "Window"
-msgstr "Gluggi"
+msgstr ""
 
 msgid "Zoom"
 msgstr ""
@@ -265,7 +251,7 @@ msgstr ""
 
 #: ../../portable/tabs.py:57
 msgid "Video Search"
-msgstr "Myndaleit"
+msgstr ""
 
 msgid "VideoWindow"
 msgstr ""
@@ -276,18 +262,15 @@ msgid ""
 msgstr ""
 
 msgid "Password:\n"
-msgstr "Lykilorð:\n"
+msgstr ""
 
-#, fuzzy
 msgid "Username and password required"
-msgstr "Þarfnast notendanafns og lykilorðs"
+msgstr ""
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
-"Notendanafn:\n"
-"\n"
 
 msgid "(You must restart Miro for some of these changes to take effect)"
 msgstr ""
@@ -304,34 +287,32 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 day"
-msgstr "1 dagur"
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid "1 month"
-msgstr "1 mánuður"
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
-#, fuzzy
 msgid "10 days"
-msgstr "10 dagar"
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "3 days"
-msgstr "3 dagar"
+msgstr ""
 
 msgid "3 hours"
-msgstr "3 klukkustundir"
+msgstr ""
 
 msgid "4"
-msgstr "4"
+msgstr ""
 
 msgid "5"
-msgstr "5"
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
-#, fuzzy
 msgid "6 days"
-msgstr "6 dagar"
+msgstr ""
 
 msgid "99999"
 msgstr ""
@@ -358,7 +339,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Change..."
-msgstr "Breyta..."
+msgstr ""
 
 msgid "Check channels for new content:"
 msgstr ""
@@ -421,14 +402,14 @@ msgstr ""
 #: ../../portable/frontends/html/contextmenu.py:232
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Remove"
-msgstr "Fjarlægja"
+msgstr ""
 
 msgid "Run Miro at startup"
-msgstr "Keyra Miro við ræsingu"
+msgstr ""
 
 #: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:592
 msgid "Show as Channel"
-msgstr "Sýna sem rás"
+msgstr ""
 
 msgid "Stop after each video."
 msgstr ""
@@ -464,13 +445,13 @@ msgid "manually"
 msgstr ""
 
 msgid "$label$"
-msgstr "$label$"
+msgstr ""
 
 msgid "$title$"
-msgstr "$title$"
+msgstr ""
 
 msgid "Channel"
-msgstr "Rás"
+msgstr ""
 
 #: ../../portable/dialogs.py:99
 msgid "Create"
@@ -483,13 +464,13 @@ msgid "Item1"
 msgstr ""
 
 msgid "Search Engine"
-msgstr "Leitarvél"
+msgstr ""
 
 msgid "Search for:"
-msgstr "Leita að:"
+msgstr ""
 
 msgid "URL"
-msgstr "Slóð"
+msgstr ""
 
 #: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
 #: ../../platform/windows-xul/platform/frontends/html/startup.py:59
@@ -498,7 +479,7 @@ msgid "(parsed %d files - found %d videos)"
 msgstr ""
 
 msgid "Back"
-msgstr "Til baka"
+msgstr ""
 
 msgid "Browse"
 msgstr ""
@@ -562,7 +543,7 @@ msgstr ""
 #: ../../portable/dialogs.py:86
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
 msgid "Yes"
-msgstr "Já."
+msgstr ""
 
 msgid ""
 "%message%\n"
@@ -571,7 +552,7 @@ msgstr ""
 
 #: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
 msgid "Audio"
-msgstr "Hljóð"
+msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
@@ -689,11 +670,11 @@ msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
 msgid "Finish"
-msgstr "Klára"
+msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
 msgid "Search!"
-msgstr "Leita!"
+msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
 msgid "Download Completed"
@@ -731,7 +712,7 @@ msgstr ""
 #: ../../platform/osx/platform/frontends/html/Preferences.py:83
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid "Disk Space"
-msgstr "Diskapláss"
+msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:251
 msgid "Movies Directory"
@@ -745,7 +726,7 @@ msgstr ""
 #: ../../platform/osx/platform/frontends/html/Preferences.py:253
 #: ../../platform/osx/platform/frontends/html/Preferences.py:362
 msgid "Select"
-msgstr "Velja"
+msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:262
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
@@ -2612,7 +2593,7 @@ msgstr ""
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
 msgid " "
-msgstr " "
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2

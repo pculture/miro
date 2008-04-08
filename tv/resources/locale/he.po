@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-02-01 11:59+0000\n"
-"Last-Translator: Eyal Levin <eyalev@gmail.com>\n"
+"POT-Creation-Date: 2008-04-02 15:46-0400\n"
+"PO-Revision-Date: 2008-03-20 14:55+0000\n"
+"Last-Translator: Mark Krapivner <mark125@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
+"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #, fuzzy
@@ -300,7 +300,7 @@ msgstr "תפריט ראשי"
 msgid "Minimize"
 msgstr "מזער"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Miro"
 msgstr "מירו"
 
@@ -450,7 +450,7 @@ msgstr "(כתובת תיקיית הסרטים פה)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 day"
@@ -489,7 +489,7 @@ msgstr "הוסף...‏"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "All"
-msgstr ""
+msgstr "הכל"
 
 msgid "Auto download default setting for new channels:"
 msgstr ""
@@ -526,7 +526,7 @@ msgstr ""
 msgid "Ignore unencrypted connections"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:45
 msgid "KB/s."
 msgstr ""
 
@@ -560,13 +560,13 @@ msgstr "נגן קבצי וידאו אחד אחרי השני."
 msgid "Remember video position."
 msgstr "זכור מיקום וידיאו."
 
-#: ../../portable/frontends/html/contextmenu.py:99
-#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:100
+#: ../../portable/frontends/html/contextmenu.py:105
 #: ../../portable/frontends/html/contextmenu.py:178
 #: ../../portable/frontends/html/contextmenu.py:184
 #: ../../portable/frontends/html/contextmenu.py:190
 #: ../../portable/frontends/html/contextmenu.py:199
-#: ../../portable/frontends/html/contextmenu.py:233
+#: ../../portable/frontends/html/contextmenu.py:232
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Remove"
 msgstr "הסר"
@@ -574,7 +574,7 @@ msgstr "הסר"
 msgid "Run Miro at startup"
 msgstr "הרץ את מירו בזמן הפעלת המחשב"
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:592
 msgid "Show as Channel"
 msgstr "הצג כערוץ"
 
@@ -594,7 +594,7 @@ msgstr ""
 msgid "Use these ports:"
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:319
+#: ../../portable/frontends/html/main.py:321
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "הזהר אותי כשאני מנסה לצאת מהתוכנה בשעה שההורדות עדיין פעילות"
 
@@ -639,8 +639,8 @@ msgstr "חפש אחר:"
 msgid "URL"
 msgstr "כתובת אינטרנט (‏‪URL‬‏)‏"
 
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
 #: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "(נותחו %d קבצים - נמצאו %d  קבצי וידאו)"
@@ -707,7 +707,7 @@ msgstr ""
 "\n"
 "האם תרצה להפעיל את מירו יחד עם הפעלת המחשב?"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "Welcome to Internet TV!"
 msgstr "ברוכים הבאים לטלוויזית אינטרנט!"
 
@@ -735,182 +735,9 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
-msgid "Update Available"
-msgstr "עדכון זמין"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
-#, python-format
-msgid "A new version of %s is available for download."
-msgstr "גרסה חדשה של %s זמינה להורדה."
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
-msgid "Error Bombing Item"
-msgstr "טעות בזמן הפצצת חפץ"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
-msgid "Error Recommending Item"
-msgstr "שגיאה בהמלצה על הפריט"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
-msgid "Error Opening Website"
-msgstr "שגיאה בפתיחת האתר"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
-#, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr "התרחשה שגיאה בפתיחת %s. אנא נסו שוב בעוד מספר שניות"
-
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
-#, python-format
-msgid "%d video found"
-msgid_plural "%d videos found"
-msgstr[0] "%d קליפים נמצאו"
-msgstr[1] "%d קליפים נמצאו"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:79
-#, python-format
-msgid ""
-"Error importing modules:\n"
-"%s"
-msgstr ""
-"שגיאה בייבוא מודולים:\n"
-"%s"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:254
-msgid "Loading window"
-msgstr "טוען חלון"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:255
-msgid "onStartup called twice"
-msgstr "onStartup נכשל פעמיים"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:739
-msgid "Spacebar"
-msgstr "ריווח"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:887
-msgid "Close to tray?"
-msgstr "סגירה לשורת משימות?"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:888
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"כשאתם לוחצים על כפתור הסגירה האדום, תירצו שמירו ייסגר למגש המערכת או ייסגר? "
-"אתם יכולים לשנות את ההגדרה הזו מאוחר יותר בהגדרות."
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
-msgid "Download Completed"
-msgstr "ההורדה הושלמה"
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
-#, python-format
-msgid "Download of video '%s' is finished."
-msgstr "ההורדה של הוידאו '%s'  הושלמה."
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
-msgid "Download Failed"
-msgstr "הורדה נכשלה"
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
-#, python-format
-msgid "Download of video '%s' has failed."
-msgstr "ההורדה של הוידאו '%s'  ניכשלה."
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
-msgid "Subscribe to Channel"
-msgstr "הוסף את הערוץ"
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
-msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "הקלידו את כתובת הערוץ שאתם רוצים להצטרף אליו."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:79
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
-msgid "General"
-msgstr "כללי"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:81
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
-msgid "Downloads"
-msgstr "הורדות"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:82
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
-msgid "Folders"
-msgstr "תיקיות"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:83
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
-msgid "Disk Space"
-msgstr "מקום בכונן"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:251
-msgid "Movies Directory"
-msgstr "תיקיית סרטים"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:252
-#, python-format
-msgid "Select a Directory to store %s downloads in."
-msgstr "בחרו בתיקייה לאחסון בתוכה %s הורדות."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:253
-#: ../../platform/osx/platform/frontends/html/Preferences.py:362
-msgid "Select"
-msgstr "בחירה"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:262
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
-msgid "Migrate existing movies?"
-msgstr "העברת סרטים קיימים?"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:263
-#, python-format
-msgid ""
-"You've selected a new folder to download movies to.  Should %s migrate your "
-"existing downloads there?  (Currently dowloading movies will not be moved "
-"until they finish)."
-msgstr ""
-"בחרתם בתיקייה חדשה  להורדת סרטים. האם %s יעביר את כל ההורדות הקיימות לשם? "
-"(סרטים שכרגע יורדים לא יועברו על שלא יסתיימו)."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:360
-msgid "View this Directory in the Library"
-msgstr "צפייה בתיקייה הזאת בתוך הספרייה"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:361
-msgid "Select a Directory to view in the Library."
-msgstr "בחירת תיקייה לצפייה בספרייה"
-
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
-msgid "Finish"
-msgstr "סיום"
-
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
-msgid "Search!"
-msgstr "חפש!"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:241
-msgid "Pause Video"
-msgstr "השהיית הוידאו"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:250
-msgid "Unsupported version of Quicktime"
-msgstr "גרסה לא ניתמכת של Quicktime"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:251
-#, python-format
-msgid ""
-"To run %s you need the most recent version of Quicktime, which is a free "
-"update."
-msgstr ""
-"כדי להריץ את %s אתם צריכים את הגרסה החדשה ביותר של Quicktime, שהיא עדכון "
-"חינם."
+#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+msgid "Audio"
+msgstr "קול"
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
@@ -1003,9 +830,123 @@ msgstr "_עידכון ערוץ..."
 msgid "_Update Channels..."
 msgstr "_עידכון ערוצים..."
 
-#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
-msgid "Audio"
-msgstr "קול"
+#: ../../platform/osx/platform/frontends/html/Application.py:241
+msgid "Pause Video"
+msgstr "השהיית הוידאו"
+
+#: ../../platform/osx/platform/frontends/html/Application.py:250
+msgid "Unsupported version of Quicktime"
+msgstr "גרסה לא ניתמכת של Quicktime"
+
+#: ../../platform/osx/platform/frontends/html/Application.py:251
+#, python-format
+msgid ""
+"To run %s you need the most recent version of Quicktime, which is a free "
+"update."
+msgstr ""
+"כדי להריץ את %s אתם צריכים את הגרסה החדשה ביותר של Quicktime, שהיא עדכון "
+"חינם."
+
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
+msgid "Subscribe to Channel"
+msgstr "הוסף את הערוץ"
+
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr "הקלידו את כתובת הערוץ שאתם רוצים להצטרף אליו."
+
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
+msgid "Finish"
+msgstr "סיום"
+
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
+msgid "Search!"
+msgstr "חפש!"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
+msgid "Download Completed"
+msgstr "ההורדה הושלמה"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "ההורדה של הוידאו '%s'  הושלמה."
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
+msgid "Download Failed"
+msgstr "הורדה נכשלה"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
+#, python-format
+msgid "Download of video '%s' has failed."
+msgstr "ההורדה של הוידאו '%s'  ניכשלה."
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
+msgid "General"
+msgstr "כללי"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:81
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+msgid "Downloads"
+msgstr "הורדות"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+msgid "Folders"
+msgstr "תיקיות"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
+msgid "Disk Space"
+msgstr "מקום בכונן"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:251
+msgid "Movies Directory"
+msgstr "תיקיית סרטים"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:252
+#, python-format
+msgid "Select a Directory to store %s downloads in."
+msgstr "בחרו בתיקייה לאחסון בתוכה %s הורדות."
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:253
+#: ../../platform/osx/platform/frontends/html/Preferences.py:362
+msgid "Select"
+msgstr "בחירה"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
+msgid "Migrate existing movies?"
+msgstr "העברת סרטים קיימים?"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:263
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %s migrate your "
+"existing downloads there?  (Currently dowloading movies will not be moved "
+"until they finish)."
+msgstr ""
+"בחרתם בתיקייה חדשה  להורדת סרטים. האם %s יעביר את כל ההורדות הקיימות לשם? "
+"(סרטים שכרגע יורדים לא יועברו על שלא יסתיימו)."
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:360
+msgid "View this Directory in the Library"
+msgstr "צפייה בתיקייה הזאת בתוך הספרייה"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:361
+msgid "Select a Directory to view in the Library."
+msgstr "בחירת תיקייה לצפייה בספרייה"
+
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
+#, python-format
+msgid "%d video found"
+msgid_plural "%d videos found"
+msgstr[0] "%d קליפים נמצאו"
+msgstr[1] "%d קליפים נמצאו"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
@@ -1023,14 +964,6 @@ msgstr "הצג"
 #: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
 msgid "Quit"
 msgstr "יציאה"
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
-msgid "New Channel _Guide..."
-msgstr "מדריך ערוצים חדש..."
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
-msgid "Folder Location"
-msgstr "מיקום תיקייה"
 
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
@@ -1051,52 +984,722 @@ msgstr "שגיאת זמן ריצה לא ידועה"
 msgid "An unknown error has occurred %s."
 msgstr "שגיאה לא ידועה ארעה: %s"
 
-#: ../../portable/dl_daemon/download.py:458
-msgid "Error"
-msgstr "בעיה"
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
+msgid "New Channel _Guide..."
+msgstr "מדריך ערוצים חדש..."
 
-#: ../../portable/dl_daemon/download.py:544
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:583
+msgid "Folder Location"
+msgstr "מיקום תיקייה"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
+msgid "Update Available"
+msgstr "עדכון זמין"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
 #, python-format
-msgid "Could not write to %s"
-msgstr "לא ניתן לכתוב ל-%s"
+msgid "A new version of %s is available for download."
+msgstr "גרסה חדשה של %s זמינה להורדה."
 
-#: ../../portable/dl_daemon/download.py:564
-#: ../../portable/dl_daemon/download.py:769
-msgid "Not enough disk space"
-msgstr "אין מספיק מקום בדיסק"
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
+msgid "Error Bombing Item"
+msgstr "טעות בזמן הפצצת חפץ"
 
-#: ../../portable/dl_daemon/download.py:565
-#: ../../portable/dl_daemon/download.py:770
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
+msgid "Error Recommending Item"
+msgstr "שגיאה בהמלצה על הפריט"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
+msgid "Error Opening Website"
+msgstr "שגיאה בפתיחת האתר"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
 #, python-format
-msgid "%s MB required to store this video"
-msgstr "%s MB נידרש כדי לאחסן את הווידאו"
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr "התרחשה שגיאה בפתיחת %s. אנא נסו שוב בעוד מספר שניות"
 
-#: ../../portable/dl_daemon/download.py:781
-msgid "BitTorrent failure"
-msgstr "כישלון ביטורנט"
-
-#: ../../portable/dl_daemon/download.py:782
-msgid "BitTorrent failed to startup"
-msgstr "ביטורנט נכשל לעלות"
-
-#: ../../portable/dl_daemon/download.py:954
-msgid "Corrupt Torrent"
-msgstr "טורנט פגום"
-
-#: ../../portable/dl_daemon/download.py:955
+#: ../../platform/windows-xul/xul/components/pybridge.py:79
 #, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "קובץ הטורנט ב-%s לא תקין"
+msgid ""
+"Error importing modules:\n"
+"%s"
+msgstr ""
+"שגיאה בייבוא מודולים:\n"
+"%s"
 
-#: ../../portable/dl_daemon/download.py:980
-msgid "Torrent file deleted"
-msgstr "קובץ שטף נמחק"
+#: ../../platform/windows-xul/xul/components/pybridge.py:254
+msgid "Loading window"
+msgstr "טוען חלון"
 
-#: ../../portable/dl_daemon/download.py:981
-msgid "The torrent file for this item was deleted outside of Miro."
+#: ../../platform/windows-xul/xul/components/pybridge.py:255
+msgid "onStartup called twice"
+msgstr "onStartup נכשל פעמיים"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:739
+msgid "Spacebar"
+msgstr "ריווח"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:887
+msgid "Close to tray?"
+msgstr "סגירה לשורת משימות?"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:888
+msgid ""
+"When you click the red close button, would you like Miro to close to the "
+"system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"כשאתם לוחצים על כפתור הסגירה האדום, תירצו שמירו ייסגר למגש המערכת או ייסגר? "
+"אתם יכולים לשנות את ההגדרה הזו מאוחר יותר בהגדרות."
+
+#: ../../portable/item.py:497
+#, python-format
+msgid "Removing %s"
+msgstr "מסיר את %s"
+
+#: ../../portable/item.py:500
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr ""
+"אתם רוצים למחוק את התיקייה הזו וכל קטעי הווידאו שנמצאים בא או רק למחוק את "
+"הרשומה בספריה?"
+
+#: ../../portable/item.py:506
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
+msgstr "האם אתה מעוניין למחוק את הקובץ או רק להסיר את הכניסה שלו מהספריה?"
+
+#: ../../portable/item.py:526
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+"הפריט הזה הוא תיקייה. כשתסירו את התיקייה, כל הפריטים בתוך התיקייה הזו ימחקו."
+
+#: ../../portable/item.py:552 ../../portable/feed.py:390
+#, python-format
+msgid "%d days"
+msgstr "%d ימים"
+
+#: ../../portable/item.py:554 ../../portable/feed.py:386
+#, python-format
+msgid "%d hours"
+msgstr "%d שעות"
+
+#: ../../portable/item.py:556
+#, python-format
+msgid "%d minutes"
+msgstr "%d דקות"
+
+#: ../../portable/item.py:566
+#, python-format
+msgid "Expires in %s"
+msgstr "פג תוקף ב-%s"
+
+#: ../../portable/item.py:578
+#, python-format
+msgid "Will retry in %s"
+msgstr "ינסה לחדש בתוך %s"
+
+#: ../../portable/item.py:580
+msgid "Paused"
+msgstr "הושהה"
+
+#: ../../portable/item.py:982
+msgid "TORRENT"
+msgstr "טורנט"
+
+#: ../../portable/item.py:984
+msgid "WEB PAGE"
+msgstr "דף אינטרנט"
+
+#: ../../portable/item.py:994
+msgid "Total Down:"
+msgstr "סה\"כ הורדה:"
+
+#: ../../portable/item.py:997
+msgid "Error:"
+msgstr "שגיאה:"
+
+#: ../../portable/item.py:1006
+msgid "Seeders:"
+msgstr "מפיצים:"
+
+#: ../../portable/item.py:1008
+msgid "Leechers:"
 msgstr ""
 
-#: ../../portable/frontends/html/contextmenu.py:103
+#: ../../portable/item.py:1010
+msgid "Down Rate:"
+msgstr "קצב הורדה:"
+
+#: ../../portable/item.py:1011
+msgid "Down Total:"
+msgstr "סה\"כ הורדה:"
+
+#: ../../portable/item.py:1013
+msgid "Up Rate:"
+msgstr "קצב העלאה:"
+
+#: ../../portable/item.py:1014
+msgid "Up Total:"
+msgstr "סה\"כ הועלאה:"
+
+#: ../../portable/item.py:1024
+msgid "Web page:"
+msgstr "אתר אינטרנט:"
+
+#: ../../portable/item.py:1024
+msgid "permalink"
+msgstr "קישור תמידי (פרמאלינק)"
+
+#: ../../portable/item.py:1028
+msgid "File link:"
+msgstr "לינק קובץ:"
+
+#: ../../portable/item.py:1028
+msgid "direct link to file"
+msgstr "קישור ישיר לקובץ"
+
+#: ../../portable/item.py:1030
+msgid "File type:"
+msgstr "סוג קובץ:"
+
+#: ../../portable/item.py:1037 ../../portable/item.py:1040
+#: ../../portable/item.py:1042
+msgid "License:"
+msgstr ""
+
+#: ../../portable/item.py:1040 ../../portable/item.py:1042
+msgid "see permalink"
+msgstr ""
+
+#: ../../portable/item.py:1049
+msgid "REVEAL LOCAL FOLDER"
+msgstr "חשיפת תיקייה מקומית"
+
+#: ../../portable/item.py:1051
+msgid "REVEAL LOCAL FILE"
+msgstr "חשיפת קובץ מקומי"
+
+#: ../../portable/item.py:1053
+msgid "Filename:"
+msgstr "שם הקובץ:"
+
+#: ../../portable/item.py:1060
+msgid "Down Total"
+msgstr "סה\"כ ירד"
+
+#: ../../portable/item.py:1062
+msgid "Up Total"
+msgstr "סה\"כ העלאה"
+
+#: ../../portable/item.py:1080
+msgid "Item Details"
+msgstr "נתוני הפריט"
+
+#: ../../portable/item.py:1087
+msgid "Torrent Details"
+msgstr "פרטי הטורנט"
+
+#: ../../portable/item.py:1089
+msgid "Torrent Details <i>stopped</i>"
+msgstr "פרטי טורנט <i>stopped</i>"
+
+#: ../../portable/item.py:1093
+msgid "Download Details"
+msgstr "פרטי ההורדה"
+
+#: ../../portable/item.py:1310
+msgid "downloading..."
+msgstr "מוריד ..."
+
+#: ../../portable/item.py:1317 ../../portable/item.py:1320
+#, python-format
+msgid "%s remaining"
+msgstr "%s נותרו"
+
+#: ../../portable/item.py:1329
+msgid "starting up..."
+msgstr "מתחיל ..."
+
+#: ../../portable/item.py:1901
+#, python-format
+msgid "Removing %s items"
+msgstr "הסרת %s פריטים"
+
+#: ../../portable/item.py:1903
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+"אחד או יותר מסרטי הוידאו לא הורד מערוץ. האם תרצה למחוק את הפריטים האלו או רק "
+"למחוק את הכניסות שלהם מהסיפריה?"
+
+#: ../../portable/item.py:1911
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"יש בתיקייה הזאת פריט אחד או יותר. כשתסירו או תימחקו תיקייה, כל הפריטים בתוך "
+"אותה תיקייה יוסרו או ימחקו."
+
+#: ../../portable/startup.py:92
+msgid "Unknown Error"
+msgstr ""
+
+#: ../../portable/startup.py:93
+#, python-format
+msgid ""
+"An unkown error prevented Miro from startup.  Please file a bug report at %s"
+msgstr ""
+
+#: ../../portable/startup.py:155
+msgid "Database too new"
+msgstr "מסד נתונים חדש מידי"
+
+#: ../../portable/startup.py:156
+msgid ""
+"You have a database that was saved with a newer version of $shortAppName. "
+"You must download the latest version of $shortAppName and run that."
+msgstr ""
+"יש לכם מסד נתונים שנשמר עם גרסה חדשה יותר של $shortAppName. עליכם להוריד את "
+"הגרסה העדכנית של $shortAppName ולהריץ את זה."
+
+#: ../../portable/startup.py:237 ../../portable/frontends/html/main.py:134
+msgid "Video Directory Missing"
+msgstr "תיקיית וידאו נעדרת"
+
+#: ../../portable/startup.py:238
+msgid ""
+"\n"
+"Miro can't find your primary video directory $moviesDirectory.  This may be "
+"because it's located on an external drive that is currently disconnected.  "
+"Please, connect the drive or create the directory, then start Miro again."
+msgstr ""
+
+#: ../../portable/feed.py:384
+msgid "never"
+msgstr "אף פעם"
+
+#: ../../portable/feed.py:388
+#, python-format
+msgid "%d day"
+msgstr "%d יום"
+
+#: ../../portable/feed.py:392
+#, python-format
+msgid "%d months"
+msgstr "%d חודשים"
+
+#: ../../portable/feed.py:825 ../../portable/frontends/html/contextmenu.py:173
+msgid "Rename Channel"
+msgstr "שינוי שם ערוץ"
+
+#: ../../portable/feed.py:826
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr "הכניסו של חדש לערוץ %s"
+
+#: ../../portable/feed.py:923
+msgid "Error loading feed"
+msgstr "שגיאה בטעינת הערוץ"
+
+#: ../../portable/feed.py:924
+#, python-format
+msgid "Couldn't load the feed at %s (%s)."
+msgstr "לא ניתן לקרוא את הערוץ ב-%s (%s)."
+
+#: ../../portable/feed.py:927
+msgid "Would you like to keep the feed?"
+msgstr "תירצו לשמור את הערוץ?"
+
+#: ../../portable/feed.py:1045
+msgid "Bad content-type"
+msgstr "סוג תוכן לא טוב"
+
+#: ../../portable/feed.py:1058
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+msgid "Channel is not compatible with $shortAppName!"
+msgstr "הערוץ לא תואם עם $shortAppName!"
+
+#: ../../portable/feed.py:1059
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"אבל נעשה את המיטב כדי לספק את הקבצים. יצירת רשימה של קבצי וידאו יכולה לקחת "
+"יותר זמן, ותיאורים יכולים להיראות מצחיק. אנא צרו קשר עם המפיצים של $url "
+"ותשאלו אם הם יכולים לספק ערוץ בפורמט שיעבוד עם $shortAppName.\n"
+"\n"
+"אתם רוצים לנסות לטעון את הערוץ בכל זאת?"
+
+#: ../../portable/feed.py:2382 ../../portable/feed.py:2472
+#: ../../portable/extrastrings.py:33
+msgid "Search"
+msgstr "חיפוש"
+
+#: ../../portable/feed.py:2486
+msgid "Local Files"
+msgstr "קבצים מקומיים"
+
+#: ../../portable/feed.py:2500
+msgid "Playing File"
+msgstr "מנגן קובץ"
+
+#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
+#, python-format
+msgid "%s database save succeeded"
+msgstr "%s שמירת מסד הנתונים הצליחה"
+
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr "מסד הנתונים נשמר בהצלחה , עכשיו בטוח לצאת בלי לאבד שום מידע"
+
+#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
+#, python-format
+msgid "%s database save failed"
+msgstr "%s שמירת מסד הנתונים לא הצליחה"
+
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
+#, python-format
+msgid ""
+"%s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"%s לא הצליח לשמור את המסד נתונים שלו: הכונן מלה.\n"
+"אנו מציעים למחוק קבצים מהכונן או פשוט למחוק כמה סרטים מהאוסף שלכם.\n"
+"שינויים שבוצעו לא מיזמן עלולים ללכת לאיבוד."
+
+#: ../../portable/tabs.py:55
+msgid "Library"
+msgstr "ספרייה"
+
+#: ../../portable/tabs.py:58
+msgid "Downloading"
+msgstr "מוריד"
+
+#: ../../portable/httpclient.py:81
+#, python-format
+msgid "Error: %s"
+msgstr "שגיאה: %s"
+
+#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
+msgid "Can't connect"
+msgstr "לא יכל להתחבר"
+
+#: ../../portable/httpclient.py:97
+#, python-format
+msgid "Connection Error: %s"
+msgstr "שיאת חיבור :%s"
+
+#: ../../portable/httpclient.py:103
+msgid "SSL connection error"
+msgstr "שגיאת חיבור SSL"
+
+#: ../../portable/httpclient.py:107
+msgid "HTTP error"
+msgstr "שגיאת HTTP"
+
+#: ../../portable/httpclient.py:110
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "שורת סטטוס לא טובה: %s"
+
+#: ../../portable/httpclient.py:113
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "שורת כותרת שגויה: %s"
+
+#: ../../portable/httpclient.py:116
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr "גודל נתח שגוי: %s"
+
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr "צפוי תו CRLF התקבל %r"
+
+#: ../../portable/httpclient.py:122
+#, python-format
+msgid "%s closed connection"
+msgstr "%s החיבור ניסגר"
+
+#: ../../portable/httpclient.py:127 ../../portable/httpclient.py:155
+#: ../../portable/downloader.py:268
+msgid "File not found"
+msgstr "קובץ לא נמצא"
+
+#: ../../portable/httpclient.py:128
+msgid "Got 404 status code"
+msgstr "יש 404 סטטוס קוד"
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "קוד סטטוס שגוי: %s"
+
+#: ../../portable/httpclient.py:134
+msgid "Authorization failed"
+msgstr "סנכרון נכשל"
+
+#: ../../portable/httpclient.py:139 ../../portable/frontends/html/main.py:271
+msgid "Internal Error"
+msgstr "בעיה פנימית"
+
+#: ../../portable/httpclient.py:140
+msgid "Pipeline request never started"
+msgstr "בקשת פייפליין לעולם לא התחילה"
+
+#: ../../portable/httpclient.py:144
+msgid "Timeout"
+msgstr "פסק זמן"
+
+#: ../../portable/httpclient.py:145
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "פג התוקף החיבור ל-%s"
+
+#: ../../portable/httpclient.py:149
+msgid "Invalid URL"
+msgstr "כתובת אינטרנט לא תקינה"
+
+#: ../../portable/httpclient.py:150
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr "\"%s\" אינה כתובת אינטרנט תקינה"
+
+#: ../../portable/httpclient.py:156
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr "הקובץ: \"%s\" אינו קיים"
+
+#: ../../portable/httpclient.py:160
+msgid "Read error"
+msgstr "שגיאה בקריאה"
+
+#: ../../portable/httpclient.py:161
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr "שגיאה בזמן קריאה מ- \"%s\""
+
+#: ../../portable/httpclient.py:354
+msgid "Unknown Error code"
+msgstr "קוד שגיאה לא ידוע"
+
+#: ../../portable/httpclient.py:386
+msgid "Connection closed"
+msgstr "חיבור נסגר"
+
+#: ../../portable/httpclient.py:811
+msgid "Unknown"
+msgstr "לא יודע"
+
+#: ../../portable/httpclient.py:812
+msgid "Internal Error: Not ready to send"
+msgstr "בעיה פנימית לא מוכן לשליחה"
+
+#: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
+msgid "Custom Channels"
+msgstr "ערוצים מותאמים אישית"
+
+#: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr "אתה מריץ גרסה של $longAppName עם אוסף ערוצים מותאם אישית."
+
+#: ../../portable/theme.py:138
+msgid "Starter Channels"
+msgstr "ערוצי התחלה"
+
+#: ../../portable/theme.py:154
+msgid "Example Playlist"
+msgstr "רשימת השמעה לדוגמה"
+
+#: ../../portable/downloader.py:234
+msgid "activity"
+msgstr "פעילות"
+
+#: ../../portable/downloader.py:269
+msgid "Flash URL Scraping Error"
+msgstr "שגיאת גירוד כתובת פלאש"
+
+#: ../../portable/downloader.py:445
+msgid "starting up"
+msgstr "מתחיל"
+
+#: ../../portable/license.py:68
+msgid "license page"
+msgstr ""
+
+#: ../../portable/singleclick.py:99
+msgid "Download already exists"
+msgstr "ההורדה קיימת"
+
+#: ../../portable/singleclick.py:100
+msgid "That URL is already an external download."
+msgstr "כתובת הרשת היא כבר הורדה חיצונית"
+
+#: ../../portable/singleclick.py:106
+msgid "Miro will begin downloading it now."
+msgstr "מירו יתחיל להוריד זאת עכשיו."
+
+#: ../../portable/singleclick.py:108
+msgid "It is downloading now."
+msgstr "זה יורד עכשיו."
+
+#: ../../portable/singleclick.py:110
+msgid "It has already been downloaded."
+msgstr "זה כבר ירד בעבר."
+
+#: ../../portable/singleclick.py:137
+msgid "Download Error"
+msgstr "שגיאת הורדה."
+
+#: ../../portable/singleclick.py:138
+#, python-format
+msgid ""
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %s"
+msgstr "כתובת %s"
+
+#: ../../portable/singleclick.py:146
+msgid "File Download"
+msgstr "הורדת קובץ"
+
+#: ../../portable/singleclick.py:147
+#, python-format
+msgid "This file at %s does not appear to be audio, video, or an RSS feed."
+msgstr "הקובץ ב %s כנראה אינו שמע, וידאו, או הזנת RSS"
+
+#: ../../portable/singleclick.py:235
+msgid "Subscribing to multiple channels"
+msgstr "מינוי לערוצים מרובים"
+
+#: ../../portable/singleclick.py:236
+#, python-format
+msgid "Create %d channels?"
+msgstr "יצירת %d ערוצים"
+
+#: ../../portable/singleclick.py:249
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr "הוספת %d ערוצים לתיקייה חדשה"
+
+#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
+msgid "Enter a name for the new channel folder"
+msgstr "הכנס את השם לתקיית הערוץ החדשה"
+
+#: ../../portable/singleclick.py:253
+#, python-format
+msgid ""
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
+msgstr ""
+"הערה: אתם כבר רשומים ב-%d מהערוצים האלו. הערוצים האלו יישארו איפה שהם כרגע "
+"נמצאים."
+
+#: ../../portable/singleclick.py:264
+msgid "Subscription error"
+msgstr "שגיאה בהצטרפות"
+
+#: ../../portable/singleclick.py:274
+msgid ""
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
+msgstr ""
+"לקובץ הערוץ $shortAppName יש מבנה לא תקף: $url. בבקשה הודע למפרסם על הקובץ "
+"הזה."
+
+#: ../../portable/singleclick.py:282
+msgid ""
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
+msgstr ""
+"לקובץ ערוץ %shortAppName  יש סוג תוכן לא נכון: %url. בבקשה הודע למפרסם הקובץ."
+
+#: ../../portable/singleclick.py:286
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr "הורדת קובץ ערוץ ה$shortAppName לא הצליחה:$url"
+
+#: ../../portable/singleclick.py:334
+msgid "Invalid Torrent"
+msgstr "טורנט לא תקין"
+
+#: ../../portable/singleclick.py:335
+#, python-format
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr "קובץ הטורנט %s ככל הנראה פגום ולא ניתן לגשת אליו. [OK]"
+
+#: ../../portable/folder.py:142
+#: ../../portable/frontends/html/contextmenu.py:183
+msgid "Rename Channel Folder"
+msgstr "שנה את שם תקיית הערוץ"
+
+#: ../../portable/folder.py:144
+#, python-format
+msgid "Enter a new name for the channel folder %s"
+msgstr "הכניסו שם חדש עבור תיקיית הערוץ %s"
+
+#: ../../portable/folder.py:213
+#: ../../portable/frontends/html/contextmenu.py:189
+msgid "Rename Playlist Folder"
+msgstr "שנה את שם תקיית רשימת ההשמעה"
+
+#: ../../portable/folder.py:215
+#, python-format
+msgid "Enter a new name for the playlist folder %s"
+msgstr "הכניסו שם חדש עבור תיקיית רשימת ההשמעה %s"
+
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "צור תקיית ערוץ"
+
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "יצירת תקיית רשימת השמעה"
+
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "הכניסו שם עבור תיקיית רשימת ההשמעה החדשה"
+
+#: ../../portable/opml.py:144
+msgid "OPML Import failed"
+msgstr "יבוא OPML נכשל"
+
+#: ../../portable/opml.py:145
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr "קובץ ה-OPML שנבחר נמצא לא תקף. היבוא נקטע."
+
+#: ../../portable/opml.py:150
+msgid "OPML Import summary"
+msgstr "סיכום יבוא OPML"
+
+#: ../../portable/opml.py:151
+#, python-format
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "הזנה %d יובאה בהצלחה."
+msgstr[1] "הזנות %d יובאו בהצלחה"
+
+#: ../../portable/opml.py:154
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] "הזנה %d דולגה כבר קיימת."
+msgstr[1] "הזנות %d דולגו כבר קיימות."
+
+#: ../../portable/frontends/html/contextmenu.py:104
 msgid "Update Channels Now"
 msgstr "עדכון הערוצים עכשיו"
 
@@ -1106,32 +1709,32 @@ msgid "%d Downloaded Items"
 msgstr "%d פריטים שהורדו"
 
 #: ../../portable/frontends/html/contextmenu.py:130
-#: ../../portable/frontends/html/contextmenu.py:211
+#: ../../portable/frontends/html/contextmenu.py:210
 msgid "Play"
 msgstr "נגן"
 
 #: ../../portable/frontends/html/contextmenu.py:131
-#: ../../portable/frontends/html/contextmenu.py:214
+#: ../../portable/frontends/html/contextmenu.py:213
 msgid "Add to new playlist"
 msgstr "הוסף לרשימת ההשמעה"
 
 #: ../../portable/frontends/html/contextmenu.py:133
-#: ../../portable/frontends/html/contextmenu.py:207
+#: ../../portable/frontends/html/contextmenu.py:206
 msgid "Remove From Playlist"
 msgstr "הסר מרשימת ההשמעה"
 
 #: ../../portable/frontends/html/contextmenu.py:135
-#: ../../portable/frontends/html/contextmenu.py:209
+#: ../../portable/frontends/html/contextmenu.py:208
 msgid "Remove From the Library"
 msgstr "הסרה מהספירה"
 
 #: ../../portable/frontends/html/contextmenu.py:141
-#: ../../portable/frontends/html/contextmenu.py:218
+#: ../../portable/frontends/html/contextmenu.py:217
 msgid "Mark as Unwatched"
 msgstr "סימון כלא ניצפה"
 
 #: ../../portable/frontends/html/contextmenu.py:146
-#: ../../portable/frontends/html/contextmenu.py:220
+#: ../../portable/frontends/html/contextmenu.py:219
 msgid "Mark as Watched"
 msgstr "סמן כנצפה"
 
@@ -1141,7 +1744,7 @@ msgid "%d Available Items"
 msgstr "%d פריטים זמינים"
 
 #: ../../portable/frontends/html/contextmenu.py:152
-#: ../../portable/frontends/html/contextmenu.py:227
+#: ../../portable/frontends/html/contextmenu.py:226
 #: ../../portable/dialogs.py:93
 msgid "Download"
 msgstr "הורד"
@@ -1152,17 +1755,17 @@ msgid "%d Downloading Items"
 msgstr "%d מוריד פריטים"
 
 #: ../../portable/frontends/html/contextmenu.py:159
-#: ../../portable/frontends/html/contextmenu.py:225
+#: ../../portable/frontends/html/contextmenu.py:224
 msgid "Cancel Download"
 msgstr "ביטול הורדה"
 
 #: ../../portable/frontends/html/contextmenu.py:161
-#: ../../portable/frontends/html/contextmenu.py:225
+#: ../../portable/frontends/html/contextmenu.py:224
 msgid "Pause Download"
 msgstr "ההיית הורדה"
 
 #: ../../portable/frontends/html/contextmenu.py:164
-#: ../../portable/frontends/html/contextmenu.py:223
+#: ../../portable/frontends/html/contextmenu.py:222
 msgid "Restart Upload"
 msgstr "הפעל מחדש העלאה"
 
@@ -1175,38 +1778,20 @@ msgstr "עדכון הערוץ עכשיו"
 msgid "Copy URL to clipboard"
 msgstr "העתק את הכתובת ללוח גזירות"
 
-#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
-msgid "Rename Channel"
-msgstr "שינוי שם ערוץ"
-
 #: ../../portable/frontends/html/contextmenu.py:177
 msgid "Revert Title to Default"
 msgstr "החזרת הכותרת לברירת המחדל"
 
-#: ../../portable/frontends/html/contextmenu.py:183
-#: ../../portable/folder.py:142
-msgid "Rename Channel Folder"
-msgstr "שנה את שם תקיית הערוץ"
-
-#: ../../portable/frontends/html/contextmenu.py:189
-#: ../../portable/folder.py:213
-msgid "Rename Playlist Folder"
-msgstr "שנה את שם תקיית רשימת ההשמעה"
-
-#: ../../portable/frontends/html/contextmenu.py:213
+#: ../../portable/frontends/html/contextmenu.py:212
 msgid "Play Just This Video"
 msgstr "נגן רק את הווידיאו הזה"
 
-#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../portable/frontends/html/contextmenu.py:231
 #: ../../portable/playlist.py:218
 msgid "Rename Playlist"
 msgstr "שינוי שם לרשימת השמעה"
 
-#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
-msgid "Video Directory Missing"
-msgstr "תיקיית וידאו נעדרת"
-
-#: ../../portable/frontends/html/main.py:133
+#: ../../portable/frontends/html/main.py:135
 msgid ""
 "\n"
 "    Miro can't find your primary video directory.  This may be because it's  "
@@ -1217,20 +1802,7 @@ msgid ""
 "   external drive).  You can also quit, connect the drive, and relaunch Miro."
 msgstr ""
 
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid "Custom Channels"
-msgstr "ערוצים מותאמים אישית"
-
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr "אתה מריץ גרסה של $longAppName עם אוסף ערוצים מותאם אישית."
-
-#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
-msgid "Internal Error"
-msgstr "בעיה פנימית"
-
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
@@ -1238,7 +1810,7 @@ msgstr ""
 "מירו נתקל בשגיאה פנימית. תוכל לעזור לנו למצוא את הבעיה ולתקן אותה על ידי "
 "שליחת דוח שגיאה."
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
@@ -1246,57 +1818,57 @@ msgstr ""
 "כלול את כל מסד הנתונים של התוכנה כולל מטא-נתונים של וידאו וערוצים בדוח "
 "התרסקות"
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid "Describe what you were doing that caused this error"
 msgstr "תאר מה עשית שגרם לשגיאה זו"
 
-#: ../../portable/frontends/html/main.py:284
+#: ../../portable/frontends/html/main.py:286
 #, python-format
 msgid "%s Version Alert"
 msgstr "%s התראת גרסה"
 
-#: ../../portable/frontends/html/main.py:285
+#: ../../portable/frontends/html/main.py:287
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
 msgstr "גרסה חדשה של %s זמינה. אתם רוצים להוריד אותה עכשיו?"
 
-#: ../../portable/frontends/html/main.py:290
+#: ../../portable/frontends/html/main.py:292
 #, python-format
 msgid "%s Version Check"
 msgstr "%s בדיקת גרסה"
 
-#: ../../portable/frontends/html/main.py:291
+#: ../../portable/frontends/html/main.py:293
 #, python-format
 msgid "%s is up to date."
 msgstr "%s מעודכן."
 
-#: ../../portable/frontends/html/main.py:309
+#: ../../portable/frontends/html/main.py:311
 msgid "Are you sure you want to quit?"
 msgstr "האם אתה בטוח שאתה רוצה לצאת?"
 
-#: ../../portable/frontends/html/main.py:311
+#: ../../portable/frontends/html/main.py:313
 msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
 msgstr ""
 "מירו עדיין מעלה את דוח ההתרסקות שלך. אם תצא עכשיו ההעלאה תתבטל. לצאת בכל זאת?"
 
-#: ../../portable/frontends/html/main.py:316
+#: ../../portable/frontends/html/main.py:318
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
 msgstr[0] "יש לך %d הורדה בתהליך. לצאת בכל זאת"
 msgstr[1] "יש לך %d הורדות בתהליך. לצאת בכל זאת"
 
-#: ../../portable/frontends/html/main.py:340
+#: ../../portable/frontends/html/main.py:342
 msgid "Import OPML File"
 msgstr "יבא קובץ OPML"
 
-#: ../../portable/frontends/html/main.py:342
+#: ../../portable/frontends/html/main.py:344
 msgid "OPML Files"
 msgstr "קבצי OPML"
 
-#: ../../portable/frontends/html/main.py:347
+#: ../../portable/frontends/html/main.py:349
 msgid "Export OPML File"
 msgstr "יצא קובץ OPML"
 
@@ -1368,31 +1940,6 @@ msgstr "%shortAppName - הורד וידאו"
 msgid "Enter the URL of the video to download"
 msgstr "הכנס כתובת אינטרנט של וידאו להורדה"
 
-#: ../../portable/tabs.py:55
-msgid "Library"
-msgstr "ספרייה"
-
-#: ../../portable/tabs.py:58
-msgid "Downloading"
-msgstr "מוריד"
-
-#: ../../portable/downloader.py:234
-msgid "activity"
-msgstr "פעילות"
-
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
-#: ../../portable/httpclient.py:155
-msgid "File not found"
-msgstr "קובץ לא נמצא"
-
-#: ../../portable/downloader.py:269
-msgid "Flash URL Scraping Error"
-msgstr "שגיאת גירוד כתובת פלאש"
-
-#: ../../portable/downloader.py:445
-msgid "starting up"
-msgstr "מתחיל"
-
 #: ../../portable/playlist.py:219
 #, python-format
 msgid "Enter a new name for the playlist %s"
@@ -1405,32 +1952,6 @@ msgstr "יצירת רשימת השמעה"
 #: ../../portable/playlist.py:242
 msgid "Enter a name for the new playlist"
 msgstr "הכניסו שם עבור רשימת ההשמעה החדשה"
-
-#: ../../portable/opml.py:144
-msgid "OPML Import failed"
-msgstr "יבוא OPML נכשל"
-
-#: ../../portable/opml.py:145
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr "קובץ ה-OPML שנבחר נמצא לא תקף. היבוא נקטע."
-
-#: ../../portable/opml.py:150
-msgid "OPML Import summary"
-msgstr "סיכום יבוא OPML"
-
-#: ../../portable/opml.py:151
-#, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] "הזנה %d יובאה בהצלחה."
-msgstr[1] "הזנות %d יובאו בהצלחה"
-
-#: ../../portable/opml.py:154
-#, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] "הזנה %d דולגה כבר קיימת."
-msgstr[1] "הזנות %d דולגו כבר קיימות."
 
 #: ../../portable/util.py:266
 #, python-format
@@ -1471,6 +1992,51 @@ msgstr "%1.1fB"
 #, python-format
 msgid "%dB"
 msgstr "%dB"
+
+#: ../../portable/dl_daemon/download.py:458
+msgid "Error"
+msgstr "בעיה"
+
+#: ../../portable/dl_daemon/download.py:544
+#, python-format
+msgid "Could not write to %s"
+msgstr "לא ניתן לכתוב ל-%s"
+
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:769
+msgid "Not enough disk space"
+msgstr "אין מספיק מקום בדיסק"
+
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:770
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "%s MB נידרש כדי לאחסן את הווידאו"
+
+#: ../../portable/dl_daemon/download.py:781
+msgid "BitTorrent failure"
+msgstr "כישלון ביטורנט"
+
+#: ../../portable/dl_daemon/download.py:782
+msgid "BitTorrent failed to startup"
+msgstr "ביטורנט נכשל לעלות"
+
+#: ../../portable/dl_daemon/download.py:954
+msgid "Corrupt Torrent"
+msgstr "טורנט פגום"
+
+#: ../../portable/dl_daemon/download.py:955
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "קובץ הטורנט ב-%s לא תקין"
+
+#: ../../portable/dl_daemon/download.py:980
+msgid "Torrent file deleted"
+msgstr "קובץ שטף נמחק"
+
+#: ../../portable/dl_daemon/download.py:981
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr ""
 
 #: ../../portable/iheartmiro.py:82
 msgid ""
@@ -1716,233 +2282,6 @@ msgstr "הסתר חלון"
 msgid "Show Window"
 msgstr "הצגצ חלון"
 
-#: ../../portable/theme.py:137
-msgid "Starter Channels"
-msgstr "ערוצי התחלה"
-
-#: ../../portable/theme.py:154
-msgid "Example Playlist"
-msgstr "רשימת השמעה לדוגמה"
-
-#: ../../portable/httpclient.py:81
-#, python-format
-msgid "Error: %s"
-msgstr "שגיאה: %s"
-
-#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
-msgid "Can't connect"
-msgstr "לא יכל להתחבר"
-
-#: ../../portable/httpclient.py:97
-#, python-format
-msgid "Connection Error: %s"
-msgstr "שיאת חיבור :%s"
-
-#: ../../portable/httpclient.py:103
-msgid "SSL connection error"
-msgstr "שגיאת חיבור SSL"
-
-#: ../../portable/httpclient.py:107
-msgid "HTTP error"
-msgstr "שגיאת HTTP"
-
-#: ../../portable/httpclient.py:110
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr "שורת סטטוס לא טובה: %s"
-
-#: ../../portable/httpclient.py:113
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr "שורת כותרת שגויה: %s"
-
-#: ../../portable/httpclient.py:116
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "גודל נתח שגוי: %s"
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr "צפוי תו CRLF התקבל %r"
-
-#: ../../portable/httpclient.py:122
-#, python-format
-msgid "%s closed connection"
-msgstr "%s החיבור ניסגר"
-
-#: ../../portable/httpclient.py:128
-msgid "Got 404 status code"
-msgstr "יש 404 סטטוס קוד"
-
-#: ../../portable/httpclient.py:130
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "קוד סטטוס שגוי: %s"
-
-#: ../../portable/httpclient.py:134
-msgid "Authorization failed"
-msgstr "סנכרון נכשל"
-
-#: ../../portable/httpclient.py:140
-msgid "Pipeline request never started"
-msgstr "בקשת פייפליין לעולם לא התחילה"
-
-#: ../../portable/httpclient.py:144
-msgid "Timeout"
-msgstr "פסק זמן"
-
-#: ../../portable/httpclient.py:145
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "פג התוקף החיבור ל-%s"
-
-#: ../../portable/httpclient.py:149
-msgid "Invalid URL"
-msgstr "כתובת אינטרנט לא תקינה"
-
-#: ../../portable/httpclient.py:150
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr "\"%s\" אינה כתובת אינטרנט תקינה"
-
-#: ../../portable/httpclient.py:156
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr "הקובץ: \"%s\" אינו קיים"
-
-#: ../../portable/httpclient.py:160
-msgid "Read error"
-msgstr "שגיאה בקריאה"
-
-#: ../../portable/httpclient.py:161
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr "שגיאה בזמן קריאה מ- \"%s\""
-
-#: ../../portable/httpclient.py:354
-msgid "Unknown Error code"
-msgstr "קוד שגיאה לא ידוע"
-
-#: ../../portable/httpclient.py:386
-msgid "Connection closed"
-msgstr "חיבור נסגר"
-
-#: ../../portable/httpclient.py:811
-msgid "Unknown"
-msgstr "לא יודע"
-
-#: ../../portable/httpclient.py:812
-msgid "Internal Error: Not ready to send"
-msgstr "בעיה פנימית לא מוכן לשליחה"
-
-#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
-#: ../../portable/feed.py:2499
-msgid "Search"
-msgstr "חיפוש"
-
-#: ../../portable/feed.py:384
-msgid "never"
-msgstr "אף פעם"
-
-#: ../../portable/feed.py:386 ../../portable/item.py:554
-#, python-format
-msgid "%d hours"
-msgstr "%d שעות"
-
-#: ../../portable/feed.py:388
-#, python-format
-msgid "%d day"
-msgstr "%d יום"
-
-#: ../../portable/feed.py:390 ../../portable/item.py:552
-#, python-format
-msgid "%d days"
-msgstr "%d ימים"
-
-#: ../../portable/feed.py:392
-#, python-format
-msgid "%d months"
-msgstr "%d חודשים"
-
-#: ../../portable/feed.py:826
-#, python-format
-msgid "Enter a new name for the channel %s"
-msgstr "הכניסו של חדש לערוץ %s"
-
-#: ../../portable/feed.py:923
-msgid "Error loading feed"
-msgstr "שגיאה בטעינת הערוץ"
-
-#: ../../portable/feed.py:924
-#, python-format
-msgid "Couldn't load the feed at %s (%s)."
-msgstr "לא ניתן לקרוא את הערוץ ב-%s (%s)."
-
-#: ../../portable/feed.py:927
-msgid "Would you like to keep the feed?"
-msgstr "תירצו לשמור את הערוץ?"
-
-#: ../../portable/feed.py:1040
-msgid "Bad content-type"
-msgstr "סוג תוכן לא טוב"
-
-#: ../../portable/feed.py:1053
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
-msgid "Channel is not compatible with $shortAppName!"
-msgstr "הערוץ לא תואם עם $shortAppName!"
-
-#: ../../portable/feed.py:1054
-msgid ""
-"But we'll try our best to grab the files. It may take extra time to list the "
-"videos, and descriptions may look funny.  Please contact the publishers of "
-"$url and ask if they can supply a feed in a format that will work with "
-"$shortAppName.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-"אבל נעשה את המיטב כדי לספק את הקבצים. יצירת רשימה של קבצי וידאו יכולה לקחת "
-"יותר זמן, ותיאורים יכולים להיראות מצחיק. אנא צרו קשר עם המפיצים של $url "
-"ותשאלו אם הם יכולים לספק ערוץ בפורמט שיעבוד עם $shortAppName.\n"
-"\n"
-"אתם רוצים לנסות לטעון את הערוץ בכל זאת?"
-
-#: ../../portable/feed.py:2513
-msgid "Local Files"
-msgstr "קבצים מקומיים"
-
-#: ../../portable/feed.py:2527
-msgid "Playing File"
-msgstr "מנגן קובץ"
-
-#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
-#, python-format
-msgid "%s database save succeeded"
-msgstr "%s שמירת מסד הנתונים הצליחה"
-
-#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr "מסד הנתונים נשמר בהצלחה , עכשיו בטוח לצאת בלי לאבד שום מידע"
-
-#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
-#, python-format
-msgid "%s database save failed"
-msgstr "%s שמירת מסד הנתונים לא הצליחה"
-
-#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
-#, python-format
-msgid ""
-"%s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%s לא הצליח לשמור את המסד נתונים שלו: הכונן מלה.\n"
-"אנו מציעים למחוק קבצים מהכונן או פשוט למחוק כמה סרטים מהאוסף שלכם.\n"
-"שינויים שבוצעו לא מיזמן עלולים ללכת לאיבוד."
-
 #: ../../portable/dialogs.py:89
 msgid "Ignore"
 msgstr "התעלם"
@@ -1951,12 +2290,12 @@ msgstr "התעלם"
 msgid "Submit Crash Report"
 msgstr "מסור דוח התרסקות"
 
-#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr "הגירה"
 
-#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:37
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr "לא להגר"
@@ -2022,12 +2361,12 @@ msgstr ""
 msgid "Don't Install"
 msgstr ""
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:56
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
 msgstr "חיפוש חדש בערוץ"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:28
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr "חיפוש בערוץ מכיל פריט שלא מתאים לתנאים"
@@ -2128,344 +2467,6 @@ msgid ""
 "not been deleted and try again."
 msgstr "קרתה שגיאה בניסיון לשמור את %s. בדוק בבקשה שהקובץ לא נמחק ונסה שוב."
 
-#: ../../portable/singleclick.py:99
-msgid "Download already exists"
-msgstr "ההורדה קיימת"
-
-#: ../../portable/singleclick.py:100
-msgid "That URL is already an external download."
-msgstr "כתובת הרשת היא כבר הורדה חיצונית"
-
-#: ../../portable/singleclick.py:106
-msgid "Miro will begin downloading it now."
-msgstr "מירו יתחיל להוריד זאת עכשיו."
-
-#: ../../portable/singleclick.py:108
-msgid "It is downloading now."
-msgstr "זה יורד עכשיו."
-
-#: ../../portable/singleclick.py:110
-msgid "It has already been downloaded."
-msgstr "זה כבר ירד בעבר."
-
-#: ../../portable/singleclick.py:137
-msgid "Download Error"
-msgstr "שגיאת הורדה."
-
-#: ../../portable/singleclick.py:138
-#, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %s"
-msgstr "כתובת %s"
-
-#: ../../portable/singleclick.py:146
-msgid "File Download"
-msgstr "הורדת קובץ"
-
-#: ../../portable/singleclick.py:147
-#, python-format
-msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr "הקובץ ב %s כנראה אינו שמע, וידאו, או הזנת RSS"
-
-#: ../../portable/singleclick.py:235
-msgid "Subscribing to multiple channels"
-msgstr "מינוי לערוצים מרובים"
-
-#: ../../portable/singleclick.py:236
-#, python-format
-msgid "Create %d channels?"
-msgstr "יצירת %d ערוצים"
-
-#: ../../portable/singleclick.py:249
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "הוספת %d ערוצים לתיקייה חדשה"
-
-#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
-msgid "Enter a name for the new channel folder"
-msgstr "הכנס את השם לתקיית הערוץ החדשה"
-
-#: ../../portable/singleclick.py:253
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
-msgstr ""
-"הערה: אתם כבר רשומים ב-%d מהערוצים האלו. הערוצים האלו יישארו איפה שהם כרגע "
-"נמצאים."
-
-#: ../../portable/singleclick.py:264
-msgid "Subscription error"
-msgstr "שגיאה בהצטרפות"
-
-#: ../../portable/singleclick.py:274
-msgid ""
-"This $shortAppName channel file has an invalid format: $url. Please notify "
-"the publisher of this file."
-msgstr ""
-"לקובץ הערוץ $shortAppName יש מבנה לא תקף: $url. בבקשה הודע למפרסם על הקובץ "
-"הזה."
-
-#: ../../portable/singleclick.py:282
-msgid ""
-"This $shortAppName channel file has the wrong content type: $url. Please "
-"notify the publisher of this file."
-msgstr ""
-"לקובץ ערוץ %shortAppName  יש סוג תוכן לא נכון: %url. בבקשה הודע למפרסם הקובץ."
-
-#: ../../portable/singleclick.py:286
-msgid "Could not download the $shortAppName channel file: $url."
-msgstr "הורדת קובץ ערוץ ה$shortAppName לא הצליחה:$url"
-
-#: ../../portable/singleclick.py:334
-msgid "Invalid Torrent"
-msgstr "טורנט לא תקין"
-
-#: ../../portable/singleclick.py:335
-#, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr "קובץ הטורנט %s ככל הנראה פגום ולא ניתן לגשת אליו. [OK]"
-
-#: ../../portable/item.py:497
-#, python-format
-msgid "Removing %s"
-msgstr "מסיר את %s"
-
-#: ../../portable/item.py:500
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
-"אתם רוצים למחוק את התיקייה הזו וכל קטעי הווידאו שנמצאים בא או רק למחוק את "
-"הרשומה בספריה?"
-
-#: ../../portable/item.py:506
-msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
-msgstr "האם אתה מעוניין למחוק את הקובץ או רק להסיר את הכניסה שלו מהספריה?"
-
-#: ../../portable/item.py:526
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
-"הפריט הזה הוא תיקייה. כשתסירו את התיקייה, כל הפריטים בתוך התיקייה הזו ימחקו."
-
-#: ../../portable/item.py:556
-#, python-format
-msgid "%d minutes"
-msgstr "%d דקות"
-
-#: ../../portable/item.py:566
-#, python-format
-msgid "Expires in %s"
-msgstr "פג תוקף ב-%s"
-
-#: ../../portable/item.py:578
-#, python-format
-msgid "Will retry in %s"
-msgstr "ינסה לחדש בתוך %s"
-
-#: ../../portable/item.py:580
-msgid "Paused"
-msgstr "הושהה"
-
-#: ../../portable/item.py:982
-msgid "TORRENT"
-msgstr "טורנט"
-
-#: ../../portable/item.py:984
-msgid "WEB PAGE"
-msgstr "דף אינטרנט"
-
-#: ../../portable/item.py:994
-msgid "Total Down:"
-msgstr "סה\"כ הורדה:"
-
-#: ../../portable/item.py:997
-msgid "Error:"
-msgstr "שגיאה:"
-
-#: ../../portable/item.py:1006
-msgid "Seeders:"
-msgstr "מפיצים:"
-
-#: ../../portable/item.py:1008
-msgid "Leechers:"
-msgstr ""
-
-#: ../../portable/item.py:1010
-msgid "Down Rate:"
-msgstr "קצב הורדה:"
-
-#: ../../portable/item.py:1011
-msgid "Down Total:"
-msgstr "סה\"כ הורדה:"
-
-#: ../../portable/item.py:1013
-msgid "Up Rate:"
-msgstr "קצב העלאה:"
-
-#: ../../portable/item.py:1014
-msgid "Up Total:"
-msgstr "סה\"כ הועלאה:"
-
-#: ../../portable/item.py:1024
-msgid "Web page:"
-msgstr "אתר אינטרנט:"
-
-#: ../../portable/item.py:1024
-msgid "permalink"
-msgstr "קישור תמידי (פרמאלינק)"
-
-#: ../../portable/item.py:1028
-msgid "File link:"
-msgstr "לינק קובץ:"
-
-#: ../../portable/item.py:1028
-msgid "direct link to file"
-msgstr "קישור ישיר לקובץ"
-
-#: ../../portable/item.py:1030
-msgid "File type:"
-msgstr "סוג קובץ:"
-
-#: ../../portable/item.py:1037 ../../portable/item.py:1040
-#: ../../portable/item.py:1042
-msgid "License:"
-msgstr ""
-
-#: ../../portable/item.py:1040 ../../portable/item.py:1042
-msgid "see permalink"
-msgstr ""
-
-#: ../../portable/item.py:1049
-msgid "REVEAL LOCAL FOLDER"
-msgstr "חשיפת תיקייה מקומית"
-
-#: ../../portable/item.py:1051
-msgid "REVEAL LOCAL FILE"
-msgstr "חשיפת קובץ מקומי"
-
-#: ../../portable/item.py:1053
-msgid "Filename:"
-msgstr "שם הקובץ:"
-
-#: ../../portable/item.py:1060
-msgid "Down Total"
-msgstr "סה\"כ ירד"
-
-#: ../../portable/item.py:1062
-msgid "Up Total"
-msgstr "סה\"כ העלאה"
-
-#: ../../portable/item.py:1080
-msgid "Item Details"
-msgstr "נתוני הפריט"
-
-#: ../../portable/item.py:1087
-msgid "Torrent Details"
-msgstr "פרטי הטורנט"
-
-#: ../../portable/item.py:1089
-msgid "Torrent Details <i>stopped</i>"
-msgstr "פרטי טורנט <i>stopped</i>"
-
-#: ../../portable/item.py:1093
-msgid "Download Details"
-msgstr "פרטי ההורדה"
-
-#: ../../portable/item.py:1310
-msgid "downloading..."
-msgstr "מוריד ..."
-
-#: ../../portable/item.py:1317 ../../portable/item.py:1320
-#, python-format
-msgid "%s remaining"
-msgstr "%s נותרו"
-
-#: ../../portable/item.py:1329
-msgid "starting up..."
-msgstr "מתחיל ..."
-
-#: ../../portable/item.py:1878
-#, python-format
-msgid "Removing %s items"
-msgstr "הסרת %s פריטים"
-
-#: ../../portable/item.py:1880
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
-"אחד או יותר מסרטי הוידאו לא הורד מערוץ. האם תרצה למחוק את הפריטים האלו או רק "
-"למחוק את הכניסות שלהם מהסיפריה?"
-
-#: ../../portable/item.py:1888
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
-msgstr ""
-"יש בתיקייה הזאת פריט אחד או יותר. כשתסירו או תימחקו תיקייה, כל הפריטים בתוך "
-"אותה תיקייה יוסרו או ימחקו."
-
-#: ../../portable/startup.py:92
-msgid "Unknown Error"
-msgstr ""
-
-#: ../../portable/startup.py:93
-#, python-format
-msgid ""
-"An unkown error prevented Miro from startup.  Please file a bug report at %s"
-msgstr ""
-
-#: ../../portable/startup.py:155
-msgid "Database too new"
-msgstr "מסד נתונים חדש מידי"
-
-#: ../../portable/startup.py:156
-msgid ""
-"You have a database that was saved with a newer version of $shortAppName. "
-"You must download the latest version of $shortAppName and run that."
-msgstr ""
-"יש לכם מסד נתונים שנשמר עם גרסה חדשה יותר של $shortAppName. עליכם להוריד את "
-"הגרסה העדכנית של $shortAppName ולהריץ את זה."
-
-#: ../../portable/startup.py:238
-msgid ""
-"\n"
-"Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected."
-msgstr ""
-
-#: ../../portable/folder.py:144
-#, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "הכניסו שם חדש עבור תיקיית הערוץ %s"
-
-#: ../../portable/folder.py:215
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "הכניסו שם חדש עבור תיקיית רשימת ההשמעה %s"
-
-#: ../../portable/folder.py:223
-msgid "Create Channel Folder"
-msgstr "צור תקיית ערוץ"
-
-#: ../../portable/folder.py:237
-msgid "Create Playlist Folder"
-msgstr "יצירת תקיית רשימת השמעה"
-
-#: ../../portable/folder.py:238
-msgid "Enter a name for the new playlist folder"
-msgstr "הכניסו שם עבור תיקיית רשימת ההשמעה החדשה"
-
-#: ../../portable/license.py:68
-msgid "license page"
-msgstr ""
-
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
 "1 day\n"
@@ -2551,40 +2552,44 @@ msgstr ""
 "<b>חיפוש וידאו:</b> למדריך מירו יש מאות ערוצי טלוויזיית אינטרנט, כולם בחינם. "
 "רק לחצו על 'הוספה' כדי לצפות בערוץ."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:28
+#: ../../platform/gtk-x11/glade/miro.glade.h:27
+msgid "<b>xine</b>"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Auto download default setting for new channels"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:29
+#: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Automatically for_ward ports."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:30
+#: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "By default, videos _expire after"
 msgstr "כברירת מחדל, _פג-תוקף קבצי וידאו אחרי"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/gtk-x11/glade/miro.glade.h:32
 msgid "C_hannel:"
 msgstr "ערוץ:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "C_hannels"
 msgstr "ע_רוצים"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:33
+#: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "C_reate Channel"
 msgstr "יצירת ערוץ"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:34
+#: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "Check Channels for _new content"
 msgstr "בדוק ערוצים ל_תוכן חדש"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:35
+#: ../../platform/gtk-x11/glade/miro.glade.h:36
 msgid "Disk _Space"
 msgstr "_מקום בדיסק"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:37
+#: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
@@ -2594,91 +2599,91 @@ msgstr ""
 "כל שעה\n"
 "ידנית"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid "G_B"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../platform/gtk-x11/glade/miro.glade.h:42
 msgid "Go"
 msgstr "עבור"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Ignore Un_encrypted Connections."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr "בתוך זה:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Limit torrent _downstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Maximum number of channel auto-downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
+#: ../../platform/gtk-x11/glade/miro.glade.h:48
 msgid "Maximum number of manual downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
+#: ../../platform/gtk-x11/glade/miro.glade.h:52
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
 "מירו יכול למצוא את כל קבצי הווידאו במחשב שלכם כדי לעזור בארגון האוסף שלכם."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid ""
 "New\n"
 "All\n"
 "Off"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
+#: ../../platform/gtk-x11/glade/miro.glade.h:57
 msgid "Play _videos one after another"
 msgstr "נגן _קבצי וידאו אחד אחרי השני"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
+#: ../../platform/gtk-x11/glade/miro.glade.h:58
 msgid "Preferences"
 msgstr "מאפיינים"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
+#: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Restrict to my full _home folder"
 msgstr "הגבלה לתיקיית הבית שלי במלואה"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid "S_top after each video"
 msgstr "ע_צור לאחר כל וידאו"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid "S_tore downloaded videos in this folder:"
 msgstr "ש_מור קבצי וידאו שירדו בתיקיה זו:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "Search _Engine:"
 msgstr "מנוע חיפוש:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "Search _custom folder:"
 msgstr "חיפוש בתוך התיקייה:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "Select Movies Directory"
 msgstr "בחירת תיקיית סרטים"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "Select custom search directory"
 msgstr "בחירת תקיית חיפוש"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
@@ -2686,23 +2691,27 @@ msgstr ""
 "המסכים הבאים יעזרו לכם להגדיר את מירו כך שזה יעבוד בצורה הטובה ביותר עבורכם. "
 "השאלה הראשונה."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "To avoid internet slowdowns, limit _upstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "Use _ports:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
+msgid "Use this for video when listening to audio:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "Use this renderer to play videos:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "Volume:"
 msgstr "עוצמת קול:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:71
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
 "This way, videos that haven't finished downloading can finish and new videos "
@@ -2712,7 +2721,7 @@ msgstr ""
 "הסתיימו יוכלו להסתיים וקטעי וידאו חדשים בערוץ שלכם יהיו זמינים לפייה מתי "
 "שתרצו."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
 "download videos from your favorite channels, watch new videos one after the "
@@ -2722,7 +2731,7 @@ msgstr ""
 "להוריד אוטומטית קטעי וידאו מהערוצים המועדפים עליכם, צפייה בקטעי וידאו אחד "
 "אחרי השני, הורדת טורנטים, המלצת וידאו לחברים ועוד הרבה."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there?  (Currently dowloading movies will not be "
@@ -2731,64 +2740,73 @@ msgstr ""
 "בחרתם בתיקייה חדשת להורדת סרטים. הם מירו צריך להעביר את כל ההורדות הקיימות "
 "לשם? (הורדות שכרגע פעילות לא יועברו עד שהם לא יסתיימו.)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "_Add Folder"
 msgstr "_הוסף תיקייה"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 msgid "_Automatically run Miro when I log in"
 msgstr "_אוטומטית הפעל את מירו כאשר אני מתחבר למערכת"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 msgid "_Downloads"
 msgstr "_הורדות"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:78
+#: ../../platform/gtk-x11/glade/miro.glade.h:80
 msgid "_Folders"
 msgstr "_תיקיות"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:79
+#: ../../platform/gtk-x11/glade/miro.glade.h:81
 msgid "_General"
 msgstr "_כללי"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:80
+#: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_KB/s."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:81
+#: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Keep at least this much free space on my drive:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:82
+#: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_Playback"
 msgstr "_ניגון"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:83
+#: ../../platform/gtk-x11/glade/miro.glade.h:85
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr "_המשך ניגון של קבצי וידאו היכן שנעצרו"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:84
+#: ../../platform/gtk-x11/glade/miro.glade.h:86
 msgid "_Search"
 msgstr "_חיפוש"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:85
+#: ../../platform/gtk-x11/glade/miro.glade.h:87
 msgid "_Search For:"
 msgstr "_חפש את:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:86
+#: ../../platform/gtk-x11/glade/miro.glade.h:88
 msgid "_URL"
 msgstr "_כתובת"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:87
+#: ../../platform/gtk-x11/glade/miro.glade.h:89
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr "_הזהר אותי כשאני מנסה לצאת ויש הורדות ברקע"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:88
+#: ../../platform/gtk-x11/glade/miro.glade.h:90
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr "_חפש קבצי וידאו חדשים בתיקיות האלה והוסף אותם לספריה"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:89
+#: ../../platform/gtk-x11/glade/miro.glade.h:91
+msgid ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:96
 msgid ""
 "xine\n"
 "gstreamer"
@@ -2796,13 +2814,10 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
-"$longAppName גרסה $appVersion ($appRevision); copyright (c) 2005-2007 "
-"$publisher.  $longAppName והלוגו של $longAppName  הם סימנים רשומים של "
-"$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"

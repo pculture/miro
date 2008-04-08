@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-03-10 13:16+0000\n"
-"Last-Translator: Jonas Granqvist <Unknown>\n"
+"POT-Creation-Date: 2008-04-02 15:46-0400\n"
+"PO-Revision-Date: 2008-04-03 20:10+0000\n"
+"Last-Translator: Fredrik Wahlberg <wahlberg@linux.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
+"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "_Save Video..."
@@ -1386,7 +1386,7 @@ msgstr "Huvudmeny"
 msgid "Minimize"
 msgstr "Minimera"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Miro"
 msgstr "Miro"
 
@@ -1578,8 +1578,9 @@ msgstr "Lägg till..."
 msgid "All"
 msgstr ""
 
+#, fuzzy
 msgid "Auto download default setting for new channels:"
-msgstr ""
+msgstr "Ladda automatisk ned inställningar för nya kanaler:"
 
 msgid "Automatically forward ports"
 msgstr "Vidarebefordra portar automatiskt"
@@ -1598,8 +1599,11 @@ msgstr "Ändra..."
 msgid "Check channels for new content:"
 msgstr "Kontrollera kanaler efter nytt innehåll:"
 
+#, fuzzy
 msgid "Don't auto-download more than this many videos per channel at once:"
 msgstr ""
+"Ladda inte automatiskt ned fler än det här antalet videor per kanal på en "
+"gång:"
 
 msgid "Don't download more than this many videos at once:"
 msgstr "Högsta antal filmer att hämta samtidigt:"
@@ -1613,16 +1617,18 @@ msgstr ""
 msgid "Ignore unencrypted connections"
 msgstr "Ignorera okrypterade anslutningar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:45
+#, fuzzy
 msgid "KB/s."
-msgstr ""
+msgstr "KB/s."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
 msgid "Keep at least this much free space on my drive:"
 msgstr "Se till att så här mycket ledigt utrymme finns på enheten:"
 
+#, fuzzy
 msgid "Limit downstream to"
-msgstr ""
+msgstr "Begränsa nedladdningshastighet till"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Never"
@@ -1647,13 +1653,13 @@ msgstr "Spela upp filmer efter varandra."
 msgid "Remember video position."
 msgstr "Kom ihåg videoposition."
 
-#: ../../portable/frontends/html/contextmenu.py:99
-#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:100
+#: ../../portable/frontends/html/contextmenu.py:105
 #: ../../portable/frontends/html/contextmenu.py:178
 #: ../../portable/frontends/html/contextmenu.py:184
 #: ../../portable/frontends/html/contextmenu.py:190
 #: ../../portable/frontends/html/contextmenu.py:199
-#: ../../portable/frontends/html/contextmenu.py:233
+#: ../../portable/frontends/html/contextmenu.py:232
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Remove"
 msgstr "Ta bort"
@@ -1661,7 +1667,7 @@ msgstr "Ta bort"
 msgid "Run Miro at startup"
 msgstr "Starta Miro vid uppstart"
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:592
 msgid "Show as Channel"
 msgstr "Visa som kanal"
 
@@ -1681,7 +1687,7 @@ msgstr ""
 msgid "Use these ports:"
 msgstr "Använd dessa portar:"
 
-#: ../../portable/frontends/html/main.py:319
+#: ../../portable/frontends/html/main.py:321
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 "Varna mig om jag försöker avsluta programmet medans nedladdningar pågår"
@@ -1728,8 +1734,8 @@ msgstr "Sök efter:"
 msgid "URL"
 msgstr "URL"
 
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
 #: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "(tolkade %d filer - hittade %d filmer)"
@@ -1797,7 +1803,7 @@ msgstr ""
 "\n"
 "Vill du låta Miro starta automatiskt när din dator startar?"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "Welcome to Internet TV!"
 msgstr "Välkommen till Internet-TV!"
 
@@ -1826,185 +1832,9 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
-msgid "Update Available"
-msgstr "Uppdatering finns tillgänglig"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
-#, python-format
-msgid "A new version of %s is available for download."
-msgstr "En ny version av %s är tillgänglig för nedladdning."
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
-msgid "Error Bombing Item"
-msgstr "Fel vid bombning av objekt"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
-msgid "Error Recommending Item"
-msgstr "Fel vid rekommendation av objekt"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
-msgid "Error Opening Website"
-msgstr "Fel vid öppning av webbplats"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
-#, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr ""
-"Det inträffade ett fel vid öppning av %s.  Försök igen om några sekunder"
-
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
-#, python-format
-msgid "%d video found"
-msgid_plural "%d videos found"
-msgstr[0] "%d film hittad"
-msgstr[1] "%d filmer hittade"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:79
-#, python-format
-msgid ""
-"Error importing modules:\n"
-"%s"
-msgstr ""
-"Fel vid importering av moduler:\n"
-"%s"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:254
-msgid "Loading window"
-msgstr "Läser in fönster"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:255
-msgid "onStartup called twice"
-msgstr "onStartup anropades två gånger"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:739
-msgid "Spacebar"
-msgstr "Mellanslag"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:887
-msgid "Close to tray?"
-msgstr "Minimera till aktivitetsfältet?"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:888
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"När du klickar på den röda knappen, vill du att Miro ska minimeras till "
-"aktivitetsfältet eller avslutas? Du kan ändra detta senare under "
-"Inställningar."
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
-msgid "Download Completed"
-msgstr "Hämtningen är färdig"
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
-#, python-format
-msgid "Download of video '%s' is finished."
-msgstr "Hämtning av videon \"%s\" är färdig."
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
-msgid "Download Failed"
-msgstr "Hämtning misslyckades"
-
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
-#, python-format
-msgid "Download of video '%s' has failed."
-msgstr "Nedladdningen av videon '%s' misslyckades."
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
-msgid "Subscribe to Channel"
-msgstr "Prenumerar på Kanal"
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
-msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "Skriv URLen för den kanal du vill prenumerera på."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:79
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
-msgid "General"
-msgstr "Allmänt"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:81
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
-msgid "Downloads"
-msgstr "Nedladdningar"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:82
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
-msgid "Folders"
-msgstr "Mappar"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:83
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
-msgid "Disk Space"
-msgstr "Diskutrymme"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:251
-msgid "Movies Directory"
-msgstr "Filmkatalog"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:252
-#, python-format
-msgid "Select a Directory to store %s downloads in."
-msgstr "Välj en katalog att lagra %s nedladdade filer i."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:253
-#: ../../platform/osx/platform/frontends/html/Preferences.py:362
-msgid "Select"
-msgstr "Välj"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:262
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
-msgid "Migrate existing movies?"
-msgstr "Migrera existerande filmer?"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:263
-#, python-format
-msgid ""
-"You've selected a new folder to download movies to.  Should %s migrate your "
-"existing downloads there?  (Currently dowloading movies will not be moved "
-"until they finish)."
-msgstr ""
-"Du har valt en ny katalog att lagra nedladdade filer i. Ska %s flytta dina "
-"tidigare hämtade filer dit? (Filmer som laddas ner just nu flyttas inte "
-"förrän de är klara.)"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:360
-msgid "View this Directory in the Library"
-msgstr "Visa den här katalogen i biblioteket"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:361
-msgid "Select a Directory to view in the Library."
-msgstr "Välj en katalog att visa i biblioteket."
-
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
-msgid "Finish"
-msgstr "Slutför"
-
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
-msgid "Search!"
-msgstr "Sök!"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:241
-msgid "Pause Video"
-msgstr "Pausa film"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:250
-msgid "Unsupported version of Quicktime"
-msgstr "Din version av Quicktime stöds inte"
-
-#: ../../platform/osx/platform/frontends/html/Application.py:251
-#, python-format
-msgid ""
-"To run %s you need the most recent version of Quicktime, which is a free "
-"update."
-msgstr ""
-"För att köra %s behöver du den senaste versionen av Quicktime, som är en "
-"gratisuppdatering."
+#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+msgid "Audio"
+msgstr "Ljud"
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
@@ -2097,9 +1927,124 @@ msgstr "_Uppdatera kanal..."
 msgid "_Update Channels..."
 msgstr "_Uppdatera kanaler..."
 
-#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
-msgid "Audio"
-msgstr "Ljud"
+#: ../../platform/osx/platform/frontends/html/Application.py:241
+msgid "Pause Video"
+msgstr "Pausa film"
+
+#: ../../platform/osx/platform/frontends/html/Application.py:250
+msgid "Unsupported version of Quicktime"
+msgstr "Din version av Quicktime stöds inte"
+
+#: ../../platform/osx/platform/frontends/html/Application.py:251
+#, python-format
+msgid ""
+"To run %s you need the most recent version of Quicktime, which is a free "
+"update."
+msgstr ""
+"För att köra %s behöver du den senaste versionen av Quicktime, som är en "
+"gratisuppdatering."
+
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
+msgid "Subscribe to Channel"
+msgstr "Prenumerar på Kanal"
+
+#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr "Skriv URLen för den kanal du vill prenumerera på."
+
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
+msgid "Finish"
+msgstr "Slutför"
+
+#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
+msgid "Search!"
+msgstr "Sök!"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
+msgid "Download Completed"
+msgstr "Hämtningen är färdig"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "Hämtning av videon \"%s\" är färdig."
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
+msgid "Download Failed"
+msgstr "Hämtning misslyckades"
+
+#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
+#, python-format
+msgid "Download of video '%s' has failed."
+msgstr "Nedladdningen av videon '%s' misslyckades."
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
+msgid "General"
+msgstr "Allmänt"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:81
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+msgid "Downloads"
+msgstr "Nedladdningar"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+msgid "Folders"
+msgstr "Mappar"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
+msgid "Disk Space"
+msgstr "Diskutrymme"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:251
+msgid "Movies Directory"
+msgstr "Filmkatalog"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:252
+#, python-format
+msgid "Select a Directory to store %s downloads in."
+msgstr "Välj en katalog att lagra %s nedladdade filer i."
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:253
+#: ../../platform/osx/platform/frontends/html/Preferences.py:362
+msgid "Select"
+msgstr "Välj"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
+msgid "Migrate existing movies?"
+msgstr "Migrera existerande filmer?"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:263
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %s migrate your "
+"existing downloads there?  (Currently dowloading movies will not be moved "
+"until they finish)."
+msgstr ""
+"Du har valt en ny katalog att lagra nedladdade filer i. Ska %s flytta dina "
+"tidigare hämtade filer dit? (Filmer som laddas ner just nu flyttas inte "
+"förrän de är klara.)"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:360
+msgid "View this Directory in the Library"
+msgstr "Visa den här katalogen i biblioteket"
+
+#: ../../platform/osx/platform/frontends/html/Preferences.py:361
+msgid "Select a Directory to view in the Library."
+msgstr "Välj en katalog att visa i biblioteket."
+
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
+#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
+#, python-format
+msgid "%d video found"
+msgid_plural "%d videos found"
+msgstr[0] "%d film hittad"
+msgstr[1] "%d filmer hittade"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
@@ -2117,14 +2062,6 @@ msgstr "Visa"
 #: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
 msgid "Quit"
 msgstr "Avsluta"
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
-msgid "New Channel _Guide..."
-msgstr "Ny Kanal_guide..."
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
-msgid "Folder Location"
-msgstr "Mapplats"
 
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
@@ -2145,52 +2082,741 @@ msgstr "Okänt körtidsfel"
 msgid "An unknown error has occurred %s."
 msgstr "Ett okänt fel har inträffat %s."
 
-#: ../../portable/dl_daemon/download.py:458
-msgid "Error"
-msgstr "Fel"
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
+msgid "New Channel _Guide..."
+msgstr "Ny Kanal_guide..."
 
-#: ../../portable/dl_daemon/download.py:544
+#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:583
+msgid "Folder Location"
+msgstr "Mapplats"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
+msgid "Update Available"
+msgstr "Uppdatering finns tillgänglig"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
 #, python-format
-msgid "Could not write to %s"
-msgstr "Kunde inte skriva till %s"
+msgid "A new version of %s is available for download."
+msgstr "En ny version av %s är tillgänglig för nedladdning."
 
-#: ../../portable/dl_daemon/download.py:564
-#: ../../portable/dl_daemon/download.py:769
-msgid "Not enough disk space"
-msgstr "Inte tillräckligt med diskutrymme"
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
+msgid "Error Bombing Item"
+msgstr "Fel vid bombning av objekt"
 
-#: ../../portable/dl_daemon/download.py:565
-#: ../../portable/dl_daemon/download.py:770
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
+msgid "Error Recommending Item"
+msgstr "Fel vid rekommendation av objekt"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
+msgid "Error Opening Website"
+msgstr "Fel vid öppning av webbplats"
+
+#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
 #, python-format
-msgid "%s MB required to store this video"
-msgstr "%s MB krävs för att lagra denna film"
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr ""
+"Det inträffade ett fel vid öppning av %s.  Försök igen om några sekunder"
 
-#: ../../portable/dl_daemon/download.py:781
-msgid "BitTorrent failure"
-msgstr "BitTorrent fel"
-
-#: ../../portable/dl_daemon/download.py:782
-msgid "BitTorrent failed to startup"
-msgstr "BitTorrent lyckades inte starta"
-
-#: ../../portable/dl_daemon/download.py:954
-msgid "Corrupt Torrent"
-msgstr "Korrupt torrent"
-
-#: ../../portable/dl_daemon/download.py:955
+#: ../../platform/windows-xul/xul/components/pybridge.py:79
 #, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "Torrentfilen %s var inte giltig"
+msgid ""
+"Error importing modules:\n"
+"%s"
+msgstr ""
+"Fel vid importering av moduler:\n"
+"%s"
 
-#: ../../portable/dl_daemon/download.py:980
-msgid "Torrent file deleted"
-msgstr "Torrentfilen borttagen"
+#: ../../platform/windows-xul/xul/components/pybridge.py:254
+msgid "Loading window"
+msgstr "Läser in fönster"
 
-#: ../../portable/dl_daemon/download.py:981
-msgid "The torrent file for this item was deleted outside of Miro."
-msgstr "Torrent-filen för den här posten togs bort utanför Miro."
+#: ../../platform/windows-xul/xul/components/pybridge.py:255
+msgid "onStartup called twice"
+msgstr "onStartup anropades två gånger"
 
-#: ../../portable/frontends/html/contextmenu.py:103
+#: ../../platform/windows-xul/xul/components/pybridge.py:739
+msgid "Spacebar"
+msgstr "Mellanslag"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:887
+msgid "Close to tray?"
+msgstr "Minimera till aktivitetsfältet?"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:888
+msgid ""
+"When you click the red close button, would you like Miro to close to the "
+"system tray or quit?  You can change this setting later in the Options."
+msgstr ""
+"När du klickar på den röda knappen, vill du att Miro ska minimeras till "
+"aktivitetsfältet eller avslutas? Du kan ändra detta senare under "
+"Inställningar."
+
+#: ../../portable/item.py:497
+#, python-format
+msgid "Removing %s"
+msgstr "Tar bort %s"
+
+#: ../../portable/item.py:500
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr ""
+"Vill du radera den här katalogen och alla videor i den eller bara ta bort "
+"den från Biblioteket?"
+
+#: ../../portable/item.py:506
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
+msgstr ""
+"Vill du radera filen, eller vill du bara ta bort den ifrån biblioteket?"
+
+#: ../../portable/item.py:526
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+"Det här objektet är en mapp. När du tar bort en mapp kommer alla objekt i "
+"den mappen att tas bort."
+
+#: ../../portable/item.py:552 ../../portable/feed.py:390
+#, python-format
+msgid "%d days"
+msgstr "%d dagar"
+
+#: ../../portable/item.py:554 ../../portable/feed.py:386
+#, python-format
+msgid "%d hours"
+msgstr "%d timmar"
+
+#: ../../portable/item.py:556
+#, python-format
+msgid "%d minutes"
+msgstr "%d minuter"
+
+#: ../../portable/item.py:566
+#, python-format
+msgid "Expires in %s"
+msgstr "Går ut om %s"
+
+#: ../../portable/item.py:578
+#, python-format
+msgid "Will retry in %s"
+msgstr "Kommer att försöka igen om %s"
+
+#: ../../portable/item.py:580
+msgid "Paused"
+msgstr "Pausad"
+
+#: ../../portable/item.py:982
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../../portable/item.py:984
+msgid "WEB PAGE"
+msgstr "HEMSIDA"
+
+#: ../../portable/item.py:994
+msgid "Total Down:"
+msgstr "Totalt ner:"
+
+#: ../../portable/item.py:997
+msgid "Error:"
+msgstr "Fel:"
+
+#: ../../portable/item.py:1006
+msgid "Seeders:"
+msgstr "Distributörer:"
+
+#: ../../portable/item.py:1008
+msgid "Leechers:"
+msgstr ""
+
+#: ../../portable/item.py:1010
+msgid "Down Rate:"
+msgstr "Nedladdningshastighet:"
+
+#: ../../portable/item.py:1011
+msgid "Down Total:"
+msgstr "Totalt ner:"
+
+#: ../../portable/item.py:1013
+msgid "Up Rate:"
+msgstr "Uppladdningshastighet:"
+
+#: ../../portable/item.py:1014
+msgid "Up Total:"
+msgstr "Totalt upp:"
+
+#: ../../portable/item.py:1024
+msgid "Web page:"
+msgstr "Webbsida:"
+
+#: ../../portable/item.py:1024
+msgid "permalink"
+msgstr "permalänk"
+
+#: ../../portable/item.py:1028
+msgid "File link:"
+msgstr "Fillänk:"
+
+#: ../../portable/item.py:1028
+msgid "direct link to file"
+msgstr "Direktlänk till fil"
+
+#: ../../portable/item.py:1030
+msgid "File type:"
+msgstr "Filtyp:"
+
+#: ../../portable/item.py:1037 ../../portable/item.py:1040
+#: ../../portable/item.py:1042
+msgid "License:"
+msgstr "Licens:"
+
+#: ../../portable/item.py:1040 ../../portable/item.py:1042
+msgid "see permalink"
+msgstr ""
+
+#: ../../portable/item.py:1049
+msgid "REVEAL LOCAL FOLDER"
+msgstr "VISA LOKAL KATALOG"
+
+#: ../../portable/item.py:1051
+msgid "REVEAL LOCAL FILE"
+msgstr "VISA LOKAL FIL"
+
+#: ../../portable/item.py:1053
+msgid "Filename:"
+msgstr "Filnamn:"
+
+#: ../../portable/item.py:1060
+msgid "Down Total"
+msgstr "Totalt ner"
+
+#: ../../portable/item.py:1062
+msgid "Up Total"
+msgstr "Totalt upp"
+
+#: ../../portable/item.py:1080
+msgid "Item Details"
+msgstr "Information om posten"
+
+#: ../../portable/item.py:1087
+msgid "Torrent Details"
+msgstr "Information om torrenten"
+
+#: ../../portable/item.py:1089
+msgid "Torrent Details <i>stopped</i>"
+msgstr "Torrent Detaljer <i>stoppad</i>"
+
+#: ../../portable/item.py:1093
+msgid "Download Details"
+msgstr "Information om nedladdningen"
+
+#: ../../portable/item.py:1310
+msgid "downloading..."
+msgstr "hämtar..."
+
+#: ../../portable/item.py:1317 ../../portable/item.py:1320
+#, python-format
+msgid "%s remaining"
+msgstr "%s återstår"
+
+#: ../../portable/item.py:1329
+msgid "starting up..."
+msgstr "startar..."
+
+#: ../../portable/item.py:1901
+#, python-format
+msgid "Removing %s items"
+msgstr "Tar bort %s objekt"
+
+#: ../../portable/item.py:1903
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+"En eller flera av dessa videor laddades inte ner från någon kanal. Vill du "
+"radera dessa eller bara ta bort dem från Biblioteket?"
+
+#: ../../portable/item.py:1911
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"Ett eller flera av dessa objekt är en mapp. När du tar flyttar eller tar "
+"bort en mapp kommer objekt i denna också att bli flyttade eller borttagna."
+
+#: ../../portable/startup.py:92
+msgid "Unknown Error"
+msgstr "Okänt fel"
+
+#: ../../portable/startup.py:93
+#, python-format
+msgid ""
+"An unkown error prevented Miro from startup.  Please file a bug report at %s"
+msgstr ""
+"Ett okänt fel hindrade Miro från att starta. Post en buggrapport på %s"
+
+#: ../../portable/startup.py:155
+msgid "Database too new"
+msgstr "Databasen för ny"
+
+#: ../../portable/startup.py:156
+msgid ""
+"You have a database that was saved with a newer version of $shortAppName. "
+"You must download the latest version of $shortAppName and run that."
+msgstr ""
+"Du har en databas som skrev av en nyare version av $shortAppName. Du måste "
+"ladda ner den senaste versionen av $shortAppName och köra den istället."
+
+#: ../../portable/startup.py:237 ../../portable/frontends/html/main.py:134
+msgid "Video Directory Missing"
+msgstr "Video Katalog Saknas"
+
+#: ../../portable/startup.py:238
+#, fuzzy
+msgid ""
+"\n"
+"Miro can't find your primary video directory $moviesDirectory.  This may be "
+"because it's located on an external drive that is currently disconnected.  "
+"Please, connect the drive or create the directory, then start Miro again."
+msgstr ""
+"\n"
+"Miro kan inte hitta din primära katalog för videor ($moviesDirectory). Det "
+"kan bero på att den finns på en extern enhet som för närvarande inte är "
+"ansluten. För att åtgärda problemet kan du ansluta den externa enheten eller "
+"skapa katalogen och sedan starta om Miro."
+
+#: ../../portable/feed.py:384
+msgid "never"
+msgstr "aldrig"
+
+#: ../../portable/feed.py:388
+#, python-format
+msgid "%d day"
+msgstr "%d dygn"
+
+#: ../../portable/feed.py:392
+#, python-format
+msgid "%d months"
+msgstr "%d månader"
+
+#: ../../portable/feed.py:825 ../../portable/frontends/html/contextmenu.py:173
+msgid "Rename Channel"
+msgstr "Byt namn på kanal"
+
+#: ../../portable/feed.py:826
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr "Ange ett nytt namn för kanalen %s"
+
+#: ../../portable/feed.py:923
+msgid "Error loading feed"
+msgstr "Fel vid inläsning av kanal"
+
+#: ../../portable/feed.py:924
+#, python-format
+msgid "Couldn't load the feed at %s (%s)."
+msgstr "Kunde inta läsa in kanalen på %s (%s)."
+
+#: ../../portable/feed.py:927
+msgid "Would you like to keep the feed?"
+msgstr "Vill du behålla kanalen?"
+
+#: ../../portable/feed.py:1045
+msgid "Bad content-type"
+msgstr "Felaktig content-type"
+
+#: ../../portable/feed.py:1058
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+msgid "Channel is not compatible with $shortAppName!"
+msgstr "Kanalen är inte kompatibel med $shortAppName!"
+
+#: ../../portable/feed.py:1059
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"Men vi kommer att göra vårt bästa för att hämta filerna. Det kan ta lite "
+"extra tid att lista videorna och beskrivningarna kan se lite konstiga ut. "
+"Kontakta gärna utgivarna av $url och fråga om de kan ordna en källa i ett "
+"format som fungerar med $shortAppName.\n"
+"\n"
+"Vill du försöka använda den här kanalen ändå?"
+
+#: ../../portable/feed.py:2382 ../../portable/feed.py:2472
+#: ../../portable/extrastrings.py:33
+msgid "Search"
+msgstr "Sök"
+
+#: ../../portable/feed.py:2486
+msgid "Local Files"
+msgstr "Lokala filer"
+
+#: ../../portable/feed.py:2500
+msgid "Playing File"
+msgstr "Spelar fil"
+
+#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
+#, python-format
+msgid "%s database save succeeded"
+msgstr "Databas för %s sparades"
+
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr ""
+"Databasen har sparats. Det är nu säkert att avsluta utan att förlora något "
+"data."
+
+#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
+#, python-format
+msgid "%s database save failed"
+msgstr "Databas för %s misslyckades att spara"
+
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
+#, python-format
+msgid ""
+"%s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"%s kunde inte spara sin databas: Disken är full.\n"
+"Vi föreslår att du tar bort filer från den fulla disken eller helt enkelt "
+"tar bort några filmer från din\n"
+"samling. Senaste ändringarna kan gå förlorade."
+
+#: ../../portable/tabs.py:55
+msgid "Library"
+msgstr "Bibliotek"
+
+#: ../../portable/tabs.py:58
+msgid "Downloading"
+msgstr "Hämtar"
+
+#: ../../portable/httpclient.py:81
+#, python-format
+msgid "Error: %s"
+msgstr "Fel: %s"
+
+#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
+msgid "Can't connect"
+msgstr "Kan inte ansluta"
+
+#: ../../portable/httpclient.py:97
+#, python-format
+msgid "Connection Error: %s"
+msgstr "Anslutningsfel: %s"
+
+#: ../../portable/httpclient.py:103
+msgid "SSL connection error"
+msgstr "SSL anslutningsfel"
+
+#: ../../portable/httpclient.py:107
+msgid "HTTP error"
+msgstr "HTTP-fel"
+
+#: ../../portable/httpclient.py:110
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "Felaktig statusrad: %s"
+
+#: ../../portable/httpclient.py:113
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "Felaktig rubrikrad: %s"
+
+#: ../../portable/httpclient.py:116
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr "Felaktig paketstorlek: %s"
+
+#: ../../portable/httpclient.py:119
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr "Förväntade CRLF, fick: %s"
+
+#: ../../portable/httpclient.py:122
+#, python-format
+msgid "%s closed connection"
+msgstr "%s stängde anslutningen"
+
+#: ../../portable/httpclient.py:127 ../../portable/httpclient.py:155
+#: ../../portable/downloader.py:268
+msgid "File not found"
+msgstr "Filen hittades inte"
+
+#: ../../portable/httpclient.py:128
+msgid "Got 404 status code"
+msgstr "Fick Statuskod 404"
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "Felaktig Statuskod: %s"
+
+#: ../../portable/httpclient.py:134
+msgid "Authorization failed"
+msgstr "Auktorisation misslyckades"
+
+#: ../../portable/httpclient.py:139 ../../portable/frontends/html/main.py:271
+msgid "Internal Error"
+msgstr "Internt fel"
+
+#: ../../portable/httpclient.py:140
+msgid "Pipeline request never started"
+msgstr "Rörledningsbegäran startade aldrig"
+
+#: ../../portable/httpclient.py:144
+msgid "Timeout"
+msgstr "Tidsgräns överskriden"
+
+#: ../../portable/httpclient.py:145
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "Anslutningen till %s  avbröts (Time Out)"
+
+#: ../../portable/httpclient.py:149
+msgid "Invalid URL"
+msgstr "Ogiltig URL"
+
+#: ../../portable/httpclient.py:150
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr "\"%s\" är inte en giltig adress"
+
+#: ../../portable/httpclient.py:156
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr "Filen \"%s\" existerar inte"
+
+#: ../../portable/httpclient.py:160
+msgid "Read error"
+msgstr "Läsfel"
+
+#: ../../portable/httpclient.py:161
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr "Fel vid läsning av  \"%s\""
+
+#: ../../portable/httpclient.py:354
+msgid "Unknown Error code"
+msgstr "Okänd felkod"
+
+#: ../../portable/httpclient.py:386
+msgid "Connection closed"
+msgstr "Anslutning stängd"
+
+#: ../../portable/httpclient.py:811
+msgid "Unknown"
+msgstr "Okänd"
+
+#: ../../portable/httpclient.py:812
+msgid "Internal Error: Not ready to send"
+msgstr "Internt fel: Inte redo att sända"
+
+#: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
+msgid "Custom Channels"
+msgstr "Anpassade kanaler"
+
+#: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr "Du kör en version av $longAppName med en egen uppsättning kanaler."
+
+#: ../../portable/theme.py:138
+msgid "Starter Channels"
+msgstr "Nybörjar kanaler"
+
+#: ../../portable/theme.py:154
+msgid "Example Playlist"
+msgstr "Exempelspellista"
+
+#: ../../portable/downloader.py:234
+msgid "activity"
+msgstr "aktivitet"
+
+#: ../../portable/downloader.py:269
+msgid "Flash URL Scraping Error"
+msgstr "Fel i Flash url-fångare"
+
+#: ../../portable/downloader.py:445
+msgid "starting up"
+msgstr "startar"
+
+#: ../../portable/license.py:68
+msgid "license page"
+msgstr "licenssida"
+
+#: ../../portable/singleclick.py:99
+msgid "Download already exists"
+msgstr "Hämtningen existerar redan."
+
+#: ../../portable/singleclick.py:100
+msgid "That URL is already an external download."
+msgstr "Den URL'en är redan en extern nedladdning"
+
+#: ../../portable/singleclick.py:106
+msgid "Miro will begin downloading it now."
+msgstr "Miro börjar att ladda ner den nu."
+
+#: ../../portable/singleclick.py:108
+msgid "It is downloading now."
+msgstr "Den laddas ner nu."
+
+#: ../../portable/singleclick.py:110
+msgid "It has already been downloaded."
+msgstr "Den har redan laddats ned."
+
+#: ../../portable/singleclick.py:137
+msgid "Download Error"
+msgstr "Nerladdningsfel"
+
+#: ../../portable/singleclick.py:138
+#, python-format
+msgid ""
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %s"
+msgstr ""
+"Miro kan inte ladda ner en fil på denna URL:\n"
+"\n"
+"URL: %s"
+
+#: ../../portable/singleclick.py:146
+msgid "File Download"
+msgstr "Fil Nedladdning"
+
+#: ../../portable/singleclick.py:147
+#, python-format
+msgid "This file at %s does not appear to be audio, video, or an RSS feed."
+msgstr "Denna fil %s verkar inte vara ljud, video eller ett RSS flöde."
+
+#: ../../portable/singleclick.py:235
+msgid "Subscribing to multiple channels"
+msgstr "Prenumererar på flera kanaler"
+
+#: ../../portable/singleclick.py:236
+#, python-format
+msgid "Create %d channels?"
+msgstr "Skapa %d kanaler?"
+
+#: ../../portable/singleclick.py:249
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr "Lägger till %d kanaler till en ny mapp"
+
+#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
+msgid "Enter a name for the new channel folder"
+msgstr "Ange ett namn för den nya kanalmappen"
+
+#: ../../portable/singleclick.py:253
+#, python-format
+msgid ""
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
+msgstr ""
+"OBS: Du prenumererar redan på %d av dessa kanaler. Dessa kanaler kommer inte "
+"att ändras."
+
+#: ../../portable/singleclick.py:264
+msgid "Subscription error"
+msgstr "Prenumerationsfel"
+
+#: ../../portable/singleclick.py:274
+msgid ""
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
+msgstr ""
+"Denna $shortAppName kanalfil har ett ogiltigt format: $url. Vänligen meddela "
+"utgivaren om detta."
+
+#: ../../portable/singleclick.py:282
+msgid ""
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
+msgstr ""
+"Den här $shortAppName-kanalfilen har fel innehållstyp: Var vänlig meddela "
+"utgivaren om detta."
+
+#: ../../portable/singleclick.py:286
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr "Kunde inte ladda ner kanalfilen: $url för $shortAppName."
+
+#: ../../portable/singleclick.py:334
+msgid "Invalid Torrent"
+msgstr "Ogiltig torrentfil"
+
+#: ../../portable/singleclick.py:335
+#, python-format
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr "Torrentfilen %s verkar vara skadad och kan inte öppnas. [OK]"
+
+#: ../../portable/folder.py:142
+#: ../../portable/frontends/html/contextmenu.py:183
+msgid "Rename Channel Folder"
+msgstr "Byt namn på kanalmapp"
+
+#: ../../portable/folder.py:144
+#, python-format
+msgid "Enter a new name for the channel folder %s"
+msgstr "Ange ett nytt namn för kanalmappen %s"
+
+#: ../../portable/folder.py:213
+#: ../../portable/frontends/html/contextmenu.py:189
+msgid "Rename Playlist Folder"
+msgstr "Byt namn på spellistemapp"
+
+#: ../../portable/folder.py:215
+#, python-format
+msgid "Enter a new name for the playlist folder %s"
+msgstr "Ange ett nytt namn för spellistemappen %s"
+
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "Skapa kanalmapp"
+
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "Skapa spellistemapp"
+
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "Ange ett namn för den nya spellistemappen"
+
+#: ../../portable/opml.py:144
+msgid "OPML Import failed"
+msgstr "Importering av OPML misslyckades"
+
+#: ../../portable/opml.py:145
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr "Den valda OPML-filen verkar vara felaktig. Importeringen avbröts."
+
+#: ../../portable/opml.py:150
+msgid "OPML Import summary"
+msgstr "OPML Import summering"
+
+#: ../../portable/opml.py:151
+#, python-format
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "Lyckades importera %d Rss flöde"
+msgstr[1] "Lyckades importera %d Rss flöden"
+
+#: ../../portable/opml.py:154
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] "Hoppade över %d flöde, flödet finns redan"
+msgstr[1] "Hoppade över %d flöden, dessa flöden finns redan"
+
+#: ../../portable/frontends/html/contextmenu.py:104
 msgid "Update Channels Now"
 msgstr "Uppdatera kanalerna nu"
 
@@ -2200,32 +2826,32 @@ msgid "%d Downloaded Items"
 msgstr "%d hämtade objekt"
 
 #: ../../portable/frontends/html/contextmenu.py:130
-#: ../../portable/frontends/html/contextmenu.py:211
+#: ../../portable/frontends/html/contextmenu.py:210
 msgid "Play"
 msgstr "Spela upp"
 
 #: ../../portable/frontends/html/contextmenu.py:131
-#: ../../portable/frontends/html/contextmenu.py:214
+#: ../../portable/frontends/html/contextmenu.py:213
 msgid "Add to new playlist"
 msgstr "Lägg till i ny spellista"
 
 #: ../../portable/frontends/html/contextmenu.py:133
-#: ../../portable/frontends/html/contextmenu.py:207
+#: ../../portable/frontends/html/contextmenu.py:206
 msgid "Remove From Playlist"
 msgstr "Ta bort från spellista"
 
 #: ../../portable/frontends/html/contextmenu.py:135
-#: ../../portable/frontends/html/contextmenu.py:209
+#: ../../portable/frontends/html/contextmenu.py:208
 msgid "Remove From the Library"
 msgstr "Ta bort från Biblioteket"
 
 #: ../../portable/frontends/html/contextmenu.py:141
-#: ../../portable/frontends/html/contextmenu.py:218
+#: ../../portable/frontends/html/contextmenu.py:217
 msgid "Mark as Unwatched"
 msgstr "Marker som osedd"
 
 #: ../../portable/frontends/html/contextmenu.py:146
-#: ../../portable/frontends/html/contextmenu.py:220
+#: ../../portable/frontends/html/contextmenu.py:219
 msgid "Mark as Watched"
 msgstr "Markera som sedd"
 
@@ -2235,7 +2861,7 @@ msgid "%d Available Items"
 msgstr "%d tillgängliga objekt"
 
 #: ../../portable/frontends/html/contextmenu.py:152
-#: ../../portable/frontends/html/contextmenu.py:227
+#: ../../portable/frontends/html/contextmenu.py:226
 #: ../../portable/dialogs.py:93
 msgid "Download"
 msgstr "Hämta"
@@ -2246,17 +2872,17 @@ msgid "%d Downloading Items"
 msgstr "%d objekt hämtas"
 
 #: ../../portable/frontends/html/contextmenu.py:159
-#: ../../portable/frontends/html/contextmenu.py:225
+#: ../../portable/frontends/html/contextmenu.py:224
 msgid "Cancel Download"
 msgstr "Avbryt hämtning"
 
 #: ../../portable/frontends/html/contextmenu.py:161
-#: ../../portable/frontends/html/contextmenu.py:225
+#: ../../portable/frontends/html/contextmenu.py:224
 msgid "Pause Download"
 msgstr "Gör paus i nedladdning"
 
 #: ../../portable/frontends/html/contextmenu.py:164
-#: ../../portable/frontends/html/contextmenu.py:223
+#: ../../portable/frontends/html/contextmenu.py:222
 msgid "Restart Upload"
 msgstr "Starta om uppladdning"
 
@@ -2269,38 +2895,20 @@ msgstr "Uppdatera kanal nu"
 msgid "Copy URL to clipboard"
 msgstr "Kopiera url till urklipp"
 
-#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
-msgid "Rename Channel"
-msgstr "Byt namn på kanal"
-
 #: ../../portable/frontends/html/contextmenu.py:177
 msgid "Revert Title to Default"
 msgstr "Nollställ titel till standardtitel"
 
-#: ../../portable/frontends/html/contextmenu.py:183
-#: ../../portable/folder.py:142
-msgid "Rename Channel Folder"
-msgstr "Byt namn på kanalmapp"
-
-#: ../../portable/frontends/html/contextmenu.py:189
-#: ../../portable/folder.py:213
-msgid "Rename Playlist Folder"
-msgstr "Byt namn på spellistemapp"
-
-#: ../../portable/frontends/html/contextmenu.py:213
+#: ../../portable/frontends/html/contextmenu.py:212
 msgid "Play Just This Video"
 msgstr "Spela enbart denna film"
 
-#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../portable/frontends/html/contextmenu.py:231
 #: ../../portable/playlist.py:218
 msgid "Rename Playlist"
 msgstr "Byt namn på spellista"
 
-#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
-msgid "Video Directory Missing"
-msgstr "Video Katalog Saknas"
-
-#: ../../portable/frontends/html/main.py:133
+#: ../../portable/frontends/html/main.py:135
 msgid ""
 "\n"
 "    Miro can't find your primary video directory.  This may be because it's  "
@@ -2319,20 +2927,7 @@ msgstr ""
 "den externa enheten). Du kan även avsluta, ansluta enheten och starta om "
 "Miro."
 
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid "Custom Channels"
-msgstr "Anpassade kanaler"
-
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr "Du kör en version av $longAppName med en egen uppsättning kanaler."
-
-#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
-msgid "Internal Error"
-msgstr "Internt fel"
-
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
@@ -2340,7 +2935,7 @@ msgstr ""
 "Miro har stött på ett internt fel. Du kan hjälpa oss att hitta problemet och "
 "fixa det genom att lämna en felrapport."
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
@@ -2348,35 +2943,35 @@ msgstr ""
 "Inkludera hela program databasen inkluderat alla videor och kanalens "
 "metadata med krashrapport"
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/frontends/html/main.py:271
 msgid "Describe what you were doing that caused this error"
 msgstr "Beskriv vad du gjorde som orsakade detta fel"
 
-#: ../../portable/frontends/html/main.py:284
+#: ../../portable/frontends/html/main.py:286
 #, python-format
 msgid "%s Version Alert"
 msgstr "%s versionsvarning"
 
-#: ../../portable/frontends/html/main.py:285
+#: ../../portable/frontends/html/main.py:287
 #, python-format
 msgid "A new version of %s is available. Would you like to download it now?"
 msgstr "En ny version av %s är tillgänglig. Vill du ladda ner den nu?"
 
-#: ../../portable/frontends/html/main.py:290
+#: ../../portable/frontends/html/main.py:292
 #, python-format
 msgid "%s Version Check"
 msgstr "%s versionskontroll"
 
-#: ../../portable/frontends/html/main.py:291
+#: ../../portable/frontends/html/main.py:293
 #, python-format
 msgid "%s is up to date."
 msgstr "%s är uppdaterad"
 
-#: ../../portable/frontends/html/main.py:309
+#: ../../portable/frontends/html/main.py:311
 msgid "Are you sure you want to quit?"
 msgstr "Är du säker på att du vill avsluta?"
 
-#: ../../portable/frontends/html/main.py:311
+#: ../../portable/frontends/html/main.py:313
 msgid ""
 "Miro is still uploading your crash report. If you quit now the upload will "
 "be canceled.  Quit Anyway?"
@@ -2384,22 +2979,22 @@ msgstr ""
 "Miro håller fortfarande på att ladda upp din krashrapport. Om du avslutar nu "
 "så kommer uppladdningen att avsluta. Vill du avsluta i alla fall?"
 
-#: ../../portable/frontends/html/main.py:316
+#: ../../portable/frontends/html/main.py:318
 #, python-format
 msgid "You have %d download still in progress.  Quit Anyway?"
 msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
 msgstr[0] "Du har %d nedladdning som pågår. Vill du avsluta i alla fall?"
 msgstr[1] "Du har %d nedladdningar som pågår. Vill du avsluta i alla fall?"
 
-#: ../../portable/frontends/html/main.py:340
+#: ../../portable/frontends/html/main.py:342
 msgid "Import OPML File"
 msgstr "Importera OPML fil"
 
-#: ../../portable/frontends/html/main.py:342
+#: ../../portable/frontends/html/main.py:344
 msgid "OPML Files"
 msgstr "OPML filer"
 
-#: ../../portable/frontends/html/main.py:347
+#: ../../portable/frontends/html/main.py:349
 msgid "Export OPML File"
 msgstr "Exportera OPML fil"
 
@@ -2472,31 +3067,6 @@ msgstr "shortAppName - Ladda ned Video"
 msgid "Enter the URL of the video to download"
 msgstr "Skriv in adressen till videon du vill ladda ner"
 
-#: ../../portable/tabs.py:55
-msgid "Library"
-msgstr "Bibliotek"
-
-#: ../../portable/tabs.py:58
-msgid "Downloading"
-msgstr "Hämtar"
-
-#: ../../portable/downloader.py:234
-msgid "activity"
-msgstr "aktivitet"
-
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
-#: ../../portable/httpclient.py:155
-msgid "File not found"
-msgstr "Filen hittades inte"
-
-#: ../../portable/downloader.py:269
-msgid "Flash URL Scraping Error"
-msgstr "Fel i Flash url-fångare"
-
-#: ../../portable/downloader.py:445
-msgid "starting up"
-msgstr "startar"
-
 #: ../../portable/playlist.py:219
 #, python-format
 msgid "Enter a new name for the playlist %s"
@@ -2509,32 +3079,6 @@ msgstr "Skapa spellista"
 #: ../../portable/playlist.py:242
 msgid "Enter a name for the new playlist"
 msgstr "Ange ett namn för den nya spellistan"
-
-#: ../../portable/opml.py:144
-msgid "OPML Import failed"
-msgstr "Importering av OPML misslyckades"
-
-#: ../../portable/opml.py:145
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr "Den valda OPML-filen verkar vara felaktig. Importeringen avbröts."
-
-#: ../../portable/opml.py:150
-msgid "OPML Import summary"
-msgstr "OPML Import summering"
-
-#: ../../portable/opml.py:151
-#, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] "Lyckades importera %d Rss flöde"
-msgstr[1] "Lyckades importera %d Rss flöden"
-
-#: ../../portable/opml.py:154
-#, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] "Hoppade över %d flöde, flödet finns redan"
-msgstr[1] "Hoppade över %d flöden, dessa flöden finns redan"
 
 #: ../../portable/util.py:266
 #, python-format
@@ -2575,6 +3119,51 @@ msgstr "%1.1fB"
 #, python-format
 msgid "%dB"
 msgstr "%dB"
+
+#: ../../portable/dl_daemon/download.py:458
+msgid "Error"
+msgstr "Fel"
+
+#: ../../portable/dl_daemon/download.py:544
+#, python-format
+msgid "Could not write to %s"
+msgstr "Kunde inte skriva till %s"
+
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:769
+msgid "Not enough disk space"
+msgstr "Inte tillräckligt med diskutrymme"
+
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:770
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "%s MB krävs för att lagra denna film"
+
+#: ../../portable/dl_daemon/download.py:781
+msgid "BitTorrent failure"
+msgstr "BitTorrent fel"
+
+#: ../../portable/dl_daemon/download.py:782
+msgid "BitTorrent failed to startup"
+msgstr "BitTorrent lyckades inte starta"
+
+#: ../../portable/dl_daemon/download.py:954
+msgid "Corrupt Torrent"
+msgstr "Korrupt torrent"
+
+#: ../../portable/dl_daemon/download.py:955
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "Torrentfilen %s var inte giltig"
+
+#: ../../portable/dl_daemon/download.py:980
+msgid "Torrent file deleted"
+msgstr "Torrentfilen borttagen"
+
+#: ../../portable/dl_daemon/download.py:981
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr "Torrent-filen för den här posten togs bort utanför Miro."
 
 #: ../../portable/iheartmiro.py:82
 msgid ""
@@ -2725,8 +3314,9 @@ msgid "_Play"
 msgstr "_Spela upp"
 
 #: ../../portable/menubar.py:228
+#, fuzzy
 msgid "_Pause"
-msgstr ""
+msgstr "_Pausa"
 
 #: ../../portable/menubar.py:229
 msgid "_Stop"
@@ -2820,237 +3410,6 @@ msgstr "Göm fönster"
 msgid "Show Window"
 msgstr "Visa fönster"
 
-#: ../../portable/theme.py:137
-msgid "Starter Channels"
-msgstr "Nybörjar kanaler"
-
-#: ../../portable/theme.py:154
-msgid "Example Playlist"
-msgstr "Exempelspellista"
-
-#: ../../portable/httpclient.py:81
-#, python-format
-msgid "Error: %s"
-msgstr "Fel: %s"
-
-#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
-msgid "Can't connect"
-msgstr "Kan inte ansluta"
-
-#: ../../portable/httpclient.py:97
-#, python-format
-msgid "Connection Error: %s"
-msgstr "Anslutningsfel: %s"
-
-#: ../../portable/httpclient.py:103
-msgid "SSL connection error"
-msgstr "SSL anslutningsfel"
-
-#: ../../portable/httpclient.py:107
-msgid "HTTP error"
-msgstr "HTTP-fel"
-
-#: ../../portable/httpclient.py:110
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr "Felaktig statusrad: %s"
-
-#: ../../portable/httpclient.py:113
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr "Felaktig rubrikrad: %s"
-
-#: ../../portable/httpclient.py:116
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "Felaktig paketstorlek: %s"
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr "Förväntade CRLF, fick: %s"
-
-#: ../../portable/httpclient.py:122
-#, python-format
-msgid "%s closed connection"
-msgstr "%s stängde anslutningen"
-
-#: ../../portable/httpclient.py:128
-msgid "Got 404 status code"
-msgstr "Fick Statuskod 404"
-
-#: ../../portable/httpclient.py:130
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "Felaktig Statuskod: %s"
-
-#: ../../portable/httpclient.py:134
-msgid "Authorization failed"
-msgstr "Auktorisation misslyckades"
-
-#: ../../portable/httpclient.py:140
-msgid "Pipeline request never started"
-msgstr "Rörledningsbegäran startade aldrig"
-
-#: ../../portable/httpclient.py:144
-msgid "Timeout"
-msgstr "Tidsgräns överskriden"
-
-#: ../../portable/httpclient.py:145
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "Anslutningen till %s  avbröts (Time Out)"
-
-#: ../../portable/httpclient.py:149
-msgid "Invalid URL"
-msgstr "Ogiltig URL"
-
-#: ../../portable/httpclient.py:150
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr "\"%s\" är inte en giltig adress"
-
-#: ../../portable/httpclient.py:156
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr "Filen \"%s\" existerar inte"
-
-#: ../../portable/httpclient.py:160
-msgid "Read error"
-msgstr "Läsfel"
-
-#: ../../portable/httpclient.py:161
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr "Fel vid läsning av  \"%s\""
-
-#: ../../portable/httpclient.py:354
-msgid "Unknown Error code"
-msgstr "Okänd felkod"
-
-#: ../../portable/httpclient.py:386
-msgid "Connection closed"
-msgstr "Anslutning stängd"
-
-#: ../../portable/httpclient.py:811
-msgid "Unknown"
-msgstr "Okänd"
-
-#: ../../portable/httpclient.py:812
-msgid "Internal Error: Not ready to send"
-msgstr "Internt fel: Inte redo att sända"
-
-#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
-#: ../../portable/feed.py:2499
-msgid "Search"
-msgstr "Sök"
-
-#: ../../portable/feed.py:384
-msgid "never"
-msgstr "aldrig"
-
-#: ../../portable/feed.py:386 ../../portable/item.py:554
-#, python-format
-msgid "%d hours"
-msgstr "%d timmar"
-
-#: ../../portable/feed.py:388
-#, python-format
-msgid "%d day"
-msgstr "%d dygn"
-
-#: ../../portable/feed.py:390 ../../portable/item.py:552
-#, python-format
-msgid "%d days"
-msgstr "%d dagar"
-
-#: ../../portable/feed.py:392
-#, python-format
-msgid "%d months"
-msgstr "%d månader"
-
-#: ../../portable/feed.py:826
-#, python-format
-msgid "Enter a new name for the channel %s"
-msgstr "Ange ett nytt namn för kanalen %s"
-
-#: ../../portable/feed.py:923
-msgid "Error loading feed"
-msgstr "Fel vid inläsning av kanal"
-
-#: ../../portable/feed.py:924
-#, python-format
-msgid "Couldn't load the feed at %s (%s)."
-msgstr "Kunde inta läsa in kanalen på %s (%s)."
-
-#: ../../portable/feed.py:927
-msgid "Would you like to keep the feed?"
-msgstr "Vill du behålla kanalen?"
-
-#: ../../portable/feed.py:1040
-msgid "Bad content-type"
-msgstr "Felaktig content-type"
-
-#: ../../portable/feed.py:1053
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
-msgid "Channel is not compatible with $shortAppName!"
-msgstr "Kanalen är inte kompatibel med $shortAppName!"
-
-#: ../../portable/feed.py:1054
-msgid ""
-"But we'll try our best to grab the files. It may take extra time to list the "
-"videos, and descriptions may look funny.  Please contact the publishers of "
-"$url and ask if they can supply a feed in a format that will work with "
-"$shortAppName.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-"Men vi kommer att göra vårt bästa för att hämta filerna. Det kan ta lite "
-"extra tid att lista videorna och beskrivningarna kan se lite konstiga ut. "
-"Kontakta gärna utgivarna av $url och fråga om de kan ordna en källa i ett "
-"format som fungerar med $shortAppName.\n"
-"\n"
-"Vill du försöka använda den här kanalen ändå?"
-
-#: ../../portable/feed.py:2513
-msgid "Local Files"
-msgstr "Lokala filer"
-
-#: ../../portable/feed.py:2527
-msgid "Playing File"
-msgstr "Spelar fil"
-
-#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
-#, python-format
-msgid "%s database save succeeded"
-msgstr "Databas för %s sparades"
-
-#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr ""
-"Databasen har sparats. Det är nu säkert att avsluta utan att förlora något "
-"data."
-
-#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
-#, python-format
-msgid "%s database save failed"
-msgstr "Databas för %s misslyckades att spara"
-
-#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
-#, python-format
-msgid ""
-"%s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%s kunde inte spara sin databas: Disken är full.\n"
-"Vi föreslår att du tar bort filer från den fulla disken eller helt enkelt "
-"tar bort några filmer från din\n"
-"samling. Senaste ändringarna kan gå förlorade."
-
 #: ../../portable/dialogs.py:89
 msgid "Ignore"
 msgstr "Ingorera"
@@ -3059,12 +3418,12 @@ msgstr "Ingorera"
 msgid "Submit Crash Report"
 msgstr "Skicka krasch-rapport"
 
-#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:49
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr "Migrera"
 
-#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:37
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr "Migrera inte"
@@ -3130,12 +3489,12 @@ msgstr "Installera iHeartMiro"
 msgid "Don't Install"
 msgstr "Installera inte"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:56
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
 msgstr "Ny sökkanal"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:28
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr "En sökkanal innehåller objekt som passar med en sökterm."
@@ -3241,354 +3600,6 @@ msgstr ""
 "Ett fel uppstod när %s sparades. Kontrollera så att filen inte har raderats "
 "och försök igen"
 
-#: ../../portable/singleclick.py:99
-msgid "Download already exists"
-msgstr "Hämtningen existerar redan."
-
-#: ../../portable/singleclick.py:100
-msgid "That URL is already an external download."
-msgstr "Den URL'en är redan en extern nedladdning"
-
-#: ../../portable/singleclick.py:106
-msgid "Miro will begin downloading it now."
-msgstr "Miro börjar att ladda ner den nu."
-
-#: ../../portable/singleclick.py:108
-msgid "It is downloading now."
-msgstr "Den laddas ner nu."
-
-#: ../../portable/singleclick.py:110
-msgid "It has already been downloaded."
-msgstr "Den har redan laddats ned."
-
-#: ../../portable/singleclick.py:137
-msgid "Download Error"
-msgstr "Nerladdningsfel"
-
-#: ../../portable/singleclick.py:138
-#, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %s"
-msgstr ""
-"Miro kan inte ladda ner en fil på denna URL:\n"
-"\n"
-"URL: %s"
-
-#: ../../portable/singleclick.py:146
-msgid "File Download"
-msgstr "Fil Nedladdning"
-
-#: ../../portable/singleclick.py:147
-#, python-format
-msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr "Denna fil %s verkar inte vara ljud, video eller ett RSS flöde."
-
-#: ../../portable/singleclick.py:235
-msgid "Subscribing to multiple channels"
-msgstr "Prenumererar på flera kanaler"
-
-#: ../../portable/singleclick.py:236
-#, python-format
-msgid "Create %d channels?"
-msgstr "Skapa %d kanaler?"
-
-#: ../../portable/singleclick.py:249
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "Lägger till %d kanaler till en ny mapp"
-
-#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
-msgid "Enter a name for the new channel folder"
-msgstr "Ange ett namn för den nya kanalmappen"
-
-#: ../../portable/singleclick.py:253
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
-msgstr ""
-"OBS: Du prenumererar redan på %d av dessa kanaler. Dessa kanaler kommer inte "
-"att ändras."
-
-#: ../../portable/singleclick.py:264
-msgid "Subscription error"
-msgstr "Prenumerationsfel"
-
-#: ../../portable/singleclick.py:274
-msgid ""
-"This $shortAppName channel file has an invalid format: $url. Please notify "
-"the publisher of this file."
-msgstr ""
-"Denna $shortAppName kanalfil har ett ogiltigt format: $url. Vänligen meddela "
-"utgivaren om detta."
-
-#: ../../portable/singleclick.py:282
-msgid ""
-"This $shortAppName channel file has the wrong content type: $url. Please "
-"notify the publisher of this file."
-msgstr ""
-"Den här $shortAppName-kanalfilen har fel innehållstyp: Var vänlig meddela "
-"utgivaren om detta."
-
-#: ../../portable/singleclick.py:286
-msgid "Could not download the $shortAppName channel file: $url."
-msgstr "Kunde inte ladda ner kanalfilen: $url för $shortAppName."
-
-#: ../../portable/singleclick.py:334
-msgid "Invalid Torrent"
-msgstr "Ogiltig torrentfil"
-
-#: ../../portable/singleclick.py:335
-#, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr "Torrentfilen %s verkar vara skadad och kan inte öppnas. [OK]"
-
-#: ../../portable/item.py:497
-#, python-format
-msgid "Removing %s"
-msgstr "Tar bort %s"
-
-#: ../../portable/item.py:500
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
-"Vill du radera den här katalogen och alla videor i den eller bara ta bort "
-"den från Biblioteket?"
-
-#: ../../portable/item.py:506
-msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
-msgstr ""
-"Vill du radera filen, eller vill du bara ta bort den ifrån biblioteket?"
-
-#: ../../portable/item.py:526
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
-"Det här objektet är en mapp. När du tar bort en mapp kommer alla objekt i "
-"den mappen att tas bort."
-
-#: ../../portable/item.py:556
-#, python-format
-msgid "%d minutes"
-msgstr "%d minuter"
-
-#: ../../portable/item.py:566
-#, python-format
-msgid "Expires in %s"
-msgstr "Går ut om %s"
-
-#: ../../portable/item.py:578
-#, python-format
-msgid "Will retry in %s"
-msgstr "Kommer att försöka igen om %s"
-
-#: ../../portable/item.py:580
-msgid "Paused"
-msgstr "Pausad"
-
-#: ../../portable/item.py:982
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../../portable/item.py:984
-msgid "WEB PAGE"
-msgstr "HEMSIDA"
-
-#: ../../portable/item.py:994
-msgid "Total Down:"
-msgstr "Totalt ner:"
-
-#: ../../portable/item.py:997
-msgid "Error:"
-msgstr "Fel:"
-
-#: ../../portable/item.py:1006
-msgid "Seeders:"
-msgstr "Distributörer:"
-
-#: ../../portable/item.py:1008
-msgid "Leechers:"
-msgstr ""
-
-#: ../../portable/item.py:1010
-msgid "Down Rate:"
-msgstr "Nedladdningshastighet:"
-
-#: ../../portable/item.py:1011
-msgid "Down Total:"
-msgstr "Totalt ner:"
-
-#: ../../portable/item.py:1013
-msgid "Up Rate:"
-msgstr "Uppladdningshastighet:"
-
-#: ../../portable/item.py:1014
-msgid "Up Total:"
-msgstr "Totalt upp:"
-
-#: ../../portable/item.py:1024
-msgid "Web page:"
-msgstr "Webbsida:"
-
-#: ../../portable/item.py:1024
-msgid "permalink"
-msgstr "permalänk"
-
-#: ../../portable/item.py:1028
-msgid "File link:"
-msgstr "Fillänk:"
-
-#: ../../portable/item.py:1028
-msgid "direct link to file"
-msgstr "Direktlänk till fil"
-
-#: ../../portable/item.py:1030
-msgid "File type:"
-msgstr "Filtyp:"
-
-#: ../../portable/item.py:1037 ../../portable/item.py:1040
-#: ../../portable/item.py:1042
-msgid "License:"
-msgstr "Licens:"
-
-#: ../../portable/item.py:1040 ../../portable/item.py:1042
-msgid "see permalink"
-msgstr ""
-
-#: ../../portable/item.py:1049
-msgid "REVEAL LOCAL FOLDER"
-msgstr "VISA LOKAL KATALOG"
-
-#: ../../portable/item.py:1051
-msgid "REVEAL LOCAL FILE"
-msgstr "VISA LOKAL FIL"
-
-#: ../../portable/item.py:1053
-msgid "Filename:"
-msgstr "Filnamn:"
-
-#: ../../portable/item.py:1060
-msgid "Down Total"
-msgstr "Totalt ner"
-
-#: ../../portable/item.py:1062
-msgid "Up Total"
-msgstr "Totalt upp"
-
-#: ../../portable/item.py:1080
-msgid "Item Details"
-msgstr "Information om posten"
-
-#: ../../portable/item.py:1087
-msgid "Torrent Details"
-msgstr "Information om torrenten"
-
-#: ../../portable/item.py:1089
-msgid "Torrent Details <i>stopped</i>"
-msgstr "Torrent Detaljer <i>stoppad</i>"
-
-#: ../../portable/item.py:1093
-msgid "Download Details"
-msgstr "Information om nedladdningen"
-
-#: ../../portable/item.py:1310
-msgid "downloading..."
-msgstr "hämtar..."
-
-#: ../../portable/item.py:1317 ../../portable/item.py:1320
-#, python-format
-msgid "%s remaining"
-msgstr "%s återstår"
-
-#: ../../portable/item.py:1329
-msgid "starting up..."
-msgstr "startar..."
-
-#: ../../portable/item.py:1878
-#, python-format
-msgid "Removing %s items"
-msgstr "Tar bort %s objekt"
-
-#: ../../portable/item.py:1880
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
-"En eller flera av dessa videor laddades inte ner från någon kanal. Vill du "
-"radera dessa eller bara ta bort dem från Biblioteket?"
-
-#: ../../portable/item.py:1888
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
-msgstr ""
-"Ett eller flera av dessa objekt är en mapp. När du tar flyttar eller tar "
-"bort en mapp kommer objekt i denna också att bli flyttade eller borttagna."
-
-#: ../../portable/startup.py:92
-msgid "Unknown Error"
-msgstr "Okänt fel"
-
-#: ../../portable/startup.py:93
-#, python-format
-msgid ""
-"An unkown error prevented Miro from startup.  Please file a bug report at %s"
-msgstr ""
-"Ett okänt fel hindrade Miro från att starta. Post en buggrapport på %s"
-
-#: ../../portable/startup.py:155
-msgid "Database too new"
-msgstr "Databasen för ny"
-
-#: ../../portable/startup.py:156
-msgid ""
-"You have a database that was saved with a newer version of $shortAppName. "
-"You must download the latest version of $shortAppName and run that."
-msgstr ""
-"Du har en databas som skrev av en nyare version av $shortAppName. Du måste "
-"ladda ner den senaste versionen av $shortAppName och köra den istället."
-
-#: ../../portable/startup.py:238
-msgid ""
-"\n"
-"Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected."
-msgstr ""
-"\n"
-"Din primära filmkatalog hittades inte. Det kan bero på att den ligger på en "
-"extern enhet som är frånkopplad."
-
-#: ../../portable/folder.py:144
-#, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "Ange ett nytt namn för kanalmappen %s"
-
-#: ../../portable/folder.py:215
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "Ange ett nytt namn för spellistemappen %s"
-
-#: ../../portable/folder.py:223
-msgid "Create Channel Folder"
-msgstr "Skapa kanalmapp"
-
-#: ../../portable/folder.py:237
-msgid "Create Playlist Folder"
-msgstr "Skapa spellistemapp"
-
-#: ../../portable/folder.py:238
-msgid "Enter a name for the new playlist folder"
-msgstr "Ange ett namn för den nya spellistemappen"
-
-#: ../../portable/license.py:68
-msgid "license page"
-msgstr "licenssida"
-
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
 "1 day\n"
@@ -3679,40 +3690,45 @@ msgstr ""
 "<b>Hitta videor:</b>Guiden i Miro har hundratals Internet TV-kanaler, alla "
 "gratis. Klicka bara 'LÄGG TILL' för att titta på en knal."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:28
+#: ../../platform/gtk-x11/glade/miro.glade.h:27
+#, fuzzy
+msgid "<b>xine</b>"
+msgstr "<b>xine</b>"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Auto download default setting for new channels"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:29
+#: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Automatically for_ward ports."
 msgstr "Framåtbefordra portar automatiskt."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:30
+#: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "By default, videos _expire after"
 msgstr "Som standard, sparas videor i"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/gtk-x11/glade/miro.glade.h:32
 msgid "C_hannel:"
 msgstr "Ka_nal:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "C_hannels"
 msgstr "Kanaler"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:33
+#: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "C_reate Channel"
 msgstr "Skapa _kanal"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:34
+#: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "Check Channels for _new content"
 msgstr "Kolla kanaler efter nytt material"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:35
+#: ../../platform/gtk-x11/glade/miro.glade.h:36
 msgid "Disk _Space"
 msgstr "Disk_Utrymme"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:37
+#: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
@@ -3722,43 +3738,43 @@ msgstr ""
 "Varje timma\n"
 "Manuellt"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid "G_B"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../platform/gtk-x11/glade/miro.glade.h:42
 msgid "Go"
 msgstr "Gå"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Ignore Un_encrypted Connections."
 msgstr "Ignorera o_krypterade anslutningar."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr "I denna:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Limit torrent _downstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Maximum number of channel auto-downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
+#: ../../platform/gtk-x11/glade/miro.glade.h:48
 msgid "Maximum number of manual downloads at a time: "
 msgstr "Maximalt antal manuella hämtningar samtidigt: "
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
+#: ../../platform/gtk-x11/glade/miro.glade.h:52
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
 msgstr ""
 "Miro kan hitta alla videor på din dator och hjälpa dig ordna din samling."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/gtk-x11/glade/miro.glade.h:53
 msgid ""
 "New\n"
 "All\n"
@@ -3768,49 +3784,49 @@ msgstr ""
 "Alla\n"
 "Av"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
+#: ../../platform/gtk-x11/glade/miro.glade.h:57
 #, fuzzy
 msgid "Play _videos one after another"
 msgstr "Spela upp filmer efter varandra"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
+#: ../../platform/gtk-x11/glade/miro.glade.h:58
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
+#: ../../platform/gtk-x11/glade/miro.glade.h:59
 msgid "Restrict to my full _home folder"
 msgstr "Begränsa till min _hemkatalog"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid "S_top after each video"
 msgstr "Stoppa efter varje video"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid "S_tore downloaded videos in this folder:"
 msgstr "Spara nedladdade filmer i denna mapp:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "Search _Engine:"
 msgstr "Sök_motor:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "Search _custom folder:"
 msgstr "Sök i _anpassad mapp:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "Select Movies Directory"
 msgstr "Välj filmkatalog"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "Select custom search directory"
 msgstr "Välj anpassad sökkatalog"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Sluta ladda upp Torrent när denna utdelningsproportionen nås:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
@@ -3818,23 +3834,27 @@ msgstr ""
 "Följande dialoger hjälper dig konfigurera Miro så att det fungerar så bra "
 "som möjligt för dig. Här är första frågan."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "To avoid internet slowdowns, limit _upstream to:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "Use _ports:"
 msgstr "Använd _portar:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
+msgid "Use this for video when listening to audio:"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "Use this renderer to play videos:"
 msgstr "Använd denna renderar för att spela filmer:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "Volume:"
 msgstr "Volym:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:71
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
 "This way, videos that haven't finished downloading can finish and new videos "
@@ -3844,7 +3864,7 @@ msgstr ""
 "viset kommer videor vars nedladdning inte gått klart att avslutas och nya "
 "videor i dina kanaler finns klara när du vill titta."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
 "download videos from your favorite channels, watch new videos one after the "
@@ -3854,7 +3874,7 @@ msgstr ""
 "automatiskt ladda ner videor från dina favoritkanaler, se nya videor i "
 "följd, ladda ner torrentar, rekommendera videor till vänner och mycket mer."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there?  (Currently dowloading movies will not be "
@@ -3864,65 +3884,74 @@ msgstr ""
 "tidigare nedladdingar dit? (Filmer som laddas ner just nu flyttas inte "
 "förrän de är klara.)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "_Add Folder"
 msgstr "_Lägg till katalog"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 msgid "_Automatically run Miro when I log in"
 msgstr "_Starta Miro automatiskt när jag loggar in"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 msgid "_Downloads"
 msgstr "_Hämtningar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:78
+#: ../../platform/gtk-x11/glade/miro.glade.h:80
 msgid "_Folders"
 msgstr "_Mappar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:79
+#: ../../platform/gtk-x11/glade/miro.glade.h:81
 msgid "_General"
 msgstr "_Allmänt"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:80
+#: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_KB/s."
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:81
+#: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Keep at least this much free space on my drive:"
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:82
+#: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_Playback"
 msgstr "_Uppspelning"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:83
+#: ../../platform/gtk-x11/glade/miro.glade.h:85
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr "_Återuppta uppspelning av videor från den punkt de blev stoppade på"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:84
+#: ../../platform/gtk-x11/glade/miro.glade.h:86
 msgid "_Search"
 msgstr "_Sök"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:85
+#: ../../platform/gtk-x11/glade/miro.glade.h:87
 msgid "_Search For:"
 msgstr "_Sök Efter:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:86
+#: ../../platform/gtk-x11/glade/miro.glade.h:88
 msgid "_URL"
 msgstr "_Url"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:87
+#: ../../platform/gtk-x11/glade/miro.glade.h:89
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr "_Varna mig när jag försöker avsluta medans nedladdningar pågår"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:88
+#: ../../platform/gtk-x11/glade/miro.glade.h:90
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr ""
 "_Leta efter nya videor i dessa kataloger och inkludera dem i biblioteket"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:89
+#: ../../platform/gtk-x11/glade/miro.glade.h:91
+msgid ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:96
 msgid ""
 "xine\n"
 "gstreamer"
@@ -3932,13 +3961,10 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
-"$publisher. $longAppName och $longAppName-logon är varumärken som tillhör "
-"$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
@@ -4080,8 +4106,9 @@ msgid "Folder"
 msgstr "Mapp"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
+#, fuzzy
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
 msgid "Ignore Unencrypted Connections"

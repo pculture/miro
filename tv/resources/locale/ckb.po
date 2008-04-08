@@ -1,42 +1,33 @@
-# Icelandic translation for democracy
-# Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
+# Kurdish (Sorani) translation for democracy
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
 # This file is distributed under the same license as the democracy package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2007-12-18 00:02+0000\n"
-"Last-Translator: Björgvin Ragnarsson <nifgraup@hotmail.com>\n"
-"Language-Team: Icelandic <is@li.org>\n"
+"PO-Revision-Date: 2008-03-26 22:12+0000\n"
+"Last-Translator: Arastein <Unknown>\n"
+"Language-Team: Kurdish (Sorani) <ckb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-08 14:45+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#~ msgid "About Democracy"
-#~ msgstr "Um Democracy"
-
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Democracy Hjálp"
 
 #: ../../portable/dialogs.py:85
 msgid "Cancel"
-msgstr "Hætta við"
+msgstr "پاشگه‌زبوونه‌وه‌"
 
 msgid "OK"
-msgstr "Í lagi"
+msgstr "باش"
 
 #: ../../portable/dialogs.py:84
 msgid "Ok"
-msgstr "Í lagi"
+msgstr "باش"
 
 msgid "$log"
 msgstr "$log"
@@ -48,17 +39,12 @@ msgid ""
 "questions, and we'll get right to work.</font>"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
 "report to our bug-tracking system? At a minimum, what we'd need is "
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Ef þú hefur smá stund, hvernig væri að senda villulýsingu í verkbeiðnakerfið "
-"okkar?  Í minnsta lagi þurfum við að fá lýsingu á því sem þú varst að gera --"
-" eins nákvæmt og þú getur -- og að auki allt yndislega ruglið úr kassanum "
-"hér fyrir neðan:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -71,21 +57,21 @@ msgid "The fall of $shortAppName??"
 msgstr ""
 
 msgid "About Miro"
-msgstr "Um Miro"
+msgstr "ده‌رباره‌ی میرۆ"
 
 msgid "Add Channel..."
-msgstr "Bæta við rás"
+msgstr "زیادكردنی كه‌ناڵ"
 
 msgid "Add Guide..."
-msgstr ""
+msgstr "زیادكردنی ڕێبه‌ری"
 
 msgid "Bring All to Front"
-msgstr "Færa allt fram"
+msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:80
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "Channels"
-msgstr "Rásir"
+msgstr "كه‌ناڵه‌كان"
 
 msgid "Check for New Version"
 msgstr ""
@@ -94,97 +80,97 @@ msgid "Clear Menu"
 msgstr ""
 
 msgid "Close Window"
-msgstr "Loka glugga"
+msgstr "داخستنی په‌نجه‌ره‌"
 
 msgid "Copy"
-msgstr "Afrita"
+msgstr "ڕوونووس"
 
 msgid "Copy Channel URL"
-msgstr "Afrita slóð rásar"
+msgstr "ڕوونووسكردنی به‌سته‌ری كه‌ناڵ"
 
 msgid "Copy Video URL"
-msgstr ""
+msgstr "ڕوونووسكردنی به‌سته‌ری ڤیدیۆ"
 
 msgid "Cut"
-msgstr "Klippa"
+msgstr ""
 
 #: ../../portable/dialogs.py:104
 msgid "Delete"
-msgstr "Eyða"
+msgstr "سڕینه‌وه‌"
 
 msgid "Donate"
-msgstr "Gefa"
+msgstr ""
 
 msgid "Download Video..."
-msgstr ""
+msgstr "داگرتنی ڤیدیۆ..."
 
 msgid "Edit"
-msgstr ""
+msgstr "ده‌ستكاری"
 
 msgid "Export Channels (OPML)..."
-msgstr ""
+msgstr "ده‌ركرده‌ی كه‌ناڵه‌كان (OPML)..."
 
 msgid "File"
-msgstr "Skrá"
+msgstr "فایل"
 
 msgid "Full Screen"
-msgstr "Fullan skjá"
+msgstr "بینینی پڕاوپڕ"
 
 msgid "Help"
-msgstr "Hjálp"
+msgstr ""
 
 msgid "Hide Miro"
-msgstr "Fela Miro"
+msgstr "شاردنه‌وه‌ی میرۆ"
 
 msgid "Hide Others"
-msgstr "Fela annað"
+msgstr "شاردنه‌وه‌ی ئه‌وانی تر"
 
 msgid "Import Channels (OPML)..."
 msgstr ""
 
 msgid "Main Window"
-msgstr "Aðalgluggi"
+msgstr "په‌نجه‌ره‌ی سه‌ره‌كی"
 
 msgid "MainMenu"
-msgstr ""
+msgstr "لیستی سه‌ره‌كی"
 
 msgid "Minimize"
-msgstr "Lágmarka"
+msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Miro"
-msgstr "Miro"
+msgstr "میرۆ"
 
 msgid "Miro Help"
-msgstr "Miro hjálp"
+msgstr "یارمه‌تی میرۆ"
 
 msgid "New Channel Folder..."
-msgstr "Ný rása mappa"
+msgstr "بوخچه‌ی كه‌ناڵی نوێ..."
 
 msgid "New Playlist Folder..."
-msgstr ""
+msgstr "بوخچه‌ی لیستی لێدانی نوێ..."
 
 msgid "New Playlist..."
-msgstr ""
+msgstr "لیستی لێدانی نوێ..."
 
 msgid "New Search Channel..."
-msgstr ""
+msgstr "كه‌ناڵی گه‌ڕانی نوێ..."
 
 msgid "Next Video"
-msgstr "Næsta mynd"
+msgstr "ڤیدیۆی دواتر"
 
 msgid "Open Recent"
-msgstr "Opna nýlegt"
+msgstr ""
 
 msgid "Open..."
-msgstr "Opna..."
+msgstr "كردنه‌وه‌..."
 
 msgid "Paste"
-msgstr "Líma"
+msgstr "دانان..."
 
 #: ../../platform/osx/platform/frontends/html/Application.py:244
 msgid "Play Video"
-msgstr ""
+msgstr "لێدانی ڤیدیۆ"
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:84
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
@@ -192,52 +178,52 @@ msgid "Playback"
 msgstr ""
 
 msgid "Playlists"
-msgstr ""
+msgstr "لیستی لێدانه‌كان"
 
 msgid "Preferences..."
 msgstr ""
 
 msgid "Previous Video"
-msgstr "Fyrri mynd"
+msgstr "ڤیدیۆی پێشتر"
 
 msgid "Quit Miro"
-msgstr "Loka Miro"
+msgstr "ده‌رچوون له‌ میرۆ"
 
 msgid "Remove..."
-msgstr ""
+msgstr "لابردن"
 
 msgid "Rename..."
-msgstr "Endurnefna..."
+msgstr "ناونانه‌وه‌..."
 
 msgid "Report a bug"
 msgstr ""
 
 msgid "Save Video As..."
-msgstr ""
+msgstr "پاشه‌كه‌وتكردنی وێنه‌ وه‌ك..."
 
 msgid "Select All"
-msgstr "Velja allt"
-
-msgid "Send This Channel to a Friend"
-msgstr "Sendu rásina til vinar"
-
-msgid "Services"
-msgstr "Þjónustur"
-
-msgid "Show All"
-msgstr "Sýna allt"
-
-msgid "Stop Video"
 msgstr ""
 
+msgid "Send This Channel to a Friend"
+msgstr "ئه‌م كه‌ناڵه‌ بنێره‌ بۆ هاوڕێیه‌ك"
+
+msgid "Services"
+msgstr "خزمه‌تگوزارییه‌كان"
+
+msgid "Show All"
+msgstr "هه‌مووی پیشانبده‌"
+
+msgid "Stop Video"
+msgstr "وه‌ستاندنی ڤیدیۆ"
+
 msgid "Update All Channels"
-msgstr "Uppfæra allar rásir"
+msgstr "نوێكردنه‌وه‌ی هه‌موو كه‌ناڵه‌كان"
 
 msgid "Update Channel"
-msgstr "Uppfæra rás"
+msgstr ""
 
 msgid "Window"
-msgstr "Gluggi"
+msgstr "په‌نجه‌ره‌"
 
 msgid "Zoom"
 msgstr ""
@@ -265,7 +251,7 @@ msgstr ""
 
 #: ../../portable/tabs.py:57
 msgid "Video Search"
-msgstr "Myndaleit"
+msgstr "گه‌ڕانی ڤیدیۆ"
 
 msgid "VideoWindow"
 msgstr ""
@@ -276,17 +262,16 @@ msgid ""
 msgstr ""
 
 msgid "Password:\n"
-msgstr "Lykilorð:\n"
+msgstr "وشه‌ی نهێنی:\n"
 
-#, fuzzy
 msgid "Username and password required"
-msgstr "Þarfnast notendanafns og lykilorðs"
+msgstr "ناوی به‌كارهێنه‌ر و وشه‌ی نهێنی پێویسته‌"
 
 msgid ""
 "Username:\n"
 "\n"
 msgstr ""
-"Notendanafn:\n"
+"ناوی به‌كارهێنه‌ر:\n"
 "\n"
 
 msgid "(You must restart Miro for some of these changes to take effect)"
@@ -304,23 +289,22 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 day"
-msgstr "1 dagur"
+msgstr "1 ڕۆژ"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid "1 month"
-msgstr "1 mánuður"
+msgstr "1 مانگ"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
-#, fuzzy
 msgid "10 days"
-msgstr "10 dagar"
+msgstr "10 ڕۆژ"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "3 days"
-msgstr "3 dagar"
+msgstr "3 ڕۆژ"
 
 msgid "3 hours"
-msgstr "3 klukkustundir"
+msgstr "3 كاژێر"
 
 msgid "4"
 msgstr "4"
@@ -329,15 +313,14 @@ msgid "5"
 msgstr "5"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
-#, fuzzy
 msgid "6 days"
-msgstr "6 dagar"
+msgstr "6 ڕۆژ"
 
 msgid "99999"
-msgstr ""
+msgstr "99999"
 
 msgid "Add..."
-msgstr ""
+msgstr "زیادكردن..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "All"
@@ -358,7 +341,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Change..."
-msgstr "Breyta..."
+msgstr ""
 
 msgid "Check channels for new content:"
 msgstr ""
@@ -391,26 +374,26 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "Never"
-msgstr ""
+msgstr "هه‌رگیز"
 
 #: ../../portable/tabs.py:56
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
 msgid "New"
-msgstr ""
+msgstr "نوێ"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "Off"
-msgstr ""
+msgstr "کوژاوه‌"
 
 msgid "OtherViews"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Play videos one after another."
-msgstr ""
+msgstr "ڤیدیۆكان ڵێبده‌ یه‌ك دوای ئه‌وی تر."
 
 msgid "Remember video position."
-msgstr ""
+msgstr "شوێنی ڤیدیۆم بیربێنه‌وه‌."
 
 #: ../../portable/frontends/html/contextmenu.py:100
 #: ../../portable/frontends/html/contextmenu.py:105
@@ -421,47 +404,47 @@ msgstr ""
 #: ../../portable/frontends/html/contextmenu.py:232
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Remove"
-msgstr "Fjarlægja"
+msgstr "لابردن"
 
 msgid "Run Miro at startup"
-msgstr "Keyra Miro við ræsingu"
+msgstr "میرۆ ئیش پێبكه‌ له‌گه‌ڵ هه‌ڵبوونی سیسته‌م"
 
 #: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:592
 msgid "Show as Channel"
-msgstr "Sýna sem rás"
+msgstr "پیشانی بده‌ وه‌ك كه‌ناڵ"
 
 msgid "Stop after each video."
-msgstr ""
+msgstr "بوه‌سته‌ پاش هه‌ر ڤیدیۆیه‌ك."
 
 msgid "Stop uploads when this ratio is reached:"
-msgstr ""
+msgstr "بوه‌سته‌ له‌ باركردن كاتێ گه‌یشته‌ ئه‌م ڕێژه‌یه‌:"
 
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "داگرتنه‌كان له‌م بوخچه‌یه‌دا پاشه‌كه‌وت بكه‌:"
 
 msgid "To avoid internet slowdowns, limit upstream to"
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
 msgid "Use these ports:"
-msgstr ""
+msgstr "ئه‌م ده‌رچه‌یانه‌ به‌كاربه‌ره‌:"
 
 #: ../../portable/frontends/html/main.py:321
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgstr "ئاگادارم بكه‌ره‌وه‌ له‌ داخستنی میرۆ كاتێك په‌ڕگه‌یه‌ك داده‌گیرێت"
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
 msgstr ""
 
 msgid "every 30 minutes"
-msgstr ""
+msgstr "هه‌موو 30 خوله‌كێك"
 
 msgid "every hour"
-msgstr ""
+msgstr "هه‌موو كاژێرێك"
 
 msgid "manually"
-msgstr ""
+msgstr "به‌ ده‌ستی"
 
 msgid "$label$"
 msgstr "$label$"
@@ -470,26 +453,26 @@ msgid "$title$"
 msgstr "$title$"
 
 msgid "Channel"
-msgstr "Rás"
+msgstr "كه‌ناڵ"
 
 #: ../../portable/dialogs.py:99
 msgid "Create"
-msgstr ""
+msgstr "دروستكردن"
 
 msgid "In this:"
-msgstr ""
+msgstr "له‌مه‌دا:"
 
 msgid "Item1"
 msgstr ""
 
 msgid "Search Engine"
-msgstr "Leitarvél"
+msgstr "بزوێنه‌ری گه‌ڕان"
 
 msgid "Search for:"
-msgstr "Leita að:"
+msgstr "بگه‌ڕێ بۆ:"
 
 msgid "URL"
-msgstr "Slóð"
+msgstr "به‌سته‌ر"
 
 #: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
 #: ../../platform/windows-xul/platform/frontends/html/startup.py:59
@@ -498,32 +481,32 @@ msgid "(parsed %d files - found %d videos)"
 msgstr ""
 
 msgid "Back"
-msgstr "Til baka"
+msgstr "گه‌ڕانه‌وه‌"
 
 msgid "Browse"
 msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/StartupPanel.py:121
 msgid "Next"
-msgstr ""
+msgstr "دواتر"
 
 #: ../../portable/dialogs.py:87
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
 msgid "No"
-msgstr ""
+msgstr "نه‌خێر"
 
 msgid "Only search my Movies folder."
-msgstr ""
+msgstr "ته‌نخا له‌ بوخچه‌ی فیلمه‌ سینه‌ماییه‌كاندا بگه‌ڕێ."
 
 msgid "Search my entire Home folder."
-msgstr ""
+msgstr "بگه‌ڕێ له‌ هه‌موو بوخچه‌كانی ماڵه‌وه‌دا."
 
 msgid "Search this folder:"
-msgstr ""
+msgstr "ئه‌م بوخچه‌یه‌ بگه‌ڕێ:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37
 msgid "Searching for Videos"
-msgstr ""
+msgstr "گه‌ڕان بۆ ڤیدیۆ"
 
 msgid ""
 "The Miro Player can find all the videos on your computer to help you "
@@ -532,6 +515,11 @@ msgid ""
 "\n"
 "Would you like Miro to look for video files on your computer?"
 msgstr ""
+"لێده‌ری میرۆ ئه‌توانێ هه‌موو ڤیدیۆكانی ناو كۆمپیوته‌ره‌كه‌ت بدۆزێته‌وه‌ تا "
+"یارمه‌تیت بدات بۆ ڕێكخستنی كۆكراوه‌كانت.\n"
+"\n"
+"\n"
+"حه‌ز ده‌كه‌یت میرۆ بگه‌ڕێ بۆ په‌ڕگه‌ ڤیدیۆییه‌كان له‌ كۆمپیوته‌ره‌كه‌تدا؟"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
@@ -546,10 +534,17 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
+"وا به‌ باشتر ئه‌زانین كه‌ ڕێگا بده‌ست لێده‌ری میرۆ خۆكارانه‌ ئیشبكات كاتێ "
+"كۆمپویته‌ره‌كه‌ت هه‌ڵده‌كه‌یت. به‌م ڕێگایه‌ ئه‌و ڤیدیۆیانه‌ كه‌ له‌ داگرتن "
+"ته‌واو نه‌بوون ئه‌توانرێ به‌ ته‌واوی دابگێردرێن وه‌ ڤیدیۆی نوێ له‌ "
+"كه‌ناڵه‌كانه‌وه‌ ئاماده‌ده‌بن كاتێ ئه‌ته‌وێت بیانبینی.\n"
+"\n"
+"\n"
+"حه‌زده‌كه‌یت میرۆ ئیشبكات كاتێ كۆمپیوته‌ره‌كه‌ت هه‌ڵده‌كه‌یت؟"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "Welcome to Internet TV!"
-msgstr ""
+msgstr "به‌خێربێیت بۆ ته‌له‌فزیۆنی نێت!"
 
 msgid ""
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: "
@@ -558,76 +553,83 @@ msgid ""
 "lots more.\n"
 "\n"
 msgstr ""
+"به‌خێربێیت بۆ ته‌له‌فزیۆنی نێت. زۆر شت هه‌ن كه‌ ئته‌واتنی بیكه‌یت له‌گه‌ڵ "
+"لێده‌ری میرۆ: خۆكارانه‌ ڤیدیۆ دابگره‌ له‌ كه‌ناڵه‌ دڵخوازه‌كانته‌وه‌، ڤیدیۆی "
+"نوێ ببینه‌ یه‌ك له‌ دوای ئه‌وی تر، تۆرێنت دابگره‌، ڤیدیۆ بنێره‌ بۆ "
+"هاوڕێكانت، زۆر زیاتریش.\n"
+"\n"
 
 #: ../../portable/dialogs.py:86
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
 msgid "Yes"
-msgstr "Já."
+msgstr "به‌ڵێ"
 
 msgid ""
 "%message%\n"
 "%message%"
 msgstr ""
+"%message%\n"
+"%message%"
 
 #: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
 msgid "Audio"
-msgstr "Hljóð"
+msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
-msgstr ""
+msgstr "_لابردن..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:34
 msgid "_Remove Playlist..."
-msgstr ""
+msgstr "_لابردنی لیستی لێدان..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:35
 msgid "_Remove Playlists..."
-msgstr ""
+msgstr "_لابردنی لیسته‌كانی لێدان..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:36
 msgid "_Remove Playlist Folder..."
-msgstr ""
+msgstr "_لابردنی بوخچه‌ی لیستی لێدان..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:37
 msgid "_Remove Playlist Folders..."
-msgstr ""
+msgstr "_لابردنی بوخچه‌كانی لیستی لێدان..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:38
 #: ../../portable/menubar.py:193
 msgid "_Remove Channel..."
-msgstr ""
+msgstr "_لابردنی كه‌ناڵ..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:39
 #: ../../portable/menubar.py:194
 msgid "_Remove Channels..."
-msgstr ""
+msgstr "_لابردنی كه‌ناڵه‌كان..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:40
 #: ../../portable/menubar.py:196
 msgid "_Remove Channel Folder..."
-msgstr ""
+msgstr "_لابردنی بوخچه‌ی كه‌ناڵ..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:41
 #: ../../portable/menubar.py:195
 msgid "_Remove Channel Folders..."
-msgstr ""
+msgstr "لابردنی بوخچه‌كانی كه‌ناڵ..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:42
 msgid "_Remove Miro Guide..."
-msgstr ""
+msgstr "_لابردنی ڕێبه‌ریی میرۆ..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:43
 msgid "_Remove Miro Guides..."
-msgstr ""
+msgstr "_لابردنی ڕێبه‌رییه‌كانی میرۆ..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:44
 msgid "_Remove Video..."
-msgstr ""
+msgstr "_لابردنی ڤیدیۆ..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:45
 msgid "_Remove Videos..."
-msgstr ""
+msgstr "_لابردنی ڤیدیۆكان..."
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:46
 msgid "Re_name..."
@@ -666,11 +668,11 @@ msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/Application.py:241
 msgid "Pause Video"
-msgstr ""
+msgstr "ڤیدیۆ بوه‌ستێنه‌"
 
 #: ../../platform/osx/platform/frontends/html/Application.py:250
 msgid "Unsupported version of Quicktime"
-msgstr ""
+msgstr "وه‌شانێكی پاڵپشتی نه‌كراوی Quicktime"
 
 #: ../../platform/osx/platform/frontends/html/Application.py:251
 #, python-format
@@ -681,71 +683,71 @@ msgstr ""
 
 #: ../../platform/osx/platform/frontends/html/MainFrame.py:297
 msgid "Subscribe to Channel"
-msgstr ""
+msgstr "به‌شداربوون بۆ كه‌ناڵ"
 
 #: ../../platform/osx/platform/frontends/html/MainFrame.py:298
 msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr ""
+msgstr "به‌سته‌ری ئه‌و كه‌ناڵه‌ دابنێ كه‌ حه‌زده‌كه‌یت به‌شداربیت بۆی."
 
 #: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
 msgid "Finish"
-msgstr "Klára"
+msgstr "ته‌واو"
 
 #: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
 msgid "Search!"
-msgstr "Leita!"
+msgstr "بگه‌ڕێ!"
 
 #: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
 msgid "Download Completed"
-msgstr ""
+msgstr "داگرتن ته‌واوبوو"
 
 #: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr ""
+msgstr "داگرتنی ڤیدیۆی '%s' ته‌واوبووه‌."
 
 #: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
 msgid "Download Failed"
-msgstr ""
+msgstr "داگرتن سه‌رنه‌كه‌وتووبوو"
 
 #: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
 #, python-format
 msgid "Download of video '%s' has failed."
-msgstr ""
+msgstr "داگرتنی ڤیدیۆی '%s' سه‌رنه‌كه‌وتووبوو."
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:79
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
 msgid "General"
-msgstr ""
+msgstr "گشتی"
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:81
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Downloads"
-msgstr ""
+msgstr "داگرتنه‌كان"
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:82
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Folders"
-msgstr ""
+msgstr "بوخچه‌كان"
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:83
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid "Disk Space"
-msgstr "Diskapláss"
+msgstr "بۆشایی دیسك"
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:251
 msgid "Movies Directory"
-msgstr ""
+msgstr "بوخچه‌ی فیلمه‌كان"
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:252
 #, python-format
 msgid "Select a Directory to store %s downloads in."
-msgstr ""
+msgstr "بوخچه‌یه‌ك دیاری بكه‌ بۆ پاشه‌كه‌وتكردنی داگیراوه‌كانی %s بۆی."
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:253
 #: ../../platform/osx/platform/frontends/html/Preferences.py:362
 msgid "Select"
-msgstr "Velja"
+msgstr "دیاری بكه‌"
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:262
 #: ../../platform/gtk-x11/glade/miro.glade.h:50
@@ -760,6 +762,9 @@ msgid ""
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
+"بوخچه‌یه‌كی نوێت دیاری كرد بۆ داگرتنی فیلمه‌كان بۆی. پێویسته‌ %s په‌ڕگه‌ "
+"داگیراوه‌كانت بگوێزێته‌وه‌ بۆ ئه‌وێ؟ (ئه‌و فیلمانه‌ی ئێستا داده‌گیرێن "
+"ناگوێزرێنه‌وه‌ هه‌تا به‌ ته‌واوی داده‌گیرێن)"
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:360
 msgid "View this Directory in the Library"
@@ -775,8 +780,8 @@ msgstr ""
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d ڤیدیۆ دۆزرایه‌وه‌"
+msgstr[1] "%d ڤیدیۆ دۆزرانه‌وه‌"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
@@ -824,12 +829,12 @@ msgstr ""
 
 #: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
 msgid "Update Available"
-msgstr ""
+msgstr "نوێكردنه‌وه‌ هه‌یه‌"
 
 #: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr ""
+msgstr "وه‌شانێكی نوێی %s هه‌یه‌ بۆ داگرتن."
 
 #: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
 msgid "Error Bombing Item"
@@ -841,12 +846,14 @@ msgstr ""
 
 #: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
 msgid "Error Opening Website"
-msgstr ""
+msgstr "هه‌ڵه‌ هه‌به‌ له‌ كردنه‌وه‌ی ماڵپه‌ڕ"
 
 #: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
+"هه‌ڵه‌یه‌ك هه‌یه‌ له‌ كردنه‌وه‌ی %s. تكایه‌ پاش چه‌ند چركه‌یه‌كی تر "
+"هه‌وڵبده‌ره‌وه‌"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:79
 #, python-format
@@ -854,6 +861,8 @@ msgid ""
 "Error importing modules:\n"
 "%s"
 msgstr ""
+"هه‌ڵه‌ هه‌یه‌ له‌ هاوردنی یه‌كه‌كان:\n"
+"%s"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:254
 msgid "Loading window"
@@ -2269,6 +2278,12 @@ msgid ""
 "1 month\n"
 "Never"
 msgstr ""
+"1 ڕۆژ\n"
+"3 ڕۆژ\n"
+"6 ڕۆژ\n"
+"10 ڕۆژ\n"
+"1 مانگ\n"
+"هه‌رگیز"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:8
 msgid "<b>BitTorrent</b>"
@@ -2282,11 +2297,13 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Searching for Videos</b>"
-msgstr ""
+msgstr "<b>گه‌ڕان بۆ ڤیدیۆ</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:12
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
 msgstr ""
+"<b>حه‌ز ده‌كه‌یت میرۆ بگه‌ڕێت بۆ په‌ڕگه‌ ڤیدیۆییه‌كان له‌ "
+"كۆمپیوته‌ره‌كه‌تدا؟</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:13
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
@@ -2612,7 +2629,7 @@ msgstr ""
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
 msgid " "
-msgstr " "
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
@@ -2881,6 +2898,8 @@ msgstr ""
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
 msgid "Would you like $longAppName to look for video files on your computer?"
 msgstr ""
+"ئه‌ته‌وێت كه‌ $longAppName بگه‌ڕێ بۆ په‌ڕگه‌ ڤیدیۆییه‌كان له‌ "
+"كۆمپیوته‌ره‌كه‌تدا؟"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
 msgid "Would you like to run $shortAppName on startup?"
@@ -2896,4 +2915,4 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"
-msgstr ""
+msgstr "پرسیار"
