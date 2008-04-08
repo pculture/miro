@@ -1,6 +1,13 @@
+miro (1.2.2-0pcf2) hardy; urgency=low
+
+  * Removed the gstreamer-as-default patch--there are issues, so it doesn't make
+    sense to do.
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Mon, 31 Mar 2008 15:16:27 -0400
+
 miro (1.2.2-0pcf1) hardy; urgency=low
 
   * First Hardy release.
   * Setting gstreamer as default--it seems to work better.
 
- -- Will Guaraldi <will.guaraldi@pculture.org>  Fri, 28 Mar 2008 14:15:52 -0400
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Mon, 31 Mar 2008 12:18:21 -0400

@@ -10,6 +10,4 @@ Miro for Ubuntu Hardy
  * The autoupdate feature, which checks for new versions of Miro, 
    has been disabled in the Ubuntu Hardy package.
 
- * The default renderer in Ubuntu Hardy is gstreamer instead of xine.
-
  -- Will Guaraldi <will.guaraldi@pculture.org>, Sun, 30 Mar 2008 15:42:06 -0400
