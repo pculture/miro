@@ -115,7 +115,7 @@ class VideoDisplay (VideoDisplayBase):
     def setRendererAndCallback(self, anItem, internal, external):
         self.renderersReady.wait()
         for renderer in app.renderers:
-            if renderer.canPlayFile(anItem.getFilename()):
+            if renderer.canPlayFile(anItem.getVideoFilename()):
                 self.setActiveRenderer(renderer)
                 self.selectItem(anItem, renderer)
                 internal()

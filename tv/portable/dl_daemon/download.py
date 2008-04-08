@@ -773,7 +773,6 @@ class BTDownloader(BGDownloader):
 
             name = os.path.dirname(stringify(self.filename))
             if self.fastResumeData:
-                resume = lt.bdecode(self.fastResumeData)
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
             else:
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, None, lt.storage_mode_t.storage_mode_allocate)
@@ -906,6 +905,7 @@ class BTDownloader(BGDownloader):
         
     def pause(self):
         self.state = "paused"
+        self.restarting = True
         self._pauseTorrent()
         self.updateClient()
 
