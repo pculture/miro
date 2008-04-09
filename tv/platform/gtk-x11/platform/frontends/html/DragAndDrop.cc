@@ -114,10 +114,11 @@ nsresult makeDragData(nsIDOMElement* element, nsISupportsArray *dragArray) {
     nsCOMPtr<nsICollection> dragCollection(do_QueryInterface(dragArray, &rv));
     if(NS_FAILED(rv)) return rv;
     rv = dragCollection->AppendElement(transSupports);
+    if(NS_FAILED(rv)) return rv;
     return rv;
 }
 
-nsresult startDrag(nsISupportsArray* dragArray) {
+nsresult startDrag(nsIDOMElement* element, nsISupportsArray* dragArray) {
     nsresult rv;
     // Get the drag service and make sure we're not already doing a drop
     nsCOMPtr<nsIDragService> dragService(do_GetService(
@@ -127,7 +128,8 @@ nsresult startDrag(nsISupportsArray* dragArray) {
     rv = dragService->GetCurrentSession(getter_AddRefs(dragSession));
     if(NS_FAILED(rv)) return rv;
     if(dragSession != nsnull) return NS_ERROR_FAILURE;
-    rv = dragService->InvokeDragSession(NULL, dragArray, NULL, 
+
+    rv = dragService->InvokeDragSession(element, dragArray, NULL, 
             nsIDragService::DRAGDROP_ACTION_COPY);
     return rv;
 }
@@ -391,8 +393,9 @@ public:
             nsCOMPtr<nsISupportsArray> dragArray(do_CreateInstance(
                         "@mozilla.org/supports-array;1", &rv));
             if (NS_FAILED(rv)) return rv;
-            makeDragData(element, dragArray);
-            rv = startDrag(dragArray);
+            rv = makeDragData(element, dragArray);
+            if (NS_FAILED(rv)) return rv;
+            rv = startDrag(element, dragArray);
             if (NS_FAILED(rv)) {
                 printf("WARNING: startDrag failed\n");
                 return rv;
