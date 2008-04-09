@@ -114,7 +114,6 @@ nsresult makeDragData(nsIDOMElement* element, nsISupportsArray *dragArray) {
     nsCOMPtr<nsICollection> dragCollection(do_QueryInterface(dragArray, &rv));
     if(NS_FAILED(rv)) return rv;
     rv = dragCollection->AppendElement(transSupports);
-    if(NS_FAILED(rv)) return rv;
     return rv;
 }
 
