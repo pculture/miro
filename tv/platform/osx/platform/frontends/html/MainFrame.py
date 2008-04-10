@@ -719,7 +719,10 @@ class ProgressDisplayView (NSView):
         self.remainingTimeIndicator.setAttributedTitle_(title)
 
     def drawRect_(self, rect):
-        drawThreePartsWidget(self.backgroundLeft, self.backgroundCenter, self.backgroundRight, self.bounds())
+        fraction = 1.0
+        if self.renderer is None:
+            fraction = 0.4
+        drawThreePartsWidget(self.backgroundLeft, self.backgroundCenter, self.backgroundRight, self.bounds(), fraction)
 
     def toggleRemainingTimeIndicator_(self, sender):
         self.displayRemaining = not self.displayRemaining
@@ -997,18 +1000,24 @@ class VideoSearchFieldCell (NSSearchFieldCell):
 
 ###############################################################################
 
-def drawThreePartsWidget(left, center, right, bounds):
+def drawThreePartsWidget(left, center, right, bounds, fraction=1.0):
     NSGraphicsContext.currentContext().saveGraphicsState()
     NSBezierPath.clipRect_(bounds)
 
     leftWidth = left.size().width
     centerWidth = center.size().width
     rightWidth = right.size().width
+
+    def drawPart(image, at, fraction):
+        if fraction == 1.0:
+            image.compositeToPoint_operation_(at, NSCompositeSourceOver)
+        else:
+            image.dissolveToPoint_fraction_(at, fraction)
     
-    left.compositeToPoint_operation_( (0,0), NSCompositeSourceOver )
+    drawPart(left, (0,0), fraction)
     if bounds.size.width > leftWidth:
         x = bounds.size.width - rightWidth
-        right.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
+        drawPart(right, (x, 0), fraction)
         if bounds.size.width > leftWidth + centerWidth:
             emptyWidth = bounds.size.width - (rightWidth + leftWidth)
             emptyRect = ((leftWidth, 0), (emptyWidth, bounds.size.height))
@@ -1017,7 +1026,7 @@ def drawThreePartsWidget(left, center, right, bounds):
             tiles = math.ceil(emptyWidth / float(centerWidth))
             for i in range(0, int(tiles)):
                 x = leftWidth + (i * centerWidth)
-                center.compositeToPoint_operation_( (x, 0), NSCompositeSourceOver )
+                drawPart(center, (x,0), fraction)
             NSGraphicsContext.currentContext().restoreGraphicsState()
 
     NSGraphicsContext.currentContext().restoreGraphicsState()
