@@ -214,6 +214,7 @@ class VideoDisplayController (NSObject):
     def onSelected(self):
         self.enableSecondaryControls(YES)
         self.preventSystemSleep(True)
+        NSNotificationCenter.defaultCenter().postNotificationName_object_('VideoDisplayWasSelected', nil)
 
     @threads.onMainThread
     def onDeselected(self):
@@ -222,6 +223,7 @@ class VideoDisplayController (NSObject):
         self.videoAreaView.teardown()
         self.progressDisplayer.teardown()
         self.reset()
+        NSNotificationCenter.defaultCenter().postNotificationName_object_('VideoDisplayWasDeselected', nil)
 
     def selectItem(self, item, renderer):
         self.videoAreaView.setup(item, renderer)

@@ -621,8 +621,14 @@ class DTVSplitView (NSSplitView):
     
     def awakeFromNib(self):
         self.color = NSColor.colorWithDeviceWhite_alpha_(148.0/255.0, 1.0)
+        self.leftPane = nil
+        self.collapsed = False
+        NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'videoDisplayWasSelected:', 'VideoDisplayWasSelected', nil)
+        NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'videoDisplayWasDeselected:', 'VideoDisplayWasDeselected', nil)
 
     def dividerThickness(self):
+        if self.collapsed:
+            return 0.0
         return 1.0
         
     def drawDividerInRect_(self, rect):
@@ -631,6 +637,26 @@ class DTVSplitView (NSSplitView):
         p2 = NSPoint(p1.x, rect.size.height)
         self.color.set()
         NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
+    
+    def videoDisplayWasSelected_(self, notification):
+        self.collapseLeftPane()
+    
+    def collapseLeftPane(self):
+        self.leftPane = self.subviews().objectAtIndex_(0)
+        self.collapsed = True
+        tempView = NSView.alloc().initWithFrame_(NSZeroRect)
+        self.replaceSubview_with_(self.leftPane, tempView)
+        self.adjustSubviews()
+
+    def videoDisplayWasDeselected_(self, notification):
+        self.revealLeftPane()
+    
+    def revealLeftPane(self):
+        leftPane = self.subviews().objectAtIndex_(0)
+        self.collapsed = False
+        self.replaceSubview_with_(leftPane, self.leftPane)
+        self.adjustSubviews()
+        self.leftPane = nil
 
 ###############################################################################
 
