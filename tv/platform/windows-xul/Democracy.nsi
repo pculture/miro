@@ -50,7 +50,7 @@ Var SIMPLE_INSTALL
 
 !addincludedir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
 
-!define MUI_WELCOMEPAGE_TITLE "Welcome to Miro!"
+!define MUI_WELCOMEPAGE_TITLE "Welcome to $APP_NAME!"
 !define MUI_WELCOMEPAGE_TEXT "To get started, choose an easy or a custom install process and then click 'Install'."
 
 !include "MUI.nsh"
@@ -61,6 +61,7 @@ Var SIMPLE_INSTALL
 !include "WordFunc.nsh"
 !include "FileFunc.nsh"
 !include "WinMessages.nsh"
+!include Locate.nsh
 
 !insertmacro TrimNewLines
 !insertmacro WordFind
@@ -194,6 +195,22 @@ Function skip_if_simple
   end:
 FunctionEnd
 
+Page custom pickThemesPage
+
+Function pickThemesPage
+  !insertmacro MUI_HEADER_TEXT "Pick themes to uninstall" "Subtitle"
+  nsDialogs::Create /NOUNLOAD 1018
+  ${NSD_CreateListBox} 0 0 100 100 "text"
+  Pop $R0 ; LB HWND
+  SetShellVarContext all
+  ${locate::Open} "$APPDATA\Participatory Culture Foundation\Miro\Themes" "/F=0 /D=1 /SF=DATE" $0
+  StrCmp $0 0 LocateDone 0
+loop:
+  ${locate::Find} $0 $1 $2 $3 $4 $5 $6
+  
+LocateDone:
+  $(locate::Close} $0
+EndFunction
 
 ; License page
 ; !insertmacro MUI_PAGE_LICENSE "license.txt"
@@ -539,6 +556,7 @@ install_theme:
   SetShellVarContext all ; use the global $APPDATA
 
   StrCpy $R0 "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME"
+  StrCmp $THEME_TEMP_DIR $R0 0 files_ok
   RMDir /r "$R0"
   ClearErrors
   CreateDirectory "$R0"
@@ -816,6 +834,20 @@ installed.  Do you want to continue and overwrite it?" \
   Quit
 UninstallCurrent:
   !insertmacro uninstall $R0
+  SetShellVarContext all
+  ${locate::Open} "$APPDATA\Participatory Culture Foundation\Miro\Themes" "/F=0 /D=1 /SF=DATE" $0
+  StrCmp $0 0 LocateDone 0
+  ${locate::Find} $0 $1 $2 $3 $4 $5 $6
+  StrCpy $THEME_TEMP_DIR $1
+  StrCmp $3 "" LocateDone
+  StrCpy $THEME_NAME $3
+  StrCpy $R0 "longAppName"
+  StrCpy $R1 "$THEME_TEMP_DIR\app.config"
+  Call GetConfigOption
+  Pop $APP_NAME
+LocateDone:
+  ${locate::Close} $0
+  ${locate::Unload}
 NotCurrentInstalled:
 
   ; Is the app already installed? Bail if so.
