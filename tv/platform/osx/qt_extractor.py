@@ -112,13 +112,10 @@ def extractThumbnail(qtmovie, target, width=0, height=0):
         imageRep = AppKit.NSBitmapImageRep.imageRepWithData_(tiffData)
         properties = {AppKit.NSImageCompressionFactor: 0.8}
         jpegData = imageRep.representationUsingType_properties_(AppKit.NSJPEGFileType, properties)
-        jpegData = str(jpegData.bytes())
-        if jpegData is None:
+        if jpegData is objc.nil:
             return "Failure"
 
-        output = file(target, 'wb')
-        output.write(jpegData)
-        output.close()
+        jpegData.writeToFile_atomically_(target, objc.YES)
     except Exception, e:
         return "Failure"
 
