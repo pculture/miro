@@ -9,17 +9,30 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 </head>
 <body>
 	<div class="main-video-details">
-		<dl class="video-stats">
-      <dt t:showIf="this.getReleaseDate() != ''" class="col1">Date:</dt>
-			<dd t:showIf="this.getReleaseDate() != ''"><b t:replace="this.getReleaseDate()" /></dd>
-      <dt t:showIf="this.getDuration() != ''" class="col1">Length:</dt>
-			<dd t:showIf="this.getDuration() != ''"><b t:replace="this.getDuration()" /></dd>
-      <dt t:showIf="this.getSizeForDisplay() != ''" class="col1">Size:</dt>
-			<dd t:showIf="this.getSizeForDisplay() != ''"><b t:replace="this.getSizeForDisplay()" /></dd>
+		<table class="video-stats">
+      <tr t:showIf="this.getReleaseDate() != ''">
+        <td class="col1" i18n:translate="">Date:</td>
+			  <td><b t:replace="this.getReleaseDate()" /></td>
+			</tr>
+      <tr t:showIf="this.getDuration() != ''">
+        <td class="col1" i18n:translate="">Length:</td>
+			  <td><b t:replace="this.getDuration()" /></td>
+			</tr>
+      <tr t:showIf="this.getSizeForDisplay() != ''">
+        <td class="col1" i18n:translate="">Size:</td>
+			  <td><b t:replace="this.getSizeForDisplay()" /></td>
+      </tr>
+      <tr>
+        <td />
+        <td>
+          <a class="details" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" t:hideIf="this.showMoreInfo"><span i18n:translate="">Show Details</span></a>
+          <a class="details" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" t:showIf="this.showMoreInfo"><span i18n:translate="">Hide Details</span></a>
+			  </td>
+			</tr>
       <span t:showIf="this.showMoreInfo">
 				<span t:replaceMarkup="this.getMoreInfo()" />
       </span>  
-    </dl>
+    </table>
 	</div>	<!-- // end details -->
 	<div class="main-video-status">
 		<div t:hideIf="this.looksLikeTorrent()" class="download-button">

@@ -580,7 +580,7 @@ an element is dragged, the drag-highlight class is added to it */
 	float:left;
 	width: 154px;
   height: 105px;
-  display:block;
+  margin-right:8px;
 }
 .more-info .main-video-tnail {
     width: 252px;
@@ -605,16 +605,14 @@ an element is dragged, the drag-highlight class is added to it */
 	padding-top:190px;
 }
 .main-video-desc {
-	float:left;
+/*	float:left;*/
 	padding:0 36px 0 16px;
-	margin-left:8px;
 	width:auto;
 	height:105px;
 	overflow:hidden;
 }
 
 .main-video.selected.more-info .main-video-desc {
-    height: auto;
     min-height: 190px;
 }
 .main-video-desc h1 {
@@ -685,26 +683,22 @@ an element is dragged, the drag-highlight class is added to it */
 .main-video-details {
   float:right;
   margin-top:2px;
-  width: 165px;
+  min-width:165px;
   height: 75px;
 }
 dl.video-stats {
 	width:150px;
 }
 .more-info .main-video-details,
-.more-info dl.video-stats {
+.more-info .video-stats {
     height: auto;
-    white-space:nowrap;
 }
-.more-info dl.video-stats {
-  padding-bottom:50px;
+.more-info .main-video-details {
+  padding-bottom:40px;
 }
-dl.video-stats dt {
-  white-space: nowrap;
-  float: left;
-  clear: left;
-  position: relative;
-  width:60px;
+.video-stats td.col1 {
+  padding-right:5px;
+  min-width:55px;
 }
 .share-menu {
     position: absolute;

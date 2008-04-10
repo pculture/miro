@@ -16,8 +16,8 @@ viewName = kargs['viewName']
     </head>
     <body>
         <div class="dnd-reorder-line" />
-        <t:includeTemplate filename="download-item-thumbnail" />
         <t:includeTemplate filename="download-item-details" />
+        <t:includeTemplate filename="download-item-thumbnail" />
         <t:includeTemplate filename="download-item-description" />
         <div class="clear" />
     </body>

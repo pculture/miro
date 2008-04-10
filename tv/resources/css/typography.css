@@ -365,13 +365,17 @@ body.gray-background {
     text-decoration: underline;
 }
 
-dl.video-stats,
-dl.video-stats dd a {
+.video-stats,
+.video-stats td a {
 	font-size:11px;
 	color:#444;
 }
+.video-stats td a.details {
+  font-weight:bold;
+  text-decoration:underline;
+}
 
-dl.video-stats dt.col1 {
+.video-stats td.col1 {
 	color:#98948f;
 }
 /*.round-button-content {

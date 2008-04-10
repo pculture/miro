@@ -323,10 +323,10 @@ table.select-box a:hover {
 	background: #0752d7;
 }
 .main-video-desc.noselect.newly-downloaded {
-	background: url('../images/status-icon_newly-downloaded.png') no-repeat left 6px;
+	background: url('../images/status-icon_newly-downloaded.png') no-repeat left 5px;
 }
 .main-video-desc.noselect.new {
-	background: url('../images/status-icon_new.png') no-repeat left 6px;
+	background: url('../images/status-icon_new.png') no-repeat left 5px;
 }
 .main-video-details-expiring {
 	background:url('../images/status_expires.png') no-repeat left top;

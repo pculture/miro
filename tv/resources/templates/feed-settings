@@ -25,7 +25,7 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 			<span t:replace="feed.getURL()" class="selectable" />
 			<a class="remove-channel" href="#" onclick="return eventURL('action:removeFeed?id=@@@feed.getID()@@@');"><span i18n:translate="">remove channel</span></a>
 		</div>
-		<h2 i18n:translate="">Settings for <span i18n:name="title" t:replace="feed.getTitle()" /></h2> 
+		<h2 i18n:translate="">Settings: <span i18n:name="title" t:replace="feed.getTitle()" /></h2> 
 				
 		<div id="actual-settings">
 		

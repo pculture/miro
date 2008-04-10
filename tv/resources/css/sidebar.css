@@ -50,8 +50,8 @@ Contains the channels
 	overflow: hidden;
 }
 #sidebar h2 {
-  color:#6e7b8b;
-  font-size:13px;
+  color:#6b7888;
+  font-size:12px;
   padding:11px 0 0 22px;
 }
 .tab-list {
@@ -115,7 +115,7 @@ a.feeditem.blinking {
 .tab-list.first .selected a.feeditem,
 .tab-list.first .selected-inactive a.feeditem {
     color: #fff;
-    text-shadow:#454545 1px 1px 1px;
+/*    text-shadow:#454545 1px 1px 1px;*/
 }
 
 a.feeditem span {
@@ -126,7 +126,7 @@ a.feeditem span {
 }
 .selected a.feeditem span, .selected-inactive a.feeditem span {
     color: #fff;
-    text-shadow:#454545 1px 1px 1px;
+/*    text-shadow:#454545 1px 1px 1px;*/
 }
 
 .selected a.feeditem,

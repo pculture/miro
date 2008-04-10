@@ -30,12 +30,6 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 			<a class="button blue" t:showIf="this.hasSharableURL()" onclick="showSelectBoxMenu('share-menu-@@@viewName@@@-@@@this.getID()@@@'); event.stopPropagation();">
 				<span i18n:translate="">Share</span>
 			</a>
-			<a class="button blue" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" t:hideIf="this.showMoreInfo">
-				<span i18n:translate="">Details <img src="resource:images/triangle-blue-button.png" alt="" /></span>
-			</a>
-			<a class="button blue" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" t:showIf="this.showMoreInfo">
-				<span i18n:translate="">Close <img src="resource:images/triangle-blue-button-up.png" alt="" /></span>
-			</a>
 		</div>
 
 		<br class="clear" />
