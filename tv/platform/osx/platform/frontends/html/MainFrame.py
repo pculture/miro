@@ -662,7 +662,7 @@ class ProgressDisplayView (NSView):
         if self.renderer != renderer:
             self.renderer = renderer
             if renderer is not nil:
-                self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(1.0, self, 'refresh:', nil, YES)
+                self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(0.5, self, 'refresh:', nil, YES)
                 NSRunLoop.currentRunLoop().addTimer_forMode_(self.updateTimer, NSEventTrackingRunLoopMode)
             elif self.updateTimer is not nil:
                 self.updateTimer.invalidate()

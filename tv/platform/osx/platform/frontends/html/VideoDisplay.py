@@ -696,7 +696,7 @@ class FullScreenPalette (NSWindow):
             self.autoConcealTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
                 1.0, self, 'concealAfterDelay:', nil, YES)
             self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-                1.0, self, 'update:', nil, YES)
+                0.5, self, 'update:', nil, YES)
             NSRunLoop.currentRunLoop().addTimer_forMode_(self.updateTimer, NSEventTrackingRunLoopMode)
             self.update_(nil)
     
