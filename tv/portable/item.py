@@ -1725,7 +1725,7 @@ class FileItem(Item):
 
     def __init__(self,filename, feed_id=None, parent_id=None, offsetPath=None, deleted=False):
         checkF(filename)
-        filename = os.path.abspath(filename)
+        filename = fileutil.abspath(filename)
         self.filename = filename
         self.deleted = deleted
         self.offsetPath = offsetPath

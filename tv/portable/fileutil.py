@@ -98,6 +98,12 @@ def rename(src, dest):
     dest = expand_filename(dest)
     os.rename (src, dest)
 
+def abspath(path):
+    path = expand_filename(path)
+    path = os.path.abspath(path)
+    path = collapse_filename(path)
+    return path
+
 
 def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
     """Try to migrate a file, if this works, callback is called.  If we fail

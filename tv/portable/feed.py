@@ -2260,7 +2260,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
 
         #Adds any files we don't know about
         #Files on the filesystem
-        if os.path.isdir(self.dir):
+        if fileutil.isdir(self.dir):
             all_files = []
             files, dirs = fileutil.miro_listdir(self.dir)
             for file in files:
@@ -2338,7 +2338,7 @@ class DirectoryFeedImpl(FeedImpl):
 
         #Adds any files we don't know about
         #Files on the filesystem
-        if os.path.isdir(moviesDir):
+        if fileutil.isdir(moviesDir):
             all_files = fileutil.miro_allfiles(moviesDir)
             for file in all_files:
                 if file not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file)):
