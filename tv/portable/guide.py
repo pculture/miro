@@ -184,11 +184,11 @@ class ChannelGuide(DDBObject):
 
     @returnsUnicode
     def getIconURL(self):
-        if self.iconCache.isValid():
-            path = self.iconCache.getFilename()
-            return resources.absoluteUrl(path)
-        else:
-            return resources.url("images/icon-guide_small.png")
+        #if self.iconCache.isValid():
+        #    path = self.iconCache.getFilename()
+        #    return resources.absoluteUrl(path)
+        #else:
+        return resources.url("images/icon-guide_small.png")
 
     def getThumbnailURL(self):
         if self.favicon:

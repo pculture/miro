@@ -1042,12 +1042,12 @@ folder will be deleted.""")
  
         if self.isDownloaded():
             basename = os.path.basename(self.getFilename())
-            basename = util.clampText(basename, 16)
+            basename = util.clampText(basename, 20)
             linkEventURL = u'revealItem?item=%d' % self.getID()
             if self.isContainerItem:
-                label = _("REVEAL LOCAL FOLDER")
+                label = _("SHOW LOCAL FOLDER")
             else:
-                label = _("REVEAL LOCAL FILE")
+                label = _("SHOW LOCAL FILE")
             link = util.makeEventURL(label, linkEventURL)
             rv.append((_('Filename:'), u"%s<BR />%s" % (filenameToUnicode(basename), link)))
         return rv
@@ -1066,8 +1066,8 @@ folder will be deleted.""")
         #lines.append(u'<h3>%s</h3>' % title)
         #lines.append(u'<table cellpadding="0" cellspacing="0">')
         for label, text in moreInfoData:
-            lines.append(u'<dt class="col1">%s</dt>'
-                    u'<dd><b>%s</b></dd>' % (label, text))
+            lines.append(u'<tr><td class="col1">%s</td>'
+                    u'<td><b>%s</b></td></tr>' % (label, text))
         #lines.append(u'</table>')
         return u'\n'.join(lines)
 
@@ -1283,7 +1283,7 @@ folder will be deleted.""")
     # to use a hardcoded constant, but the templating system doesn't 
     # really leave any other choice.
     def downloadProgressWidth(self):
-        fullWidth = 112  # width of resource:channelview-progressbar-bg.png
+        fullWidth = 131  # width of resource:channelview-progressbar-bg.png
         progress = self.downloadProgress() / 100.0
         if progress == 0:
             return 0
