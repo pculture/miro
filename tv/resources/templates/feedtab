@@ -32,7 +32,11 @@
 </div>
 <div t:showIf="this.obj.isUpdating()" class="feed-loading-icon" />
 
-<img id="channel-tnail-***this.objID()***" class="icon" src="***this.obj.getTablistThumbnail()***" /><div class="name noselect" t:replace="this.obj.getTitle()" />
+<!--
+  <img id="channel-tnail-***this.objID()***" class="icon" src="***this.obj.getTablistThumbnail()***" />
+-->
+<img id="channel-tnail-***this.objID()***" class="icon" src="resource:images/icon-rss.png" />
+<div class="name noselect" t:replace="this.obj.getTitle()" />
 </a>
 </div>
 

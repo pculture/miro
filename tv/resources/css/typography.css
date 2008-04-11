@@ -44,7 +44,10 @@ li {
     color: #fff;
     font-size: 13px;
 }
-
+#actual-settings {
+  font-size:12px;
+  font-weight:normal;
+}
 #channel-url {
     font-size: 11px;
 }
@@ -150,7 +153,7 @@ a.button.blue.saved span {
 }
 a.button.gray.done span {
   color:#fefefe;
-	text-shadow:#000 1px 1px 1px;
+	text-shadow:#666 1px -1px -1px;
 	text-decoration:none;
 	
 }

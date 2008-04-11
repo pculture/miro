@@ -84,7 +84,7 @@ Contains the channels
 a.feeditem {
     display: block;
     padding: 1px 5px 1px 23px;
-    color: #000;
+    color: #26292b;
     font-size: 11px;
     text-decoration: none;
     height: 20px;
@@ -95,17 +95,16 @@ a.feeditem div.name {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.tab-list.first a.feeditem {
+.tab-list.first a.feeditem,
+a.feeditem.folder {
 	padding:2px 5px 2px 23px;
 	font-size:13px;
 	color:#26292b;
   height:26px;
 }
-
 a.feeditem.folder {
-    padding-left: 8px;
+  padding-left:9px;
 }
-
 .child a.feeditem {
    padding-left: 45px;
    margin-bottom:12px;
@@ -144,16 +143,16 @@ a.feeditem span {
 }*/
 
 a.feeditem img.icon {
-    margin-right:6px;
+    margin:3px 5px 3px 0;
     border: 0;
     float: left;
 }
 .tab-list.first a.feeditem img.icon {
-  margin-right:8px;
+  margin:0 8px 0 0;
 }
 .tab-list.second a.feeditem img.icon {
-  height: 20px;
-  width: 20px;
+/*  height: 20px;
+  width: 20px;*/
 }
 
 .expanded-triangle {
