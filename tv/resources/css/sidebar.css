@@ -90,6 +90,11 @@ a.feeditem {
     height: 20px;
     white-space: nowrap;
 }
+a.feeditem div.name {
+	padding: 4px 3px 3px 3px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 .tab-list.first a.feeditem {
 	padding:2px 5px 2px 23px;
 	font-size:13px;
@@ -297,12 +302,6 @@ tab lists.
     top: -5px;
 }
 
-a.feeditem div.name {
-	padding: 3px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
 .tab-list-end {
 	height: 5px;
 }
@@ -341,7 +340,7 @@ a.feeditem.normal .feed-loading-icon {
 }
 .bubble-left {
 	padding-left: 5px;
-	margin: 2px 0px 0px 5px;
+	margin: 3px 0px 0px 5px;
 	float: right;
 	position: relative;
 	z-index: 2;
@@ -349,7 +348,7 @@ a.feeditem.normal .feed-loading-icon {
 	background-repeat:no-repeat;
 }
 .tab-list.first .bubble-left {
-  margin-top:3px;
+  margin-top:4px;
 }
 .bubble-left.second {
 	margin-left: 1px;

@@ -94,10 +94,11 @@ allPausedDownloads.unlink()
 	<div id="main-icon" class="noborder static-tab">
 		<img src="resource:images/icon-downloading_large.png" />
 	</div>
-	<h1 id="main-title" class="static-tab" i18n:translate="">Downloading</h1>
 	<div id="search-box-container">
 		<input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***"/>
 	</div>
+	<h1 id="main-title" class="static-tab" i18n:translate="">Downloading</h1>
+	
 </div> <!-- end main-titlebar -->
 	<div id="sub-titlebar">
 		

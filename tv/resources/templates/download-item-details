@@ -112,7 +112,7 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 				<span t:replace="this.getEmblemCSSString()" />
 			</div>
 			
-			<div t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
+			<div class="stop-seeding" t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
 				<a href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');" class="button gray">
 					<span i18n:translate="">STOP SEEDING</span>
 				</a>

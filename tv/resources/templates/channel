@@ -175,7 +175,6 @@ if feed.idExists():
 			<div>
 				<img id="main-icon" src="***feed.getThumbnail()***" alt=""/>
 			</div>
-			<h1 id="main-title" t:replace="feed.getTitle()" />
 			
 			<div id="search-box-container" t:hideIf="'feed' in localvars and feed.getURL() == 'dtv:search'">
 				<div t:showIf="feed.inlineSearchTerm is None">
@@ -185,6 +184,9 @@ if feed.idExists():
 					<input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***feed.inlineSearchTerm***" searching="1"/>
 				</div>
 			</div>
+			
+			<h1 id="main-title" t:replace="feed.getTitle()" />
+			
 		</div>
 		
 		<div t:updateForView="matchingItems">

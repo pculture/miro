@@ -46,7 +46,6 @@ matchingItems.unlink()
 <!-- TITLE BAR ************************************************************ -->
 <div id="main-titlebar">
     <div id="main-icon" class="noborder static-tab"><img src="resource:images/icon-library_large.png" /></div>
-    <h1 id="main-title" class="static-tab" i18n:translate="">Library</h1>
     <div id="search-box-container">
         <div t:showIf="app.controller.librarySearchTerm is None">
             <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***_('Find')***" />
@@ -55,6 +54,8 @@ matchingItems.unlink()
             <input id="search-box" type="search" onfocus="onSearchFocus(this)" onblur="endEditSearch()" value="***app.controller.librarySearchTerm***" searching="1"/>
         </div>
     </div>
+    <h1 id="main-title" class="static-tab" i18n:translate="">Library</h1>
+    
 </div>
 <!-- / TITLE BAR -->
 

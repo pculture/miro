@@ -150,12 +150,12 @@ a.remove-channel {
 
 .downloading-channelbar:hover {
         background-color: #FF8c2d;
-}*/ 
+} 
 
 .main-channelbar.seeding-channelbar {
     background-image: url("../images/download-channelbar-bg.png");
 }
-
+*/
 
 /* triangle for the bars */
 .triangle {
