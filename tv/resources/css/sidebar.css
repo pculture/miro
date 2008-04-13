@@ -91,9 +91,12 @@ a.feeditem {
     white-space: nowrap;
 }
 a.feeditem div.name {
-	padding: 4px 3px 3px 3px;
+	padding: 6px 3px 3px 3px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+.tab-list.first a.feeditem div.name {
+  padding-top:7px;
 }
 .tab-list.first a.feeditem,
 a.feeditem.folder {
@@ -329,7 +332,8 @@ a.feeditem.normal .feed-loading-icon {
 .number-count {
 	font-size: 10px;
 	color: #FFFFFF;
-	padding:1px 0;
+	line-height:14px;
+	padding:1px 0 0 0;
 	font-weight: normal;
 	background-position: left top;
 	background-repeat:repeat-x;
