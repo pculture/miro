@@ -627,7 +627,9 @@ class DTVSplitView (NSSplitView):
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'videoDisplayWasDeselected:', 'VideoDisplayWasDeselected', nil)
 
     def dividerThickness(self):
-        if self.collapsed:
+        # On 10.4, this could be called BEFORE awakeFromNib, so we need to test
+        # for the existence of the collapsed attribute first...
+        if hasattr(self, 'collapsed') and self.collapsed:
             return 0.0
         return 1.0
         
