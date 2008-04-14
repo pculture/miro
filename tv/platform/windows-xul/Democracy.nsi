@@ -9,7 +9,6 @@
 ;  CONFIG_ICON           eg, "Democracy.ico"
 ;  CONFIG_OUTPUT_FILE    eg, "Democracy-0.8.0.exe"
 ;  CONFIG_PROG_ID        eg, "Democracy.Player.1"
-
 !define INST_KEY "Software\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
 !define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CONFIG_LONG_APP_NAME}"
 
@@ -50,7 +49,7 @@ Var SIMPLE_INSTALL
 
 !addincludedir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
 
-!define MUI_WELCOMEPAGE_TITLE "Welcome to Miro!"
+!define MUI_WELCOMEPAGE_TITLE "Welcome to $APP_NAME!"
 !define MUI_WELCOMEPAGE_TEXT "To get started, choose an easy or a custom install process and then click 'Install'."
 
 !include "MUI.nsh"
@@ -61,6 +60,8 @@ Var SIMPLE_INSTALL
 !include "WordFunc.nsh"
 !include "FileFunc.nsh"
 !include "WinMessages.nsh"
+!include Locate.nsh
+!include nsDialogs.nsh
 
 !insertmacro TrimNewLines
 !insertmacro WordFind
@@ -194,7 +195,6 @@ Function skip_if_simple
   end:
 FunctionEnd
 
-
 ; License page
 ; !insertmacro MUI_PAGE_LICENSE "license.txt"
 
@@ -239,6 +239,9 @@ FunctionEnd
 
 ; Uninstaller pages
 !insertmacro MUI_UNPAGE_CONFIRM
+UninstPage custom un.pickThemesPage un.pickThemesPageAfter
+; defined lower down
+
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
@@ -347,6 +350,11 @@ Pop $R3
 Pop $R2
 Pop $R1
 Exch $R0
+!macroend
+
+!macro locateThemes _HANDLE
+  SetShellVarContext all
+  ${locate::Open} "$APPDATA\Participatory Culture Foundation\Miro\Themes" "/F=0 /D=1 /-PN=xul /-N=xul /SF=DATE" `${_HANDLE}`
 !macroend
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -469,6 +477,50 @@ Function LaunchLink
   ExecShell "" "$SMPROGRAMS\$STARTMENU_FOLDER\$R2"
 FunctionEnd
 
+
+Function un.pickThemesPage
+  Var /GLOBAL THEMES_HWND
+  !insertmacro locateThemes $0
+  StrCmp $0 0 0 +3
+  ${locate::Close} $0
+  Abort
+  !insertmacro MUI_HEADER_TEXT "Pick themes to uninstall" "This won't remove the channels or channel guides that are in your database."
+  nsDialogs::Create /NOUNLOAD 1018
+  nsDialogs::CreateControl /NOUNLOAD ${__NSD_ListBox_CLASS} ${__NSD_ListBox_STYLE}|${LBS_MULTIPLESEL} ${__NSD_ListBox_EXSTYLE} 0 0 200 200 ""
+  Pop $THEMES_HWND
+pickThemesLoop:
+  ${locate::Find} $0 $1 $2 $3 $4 $5 $6
+  StrCmp $3 "" LocateDone 0
+  ${NSD_LB_AddString} $THEMES_HWND $3
+  Goto pickThemesLoop
+LocateDone:
+  ${locate::Close} $0
+  SendMessage $THEMES_HWND ${LB_SELITEMRANGEEX} 0 65536
+  nsDialogs::Show
+FunctionEnd
+
+Function un.pickThemesPageAfter
+  ; scan the theme directory again, checking to see if the name is
+  ; present and selected
+  !insertmacro locateThemes $0
+  StrCmp $0 0 pickThemesAfterEnd
+pickThemesAfterLoop:
+  ${locate::Find} $0 $1 $2 $3 $4 $5 $6
+  StrCmp $3 "" pickThemesAfterEnd
+  SendMessage $THEMES_HWND ${LB_FINDSTRINGEXACT} -1 "STR:$3" $R0
+  IntCmp $R0 -1 pickThemesAfterLoop ; didn't find it
+  SendMessage $THEMES_HWND ${LB_GETSEL} $R0 0 $R1
+  IntCmp $R1 0 pickThemesAfterLoop ; not selected
+  RMDir /r $1
+  Goto pickThemesAfterLoop
+pickThemesAfterEnd:
+  ${locate::Close} $0
+  SetShellVarContext all
+  RMDir "$APPDATA\Participatory Culture\Miro\Themes"
+  RMDir "$APPDATA\Participatory Culture\Miro"
+  RMDIR "$APPDATA\Participatory Culture"
+FunctionEnd
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sections                                                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -539,6 +591,7 @@ install_theme:
   SetShellVarContext all ; use the global $APPDATA
 
   StrCpy $R0 "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME"
+  StrCmp $THEME_TEMP_DIR $R0 0 files_ok
   RMDir /r "$R0"
   ClearErrors
   CreateDirectory "$R0"
@@ -716,7 +769,7 @@ Function .onInit
   StrCpy $THEME_TEMP_DIR ""
   StrCpy $APP_NAME "${CONFIG_LONG_APP_NAME}"
   StrCpy $SIMPLE_INSTALL "1"
-
+  
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "iHeartMiro-installer-page.ini"
 
   GetTempFileName $TACKED_ON_FILE
@@ -812,10 +865,22 @@ prompt_for_uninstall:
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "It looks like you already have a copy of $APP_NAME $\n\
 installed.  Do you want to continue and overwrite it?" \
-       IDOK UninstallCurrent
+       /SD IDOK IDOK UninstallCurrent
   Quit
 UninstallCurrent:
   !insertmacro uninstall $R0
+  !insertmacro locateThemes $0
+  StrCmp $0 0 LocateDone 0
+  ${locate::Find} $0 $1 $2 $3 $4 $5 $6
+  StrCpy $THEME_TEMP_DIR $1
+  StrCmp $3 "" LocateDone
+  StrCpy $THEME_NAME $3
+  StrCpy $R0 "longAppName"
+  StrCpy $R1 "$THEME_TEMP_DIR\app.config"
+  Call GetConfigOption
+  Pop $APP_NAME
+LocateDone:
+  ${locate::Close} $0
 NotCurrentInstalled:
 
   ; Is the app already installed? Bail if so.
@@ -826,7 +891,7 @@ NotCurrentInstalled:
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "It looks like you already have a copy of Democracy Player $\n\
 installed.  Do you want to continue and overwrite it?" \
-       IDOK UninstallOld
+       /SD IDOK IDOK UninstallOld
   Quit
 UninstallOld:
   !insertmacro uninstall $R0
