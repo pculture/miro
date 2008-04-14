@@ -30,6 +30,7 @@
 
 import gtkmozembed
 import logging
+import gtk
 
 cdef extern from "MozillaBrowserIncludes.h":
     ctypedef struct GtkWidget
@@ -85,6 +86,7 @@ cdef extern from "MozillaBrowserXPCOM.h":
 
 cdef extern from "DragAndDrop.h":
     nsresult setupDragAndDrop(GtkMozEmbed *gtkembed)
+    nsresult setupDummyBrowser(GtkMozEmbed *gtkembed)
 
 cdef extern from "PromptService.h":
     nsresult installPromptService()
@@ -105,6 +107,33 @@ class DOMError(Exception):
 class XPCOMError(Exception):
     pass
 
+cdef GtkMozEmbed *pygtkmozembed_to_c(object pygtkmoz):
+    cdef PyGObject *tempObj
+    cdef GObject *temp
+    tempObj = <PyGObject *>pygtkmoz
+    temp = tempObj.obj
+    return <GtkMozEmbed *>temp
+
+# setupDragAndDropDummy() exists to work around a weird drag and drop bug.
+# DragAndDrop.cc contains the details, at this point we only need to create a
+# gtkmozembed widget, that has an X window but isn't shown.  After that we
+# pass it to setupDummyBrowser(), defined in DragAndDrop.cc.
+def setupDragAndDropDummy():
+    # make dummy_window a global in order to keep a reference around so that
+    # it doesn't get garbage collected.
+    global dummy_window 
+    cdef GtkMozEmbed *cWidget
+
+    dummy_window = gtk.Window()
+    dummy_widget = gtkmozembed.MozEmbed()
+    cWidget = pygtkmozembed_to_c(dummy_widget)
+    dummy_window.add(dummy_widget)
+    dummy_window.realize()
+    dummy_widget.realize()
+    rv = setupDummyBrowser(cWidget)
+    if rv != NS_OK:
+        print "WARNING! setupDummyBrowser failed"
+
 cdef class MozillaBrowser:
     cdef GtkMozEmbed *cWidget
     cdef object widget, URICallBack, finishedCallBack, destroyCallBack
@@ -112,7 +141,7 @@ cdef class MozillaBrowser:
     
     def __new__(self):
         self.widget = gtkmozembed.MozEmbed()
-        self.cWidget = self.pygtkmozembed_to_c(self.widget)
+        self.cWidget = pygtkmozembed_to_c(self.widget)
 
     def __init__(self):
         initializeXPCOMComponents()
@@ -199,13 +228,6 @@ cdef class MozillaBrowser:
 
     def getContextMenuCallBack(self):
         return self.contextMenuCallBack
-
-    cdef GtkMozEmbed *pygtkmozembed_to_c(MozillaBrowser self, object pygtkmoz):
-        cdef PyGObject *tempObj
-        cdef GObject *temp
-        tempObj = <PyGObject *>pygtkmoz
-        temp = tempObj.obj
-        return <GtkMozEmbed *>temp
 
     def openUriCallback(self, uri):
         URICallBack = self.getURICallBack()
@@ -327,3 +349,6 @@ def initializeXPCOMComponents():
     result = installPromptService()
     if result != NS_OK:
         logging.warn("Error setting up Prompt service")
+    result = setupDragAndDropDummy()
+    if result != NS_OK:
+        logging.warn("Error setting up drag and drop dummy element")
