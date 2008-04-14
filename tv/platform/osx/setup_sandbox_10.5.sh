@@ -108,8 +108,8 @@ $PYTHON setup.py install
 
 cd $WORK_DIR
 
-svn co http://svn.boost.org/svn/boost/trunk boost-1_35
-cd boost-1_35
+tar -xzf $BKIT_DIR/boost_1_35_0.tar.gz
+cd boost_1_35_0
 
 cd tools/jam/src
 ./build.sh
@@ -117,7 +117,7 @@ cd `find . -type d -maxdepth 1 | grep bin.`
 mkdir -p $SBOX_DIR/bin
 cp bjam $SBOX_DIR/bin
 
-cd $WORK_DIR/boost-1_35
+cd $WORK_DIR/boost_1_35_0
 $SBOX_DIR/bin/bjam  --prefix=$SBOX_DIR \
                     --with-python \
                     --with-date_time \
