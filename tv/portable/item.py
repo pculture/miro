@@ -547,7 +547,9 @@ folder will be deleted.""")
     def getString(self, when):
         """Get the expiration time a string to display to the user."""
         offset = when - datetime.now()
-        if offset.days > 0:
+        if offset.days == 1:
+            result = _("1 day")
+        elif offset.days > 0:
             result = _("%d days") % offset.days
         elif offset.seconds > 3600:
             result = _("%d hours") % (ceil(offset.seconds/3600.0))
