@@ -37,6 +37,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+nsresult setupDummyBrowser(GtkMozEmbed* gtkembed);
 nsresult setupDragAndDrop(GtkMozEmbed* gtkembed);
 #ifdef __cplusplus
 }

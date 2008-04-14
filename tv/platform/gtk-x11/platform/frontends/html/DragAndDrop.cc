@@ -40,6 +40,7 @@
 
 #include <nsIDragService.h>
 #include <nsIDragSession.h>
+#include <nsIDOMDocument.h>
 #include <nsIDOMEvent.h>
 #include <nsIDOMEventListener.h>
 #include <nsIDOMEventTarget.h>
@@ -70,6 +71,9 @@
 #include <nsServiceManagerUtils.h>
 #include <nsComponentManagerUtils.h>
 #endif
+
+// dummyElement used in the drag and drop hack (see setupDummyBrowser)
+static nsCOMPtr<nsIDOMElement> dummyElement;
 
 PRInt32 stringToDragAction(const nsAString &str) {
     nsCAutoString cstr = NS_ConvertUTF16toUTF8(str);
@@ -389,13 +393,15 @@ public:
         nsresult rv = searchUpForElementWithAttribute(event, 
                 dragSourceTypeStr, getter_AddRefs(element));
         if (NS_FAILED(rv)) return rv;
-        if(element) {
+        if(element && dummyElement) {
             nsCOMPtr<nsISupportsArray> dragArray(do_CreateInstance(
                         "@mozilla.org/supports-array;1", &rv));
             if (NS_FAILED(rv)) return rv;
             rv = makeDragData(element, dragArray);
             if (NS_FAILED(rv)) return rv;
-            rv = startDrag(element, dragArray);
+            // dummyElement is setup in setupDummyBrowser().  See that
+            // function for more info on the hack we're doing.
+            rv = startDrag(dummyElement, dragArray);
             if (NS_FAILED(rv)) {
                 printf("WARNING: startDrag failed\n");
                 return rv;
@@ -518,6 +524,35 @@ public:
 };
 
 NS_IMPL_ISUPPORTS2(MiroDNDHook, nsIClipboardDragDropHooks, nsIDOMEventListener)
+
+/* setupDummyBrowser() implements a hack to get drag and drop to work.  When
+ * we call nsIDragService.InvokeDragSession() we need to pass it an element
+ * who's containing document won't get dropped on.  If the element's document
+ * is the document that gets the drop, then we don't ever get a call to
+ * OnPasteOrDrop().
+ * 
+ * In MozillaBrowser.pyx we set up a dummy GtkMozEmbed widget that is never
+ * used.  We use an element from that widget as the element to
+ * InvokeDragSession().  This is a horrible hack, but it's the only thing that
+ * we could get to work in practice.
+ */
+nsresult setupDummyBrowser(GtkMozEmbed* gtkembed)
+{
+    nsresult rv;
+    nsCOMPtr<nsIWebBrowser> browser;
+    gtk_moz_embed_get_nsIWebBrowser(gtkembed, getter_AddRefs(browser));
+    nsCOMPtr<nsIDOMWindow> domWindow;
+    rv = browser->GetContentDOMWindow(getter_AddRefs(domWindow));
+    NS_ENSURE_SUCCESS(rv, rv);
+    nsCOMPtr<nsIDOMDocument> domDocument;
+    rv = domWindow->GetDocument(getter_AddRefs(domDocument));
+    NS_ENSURE_SUCCESS(rv, rv);
+    nsAutoString tagName = NS_ConvertUTF8toUTF16(nsDependentCString("blink"));
+    // Blink tag seems appropriate for this level of hackiness.
+    rv = domDocument->CreateElement(tagName, getter_AddRefs(dummyElement));
+    NS_ENSURE_SUCCESS(rv, rv);
+    return NS_OK;
+}
 
 nsresult setupDragAndDrop(GtkMozEmbed* gtkembed)
 {
