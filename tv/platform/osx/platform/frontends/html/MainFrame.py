@@ -618,18 +618,18 @@ class DisplayHostView (NSView):
 ###############################################################################
 
 class DTVSplitView (NSSplitView):
-    
-    def awakeFromNib(self):
+
+    def initWithCoder_(self, coder):
+        self = NSSplitView.initWithCoder_(self, coder)
         self.color = NSColor.colorWithDeviceWhite_alpha_(148.0/255.0, 1.0)
         self.leftPane = nil
         self.collapsed = False
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'videoDisplayWasSelected:', 'VideoDisplayWasSelected', nil)
         NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'videoDisplayWasDeselected:', 'VideoDisplayWasDeselected', nil)
-
+        return self
+    
     def dividerThickness(self):
-        # On 10.4, this could be called BEFORE awakeFromNib, so we need to test
-        # for the existence of the collapsed attribute first...
-        if hasattr(self, 'collapsed') and self.collapsed:
+        if self.collapsed:
             return 0.0
         return 1.0
         
