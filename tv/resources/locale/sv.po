@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-04-03 20:10+0000\n"
+"PO-Revision-Date: 2008-04-12 14:48+0000\n"
 "Last-Translator: Fredrik Wahlberg <wahlberg@linux.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "_Save Video..."
@@ -1575,8 +1575,9 @@ msgid "Add..."
 msgstr "Lägg till..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+#, fuzzy
 msgid "All"
-msgstr ""
+msgstr "Alla"
 
 #, fuzzy
 msgid "Auto download default setting for new channels:"
@@ -1611,8 +1612,9 @@ msgstr "Högsta antal filmer att hämta samtidigt:"
 msgid "Folder location"
 msgstr "Mapplats"
 
+#, fuzzy
 msgid "GB\n"
-msgstr ""
+msgstr "GB\n"
 
 msgid "Ignore unencrypted connections"
 msgstr "Ignorera okrypterade anslutningar"
@@ -2228,8 +2230,9 @@ msgid "Seeders:"
 msgstr "Distributörer:"
 
 #: ../../portable/item.py:1008
+#, fuzzy
 msgid "Leechers:"
-msgstr ""
+msgstr "Användare med delar av flödet:"
 
 #: ../../portable/item.py:1010
 msgid "Down Rate:"
@@ -3166,6 +3169,7 @@ msgid "The torrent file for this item was deleted outside of Miro."
 msgstr "Torrent-filen för den här posten togs bort utanför Miro."
 
 #: ../../portable/iheartmiro.py:82
+#, fuzzy
 msgid ""
 "An Effortless Way to Help Miro\n"
 "\n"
@@ -3180,6 +3184,18 @@ msgid ""
 "ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks "
 "for your help."
 msgstr ""
+"Ett lätt sätt att hjälpa Miro\n"
+"\n"
+"Miro bygger på öppen källkod och ideelt arbete. Vi behöver din hjälp för att "
+"kunna fortsätta vårt arbete.\n"
+"\n"
+"I Heart Miro är ett plugin till Firefox som genererar en liten summa pengar "
+"till organisationen Miro varje gång som du handlar på Amazon. Du kommer "
+"aldrig att märka av den, kostar dig inget och är lätt att avinstallera.\n"
+"\n"
+"Om du klicka på 'Installera iHeartMiro' här nedan kommer Firefox öppnas och "
+"fråga om det är ok. Svarar du ja där är du klar. Det tar ungefär 7 sekunder. "
+"Tack för din hjälp."
 
 #: ../../portable/menubar.py:158
 msgid "_Open"
@@ -3697,8 +3713,9 @@ msgstr "<b>xine</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
+#, fuzzy
 msgid "Auto download default setting for new channels"
-msgstr ""
+msgstr "Ladda automatiskt ned inställningar för denna kanal"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Automatically for_ward ports."
@@ -3739,8 +3756,9 @@ msgstr ""
 "Manuellt"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:41
+#, fuzzy
 msgid "G_B"
-msgstr ""
+msgstr "G_B"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
 msgid "Go"
@@ -3843,8 +3861,9 @@ msgid "Use _ports:"
 msgstr "Använd _portar:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
+#, fuzzy
 msgid "Use this for video when listening to audio:"
-msgstr ""
+msgstr "Använd det här som video när jag lyssnar på ljud:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "Use this renderer to play videos:"
@@ -3905,12 +3924,14 @@ msgid "_General"
 msgstr "_Allmänt"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:82
+#, fuzzy
 msgid "_KB/s."
-msgstr ""
+msgstr "_KB/s."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:83
+#, fuzzy
 msgid "_Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "_Spara minst så här mycket ledigt utrymme på min hårddisk:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_Playback"
@@ -3943,6 +3964,7 @@ msgstr ""
 "_Leta efter nya videor i dessa kataloger och inkludera dem i biblioteket"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:91
+#, fuzzy
 msgid ""
 "goom\n"
 "oscope\n"
@@ -3950,6 +3972,11 @@ msgid ""
 "fftgraph\n"
 "none"
 msgstr ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"ingen"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:96
 msgid ""
@@ -4115,12 +4142,14 @@ msgid "Ignore Unencrypted Connections"
 msgstr "Ignorera okrypterade anslutningar"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
+#, fuzzy
 msgid "KB/s"
-msgstr ""
+msgstr "KB/s"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
+#, fuzzy
 msgid "Limit downstream bandwith to:"
-msgstr ""
+msgstr "Begränsa bandbredden nedströms till:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Manually"

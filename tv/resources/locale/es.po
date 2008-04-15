@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-04-08 13:58+0000\n"
-"Last-Translator: ocinu <cahernandezva@unal.edu.co>\n"
+"PO-Revision-Date: 2008-04-10 01:51+0000\n"
+"Last-Translator: Zenia <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:45+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -38,11 +38,6 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
-"<font face=\"Lucida Grande\" size=\"-1\">Nuestro gestor de errores se "
-"encuentra en <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Por favor, "
-"díganos lo que estaba haciendo cuando ocurrió el problema. Copie el mensaje "
-"de la caja de registro de arriba, conteste unas cuantas preguntas, y nos "
-"pondremos a trabajar en ello enseguida.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -50,11 +45,6 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Si tiene un momento, ¿podría enviar un informe del problema a nuestro "
-"sistema de seguimiento de errores? Como mínimo, necesitaríamos una "
-"descripción de lo que estaba haciendo en ese momento (tan precisa como le "
-"sea posible) junto con la frase aparentemente carente de sentido de la caja "
-"de abajo:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -336,7 +326,7 @@ msgid "99999"
 msgstr "99999"
 
 msgid "Add..."
-msgstr "Añadir..."
+msgstr "Agregar..."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
 msgid "All"
@@ -484,7 +474,7 @@ msgid "In this:"
 msgstr "En este:"
 
 msgid "Item1"
-msgstr "Item1"
+msgstr "Elemento1"
 
 msgid "Search Engine"
 msgstr "Motor de búsqueda"
@@ -502,7 +492,7 @@ msgid "(parsed %d files - found %d videos)"
 msgstr "(analizados %d archivos - encontrados %d vídeos)"
 
 msgid "Back"
-msgstr "Volver"
+msgstr "Regresar"
 
 msgid "Browse"
 msgstr "Examinar"
@@ -517,7 +507,7 @@ msgid "No"
 msgstr "No"
 
 msgid "Only search my Movies folder."
-msgstr "Buscar sólo en mi directorio de vídeos"
+msgstr "Buscar solamente en mi carpeta de videos"
 
 msgid "Search my entire Home folder."
 msgstr "Buscar en toda mi carpeta personal"
@@ -547,7 +537,7 @@ msgid ""
 "best for you. Here's the first question."
 msgstr ""
 "Las siguientes pantallas le ayudarán a configurar Miro para que funcione de "
-"forma óptima. Ésta es la primera pregunta."
+"manera óptima. Ésta es la primer pregunta."
 
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
@@ -558,12 +548,12 @@ msgid ""
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
 "Le recomendamos que permita al Reproductor Miro ejecutarse cuando su "
-"ordenador se enciende. De esta manera, aquellos vídeos que no terminaron de "
+"ordenador se encienda. De esta manera, aquellos vídeos que no terminaron de "
 "descargarse pueden finalizar y los nuevos vídeos en sus canales estarán "
 "preparados para cuando quiera verlos.\n"
 "\n"
 "\n"
-"¿Desea que Miro se ejecute cuando su ordenador se enciende?"
+"¿Desea que Miro se ejecute cuando su ordenador se encienda?"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "Welcome to Internet TV!"
@@ -687,7 +677,7 @@ msgstr "_Actualizar canal..."
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:53
 #: ../../portable/menubar.py:199
 msgid "_Update Channels..."
-msgstr "A_ctualizar canales..."
+msgstr "_Actualizar canales..."
 
 #: ../../platform/osx/platform/frontends/html/Application.py:241
 msgid "Pause Video"
@@ -712,7 +702,7 @@ msgstr "Suscribirse al canal"
 
 #: ../../platform/osx/platform/frontends/html/MainFrame.py:298
 msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "Escribe la URL del canal al que deseas suscribirte"
+msgstr "Escribe la URL del canal al que desea suscribirse"
 
 #: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
 msgid "Finish"
@@ -724,7 +714,7 @@ msgstr "¡Buscar!"
 
 #: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
 msgid "Download Completed"
-msgstr "Descarga Completada"
+msgstr "Descarga Completa"
 
 #: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
 #, python-format
@@ -789,7 +779,7 @@ msgid ""
 msgstr ""
 "Ha seleccionado una nueva carpeta para descargar vídeos. ¿Debe %s migrar sus "
 "descargas preexistentes allí? (Los vídeos que están descargándose en este "
-"momento no se moveran hasta que terminen)."
+"momento no se moverán hasta que terminen)."
 
 #: ../../platform/osx/platform/frontends/html/Preferences.py:360
 msgid "View this Directory in the Library"
@@ -805,12 +795,12 @@ msgstr "Elija un directorio para verlo en la biblioteca"
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
-msgstr[0] "encontrado %d video"
+msgstr[0] "videio  %d encontrado"
 msgstr[1] "encontrados %d videos"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
-msgstr "Preferencias"
+msgstr "Configuración"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56
 msgid "Hide"
@@ -837,7 +827,7 @@ msgstr "Contraseña:"
 
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416
 msgid "Unknown Runtime Error"
-msgstr "Error en ejecucion desconocido"
+msgstr "Error en ejecución desconocido"
 
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417
 #, python-format
@@ -854,7 +844,7 @@ msgstr "Ubicación de la carpeta"
 
 #: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
 msgid "Update Available"
-msgstr "Disponible una actualización"
+msgstr "Actualización disponible"
 
 #: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
 #, python-format
@@ -877,7 +867,8 @@ msgstr "Error al abrir página web"
 #, python-format
 msgid "There was an error opening %s.  Please try again in a few seconds"
 msgstr ""
-"Ha habido un error abriendo %s. Por favor, inténtelo dentro de unos segundos"
+"Ha habido un error abriendo %s. Por favor, inténtelo de nuevo dentro de unos "
+"segundos"
 
 #: ../../platform/windows-xul/xul/components/pybridge.py:79
 #, python-format
@@ -936,7 +927,8 @@ msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
 msgstr ""
-"Es una carpeta. Si se elimina, todo lo que hay dentro también se eliminara."
+"Esto es una carpeta. Si se elimina, todo lo que hay dentro también se "
+"eliminará."
 
 #: ../../portable/item.py:552 ../../portable/feed.py:390
 #, python-format
@@ -1115,7 +1107,7 @@ msgstr "Error Desconocido"
 msgid ""
 "An unkown error prevented Miro from startup.  Please file a bug report at %s"
 msgstr ""
-"Un error desconocido impidió inicar Miro. Por favor envía un informe de "
+"Un error desconocido impidió iniciar Miro. Por favor envíe un informe de "
 "error a %s"
 
 #: ../../portable/startup.py:155
@@ -1127,7 +1119,7 @@ msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
-"Tiene una base de datos guardada con una versión más moderna de "
+"Tiene una base de datos guardada con una versión más reciente de "
 "$shortAppName. Debe descargar la última versión de $shortAppName y "
 "ejecutarla."
 
@@ -1146,7 +1138,7 @@ msgstr ""
 "Miro no puede encontrar su directorio principal de videos $moviesDirectory. "
 "Puede ser que su directorio se encuentre en un disco externo que  se "
 "encuentra actualmente desconectado. Por favor conecte el Disco o cree el "
-"directorio. y finalmente reinicie Miro para Iniciar"
+"directorio y reinicie Miro"
 
 #: ../../portable/feed.py:384
 msgid "never"
@@ -1203,11 +1195,11 @@ msgid ""
 "Do you want to try to load this channel anyway?"
 msgstr ""
 "Pero trataremos de conseguir los archivos. Puede tardar un poco hacer una "
-"lista de los vídeos, y las descripciones pueden parecer estrañas. Por favor, "
-"contacte a los que publican $url y pregúnteles si pueden proporcionar una "
+"lista de los vídeos, y las descripciones pueden parecer extrañas. Por favor, "
+"contacte a los que publican $url y pregúntel si pueden proporcionar una "
 "fuente en un formato que funcione con $shortAppName.\n"
 "\n"
-"¿Desea abrir el canal de todas formas?"
+"¿Desea abrir el canal de cualquier modo?"
 
 #: ../../portable/feed.py:2382 ../../portable/feed.py:2472
 #: ../../portable/extrastrings.py:33
@@ -1331,11 +1323,11 @@ msgstr "Error interno"
 
 #: ../../portable/httpclient.py:140
 msgid "Pipeline request never started"
-msgstr "La solicitud de tubería no llegó a comenzar"
+msgstr "La solicitud de tubería no comenzó"
 
 #: ../../portable/httpclient.py:144
 msgid "Timeout"
-msgstr "Plazo expirado"
+msgstr "Tiempo agotado"
 
 #: ../../portable/httpclient.py:145
 #, python-format

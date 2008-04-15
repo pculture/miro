@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-03-04 15:50+0000\n"
-"Last-Translator: Sergiy Babakin <babakin.serg@gmail.com>\n"
+"PO-Revision-Date: 2008-04-14 04:47+0000\n"
+"Last-Translator: oleksandr korneta <atenrok@ua.fm>\n"
 "Language-Team: Ukranian <serg74@hotmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:45+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -24,11 +24,11 @@ msgid "Cancel"
 msgstr "Скасувати"
 
 msgid "OK"
-msgstr "Так"
+msgstr "Гаразд"
 
 #: ../../portable/dialogs.py:84
 msgid "Ok"
-msgstr "Так"
+msgstr "Гаразд"
 
 msgid "$log"
 msgstr "$log"
@@ -50,9 +50,9 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Якщо ви маєте хвилинку, будь ласка надішліть рапорт до нашого трекера "
-"помилок. Скажіть нам що ви робили як мога точніше, плюс повідомлення з вікна "
-"внизу:"
+"Якщо ви маєте хвилинку, будь ласка надішліть звіт на наш трекер помилок. "
+"Якомога дательніше розкажіть про свої дії, та додайте оту нісенітницю що у "
+"віконці знизу:"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -60,9 +60,9 @@ msgid ""
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
-"Невдача! $longAppName впала жертвою внутрішньої колізії або помилкового "
-"напрямку $when. Ми вибачаємось та рекомендуємо закрити і перезапустити "
-"$shortAppName. Це зменьшує шанс згубити настройки та підписку на канали."
+"Нажаль $longAppName стла жертвою внутрішньої колізії або помилкового "
+"напрямку $when. Ми перепрошуємо та радимо закрити і перезапустити "
+"$shortAppName. Це зменшить шанс втрати налаштувань та та підписки на канали."
 
 msgid "The fall of $shortAppName??"
 msgstr "Падіння $shortAppName??"
@@ -88,19 +88,19 @@ msgid "Check for New Version"
 msgstr "Перевірити на нову версію"
 
 msgid "Clear Menu"
-msgstr "Почистити Меню"
+msgstr "Очистити Меню"
 
 msgid "Close Window"
 msgstr "Закрити вікно"
 
 msgid "Copy"
-msgstr "Скопіювати"
+msgstr "Копіювати"
 
 msgid "Copy Channel URL"
-msgstr "Копіювати URL каналу"
+msgstr "Копіювати інтернет-адресу каналу"
 
 msgid "Copy Video URL"
-msgstr "Скопіювати Відео URL"
+msgstr "Копіювати адресу відео"
 
 msgid "Cut"
 msgstr "Вирізати"
@@ -110,10 +110,10 @@ msgid "Delete"
 msgstr "Видалити"
 
 msgid "Donate"
-msgstr "Пожертвування"
+msgstr "Фінансова допомога"
 
 msgid "Download Video..."
-msgstr "Закачати Відео..."
+msgstr "Завантажити відео..."
 
 msgid "Edit"
 msgstr "Редагувати"
@@ -125,19 +125,19 @@ msgid "File"
 msgstr "Файл"
 
 msgid "Full Screen"
-msgstr "Повний екран"
+msgstr "На весь екран"
 
 msgid "Help"
 msgstr "Довідка"
 
 msgid "Hide Miro"
-msgstr "Сховати Miro"
+msgstr "Приховати Miro"
 
 msgid "Hide Others"
-msgstr "Сховати решту"
+msgstr "Приховати всі інші"
 
 msgid "Import Channels (OPML)..."
-msgstr "Імпортувати Канали (OPML)... (OPML)..."
+msgstr "Імпортувати Канали (OPML)..."
 
 msgid "Main Window"
 msgstr "Головне вікно"
@@ -146,20 +146,20 @@ msgid "MainMenu"
 msgstr "ГоловнеМеню"
 
 msgid "Minimize"
-msgstr "Мінімізувати"
+msgstr "Згорнути"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Miro"
 msgstr "Miro"
 
 msgid "Miro Help"
-msgstr "Допомога Miro"
+msgstr "Довідка по Miro"
 
 msgid "New Channel Folder..."
-msgstr "Папка нових каналів..."
+msgstr "Тека нових каналів..."
 
 msgid "New Playlist Folder..."
-msgstr "Папка нового списку програвання..."
+msgstr "Тека нового списку програвання..."
 
 msgid "New Playlist..."
 msgstr "Новий список програвання..."
@@ -171,7 +171,7 @@ msgid "Next Video"
 msgstr "Наступне Відео"
 
 msgid "Open Recent"
-msgstr "Відкрити текучий"
+msgstr "Відкрити останнє"
 
 msgid "Open..."
 msgstr "Відкрити..."
@@ -189,13 +189,13 @@ msgid "Playback"
 msgstr "Програвання"
 
 msgid "Playlists"
-msgstr "Списки програвання"
+msgstr "Списки відеокомпозицій"
 
 msgid "Preferences..."
-msgstr "Параметри..."
+msgstr "Налаштування..."
 
 msgid "Previous Video"
-msgstr "Попереднє Відео"
+msgstr "Попереднє відео"
 
 msgid "Quit Miro"
 msgstr "Вийти з Miro"
@@ -1177,6 +1177,11 @@ msgid ""
 "because it's located on an external drive that is currently disconnected.  "
 "Please, connect the drive or create the directory, then start Miro again."
 msgstr ""
+"\n"
+"Miro не вдалося знайти вашу головну теку для відео $moviesDirectory. Можливо "
+"це сталося через те, що тека розміщена на зовнішньому жорсткому диску котрий "
+"в даний момент відключено. Будь ласка підключіть жорсткий диск або створіть "
+"цю теку і спробуйте знову запустити Miro."
 
 #: ../../portable/feed.py:384
 msgid "never"
@@ -2767,7 +2772,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "<b>xine</b>"
-msgstr ""
+msgstr "<b>xine</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
@@ -2931,7 +2936,7 @@ msgstr "Використовувати порти:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "Use this for video when listening to audio:"
-msgstr ""
+msgstr "Відображати це в якості відео якшо ви прослуховуєте аудіозапис:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "Use this renderer to play videos:"
@@ -3039,6 +3044,11 @@ msgid ""
 "fftgraph\n"
 "none"
 msgstr ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"нічого"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:96
 msgid ""
@@ -3049,11 +3059,15 @@ msgstr ""
 "gstreamer"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
+#, fuzzy
 msgid ""
 "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName версія $appVersion ($appRevision); всі права застережено (c) "
+"2005-2008 $publisher. $longAppName та  логотип $longAppName є суть торговою "
+"маркою $publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"

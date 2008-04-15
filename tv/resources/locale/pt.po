@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-04-07 07:36+0000\n"
-"Last-Translator: Pedro Silva <psilva@sfsu.edu>\n"
+"PO-Revision-Date: 2008-04-13 10:15+0000\n"
+"Last-Translator: João Santos <twocool.pt@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "Save this video"
@@ -1335,14 +1335,12 @@ msgstr ""
 "Nome de Utilizador:\n"
 "\n"
 
-#, fuzzy
 msgid "(You must restart Miro for some of these changes to take effect)"
 msgstr ""
 "(Deverá reiniciar o Miro para que algumas destas alterações tenham efeito)"
 
-#, fuzzy
 msgid "(You must restart Miro for this change to take effect)\n"
-msgstr "(Tem que reiniciar o Miro para que esta alteração tenha efeito)\n"
+msgstr "(Deverá reiniciar o Miro para que esta alteração tenha efeito)\n"
 
 msgid "(movies directory path goes here)"
 msgstr "(o caminho para a directoria dos filmes entra aqui)"
@@ -1390,9 +1388,8 @@ msgstr "Adicionar..."
 msgid "All"
 msgstr "Tudo"
 
-#, fuzzy
 msgid "Auto download default setting for new channels:"
-msgstr "Descarregar automaticamente configurações-padrão para novos canais"
+msgstr "Descarregar automaticamente configurações-padrão para novos canais:"
 
 msgid "Automatically forward ports"
 msgstr "Reencaminhar portas automaticamente"
@@ -1411,7 +1408,6 @@ msgstr "Modificar..."
 msgid "Check channels for new content:"
 msgstr "Verifique nos canais a existência de novos conteúdos:"
 
-#, fuzzy
 msgid "Don't auto-download more than this many videos per channel at once:"
 msgstr ""
 "Não descarregar automaticamente mais que este número de videos por canal ao "
@@ -1426,7 +1422,6 @@ msgstr "Localização da Pasta"
 msgid "GB\n"
 msgstr "GB\n"
 
-#, fuzzy
 msgid "Ignore unencrypted connections"
 msgstr "Ignorar ligações não encriptadas"
 
@@ -1438,7 +1433,6 @@ msgstr "KB/s."
 msgid "Keep at least this much free space on my drive:"
 msgstr "Deixar pelo menos este espaço livre no meu disco:"
 
-#, fuzzy
 msgid "Limit downstream to"
 msgstr "Limitar velocidade de descarregamento a"
 
@@ -1489,7 +1483,6 @@ msgstr "Parar depois de cada video."
 msgid "Stop uploads when this ratio is reached:"
 msgstr "Parar de carregar quando atingir este proporção:"
 
-#, fuzzy
 msgid "Store downloads in this folder:"
 msgstr "Guardar ficheiros descarregados na seguinte pasta:"
 
@@ -2983,7 +2976,6 @@ msgid "Torrent file deleted"
 msgstr "Ficheiro torrent apagado"
 
 #: ../../portable/dl_daemon/download.py:981
-#, fuzzy
 msgid "The torrent file for this item was deleted outside of Miro."
 msgstr "O ficheiro torrent para este item foi apagado fora do Miro."
 
@@ -3458,12 +3450,12 @@ msgid "<b>BitTorrent</b>"
 msgstr "<b>BitTorrent</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
-#, fuzzy
 msgid ""
 "<b>Note:</b> If you change the renderer used to play videos, you MUST \n"
 "restart Miro for the changes to take effect."
 msgstr ""
 "<b>Nota:</b> Se modificar o renderizador usado para reproduzir videos, TERÁ "
+"\n"
 "que reiniciar o Miro para as mudanças terem efeito."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
@@ -3587,7 +3579,7 @@ msgstr "Ir"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:43
 msgid "Ignore Un_encrypted Connections."
-msgstr ""
+msgstr "Ignorar Ligações Não _Encriptadas."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:44
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
@@ -3596,7 +3588,7 @@ msgstr "Nisto:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Limit torrent _downstream to:"
-msgstr ""
+msgstr "Limitar velocidade de _descarregamento a:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Maximum number of channel auto-downloads at a time: "
@@ -3674,8 +3666,9 @@ msgstr ""
 "perfeição. Aqui está a primeira questão."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
+#, fuzzy
 msgid "To avoid internet slowdowns, limit _upstream to:"
-msgstr ""
+msgstr "Para evitar abrandamento na ligação, limitar o en_vio a:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "Use _ports:"
@@ -3750,7 +3743,7 @@ msgstr "_KB/s."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Man_ter pelo menos este espaço livre no disco:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_Playback"

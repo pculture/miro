@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-04-08 13:29+0000\n"
-"Last-Translator: ehellabe <Unknown>\n"
+"PO-Revision-Date: 2008-04-10 10:59+0000\n"
+"Last-Translator: Stian24 <Unknown>\n"
 "Language-Team: Norwegian Bokmål <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:45+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "_Save Video..."
@@ -3635,8 +3635,7 @@ msgstr ""
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
 #, fuzzy
 msgid "To avoid internet slowdowns, limit _upstream to:"
-msgstr ""
-"For å unngå treghet over internett, begrens opplastningsstrømmen til:"
+msgstr "For å unngå treghet på internett, begrens opplastningsstrømmen til:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 #, fuzzy

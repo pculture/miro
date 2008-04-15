@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-04-07 06:30+0000\n"
-"Last-Translator: Mathieu Fontaine <Unknown>\n"
+"PO-Revision-Date: 2008-04-12 14:08+0000\n"
+"Last-Translator: Stéphane Loeuillet <leroutier@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: French\n"
 
@@ -475,11 +475,10 @@ msgstr ""
 "Nom d'utilisateur :\n"
 "\n"
 
-#, fuzzy
 msgid "(You must restart Miro for some of these changes to take effect)"
 msgstr ""
-"Vous devez redémarrer Miro pour que les changements effectués soient "
-"appliqués"
+"(Vous devez redémarrer Miro pour que certains de ces changements soient "
+"effectifs)"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr ""
@@ -552,36 +551,30 @@ msgstr "Modifier..."
 msgid "Check channels for new content:"
 msgstr "Actualiser les chaînes :"
 
-#, fuzzy
 msgid "Don't auto-download more than this many videos per channel at once:"
 msgstr ""
-"Ne pas télécharger automatiquement plus d'une vidéo à la fois par chaîne"
+"Ne pas télécharger plus de ... vidéo(s) à la fois pour chaque chaîne:"
 
-#, fuzzy
 msgid "Don't download more than this many videos at once:"
-msgstr "Ne pas télécharger plus d'une vidéo à la fois"
+msgstr "Ne pas télécharger plus de ... vidéo(s) à la fois:"
 
 msgid "Folder location"
 msgstr "Emplacement du dossier"
 
-#, fuzzy
 msgid "GB\n"
-msgstr "GB\n"
+msgstr "Go\n"
 
-#, fuzzy
 msgid "Ignore unencrypted connections"
-msgstr "Ignorer les connexions non-cryptées"
+msgstr "Ignorer les connexions non cryptées"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:45
 msgid "KB/s."
 msgstr "Kb/s"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
-#, fuzzy
 msgid "Keep at least this much free space on my drive:"
 msgstr "Concerver au moins cet espace libre sur mon disque:"
 
-#, fuzzy
 msgid "Limit downstream to"
 msgstr "Limiter le taux de réception à"
 
@@ -632,17 +625,14 @@ msgstr "Arrêter la lecture aprés chaque vidéo."
 msgid "Stop uploads when this ratio is reached:"
 msgstr "Arrêter le téléversement quand ce ratio est atteint"
 
-#, fuzzy
 msgid "Store downloads in this folder:"
-msgstr "Conserver les téléchargements dans ce dossier"
+msgstr "Enregistrer les téléchargements dans ce dossier:"
 
-#, fuzzy
 msgid "To avoid internet slowdowns, limit upstream to"
 msgstr ""
 "Pour éviter les ralentissements sur Internet, limiter le taux d'émission à"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
-#, fuzzy
 msgid "Use these ports:"
 msgstr "Utiliser les ports suivants :"
 
@@ -1229,12 +1219,10 @@ msgstr "Type de fichier:"
 
 #: ../../portable/item.py:1037 ../../portable/item.py:1040
 #: ../../portable/item.py:1042
-#, fuzzy
 msgid "License:"
-msgstr "Autorisation:"
+msgstr "Licence :"
 
 #: ../../portable/item.py:1040 ../../portable/item.py:1042
-#, fuzzy
 msgid "see permalink"
 msgstr "voir le lien permanent"
 
@@ -2127,9 +2115,9 @@ msgid "Torrent file deleted"
 msgstr "Fichier torrent supprimé"
 
 #: ../../portable/dl_daemon/download.py:981
-#, fuzzy
 msgid "The torrent file for this item was deleted outside of Miro."
-msgstr "Le fichier torrent pour ce document a été supprimé en-dehors de Miro"
+msgstr ""
+"Le fichier torrent pour cette entrée a été supprimé en-dehors de Miro."
 
 #: ../../portable/iheartmiro.py:82
 #, fuzzy
@@ -2462,12 +2450,10 @@ msgid "Download Anyway"
 msgstr "Télécharger quand même"
 
 #: ../../portable/dialogs.py:109
-#, fuzzy
 msgid "Install iHeartMiro"
 msgstr "Installer iHeartMiro"
 
 #: ../../portable/dialogs.py:110
-#, fuzzy
 msgid "Don't Install"
 msgstr "Ne pas installer"
 
@@ -2755,9 +2741,8 @@ msgid "In This:"
 msgstr "Dans Ceci:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
-#, fuzzy
 msgid "Limit torrent _downstream to:"
-msgstr "Limiter le débit _entrant des torrents à :"
+msgstr "Limiter la vitesse de réception du torrent à :"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Maximum number of channel auto-downloads at a time: "
@@ -2836,7 +2821,6 @@ msgstr ""
 "l'optimiser pour votre utilisation. Voici la première question."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:68
-#, fuzzy
 msgid "To avoid internet slowdowns, limit _upstream to:"
 msgstr ""
 "Pour éviter des ralentissements sur Internet, limiter le débit _sortant à:"
@@ -3145,9 +3129,8 @@ msgid "KB/s"
 msgstr "KB/s"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
-#, fuzzy
 msgid "Limit downstream bandwith to:"
-msgstr "Limiter la largeur du débit entrant à :"
+msgstr "Limiter ma vitesse de réception à :"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
 msgid "Manually"
@@ -3190,11 +3173,10 @@ msgid "Store downloaded videos in this folder:"
 msgstr "Enregistrer les vidéos téléchargées dans ce dossier:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
-#, fuzzy
 msgid "To avoid internet slowdowns, limit upstream bandwith to:"
 msgstr ""
-"Pour éviter des ralentissements sur Internet, limiter la largeur du débit "
-"sortant à :"
+"Pour éviter des ralentissements sur Internet, limiter la vitesse d'émission "
+"à :"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid ""

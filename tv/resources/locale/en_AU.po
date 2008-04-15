@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-03-09 00:49+0000\n"
+"PO-Revision-Date: 2008-04-08 21:09+0000\n"
 "Last-Translator: Alan <alan.cramer@gmail.com>\n"
 "Language-Team: English (Australia) <en_AU@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -593,7 +593,7 @@ msgstr ""
 
 #: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: ../../platform/osx/platform/frontends/html/UIStrings.py:33
 msgid "_Remove..."
@@ -807,47 +807,47 @@ msgstr[1] "%d videos found"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
 msgid "Settings"
-msgstr ""
+msgstr "Settings"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56
 msgid "Hide"
-msgstr ""
+msgstr "Hide"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58
 msgid "Show"
-msgstr ""
+msgstr "Show"
 
 #: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59
 #: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
 msgid "Quit"
-msgstr ""
+msgstr "Quit"
 
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
 msgid "Username:"
-msgstr ""
+msgstr "Username:"
 
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
 msgid "Password:"
-msgstr ""
+msgstr "Password:"
 
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416
 msgid "Unknown Runtime Error"
-msgstr ""
+msgstr "Unknown Runtime Error"
 
 #: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417
 #, python-format
 msgid "An unknown error has occurred %s."
-msgstr ""
+msgstr "An unknown error has occurred %s."
 
 #: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
 msgid "New Channel _Guide..."
-msgstr ""
+msgstr "New Channel _Guide..."
 
 #: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:583
 msgid "Folder Location"
-msgstr ""
+msgstr "Folder Location"
 
 #: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
 msgid "Update Available"
@@ -911,192 +911,201 @@ msgstr ""
 #: ../../portable/item.py:497
 #, python-format
 msgid "Removing %s"
-msgstr ""
+msgstr "Removing %s"
 
 #: ../../portable/item.py:500
 msgid ""
 "Would you like to delete this folder and all of its videos or just remove "
 "its entry from the Library?"
 msgstr ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
 
 #: ../../portable/item.py:506
 msgid ""
 "Would you like to delete this file or just remove its entry from the Library?"
 msgstr ""
+"Would you like to delete this file or just remove its entry from the Library?"
 
 #: ../../portable/item.py:526
 msgid ""
 "This item is a folder.  When you remove a folder, any items inside that "
 "folder will be deleted."
 msgstr ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
 
 #: ../../portable/item.py:552 ../../portable/feed.py:390
 #, python-format
 msgid "%d days"
-msgstr ""
+msgstr "%d days"
 
 #: ../../portable/item.py:554 ../../portable/feed.py:386
 #, python-format
 msgid "%d hours"
-msgstr ""
+msgstr "%d hours"
 
 #: ../../portable/item.py:556
 #, python-format
 msgid "%d minutes"
-msgstr ""
+msgstr "%d minutes"
 
 #: ../../portable/item.py:566
 #, python-format
 msgid "Expires in %s"
-msgstr ""
+msgstr "Expires in %s"
 
 #: ../../portable/item.py:578
 #, python-format
 msgid "Will retry in %s"
-msgstr ""
+msgstr "Will retry in %s"
 
 #: ../../portable/item.py:580
 msgid "Paused"
-msgstr ""
+msgstr "Paused"
 
 #: ../../portable/item.py:982
 msgid "TORRENT"
-msgstr ""
+msgstr "TORRENT"
 
 #: ../../portable/item.py:984
 msgid "WEB PAGE"
-msgstr ""
+msgstr "WEB PAGE"
 
 #: ../../portable/item.py:994
 msgid "Total Down:"
-msgstr ""
+msgstr "Total Down:"
 
 #: ../../portable/item.py:997
 msgid "Error:"
-msgstr ""
+msgstr "Error:"
 
 #: ../../portable/item.py:1006
 msgid "Seeders:"
-msgstr ""
+msgstr "Seeders:"
 
 #: ../../portable/item.py:1008
 msgid "Leechers:"
-msgstr ""
+msgstr "Leechers:"
 
 #: ../../portable/item.py:1010
 msgid "Down Rate:"
-msgstr ""
+msgstr "Down Rate:"
 
 #: ../../portable/item.py:1011
 msgid "Down Total:"
-msgstr ""
+msgstr "Down Total:"
 
 #: ../../portable/item.py:1013
 msgid "Up Rate:"
-msgstr ""
+msgstr "Up Rate:"
 
 #: ../../portable/item.py:1014
 msgid "Up Total:"
-msgstr ""
+msgstr "Up Total:"
 
 #: ../../portable/item.py:1024
 msgid "Web page:"
-msgstr ""
+msgstr "Web page:"
 
 #: ../../portable/item.py:1024
 msgid "permalink"
-msgstr ""
+msgstr "permalink"
 
 #: ../../portable/item.py:1028
 msgid "File link:"
-msgstr ""
+msgstr "File link:"
 
 #: ../../portable/item.py:1028
 msgid "direct link to file"
-msgstr ""
+msgstr "direct link to file"
 
 #: ../../portable/item.py:1030
 msgid "File type:"
-msgstr ""
+msgstr "File type:"
 
 #: ../../portable/item.py:1037 ../../portable/item.py:1040
 #: ../../portable/item.py:1042
 msgid "License:"
-msgstr ""
+msgstr "License:"
 
 #: ../../portable/item.py:1040 ../../portable/item.py:1042
 msgid "see permalink"
-msgstr ""
+msgstr "see permalink"
 
 #: ../../portable/item.py:1049
 msgid "REVEAL LOCAL FOLDER"
-msgstr ""
+msgstr "REVEAL LOCAL DIRECTORY"
 
 #: ../../portable/item.py:1051
 msgid "REVEAL LOCAL FILE"
-msgstr ""
+msgstr "REVEAL LOCAL FILE"
 
 #: ../../portable/item.py:1053
 msgid "Filename:"
-msgstr ""
+msgstr "Filename:"
 
 #: ../../portable/item.py:1060
 msgid "Down Total"
-msgstr ""
+msgstr "Total Downloaded"
 
 #: ../../portable/item.py:1062
 msgid "Up Total"
-msgstr ""
+msgstr "Total Uploaded"
 
 #: ../../portable/item.py:1080
 msgid "Item Details"
-msgstr ""
+msgstr "Item Details"
 
 #: ../../portable/item.py:1087
 msgid "Torrent Details"
-msgstr ""
+msgstr "Torrent Details"
 
 #: ../../portable/item.py:1089
 msgid "Torrent Details <i>stopped</i>"
-msgstr ""
+msgstr "Torrent Details <i>stopped</i>"
 
 #: ../../portable/item.py:1093
 msgid "Download Details"
-msgstr ""
+msgstr "Download Details"
 
 #: ../../portable/item.py:1310
 msgid "downloading..."
-msgstr ""
+msgstr "downloading..."
 
 #: ../../portable/item.py:1317 ../../portable/item.py:1320
 #, python-format
 msgid "%s remaining"
-msgstr ""
+msgstr "%s remaining"
 
 #: ../../portable/item.py:1329
 msgid "starting up..."
-msgstr ""
+msgstr "starting up..."
 
 #: ../../portable/item.py:1901
 #, python-format
 msgid "Removing %s items"
-msgstr ""
+msgstr "Removing %s items"
 
 #: ../../portable/item.py:1903
 msgid ""
 "One or more of these videos was not downloaded from a channel.  Would you "
 "like to delete these items or just remove their entries from the Library?"
 msgstr ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or remove their entries from the Library?"
 
 #: ../../portable/item.py:1911
 msgid ""
 "One or more of these items is a folder.  When you remove or delete a folder, "
 "any items inside that folder will also be removed or deleted."
 msgstr ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
 
 #: ../../portable/startup.py:92
 msgid "Unknown Error"
-msgstr ""
+msgstr "Unknown Error"
 
 #: ../../portable/startup.py:93
 #, python-format
@@ -1133,43 +1142,43 @@ msgstr ""
 #: ../../portable/feed.py:388
 #, python-format
 msgid "%d day"
-msgstr ""
+msgstr "%d day"
 
 #: ../../portable/feed.py:392
 #, python-format
 msgid "%d months"
-msgstr ""
+msgstr "%d months"
 
 #: ../../portable/feed.py:825 ../../portable/frontends/html/contextmenu.py:173
 msgid "Rename Channel"
-msgstr ""
+msgstr "Rename Channel"
 
 #: ../../portable/feed.py:826
 #, python-format
 msgid "Enter a new name for the channel %s"
-msgstr ""
+msgstr "Enter a new name for the channel %s"
 
 #: ../../portable/feed.py:923
 msgid "Error loading feed"
-msgstr ""
+msgstr "Error loading feed"
 
 #: ../../portable/feed.py:924
 #, python-format
 msgid "Couldn't load the feed at %s (%s)."
-msgstr ""
+msgstr "Couldn't load the feed at %s (%s)."
 
 #: ../../portable/feed.py:927
 msgid "Would you like to keep the feed?"
-msgstr ""
+msgstr "Would you like to keep the feed?"
 
 #: ../../portable/feed.py:1045
 msgid "Bad content-type"
-msgstr ""
+msgstr "Bad content-type"
 
 #: ../../portable/feed.py:1058
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
 msgid "Channel is not compatible with $shortAppName!"
-msgstr ""
+msgstr "Channel is not compatible with $shortAppName!"
 
 #: ../../portable/feed.py:1059
 msgid ""
@@ -1180,35 +1189,43 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
 
 #: ../../portable/feed.py:2382 ../../portable/feed.py:2472
 #: ../../portable/extrastrings.py:33
 msgid "Search"
-msgstr ""
+msgstr "Search"
 
 #: ../../portable/feed.py:2486
 msgid "Local Files"
-msgstr ""
+msgstr "Local Files"
 
 #: ../../portable/feed.py:2500
 msgid "Playing File"
-msgstr ""
+msgstr "Playing File"
 
 #: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
 #, python-format
 msgid "%s database save succeeded"
-msgstr ""
+msgstr "%s database save succeeded"
 
 #: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
 
 #: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
 #, python-format
 msgid "%s database save failed"
-msgstr ""
+msgstr "%s database save failed"
 
 #: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
 #, python-format
@@ -1218,192 +1235,197 @@ msgid ""
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
+"%s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
 
 #: ../../portable/tabs.py:55
 msgid "Library"
-msgstr ""
+msgstr "Library"
 
 #: ../../portable/tabs.py:58
 msgid "Downloading"
-msgstr ""
+msgstr "Downloading"
 
 #: ../../portable/httpclient.py:81
 #, python-format
 msgid "Error: %s"
-msgstr ""
+msgstr "Error: %s"
 
 #: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
 msgid "Can't connect"
-msgstr ""
+msgstr "Can't connect"
 
 #: ../../portable/httpclient.py:97
 #, python-format
 msgid "Connection Error: %s"
-msgstr ""
+msgstr "Connection Error: %s"
 
 #: ../../portable/httpclient.py:103
 msgid "SSL connection error"
-msgstr ""
+msgstr "SSL connection error"
 
 #: ../../portable/httpclient.py:107
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP error"
 
 #: ../../portable/httpclient.py:110
 #, python-format
 msgid "Bad Status Line: %s"
-msgstr ""
+msgstr "Bad Status Line: %s"
 
 #: ../../portable/httpclient.py:113
 #, python-format
 msgid "Bad Header Line: %s"
-msgstr ""
+msgstr "Bad Header Line: %s"
 
 #: ../../portable/httpclient.py:116
 #, python-format
 msgid "Bad Chunk size: %s"
-msgstr ""
+msgstr "Bad Chunk size: %s"
 
 #: ../../portable/httpclient.py:119
 #, python-format
 msgid "Expected CRLF got: %r"
-msgstr ""
+msgstr "Expected CRLF got: %r"
 
 #: ../../portable/httpclient.py:122
 #, python-format
 msgid "%s closed connection"
-msgstr ""
+msgstr "%s closed connection"
 
 #: ../../portable/httpclient.py:127 ../../portable/httpclient.py:155
 #: ../../portable/downloader.py:268
 msgid "File not found"
-msgstr ""
+msgstr "File not found"
 
 #: ../../portable/httpclient.py:128
 msgid "Got 404 status code"
-msgstr ""
+msgstr "Got 404 status code"
 
 #: ../../portable/httpclient.py:130
 #, python-format
 msgid "Bad Status Code: %s"
-msgstr ""
+msgstr "Bad Status Code: %s"
 
 #: ../../portable/httpclient.py:134
 msgid "Authorization failed"
-msgstr ""
+msgstr "Authorisation failed"
 
 #: ../../portable/httpclient.py:139 ../../portable/frontends/html/main.py:271
 msgid "Internal Error"
-msgstr ""
+msgstr "Internal Error"
 
 #: ../../portable/httpclient.py:140
 msgid "Pipeline request never started"
-msgstr ""
+msgstr "Pipeline request never started"
 
 #: ../../portable/httpclient.py:144
 msgid "Timeout"
-msgstr ""
+msgstr "Timeout"
 
 #: ../../portable/httpclient.py:145
 #, python-format
 msgid "Connection to %s timed out"
-msgstr ""
+msgstr "Connection to %s timed out"
 
 #: ../../portable/httpclient.py:149
 msgid "Invalid URL"
-msgstr ""
+msgstr "Invalid URL"
 
 #: ../../portable/httpclient.py:150
 #, python-format
 msgid "\"%s\" is not a valid URL"
-msgstr ""
+msgstr "The resource \"%s\" is not a valid URL"
 
 #: ../../portable/httpclient.py:156
 #, python-format
 msgid "The file: \"%s\" doesn't exist"
-msgstr ""
+msgstr "The file \"%s\" does not exist"
 
 #: ../../portable/httpclient.py:160
 msgid "Read error"
-msgstr ""
+msgstr "Read error"
 
 #: ../../portable/httpclient.py:161
 #, python-format
 msgid "Error while reading from \"%s\""
-msgstr ""
+msgstr "Error while reading \"%s\""
 
 #: ../../portable/httpclient.py:354
 msgid "Unknown Error code"
-msgstr ""
+msgstr "Unknown Error code"
 
 #: ../../portable/httpclient.py:386
 msgid "Connection closed"
-msgstr ""
+msgstr "Connection closed"
 
 #: ../../portable/httpclient.py:811
 msgid "Unknown"
-msgstr ""
+msgstr "Unknown"
 
 #: ../../portable/httpclient.py:812
 msgid "Internal Error: Not ready to send"
-msgstr ""
+msgstr "Internal Error: Not ready to send"
 
 #: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
 msgid "Custom Channels"
-msgstr ""
+msgstr "Custom Channels"
 
 #: ../../portable/theme.py:127 ../../portable/frontends/html/main.py:192
 msgid ""
 "You are running a version of $longAppName with a custom set of channels."
 msgstr ""
+"You are running a version of $longAppName with a custom set of channels."
 
 #: ../../portable/theme.py:138
 msgid "Starter Channels"
-msgstr ""
+msgstr "Starter Channels"
 
 #: ../../portable/theme.py:154
 msgid "Example Playlist"
-msgstr ""
+msgstr "Example Playlist"
 
 #: ../../portable/downloader.py:234
 msgid "activity"
-msgstr ""
+msgstr "activity"
 
 #: ../../portable/downloader.py:269
 msgid "Flash URL Scraping Error"
-msgstr ""
+msgstr "Flash URL Scraping Error"
 
 #: ../../portable/downloader.py:445
 msgid "starting up"
-msgstr ""
+msgstr "starting up"
 
 #: ../../portable/license.py:68
 msgid "license page"
-msgstr ""
+msgstr "licence page"
 
 #: ../../portable/singleclick.py:99
 msgid "Download already exists"
-msgstr ""
+msgstr "Download already exists"
 
 #: ../../portable/singleclick.py:100
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "That URL is already an external download."
 
 #: ../../portable/singleclick.py:106
 msgid "Miro will begin downloading it now."
-msgstr ""
+msgstr "Miro will begin downloading it now."
 
 #: ../../portable/singleclick.py:108
 msgid "It is downloading now."
-msgstr ""
+msgstr "It is downloading now."
 
 #: ../../portable/singleclick.py:110
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "It has already been downloaded."
 
 #: ../../portable/singleclick.py:137
 msgid "Download Error"
-msgstr ""
+msgstr "Download Error"
 
 #: ../../portable/singleclick.py:138
 #, python-format
@@ -1412,33 +1434,36 @@ msgid ""
 "\n"
 "URL: %s"
 msgstr ""
+"Miro is not able to download the resource at this URL:\n"
+"\n"
+"%s"
 
 #: ../../portable/singleclick.py:146
 msgid "File Download"
-msgstr ""
+msgstr "File Download"
 
 #: ../../portable/singleclick.py:147
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
+msgstr "The resource %s does not appear to be audio, video, or an RSS feed."
 
 #: ../../portable/singleclick.py:235
 msgid "Subscribing to multiple channels"
-msgstr ""
+msgstr "Subscribing to multiple channels"
 
 #: ../../portable/singleclick.py:236
 #, python-format
 msgid "Create %d channels?"
-msgstr ""
+msgstr "Create %d channels?"
 
 #: ../../portable/singleclick.py:249
 #, python-format
 msgid "Adding %d channels to a new folder"
-msgstr ""
+msgstr "Adding %d channels to a new folder"
 
 #: ../../portable/singleclick.py:250 ../../portable/folder.py:224
 msgid "Enter a name for the new channel folder"
-msgstr ""
+msgstr "Enter a name for the new channel folder"
 
 #: ../../portable/singleclick.py:253
 #, python-format
@@ -1446,16 +1471,20 @@ msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
 "will stay where they currently are."
 msgstr ""
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
 
 #: ../../portable/singleclick.py:264
 msgid "Subscription error"
-msgstr ""
+msgstr "Subscription error"
 
 #: ../../portable/singleclick.py:274
 msgid ""
 "This $shortAppName channel file has an invalid format: $url. Please notify "
 "the publisher of this file."
 msgstr ""
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
 
 #: ../../portable/singleclick.py:282
 msgid ""

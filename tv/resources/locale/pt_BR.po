@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-03-20 15:31+0000\n"
-"Last-Translator: lokodan <lokodan@gmail.com>\n"
+"PO-Revision-Date: 2008-04-10 14:45+0000\n"
+"Last-Translator: Felipe <Unknown>\n"
 "Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "Save this video"
@@ -1112,11 +1112,10 @@ msgid ""
 "doing, paste in the log message from the box above, and answer a few "
 "questions, and we'll get right to work.</font>"
 msgstr ""
-"<font face=\"Lucida Grande\" size=\"-1\">Nosso gerenciador de bugs fica em "
-"<a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Basta contar-nos o que você "
-"estava fazendo, copiar a mensagem de registro da caixa acima e responder "
-"algumas perguntas, que nós começaremos a trabalhar no problema "
-"imediatamente.</font>"
+"<font face=\"Lucida Grande\" size=\"-1\">Nosso bug tracker fica em <a "
+"href=\"$bugTrackerURL\">$bugTrackerURL</a>. Apenas conte-nos o que você "
+"estava fazendo, cole no log das mensagens da caixa acima, e responda algumas "
+"perguntas, e nós começaremos a trabalhar.</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
@@ -1144,7 +1143,7 @@ msgid "The fall of $shortAppName??"
 msgstr "A queda de $shortAppName??"
 
 msgid "About Miro"
-msgstr "Sobre"
+msgstr "Sobre o Miro"
 
 msgid "Add Channel..."
 msgstr "Adicionar Canal..."
@@ -1201,7 +1200,7 @@ msgid "File"
 msgstr "Arquivo"
 
 msgid "Full Screen"
-msgstr "Tela Cheia"
+msgstr "Tela Inteira"
 
 msgid "Help"
 msgstr "Ajuda"
@@ -2214,6 +2213,11 @@ msgid ""
 "because it's located on an external drive that is currently disconnected.  "
 "Please, connect the drive or create the directory, then start Miro again."
 msgstr ""
+"\n"
+"Miro não pode achar o seu diretório primário de vídeo $moviesDirectory.  "
+"Isso pode ter acontecido por ele estar localizado em uma unidade externa que "
+"no momento está disconectada. Por favor, conecte a unidade ou crie o "
+"diretório, para então iniciar o Miro novamenten."
 
 #: ../../portable/feed.py:384
 msgid "never"
@@ -3540,7 +3544,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "<b>xine</b>"
-msgstr ""
+msgstr "<b>xine</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
@@ -3691,7 +3695,7 @@ msgstr "Usar _portas:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "Use this for video when listening to audio:"
-msgstr ""
+msgstr "Use este vídeo quando ouvir um áudio:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "Use this renderer to play videos:"
@@ -3798,6 +3802,11 @@ msgid ""
 "fftgraph\n"
 "none"
 msgstr ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:96
 msgid ""
@@ -3813,6 +3822,8 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName versão $appVersion ($appRevision); copyright (c) 2005-2008 "
+"$publisher.  $longAppName e o logo $longAppName são trademarks de $publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"

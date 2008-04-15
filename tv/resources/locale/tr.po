@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-03-23 16:40+0000\n"
-"Last-Translator: mserdark <Unknown>\n"
+"PO-Revision-Date: 2008-04-09 22:06+0000\n"
+"Last-Translator: sg <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -303,7 +303,7 @@ msgstr "(filmler dizini buraya gidiyor)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
 msgid "1 day"
@@ -375,7 +375,7 @@ msgid "Folder location"
 msgstr "Dosya yeri"
 
 msgid "GB\n"
-msgstr ""
+msgstr "GB\n"
 
 msgid "Ignore unencrypted connections"
 msgstr "Kriptolanmamış (şifrelenmemiş) bağlantıları göz ardı et"
@@ -2460,7 +2460,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "<b>xine</b>"
-msgstr ""
+msgstr "<b>xine</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
@@ -2507,7 +2507,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid "G_B"
-msgstr ""
+msgstr "G_B"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:42
 msgid "Go"
@@ -2671,7 +2671,7 @@ msgstr "_Genel"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_KB/s."
-msgstr ""
+msgstr "_KB/s."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Keep at least this much free space on my drive:"
@@ -2714,12 +2714,19 @@ msgid ""
 "fftgraph\n"
 "none"
 msgstr ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:96
 msgid ""
 "xine\n"
 "gstreamer"
 msgstr ""
+"xine\n"
+"gstreamer"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
@@ -2727,6 +2734,9 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName Sürümü $appVersion ($appRevision); Telif Hakkı (c) 2005-2008 "
+"$publisher.  $longAppName ve $longAppName logo'su $publisher'ın tescilli "
+"markasıdır."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
@@ -2874,7 +2884,7 @@ msgstr "Klasör"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
 msgid "Ignore Unencrypted Connections"
@@ -2882,7 +2892,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
 msgid "KB/s"
-msgstr ""
+msgstr "KB/s"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
 msgid "Limit downstream bandwith to:"

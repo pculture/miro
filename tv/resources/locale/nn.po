@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-03-09 13:45+0000\n"
+"PO-Revision-Date: 2008-04-12 13:28+0000\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -1133,6 +1133,10 @@ msgid ""
 "because it's located on an external drive that is currently disconnected.  "
 "Please, connect the drive or create the directory, then start Miro again."
 msgstr ""
+"\n"
+"Miro finn ikkje hovudfilmmappa «$moviesDirectory». Dette kan vera fordi "
+"mappa ligg på     ein ekstern harddisk som ikkje er kopla til. Avslutt Miro, "
+"kopla til den eksterne harddisken, og start så Miro på nytt."
 
 #: ../../portable/feed.py:384
 msgid "never"
@@ -1581,7 +1585,7 @@ msgstr "Spel"
 #: ../../portable/frontends/html/contextmenu.py:131
 #: ../../portable/frontends/html/contextmenu.py:213
 msgid "Add to new playlist"
-msgstr "Legg til ny speleliste"
+msgstr "Legg til i ny speleliste"
 
 #: ../../portable/frontends/html/contextmenu.py:133
 #: ../../portable/frontends/html/contextmenu.py:206
@@ -1649,7 +1653,7 @@ msgstr "Tilbakestill tittel"
 
 #: ../../portable/frontends/html/contextmenu.py:212
 msgid "Play Just This Video"
-msgstr "Berre spel denne filmen"
+msgstr "Spel berre denne filmen"
 
 #: ../../portable/frontends/html/contextmenu.py:231
 #: ../../portable/playlist.py:218
@@ -2273,7 +2277,7 @@ msgstr "Er du sikker på at du vil fjerna gaiden «%s»?"
 #: ../../portable/controller.py:211
 #, python-format
 msgid "Are you sure you want to remove %s"
-msgstr "Er du sikker på at du vil fjerna «%s»"
+msgstr "Er du sikker på at du vil fjerna «%s»?"
 
 #: ../../portable/controller.py:214 ../../portable/controller.py:259
 #: ../../portable/controller.py:285 ../../portable/controller.py:304
@@ -2284,7 +2288,7 @@ msgstr "Fjern %s kanalar"
 #: ../../portable/controller.py:216
 #, python-format
 msgid "Are you sure you want to remove these %s playlists"
-msgstr "Er du sikker på at du vil fjerna desse %s spelelistene"
+msgstr "Er du sikker på at du vil fjerna desse %s spelelistene?"
 
 #: ../../portable/controller.py:255
 msgid ""
@@ -2388,7 +2392,7 @@ msgid ""
 "restart Miro for the changes to take effect."
 msgstr ""
 "<b>Merk:</b> Viss du endrar filmvisaren, <i>må</i> du starta Miro på nytt "
-"for at den nye visaren vert teken i bruk."
+"før den nye visaren vert teken i bruk."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 msgid "<b>Searching for Videos</b>"
@@ -2452,16 +2456,16 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "<b>xine</b>"
-msgstr ""
+msgstr "<b>xine</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
 msgid "Auto download default setting for new channels"
-msgstr "Innstillingar for automatisk nedlasting av nye kanalar"
+msgstr "Standarval for nedlasting av nye kanalar:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:30
 msgid "Automatically for_ward ports."
-msgstr "Vidare_send automatisk portar."
+msgstr "Vidare_send automatisk portar"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
 msgid "By default, videos _expire after"
@@ -2493,9 +2497,9 @@ msgid ""
 "Every hour\n"
 "Manually"
 msgstr ""
-"Kvar halvtime\n"
-"Kvart time\n"
-"Manuelt"
+"kvar halvtime\n"
+"kvar time\n"
+"manuelt"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:41
 msgid "G_B"
@@ -2516,7 +2520,7 @@ msgstr "Her:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Limit torrent _downstream to:"
-msgstr "Avgrense torrent_nedlasting til:"
+msgstr "Avgrens torrent_nedlasting til:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
 msgid "Maximum number of channel auto-downloads at a time: "
@@ -2599,11 +2603,11 @@ msgstr "For å hindra overbalasta nettverk, avgrens _opplasting til:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:69
 msgid "Use _ports:"
-msgstr "Bruk _portar:"
+msgstr "Bruk _portane:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid "Use this for video when listening to audio:"
-msgstr ""
+msgstr "Bruk dette som videoillustrasjon ved avspeling av lydfiler:"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "Use this renderer to play videos:"
@@ -2709,6 +2713,11 @@ msgid ""
 "fftgraph\n"
 "none"
 msgstr ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:96
 msgid ""
@@ -2724,6 +2733,8 @@ msgid ""
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName versjon $appVersion ($appRevision). Copyright © 2005–2008 "
+"$publisher. $longAppName og $longAppName-logoen er varemerker til $publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"

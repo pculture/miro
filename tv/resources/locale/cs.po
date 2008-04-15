@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-02-27 15:54+0000\n"
-"Last-Translator: Vi <Unknown>\n"
+"PO-Revision-Date: 2008-04-12 18:12+0000\n"
+"Last-Translator: defr <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "Open various files"
@@ -1046,8 +1046,9 @@ msgid "Folder Location"
 msgstr "Adresa složky"
 
 #: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
+#, fuzzy
 msgid "Update Available"
-msgstr "Je dostupná aktualizace"
+msgstr "Dostupná nová aktualizace"
 
 #: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
 #, python-format

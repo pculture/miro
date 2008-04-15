@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-03-29 13:28+0000\n"
-"Last-Translator: Reinier Kip <Unknown>\n"
+"PO-Revision-Date: 2008-04-10 08:44+0000\n"
+"Last-Translator: Markus Brummer <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -349,8 +349,9 @@ msgstr "Kaikki"
 msgid "Auto download default setting for new channels:"
 msgstr "Lataa automaattisesti oletusasetukset uusille kanaville"
 
+#, fuzzy
 msgid "Automatically forward ports"
-msgstr ""
+msgstr "Automaattisesti ohjatut portit"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "BitTorrent"
@@ -1139,12 +1140,17 @@ msgid "Video Directory Missing"
 msgstr "Videokansio puuttuu"
 
 #: ../../portable/startup.py:238
+#, fuzzy
 msgid ""
 "\n"
 "Miro can't find your primary video directory $moviesDirectory.  This may be "
 "because it's located on an external drive that is currently disconnected.  "
 "Please, connect the drive or create the directory, then start Miro again."
 msgstr ""
+"\n"
+"Miro ei löydä ensisijaista videohakemistoasi $moviesDirectory. Tämä voi "
+"johtua siitä että sen on kohdennettu ulkoiselle asemalle joka on irroitettu. "
+"Ole hyvä ja yhdistä asema tai luo uusi hakemisto ja käynnistä Miro uudelleen."
 
 #: ../../portable/feed.py:384
 msgid "never"
@@ -2443,7 +2449,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:27
 msgid "<b>xine</b>"
-msgstr ""
+msgstr "<b>xine</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17

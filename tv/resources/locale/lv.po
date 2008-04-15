@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: _democracyplayer-lv\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-04-02 15:46-0400\n"
-"PO-Revision-Date: 2008-04-07 21:12+0000\n"
+"PO-Revision-Date: 2008-04-12 09:10+0000\n"
 "Last-Translator: Uldis Trapencieris <uldism@gmail.com>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2008-04-08 14:44+0000\n"
+"X-Launchpad-Export-Date: 2008-04-15 03:45+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -1475,7 +1475,7 @@ msgstr "Pievienot %d kanālus jaunai mapei"
 
 #: ../../portable/singleclick.py:250 ../../portable/folder.py:224
 msgid "Enter a name for the new channel folder"
-msgstr "IEvadiet jaunās kanālu mapes nosaukumu"
+msgstr "Ievadiet jaunās kanālu mapes nosaukumu"
 
 #: ../../portable/singleclick.py:253
 #, python-format
@@ -1483,8 +1483,8 @@ msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
 "will stay where they currently are."
 msgstr ""
-"PIEZĪME: Jūs jau esat pierakstījušies uz %d no šiem kanāliem. Šie kanāli "
-"paliks tur, kur tie atrodas šobrīd."
+"PIEZĪME: Jūs jau esat pierakstījies uz %d no šiem kanāliem. Šie kanāli "
+"paliks tur, kur tie šobrīd atrodas."
 
 #: ../../portable/singleclick.py:264
 msgid "Subscription error"
@@ -1503,7 +1503,7 @@ msgid ""
 "This $shortAppName channel file has the wrong content type: $url. Please "
 "notify the publisher of this file."
 msgstr ""
-"Šim $shortAppName kanālam ir nederīgs formāta tips: $url. Lūdzu ziņojiet tā "
+"Šim $shortAppName kanālam ir nederīgs formāta veids: $url. Lūdzu ziņojiet tā "
 "autoriem par šo failu."
 
 #: ../../portable/singleclick.py:286
@@ -1517,7 +1517,7 @@ msgstr "Nederīgs torrents"
 #: ../../portable/singleclick.py:335
 #, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr "Torrent fails %s izskats bojats un to nevar atvērt. [OK]"
+msgstr "Torrent fails %s izskatās bojāts un to nevar atvērt. [OK]"
 
 #: ../../portable/folder.py:142
 #: ../../portable/frontends/html/contextmenu.py:183
@@ -1527,17 +1527,17 @@ msgstr "Pārsaukt kanālu mapi"
 #: ../../portable/folder.py:144
 #, python-format
 msgid "Enter a new name for the channel folder %s"
-msgstr "Ievadiet jaunu kanālu mapes %s nosaukumu"
+msgstr "Ievadiet jaunu kanāla mapes %s nosaukumu"
 
 #: ../../portable/folder.py:213
 #: ../../portable/frontends/html/contextmenu.py:189
 msgid "Rename Playlist Folder"
-msgstr "Pārsaukt repertuāru mapi"
+msgstr "Pārsaukt repertuāra mapi"
 
 #: ../../portable/folder.py:215
 #, python-format
 msgid "Enter a new name for the playlist folder %s"
-msgstr "Ievadiet jaunu lejupielāžu mapes %s nosaukmu"
+msgstr "Ievadiet jaunu repertuāra mapes %s nosaukmu"
 
 #: ../../portable/folder.py:223
 msgid "Create Channel Folder"
@@ -1545,11 +1545,11 @@ msgstr "Izveidot kanālu mapi"
 
 #: ../../portable/folder.py:237
 msgid "Create Playlist Folder"
-msgstr "Izveidot repartuāru mapi"
+msgstr "Izveidot repertuāra mapi"
 
 #: ../../portable/folder.py:238
 msgid "Enter a name for the new playlist folder"
-msgstr "Ievadiet jaunu repertuāru mapes nosaukumu"
+msgstr "Ievadiet jaunās repertuāra mapes nosaukumu"
 
 #: ../../portable/opml.py:144
 msgid "OPML Import failed"
@@ -1575,9 +1575,9 @@ msgstr[2] "Veiksmīgi importētas %d barotnes."
 #, python-format
 msgid "Skipped %d feed already present."
 msgid_plural "Skipped %d feeds already present."
-msgstr[0] "Izlaista %d barotne jau ir pieejama."
-msgstr[1] "Izlaistas %d barotnes jau ir pieejamas."
-msgstr[2] "Izlaistas %d barotnes jau ir pieejamas."
+msgstr[0] "Izlaistā %d barotne jau ir pieejama."
+msgstr[1] "Izlaistās %d barotnes jau ir pieejamas."
+msgstr[2] "Izlaistās %d barotnes jau ir pieejamas."
 
 #: ../../portable/frontends/html/contextmenu.py:104
 msgid "Update Channels Now"
@@ -1637,7 +1637,7 @@ msgstr "%d video lejupielādējas"
 #: ../../portable/frontends/html/contextmenu.py:159
 #: ../../portable/frontends/html/contextmenu.py:224
 msgid "Cancel Download"
-msgstr "Atclt lejupielādi"
+msgstr "Atcelt lejupielādi"
 
 #: ../../portable/frontends/html/contextmenu.py:161
 #: ../../portable/frontends/html/contextmenu.py:224
