@@ -91,12 +91,12 @@ a.feeditem {
     white-space: nowrap;
 }
 a.feeditem div.name {
-	padding: 6px 3px 3px 3px;
+  line-height:20px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 .tab-list.first a.feeditem div.name {
-  padding-top:7px;
+  line-height:24px;
 }
 .tab-list.first a.feeditem,
 a.feeditem.folder {
@@ -333,7 +333,7 @@ a.feeditem.normal .feed-loading-icon {
 	font-size: 10px;
 	color: #FFFFFF;
 	line-height:14px;
-	padding:1px 0 0 0;
+	padding:0;
 	font-weight: normal;
 	background-position: left top;
 	background-repeat:repeat-x;
