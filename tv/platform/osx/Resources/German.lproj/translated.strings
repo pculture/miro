@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 14:33-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-15 09:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Abbrechen";
@@ -12,16 +12,15 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "OK" = "OK";
 
 /* File: ../../portable/dialogs.py:84 */
-"Ok" = "Ok";
+"Ok" = "OK";
 
 "$log" = "$log";
 
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Unsere Fehlerverwaltung findest du hier: <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Teile uns bitte mit, was du vor dem Erscheinen der Fehlermeldung gemacht hast, kopiere obige Logmeldung und beantworte einige kurze Fragen. Wir machen uns danach umgehend an die Arbeit!</font>";
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Unsere Fehlerverwaltung findest du hier: <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Teile uns einfach kurz mit, was du vor dem Auftreten des Fehlers gemacht hast, kopiere obige Logmeldung und beantworte einige kurze Fragen. Wir machen uns danach umgehend an die Arbeit!</font>";
 
-/* Flag: untranslated */
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" /* = "Hast du einen Moment Zeit, uns einen Fehlerbericht einzureichen? Gib bitte zumindest eine kurze und möglichst exakte Beschreibung an, wie es zu der Fehlermeldung kam und füge den Inhalt der unteren Textbox hinzu:" */;
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Hast du einen Moment Zeit? Dann fülle bitte den Fehlerbericht aus. Dazu benötigen wir mindestens eine möglichst genaue Beschreibung dessen, was du vor dem Auftreten des Fehlers gemacht hast. Füge außerdem den Inhalt der unten stehenden Textbox hinzu.";
 
-"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Pech gehabt! $longAppName wurde Opfer innerer Verwirrung oder Starrköpfigkeit $when. Wir entschuldigen uns und empfehlen das Sie $shortAppName beenden und neu starten. Das wird ihm eine Lehre sein und verringert auch die Wahrscheinlichkeit dass Sie ihre Einstellungen oder Kanal-Abonnements verlieren.";
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Mist! $longAppName wurde Opfer irgendeiner geistigen Verwirrung oder Starrköpfigkeit $when. Wir entschuldigen uns und schlagen vor, $shortAppName zu beenden und neu zu starten. Das wird ihm eine Lehre sein und verringert auch die Wahrscheinlichkeit, deine Einstellungen oder Kanal-Abonnements zu verlieren.";
 
 "The fall of $shortAppName??" = "Der Untergang von $shortAppName??";
 
@@ -736,8 +735,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Video Directory Missing" = "Das Videoverzeichnis ist nicht auffindbar.";
 
 /* File: ../../portable/startup.py:238 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." /* = "\nMiro kann dein primäres Videoverzeichnis $moviesDirectory nicht finden. Das könnte daran liegen, dass es sich auf einem externen Speichermedium befindet, das zur Zeit nicht angeschlossen ist. Bitte schließe gegenbenenfalls dieses Medium an oder erstelle das Verzeichnis und starte dann Miro neu." */;
+"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nMiro kann dein Hauptverzeichnis für Videos $moviesDirectory nicht finden. Das könnte daran liegen, dass es sich auf einem externen Speichermedium befindet, welches zur Zeit nicht angeschlossen ist. Verbinde es gegenbenenfalls neu oder erstelle das Verzeichnis, und starte Miro anschließend neu.";
 
 /* File: ../../portable/feed.py:384 */
 "never" = "nie";
@@ -1716,8 +1714,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Use _ports:" = "Verwende _Ports:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
-/* Flag: untranslated */
-"Use this for video when listening to audio:" = "Use this for video when listening to audio:" /* = "Benutze folgendes wenn Audio wiedergegeben wird:" */;
+"Use this for video when listening to audio:" = "Benutze folgendes als Anzeige während einer reinen Audio-Wiedergabe:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
 "Use this renderer to play videos:" = "Verwende diesen Renderer zur Videowiedergabe:";
@@ -1777,8 +1774,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Watch for new videos in these folders and include them in the Library" = "_Überprüfe auf neue Videos in diesen Verzeichnissen und füge sie zur Bibliothek hinzu";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:91 */
-/* Flag: untranslated */
-"goom\noscope\nfftscope\nfftgraph\nnone" = "goom\noscope\nfftscope\nfftgraph\nnone" /* = "goom\noscope\nfftscope\nfftgraph\nkeine" */;
+"goom\noscope\nfftscope\nfftgraph\nnone" = "goom\noscope\nfftscope\nfftgraph\nkeine";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:96 */
 "xine\ngstreamer" = "xine\ngstreamer";

@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 14:33-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-15 09:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Cancelar";
@@ -16,9 +16,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "$log" = "$log";
 
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Nuestro gestor de errores se encuentra en <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Por favor, díganos lo que estaba haciendo cuando ocurrió el problema. Copie el mensaje de la caja de registro de arriba, conteste unas cuantas preguntas, y nos pondremos a trabajar en ello enseguida.</font>";
+/* Flag: untranslated */
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>";
 
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Si tiene un momento, ¿podría enviar un informe del problema a nuestro sistema de seguimiento de errores? Como mínimo, necesitaríamos una descripción de lo que estaba haciendo en ese momento (tan precisa como le sea posible) junto con la frase aparentemente carente de sentido de la caja de abajo:";
+/* Flag: untranslated */
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:";
 
 "Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "$longAppName provocó un error $when. Le pedimos disculpas y sugerimos que reinicie $shortAppName. Esto reducirá la posibilidad de perder sus preferencias o suscripciones de canales.";
 
@@ -200,7 +202,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "99999" = "99999";
 
-"Add..." = "Añadir...";
+"Add..." = "Agregar...";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
 "All" = "Todo";
@@ -302,7 +304,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "In this:" = "En este:";
 
-"Item1" = "Item1";
+"Item1" = "Elemento1";
 
 "Search Engine" = "Motor de búsqueda";
 
@@ -315,7 +317,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(analizados %d archivos - encontrados %d vídeos)";
 
-"Back" = "Volver";
+"Back" = "Regresar";
 
 "Browse" = "Examinar";
 
@@ -326,7 +328,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "No";
 
-"Only search my Movies folder." = "Buscar sólo en mi directorio de vídeos";
+"Only search my Movies folder." = "Buscar solamente en mi carpeta de videos";
 
 "Search my entire Home folder." = "Buscar en toda mi carpeta personal";
 
@@ -337,9 +339,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "El Reproductor Miro puede encontrar todos los vídeos en su ordenador para ayudarle a organizar su colección.\n\n\n¿Desea que Miro busque vídeos en su ordenador?";
 
-"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "Las siguientes pantallas le ayudarán a configurar Miro para que funcione de forma óptima. Ésta es la primera pregunta.";
+"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "Las siguientes pantallas le ayudarán a configurar Miro para que funcione de manera óptima. Ésta es la primer pregunta.";
 
-"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Le recomendamos que permita al Reproductor Miro ejecutarse cuando su ordenador se enciende. De esta manera, aquellos vídeos que no terminaron de descargarse pueden finalizar y los nuevos vídeos en sus canales estarán preparados para cuando quiera verlos.\n\n\n¿Desea que Miro se ejecute cuando su ordenador se enciende?";
+"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Le recomendamos que permita al Reproductor Miro ejecutarse cuando su ordenador se encienda. De esta manera, aquellos vídeos que no terminaron de descargarse pueden finalizar y los nuevos vídeos en sus canales estarán preparados para cuando quiera verlos.\n\n\n¿Desea que Miro se ejecute cuando su ordenador se encienda?";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
 "Welcome to Internet TV!" = "¡Bienvenido a la televisión por Internet!";
@@ -423,7 +425,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:53 */
 /* File: ../../portable/menubar.py:199 */
-"_Update Channels..." = "A_ctualizar canales...";
+"_Update Channels..." = "_Actualizar canales...";
 
 /* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
 "Pause Video" = "Pausar vídeo";
@@ -439,7 +441,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Subscribe to Channel" = "Suscribirse al canal";
 
 /* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
-"Enter the URL of the channel you would like to subscribe to." = "Escribe la URL del canal al que deseas suscribirte";
+"Enter the URL of the channel you would like to subscribe to." = "Escribe la URL del canal al que desea suscribirse";
 
 /* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
 "Finish" = "Finalizar";
@@ -448,7 +450,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Search!" = "¡Buscar!";
 
 /* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
-"Download Completed" = "Descarga Completada";
+"Download Completed" = "Descarga Completa";
 
 /* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
 /* Flag: python-format */
@@ -495,7 +497,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
 /* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Ha seleccionado una nueva carpeta para descargar vídeos. ¿Debe %s migrar sus descargas preexistentes allí? (Los vídeos que están descargándose en este momento no se moveran hasta que terminen).";
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Ha seleccionado una nueva carpeta para descargar vídeos. ¿Debe %s migrar sus descargas preexistentes allí? (Los vídeos que están descargándose en este momento no se moverán hasta que terminen).";
 
 /* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
 "View this Directory in the Library" = "Ver este directorio en la biblioteca";
@@ -504,7 +506,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Select a Directory to view in the Library." = "Elija un directorio para verlo en la biblioteca";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
-"Settings" = "Preferencias";
+"Settings" = "Configuración";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56 */
 "Hide" = "Ocultar";
@@ -526,7 +528,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Password:" = "Contraseña:";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416 */
-"Unknown Runtime Error" = "Error en ejecucion desconocido";
+"Unknown Runtime Error" = "Error en ejecución desconocido";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417 */
 /* Flag: python-format */
@@ -539,7 +541,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Folder Location" = "Ubicación de la carpeta";
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
-"Update Available" = "Disponible una actualización";
+"Update Available" = "Actualización disponible";
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
 /* Flag: python-format */
@@ -556,7 +558,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
 /* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "Ha habido un error abriendo %s. Por favor, inténtelo dentro de unos segundos";
+"There was an error opening %s.  Please try again in a few seconds" = "Ha habido un error abriendo %s. Por favor, inténtelo de nuevo dentro de unos segundos";
 
 /* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
 /* Flag: python-format */
@@ -588,7 +590,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Would you like to delete this file or just remove its entry from the Library?" = "¿Desea borrar este archivo o tan sólo quitarlo de la biblioteca?";
 
 /* File: ../../portable/item.py:526 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Es una carpeta. Si se elimina, todo lo que hay dentro también se eliminara.";
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Esto es una carpeta. Si se elimina, todo lo que hay dentro también se eliminará.";
 
 /* File: ../../portable/item.py:552 */
 /* File: ../../portable/feed.py:390 */
@@ -722,20 +724,20 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/startup.py:93 */
 /* Flag: python-format */
-"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "Un error desconocido impidió inicar Miro. Por favor envía un informe de error a %s";
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "Un error desconocido impidió iniciar Miro. Por favor envíe un informe de error a %s";
 
 /* File: ../../portable/startup.py:155 */
 "Database too new" = "Base de datos demasiado nueva";
 
 /* File: ../../portable/startup.py:156 */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Tiene una base de datos guardada con una versión más moderna de $shortAppName. Debe descargar la última versión de $shortAppName y ejecutarla.";
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Tiene una base de datos guardada con una versión más reciente de $shortAppName. Debe descargar la última versión de $shortAppName y ejecutarla.";
 
 /* File: ../../portable/startup.py:237 */
 /* File: ../../portable/frontends/html/main.py:134 */
 "Video Directory Missing" = "Falta el directorio de vídeos";
 
 /* File: ../../portable/startup.py:238 */
-"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nMiro no puede encontrar su directorio principal de videos $moviesDirectory. Puede ser que su directorio se encuentre en un disco externo que  se encuentra actualmente desconectado. Por favor conecte el Disco o cree el directorio. y finalmente reinicie Miro para Iniciar";
+"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nMiro no puede encontrar su directorio principal de videos $moviesDirectory. Puede ser que su directorio se encuentre en un disco externo que  se encuentra actualmente desconectado. Por favor conecte el Disco o cree el directorio y reinicie Miro";
 
 /* File: ../../portable/feed.py:384 */
 "never" = "nunca";
@@ -774,7 +776,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Channel is not compatible with $shortAppName!" = "El canal no es compatible con $shortAppName";
 
 /* File: ../../portable/feed.py:1059 */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Pero trataremos de conseguir los archivos. Puede tardar un poco hacer una lista de los vídeos, y las descripciones pueden parecer estrañas. Por favor, contacte a los que publican $url y pregúnteles si pueden proporcionar una fuente en un formato que funcione con $shortAppName.\n\n¿Desea abrir el canal de todas formas?";
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Pero trataremos de conseguir los archivos. Puede tardar un poco hacer una lista de los vídeos, y las descripciones pueden parecer extrañas. Por favor, contacte a los que publican $url y pregúntel si pueden proporcionar una fuente en un formato que funcione con $shortAppName.\n\n¿Desea abrir el canal de cualquier modo?";
 
 /* File: ../../portable/feed.py:2382 */
 /* File: ../../portable/feed.py:2472 */
@@ -870,10 +872,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Internal Error" = "Error interno";
 
 /* File: ../../portable/httpclient.py:140 */
-"Pipeline request never started" = "La solicitud de tubería no llegó a comenzar";
+"Pipeline request never started" = "La solicitud de tubería no comenzó";
 
 /* File: ../../portable/httpclient.py:144 */
-"Timeout" = "Plazo expirado";
+"Timeout" = "Tiempo agotado";
 
 /* File: ../../portable/httpclient.py:145 */
 /* Flag: python-format */

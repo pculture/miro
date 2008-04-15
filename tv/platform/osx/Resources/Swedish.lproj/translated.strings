@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 14:33-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-15 09:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: python-format */
@@ -205,7 +205,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
 /* Flag: untranslated */
-"All" = "All";
+"All" = "All" /* = "Alla" */;
 
 /* Flag: untranslated */
 "Auto download default setting for new channels:" = "Auto download default setting for new channels:" /* = "Ladda automatisk ned inställningar för nya kanaler:" */;
@@ -230,7 +230,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Folder location" = "Mapplats";
 
 /* Flag: untranslated */
-"GB\n" = "GB\n";
+"GB\n" = "GB\n" /* = "GB\n" */;
 
 "Ignore unencrypted connections" = "Ignorera okrypterade anslutningar";
 
@@ -641,7 +641,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/item.py:1008 */
 /* Flag: untranslated */
-"Leechers:" = "Leechers:";
+"Leechers:" = "Leechers:" /* = "Användare med delar av flödet:" */;
 
 /* File: ../../portable/item.py:1010 */
 "Down Rate:" = "Nedladdningshastighet:";
@@ -1288,7 +1288,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/iheartmiro.py:82 */
 /* Flag: untranslated */
-"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.";
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." /* = "Ett lätt sätt att hjälpa Miro\n\nMiro bygger på öppen källkod och ideelt arbete. Vi behöver din hjälp för att kunna fortsätta vårt arbete.\n\nI Heart Miro är ett plugin till Firefox som genererar en liten summa pengar till organisationen Miro varje gång som du handlar på Amazon. Du kommer aldrig att märka av den, kostar dig inget och är lätt att avinstallera.\n\nOm du klicka på 'Installera iHeartMiro' här nedan kommer Firefox öppnas och fråga om det är ok. Svarar du ja där är du klar. Det tar ungefär 7 sekunder. Tack för din hjälp." */;
 
 /* File: ../../portable/menubar.py:158 */
 "_Open" = "Öppna (_O)";
@@ -1636,7 +1636,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
 /* Flag: untranslated */
-"Auto download default setting for new channels" = "Auto download default setting for new channels";
+"Auto download default setting for new channels" = "Auto download default setting for new channels" /* = "Ladda automatiskt ned inställningar för denna kanal" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
 "Automatically for_ward ports." = "Framåtbefordra portar automatiskt.";
@@ -1664,7 +1664,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
 /* Flag: untranslated */
-"G_B" = "G_B";
+"G_B" = "G_B" /* = "G_B" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
 "Go" = "Gå";
@@ -1737,7 +1737,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
 /* Flag: untranslated */
-"Use this for video when listening to audio:" = "Use this for video when listening to audio:";
+"Use this for video when listening to audio:" = "Use this for video when listening to audio:" /* = "Använd det här som video när jag lyssnar på ljud:" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
 "Use this renderer to play videos:" = "Använd denna renderar för att spela filmer:";
@@ -1771,11 +1771,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
 /* Flag: untranslated */
-"_KB/s." = "_KB/s.";
+"_KB/s." = "_KB/s." /* = "_KB/s." */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
 /* Flag: untranslated */
-"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:" /* = "_Spara minst så här mycket ledigt utrymme på min hårddisk:" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
 "_Playback" = "_Uppspelning";
@@ -1800,7 +1800,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:91 */
 /* Flag: untranslated */
-"goom\noscope\nfftscope\nfftgraph\nnone" = "goom\noscope\nfftscope\nfftgraph\nnone";
+"goom\noscope\nfftscope\nfftgraph\nnone" = "goom\noscope\nfftscope\nfftgraph\nnone" /* = "goom\noscope\nfftscope\nfftgraph\ningen" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:96 */
 "xine\ngstreamer" = "xine\ngstreamer";
@@ -1901,11 +1901,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
 /* Flag: untranslated */
-"KB/s" = "KB/s";
+"KB/s" = "KB/s" /* = "KB/s" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
 /* Flag: untranslated */
-"Limit downstream bandwith to:" = "Limit downstream bandwith to:";
+"Limit downstream bandwith to:" = "Limit downstream bandwith to:" /* = "Begränsa bandbredden nedströms till:" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Manually" = "Manuellt";

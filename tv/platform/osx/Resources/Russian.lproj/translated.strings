@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 14:33-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-15 09:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: untranslated */
@@ -744,7 +744,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/startup.py:238 */
 /* Flag: untranslated */
-"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again.";
+"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." /* = "\nMiro не может найти вашу основную папку видео $moviesDirectory. Возможно это произошло потому что она находится на внешнем носителе, который в данный момент отключен. Пожалуйста, подключите носитель или создайте папку, а затем запустите Miro заново." */;
 
 /* File: ../../portable/feed.py:384 */
 "never" = "никогда";
@@ -1808,7 +1808,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
 /* Flag: untranslated */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." /* = "$longAppName версия $appVersion ($appRevision); copyright (c) 2005-2008 $publisher. $longAppName и $longAppName logo являются зарегистрированными торговыми марками $publisher." */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
 "About $longAppName" = "О $longAppName";

@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 14:33-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-15 09:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: untranslated */
@@ -1719,7 +1719,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
 /* Flag: untranslated */
-"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:" /* = "For å unngå treghet over internett, begrens opplastningsstrømmen til:" */;
+"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:" /* = "For å unngå treghet på internett, begrens opplastningsstrømmen til:" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
 /* Flag: untranslated */

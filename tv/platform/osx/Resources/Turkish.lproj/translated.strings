@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 14:33-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-15 09:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "İptal";
@@ -175,7 +175,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "(movies directory path goes here)" = "(filmler dizini buraya gidiyor)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-/* Flag: untranslated */
 "-" = "-";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
@@ -227,7 +226,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Folder location" = "Dosya yeri";
 
-/* Flag: untranslated */
 "GB\n" = "GB\n";
 
 "Ignore unencrypted connections" = "Kriptolanmamış (şifrelenmemiş) bağlantıları göz ardı et";
@@ -1619,7 +1617,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Bitti!</b>\n\nKurulum tamamlandı -- artık birkaç kanal bulup izlemeye başlayabilirsiniz.\n\n<b>Beklemeyin:</b> Miro web sayfalarındaki videoları izlemekten farklıdır -- yayımcılar kocaman, kaliteli videolar sunabilirler. Yani bilgisayar başında video inmesini beklemeyin: indirmeye başlayın ve sonra gelip izleyin. \n\n<b>Açık Bırakın:</b> Miro düzenli olarak kanalları kontrol eder ve yeni videoları sizi rahatsız etmeden indirir. Açık bırakırsanız, seyretmek istediğinizde videolarınız sizi bekliyor olacaktır.\n\n<b>Boş Disk Alanına Kafanızı Takmayın:</b> Aynen TiVo gibi, Miro da bir \"son kullanma tarihi\" sistemi içeriyor. Bu sistem yeni videolara yer açmak için eskilerini siliyor. Tabi her zaman bir videoyu \"kaydet\" tuşuna tıklayarak sürekli olarak saklayabilir ve istediğiniz kanallardaki videoları otomatik olarak saklanacak şekilde ayarlayabilirsiniz.\n\n<b>Büyütün:</b> Oynat düğmesinin yanındaki düğme videoalrı tam ekran olarak gösterir.\n\n<b>Video Bulun:</b> Miro Rehberi yüzlerce internet televizyon kanalı içeriyor. Hepsi de bedava. Bir kanalı izlemek için \"EKLE\" tuşuna tıklamanız yeterli.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
-/* Flag: untranslated */
 "<b>xine</b>" = "<b>xine</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
@@ -1653,7 +1650,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Every 30 minutes\nEvery hour\nManually" = "Her 30 dakikada bir\nHer saat\nEl ile";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
-/* Flag: untranslated */
 "G_B" = "G_B";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
@@ -1765,7 +1761,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_General" = "_Genel";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
-/* Flag: untranslated */
 "_KB/s." = "_KB/s.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
@@ -1794,16 +1789,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_Watch for new videos in these folders and include them in the Library" = "Kütüphanem de dahil, yeni videoları kontrol et.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:91 */
-/* Flag: untranslated */
 "goom\noscope\nfftscope\nfftgraph\nnone" = "goom\noscope\nfftscope\nfftgraph\nnone";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:96 */
-/* Flag: untranslated */
 "xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
-/* Flag: untranslated */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName Sürümü $appVersion ($appRevision); Telif Hakkı (c) 2005-2008 $publisher.  $longAppName ve $longAppName logo'su $publisher'ın tescilli markasıdır.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
 "About $longAppName" = "$longAppName Hakkında";
@@ -1890,7 +1882,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Folder" = "Klasör";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-/* Flag: untranslated */
 "GB" = "GB";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
@@ -1898,7 +1889,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Ignore Unencrypted Connections" = "Ignore Unencrypted Connections";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
-/* Flag: untranslated */
 "KB/s" = "KB/s";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */

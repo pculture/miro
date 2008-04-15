@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 14:33-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-15 09:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Atcelt";
@@ -981,11 +981,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/singleclick.py:250 */
 /* File: ../../portable/folder.py:224 */
-"Enter a name for the new channel folder" = "IEvadiet jaunās kanālu mapes nosaukumu";
+"Enter a name for the new channel folder" = "Ievadiet jaunās kanālu mapes nosaukumu";
 
 /* File: ../../portable/singleclick.py:253 */
 /* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "PIEZĪME: Jūs jau esat pierakstījušies uz %d no šiem kanāliem. Šie kanāli paliks tur, kur tie atrodas šobrīd.";
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "PIEZĪME: Jūs jau esat pierakstījies uz %d no šiem kanāliem. Šie kanāli paliks tur, kur tie šobrīd atrodas.";
 
 /* File: ../../portable/singleclick.py:264 */
 "Subscription error" = "Pierakstīšanās kļūda";
@@ -994,7 +994,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Šim $shortAppName kanālam ir nederīgs formāts: $url. Lūdzu ziņojiet tā autoriem par šo failu.";
 
 /* File: ../../portable/singleclick.py:282 */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Šim $shortAppName kanālam ir nederīgs formāta tips: $url. Lūdzu ziņojiet tā autoriem par šo failu.";
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Šim $shortAppName kanālam ir nederīgs formāta veids: $url. Lūdzu ziņojiet tā autoriem par šo failu.";
 
 /* File: ../../portable/singleclick.py:286 */
 "Could not download the $shortAppName channel file: $url." = "Nevarēja lejupielādēt $shortAppName kanāla failu: $url.";
@@ -1004,7 +1004,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/singleclick.py:335 */
 /* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Torrent fails %s izskats bojats un to nevar atvērt. [OK]";
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Torrent fails %s izskatās bojāts un to nevar atvērt. [OK]";
 
 /* File: ../../portable/folder.py:142 */
 /* File: ../../portable/frontends/html/contextmenu.py:183 */
@@ -1012,24 +1012,24 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/folder.py:144 */
 /* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Ievadiet jaunu kanālu mapes %s nosaukumu";
+"Enter a new name for the channel folder %s" = "Ievadiet jaunu kanāla mapes %s nosaukumu";
 
 /* File: ../../portable/folder.py:213 */
 /* File: ../../portable/frontends/html/contextmenu.py:189 */
-"Rename Playlist Folder" = "Pārsaukt repertuāru mapi";
+"Rename Playlist Folder" = "Pārsaukt repertuāra mapi";
 
 /* File: ../../portable/folder.py:215 */
 /* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Ievadiet jaunu lejupielāžu mapes %s nosaukmu";
+"Enter a new name for the playlist folder %s" = "Ievadiet jaunu repertuāra mapes %s nosaukmu";
 
 /* File: ../../portable/folder.py:223 */
 "Create Channel Folder" = "Izveidot kanālu mapi";
 
 /* File: ../../portable/folder.py:237 */
-"Create Playlist Folder" = "Izveidot repartuāru mapi";
+"Create Playlist Folder" = "Izveidot repertuāra mapi";
 
 /* File: ../../portable/folder.py:238 */
-"Enter a name for the new playlist folder" = "Ievadiet jaunu repertuāru mapes nosaukumu";
+"Enter a name for the new playlist folder" = "Ievadiet jaunās repertuāra mapes nosaukumu";
 
 /* File: ../../portable/opml.py:144 */
 "OPML Import failed" = "OPML imports neizdevās";
@@ -1086,7 +1086,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../portable/frontends/html/contextmenu.py:159 */
 /* File: ../../portable/frontends/html/contextmenu.py:224 */
-"Cancel Download" = "Atclt lejupielādi";
+"Cancel Download" = "Atcelt lejupielādi";
 
 /* File: ../../portable/frontends/html/contextmenu.py:161 */
 /* File: ../../portable/frontends/html/contextmenu.py:224 */

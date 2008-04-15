@@ -14,7 +14,7 @@
 <!ENTITY prefs.channels.check.sixty "Kvar time">
 <!ENTITY prefs.channels.check.manually "Manuelt">
 
-<!ENTITY prefs.channels.autodownloaddefault "Innstillingar for automatisk nedlasting av nye kanalar">
+<!ENTITY prefs.channels.autodownloaddefault "Standarval for nedlasting av nye kanalar:">
 <!ENTITY prefs.channels.autodownloaddefault.all "Alle">
 <!ENTITY prefs.channels.autodownloaddefault.new "Ny">
 <!ENTITY prefs.channels.autodownloaddefault.off "Av">

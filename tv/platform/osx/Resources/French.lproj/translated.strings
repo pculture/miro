@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 14:33-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-15 09:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: untranslated */
@@ -171,8 +171,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Username:\n\n" = "Nom d'utilisateur :\n\n";
 
-/* Flag: untranslated */
-"(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)" /* = "Vous devez redémarrer Miro pour que les changements effectués soient appliqués" */;
+"(You must restart Miro for some of these changes to take effect)" = "(Vous devez redémarrer Miro pour que certains de ces changements soient effectifs)";
 
 "(You must restart Miro for this change to take effect)\n" = "(Vous devez redémarrer Miro pour que ces changements soient pris en compte)\n";
 
@@ -224,29 +223,23 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Check channels for new content:" = "Actualiser les chaînes :";
 
-/* Flag: untranslated */
-"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:" /* = "Ne pas télécharger automatiquement plus d'une vidéo à la fois par chaîne" */;
+"Don't auto-download more than this many videos per channel at once:" = "Ne pas télécharger plus de ... vidéo(s) à la fois pour chaque chaîne:";
 
-/* Flag: untranslated */
-"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:" /* = "Ne pas télécharger plus d'une vidéo à la fois" */;
+"Don't download more than this many videos at once:" = "Ne pas télécharger plus de ... vidéo(s) à la fois:";
 
 "Folder location" = "Emplacement du dossier";
 
-/* Flag: untranslated */
-"GB\n" = "GB\n" /* = "GB\n" */;
+"GB\n" = "Go\n";
 
-/* Flag: untranslated */
-"Ignore unencrypted connections" = "Ignore unencrypted connections" /* = "Ignorer les connexions non-cryptées" */;
+"Ignore unencrypted connections" = "Ignorer les connexions non cryptées";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
 "KB/s." = "Kb/s";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
-/* Flag: untranslated */
-"Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:" /* = "Concerver au moins cet espace libre sur mon disque:" */;
+"Keep at least this much free space on my drive:" = "Concerver au moins cet espace libre sur mon disque:";
 
-/* Flag: untranslated */
-"Limit downstream to" = "Limit downstream to" /* = "Limiter le taux de réception à" */;
+"Limit downstream to" = "Limiter le taux de réception à";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "Never" = "Jamais";
@@ -284,15 +277,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Stop uploads when this ratio is reached:" = "Arrêter le téléversement quand ce ratio est atteint";
 
-/* Flag: untranslated */
-"Store downloads in this folder:" = "Store downloads in this folder:" /* = "Conserver les téléchargements dans ce dossier" */;
+"Store downloads in this folder:" = "Enregistrer les téléchargements dans ce dossier:";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to" /* = "Pour éviter les ralentissements sur Internet, limiter le taux d'émission à" */;
+"To avoid internet slowdowns, limit upstream to" = "Pour éviter les ralentissements sur Internet, limiter le taux d'émission à";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
-/* Flag: untranslated */
-"Use these ports:" = "Use these ports:" /* = "Utiliser les ports suivants :" */;
+"Use these ports:" = "Utiliser les ports suivants :";
 
 /* File: ../../portable/frontends/html/main.py:321 */
 "Warn me when I attempt to quit with downloads in progress" = "Me prévenir lorsque je souhaite quitter alors que des téléchargements sont en cours";
@@ -677,13 +667,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/item.py:1037 */
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"License:" = "License:" /* = "Autorisation:" */;
+"License:" = "Licence :";
 
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"see permalink" = "see permalink" /* = "voir le lien permanent" */;
+"see permalink" = "voir le lien permanent";
 
 /* File: ../../portable/item.py:1049 */
 "REVEAL LOCAL FOLDER" = "MONTRER LE DOSSIER LOCAL";
@@ -1290,8 +1278,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Torrent file deleted" = "Fichier torrent supprimé";
 
 /* File: ../../portable/dl_daemon/download.py:981 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro." /* = "Le fichier torrent pour ce document a été supprimé en-dehors de Miro" */;
+"The torrent file for this item was deleted outside of Miro." = "Le fichier torrent pour cette entrée a été supprimé en-dehors de Miro.";
 
 /* File: ../../portable/iheartmiro.py:82 */
 /* Flag: untranslated */
@@ -1527,12 +1514,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Download Anyway" = "Télécharger quand même";
 
 /* File: ../../portable/dialogs.py:109 */
-/* Flag: untranslated */
-"Install iHeartMiro" = "Install iHeartMiro" /* = "Installer iHeartMiro" */;
+"Install iHeartMiro" = "Installer iHeartMiro";
 
 /* File: ../../portable/dialogs.py:110 */
-/* Flag: untranslated */
-"Don't Install" = "Don't Install" /* = "Ne pas installer" */;
+"Don't Install" = "Ne pas installer";
 
 /* File: ../../portable/dialogs.py:231 */
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
@@ -1682,8 +1667,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "In This:" = "Dans Ceci:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-/* Flag: untranslated */
-"Limit torrent _downstream to:" = "Limit torrent _downstream to:" /* = "Limiter le débit _entrant des torrents à :" */;
+"Limit torrent _downstream to:" = "Limiter la vitesse de réception du torrent à :";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
 "Maximum number of channel auto-downloads at a time: " = "Nombre maximum de téléchargements automatique simultané de chaînes : ";
@@ -1732,8 +1716,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Les prochaines pages vont vous permettre de configurer Miro afin de l'optimiser pour votre utilisation. Voici la première question.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:" /* = "Pour éviter des ralentissements sur Internet, limiter le débit _sortant à:" */;
+"To avoid internet slowdowns, limit _upstream to:" = "Pour éviter des ralentissements sur Internet, limiter le débit _sortant à:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
 "Use _ports:" = "Utiliser les _ports :";
@@ -1902,8 +1885,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "KB/s" = "KB/s";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
-/* Flag: untranslated */
-"Limit downstream bandwith to:" = "Limit downstream bandwith to:" /* = "Limiter la largeur du débit entrant à :" */;
+"Limit downstream bandwith to:" = "Limiter ma vitesse de réception à :";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
 "Manually" = "Manuellement";
@@ -1933,8 +1915,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Store downloaded videos in this folder:" = "Enregistrer les vidéos téléchargées dans ce dossier:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:" /* = "Pour éviter des ralentissements sur Internet, limiter la largeur du débit sortant à :" */;
+"To avoid internet slowdowns, limit upstream bandwith to:" = "Pour éviter des ralentissements sur Internet, limiter la vitesse d'émission à :";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "AVERTISSEMENT: Cette option n'aura pas d'effet tant que vous ne redémarrez pas $longAppName.";

@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 14:33-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-15 09:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Cancel";
@@ -353,7 +353,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "%message%\n%message%" = "%message%\n%message%";
 
 /* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
-/* Flag: untranslated */
 "Audio" = "Audio";
 
 /* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
@@ -505,48 +504,38 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Select a Directory to view in the Library." = "Select a Directory to view in the Library.";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
-/* Flag: untranslated */
 "Settings" = "Settings";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56 */
-/* Flag: untranslated */
 "Hide" = "Hide";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58 */
-/* Flag: untranslated */
 "Show" = "Show";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59 */
 /* File: ../../portable/menubar.py:273 */
 /* File: ../../portable/dialogs.py:88 */
-/* Flag: untranslated */
 "Quit" = "Quit";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
-/* Flag: untranslated */
 "Username:" = "Username:";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
-/* Flag: untranslated */
 "Password:" = "Password:";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416 */
-/* Flag: untranslated */
 "Unknown Runtime Error" = "Unknown Runtime Error";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "An unknown error has occurred %s.";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
-/* Flag: untranslated */
 "New Channel _Guide..." = "New Channel _Guide...";
 
 /* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:583 */
-/* Flag: untranslated */
 "Folder Location" = "Folder Location";
 
 /* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
@@ -589,189 +578,146 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "When you click the red close button, would you like Miro to minimise to the system tray or quit?  You can change this setting later in the Options.";
 
 /* File: ../../portable/item.py:497 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Removing %s" = "Removing %s";
 
 /* File: ../../portable/item.py:500 */
-/* Flag: untranslated */
 "Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Would you like to delete this folder and all of its videos or just remove its entry from the Library?";
 
 /* File: ../../portable/item.py:506 */
-/* Flag: untranslated */
 "Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
 
 /* File: ../../portable/item.py:526 */
-/* Flag: untranslated */
 "This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted.";
 
 /* File: ../../portable/item.py:552 */
 /* File: ../../portable/feed.py:390 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%d days" = "%d days";
 
 /* File: ../../portable/item.py:554 */
 /* File: ../../portable/feed.py:386 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%d hours" = "%d hours";
 
 /* File: ../../portable/item.py:556 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%d minutes" = "%d minutes";
 
 /* File: ../../portable/item.py:566 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Expires in %s" = "Expires in %s";
 
 /* File: ../../portable/item.py:578 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Will retry in %s" = "Will retry in %s";
 
 /* File: ../../portable/item.py:580 */
-/* Flag: untranslated */
 "Paused" = "Paused";
 
 /* File: ../../portable/item.py:982 */
-/* Flag: untranslated */
 "TORRENT" = "TORRENT";
 
 /* File: ../../portable/item.py:984 */
-/* Flag: untranslated */
 "WEB PAGE" = "WEB PAGE";
 
 /* File: ../../portable/item.py:994 */
-/* Flag: untranslated */
 "Total Down:" = "Total Down:";
 
 /* File: ../../portable/item.py:997 */
-/* Flag: untranslated */
 "Error:" = "Error:";
 
 /* File: ../../portable/item.py:1006 */
-/* Flag: untranslated */
 "Seeders:" = "Seeders:";
 
 /* File: ../../portable/item.py:1008 */
-/* Flag: untranslated */
 "Leechers:" = "Leechers:";
 
 /* File: ../../portable/item.py:1010 */
-/* Flag: untranslated */
 "Down Rate:" = "Down Rate:";
 
 /* File: ../../portable/item.py:1011 */
-/* Flag: untranslated */
 "Down Total:" = "Down Total:";
 
 /* File: ../../portable/item.py:1013 */
-/* Flag: untranslated */
 "Up Rate:" = "Up Rate:";
 
 /* File: ../../portable/item.py:1014 */
-/* Flag: untranslated */
 "Up Total:" = "Up Total:";
 
 /* File: ../../portable/item.py:1024 */
-/* Flag: untranslated */
 "Web page:" = "Web page:";
 
 /* File: ../../portable/item.py:1024 */
-/* Flag: untranslated */
 "permalink" = "permalink";
 
 /* File: ../../portable/item.py:1028 */
-/* Flag: untranslated */
 "File link:" = "File link:";
 
 /* File: ../../portable/item.py:1028 */
-/* Flag: untranslated */
 "direct link to file" = "direct link to file";
 
 /* File: ../../portable/item.py:1030 */
-/* Flag: untranslated */
 "File type:" = "File type:";
 
 /* File: ../../portable/item.py:1037 */
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
 "License:" = "License:";
 
 /* File: ../../portable/item.py:1040 */
 /* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
 "see permalink" = "see permalink";
 
 /* File: ../../portable/item.py:1049 */
-/* Flag: untranslated */
-"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
+"REVEAL LOCAL FOLDER" = "REVEAL LOCAL DIRECTORY";
 
 /* File: ../../portable/item.py:1051 */
-/* Flag: untranslated */
 "REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
 
 /* File: ../../portable/item.py:1053 */
-/* Flag: untranslated */
 "Filename:" = "Filename:";
 
 /* File: ../../portable/item.py:1060 */
-/* Flag: untranslated */
-"Down Total" = "Down Total";
+"Down Total" = "Total Downloaded";
 
 /* File: ../../portable/item.py:1062 */
-/* Flag: untranslated */
-"Up Total" = "Up Total";
+"Up Total" = "Total Uploaded";
 
 /* File: ../../portable/item.py:1080 */
-/* Flag: untranslated */
 "Item Details" = "Item Details";
 
 /* File: ../../portable/item.py:1087 */
-/* Flag: untranslated */
 "Torrent Details" = "Torrent Details";
 
 /* File: ../../portable/item.py:1089 */
-/* Flag: untranslated */
 "Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
 
 /* File: ../../portable/item.py:1093 */
-/* Flag: untranslated */
 "Download Details" = "Download Details";
 
 /* File: ../../portable/item.py:1310 */
-/* Flag: untranslated */
 "downloading..." = "downloading...";
 
 /* File: ../../portable/item.py:1317 */
 /* File: ../../portable/item.py:1320 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%s remaining" = "%s remaining";
 
 /* File: ../../portable/item.py:1329 */
-/* Flag: untranslated */
 "starting up..." = "starting up...";
 
 /* File: ../../portable/item.py:1901 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Removing %s items" = "Removing %s items";
 
 /* File: ../../portable/item.py:1903 */
-/* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?";
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or remove their entries from the Library?";
 
 /* File: ../../portable/item.py:1911 */
-/* Flag: untranslated */
 "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
 
 /* File: ../../portable/startup.py:92 */
-/* Flag: untranslated */
 "Unknown Error" = "Unknown Error";
 
 /* File: ../../portable/startup.py:93 */
@@ -801,322 +747,252 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "never" = "never";
 
 /* File: ../../portable/feed.py:388 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%d day" = "%d day";
 
 /* File: ../../portable/feed.py:392 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%d months" = "%d months";
 
 /* File: ../../portable/feed.py:825 */
 /* File: ../../portable/frontends/html/contextmenu.py:173 */
-/* Flag: untranslated */
 "Rename Channel" = "Rename Channel";
 
 /* File: ../../portable/feed.py:826 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Enter a new name for the channel %s" = "Enter a new name for the channel %s";
 
 /* File: ../../portable/feed.py:923 */
-/* Flag: untranslated */
 "Error loading feed" = "Error loading feed";
 
 /* File: ../../portable/feed.py:924 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Couldn't load the feed at %s (%s)." = "Couldn't load the feed at %s (%s).";
 
 /* File: ../../portable/feed.py:927 */
-/* Flag: untranslated */
 "Would you like to keep the feed?" = "Would you like to keep the feed?";
 
 /* File: ../../portable/feed.py:1045 */
-/* Flag: untranslated */
 "Bad content-type" = "Bad content-type";
 
 /* File: ../../portable/feed.py:1058 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-/* Flag: untranslated */
 "Channel is not compatible with $shortAppName!" = "Channel is not compatible with $shortAppName!";
 
 /* File: ../../portable/feed.py:1059 */
-/* Flag: untranslated */
 "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?";
 
 /* File: ../../portable/feed.py:2382 */
 /* File: ../../portable/feed.py:2472 */
 /* File: ../../portable/extrastrings.py:33 */
-/* Flag: untranslated */
 "Search" = "Search";
 
 /* File: ../../portable/feed.py:2486 */
-/* Flag: untranslated */
 "Local Files" = "Local Files";
 
 /* File: ../../portable/feed.py:2500 */
-/* Flag: untranslated */
 "Playing File" = "Playing File";
 
 /* File: ../../portable/storedatabase.py:859 */
 /* File: ../../portable/storedatabase.py:1258 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%s database save succeeded" = "%s database save succeeded";
 
 /* File: ../../portable/storedatabase.py:860 */
 /* File: ../../portable/storedatabase.py:1259 */
-/* Flag: untranslated */
 "The database has been successfully saved. It is now safe to quit without losing any data." = "The database has been successfully saved. It is now safe to quit without losing any data.";
 
 /* File: ../../portable/storedatabase.py:867 */
 /* File: ../../portable/storedatabase.py:1267 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%s database save failed" = "%s database save failed";
 
 /* File: ../../portable/storedatabase.py:868 */
 /* File: ../../portable/storedatabase.py:1268 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.";
 
 /* File: ../../portable/tabs.py:55 */
-/* Flag: untranslated */
 "Library" = "Library";
 
 /* File: ../../portable/tabs.py:58 */
-/* Flag: untranslated */
 "Downloading" = "Downloading";
 
 /* File: ../../portable/httpclient.py:81 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Error: %s" = "Error: %s";
 
 /* File: ../../portable/httpclient.py:96 */
 /* File: ../../portable/httpclient.py:102 */
-/* Flag: untranslated */
 "Can't connect" = "Can't connect";
 
 /* File: ../../portable/httpclient.py:97 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Connection Error: %s" = "Connection Error: %s";
 
 /* File: ../../portable/httpclient.py:103 */
-/* Flag: untranslated */
 "SSL connection error" = "SSL connection error";
 
 /* File: ../../portable/httpclient.py:107 */
-/* Flag: untranslated */
 "HTTP error" = "HTTP error";
 
 /* File: ../../portable/httpclient.py:110 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Bad Status Line: %s" = "Bad Status Line: %s";
 
 /* File: ../../portable/httpclient.py:113 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Bad Header Line: %s" = "Bad Header Line: %s";
 
 /* File: ../../portable/httpclient.py:116 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Bad Chunk size: %s" = "Bad Chunk size: %s";
 
 /* File: ../../portable/httpclient.py:119 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Expected CRLF got: %r" = "Expected CRLF got: %r";
 
 /* File: ../../portable/httpclient.py:122 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "%s closed connection" = "%s closed connection";
 
 /* File: ../../portable/httpclient.py:127 */
 /* File: ../../portable/httpclient.py:155 */
 /* File: ../../portable/downloader.py:268 */
-/* Flag: untranslated */
 "File not found" = "File not found";
 
 /* File: ../../portable/httpclient.py:128 */
-/* Flag: untranslated */
 "Got 404 status code" = "Got 404 status code";
 
 /* File: ../../portable/httpclient.py:130 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Bad Status Code: %s" = "Bad Status Code: %s";
 
 /* File: ../../portable/httpclient.py:134 */
-/* Flag: untranslated */
-"Authorization failed" = "Authorization failed";
+"Authorization failed" = "Authorisation failed";
 
 /* File: ../../portable/httpclient.py:139 */
 /* File: ../../portable/frontends/html/main.py:271 */
-/* Flag: untranslated */
 "Internal Error" = "Internal Error";
 
 /* File: ../../portable/httpclient.py:140 */
-/* Flag: untranslated */
 "Pipeline request never started" = "Pipeline request never started";
 
 /* File: ../../portable/httpclient.py:144 */
-/* Flag: untranslated */
 "Timeout" = "Timeout";
 
 /* File: ../../portable/httpclient.py:145 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Connection to %s timed out" = "Connection to %s timed out";
 
 /* File: ../../portable/httpclient.py:149 */
-/* Flag: untranslated */
 "Invalid URL" = "Invalid URL";
 
 /* File: ../../portable/httpclient.py:150 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" is not a valid URL";
+"\"%s\" is not a valid URL" = "The resource \"%s\" is not a valid URL";
 
 /* File: ../../portable/httpclient.py:156 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "The file: \"%s\" doesn't exist";
+"The file: \"%s\" doesn't exist" = "The file \"%s\" does not exist";
 
 /* File: ../../portable/httpclient.py:160 */
-/* Flag: untranslated */
 "Read error" = "Read error";
 
 /* File: ../../portable/httpclient.py:161 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Error while reading from \"%s\"" = "Error while reading from \"%s\"";
+"Error while reading from \"%s\"" = "Error while reading \"%s\"";
 
 /* File: ../../portable/httpclient.py:354 */
-/* Flag: untranslated */
 "Unknown Error code" = "Unknown Error code";
 
 /* File: ../../portable/httpclient.py:386 */
-/* Flag: untranslated */
 "Connection closed" = "Connection closed";
 
 /* File: ../../portable/httpclient.py:811 */
-/* Flag: untranslated */
 "Unknown" = "Unknown";
 
 /* File: ../../portable/httpclient.py:812 */
-/* Flag: untranslated */
 "Internal Error: Not ready to send" = "Internal Error: Not ready to send";
 
 /* File: ../../portable/theme.py:127 */
 /* File: ../../portable/frontends/html/main.py:192 */
-/* Flag: untranslated */
 "Custom Channels" = "Custom Channels";
 
 /* File: ../../portable/theme.py:127 */
 /* File: ../../portable/frontends/html/main.py:192 */
-/* Flag: untranslated */
 "You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels.";
 
 /* File: ../../portable/theme.py:138 */
-/* Flag: untranslated */
 "Starter Channels" = "Starter Channels";
 
 /* File: ../../portable/theme.py:154 */
-/* Flag: untranslated */
 "Example Playlist" = "Example Playlist";
 
 /* File: ../../portable/downloader.py:234 */
-/* Flag: untranslated */
 "activity" = "activity";
 
 /* File: ../../portable/downloader.py:269 */
-/* Flag: untranslated */
 "Flash URL Scraping Error" = "Flash URL Scraping Error";
 
 /* File: ../../portable/downloader.py:445 */
-/* Flag: untranslated */
 "starting up" = "starting up";
 
 /* File: ../../portable/license.py:68 */
-/* Flag: untranslated */
-"license page" = "license page";
+"license page" = "licence page";
 
 /* File: ../../portable/singleclick.py:99 */
-/* Flag: untranslated */
 "Download already exists" = "Download already exists";
 
 /* File: ../../portable/singleclick.py:100 */
-/* Flag: untranslated */
 "That URL is already an external download." = "That URL is already an external download.";
 
 /* File: ../../portable/singleclick.py:106 */
-/* Flag: untranslated */
 "Miro will begin downloading it now." = "Miro will begin downloading it now.";
 
 /* File: ../../portable/singleclick.py:108 */
-/* Flag: untranslated */
 "It is downloading now." = "It is downloading now.";
 
 /* File: ../../portable/singleclick.py:110 */
-/* Flag: untranslated */
 "It has already been downloaded." = "It has already been downloaded.";
 
 /* File: ../../portable/singleclick.py:137 */
-/* Flag: untranslated */
 "Download Error" = "Download Error";
 
 /* File: ../../portable/singleclick.py:138 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro is not able to download a file at this URL:\n\nURL: %s";
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro is not able to download the resource at this URL:\n\n%s";
 
 /* File: ../../portable/singleclick.py:146 */
-/* Flag: untranslated */
 "File Download" = "File Download";
 
 /* File: ../../portable/singleclick.py:147 */
-/* Flag: untranslated */
 /* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "This file at %s does not appear to be audio, video, or an RSS feed.";
+"This file at %s does not appear to be audio, video, or an RSS feed." = "The resource %s does not appear to be audio, video, or an RSS feed.";
 
 /* File: ../../portable/singleclick.py:235 */
-/* Flag: untranslated */
 "Subscribing to multiple channels" = "Subscribing to multiple channels";
 
 /* File: ../../portable/singleclick.py:236 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Create %d channels?" = "Create %d channels?";
 
 /* File: ../../portable/singleclick.py:249 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "Adding %d channels to a new folder" = "Adding %d channels to a new folder";
 
 /* File: ../../portable/singleclick.py:250 */
 /* File: ../../portable/folder.py:224 */
-/* Flag: untranslated */
 "Enter a name for the new channel folder" = "Enter a name for the new channel folder";
 
 /* File: ../../portable/singleclick.py:253 */
-/* Flag: untranslated */
 /* Flag: python-format */
 "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are.";
 
 /* File: ../../portable/singleclick.py:264 */
-/* Flag: untranslated */
 "Subscription error" = "Subscription error";
 
 /* File: ../../portable/singleclick.py:274 */
-/* Flag: untranslated */
 "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.";
 
 /* File: ../../portable/singleclick.py:282 */

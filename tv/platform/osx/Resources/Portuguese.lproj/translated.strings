@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-08 14:33-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-04-15 09:17-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: python-format */
@@ -169,11 +169,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Username:\n\n" = "Nome de Utilizador:\n\n";
 
-/* Flag: untranslated */
-"(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)" /* = "(Deverá reiniciar o Miro para que algumas destas alterações tenham efeito)" */;
+"(You must restart Miro for some of these changes to take effect)" = "(Deverá reiniciar o Miro para que algumas destas alterações tenham efeito)";
 
-/* Flag: untranslated */
-"(You must restart Miro for this change to take effect)\n" = "(You must restart Miro for this change to take effect)\n" /* = "(Tem que reiniciar o Miro para que esta alteração tenha efeito)\n" */;
+"(You must restart Miro for this change to take effect)\n" = "(Deverá reiniciar o Miro para que esta alteração tenha efeito)\n";
 
 "(movies directory path goes here)" = "(o caminho para a directoria dos filmes entra aqui)";
 
@@ -208,8 +206,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
 "All" = "Tudo";
 
-/* Flag: untranslated */
-"Auto download default setting for new channels:" = "Auto download default setting for new channels:" /* = "Descarregar automaticamente configurações-padrão para novos canais" */;
+"Auto download default setting for new channels:" = "Descarregar automaticamente configurações-padrão para novos canais:";
 
 "Automatically forward ports" = "Reencaminhar portas automaticamente";
 
@@ -223,8 +220,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Check channels for new content:" = "Verifique nos canais a existência de novos conteúdos:";
 
-/* Flag: untranslated */
-"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:" /* = "Não descarregar automaticamente mais que este número de videos por canal ao mesmo tempo:" */;
+"Don't auto-download more than this many videos per channel at once:" = "Não descarregar automaticamente mais que este número de videos por canal ao mesmo tempo:";
 
 "Don't download more than this many videos at once:" = "Não descarregar mais do que este número de videos ao mesmo tempo:";
 
@@ -232,8 +228,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "GB\n" = "GB\n";
 
-/* Flag: untranslated */
-"Ignore unencrypted connections" = "Ignore unencrypted connections" /* = "Ignorar ligações não encriptadas" */;
+"Ignore unencrypted connections" = "Ignorar ligações não encriptadas";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
 "KB/s." = "KB/s.";
@@ -241,8 +236,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
 "Keep at least this much free space on my drive:" = "Deixar pelo menos este espaço livre no meu disco:";
 
-/* Flag: untranslated */
-"Limit downstream to" = "Limit downstream to" /* = "Limitar velocidade de descarregamento a" */;
+"Limit downstream to" = "Limitar velocidade de descarregamento a";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "Never" = "Nunca";
@@ -280,8 +274,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Stop uploads when this ratio is reached:" = "Parar de carregar quando atingir este proporção:";
 
-/* Flag: untranslated */
-"Store downloads in this folder:" = "Store downloads in this folder:" /* = "Guardar ficheiros descarregados na seguinte pasta:" */;
+"Store downloads in this folder:" = "Guardar ficheiros descarregados na seguinte pasta:";
 
 "To avoid internet slowdowns, limit upstream to" = "Para evitar abrandar a internet, limitar a velocidade de carregamento a";
 
@@ -1281,8 +1274,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Torrent file deleted" = "Ficheiro torrent apagado";
 
 /* File: ../../portable/dl_daemon/download.py:981 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro." /* = "O ficheiro torrent para este item foi apagado fora do Miro." */;
+"The torrent file for this item was deleted outside of Miro." = "O ficheiro torrent para este item foi apagado fora do Miro.";
 
 /* File: ../../portable/iheartmiro.py:82 */
 /* Flag: untranslated */
@@ -1612,8 +1604,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>BitTorrent</b>" = "<b>BitTorrent</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-/* Flag: untranslated */
-"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." /* = "<b>Nota:</b> Se modificar o renderizador usado para reproduzir videos, TERÁ que reiniciar o Miro para as mudanças terem efeito." */;
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Nota:</b> Se modificar o renderizador usado para reproduzir videos, TERÁ \nque reiniciar o Miro para as mudanças terem efeito.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
 "<b>Searching for Videos</b>" = "<b>À procura de videos</b>";
@@ -1667,16 +1658,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Go" = "Ir";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
-/* Flag: untranslated */
-"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
+"Ignore Un_encrypted Connections." = "Ignorar Ligações Não _Encriptadas.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
 "In This:" = "Nisto:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-/* Flag: untranslated */
-"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
+"Limit torrent _downstream to:" = "Limitar velocidade de _descarregamento a:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
 "Maximum number of channel auto-downloads at a time: " = "Número máximo de auto-descarregamentos de canal ao mesmo tempo: ";
@@ -1726,7 +1715,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
 /* Flag: untranslated */
-"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
+"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:" /* = "Para evitar abrandamento na ligação, limitar o en_vio a:" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
 "Use _ports:" = "Usar _portos:";
@@ -1768,8 +1757,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "_KB/s." = "_KB/s.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
-/* Flag: untranslated */
-"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+"_Keep at least this much free space on my drive:" = "Man_ter pelo menos este espaço livre no disco:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
 "_Playback" = "Re_produzir";
