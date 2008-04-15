@@ -44,7 +44,7 @@ export LDFLAGS=$CFLAGS
 # PyObjC ======================================================================
 
 cd $WORK_DIR
-svn co http://svn.red-bean.com/pyobjc/trunk/pyobjc PyObjC-2.0
+svn co -r 1992 http://svn.red-bean.com/pyobjc/trunk/pyobjc PyObjC-2.0
 cd PyObjC-2.0
 
 for proj in altgraph \
