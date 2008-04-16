@@ -577,6 +577,8 @@ class Feed(DDBObject):
     ICON_CACHE_SIZES = [
         (20, 20),
         (76, 76),
+        itemmod.Item.SMALL_ICON_SIZE,
+        itemmod.Item.BIG_ICON_SIZE
     ]
 
     def __init__(self,url, initiallyAutoDownloadable=None):
