@@ -40,21 +40,17 @@ def tryScrapingURL(url, callback):
     checkU(url)
     scrape =_getScrapeFunctionFor(url)
     if scrape is not None:
-        scrape(url,lambda x:_actualURLCallback(url,callback,x))
+        scrape(url,lambda x, y=u"video/x-flv":_actualURLCallback(url,callback,x,y))
     else:
         callback(url)
     
 # =============================================================================
 
 # The callback is wrapped in this for flv videos
-def _actualURLCallback(url, callback, newURL):
+def _actualURLCallback(url, callback, newURL, contentType):
     if newURL:
         checkU(newURL)
-    #print "Changed:"
-    #print url
-    #print "   to"
-    #print newURL
-    callback(newURL, contentType = u"video/x-flv")
+    callback(newURL, contentType=contentType)
 
 def _getScrapeFunctionFor(url):
     checkU(url)
@@ -65,21 +61,40 @@ def _getScrapeFunctionFor(url):
 
 def _scrapeYouTubeURL(url, callback):
     checkU(url)
-    httpclient.grabHeaders(url, lambda x:_youTubeCallback(x,callback),
+    httpclient.grabHeaders(url, lambda x:_youTubeCallback(url, x, callback),
                            lambda x:_youTubeErrback(x,callback))
 
-def _youTubeCallback(info, callback):
-    url = info['redirected-url']
+def _youTubeCallback(original_url, info, callback):
+    redirected_url = info['redirected-url']
     try:
-        components = urlparse.urlsplit(url)
+        components = urlparse.urlsplit(redirected_url)
         params = cgi.parse_qs(components[3])
         videoID = params['video_id'][0]
         t = params['t'][0]
-        url = u"http://youtube.com/get_video.php?video_id=%s&t=%s" % (videoID, t)
-        callback(url)
+        url = u"http://youtube.com/get_video.php?video_id=%s&t=%s&fmt=18" % (videoID, t)
+        httpclient.grabHeaders(url, lambda x: _youTubeCallback2(redirected_url, url, x, callback),
+                               lambda x: _youTubeErrback(x, callback))
     except:
-        print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % url
+        print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % redirected_url
         callback(None)
+
+def _youTubeCallback2(redirected_url, hidef_url, info, callback):
+    status = info['status']
+
+    if status == 415:
+        try:
+            components = urlparse.urlsplit(redirected_url)
+            params = cgi.parse_qs(components[3])
+            videoID = params['video_id'][0]
+            t = params['t'][0]
+            url = u"http://youtube.com/get_video.php?video_id=%s&t=%s" % (videoID, t)
+            callback(url)
+        except:
+            print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % redirected_url
+            callback(None)
+        return
+
+    callback(hidef_url, u"video/mpeg4")
 
 def _youTubeErrback(err, callback):
     print "DTV: WARNING, network error scraping You Tube Video URL"
