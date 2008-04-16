@@ -419,7 +419,9 @@ class VideoAreaView (NSView):
             return
         frame = self.frame()
         frame.origin = self.convertPoint_toView_(NSZeroPoint, nil)
+        frame.origin.x = 0
         frame.origin = self.window().convertBaseToScreen_(frame.origin)
+        frame.size = NSSize(self.window().frame().size.width, frame.size.height)
         self.videoWindow.setFrame_display_(frame, YES)
         
     def setFrame_(self, frame):

@@ -114,6 +114,7 @@ class MainController (NSWindowController):
         self.frame.videoInfoDisplay.backgroundColor = NSColor.blackColor()
         self.restoreLayout()
         self.window().setTitle_(config.get(prefs.LONG_APP_NAME))
+        self.window().setMinSize_(NSSize(800, 600))
         self.showWindow_(nil)
 
     def appWillTerminate_(self, notification):
@@ -222,23 +223,22 @@ class MainController (NSWindowController):
         contentSize = contentBox.frame().size
         dividerWidth = sender.dividerThickness()
 
-        tabSize.height = contentSize.height = splitViewSize.height
-
-        contentSize.width = splitViewSize.width - dividerWidth - tabSize.width
-        if contentSize.width < self.minimumContentWidth:
-            contentSize.width = self.minimumContentWidth
-        tabSize.width = splitViewSize.width - dividerWidth - contentSize.width
+        if sender.collapsed:
+            contentOrigin = NSPoint(0,0)
+            contentSize = splitViewSize
+        else:
+            contentOrigin = NSPoint(tabSize.width + dividerWidth, 0)
+            contentSize.height = splitViewSize.height
+            contentSize.width = splitViewSize.width - dividerWidth - tabSize.width
+            if contentSize.width < self.minimumContentWidth:
+                contentSize.width = self.minimumContentWidth
+            tabSize.height = splitViewSize.height
+            tabSize.width = splitViewSize.width - dividerWidth - contentSize.width
 
         tabBox.setFrameSize_(tabSize)
         tabBox.setFrameOrigin_(NSZeroPoint)
         contentBox.setFrameSize_(contentSize)
-        contentBox.setFrameOrigin_((tabSize.width + dividerWidth, 0))
-
-    def splitView_canCollapseSubview_(self, sender, subview):
-        if hasattr(app.controller, 'videoDisplay'):
-            return self.channelsHostView.isDescendantOf_(subview) and app.htmlapp.videoDisplay.isSelected()
-        else:
-            return NO
+        contentBox.setFrameOrigin_(contentOrigin)
 
     ### Events ###
 
