@@ -61,10 +61,10 @@ def _getScrapeFunctionFor(url):
 
 def _scrapeYouTubeURL(url, callback):
     checkU(url)
-    httpclient.grabHeaders(url, lambda x:_youTubeCallback(url, x, callback),
+    httpclient.grabHeaders(url, lambda x:_youTubeCallback(x,callback),
                            lambda x:_youTubeErrback(x,callback))
 
-def _youTubeCallback(original_url, info, callback):
+def _youTubeCallback(info, callback):
     redirected_url = info['redirected-url']
     try:
         components = urlparse.urlsplit(redirected_url)
@@ -81,7 +81,8 @@ def _youTubeCallback(original_url, info, callback):
 def _youTubeCallback2(redirected_url, hidef_url, info, callback):
     status = info['status']
 
-    if status == 415:
+    # if the status is a 4xx, then we go for the lodef version
+    if status == 0 or status / 100 == 4:
         try:
             components = urlparse.urlsplit(redirected_url)
             params = cgi.parse_qs(components[3])
