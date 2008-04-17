@@ -516,9 +516,9 @@ pickThemesAfterLoop:
 pickThemesAfterEnd:
   ${locate::Close} $0
   SetShellVarContext all
-  RMDir "$APPDATA\Participatory Culture\Miro\Themes"
-  RMDir "$APPDATA\Participatory Culture\Miro"
-  RMDIR "$APPDATA\Participatory Culture"
+  RMDir "$APPDATA\Participatory Culture Foundation\Miro\Themes"
+  RMDir "$APPDATA\Participatory Culture Foundation\Miro"
+  RMDIR "$APPDATA\Participatory Culture Foundation"
 FunctionEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -591,7 +591,7 @@ install_theme:
   SetShellVarContext all ; use the global $APPDATA
 
   StrCpy $R0 "$APPDATA\Participatory Culture Foundation\Miro\Themes\$THEME_NAME"
-  StrCmp $THEME_TEMP_DIR $R0 0 files_ok
+  StrCmp $THEME_TEMP_DIR $R0 files_ok 0
   RMDir /r "$R0"
   ClearErrors
   CreateDirectory "$R0"
@@ -869,6 +869,7 @@ installed.  Do you want to continue and overwrite it?" \
   Quit
 UninstallCurrent:
   !insertmacro uninstall $R0
+  StrCmp $THEME_TEMP_DIR "" 0 NotCurrentInstalled
   !insertmacro locateThemes $0
   StrCmp $0 0 LocateDone 0
   ${locate::Find} $0 $1 $2 $3 $4 $5 $6
