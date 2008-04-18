@@ -35,7 +35,6 @@ from string import Template
 from miro import app
 
 CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12 = range(24)
-_ = lambda x : x
 platform = config.get(prefs.APP_PLATFORM)
 
 if platform == "osx":
