@@ -227,7 +227,7 @@ function setupSeekButton(direction, buttonId) {
     // we want to seek at 3X speed in our current direction (-1 for back, 1
     // for forward).  We also need to take into account that we've played back
     // 0.5 seconds worth of video before the timeout.
-    vlcrenderer.setCurrentTime(vlcrenderer.getCurrentTimeJSONLY()/1000+seekAmount);
+    vlcrenderer.setCurrentTime(vlcrenderer.getCurrentTimeJSONLY()+seekAmount);
     didSeek = true;
     timeoutId = setTimeout(handleTimeout, 500);
   }
