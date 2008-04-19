@@ -45,7 +45,7 @@ def createDownloader(url, contentType, dlid):
     if contentType == u'application/x-bittorrent':
         return BTDownloader(url, dlid)
     else:
-        return HTTPDownloader(url, dlid)
+        return HTTPDownloader(url, dlid, expectedContentType=contentType)
 
 # Creates a new downloader object. Returns id on success, None on failure
 def startNewDownload(url, dlid, contentType, channelName):
@@ -474,9 +474,10 @@ class HTTPDownloader(BGDownloader):
     UPDATE_CLIENT_WINDOW = 12
     HALTED_THRESHOLD = 3 # how many secs until we consider a download halted
 
-    def __init__(self, url = None,dlid = None,restore = None):
+    def __init__(self, url = None, dlid = None, restore = None, expectedContentType = None):
         self.retryDC = None
         self.channelName = None
+        self.expectedContentType = expectedContentType
         if restore is not None:
             if not isinstance(restore.get('totalSize', 0), int):
                 # Sometimes restoring old downloaders caused errors because
@@ -568,7 +569,10 @@ class HTTPDownloader(BGDownloader):
         self.retryCount = -1
         #Get the length of the file, then create it
         self.shortFilename = cleanFilename(info['filename'])
-        self.shortFilename = checkFilenameExtension(self.shortFilename, info)
+        if self.expectedContentType is not None:
+            self.shortFilename = checkFilenameExtension(self.shortFilename, self.expectedContentType)
+        else:
+            self.shortFilename = checkFilenameExtension(self.shortFilename, info.get('content-type'))
         self.pickInitialFilename()
         try:
             self.filehandle = fileutil.open_file(self.filename,"w+b")

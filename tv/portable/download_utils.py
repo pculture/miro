@@ -120,10 +120,10 @@ def getFileURLPath(url):
 
 # If a filename doesn't have an extension, this tries to find a suitable one
 # based on the HTTP content-type info and add it if one is available.
-def checkFilenameExtension(filename, httpInfo):
+def checkFilenameExtension(filename, contentType):
     checkF(filename)
-    if 'content-type' in httpInfo and not filetypes.isAllowedFilename(filename):
-        guessedExt = filetypes.guessExtension(httpInfo['content-type'])
+    if contentType is not None and not filetypes.isAllowedFilename(filename):
+        guessedExt = filetypes.guessExtension(contentType)
         if guessedExt is not None:
             filename += guessedExt
     return filename
