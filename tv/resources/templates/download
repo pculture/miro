@@ -103,12 +103,23 @@ allPausedDownloads.unlink()
 	<div id="sub-titlebar">
 		
 		<div class="sub-titlebar-right">
+			<div class="speeds" t:updateForView="views.remoteDownloads">
+  			<ul class="download-rates">
+  				<li t:showIf="downloader.totalDownRate > 1">
+  					<span t:replace="getDownRate()"/>
+  				</li>
+  				<li t:showIf="downloader.totalUpRate > 1">
+  					<span t:replace="getUpRate()"/>
+  				</li>
+  			</ul>
+  		</div>
 			<a t:hideIf="views.downloadingItems.len() == 0" t:updateHideOnView="views.downloadingItems" class="button gray" href="#" onclick="return eventURL('action:pauseAll');" title="Pause All">
 				<span i18n:translate="">Pause All</span>
 			</a>
 			<a class="button gray" t:hideIf="views.pausedItems.len() == 0" t:updateHideOnView="views.pausedItems" href="#" onclick="return eventURL('action:resumeAll');" title="Resume All">
 				<span i18n:translate="">Resume All</span>
 			</a>
+  	
 		</div>
 
 	<div id="download-info">
@@ -118,16 +129,7 @@ allPausedDownloads.unlink()
 						<span i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
 					</span>
 				</span>
-		<div t:updateForView="views.remoteDownloads">
-			<ul class="download-rates">
-				<li t:showIf="downloader.totalDownRate > 1">
-					<span t:replace="getDownRate()"/>
-				</li>
-				<li t:showIf="downloader.totalUpRate > 1">
-					<span t:replace="getUpRate()"/>
-				</li>
-			</ul>
-		</div>
+	
 	</div>	<!-- end download-info -->
 </div> <!-- end sub-titlebar -->
 

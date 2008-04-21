@@ -125,7 +125,7 @@ a.button.gray span {
 	font-size:10px;
 }
 a.button em {
-	font-style:none;
+	font-style:normal;
 	text-transform:none;
 }
 a.button.blue,
@@ -331,9 +331,9 @@ body.gray-background {
 .main-video-desc-desc {
     color: #777470;
 }
-.main-video-bottom { 
+/*.main-video-bottom { 
     background-font-size: 12px;
-}
+}*/
 
 .channel-title {
     text-align: right;

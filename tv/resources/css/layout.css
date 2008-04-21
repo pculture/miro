@@ -192,8 +192,13 @@ ul#view_style li a {
     right: 195px;
     }
 */
-.download-rates {
-    margin: 10px 0px 20px 0px;
+.speeds {
+  float:left;
+  padding-right:20px;
+}
+.download-rates, .download-rates li {
+  float:left;
+  margin-right:12px;
 }
 /* Search page components */
 #engine-search {
@@ -265,12 +270,6 @@ ul#view_style li a {
   padding-top:2px;
   position:relative;
   height:28px;
-}
-
-.video-stats div {
-    float: left;
-    padding-top: 3px;
-    height: 15px;
 }
 
 a.sort-button {
@@ -588,6 +587,18 @@ an element is dragged, the drag-highlight class is added to it */
 
 /* These change the background based on whether or not it's selected */
 
+.tnail-over {
+  position:absolute;
+  display:block;
+  width:154px;
+  height:105px;
+  left:0;
+  top:0;
+}
+.more-info .tnail-over {
+  width:252px;
+  height:190px;
+}
 
 .main-video-tnail {
 	float:left;
@@ -611,7 +622,7 @@ an element is dragged, the drag-highlight class is added to it */
 	top:0px;
 	height:0px;
 	overflow:hidden;
-	padding-top:104px;
+	padding-top:105px;
 }
 .main-video.more-info a.play {
 	width:252px;
@@ -627,6 +638,7 @@ an element is dragged, the drag-highlight class is added to it */
 
 .main-video.selected.more-info .main-video-desc {
     min-height: 190px;
+    height:auto;
 }
 .main-video-desc h1 {
     margin: 0px;
@@ -646,7 +658,8 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video.selected.more-info .main-video-desc-desc {
-    height: auto;
+    min-height:50px;
+    height:auto;
     padding-bottom:10px;
 }
 

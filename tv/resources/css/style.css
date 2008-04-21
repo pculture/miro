@@ -448,11 +448,11 @@ a.play:hover {
      * Make the main-video-bottom cover the description.  We need to set the
      * background to do this, otherwise both will show.  This is sort of a
      * hack -- it works because more-info is not set, so main-video-bottom
-     * will only be 1 */
-    /*background: url(../images/main-video-bg.png) repeat-x;
-		background-position: 0px -70px;*/
+     * will only be 1 
+    background: url(../images/main-video-bg.png) repeat-x;
+		background-position: 0px -70px;
 }
-/*
+
 .selected .main-video-bottom { 
     background-image: url(../images/main-video-bg-selected.png);
 }

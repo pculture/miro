@@ -9,6 +9,7 @@
 </head>
 <body>
 		<div class="tnail">
+		  <img class="tnail-over" src="resource:images/thumbnail-overlay.png" />
 		  <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
 		<a t:showIf="this.isPlayable()" class="play" href="#" title="Play '***this.getTitle()***'" onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');">Play</a>
     </div>

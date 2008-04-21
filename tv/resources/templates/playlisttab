@@ -19,11 +19,11 @@
 <div class="dnd-container-drop-indicator left" />
 <div class="dnd-container-drop-indicator mid" />
 <div class="dnd-container-drop-indicator right" />
-<a class="feeditem draggable noselect"
+<a class="feeditem draggable noselect playlist"
 	dragsourcetype="***this.getDragSourceType()***"
 	dragsourcedata="tablist-***this.objID()***"
 	dragicon="playlist-tnail-***this.objID()***">
-<img id="playlist-tnail-***this.objID()***" class="icon" src="resource:images/playlist-icon-tablist.png" /><div class="name" t:replace="this.obj.getTitle()" />
+<img id="playlist-tnail-***this.objID()***" class="icon" src="resource:images/icon-playlist.png" /><div class="name" t:replace="this.obj.getTitle()" />
 </a>
 </div>
 </div>

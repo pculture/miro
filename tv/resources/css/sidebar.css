@@ -68,8 +68,8 @@ Contains the channels
   border-bottom: 1px solid #cbd5df;
 }
 
-.tablist.first li a img.icon {
-/*	margin-top:2px;*/
+.tablist.first li {
+  margin-top:0px;
 }
 .tab-list li{
        list-style: none;
@@ -95,18 +95,21 @@ a.feeditem div.name {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.tab-list.first a.feeditem div.name {
+.tab-list.first a.feeditem div.name,
+a.feeditem.playlist div.name,
+a.feeditem.folder div.name {
   line-height:24px;
 }
 .tab-list.first a.feeditem,
-a.feeditem.folder {
+a.feeditem.folder,
+a.feeditem.playlist {
 	padding:2px 5px 2px 23px;
-	font-size:13px;
+	font-size:12px;
 	color:#26292b;
   height:26px;
 }
 a.feeditem.folder {
-  padding-left:9px;
+  padding-left:8px;
 }
 .child a.feeditem {
    padding-left: 45px;
@@ -150,7 +153,9 @@ a.feeditem img.icon {
     border: 0;
     float: left;
 }
-.tab-list.first a.feeditem img.icon {
+.tab-list.first a.feeditem img.icon,
+a.feeditem.folderlist img.icon,
+a.feeditem.playlist img.icon {
   margin:0 8px 0 0;
 }
 .tab-list.second a.feeditem img.icon {
