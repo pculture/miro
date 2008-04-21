@@ -54,7 +54,7 @@ for lproj in glob("Resources/*.lproj"):
                 nib = "Resources/%s.lproj/temp.%s.nib" % (lang, name)
             else:
                 nib = "Resources/%s.lproj/%s.nib" % (lang, name)
-            os.system ("nibtool -8 Resources/English.lproj/%s.nib -d Resources/%s.lproj/translated.strings -W %s" % (name, lang, nib))
+            os.system ("nibtool -8 Resources/English.lproj/%s.nib -d Resources/%s.lproj/translated.strings -I %s -W %s" % (name, lang, nib, nib))
             if exists:
                 os.system ("mv Resources/%s.lproj/temp.%s.nib/* Resources/%s.lproj/%s.nib/" % (lang, name, lang, name))
                 os.system ("rmdir Resources/%s.lproj/temp.%s.nib" % (lang, name))
