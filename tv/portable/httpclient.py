@@ -342,7 +342,10 @@ class AsyncSocket(object):
                         SOCKET_CONNECT_TIMEOUT, onWriteTimeout,
                         "socket connect timeout")
             else:
-                msg = errno.errorcode[rv]
+                try:
+                    msg = errno.errorcode[rv]
+                except KeyError:
+                    msg = "Unknown connection error: %s" % rv
                 trapCall(self, errback, ConnectionError(msg))
         def onWriteReady():
             eventloop.removeWriteCallback(self.socket)
