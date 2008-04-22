@@ -118,9 +118,10 @@ class VideoDisplayBase (Display):
         from miro.frontends.html.templatedisplay import TemplateDisplay
         self.stopOnDeselect = True
         app.controller.videoInfoItem = anItem
-        templ = TemplateDisplay('video-info', 'default')
-        area = app.htmlapp.frame.videoInfoDisplay
-        app.htmlapp.frame.selectDisplay(templ, area)
+        if hasattr(app.htmlapp.frame, 'videoInfoDisplay'):
+            templ = TemplateDisplay('video-info', 'default')
+            area = app.htmlapp.frame.videoInfoDisplay
+            app.htmlapp.frame.selectDisplay(templ, area)
 
         self.setActiveRenderer(renderer)
         self.activeRenderer.selectItem(anItem)
