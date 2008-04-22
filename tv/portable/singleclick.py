@@ -125,7 +125,7 @@ def addDownload(url):
         if checkURLExists(url):
             return
         contentType = headers.get('content-type')
-        if filetypes.isFeedContentType(contentType):
+        if contentType and filetypes.isFeedContentType(contentType):
             addFeeds([url])
         else:
             entry = item.getEntryForURL(url, contentType)
