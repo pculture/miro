@@ -4,28 +4,6 @@
         {CLASS = DTVSplitView; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
         {CLASS = DisplayHostView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = FullScreenControlsView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {
-            ACTIONS = {expireNow = id; tellAFriend = id; }; 
-            CLASS = FullScreenPalette; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                donationLabel = id; 
-                feedLabel = id; 
-                playPauseButton = id; 
-                progressSlider = id; 
-                seekBackwardButton = id; 
-                seekForwardButton = id; 
-                skipBackwardButton = id; 
-                skipForwardButton = id; 
-                timeIndicator = id; 
-                titleLabel = id; 
-                volumeSlider = id; 
-            }; 
-            SUPERCLASS = NSWindow; 
-        }, 
-        {CLASS = FullScreenPaletteView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
-        {CLASS = FullScreenSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
         {
             ACTIONS = {addChannel = id; switchTabs = id; }; 
             CLASS = MainController; 
@@ -41,6 +19,34 @@
             SUPERCLASS = NSWindowController; 
         }, 
         {CLASS = MetalSlider; LANGUAGE = ObjC; SUPERCLASS = NSSlider; }, 
+        {
+            ACTIONS = {expireNow = id; handleShareItem = id; keep = id; share = id; }; 
+            CLASS = OverlayPalette; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                deleteButton = id; 
+                donationLabel = id; 
+                feedLabel = id; 
+                fsButton = id; 
+                keepButton = id; 
+                playPauseButton = id; 
+                playbackControls = id; 
+                progressSlider = id; 
+                seekBackwardButton = id; 
+                seekForwardButton = id; 
+                shareButton = id; 
+                shareMenu = id; 
+                skipBackwardButton = id; 
+                skipForwardButton = id; 
+                timeIndicator = id; 
+                titleLabel = id; 
+                volumeSlider = id; 
+            }; 
+            SUPERCLASS = NSWindow; 
+        }, 
+        {CLASS = OverlayPaletteControlsView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = OverlayPaletteSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
+        {CLASS = OverlayPaletteView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
         {
             CLASS = PlacardView; 
             LANGUAGE = ObjC; 
@@ -59,7 +65,7 @@
         {
             CLASS = VideoAreaView; 
             LANGUAGE = ObjC; 
-            OUTLETS = {videoWindow = NSWindow; }; 
+            OUTLETS = {videoWindow = id; }; 
             SUPERCLASS = NSView; 
         }, 
         {
@@ -98,10 +104,10 @@
             SUPERCLASS = NSSearchField; 
         }, 
         {
-            ACTIONS = {exitFullScreen = id; }; 
+            ACTIONS = {exitFullScreen = id; toggleFullScreen = id; }; 
             CLASS = VideoWindow; 
             LANGUAGE = ObjC; 
-            OUTLETS = {palette = NSWindow; }; 
+            OUTLETS = {palette = id; }; 
             SUPERCLASS = NSWindow; 
         }
     ); 

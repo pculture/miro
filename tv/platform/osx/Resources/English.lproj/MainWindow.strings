@@ -4,9 +4,6 @@
 /* NSTextField (%channel title%) : <title:%channel title%> (oid:241) */
 "%channel title%" = "%channel title%";
 
-/* NSTextField (%donation label%) : <title:%donation label%> (oid:256) */
-"%donation label%" = "%donation label%";
-
 /* NSButton (-00:00:00) : <title:-00:00:00> (oid:311) */
 "-00:00:00" = "-00:00:00";
 
@@ -16,11 +13,35 @@
 /* NSTextField (0:00:00) : <title:0:00:00> (oid:280) */
 "0:00:00" = "0:00:00";
 
-/* FullScreenPalette (FullScreen Controls) : <title:FullScreen Controls> (oid:237) */
+/* NSButton (Delete) : <title:Delete> (oid:477) */
+"Delete" = "Delete";
+
+/* NSMenuItem : <title:Email to a friend> (oid:514) */
+"Email to a friend" = "Email to a friend";
+
+/* OverlayPalette (FullScreen Controls) : <title:FullScreen Controls> (oid:237) */
 "FullScreen Controls" = "FullScreen Controls";
+
+/* NSButton (Keep) : <title:Keep> (oid:479) */
+"Keep" = "Keep";
 
 /* NSWindow (Miro) : <title:Miro> (oid:7) */
 "Miro" = "Miro";
+
+/* NSMenuItem : <title:Post to Reddit> (oid:519) */
+"Post to Reddit" = "Post to Reddit";
+
+/* NSMenuItem : <title:Post to Video Bomb> (oid:515) */
+"Post to Video Bomb" = "Post to Video Bomb";
+
+/* NSMenuItem : <title:Post to del.icio.us> (oid:517) */
+"Post to del.icio.us" = "Post to del.icio.us";
+
+/* NSMenuItem : <title:Post to digg> (oid:518) */
+"Post to digg" = "Post to digg";
+
+/* NSButton (Share) : <title:Share> (oid:409) */
+"Share" = "Share";
 
 /* VideoSearchField (0) : <title:Video Search> (oid:289) */
 "Video Search" = "Video Search";
