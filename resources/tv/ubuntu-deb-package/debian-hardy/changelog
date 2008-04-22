@@ -1,3 +1,18 @@
+miro (1.2.3-0pcf1) hardy; urgency=low
+
+  * #9685 NEW Download mp4 from YouTube? if available and download flv if not
+  * #9841 FIXED Downloaded torrents disappear when play selected
+  * #9787 FIXED New counter doesn't update until selected
+  * #9727 FIXED Feeds duplicated when updating to co-branded version
+  * #9880, #8104 FIXED Problems with menus not being translated for windows-xul 
+    and gtkx11 platforms
+  * #8378 FIXED httpclient error 
+  * #9740 FIXED Thumbnails are downloaded but not displayed in Hardy
+  * #9860 FIXED Drag and drop does not work in Hardy
+  * #9692 FIXED Fix gtkx11 code so it works with xulrunner 1.9 
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Tue, 22 Apr 2008 17:14:14 -0400
+
 miro (1.2.2-0pcf2) hardy; urgency=low
 
   * Removed the gstreamer-as-default patch--there are issues, so it doesn't make

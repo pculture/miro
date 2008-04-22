@@ -15,7 +15,6 @@ Build-Depends: cdbs,
                libboost-serialization-dev, 
                python-gtk2-dev, 
                python-gnome2-extras-dev (>= 2.14.0-2), 
-               python2.5-dbus, 
                libxine-dev, 
                libxv-dev, 
                libssl-dev, 
@@ -32,10 +31,11 @@ Depends: ${shlibs:Depends},
          python-gnome2-extras (>= 2.14.0-2), 
          python-glade2, 
          imagemagick, 
+         python2.5-dbus, 
          libxine1-plugins, 
          libxine1, 
          xulrunner-1.9,
-         miro-data (>= 1.2.2)
+         miro-data (>= 1.2.3)
 Recommends: libxine1-ffmpeg
 Suggests: python-psyco [i386 hurd-i386 netbsd-i386 kfreebsd-i386]
 Description: GTK+ based RSS video aggregator
