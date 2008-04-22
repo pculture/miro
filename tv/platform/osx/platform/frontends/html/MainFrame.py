@@ -57,7 +57,6 @@ class MainFrame:
     def __init__(self, appl):
         self.channelsDisplay = None
         self.mainDisplay = None
-        self.videoInfoDisplay = None
         # Do this in two steps so that self.controller is set when self.controler.init
         # is called. That way, init can turn around and call selectDisplay.
         self.controller = MainController.alloc()
@@ -88,7 +87,6 @@ class MainController (NSWindowController):
     mainHostView            = IBOutlet('mainHostView')
     splitView               = IBOutlet('splitView')
     videoDisplayController  = IBOutlet('videoDisplayController')
-    videoInfoHostView       = IBOutlet('videoInfoHostView')
 
     def initWithFrame_application_(self, frame, appl):
         super(MainController, self).init()
@@ -110,14 +108,14 @@ class MainController (NSWindowController):
     def awakeFromNib(self):
         self.frame.channelsDisplay = self.channelsHostView
         self.frame.mainDisplay = self.mainHostView
-        self.frame.videoInfoDisplay = self.videoInfoHostView
-        self.frame.videoInfoDisplay.backgroundColor = NSColor.blackColor()
         self.restoreLayout()
         self.window().setTitle_(config.get(prefs.LONG_APP_NAME))
         self.window().setMinSize_(NSSize(800, 600))
         self.showWindow_(nil)
 
     def appWillTerminate_(self, notification):
+        if self.splitView.collapsed:
+            self.splitView.revealLeftPane()
         self.saveLayout()
 
     def restoreLayout(self):
@@ -646,6 +644,8 @@ class DTVSplitView (NSSplitView):
     def collapseLeftPane(self):
         self.leftPane = self.subviews().objectAtIndex_(0)
         self.collapsed = True
+        leftRect = NSZeroRect
+        leftRect.size.height = self.frame().size.height
         tempView = NSView.alloc().initWithFrame_(NSZeroRect)
         self.replaceSubview_with_(self.leftPane, tempView)
         self.adjustSubviews()

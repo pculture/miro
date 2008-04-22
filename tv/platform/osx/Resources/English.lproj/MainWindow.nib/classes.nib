@@ -27,14 +27,6 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>FullScreenControlsView</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>NSView</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>PlacardView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
@@ -45,6 +37,70 @@
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>OverlayPaletteView</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSView</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>expireNow</key>
+				<string>id</string>
+				<key>handleShareItem</key>
+				<string>id</string>
+				<key>keep</key>
+				<string>id</string>
+				<key>share</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>OverlayPalette</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>deleteButton</key>
+				<string>id</string>
+				<key>donationLabel</key>
+				<string>id</string>
+				<key>feedLabel</key>
+				<string>id</string>
+				<key>fsButton</key>
+				<string>id</string>
+				<key>keepButton</key>
+				<string>id</string>
+				<key>playPauseButton</key>
+				<string>id</string>
+				<key>playbackControls</key>
+				<string>id</string>
+				<key>progressSlider</key>
+				<string>id</string>
+				<key>seekBackwardButton</key>
+				<string>id</string>
+				<key>seekForwardButton</key>
+				<string>id</string>
+				<key>shareButton</key>
+				<string>id</string>
+				<key>shareMenu</key>
+				<string>id</string>
+				<key>skipBackwardButton</key>
+				<string>id</string>
+				<key>skipForwardButton</key>
+				<string>id</string>
+				<key>timeIndicator</key>
+				<string>id</string>
+				<key>titleLabel</key>
+				<string>id</string>
+				<key>volumeSlider</key>
+				<string>id</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSWindow</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -59,6 +115,8 @@
 			<dict>
 				<key>exitFullScreen</key>
 				<string>id</string>
+				<key>toggleFullScreen</key>
+				<string>id</string>
 			</dict>
 			<key>CLASS</key>
 			<string>VideoWindow</string>
@@ -67,7 +125,7 @@
 			<key>OUTLETS</key>
 			<dict>
 				<key>palette</key>
-				<string>NSWindow</string>
+				<string>id</string>
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSWindow</string>
@@ -112,11 +170,11 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>FullScreenPaletteView</string>
+			<string>OverlayPaletteSlider</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>NSView</string>
+			<string>Slider</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
@@ -220,64 +278,24 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>FullScreenSlider</string>
-			<key>LANGUAGE</key>
-			<string>ObjC</string>
-			<key>SUPERCLASS</key>
-			<string>Slider</string>
-		</dict>
-		<dict>
-			<key>CLASS</key>
 			<string>VideoAreaView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>OUTLETS</key>
 			<dict>
 				<key>videoWindow</key>
-				<string>NSWindow</string>
+				<string>id</string>
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>NSView</string>
 		</dict>
 		<dict>
-			<key>ACTIONS</key>
-			<dict>
-				<key>expireNow</key>
-				<string>id</string>
-				<key>tellAFriend</key>
-				<string>id</string>
-			</dict>
 			<key>CLASS</key>
-			<string>FullScreenPalette</string>
+			<string>OverlayPaletteControlsView</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
-			<key>OUTLETS</key>
-			<dict>
-				<key>donationLabel</key>
-				<string>id</string>
-				<key>feedLabel</key>
-				<string>id</string>
-				<key>playPauseButton</key>
-				<string>id</string>
-				<key>progressSlider</key>
-				<string>id</string>
-				<key>seekBackwardButton</key>
-				<string>id</string>
-				<key>seekForwardButton</key>
-				<string>id</string>
-				<key>skipBackwardButton</key>
-				<string>id</string>
-				<key>skipForwardButton</key>
-				<string>id</string>
-				<key>timeIndicator</key>
-				<string>id</string>
-				<key>titleLabel</key>
-				<string>id</string>
-				<key>volumeSlider</key>
-				<string>id</string>
-			</dict>
 			<key>SUPERCLASS</key>
-			<string>NSWindow</string>
+			<string>NSView</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>

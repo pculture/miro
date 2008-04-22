@@ -40,6 +40,7 @@ from miro import eventloop
 from miro.platform import bundle
 from miro.platform.filenames import filenameTypeToOSFilename
 from miro.frontends.html.displaybase import VideoDisplayBase
+from miro.frontends.html.templatedisplay import ModelActionHandler
 from miro.platform.frontends.html import threads
 from miro.frontends.html.playbackcontroller import PlaybackControllerBase
 from miro.platform.frontends.html.MainFrame import Slider, handleKey
@@ -174,7 +175,6 @@ class VideoDisplayController (NSObject):
 
     backwardButton      = IBOutlet('backwardButton')
     forwardButton       = IBOutlet('forwardButton')
-    fullscreenButton    = IBOutlet('fullscreenButton')
     muteButton          = IBOutlet('muteButton')
     playPauseButton     = IBOutlet('playPauseButton')
     stopButton          = IBOutlet('stopButton')
@@ -246,7 +246,6 @@ class VideoDisplayController (NSObject):
 
     def enablePrimaryControls(self, enabled):
         self.playPauseButton.setEnabled_(enabled)
-        self.fullscreenButton.setEnabled_(enabled)
 
     def enableSecondaryControls(self, enabled, allowFastSeeking=YES):
         self.backwardButton.setEnabled_(enabled)
@@ -258,7 +257,6 @@ class VideoDisplayController (NSObject):
     def enableExternalPlaybackControls(self):
         self.stopButton.setEnabled_(True)
         self.playPauseButton.setEnabled_(False)
-        self.fullscreenButton.setEnabled_(False)
         self.backwardButton.setEnabled_(False)
         self.forwardButton.setEnabled_(False)
 
@@ -373,6 +371,7 @@ class VideoAreaView (NSView):
     def setup(self, item, renderer):
         if not self.videoWindow.isFullScreen:
             self.adjustVideoWindowFrame()
+        self.window().setAcceptsMouseMovedEvents_(YES)
         self.videoWindow.setup(renderer, item)
         self.activateVideoWindow()
         nc = NSNotificationCenter.defaultCenter()
@@ -395,19 +394,23 @@ class VideoAreaView (NSView):
         nc.removeObserver_name_object_(self, nil, nil)
         if self.videoWindow.isFullScreen:
             self.videoWindow.exitFullScreen()
+        self.window().setAcceptsMouseMovedEvents_(NO)
         self.window().removeChildWindow_(self.videoWindow)
         self.videoWindow.orderOut_(nil)
         self.videoWindow.teardown()
+
+    def mouseMoved_(self, event):
+        self.videoWindow.sendEvent_(event)
 
     @threads.onMainThreadWaitingUntilDone
     def activateVideoWindow(self):
         if self.window().isMiniaturized():
             self.window().deminiaturize_(nil)
         self.window().orderFront_(nil)
-        self.videoWindow.orderFront_(nil)
-        self.window().makeFirstResponder_(self.window().delegate())
+        self.window().makeFirstResponder_(self)
         if self.videoWindow.parentWindow() is nil:
             self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
+        self.videoWindow.orderFront_(nil)
     
     def drawRect_(self, rect):
         NSColor.blackColor().set()
@@ -438,7 +441,6 @@ class VideoAreaView (NSView):
     
     def windowDidBecomeKey_(self, notification):
         self.adjustVideoWindowFrame()
-        self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
         self.window().orderFront_(nil)
     
     @threads.onMainThread
@@ -446,14 +448,10 @@ class VideoAreaView (NSView):
         self.adjustVideoWindowFrame()
         if self.window() is not nil:
             self.videoWindow.enterFullScreen(self.window().screen())
-            self.window().removeChildWindow_(self.videoWindow)
-            self.window().orderOut_(nil)
 
     @threads.onMainThread
     def exitFullScreen(self):
         if self.videoWindow.isFullScreen:
-            self.window().orderFront_(nil)
-            self.window().addChildWindow_ordered_(self.videoWindow, NSWindowAbove)
             self.videoWindow.exitFullScreen()
             self.window().makeKeyWindow()
     
@@ -470,19 +468,22 @@ class VideoWindow (NSWindow):
             NSBorderlessWindowMask,
             backing,
             defer )
-        self.setAcceptsMouseMovedEvents_(YES)
         self.setBackgroundColor_(NSColor.blackColor())
         self.isFullScreen = NO
         return self
 
+    def setFrame_display_(self, frame, display):
+        super(VideoWindow, self).setFrame_display_(frame, display)
+        if self.palette.isVisible():
+            self.palette.adjustPosition(self)
+
     def setup(self, renderer, item):
         self.installRendererView_(renderer.view)
         self.palette.setup(item, renderer)
-        if self.isFullScreen:
-            threads.callOnMainThreadAfterDelay(0.5, self.palette.reveal, self)
     
     def teardown(self):
         threads.warnIfNotOnMainThread('VideoWindow.teardown')
+        self.palette.remove()
         self.setContentView_(nil)
 
     @threads.onMainThreadWaitingUntilDone
@@ -492,10 +493,10 @@ class VideoWindow (NSWindow):
         self.setContentView_(view)
 
     def canBecomeMainWindow(self):
-        return self.isFullScreen
+        return NO
     
     def canBecomeKeyWindow(self):
-        return self.isFullScreen
+        return NO
 
     def enterFullScreen(self, screen):
         threads.warnIfNotOnMainThread('VideoWindow.enterFullScreen')
@@ -504,22 +505,24 @@ class VideoWindow (NSWindow):
             screenWithMenuBar = screens[0]
             if screen == screenWithMenuBar:
                 SetSystemUIMode(kUIModeAllHidden, 0)
-        NSCursor.setHiddenUntilMouseMoves_(YES)
         self.isFullScreen = YES
         self.previousFrame = self.frame()
         self.setFrame_display_animate_(screen.frame(), YES, YES)
-        self.makeKeyAndOrderFront_(nil)
+        self.palette.enterFullScreen()
 
     def exitFullScreen(self):
         threads.warnIfNotOnMainThread('VideoWindow.exitFullScreen')
         NSCursor.setHiddenUntilMouseMoves_(NO)
         self.isFullScreen = NO
-        self.palette.remove()
+        self.palette.exitFullScreen()
         self.setFrame_display_animate_(self.previousFrame, YES, YES)
         SetSystemUIMode(kUIModeNormal, 0)
         
     def toggleFullScreen_(self, sender):
-        app.htmlapp.videoDisplay.exitFullScreen()
+        if self.isFullScreen:
+            app.htmlapp.videoDisplay.exitFullScreen()
+        else:
+            app.htmlapp.videoDisplay.goFullScreen()
 
     def nextVideo_(self, sender):
         eventloop.addIdle(lambda:app.htmlapp.playbackController.skip(1), "Skip Video")
@@ -531,28 +534,350 @@ class VideoWindow (NSWindow):
         eventloop.addIdle(lambda:app.htmlapp.playbackController.stop(), "Stop Video")
 
     def sendEvent_(self, event):
-        if self.isFullScreen:
-            if event.type() == NSLeftMouseDown:
-                if NSApplication.sharedApplication().isActive():
-                    if event.clickCount() > 1:
+        if event.type() == NSMouseMoved:
+            if NSPointInRect(NSEvent.mouseLocation(), self.frame()):
+                self.palette.reveal(self)
+        elif event.type() == NSLeftMouseDown:
+            if NSApplication.sharedApplication().isActive():
+                if event.clickCount() > 1:
+                    if self.isFullScreen:
                         app.htmlapp.videoDisplay.exitFullScreen()
-                else:
-                    NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
-            elif event.type() == NSKeyDown:
-                handleKey(event)
-            elif event.type() == NSMouseMoved:
-                if not self.palette.isVisible():
-                    self.palette.reveal(self)
-                else:
-                    self.palette.resetAutoConceal()
-        else:
-            if event.type() == NSLeftMouseDown:
-                if NSApplication.sharedApplication().isActive():
-                    if event.clickCount() > 1:
+                    else:
                         app.htmlapp.videoDisplay.goFullScreen()
-                else:
-                    NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
+            else:
+                NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
+        elif event.type() == NSKeyDown:
+            handleKey(event)
+        else:
+            super(VideoWindow, self).sendEvent_(event)
     
+###############################################################################
+
+class OverlayPalette (NSWindow):
+    
+    titleLabel          = IBOutlet('titleLabel')
+    feedLabel           = IBOutlet('feedLabel')
+    shareButton         = IBOutlet('shareButton')
+    shareMenu           = IBOutlet('shareMenu')
+    keepButton          = IBOutlet('keepButton')
+    deleteButton        = IBOutlet('deleteButton')
+    fsButton            = IBOutlet('fsButton')
+    
+    playbackControls    = IBOutlet('playbackControls')
+    playPauseButton     = IBOutlet('playPauseButton')
+    progressSlider      = IBOutlet('progressSlider')
+    seekBackwardButton  = IBOutlet('seekBackwardButton')
+    skipBackwardButton  = IBOutlet('skipBackwardButton')
+    seekForwardButton   = IBOutlet('seekForwardButton')
+    skipForwardButton   = IBOutlet('skipForwardButton')
+    timeIndicator       = IBOutlet('timeIndicator')
+    volumeSlider        = IBOutlet('volumeSlider')
+    
+    HOLD_TIME = 2
+    
+    def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
+        self = super(OverlayPalette, self).initWithContentRect_styleMask_backing_defer_(
+            rect,
+            NSBorderlessWindowMask,
+            backing,
+            defer )
+        nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', u'videoWillPlay', nil)
+        nc.addObserver_selector_name_object_(self, 'videoWillPause:', u'videoWillPause', nil)
+        self.playingItem = None
+        self.setBackgroundColor_(NSColor.clearColor())
+        self.setAlphaValue_(1.0)
+        self.setOpaque_(NO)
+        self.autoHidingTimer = nil
+        self.updateTimer = nil
+        self.holdStartTime = 0.0
+        self.renderer = None
+        self.wasPlaying = False
+        self.revealing = False
+        self.hiding = False
+        self.anim = None
+        return self
+
+    def awakeFromNib(self):
+        self.shareButton.setImage_(getOverlayButtonImage(self.shareButton.bounds().size))
+        self.shareButton.setAlternateImage_(getOverlayButtonAlternateImage(self.shareButton.bounds().size))
+
+        self.keepButton.setImage_(getOverlayButtonImage(self.keepButton.bounds().size))
+        self.keepButton.setAlternateImage_(getOverlayButtonAlternateImage(self.keepButton.bounds().size))
+
+        self.deleteButton.setImage_(getOverlayButtonImage(self.deleteButton.bounds().size))
+        self.deleteButton.setAlternateImage_(getOverlayButtonAlternateImage(self.deleteButton.bounds().size))
+
+        self.seekForwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekForwardButton.cell(), 1, 0.0))
+        self.seekForwardButton.cell().setAllowsSkipping(False)
+        self.seekBackwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekBackwardButton.cell(), -1, 0.0))
+        self.seekBackwardButton.cell().setAllowsSkipping(False)
+
+        self.progressSlider.track = NSImage.imageNamed_(u'fs-progress-background')
+        self.progressSlider.cursor = NSImage.imageNamed_(u'fs-progress-slider')
+        self.progressSlider.sliderWasClicked = self.progressSliderWasClicked
+        self.progressSlider.sliderWasDragged = self.progressSliderWasDragged
+        self.progressSlider.sliderWasReleased = self.progressSliderWasReleased
+        self.progressSlider.setShowCursor_(True)
+
+        self.volumeSlider.track = NSImage.imageNamed_(u'fs-volume-background')
+        self.volumeSlider.cursor = NSImage.imageNamed_(u'fs-volume-slider')
+        self.volumeSlider.sliderWasDragged = self.volumeSliderWasDragged
+        self.volumeSlider.setShowCursor_(True)
+
+    def canBecomeKeyWindow(self):
+        return NO
+
+    def canBecomeMainWindow(self):
+        return NO
+
+    def setup(self, item, renderer):
+        self.playingItem = item
+        self.titleLabel.setStringValue_(unicode(item.getTitle()))
+        self.feedLabel.setStringValue_(unicode(item.getFeed().getTitle()))
+        self.keepButton.setEnabled_(item.showSaveButton())
+        self.shareButton.setEnabled_(item.hasSharableURL())
+        self.renderer = renderer
+        self.update_(nil)
+
+    def enterFullScreen(self):
+        if self.isVisible():
+            newFrame = self.frame()
+            newFrame.size.width = 824
+            newFrame.origin.x = self.getHorizontalPosition(self, newFrame.size.width)
+            self.setFrame_display_animate_(newFrame, YES, YES)
+            self.adjustContent(self.parentWindow(), True)
+            self.fsButton.setImage_(NSImage.imageNamed_('fs-button-exitfullscreen'))
+            self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-exitfullscreen-alt'))
+
+    def exitFullScreen(self):
+        if self.isVisible():
+            self.adjustContent(self.parentWindow(), True)
+            self.fsButton.setImage_(NSImage.imageNamed_('fs-button-enterfullscreen'))
+            self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-enterfullscreen-alt'))
+
+    def getHorizontalPosition(self, parent, width):
+        parentFrame = parent.frame()
+        return parentFrame.origin.x + ((parentFrame.size.width - width) / 2.0)
+
+    def adjustPosition(self, parent):
+        parentFrame = parent.frame()
+        x = self.getHorizontalPosition(parent, self.frame().size.width)
+        y = parentFrame.origin.y + 60
+        self.setFrameOrigin_(NSPoint(x, y))
+
+    def adjustContent(self, parent, animate):
+        newFrame = self.frame()
+        if parent.isFullScreen:
+            self.playbackControls.setHidden_(NO)
+            newFrame.size.width = 824
+        else:
+            self.playbackControls.setHidden_(YES)
+            newFrame.size.width = 516
+        newFrame.origin.x = self.getHorizontalPosition(parent, newFrame.size.width)
+        if animate:
+            self.setFrame_display_animate_(newFrame, YES, YES)
+        else:
+            self.setFrame_display_(newFrame, YES)
+
+    def reveal(self, parent):
+        threads.warnIfNotOnMainThread('OverlayPalette.reveal')
+        self.resetAutoHiding()
+        if (not self.isVisible() and not self.revealing) or (self.isVisible() and self.hiding):
+            self.update_(nil)
+            app.htmlapp.videoDisplay.getVolume(lambda v: self.volumeSlider.setFloatValue_(v))
+
+            self.adjustPosition(parent)
+            self.adjustContent(parent, False)
+
+            if self.hiding and self.anim is not None:
+                self.anim.stopAnimation()
+                self.hiding = False
+            else:
+                self.setAlphaValue_(0.0)
+
+            self.orderFront_(nil)
+            parent.addChildWindow_ordered_(self, NSWindowAbove)
+
+            self.revealing = True
+            params = {NSViewAnimationTargetKey: self, NSViewAnimationEffectKey: NSViewAnimationFadeInEffect}
+            self.animate(params, 0.3)
+    
+    def hide(self):
+        threads.warnIfNotOnMainThread('OverlayPalette.hide')
+        if not self.hiding:
+            if self.autoHidingTimer is not nil:
+                self.autoHidingTimer.invalidate()
+                self.autoHidingTimer = nil
+
+            if self.revealing and self.anim is not None:
+                self.anim.stopAnimation()
+                self.revealing = False
+
+            self.hiding = True
+            params = {NSViewAnimationTargetKey: self, NSViewAnimationEffectKey: NSViewAnimationFadeOutEffect}
+            self.animate(params, 1.5)
+    
+    def hideAfterDelay_(self, timer):
+        if time.time() - self.holdStartTime > self.HOLD_TIME:
+            self.hide()
+    
+    def resetAutoHiding(self):
+        self.holdStartTime = time.time()
+        
+    def animate(self, params, duration):
+        self.anim = NSViewAnimation.alloc().initWithViewAnimations_([params])
+        self.anim.setDuration_(duration)
+        self.anim.setDelegate_(self)
+        self.anim.startAnimation()
+
+    def animationDidEnd_(self, anim):
+        parent = self.parentWindow()
+        if self.revealing:
+            self.holdStartTime = time.time()
+            self.autoHidingTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+                1.0, self, 'hideAfterDelay:', nil, YES)
+            self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+                0.5, self, 'update:', nil, YES)
+            NSRunLoop.currentRunLoop().addTimer_forMode_(self.updateTimer, NSEventTrackingRunLoopMode)
+            self.update_(nil)
+            if parent is not None and parent.isFullScreen:
+                NSCursor.setHiddenUntilMouseMoves_(NO)
+        elif self.hiding:
+            if parent is not None and parent.isFullScreen:
+                NSCursor.setHiddenUntilMouseMoves_(YES)
+            self.remove()
+
+        self.anim = None
+        self.revealing = False
+        self.hiding = False
+        
+    def keep_(self, sender):
+        def doKeep(item):
+            ModelActionHandler().keepItem(self.playingItem.getID())
+            sender.setEnabled_(NO)
+        eventloop.addUrgentCall(lambda:doKeep(self.playingItem), "Keeping Video")
+    
+    def expireNow_(self, sender):
+        def doExpire(item):
+            ModelActionHandler().expirePlayingItem(self.playingItem.getID())
+        eventloop.addUrgentCall(lambda:doExpire(self.playingItem), "Expiring Video")
+        
+    def share_(self, sender):
+        event = NSApplication.sharedApplication().currentEvent()
+        NSMenu.popUpContextMenu_withEvent_forView_(self.shareMenu, event, sender)
+    
+    def handleShareItem_(self, sender):
+        def doShare(item):
+            if sender.tag() == 1: # Post to Video Bomb
+                ModelActionHandler().videoBombExternally(item.getID())
+            else:
+                if sender.tag() == 0:   # Email to friend
+                    url = "http://www.videobomb.com/index/democracyemail?url=%s&title=%s" % (item.getQuotedURL(), item.getQuotedTitle())
+                elif sender.tag() == 2: # Post to del.icio.us
+                    url = "http://del.icio.us/post?v=4&noui&jump=close&url=%s&title=%s" % (item.getQuotedURL(), item.getQuotedTitle())
+                elif sender.tag() == 3: # Post to digg
+                    url = "http://www.digg.com/submit?phrase=2&url=%s" % item.getQuotedURL()
+                elif sender.tag() == 4: # Post to Reddit
+                    url = "http://reddit.com/submit?url=%s&title=%s" % (item.getQuotedURL(), item.getQuotedTitle())
+                NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
+
+        eventloop.addUrgentCall(lambda:doShare(self.playingItem), "Sharing Video")
+    
+    def update_(self, timer):
+        self.renderer.getDisplayTime(lambda t: self.timeIndicator.setStringValue_(unicode(t)))
+        self.renderer.getProgress(lambda p: self.progressSlider.setFloatValue_(p))
+            
+    def progressSliderWasClicked(self, slider):
+        if app.htmlapp.videoDisplay.isPlaying:
+            self.wasPlaying = True
+            self.renderer.pause()
+        self.renderer.setProgress(slider.floatValue())
+        self.renderer.interactivelySeeking = True
+        self.resetAutoHiding()
+        
+    def progressSliderWasDragged(self, slider):
+        self.renderer.setProgress(slider.floatValue())
+        self.resetAutoHiding()
+        
+    def progressSliderWasReleased(self, slider):
+        self.renderer.interactivelySeeking = False
+        if self.wasPlaying:
+            self.wasPlaying = False
+            self.renderer.play()
+
+    def volumeSliderWasDragged(self, slider):
+        app.htmlapp.videoDisplay.setVolume(slider.floatValue())
+        self.resetAutoHiding()
+
+    def videoWillPlay_(self, notification):
+        self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-pause'))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'fs-button-pause-alt'))
+
+    def videoWillPause_(self, notification):
+        self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-play'))
+        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'fs-button-play-alt'))
+
+    def remove(self):
+        threads.warnIfNotOnMainThread('OverlayPalette.remove')
+        if self.autoHidingTimer is not nil:
+            self.autoHidingTimer.invalidate()
+            self.autoHidingTimer = nil
+        if self.updateTimer is not nil:
+            self.updateTimer.invalidate()
+            self.updateTimer = nil
+        if self.parentWindow() is not nil:
+            self.parentWindow().removeChildWindow_(self)
+        self.orderOut_(nil)
+
+###############################################################################
+
+class OverlayPaletteView (NSView):
+
+    def drawRect_(self, rect):
+        radius = 8
+        lineWidth = 2
+        rect = NSInsetRect(self.frame(), radius+lineWidth, radius+lineWidth)
+        
+        path = NSBezierPath.bezierPath()
+        path.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_(NSPoint(NSMinX(rect), NSMinY(rect)), radius, 180.0, 270.0)
+        path.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_(NSPoint(NSMaxX(rect), NSMinY(rect)), radius, 270.0, 360.0)
+        path.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_(NSPoint(NSMaxX(rect), NSMaxY(rect)), radius,   0.0,  90.0)
+        path.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_(NSPoint(NSMinX(rect), NSMaxY(rect)), radius,  90.0, 180.0)
+        path.closePath()
+        
+        transform = NSAffineTransform.transform()
+        transform.translateXBy_yBy_(0.5, 0.5)
+        path.transformUsingAffineTransform_(transform)
+        
+        NSColor.colorWithCalibratedWhite_alpha_(0.0, 0.6).set()
+        path.fill()
+        
+        NSColor.colorWithCalibratedWhite_alpha_(1.0, 0.6).set()
+        path.setLineWidth_(lineWidth)
+        path.stroke()
+
+###############################################################################
+
+class OverlayPaletteControlsView (NSView):
+        
+    def hitTest_(self, point):
+        # Our buttons have transparent parts, but we still want mouse clicks
+        # to be detected if they happen there, so we override hit testing and
+        # simply test for button frames.
+        for subview in self.subviews():
+            if NSPointInRect(self.convertPoint_fromView_(point, nil), subview.frame()):
+                return subview
+        return self
+
+
+###############################################################################
+
+class OverlayPaletteSlider (Slider):
+
+    def drawTrack(self):
+        self.track.compositeToPoint_operation_((0, 2), NSCompositeSourceOver)
+
 ###############################################################################
 
 class SkipSeekButtonCell (NSButtonCell):
@@ -620,202 +945,30 @@ class SkipSeekButtonCell (NSButtonCell):
 
 ###############################################################################
 
-class FullScreenPalette (NSWindow):
+def getOverlayButtonImage(size):
+    fillColor = NSColor.colorWithCalibratedWhite_alpha_(190.0/255.0, 0.8)
+    strokeColor = NSColor.colorWithCalibratedWhite_alpha_(76.0/255.0, 0.8)
+    return makeOverlayButtonImage(size, fillColor, strokeColor)
+
+def getOverlayButtonAlternateImage(size):
+    fillColor = NSColor.colorWithCalibratedWhite_alpha_(220.0/255.0, 0.8)
+    strokeColor = NSColor.colorWithCalibratedWhite_alpha_(106.0/255.0, 0.8)
+    return makeOverlayButtonImage(size, fillColor, strokeColor)
+
+def makeOverlayButtonImage(size, fillColor, strokeColor):
+    radius = (size.height-1) / 2.0
+    path = NSBezierPath.bezierPath()
+    path.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_(NSPoint(radius+1.5, radius+0.5), radius, 90.0, 270.0)
+    path.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_(NSPoint(size.width - radius - 1.5, radius+0.5), radius, 270.0, 90.0)
+    path.closePath()
+
+    image = NSImage.alloc().initWithSize_(size)
+    image.lockFocus()
     
-    donationLabel       = IBOutlet('donationLabel')
-    feedLabel           = IBOutlet('feedLabel')
-    playPauseButton     = IBOutlet('playPauseButton')
-    progressSlider      = IBOutlet('progressSlider')
-    seekBackwardButton  = IBOutlet('seekBackwardButton')
-    seekForwardButton   = IBOutlet('seekForwardButton')
-    timeIndicator       = IBOutlet('timeIndicator')
-    titleLabel          = IBOutlet('titleLabel')
-    volumeSlider        = IBOutlet('volumeSlider')
+    fillColor.set()
+    path.fill()
+    strokeColor.set()
+    path.stroke()
     
-    HOLD_TIME = 2
-    
-    def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
-        self = super(FullScreenPalette, self).initWithContentRect_styleMask_backing_defer_(
-            rect,
-            NSBorderlessWindowMask,
-            backing,
-            defer )
-        nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', u'videoWillPlay', nil)
-        nc.addObserver_selector_name_object_(self, 'videoWillPause:', u'videoWillPause', nil)
-        self.setBackgroundColor_(NSColor.clearColor())
-        self.setAlphaValue_(1.0)
-        self.setOpaque_(NO)
-        self.autoConcealTimer = nil
-        self.updateTimer = nil
-        self.holdStartTime = 0.0
-        self.renderer = None
-        self.wasPlaying = False
-        return self
-
-    def awakeFromNib(self):
-        self.seekForwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekForwardButton.cell(), 1, 0.0))
-        self.seekForwardButton.cell().setAllowsSkipping(False)
-        self.seekBackwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekBackwardButton.cell(), -1, 0.0))
-        self.seekBackwardButton.cell().setAllowsSkipping(False)
-        self.progressSlider.track = NSImage.imageNamed_(u'fs-progress-background')
-        self.progressSlider.cursor = NSImage.imageNamed_(u'fs-progress-slider')
-        self.progressSlider.sliderWasClicked = self.progressSliderWasClicked
-        self.progressSlider.sliderWasDragged = self.progressSliderWasDragged
-        self.progressSlider.sliderWasReleased = self.progressSliderWasReleased
-        self.progressSlider.setShowCursor_(True)
-        self.volumeSlider.track = NSImage.imageNamed_(u'fs-volume-background')
-        self.volumeSlider.cursor = NSImage.imageNamed_(u'fs-volume-slider')
-        self.volumeSlider.sliderWasDragged = self.volumeSliderWasDragged
-        self.volumeSlider.setShowCursor_(True)
-
-    def canBecomeKeyWindow(self):
-        return NO
-
-    def canBecomeMainWindow(self):
-        return NO
-
-    def setup(self, item, renderer):
-        self.titleLabel.setStringValue_(unicode(item.getTitle()))
-        self.feedLabel.setStringValue_(unicode(item.getFeed().getTitle()))
-        self.donationLabel.setStringValue_(u'')
-        self.renderer = renderer
-        self.update_(nil)
-
-    def reveal(self, parent):
-        threads.warnIfNotOnMainThread('FullScreenPalette.reveal')
-        if not self.isVisible():
-            self.update_(nil)
-            app.htmlapp.videoDisplay.getVolume(lambda v: self.volumeSlider.setFloatValue_(v))
-            screenOrigin = parent.screen().frame().origin
-            screenSize = parent.screen().frame().size
-            height = self.frame().size.height
-            frame = ((screenOrigin.x, screenOrigin.y-height), (screenSize.width, height))
-            self.setFrame_display_(frame, NO)        
-            parent.addChildWindow_ordered_(self, NSWindowAbove)
-            self.orderFront_(nil)
-            frame = (screenOrigin, (screenSize.width, height))
-            self.setFrame_display_animate_(frame, YES, YES)
-            self.holdStartTime = time.time()
-            self.autoConcealTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-                1.0, self, 'concealAfterDelay:', nil, YES)
-            self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-                0.5, self, 'update:', nil, YES)
-            NSRunLoop.currentRunLoop().addTimer_forMode_(self.updateTimer, NSEventTrackingRunLoopMode)
-            self.update_(nil)
-    
-    def conceal(self):
-        threads.warnIfNotOnMainThread('FullScreenPalette.conceal')
-        frame = self.frame()
-        frame.origin.y = -frame.size.height
-        self.setFrame_display_animate_(frame, YES, YES)
-        self.remove()
-        NSCursor.setHiddenUntilMouseMoves_(YES)
-    
-    def concealAfterDelay_(self, timer):
-        if time.time() - self.holdStartTime > self.HOLD_TIME:
-            self.conceal()
-    
-    def resetAutoConceal(self):
-        self.holdStartTime = time.time()
-        
-    def expireNow_(self, sender):
-        pass
-        
-    def tellAFriend_(self, sender):
-        pass
-        
-    def update_(self, timer):
-        self.renderer.getDisplayTime(lambda t: self.timeIndicator.setStringValue_(unicode(t)))
-        self.renderer.getProgress(lambda p: self.progressSlider.setFloatValue_(p))
-            
-    def progressSliderWasClicked(self, slider):
-        if app.htmlapp.videoDisplay.isPlaying:
-            self.wasPlaying = True
-            self.renderer.pause()
-        self.renderer.setProgress(slider.floatValue())
-        self.renderer.interactivelySeeking = True
-        self.resetAutoConceal()
-        
-    def progressSliderWasDragged(self, slider):
-        self.renderer.setProgress(slider.floatValue())
-        self.resetAutoConceal()
-        
-    def progressSliderWasReleased(self, slider):
-        self.renderer.interactivelySeeking = False
-        if self.wasPlaying:
-            self.wasPlaying = False
-            self.renderer.play()
-
-    def volumeSliderWasDragged(self, slider):
-        app.htmlapp.videoDisplay.setVolume(slider.floatValue())
-        self.resetAutoConceal()
-
-    def videoWillPlay_(self, notification):
-        self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-pause'))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'fs-button-pause-alt'))
-
-    def videoWillPause_(self, notification):
-        self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-play'))
-        self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'fs-button-play-alt'))
-
-    def remove(self):
-        threads.warnIfNotOnMainThread('FullScreenPalette.remove')
-        if self.autoConcealTimer is not nil:
-            self.autoConcealTimer.invalidate()
-            self.autoConcealTimer = nil
-        if self.updateTimer is not nil:
-            self.updateTimer.invalidate()
-            self.updateTimer = nil
-        if self.parentWindow() is not nil:
-            self.parentWindow().removeChildWindow_(self)
-        self.orderOut_(nil)
-
-###############################################################################
-
-class FullScreenPaletteView (NSView):
-
-    def awakeFromNib(self):
-        self.background = NSImage.imageNamed_(u'fs-background')
-        self.backgroundRect = NSRect((0,0), self.background.size())
-        self.topLine = NSImage.imageNamed_(u'fs-topline')
-        self.topLineRect = NSRect((0,0), self.topLine.size())
-
-    def drawRect_(self, rect):
-        width = self.bounds().size.width
-        bgRect = ((0,0), (width, self.backgroundRect.size.height))
-        self.background.drawInRect_fromRect_operation_fraction_(bgRect, self.backgroundRect, NSCompositeSourceOver, 1.0)
-        tlRect1 = ((0,self.backgroundRect.size.height), (width-135, self.topLineRect.size.height))
-        self.topLine.drawInRect_fromRect_operation_fraction_(tlRect1, self.topLineRect, NSCompositeSourceOver, 1.0)
-        tlRect2 = ((width-25,self.backgroundRect.size.height), (25, self.topLineRect.size.height))
-        self.topLine.drawInRect_fromRect_operation_fraction_(tlRect2, self.topLineRect, NSCompositeSourceOver, 1.0)
-
-###############################################################################
-
-class FullScreenControlsView (NSView):
-    
-    def awakeFromNib(self):
-        self.background = NSImage.imageNamed_(u'fs-controls-background')
-        self.backgroundRect = NSRect((0,0), self.background.size())
-
-    def drawRect_(self, rect):
-        self.background.compositeToPoint_operation_((0, 0), NSCompositeSourceOver)
-        
-    def hitTest_(self, point):
-        # Our buttons have transparent parts, but we still want mouse clicks
-        # to be detected if they happen there, so we override hit testing and
-        # simply test for button frames.
-        for subview in self.subviews():
-            if NSPointInRect(self.convertPoint_fromView_(point, nil), subview.frame()):
-                return subview
-        return self
-
-
-###############################################################################
-
-class FullScreenSlider (Slider):
-
-    def drawTrack(self):
-        self.track.compositeToPoint_operation_((0, 2), NSCompositeSourceOver)
-
-###############################################################################
+    image.unlockFocus()
+    return image
