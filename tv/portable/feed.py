@@ -956,7 +956,8 @@ class Feed(DDBObject):
 
         if not self.idExists():
             return
-        if info['updated-url'] != self.origURL: # we got redirected
+        if info['updated-url'] != self.origURL and \
+                not self.origURL.startswith('dtv:'): # we got redirected
             f = getFeedByURL(info['updated-url'])
             if f is not None: # already have this feed, so delete us
                 self.remove()
