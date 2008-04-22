@@ -95,7 +95,7 @@ class Application(HTMLApplication):
         pass
 
     def onUnwatchedItemsCountChange(self, obj, id):
-        HTMLApplication.onDownloadingItemsCountChange(self, obj, id)
+        HTMLApplication.onUnwatchedItemsCountChange(self, obj, id)
         pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge, True, False)
         pybridge.updateTrayMenus()
 
