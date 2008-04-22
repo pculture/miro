@@ -33,11 +33,14 @@ error reporting, etc.
 import logging
 import urllib
 
+from xml.dom import minidom
+
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import dialogs
 from miro.frontends.html import template
 from miro.frontends.html import templatedisplay
+from miro.platform import resources
 from miro.platform.frontends.html.MainFrame import MainFrame
 from miro.platform.frontends.html.UIBackendDelegate import UIBackendDelegate
 from miro.platform.frontends.html import VideoDisplay
@@ -151,6 +154,7 @@ class HTMLApplication:
     @eventloop.asUrgent
     def finishStartup(self, gatheredVideos=None):
         # Keep a ref of the 'new' and 'download' tabs, we'll need'em later
+        reloadStaticTabs()
         self.newTab = None
         self.downloadTab = None
         for tab in views.allTabs:
@@ -594,3 +598,19 @@ class HTMLApplication:
         # line
         if self.playbackController.currentPlaylist is None:
             app.selection.selectFirstTab()
+
+# Reload the StaticTabs in the database from the statictabs.xml resource file.
+def reloadStaticTabs():
+    app.db.confirmDBThread()
+    # Wipe all of the StaticTabs currently in the database.
+    tabs.removeStaticTabs()
+
+    # Load them anew from the resource file.
+    # NEEDS: maybe better error reporting?
+    document = minidom.parse(resources.path('statictabs.xml'))
+    for n in document.getElementsByTagName('statictab'):
+        tabTemplateBase = n.getAttribute('tabtemplatebase')
+        contentsTemplate = n.getAttribute('contentstemplate')
+        state = n.getAttribute('state')
+        order = int(n.getAttribute('order'))
+        tabs.StaticTab(tabTemplateBase, contentsTemplate, state, order)

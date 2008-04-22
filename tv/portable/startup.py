@@ -201,7 +201,6 @@ def setupGlobalFeeds():
     setupGlobalFeed(u'dtv:directoryfeed')
 
 def setupTabs():
-    tabs.reloadStaticTabs()
     try:
         channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
     except LookupError:

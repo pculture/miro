@@ -40,7 +40,6 @@ from miro import sorts
 from miro.util import checkU, getSingletonDDBObject
 from miro.databasehelper import TrackedIDList
 
-from xml.dom.minidom import parse
 from miro.gtcache import gettext as _
 import logging
 
@@ -345,22 +344,6 @@ def removeStaticTabs():
     app.db.confirmDBThread()
     for obj in views.staticTabsObjects:
         obj.remove()
-
-# Reload the StaticTabs in the database from the statictabs.xml resource file.
-def reloadStaticTabs():
-    app.db.confirmDBThread()
-    # Wipe all of the StaticTabs currently in the database.
-    removeStaticTabs()
-
-    # Load them anew from the resource file.
-    # NEEDS: maybe better error reporting?
-    document = parse(resources.path('statictabs.xml'))
-    for n in document.getElementsByTagName('statictab'):
-        tabTemplateBase = n.getAttribute('tabtemplatebase')
-        contentsTemplate = n.getAttribute('contentstemplate')
-        state = n.getAttribute('state')
-        order = int(n.getAttribute('order'))
-        StaticTab(tabTemplateBase, contentsTemplate, state, order)
 
 def tabIterator():
     """Iterates over all tabs in order"""
