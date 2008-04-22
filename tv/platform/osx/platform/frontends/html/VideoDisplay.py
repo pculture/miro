@@ -726,8 +726,8 @@ class OverlayPalette (NSWindow):
         self.holdStartTime = time.time()
         
     def animate(self, params, duration):
-        self.anim = NSViewAnimation.alloc().initWithViewAnimations_([params])
-        self.anim.setDuration_(duration)
+        self.anim = NSViewAnimation.alloc().initWithDuration_animationCurve_(duration, 0)
+        self.anim.setViewAnimations_(NSArray.arrayWithObject_(params))
         self.anim.setDelegate_(self)
         self.anim.startAnimation()
 
