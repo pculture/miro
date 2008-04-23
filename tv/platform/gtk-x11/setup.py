@@ -397,7 +397,7 @@ data_files += [
      [os.path.join(platform_dir, 'miro.xml')]),
     ('/usr/share/man/man1',
      [os.path.join(platform_dir, 'miro.1.gz')]),
-    ('/usr/libexec/',
+    ('/usr/lib/miro/',
      [os.path.join(platform_dir, 'xine/xine_extractor')]),
 ]
 

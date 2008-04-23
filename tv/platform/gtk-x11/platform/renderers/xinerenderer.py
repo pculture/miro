@@ -237,4 +237,4 @@ class Renderer:
         self.xine.setRate(rate)
 
     def movieDataProgramInfo(self, moviePath, thumbnailPath):
-        return ((resources.path('../../../libexec/xine_extractor'), moviePath, thumbnailPath), None)
+        return ((resources.path('../../../lib/miro/xine_extractor'), moviePath, thumbnailPath), None)
