@@ -716,7 +716,7 @@ class OverlayPalette (NSWindow):
 
             self.hiding = True
             params = {NSViewAnimationTargetKey: self, NSViewAnimationEffectKey: NSViewAnimationFadeOutEffect}
-            self.animate(params, 1.5)
+            self.animate(params, 0.5)
     
     def hideAfterDelay_(self, timer):
         if time.time() - self.holdStartTime > self.HOLD_TIME:
