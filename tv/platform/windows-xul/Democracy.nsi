@@ -709,7 +709,7 @@ Section "Handle Windows Media files" SecRegisterWmv
   WriteRegStr HKCR ".wmv" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
-Section "DTS files" SecRegisterDts
+Section "Handle DTS Media files" SecRegisterDts
   WriteRegStr HKCR ".dts" "" "${CONFIG_PROG_ID}"
 SectionEnd
 
