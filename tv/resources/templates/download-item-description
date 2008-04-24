@@ -24,7 +24,8 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 			</a>
 
 			<a class="button blue" href="#" onclick="return eventURL('action:expireItem?item=@@@this.getID()@@@');" t:showIf="this.showTrashButton()">
-				<span i18n:translate="">Delete</span>
+				<span i18n:translate="" t:hideIf="this.isExternal()">Delete</span>
+				<span i18n:translate="" t:showIf="this.isExternal()">Remove</span>
 			</a>
 			<!-- need to call event.stopPropagation() to prevent us from selecting the div -->
 			<a class="button blue" t:showIf="this.hasSharableURL()" onclick="showSelectBoxMenu('share-menu-@@@viewName@@@-@@@this.getID()@@@'); event.stopPropagation();">
