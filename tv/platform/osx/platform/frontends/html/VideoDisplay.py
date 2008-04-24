@@ -544,6 +544,8 @@ class VideoWindow (NSWindow):
                         app.htmlapp.videoDisplay.exitFullScreen()
                     else:
                         app.htmlapp.videoDisplay.goFullScreen()
+                elif not self.parentWindow().isMainWindow():
+                    self.parentWindow().makeKeyAndOrderFront_(nil)
             else:
                 NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
         elif event.type() == NSKeyDown:
