@@ -47,7 +47,7 @@ from miro.platform.utils import setMainThread
 
 class Application(HTMLApplication):
     def run(self):
-        mozsetup.setupMozillaEnvironment()
+        queue.call_nowait(mozsetup.setupMozillaEnvironment)
         gtk.glade.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
         gtk.glade.textdomain("miro")
 

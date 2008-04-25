@@ -32,7 +32,6 @@ import os
 from miro import config
 from miro import prefs
 import gtkmozembed
-from miro.platform.frontends.html.gtk_queue import gtkAsyncMethod
 
 def createProfileDirectory():
     """Create the mozilla profile directory, if needed."""
@@ -91,7 +90,6 @@ user_pref("network.proxy.share_proxy_settings", true);
     f.write(prefsContent)
     f.close()
 
-@gtkAsyncMethod
 def setupMozillaEnvironment():
     """Do all the work necessary setup the Miro Mozilla environment."""
     createProfileDirectory()
