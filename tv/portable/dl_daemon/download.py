@@ -3,7 +3,6 @@ import sys
 import shutil
 import types
 from gettext import gettext as _
-from os import remove
 import re
 from threading import RLock, Event, Thread
 import traceback
@@ -349,7 +348,7 @@ class BGDownloader:
                 'Incomplete Downloads')
         # Create the download directory if it doesn't already exist.
         try:
-            os.makedirs(downloadDir)
+            fileutil.makedirs(downloadDir)
         except:
             pass
         cleaned = cleanFilename(self.shortFilename + suffix)
@@ -369,7 +368,7 @@ class BGDownloader:
             channelName = filterDirectoryName(self.channelName)
             directory = os.path.join (directory, channelName)
             try:
-                os.makedirs(directory)
+                fileutil.makedirs(directory)
             except:
                 pass
         newfilename = os.path.join(directory, self.shortFilename)
@@ -531,7 +530,7 @@ class HTTPDownloader(BGDownloader):
         BGDownloader.handleError(self, shortReason, reason)
         self.cancelRequest()
         try:
-            remove (self.filename)
+            fileutil.remove (self.filename)
         except:
             pass
         self.currentSize = 0
@@ -550,7 +549,7 @@ class HTTPDownloader(BGDownloader):
             except:
                 pass
         try:
-            remove(self.filename)
+            fileutil.remove(self.filename)
         except:
             pass
 
@@ -576,7 +575,7 @@ class HTTPDownloader(BGDownloader):
             self.shortFilename = checkFilenameExtension(self.shortFilename, info.get('content-type'))
         self.pickInitialFilename()
         try:
-            self.filehandle = file(self.filename,"w+b")
+            self.filehandle = fileutil.open_file(self.filename,"w+b")
         except IOError:
             self.handleGenericError("Couldn't open %s for writing" % 
                 stringify(self.filename))
@@ -613,7 +612,7 @@ class HTTPDownloader(BGDownloader):
             self.startNewDownload()
         else:
             try:
-                self.filehandle = file(self.filename,"r+b")
+                self.filehandle = fileutil.open_file(self.filename,"r+b")
                 self.filehandle.seek(self.currentSize)
             except IOError, e:
                 self.handleWriteError(e)
@@ -711,15 +710,15 @@ class HTTPDownloader(BGDownloader):
                 try:
                     if not self.filehandle.closed:
                         self.filehandle.close()
-                    remove(self.filename)
+                    fileutil.remove(self.filename)
                 except:
                     pass
         if delete:
             try:
-                if os.path.isdir(self.filename):
-                    shutil.rmtree(self.filename)
+                if fileutil.isdir(self.filename):
+                    fileutil.rmtree(self.filename)
                 else:
-                    remove(self.filename)
+                    fileutil.remove(self.filename)
             except:
                 pass
         self.currentSize = 0
@@ -775,7 +774,7 @@ class BTDownloader(BGDownloader):
                                  (self.totalSize / (2 ** 20)))
                 return
 
-            name = os.path.dirname(stringify(self.filename))
+            name = os.path.dirname(fileutil.expand_filename(stringify(self.filename)))
             if self.fastResumeData:
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
             else:
@@ -919,10 +918,10 @@ class BTDownloader(BGDownloader):
         self.updateClient()
         if delete:
             try:
-                if os.path.isdir(self.filename):
-                    shutil.rmtree(self.filename)
+                if fileutil.isdir(self.filename):
+                    fileutil.rmtree(self.filename)
                 else:
-                    remove(self.filename)
+                    fileutil.remove(self.filename)
             except:
                 pass
 

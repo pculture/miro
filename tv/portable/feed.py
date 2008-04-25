@@ -58,7 +58,7 @@ from miro import prefs
 from miro.platform import resources
 from miro import downloader
 from miro.util import (returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure, escape, toUni)
-from miro.fileutil import miro_listdir, miro_allfiles
+from miro import fileutil
 from miro.platform.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
 from miro import filetypes
 from miro import item as itemmod
@@ -1117,6 +1117,7 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
         self.confirmDBThread()
         if self.iconCache and self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(76, 76)
+            path = fileutil.expand_filename(path)
             return resources.absoluteUrl(path)
         else:
             return defaultFeedIconURL()
@@ -1126,6 +1127,7 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
         self.confirmDBThread()
         if self.iconCache and self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(20, 20)
+            path = fileutil.expand_filename(path)
             return resources.absoluteUrl(path)
         else:
             return defaultFeedIconURLTablist()
@@ -1135,6 +1137,7 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
         self.confirmDBThread()
         if self.iconCache and self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(width, height)
+            path = fileutil.expand_filename(path)
             return resources.absoluteUrl(path)
         else:
             return None
@@ -2244,7 +2247,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
         knownFiles = set()
         for item in views.toplevelItems:
             if not item.getFeed().getURL().startswith("dtv:directoryfeed"):
-                knownFiles.add(os.path.normcase(item.getFilename()))
+                knownFiles.add(item.getFilename())
 
         # Remove items that are in feeds, but we have in our list
         for item in self.items:
@@ -2255,17 +2258,17 @@ class DirectoryWatchFeedImpl(FeedImpl):
         # add our items to knownFiles so that they don't get added
         # multiple times to this feed.
         for x in self.items:
-            knownFiles.add(os.path.normcase (x.getFilename()))
+            knownFiles.add(x.getFilename())
 
         #Adds any files we don't know about
         #Files on the filesystem
-        if os.path.isdir(self.dir):
+        if fileutil.isdir(self.dir):
             all_files = []
-            files, dirs = miro_listdir(self.dir)
+            files, dirs = fileutil.miro_listdir(self.dir)
             for file in files:
                 all_files.append(file)
             for dir in dirs:
-                subfiles, subdirs = miro_listdir(dir)
+                subfiles, subdirs = fileutil.miro_listdir(dir)
                 for subfile in subfiles:
                     all_files.append(subfile)
             for file in all_files:
@@ -2273,7 +2276,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
                     itemmod.FileItem(file, feed_id=self.ufeed.id)
 
         for item in self.items:
-            if not os.path.isfile(item.getFilename()):
+            if not fileutil.isfile(item.getFilename()):
                 item.remove()
         if self.firstUpdate:
             for item in self.items:
@@ -2318,11 +2321,11 @@ class DirectoryFeedImpl(FeedImpl):
         knownFiles = set()
         for item in views.toplevelItems:
             if item.feed_id is not self.ufeed.id:
-                knownFiles.add(os.path.normcase(item.getFilename()))
+                knownFiles.add(item.getFilename())
             if item.isContainerItem:
                 item.findNewChildren()
 
-        knownFiles.add(os.path.normcase(os.path.join(moviesDir, "Incomplete Downloads")))
+        knownFiles.add(os.path.join(moviesDir, "Incomplete Downloads"))
 
         # Remove items that are in feeds, but we have in our list
         for item in self.items:
@@ -2333,18 +2336,18 @@ class DirectoryFeedImpl(FeedImpl):
         # add our items to knownFiles so that they don't get added
         # multiple times to this feed.
         for x in self.items:
-            knownFiles.add(os.path.normcase (x.getFilename()))
+            knownFiles.add(x.getFilename())
 
         #Adds any files we don't know about
         #Files on the filesystem
-        if os.path.isdir(moviesDir):
-            all_files = miro_allfiles(moviesDir)
+        if fileutil.isdir(moviesDir):
+            all_files = fileutil.miro_allfiles(moviesDir)
             for file in all_files:
                 if file not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file)):
                     itemmod.FileItem(file, feed_id=self.ufeed.id)
 
         for item in self.items:
-            if not os.path.exists(item.getFilename()):
+            if not fileutil.exists(item.getFilename()):
                 item.remove()
 
         self.scheduleUpdateEvents(-1)

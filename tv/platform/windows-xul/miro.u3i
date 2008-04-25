@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<u3manifest version="1.0">
+  <application uuid="D6270AC2-2EF1-4e69-8477-E0A88D7938B7" version="1.2">
+    <icon>Miro.ico</icon>
+    <name>Miro</name>
+    <description>Video Podcasting Client</description>
+    <shortDescription>Video Podcasting Client</shortDescription>
+    <vendor url="http://www.getmiro.com/">Participatory Culture</vendor>
+    <options>
+      <minFreeSpace>200</minFreeSpace>
+      <upgrade appData="add" deviceExec="remove" />
+    </options>
+    <i18n />
+  </application>
+  <actions>
+    <hostCleanUp cmd="%U3_HOST_EXEC_PATH%\U3Action.exe">-hostCleanUp</hostCleanUp>
+    <appStop cmd="%U3_HOST_EXEC_PATH%\U3Action.exe">-appStop -WinTitle Miro</appStop>
+    <appStart cmd="%U3_HOST_EXEC_PATH%\U3Action.exe">-appStart  -SIHost Miro.exe \"%U3_DEVICE_EXEC_PATH%\Miro.exe\"</appStart>
+  </actions>
+</u3manifest>

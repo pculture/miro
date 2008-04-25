@@ -42,6 +42,7 @@ from miro import config
 from miro import prefs
 from miro import signals
 from miro import util
+from miro import fileutil
 from miro.platform.utils import FilenameType, killProcess
 
 MOVIE_DATA_UTIL_TIMEOUT = 60
@@ -57,7 +58,7 @@ thumbnailRE = re.compile("Miro-Movie-Data-Thumbnail: (Success|Failure)")
 def thumbnailDirectory():
     dir = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
     try:
-        os.makedirs(dir)
+        fileutil.makedirs(dir)
     except:
         pass
     return dir
@@ -87,7 +88,7 @@ class MovieDataInfo:
         for renderer in app.renderers:
             try:
                 commandLine, env = renderer.movieDataProgramInfo(
-                        self.videoPath, self.thumbnailPath)
+                        fileutil.expand_filename(self.videoPath), fileutil.expand_filename(self.thumbnailPath))
             except NotImplementedError:
                 pass
             else:
@@ -124,7 +125,7 @@ class MovieDataUpdater:
                     if duration != -1 and screenshotWorked:
                         break
                 if (screenshotWorked and 
-                        os.path.exists(movieDataInfo.thumbnailPath)):
+                        fileutil.exists(movieDataInfo.thumbnailPath)):
                     screenshot = movieDataInfo.thumbnailPath
                 else:
                     # All the programs failed, maybe it's an audio file?
@@ -189,7 +190,7 @@ class MovieDataUpdater:
         if self.inShutdown:
             return
         filename = item.getVideoFilename()
-        if not filename or not os.path.isfile(filename):
+        if not filename or not fileutil.isfile(filename):
             return
         if item.downloader and not item.downloader.isFinished():
             return

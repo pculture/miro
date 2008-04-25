@@ -60,6 +60,7 @@ from miro import singleclick
 from miro import util
 from miro import views
 from miro import databasehelper
+from miro import fileutil
 from miro.platform.utils import exit, osFilenameToFilenameType
 
 ###############################################################################
@@ -512,11 +513,11 @@ Are you sure you want to stop watching these %s directories?""") % len(feeds)
                     download.migrate(newDir)
             # Pass in case they don't exist or are not empty:
             try:
-                os.rmdir(os.path.join (oldDir, 'Incomplete Downloads'))
+                fileutil.rmdir(os.path.join (oldDir, 'Incomplete Downloads'))
             except:
                 pass
             try:
-                os.rmdir(oldDir)
+                fileutil.rmdir(oldDir)
             except:
                 pass
         util.getSingletonDDBObject(views.directoryFeed).update()

@@ -35,9 +35,11 @@ import logging
 
 from miro import filetypes
 from miro import util
+from miro import fileutil
 
 from miro.util import checkF, checkU, returnsFilename
 from miro.platform.utils import unicodeToFilename, unmakeURLSafe
+from miro.fileutil import expand_filename
 
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
 # filename limits this is mostly for windows where we have a 255 character
@@ -132,19 +134,19 @@ def checkFilenameExtension(filename, contentType):
 @returnsFilename
 def nextFreeFilename(name):
     checkF(name)
-    if not access(name,F_OK):
+    if not access(expand_filename(name),F_OK):
         return name
     parts = name.split('.')
     count = 1
     if len(parts) == 1:
         newname = "%s.%s" % (name, count)
-        while access(newname,F_OK):
+        while access(expand_filename(newname),F_OK):
             count += 1
             newname = "%s.%s" % (name, count)
     else:
         parts[-1:-1] = [str(count)]
         newname = '.'.join(parts)
-        while access(newname,F_OK):
+        while access(expand_filename(newname),F_OK):
             count += 1
             parts[-2] = str(count)
             newname = '.'.join(parts)
@@ -199,7 +201,7 @@ def cleanFilename(filename):
 # Saves data, returns filename, doesn't write over existing files.
 def saveData (target, suggested_basename, data):
     try:
-        os.makedirs(target)
+        fileutil.makedirs(target)
     except:
         pass
 
@@ -215,7 +217,7 @@ def saveData (target, suggested_basename, data):
         output.close()
     except IOError:
         try:
-            os.remove (tmp_filename)
+            fileutil.remove (tmp_filename)
         except:
             pass
         raise
@@ -224,11 +226,11 @@ def saveData (target, suggested_basename, data):
     filename = nextFreeFilename (filename)
     needsSave = True
     try:
-        os.remove (filename)
+        fileutil.remove (filename)
     except:
         pass
 
-    os.rename (tmp_filename, filename)
+    fileutil.rename (tmp_filename, filename)
 
     return filename
 
