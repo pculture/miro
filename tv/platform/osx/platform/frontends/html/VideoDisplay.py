@@ -297,6 +297,9 @@ class VideoDisplayController (NSObject):
             self.videoDisplay.goFullScreen()
         eventloop.addUrgentCall(lambda:performInEventLoop(), "Play Video Fullscreen")
 
+    def toggleFullScreen_(self, sender):
+        self.videoAreaView.toggleFullScreen_(sender)
+
     @threads.onMainThread
     def goFullScreen(self):
         self.videoAreaView.enterFullScreen()
@@ -442,6 +445,9 @@ class VideoAreaView (NSView):
     def windowDidBecomeKey_(self, notification):
         self.adjustVideoWindowFrame()
         self.window().orderFront_(nil)
+    
+    def toggleFullScreen_(self, sender):
+        self.videoWindow.toggleFullScreen_(sender)
     
     @threads.onMainThread
     def enterFullScreen(self):

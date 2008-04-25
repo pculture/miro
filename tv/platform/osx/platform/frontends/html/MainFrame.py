@@ -330,7 +330,7 @@ class MainController (NSWindowController):
         eventloop.addIdle(lambda:app.htmlapp.playbackController.skip(-1, False), "Skip Video")
 
     def toggleFullScreen_(self, sender):
-        self.videoDisplayController.playFullScreen_(sender)
+        self.videoDisplayController.toggleFullScreen_(sender)
 
     # Help menu #
 
