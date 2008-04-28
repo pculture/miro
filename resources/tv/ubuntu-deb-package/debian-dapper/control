@@ -2,12 +2,42 @@ Source: miro
 Section: net
 Priority: optional
 Maintainer: Will Guaraldi <will.guaraldi@pculture.org>
-Build-Depends: cdbs, debhelper (>= 5), python2.4, python-pyrex, libboost-python-dev, python-gtk2-dev, python-gnome2-extras-dev (>= 2.14.0-0), python2.4-dbus, firefox-dev, libnspr-dev, libxine-dev, libsigc++-dev, libboost-thread-dev, libboost-filesystem-dev, libboost-date-time-dev, libboost-serialization-dev, libxv-dev, libssl-dev, python2.4-dev, python-dev, python-support
+Build-Depends: cdbs, 
+               debhelper (>= 5), 
+               python2.4, 
+               python-pyrex, 
+               libboost-python-dev, 
+               python-gtk2-dev, 
+               python-gnome2-extras-dev (>= 2.14.0-0), 
+               firefox-dev, 
+               libnspr-dev, 
+               libxine-dev, 
+               libsigc++-dev, 
+               libboost-thread-dev, 
+               libboost-filesystem-dev, 
+               libboost-date-time-dev, 
+               libboost-serialization-dev, 
+               libxv-dev, 
+               libssl-dev, 
+               python2.4-dev, 
+               python-dev, 
+               python-support
 Standards-Version: 3.7.2
 
 Package: miro
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, python-gtk2, python-gnome2, python-gnome2-extras (>= 2.14.0-0), python-glade2, miro-data (>= 1.2), mozilla-psm, imagemagick, python-pysqlite2
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         ${python:Depends},
+         python2.4-dbus, 
+         python-gtk2,
+         python-gnome2,
+         python-gnome2-extras (>= 2.14.0-0),
+         python-glade2,
+         miro-data (>= 1.2.3),
+         mozilla-psm,
+         imagemagick,
+         python-pysqlite2
 Suggests: ttf-bitstream-vera
 Conflicts: j2re1.4, democracyplayer (<< 0.9.8)
 Replaces: democracyplayer
