@@ -402,6 +402,10 @@ class VideoAreaView (NSView):
         self.videoWindow.orderOut_(nil)
         self.videoWindow.teardown()
 
+    def keyDown_(self, event):
+        if event.keyCode() == 0x35 and self.videoWindow.isFullScreen:
+            self.videoWindow.toggleFullScreen_(nil)
+
     def mouseMoved_(self, event):
         self.videoWindow.sendEvent_(event)
 
@@ -443,8 +447,9 @@ class VideoAreaView (NSView):
         self.videoWindow.orderOut_(nil)
     
     def windowDidBecomeKey_(self, notification):
-        self.adjustVideoWindowFrame()
-        self.window().orderFront_(nil)
+        if not self.videoWindow.isFullScreen:
+            self.adjustVideoWindowFrame()
+        self.window().makeKeyAndOrderFront_(nil)
     
     def toggleFullScreen_(self, sender):
         self.videoWindow.toggleFullScreen_(sender)
@@ -554,8 +559,6 @@ class VideoWindow (NSWindow):
                     self.parentWindow().makeKeyAndOrderFront_(nil)
             else:
                 NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
-        elif event.type() == NSKeyDown:
-            handleKey(event)
         else:
             super(VideoWindow, self).sendEvent_(event)
     
@@ -657,6 +660,8 @@ class OverlayPalette (NSWindow):
             self.adjustContent(self.parentWindow(), True)
             self.fsButton.setImage_(NSImage.imageNamed_('fs-button-exitfullscreen'))
             self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-exitfullscreen-alt'))
+        else:
+            NSCursor.setHiddenUntilMouseMoves_(YES)
 
     def exitFullScreen(self):
         if self.isVisible():
