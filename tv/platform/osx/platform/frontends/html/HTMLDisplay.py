@@ -190,7 +190,7 @@ class ManagedWebHTMLView (WebHTMLView):
 
     def keyDown_(self, event):
         key = mapKey(event)
-        if key in (keyboard.UP, keyboard.DOWN):
+        if key in (keyboard.UP, keyboard.DOWN, keyboard.SPACE):
             handleKey(event)
         else:
             super(ManagedWebHTMLView, self).keyDown_(event)

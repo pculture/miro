@@ -50,7 +50,7 @@ def handleKey(key, shiftDown, controlDown):
         handleKeyPlayback(key, shiftDown, controlDown)
 
 def handleKeyNoPlayback(key, shiftDown, controlDown):
-    if key not in (UP, DOWN):
+    if key not in (UP, DOWN, SPACE):
         return
     if app.selection.tabListActive:
         selectionArea = app.selection.tabListSelection
@@ -64,8 +64,11 @@ def handleKeyNoPlayback(key, shiftDown, controlDown):
         area = 'itemlist'
     if key == UP:
         toSelect = selectionArea.firstBeforeSelection(iterator)
-    else:
+    elif key == DOWN:
         toSelect = selectionArea.firstAfterSelection(iterator)
+    elif key == SPACE:
+        toSelect = None
+        app.htmlapp.playbackController.playPause()
     if toSelect is not None:
         if app.selection.tabListActive:
             itemView = tabs.getViewForTab(toSelect)
