@@ -47,6 +47,13 @@ from miro.platform.frontends.html.MainFrame import mapKey, handleKey
 from miro.platform.frontends.html import threads
 
 ###############################################################################
+
+webKitBundle = NSBundle.bundleForClass_(WebView)
+webKitInfo = webKitBundle.infoDictionary()
+
+WEBKIT_VERSION = float(webKitInfo['CFBundleVersion'])
+
+###############################################################################
 # These are used by the channel guide. This platform uses the
 # old-style 'magic URL' guide API, so we just return None. See
 # ChannelGuideToDtvApi in the Trac wiki for the full writeup.
@@ -196,10 +203,11 @@ class ManagedWebHTMLView (WebHTMLView):
             super(ManagedWebHTMLView, self).keyDown_(event)
 
     def rightMouseDown_(self, event):
-        # We want a right click to also select what's underneath so we intercept
-        # the event here, force the left click handler first and reschedule the
-        # right click handler.
-        threads.callOnMainThread(self.mouseDown_, event)
+        if WEBKIT_VERSION < 500.0:
+            # We want a right click to also select what's underneath so we intercept
+            # the event here, force the left click handler first and reschedule the
+            # right click handler.
+            threads.callOnMainThread(self.mouseDown_, event)
         threads.callOnMainThreadAfterDelay(0.2, WebHTMLView.rightMouseDown_, self, event)
 
 ###############################################################################
