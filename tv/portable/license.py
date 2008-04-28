@@ -52,6 +52,7 @@ def license_name(license_uri):
 
     # retrieve the license document and parse it for RDFa
     try:
+        # this throws an AttributeError way down in urllib in some cases
         sink = rdfa.parseURI(license_uri, sink=DictSink())
 
         # look for explicit assertions about the license URI first, 
@@ -64,5 +65,4 @@ def license_name(license_uri):
         return license_name[1:license_name.find('"',1)]
 
     except (IOError, KeyError, SAXParseException), e:
-        
         return _('license page')
