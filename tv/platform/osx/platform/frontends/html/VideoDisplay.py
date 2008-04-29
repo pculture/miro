@@ -403,8 +403,7 @@ class VideoAreaView (NSView):
         self.videoWindow.teardown()
 
     def keyDown_(self, event):
-        if event.keyCode() == 0x35 and self.videoWindow.isFullScreen:
-            self.videoWindow.toggleFullScreen_(nil)
+        handleKey(event)
 
     def mouseMoved_(self, event):
         self.videoWindow.sendEvent_(event)
