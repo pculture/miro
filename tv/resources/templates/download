@@ -90,7 +90,7 @@ allPausedDownloads.unlink()
 <body onkeydown="sendKeyToSearchBox(event);">
 
 <!-- TITLE BAR ************************************************************ -->
-<div id="main-titlebar">
+<div id="main-titlebar" class="static-tab">
 	<div id="main-icon" class="noborder static-tab">
 		<img src="resource:images/icon-downloading_large.png" />
 	</div>
@@ -100,7 +100,7 @@ allPausedDownloads.unlink()
 	<h1 id="main-title" class="static-tab" i18n:translate="">Downloading</h1>
 	
 </div> <!-- end main-titlebar -->
-	<div id="sub-titlebar">
+	<div id="sub-titlebar" class="downloads">
 		
 		<div class="sub-titlebar-right">
 			<div class="speeds" t:updateForView="views.remoteDownloads">
@@ -123,13 +123,13 @@ allPausedDownloads.unlink()
 		</div>
 
 	<div id="download-info">
-				<span i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk</span>
+			<span t:hideIf="getFreeSpace() == getAvailableSpace()">
 				<span t:updateForConfigChange="">
-					<span t:hideIf="getFreeSpace() == getAvailableSpace()">
-						<span i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
+					<span i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
 					</span>
-				</span>
-	
+				<span>&nbsp;&nbsp;&nbsp;(<span i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk</span>)</span>
+			</span>
+			<span t:showIf="getFreeSpace() == getAvailableSpace()" i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk</span>
 	</div>	<!-- end download-info -->
 </div> <!-- end sub-titlebar -->
 

@@ -68,7 +68,7 @@ t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
 		</select>
 <br /><br />
 		<div class="settings-button">
-	    <a id="feed-settings-close-button" class="button gray done" onclick="return hideSettings()" >
+	    <a id="feed-settings-close-button" class="button gray" onclick="return hideSettings()" >
         <span i18:translate="">Done</span>
       </a>
 		</div>

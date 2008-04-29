@@ -59,7 +59,9 @@ a.remove-channel {
      * sort-bar, so the auto-download select menu is above sort-bar.
      */
 }
-
+#main-titlebar.static-tab {
+  height:58px;
+}
 /* The icon for the channel view. Usually in the titlebar */
 #main-icon {
     position: absolute;
@@ -68,13 +70,13 @@ a.remove-channel {
   /*  width: 76px;*/
     height: 61px;
     }
-#main-icon.no-border.static-tab {
+/*#main-icon.no-border.static-tab {
 	top:6px;
 	left:8px;
 }
 #main-titlebar .noborder {
     margin: 2px;
-}
+}*/
 
 /* This wraps just the name of the view */
 #main-title {
@@ -95,13 +97,16 @@ a.remove-channel {
 h1#main-title.static-tab {
 	left:63px;
 }
+/*#main-title.static-tab {
+  border-bottom:1px solid #d8d8d8;
+}*/
 /* Search box */
 #search-box-container {
 /*    position: absolute;
     right:40px;
     top: 20px;*/
     float:right;
-    margin:20px 40px 0 100px;
+    margin:22px 40px 0 100px;
 }
 
 #search-box {
@@ -117,6 +122,9 @@ h1#main-title.static-tab {
 	top:61px;
 	height:27px;
 	z-index:6;
+}
+#sub-titlebar.downloads {
+  top:59px;
 }
 /* The right side of the titlebar (visit website, settings, etc). */
 .sub-titlebar-right {
@@ -252,7 +260,8 @@ ul#view_style li a {
 #main-container.library,
 #main-container.new,
 #main-container.search {
-  top:61px;
+  border-top:1px solid #f1f1f1;
+  top:59px;
 }
 #main-container.download {
   top:88px;
@@ -635,15 +644,22 @@ an element is dragged, the drag-highlight class is added to it */
 	height:105px;
 	overflow:hidden;
 }
-
+.channel-title {
+  padding-bottom:5px;
+}
+.hide-channel-title .channel-title {
+    display: none;
+}
 .main-video.selected.more-info .main-video-desc {
     min-height: 190px;
     height:auto;
 }
 .main-video-desc h1 {
+  height:19px;
+}
+.hide-channel-title .main-video-desc h1 {
     margin: 0px;
-    padding: 0px;
-    height: 22px;
+    padding-bottom: 5px;
     overflow: hidden;
 }
 
@@ -653,9 +669,13 @@ an element is dragged, the drag-highlight class is added to it */
     overflow: hidden;
 }
 .main-video.selected .main-video-desc-desc {
-	height:50px;
+	height:36px;
 	overflow:hidden;
 }
+.hide-channel-title .main-video.selected .main-video-desc-desc {
+	height:50px;
+}
+
 
 .main-video.selected.more-info .main-video-desc-desc {
     min-height:50px;
@@ -744,7 +764,15 @@ dl.video-stats {
   right:125px;
   top:-25px;
 }
-
+.is_auto {
+  position:relative;
+  right:90px;
+}
+.main-video-details-failed-download {
+  width:165px;
+  height:auto;
+  padding-bottom:40px;
+}
 .main-video-status {
   position:absolute;
   right:0;
@@ -772,19 +800,21 @@ dl.video-stats {
 .main-video-status-progress {
 	top:-4px;
 	position: absolute;
-	right: 39px;
+	right: 0px;
 }
 .progress-strings {
-	white-space:nowrap;
+  width:178px;
 	margin-left:4px;
 }
 .progress-strings .downloading,
 .progress-strings .paused, 
 .download-rate-and-eta {
-	display:inline;
+/*	display:inline;*/
 }
 .download-rate-and-eta {
 /*	padding-left:12px;*/
+  position:relative;
+  top:-4px;
 }
 
 .main-progress-bar-bg {
@@ -820,7 +850,6 @@ dl.video-stats {
 	left: 155px;
 }
 
-
 /* ---buttons--- */
 a.button {
 	float:left;
@@ -843,4 +872,12 @@ a.button.gray span {
 }
 a.button.select span {
 	padding:0 25px 0 0;
+}
+
+.save-search-searchpage {
+  float:right;
+  margin:1px 3px 0 0;
+}
+#results-text h3 {
+  margin-left:10px;
 }

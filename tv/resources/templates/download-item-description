@@ -10,6 +10,9 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <body>
 	<div class="main-video-desc noselect ***this.getEmblemCSSClass()***">
 		<h1 t:replace="this.getTitle()" class="noselect"/>
+    <div class="channel-title">
+			<h4 t:replace="this.getChannelTitle()" />
+		</div>
 		<div class="main-video-desc-desc noselect">
 			<span t:replaceMarkup="this.getDescription()" />
 		</div>
@@ -87,11 +90,8 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 					
 
 		<div class="main-video-bottom">
-			<!--
-			  <div class="channel-title">
-				<span t:replace="this.getChannelTitle()" />
-			</div>
-		-->
+		
+		
 			<div class="donate-html noselect">
 				<span t:replaceMarkup="this.getPaymentHTML()" />
 			</div>

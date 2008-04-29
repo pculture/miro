@@ -33,12 +33,23 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 				<span t:replaceMarkup="this.getMoreInfo()" />
       </span>  
     </table>
+	  <div t:showIf="this.isFailedDownload() and not this.isPendingManualDownload()" class="main-video-details-failed-download">
+  		<span class="error" t:replace="this.getFailureReason()" />
+  	</div>
 	</div>	<!-- // end details -->
+	
 	<div class="main-video-status">
 		<div t:hideIf="this.looksLikeTorrent()" class="download-button">
-		<a t:showIf="this.isDownloadable()" class="button gray download" href="#" title="Download '***this.getTitle()***'" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');">
-			<span i18n:translate="">Download</span>
-		</a>
+		  <div t:hideIf="this.isPendingAutoDownload()">
+		    <a t:showIf="this.isDownloadable()" class="button gray download" href="#" title="Download '***this.getTitle()***'" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');">
+          <span i18n:translate="">Download</span>
+        </a>
+      </div>
+		  <div t:showIf="this.isPendingAutoDownload()" class="is_auto">
+		    <a t:showIf="this.isDownloadable()" class="button gray download" href="#" title="Download '***this.getTitle()***'" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');">
+			    <span i18n:translate="">Download</span>
+		    </a>
+		  </div>
 		</div>
 		<div t:showIf="this.looksLikeTorrent()" class="download-button torrent">
 		<a t:showIf="this.isDownloadable()" class="button gray download" href="#" title="Download '***this.getTitle()***'" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');">
@@ -53,14 +64,17 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 						<div t:hideIf="this.downloadInProgress()">
 							<span t:replace="this.getStartupActivity()" />
 						</div>
-						<span t:showIf="this.downloadInProgress()">Downloading:</span>
+						<!--
+						  <span t:showIf="this.downloadInProgress()">Downloading:</span>
+						-->
 					</div>
 					<div t:showIf="this.getState() == 'paused'" class="paused">
 						<span t:replace="this.getPausedString()" />
 					</div>
 					<div t:showIf="this.downloadInProgress()" class="download-rate-and-eta">
-						<span t:replace="this.twoDigitPercentDone()" />
-						<!--<span class="download-rate" t:replace="this.downloadRate()" />-->
+						  <div t:hideIf="this.getState() == 'paused'">
+						  <span t:replace="this.twoDigitPercentDone()" /> done - <span t:replace="this.downloadETA()" /> - <span class="download-rate" t:replace="this.downloadRate()" />
+					    </div>
 					</div>
 				</div>
 				<div t:showIf="this.gotContentLength()">
@@ -102,10 +116,6 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 			
 			<div t:showIf="this.isPendingAutoDownload()" class="main-video-details-pending-auto">
 				<span i18n:translate="">Pending Auto Download</span>
-			</div>
-			
-			<div t:showIf="this.isFailedDownload() and not this.isPendingManualDownload()" class="main-video-details-failed-download">
-				<span t:replace="this.getFailureReason()" />
 			</div>
 			
 			<div t:hideIf="this.getEmblemCSSString() == '' or this.getEmblemCSSString() == 'New'" class="video-state ***this.getEmblemCSSClass()***">

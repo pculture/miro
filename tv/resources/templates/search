@@ -38,7 +38,7 @@ searchItems.unlink()
 </head>
 
 <body onkeydown="sendKeyToSearchBox(event);">
-  <div id="main-titlebar">
+  <div id="main-titlebar" class="static-tab">
     <div id="main-icon" class="noborder static-tab"><img src="resource:images/icon-search_large.png" /></div>
     <h1 id="main-title" class="static-tab" i18n:translate="">Video Search</h1>
     <div t:updateForView="searchFeed">
@@ -72,14 +72,16 @@ searchItems.unlink()
       <div class="search-message" t:showIf="feed.getStatus() == 'idle-no-results'">
         <span i18n:translate="">No matching videos found.<br />Enter a different query in the search field above.</span>
       </div>
+      
       <div class="search-results-bar" t:showIf="feed.getStatus() == 'idle-with-results'">
-        <div id="results-text" i18n:translate="">
-          Results for "<span i18n:name="query" t:replace="feed.lastQuery" />"
-        </div>
         <div class="save-search-searchpage">
           <a class="button gray" href="#" onclick="return eventURL('action:addEngineSearchFeed?term=@@@feed.lastQuery@@@&amp;name=@@@feed.lastEngine@@@');">
             <span i18n:translate="">Save as a Channel</span>
           </a>
+        </div>
+        
+        <div id="results-text" i18n:translate="">
+          <h3>Results for "<span i18n:name="query" t:replace="feed.lastQuery" />"</h3>
         </div>
       </div>
     </div>

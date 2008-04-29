@@ -871,9 +871,9 @@ folder will be deleted.""")
             if feedThumbnail is not None:
                 return feedThumbnail
             elif self.showMoreInfo:
-                return resources.url(u"images/thumb-more-info.png")
+                return resources.url(u"images/thumb-default_large.png")
             else: 
-                return resources.url(u"images/thumb.png")
+                return resources.url(u"images/thumb-default_small.png")
 
     ##
     # returns the title of the item
@@ -1321,10 +1321,10 @@ folder will be deleted.""")
         hours, mins = divmod(mins, 60)
         if hours > 0:
             time = u"%d:%02d:%02d" % (hours, mins, secs)
-            return _("%s remaining") % time
+            return _("%s left") % time
         else:
             time = u"%d:%02d" % (mins, secs)
-            return _("%s remaining") % time
+            return _("%s left") % time
 
     @returnsUnicode
     def getStartupActivity(self):

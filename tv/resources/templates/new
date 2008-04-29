@@ -46,7 +46,7 @@ matchingItems.unlink()
 <body onkeydown="sendKeyToSearchBox(event);">
 
 <!-- TITLE BAR ************************************************************ -->
-<div id="main-titlebar">
+<div id="main-titlebar" class="static-tab">
     <div id="main-icon" class="noborder static-tab"><img src="resource:images/icon-new_large.png" /></div>
     <div id="search-box-container">
         <div t:showIf="app.controller.newVideosSearchTerm is None">

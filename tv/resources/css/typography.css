@@ -335,11 +335,11 @@ body.gray-background {
     background-font-size: 12px;
 }*/
 
-.channel-title {
+/*.channel-title {
     text-align: right;
     color: #666;
     line-height: 130%;
-}
+}*/
 .main-video.selected .main-video-desc h1 {
 	color:#1b4065
 }
@@ -351,7 +351,7 @@ body.gray-background {
 .main-video.selected .main-video-desc.new h1 {
 	color:#2887fa;
 }
-.main-video.selected .main-video-desc-desc, .main-video.selected .channel-title {
+.main-video.selected .main-video-desc-desc {
     color:#6b9ccd; 
 }
 .main-video-desc a:link, .main-video-desc a:active, .main-content a:link, .main-content a:active {
@@ -436,6 +436,13 @@ a.small-button-left:hover {
 	font-size: 10px;
 	font-weight:bold;
 }
+.main-video-details-failed-download span {
+  font-size:11px;
+  color:#333;
+}
+.main-video-details-failed-download span.error {
+  color:#BE0400;
+}
 .main-video-status-progress {
     font-size: 10px;
 }
@@ -446,3 +453,8 @@ a.small-button-left:hover {
 /*.main-video-details-pending-auto, .main-video-details-failed-download {
     text-align: center;
 }*/
+
+#results-text h3 {
+  color:#646464;
+  font-weight:bold;
+}
