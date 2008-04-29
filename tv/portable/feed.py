@@ -1538,7 +1538,7 @@ class RSSFeedImpl(FeedImpl):
     @returnsUnicode
     def getLicense(self):
         try:
-            ret = self.parsed.license
+            ret = self.parsed["feed"]["license"]
         except:
             ret = u""
         return ret

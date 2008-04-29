@@ -1460,7 +1460,8 @@ folder will be deleted.""")
             try:
                 return self.getFeed().getLicense()
             except:
-                return u""
+                pass
+        return u""
 
     ##
     # return the people associated with the video, separated by commas
