@@ -279,7 +279,9 @@ class SelectionArea(object):
 
     def getObjects(self):
         view = self.currentView
-        return [view.getObjectByID(id) for id in self.currentSelection]
+        objects = [view.getObjectByID(id) for id in self.currentSelection]
+        # Don't return items that have been deleted from the DB (#9399)
+        return [obj for obj in objects if obj.idExists()]
 
     def firstBeforeSelection(self, iterator):
         """Go through iterator and find the first item that is selected.
