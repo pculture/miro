@@ -200,6 +200,10 @@ def configDidChange(key, value):
 config.addChangeCallback(configDidChange)
 
 ##
+# Wait X seconds before updating the feeds at startup
+INITIAL_FEED_UPDATE_DELAY = 5.0
+
+##
 # Actual implementation of a basic feed.
 class FeedImpl:
     def __init__(self, url, ufeed, title = None, visible = True):
@@ -1556,7 +1560,7 @@ class RSSFeedImpl(FeedImpl):
         # wait a little while before we start the update
         FeedImpl.onRestore(self)
         self.download = None
-        self.scheduleUpdateEvents(0.1)
+        self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
 # FIXME: Derive from RSSFeedImpl, but that requires changing RSSFeedImpl some.
 class RSSMultiFeedImpl(FeedImpl):
@@ -1896,7 +1900,7 @@ class RSSMultiFeedImpl(FeedImpl):
         self.download_dc = {}
         self.updating = 0
         self.splitURLs()
-        self.scheduleUpdateEvents(0.1)
+        self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
 
 ##
