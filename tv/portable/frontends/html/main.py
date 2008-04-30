@@ -57,6 +57,7 @@ from miro import signals
 from miro import tabs
 from miro import util
 from miro import views
+from miro import u3info
 
 class HTMLApplication:
     """HTMLApplication handles the frontend when Miro is using the HTML-based
@@ -117,7 +118,7 @@ class HTMLApplication:
         app.controller.shutdown()
 
     def handleStartupSuccess(self, obj):
-        if self.AUTOUPDATE_SUPPORTED:
+        if self.AUTOUPDATE_SUPPORTED and not u3info.u3_active:
             eventloop.addTimeout (3, autoupdate.checkForUpdates, 
                     "Check for updates")
             signals.system.connect('update-available', self.handleNewUpdate)
