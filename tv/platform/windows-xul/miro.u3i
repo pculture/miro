@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <u3manifest version="1.0">
-  <application uuid="D6270AC2-2EF1-4e69-8477-E0A88D7938B7" version="1.2">
+  <application uuid="D6270AC2-2EF1-4e69-8477-E0A88D7938B7" version="1.2.3">
     <icon>Miro.ico</icon>
     <name>Miro</name>
     <description>Video Podcasting Client</description>
