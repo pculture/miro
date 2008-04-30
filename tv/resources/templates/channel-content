@@ -11,6 +11,13 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 </head>
 <body>
 	<!-- DOWNLOADS ******************************************************** -->
+	<div t:updateForView="matchingItems">
+		<div class="feed-search" t:hideIf="feed.inlineSearchTerm is None or feed.getURL().startswith('dtv:directoryfeed')">
+      <a class="button gray" href="#" onclick="return eventURL('action:addChannelSearchFeed?id=@@@feed.getID()@@@');">
+        <span i18n:translate="">Save Search</span>
+      </a>
+		</div>
+	</div>
 	<div t:updateForView="allDownloadingItems">
 		<div t:hideIf="allDownloadingItems.len() == 0">
 			<div class="main-channelbar downloading-channelbar" onclick="return eventURL('action:toggleDownloadsView');">
@@ -57,6 +64,7 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 						<span class="light-text"><span i18n:name="len2" t:replace="allDownloadingItems.len()" />
 						Downloading</span>
 					</div>
+
 					<div t:showIf="feed.inlineSearchTerm is not None">
 						<div t:showIf="notDeleted.len() == matchingItems.len()" i18n:translate="">
 							All <span i18n:name="len" t:replace="matchingItems.len()" /> 

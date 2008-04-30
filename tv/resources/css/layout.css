@@ -332,7 +332,12 @@ a.sort-button.descending img.down-arrow {
 }
 
 /* The section dividers */
-
+.feed-search {
+  float:right;
+  position:relative;
+  z-index:10;
+  margin-right:15px;
+}
 .main-channelbar {
     height: 22px;
     display: block;
@@ -408,6 +413,15 @@ a.download-bar-action {
 }
 
 /* Around  the "empty folder" message */
+table.multi {
+  width:auto;
+  margin:0 auto;
+  table-layout:fixed;
+  text-align:center;
+}
+table.multi.second td {
+  padding-top:40px;
+}
 .channel-blank {
     margin-top: 110px;
     padding: 30px;
@@ -421,14 +435,14 @@ a.download-bar-action {
 
 /* used in multi-channel */
 
-.button-zone-two {
+/*.button-zone-two {
     margin: 0 auto 0 auto;
     width: 500px;
 }
 .button-zone-one {
     margin: 0 auto 0 auto;
     width: 270px;
-}
+}*/
 .gray-button-wrap {
     margin-right: 10px;
     float: left;

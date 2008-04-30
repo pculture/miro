@@ -16,59 +16,44 @@ containedChildren = kargs['containedChildren']
     </t:execOnLoad>
 </head>
 <body class="gray-background">
-    <div class="channel-blank">
-        <div t:showIf="selectedFolders > 0">
+  <div class="channel-blank">
+    <table class="multi">
+      <tr>
+        <td>
+          <div t:showIf="selectedFolders > 0">
             <div class="channel-message" i18n:translate="">
-                <span i18n:name="count" t:replace="selectedFolders" />
-                    Channel Folders Selected<br />(contains 
-                    <span i18n:name="containedcount" t:replace="containedChildren" />
-                    channels)
+              <span i18n:name="count" t:replace="selectedFolders" />
+                Channel Folders Selected<br />(contains 
+              <span i18n:name="containedcount" t:replace="containedChildren" />
+                channels)
             </div>
-        </div>
-        <div t:showIf="selectedChildren > 0">
+          </div>
+          <div t:showIf="selectedChildren > 0">
             <div class="channel-message" i18n:translate="">
-                <span i18n:name="count" t:replace="selectedChildren" />
-                    Channels Selected
+              <span i18n:name="count" t:replace="selectedChildren" />
+                Channels Selected
             </div>
-        </div>
-        <br /><br /><br />
-        
-        
-        
-        <span t:hideIf="selectedFolders > 0">
-            
-            
-            <div class="button-zone-two">
-              
-              <a class="button gray" href="#" onclick="return eventURL('action:mergeToFolder');">
-  									<span i18n:translate="">Put Into a New Folder</span>
-  						</a>
-  						
-  						<a class="button gray" href="#" onclick="return eventURL('action:removeCurrentFeed');">
-  									<span i18n:translate="">Delete</span>
-  						</a>
-
-            
-        	  </div>
-         
-		    </span>
-
-
-        <span t:showIf="selectedFolders > 0">
-
-            <div class="button-zone-one">
-
-              <a class="button gray" href="#" onclick="return eventURL('action:removeCurrentFeed');">
-  									<span i18n:translate="">Delete All</span>
-  						</a>
-
-			      </div>
-
-		</span>
-
-         
-</div>
-        
-        
+          </div>
+        </td>
+      </tr>
+    </table>
+    <table class="multi second">
+      <tr>
+        <td t:hideIf="selectedFolders > 0">  
+          <a class="button gray" href="#" onclick="return eventURL('action:mergeToFolder');">
+					<span i18n:translate="">Put Into a New Folder</span>
+					</a>  						
+					<a class="button gray" href="#" onclick="return eventURL('action:removeCurrentFeed');">
+								<span i18n:translate="">Delete</span>
+					</a>
+  		  </td>
+        <td t:showIf="selectedFolders > 0">
+          <a class="button gray" href="#" onclick="return eventURL('action:removeCurrentFeed');">
+              <span i18n:translate="">Delete All</span>
+				  </a>
+  		  </td>
+  		</tr>
+  	</table>
+  </div>
 </body>
 </html>

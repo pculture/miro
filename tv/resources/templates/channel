@@ -188,19 +188,6 @@ if feed.idExists():
 			<h1 id="main-title" t:replace="feed.getTitle()" />
 			
 		</div>
-		
-		<div t:updateForView="matchingItems">
-			<div t:hideIf="feed.inlineSearchTerm is None or feed.getURL().startswith('dtv:directoryfeed')">
-				<div class="white-button-left save-search-channel">
-					<div class="white-button-right">
-						<div class="white-button-middle">
-							<a href="#" onclick="return eventURL('action:addChannelSearchFeed?id=@@@feed.getID()@@@');">Save Search</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
 	</div> <!-- // end main-titlebar -->
 		
 	<div id="sub-titlebar">
