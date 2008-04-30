@@ -72,6 +72,7 @@ try:
     from miro.platform import migrateappname
     from miro.platform import specialfolders
     from miro import signals
+    from miro import u3info
     moviedata.RUNNING_MAX = 1
 except:
     errorOnImport = True
@@ -378,6 +379,8 @@ class PyBridge:
     def setBTMaxPort(self, value):
         return config.set(prefs.BT_MAX_PORT, value)
     def getStartupTasksDone(self):
+        if u3info.u3_active:
+            config.set(prefs.STARTUP_TASKS_DONE, True)
         return config.get(prefs.STARTUP_TASKS_DONE)
     def setStartupTasksDone(self, value):
         return config.set(prefs.STARTUP_TASKS_DONE, value)
