@@ -643,12 +643,20 @@ class OverlayPalette (NSWindow):
 
     def setup(self, item, renderer):
         self.playingItem = item
-        self.titleLabel.setStringValue_(unicode(item.getTitle()))
-        self.feedLabel.setStringValue_(unicode(item.getFeed().getTitle()))
-        self.keepButton.setEnabled_(item.showSaveButton())
-        self.shareButton.setEnabled_(item.hasSharableURL())
         self.renderer = renderer
-        self.update_(nil)
+        def fetchItemValues(item):
+            title = item.getTitle()
+            feedTitle = item.getFeed().getTitle()
+            keep = item.showSaveButton()
+            share = item.hasSharableURL()
+            threads.callOnMainThread(finishSetup, title, feedTitle, keep, share)
+        def finishSetup(title, feedTitle, keep, share):
+            self.titleLabel.setStringValue_(title)
+            self.feedLabel.setStringValue_(feedTitle)
+            self.keepButton.setEnabled_(keep)
+            self.shareButton.setEnabled_(share)
+            self.update_(nil)
+        eventloop.addUrgentCall(lambda:fetchItemValues(item), "Fetching item values")
 
     def enterFullScreen(self):
         if self.isVisible():
