@@ -609,10 +609,8 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 /* These change the background based on whether or not it's selected */
-
 .tnail-over {
   position:absolute;
-  display:block;
   width:154px;
   height:105px;
   left:0;
@@ -624,9 +622,9 @@ an element is dragged, the drag-highlight class is added to it */
 }
 
 .main-video-tnail {
-	float:left;
-	width: 154px;
-  height: 105px;
+  float:left;
+  width:154px;
+  height:105px;
   margin-right:8px;
 }
 .more-info .main-video-tnail {
@@ -634,22 +632,59 @@ an element is dragged, the drag-highlight class is added to it */
     height: 190px;
 		padding-bottom:2px;
 }
-.main-video a.play {
-	display:none;
+#tnail-buttons {
+  display:none;
+  left:0;
+  top:0;
+  width:154px;
+  text-align:center;
+  position:absolute;
+  z-index:20;
 }
-.tnail:hover a.play,
-.main-video.selected a.play {
-	position:absolute;
-	display:block;
-	width:154px;
-	top:0px;
-	height:0px;
-	overflow:hidden;
-	padding-top:105px;
+.tnail:hover #tnail-buttons {
+  display:block;
+}
+
+#tnail-buttons a.button.black {
+  margin:40px 0 0 0;
+}
+.more-info #tnail-buttons {
+  width:252px;
+  height:190px;
+}
+.more-info #tnail-buttons a.button.black {
+  margin:82px 0 0 0;
+}
+#tnail-buttons a.play {
+  display:block;
+  height:32px;
+  margin-top:36px;
+  overflow:hidden;
+}
+.more-info #tnail-buttons a.play {
+  height:50px;
+  margin-top:70px;
+}
+a.play img {
+  position:relative;
+}
+a.play:hover img {
+  top:-32px;
+}
+.more-info a.play:hover img {
+  top:-50px;
+}
+#tnail-buttons.clicked a.play img,
+#tnail-buttons.clicked a.play:hover img {
+  top:-64px;
+}
+.more-info #tnail-buttons.clicked a.play img,
+.more-info #tnail-buttons.clicked a.play:hover img {
+  top:-100px;
 }
 .main-video.more-info a.play {
-	width:252px;
-	padding-top:190px;
+/*	width:252px;
+	padding-top:190px;*/
 }
 .main-video-desc {
 /*	float:left;*/
@@ -883,6 +918,14 @@ a.button.gray {
 a.button.gray span {
 	padding:0 16px 0 5px;
 	height:20px;
+}
+a.button.black {
+  height:26px;
+  padding:0 0 0 13px;
+}
+a.button.black span {
+  height:26px;
+  padding:0 13px 0 0px;
 }
 a.button.select span {
 	padding:0 25px 0 0;

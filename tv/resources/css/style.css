@@ -405,11 +405,25 @@ a.button.gray:hover span,
 a.button.gray span:hover {
 	background-position:right -20px;
 }
-a.button.gray.done {
-  background-image: url('../images/button-done_left.png');
+a.button.black {
+  background-image: url('../images/button-black_left.png');
 }
-a.button.gray.done span {
-  background-image: url('../images/button-done_right.png');
+a.button.black span {
+  background-image: url('../images/button-black_right.png');
+}
+a.button.black:hover {
+  background-position:left -26px;
+}
+a.button.black:hover span {
+  background-position:right -26px;
+}
+#tnail-buttons.clicked a.button.black,
+#tnail-buttons.clicked a.button.black:hover {
+  background-position:left -52px;
+}
+#tnail-buttons.clicked a.button.black span,
+#tnail-buttons.clicked a.button.black:hover span {
+  background-position:right -52px;
 }
 a.button.select {
 	background-image: url('../images/button-select-left.png');
@@ -430,7 +444,7 @@ a.button.select:hover span,
 a.button.select span:hover {
 	background-position:right top;
 }
-a.play {  
+/*a.play {  
 	background: url('../images/play-icon.png') no-repeat left top;
 }
 a.play:hover {
@@ -441,7 +455,7 @@ a.play:hover {
 }
 .more-info a.play:hover {
 	background-position:left -191px;
-}
+}*/
 
 /*.main-video-bottom { 
 

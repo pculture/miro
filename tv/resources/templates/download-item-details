@@ -73,8 +73,8 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 					</div>
 					<div t:showIf="this.downloadInProgress()" class="download-rate-and-eta">
 						  <div t:hideIf="this.getState() == 'paused'">
-						  <span t:replace="this.twoDigitPercentDone()" /> done - <span t:replace="this.downloadETA()" /> - <span class="download-rate" t:replace="this.downloadRate()" />
-					    </div>
+						  <span t:replace="this.twoDigitPercentDone()" /> done - <span class="download-rate" t:replace="this.downloadRate()" /> - <span t:replace="this.downloadETA()" />
+						  </div>
 					</div>
 				</div>
 				<div t:showIf="this.gotContentLength()">

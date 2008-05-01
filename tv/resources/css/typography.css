@@ -124,6 +124,13 @@ a.button.gray span {
 	font-weight:bold;
 	font-size:10px;
 }
+a.button.black span {
+  line-height:25px;
+  color:#fff;
+  font-size:9px;
+  font-weight:bold;
+  text-shadow:#464646 -1px -1px 1px;
+}
 a.button em {
 	font-style:normal;
 	text-transform:none;
@@ -150,12 +157,6 @@ a.button.blue.saved,
 a.button.blue.saved span {
 	color:#eee;
 	cursor:default;
-}
-a.button.gray.done span {
-  color:#fefefe;
-	text-shadow:#666 1px -1px -1px;
-	text-decoration:none;
-	
 }
 
 /* Download page titlebar components */
