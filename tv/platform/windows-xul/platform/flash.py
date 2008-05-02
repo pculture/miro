@@ -106,8 +106,7 @@ def checkFlashInstall():
     description = _("For the best %s experience, you should install Adobe Flash.  Do this now?")
     description = description % config.get(prefs.SHORT_APP_NAME)
 
-    if 0:
-        dialog = dialogs.ThreeChoiceDialog(title, description,
+    dialog = dialogs.ThreeChoiceDialog(title, description,
                                        dialogs.BUTTON_YES,
                                        dialogs.BUTTON_NOT_NOW,
                                        dialogs.BUTTON_NO)
@@ -119,5 +118,5 @@ def checkFlashInstall():
             installFlash()
         else:
             config.set(prefs.FLASH_REQUEST_COUNT, 1)
-    installFlash()        
-    #dialog.run(callback)
+
+    dialog.run(callback)
