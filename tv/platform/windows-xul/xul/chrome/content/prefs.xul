@@ -53,9 +53,13 @@
                     <menupopup>
                         <menuitem label="&prefs.channels.check.thirty;" oncommand="checkEveryChange(30);" id="check30" value="30"/>
                         <menuitem label="&prefs.channels.check.sixty;" oncommand="checkEveryChange(60);" id="check60" value="60"/>
+                        <menuitem label="&prefs.channels.check.daily;" oncommand="checkEveryChange(1440);" id="check1440" value="1440"/>
                         <menuitem label="&prefs.channels.check.manually;" oncommand="checkEveryChange(-1);" id="checknever" value="never"/>
                     </menupopup>
                 </menulist>
+            </hbox>
+            <hbox align="end">
+                <description>&prefs.channels.check.note;</description>
             </hbox>
             <hbox align="end">
                 <description>&prefs.channels.autodownloaddefault;</description>

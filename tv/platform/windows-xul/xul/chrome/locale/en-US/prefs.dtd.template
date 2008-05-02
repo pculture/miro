@@ -12,7 +12,9 @@
 <!ENTITY prefs.channels.check "Check channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
+<!ENTITY prefs.channels.check.daily "Every day">
 <!ENTITY prefs.channels.check.manually "Manually">
+<!ENTITY prefs.channels.check.note "Note: You can set the frequency channels are checked from the channel's settings pane.">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
 <!ENTITY prefs.channels.autodownloaddefault.all "All">
