@@ -34,7 +34,8 @@ def matchingItems(obj, searchString):
     searchString = searchString.lower()
     title = obj.getTitle() or ''
     desc = obj.getRawDescription() or ''
-    if search.match (searchString, [title.lower(), desc.lower()]):
+    filename = obj.getFilename() or ''
+    if search.match (searchString, [title.lower(), desc.lower(), filename.lower()]):
         return True
     if not obj.isContainerItem:
         parent = obj.getParent()
