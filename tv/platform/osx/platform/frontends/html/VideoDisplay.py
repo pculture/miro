@@ -518,13 +518,13 @@ class VideoWindow (NSWindow):
         self.isFullScreen = YES
         self.previousFrame = self.frame()
         self.setFrame_display_animate_(screen.frame(), YES, YES)
-        self.palette.enterFullScreen()
+        self.palette.enterFullScreen(self)
 
     def exitFullScreen(self):
         threads.warnIfNotOnMainThread('VideoWindow.exitFullScreen')
         NSCursor.setHiddenUntilMouseMoves_(NO)
         self.isFullScreen = NO
-        self.palette.exitFullScreen()
+        self.palette.exitFullScreen(self)
         self.setFrame_display_animate_(self.previousFrame, YES, YES)
         SetSystemUIMode(kUIModeNormal, 0)
         
@@ -658,21 +658,21 @@ class OverlayPalette (NSWindow):
             self.update_(nil)
         eventloop.addUrgentCall(lambda:fetchItemValues(item), "Fetching item values")
 
-    def enterFullScreen(self):
+    def enterFullScreen(self, parent):
         if self.isVisible():
             newFrame = self.frame()
             newFrame.size.width = 824
             newFrame.origin.x = self.getHorizontalPosition(self, newFrame.size.width)
             self.setFrame_display_animate_(newFrame, YES, YES)
-            self.adjustContent(self.parentWindow(), True)
+            self.adjustContent(parent, True)
             self.fsButton.setImage_(NSImage.imageNamed_('fs-button-exitfullscreen'))
             self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-exitfullscreen-alt'))
         else:
             NSCursor.setHiddenUntilMouseMoves_(YES)
 
-    def exitFullScreen(self):
+    def exitFullScreen(self, parent):
         if self.isVisible():
-            self.adjustContent(self.parentWindow(), True)
+            self.adjustContent(parent, True)
             self.fsButton.setImage_(NSImage.imageNamed_('fs-button-enterfullscreen'))
             self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-enterfullscreen-alt'))
 
