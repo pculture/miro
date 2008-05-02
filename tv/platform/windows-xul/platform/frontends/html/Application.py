@@ -34,7 +34,9 @@ import logging
 from miro import app
 from miro import config
 from miro import prefs
+from miro import eventloop
 from miro.platform import resources
+from miro.platform import flash
 from miro import searchengines
 from miro import views
 from miro.platform.utils import _getLocale as getLocale
@@ -76,6 +78,7 @@ class Application(HTMLApplication):
         app.jsBridge.closeWindow()
 
     def finishStartupSequence(self):
+        eventloop.addIdle(flash.checkFlashInstall, 'Install Flash')            
         pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge,True, False)
         self.initializeSearchEngines()
         migrateappname.migrateVideos('Democracy', 'Miro')

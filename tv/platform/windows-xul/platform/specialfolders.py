@@ -40,6 +40,7 @@ _specialFolderCSIDLs = {
     "My Documents": 0x0005,
     "Desktop": 0x0000,
     "Common AppData": 0x0023,
+    "System": 0x0025
 }
 
 def getSpecialFolder(name):
