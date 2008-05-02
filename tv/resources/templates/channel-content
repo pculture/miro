@@ -12,10 +12,12 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 <body>
 	<!-- DOWNLOADS ******************************************************** -->
 	<div t:updateForView="matchingItems">
-		<div class="feed-search" t:hideIf="feed.inlineSearchTerm is None or feed.getURL().startswith('dtv:directoryfeed')">
-      <a class="button gray" href="#" onclick="return eventURL('action:addChannelSearchFeed?id=@@@feed.getID()@@@');">
-        <span i18n:translate="">Save Search</span>
-      </a>
+	    <div t:showIf="not isFolder" i18n:translate="">
+		    <div class="feed-search" t:hideIf="feed.inlineSearchTerm is None or feed.getURL().startswith('dtv:directoryfeed')">
+                <a class="button gray" href="#" onclick="return eventURL('action:addChannelSearchFeed?id=@@@feed.getID()@@@');">
+                    <span i18n:translate="">Save Search</span>
+                </a>
+		    </div>
 		</div>
 	</div>
 	<div t:updateForView="allDownloadingItems">
