@@ -26,15 +26,17 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+from miro.platform.utils import filenameToUnicode
+
 # Returns items that match search
 def matchingItems(obj, searchString):
     from miro import search
     if searchString is None:
         return True
     searchString = searchString.lower()
-    title = obj.getTitle() or ''
-    desc = obj.getRawDescription() or ''
-    filename = obj.getFilename() or ''
+    title = obj.getTitle() or u''
+    desc = obj.getRawDescription() or u''
+    filename = filenameToUnicode(obj.getFilename()) or u''
     if search.match (searchString, [title.lower(), desc.lower(), filename.lower()]):
         return True
     if not obj.isContainerItem:
