@@ -1020,9 +1020,15 @@ folder will be deleted.""")
     def getItemDetails(self):
         rv = []
         
-        link = self.getLink()
-        if link:
-            rv.append((_('Web page:'), util.makeAnchor(_('permalink'), link)))
+        # prefer a comments link if it exists; if not, use the permalink
+        comments = self.getCommentsLink()
+        if comments:
+            rv.append((_('Web page:'), util.makeAnchor(_('comments'), comments)))
+
+        else:
+            link = self.getLink()
+            if link:
+                rv.append((_('Web page:'), util.makeAnchor(_('permalink'), link)))
 
         url = self.getURL()
         if url and not url.startswith("file:"):
@@ -1461,6 +1467,18 @@ folder will be deleted.""")
                 return self.getFeed().getLicense()
             except:
                 pass
+        return u""
+
+    ##
+    # returns the comments link if it exists in the feed item
+    @returnsUnicode
+    def getCommentsLink(self):
+        self.confirmDBThread()
+        try:
+            return self.entry.comments
+        except:
+            pass
+
         return u""
 
     ##
