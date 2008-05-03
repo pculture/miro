@@ -51,7 +51,8 @@ from miro.plat.frontends.html import threads
 webKitBundle = NSBundle.bundleForClass_(WebView)
 webKitInfo = webKitBundle.infoDictionary()
 
-WEBKIT_VERSION = float(webKitInfo['CFBundleVersion'])
+WEBKIT_VERSION_ITEMS = webKitInfo['CFBundleVersion'].split('.')
+WEBKIT_VERSION = float(WEBKIT_VERSION_ITEMS[0])
 
 ###############################################################################
 # These are used by the channel guide. This platform uses the
