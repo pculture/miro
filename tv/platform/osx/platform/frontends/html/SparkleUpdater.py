@@ -29,7 +29,7 @@
 import objc
 import Foundation
 
-from miro.platform.frontends.html import threads
+from miro.plat.frontends.html import threads
 
 ###############################################################################
 

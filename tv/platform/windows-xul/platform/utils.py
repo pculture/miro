@@ -37,7 +37,7 @@ from miro import config
 from miro import prefs
 import os
 import logging
-from miro.platform import resources
+from miro.plat import resources
 import subprocess
 import sys
 import urllib

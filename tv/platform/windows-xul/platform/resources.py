@@ -31,7 +31,7 @@ import re
 import sys
 import urllib
 
-from miro.platform import specialfolders
+from miro.plat import specialfolders
 
 def appRoot():
     """Determine the directory the .exe file is located in.  Taken from the

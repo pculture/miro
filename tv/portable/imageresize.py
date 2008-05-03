@@ -32,7 +32,7 @@ import logging
 import os
 import traceback
 
-from miro.platform.utils import resizeImage
+from miro.plat.utils import resizeImage
 from miro import fileutil
 
 def _resizedKey(width, height):

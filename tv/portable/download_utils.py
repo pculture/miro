@@ -38,7 +38,7 @@ from miro import util
 from miro import fileutil
 
 from miro.util import checkF, checkU, returnsFilename
-from miro.platform.utils import unicodeToFilename, unmakeURLSafe
+from miro.plat.utils import unicodeToFilename, unmakeURLSafe
 from miro.fileutil import expand_filename
 
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')

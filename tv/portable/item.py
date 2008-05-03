@@ -33,7 +33,7 @@ from math import ceil
 from miro.xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
 from miro.util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure
-from miro.platform.utils import FilenameType, filenameToUnicode, unicodeToFilename
+from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename
 import locale
 import os
 import os.path
@@ -58,7 +58,7 @@ from miro import dialogs
 from miro import eventloop
 from miro import filters
 from miro import prefs
-from miro.platform import resources
+from miro.plat import resources
 from miro import views
 import random
 from miro import indexes

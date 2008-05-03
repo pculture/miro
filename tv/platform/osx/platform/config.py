@@ -34,10 +34,10 @@ import objc
 
 from miro import app
 from miro import prefs
-from miro.platform import bundle
-from miro.platform import keychain
-from miro.platform import resources
-from miro.platform.filenames import osFilenameToFilenameType
+from miro.plat import bundle
+from miro.plat import keychain
+from miro.plat import resources
+from miro.plat.filenames import osFilenameToFilenameType
 
 sysconfPath = objc.pathForFramework('/System/Library/Frameworks/SystemConfiguration.framework')
 sysconfBundle = NSBundle.bundleWithPath_(sysconfPath)

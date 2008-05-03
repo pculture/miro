@@ -79,7 +79,7 @@ def installIHeartMiroFirefox():
 
 def installIHeartMiroIE7():
     def httpSuccess(info):
-        from miro.platform import specialfolders
+        from miro.plat import specialfolders
         filename = os.path.join(specialfolders.appDataDirectory,
                                 u'Participatory Culture Foundation',
                                 'IHeartMiro.dll')

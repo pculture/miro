@@ -59,10 +59,10 @@ def activatePsyco():
 # =============================================================================
 
 def launchApplication():
-    from miro.platform import migrateappname
+    from miro.plat import migrateappname
     migrateappname.migrateSupport('Democracy', 'Miro')
 
-    from miro.platform.utils import initializeLocale
+    from miro.plat.utils import initializeLocale
     initializeLocale()
     
     from glob import glob
@@ -107,7 +107,7 @@ def launchApplication():
     from AppKit import NSApplication
     NSApplication.sharedApplication()
 
-    from miro.platform.frontends.html.Application import Application
+    from miro.plat.frontends.html.Application import Application
     Application().run()
 
 # =============================================================================

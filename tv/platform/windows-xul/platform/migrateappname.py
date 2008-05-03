@@ -32,8 +32,8 @@ import os.path
 from miro import app
 from miro import config
 from miro import prefs
-from miro.platform import resources
-from miro.platform.specialfolders import baseMoviesDirectory, appDataDirectory
+from miro.plat import resources
+from miro.plat.specialfolders import baseMoviesDirectory, appDataDirectory
 import _winreg
 from xpcom import components
 

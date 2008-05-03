@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.platform.frontends.html.threads -- Call functions in the XUL
+"""miro.plat.frontends.html.threads -- Call functions in the XUL
 thread.
 """
 

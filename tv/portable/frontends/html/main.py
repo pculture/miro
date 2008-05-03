@@ -40,10 +40,10 @@ from miro.gtcache import ngettext
 from miro import dialogs
 from miro.frontends.html import template
 from miro.frontends.html import templatedisplay
-from miro.platform import resources
-from miro.platform.frontends.html.MainFrame import MainFrame
-from miro.platform.frontends.html.UIBackendDelegate import UIBackendDelegate
-from miro.platform.frontends.html import VideoDisplay
+from miro.plat import resources
+from miro.plat.frontends.html.MainFrame import MainFrame
+from miro.plat.frontends.html.UIBackendDelegate import UIBackendDelegate
+from miro.plat.frontends.html import VideoDisplay
 from miro import app
 from miro import autoupdate
 from miro import config

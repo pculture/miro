@@ -43,7 +43,7 @@ from AppKit import *
 from miro import prefs
 from miro import config
 from miro.util import returnsUnicode, returnsBinary, checkU, checkB
-from miro.platform.filenames import osFilenameToFilenameType, \
+from miro.plat.filenames import osFilenameToFilenameType, \
         osFilenamesToFilenameTypes, filenameTypeToOSFilename
 
 FilenameType = str

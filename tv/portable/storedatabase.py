@@ -71,7 +71,7 @@ from zipfile import ZipFile
 import tempfile
 from random import randrange, seed
 import os.path
-from miro.platform.utils import exit
+from miro.plat.utils import exit
 
 try:
     import bsddb.db

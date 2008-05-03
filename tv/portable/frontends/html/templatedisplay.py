@@ -39,7 +39,7 @@ import traceback
 from miro.clock import clock
 from miro import dialogs
 from miro.gtcache import gettext as _
-from miro.platform.frontends.html.HTMLDisplay import HTMLDisplay
+from miro.plat.frontends.html.HTMLDisplay import HTMLDisplay
 from miro import app
 from miro import autodler
 from miro import config
@@ -52,7 +52,7 @@ from miro import guide
 from miro import indexes
 from miro import item
 import logging
-from miro.platform.utils import unicodeToFilename
+from miro.plat.utils import unicodeToFilename
 from miro import playlist
 from miro import prefs
 from miro import searchengines

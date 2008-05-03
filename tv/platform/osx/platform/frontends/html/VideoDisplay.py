@@ -37,14 +37,14 @@ from QTKit import QTMovieDidEndNotification
 
 from miro import app
 from miro import eventloop
-from miro.platform import bundle
-from miro.platform.filenames import filenameTypeToOSFilename
+from miro.plat import bundle
+from miro.plat.filenames import filenameTypeToOSFilename
 from miro.frontends.html.displaybase import VideoDisplayBase
 from miro.frontends.html.templatedisplay import ModelActionHandler
-from miro.platform.frontends.html import threads
+from miro.plat.frontends.html import threads
 from miro.frontends.html.playbackcontroller import PlaybackControllerBase
-from miro.platform.frontends.html.MainFrame import Slider, handleKey
-from miro.platform.renderers.QuicktimeRenderer import QuicktimeRenderer
+from miro.plat.frontends.html.MainFrame import Slider, handleKey
+from miro.plat.renderers.QuicktimeRenderer import QuicktimeRenderer
 
 ###############################################################################
 #### Dynamically link some specific Carbon functions which we need but     ####

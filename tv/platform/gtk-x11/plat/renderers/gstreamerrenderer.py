@@ -44,8 +44,8 @@ from miro import config
 from miro import eventloop
 from miro import prefs
 from miro.download_utils import nextFreeFilename
-from miro.platform.frontends.html import gtk_queue
-from miro.platform.utils import confirmMainThread
+from miro.plat.frontends.html import gtk_queue
+from miro.plat.utils import confirmMainThread
 
 class Tester:
     def __init__(self, filename):
@@ -288,4 +288,4 @@ class Renderer:
         logging.info("gstreamer setRate: set rate to %s" % rate)
 
     def movieDataProgramInfo(self, moviePath, thumbnailPath):
-        return (("python", 'platform/renderers/gst_extractor.py', moviePath, thumbnailPath), None)
+        return (("python", 'plat/renderers/gst_extractor.py', moviePath, thumbnailPath), None)

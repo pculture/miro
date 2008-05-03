@@ -30,7 +30,7 @@ import os, os.path, sys
 import subprocess, time
 from miro import app, httpclient, dialogs, config, prefs, signals
 from miro.gtcache import gettext as _
-from miro.platform import specialfolders, resources
+from miro.plat import specialfolders, resources
 from xpcom import shutdown
 import tempfile
 import webbrowser

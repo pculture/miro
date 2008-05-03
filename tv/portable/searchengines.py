@@ -33,7 +33,7 @@ from miro.util import getSingletonDDBObject, checkU, returnsUnicode, quoteattr, 
 from miro.database import DDBObject
 from miro.xhtmltools import urlencode
 from xml.dom.minidom import parse
-from miro.platform import resources
+from miro.plat import resources
 import os
 from miro import config
 from miro import prefs

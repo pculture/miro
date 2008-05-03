@@ -40,8 +40,8 @@ import traceback
 import _winreg
 
 try:
-    from miro.platform.xulhelper import makeService, makeComp, proxify
-    from miro.platform.utils import initializeLocale, setupLogging, getLongPathName, makeURLSafe
+    from miro.plat.xulhelper import makeService, makeComp, proxify
+    from miro.plat.utils import initializeLocale, setupLogging, getLongPathName, makeURLSafe
     initializeLocale()
     setupLogging()
     from miro import gtcache
@@ -61,16 +61,16 @@ try:
     from miro import menubar
     from miro import feed
     from miro import database
-    from miro.platform.frontends.html import startup as platform_startup
-    from miro.platform.frontends.html import HTMLDisplay
-    from miro.platform.frontends.html.Application import Application
-    from miro.platform.frontends.html.MainFrame import MainFrame
+    from miro.plat.frontends.html import startup as platform_startup
+    from miro.plat.frontends.html import HTMLDisplay
+    from miro.plat.frontends.html.Application import Application
+    from miro.plat.frontends.html.MainFrame import MainFrame
     from miro.eventloop import asUrgent, asIdle
     from miro import searchengines
     from miro import views
     from miro import moviedata
-    from miro.platform import migrateappname
-    from miro.platform import specialfolders
+    from miro.plat import migrateappname
+    from miro.plat import specialfolders
     from miro import signals
     from miro import u3info
     moviedata.RUNNING_MAX = 1
@@ -691,7 +691,7 @@ class PyBridge:
                 from miro import app
                 delegate = app.delegate
             except:
-                from miro.platform.frontends.html.UIBackendDelegate import UIBackendDelegate
+                from miro.plat.frontends.html.UIBackendDelegate import UIBackendDelegate
                 delegate = UIBackendDelegate()
             delegate = UIBackendDelegate()
             delegate.openExternalURL(config.get(prefs.BUG_TRACKER_URL))

@@ -327,7 +327,7 @@ class TemplateContentCompiler(sax.handler.ContentHandler):
         fileobj.write(u'from miro import sorts\n')
         fileobj.write(u'from miro import indexes\n')
         fileobj.write(u'from miro import filters\n')
-        fileobj.write(u'from miro.platform import resources\n')
+        fileobj.write(u'from miro.plat import resources\n')
         fileobj.write(u'from miro import gtcache\n')
         fileobj.write(u'_ = gtcache.gettext\n')
         fileobj.write(u'def fillTemplate(domHandler, dtvPlatform, eventCookie, bodyTagExtra, *args, **kargs):\n')

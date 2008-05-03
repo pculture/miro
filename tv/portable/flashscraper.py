@@ -50,6 +50,7 @@ def tryScrapingURL(url, callback):
 def _actualURLCallback(url, callback, newURL, contentType):
     if newURL:
         checkU(newURL)
+    print "** WBG: _actualURLCallback '%s'" % repr(callback)
     callback(newURL, contentType=contentType)
 
 def _getScrapeFunctionFor(url):

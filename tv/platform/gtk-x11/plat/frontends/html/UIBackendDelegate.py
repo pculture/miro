@@ -39,7 +39,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 import re
 import MainFrame
-from miro.platform import resources
+from miro.plat import resources
 from miro import feed
 from miro import util
 from miro import views
@@ -48,8 +48,8 @@ import logging
 
 from miro import config
 from miro import prefs
-from miro.platform.frontends.html.gtk_queue import gtkAsyncMethod
-from miro.platform.frontends.html import startup
+from miro.plat.frontends.html.gtk_queue import gtkAsyncMethod
+from miro.plat.frontends.html import startup
 
 ###############################################################################
 #### 'Delegate' objects for asynchronously asking the user questions       ####

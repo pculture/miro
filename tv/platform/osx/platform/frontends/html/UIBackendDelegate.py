@@ -44,13 +44,13 @@ from miro import prefs
 from miro import config
 from miro import dialogs
 from miro import eventloop
-from miro.platform import bundle
-from miro.platform.utils import filenameTypeToOSFilename
-from miro.platform.frontends.html import threads
+from miro.plat import bundle
+from miro.plat.utils import filenameTypeToOSFilename
+from miro.plat.frontends.html import threads
 
-from miro.platform.frontends.html.StartupPanel import StartupPanelController
-from miro.platform.frontends.html import GrowlNotifier
-from miro.platform.frontends.html import SparkleUpdater
+from miro.plat.frontends.html.StartupPanel import StartupPanelController
+from miro.plat.frontends.html import GrowlNotifier
+from miro.plat.frontends.html import SparkleUpdater
 
 ###############################################################################
 

@@ -1122,13 +1122,13 @@ if __name__ == "__main__":
             'miro.frontends',
             'miro.frontends.html',
             'miro.frontends.html.compiled_templates',
-            'miro.platform',
-            'miro.platform.frontends',
-            'miro.platform.frontends.html',
+            'miro.plat',
+            'miro.plat.frontends',
+            'miro.plat.frontends.html',
         ],
         package_dir = {
             'miro': portable_dir,
-            'miro.platform': os.path.join(platform_dir, 'platform'),
+            'miro.plat': os.path.join(platform_dir, 'plat'),
         },
         cmdclass = {
             'build_ext': build_ext,

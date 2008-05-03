@@ -27,7 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from xpcom import components
-from miro.platform.xulhelper import makeService
+from miro.plat.xulhelper import makeService
 import ctypes
 import logging
 from ctypes.wintypes import DWORD, HWND, HANDLE, LPCWSTR, WPARAM, LPARAM, RECT, POINT
@@ -112,7 +112,7 @@ WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.c_int, HWND, LPARAM)
 
 from miro import config
 from miro import prefs
-from miro.platform import resources
+from miro.plat import resources
 
 class GUID(ctypes.Structure):
     _fields_ = [("Data1", ctypes.c_int32),

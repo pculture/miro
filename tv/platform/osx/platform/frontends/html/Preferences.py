@@ -37,7 +37,7 @@ from miro import views
 from miro import config
 from miro import dialogs
 from miro import eventloop
-from miro.platform.utils import filenameTypeToOSFilename, osFilenameToFilenameType, makeURLSafe
+from miro.plat.utils import filenameTypeToOSFilename, osFilenameToFilenameType, makeURLSafe
 
 from miro.gtcache import gettext as _
 

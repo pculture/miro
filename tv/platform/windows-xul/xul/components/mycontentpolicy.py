@@ -32,8 +32,8 @@ import sys
 
 from miro import config
 from miro import prefs
-from miro.platform.frontends.html import urlcallbacks
-from miro.platform.xulhelper import makeService
+from miro.plat.frontends.html import urlcallbacks
+from miro.plat.xulhelper import makeService
 
 nsIContentPolicy = components.interfaces.nsIContentPolicy
 

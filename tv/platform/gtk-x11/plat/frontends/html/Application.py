@@ -29,17 +29,17 @@
 import gtk
 
 import threading
-from miro.platform.frontends.html.gtk_queue import queue, gtkAsyncMethod
+from miro.plat.frontends.html.gtk_queue import queue, gtkAsyncMethod
 from miro.frontends.html.main import HTMLApplication
-from miro.platform import mozsetup
-from miro.platform import options
+from miro.plat import mozsetup
+from miro.plat import options
 from miro import app
 from miro import gtcache
 from miro import config
 from miro import prefs
 from miro import startup
 import gtk.glade
-from miro.platform.utils import setMainThread
+from miro.plat.utils import setMainThread
 
 ###############################################################################
 #### Application object                                                    ####

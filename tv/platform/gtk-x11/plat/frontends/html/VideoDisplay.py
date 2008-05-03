@@ -66,8 +66,8 @@ class VideoDisplay (VideoDisplayBase):
 
     def add_renderer(self, modname):
         try:
-            pkg = __import__('miro.platform.renderers.' + modname)
-            module = getattr(pkg.platform.renderers, modname)
+            pkg = __import__('miro.plat.renderers.' + modname)
+            module = getattr(pkg.plat.renderers, modname)
             renderer = module.Renderer()
             widget = gtk.DrawingArea()
             widget.set_double_buffered(False)

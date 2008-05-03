@@ -25,7 +25,7 @@ from sha import sha
 from miro.dl_daemon import command, daemon
 from datetime import timedelta
 from miro.util import checkF, checkU, stringify
-from miro.platform.utils import getAvailableBytesForMovies
+from miro.plat.utils import getAvailableBytesForMovies
 
 import string
 
@@ -359,7 +359,7 @@ class BGDownloader:
         the movies directory.
         """
         if chatter:
-            logging.info ("moving to movies directory filename is %s", self.filename)
+            logging.info ("** WBG: moveToMoviesDirectory: moving to movies directory.  filename is %s", self.filename)
         self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
 
     def moveToDirectory (self, directory):
@@ -371,10 +371,13 @@ class BGDownloader:
                 fileutil.makedirs(directory)
             except:
                 pass
+        print "** WBG: moveToDirectory: filename: %s" % self.filename
         newfilename = os.path.join(directory, self.shortFilename)
+        print "** WBG: moveToDirectory: newfilename: %s" % newfilename
         if newfilename == self.filename:
             return
         newfilename = nextFreeFilename(newfilename)
+        print "** WBG: moveToDirectory: newfilename2: %s" % newfilename
         def callback():
             self.filename = newfilename
             self.updateClient()

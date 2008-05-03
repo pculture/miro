@@ -15,7 +15,7 @@ import os
 from miro import gtcache
 import gettext
 from miro import signals
-from miro.platform import resources
+from miro.plat import resources
 from miro.frontends.html import template
 from miro import util
 from miro.frontends.html.template_compiler import TemplateError

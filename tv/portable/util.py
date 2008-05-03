@@ -429,7 +429,7 @@ def returnsURL(func):
 
 # Returns exception if input isn't a filename type
 def checkF(text):
-    from miro.platform.utils import FilenameType
+    from miro.plat.utils import FilenameType
     if text is not None and type(text) != FilenameType:
         raise DemocracyUnicodeError, (u"text \"%s\" is not a valid filename type" %
                                      text)

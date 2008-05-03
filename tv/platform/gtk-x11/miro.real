@@ -2,7 +2,7 @@
 # -*- mode: python -*-
 
 # This comes first.  Seriously.
-from miro.platform import xlibhelper
+from miro.plat import xlibhelper
 if xlibhelper.XInitThreads() == 0:
     print "WARNING: XInitThreads() failed!"
 
@@ -13,7 +13,7 @@ import optparse
 import pygtk
 pygtk.require('2.0')
 
-from miro.platform import upgrade
+from miro.plat import upgrade
 upgrade.upgrade()
 
 # Set up gettext before everything else
@@ -21,14 +21,14 @@ from miro import gtcache
 gtcache.init()
 
 from miro import config
-from miro import platform
-from miro.platform import options
+from miro import plat
+from miro.plat import options
 from miro import prefs
 from miro import singleclick
 
 def startup():
     if parsed_options.frontend == 'html':
-        from miro.platform.frontends.html.Application import Application
+        from miro.plat.frontends.html.Application import Application
         Application().run()
     elif parsed_options.frontend == 'cli':
         from miro.frontends import cli
@@ -64,7 +64,7 @@ parser.add_option('--frontend', dest='frontend', metavar='<frontend>',
 (parsed_options, args) = parser.parse_args()
 
 def startapp():
-    platform.utils.initializeLocale()
+    plat.utils.initializeLocale()
     # Create miro directories in the user's home
     support_dir = config.get(prefs.SUPPORT_DIRECTORY)
     if not os.path.exists(support_dir):
@@ -112,7 +112,7 @@ elif parsed_options.profile:
 else:
     try:
         import dbus
-        from miro.platform import onetime
+        from miro.plat import onetime
         try:
             onetime.OneTime()
             startapp()

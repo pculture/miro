@@ -16,7 +16,7 @@ from miro import prefs
 from miro import util
 from miro import downloader
 from miro.gtcache import gettext as _
-from miro.platform.utils import getAvailableBytesForMovies
+from miro.plat.utils import getAvailableBytesForMovies
 
 def getFreeSpace():
     bytes = getAvailableBytesForMovies()

@@ -34,8 +34,8 @@ from miro.appconfig import AppConfig
 from miro import app
 from miro import util
 from miro import prefs
-from miro.platform import config as platformcfg
-from miro.platform import resources
+from miro.plat import config as platformcfg
+from miro.plat import resources
 import urllib
 import logging
 

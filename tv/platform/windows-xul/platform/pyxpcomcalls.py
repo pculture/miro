@@ -32,7 +32,7 @@
 from xpcom import components
 
 from miro.eventloop import asIdle
-from miro.platform.xulhelper import makeComp
+from miro.plat.xulhelper import makeComp
 from miro.util import random_string
 
 _callbacks = {}

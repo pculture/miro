@@ -28,7 +28,7 @@
 
 import os
 import shutil
-from miro.platform import resources
+from miro.plat import resources
 import gconf
 
 def upgrade():

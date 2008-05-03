@@ -111,7 +111,7 @@ dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
-platform_package_dir = os.path.join(platform_dir, 'platform')
+platform_package_dir = os.path.join(platform_dir, 'plat')
 platform_html_frontend_dir = os.path.join(platform_package_dir, 'frontends',
         'html')
 glade_dir = os.path.join(platform_dir, 'glade')
@@ -123,8 +123,8 @@ sys.path.insert(0, root_dir)
 # at this point, they are in a package named "portable", so let's hack it
 import portable
 sys.modules['miro'] = portable
-import platform
-sys.modules['miro'].platform = platform
+import plat
+sys.modules['miro'].plat = plat
 
 from miro.frontends.html import template_compiler
 from miro import setup_portable
@@ -326,7 +326,7 @@ if nsI:
 if xulrunner19:
     mozilla_browser_options['extra_compile_args'].append('-DPCF_USING_XULRUNNER19=1')
 
-mozilla_browser_ext = Extension("miro.platform.MozillaBrowser",
+mozilla_browser_ext = Extension("miro.plat.MozillaBrowser",
         [ os.path.join(platform_html_frontend_dir,'MozillaBrowser.pyx'),
           os.path.join(platform_html_frontend_dir,'MozillaBrowserXPCOM.cc'),
           os.path.join(platform_html_frontend_dir,'HttpObserver.cc'),
@@ -338,7 +338,7 @@ mozilla_browser_ext = Extension("miro.platform.MozillaBrowser",
         **mozilla_browser_options)
 #### Xlib Extension ####
 xlib_ext = \
-    Extension("miro.platform.xlibhelper", 
+    Extension("miro.plat.xlibhelper", 
         [ os.path.join(platform_html_frontend_dir,'xlibhelper.pyx') ],
         library_dirs = ['/usr/X11R6/lib'],
         libraries = ['X11'],
@@ -624,15 +624,15 @@ setup(name='miro',
         'miro.frontends.html',
         'miro.frontends.html.compiled_templates',
         'miro.frontends.html.compiled_templates.unittest',
-        'miro.platform',
-        'miro.platform.frontends',
-        'miro.platform.frontends.html',
-        'miro.platform.renderers',
+        'miro.plat',
+        'miro.plat.frontends',
+        'miro.plat.frontends.html',
+        'miro.plat.renderers',
     ],
     package_dir = {
         'miro': portable_dir,
         'miro.test' : test_dir,
-        'miro.platform': platform_package_dir,
+        'miro.plat': platform_package_dir,
     },
     cmdclass = {
         'build_ext': build_ext, 

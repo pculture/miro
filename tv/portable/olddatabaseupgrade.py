@@ -80,7 +80,7 @@ from miro import storedatabase
 
 
 def defaultFeedIconURL():
-    from miro.platform import resources
+    from miro.plat import resources
     return resources.url("images/feedicon.png")
 
 #Dummy class for removing bogus FileItem instances

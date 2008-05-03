@@ -31,7 +31,7 @@ import os
 import gtk
 from miro import app
 import gobject
-from miro.platform.utils import confirmMainThread
+from miro.plat.utils import confirmMainThread
 import logging
 
 class MainWindowChanger(object):

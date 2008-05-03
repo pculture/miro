@@ -44,7 +44,7 @@ from miro import indexes
 from miro import prefs
 import random
 from miro import views
-from miro.platform.utils import samefile, FilenameType, unicodeToFilename
+from miro.plat.utils import samefile, FilenameType, unicodeToFilename
 from miro import flashscraper
 import logging
 import traceback
@@ -259,6 +259,7 @@ class RemoteDownloader(DDBObject):
             self.contentType = contentType
         if url is not None:
             self.url = url
+            print "** WBG: _runDownloader: downloading '%s'" % url
             c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.url, self.dlid, self.contentType, self.channelName)
             c.send()

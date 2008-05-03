@@ -34,11 +34,11 @@ import gtkmozembed
 from miro import prefs
 import tempfile
 from xml.sax.saxutils import escape
-from miro.platform.MozillaBrowser import MozillaBrowser
+from miro.plat.MozillaBrowser import MozillaBrowser
 from miro.frontends.html.displaybase import Display
-from miro.platform.frontends.html.gtk_queue import gtkAsyncMethod
+from miro.plat.frontends.html.gtk_queue import gtkAsyncMethod
 from miro.util import quoteJS, checkU
-from miro.platform.utils import confirmMainThread
+from miro.plat.utils import confirmMainThread
 
 import os
 import re

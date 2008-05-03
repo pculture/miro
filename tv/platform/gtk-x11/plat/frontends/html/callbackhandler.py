@@ -37,15 +37,15 @@ import os
 import shutil
 from miro import config
 from miro import prefs
-from miro.platform import resources
+from miro.plat import resources
 import MainFrame
 from miro import singleclick
 from miro import eventloop
 import math
 from miro import folder
 from miro import playlist
-from miro.platform.utils import confirmMainThread, makeURLSafe, filenameToUnicode
-from miro.platform.frontends.html import startup
+from miro.plat.utils import confirmMainThread, makeURLSafe, filenameToUnicode
+from miro.plat.frontends.html import startup
 import logging
 from miro import feed
 from miro import views

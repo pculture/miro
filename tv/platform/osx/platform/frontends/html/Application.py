@@ -51,13 +51,13 @@ from miro import filetypes
 from miro import eventloop
 from miro import autoupdate
 from miro import singleclick
-from miro.platform.utils import ensureDownloadDaemonIsTerminated, osFilenamesToFilenameTypes
+from miro.plat.utils import ensureDownloadDaemonIsTerminated, osFilenamesToFilenameTypes
 
 from miro.gtcache import gettext as _
 
-from miro.platform.frontends.html import Preferences
-from miro.platform.frontends.html import GrowlNotifier
-from miro.platform.frontends.html import SparkleUpdater
+from miro.plat.frontends.html import Preferences
+from miro.plat.frontends.html import GrowlNotifier
+from miro.plat.frontends.html import SparkleUpdater
 
 ###############################################################################
 
@@ -143,7 +143,7 @@ class AppController (NSObject):
         app.htmlapp.startup()
 
         # The database should be ready at this point, check Miro migration.
-        from miro.platform import migrateappname
+        from miro.plat import migrateappname
         migrateappname.migrateVideos('Democracy', 'Miro')
 
         # Initialize the Growl notifier

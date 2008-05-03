@@ -59,7 +59,7 @@ from miro import util
 from miro import config
 from miro import prefs
 from string import Template
-from miro.platform.utils import samefile, filenameToUnicode
+from miro.plat.utils import samefile, filenameToUnicode
 
 _commandLineArgs = []
 commandLineVideoIds = None

@@ -32,7 +32,7 @@ import gettext as _gt
 import locale
 from miro import config
 from miro import prefs
-import miro.platform.utils
+import miro.plat.utils
 import os
 
 _gtcache = None
@@ -40,7 +40,7 @@ _gtcache = None
 def init():
     global _gtcache
     _gtcache = {}
-    if not miro.platform.utils.localeInitialized:
+    if not miro.plat.utils.localeInitialized:
         raise Exception, "locale not initialized"
 
     # try to set the locale to the platform default, but if that fails

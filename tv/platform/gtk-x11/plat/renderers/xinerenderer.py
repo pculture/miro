@@ -38,10 +38,10 @@ from miro import eventloop
 from miro import prefs
 from miro import xine
 from miro.download_utils import nextFreeFilename
-from miro.platform.frontends.html import gtk_queue
-from miro.platform import options
-from miro.platform import resources
-from miro.platform.utils import confirmMainThread
+from miro.plat.frontends.html import gtk_queue
+from miro.plat import options
+from miro.plat import resources
+from miro.plat.utils import confirmMainThread
 
 def waitForAttach(func):
     """Many xine calls can't be made until we attach the object to a X window.

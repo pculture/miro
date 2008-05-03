@@ -8,7 +8,7 @@ from miro import olddatabaseupgrade
 from miro import storedatabase
 from miro import databaseupgrade
 from miro import databasesanity
-from miro.platform import resources
+from miro.plat import resources
 
 from miro.test.framework import EventLoopTest
 

@@ -35,7 +35,7 @@ import QTKit
 import AppKit
 import Foundation
 
-from miro.platform import qtcomp
+from miro.plat import qtcomp
 
 # =============================================================================
 

@@ -43,7 +43,7 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
-from miro.platform.utils import FilenameType, killProcess
+from miro.plat.utils import FilenameType, killProcess
 
 MOVIE_DATA_UTIL_TIMEOUT = 60
 # Time in seconds that we wait for the utility to execute.  If it goes longer

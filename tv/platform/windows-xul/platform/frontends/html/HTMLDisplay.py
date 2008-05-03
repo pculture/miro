@@ -39,10 +39,10 @@ from miro import config
 from miro import download_utils
 import tempfile
 import os
-from miro.platform.utils import makeURLSafe, getLongPathName, osFilenameToFilenameType
+from miro.plat.utils import makeURLSafe, getLongPathName, osFilenameToFilenameType
 from miro import prefs
 from miro.frontends.html.displaybase import Display
-from miro.platform.frontends.html import urlcallbacks
+from miro.plat.frontends.html import urlcallbacks
 
 tempdir = os.path.join(tempfile.gettempdir(), config.get(prefs.SHORT_APP_NAME))
 

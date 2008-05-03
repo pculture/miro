@@ -36,7 +36,7 @@ import zipfile
 import tarfile
 import plistlib
 import datetime
-import platform
+import plat
 import subprocess
 
 from glob import glob
@@ -45,7 +45,7 @@ from glob import glob
 # Check Python version
 # =============================================================================
 
-PYTHON_VERSION = platform.python_version()[0:3]
+PYTHON_VERSION = plat.python_version()[0:3]
 
 # =============================================================================
 # Find the top of the source tree and set the search path accordingly
@@ -57,7 +57,7 @@ ROOT_DIR = os.path.normpath(ROOT_DIR)
 
 PORTABLE_DIR = os.path.join(ROOT_DIR, 'portable')
 PLATFORM_DIR = os.path.join(ROOT_DIR, 'platform', 'osx')
-PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'platform')
+PLATFORM_PACKAGE_DIR = os.path.join(PLATFORM_DIR, 'plat')
 
 OS_INFO = os.uname()
 OS_VERSION = int(OS_INFO[2][0])
@@ -302,16 +302,16 @@ class MiroBuild (py2app):
             'miro.frontends',
             'miro.frontends.html',
             'miro.frontends.html.compiled_templates',
-            'miro.platform',
-            'miro.platform.frontends',
-            'miro.platform.frontends.html',
-            'miro.platform.renderers',
+            'miro.plat',
+            'miro.plat.frontends',
+            'miro.plat.frontends.html',
+            'miro.plat.renderers',
         ]
         self.includes.add('miro.frontends.html.compiled_templates')
 
         self.distribution.package_dir = {
             'miro': PORTABLE_DIR,
-            'miro.platform': PLATFORM_PACKAGE_DIR,
+            'miro.plat': PLATFORM_PACKAGE_DIR,
         }
         
         self.iconfile = self.config.get_icon_file()
@@ -331,17 +331,17 @@ class MiroBuild (py2app):
     def get_idletime_ext(self):
         idletime_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'idletime.c'))
         idletime_link_args = ['-framework', 'CoreFoundation']
-        return Extension("miro.platform.idletime", sources=idletime_src, extra_link_args=idletime_link_args)
+        return Extension("miro.plat.idletime", sources=idletime_src, extra_link_args=idletime_link_args)
     
     def get_keychain_ext(self):
         keychain_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'keychain.c'))
         keychain_link_args = ['-framework', 'Security']
-        return Extension("miro.platform.keychain", sources=keychain_src, extra_link_args=keychain_link_args)
+        return Extension("miro.plat.keychain", sources=keychain_src, extra_link_args=keychain_link_args)
     
     def get_qtcomp_ext(self):
         qtcomp_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'qtcomp.c'))
         qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'Quicktime']
-        return Extension("miro.platform.qtcomp", sources=qtcomp_src, extra_link_args=qtcomp_link_args)
+        return Extension("miro.plat.qtcomp", sources=qtcomp_src, extra_link_args=qtcomp_link_args)
     
     def get_database_ext(self):
         database_src = glob(os.path.join(ROOT_DIR, 'portable', 'database.pyx'))

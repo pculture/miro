@@ -29,7 +29,7 @@
 import os
 
 import urllib
-from miro.platform import bundle
+from miro.plat import bundle
 
 # Find the full path to a resource data file. 'relative_path' is
 # expected to be supplied in Unix format, with forward-slashes as

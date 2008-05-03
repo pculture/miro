@@ -61,7 +61,7 @@ from miro import util
 from miro import views
 from miro import databasehelper
 from miro import fileutil
-from miro.platform.utils import exit, osFilenameToFilenameType
+from miro.plat.utils import exit, osFilenameToFilenameType
 
 ###############################################################################
 #### The main application app.controller object, binding model to view         ####

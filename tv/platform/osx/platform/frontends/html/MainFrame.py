@@ -43,10 +43,10 @@ from miro import folder
 from miro import dialogs
 from miro.frontends.html import keyboard
 from miro import playlist
-from miro.platform import resources
+from miro.plat import resources
 from miro import eventloop
 from miro import searchengines
-from miro.platform.frontends.html import threads
+from miro.plat.frontends.html import threads
 
 from miro.gtcache import gettext as _
 

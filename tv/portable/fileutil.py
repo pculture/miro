@@ -166,6 +166,8 @@ def delete(path, retry_after=10, retry_for=60):
             os.remove (path)
         elif os.path.isdir(path):
             shutil.rmtree (path)
+        else:
+            logging.warn("asked to delete '%s' but it's not there." % path)
     except EnvironmentError, e:
         logging.warn("Error deleting %s", path)
         if retry_for > 0 and e.errno == 13:

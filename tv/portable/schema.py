@@ -49,7 +49,7 @@ import time
 import logging
 from types import NoneType
 from fasttypes import LinkedList
-from miro.platform.utils import FilenameType
+from miro.plat.utils import FilenameType
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""

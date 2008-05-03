@@ -35,9 +35,9 @@ from xml.sax.saxutils import escape
 from glob import glob
 import os.path
 
-from miro.platform.xulhelper import makeService, proxify
+from miro.plat.xulhelper import makeService, proxify
 from miro import config
-from miro.platform import resources
+from miro.plat import resources
 
 def _recalculateThemeLocale(theme):
     templateVars = config.app.configfile.default_vars.copy()

@@ -38,8 +38,8 @@ from miro import config
 from miro import dialogs
 from miro import feed
 from miro import app
-from miro.platform import clipboard
-from miro.platform.frontends.html import urlcallbacks
+from miro.plat import clipboard
+from miro.plat.frontends.html import urlcallbacks
 from miro.trapcall import trapCall
 
 currentId = 1
@@ -63,7 +63,7 @@ def getPrefillText(dialog):
     return ''
 
 def _makeSupportsArrayFromSecondElement(data):
-    from miro.platform.xulhelper import makeComp, components
+    from miro.plat.xulhelper import makeComp, components
     arrayAbs = makeComp("@mozilla.org/supports-array;1", components.interfaces.nsISupportsArray, False)
     for datum in data:
         supportsString = makeComp("@mozilla.org/supports-string;1", components.interfaces.nsISupportsString, False)

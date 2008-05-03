@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.platform.frontends.html.threads -- call a method in the Cocoa thread.
+"""miro.plat.frontends.html.threads -- call a method in the Cocoa thread.
 """
 
 import threading

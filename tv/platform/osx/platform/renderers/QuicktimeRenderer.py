@@ -39,11 +39,11 @@ from Foundation import *
 from miro import util
 from miro import prefs
 from miro import config
-from miro.platform import qtcomp
-from miro.platform import bundle
-from miro.platform.utils import getMajorOSVersion, filenameTypeToOSFilename, getResizedJPEGData
+from miro.plat import qtcomp
+from miro.plat import bundle
+from miro.plat.utils import getMajorOSVersion, filenameTypeToOSFilename, getResizedJPEGData
 from miro import download_utils
-from miro.platform.frontends.html import threads
+from miro.plat.frontends.html import threads
 
 from miro.gtcache import gettext as _
 

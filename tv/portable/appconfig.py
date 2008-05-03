@@ -39,7 +39,7 @@ import traceback
 
 from miro import app
 from miro import util
-from miro.platform import resources
+from miro.plat import resources
 
 class AppConfig(object):
     def __init__(self, theme=None):

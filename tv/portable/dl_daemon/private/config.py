@@ -1,6 +1,6 @@
 from threading import Event, Lock
 from miro import prefs
-import miro.platform.config
+import miro.plat.config
 
 _data = {}
 _dataLock = Lock()
@@ -42,7 +42,7 @@ def get(descriptor):
         if descriptor.key in _data:
             return _data[descriptor.key]
         elif descriptor.platformSpecific:
-            return miro.platform.config.get(descriptor)
+            return miro.plat.config.get(descriptor)
         else:
             return descriptor.default
     finally:

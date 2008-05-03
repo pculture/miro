@@ -35,15 +35,15 @@ from miro import app
 from miro import config
 from miro import prefs
 from miro import eventloop
-from miro.platform import resources
-from miro.platform import flash
+from miro.plat import resources
+from miro.plat import flash
 from miro import searchengines
 from miro import views
-from miro.platform.utils import _getLocale as getLocale
+from miro.plat.utils import _getLocale as getLocale
 from miro.frontends.html.main import HTMLApplication
-from miro.platform.frontends.html import HTMLDisplay
-from miro.platform import migrateappname
-from miro.platform.xulhelper import makeService, pcfIDTVPyBridge
+from miro.plat.frontends.html import HTMLDisplay
+from miro.plat import migrateappname
+from miro.plat.xulhelper import makeService, pcfIDTVPyBridge
 
 ###############################################################################
 #### Application object                                                    ####

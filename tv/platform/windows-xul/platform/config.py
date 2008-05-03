@@ -37,9 +37,9 @@ from miro import prefs
 from miro import util
 from miro import u3info
 from miro import fileutil
-from miro.platform import proxyfind
-from miro.platform import resources
-from miro.platform import specialfolders
+from miro.plat import proxyfind
+from miro.plat import resources
+from miro.plat import specialfolders
 
 proxy_info = proxyfind.get_proxy_info()
 

@@ -27,7 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from xpcom import components
-from miro.platform import pyxpcomcalls
+from miro.plat import pyxpcomcalls
 
 class PyCallback:
     _com_interfaces_ = [components.interfaces.pcfIDTVPyCallback]

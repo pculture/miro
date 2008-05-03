@@ -26,13 +26,16 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.platform.options -- Holds platform-specific command line options.
-Most/all of these are set in the miro.real script.  The values here are
-hopefully sane defaults.
+"""miro.plat.frontends.html.threads -- Handles calling a function in the
+main thread.
 """
 
-shouldSyncX = False
-useXineHack = True
-defaultXineDriver = "xv"
-themeName = None
-frontend = 'html'
+from miro.plat.frontends.html.gtk_queue import gtkAsyncMethod
+
+@gtkAsyncMethod
+def inMainThread(function, args=None, kwargs=None):
+    if args is None:
+        args = ()
+    if kwargs is None:
+        kwargs = {}
+    function(*args, **kwargs)

@@ -61,11 +61,11 @@ setup(
         'miro',
         'miro.dl_daemon',
         'miro.dl_daemon.private',
-        'miro.platform',
+        'miro.plat',
     ],
     package_dir = {
         'miro': core_setup.portable_dir,
-        'miro.platform': os.path.join(core_setup.platform_dir, 'platform'),
+        'miro.plat': os.path.join(core_setup.platform_dir, 'plat'),
     },
     cmdclass = {
 	'build_ext': build_ext,

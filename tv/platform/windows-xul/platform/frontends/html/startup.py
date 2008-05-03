@@ -36,7 +36,7 @@ from miro import config
 from miro import prefs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
-from miro.platform import resources
+from miro.plat import resources
 
 class _Search:
     def __init__(self, path):

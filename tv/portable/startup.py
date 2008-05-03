@@ -58,12 +58,12 @@ from miro import feed
 from miro import folder
 from miro import guide
 from miro import moviedata
-from miro import platform
+from miro import plat
 from miro import playlist
 from miro import prefs
 from miro import selection
-from miro.platform import resources
-from miro.platform.utils import setupLogging
+from miro.plat import resources
+from miro.plat.utils import setupLogging
 from miro import signals
 from miro import tabs
 from miro import theme

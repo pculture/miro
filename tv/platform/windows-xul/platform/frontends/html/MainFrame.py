@@ -31,9 +31,9 @@ import logging
 
 from miro import app
 from miro.util import quoteJS
-from miro.platform.frontends.html.VideoDisplay import VideoDisplay
-from miro.platform.frontends.html import urlcallbacks
-from miro.platform.xulhelper import makeComp
+from miro.plat.frontends.html.VideoDisplay import VideoDisplay
+from miro.plat.frontends.html import urlcallbacks
+from miro.plat.xulhelper import makeComp
 
 ###############################################################################
 #### Main window                                                           ####

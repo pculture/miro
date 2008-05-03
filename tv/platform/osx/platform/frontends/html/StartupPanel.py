@@ -38,8 +38,8 @@ from miro import util
 from miro import prefs
 from miro import config
 from miro import eventloop
-from miro.platform.utils import osFilenameToFilenameType
-from miro.platform.frontends.html import threads
+from miro.plat.utils import osFilenameToFilenameType
+from miro.plat.frontends.html import threads
 
 from miro.gtcache import gettext as _
 

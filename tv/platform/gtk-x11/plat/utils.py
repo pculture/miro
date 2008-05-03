@@ -40,7 +40,7 @@ import sys
 import time
 from miro.util import returnsUnicode, returnsBinary, checkU, checkB, call_command
 import miro
-from miro.platform import options
+from miro.plat import options
 
 FilenameType = str
 

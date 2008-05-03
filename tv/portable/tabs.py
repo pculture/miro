@@ -32,7 +32,7 @@ from miro import views
 from miro import eventloop
 from miro import feed
 from miro import folder
-from miro.platform import resources
+from miro.plat import resources
 from miro import guide
 from miro import playlist
 from miro import signals

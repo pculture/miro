@@ -59,7 +59,7 @@ def launch():
 
     override_modules()
 
-    from miro.platform.utils import setupLogging, initializeLocale
+    from miro.plat.utils import setupLogging, initializeLocale
     setupLogging(inDownloader=True)
     util.setupLogging()
     initializeLocale()

@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.platform.utils import filenameToUnicode
+from miro.plat.utils import filenameToUnicode
 
 # Returns items that match search
 def matchingItems(obj, searchString):
