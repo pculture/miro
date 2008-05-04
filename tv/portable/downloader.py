@@ -259,7 +259,6 @@ class RemoteDownloader(DDBObject):
             self.contentType = contentType
         if url is not None:
             self.url = url
-            print "** WBG: _runDownloader: downloading '%s'" % url
             c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.url, self.dlid, self.contentType, self.channelName)
             c.send()

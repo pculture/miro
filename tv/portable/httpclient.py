@@ -1808,7 +1808,6 @@ class HTTPClient(object):
         self.depth += 1
         self.url = urljoin(self.url, response['location'])
         self.redirectedURL = self.url
-        logging.info("** WBG: redirecting to %s" % self.redirectedURL)
         if response['status'] == 301 and self.updateURLOk:
             self.updatedURL = self.url
         else:

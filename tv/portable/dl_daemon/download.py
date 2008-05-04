@@ -359,7 +359,7 @@ class BGDownloader:
         the movies directory.
         """
         if chatter:
-            logging.info ("** WBG: moveToMoviesDirectory: moving to movies directory.  filename is %s", self.filename)
+            logging.info ("moveToMoviesDirectory: moving to movies directory.  filename is %s", self.filename)
         self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
 
     def moveToDirectory (self, directory):
