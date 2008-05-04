@@ -36,16 +36,9 @@ import zipfile
 import tarfile
 import plistlib
 import datetime
-import plat
 import subprocess
 
 from glob import glob
-
-# =============================================================================
-# Check Python version
-# =============================================================================
-
-PYTHON_VERSION = plat.python_version()[0:3]
 
 # =============================================================================
 # Find the top of the source tree and set the search path accordingly
