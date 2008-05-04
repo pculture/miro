@@ -2,25 +2,39 @@
 README
 ======
 
+:Author: Will Guaraldi <will.guaraldi at pculture dot org>
+:Date: May 4th, 2008
+
+
 Summary
 =======
 
 This is the GTK/X11 port of Miro.
 
-If you want to test it, execute ``./run.sh``. If you have the required
-dependencies it should build Miro and run it.
+Instructions and build requirements are documented at
+https://develop.participatoryculture.org/trac/democracy/wiki/GTKX11BuildDocs
+
+
+Build and run
+=============
+
+To compile and run Miro in the current directory, do::
+
+   ./run.sh
+
+If you have the required dependencies it should build Miro and run it.
 
 See https://develop.participatoryculture.org/projects/dtv/wiki/GTKX11BuildDocs
 for more information on building and executing the GTK-X11 platform code.
 The information at this url is considered the authoritative source.
 
+To run Miro in "debug mode" (i.e. in gdb)::
 
+   ./run.sh --debug
 
-Build and run instructions
-==========================
+For more command-line options::
 
-Instructions and build requirements are documented at
-https://develop.participatoryculture.org/trac/democracy/wiki/GTKX11BuildDocs
+   ./run.sh --help
 
 
 Unittest instructions
