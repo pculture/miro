@@ -90,20 +90,26 @@ import shutil
 from Pyrex.Distutils import build_ext
 
 #### usefull paths to have around ####
-# bdist_rpm and possibly other commands copies setup.py into a subdir of
-# platform/gtk-x11.  This makes it hard to find the root directory.  We work
-# our way up the path until our is_root_dir test passes.
 def is_root_dir(dir):
+    """
+    bdist_rpm and possibly other commands copies setup.py into a subdir of
+    platform/gtk-x11.  This makes it hard to find the root directory.  We work
+    our way up the path until our is_root_dir test passes.
+    """
     return os.path.exists(os.path.join(dir, "MIRO_ROOT"))
 
-root_try = os.path.abspath(os.path.dirname(__file__))
-while True:
-    if is_root_dir(root_try):
-        root_dir = root_try
-        break
-    if root_try == '/':
-        raise RuntimeError("Couldn't find Miro root directory")
-    root_try = os.path.abspath(os.path.join(root_try, '..'))
+def get_root_dir():
+    root_try = os.path.abspath(os.path.dirname(__file__))
+    while True:
+        if is_root_dir(root_try):
+            root_dir = root_try
+            break
+        if root_try == '/':
+            raise RuntimeError("Couldn't find Miro root directory")
+        root_try = os.path.abspath(os.path.join(root_try, '..'))
+    return root_dir
+
+root_dir = get_root_dir()
 portable_dir = os.path.join(root_dir, 'portable')
 portable_frontend_dir = os.path.join(portable_dir, 'frontends')
 portable_html_frontend_dir = os.path.join(portable_frontend_dir, 'html')
@@ -112,25 +118,25 @@ test_dir = os.path.join(portable_dir, 'test')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
 platform_package_dir = os.path.join(platform_dir, 'plat')
-platform_html_frontend_dir = os.path.join(platform_package_dir, 'frontends',
-        'html')
+platform_html_frontend_dir = os.path.join(platform_package_dir, 'frontends', 'html')
 glade_dir = os.path.join(platform_dir, 'glade')
 xine_dir = os.path.join(platform_dir, 'xine')
 debian_package_dir = os.path.join(platform_dir, 'debian_package')
 
+# insert the root_dir to the beginning of sys.path so that we can
+# pick up portable and other packages
 sys.path.insert(0, root_dir)
-# when we install the portable modules, they will be in the miro package, but
-# at this point, they are in a package named "portable", so let's hack it
+
+# later when we install the portable modules, they will be in the miro package, 
+# but at this point, they are in a package named "portable", so let's hack it
 import portable
 sys.modules['miro'] = portable
 import plat
 sys.modules['miro'].plat = plat
 
-from miro.frontends.html import template_compiler
 from miro import setup_portable
-template_compiler.compileAllTemplates(root_dir)
 
-# little hack get the version from the current app.config.template
+# little hack to get the version from the current app.config.template
 from miro import util
 app_config = os.path.join(resource_dir, 'app.config.template')
 appVersion = util.readSimpleConfigFile(app_config)['appVersion']
@@ -140,7 +146,16 @@ if 'bdist_rpm' in sys.argv:
     appVersion = appVersion.replace('-', '_')
 
 #### utility functions ####
+def compile_templates():
+    """Compiles the templates into .py files.
+    """
+    from miro.frontends.html import template_compiler
+    template_compiler.compileAllTemplates(root_dir)
+
 def getlogin():
+    """Does a best-effort attempt to return the login of the user running the
+    script.
+    """
     try:
         return os.environ['LOGNAME']
     except KeyError:
@@ -169,7 +184,6 @@ def expand_file_contents(path, **values):
     """Do a string expansion on the contents of a file using the same rules as
     string.Template from the standard library.  
     """
-
     template = Template(read_file(path))
     expanded = template.substitute(**values)
     write_file(path, expanded)
@@ -180,7 +194,7 @@ def getCommandOutput(cmd, warnOnStderr = True, warnOnReturnCode = True):
     """
 
     p = subprocess.Popen(cmd, shell=True, close_fds = True,
-            stdout=subprocess.PIPE, stderr = subprocess.PIPE)
+                         stdout=subprocess.PIPE, stderr = subprocess.PIPE)
     stdout, stderr = p.communicate()
     if warnOnStderr and stderr != '':
         raise RuntimeError("%s outputted the following error:\n%s" % 
@@ -204,7 +218,6 @@ def parsePkgConfig(command, components, options_dict = None):
     If options_dict is passed in, we add options to it, instead of starting
     from scratch.
     """
-
     if options_dict is None:
         options_dict = {
             'include_dirs' : [],
@@ -226,6 +239,57 @@ def parsePkgConfig(command, components, options_dict = None):
             options_dict['extra_compile_args'].append(comp)
     return options_dict
 
+def compile_xine_extractor():
+    rv = os.system ("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" % (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
+    if rv != 0:
+        raise RuntimeError("xine_extractor compilation failed.  Possibly missing libxine, gdk-pixbuf-2.0, or glib-2.0.")
+
+def generate_miro():
+    # build a miro script that wraps the miro.real script with an LD_LIBRARY_PATH
+    # environment variable to pick up the xpcom we decided to use.
+    try:
+        runtimelib = getCommandOutput("pkg-config --variable=libdir %s" % xpcom).strip()
+
+        # print "Using xpcom: %s and gtkmozembed: %s runtimelib: %s" % (xpcom, gtkmozembed, runtimelib)
+        f = open(os.path.join(platform_dir, "miro"), "w")
+        if runtimelib:
+            runtimelib = "LD_LIBRARY_PATH=%s " % runtimelib
+
+        f.write( \
+"""#!/bin/sh
+DEBUG=0
+
+for arg in $@
+do
+    case $arg in
+    "--debug")    DEBUG=1;;
+    esac
+done
+
+if [ $DEBUG = 1 ]
+then
+    echo "DEBUGGING MODE."
+    PYTHON=`which python`
+    GDB=`which gdb`
+
+    if [ -z $GDB ]
+    then
+        echo "gdb cannot be found on your path.  aborting....";
+        exit;
+    fi
+
+    %(runtimelib)s$GDB -ex 'set breakpoint pending on' -ex 'break gdk_x_error' -ex 'run' --args $PYTHON ./miro.real --sync "$@"
+else
+    %(runtimelib)smiro.real "$@"
+fi
+""" % { "runtimelib": runtimelib})
+        f.close()
+
+    except RuntimeError, error:
+        sys.exit("Package config error:\n%s" % (error,))
+
+
+
 #### The fasttypes extension ####
 fasttypes_ext = \
     Extension("miro.fasttypes", 
@@ -233,8 +297,10 @@ fasttypes_ext = \
         libraries = [BOOST_LIB],
     )
 
+
 ##### The libtorrent extension ####
 libtorrent_ext = setup_portable.libtorrent_extension(portable_dir)
+
 
 #### MozillaBrowser Extension ####
 try:
@@ -259,22 +325,6 @@ elif re.search("^firefox-xpcom", packages, re.MULTILINE):
 else:
     sys.exit("Can't find libxul, xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
 
-if not "clean" in sys.argv:
-    # build a miro script that wraps the miro.real script with an LD_LIBRARY_PATH
-    # environment variable to pick up the xpcom we decided to use.
-    try:
-        fflib = getCommandOutput("pkg-config --variable=libdir %s" % xpcom).strip()
-
-        # print "Using xpcom: %s and gtkmozembed: %s fflib: %s" % (xpcom, gtkmozembed, fflib)
-        f = open(os.path.join(platform_dir, "miro"), "w")
-        if fflib:
-            f.write("#!/bin/sh\nLD_LIBRARY_PATH=%s miro.real \"$@\"\n" % fflib)
-        else:
-            f.write("#!/bin/sh\nmiro.real \"$@\"\n")
-        f.close()
-    except RuntimeError, error:
-        sys.exit("Package config error:\n%s" % (error,))
-
 mozilla_browser_options = parsePkgConfig("pkg-config" , 
         "gtk+-2.0 glib-2.0 pygtk-2.0 --define-variable=includetype=unstable %s %s" % (gtkmozembed, xpcom))
 mozilla_lib_path = parsePkgConfig('pkg-config', 
@@ -293,6 +343,7 @@ for dir in xpcom_includes['include_dirs']:
         # base include directory
         mozIncludeBase = dir
         break
+
 
 # xulrunner 1.9 has a different directory structure where all the headers are
 # in the same directory.
@@ -321,7 +372,6 @@ for dir in mozilla_browser_options['include_dirs']:
 if nsI:
     mozilla_browser_options['extra_compile_args'].append('-DNS_I_SERVICE_MANAGER_UTILS=1')
 
-# FIXME - WBG
 # do a xulrunner 1.9 check here and if not, then define PCF_USING_XULRUNNER19
 if xulrunner19:
     mozilla_browser_options['extra_compile_args'].append('-DPCF_USING_XULRUNNER19=1')
@@ -336,6 +386,8 @@ mozilla_browser_ext = Extension("miro.plat.MozillaBrowser",
         ],
         runtime_library_dirs=mozilla_lib_path,
         **mozilla_browser_options)
+
+
 #### Xlib Extension ####
 xlib_ext = \
     Extension("miro.plat.xlibhelper", 
@@ -343,6 +395,7 @@ xlib_ext = \
         library_dirs = ['/usr/X11R6/lib'],
         libraries = ['X11'],
     )
+
 
 #### Xine Extension ####
 xine_options = parsePkgConfig('pkg-config', 
@@ -364,9 +417,11 @@ xine_ext = Extension('miro.xine', [
                          os.path.join(xine_dir, 'xine_impl.c'),],
                      **xine_options)
 
+
 #### Build the data_files list ####
 def listfiles(path):
     return [f for f in glob(os.path.join(path, '*')) if os.path.isfile(f)]
+
 data_files = []
 # append the root resource directory.
 # filter out app.config.template (which is handled specially)
@@ -380,14 +435,9 @@ for dir in ('templates', 'css', 'images', 'html', 'testdata', os.path.join('temp
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
+
+
 # add the desktop file, icons, mime data, and man page.
-
-if not "clean" in sys.argv:
-    rv = os.system ("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" % (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
-
-    if rv != 0:
-        raise RuntimeError("xine_extractor compilation failed.  Possibly missing libxine, gdk-pixbuf-2.0, or glib-2.0.")
-
 data_files += [
     ('/usr/share/pixmaps', 
      glob(os.path.join(platform_dir, 'miro-*.png'))),
@@ -397,11 +447,24 @@ data_files += [
      [os.path.join(platform_dir, 'miro.xml')]),
     ('/usr/share/man/man1',
      [os.path.join(platform_dir, 'miro.1.gz')]),
+    ('/usr/share/man/man1',
+     [os.path.join(platform_dir, 'miro.real.1.gz')]),
     ('/usr/lib/miro/',
      [os.path.join(platform_dir, 'xine/xine_extractor')]),
 ]
 
-os.system ("gzip -9 < " + os.path.join(platform_dir, 'miro.1') + " > " + os.path.join(platform_dir, 'miro.1.gz'))
+
+# if we're not doing "python setup.py clean", then we can do a bunch of things
+# that have file-related side-effects
+if not "clean" in sys.argv:
+    compile_templates()
+    compile_xine_extractor()
+    generate_miro()
+    # gzip the man page
+    os.system ("gzip -9 < %s > %s" % (os.path.join(platform_dir, 'miro.1'), os.path.join(platform_dir, 'miro.1.gz')))
+    # copy miro.1.gz to miro.real.1.gz so that lintian complains less
+    os.system ("cp %s %s" % (os.path.join(platform_dir, 'miro.1.gz'), os.path.join(platform_dir, 'miro.real.1.gz')))
+
 
 #### Our specialized install_data command ####
 class install_data (distutils.command.install_data.install_data):
@@ -452,6 +515,7 @@ class install_data (distutils.command.install_data.install_data):
         distutils.command.install_data.install_data.run(self)
         self.install_app_config()
 
+
 #### Our specialized build_py command ####
 class build_py (distutils.command.build_py.build_py):
     """build_py extends the default build_py implementation so that the
@@ -471,9 +535,9 @@ class build_py (distutils.command.build_py.build_py):
         self.expand_templates()
         return distutils.command.build_py.build_py.run(self)
 
+
 #### bdist_deb builds the miro debian package ####
 class bdist_deb (Command):
-
     description = "Create a deb package"
     user_options = [ ]
 
@@ -536,9 +600,9 @@ class bdist_deb (Command):
         os.system(dpkg_command)
         dir_util.remove_tree(self.bdist_dir)
 
+
 #### install_theme installs a specifified theme .zip
 class install_theme(Command):
-
     description = 'Install a provided theme to /usr/share/miro/themes'
     user_options = [("theme=", None, 'ZIP file containing the theme')]
 
@@ -591,7 +655,6 @@ To use this theme, run:
     miro --theme="%s"
 """ % (self.theme_name, self.theme_name)
 
-#print "IS_FILE: %s" % repr(os.path.isfile(os.path.join(platform_dir, "miro.real")))
 
 #### Run setup ####
 setup(name='miro', 

@@ -61,6 +61,7 @@ parser.add_option('--disable-xine-hack', dest="use_xv_hack", action="store_false
 parser.add_option('--theme', dest='theme', metavar='<theme>', help='Theme to use')
 parser.add_option('--frontend', dest='frontend', metavar='<frontend>',
         default='html', help='Frontend to use (html, cli)')
+parser.add_option('--debug', action="store_true", help='Starts Miro in a gdb session for better debugging.')
 (parsed_options, args) = parser.parse_args()
 
 def startapp():

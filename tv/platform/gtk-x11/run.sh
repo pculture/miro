@@ -38,8 +38,10 @@ export MIRO_RESOURCE_ROOT=dist/$PREFIX/share/miro/resources/
 # picks out and puts in dist/usr/bin/miro .  If you're having problems
 # running miro with ./run.sh, then make sure you've got the LD_LIBRARY_PATH
 # portion matching.
+#
 # This line probably doesn't need to be here since we call "miro" which sets
 # the LD_LIBRARY_PATH correctly anyhow.
+#
 # export LD_LIBRARY_PATH=/usr/lib/firefox${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}
 
 $PYTHON setup.py install --root=./dist --prefix=$PREFIX && PATH=dist/$PREFIX/bin:$PATH PYTHONPATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/ dist/$PREFIX/bin/miro "$@"
