@@ -28,30 +28,30 @@
 #  statement from all source files in the program, then also delete it here.
 
 import os
-from miro import plat
+import platform
 print "Attempting to detect your system information"
-if plat.machine() == "i386" or plat.machine() == "i686":
+if platform.machine() == "i386" or platform.machine() == "i686":
     print "32bit x86 system detected"
     ARCH = "x86"
-elif plat.machine() == "x86_64" or plat.machine() == "amd64":
+elif platform.machine() == "x86_64" or platform.machine() == "amd64":
     print "64bit x86_64 system detected"
     ARCH = "x64"
-elif plat.machine() == "ppc":
+elif platform.machine() == "ppc":
     print "PowerPC system detected"
     ARCH = "ppc"
 else:
     print "Couldn't detect CPU architecture"
     ARCH = ""
-if plat.system() == "Linux":
+if platform.system() == "Linux":
     print "Linux operating system detected"
     OS = "linux"
-elif plat.system() == "Darwin" :
+elif platform.system() == "Darwin" :
     print "Darwin / OS X system detected"
     OS = "osx"
-elif plat.system() == "FreeBSD" :
+elif platform.system() == "FreeBSD" :
     print "FreeBSD operating system detected"
     OS = "freebsd"
-elif plat.system() in ('Windows', 'Microsoft'): 
+elif platform.system() in ('Windows', 'Microsoft'): 
     print "Windows system detected"
     OS = "win"
 elif os.name == "posix":
@@ -73,7 +73,7 @@ from distutils import sysconfig
 #    from distutils.command.build_ext import build_ext as _build_ext
 #import msgfmt
 #
-python_version = plat.python_version()[0:3]
+python_version = platform.python_version()[0:3]
 
 
 # NOTE: The following "hack" removes the -g and -Wstrict-prototypes

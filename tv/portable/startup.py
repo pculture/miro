@@ -58,7 +58,6 @@ from miro import feed
 from miro import folder
 from miro import guide
 from miro import moviedata
-from miro import plat
 from miro import playlist
 from miro import prefs
 from miro import selection

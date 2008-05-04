@@ -28,6 +28,7 @@
 
 from miro.gtcache import gettext as _
 import logging
+import platform
 from miro import config
 from miro import prefs
 from miro import app
@@ -39,7 +40,6 @@ from miro.database import DDBObject
 from miro import opml
 from miro import iconcache
 from miro.plat import resources
-from miro import plat
 from miro import guide
 from miro import feed
 from miro import folder
@@ -129,9 +129,9 @@ class ThemeHistory(DDBObject):
             app.controller.initial_feeds = True
         else:
             logging.info("Adding default feeds")
-            if plat.system() == 'Darwin':
+            if platform.system() == 'Darwin':
                 defaultFeedURLs = [u'http://www.getmiro.com/screencasts/mac/mac.feed.rss']
-            elif plat.system() == 'Windows':
+            elif platform.system() == 'Windows':
                 defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
             else:
                 defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
