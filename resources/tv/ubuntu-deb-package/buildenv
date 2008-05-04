@@ -18,7 +18,8 @@ function create_or_update {
     fi
 }
 
-create_or_update dapper ;
-create_or_update feisty ;
+# create_or_update dapper ;
+# create_or_update feisty ;
+
 create_or_update gutsy ;
 create_or_update hardy ;
