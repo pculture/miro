@@ -334,7 +334,6 @@ class IconCache:
         self.updated = False
         self.updating = False
         self.needsUpdate = False
-        self.requestUpdate ()
 
     def isValid(self):
         self.dbItem.confirmDBThread()
