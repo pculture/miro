@@ -186,6 +186,7 @@ class ChannelGuide(DDBObject):
     def getIconURL(self):
         if self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(20, 20)
+            path = fileutil.expand_filename(path)
             return resources.absoluteUrl(path)
         else:
             return resources.url("images/channelguide-icon-tablist.png")
