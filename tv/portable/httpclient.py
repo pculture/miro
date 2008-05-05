@@ -103,7 +103,7 @@ class ConnectionError(NetworkError):
     def __init__(self, errorMessage):
         self.friendlyDescription = _("Can't connect")
         self.longDescription = _("Connection Error: %s") % \
-                               util.stringify(errorMessage, "replace")
+                               util.unicodify(errorMessage)
 
 class SSLConnectionError(ConnectionError):
     def __init__(self):
@@ -115,13 +115,16 @@ class HTTPError(NetworkError):
         NetworkError.__init__(self, _("HTTP error"), longDescription)
 class BadStatusLine(HTTPError):
     def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Status Line: %s") % line)
+        HTTPError.__init__(self, _("Bad Status Line: %s") % 
+                util.unicodify(line))
 class BadHeaderLine(HTTPError):
     def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Header Line: %s") % line)
+        HTTPError.__init__(self, _("Bad Header Line: %s") % 
+                util.unicodify(line))
 class BadChunkSize(HTTPError):
     def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Chunk size: %s") % line)
+        HTTPError.__init__(self, _("Bad Chunk size: %s") % 
+                util.unicodify(line))
 class CRLFExpected(HTTPError):
     def __init__(self, crlf):
         HTTPError.__init__(self, _("Expected CRLF got: %r") % crlf)
@@ -135,7 +138,8 @@ class UnexpectedStatusCode(HTTPError):
             self.friendlyDescription = _("File not found")
             self.longDescription = _("Got 404 status code")
         else:
-            HTTPError.__init__(self, _("Bad Status Code: %s") % code)
+            HTTPError.__init__(self, _("Bad Status Code: %s") % 
+                    util.unicodify(code))
 
 class AuthorizationFailed(NetworkError):
     def __init__(self):
