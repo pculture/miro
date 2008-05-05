@@ -26,8 +26,9 @@ thisItemView.unlink()
      <div  t:showIf="this.hasSharableURL()">
         <a href="#" onclick="return recommendItem('@@@this.getTitle()@@@', '@@@this.getURL()@@@', '@@@this.getFeed().getURL()@@@');"><span i18n:translate="">EMAIL A FRIEND</span></a>
      </div>
-     <div t:showIf="this.getLink()">
-        <a href="***this.getLink()***"><span i18n:translate="">PERMALINK</span></a>
+     <div>
+        <span t:showIf="this.getLink()"><a href="***this.getLink()***"><span i18n:translate="">PERMALINK</span></a></span>
+        <span t:showIf="this.getCommentsLink()"><a href="***this.getCommentsLink()***"><span i18n:translate="">COMMENTS</span></a></span>
      </div>
      <div>
         <span t:showIf="this.getExpiring()"><span class="expiration" t:replace="this.getExpirationString()" /></span>
