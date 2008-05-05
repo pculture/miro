@@ -391,7 +391,7 @@ mozilla_browser_ext = Extension("miro.plat.MozillaBrowser",
 #### Xlib Extension ####
 xlib_ext = \
     Extension("miro.plat.xlibhelper", 
-        [ os.path.join(platform_html_frontend_dir,'xlibhelper.pyx') ],
+        [ os.path.join(platform_package_dir,'xlibhelper.pyx') ],
         library_dirs = ['/usr/X11R6/lib'],
         libraries = ['X11'],
     )
