@@ -38,6 +38,7 @@ from miro import app
 from miro import config
 from miro import indexes
 from miro import prefs
+from miro import fileutil
 import threading
 import urllib
 from miro import eventloop
