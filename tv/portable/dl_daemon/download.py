@@ -371,13 +371,10 @@ class BGDownloader:
                 fileutil.makedirs(directory)
             except:
                 pass
-        print "** WBG: moveToDirectory: filename: %s" % self.filename
         newfilename = os.path.join(directory, self.shortFilename)
-        print "** WBG: moveToDirectory: newfilename: %s" % newfilename
         if newfilename == self.filename:
             return
         newfilename = nextFreeFilename(newfilename)
-        print "** WBG: moveToDirectory: newfilename2: %s" % newfilename
         def callback():
             self.filename = newfilename
             self.updateClient()
