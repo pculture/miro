@@ -108,28 +108,23 @@ def setupLogging (inDownloader=False):
 
         logging.getLogger('').addHandler(console)
 
-# Takes in a unicode string representation of a filename and creates a
-# valid byte representation of it attempting to preserve extensions
-#
-# This is not guaranteed to give the same results every time it is run,
-# not is it garanteed to reverse the results of filenameToUnicode
 @returnsBinary
-def unicodeToFilename(filename, path = None):
+def unicodeToFilename(filename, path=None):
+    """Takes in a unicode string representation of a filename and creates a
+    valid byte representation of it attempting to preserve extensions
+
+    Note: This is not guaranteed to give the same results every time it is run,
+    nor is it garanteed to reverse the results of filenameToUnicode.
+    """
     @returnsUnicode
     def shortenFilename(filename):
         checkU(filename)
-        # Find the first part and the last part
-        pieces = filename.split(u".")
-        lastpart = pieces[-1]
-        if len(pieces) > 1:
-            firstpart = u".".join(pieces[:-1])
-        else:
-            firstpart = u""
-        # If there's a first part, use that, otherwise shorten what we have
-        if len(firstpart) > 0:
-            return u"%s.%s" % (firstpart[:-1],lastpart)
-        else:
-            return filename[:-1]
+        first, last = os.path.splitext(filename)
+
+        if first:
+            return u"".join(first[:-1], last)
+
+        return last[:-1]
 
     checkU(filename)
     if path:
@@ -141,26 +136,30 @@ def unicodeToFilename(filename, path = None):
     # nextFilename
     MAX_LEN = os.statvfs(path)[statvfs.F_NAMEMAX]-5
     
-    filename.replace('/','_').replace("\000","_").replace("\\","_").replace(":","_").replace("*","_").replace("?","_").replace("\"","_").replace("<","_").replace(">","_").replace("|","_")
-    try:
-        newFilename = filename.encode(locale.getpreferredencoding())
-    except:
-        newFilename = filename.encode('ascii','replace')
+    for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "<", ">", "|", "&"):
+        filename = filename.replace(mem, "_")
+
+    def encodef(filename):
+        try:
+            return filename.encode(locale.getpreferredencoding())
+        except:
+            return filename.encode('ascii','replace')
+
+    newFilename = encodef(filename)
+
     while len(newFilename) > MAX_LEN:
         filename = shortenFilename(filename)
-        try:
-            newFilename = filename.encode(locale.getpreferredencoding())
-        except:
-            newFilename = filename.encode('ascii','replace')
+        newFilename = encodef(filename)
 
     return newFilename
 
-# Given a filename in raw bytes, return the unicode representation
-#
-# SinceThis is not guaranteed to give the same results every time it is run,
-# not is it garanteed to reverse the results of unicodeToFilename
 @returnsUnicode
 def filenameToUnicode(filename, path = None):
+    """Given a filename in raw bytes, return the unicode representation
+    
+    Note: This is not guaranteed to give the same results every time it is run,
+    not is it garanteed to reverse the results of unicodeToFilename.
+    """
     if path:
         checkB(path)
     checkB(filename)
