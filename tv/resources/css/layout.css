@@ -335,7 +335,7 @@ a.sort-button.descending img.down-arrow {
 .feed-search {
   float:right;
   position:relative;
-  z-index:10;
+  z-index:4;
   margin-right:15px;
 }
 .main-channelbar {
