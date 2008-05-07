@@ -243,26 +243,25 @@ class TemplateDisplay(HTMLDisplay):
                     return
 
         normalizedURLs = []
-        for url in subscribeURLs:
+        for url, additional in subscribeURLs:
             normalized = feed.normalizeFeedURL(url)
             if feed.validateFeedURL(normalized):
-                normalizedURLs.append(normalized)
+                normalizedURLs.append((normalized, additional))
         if normalizedURLs:
             if type == 'feed':
-                for url in normalizedURLs:
+                for url, additional in normalizedURLs:
                     if feed.getFeedByURL(url) is None:
                         newFeed = feed.Feed(url)
                         newFeed.blink()
             elif type == 'download':
-                for url in normalizedURLs:
-                    filename = unicodeToFilename(url)
-                    singleclick.downloadURL(filename)
+                for url, additional in normalizedURLs:
+                    singleclick.addDownload(url, additional)
             elif type == 'guide':
-                for url in normalizedURLs:
+                for url, additional in normalizedURLs:
                     if guide.getGuideByURL (url) is None:
                         guide.ChannelGuide(url, '*')
             else:
-                raise AssertionError("Unkown subscribe type")
+                raise AssertionError("Unknown subscribe type")
             return
 
         if url.startswith(u'feed://'):

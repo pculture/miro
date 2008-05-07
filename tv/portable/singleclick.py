@@ -116,7 +116,7 @@ def checkURLExists(url):
         return True
     return False
 
-def addDownload(url):
+def addDownload(url, additional=None):
     if checkURLExists(url):
         return
     # We need to figure out if the URL is a external video link, or a link to
@@ -129,6 +129,19 @@ def addDownload(url):
             addFeeds([url])
         else:
             entry = item.getEntryForURL(url, contentType)
+            if additional is not None:
+                for key in 'title', 'link', 'feed':
+                    if key in additional:
+                        entry[key] = additional[key]
+                if 'description' in additional:
+                    entry['description'] = entry['summary'] = additional[
+                        'description']
+                if 'thumbnail' in additional:
+                    entry['thumbnail'] = {'href': additional['thumbnail']}
+                if 'length' in additional:
+                    entry['enclosures'][0]['length'] = additional['length']
+                if 'type' in additional:
+                    entry['enclosures'][0]['type'] = additional['type']
             if filetypes.isVideoEnclosure(entry['enclosures'][0]):
                 downloadVideo(entry)
             else:

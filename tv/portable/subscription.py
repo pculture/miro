@@ -73,9 +73,17 @@ def parseContent(content):
 
 def get_urls_from_query(query):
     urls = []
-    for key, value in cgi.parse_qs(query).items():
-        if re.match(r'url\d+$', key):
-            urls.append(value[0])
+    parsedQuery = cgi.parse_qs(query)
+    for key, value in parsedQuery.items():
+        match = re.match(r'^url(\d+)$', key)
+        if match:
+            urlId = match.group(1)
+            additional = {}
+            for key2 in ('title', 'description', 'length', 'type', 
+                         'thumbnail', 'feed', 'link'):
+                if '%s%s' % (key2, urlId) in parsedQuery:
+                    additional[key2] = parsedQuery['%s%s' % (key2, urlId)][0]
+            urls.append((value[0], additional))
     return urls
 
 def findSubscribeLinks(url):
@@ -95,7 +103,7 @@ def findSubscribeLinks(url):
     elif path in ('/channelguide.php', '/channelguide', '/channelguide/'):
         return 'guide', get_urls_from_query(query)
     else:
-        return 'feed', [urllib2.unquote(path[1:])]
+        return 'feed', [(urllib2.unquote(path[1:]), {})]
 
 # =========================================================================
 
