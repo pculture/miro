@@ -123,13 +123,13 @@ allPausedDownloads.unlink()
 		</div>
 
 	<div id="download-info">
+	        <span t:updateForConfigChange="">
 			<span t:hideIf="getFreeSpace() == getAvailableSpace()">
-				<span t:updateForConfigChange="">
 					<span i18n:translate=""><span i18n:name="size" t:replace="getAvailableSpace()" /> free for downloads</span>
-					</span>
 				<span>&nbsp;&nbsp;&nbsp;(<span i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk</span>)</span>
 			</span>
 			<span t:showIf="getFreeSpace() == getAvailableSpace()" i18n:translate=""><span i18n:name="size" t:replace="getFreeSpace()" /> free on disk</span>
+		</span>
 	</div>	<!-- end download-info -->
 </div> <!-- end sub-titlebar -->
 
