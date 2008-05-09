@@ -713,7 +713,7 @@ class GUIActionHandler:
     def addDownload(self, url = None):
         def doAdd(url):
             app.db.confirmDBThread()
-            singleclick.downloadURL(unicodeToFilename(url))
+            singleclick.downloadURL(url)
         self.addURL (Template(_("$shortAppName - Download Video")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME)), _("Enter the URL of the video to download"), doAdd, url)
 
     def handleDrop(self, data, type, sourcedata):

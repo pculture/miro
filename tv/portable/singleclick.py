@@ -309,6 +309,20 @@ def setCommandLineArgs(args):
     global _commandLineArgs
     _commandLineArgs.extend (args)
 
+def downloadURL(url):
+    if url.startswith('http:') or url.startswith('https:'):
+        addDownload(url)
+    elif url.startswith('feed:'):
+        # hack so feed: acts as http:
+        url = "http:" + url[len("feed:"):]
+        addDownload(url)
+    elif url.startswith('feeds:'):
+        # hack so feeds: acts as https:
+        url = "https:" + url[len("feeds:"):]
+        addDownload(url)
+    else:
+        parseCommandLineArgs ([unicodeToFilename(url)])
+
 def parseCommandLineArgs(args=None):
 
     if args is None:
@@ -328,16 +342,8 @@ def parseCommandLineArgs(args=None):
             addSubscriptionURL('miro:', 'application/x-miro', arg)
         elif arg.startswith('democracy:'):
             addSubscriptionURL('democracy:', 'application/x-democracy', arg)
-        elif arg.startswith('http:') or arg.startswith('https:'):
-            addDownload(filenameToUnicode(arg))
-        elif arg.startswith('feed:'):
-            # hack so feed: acts as http:
-            arg = "http:" + arg[len("feed:"):]
-            addDownload(platformutils.filenameToUnicode(arg))
-        elif arg.startswith('feeds:'):
-            # hack so feeds: acts as https:
-            arg = "https:" + arg[len("feeds:"):]
-            addDownload(platformutils.filenameToUnicode(arg))
+        elif arg.startswith('http:') or arg.startswith('https:') or arg.startswith('feed:') or arg.startswith('feeds:'):
+            downloadURL(filenameToUnicode(arg))
         elif os.path.exists(arg):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):
@@ -369,6 +375,3 @@ def parseCommandLineArgs(args=None):
 
 def openFile(path):
     parseCommandLineArgs([path])
-
-def downloadURL(url):
-    parseCommandLineArgs([url])
