@@ -939,6 +939,21 @@ def upgrade62(objectList):
 
 upgrade63 = upgrade37
 
+def upgrade64(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString == 'channel-guide':
+            if o.savedData['url'] == config.get(prefs.CHANNEL_GUIDE_URL):
+                allowedURLs = unicode(
+                    config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split()
+                allowedURLs.append(config.get(
+                        prefs.CHANNEL_GUIDE_FIRST_TIME_URL))
+                o.savedData['allowedURLs'] = allowedURLs
+            else:
+                o.savedData['allowedURLs'] = []
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
