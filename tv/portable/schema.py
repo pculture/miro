@@ -38,7 +38,7 @@ The goals of this modules are:
 Module-level variables:
     objectSchemas -- Schemas to use with the current database.
     VERSION -- Current schema version.  If you change the schema you must bump
-    this number and add a function in the dbupgrade module.
+    this number and add a function in the databaseupgrade module.
 
 Go to the bottom of this file for the current database schema.
 """
@@ -486,6 +486,7 @@ class ChannelGuideSchema(DDBObjectSchema):
     classString = 'channel-guide'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL(noneOk=True)),
+        ('allowedURLs', SchemaList(SchemaURL())),
         ('updated_url', SchemaURL(noneOk=True)),
         ('favicon', SchemaURL(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
@@ -501,7 +502,7 @@ class ThemeHistorySchema(DDBObjectSchema):
         ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
     ]
 
-VERSION = 63
+VERSION = 64
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
