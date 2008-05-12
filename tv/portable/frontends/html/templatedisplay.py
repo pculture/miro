@@ -260,7 +260,7 @@ class TemplateDisplay(HTMLDisplay):
             elif type == 'guide':
                 for url, additional in normalizedURLs:
                     if guide.getGuideByURL (url) is None:
-                        guide.ChannelGuide(url, '*')
+                        guide.ChannelGuide(url, [u'*'])
             else:
                 raise AssertionError("Unknown subscribe type")
             return
@@ -705,7 +705,7 @@ class GUIActionHandler:
             app.db.confirmDBThread()
             myGuide = guide.getGuideByURL (url)
             if myGuide is None:
-                myGuide = guide.ChannelGuide(url, '*')
+                myGuide = guide.ChannelGuide(url, [u'*'])
     
             if selected == '1':
                 app.selection.selectTabByObject(myGuide)
