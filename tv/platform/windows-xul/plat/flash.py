@@ -26,9 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import os, os.path, sys
-import subprocess, time
-from miro import app, httpclient, dialogs, config, prefs, signals
+import os, sys
+import subprocess
+from miro import app, httpclient, dialogs, config, prefs
 from miro.gtcache import gettext as _
 from miro.plat import specialfolders, resources
 from xpcom import shutdown
@@ -61,7 +61,11 @@ def installFlash():
         output.write(info['body'])
         output.close()
         code = subprocess.call([filename, '/S'])
-        os.unlink(filename)
+        try:
+            os.unlink(filename)
+        except OSError, e:
+            if e.errno != 13: # not Access Denied
+                raise
         if code: # fail!
             print 'error installing flash'
             config.set(prefs.FLASH_REQUEST_COUNT, 0)
