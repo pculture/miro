@@ -28,10 +28,13 @@
 
 import cgi
 import re
-from miro import util
+import traceback
+import logging
 import urllib2
 import urlparse
 import xml.dom.minidom
+
+from miro import util
 
 """
 This place's waiting for a little bit of documentation
@@ -65,10 +68,9 @@ def parseContent(content):
         dom.unlink()
         return urls
     except:
-        import traceback
         if util.chatter:
-            print "WARNING: Error parsing OPML content..."
-            traceback.print_exc()
+            logging.warn("Error parsing OPML content...\n%s",
+                    traceback.format_exc())
         return None
 
 def get_urls_from_query(query):
@@ -93,6 +95,8 @@ def findSubscribeLinks(url):
     try:
         scheme, host, path, params, query, frag = urlparse.urlparse(url)
     except:
+        logging.warn("Error parsing %s in findSubscribeLinks()\n%s", url,
+                traceback.format_exc())
         return 'none', []
     if host not in ('subscribe.getdemocracy.com', 'subscribe.getmiro.com'):
         return 'none', []

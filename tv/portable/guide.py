@@ -177,7 +177,7 @@ class ChannelGuide(DDBObject):
             self.signalChange()
 
     def guideError (self, error):
-        pass
+        logging.warn("Error downloading guide: %s", error)
 
     def downloadGuide(self):
         httpclient.grabURL(self.getURL(), self.guideDownloaded, self.guideError)
