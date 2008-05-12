@@ -105,11 +105,6 @@ class ChannelGuide(DDBObject):
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
-        if self.getDefault():
-            self.allowedURLs = config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS).split()
-            self.allowedURLs.append(config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL))
-        else:
-            self.allowedURLs = []
         self.downloadGuide()
 
 
