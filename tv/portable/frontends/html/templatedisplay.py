@@ -203,8 +203,9 @@ class TemplateDisplay(HTMLDisplay):
                 return False
 
             # Let channel guide URLs pass through
-            if app.controller.guide is not None and \
-                   app.controller.guide.isPartOfGuide(url):
+            if (not subscription.isSubscribeLink(url) and
+                    app.controller.guide is not None and 
+                    app.controller.guide.isPartOfGuide(url)):
                 app.controller.setLastVisitedGuideURL(url)
                 return True
             if url.startswith(u'file://'):

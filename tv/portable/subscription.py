@@ -37,8 +37,18 @@ import xml.dom.minidom
 from miro import util
 
 """
-This place's waiting for a little bit of documentation
+This file handles checking URLs that the user clicks on to see if they are
+subscribe links.  Subscribe links are specially formatted URLs that signal
+that we should subscribe the user to a feed, add a new channel guide, start a
+new video download, or something similar.
+
+Our basic strategy is to have have links with the host subscribe.getmiro.com.
+That way we can parse them in miro and have an actual page on
+subscribe.getmiro.com that the user will see if they click it in an actual web
+browser.
 """
+
+SUBSCRIBE_HOSTS = ('subscribe.getdemocracy.com', 'subscribe.getmiro.com')
 
 # =========================================================================
 
@@ -88,6 +98,13 @@ def get_urls_from_query(query):
             urls.append((value[0], additional))
     return urls
 
+def isSubscribeLink(url):
+    try:
+        scheme, host, path, params, query, frag = urlparse.urlparse(url)
+    except:
+        return False
+    return host in SUBSCRIBE_HOSTS
+
 def findSubscribeLinks(url):
     """Given a URL, test if it's trying to subscribe the user using
     subscribe.getdemocracy.com.  Returns the list of parsed URLs.
@@ -98,7 +115,7 @@ def findSubscribeLinks(url):
         logging.warn("Error parsing %s in findSubscribeLinks()\n%s", url,
                 traceback.format_exc())
         return 'none', []
-    if host not in ('subscribe.getdemocracy.com', 'subscribe.getmiro.com'):
+    if host not in SUBSCRIBE_HOSTS:
         return 'none', []
     if path in ('/', '/opml.php'):
         return 'feed', get_urls_from_query(query)
