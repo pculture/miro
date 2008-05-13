@@ -5,7 +5,8 @@
 <!DOCTYPE window SYSTEM "chrome://dtv/locale/main.dtd">
 
 <!-- add hidechrome="true" to eliminate title bar -->
-<window id="main" title="&main.title;"
+<window id="main"
+        title="&main.title;"
         windowtype="main"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml"
@@ -18,188 +19,230 @@
         onkeydown="return onKeyDown(event);"
         width="1020" height="680"
         persist="screenX screenY width height">
-        <script src="chrome://dtv/content/dnd.js"/>
-        <script src="chrome://dtv/content/xulhelper.js"/>
-        <script src="chrome://dtv/content/main.js"/>
-        <popupset><popup id="contextPopup"></popup></popupset>
 
-        <!-- TITLEBAR -->
-        <hbox height="25" container="1" id="titlebar" class="titlebar"
-                ondblclick="maximizeOrRestore();" >
-<!-- MAIN MENUBAR -->
-<hbox>
-<menubar id="titlebar-menu"
-        ondblclick="event.stopPropagation(); return false;">
+    <script src="chrome://dtv/content/dnd.js"/>
+    <script src="chrome://dtv/content/xulhelper.js"/>
+    <script src="chrome://dtv/content/main.js"/>
 
-<!-- I don't know why, but if this isn't here, we can't
-add more menu elements later -NN -->
-<menu id="placeholder-menu"/>
+    <popupset>
+        <popup id="contextPopup">        
+        </popup>
+    </popupset>
 
-</menubar>
-
-</hbox>
-<!-- / MAIN MENUBAR -->
-
-<!-- WINDOW TITLE -->
-<titlebar flex="1" container="1">
-<caption flex="1" label="&main.title;"/>
-</titlebar>
-<!-- / WINDOW TITLE -->
-
-<!-- WINDOW BUTTONS -->
-<hbox flex="0" width="55" height="24" align="center">
-                <image id="titlebar-buttons-minimize" class="titlebar-button" onclick="minimize();" />
-                <image id="titlebar-buttons-maximize" class="titlebar-button" onclick="maximizeOrRestore();" />
-                <image id="titlebar-buttons-close" class="titlebar-button" onclick="onClose();" />
-</hbox>
-<!-- / WINDOW BUTTONS -->
-
-</hbox>
-<!-- / TITLEBAR -->
-
-<!-- CONTENT AREA -->
-<hbox flex="1">
-
-<resizer id="resizer-left" dir="left" class="side-resizer" oncommand="return doResize(event);" />
-
-<!-- CHANNEL BAR -->
-  <browser id="channelsDisplay" src="" type="content"
-                 flex="0" width="180" minwidth="50" maxwidth="400"
-                 ondraggesture="return onDragGesture(event, 'channelsDisplay');"
-                 ondragover="return onDragOver(event, 'channelsDisplay');"
-                 ondragexit="return onDragExit(event, 'channelsDisplay');"
-                 ondragdrop="return onDragDrop(event, 'channelsDisplay');"
-                 />
-<!-- / CHANNEL BAR -->
-
-  <!-- DIVIDER -->
-<splitter id="mainSplitter" collapse="before" width="10"/>
-<!-- / DIVIDER -->
-
-        <browser id="mainDisplay" src="" type="content" flex="1"
-             ondraggesture="return onDragGesture(event, 'mainDisplay');"
-             ondragover="return onDragOver(event, 'mainDisplay');"
-             ondragexit="return onDragExit(event, 'mainDisplay');"
-             ondragdrop="return onDragDrop(event, 'mainDisplay');" />
-        <vbox id="video-box" flex="1" collapsed="true">
-            <browser flex="1" id="mainDisplayVideo" 
-                ondblclick="onFullscreenActivate();"
-                src="chrome://dtv/content/video-display-vlc.html" 
-                type="content" />
-            <browser id="videoInfoDisplay" src="" type="content"
-                    height="40px"/>
-        </vbox>
-<resizer id="resizer-right" dir="right" class="side-resizer" oncommand="return doResize(event);" />
-
-</hbox>
-<!-- / CONTENT AREA -->
-
-<!-- BOTTOM -->
-<hbox flex="0" height="64" id="bottom" class="bottom" align="center">
-<hbox flex="0" container="1" height="64" minheight="64" id="bottom-left">
-<hbox flex="0" maxheight="29" id="bottom-left-search" >
-      <textbox type="autocomplete" flex="1" id="search-textbox" onfocus="onSearchBoxFocus();" onblur="onSearchBoxBlur();" onkeydown="onSearchKeyDown(event);">
-        <stack popup="searchMenu">
-          <hbox>
-          <image id="search-icon" />
-          <popupset><popup onpopupshowing="jsbridge.fillSearchMenu();"
-                          position="before_start"
-                          id="searchMenu"></popup></popupset>
-          </hbox>
-          <image class="searchbar-dropmarker-image" />
-        </stack>
-      </textbox>
-</hbox>
-</hbox>
-        <spacer flex="0" width="20" id="bottom-left-blank" collapsed="true" />
-        <stack id="bottom-progress">
-                <hbox align="center" flex="0">
-                        <label id="progress-text">00:00:00</label>
-                        <spacer flex="1" />
-                        <label id="duration-text">00:00:00</label>
-                </hbox>
-                <image id="progress-slider" class="progress-slider-inactive" left="61" top="10" />
-        </stack>
-        <spacer flex="1"/>
-
-        <hbox flex="0" id="bottom-buttons" width="185" align="center">
-                <image id="bottom-buttons-previous" class="bottom-buttons-previous-inactive" />
-                <image id="bottom-buttons-stop" class="bottom-buttons-stop-inactive" />
-                <image id="bottom-buttons-play" class="bottom-buttons-play-inactive" />
-                <image id="bottom-buttons-fullscreen" class="bottom-buttons-fullscreen-inactive" />
-                <image id="bottom-buttons-next" class="bottom-buttons-next-inactive" />
+    <!-- TITLEBAR -->
+    <hbox height="25" container="1" id="titlebar" class="titlebar" ondblclick="maximizeOrRestore();" >
+        <!-- MAIN MENUBAR -->
+        <hbox>
+            <menubar id="titlebar-menu" ondblclick="event.stopPropagation(); return false;">
+                <!-- I don't know why, but if this isn't here, we can't
+                add more menu elements later -NN -->
+                <menu id="placeholder-menu"/>
+            </menubar>
         </hbox>
-        <spacer flex="1"/>
+        <!-- / MAIN MENUBAR -->
 
-        <stack flex="0" id="volume">
-                <image left="98" top="26" src="images/bottom-volume-slider.png" id="knob"/>
-        </stack>
+        <!-- WINDOW TITLE -->
+        <titlebar flex="1" container="1">
+            <caption flex="1" label="&main.title;"/>
+        </titlebar>
+        <!-- / WINDOW TITLE -->
 
-  <resizer dir="bottomright" id="resizer-bottom-right" oncommand="return doResize(event);"/>
-        <spacer flex="0" width="20" id="bottom-right-blank" collapsed="true" />
-</hbox>
+        <!-- WINDOW BUTTONS -->
+        <hbox flex="0" width="55" height="24" align="center">
+            <image id="titlebar-buttons-minimize" class="titlebar-button" onclick="minimize();" />
+            <image id="titlebar-buttons-maximize" class="titlebar-button" onclick="maximizeOrRestore();" />
+            <image id="titlebar-buttons-close" class="titlebar-button" onclick="onClose();" />
+        </hbox>
+        <!-- / WINDOW BUTTONS -->
 
-<!-- this gets filled in with the tray icon context menu -->
-  <popupset id="mainPopupSet">
-    <popup id="traypopup"/>
-  </popupset>       
+    </hbox>
+    <!-- / TITLEBAR -->
 
-<command id="showsearchmenu" oncommand="jsbridge.showSearchMenu();" />
+    <!-- CONTENT AREA -->
+    <hbox flex="1">
 
-<command id="Open" oncommand="openFile();" />
-<command id="CheckVersion" oncommand="pybridge.checkForUpdates();" />
-<command id="RemoveVideos" oncommand="pybridge.removeCurrentItems();" />
-<command id="SaveVideo" oncommand="jsbridge.saveVideo();" />
-<command id="CopyVideoURL" oncommand="pybridge.copyCurrentItemURL();" />
+        <resizer id="resizer-left" dir="left" class="side-resizer" oncommand="return doResize(event);" />
 
-<command id="Quit" oncommand="handleExit();" />
+        <!-- LEFT PANEL -->
+        <vbox id="leftPane" width="228" minwidth="50" maxwidth="400">
+            
+            <!-- CHANNEL BAR -->
+            <browser id="channelsDisplay" src="" type="content"
+                     flex="1"
+                     ondraggesture="return onDragGesture(event, 'channelsDisplay');"
+                     ondragover="return onDragOver(event, 'channelsDisplay');"
+                     ondragexit="return onDragExit(event, 'channelsDisplay');"
+                     ondragdrop="return onDragDrop(event, 'channelsDisplay');"
+            />
+            <!-- / CHANNEL BAR -->
 
-<command id="RestoreWindow" oncommand="minimizeOrRestore();" />
+            <!-- CHROME SEARCH -->
+            <hbox flex="1" height="64" id="chrome-search" class="bottom" align="center">
+                <hbox flex="1" container="1" height="64" minheight="64" id="bottom-left">
+                    <hbox flex="1" maxheight="29" id="bottom-left-search" >
+                        <textbox type="autocomplete" flex="1" id="search-textbox" onfocus="onSearchBoxFocus();" onblur="onSearchBoxBlur();" onkeydown="onSearchKeyDown(event);">
+                            <stack popup="searchMenu">
+                                <hbox>
+                                    <image id="search-icon" />
+                                    <popupset>
+                                        <popup onpopupshowing="jsbridge.fillSearchMenu();"
+                                               position="before_start"
+                                               id="searchMenu">
+                                        </popup>
+                                    </popupset>
+                                    <image class="searchbar-dropmarker-image" />
+                                </hbox>
+                            </stack>
+                        </textbox>
+                    </hbox>
+                </hbox>
+            </hbox>
+            <!-- CHROME SEARCH -->
+            
+        </vbox>
+        <!-- LEFT PANEL -->
 
-<command id="Cut" oncommand="clipboardCut();" />
-<command id="Copy" oncommand="clipboardCopy();" />
-<command id="Paste" oncommand="clipboardPaste();" />
-<command id="SelectAll" oncommand="pybridge.selectAllItems();" />
+        <!-- DIVIDER -->
+        <splitter id="mainSplitter" collapse="before" maxwidth="1" />
+        <!-- / DIVIDER -->
 
-<command id="NewChannel" oncommand="pybridge.addChannel();" />
-<command id="NewSearchChannel" oncommand="pybridge.createNewSearchChannel();" />
-<command id="NewChannelFolder" oncommand="pybridge.createNewChannelFolder();" />
-<command id="NewGuide" oncommand="pybridge.createNewChannelGuide();" />
-<command id="NewDownload" oncommand="pybridge.createNewDownload();" />
-<command id="RenameChannel" oncommand="pybridge.renameCurrentChannel();" />
-<command id="RemoveChannels" oncommand="pybridge.removeCurrentChannel();" />
-<command id="UpdateChannels" oncommand="pybridge.updateCurrentChannel();" />
-<command id="ImportChannels" oncommand="pybridge.importChannels();" />
-<command id="ExportChannels" oncommand="pybridge.exportChannels();" />
-<command id="UpdateAllChannels" oncommand="pybridge.updateChannels();" />
-<command id="CopyChannelURL" oncommand="pybridge.copyChannelLink();" />
-<command id="MailChannel" oncommand="pybridge.recommendCurrentChannel();" />
+        <!-- RIGHT PANEL -->
+        <vbox flex="1">
 
-<command id="NewPlaylist" oncommand="pybridge.createNewPlaylist();" />
-<command id="NewPlaylistFolder" oncommand="pybridge.createNewPlaylistFolder();" />
-<command id="RenamePlaylist" oncommand="pybridge.renameCurrentPlaylist();" />
-<command id="RemovePlaylist" oncommand="pybridge.removeCurrentPlaylist();" />
+            <!-- VIDEO DISPLAY -->
+            <vbox id="video-box" flex="1" collapsed="true">
+                <browser flex="1" id="mainDisplayVideo" 
+                         ondblclick="onFullscreenActivate();"
+                         src="chrome://dtv/content/video-display-vlc.html" 
+                         type="content" 
+                />
+                <browser id="videoInfoDisplay" src="" type="content" height="40px"/>
+            </vbox>
+            <!-- VIDEO DISPLAY -->
 
-<command id="PlayPauseVideo" oncommand="pybridge.playPause();" />
-<command id="StopVideo" oncommand="pybridge.stop();" />
-<command id="NextVideo" oncommand="pybridge.skip(1);" />
-<command id="PreviousVideo" oncommand="pybridge.skipPrevious();" />
-<command id="FastForward" oncommand="pybridge.fastForward();" />
-<command id="Rewind" oncommand="pybridge.rewind();" />
-<command id="Fullscreen" oncommand="onFullscreenActivate();" />
+            <!-- MAIN DISPLAY -->
+            <browser id="mainDisplay" src="" type="content" flex="1"
+                     ondraggesture="return onDragGesture(event, 'mainDisplay');"
+                     ondragover="return onDragOver(event, 'mainDisplay');"
+                     ondragexit="return onDragExit(event, 'mainDisplay');"
+                     ondragdrop="return onDragDrop(event, 'mainDisplay');" 
+            />
+            <!-- MAIN DISPLAY -->
+            
+            <!-- PLAYBACK CONTROLS -->
+            <hbox flex="0" height="64" minheight="65" id="playback-controls" class="bottom" align="center">
+                <image id="bottom-left-image" src="images/bottom-left-bg.png" />
+                <spacer flex="0" width="20" id="bottom-left-blank" />
 
-<command id="About" oncommand="window.openDialog('chrome://dtv/content/about.xul','aboutdialog','chrome,dependent,centerscreen');" />
-<command id="Donate" oncommand="pybridge.openDonatePage();" />
-<command id="Translate" oncommand="pybridge.openTranslatePage();" />
-<command id="Planet" oncommand="pybridge.openPlanetPage();" />
-<command id="Help" oncommand="pybridge.showHelp();" />
-<command id="ReportBug" oncommand="pybridge.reportBug();" />
+                <hbox flex="0" id="bottom-buttons" width="185" align="center">
+                    <image id="bottom-buttons-previous" class="bottom-buttons-previous-inactive" />
+                    <image id="bottom-buttons-stop" class="bottom-buttons-stop-inactive" />
+                    <image id="bottom-buttons-play" class="bottom-buttons-play-inactive" />
+                    <image id="bottom-buttons-fullscreen" class="bottom-buttons-fullscreen-inactive" />
+                    <image id="bottom-buttons-next" class="bottom-buttons-next-inactive" />
+                </hbox>
 
-<command id="PlayUnwatched" oncommand="pybridge.playUnwatched();" />
-<command id="PauseDownloads" oncommand="pybridge.pauseDownloads();" />
-<command id="ResumeDownloads" oncommand="pybridge.resumeDownloads();" />
+                <spacer flex="0" width="40" />
 
-<command id="EditPreferences" oncommand="showOptionsDialog();" />
-<command id="RemoveCurrentSelection" oncommand="pybridge.removeCurrentSelection();" />
+                <hbox id="bottom-progress" class="bottom-progress-inactive" flex="1">
+                    <label id="progress-text"> </label>
+                    <stack flex="1">
+                        <box id="progress-center"/>
+                        <hbox id="progress-track">
+                            <box id="progress-track-left" />
+                            <box id="progress-track-center" flex="1" />
+                            <box id="progress-track-right" />
+                        </hbox>
+                        <hbox id="progress-track-current">
+                            <box id="progress-track-current-left" />
+                            <box id="progress-track-current-center" />
+                            <box id="progress-track-current-right" />
+                        </hbox>
+                        <image id="progress-slider" />
+                    </stack>
+                    <label id="duration-text"> </label>
+                </hbox>
+
+                <spacer flex="0" width="40" />
+
+                <stack flex="0" id="volume">
+                    <image left="98" top="25" src="images/bottom-volume-slider.png" id="knob"/>
+                </stack>
+
+                <resizer dir="bottomright" id="resizer-bottom-right" oncommand="return doResize(event);"/>
+                <spacer flex="0" width="20" id="bottom-right-blank" collapsed="true" />
+            </hbox>
+            <!-- PLAYBACK CONTROLS -->
+
+        </vbox>
+        <!-- RIGHT PANEL -->
+        
+        <resizer id="resizer-right" dir="right" class="side-resizer" oncommand="return doResize(event);" />
+
+    </hbox>
+    <!-- / CONTENT AREA -->
+
+    <!-- this gets filled in with the tray icon context menu -->
+    <popupset id="mainPopupSet">
+        <popup id="traypopup"/>
+    </popupset>       
+
+    <command id="showsearchmenu" oncommand="jsbridge.showSearchMenu();" />
+
+    <command id="Open" oncommand="openFile();" />
+    <command id="CheckVersion" oncommand="pybridge.checkForUpdates();" />
+    <command id="RemoveVideos" oncommand="pybridge.removeCurrentItems();" />
+    <command id="SaveVideo" oncommand="jsbridge.saveVideo();" />
+    <command id="CopyVideoURL" oncommand="pybridge.copyCurrentItemURL();" />
+    
+    <command id="Quit" oncommand="handleExit();" />
+    
+    <command id="RestoreWindow" oncommand="minimizeOrRestore();" />
+    
+    <command id="Cut" oncommand="clipboardCut();" />
+    <command id="Copy" oncommand="clipboardCopy();" />
+    <command id="Paste" oncommand="clipboardPaste();" />
+    <command id="SelectAll" oncommand="pybridge.selectAllItems();" />
+    
+    <command id="NewChannel" oncommand="pybridge.addChannel();" />
+    <command id="NewSearchChannel" oncommand="pybridge.createNewSearchChannel();" />
+    <command id="NewChannelFolder" oncommand="pybridge.createNewChannelFolder();" />
+    <command id="NewGuide" oncommand="pybridge.createNewChannelGuide();" />
+    <command id="NewDownload" oncommand="pybridge.createNewDownload();" />
+    <command id="RenameChannel" oncommand="pybridge.renameCurrentChannel();" />
+    <command id="RemoveChannels" oncommand="pybridge.removeCurrentChannel();" />
+    <command id="UpdateChannels" oncommand="pybridge.updateCurrentChannel();" />
+    <command id="ImportChannels" oncommand="pybridge.importChannels();" />
+    <command id="ExportChannels" oncommand="pybridge.exportChannels();" />
+    <command id="UpdateAllChannels" oncommand="pybridge.updateChannels();" />
+    <command id="CopyChannelURL" oncommand="pybridge.copyChannelLink();" />
+    <command id="MailChannel" oncommand="pybridge.recommendCurrentChannel();" />
+    
+    <command id="NewPlaylist" oncommand="pybridge.createNewPlaylist();" />
+    <command id="NewPlaylistFolder" oncommand="pybridge.createNewPlaylistFolder();" />
+    <command id="RenamePlaylist" oncommand="pybridge.renameCurrentPlaylist();" />
+    <command id="RemovePlaylist" oncommand="pybridge.removeCurrentPlaylist();" />
+    
+    <command id="PlayPauseVideo" oncommand="pybridge.playPause();" />
+    <command id="StopVideo" oncommand="pybridge.stop();" />
+    <command id="NextVideo" oncommand="pybridge.skip(1);" />
+    <command id="PreviousVideo" oncommand="pybridge.skipPrevious();" />
+    <command id="FastForward" oncommand="pybridge.fastForward();" />
+    <command id="Rewind" oncommand="pybridge.rewind();" />
+    <command id="Fullscreen" oncommand="onFullscreenActivate();" />
+    
+    <command id="About" oncommand="window.openDialog('chrome://dtv/content/about.xul','aboutdialog','chrome,dependent,centerscreen');" />
+    <command id="Donate" oncommand="pybridge.openDonatePage();" />
+    <command id="Translate" oncommand="pybridge.openTranslatePage();" />
+    <command id="Planet" oncommand="pybridge.openPlanetPage();" />
+    <command id="Help" oncommand="pybridge.showHelp();" />
+    <command id="ReportBug" oncommand="pybridge.reportBug();" />
+    
+    <command id="PlayUnwatched" oncommand="pybridge.playUnwatched();" />
+    <command id="PauseDownloads" oncommand="pybridge.pauseDownloads();" />
+    <command id="ResumeDownloads" oncommand="pybridge.resumeDownloads();" />
+    
+    <command id="EditPreferences" oncommand="showOptionsDialog();" />
+    <command id="RemoveCurrentSelection" oncommand="pybridge.removeCurrentSelection();" />
 
 </window>

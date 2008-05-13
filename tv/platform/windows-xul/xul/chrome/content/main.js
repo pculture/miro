@@ -61,7 +61,7 @@ function isDecendentOf(element, id) {
  Volume Knob 
  *****************************************************************************/
 
-var VOLUME_SLIDER_LEFT = 25;
+var VOLUME_SLIDER_LEFT = 22;
 var VOLUME_SLIDER_RIGHT = 98;
 var VOLUME_SLIDER_WIDTH = VOLUME_SLIDER_RIGHT - VOLUME_SLIDER_LEFT;
 var VOLUME_KNOB_OFFSET = 6;
@@ -116,46 +116,30 @@ function volumeKnobUp(event) {
 /*****************************************************************************
  Video Progress Slider
  *****************************************************************************/
-
-var PROGRESS_SLIDER_LEFT = 61;
-var PROGRESS_SLIDER_RIGHT = 204;
-var PROGRESS_SLIDER_WIDTH = PROGRESS_SLIDER_RIGHT - PROGRESS_SLIDER_LEFT;
-var PROGRESS_KNOB_OFFSET = 2;
-
+/*
+var PROGRESS_KNOB_OFFSET = 3;
 
 function translateToProgressX(event) 
 {
   var bottomProgress = document.getElementById("bottom-progress");
-  var x = event.screenX - bottomProgress.boxObject.screenX;
-  x = x - PROGRESS_KNOB_OFFSET;
-  return Math.max(PROGRESS_SLIDER_LEFT, Math.min(PROGRESS_SLIDER_RIGHT, x));
+  var x = event.screenX - bottomProgress.boxObject.screenX + PROGRESS_SLIDER_LEFT - PROGRESS_KNOB_OFFSET;
+  var right = bottomProgress.boxObject.width - 60;
+  return Math.max(PROGRESS_SLIDER_LEFT, Math.min(right, x));
 }
-
+*/
 var videoWasPlaying = false;
 
 function videoProgressDown(event) {
   var slider = document.getElementById("progress-slider");
   slider.beingDragged = true;
-  slider.left = translateToProgressX(event);
   videoWasPlaying = vlcrenderer.isPlayingJSONLY();
   if(videoWasPlaying) vlcrenderer.pauseForDrag();
-}
-
-function doSeek() {
-  var slider = document.getElementById("progress-slider");
-  var x = slider.left;
-  var fractionDone = (x - PROGRESS_SLIDER_LEFT) / PROGRESS_SLIDER_WIDTH;
-  var totalTime = vlcrenderer.getDurationJSONLY();
-  var seekTime = totalTime * fractionDone;
-  vlcrenderer.setCurrentTime(seekTime/1000);
-  if(videoWasPlaying) vlcrenderer.play();
-  slider.beingDragged = false;
+  videoProgressMove(event);
 }
 
 function videoProgressOut(event) {
   var slider = document.getElementById("progress-slider");
-  if(!isDecendentOf(event.relatedTarget, "bottom-progress") &&
-                  slider.beingDragged) { 
+  if(!isDecendentOf(event.relatedTarget, "bottom-progress") && slider.beingDragged) { 
     doSeek();
   }
 }
@@ -163,9 +147,13 @@ function videoProgressOut(event) {
 function videoProgressMove(event) {
   var slider = document.getElementById("progress-slider");
   if (slider.beingDragged) {
-    var x = translateToProgressX(event);
-    slider.left = x;
-    var fractionDone = (x - PROGRESS_SLIDER_LEFT) / PROGRESS_SLIDER_WIDTH;
+    var bottomProgress = document.getElementById("progress-center");
+    var x = event.screenX - bottomProgress.boxObject.screenX;
+    var width = bottomProgress.boxObject.width - slider.boxObject.width;
+    slider.left = Math.max(0, Math.min(x, width));
+    var track = document.getElementById("progress-track-current-center");
+    track.width = slider.left;
+    var fractionDone = x / width;
     var totalTime = vlcrenderer.getDurationJSONLY();
     var seekTime = Math.round(totalTime * fractionDone);
     jsbridge.setSliderText(seekTime);
@@ -177,6 +165,19 @@ function videoProgressUp(event) {
   if (slider.beingDragged) {
     doSeek();
   }
+}
+
+function doSeek() {
+  var slider = document.getElementById("progress-slider");
+  var x = slider.left;
+  var bottomProgress = document.getElementById("progress-center");
+  var width = bottomProgress.boxObject.width;
+  var fractionDone = x / width;
+  var totalTime = vlcrenderer.getDurationJSONLY();
+  var seekTime = totalTime * fractionDone;
+  vlcrenderer.setCurrentTime(seekTime/1000);
+  if(videoWasPlaying) vlcrenderer.play();
+  slider.beingDragged = false;
 }
 
 /*****************************************************************************
@@ -306,9 +307,14 @@ function jsdump(str) {
 }
 
 function maximizeOrRestore() {
+  var maximizeButton = document.getElementById("titlebar-buttons-maximize");
+  var maximizeButtonClass = maximizeButton.className;
+
   if (window.windowState == window.STATE_MAXIMIZED) { 
+      maximizeButton.className = maximizeButtonClass.replace(/restore/, "");
       window.restore(); 
   } else { 
+      maximizeButton.className = maximizeButtonClass + " restore";
       window.maximize(); 
   } 
 }

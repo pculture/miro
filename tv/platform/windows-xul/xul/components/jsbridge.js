@@ -167,8 +167,7 @@ LoadFinishedListener.prototype =
       pybridge.pageLoadFinished(this.area, aRequest.name);
     }
   },
-  onProgressChange : function(aWebProgress, aRequest, aCurSelfProgress,
-aMaxSelfProgress, aCurTotalProgress, aMaxTotalProgress) { },
+  onProgressChange : function(aWebProgress, aRequest, aCurSelfProgress,aMaxSelfProgress, aCurTotalProgress, aMaxTotalProgress) { },
   onLocationChange : function(aWebProgress, aRequest, aLocation) { },
   onStatusChange : function(aWebProgress, aRequest, aStatus, aMessage) { },
   onSecurityChange : function(aWebProgress, aRequest, aState) { }
@@ -364,8 +363,10 @@ jsBridge.prototype = {
             "dialog", "chrome,dependent,centerscreen,modal,resizable", params);
   },
 
-  setCollapsed: function(id, value) {
+  setCollapsed: function(id, collapsed) {
     var elt = this.document.getElementById(id);
+    var value = "false";
+    if (collapsed) value = "true";
     elt.setAttribute("collapsed", value);
   },
 
@@ -376,25 +377,31 @@ jsBridge.prototype = {
   },
 
   showVideoDisplay: function() {
-    this.setCollapsed("video-box", "false");
-    this.setCollapsed("mainDisplay", "true");
+    this.setCollapsed("video-box", false);
+    this.setCollapsed("leftPane", true);
+    this.setCollapsed("mainSplitter", true);
+    this.setCollapsed("mainDisplay", true);
     this.setActive("bottom-buttons-previous", true);
     this.setActive("bottom-buttons-stop", true);
     this.setActive("bottom-buttons-play", true);
     this.setActive("bottom-buttons-fullscreen", true);
     this.setActive("bottom-buttons-next", true);
-    this.setActive("progress-slider", true);
+    this.setActive("bottom-progress", true);
   },
 
   hideVideoDisplay: function() {
-    this.setCollapsed("video-box", "true");
-    this.setCollapsed("mainDisplay", "false");
+    this.setCollapsed("video-box", true);
+    this.setCollapsed("leftPane", false);
+    this.setCollapsed("mainSplitter", false);
+    this.setCollapsed("mainDisplay", false);
     this.setActive("bottom-buttons-previous", false);
     this.setActive("bottom-buttons-stop", false);
     this.setActive("bottom-buttons-play", false);
     this.setActive("bottom-buttons-fullscreen", false);
     this.setActive("bottom-buttons-next", false);
-    this.setActive("progress-slider", false);
+    this.setActive("bottom-progress", false);
+    this.setSliderText(null);
+    this.setDuration(null);
   },
 
   setExternalVideoDisplay: function() {
@@ -402,16 +409,14 @@ jsBridge.prototype = {
   },
 
   positionVolumeSlider: function(volume) {
-    var left = 25;
+    var left = 22;
     var right= 98;
     var position = left + (right-left) * volume;
     position = Math.min(right, Math.max(left, position));
     this.document.getElementById("knob").left = position;
   },
 
-  hideForFullscreen: Array('channelsDisplay', 'mainSplitter',
-        'resizer-left', 'bottom-left', 'resizer-bottom-right','titlebar'),
-  showForFullscreen: Array('bottom-left-blank', 'bottom-right-blank'),
+  hideForFullscreen: Array('resizer-left', 'resizer-bottom-right', 'resizer-right', 'titlebar'),
 
   toggleFullscreen: function() {
     if(this.window.fullScreen) this.leaveFullscreen();
@@ -422,14 +427,8 @@ jsBridge.prototype = {
     if(this.window.fullScreen) return;
     this.window.fullScreen = true;
     for(var i = 0; i < this.hideForFullscreen.length; i++) {
-          var elt = this.document.getElementById(this.hideForFullscreen[i]);
-          elt.collapsed = true;
+        this.setCollapsed(this.hideForFullscreen[i], true);
     }
-    for(var i = 0; i < this.showForFullscreen.length; i++) {
-          var elt = this.document.getElementById(this.showForFullscreen[i]);
-          elt.collapsed = false;
-    }
-
 
     var self = this;
     this.mousedown = false;
@@ -452,9 +451,9 @@ jsBridge.prototype = {
   },
 
   leaveTotallyFullscreen: function() {
-      var pybridge = getPyBridge();
-    this.document.getElementById('bottom').collapsed = false;
-    this.document.getElementById('videoInfoDisplay').collapsed = false;
+    var pybridge = getPyBridge();
+    this.setCollapsed('playback-controls', false);
+    this.setCollapsed('videoInfoDisplay', false);
     this.hideVideoControlsTimer.cancel();
     pybridge.showCursor(true);
   },
@@ -465,8 +464,6 @@ jsBridge.prototype = {
   },
 
   startHideVideoControlsTimer: function() {
-    var bottom = this.document.getElementById('bottom')
-    var videoInfoDisplay = this.document.getElementById('videoInfoDisplay')
     var self = this;
     // If we don't have this second callback, we ALWAYs immediately
     // get a mouse move event in Vista and go out of "totally
@@ -477,7 +474,8 @@ jsBridge.prototype = {
     var callback = {notify: function() {
         var pybridge = getPyBridge();
         self.justResized = true;
-        videoInfoDisplay.collapsed = bottom.collapsed = true;
+        self.setCollapsed('videoInfoDisplay', true);
+        self.setCollapsed('playback-controls', true);
         pybridge.showCursor(false);
         self.hideVideoControlsTimer.initWithCallback(callback2, 100,
                           Components.interfaces.nsITimer.TYPE_ONE_SHOT);
@@ -492,12 +490,7 @@ jsBridge.prototype = {
     if(!this.window.fullScreen) return;
     this.window.fullScreen = false;
     for(var i = 0; i < this.hideForFullscreen.length; i++) {
-          var elt = this.document.getElementById(this.hideForFullscreen[i]);
-          elt.collapsed = false;
-    }
-    for(var i = 0; i < this.showForFullscreen.length; i++) {
-          var elt = this.document.getElementById(this.showForFullscreen[i]);
-          elt.collapsed = true;
+        this.setCollapsed(this.hideForFullscreen[i], false);
     }
     this.leaveTotallyFullscreen();
     this.document.removeEventListener('mousemove', this.mousemoveListener, true);
@@ -619,20 +612,25 @@ jsBridge.prototype = {
 
   setSliderText: function(elapsed) {
     var sliderText = this.document.getElementById("progress-text");
-    sliderText.childNodes[0].nodeValue = formatTime(elapsed);
+    if (elapsed !== null) sliderText.childNodes[0].nodeValue = formatTime(elapsed);
+    else                  sliderText.childNodes[0].nodeValue = " ";
   },
 
   setDuration: function(duration) {
     var sliderText = this.document.getElementById("duration-text");
-    sliderText.childNodes[0].nodeValue = formatTime(duration);
+    if (duration !== null) sliderText.childNodes[0].nodeValue = formatTime(duration);
+    else                   sliderText.childNodes[0].nodeValue = " ";
   },
 
   moveSlider: function(fractionDone) {
-    var left = 61;
-    var right = 204;
-    var newSliderPos = Math.floor(left + fractionDone*(right-left));
+    var width = this.document.getElementById("bottom-progress").boxObject.width;
+    var newSliderPos = Math.floor(fractionDone*width);
+
     var progressSlider = this.document.getElementById("progress-slider");
     progressSlider.left = newSliderPos;
+
+    var track = this.document.getElementById("progress-track-current-center");
+    track.width = newSliderPos;
   },
 
   setSearchEngineInfo: function(names, titles) {

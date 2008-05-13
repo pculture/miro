@@ -1,4 +1,4 @@
-
+ftitle
 wnindow, hbox, vbox, menu, menubar, menuitem, menupopup {	
 	font: normal 11px "Tahoma", "Trebuchet MS", Arial;
 }
@@ -12,7 +12,11 @@ description[disabled] {
 
 #titlebar {
 	background: url(images/titlebar-bg.png) repeat-x 0px 0px;
-	border: 0px;
+	border-bottom: 1px solid #404040;
+/*	
+    -moz-border-radius-topleft: 8px;
+    -moz-border-radius-topright: 8px;
+*/
 }
 
 #titlebar-menu {
@@ -21,12 +25,14 @@ description[disabled] {
 
 .titlebar menu {
 	-moz-appearance: none; 
-	color: #FFFFFF;
+	color: #111;
+	margin: 2px;
 }
 
 .titlebar menu:hover {
 	-moz-appearance: none;
-	background: #000000;
+	background: -moz-menuhover;
+	color: #FFF;
 }
 
 .titlebar-toplevel {
@@ -39,46 +45,52 @@ description[disabled] {
 	border: 0;
 }
 
+.titlebar menuitem {
+    height: 18px;
+}
+
 .titlebar menuitem, .titlebar menu menu {
 	-moz-appearance: none;
-	color: #CCCCCC;
+	color: #111;
 }
 
 .titlebar menuitem:hover, .titlebar menu menu:hover {
 	-moz-appearance: none;
-	color: #FFFFFF;
-	background-color: #444444;
+	color: #FFF;
+	background-color: -moz-menuhover;
 }
 
 .titlebar menu menuitem[disabled] {
-	color: #AAA;
+	color: #999;
 	background-color: inherit;
 }
 
 .titlebar menupopup {
 	-moz-appearance: none;
-	-moz-border-top-colors: #777777 #555555;
-	-moz-border-right-colors: #777777 #555555;
-	-moz-border-bottom-colors: #000000 #222222;
-	-moz-border-left-colors: #000000 #222222;
-	background-color: #333333;
-	color: #CCCCCC;
+	padding-top: 2px;
+	padding-bottom: 6px;
+	border: 1px solid #949494;
+	background-color: #CCC;
+	color: #111;
 }
 
 .titlebar menuseparator {
 	-moz-appearance: none;
-	-moz-border-top-colors: #555555;
-	-moz-border-bottom-colors: #333333;
+	border: 0px;
+    border-top: 1px solid #666;
+	margin-top: 8px;
+	margin-left: 6px;
+	margin-right: 6px;
 }
 
 .titlebar caption {
 	background: none;
 	font: bold 12px "Tahoma", "Trebuchet MS", Arial;
-	color: #FFFFFF;
+	color: #111;
 	text-align: center;
 	padding-top: 6px;
 }
-
+/*
 #titlebar-buttons {
 	margin: 4px 2px 0px 0px;
 	padding: 0px;
@@ -101,36 +113,43 @@ description[disabled] {
 	overflow: hidden;
 	cursor: default;
 }
-
+*/
 .titlebar-button {
-        width: 16px;
-        height: 16px;
-        margin-right: 2px;
-        list-style-image: url("images/titlebar-buttons.png");
+    width: 14px;
+    height: 15px;
+    margin-right: 4px;
 }
 
-#titlebar-buttons-minimize {	
-        -moz-image-region: rect(0px 16px 16px 0px);
+#titlebar-buttons-minimize {
+    background-image: url(images/win-minimize.png);
 }
 
 #titlebar-buttons-minimize:hover {	
-        -moz-image-region: rect(16px 16px 32px 0px);
+    background-image: url(images/win-minimize-over.png);
 }
 
 #titlebar-buttons-maximize {	
-        -moz-image-region: rect(0px 32px 16px 16px);
+    background-image: url(images/win-maximize.png);
 }
 
 #titlebar-buttons-maximize:hover {	
-        -moz-image-region: rect(16px 32px 32px 16px);
+    background-image: url(images/win-maximize-over.png);
+}
+
+#titlebar-buttons-maximize.restore {	
+    background-image: url(images/win-restore.png);
+}
+
+#titlebar-buttons-maximize.restore:hover {	
+    background-image: url(images/win-restore-over.png);
 }
 
 #titlebar-buttons-close {	
-        -moz-image-region: rect(0px 48px 16px 32px);
+    background-image: url(images/win-close.png);
 }
 
 #titlebar-buttons-close:hover {	
-        -moz-image-region: rect(16px 48px 32px 32px);
+    background-image: url(images/win-close-over.png);
 }
 
 
@@ -140,27 +159,27 @@ description[disabled] {
 
 splitter {
 	-moz-appearance: none;
-	-moz-border-right-colors: #666666 #444444;
-	-moz-border-left-colors: #666666 #444444;
-	background: #333333;
+    border: 0px;
+    background: #949494 !important; 
+    min-width: 1px !important;
+    width: 1px !important;
 }	
 
 resizer {
-        background: black;
+    background: #949494;
 }
-
 
 resizer:hover {
 	cursor: e-resize;	
 }	
 
 resizer.side-resizer {
-        min-width: 5px;
-        max-width: 5px;
+    min-width: 2px;
+    max-width: 2px;
 }
 
 #bottom-right {
-        width: 20px;
+    width: 20px;
 }
 
 #resizer-bottom-right {
@@ -175,40 +194,32 @@ resizer.side-resizer {
 	cursor: se-resize;
 }
 
-
-
 /* BOTTOM 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#bottom {	
+.bottom {	
+    border-top: 1px solid #AAA;
 	background: url(images/bottom-bg.png) repeat-x 0px 0px;
 }
 
-.bottom button {	
-	-moz-appearance: none;
-	-moz-border-top-colors: #333333 #222222 #111111;
-	-moz-border-left-colors: #333333 #222222 #111111;
-	-moz-border-bottom-colors: #333333 #222222 #111111;
-	-moz-border-right-colors: #333333 #222222 #111111;
-	background: url(images/titlebar-bg.png) repeat-x 0px 50%;
-	color: #CCCCCC;
-	padding: 2px 5px;
+.bottom textbox {
+    border: none;
 }
 
-.bottom button:hover {	
-	-moz-appearance: none;
-	-moz-border-top-colors: #444444 #222222 #111111;
-	-moz-border-left-colors: #444444 #222222 #111111;
-	-moz-border-bottom-colors: #444444 #222222 #111111;
-	-moz-border-right-colors: #444444 #222222 #111111;
-	background: url(images/titlebar-bg.png) repeat-x 0px 50%;
-	color: #FFFFFF;
+#search-icon {
+    padding-left: 6px;
 }
 
 #bottom-left-search {
 	margin: 17px 20px 0px 15px;
 }
 
+.searchbar-dropmarker-image {
+    width: 11px;
+    height: 9px;
+    margin-top: 2px;
+    background: url(images/search-arrow.gif) no-repeat;
+}
 
 #bottom-center {
 
@@ -223,121 +234,199 @@ resizer.side-resizer {
 
 #bottom-buttons image {
 	margin: 0px 2px 0px 0px;
-	list-style-image:  url(images/bottom-controls.png);
 }
 
-.bottom-buttons-previous {	
-        -moz-image-region: rect(0px 31px 39px 0px);
+.bottom-buttons-previous, .bottom-buttons-previous:hover,.bottom-buttons-previous-inactive,
+.bottom-buttons-fullscreen, .bottom-buttons-fullscreen:hover, .bottom-buttons-fullscreen-inactive,
+.bottom-buttons-next, .bottom-buttons-next:hover, .bottom-buttons-next-inactive {
+    width: 32px;
+    height: 31px;
+}
+
+.bottom-buttons-stop, .bottom-buttons-stop:hover, .bottom-buttons-stop-inactive,
+.bottom-buttons-play, .bottom-buttons-play:hover, .bottom-buttons-play-inactive,
+.bottom-buttons-pause, .bottom-buttons-pause:hover, .bottom-buttons-pause-inactive {
+    width: 39px;
+    height: 39px;
+}
+
+.bottom-buttons-previous {
+    background: url(images/pb-skip-previous.png) no-repeat;
 }
 
 .bottom-buttons-previous:hover {	
-        -moz-image-region: rect(39px 31px 78px 0px);
+    background: url(images/pb-skip-previous-active.png) no-repeat;
 }
 
-.bottom-buttons-previous-inactive {	
-        -moz-image-region: rect(78px 31px 117px 0px);
+.bottom-buttons-previous-inactive {
+    background: url(images/pb-skip-previous.png) no-repeat;
+    -moz-opacity: 0.5;
 }
 
 .bottom-buttons-stop {
-        -moz-image-region: rect(0px 70px 39px 31px);
+    background: url(images/pb-stop.png) no-repeat;
 }
 
 .bottom-buttons-stop:hover {	
-        -moz-image-region: rect(39px 70px 78px 31px);
+    background: url(images/pb-stop-active.png) no-repeat;
 }
 
 .bottom-buttons-stop-inactive {	
-        -moz-image-region: rect(78px 70px 117px 31px);
+    background: url(images/pb-stop.png) no-repeat;
+    -moz-opacity: 0.5;
 }
 
 .bottom-buttons-play {	
-        -moz-image-region: rect(0px 109px 39px 70px);
+    background: url(images/pb-play.png) no-repeat;
 }
 
 .bottom-buttons-play:hover {	
-        -moz-image-region: rect(39px 109px 78px 70px);
+    background: url(images/pb-play-active.png) no-repeat;
 }
 
 .bottom-buttons-play-inactive {	
-        -moz-image-region: rect(78px 109px 117px 70px);
+    background: url(images/pb-play.png) no-repeat;
+    -moz-opacity: 0.5;
 }
 
 .bottom-buttons-pause {	
-        -moz-image-region: rect(117px 109px 156px 70px);
+    background: url(images/pb-pause.png) no-repeat;
 }
 
 .bottom-buttons-pause:hover {	
-        -moz-image-region: rect(156px 109px 195px 70px);
+    background: url(images/pb-pause-active.png) no-repeat;
 }
 
 .bottom-buttons-fullscreen {	
-        -moz-image-region: rect(0px 140px 39px 109px);
+    background: url(images/pb-play-fullscreen.png) no-repeat;
 }
 
 .bottom-buttons-fullscreen:hover {	
-        -moz-image-region: rect(39px 140px 78px 109px);
+    background: url(images/pb-play-fullscreen-active.png) no-repeat;
 }
 
 .bottom-buttons-fullscreen-inactive {	
-        -moz-image-region: rect(78px 140px 117px 109px);
+    background: url(images/pb-play-fullscreen.png) no-repeat;
+    -moz-opacity: 0.5;
 }
 
 .bottom-buttons-next {	
-        -moz-image-region: rect(0px 171px 39px 140px);
+    background: url(images/pb-skip-forward.png) no-repeat;
 }
 
 .bottom-buttons-next:hover {	
-        -moz-image-region: rect(39px 171px 78px 140px);
+    background: url(images/pb-skip-forward-active.png) no-repeat;
 }
 
 .bottom-buttons-next-inactive {	
-        -moz-image-region: rect(78px 171px 117px 140px);
+    background: url(images/pb-skip-forward.png) no-repeat;
+    -moz-opacity: 0.5;
 }
 
 #volume {
-  width: 110px;
-  height: 100px;
-  background: url(images/bottom-volume.png) no-repeat 0px 26px;
+  width: 120px;
+  height: 64px;
+  background: url(images/bottom-volume.png) no-repeat 0px 24px;
 }
 
 #knob {
-  width: 12px;
-  height: 12px;
-}
-
-#bottom-progress hbox {
-  padding: 2px 5px 0px 5px;
-}
-
-#bottom-progress label {
-  font: 10px "Courier New" Courier;
-  color: black;
-  margin: 0px;
-}
-
-#duration-text {
-  text-align: right;
-}
-
-#progress-slider {
-  position: absolute;
-  padding: 0px;
-  width: 5px;
-  height: 7px;
-}
-
-.progress-slider {
-  list-style-image: url("images/progress-slider.png");
-}
-
-.progress-slider-inactive {
+  width: 16px;
+  height: 16px;
 }
 
 #bottom-progress {
-  margin: 0px 10px 0px 0px;
-  width: 270px;
-  height: 26px;
-  background: url(images/progress.png) no-repeat;
+    -moz-opacity: 1.0;
+}
+
+#bottom-progress.bottom-progress-inactive {
+    -moz-opacity: 0.5;
+}
+
+#bottom-progress label {
+  font-size: 10px;
+  color: #EEE;
+  margin: 0px;
+}
+
+#bottom-progress #progress-text {
+    width: 48px;
+    height: 29px;
+    padding-right:4px;
+    padding-top: 8px;
+    background: url(images/progress-left.png) no-repeat;
+    text-align: right;
+}
+
+#bottom-progress #duration-text {
+    width: 57px;
+    height: 29px;
+    padding-left:4px;
+    padding-top: 8px;
+    background: url(images/progress-right.png) no-repeat;
+    text-align: left;
+}
+
+#bottom-progress #progress-center {
+    height: 29px;
+    background: url(images/progress.png) repeat-x;
+}
+
+#bottom-progress #progress-track {
+    padding-top: 8px;
+}
+
+#bottom-progress.bottom-progress-inactive #progress-track {
+    display: none;
+}
+
+#bottom-progress #progress-track-left {
+    width: 2px;
+    background: url(images/progress-track-left.png) no-repeat;
+}
+
+#bottom-progress #progress-track-center {
+    background: url(images/progress-track-center.png) repeat-x;
+}
+
+#bottom-progress #progress-track-right {
+    width: 2px;
+    background: url(images/progress-track-right.png) no-repeat;
+}
+
+#bottom-progress #progress-track-current {
+    padding-top: 8px;
+}
+
+#bottom-progress.bottom-progress-inactive #progress-track-current {
+    display: none;
+}
+
+#bottom-progress #progress-track-current-left {
+    width: 1px;
+    background: url(images/progress-track-current-left.png) no-repeat;
+}
+
+#bottom-progress #progress-track-current-center {
+    background: url(images/progress-track-current-center.png) repeat-x;
+}
+
+#bottom-progress #progress-track-current-right {
+    width: 1px;
+    height: 13px;
+    background: url(images/progress-track-current-right.png) no-repeat;
+}
+
+#bottom-progress #progress-slider {
+  position: absolute;
+  top: 8px;
+  padding: 0px;
+  width: 6px;
+  height: 13px;
+  background: url("images/progress-slider.png") no-repeat;
+}
+
+#bottom-progress.bottom-progress-inactive #progress-slider {
+    display: none;
 }
 
 wizard.startup {
@@ -346,12 +435,6 @@ wizard.startup {
 
 .startup-indented {
   margin-left: 30px;
-}
-
-.searchbar-dropmarker-image {
-  -moz-margin-start: 12px;
-  margin-top: 8px;
-  list-style-image: url(images/search-arrow.gif);
 }
 
 tabbox.prefs tab {
@@ -372,7 +455,7 @@ tabbox.prefs caption {
 }
 
 tabbox.prefs groupbox {
-    border-color: #ccc;
+    border-color: #CCC;
 }
 
 tabbox.prefs .suboption {
