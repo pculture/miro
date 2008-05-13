@@ -22,13 +22,17 @@
  </div>
 </div>
 <div t:showIf="this.obj.showU()" class="bubble-left green">
- <div class="bubble-right green">
-  <div class="number-count green" t:replace="this.obj.numUnwatched()" />
- </div>
- <div href="#" class="new-video-play-button"
-      onclick="return playNewVideos(event, ***this.objID()***);" >
-     <img src="resource:images/play.png" />
- </div>
+  <div class="bubble-right green">
+    <div class="number-count green" t:replace="this.obj.numUnwatched()" />
+    <div t:hideIf="this.getState() == 'selected'" href="#" class="new-video-play-button"
+        onclick="return playNewVideos(event, ***this.objID()***);" >
+        <img src="resource:images/bubble-play.png" />
+    </div>
+    <div t:showIf="this.getState() == 'selected'" href="#" class="new-video-play-button"
+        onclick="return playNewVideos(event, ***this.objID()***);" >
+        <img src="resource:images/bubble-play_selected.png" />
+    </div>
+  </div>
 </div>
 
 <div class="line">

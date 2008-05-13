@@ -10,10 +10,14 @@
         <div class="bubble-right @@@this.obj.getNumberColor()@@@">
             <div class="number-count @@@this.obj.getNumberColor()@@@" t:replace="this.obj.getNumber()" />
         </div>
-        <div t:showIf="this.obj.enableNewVideoPlayButton()" href="#" 
+        <div t:showIf="this.obj.enableNewVideoPlayButton() and this.getState() != 'selected'" href="#" 
              class="new-video-play-button"
              onclick="return playNewVideos(event, ***this.objID()***);" >
-            <img src="resource:images/play.png" />
+            <img src="resource:images/bubble-play.png" />
+        </div>
+        <div t:showIf="this.obj.enableNewVideoPlayButton() and this.getState() == 'selected'" href="#" class="new-video-play-button"
+            onclick="return playNewVideos(event, ***this.objID()***);" >
+            <img src="resource:images/bubble-play_selected.png" />
         </div>
     </div>
     <div class="name" t:replace="this.obj.getTitle()" />

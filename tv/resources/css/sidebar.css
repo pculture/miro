@@ -113,7 +113,7 @@ a.feeditem.folder {
 }
 .child a.feeditem {
    padding-left: 45px;
-   margin-bottom:12px;
+/*   margin-bottom:12px;*/
 }
 
 a.feeditem.blinking {
@@ -346,6 +346,12 @@ a.feeditem.normal .feed-loading-icon {
 	text-align: center;
 	text-shadow:none;
 }
+.tab-list.first a.feeditem .number-count,
+a.feeditem.folder .number-count,
+a.feeditem.playlist .number-count {
+  line-height:14px;
+}
+
 .bubble-left {
 	padding-left: 5px;
 	margin: 3px 0px 0px 5px;
@@ -378,7 +384,11 @@ a.feeditem.normal .feed-loading-icon {
 .number-count.green {
 	background-image: url('../images/bubble-count_green.png');
 }
-
+.bubble-left.green:hover .number-count.green {
+  height:0px;
+  overflow:hidden;
+  padding-top:14px;
+}
 .bubble-left.blue {
 	background-image: url('../images/bubble-left_blue.png');
 }
@@ -415,12 +425,16 @@ a.feeditem.normal .feed-loading-icon {
 
 .new-video-play-button {
 	position: absolute;
-	left: 6px;
-	right: 6px;
-	top: 0px;
-	height: 19px;
+	left: 7px;
+	top: 1px;
+	height: 14px;
 	text-align: center;
 	z-index: 5;
+}
+.tab-list.first a.feeditem .new-video-play-button,
+a.feeditem.folder .new-video-play-button,
+a.feeditem.playlist .new-video-play-button {
+  top:0px;
 }
 
 .new-video-play-button:hover {
@@ -434,7 +448,7 @@ a.feeditem.normal .feed-loading-icon {
 	margin-top: 2px;*/
 }
 
-.new-video-play-button:hover img {
+.bubble-left.green:hover .new-video-play-button img {
 	display: inline;
 }
 

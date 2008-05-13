@@ -37,9 +37,13 @@
  <div class="bubble-right green">
   <div class="number-count green" t:replace="this.obj.numUnwatched()" />
  </div>
- <div href="#" class="new-video-play-button"
-      onclick="return playNewVideos(event, ***this.objID()***);" >
-     <img src="resource:images/play.png" />
+ <div t:hideIf="this.getState() == 'selected'" href="#" class="new-video-play-button"
+     onclick="return playNewVideos(event, ***this.objID()***);" >
+     <img src="resource:images/bubble-play.png" />
+ </div>
+ <div t:showIf="this.getState() == 'selected'" href="#" class="new-video-play-button"
+     onclick="return playNewVideos(event, ***this.objID()***);" >
+     <img src="resource:images/bubble-play_selected.png" />
  </div>
 </div>
 <img id="channel-tnail-***this.objID()***" class="icon" src="resource:images/folder-icon-tablist.png" /><div class="name" t:replace="this.obj.getTitle()" />
