@@ -184,7 +184,7 @@ def filenameFromURL(url, clean=False):
 # version of it
 @returnsFilename
 def cleanFilename(filename):
-    for char in ':?><|*/\\"\'':
+    for char in ( ':', '?', '<', '>', '|', '*', '\\', '"', '\'', ' ', '%'):
         filename = filename.replace(char,'')
     if len(filename) == 0:
         return unicodeToFilename(u'_')
