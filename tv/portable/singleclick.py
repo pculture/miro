@@ -116,36 +116,28 @@ def checkURLExists(url):
         return True
     return False
 
+def __buildEntry(url, contentType, additional):
+    entry = item.getEntryForURL(url, contentType)
+    if additional is not None:
+        for key in 'title', 'link', 'feed':
+            if key in additional:
+                entry[key] = additional[key]
+        if 'description' in additional:
+            entry['description'] = entry['summary'] = additional[
+                'description']
+        if 'thumbnail' in additional:
+            entry['thumbnail'] = {'href': additional['thumbnail']}
+        if 'length' in additional:
+            entry['enclosures'][0]['length'] = additional['length']
+        if 'type' in additional:
+            entry['enclosures'][0]['type'] = additional['type']
+
+    return entry
+
 def addDownload(url, additional=None):
     if checkURLExists(url):
         return
-    # We need to figure out if the URL is a external video link, or a link to
-    # a channel.
-    def callback(headers):
-        if checkURLExists(url):
-            return
-        contentType = headers.get('content-type')
-        if contentType and filetypes.isFeedContentType(contentType):
-            addFeeds([url])
-        else:
-            entry = item.getEntryForURL(url, contentType)
-            if additional is not None:
-                for key in 'title', 'link', 'feed':
-                    if key in additional:
-                        entry[key] = additional[key]
-                if 'description' in additional:
-                    entry['description'] = entry['summary'] = additional[
-                        'description']
-                if 'thumbnail' in additional:
-                    entry['thumbnail'] = {'href': additional['thumbnail']}
-                if 'length' in additional:
-                    entry['enclosures'][0]['length'] = additional['length']
-                if 'type' in additional:
-                    entry['enclosures'][0]['type'] = additional['type']
-            if filetypes.isVideoEnclosure(entry['enclosures'][0]):
-                downloadVideo(entry)
-            else:
-                downloadUnknownMimeType(url)
+
     def errback(error):
         title = _("Download Error")
         text = _("""\
@@ -153,6 +145,46 @@ Miro is not able to download a file at this URL:
 
 URL: %s""") % url
         dialogs.MessageBoxDialog(title, text).run()
+
+    def callback_peek(data):
+        """Takes the data returned from a GET and peeks at it to see if it's a
+        feed despite the fact that it has the wrong content-type.
+        """
+
+        if data["body"]:
+            if filetypes.isMaybeRSS(data["body"]):
+                # FIXME - this is silly since we just did a GET and we do 
+                # another one in addFeeds
+                logging.info("%s is a feed--adding it." % url)
+                addFeeds([url])
+                return
+        
+        downloadUnknownMimeType(url)
+
+    def callback(headers):
+        """We need to figure out if the URL is a external video link, or a link to
+        a channel.
+        """
+        if checkURLExists(url):
+            return
+
+        contentType = headers.get("content-type")
+        if contentType and filetypes.isFeedContentType(contentType):
+            addFeeds([url])
+            return
+
+        if contentType and filetypes.isMaybeFeedContentType(contentType):
+            logging.info("%s content type is %s.  going to peek to see if it's a feed...." % (url, contentType))
+            httpclient.grabURL(url, callback_peek, errback)
+            return
+
+        entry = __buildEntry(url, contentType, additional)
+
+        if filetypes.isVideoEnclosure(entry['enclosures'][0]):
+            downloadVideo(entry)
+        else:
+            downloadUnknownMimeType(url)
+
     httpclient.grabHeaders(url, callback, errback)
 
 def downloadUnknownMimeType(url):

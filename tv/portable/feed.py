@@ -973,8 +973,8 @@ class Feed(DDBObject):
         
         # Some smarty pants serve RSS feeds with a text/html content-type...
         # So let's do some really simple sniffing first.
-        apparentlyRSS = re.compile(r'<\?xml.*\?>\s*<rss').match(info['body']) is not None
-
+        apparentlyRSS = filetypes.isMaybeRSS(info['body']) 
+ 
         #Definitely an HTML feed
         if (contentType.startswith(u'text/html') or 
             contentType.startswith(u'application/xhtml+xml')) and not apparentlyRSS:
@@ -1025,8 +1025,10 @@ class Feed(DDBObject):
             # FIXME html and xmldata can be non-unicode at this point
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
-            try: parser.setFeature(xml.sax.handler.feature_external_ges, 0)
-            except: pass
+            try: 
+                parser.setFeature(xml.sax.handler.feature_external_ges, 0)
+            except:
+                pass
             handler = RSSLinkGrabber(unicodify(info['redirected-url']),charset)
             parser.setContentHandler(handler)
             parser.setErrorHandler(handler)

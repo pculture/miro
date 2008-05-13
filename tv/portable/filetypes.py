@@ -132,6 +132,25 @@ def isFeedContentType(contentType):
             return True
     return False
 
+def isMaybeFeedContentType(contentType):
+    """Could the content type contain a feed?
+    """
+    return contentType.startswith(u"text/")
+
+def isMaybeRSS(body):
+    """Sniffs the body to determine whether it's a feed or not.
+
+    this is very loosely taken from Firefox nsFeedSniffer.cpp and ideas in
+    http://blogs.msdn.com/rssteam/articles/PublishersGuide.aspx
+    """
+    if len(body) > 512:
+        body = body[0:512]
+
+    for mem in ( "<rss", "<feed", "<rdf:RDF" ):
+        if body.find(mem) != -1:
+            return True
+    return False
+
 def guessExtension(mimetype):
     """
     Pass a mime type to this method and it will return a corresponding file
