@@ -8,8 +8,9 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />        
 </head>
 <body>
-		<div class="tnail">
-		  <img class="tnail-over" src="resource:images/thumbnail-overlay.png" />
+		<div class="tnail ***this.getIsPlayable()***" onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');">
+		  <img t:hideIf="this.showMoreInfo" class="tnail-over" src="resource:images/thumb-overlay_small.png" />
+		  <img t:showIf="this.showMoreInfo" class="tnail-over" src="resource:images/thumb-overlay_large.png" />
 		  <img class="main-video-tnail" src="***this.getThumbnail()***" alt="" id="video-tnail-***viewName + str(this.getID())***" />
 		  <div id="tnail-buttons" class="" onmousedown="this.className='clicked';" onmouseup="this.className='';">
 		  <table class="multi" cellpadding="0" cellspacing="0">
@@ -25,15 +26,15 @@
     		</span>
     	  <a t:showIf="this.isDownloadable()" class="button black" href="#" title="Download '***this.getTitle()***'" onclick="return eventURL('action:startDownload?item=@@@this.getID()@@@');">
           <span i18n:translate="">Download</span>
-        </a>	
-  		  <a t:showIf="this.isPlayable()" class="play" href="#" title="Play '***this.getTitle()***'" onclick="return eventURL('action:playViewNamed?viewName=@@@viewName@@@&amp;firstItemId=@@@this.getID()@@@');">
+        </a>
+        <a t:showIf="this.isPlayable()" class="play" href="#" title="Play '***this.getTitle()***'">
   		    <img t:hideIf="this.showMoreInfo" src="resource:images/button-play.png" alt="play button" />
   		    <img t:showIf="this.showMoreInfo" src="resource:images/button-play_large.png" alt="play button" />
   		  </a>
-  		  </td>
-  		</tr>
-  		</table>
-		  </div>
+      </td>
+		</tr>
+		</table>
+	  </div>	
     </div>
 </body>
 </html>

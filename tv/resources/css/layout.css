@@ -611,14 +611,14 @@ an element is dragged, the drag-highlight class is added to it */
 /* These change the background based on whether or not it's selected */
 .tnail-over {
   position:absolute;
-  width:154px;
-  height:105px;
+/*  width:154px;
+  height:105px;*/
   left:0;
   top:0;
 }
 .more-info .tnail-over {
-  width:252px;
-  height:190px;
+/*  width:252px;
+  height:190px;*/
 }
 
 .main-video-tnail {
@@ -641,7 +641,8 @@ an element is dragged, the drag-highlight class is added to it */
   position:absolute;
   z-index:20;
 }
-.tnail:hover #tnail-buttons {
+.tnail.playable #tnail-buttons,
+table.item:hover #tnail-buttons {
   display:block;
 }
 
@@ -668,10 +669,10 @@ an element is dragged, the drag-highlight class is added to it */
 a.play img {
   position:relative;
 }
-a.play:hover img {
+.tnail:hover a.play img {
   top:-32px;
 }
-.more-info a.play:hover img {
+.more-info .tnail:hover a.play img {
   top:-50px;
 }
 #tnail-buttons.clicked a.play img,
@@ -794,6 +795,10 @@ dl.video-stats {
 .video-stats td.col1 {
   padding-right:5px;
   min-width:55px;
+}
+.video-stats td a.details.more {
+  display:block;
+  margin-bottom:12px;
 }
 .share-menu {
     position: absolute;

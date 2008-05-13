@@ -26,7 +26,7 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
         <td />
         <td>
           <a class="details" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" t:hideIf="this.showMoreInfo"><span i18n:translate="">Show Details</span></a>
-          <a class="details" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" t:showIf="this.showMoreInfo"><span i18n:translate="">Hide Details</span></a>
+          <a class="details more" href="#" onclick="return eventURL('action:toggleMoreItemInfo?item=@@@this.getID()@@@');" t:showIf="this.showMoreInfo"><span i18n:translate="">Hide Details</span></a>
 			  </td>
 			</tr>
       <span t:showIf="this.showMoreInfo">

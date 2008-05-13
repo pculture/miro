@@ -341,7 +341,22 @@ body.gray-background {
     color: #666;
     line-height: 130%;
 }*/
-.main-video.selected .main-video-desc h1 {
+.video-stats,
+.video-stats td a {
+	font-size:11px;
+	color:#444;
+}
+.video-stats td a.details {
+  font-weight:bold;
+  text-decoration:underline;
+}
+
+.video-stats td.col1 {
+	color:#98948f;
+}
+.main-video.selected .main-video-desc h1,
+.main-video.selected .video-stats,
+.main-video.selected .video-stats td a {
 	color:#1b4065
 }
 .main-video .main-video-desc.newly-downloaded h1,
@@ -352,7 +367,8 @@ body.gray-background {
 .main-video.selected .main-video-desc.new h1 {
 	color:#2887fa;
 }
-.main-video.selected .main-video-desc-desc {
+.main-video.selected .main-video-desc-desc,
+.main-video.selected .video-stats td.col1 {
     color:#6b9ccd; 
 }
 .main-video-desc a:link, .main-video-desc a:active, .main-content a:link, .main-content a:active {
@@ -369,19 +385,7 @@ body.gray-background {
     text-decoration: underline;
 }
 
-.video-stats,
-.video-stats td a {
-	font-size:11px;
-	color:#444;
-}
-.video-stats td a.details {
-  font-weight:bold;
-  text-decoration:underline;
-}
 
-.video-stats td.col1 {
-	color:#98948f;
-}
 /*.round-button-content {
     font-size: 9px;
     text-align: center;

@@ -1637,6 +1637,12 @@ folder will be deleted.""")
         else:
             return self.isDownloaded() and len(self.getChildren()) > 0
 
+    def getIsPlayable(self):
+        if self.isPlayable():
+            return u'playable'
+        else:
+            return u''
+        
     def getRSSEntry(self):
         self.confirmDBThread()
         return self.entry
