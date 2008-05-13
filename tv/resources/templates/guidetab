@@ -6,7 +6,7 @@
 <body>
 <a class="feeditem">
     <img class="icon" alt="" src="***this.obj.getIconURL()***" />
-    <div class="name" t:replace="this.obj.getTitle()" />
+    <div class="line"><div class="name" t:replace="this.obj.getTitle()" /></div>
 </a>
 </body>
 </html>

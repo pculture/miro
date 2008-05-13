@@ -46,7 +46,9 @@
      <img src="resource:images/bubble-play_selected.png" />
  </div>
 </div>
+<div class="line">
 <img id="channel-tnail-***this.objID()***" class="icon" src="resource:images/folder-icon-tablist.png" /><div class="name" t:replace="this.obj.getTitle()" />
+</div>
 </a>
 </div>
 </div>

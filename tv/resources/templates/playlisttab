@@ -23,7 +23,9 @@
 	dragsourcetype="***this.getDragSourceType()***"
 	dragsourcedata="tablist-***this.objID()***"
 	dragicon="playlist-tnail-***this.objID()***">
+<div class="line">
 <img id="playlist-tnail-***this.objID()***" class="icon" src="resource:images/icon-playlist.png" /><div class="name" t:replace="this.obj.getTitle()" />
+</div>
 </a>
 </div>
 </div>
