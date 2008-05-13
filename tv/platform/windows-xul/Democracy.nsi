@@ -1,14 +1,14 @@
 ; These are passed in from setup.py:
 ;  CONFIG_VERSION        eg, "0.8.0"
 ;  CONFIG_PROJECT_URL    eg, "http://www.participatoryculture.org/"
-;  CONFIG_SHORT_APP_NAME eg, "Democracy"
-;  CONFIG_LONG_APP_NAME  eg, "Democracy Player"
+;  CONFIG_SHORT_APP_NAME eg, "Miro"
+;  CONFIG_LONG_APP_NAME  eg, "Miro"
 ;  CONFIG_PUBLISHER      eg, "Participatory Culture Foundation"
-;  CONFIG_EXECUTABLE     eg, "Democracy.exe
-;  CONFIG_MOVIE_DATA_EXECUTABLE     eg, "Democracy_MovieData.exe
-;  CONFIG_ICON           eg, "Democracy.ico"
-;  CONFIG_OUTPUT_FILE    eg, "Democracy-0.8.0.exe"
-;  CONFIG_PROG_ID        eg, "Democracy.Player.1"
+;  CONFIG_EXECUTABLE     eg, "Miro.exe
+;  CONFIG_MOVIE_DATA_EXECUTABLE     eg, "Miro_MovieData.exe
+;  CONFIG_ICON           eg, "Miro.ico"
+;  CONFIG_OUTPUT_FILE    eg, "Miro-1.2.3.exe"
+;  CONFIG_PROG_ID        eg, "Miro.1"
 !define INST_KEY "Software\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
 !define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CONFIG_LONG_APP_NAME}"
 
@@ -42,6 +42,7 @@ Var ONLY_INSTALL_THEME
 Var THEME_TEMP_DIR
 Var INITIAL_FEEDS
 Var TACKED_ON_FILE
+Var REINSTALL
 Var SIMPLE_INSTALL
 
 ; Runs in tv/platform/windows-xul/dist, so 4 ..s.
@@ -65,6 +66,8 @@ Var SIMPLE_INSTALL
 
 !insertmacro TrimNewLines
 !insertmacro WordFind
+!insertmacro GetParameters
+!insertmacro GetOptions
 !insertmacro un.TrimNewLines
 !insertmacro un.WordFind
 !insertmacro un.GetParameters
@@ -87,7 +90,7 @@ ReserveFile "iHeartMiro-installer-page.ini"
 !insertmacro MUI_PAGE_WELCOME
 
 Function add_radio_buttons
-
+  Call skip_if_simple_or_reinstall
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NumFields" "5"
   
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Top" "20"
@@ -187,6 +190,15 @@ Function check_radio_buttons
   Pop $0
 FunctionEnd
 
+Function skip_if_simple_or_reinstall
+  StrCmp $SIMPLE_INSTALL "1" skip_for_simple_or_reinstall
+  StrCmp $REINSTALL "1" skip_for_simple_or_reinstall
+  goto end
+skip_for_simple_or_reinstall:
+  Abort
+end:
+FunctionEnd
+
 Function skip_if_simple
   StrCmp $SIMPLE_INSTALL "1" skip_for_simple
   goto end
@@ -201,17 +213,17 @@ FunctionEnd
 ; Component selection page
 !define MUI_COMPONENTSPAGE_TEXT_COMPLIST \
   "Please choose which optional components to install."
-!define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple"
+!define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple_or_reinstall"
 !insertmacro MUI_PAGE_COMPONENTS
 
 ; Page custom iHeartMiroInstall iHeartMiroInstallLeave
 
 ; Installation directory selection page
-!define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple"
+!define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple_or_reinstall"
 !insertmacro MUI_PAGE_DIRECTORY
 
 ; Start menu folder name selection page
-!define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple"
+!define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple_or_reinstall"
 !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
 
 ; Installation page
@@ -768,7 +780,15 @@ Function .onInit
   StrCpy $ONLY_INSTALL_THEME ""
   StrCpy $THEME_TEMP_DIR ""
   StrCpy $APP_NAME "${CONFIG_LONG_APP_NAME}"
+  StrCpy $REINSTALL "0"
   StrCpy $SIMPLE_INSTALL "1"
+
+  ; Check if we're reinstalling
+  ${GetParameters} $R0
+  ${GetOptions} "$R0" "/reinstall" $R1
+  IfErrors +2 0
+  StrCpy $REINSTALL "1"
+  ClearErrors
   
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "iHeartMiro-installer-page.ini"
 
@@ -824,10 +844,31 @@ non_zip_tackon:  ; non-zip tacked on file
 no_tackon:
   ClearErrors
 
+  StrCmp $THEME_TEMP_DIR "" 0 TestRunning
+  !insertmacro locateThemes $0
+  StrCmp $0 0 LocateDone 0
+  ${locate::Find} $0 $1 $2 $3 $4 $5 $6
+  StrCpy $THEME_TEMP_DIR $1
+  StrCmp $3 "" LocateDone
+  StrCpy $THEME_NAME $3
+  StrCpy $R0 "longAppName"
+  StrCpy $R1 "$THEME_TEMP_DIR\app.config"
+  Call GetConfigOption
+  Pop $APP_NAME
+LocateDone:
+  ${locate::Close} $0
+
+  
   ; Is the app running?  Stop it if so.
 TestRunning:
   ${nsProcess::FindProcess} "miro.exe" $R0
   StrCmp $R0 0 0 NotRunning
+  StrCmp $REINSTALL 1 0 ShowCloseBox
+  FindWindow $R0 "" "$APP_NAME"
+  IsWindow $R0 0 TestRunning
+  SendMessage $R0 ${WM_CLOSE} 0 0 /TIMEOUT=5000
+  Goto TestRunning
+ShowCloseBox:
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "It looks like you're already running $APP_NAME.$\n\
 Please shut it down before continuing." \
@@ -862,6 +903,7 @@ NotOldDownloaderRunning:
  
 prompt_for_uninstall:
   ; Should we uninstall the old one?
+  StrCmp $REINSTALL 1 UninstallCurrent 0
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "It looks like you already have a copy of $APP_NAME $\n\
 installed.  Do you want to continue and overwrite it?" \
@@ -869,19 +911,6 @@ installed.  Do you want to continue and overwrite it?" \
   Quit
 UninstallCurrent:
   !insertmacro uninstall $R0
-  StrCmp $THEME_TEMP_DIR "" 0 NotCurrentInstalled
-  !insertmacro locateThemes $0
-  StrCmp $0 0 LocateDone 0
-  ${locate::Find} $0 $1 $2 $3 $4 $5 $6
-  StrCpy $THEME_TEMP_DIR $1
-  StrCmp $3 "" LocateDone
-  StrCpy $THEME_NAME $3
-  StrCpy $R0 "longAppName"
-  StrCpy $R1 "$THEME_TEMP_DIR\app.config"
-  Call GetConfigOption
-  Pop $APP_NAME
-LocateDone:
-  ${locate::Close} $0
 NotCurrentInstalled:
 
   ; Is the app already installed? Bail if so.
@@ -934,7 +963,9 @@ UninstallOld:
   DeleteRegKey HKCR "Democracy.Player.1"
 
 NotOldInstalled:
+  StrCmp $REINSTALL "1" SkipLanguageDLL
   !insertmacro MUI_LANGDLL_DISPLAY
+SkipLanguageDLL:
 
   ; Make check boxes for unhandled file extensions.
 
