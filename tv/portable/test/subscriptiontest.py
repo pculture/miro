@@ -85,16 +85,16 @@ REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME = "reflexive-auto-discovery-page-rss.
 REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS = u"""\
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
-	                  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+                          "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<title>Reflexive Auto Discovery Page</title>
-	    <link rel="alternate" type="application/rss+xml" title="RSS" href="%s" />
-	</head>
-	<body>
-	    This place intentionally (almost) blank... :)
-	</body>
+        <head>
+                <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+                <title>Reflexive Auto Discovery Page</title>
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="%s" />
+        </head>
+        <body>
+            This place intentionally (almost) blank... :)
+        </body>
 </html>
 """ % SAMPLE_RSS_SUBSCRIPTION_URL_1
 
@@ -119,16 +119,16 @@ REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME = "reflexive-auto-discovery-page-ato
 REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM = u"""\
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
-	                  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+                          "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<title>Reflexive Auto Discovery Page</title>
-	    <link rel="alternate" type="application/atom+xml" title="RSS" href="%s" />
-	</head>
-	<body>
-	    This place intentionally (almost) blank... :)
-	</body>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title>Reflexive Auto Discovery Page</title>
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="%s" />
+    </head>
+    <body>
+        This place intentionally (almost) blank... :)
+    </body>
 </html>
 """ % SAMPLE_ATOM_SUBSCRIPTION_URL_1
 
@@ -246,48 +246,52 @@ class TestFindSubscribeLinks (DemocracyTestCase):
     def testLinkInPath(self):
         url = 'http://subscribe.getdemocracy.com/http%3A//www.myblog.com/rss'
         self.assertEquals(subscription.findSubscribeLinks(url), 
-                ('feed', ['http://www.myblog.com/rss']))
+                ('feed', [ ('http://www.myblog.com/rss', {}) ]))
 
     def testLinkInQuery(self):
-        url = ('http://subscribe.getdemocracy.com/'
-             '?url1=http%3A//www.myblog.com/rss')
+        url = ('http://subscribe.getdemocracy.com/' + \
+               '?url1=http%3A//www.myblog.com/rss')
         self.assertEquals(subscription.findSubscribeLinks(url), 
-                ('feed', ['http://www.myblog.com/rss']))
+                ('feed', [ ('http://www.myblog.com/rss', {}) ]))
 
     def testMultipleLinksInQuery(self):
-        url = ('http://subscribe.getdemocracy.com/'
-             '?url1=http%3A//www.myblog.com/rss'
-             '&url2=http%3A//www.yourblog.com/atom'
-             '&url3=http%3A//www.herblog.com/scoobydoo')
+        url = ('http://subscribe.getdemocracy.com/' + \
+               '?url1=http%3A//www.myblog.com/rss' + \
+               '&url2=http%3A//www.yourblog.com/atom' + \
+               '&url3=http%3A//www.herblog.com/scoobydoo')
 
-        type, links = subscription.findSubscribeLinks(url)
-        self.assertEquals(type, 'feed')
-        self.assertEquals(set(links), set(['http://www.myblog.com/rss',
-            'http://www.yourblog.com/atom',
-            'http://www.herblog.com/scoobydoo' ]))
+        contenttype, links = subscription.findSubscribeLinks(url)
+        self.assertEquals(contenttype, 'feed')
+        # have to sort them because they could be in any order
+        links.sort()
+        self.assertEquals(links, [ ('http://www.herblog.com/scoobydoo', {}),
+                                   ('http://www.myblog.com/rss', {}),
+                                   ('http://www.yourblog.com/atom', {}) ])
 
     def testQueryGarbage(self):
-        url = ('http://subscribe.getdemocracy.com/'
-             '?url1=http%3A//www.myblog.com/rss'
-             '&url2=http%3A//www.yourblog.com/atom'
-             '&url3=http%3A//www.herblog.com/scoobydoo'
-             '&foo=bar'
-             '&extra=garbage')
+        url = ('http://subscribe.getdemocracy.com/' + \
+               '?url1=http%3A//www.myblog.com/rss' + \
+               '&url2=http%3A//www.yourblog.com/atom' + \
+               '&url3=http%3A//www.herblog.com/scoobydoo' + \
+               '&foo=bar' + \
+               '&extra=garbage')
 
-        type, links = subscription.findSubscribeLinks(url)
-        self.assertEquals(type, 'feed')
-        self.assertEquals(set(links), set(['http://www.myblog.com/rss',
-            'http://www.yourblog.com/atom',
-            'http://www.herblog.com/scoobydoo']))
+        contenttype, links = subscription.findSubscribeLinks(url)
+        self.assertEquals(contenttype, 'feed')
+        # have to sort them because they could be in any order
+        links.sort()
+        self.assertEquals(links, [ ('http://www.herblog.com/scoobydoo', {}),
+                                   ('http://www.myblog.com/rss', {}),
+                                   ('http://www.yourblog.com/atom', {}) ])
 
     def testChannelGuideLinks(self):
-        url = ('http://subscribe.getdemocracy.com/channelguide.php'
-             '?url1=http%3A//www.mychannelguide.com/')
+        url = ('http://subscribe.getdemocracy.com/channelguide.php' + \
+               '?url1=http%3A//www.mychannelguide.com/')
         self.assertEquals(subscription.findSubscribeLinks(url), 
-                ('guide', ['http://www.mychannelguide.com/']))
+                ('guide', [ ('http://www.mychannelguide.com/', {}) ]))
 
     def testDownloadLinks(self):
-        url = ('http://subscribe.getdemocracy.com/download.php'
-             '?url1=http%3A//www.myblog.com/videos/cats.ogm')
+        url = ('http://subscribe.getdemocracy.com/download.php' + \
+               '?url1=http%3A//www.myblog.com/videos/cats.ogm')
         self.assertEquals(subscription.findSubscribeLinks(url), 
-                ('download', ['http://www.myblog.com/videos/cats.ogm']))
+                ('download', [ ('http://www.myblog.com/videos/cats.ogm', {}) ]))
