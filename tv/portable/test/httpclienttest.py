@@ -780,6 +780,26 @@ HELLO: WORLD\r\n"""
         self.assert_(self.errbackCalled)
         self.assert_(isinstance(self.data, httpclient.ServerClosedConnection))
 
+    def testCloseBeforeReadyCallback(self):
+        data = self.fakeResponse
+        self.readyCallbackSeen = False
+        def fakeReadyCallback(client):
+            self.readyCallbackSeen = True
+        self.testRequest.readyCallback = fakeReadyCallback
+        self.testRequest.handleData(startResponse(
+            headers={'Content-Length': 128}))
+        self.assertEquals(self.testRequest.canSendRequest(), True)
+        self.testRequest.handleData('a' * 128)
+        # At this point, our connection should have scheduled an idle call to
+        # check if it should call fakeReadyCallback().  If readyCallbackSeen
+        # is True on the next line, it's actually not an error with
+        # httpclient.  However, if we haven't gotten the callback yet, then
+        # we close the connection then we shouldn't get the callback later.
+        self.assert_(not self.readyCallbackSeen)
+        self.testRequest.handleClose(socket.SHUT_RD)
+        self.runPendingIdles()
+        self.assert_(not self.readyCallbackSeen)
+
 class HTTPClientTestBase(AsyncSocketTest):
     def setUp(self):
         AsyncSocketTest.setUp(self)

@@ -1149,15 +1149,14 @@ class HTTPConnection(ConnectionHandler):
             response[key] = getattr(self, key)
         return response
 
+    # This needs to be in an idle so that the connection is added
+    # to the "active" list before the open callback happens --NN
+    @eventloop.asIdle
     def maybeSendReadyCallback(self):
         if (self.readyCallback and self.canSendRequest() and not
                 self.sentReadyCallback):
             self.sentReadyCallback = True
-
-            # This needs to be in an idle so that the connection is added
-            # to the "active" list before the open callback happens --NN
-            eventloop.addIdle(lambda : self.readyCallback(self),
-                              "Ready Callback %s" % str(self))
+            self.readyCallback(self)
         
     def handleClose(self, type):
         oldState = self.state
