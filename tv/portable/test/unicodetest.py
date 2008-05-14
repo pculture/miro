@@ -21,7 +21,7 @@ from miro import util
 from miro.frontends.html.template_compiler import TemplateError
 from miro.frontends.html import template_compiler
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 
 class UnicodeFeedTestCase(framework.EventLoopTest):
     def setUp(self):
@@ -349,7 +349,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         else:
             os.environ["LANGUAGE"] = oldLang
 
-class TemplateCompilerTest(framework.DemocracyTestCase):
+class TemplateCompilerTest(framework.MiroTestCase):
     def testNonUnicode(self):
         # genRepeatText
         self.assertRaises(util.DemocracyUnicodeError,

@@ -2,9 +2,9 @@ import unittest
 from miro import feedparser
 from miro.plat import resources
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 
-class FeedParserDictTest(DemocracyTestCase):
+class FeedParserDictTest(MiroTestCase):
     def test(self):
         a = feedparser.FeedParserDict ()
         a["href"] = "hello"
@@ -28,7 +28,7 @@ class FeedParserDictTest(DemocracyTestCase):
         self.assertEqual(a.equal(d), False)
         self.assertEqual(d.equal(a), False)
 
-class FeedParserTest (DemocracyTestCase):
+class FeedParserTest (MiroTestCase):
     def test_ooze(self):
         feedparser.parse(resources.path("testdata/ooze.rss"))
 

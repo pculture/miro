@@ -16,8 +16,8 @@ from time import sleep
 
 util.setupLogging()
 
-# Generally, all test cases should extend DemocracyTestCase or
-# EventLoopTest.  DemocracyTestCase cleans up any database changes you
+# Generally, all test cases should extend MiroTestCase or
+# EventLoopTest.  MiroTestCase cleans up any database changes you
 # might have made, and EventLoopTest provides an API for accessing the
 # eventloop in addition to managing the thread pool and cleaning up
 # any events you may have scheduled.
@@ -61,7 +61,7 @@ class DummyController:
         self.frame = DummyMainFrame()
         self.videoDisplay = DummyVideoDisplay()
 
-class DemocracyTestCase(unittest.TestCase):
+class MiroTestCase(unittest.TestCase):
     def setUp(self):
         app.db = database.defaultDatabase
         database.set_thread(threading.currentThread())
@@ -90,9 +90,9 @@ class DemocracyTestCase(unittest.TestCase):
         else:
             raise Exception("error signal")
 
-class EventLoopTest(DemocracyTestCase):
+class EventLoopTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.hadToStopEventLoop = False
 
     def stopEventLoop(self, abnormal = True):

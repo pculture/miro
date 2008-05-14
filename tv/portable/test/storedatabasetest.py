@@ -11,7 +11,7 @@ from miro import schema
 import shutil
 from miro import storedatabase
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 # sooo much easier to type...
 from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaSimpleContainer
 from miro.schema import SchemaList, SchemaDict, SchemaObject
@@ -97,9 +97,9 @@ class PCFProgramerSchema(HumanSchema):
 testObjectSchemas = [HumanSchema, DogSchema, HouseSchema, PCFProgramerSchema,
     RestorableHumanSchema]
 
-class SchemaTest(DemocracyTestCase):
+class SchemaTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         storedatabase.skipUpgrade = True
         self.lee = Human(u"lee", 25, 1.4, [], {u'virtual bowling': 212})
         self.joe = Human(u"joe", 14, 1.4, [self.lee])
@@ -117,7 +117,7 @@ class SchemaTest(DemocracyTestCase):
             os.unlink(self.savePath)
         except OSError:
             pass
-        DemocracyTestCase.tearDown(self)
+        MiroTestCase.tearDown(self)
 
     def addSubclassObjects(self):
         self.ben = PCFProgramer(u'ben', 25, 3.4, [], u'programmer',
@@ -325,9 +325,9 @@ class UpgradeTest(SchemaTest):
         newDb = storedatabase.restoreObjectList(self.savePath,
                 self.nextGenObjectSchemas)
 
-class LiveStorageTest(DemocracyTestCase):
+class LiveStorageTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         storedatabase.skipUpgrade = True
         self.savePath = os.path.join(tempfile.gettempdir(),
                 'democracy-temp-db')
@@ -346,7 +346,7 @@ class LiveStorageTest(DemocracyTestCase):
             shutil.rmtree(self.savePath);
         except:
             pass
-        DemocracyTestCase.tearDown(self)
+        MiroTestCase.tearDown(self)
 
 
 class TestConstraintChecking(LiveStorageTest):

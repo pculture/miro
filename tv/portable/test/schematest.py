@@ -9,9 +9,9 @@ from miro import schema
 from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaBool
 from miro.schema import SchemaDateTime, SchemaList, SchemaDict, SchemaObject
 from miro.schema import SchemaSimpleContainer, ValidationError
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 
-class TestValidation(DemocracyTestCase):
+class TestValidation(MiroTestCase):
     def testModuleVariablesDefined(self):
         self.assert_(hasattr(schema, 'VERSION'))
         self.assert_(hasattr(schema, 'objectSchemas'))

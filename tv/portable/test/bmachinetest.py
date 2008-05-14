@@ -114,7 +114,7 @@ class BroadcastMachineTest(DownloaderTestCase):
                                postVariables = {
                 'Name' : 'Test Channel 1',
                 'Description' : 'This is a test channel',
-                'Publisher' : 'Democracy/Broadcast Machine tester',
+                'Publisher' : 'Miro/Broadcast Machine tester',
                 'Icon' : 'http://images.slashdot.org/topics/topiccommunications.gif',
                 'post_use_auto' : "1",
                 'Options[Thumbnail]' : "1",
@@ -137,7 +137,7 @@ class BroadcastMachineTest(DownloaderTestCase):
         self.assert_(info['redirected-url'].endswith('/channels.php'))
         
         self.assertNotEqual(info['body'].find('Test Channel 1'), -1)
-        self.assertNotEqual(info['body'].find('Democracy/Broadcast Machine tester'), -1)
+        self.assertNotEqual(info['body'].find('Miro/Broadcast Machine tester'), -1)
         self.assertNotEqual(info['body'].find('http://images.slashdot.org/topics/topiccommunications.gif'), -1)
         self.storeBMCookie(info['cookies'])
         eventloop.quit()

@@ -17,7 +17,7 @@ from miro import database
 import gettext
 from miro.frontends.html import compiled_templates
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 
 # FIXME: Add tests for DOM Handles without changeItems or deprecate
 #        the old changeItem API
@@ -57,9 +57,9 @@ class ChangeDelayedDOMTracker(DOMTracker):
         time.sleep(0.1)
         self.callList.append({'name':'changeItem','xml':xml,'id':id})
 
-class SimpleTest(DemocracyTestCase):
+class SimpleTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         handle = file(resources.path("templates/unittest/simple"),"r")
         self.text = handle.read()
         handle.close()
@@ -76,9 +76,9 @@ class SimpleTest(DemocracyTestCase):
         testRE = re.compile(r'^\s+<span>foo</span>\s+<span>BAR</span>\s+$')
         self.assert_(testRE.match(text))
 
-class TranslationTest(DemocracyTestCase):
+class TranslationTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         handle = file(resources.path("testdata/translation-result"),"r")
         self.text = handle.read()
         handle.close()
@@ -86,7 +86,7 @@ class TranslationTest(DemocracyTestCase):
         self.oldgettext = gettext.gettext
     def tearDown(self):
         compiled_templates.unittest.translationtest._ = self.oldgettext
-        DemocracyTestCase.tearDown(self)
+        MiroTestCase.tearDown(self)
     def test(self):
         compiled_templates.unittest.translationtest._ = lambda x : '!%s!' % x
         (tch, handle) = fillTemplate("unittest/translationtest",DOMTracker(),'gtk-x11-MozillaBrowser','platform')
@@ -95,9 +95,9 @@ class TranslationTest(DemocracyTestCase):
         text = HTMLPattern.match(text).group(1)
         self.assertEqual(text,self.text)
 
-class ReplaceTest(DemocracyTestCase):
+class ReplaceTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         handle = file(resources.path("testdata/replace-result"),"r")
         self.text = handle.read()
         handle.close()
@@ -108,9 +108,9 @@ class ReplaceTest(DemocracyTestCase):
         text = HTMLPattern.match(text).group(1)
         self.assertEqual(text,self.text)
 
-class HideTest(DemocracyTestCase):
+class HideTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         handle = file(resources.path("testdata/hide-result"),"r")
         self.text = handle.read()
         handle.close()
@@ -121,7 +121,7 @@ class HideTest(DemocracyTestCase):
         text = HTMLPattern.match(text).group(1)
         self.assertEqual(text,self.text)
 
-class ViewTest(DemocracyTestCase):
+class ViewTest(MiroTestCase):
     pattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n", re.S)
     containerPattern = re.compile("^\n<h1>view test template</h1>\n<div id=\"([^\"]+)\"></div>\n", re.S)
     doublePattern = re.compile("^\n<h1>view test template</h1>\n<span id=\"([^\"]+)\"/>\n<span id=\"([^\"]+)\"/>\n", re.S)
@@ -132,7 +132,7 @@ class ViewTest(DemocracyTestCase):
     def setUp(self):
         global ranOnUnload
         ranOnUnload = 0
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = HTMLObject('<span>object</span>')
         self.y = HTMLObject('<span>object</span>')
@@ -316,11 +316,11 @@ class ViewTest(DemocracyTestCase):
         handle.unlinkTemplate()
         self.assertEqual(ranOnUnload, 1)
 
-class TemplatePerformance(DemocracyTestCase):
+class TemplatePerformance(MiroTestCase):
     def setUp(self):
         global ranOnUnload
         ranOnUnload = 0
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.domHandle = DOMTracker()
 
@@ -367,9 +367,9 @@ class TemplatePerformance(DemocracyTestCase):
         handle.initialFillIn()
         handle.unlinkTemplate()
 
-class OptimizedAttributeChangeTest(DemocracyTestCase):
+class OptimizedAttributeChangeTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.changer = templateoptimize.HTMLChangeOptimizer()
 
     def checkChange(self, id, newXML, attributesDiff, htmlChanged):
@@ -413,9 +413,9 @@ class OptimizedAttributeChangeTest(DemocracyTestCase):
         self.checkChange('abc123', third, {}, True)
         self.checkChange('abc123', fourth, {'class': 'item'}, False)
 
-class HotspotOptimizedTest(DemocracyTestCase):
+class HotspotOptimizedTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.changer = templateoptimize.HTMLChangeOptimizer()
 
     def makeHotspotArea(self, outertext, innertext):

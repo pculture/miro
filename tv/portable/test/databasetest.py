@@ -13,16 +13,16 @@ import tempfile
 from miro import storedatabase
 from threading import Thread
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 
 class SortableObject(database.DDBObject):
     def __init__(self, value):
         self.value = value
         database.DDBObject.__init__(self)
 
-class EmptyViewTestCase(DemocracyTestCase):
+class EmptyViewTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
     def testCur(self):
         self.everything.resetCursor()
@@ -38,9 +38,9 @@ class EmptyViewTestCase(DemocracyTestCase):
     def testLen(self):
         self.assertEqual(self.everything.len(),0)
         
-class SingleItemViewTestCase(DemocracyTestCase):
+class SingleItemViewTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
     def testAdd(self):
@@ -64,9 +64,9 @@ class SingleItemViewTestCase(DemocracyTestCase):
     def testLen(self):
         self.assertEqual(self.everything.len(),1)
 
-class AddBeforeViewTestCase(DemocracyTestCase):
+class AddBeforeViewTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.x = database.DDBObject()
         self.y = database.DDBObject()
         database.resetDefaultDatabase()
@@ -100,9 +100,9 @@ class AddBeforeViewTestCase(DemocracyTestCase):
     def testLen(self):
         self.assertEqual(self.everything.len(),2)
 
-class AddAfterViewTestCase(DemocracyTestCase):
+class AddAfterViewTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.x = database.DDBObject()
         self.y = database.DDBObject()
         database.resetDefaultDatabase()
@@ -137,9 +137,9 @@ class AddAfterViewTestCase(DemocracyTestCase):
     def testLen(self):
         self.assertEqual(self.everything.len(),2)
 
-class DeletedItemViewTestCase(DemocracyTestCase):
+class DeletedItemViewTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -165,9 +165,9 @@ class DeletedItemViewTestCase(DemocracyTestCase):
     def testLen(self):
         self.assertEqual(self.everything.len(),1)
 
-class FilterViewTestCase(DemocracyTestCase):
+class FilterViewTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -191,9 +191,9 @@ class FilterViewTestCase(DemocracyTestCase):
     def testLen(self):
         self.assertEqual(self.filtered.len(),1)
 
-class RecomputeFilterViewTestCase(DemocracyTestCase):
+class RecomputeFilterViewTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -222,9 +222,9 @@ class RecomputeFilterViewTestCase(DemocracyTestCase):
     def testLen(self):
         self.assertEqual(self.filtered.len(),1)
 
-class SortTestCase(DemocracyTestCase):
+class SortTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -283,9 +283,9 @@ class SortTestCase(DemocracyTestCase):
         self.assertEqual(self.sorted[0],self.x)
         self.assertEqual(self.sorted[1],self.y)
 
-class MapViewTestCase(DemocracyTestCase):
+class MapViewTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()
@@ -324,9 +324,9 @@ class MapViewTestCase(DemocracyTestCase):
     def testLen(self):
         self.assertEqual(self.everything.len(),2)
 
-class CallbackViewTestCase(DemocracyTestCase):
+class CallbackViewTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.filtered = self.everything.filter(lambda x:True)
         self.mapped = self.everything.map(lambda x:x)
@@ -394,9 +394,9 @@ class CallbackViewTestCase(DemocracyTestCase):
         self.x.change()
         self.assertEqual(self.callcount,1)
 
-class SaveRestoreTestCase(DemocracyTestCase):
+class SaveRestoreTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.tempdb = os.path.join(tempfile.gettempdir(), 'democracy-temp-db')
         self.everything = database.defaultDatabase
         self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb,
@@ -410,7 +410,7 @@ class SaveRestoreTestCase(DemocracyTestCase):
             shutil.rmtree(self.tempdb)
         except:
             pass
-        DemocracyTestCase.tearDown(self)
+        MiroTestCase.tearDown(self)
 
 class BasicSaveTestCase(SaveRestoreTestCase):
     def testSaveRestore(self):
@@ -444,9 +444,9 @@ class BasicSaveTestCase(SaveRestoreTestCase):
         self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb)
         assert database.DDBObject().getID() > last
 
-class MapFilterRemoveViewTestCase(DemocracyTestCase):
+class MapFilterRemoveViewTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.objlist = []
         for x in range(0,10):
@@ -475,9 +475,9 @@ class MapFilterRemoveViewTestCase(DemocracyTestCase):
         for obj in self.everything:
             self.assertEqual(self.mapFunc(obj),self.mapped.getObjectByID(obj.getID()))
 
-class FilterSortMapTestCase(DemocracyTestCase):
+class FilterSortMapTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.callbacks = 0
         self.objlist = []
@@ -641,9 +641,9 @@ class FilterSortMapTestCase(DemocracyTestCase):
         self.objlist[3].signalChange()
         self.assertEqual(self.callbacks2,4)
         
-class CursorTestCase(DemocracyTestCase):
+class CursorTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID)
@@ -673,9 +673,9 @@ class CursorTestCase(DemocracyTestCase):
         self.everything.restoreCursor()
         self.assertEqual(self.everything.cur(), obj)
 
-class RecomputeMapTestCase(DemocracyTestCase):
+class RecomputeMapTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID).map(self.mapToObject)
@@ -696,9 +696,9 @@ class RecomputeMapTestCase(DemocracyTestCase):
         temp.signalChange()
         self.assertEqual(self.changeCalls,1)
 
-class FilterUpdateOnChange(DemocracyTestCase):
+class FilterUpdateOnChange(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
@@ -718,9 +718,9 @@ class FilterUpdateOnChange(DemocracyTestCase):
         self.assertEqual(self.objs.len(),2)
 
 # Currently, we require that the database does NOT update maps on a change
-class MapUpdateOnChange(DemocracyTestCase):
+class MapUpdateOnChange(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
@@ -743,9 +743,9 @@ class MapUpdateOnChange(DemocracyTestCase):
         self.origObjs[1].signalChange()
         self.assertEqual(self.objs.len(),1)
 
-class SortUpdateOnChange(DemocracyTestCase):
+class SortUpdateOnChange(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.origObjs[0].good = True
@@ -764,9 +764,9 @@ class SortUpdateOnChange(DemocracyTestCase):
         self.origObjs[1].signalChange()
         self.assertEqual(self.objs.len(),2)
 
-class IDBaseTraversal(DemocracyTestCase):
+class IDBaseTraversal(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
         self.sorted = self.everything.sort(self.sortID)
@@ -800,7 +800,7 @@ class IDBaseTraversal(DemocracyTestCase):
         self.sorted.getNext()
         self.assertEqual(self.origObjs[2].getID(), self.sorted.getCurrentID())
 
-# class ThreadTest(DemocracyTestCase):
+# class ThreadTest(MiroTestCase):
 #     def setUp(self):
 #         self.everything = database.defaultDatabase
 #     def add100(self):
@@ -817,9 +817,9 @@ class IDBaseTraversal(DemocracyTestCase):
 #         self.remove100()
 #         thread.join()
 
-class IndexFilterTestBase(DemocracyTestCase):
+class IndexFilterTestBase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.addCallbacks = 0
         self.removeCallbacks = 0
@@ -1147,9 +1147,9 @@ class MultiIndexTestCase(IndexFilterTestBase):
             self.assertEquals(self.addCallbacks, addCallbackGoal)
             self.assertEquals(self.removeCallbacks, removeCallbackGoal)
 
-class ReSortTestCase(DemocracyTestCase):
+class ReSortTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.addCallbacks = 0
         self.removeCallbacks = 0
@@ -1198,9 +1198,9 @@ class ReSortTestCase(DemocracyTestCase):
         self.assertEqual(self.removeCallbacks, 1)
         self.assertEqual(self.changeCallbacks, 0)
 
-class SortingFilterTestCase(DemocracyTestCase):
+class SortingFilterTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.sortCalls = 0
         self.objs = []
@@ -1408,10 +1408,10 @@ class SortingFilterTestCase(DemocracyTestCase):
         for view in allMyViews:
             view.unlink()
 
-class UnlinkViewTestCase(DemocracyTestCase):
+class UnlinkViewTestCase(MiroTestCase):
     def setUp(self):
         self.sortCalls = 0
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.everything = database.defaultDatabase
         self.x = database.DDBObject()
         self.y = database.DDBObject()

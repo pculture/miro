@@ -18,7 +18,7 @@ from miro import dialogs
 from miro import httpclient
 from miro import signals
 from miro import util
-from miro.test.framework import EventLoopTest, DemocracyTestCase, HadToStopEventLoop
+from miro.test.framework import EventLoopTest, MiroTestCase, HadToStopEventLoop
 
 class TestingConnectionHandler(httpclient.ConnectionHandler):
     def __init__(self, test):
@@ -318,10 +318,10 @@ class AsyncSocketTest(EventLoopTest):
         self.errbackCalled = True
         self.stopEventLoop(False)
 
-class NetworkBufferTest(DemocracyTestCase):
+class NetworkBufferTest(MiroTestCase):
     def setUp(self):
         self.buffer = httpclient.NetworkBuffer()
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
 
 #    def testMemory(self):
 #        i = 0
@@ -1039,11 +1039,11 @@ class HTTPClientTest(HTTPClientTestBase):
 #         httpclient.grabURL(url, self.callback, self.errback, clientClass=TestHTTPClient)
 #         self.runEventLoop(timeout=5)
 #         self.assertEquals(len(self.data['cookies']),1)
-#         self.assert_(self.data['cookies'].has_key('DemocracyTestCookie'))
-#         self.assertEquals(self.data['cookies']['DemocracyTestCookie']['Value'], 'foobar')
+#         self.assert_(self.data['cookies'].has_key('MiroTestCookie'))
+#         self.assertEquals(self.data['cookies']['MiroTestCookie']['Value'], 'foobar')
 #         httpclient.grabURL(url, self.callback, self.errback,cookies = self.data['cookies'], clientClass=TestHTTPClient)
 #         self.runEventLoop(timeout=2)
-#         self.assertNotEqual(self.data['body'].find('DemocracyTestCookie:foobar'),-1)
+#         self.assertNotEqual(self.data['body'].find('MiroTestCookie:foobar'),-1)
 
     def testParseURL(self):
         (scheme, host, port, path) = \

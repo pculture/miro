@@ -2,7 +2,7 @@
 
 import tempfile
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 from miro import databaseupgrade
 from miro import feed
 from miro import item
@@ -10,7 +10,7 @@ from miro import folder
 from miro import playlist
 from miro import storedatabase
 
-class DatabaseUpgradeTest(DemocracyTestCase):
+class DatabaseUpgradeTest(MiroTestCase):
     def makeSavables(self, *objects):
         return [storedatabase.objectToSavable(o) for o in objects]
 

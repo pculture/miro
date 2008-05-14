@@ -1,7 +1,7 @@
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 from miro.download_utils import parseURL
 
-class TestParseURL(DemocracyTestCase):
+class TestParseURL(MiroTestCase):
     def doCheck(self, url, scheme, host, port, path):
         result = parseURL(url)
         self.assertEquals(result[0], scheme)

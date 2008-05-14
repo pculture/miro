@@ -1,16 +1,16 @@
 from miro import signals
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 
 class TestSignaller(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'signal1', 'signal2')
 
-class SignalsTest(DemocracyTestCase):
+class SignalsTest(MiroTestCase):
     def setUp(self):
         self.callbacks = []
         self.signaller = TestSignaller()
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         
     def callback(self, *args):
         self.callbacks.append(args)

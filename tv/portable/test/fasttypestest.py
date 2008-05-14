@@ -1,14 +1,14 @@
 import unittest
 from miro import fasttypes
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 
 class Dummy:
     pass
 
-class LinkedListTestCase(DemocracyTestCase):
+class LinkedListTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.list = fasttypes.LinkedList()
     def test(self):
         temp = Dummy()
@@ -116,9 +116,9 @@ class LinkedListTestCase(DemocracyTestCase):
         assert self.list.firstIter() == self.list.lastIter()
         assert not self.list.firstIter() != self.list.lastIter()
 
-class SortedListTestCase(DemocracyTestCase):
+class SortedListTestCase(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.list = fasttypes.SortedList(self.cmp)
     def cmp(self, obj1, obj2):
         return obj1 < obj2

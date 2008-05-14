@@ -13,11 +13,11 @@ from miro import databasesanity
 from miro import database
 from miro import util
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 
-class SanityCheckingTest(DemocracyTestCase):
+class SanityCheckingTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.savePath = tempfile.mktemp()
 
     def tearDown(self):
@@ -25,7 +25,7 @@ class SanityCheckingTest(DemocracyTestCase):
             os.unlink(self.savePath)
         except OSError:
             pass
-        DemocracyTestCase.tearDown(self)
+        MiroTestCase.tearDown(self)
 
     def checkObjectListFailsTest(self, objectList):
         self.assertRaises(databasesanity.DatabaseInsaneError,

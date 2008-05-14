@@ -3,7 +3,7 @@ import unittest
 
 from miro import subscription
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 
 # =============================================================================
 # Test data
@@ -176,7 +176,7 @@ OPML_NESTED = u"""\
 # Test case
 # =============================================================================
 
-class TestSubscription (DemocracyTestCase):
+class TestSubscription (MiroTestCase):
         
     subscription.reflexiveAutoDiscoveryOpener = open
 
@@ -232,7 +232,7 @@ class TestSubscription (DemocracyTestCase):
         self.assert_(urls[2] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
         self.assert_(urls[3] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
 
-class TestFindSubscribeLinks (DemocracyTestCase):
+class TestFindSubscribeLinks (MiroTestCase):
     def testDifferstHost(self):
         url = 'http://youtoob.com'
         self.assertEquals(subscription.findSubscribeLinks(url), 

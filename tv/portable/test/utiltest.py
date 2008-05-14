@@ -3,7 +3,7 @@ from StringIO import StringIO
 import os
 import tempfile
 
-from miro.test.framework import DemocracyTestCase
+from miro.test.framework import MiroTestCase
 from miro import download_utils
 from miro import util
 from miro import xhtmltools
@@ -21,9 +21,9 @@ class FakeStream:
     def flush(self):
         pass
 
-class AutoflushingStreamTest(DemocracyTestCase):
+class AutoflushingStreamTest(MiroTestCase):
     def setUp(self):
-        DemocracyTestCase.setUp(self)
+        MiroTestCase.setUp(self)
         self.stream = FakeStream()
         self.afs = util.AutoflushingStream(self.stream)
 
@@ -35,7 +35,7 @@ class AutoflushingStreamTest(DemocracyTestCase):
     def testUnicodeWrite(self):
         self.afs.write(u'\xf8')
 
-class UtilTest(DemocracyTestCase):
+class UtilTest(MiroTestCase):
     def testAbsolutePathToFileURL(self):
         testPaths = {
             '/ben/dean/kawamura' : 'file:///ben/dean/kawamura',
@@ -73,7 +73,7 @@ class UtilTest(DemocracyTestCase):
             self.assertEquals(len(ret), length)
             self.assertEquals(ret.isalpha(), True)
 
-class XHTMLToolsTest(DemocracyTestCase):
+class XHTMLToolsTest(MiroTestCase):
     def testMultipartEncode(self):
         vars = {
                 'foo': u'123',  # unicode string
@@ -88,7 +88,7 @@ class XHTMLToolsTest(DemocracyTestCase):
 
         boundary, data = xhtmltools.multipartEncode(vars, files)
 
-class DownloadUtilsTest(DemocracyTestCase):
+class DownloadUtilsTest(MiroTestCase):
     def checkCleanFilename(self, filename, test_against):
         self.assertEquals(download_utils.cleanFilename(filename),
                 test_against)

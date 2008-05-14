@@ -8,7 +8,7 @@ from miro import dialogs
 from miro import database
 from miro.feed import validateFeedURL, normalizeFeedURL, Feed
 
-from miro.test.framework import DemocracyTestCase, EventLoopTest
+from miro.test.framework import MiroTestCase, EventLoopTest
 
 class FakeDownloader:
     pass
@@ -26,7 +26,7 @@ class AcceptScrapeTestDelegate:
         dialog.choice = dialogs.BUTTON_YES
         dialog.callback(dialog)
 
-class FeedURLValidationTest(DemocracyTestCase):
+class FeedURLValidationTest(MiroTestCase):
     def test(self):
         self.assertEqual(validateFeedURL(u"http://foo.bar.com/"), True)
         self.assertEqual(validateFeedURL(u"https://foo.bar.com/"), True)
@@ -49,7 +49,7 @@ class FeedURLValidationTest(DemocracyTestCase):
         self.assertEqual(validateFeedURL(u"crap://foo.bar.com"), False)
         self.assertEqual(validateFeedURL(u"crap:///foo.bar.com"), False)
 
-class FeedURLNormalizationTest(DemocracyTestCase):
+class FeedURLNormalizationTest(MiroTestCase):
     def test(self):
         self.assertEqual(normalizeFeedURL(u"http://foo.bar.com"), u"http://foo.bar.com/")
         self.assertEqual(normalizeFeedURL(u"https://foo.bar.com"), u"https://foo.bar.com/")
