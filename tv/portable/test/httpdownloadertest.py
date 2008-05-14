@@ -7,6 +7,12 @@ from miro import httpclient
 from miro.test import schedulertest
 from miro.dl_daemon import download
 
+# BIGTESTFILE = { "url": u"http://www.getmiro.com/images/apple-screen.jpg", 
+#                 "size": 171497 }
+BIGTESTFILE = { "url": u"http://www.getmiro.com/images/linux-screen.jpg", 
+                "size": 45572 }
+
+
 def testingNextFreeFilename(filename):
     return tempfile.mktemp()
 
@@ -77,7 +83,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
 
     def testStop(self):
         # nice large download so that we have time to interrupt it
-        url = u'http://www.getmiro.com/images/linux-screen.jpg'
+        url = BIGTESTFILE["url"]
         self.downloader = TestingDownloader(self, url, "ID1")
         def stopOnData():
             if (self.downloader.state == 'downloading' and 
@@ -95,11 +101,11 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         self.addTimeout(0.5, restart, 'restarter')
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
-        self.assertEquals(self.downloader.currentSize, 45572)
-        self.assertEquals(self.downloader.totalSize, 45572)
+        self.assertEquals(self.downloader.currentSize, BIGTESTFILE["size"])
+        self.assertEquals(self.downloader.totalSize, BIGTESTFILE["size"])
 
     def testPause(self):
-        url = u'http://www.getmiro.com/images/linux-screen.jpg'
+        url = BIGTESTFILE["url"]
         self.downloader = TestingDownloader(self, url, "ID1")
         def pauseOnData():
             if (self.downloader.state == 'downloading' and 
@@ -117,11 +123,11 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
         self.addTimeout(0.5, restart, 'restarter')
         self.downloader.statusCallback = self.stopOnFinished
         self.runEventLoop()
-        self.assertEquals(self.downloader.currentSize, 45572)
-        self.assertEquals(self.downloader.totalSize, 45572)
+        self.assertEquals(self.downloader.currentSize, BIGTESTFILE["size"])
+        self.assertEquals(self.downloader.totalSize, BIGTESTFILE["size"])
 
     def testRestore(self):
-        url = u'http://www.getmiro.com/images/linux-screen.jpg'
+        url = BIGTESTFILE["url"]
         self.downloader = TestingDownloader(self, url, "ID1")
         def pauseInMiddle():
             if (self.downloader.state == 'downloading' and 
