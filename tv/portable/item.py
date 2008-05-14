@@ -916,37 +916,51 @@ folder will be deleted.""")
     @returnsUnicode
     def getRawDescription(self):
         self.confirmDBThread()
+
         try:
             enclosure = self.getFirstVideoEnclosure()
-            return enclosure["text"]
-        except:
-            try:
+            if "text" in enclosure:
+                return enclosure["text"]
+
+            if hasattr(self.entry, "description"):
                 return self.entry.description
-            except:
-                return u''
+
+        except Exception:
+            logging.exception("getRawDescription threw exception:")
+
+        return u''
 
     ##
     # Returns valid XHTML containing a description of the video (str)
     @returnsUnicode
     def getDescription(self):
         rawDescription = self.getRawDescription()
+
+        # FIXME - clean this up in regards to exception handling.
         try:
             purifiedDescription = adscraper.purify(rawDescription)
             return xhtmlify (u'<span>%s</span>' % (unescape(purifiedDescription),), filterFontTags=True)
-        except:
+
+        except Exception:
+            logging.exception("getDescription threw error.")
             try:
                 return xhtmlify (u'<span>%s</span>' % (unescape(rawDescription),))
-            except:
+            except Exception:
+                logging.exception("getDescription threw error.")
                 return u'<span />'
 
     ##
     # Returns valid XHTML containing the ad (str)
     def getAd(self):
         rawDescription = self.getRawDescription()
+
+        # FIXME - clean this up in regards to exception handling.
         try:
             rawAd = adscraper.scrape(rawDescription)
             return xhtmlify (u'<span>%s</span>' % (unescape(rawAd),))
-        except:
+
+        except Exception:
+            logging.exception("getAd threw error.")
             return u'<span />'
 
     def looksLikeTorrent(self):
