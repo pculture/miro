@@ -95,6 +95,9 @@ a.feeditem div.name {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+a.feeditem div.line {
+  white-space:nowrap;
+}
 .tab-list.first a.feeditem div.name,
 a.feeditem.playlist div.name,
 a.feeditem.folder div.name {
@@ -115,7 +118,6 @@ a.feeditem.folder {
    padding-left: 45px;
 /*   margin-bottom:12px;*/
 }
-
 a.feeditem.blinking {
     background: #ff9;
 }
