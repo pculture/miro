@@ -46,22 +46,39 @@ if '--unittest' in sys.argv:
 
 usage = "usage: %prog [options] [torrent files] [video files]"
 parser = optparse.OptionParser(usage=usage)
-parser.add_option('--unittest', dest='unittest', default=False,
-    action='store_true', 
-    help='run unittests instead of launching the program')
-parser.add_option('-v', '--version', dest='version', default=False,
-    action='store_true', help='print version info')
-parser.add_option('--profile', metavar='<file>', help='write profiling information to FILE')
-parser.add_option('--bias', metavar='<bias>', help='set profiling bias to BIAS', type=float, default=None)
-parser.add_option('--sync', help='Use X Syncronously (for debugging)', default=False, action="store_true")
-parser.add_option("--xine-driver", metavar="<driver>",
-                  action="store", type="string", dest="xine_driver", help="Xine driver (xv, xshm, opengl, sdl, dxr3, aadxr3, aa, caca, or xxmc)")
-parser.add_option('--enable-xine-hack', dest="use_xv_hack", action="store_true", help='Enable the Xine XV Hack (default)')
-parser.add_option('--disable-xine-hack', dest="use_xv_hack", action="store_false", help='Disable the Xine XV Hack')
-parser.add_option('--theme', dest='theme', metavar='<theme>', help='Theme to use')
-parser.add_option('--frontend', dest='frontend', metavar='<frontend>',
-        default='html', help='Frontend to use (html, cli)')
-parser.add_option('--debug', action="store_true", help='Starts Miro in a gdb session for better debugging.')
+parser.add_option('-v', '--version',
+                  dest='version', default=False, action='store_true', 
+                  help='print version info')
+parser.add_option('--debug', 
+                  action="store_true", 
+                  help='Starts Miro in a gdb session for better debugging.')
+parser.add_option('--unittest', 
+                  dest='unittest', default=False, action='store_true', 
+                  help='run unittests instead of launching the program')
+parser.add_option('--profile', 
+                  metavar='<file>', 
+                  help='write profiling information to FILE')
+parser.add_option('--bias', 
+                  metavar='<bias>', type=float, default=None,
+                  help='set profiling bias to BIAS')
+parser.add_option('--sync', 
+                  default=False, action="store_true",
+                  help='Use X Syncronously (for debugging)')
+parser.add_option("--xine-driver", 
+                  metavar="<driver>", action="store", type="string", dest="xine_driver", 
+                  help="Xine driver (auto, xv, xshm, opengl, sdl, dxr3, aadxr3, aa, caca, or xxmc)")
+parser.add_option('--enable-xine-hack', 
+                  dest="use_xv_hack", action="store_true", 
+                  help='Enable the Xine XV Hack (default)')
+parser.add_option('--disable-xine-hack', 
+                  dest="use_xv_hack", action="store_false", 
+                  help='Disable the Xine XV Hack')
+parser.add_option('--theme', 
+                  dest='theme', metavar='<theme>', 
+                  help='Theme to use')
+parser.add_option('--frontend', 
+                  dest='frontend', metavar='<frontend>', default='html', 
+                  help='Frontend to use (html, cli)')
 (parsed_options, args) = parser.parse_args()
 
 def startapp():
