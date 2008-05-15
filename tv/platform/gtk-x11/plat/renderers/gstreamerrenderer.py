@@ -165,8 +165,9 @@ class Renderer:
         
     def onExpose(self, widget, event):
         confirmMainThread()
-        if self.sink and hasattr(self.sink, "expose"):
-            self.sink.expose()
+        if self.sink:
+            if hasattr(self.sink, "expose"):
+                self.sink.expose()
         else:
             widget.window.draw_rectangle(self.gc,
                                          True,
