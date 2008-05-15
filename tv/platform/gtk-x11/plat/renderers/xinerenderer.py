@@ -28,6 +28,7 @@
 
 import os
 import traceback
+import logging
 
 import gtk
 import gobject
@@ -60,7 +61,15 @@ class Renderer:
         self.xine.setEosCallback(self.onEos)
         self.attachQueue = []
         self.attached = False
+        self.driver = self.getDriver()
+        logging.info("xinerenderer: using '%s' as driver" % self.driver)
 
+    def getDriver(self):
+        xineDriver = options.defaultXineDriver
+        if xineDriver is None:
+            xineDriver = "xv"
+        return xineDriver
+ 
     def setWidget(self, widget):
         confirmMainThread()
         widget.connect_after("realize", self.onRealize)
@@ -77,10 +86,7 @@ class Renderer:
         # flush gdk output to ensure that our window is created
         gtk.gdk.flush()
         displayName = gtk.gdk.display_get_default().get_name()
-        xineDriver = options.defaultXineDriver
-        if xineDriver is None:
-            xineDriver = "xv"
-        self.xine.attach(displayName, widget.window.xid, xineDriver, int(options.shouldSyncX), int(options.useXineHack))
+        self.xine.attach(displayName, widget.window.xid, self.driver, int(options.shouldSyncX), int(options.useXineHack))
         self.attached = True
         for func, args in self.attachQueue:
             try:
@@ -177,7 +183,6 @@ class Renderer:
         confirmMainThread()
         self.seek (seconds)
         
-
     @waitForAttach
     def seek(self, seconds):
         confirmMainThread()
