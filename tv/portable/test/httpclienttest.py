@@ -47,6 +47,7 @@ class TestingConnectionHandler(httpclient.ConnectionHandler):
 class FakeStream:
     def __init__(self, closeCallback=None):
         self.open = False
+        self.paused = False
         self.readCallback = None
         self.closeCallback = closeCallback
         self.timedOut = False
@@ -95,10 +96,23 @@ class FakeStream:
         
 
     def _tryReadCallback(self):
-        if len(self.pendingOutput)>0 and self.readCallback:
+        if (len(self.pendingOutput)>0 and self.readCallback and not
+                self.paused):
             response = self.pendingOutput
             self.pendingOutput = ''
             self.readCallback(response)
+
+    def pause(self):
+        self.paused = True
+
+    def unpause(self):
+        self.paused = False
+        self._tryReadCallback()
+
+    def unpause_momentarily(self):
+        self.paused = False
+        self._tryReadCallback()
+        self.paused = True
             
     def _generateResponse(self, method, uri, version, headers):
         text = None
@@ -253,24 +267,28 @@ class TestingHTTPConnectionPool(httpclient.HTTPConnectionPool):
         for conn in conns[type]:
             return conn # returns the 1st one we find
 
+    def getAllConnections(self):
+        retval = []
+        for conns in self.connections.values():
+            retval.extend(conns['free'])
+            retval.extend(conns['active'])
+        return retval
+
     def assertConnectionStarted(self, url):
         assert self.checkConnectionStarted(url)
     def assertConnectionNotStarted(self, url):
         assert not self.checkConnectionStarted(url)
     def checkConnectionStarted(self, url):
-        scheme, host, port, path = httpclient.parseURL(url)
+        scheme, host, port, path = download_utils.parseURL(url)
         conns = self._getServerConnections(scheme, host, port)
         for conn in conns['active']:
             try:
-                if conn.host == host and conn.port == port:
+                if (conn.host == host and conn.port == port and 
+                        conn.path == path):
                     return True
             except:
                 pass
         return False
-    def closeConnection(self, scheme, host, port=None, type='active'):
-        conn = self.getConnection(scheme, host, port, type)
-        conn.handleClose(socket.SHUT_RDWR)
-
 
 class DumbTestingHTTPConnectionPool(TestingHTTPConnectionPool):
     HTTP_CONN = DumbTestingHTTPConnection
@@ -1067,21 +1085,21 @@ class HTTPClientTest(HTTPClientTestBase):
 
     def testParseURL(self):
         (scheme, host, port, path) = \
-                httpclient.parseURL("https://www.foo.com/abc;123?a=b#4")
+                download_utils.parseURL("https://www.foo.com/abc;123?a=b#4")
         self.assertEquals(scheme, 'https')
         self.assertEquals(host, 'www.foo.com')
         self.assertEquals(port, 443)
         self.assertEquals(path, '/abc;123?a=b')
         (scheme, host, port, path) = \
-                httpclient.parseURL("http://www.foo.com/abc;123?a=b#4")
+                download_utils.parseURL("http://www.foo.com/abc;123?a=b#4")
         self.assertEquals(port, 80)
         (scheme, host, port, path) = \
-                httpclient.parseURL("http://www.foo.com:5000/abc;123?a=b#4")
+                download_utils.parseURL("http://www.foo.com:5000/abc;123?a=b#4")
         self.assertEquals(port, 5000)
         # I guess some feeds have bad url, with a double port in them, test
         # that we handle these.
         (scheme, host, port, path) = \
-                httpclient.parseURL("http://www.foo.com:123:123/abc;123?a=b#4")
+                download_utils.parseURL("http://www.foo.com:123:123/abc;123?a=b#4")
         self.assertEquals(port, 123)
 
 #     def checkRedirect(self, url, redirectUrl, updatedUrl, **extra):
@@ -1228,6 +1246,38 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.pool = TestingHTTPConnectionPool()
         super(HTTPConnectionPoolTest, self).setUp()
 
+    def getConnectionForURL(self, url):
+        scheme, host, port, path = download_utils.parseURL(url)
+        # Run event loop to make sure all the open callbacks have run, so that
+        # each connection has a URL
+        self.runPendingIdles()
+        for conn in self.pool.getAllConnections():
+            if (conn.scheme == scheme and conn.host == host and
+                    conn.port == port and conn.path == path):
+                return conn
+        raise AssertionError("No connection with url: %s" % url)
+
+    def pauseAllConnections(self):
+        for conn in self.pool.getAllConnections():
+            conn.stream.pause()
+
+    def finishConnectionForURL(self, url):
+        self.pauseAllConnections()
+        conn = self.getConnectionForURL(url)
+        # The stream should be all ready to send it's response.
+        # unpause it and run the event loop and it should be finished
+        conn.stream.unpause()
+        # We probably started a new pending request.  Make sure that the
+        # stream is re-paused and if we created any new streams are paused
+        # too.
+        self.pauseAllConnections()
+        self.runPendingIdles()
+
+    def closeConnectionForURL(self, url):
+        self.pauseAllConnections()
+        conn = self.getConnectionForURL(url)
+        conn.handleClose(socket.SHUT_RDWR)
+
     def addRequest(self, url):
         return self.pool.addRequest(
             lambda blah: self.addIdle(lambda :self.stopEventLoop(False),
@@ -1267,11 +1317,11 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.addRequest("http://participatoryculture.org/democracytest/normalpage.txt")
         self.addRequest("https://participatoryculture.org/")
         self.checkCounts(3, 0, 0)
-        self.runEventLoop()
+        self.finishConnectionForURL('http://participatoryculture.org')
         self.checkCounts(2, 1, 0)
-        self.pool.closeConnection('https', 'participatoryculture.org')
+        self.closeConnectionForURL('https://participatoryculture.org/')
         self.checkCounts(1, 1, 0)
-        self.pool.closeConnection('http', 'participatoryculture.org', type='free')
+        self.closeConnectionForURL('http://participatoryculture.org/')
         self.checkCounts(1, 0, 0)
 
     def testServerLimit(self):
@@ -1282,9 +1332,9 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.addRequest("http://participatoryculture.org/democracytest/normalpage3.txt")
         self.checkCounts(3, 0, 1)
         self.pool.assertConnectionNotStarted('http://participatoryculture.org/democracytest/normalpage3.txt')
-        self.runEventLoop()
+        self.finishConnectionForURL("http://participatoryculture.org/democracytest/normalpage.txt")
         self.checkCounts(3, 0, 0)
-        self.runEventLoop()
+        self.finishConnectionForURL("http://participatoryculture.org/democracytest/normalpage2.txt")
         self.pool.assertConnectionStarted('http://participatoryculture.org/democracytest/normalpage3.txt')
         self.checkCounts(2, 1, 0)
 
@@ -1310,12 +1360,12 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.addRequest("http://www.baz.com/")
         self.checkCounts(4, 0, 2)
         self.pool.assertConnectionNotStarted('http://www.baz.com/')
-        self.runEventLoop()
-        self.checkCounts(4, 0, 1)
-        self.pool.assertConnectionNotStarted('http://www.baz.com/')
-        self.runEventLoop()
-        self.checkCounts(4, 0, 0)
-        self.runEventLoop()
+        self.pool.assertConnectionNotStarted('http://participatoryculture.org/3')
+        self.finishConnectionForURL('https://www.bar.com/')
+        self.checkCounts(3, 1, 1)
+        self.pool.assertConnectionNotStarted('http://participatoryculture.org/3')
+        self.finishConnectionForURL('http://participatoryculture.org/')
+        self.checkCounts(3, 1, 0)
 
     def testDropTheLRU(self):
         # Check that the first connection dropped when we run out of
@@ -1324,9 +1374,14 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.addRequest("http://participatoryculture.org/")
         self.addRequest("http://www.bar.com/")
         self.addRequest("http://www.froz.com/")
-        self.addRequest("http://www.qux.com/")
-        self.assert_(len(self.pool.connections['http:www.baz.com:80']['free'])==0 and len(self.pool.connections['http:www.baz.com:80']['active'])>0)
-        self.runEventLoop()
+        self.finishConnectionForURL('http://www.baz.com/')
+        self.finishConnectionForURL('http://www.bar.com/')
+        self.getConnectionForURL('http://www.baz.com').idleSince = 10
+        self.getConnectionForURL('http://www.bar.com').idleSince = 20
+        # baz.com has been idle longer, so it should be dropped when we add a new
+        # request
+        self.assert_(len(self.pool.connections['http:www.baz.com:80']['free'])==1 and len(self.pool.connections['http:www.baz.com:80']['active'])==0)
+        self.addRequest("http://www.booya.com/2")
         self.assert_(len(self.pool.connections['http:www.baz.com:80']['free'])==0 and len(self.pool.connections['http:www.baz.com:80']['active'])==0)
 
         # 

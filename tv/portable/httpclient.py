@@ -1276,8 +1276,6 @@ class HTTPConnectionPool(object):
             postVariables = None, postFiles = None):
         """Add a request to be run.  The request will run immediately if we
         have a free connection, otherwise it will be queued.
-
-        returns a request id that can be passed to cancelRequest
         """
         proxy_host = proxy_port = None
         scheme, host, port, path = parseURL(url)
@@ -1410,7 +1408,6 @@ class HTTPConnectionPool(object):
         return conn
 
     def _dropAFreeConnection(self):
-        # TODO: pick based on LRU
         firstTime = sys.maxint
         toDrop = None
 
@@ -1418,6 +1415,7 @@ class HTTPConnectionPool(object):
             for candidate in conns['free']:
                 if candidate.idleSince < firstTime:
                     toDrop = candidate
+                    firstTime= candidate.idleSince
         if toDrop is not None:
             toDrop.closeConnection()
 
