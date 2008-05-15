@@ -106,7 +106,22 @@ class Renderer:
         self.bus.enable_sync_message_emission()        
         self.watch_id = self.bus.connect("message", self.onBusMessage)
         self.bus.connect('sync-message::element', self.onSyncMessage)
-        self.sink = gst.element_factory_make("ximagesink", "sink")
+
+        videosink = "gconfvideosink"
+        try:
+            logging.info("gstreamerrenderer: using '%s' for sink" % videosink)
+            self.sink = gst.element_factory_make(videosink, "sink")
+
+        except gst.ElementNotFoundError:
+            logging.info("gstreamerrenderer: ElementNotFoundError '%s'" % videosink)
+            logging.info("gstreamerrenderer: using 'ximagesink' for sink")
+            self.sink = gst.element_factory_make("ximagesink", "sink")
+
+        except Exception, e:
+            logging.exception("sink exception")
+            logging.info("gstreamerrenderer: using 'ximagesink' for sink")
+            self.sink = gst.element_factory_make("ximagesink", "sink")
+
         self.playbin.set_property("video-sink", self.sink)
 
     def onSyncMessage(self, bus, message):
@@ -150,7 +165,7 @@ class Renderer:
         
     def onExpose(self, widget, event):
         confirmMainThread()
-        if self.sink:
+        if self.sink and hasattr(self.sink, "expose"):
             self.sink.expose()
         else:
             widget.window.draw_rectangle(self.gc,
