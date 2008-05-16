@@ -97,6 +97,8 @@ def _getItemForLatest(appcast):
         for enclosure in item['enclosures']:
             if enclosure['dtv:platform'] != platform:
                 rejectedEnclosures.append(enclosure)
+            if enclosure['type'] != 'application/octet-stream':
+                rejectedEnclosures.append(enclosure)
         for enclosure in rejectedEnclosures:
             item['enclosures'].remove(enclosure)
         if len(item['enclosures']) == 0:

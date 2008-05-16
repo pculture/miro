@@ -28,7 +28,9 @@
 
 import os
 import logging
+import tempfile
 import webbrowser
+import subprocess
 import traceback
 from miro.gtcache import gettext as _
 from urlparse import urlparse
@@ -38,6 +40,7 @@ from miro import config
 from miro import dialogs
 from miro import feed
 from miro import app
+from miro import httpclient
 from miro.plat import clipboard
 from miro.plat.frontends.html import urlcallbacks
 from miro.trapcall import trapCall
@@ -71,6 +74,21 @@ def _makeSupportsArrayFromSecondElement(data):
         arrayAbs.AppendElement(supportsString)
     return arrayAbs
 
+def downloadUpdate(url):
+    print 'downloading new version of Miro', url
+    def success(info):
+        fd, filename = tempfile.mkstemp(suffix='.exe')
+        output = os.fdopen(fd, 'wb')
+        output.write(info['body'])
+        output.close()
+        subprocess.Popen(filename)
+        app.controller.shutdown()
+    def error(e):
+        # XXX what should we do here?
+        print 'error downloading installer', e
+        httpclient.grabURL(url, success, error)
+    httpclient.grabURL(url, success, error)
+               
 class UpdateAvailableDialog(dialogs.Dialog):
     """Give the user a choice of 2 options (Yes/No, Ok/Cancel,
     Migrate/Don't Migrate, etc.)
@@ -289,5 +307,5 @@ class UIBackendDelegate:
         dialog = UpdateAvailableDialog(releaseNotes)
         def callback(dialog):
             if dialog.choice == dialogs.BUTTON_DOWNLOAD:
-                self.openExternalURL(url)
+                downloadUpdate(url)
         dialog.run(callback)

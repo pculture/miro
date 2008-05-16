@@ -864,9 +864,7 @@ TestRunning:
   ${nsProcess::FindProcess} "miro.exe" $R0
   StrCmp $R0 0 0 NotRunning
   StrCmp $REINSTALL 1 0 ShowCloseBox
-  FindWindow $R0 "" "$APP_NAME"
-  IsWindow $R0 0 TestRunning
-  SendMessage $R0 ${WM_CLOSE} 0 0 /TIMEOUT=5000
+  Sleep 2000
   Goto TestRunning
 ShowCloseBox:
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
