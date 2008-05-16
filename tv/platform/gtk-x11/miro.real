@@ -26,6 +26,13 @@ from miro.plat import options
 from miro import prefs
 from miro import singleclick
 
+if '--unittest' in sys.argv:
+    # handle this outside optparse, because unittest has its own option set
+    sys.argv.remove('--unittest')
+    import unittest
+    from miro import test
+    unittest.main(module=test)
+
 def startup():
     if parsed_options.frontend == 'html':
         from miro.plat.frontends.html.Application import Application
@@ -35,14 +42,6 @@ def startup():
         cli.run(parsed_options.theme)
     else:
         raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
-
-
-if '--unittest' in sys.argv:
-    # handle this outside optparse, because unittest has its own option set
-    sys.argv.remove('--unittest')
-    import unittest
-    from miro import test
-    unittest.main(module=test)
 
 usage = "usage: %prog [options] [torrent files] [video files]"
 parser = optparse.OptionParser(usage=usage)
@@ -88,7 +87,6 @@ def startapp():
     if not os.path.exists(support_dir):
         os.makedirs(support_dir)
 
-
     # These aren't in config because we can override them with the
     # command line, so config.get() wouldn't return the correct value
     # anyway.  Maybe, eventually, we should integrate command line
@@ -111,6 +109,7 @@ def startapp():
     singleclick.setCommandLineArgs(args)
 
     startup()
+
 if parsed_options.version:
     print "Miro"
     print "Version: %s" % config.get(prefs.APP_VERSION)
@@ -118,6 +117,7 @@ if parsed_options.version:
     print "Miro comes with ABSOLUTELY NO WARRANTY."
     print "This is free software, and you are welcome to redistribute it"
     print "under certain conditions.  See license.txt for details."
+
 elif parsed_options.profile:
     import profile
     import eventloop
@@ -127,6 +127,7 @@ elif parsed_options.profile:
         profile.Profile.bias = parsed_options.bias
     eventloop.profile_file = parsed_options.profile
     profile.run ('main()', parsed_options.profile)
+
 else:
     try:
         import dbus
