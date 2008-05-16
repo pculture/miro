@@ -90,7 +90,8 @@ ReserveFile "iHeartMiro-installer-page.ini"
 !insertmacro MUI_PAGE_WELCOME
 
 Function add_radio_buttons
-  Call skip_if_simple_or_reinstall
+  StrCmp $REINSTALL "1" 0 +2
+  Abort
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NumFields" "5"
   
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Top" "20"
