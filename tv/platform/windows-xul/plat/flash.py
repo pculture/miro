@@ -38,6 +38,21 @@ import webbrowser
 FLASH_INSTALL_URL = 'http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player.exe'
 FLASH_EULA_URL = 'http://www.adobe.com/products/eulas/players/flash/'
 
+if sys.version_info < (2, 5, 1):
+    # monkeypatch webbrowser.BackgroundBrowser.open
+    # the version in 2.5.0 doesn't correctly handle Popen on Windows.
+    # XXX: when we switch the build process to 2.5.1, this can be removed.
+    # fixes #10020
+    def patchedOpen(self, url, new=0, autoraise=1):
+        cmdline = [self.name] + [arg.replace('%s', url) for arg
+                                 in self.args]
+        try:
+            p = subprocess.Popen(cmdline)
+            return (p.poll() is None)
+        except OSError:
+            return False
+    webbrowser.BackgroundBrowser.open = patchedOpen
+    
 def restartMiro(obj=None):
     root = resources.appRoot().encode('mbcs')
     args = [sys.executable, os.path.join(root, 'application.ini')]
@@ -73,7 +88,7 @@ def installFlash():
             try:
                 webbrowser.open(FLASH_EULA_URL)
             except WindowsError, e:
-                if e.errno != 22:
+                if e.errno not in (2, 22):
                     raise
                 # Application not found
                 # fake it by calling explorer
