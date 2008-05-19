@@ -49,6 +49,7 @@ from miro import eventloop
 from miro import feed
 from miro import folder
 from miro import guide
+from miro import httpclient
 from miro import indexes
 from miro import item
 import logging
@@ -254,6 +255,10 @@ class TemplateDisplay(HTMLDisplay):
                     if feed.getFeedByURL(url) is None:
                         newFeed = feed.Feed(url)
                         newFeed.blink()
+                        if 'trackback' in additional:
+                            httpclient.grabURL(additional['trackback'],
+                                               lambda x: None,
+                                               lambda x: None)
             elif type == 'download':
                 for url, additional in normalizedURLs:
                     singleclick.addDownload(url, additional)
