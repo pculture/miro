@@ -1508,8 +1508,11 @@ class _FeedParserMixin:
     def _start_itunes_image(self, attrsD):
         self.push('itunes_image', 0)
         self._getContext()['image'] = FeedParserDict({'href': attrsD.get('href')})
-    _start_itunes_link = _start_itunes_image
         
+    def _start_itunes_link(self, attrsD):
+        self.push('itunes_link', 0)
+        self._getContext()['link'] = FeedParserDict({'href': attrsD.get('href')})
+
     def _end_itunes_block(self):
         value = self.pop('itunes_block', 0)
         self._getContext()['itunes_block'] = (value == 'yes') and 1 or 0
