@@ -181,7 +181,8 @@ class ChannelsPrefsController (NSObject):
         
         defaultAutoDownload = config.get(prefs.CHANNEL_AUTO_DEFAULT)
         tag = self.AUTO_DOWNLOAD_VALS.index(defaultAutoDownload)
-        self.autoDownloadPopup.selectItemWithTag_(tag)
+        itemIndex = self.autoDownloadPopup.indexOfItemWithTag_(tag)
+        self.autoDownloadPopup.selectItemAtIndex_(itemIndex)
 
     def checkEvery_(self, sender):
         minutes = sender.selectedItem().tag()
