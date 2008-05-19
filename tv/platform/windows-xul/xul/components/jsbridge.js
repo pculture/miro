@@ -623,7 +623,7 @@ jsBridge.prototype = {
   },
 
   moveSlider: function(fractionDone) {
-    var width = this.document.getElementById("bottom-progress").boxObject.width;
+    var width = this.document.getElementById("bottom-progress-master").boxObject.width;
     var newSliderPos = Math.floor(fractionDone*width);
 
     var progressSlider = this.document.getElementById("progress-slider");

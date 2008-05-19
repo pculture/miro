@@ -146,6 +146,7 @@
 
                 <hbox id="bottom-progress" class="bottom-progress-inactive" flex="1">
                     <label id="progress-text"> </label>
+                    <hbox id="bottom-progress-master" flex="1">
                     <stack flex="1">
                         <box id="progress-center"/>
                         <hbox id="progress-track">
@@ -160,6 +161,7 @@
                         </hbox>
                         <image id="progress-slider" />
                     </stack>
+                    </hbox>
                     <label id="duration-text"> </label>
                 </hbox>
 
