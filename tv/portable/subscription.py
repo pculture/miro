@@ -50,6 +50,10 @@ browser.
 
 SUBSCRIBE_HOSTS = ('subscribe.getdemocracy.com', 'subscribe.getmiro.com')
 
+# if you update this list, also update the list on
+# subscribe.getmiro.com/geturls.php
+ADDITIONAL_KEYS =  ('title', 'description', 'length', 'type', 'thumbnail',
+                    'feed', 'link')
 # =========================================================================
 
 reflexiveAutoDiscoveryOpener = urllib2.urlopen
@@ -67,16 +71,17 @@ def parseContent(content):
     try:
         dom = xml.dom.minidom.parseString(content)
         root = dom.documentElement
+        urlsType = 'rss'
         if root.nodeName == "rss":
             urls = _getSubscriptionsFromRSSChannel(root)
         elif root.nodeName == "feed":
             urls = _getSubscriptionsFromAtomFeed(root)
         elif root.nodeName == "opml":
-            urls = _getSubscriptionsFromOPMLOutline(root)
+            urlsType, urls = _getSubscriptionsFromOPMLOutline(root)
         else:
             urls = None
         dom.unlink()
-        return urls
+        return urlsType, urls
     except:
         if util.chatter:
             logging.warn("Error parsing OPML content...\n%s",
@@ -91,8 +96,7 @@ def get_urls_from_query(query):
         if match:
             urlId = match.group(1)
             additional = {}
-            for key2 in ('title', 'description', 'length', 'type', 
-                         'thumbnail', 'feed', 'link'):
+            for key2 in ADDITIONAL_KEYS:
                 if '%s%s' % (key2, urlId) in parsedQuery:
                     additional[key2] = parsedQuery['%s%s' % (key2, urlId)][0]
             urls.append((value[0], additional))
@@ -191,25 +195,45 @@ def _getSubscriptionsFromOPMLOutline(root):
     try:
         urls = list()
         body = root.getElementsByTagName("body").pop()
-        _searchOPMLNodeRecursively(body, urls)
+        urlsType = _searchOPMLNodeRecursively(body, urls)
     except:
         urls = None
     else:
         if len(urls) == 0:
             urls = None
-    return urls
+    return urlsType, urls
 
 def _searchOPMLNodeRecursively(node, urls):
+    urlsType = None
     try:
         children = node.childNodes
         for child in children:
             if hasattr(child, 'getAttribute'):
                 if child.hasAttribute("xmlUrl"):
-                    url = child.getAttribute("xmlUrl")
-                    urls.append(url)
+                     newType, newURL = _handleOPMLChild(child)
+                     if urlsType is None:
+                         urlsType = newType
+                         urls.append(newURL)
+                     elif urlsType == newType:
+                         urls.append(newURL)
+                     else:
+                         logging.debug('%s != %s, ignoring' % (urlsType, newType))
                 else:
                     _searchOPMLNodeRecursively(child, urls)
-    except:
-        pass
+    except Exception, e:
+        logging.exception('error searching OPML')
+    return urlsType
 
+def _handleOPMLChild(node):
+    type = node.getAttribute('type')
+    url = node.getAttribute('xmlUrl')
+    if type == 'download':
+        additional = {}
+        for key in ADDITIONAL_KEYS:
+            attribute = 'additional%s' % key.capitalize()
+            if node.hasAttribute(attribute):
+                additional[key] = node.getAttribute(attribute)
+        return type, (url, additional)
+    else:
+        return type, url
 # =========================================================================

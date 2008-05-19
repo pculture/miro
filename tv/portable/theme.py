@@ -120,8 +120,8 @@ class ThemeHistory(DDBObject):
     def _installDefaultFeeds(self):
         initialFeeds = resources.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
-            urls = subscription.parseFile(initialFeeds)
-            if urls is not None:
+            type, urls = subscription.parseFile(initialFeeds)
+            if urls is not None and type == 'rss':
                 for url in urls:
                     feed.Feed(url, initiallyAutoDownloadable=False)
             dialog = dialogs.MessageBoxDialog(_("Custom Channels"), Template(_("You are running a version of $longAppName with a custom set of channels.")).substitute(longAppName=config.get(prefs.LONG_APP_NAME)))

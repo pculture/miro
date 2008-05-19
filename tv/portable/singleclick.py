@@ -51,6 +51,7 @@ from miro import item
 from miro import feed
 from miro import filetypes
 from miro import folder
+from miro import guide
 from miro import httpclient
 from miro import views
 from miro import signals
@@ -239,14 +240,20 @@ def playCommandLineView():
 def addFeed(path):
     feed.addFeedFromFile(path)
 
-def addSubscriptions(path):
-    urls = subscription.parseFile(path)
+def addSubscriptions(type, urls):
     if urls is not None:
-        if len(urls) > 1:
-            askForMultipleFeeds(urls)
-        else:
-            addFeeds(urls)
-
+        if type == 'rss':
+            if len(urls) > 1:
+                askForMultipleFeeds(urls)
+            else:
+                addFeeds(urls)
+        elif type == 'download':
+            [addDownload(url, additional) for url, additional in urls]
+        elif type == 'guide':
+            for url in urls:
+                if guide.getGuideByURL(url) is None:
+                    guide.ChannelGuide(url, [u'*'])
+                    
 def filterExistingFeedURLs(urls):
     return [u for u in urls if feed.getFeedByURL(u) is None]
 
@@ -313,15 +320,12 @@ def addSubscriptionURL(prefix, expectedContentType, url):
     realURL = url[len(prefix):]
     def callback(info):
         if info.get('content-type') == expectedContentType:
-            urls = subscription.parseContent(info['body'])
+            type, urls = subscription.parseContent(info['body'])
             if urls is None:
                 complainAboutSubscriptionURL(
                     Template(_("This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
             else:
-                if len(urls) > 1:
-                    askForMultipleFeeds(urls)
-                else:
-                    addFeeds(urls)
+                addSubscriptions(type, urls)
         else:
             complainAboutSubscriptionURL(
                 Template(_("This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.")).substitute(
@@ -392,7 +396,7 @@ def parseCommandLineArgs(args=None):
             elif ext in ('.rss', '.rdf', '.atom', '.ato'):
                 addFeed(arg)
             elif ext in ('.miro', '.democracy', '.dem', '.opml'):
-                addSubscriptions(arg)
+                addSubscriptions(*subscription.parseFile(arg))
             else:
                 addVideo(arg, len(args) == 1)
                 addedVideos = True
