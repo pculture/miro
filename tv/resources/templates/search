@@ -80,9 +80,7 @@ searchItems.unlink()
           </a>
         </div>
         
-        <div id="results-text" i18n:translate="">
-          <h3>Results for "<span i18n:name="query" t:replace="feed.lastQuery" />"</h3>
-        </div>
+        <h3 id="results-text">Results for &quot;<span i18n:name="query" t:replace="feed.lastQuery" />&quot;</h3>
       </div>
     </div>
 
