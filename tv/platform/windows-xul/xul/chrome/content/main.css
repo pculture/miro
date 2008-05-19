@@ -329,7 +329,7 @@ resizer.side-resizer {
   background: url(images/bottom-volume.png) no-repeat 0px 24px;
 }
 
-#knob {
+#volume-knob {
   width: 16px;
   height: 16px;
 }

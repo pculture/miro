@@ -166,7 +166,7 @@
                 <spacer flex="0" width="40" />
 
                 <stack flex="0" id="volume">
-                    <image left="98" top="25" src="images/bottom-volume-slider.png" id="knob"/>
+                    <image left="98" top="25" src="images/bottom-volume-slider.png" id="volume-knob"/>
                 </stack>
 
                 <resizer dir="bottomright" id="resizer-bottom-right" oncommand="return doResize(event);"/>

@@ -70,26 +70,26 @@ var VOLUME_KNOB_OFFSET = 6;
 function translateToVolumeX(event) 
 {
   var bottomVolume = document.getElementById("volume");
-  var slider = document.getElementById("knob");
+  var slider = document.getElementById("volume-knob");
   var x = event.screenX - bottomVolume.boxObject.screenX;
   x = x - VOLUME_KNOB_OFFSET;
   return Math.max(VOLUME_SLIDER_LEFT, Math.min(VOLUME_SLIDER_RIGHT, x));
 }
 
 function volumeKnobDown(event) {
-  var slider = document.getElementById("knob");
+  var slider = document.getElementById("volume-knob");
   slider.beingDragged = true;
   slider.left = translateToVolumeX(event);
 }
 
 function doVol() {
-  var slider = document.getElementById("knob");
+  var slider = document.getElementById("volume-knob");
   var x = slider.left;
   pybridge.setVolume((x - VOLUME_SLIDER_LEFT) / VOLUME_SLIDER_WIDTH);
 }
 
 function volumeKnobOut(event) {
-  var slider = document.getElementById("knob");
+  var slider = document.getElementById("volume-knob");
   if(!isDecendentOf(event.relatedTarget, "volume") && slider.beingDragged) {
     doVol();
     slider.beingDragged = false;
@@ -97,7 +97,7 @@ function volumeKnobOut(event) {
 }
 
 function volumeKnobMove(event) {
-  var slider = document.getElementById("knob");
+  var slider = document.getElementById("volume-knob");
   if (slider.beingDragged) {
     var x = translateToVolumeX(event);
     slider.left = x;
@@ -106,7 +106,7 @@ function volumeKnobMove(event) {
 }
 
 function volumeKnobUp(event) {
-  var slider = document.getElementById("knob");
+  var slider = document.getElementById("volume-knob");
   if (slider.beingDragged) {
     doVol();
     slider.beingDragged = false;
@@ -255,11 +255,11 @@ function setupSeekButton(direction, buttonId) {
 }
 
 function setupHandlers() {
-    var knob = document.getElementById("volume");
-    knob.onmousemove = volumeKnobMove;
-    knob.onmousedown = volumeKnobDown;
-    knob.onmouseout = volumeKnobOut;
-    knob.onmouseup = volumeKnobUp;
+    var volume_knob = document.getElementById("volume");
+    volume_knob.onmousemove = volumeKnobMove;
+    volume_knob.onmousedown = volumeKnobDown;
+    volume_knob.onmouseout = volumeKnobOut;
+    volume_knob.onmouseup = volumeKnobUp;
 
     // Set up listeners for the progress slider
     var progress = document.getElementById("bottom-progress");

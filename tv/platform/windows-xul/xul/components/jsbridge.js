@@ -413,7 +413,7 @@ jsBridge.prototype = {
     var right= 98;
     var position = left + (right-left) * volume;
     position = Math.min(right, Math.max(left, position));
-    this.document.getElementById("knob").left = position;
+    this.document.getElementById("volume-knob").left = position;
   },
 
   hideForFullscreen: Array('resizer-left', 'resizer-bottom-right', 'resizer-right', 'titlebar'),
