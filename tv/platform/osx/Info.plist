@@ -263,7 +263,7 @@
 	<key>CFBundleVersion</key>
 	<string>r$appRevisionNum</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.3.9</string>
+	<string>10.4</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>$copyright, $publisher</string>
 	<key>SUCheckAtStartup</key>

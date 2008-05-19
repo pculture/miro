@@ -71,18 +71,11 @@ class QuicktimeRenderer:
         components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
         for component in components:
             cmpName = os.path.basename(component)
-            if self.checkComponentCompatibility(cmpName):
-                ok = qtcomp.register(component.encode('utf-8'))
-                if ok:
-                    logging.info('Successfully registered embedded component: %s' % cmpName)
-                else:
-                    logging.warn('Error while registering embedded component: %s' % cmpName)
-
-    def checkComponentCompatibility(self, name):
-        if "Perian" in name or "AC3" in name or "A52" in name:
-            if getMajorOSVersion() <= 7:
-                return False
-        return True
+            ok = qtcomp.register(component.encode('utf-8'))
+            if ok:
+                logging.info('Successfully registered embedded component: %s' % cmpName)
+            else:
+                logging.warn('Error while registering embedded component: %s' % cmpName)
 
     def registerMovieObserver(self, movie):
         threads.warnIfNotOnMainThread('QuicktimeRenderer.registerMovieObserver')
