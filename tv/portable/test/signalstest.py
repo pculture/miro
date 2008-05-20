@@ -25,8 +25,8 @@ class SignalsTest(MiroTestCase):
         self.checkSingleCallback(self.signaller, 'foo')
 
     def test_disconnect(self):
-        self.signaller.connect('signal1', self.callback)
-        self.signaller.disconnect('signal1', self.callback)
+        id = self.signaller.connect('signal1', self.callback)
+        self.signaller.disconnect(id)
         self.signaller.emit('signal1')
         self.assertEquals(self.callbacks, [])
 
@@ -44,3 +44,27 @@ class SignalsTest(MiroTestCase):
         self.signaller.connect('signal1', self.callback)
         self.signaller.emit('signal2', 'foo')
         self.assertEquals(self.callbacks, [])
+
+    def test_weak_callback(self):
+        callback_obj = WeakCallbackTester(self)
+        self.signaller.connect_weak('signal1', callback_obj.callback, 0)
+        self.signaller.emit('signal1')
+        self.checkSingleCallback(0)
+        del callback_obj
+        self.signaller.emit('signal1')
+        self.checkSingleCallback(0)
+        self.assertEquals(len(self.signaller.get_callbacks('signal1')), 0)
+
+    def test_weak_callback_disconnect(self):
+        callback_obj = WeakCallbackTester(self)
+        id = self.signaller.connect_weak('signal1', callback_obj.callback, 0)
+        self.signaller.disconnect(id)
+        self.signaller.emit('signal1')
+        self.assertEquals(self.callbacks, [])
+
+class WeakCallbackTester(object):
+    def __init__(self, unittest):
+        self.unittest = unittest
+
+    def callback(self, obj, *values):
+        self.unittest.callbacks.append(values)

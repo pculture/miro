@@ -31,19 +31,70 @@
 GObject-like signal handling for Miro.
 """
 
+import itertools
 import logging
 import threading
 import time
 import traceback
+import weakref
 
 from miro import config
 from miro import prefs
 import sys
 from miro import util
 
+class WeakMethodReference:
+    """Used to handle weak references to a method.
+
+    We can't simply keep a weak reference to method itself, because there
+    almost certainly aren't any other references to it.  Instead we keep a
+    weak reference to the object, it's class and the unbound method.  This
+    gives us enough info to recreate the bound method when we need it.
+    """
+
+    def __init__(self, method):
+        self.object = weakref.ref(method.im_self)
+        self.func = weakref.ref(method.im_func)
+        # don't create a weak refrence to the class.  That only works for
+        # new-style classes.  It's highly unlikely the class will ever need to
+        # be garbage collected anyways.
+        self.cls = method.im_class
+
+    def __call__(self):
+        func = self.func()
+        if func is None: return None
+        object = self.object()
+        if object is None: return None
+        return func.__get__(object, self.cls)
+
+class Callback:
+    def __init__(self, func, extra_args):
+        self.func = func
+        self.extra_args = extra_args
+
+    def invoke(self, obj, args):
+        self.func(obj, *(args + self.extra_args))
+
+    def is_dead(self):
+        return False
+
+class WeakCallback:
+    def __init__(self, method, extra_args):
+        self.ref = WeakMethodReference(method)
+        self.extra_args = extra_args
+
+    def invoke(self, obj, args):
+        callback = self.ref()
+        if callback is not None:
+            callback(obj, *(args + self.extra_args))
+
+    def is_dead(self):
+        return self.ref() is None
+
 class SignalEmitter:
     def __init__(self, *signal_names):
         self.signal_callbacks = {}
+        self.id_generator = itertools.count()
         for name in signal_names:
             self.create_signal(name)
 
@@ -56,22 +107,48 @@ class SignalEmitter:
         except KeyError:
             raise KeyError("Signal: %s doesn't exist" % signal_name)
 
-    def connect(self, name, callback, *extra_args):
+    def connect(self, name, func, *extra_args):
+        """Connect a callback to a signal.  Returns an callback handle that
+        can be passed into disconnect().
+        """
+        id = self.id_generator.next()
         callbacks = self.get_callbacks(name)
-        callbacks[callback] = (callback, extra_args)
+        callbacks[id] = Callback(func, extra_args)
+        return (name, id)
 
-    def disconnect(self, name, callback):
+    def connect_weak(self, name, method, *extra_args):
+        """Connect a callback weakly.  Callback must be a method of some
+        object.  We create a weak reference to the method, so that the
+        connection doesn't keep the object from being garbage collected.
+        """
+        if not hasattr(method, 'im_self'):
+            raise TypeError("connect_weak must be called with object methods")
+        id = self.id_generator.next()
         callbacks = self.get_callbacks(name)
-        del callbacks[callback]
+        callbacks[id] = WeakCallback(method, extra_args)
+        return (name, id)
+
+    def disconnect(self, callback_handle):
+        """Disconnect a signal.  callback_handle must be the return value from
+        connect() or connect_weak().
+        """
+        callbacks = self.get_callbacks(callback_handle[0])
+        del callbacks[callback_handle[1]]
 
     def disconnect_all(self):
         for signal in self.signal_callbacks:
             self.signal_callbacks[signal] = {}
 
     def emit(self, name, *args):
-        for callback, callback_args in self.get_callbacks(name).values():
-            all_args = args + callback_args
-            callback(self, *all_args)
+        for callback in self.get_callbacks(name).values():
+            callback.invoke(self, args)
+        self.clear_old_weak_references()
+
+    def clear_old_weak_references(self):
+        for callback_map in self.signal_callbacks.values():
+            for id in callback_map.keys():
+                if callback_map[id].is_dead():
+                    del callback_map[id]
 
 class SystemSignals(SignalEmitter):
     """System wide signals for Miro.  These can be accessed from the singleton
