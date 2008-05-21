@@ -151,7 +151,7 @@ class Renderer:
     @waitForAttach
     def selectFile(self, filename):
         confirmMainThread()
-        viz = config.get(prefs.XINE_VIZ);
+        viz = config.get(options.XINE_VIZ);
         self.xine.setViz(viz);
         self.xine.selectFile(filename)
         def exposeWorkaround():
