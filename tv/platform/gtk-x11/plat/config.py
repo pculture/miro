@@ -26,6 +26,14 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""miro.plat.config
+
+This module implements configuration persistence for the gtkx11 platform.
+Miro persists configuration preferences for gtkx11 platform to gconf.
+
+Preferences are listed in miro.pref and also miro.plat.options.
+"""
+
 import os
 from miro import prefs
 import gconf

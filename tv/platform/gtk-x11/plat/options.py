@@ -31,8 +31,44 @@ Most/all of these are set in the miro.real script.  The values here are
 hopefully sane defaults.
 """
 
+# these have no related prefs
 shouldSyncX = False
+frontend = 'html'
+themeName = None
+
 useXineHack = True
 defaultXineDriver = "xv"
-themeName = None
-frontend = 'html'
+
+from miro.prefs import Pref
+
+
+USE_RENDERER = Pref( key="useRenderer", 
+                     default=u"gstreamer", 
+                     platformSpecific=False, 
+                     alias="renderer",
+                     help="Which renderer to use.  (gstreamer, xine)" )
+
+XINE_VIZ = Pref( key="xineViz", 
+                 default=u"goom", 
+                 platformSpecific=False,
+                 alias="xine-viz",
+                 help="Which visualization plugin to use.  (goom, none)" )
+
+USE_XINE_XV_HACK = Pref(key="UseXineXVHack", 
+                        default=True, 
+                        platformSpecific=False,
+                        alias="xine-xvhack",
+                        help="Whether or not to use the Xine xv hack.  (true, false)" )
+
+DEFAULT_XINE_DRIVER = Pref(key="DefaultXineDriver", 
+                           default="xv",
+                           platformSpecific=False,
+                           alias="xine-driver",
+                           help="Which Xine driver to use for video.  (auto, xv, xshm)" )
+
+# build a lookup for preferences by alias
+PREFERENCES = {}
+for mem in dir():
+    p = locals()[mem]
+    if isinstance(p, Pref):
+        PREFERENCES[p.alias] = p

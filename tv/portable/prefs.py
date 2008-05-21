@@ -73,17 +73,6 @@ FLASH_REQUEST_COUNT         = Pref( key='flashRequestCount',     default=0,     
 # This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.
 SHOW_ERROR_DIALOG           = Pref( key='showErrorDialog',       default=True,  platformSpecific=True )
 
-# Only used on particular platforms.
-XINE_VIZ                    = Pref( key="xineViz",               default=u"goom",platformSpecific=False )
-
-# Only used on platforms where we have multiple renderers (like GTKX11).
-# This is a comma-delimited list of renderers.
-USE_RENDERER                = Pref( key="useRenderer",           default=u"gstreamer",platformSpecific=False )
-
-# These can be safely ignored on non-GTK systems
-USE_XINE_XV_HACK  = Pref(key="UseXineXVHack", default=True, platformSpecific=False)
-DEFAULT_XINE_DRIVER  = Pref(key="DefaultXineDriver", default="xv", platformSpecific=False)
-
 
 # These have a hardcoded default which can be overridden by setting an
 # environment variable.

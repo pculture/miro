@@ -37,6 +37,7 @@ import os
 import shutil
 from miro import config
 from miro import prefs
+from miro.plat import options
 from miro.plat import resources
 import MainFrame
 from miro import singleclick
@@ -568,8 +569,8 @@ class CallbackHandler(object):
         AttachCombo   (dialog, widgetTree['combobox-auto-setting'], prefs.CHANNEL_AUTO_DEFAULT, ("new", "all", "off"))
         AttachCombo   (dialog, widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
         AttachBooleanRadio (dialog, widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
-        AttachCombo   (dialog, widgetTree['combobox-renderer'], prefs.USE_RENDERER, ("xine", "gstreamer"))
-        AttachCombo   (dialog, widgetTree['combobox-xineviz'], prefs.XINE_VIZ, ("goom", "oscope", "fftscopoe", "fftgraph", "none"))
+        AttachCombo   (dialog, widgetTree['combobox-renderer'], options.USE_RENDERER, ("xine", "gstreamer"))
+        AttachCombo   (dialog, widgetTree['combobox-xineviz'], options.XINE_VIZ, ("goom", "oscope", "fftscopoe", "fftgraph", "none"))
         AttachBoolean (dialog, widgetTree['checkbutton-resumemode'], prefs.RESUME_VIDEOS_MODE)
         AttachBoolean (dialog, widgetTree['checkbutton-warnonquit'], prefs.WARN_IF_DOWNLOADING_ON_QUIT)
         AttachBoolean (dialog, widgetTree['checkbutton-bt-autoforward'], prefs.USE_UPNP)

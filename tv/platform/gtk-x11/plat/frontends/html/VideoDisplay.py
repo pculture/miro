@@ -38,6 +38,7 @@ import logging
 from gtk_queue import gtkAsyncMethod, gtkSyncMethod
 from miro.frontends.html.displaybase import Display, VideoDisplayBase
 from miro.frontends.html.playbackcontroller import PlaybackControllerBase
+from miro.plat import options
 
 from threading import Event
 
@@ -64,7 +65,8 @@ class VideoDisplay (VideoDisplayBase):
         self._gtkInit()
         self.renderersReady = Event()
 
-    def add_renderer(self, modname):
+    def addRenderer(self, modname):
+        logging.info ("addRenderer: trying to add %s", modname)
         try:
             pkg = __import__('miro.plat.renderers.' + modname)
             module = getattr(pkg.plat.renderers, modname)
@@ -75,7 +77,7 @@ class VideoDisplay (VideoDisplayBase):
             widget.show()
             renderer.setWidget(widget)
             app.renderers.append(renderer)
-            logging.info ("loaded renderer '%s'", modname)
+            logging.info ("addRenderer: success")
         except:
             logging.info ("initRenderers: couldn't load %s: %s", modname, sys.exc_info()[1])
             raise
@@ -85,16 +87,17 @@ class VideoDisplay (VideoDisplayBase):
         # renderer modules have to be xxxxrenderer and xxxx shows up in the
         # preferences.
 
-        r = config.get(prefs.USE_RENDERER)
+        r = config.get(options.USE_RENDERER)
         try:
-            self.add_renderer(r + "renderer")
+            self.addRenderer(r + "renderer")
         except:
             try:
                 logging.error ("initRenderers: error detected...  trying to add gstreamerrenderer")
                 # try to add the xine renderer if the preferences aren't right
-                self.add_renderer("gstreamerrenderer")
+                self.addRenderer("gstreamerrenderer")
             except:
                 logging.error ("initRenderers: no valid renderer has been loaded")
+                return
 
         self.widget.add (app.renderers[0].widget)
         self.renderersReady.set()

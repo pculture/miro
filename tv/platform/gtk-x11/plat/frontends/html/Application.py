@@ -29,6 +29,7 @@
 import gtk
 
 import threading
+import logging
 from miro.plat.frontends.html.gtk_queue import queue, gtkAsyncMethod
 from miro.frontends.html.main import HTMLApplication
 from miro.plat import mozsetup
@@ -46,7 +47,7 @@ from miro.plat.utils import setMainThread
 ###############################################################################
 
 class Application(HTMLApplication):
-    def run(self):
+    def run(self, props_to_set):
         queue.call_nowait(mozsetup.setupMozillaEnvironment)
         gtk.glade.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
         gtk.glade.textdomain("miro")
@@ -56,12 +57,15 @@ class Application(HTMLApplication):
         gtk.gdk.threads_init()
         startup.initialize(options.themeName)
         self.startup()
+        self.setProperties(props_to_set)
         gtk.main()
         app.controller.onShutdown()
+
+    def setProperties(self, props):
+        for p, val in props:
+            logging.info("Setting preference: %s -> %s", p.alias, val)
+            config.set(p, val)
 
     @gtkAsyncMethod
     def quitUI(self):
         gtk.main_quit()
-
-###############################################################################
-###############################################################################

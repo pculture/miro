@@ -62,10 +62,10 @@ class Renderer:
         self.attachQueue = []
         self.attached = False
         self.driver = self.getDriver()
-        logging.info("xinerenderer: using '%s' as driver" % self.driver)
+        logging.info("Xine driver:     %s", self.driver)
 
     def getDriver(self):
-        xineDriver = options.defaultXineDriver
+        xineDriver = config.get(options.DEFAULT_XINE_DRIVER)
         if xineDriver is None:
             xineDriver = "xv"
         return xineDriver
@@ -86,7 +86,11 @@ class Renderer:
         # flush gdk output to ensure that our window is created
         gtk.gdk.flush()
         displayName = gtk.gdk.display_get_default().get_name()
-        self.xine.attach(displayName, widget.window.xid, self.driver, int(options.shouldSyncX), int(options.useXineHack))
+        self.xine.attach(displayName, 
+                         widget.window.xid, 
+                         self.driver, 
+                         int(options.shouldSyncX), 
+                         int(config.get(options.USE_XINE_XV_HACK)))
         self.attached = True
         for func, args in self.attachQueue:
             try:

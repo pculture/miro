@@ -33,10 +33,10 @@ if '--unittest' in sys.argv:
     from miro import test
     unittest.main(module=test)
 
-def startup():
+def startup(props_to_set):
     if parsed_options.frontend == 'html':
         from miro.plat.frontends.html.Application import Application
-        Application().run()
+        Application().run(props_to_set)
     elif parsed_options.frontend == 'cli':
         from miro.frontends import cli
         cli.run(parsed_options.theme)
@@ -46,58 +46,100 @@ def startup():
 usage = "usage: %prog [options] [torrent files] [video files]"
 parser = optparse.OptionParser(usage=usage)
 parser.add_option('-v', '--version',
-                  dest='version', default=False, action='store_true', 
+                  dest='version', action='store_true', 
                   help='print version info')
-parser.add_option('--debug', 
-                  action="store_true", 
-                  help='Starts Miro in a gdb session for better debugging.')
-parser.add_option('--unittest', 
-                  dest='unittest', default=False, action='store_true', 
-                  help='run unittests instead of launching the program')
-parser.add_option('--profile', 
-                  metavar='<file>', 
-                  help='write profiling information to FILE')
-parser.add_option('--bias', 
-                  metavar='<bias>', type=float, default=None,
-                  help='set profiling bias to BIAS')
-parser.add_option('--sync', 
-                  default=False, action="store_true",
-                  help='Use X Syncronously (for debugging)')
-parser.add_option("--xine-driver", 
-                  metavar="<driver>", action="store", type="string", dest="xine_driver", 
-                  help="Xine driver (auto, xv, xshm, opengl, sdl, dxr3, aadxr3, aa, caca, or xxmc)")
-parser.add_option('--enable-xine-hack', 
-                  dest="use_xv_hack", action="store_true", 
-                  help='Enable the Xine XV Hack (default)')
-parser.add_option('--disable-xine-hack', 
-                  dest="use_xv_hack", action="store_false", 
-                  help='Disable the Xine XV Hack')
+parser.set_defaults(version=False)
+
 parser.add_option('--theme', 
-                  dest='theme', metavar='<theme>', 
+                  dest='theme', metavar='<THEME>', 
                   help='Theme to use')
 parser.add_option('--frontend', 
-                  dest='frontend', metavar='<frontend>', default='html', 
+                  dest='frontend', metavar='<FRONTEND>',
                   help='Frontend to use (html, cli)')
+parser.set_defaults(frontend="html")
+
+group = optparse.OptionGroup(parser, "Settings options")
+group.add_option('--list',
+                 action="store_true",
+                 dest="list_options",
+                 help="Lists all preferences that can be set by command line.")
+parser.set_defaults(list_options=False)
+group.add_option('--set',
+                 action="append",
+                 dest="set_prefs",
+                 metavar="<PREF>",
+                 nargs=1,
+                 help="Sets a preference and saves the new value for future Miro runs.  Example: miro --set renderer=xine")
+parser.set_defaults(set_prefs=[])
+parser.add_option_group(group)
+
+group = optparse.OptionGroup(parser, "Debugging options")
+group.add_option('--debug', 
+                  action="store_true", 
+                  help='Starts Miro in a gdb session for better debugging.')
+group.add_option('--unittest', 
+                  dest='unittest', action='store_true', 
+                  help='Run unittests instead of launching the program.')
+parser.set_defaults(unittest=False)
+group.add_option('--profile', 
+                  metavar='<FILE>', 
+                  help='Write profiling information to FILE.')
+group.add_option('--bias', 
+                  metavar='<BIAS>', type=float,
+                  help='Set profiling bias to BIAS.')
+parser.set_defaults(bias=None)
+group.add_option('--sync', 
+                  action="store_true",
+                  help='Use X syncronously.')
+parser.set_defaults(sync=False)
+parser.add_option_group(group)
+
 (parsed_options, args) = parser.parse_args()
+
+def get_keyval(keyval):
+    key, val = keyval.split("=")
+    if not key in options.PREFERENCES:
+        print "Option '%s' does not exist." % (key)
+        print "Exiting...."
+        sys.exit(1)
+
+    p = options.PREFERENCES[key]
+
+    try:
+        defaulttype = type(p.default)
+        if defaulttype == unicode or defaulttype == str:
+            pass
+        elif defaulttype == float:
+            val = float(val)
+        elif defaulttype == int:
+            val = int(val)
+        elif defaulttype == bool:
+            if val[0].lower() in ["t", "y", "1" ]:
+                val = True
+            else:
+                val = False
+    except Exception, e:
+        print "Problem converting value to correct type: %s" % e
+        print "Exiting...."
+        sys.exit(1)
+
+    return p, val
 
 def startapp():
     plat.utils.initializeLocale()
+
     # Create miro directories in the user's home
     support_dir = config.get(prefs.SUPPORT_DIRECTORY)
     if not os.path.exists(support_dir):
         os.makedirs(support_dir)
 
-    # These aren't in config because we can override them with the
-    # command line, so config.get() wouldn't return the correct value
-    # anyway.  Maybe, eventually, we should integrate command line
-    # config support into prefs.py and config.py.
-    if parsed_options.use_xv_hack is None:
-        parsed_options.use_xv_hack = config.get(prefs.USE_XINE_XV_HACK)
-    if parsed_options.xine_driver is None:
-        parsed_options.xine_driver = config.get(prefs.DEFAULT_XINE_DRIVER)
+    props_to_set = []
+
+    for mem in parsed_options.set_prefs:
+        p, val = get_keyval(mem)
+        props_to_set.append( (p, val) )
+   
     options.shouldSyncX = parsed_options.sync
-    options.useXineHack = parsed_options.use_xv_hack
-    options.defaultXineDriver = parsed_options.xine_driver
     options.frontend = parsed_options.frontend
     if parsed_options.theme:
         options.themeName = parsed_options.theme
@@ -106,17 +148,29 @@ def startapp():
     for i in xrange(len(args)):
         if args[i].startswith('file://'):
             args[i] = args[i][len('file://'):]
-    singleclick.setCommandLineArgs(args)
 
-    startup()
+    singleclick.setCommandLineArgs(args)
+    startup(props_to_set)
+
+def print_version():
+    print """
+Miro (%s)
+
+Miro comes with ABSOLUTELY NO WARRANTY.
+
+This is free software, and you are welcome to redistribute it under certain 
+conditions.  See license.txt for details.
+""" % config.get(prefs.APP_VERSION)
 
 if parsed_options.version:
-    print "Miro"
-    print "Version: %s" % config.get(prefs.APP_VERSION)
-    print ""
-    print "Miro comes with ABSOLUTELY NO WARRANTY."
-    print "This is free software, and you are welcome to redistribute it"
-    print "under certain conditions.  See license.txt for details."
+    print_version()
+
+elif parsed_options.list_options:
+    print_version()
+
+    print "Options that can be set:"
+    for p in options.PREFERENCES.values():
+        print "   %s\n      %s\n" % (p.alias, p.help)
 
 elif parsed_options.profile:
     import profile
