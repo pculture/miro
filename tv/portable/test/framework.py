@@ -88,7 +88,7 @@ class MiroTestCase(unittest.TestCase):
         if self.errorSignalOkay:
             self.sawError = True
         else:
-            raise Exception("error signal")
+            raise Exception("error signal %s" % report)
 
 class EventLoopTest(MiroTestCase):
     def setUp(self):
@@ -103,8 +103,10 @@ class EventLoopTest(MiroTestCase):
         idleQueue = eventloop._eventLoop.idleQueue
         urgentQueue = eventloop._eventLoop.urgentQueue
         while idleQueue.hasPendingIdle() or urgentQueue.hasPendingIdle():
-            urgentQueue.processIdles()
-            idleQueue.processNextIdle()
+            if urgentQueue.hasPendingIdle():
+                urgentQueue.processIdles()
+            if idleQueue.hasPendingIdle():
+                idleQueue.processNextIdle()
 
     def runEventLoop(self, timeout=10, timeoutNormal=False):
         eventloop.threadPoolInit()
