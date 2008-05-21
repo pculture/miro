@@ -100,6 +100,7 @@ class Tester:
 class Renderer:
     def __init__(self):
         confirmMainThread()
+        logging.info("GStreamer version: %s", gst.version_string())
         self.playbin = gst.element_factory_make("playbin", "player")
         self.bus = self.playbin.get_bus()
         self.bus.add_signal_watch()
@@ -109,19 +110,20 @@ class Renderer:
 
         videosink = "gconfvideosink"
         try:
-            logging.info("gstreamerrenderer: using '%s' for sink" % videosink)
             self.sink = gst.element_factory_make(videosink, "sink")
 
         except gst.ElementNotFoundError:
             logging.info("gstreamerrenderer: ElementNotFoundError '%s'" % videosink)
-            logging.info("gstreamerrenderer: using 'ximagesink' for sink")
-            self.sink = gst.element_factory_make("ximagesink", "sink")
+            videosink = "ximagesink"
+            self.sink = gst.element_factory_make(videosink, "sink")
 
         except Exception, e:
+            logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
             logging.exception("sink exception")
-            logging.info("gstreamerrenderer: using 'ximagesink' for sink")
-            self.sink = gst.element_factory_make("ximagesink", "sink")
+            videosink = "ximagesink"
+            self.sink = gst.element_factory_make(videosink, "sink")
 
+        logging.info("GStreamer sink:    %s", videosink)
         self.playbin.set_property("video-sink", self.sink)
 
     def onSyncMessage(self, bus, message):
