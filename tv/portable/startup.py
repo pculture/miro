@@ -40,6 +40,7 @@ from string import Template
 import logging
 import os
 import traceback
+import platform
 
 from miro.clock import clock
 from miro import app
@@ -134,6 +135,7 @@ def startup():
     """
     logging.info ("Starting up %s", config.get(prefs.LONG_APP_NAME))
     logging.info ("Version:    %s", config.get(prefs.APP_VERSION))
+    logging.info ("OS:         %s %s %s", platform.system(), platform.release(), platform.machine())
     logging.info ("Revision:   %s", config.get(prefs.APP_REVISION))
     logging.info ("Builder:    %s", config.get(prefs.BUILD_MACHINE))
     logging.info ("Build Time: %s", config.get(prefs.BUILD_TIME))
