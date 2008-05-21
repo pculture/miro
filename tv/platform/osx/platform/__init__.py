@@ -50,3 +50,12 @@ def python_version():
     while version.count('.') < 3:
         version += '.0'
     return version
+
+# The code below makes the backported user-agent code work in httpclient.py.
+# In trunk we don't need this hack.
+import platform 
+def release():
+    return platform.release()
+
+def machine():
+    return platform.machine()

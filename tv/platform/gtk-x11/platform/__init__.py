@@ -52,3 +52,9 @@ def python_version():
 
 def uname():
     return os.uname()
+
+# The code below makes the backported user-agent code work in httpclient.py.
+# In trunk we don't need this hack.
+import platform
+def release():
+    return platform.release()
