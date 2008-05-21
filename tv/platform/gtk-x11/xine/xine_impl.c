@@ -458,3 +458,8 @@ int xineGetPosLength(_Xine* xine, int* position, int* length)
     }
     return xine_get_pos_length(xine->stream, &dummy, position, length);
 }
+
+char *xineVersion()
+{
+    return xine_get_version_string();
+}

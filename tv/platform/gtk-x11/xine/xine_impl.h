@@ -271,3 +271,6 @@ void xineSeek(_Xine* xine, int position);
 /* Get the current postion in the stream and its total length, both in
  * milliseconds.  Returns 1 on success, 0 on failure */
 int xineGetPosLength(_Xine* xine, int* position, int* length);
+
+/* Get Xine version.  Returns Xine version string. */
+char *xineVersion();

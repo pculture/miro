@@ -75,6 +75,10 @@ cdef extern from "xine_impl.h":
     void xineGotExposeEvent(_Xine* xine, int x, int y, int width, int height)
     void xineSeek(_Xine* xine, int position)
     int xineGetPosLength(_Xine* xine, int* position, int* length)
+    char* xineVersion()
+
+def getXineVersion():
+    return xineVersion()
 
 class CantQueryPositionLength(Exception):
     pass

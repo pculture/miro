@@ -57,6 +57,7 @@ def waitForAttach(func):
 
 class Renderer:
     def __init__(self):
+        logging.info("Xine version:    %s", xine.getXineVersion())
         self.xine = xine.Xine()
         self.xine.setEosCallback(self.onEos)
         self.attachQueue = []
