@@ -40,7 +40,6 @@ reference (http://www.w3.org/Protocols/rfc2616/rfc2616.html).
 import errno
 import logging
 import re
-import platform
 import socket
 import traceback
 from urlparse import urljoin
@@ -67,14 +66,6 @@ PIPELINING_ENABLED = True
 SOCKET_READ_TIMEOUT = 60
 SOCKET_INITIAL_READ_TIMEOUT = 30
 SOCKET_CONNECT_TIMEOUT = 15
-
-def userAgent():
-    osname = '%s %s %s' % (platform.system(), platform.release(),
-            platform.machine())
-    return "%s/%s (%s; %s)" % (config.get(prefs.SHORT_APP_NAME),
-            config.get(prefs.APP_VERSION),
-            config.get(prefs.PROJECT_URL),
-            osname)
 
 class NetworkError(Exception):
     """Base class for all errors that will be passed to errbacks from getURL
@@ -607,7 +598,11 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
             eventloop.callInThread(onSSLOpen, handleSSLError, lambda: openProxyConnection(self),
                                    "ProxiedAsyncSSL openProxyConnection()")
         def openProxyConnection(self):
-            headers = {'User-Agent': userAgent(), "Host": host}
+            headers = {'User-Agent': '%s/%s (%s)' % (
+                config.get(prefs.SHORT_APP_NAME),
+                config.get(prefs.APP_VERSION),
+                config.get(prefs.PROJECT_URL)),
+                "Host": host}
             if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
                 username = config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)
                 password = config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD)
@@ -1475,7 +1470,10 @@ class HTTPClient(object):
         self.authAttempts = 0
         self.updateURLOk = True
         self.originalURL = self.updatedURL = self.redirectedURL = url
-        self.userAgent = userAgent()
+        self.userAgent = "%s/%s (%s)" % \
+                         (config.get(prefs.SHORT_APP_NAME),
+                          config.get(prefs.APP_VERSION),
+                          config.get(prefs.PROJECT_URL))
         self.connection = None
         self.cancelled = False
         self.initHeaders()

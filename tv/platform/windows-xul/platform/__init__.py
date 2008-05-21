@@ -36,12 +36,3 @@ though, we just implement the parts of the API we need here.
 
 def system():
     return "Linux"
-
-# The code below makes the backported user-agent code work in httpclient.py.
-# In trunk we don't need this hack.
-import platform
-def release():
-    return platform.release()
-
-def machine():
-    return platform.machine()
