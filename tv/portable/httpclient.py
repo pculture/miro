@@ -69,7 +69,8 @@ SOCKET_INITIAL_READ_TIMEOUT = 30
 SOCKET_CONNECT_TIMEOUT = 15
 
 def userAgent():
-    osname = '%s %s' % (platform.system(), platform.machine())
+    osname = '%s %s %s' % (platform.system(), platform.release(),
+            platform.machine())
     return "%s/%s (%s; %s)" % (config.get(prefs.SHORT_APP_NAME),
             config.get(prefs.APP_VERSION),
             config.get(prefs.PROJECT_URL),
@@ -610,8 +611,7 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
             eventloop.callInThread(onSSLOpen, handleSSLError, lambda: openProxyConnection(self),
                                    "ProxiedAsyncSSL openProxyConnection()")
         def openProxyConnection(self):
-            headers = {'User-Agent': userAgent(),
-                "Host": host}
+            headers = {'User-Agent': userAgent(), "Host": host}
             if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
                 username = config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)
                 password = config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD)
