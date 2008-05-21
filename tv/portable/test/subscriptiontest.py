@@ -181,20 +181,22 @@ class TestSubscription (MiroTestCase):
     subscription.reflexiveAutoDiscoveryOpener = open
 
     def testInvalidSubscriptions(self):
-        urls = subscription.parseFile("this-file-does-not-exist.xml")
-        self.assert_(urls is None)
-        urls = subscription.parseContent(INVALID_CONTENT_1)
-        self.assert_(urls is None)
-        urls = subscription.parseContent(INVALID_CONTENT_2)
-        self.assert_(urls is None)
+        retval = subscription.parseFile("this-file-does-not-exist.xml")
+        self.assertEquals(retval, None)
+        retval = subscription.parseContent(INVALID_CONTENT_1)
+        self.assertEquals(retval, None)
+        retval = subscription.parseContent(INVALID_CONTENT_2)
+        self.assertEquals(retval, None)
     
     def testAtomLinkConstructInRSS(self):
-        urls = subscription.parseContent(ATOM_LINK_CONSTRUCT_IN_RSS)
+        type, urls = subscription.parseContent(ATOM_LINK_CONSTRUCT_IN_RSS)
+        self.assertEquals(type, 'rss')
         self.assert_(len(urls) == 1)
         self.assert_(urls[0] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
 
     def testAtomLinkConstructInAtom(self):
-        urls = subscription.parseContent(ATOM_LINK_CONSTRUCT_IN_ATOM)
+        type, urls = subscription.parseContent(ATOM_LINK_CONSTRUCT_IN_ATOM)
+        self.assertEquals(type, 'rss')
         self.assert_(len(urls) == 1)
         self.assert_(urls[0] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
         
@@ -202,7 +204,8 @@ class TestSubscription (MiroTestCase):
         pageFile = file(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME, "w")
         pageFile.write(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS)
         pageFile.close()
-        urls = subscription.parseContent(REFLEXIVE_AUTO_DISCOVERY_IN_RSS)
+        type, urls = subscription.parseContent(REFLEXIVE_AUTO_DISCOVERY_IN_RSS)
+        self.assertEquals(type, 'rss')
         self.assert_(len(urls) == 1)
         self.assert_(urls[0] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
         os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME)
@@ -211,13 +214,15 @@ class TestSubscription (MiroTestCase):
         pageFile = file(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME, "w")
         pageFile.write(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM)
         pageFile.close()
-        urls = subscription.parseContent(REFLEXIVE_AUTO_DISCOVERY_IN_ATOM)
+        type, urls = subscription.parseContent(REFLEXIVE_AUTO_DISCOVERY_IN_ATOM)
+        self.assertEquals(type, 'rss')
         self.assert_(len(urls) == 1)
         self.assert_(urls[0] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
         os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME)
     
     def testFlatOPMLSubscriptions(self):
-        urls = subscription.parseContent(OPML_FLAT)
+        type, urls = subscription.parseContent(OPML_FLAT)
+        self.assertEquals(type, 'rss')
         self.assert_(len(urls) == 4)
         self.assert_(urls[0] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
         self.assert_(urls[1] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
@@ -225,7 +230,8 @@ class TestSubscription (MiroTestCase):
         self.assert_(urls[3] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
 
     def testNestedOPMLSubscriptions(self):
-        urls = subscription.parseContent(OPML_NESTED)
+        type, urls = subscription.parseContent(OPML_NESTED)
+        self.assertEquals(type, 'rss')
         self.assert_(len(urls) == 4)
         self.assert_(urls[0] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
         self.assert_(urls[1] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)

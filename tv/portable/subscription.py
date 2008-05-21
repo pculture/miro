@@ -70,18 +70,20 @@ def parseFile(path):
 def parseContent(content):
     try:
         dom = xml.dom.minidom.parseString(content)
-        root = dom.documentElement
-        urlsType = 'rss'
-        if root.nodeName == "rss":
-            urls = _getSubscriptionsFromRSSChannel(root)
-        elif root.nodeName == "feed":
-            urls = _getSubscriptionsFromAtomFeed(root)
-        elif root.nodeName == "opml":
-            urlsType, urls = _getSubscriptionsFromOPMLOutline(root)
-        else:
-            urls = None
-        dom.unlink()
-        return urlsType, urls
+        try:
+            root = dom.documentElement
+            urlsType = 'rss'
+            if root.nodeName == "rss":
+                urls = _getSubscriptionsFromRSSChannel(root)
+            elif root.nodeName == "feed":
+                urls = _getSubscriptionsFromAtomFeed(root)
+            elif root.nodeName == "opml":
+                urlsType, urls = _getSubscriptionsFromOPMLOutline(root)
+            else:
+                return None
+            return urlsType, urls
+        finally:
+            dom.unlink()
     except:
         if util.chatter:
             logging.warn("Error parsing OPML content...\n%s",
@@ -203,8 +205,7 @@ def _getSubscriptionsFromOPMLOutline(root):
             urls = None
     return urlsType, urls
 
-def _searchOPMLNodeRecursively(node, urls):
-    urlsType = None
+def _searchOPMLNodeRecursively(node, urls, urlsType=None):
     try:
         children = node.childNodes
         for child in children:
@@ -219,7 +220,7 @@ def _searchOPMLNodeRecursively(node, urls):
                      else:
                          logging.debug('%s != %s, ignoring' % (urlsType, newType))
                 else:
-                    _searchOPMLNodeRecursively(child, urls)
+                    urlsType = _searchOPMLNodeRecursively(child, urls, urlsType)
     except Exception, e:
         logging.exception('error searching OPML')
     return urlsType
