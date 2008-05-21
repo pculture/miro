@@ -110,6 +110,9 @@ class FeedTrackTest(BackendMessagesTest):
         message = self.test_handler.messages[index]
         self.assertEquals(type(message), message_type)
         self.checkChannelInfo(message.channel, channel)
+        if message_type is messages.ChannelAdded:
+            prev_id = self.channelTabOrder.getView().getPrevID(channel.id)
+            self.assertEquals(prev_id, message.added_after)
 
     def testAdded(self):
         f = Feed(u'http://example.com/3')
@@ -186,6 +189,9 @@ class PlaylistTrackTest(BackendMessagesTest):
         message = self.test_handler.messages[index]
         self.assertEquals(type(message), message_type)
         self.checkPlaylistInfo(message.playlist, playlist)
+        if message_type is messages.PlaylistAdded:
+            prev_id = self.playlistTabOrder.getView().getPrevID(playlist.id)
+            self.assertEquals(prev_id, message.added_after)
 
     def testAdded(self):
         p = SavedPlaylist(u'http://example.com/3')

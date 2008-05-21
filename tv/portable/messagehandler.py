@@ -56,7 +56,8 @@ class ViewTracker(object):
         self.changed -= self.added
 
         for obj in self.added:
-            self.AddedClass(self.make_info(obj)).send_to_frontend()
+            message = self.AddedClass(self.make_info(obj), self.prev_id(obj))
+            message.send_to_frontend()
         for obj in self.removed:
             self.RemovedClass(self.make_info(obj)).send_to_frontend()
         for obj in self.changed:
@@ -111,6 +112,8 @@ class TabTracker(ViewTracker):
                 current_folder_info.children.append(info)
         response.send_to_frontend()
 
+    def prev_id(self, tab):
+        return self.view().getPrevID(tab.objID())
 
 class ChannelTracker(TabTracker):
     ListClass = messages.ChannelList

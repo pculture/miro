@@ -169,10 +169,12 @@ class ChannelAdded(FrontendMessage):
 
     Attributes:
     channel -- ChannelInfo object for the added channel
+    added_after -- id of the previous channel in the channel list
     """
 
-    def __init__(self, channel):
+    def __init__(self, channel, added_after):
         self.channel = channel
+        self.added_after = added_after
 
 class ChannelRemoved(FrontendMessage):
     """Informs the frontend that a channel has been removed
@@ -233,10 +235,12 @@ class PlaylistAdded(FrontendMessage):
 
     Attributes:
     playlist -- PlaylistInfo object for the added playlist
+    added_after -- id of the previous playlist in the list of playlists
     """
 
-    def __init__(self, playlist):
+    def __init__(self, playlist, added_after):
         self.playlist = playlist
+        self.added_after = added_after
 
 class PlaylistRemoved(FrontendMessage):
     """Informs the frontend that a playlist has been removed
