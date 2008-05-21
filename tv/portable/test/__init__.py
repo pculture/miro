@@ -48,4 +48,5 @@ from miro.test.playlisttest import *
 from miro.test.unicodetest import *
 from miro.test.databaseupgradetest import *
 from miro.test.signalstest import *
+from miro.test.messagetest import *
 import miro.test.bmachinetest
