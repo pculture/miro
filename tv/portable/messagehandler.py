@@ -38,9 +38,10 @@ class ViewTracker(object):
     """Handles tracking views for TrackChannels, TrackPlaylist and TrackFeed."""
 
     def __init__(self):
-        self.view().addAddCallback(self.on_object_added)
-        self.view().addRemoveCallback(self.on_object_removed)
-        self.view().addChangeCallback(self.on_object_changed)
+        self.view = self.get_view()
+        self.view.addAddCallback(self.on_object_added)
+        self.view.addRemoveCallback(self.on_object_removed)
+        self.view.addChangeCallback(self.on_object_changed)
         self.reset_changes()
 
     def reset_changes(self):
@@ -56,12 +57,11 @@ class ViewTracker(object):
         self.changed -= self.added
 
         for obj in self.added:
-            message = self.AddedClass(self.make_info(obj), self.prev_id(obj))
-            message.send_to_frontend()
+            self.make_added_message(obj).send_to_frontend()
         for obj in self.removed:
-            self.RemovedClass(self.make_info(obj)).send_to_frontend()
+            self.make_removed_message(obj).send_to_frontend()
         for obj in self.changed:
-            self.ChangedClass(self.make_info(obj)).send_to_frontend()
+            self.make_changed_message(obj).send_to_frontend()
         self.reset_changes()
 
     def schedule_send_messages(self):
@@ -88,17 +88,28 @@ class ViewTracker(object):
         self.schedule_send_messages()
 
     def unlink(self):
-        self.view().removeAddCallback(self.on_object_added)
-        self.view().removeRemoveCallback(self.on_object_removed)
-        self.view().removeChangeCallback(self.on_object_changed)
-
+        self.view.removeAddCallback(self.on_object_added)
+        self.view.removeRemoveCallback(self.on_object_removed)
+        self.view.removeChangeCallback(self.on_object_changed)
 
 class TabTracker(ViewTracker):
+    def make_added_message(self, tab):
+        added_after = self.view.getPrevID(tab.objID())
+        if added_after == tab.objID(): # We are on the first object
+            added_after =  None
+        return self.AddedClass(self.InfoClass(tab.obj), added_after)
+
+    def make_removed_message(self, tab):
+        return self.RemovedClass(self.InfoClass(tab.obj))
+
+    def make_changed_message(self, tab):
+        return self.ChangedClass(self.InfoClass(tab.obj))
+
     def send_initial_list(self):
         response = self.ListClass()
         current_folder_info = None
-        for tab in self.view():
-            info = self.make_info(tab)
+        for tab in self.view:
+            info = self.InfoClass(tab.obj)
             if tab.obj.getFolder() is None:
                 response.append(info)
                 if isinstance(tab.obj, FolderBase):
@@ -112,23 +123,14 @@ class TabTracker(ViewTracker):
                 current_folder_info.children.append(info)
         response.send_to_frontend()
 
-    def prev_id(self, tab):
-        prev_id = self.view().getPrevID(tab.objID())
-        if prev_id == tab.objID(): # We are on the first object
-            return None
-        else:
-            return prev_id
-
 class ChannelTracker(TabTracker):
     ListClass = messages.ChannelList
     AddedClass = messages.ChannelAdded
     RemovedClass = messages.ChannelRemoved
     ChangedClass = messages.ChannelChanged
+    InfoClass = messages.ChannelInfo
 
-    def make_info(self, channel_tab):
-        return messages.ChannelInfo(channel_tab.obj)
-
-    def view(self):
+    def get_view(self):
         return getSingletonDDBObject(views.channelTabOrder).getView()
 
 class PlaylistTracker(TabTracker):
@@ -136,11 +138,9 @@ class PlaylistTracker(TabTracker):
     AddedClass = messages.PlaylistAdded
     RemovedClass = messages.PlaylistRemoved
     ChangedClass = messages.PlaylistChanged
+    InfoClass = messages.PlaylistInfo
 
-    def make_info(self, playlist_tab):
-        return messages.PlaylistInfo(playlist_tab.obj)
-
-    def view(self):
+    def get_view(self):
         return getSingletonDDBObject(views.playlistTabOrder).getView()
 
 class BackendMessageHandler(messages.MessageHandler):
