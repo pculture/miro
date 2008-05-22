@@ -57,13 +57,13 @@ def waitForAttach(func):
 
 class Renderer:
     def __init__(self):
-        logging.info("Xine version:    %s", xine.getXineVersion())
+        logging.info("Xine version:      %s", xine.getXineVersion())
         self.xine = xine.Xine()
         self.xine.setEosCallback(self.onEos)
         self.attachQueue = []
         self.attached = False
         self.driver = config.get(options.DEFAULT_XINE_DRIVER)
-        logging.info("Xine video driver:     %s", self.driver)
+        logging.info("Xine video driver: %s", self.driver)
 
     def setWidget(self, widget):
         confirmMainThread()
