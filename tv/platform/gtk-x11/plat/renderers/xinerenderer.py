@@ -62,15 +62,9 @@ class Renderer:
         self.xine.setEosCallback(self.onEos)
         self.attachQueue = []
         self.attached = False
-        self.driver = self.getDriver()
-        logging.info("Xine driver:     %s", self.driver)
+        self.driver = config.get(options.DEFAULT_XINE_DRIVER)
+        logging.info("Xine video driver:     %s", self.driver)
 
-    def getDriver(self):
-        xineDriver = config.get(options.DEFAULT_XINE_DRIVER)
-        if xineDriver is None:
-            xineDriver = "xv"
-        return xineDriver
- 
     def setWidget(self, widget):
         confirmMainThread()
         widget.connect_after("realize", self.onRealize)
