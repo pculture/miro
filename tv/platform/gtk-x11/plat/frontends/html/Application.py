@@ -40,7 +40,7 @@ from miro import config
 from miro import prefs
 from miro import startup
 import gtk.glade
-from miro.plat.utils import setMainThread
+from miro.plat.utils import setMainThread, setProperties
 
 ###############################################################################
 #### Application object                                                    ####
@@ -56,17 +56,12 @@ class Application(HTMLApplication):
         gtk.gdk.threads_init()
         startup.initialize(options.themeName)
         self.startup()
-        self.setProperties(props_to_set)
+        setProperties(props_to_set)
         logging.info("Gtk+ version:      %s", gtk.gtk_version)
         logging.info("PyGObject version: %s", gtk.ver)
         logging.info("PyGtk version:     %s", gtk.pygtk_version)
         gtk.main()
         app.controller.onShutdown()
-
-    def setProperties(self, props):
-        for p, val in props:
-            logging.info("Setting preference: %s -> %s", p.alias, val)
-            config.set(p, val)
 
     @gtkAsyncMethod
     def quitUI(self):

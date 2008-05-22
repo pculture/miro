@@ -286,3 +286,9 @@ def launchDownloadDaemon(oldpid, env):
 
 def exit(returnCode):
     sys.exit(returnCode)
+
+def setProperties(props):
+    for p, val in props:
+        logging.info("Setting preference: %s -> %s", p.alias, val)
+        config.set(p, val)
+
