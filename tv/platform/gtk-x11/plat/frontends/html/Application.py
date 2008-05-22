@@ -51,13 +51,15 @@ class Application(HTMLApplication):
         queue.call_nowait(mozsetup.setupMozillaEnvironment)
         gtk.glade.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
         gtk.glade.textdomain("miro")
-
         queue.main_thread = threading.currentThread()
         setMainThread()
         gtk.gdk.threads_init()
         startup.initialize(options.themeName)
         self.startup()
         self.setProperties(props_to_set)
+        logging.info("Gtk+ version:      %s", gtk.gtk_version)
+        logging.info("PyGObject version: %s", gtk.ver)
+        logging.info("PyGtk version:     %s", gtk.pygtk_version)
         gtk.main()
         app.controller.onShutdown()
 
