@@ -1,4 +1,5 @@
 from miro.feed import Feed
+from miro.guide import ChannelGuide
 from miro.playlist import SavedPlaylist
 from miro.folder import PlaylistFolder, ChannelFolder
 from miro.tabs import TabOrder
@@ -64,6 +65,9 @@ class BackendMessagesTest(EventLoopTest):
                 messagehandler.BackendMessageHandler())
         self.channelTabOrder = TabOrder(u'channel')
         self.playlistTabOrder = TabOrder(u'playlist')
+        # Adding a guide ensures that if we remove all our channel/playlist
+        # tabs the selection code won't go crazy.
+        ChannelGuide(u"http://miroguide.com/")
 
     def tearDown(self):
         messages.BackendMessage.install_handler(None)
@@ -120,6 +124,15 @@ class FeedTrackTest(BackendMessagesTest):
         self.checkMessage(1, messages.ChannelAdded, f)
         # there will actually be a ChannelChanged message afterwards, but we
         # don't need to care about that.
+
+    def testAddedFirst(self):
+        self.feed1.remove()
+        self.feed2.remove()
+        self.feed_folder.remove()
+        self.runPendingIdles()
+        f = Feed(u'http://example.com/3')
+        self.runPendingIdles()
+        self.assertEquals(self.test_handler.messages[-2].added_after, None)
 
     def testRemoved(self):
         self.feed2.remove()
@@ -199,6 +212,15 @@ class PlaylistTrackTest(BackendMessagesTest):
         self.checkMessage(1, messages.PlaylistAdded, p)
         # there will actually be a PlaylistChanged message afterwards, but we
         # don't need to care about that.
+
+    def testAddedFirst(self):
+        self.playlist1.remove()
+        self.playlist2.remove()
+        self.folder.remove()
+        self.runPendingIdles()
+        p = SavedPlaylist(u'Playlist 3')
+        self.runPendingIdles()
+        self.assertEquals(self.test_handler.messages[-1].added_after, None)
 
     def testRemoved(self):
         self.playlist2.remove()

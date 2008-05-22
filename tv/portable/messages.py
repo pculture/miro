@@ -169,7 +169,8 @@ class ChannelAdded(FrontendMessage):
 
     Attributes:
     channel -- ChannelInfo object for the added channel
-    added_after -- id of the previous channel in the channel list
+    added_after -- id of the previous channel in the channel list, or None if
+        it's the first channel in the list.
     """
 
     def __init__(self, channel, added_after):
@@ -235,7 +236,8 @@ class PlaylistAdded(FrontendMessage):
 
     Attributes:
     playlist -- PlaylistInfo object for the added playlist
-    added_after -- id of the previous playlist in the list of playlists
+    added_after -- id of the previous playlist in the list of playlists or
+        None if it's the first playlist in the list.
     """
 
     def __init__(self, playlist, added_after):

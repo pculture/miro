@@ -113,7 +113,11 @@ class TabTracker(ViewTracker):
         response.send_to_frontend()
 
     def prev_id(self, tab):
-        return self.view().getPrevID(tab.objID())
+        prev_id = self.view().getPrevID(tab.objID())
+        if prev_id == tab.objID(): # We are on the first object
+            return None
+        else:
+            return prev_id
 
 class ChannelTracker(TabTracker):
     ListClass = messages.ChannelList
