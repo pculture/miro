@@ -223,7 +223,6 @@ class Mediator:
     @eventloop.asIdle
     def fillIn (self):
         for f in views.feeds:
-            print f, f.actualFeed
             if isinstance (f.actualFeed, feed.DirectoryWatchFeedImpl):
                 self.changeDirectory (f.getID(), f.dir, f.visible)
         views.feeds.addChangeCallback(self.changeCallback)
@@ -546,6 +545,7 @@ class CallbackHandler(object):
         # get our add channel dialog
         movie_dir = config.get(prefs.MOVIES_DIRECTORY)
         widgetTree = MainFrame.WidgetTree(resources.path('miro.glade'), 'dialog-preferences', 'miro')
+        widgetTree.signal_autoconnect(self)
         dialog = widgetTree['dialog-preferences']
         widgetTree['prefs-notebook'].set_property("homogeneous", True)
         dialog.integerWidgets = []
@@ -568,6 +568,7 @@ class CallbackHandler(object):
         AttachCombo   (dialog, widgetTree['combobox-poll'], prefs.CHECK_CHANNELS_EVERY_X_MN, (30, 60, 1440, -1))
         AttachCombo   (dialog, widgetTree['combobox-auto-setting'], prefs.CHANNEL_AUTO_DEFAULT, ("new", "all", "off"))
         AttachCombo   (dialog, widgetTree['combobox-expiration'], prefs.EXPIRE_AFTER_X_DAYS, (1, 3, 6, 10, 30, -1))
+        AttachCombo   (dialog, widgetTree['combobox-maxolditems'], prefs.MAX_OLD_ITEMS_DEFAULT, (0, 20, 50, 100, 100))
         AttachBooleanRadio (dialog, widgetTree['radiobutton-playback-one'], widgetTree['radiobutton-playback-all'], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         AttachCombo   (dialog, widgetTree['combobox-renderer'], options.USE_RENDERER, ("xine", "gstreamer"))
         AttachCombo   (dialog, widgetTree['combobox-xineviz'], options.XINE_VIZ, ("goom", "oscope", "fftscopoe", "fftgraph", "none"))
@@ -669,3 +670,10 @@ class CallbackHandler(object):
         iter = widgetTree["combobox-chrome-search-engine"].get_active_iter()
         (engine,) = widgetTree["combobox-chrome-search-engine"].get_model().get(iter, 0)
         eventloop.addIdle (lambda:app.htmlapp.performSearch (engine.decode('utf-8','replace'), term.decode('utf-8','replace')), "Search for %s on %s" % (term.decode('utf-8','replace'), engine.decode('utf-8','replace')))
+
+    def on_clear_all_old_items(self, event=None):
+        def _clear():
+            for feed in views.feeds:
+                feed.cleanOldItems()
+        eventloop.addIdle(_clear, "clean old items from all feeds")
+`

@@ -218,14 +218,13 @@ class OldItemExpireTest(FeedTestCase):
         self.writeNewFeed()
         self.feed = self.makeFeed()
         self.items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
-        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
+        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 2)
 
     def writeNewFeed(self, entryCount=2):
         # make a feed with a new item and parse it
         items = []
         for x in range(entryCount):
             self.counter += 1
-
             items.append("""\
 <item>
  <title>Bumper Sticker</title>
@@ -274,14 +273,36 @@ class OldItemExpireTest(FeedTestCase):
         self.checkGuids(1, 2, 5, 6)
 
     def testOverflowStillInFeed(self):
+        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 0)
         self.parseNewFeed(6)
         self.checkGuids(3, 4, 5, 6, 7, 8)
 
     def testOverflowWithReplacement(self):
         # Keep item with guid-2 in the feed.
+        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 0)1
         self.counter = 1
         self.parseNewFeed(5)
         self.checkGuids(2, 3, 4, 5, 6)
+
+    def testOverflowWithMaxOldItems(self):
+        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
+        self.assertEqual(self.items.len(), 2)
+        self.parseNewFeed()
+        self.assertEquals(self.items.len(), 4)
+        self.parseNewFeed()
+        self.feed.setMaxOldItems(4)
+        while self.feed.actualFeed.updating:
+            self.processThreads()
+            self.processIdles()
+            sleep(0.1)
+        self.assertEquals(self.items.len(), 6)            
+        self.feed.setMaxOldItems(2)
+        while self.feed.actualFeed.updating:
+            self.processThreads()
+            self.processIdles()
+            sleep(0.1)
+        self.assertEquals(self.items.len(), 4)
+        self.checkGuids(3, 4, 5, 6)
 
 if __name__ == "__main__":
     unittest.main()

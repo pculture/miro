@@ -51,7 +51,7 @@ li {
 #channel-url {
     font-size: 11px;
 }
-#channel-url a.remove-channel:link {
+#channel-url a.remove-channel:link, #actual-settings a.clean-old-items:link {
 	color:#fff;
 }
 /*#channel-url a.remove-channel {

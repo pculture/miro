@@ -954,6 +954,14 @@ def upgrade64(objectList):
             changed.add(o)
     return changed
 
+def upgrade65(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString == 'feed':
+            o.savedData['maxOldItems'] = 30
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

@@ -50,7 +50,7 @@
             maxNew.disabled = false;
             if(maxNew.value == '') maxNew.value = '0';
             if(!(parseInt(maxNew.value) >= 0)) {
-               eventURL('action:invalidMaxNew?value=' + escape(maxNew.value));
+               eventURL('action:requiresPositiveInteger?value=' + escape(maxNew.value));
                maxNew.value = '0';
             }
             url += '&maxNew=' + maxNew.value;
@@ -63,6 +63,26 @@
 
         eventURL(url);
     }
+
+function setMaxOldItems() {
+    var url = 'action:setMaxOldItems?feed=';
+    url += document.forms['settings']['feed'].value;
+    url += '&maxOldItems=';
+    var maxOld = document.forms['settings']['maxOldItems'];
+    if (document.forms['settings']['expireOldItems'].checked) {
+	maxOld.disabled = false;
+	if (maxOld.value == '') maxOld.value = '0';
+	if (!(parseInt(maxOld.value) >= 0)) {
+	    eventURL('action:requiresPositiveInteger?value=' + escape(maxOld.value));
+	    maxOld.value = '0';
+	}
+	url += maxOld.value;
+    } else {
+	maxOld.disabled = true;
+	url += '-1';
+    }
+    eventURL(url);	
+}
 
     -->
 </script>

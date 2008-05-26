@@ -64,6 +64,7 @@ SINGLE_VIDEO_PLAYBACK_MODE  = Pref( key='singleVideoPlaybackMode',default=False,
 RESUME_VIDEOS_MODE          = Pref( key='resumeVideosMode',      default=True,  platformSpecific=False )
 WARN_IF_DOWNLOADING_ON_QUIT = Pref( key='warnIfDownloadingOnQuit',default=True, platformSpecific=False )
 TRUNCATE_CHANNEL_AFTER_X_ITEMS = Pref( key='TruncateChannelAFterXItems',  default=1000, platformSpecific=False)
+MAX_OLD_ITEMS_DEFAULT       = Pref( key='maxOldItemsDefault',    default=20,    platformSpecific=False)
 USE_UPNP                    = Pref( key='useUpnp',               default=True,  platformSpecific=False )
 BT_ENC_REQ                  = Pref( key='BitTorrentEncReq',      default=False, platformSpecific=False )
 CHANNEL_AUTO_DEFAULT        = Pref( key='ChannelAutoDefault',    default=u"new", platformSpecific=False )

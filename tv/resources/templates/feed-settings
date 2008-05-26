@@ -12,6 +12,7 @@
 <t:include filename="settings.js" />
 </head>
     <t:execOnLoad><![CDATA[
+from miro import config, prefs
 feed = views.feeds.getObjectByID(int(kargs['id']))
 ]]></t:execOnLoad>
 
@@ -68,19 +69,34 @@ t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
 		</select>
 <br /><br />
 		<div class="settings-button">
-	    <a id="feed-settings-close-button" class="button gray" onclick="return hideSettings()" >
-        <span i18:translate="">Done</span>
-      </a>
+		  <a id="feed-settings-close-button" class="button gray" onclick="return hideSettings()" >
+		    <span i18:translate="">Done</span>
+		  </a>
 		</div>
-		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" checked="checked" t:hideIf="feed.getMaxNew() == 'unlimited'" />
-		<input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
-		<span i18n:translate="">Don't Auto Download when more than 
-		<input i18n:name="maxnew" name="maxNew" type="text" size="3" value="3" disabled="1" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
-		<input i18n:name="maxnew2" name="maxNew" type="text" size="3" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
-		videos are waiting unwatched.</span>
-		<!--
-			<div i18n:translate="" class="settings-small">Prevents this channel from using unlimited disk space.</div>
-			-->
+		<div>
+		  <input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" checked="checked" t:hideIf="feed.getMaxNew() == 'unlimited'" />
+		  <input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
+		  <span i18n:translate="">Don't Auto Download when more than 
+		    <input i18n:name="maxnew" name="maxNew" type="text" size="3" value="3" disabled="1" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
+		    <input i18n:name="maxnew2" name="maxNew" type="text" size="3" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
+		    videos are waiting unwatched.</span>
+		  <!--
+		      <div i18n:translate="" class="settings-small">Prevents this channel from using unlimited disk space.</div>
+		      -->
+		</div>
+		<div>
+		  <span i18n:translate="">Remember
+		    <select i18n:name="maxold" name="maxOldItems" onChange="javascript:setMaxOldItems()">
+		      <option value="0" selected="@@@int(feed.maxOldItems == 0)@@@">0</option>
+		      <option value="20" selected="@@@int(feed.maxOldItems == 20)@@@">20</option>
+		      <option value="50" selected="@@@int(feed.maxOldItems == 50)@@@">50</option>
+		      <option value="100" selected="@@@int(feed.maxOldItems == 100)@@@">100</option>
+		      <option value="1000" selected="@@@int(feed.maxOldItems == 1000)@@@">1000</option>
+		      <option value="-1" selected="@@@int(feed.maxOldItems is None)@@@">default (<span t:replace="config.get(prefs.MAX_OLD_ITEMS_DEFAULT)"/>)</option>
+		    </select>
+		    older items in this feed in addition to the current contents.</span>
+		    (<a class="clean-old-items" onClick="return eventURL('action:cleanOldItems?feed=@@@feed.getID()@@@');" href="#"><span i18n:translate="">clear older items now</span></a>)
+		</div>
  	</div>         
 </div>
 

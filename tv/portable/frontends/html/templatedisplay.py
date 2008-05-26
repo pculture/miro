@@ -322,16 +322,25 @@ class ModelActionHandler:
         obj = app.db.getObjectByID(int(feed))
         obj.setExpiration(type, int(time))
 
-    def setMaxNew(self, feed, maxNew):
-        obj = app.db.getObjectByID(int(feed))
-        obj.setMaxNew(int(maxNew))
-
-    def invalidMaxNew(self, value):
+    def requiresPositiveInteger(self, value):
         title = _("Invalid Value")
         description = _("%s is invalid.  You must enter a non-negative "
                 "number.") % value
         dialogs.MessageBoxDialog(title, description).run()
 
+
+    def setMaxNew(self, feed, maxNew):
+        obj = app.db.getObjectByID(int(feed))
+        obj.setMaxNew(int(maxNew))
+
+    def setMaxOldItems(self, feed, maxOldItems):
+        obj = app.db.getObjectByID(int(feed))
+        obj.setMaxOldItems(int(maxOldItems))
+
+    def cleanOldItems(self, feed):
+        obj = app.db.getObjectByID(int(feed))
+        obj.cleanOldItems()
+        
     def startDownload(self, item):
         try:
             obj = app.db.getObjectByID(int(item))

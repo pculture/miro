@@ -12,6 +12,7 @@
     <t:include filename="settings.js" />
     <script type="text/javascript" src="resource:templates/osxdnd.js" />
     <t:execOnLoad><![CDATA[
+from miro import config, prefs
 #print templateState
 global feed, showDownloads, showWatchableItems, showNewItems, allItemsMode, allItems, watchableItems, matchingItems, newItems, itemSort, itemSortWatchable, itemSortDownloading, notDeleted
 
