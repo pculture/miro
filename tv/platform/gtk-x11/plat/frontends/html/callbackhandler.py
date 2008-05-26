@@ -676,4 +676,3 @@ class CallbackHandler(object):
             for feed in views.feeds:
                 feed.cleanOldItems()
         eventloop.addIdle(_clear, "clean old items from all feeds")
-`
