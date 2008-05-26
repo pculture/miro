@@ -35,4 +35,4 @@ though, we just implement the parts of the API we need here.
 """
 
 def system():
-    return "Windows"
+    return "Linux"
