@@ -1151,7 +1151,7 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
         self.confirmDBThread()
         return resources.absoluteUrl(self.calcTablistThumbnail())
 
-    @returnsUnicode
+    @returnsFilename
     def getTablistThumbnailPath(self):
         self.confirmDBThread()
         return resources.path(self.calcTablistThumbnail())
