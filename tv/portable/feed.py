@@ -57,7 +57,7 @@ from miro import folder
 from miro import prefs
 from miro.plat import resources
 from miro import downloader
-from miro.util import (returnsUnicode, unicodify, chatter, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure, escape, toUni)
+from miro.util import (returnsUnicode, returnsFilename, unicodify, chatter, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure, escape, toUni)
 from miro import fileutil
 from miro.plat.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
 from miro import filetypes
@@ -72,13 +72,16 @@ from miro.clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 
-@returnsUnicode
-def defaultFeedIconURL():
-    return resources.url(u"images/feedicon.png")
+DEFAULT_FEED_ICON = u"images/feedicon.png"
+DEFAULT_FEED_ICON_TABLIST = u"images/feedicon-tablist.png"
 
 @returnsUnicode
-def defaultFeedIconURLTablist():
-    return resources.url(u"images/feedicon-tablist.png")
+def defaultFeedIconURL():
+    return resources.url(DEFAULT_FEED_ICON)
+
+@returnsUnicode
+def defaultTablistFeedIconURL():
+    return resources.url(DEFAULT_FEED_ICON_TABLIST)
 
 # Notes on character set encoding of feeds:
 #
@@ -1119,25 +1122,39 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
         DDBObject.remove(self)
         self.actualFeed.onRemove()
 
+    def calcThumbnail(self):
+        if self.iconCache and self.iconCache.isValid():
+            path = self.iconCache.getResizedFilename(76, 76)
+            return fileutil.expand_filename(path)
+        else:
+            return DEFAULT_FEED_ICON
+
+    def calcTablistThumbnail(self):
+        if self.iconCache and self.iconCache.isValid():
+            path = self.iconCache.getResizedFilename(20, 20)
+            return fileutil.expand_filename(path)
+        else:
+            return DEFAULT_FEED_ICON_TABLIST
+
     @returnsUnicode
     def getThumbnail(self):
         self.confirmDBThread()
-        if self.iconCache and self.iconCache.isValid():
-            path = self.iconCache.getResizedFilename(76, 76)
-            path = fileutil.expand_filename(path)
-            return resources.absoluteUrl(path)
-        else:
-            return defaultFeedIconURL()
+        return resources.absoluteUrl(self.calcThumbnail())
+
+    @returnsFilename
+    def getThumbnailPath(self):
+        self.confirmDBThread()
+        return resources.path(self.calcThumbnail())
 
     @returnsUnicode
     def getTablistThumbnail(self):
         self.confirmDBThread()
-        if self.iconCache and self.iconCache.isValid():
-            path = self.iconCache.getResizedFilename(20, 20)
-            path = fileutil.expand_filename(path)
-            return resources.absoluteUrl(path)
-        else:
-            return defaultFeedIconURLTablist()
+        return resources.absoluteUrl(self.calcTablistThumbnail())
+
+    @returnsUnicode
+    def getTablistThumbnailPath(self):
+        self.confirmDBThread()
+        return resources.path(self.calcTablistThumbnail())
 
     @returnsUnicode
     def getItemThumbnail(self, width, height):
