@@ -49,6 +49,7 @@ function onload() {
   setHasMinDiskSpace(pybridge.getPreserveDiskSpace());
   setMinDiskSpace(pybridge.getPreserveDiskSpaceAmount());
   setExpire(pybridge.getExpireAfter());
+  setMaxOldItems(pybridge.getMaxOldItems());
   setResumeVideosMode(pybridge.getResumeVideosMode());
   setSinglePlayMode(pybridge.getSinglePlayMode());
   setBTMinPort(pybridge.getBTMinPort());
@@ -304,6 +305,19 @@ function setExpire(days) {
 }
 function expirationChange(days) {
    pybridge.setExpireAfter(parseInt(days));
+}
+
+function setMaxOldItems(items) {
+    var check = document.getElementById('maxolditems');
+    check.value = items;
+}
+
+function maxOldItemsChange(items) {
+    pybridge.setMaxOldItems(parseInt(items));
+}
+
+function cleanAllOldItems() {
+    pybridge.cleanAllOldItems();
 }
 
 function singlePlayModeChange() {

@@ -183,6 +183,23 @@
                     </menupopup>
                 </menulist>
             </hbox>
+	    <separator />
+	    <hbox>
+	      <description style="padding-top:4px;">&prefs.videos.maxolditems;</description>
+	      <menulist id="maxolditems">
+		<menupopup>
+		  <menuitem label="&prefs.videos.maxolditems.zero;" oncommand="maxOldItemsChange(0);" value="0" />
+		  <menuitem label="&prefs.videos.maxolditems.twenty;" oncommand="maxOldItemsChange(20);" value="20" />
+		  <menuitem label="&prefs.videos.maxolditems.fifty;" oncommand="maxOldItemsChange(50);" value="50" />
+		  <menuitem label="&prefs.videos.maxolditems.hundred;" oncommand="maxOldItemsChange(100);" value="100" />
+		  <menuitem label="&prefs.videos.maxolditems.thousand;" oncommand="maxOldItemsChange(1000);" value="1000" />
+		</menupopup>
+	      </menulist>
+	      <description style="padding-top:4px;">&prefs.videos.maxolditems2;</description>
+              <button id="clearallolditems" flex="0"
+                      label="&prefs.videos.cleanallolditems;"
+                      oncommand="cleanAllOldItems();" />
+	    </hbox>
         </tabpanel>
         <tabpanel orient="vertical">
             <!--PLAYBACK-->

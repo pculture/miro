@@ -118,6 +118,9 @@ interface pcfIDTVPyBridge : nsISupports
   void setPreserveDiskSpaceAmount(in float value);
   short getExpireAfter();
   void setExpireAfter(in short value);
+  short getMaxOldItems();
+  void setMaxOldItems(in short value);
+  void cleanAllOldItems();
   boolean getSinglePlayMode();
   void setSinglePlayMode(in boolean value);
   short getBTMinPort();

@@ -593,9 +593,6 @@ class FeedImpl:
         Called to remove old items which are no longer in the feed.
 
         Items that are currently in the feed should always be kept.
-        The number of old items to keep is:
-          min(config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS),
-              self.ufeed.getMaxOldItems())
         """
         pass
 ##
@@ -1419,7 +1416,7 @@ class RSSFeedImplBase(FeedImpl):
         
     def truncateOldItems(self, old_items):
         """Truncate items so that the number of items in this feed doesn't
-        exceed prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS.
+        exceed self.getMaxOldItems()
 
         old_items should be an iterable that contains items that aren't in the
         feed anymore.
@@ -1427,9 +1424,7 @@ class RSSFeedImplBase(FeedImpl):
         Items are only truncated if they don't exist in the feed anymore, and
         if the user hasn't downloaded them.
         """
-        limit = config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
-        if self.ufeed.getMaxOldItems() is not None:
-            limit = min(limit, self.ufeed.getMaxOldItems())
+        limit = self.ufeed.getMaxOldItems()
         extra = len(old_items) - limit
         if extra <= 0:
             return

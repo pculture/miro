@@ -362,6 +362,14 @@ class PyBridge:
         return config.get(prefs.EXPIRE_AFTER_X_DAYS)
     def setExpireAfter(self, value):
         return config.set(prefs.EXPIRE_AFTER_X_DAYS, value)
+    def getMaxOldItems(self):
+        return config.get(prefs.MAX_OLD_ITEMS_DEFAULT)
+    def setMaxOldItems(self, value):
+        return config.set(prefs.MAX_OLD_ITEMS_DEFAULT, value)
+    @asIdle
+    def cleanAllOldItems(self):
+        for feed in views.feeds:
+            feed.cleanOldItems()
     def getSinglePlayMode(self):
         return config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE)
     def setSinglePlayMode(self, value):
