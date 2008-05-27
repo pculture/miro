@@ -4,7 +4,10 @@
 <head>
 </head>
 <body>
-<a class="feeditem noselect">
+<a class="feeditem draggable noselect"
+   dragsourcetype="***this.getDragSourceType()***"
+   dragsourcedata="tablist-***this.objID()***"
+   dragicon="channel-tnail-***this.objID()***">
     <img class="icon" alt="" src="***this.obj.getIconURL()***" />
     <div class="line"><div class="name" t:replace="this.obj.getTitle()" /></div>
 </a>

@@ -491,6 +491,7 @@ class SelectionHandler(signals.SignalEmitter):
         tabViews = [ 
             views.guideTabs, 
             views.staticTabs, 
+            views.siteTabs,
             views.feedTabs, 
             views.playlistTabs,
         ]
@@ -503,11 +504,13 @@ class SelectionHandler(signals.SignalEmitter):
                     return
 
     def selectTabByObject(self, obj, sendSignal=True):
+        siteTabOrder = util.getSingletonDDBObject(views.siteTabOrder)
         channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
         playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
         tabViews = [ 
             views.guideTabs, 
-            views.staticTabs, 
+            views.staticTabs,
+            siteTabOrder.getView(),
             channelTabOrder.getView(), 
             playlistTabOrder.getView(), 
         ]

@@ -184,9 +184,9 @@ EditItems = [
 
 ChannelItems = [
     MenuItem(_("Add _Channel"), "NewChannel", (Key("n",MOD),)),
+    MenuItem(_("Add Site..."), "NewGuide", ()),
     MenuItem(_("New Searc_h Channel..."), "NewSearchChannel", ()),
     MenuItem(_("New _Folder..."), "NewChannelFolder", (Key("n",MOD,SHIFT),)),
-    MenuItem(_("Add Channel _Guide..."), "NewGuide", ()),
     Separator(),
     MenuItem(_("Re_name Channel..."), "RenameChannel", (), enabled=False),
     MenuItem(_("_Remove Channel..."), "RemoveChannels", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,

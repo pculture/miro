@@ -196,8 +196,8 @@ def makeGuideContextMenu(guideObj, templateName, view):
             _('Copy URL to clipboard')),
     ]
     if not guideObj.getDefault():
-        i = (lambda: app.controller.removeGuide(guideObj), _('Remove'))
-        menuItems.append(i)
+        menuItems.append((lambda: app.controller.renameGuide(guideObj), _('Rename')))
+        menuItems.append((lambda: app.controller.removeGuide(guideObj), _('Remove')))
     return makeMenu(menuItems)
 
 def makeItemContextMenu(itemObj, templateName, view):

@@ -145,6 +145,9 @@ class ChannelGuide(DDBObject):
     def getDefault(self):
         return self.url == config.get(prefs.CHANNEL_GUIDE_URL)
 
+    def getFolder(self):
+        return None
+
     # For the tabs
     @returnsUnicode
     def getTitle(self):
@@ -152,6 +155,11 @@ class ChannelGuide(DDBObject):
             return self.title
         else:
             return self.getURL()
+
+    def setTitle(self, title):
+        self.confirmDBThread()
+        self.title = title
+        self.signalChange(needsSave=True)
 
     def guideDownloaded(self, info):
         self.updated_url = unicode(info["updated-url"])
@@ -183,7 +191,9 @@ class ChannelGuide(DDBObject):
         #    path = self.iconCache.getFilename()
         #    return resources.absoluteUrl(path)
         #else:
-        return resources.url("images/icon-guide_small.png")
+        if self.getDefault():
+            return resources.url("images/icon-guide_small.png")
+        return resources.url("images/site-icon.png")
 
     def getThumbnailURL(self):
         if self.favicon:

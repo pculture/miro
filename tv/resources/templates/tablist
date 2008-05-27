@@ -15,6 +15,7 @@
     <t:execOnLoad><![CDATA[
 guideTabs = views.guideTabs
 staticTabs = views.staticTabs
+siteTabs = kargs['siteTabOrder'].getView()
 feedTabs = kargs['channelTabOrder'].getView()
 playlistTabs = kargs['playlistTabOrder'].getView()
 ]]>
@@ -23,91 +24,113 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 <body>
 
 <div id="sidebar">
-  <div class="tab-list-drop-target"
+
+    <div class="tab-list-drop-target"
+         dragdesttype="channel:channelfolder"
+         dragdestdata="channel-START"
+         drageffectchannel="move" 
+	     drageffectchannelfolder="move" >
+        <ul class="tab-list first">
+	        <li t:repeatForView="guideTabs" 
+                t:repeatTemplate="guidetab"
+	            class="***this.getState()***"
+	            selectID="***this.objID()***"
+	            selectViewName="guideTabs"
+	            selectArea='tablist' 
+	            onmousedown="return handleContextMenuSelect(event);" 
+	            onclick="return handleSelect(event);" />
+	        <li t:repeatForView="staticTabs" 
+                t:repeatTemplate="statictab"
+	            class="***this.getState()***"
+	            selectID="***this.objID()***" selectViewName="staticTabs"
+	            selectArea='tablist' 
+	            onclick="return handleSelect(event);" />
+        </ul>
+        <div class="dnd-reorder-indicator circle" />
+        <div class="dnd-reorder-indicator line" />
+    </div>
+
+     <div class="tab-list-drop-target"
           dragdesttype="channel:channelfolder"
           dragdestdata="channel-START"
-          drageffectchannel="move" 
-	  drageffectchannelfolder="move" >
-    <ul class="tab-list first">
-	<li t:repeatForView="guideTabs" 
-	  class="***this.getState()***"
-	  selectID="***this.objID()***" selectViewName="guideTabs"
-	  selectArea='tablist' 
-	  onmousedown="return handleContextMenuSelect(event);" 
-	  onclick="return handleSelect(event);" >
-	      <t:includeTemplate filename="guidetab" />
-	</li>
-	<li t:repeatForView="staticTabs" 
-	  class="***this.getState()***"
-	  selectID="***this.objID()***" selectViewName="staticTabs"
-	  selectArea='tablist' 
-	  onclick="return handleSelect(event);" >
-	    <t:includeTemplate filename="statictab" />
-	</li>
-    </ul>
-    <div class="dnd-reorder-indicator circle" />
-    <div class="dnd-reorder-indicator line" />
-  </div>
-  <div class="tab-list-drop-target"
-	dragdesttype="playlist:playlistfolder"
-	dragdestdata="playlist-START"
-	drageffectplaylist="move" 
-	drageffectplaylistfolder="move" >
-  <h2>CHANNELS</h2>
-    <ul class="tab-list second">
-      <li t:repeatForView="feedTabs" 
-	class="***this.getState()***"
-	selectID="***this.objID()***" selectViewName="feedTabs"
-	selectArea='tablist' 
-	onmousedown="return handleContextMenuSelect(event);" 
-        onclick="return handleSelect(event)">
-        <div id="tab-***this.objID()***">
-	  <div t:showIf="this.isFeed()">
-	      <t:includeTemplate filename="feedtab" />
-	    </div>
-	  <div t:showIf="this.isChannelFolder()">
-	      <t:includeTemplate filename="channelfoldertab" />
-	  </div>
-        </div>
-      </li>
-    </ul>
-    <div class="dnd-reorder-indicator circle" />
-    <div class="dnd-reorder-indicator line" />
-  </div>
-  <div class="tab-list-drop-target"
-	dragdesttype="channel:channelfolder"
-	dragdestdata="channel-END"
-	drageffectchannel="move" 
-	drageffectchannelfolder="move" >
-	<div class="dnd-reorder-indicator show-on-top circle" />
-	<div class="dnd-reorder-indicator show-on-top line" />
-      <h2>PLAYLISTS</h2>
-      <ul class="tab-list third">
-      <li t:repeatForView="playlistTabs" 
-	class="***this.getState()***"
-	selectID="***this.objID()***" selectViewName="playlistTabs"
-	selectArea='tablist' 
-	onmousedown="return handleContextMenuSelect(event);" 
-        onclick="return handleSelect(event);">
-        <div id="tab-***this.objID()***">
-	  <div t:showIf="this.isPlaylist()">
-	      <t:includeTemplate filename="playlisttab" />
-	  </div>
-	  <div t:showIf="this.isPlaylistFolder()">
-              <t:includeTemplate filename="playlistfoldertab" />
-	  </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div class="tab-list-drop-target"
-      dragdesttype="playlist:playlistfolder"
-      dragdestdata="playlist-END"
-      drageffectplaylist="move" 
-      drageffectplaylistfolder="move" >
-      <div class="dnd-reorder-indicator show-on-top circle" />
-      <div class="dnd-reorder-indicator show-on-top line" />
-    </div>
-</div>
+          drageffectchannel="move">
+         <h2>SITES</h2>
+         <ul class="tab-list second">
+             <li t:repeatForView="siteTabs" 
+                 t:repeatTemplate="sitetab"
+                 class="***this.getState()***"
+                 selectID="***this.objID()***"
+                 selectViewName="siteTabs"
+                 selectArea='tablist' 
+                 onmousedown="return handleContextMenuSelect(event);" 
+                 onclick="return handleSelect(event)" />
+         </ul>
+         <div class="dnd-reorder-indicator circle" />
+         <div class="dnd-reorder-indicator line" />
+     </div>
+  
+     <div class="tab-list-drop-target"
+          dragdesttype="playlist:playlistfolder"
+          dragdestdata="playlist-START"
+          drageffectplaylist="move" 
+          drageffectplaylistfolder="move" >
+         <h2>CHANNELS</h2>
+         <ul class="tab-list second">
+             <li t:repeatForView="feedTabs" 
+                 class="***this.getState()***"
+                 selectID="***this.objID()***" selectViewName="feedTabs"
+                 selectArea='tablist' 
+                 onmousedown="return handleContextMenuSelect(event);" 
+                 onclick="return handleSelect(event)">
+                 <div id="tab-***this.objID()***">
+                     <div t:showIf="this.isFeed()">
+                         <t:includeTemplate filename="feedtab" />
+                     </div>
+                     <div t:showIf="this.isChannelFolder()">
+                         <t:includeTemplate filename="channelfoldertab" />
+                     </div>
+                 </div>
+             </li>
+         </ul>
+         <div class="dnd-reorder-indicator circle" />
+         <div class="dnd-reorder-indicator line" />
+     </div>
+  
+     <div class="tab-list-drop-target"
+    	  dragdesttype="channel:channelfolder"
+    	  dragdestdata="channel-END"
+    	  drageffectchannel="move" 
+    	  drageffectchannelfolder="move" >
+          <div class="dnd-reorder-indicator show-on-top circle" />
+          <div class="dnd-reorder-indicator show-on-top line" />
+          <h2>PLAYLISTS</h2>
+          <ul class="tab-list third">
+              <li t:repeatForView="playlistTabs" 
+                  class="***this.getState()***"
+                  selectID="***this.objID()***" selectViewName="playlistTabs"
+                  selectArea='tablist' 
+                  onmousedown="return handleContextMenuSelect(event);" 
+                  onclick="return handleSelect(event);">
+                  <div id="tab-***this.objID()***">
+                      <div t:showIf="this.isPlaylist()">
+                          <t:includeTemplate filename="playlisttab" />
+                      </div>
+                      <div t:showIf="this.isPlaylistFolder()">
+                          <t:includeTemplate filename="playlistfoldertab" />
+                      </div>
+                  </div>
+              </li>
+          </ul>
+      </div>
+  
+      <div class="tab-list-drop-target"
+           dragdesttype="playlist:playlistfolder"
+           dragdestdata="playlist-END"
+           drageffectplaylist="move" 
+           drageffectplaylistfolder="move" >
+           <div class="dnd-reorder-indicator show-on-top circle" />
+           <div class="dnd-reorder-indicator show-on-top line" />
+       </div>
+   </div>
 </body>
 </html>

@@ -202,16 +202,15 @@ def setupGlobalFeeds():
     setupGlobalFeed(u'dtv:directoryfeed')
 
 def setupTabs():
-    try:
-        channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
-    except LookupError:
-        logging.info ("Creating channel tab order")
-        tabs.TabOrder(u'channel')
-    try:
-        util.getSingletonDDBObject(views.playlistTabOrder)
-    except LookupError:
-        logging.info ("Creating playlist tab order")
-        tabs.TabOrder(u'playlist')
+    def setupTabOrder(view, key):
+        try:
+            tabOrder = util.getSingletonDDBObject(view)
+        except LookupError:
+            logging.info ("Creating %s tab order" % key)
+            tabs.TabOrder(key)
+    setupTabOrder(views.siteTabOrder, u'site')
+    setupTabOrder(views.channelTabOrder, u'channel')
+    setupTabOrder(views.playlistTabOrder, u'playlist')
 
 def moviesDirectoryGone():
     movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))

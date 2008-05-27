@@ -33,8 +33,8 @@ initialized = False
 def initialize():
     global initialized
     initialized = True
-    global allTabs, guideTabs, staticTabs, feedTabs, playlistTabs
-    global selectedTabs, tabOrders, channelTabOrder, playlistTabOrder
+    global allTabs, guideTabs, siteTabs, staticTabs, feedTabs, playlistTabs
+    global selectedTabs, tabOrders, siteTabOrder, channelTabOrder, playlistTabOrder
     global items, fileItems, toplevelItems, nonContainerItems, unwatchedItems
     global watchableItems, newWatchableItems, uniqueWatchableItems, uniqueNewWatchableItems
     global feeds, remoteDownloads
@@ -64,19 +64,20 @@ def initialize():
 
     allTabs = app.db.filter(filters.mappableToTab).map(maps.mapToTab)
     allTabs.createIndex(indexes.tabType)
-    guideTabs = allTabs.filterWithIndex(indexes.tabType, 'guide') \
-                .sort(sorts.guideTabs)
-    staticTabs = allTabs.filterWithIndex(indexes.tabType, 'statictab') \
-                 .sort(sorts.staticTabs)
+ 
+    guideTabs = allTabs.filterWithIndex(indexes.tabType, 'guide')
+    staticTabs = allTabs.filterWithIndex(indexes.tabType, 'statictab').sort(sorts.staticTabs)
 
-    # no need to sort channel/playlist tabs...  These get ordered by the TabOrder
+    # no need to sort site/channel/playlist tabs...  These get ordered by the TabOrder
     # class.
+    siteTabs = allTabs.filterWithIndex(indexes.tabType, 'site')
     feedTabs = allTabs.filterWithIndex(indexes.tabType, 'feed')
     playlistTabs = allTabs.filterWithIndex(indexes.tabType, 'playlist')
     selectedTabs = allTabs.filter(lambda x: x.selected)
 
     tabOrders = app.db.filterWithIndex(indexes.objectsByClass, tabs.TabOrder)
     tabOrders.createIndex(indexes.tabOrderType)
+    siteTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'site')
     channelTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'channel')
     playlistTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'playlist')
 

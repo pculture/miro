@@ -190,6 +190,16 @@ class Controller:
         for f in views.feeds:
             f.update()
 
+    def renameGuide(self, guide):
+        if guide.getDefault():
+            logging.warning ("attempt to rename default guide")
+            return
+        def callback(dialog):
+            if dialog.choice == dialogs.BUTTON_OK:
+                guide.setTitle(dialog.value)
+        dialogs.TextEntryDialog(_('Rename Site'), _('Enter a new name for the Web Site %s') % guide.getURL(), 
+                dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL).run(callback)
+
     def removeGuide(self, guide):
         if guide.getDefault():
             logging.warning ("attempt to remove default guide")

@@ -203,12 +203,19 @@ class HTMLApplication:
 
         util.print_mem_usage("Post-selection memory check")
 
+        siteTabOrder = util.getSingletonDDBObject(views.siteTabOrder)
+        siteTabOrder.connect('tab-added', self.makeLastTabVisible)
+
         channelTabOrder = util.getSingletonDDBObject(views.channelTabOrder)
-        playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
         channelTabOrder.connect('tab-added', self.makeLastTabVisible)
+
+        playlistTabOrder = util.getSingletonDDBObject(views.playlistTabOrder)
         playlistTabOrder.connect('tab-added', self.makeLastTabVisible)
+
         self.tabDisplay = templatedisplay.TemplateDisplay('tablist',
-                'default', playlistTabOrder=playlistTabOrder,
+                'default', 
+                siteTabOrder=siteTabOrder,
+                playlistTabOrder=playlistTabOrder,
                 channelTabOrder=channelTabOrder)
         self.frame.selectDisplay(self.tabDisplay, self.frame.channelsDisplay)
 

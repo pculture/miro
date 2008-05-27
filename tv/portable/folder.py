@@ -212,8 +212,7 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     def renameTitle(self):
         return _("Rename Playlist Folder")
     def renameText(self):
-        return _("Enter a new name for the playlist folder %s" % 
-                self.getTitle())
+        return _("Enter a new name for the playlist folder %s") % self.getTitle()
     def getTabOrder(self):
         return util.getSingletonDDBObject(views.playlistTabOrder)
     def getChildrenView(self):

@@ -112,7 +112,10 @@ class Tab:
         self.obj = obj
 
         if obj.__class__ == guide.ChannelGuide:
-            self.type = 'guide'
+            if obj.getDefault():
+                self.type = 'guide'
+            else:
+                self.type = 'site'
         elif obj.__class__ == StaticTab: 
             self.type = 'statictab'
         elif obj.__class__ in (feed.Feed, folder.ChannelFolder): 
@@ -136,6 +139,8 @@ class Tab:
                 return 'playlistfolder'
             else:
                 return 'playlist'
+        elif self.type == 'site':
+            return 'site'
         else:
             return ''
 
@@ -185,7 +190,11 @@ class Tab:
 
     def isGuide(self):
         """True if this Tab represents a Channel Guide."""
-        return isinstance(self.obj, guide.ChannelGuide)
+        return isinstance(self.obj, guide.ChannelGuide) and self.obj.getDefault()
+
+    def isSite(self):
+        """True is this Tab represents a Web Site"""
+        return isinstance(self.obj, guide.ChannelGuide) and not self.obj.getDefault()
 
     def isPlaylist(self):
         """True if this Tab represents a Playlist."""
@@ -197,7 +206,7 @@ class Tab:
 
     def feedURL(self):
         """If this Tab represents a Feed or a Guide, the URL. Otherwise None."""
-        if self.isFeed() or self.isGuide():
+        if self.isFeed() or self.isGuide() or self.isSite():
             return self.obj.getURL()
         else:
             return None
@@ -265,7 +274,9 @@ class TabOrder(database.DDBObject, signals.SignalEmitter):
 
     def _initRestore(self):
         signals.SignalEmitter.__init__(self, 'tab-added')
-        if self.type == u'channel':
+        if self.type == u'site':
+            self.tabView = views.siteTabs
+        elif self.type == u'channel':
             self.tabView = views.feedTabs
         elif self.type == u'playlist':
             self.tabView = views.playlistTabs
@@ -351,6 +362,8 @@ def tabIterator():
         yield tab
     for tab in views.staticTabs:
         yield tab
+    for tab in getSingletonDDBObject(views.siteTabOrder).getView():
+        yield tab
     for tab in getSingletonDDBObject(views.channelTabOrder).getView():
         yield tab
     for tab in getSingletonDDBObject(views.playlistTabOrder).getView():
@@ -361,6 +374,8 @@ def getViewForTab(tab):
         return views.guideTabs
     elif tab.type == 'statictab':
         return views.staticTabs
+    if tab.type == 'site':
+        return getSingletonDDBObject(views.siteTabOrder).getView()
     elif tab.type == 'feed':
         return getSingletonDDBObject(views.channelTabOrder).getView()
     elif tab.type == 'playlist':
